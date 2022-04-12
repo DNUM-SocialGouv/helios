@@ -1,0 +1,118 @@
+{
+  "extends": "next/core-web-vitals",
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true,
+    "jest": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "eslint-plugin-react",
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "array-bracket-spacing": ["error", "never"],
+    "arrow-parens": ["error", "always"],
+    "arrow-spacing": "error",
+    "brace-style": "error",
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "imports": "always-multiline",
+        "objects": "always-multiline"
+      }
+    ],
+    "default-case": "error",
+    "eol-last": ["error", "always"],
+    "eqeqeq": "error",
+    "id-match": "error",
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "jsx-quotes": ["error", "prefer-double"],
+    "keyword-spacing": "error",
+    "max-len": [
+      "error",
+      {
+        "code": 160,
+        "ignoreUrls": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreRegExpLiterals": true
+      }
+    ],
+    "no-console": ["error", { "allow": ["error"] }],
+    "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0, "maxBOF": 0 }],
+    "no-multi-spaces": "error",
+    "no-param-reassign": "error",
+    "no-tabs": "error",
+    "no-trailing-spaces": "error",
+    "object-curly-spacing": ["error", "always"],
+    "prefer-const": "error",
+    "quote-props": ["error", "as-needed"],
+    "quotes": ["error", "single", { "avoidEscape": true }],
+    "semi": ["error", "never"],
+    "yoda": "error",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "variable",
+        "format": [
+          "camelCase",
+          "PascalCase",
+          "UPPER_CASE"
+        ]
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "@typescript-eslint/no-var-requires": "error",
+    "@typescript-eslint/type-annotation-spacing": "error",
+    "react-hooks/exhaustive-deps": "off",
+    "react/jsx-closing-bracket-location": ["error", "line-aligned"],
+    "react/jsx-curly-brace-presence": "error",
+    "react/jsx-first-prop-new-line": ["error", "multiline"],
+    "react/jsx-indent": [2, 2],
+    "react/jsx-indent-props": [2, 2],
+    "react/jsx-max-props-per-line": [1, { "when": "always" }],
+    "react/jsx-one-expression-per-line": ["error", { "allow": "literal" }],
+    "react/jsx-sort-props": "error",
+    "react/jsx-space-before-closing": "error",
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error",
+    "import/no-extraneous-dependencies": "error",
+    "import/no-mutable-exports": "error",
+    "import/order": [
+      "warn",
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "newlines-between": "always",
+        "alphabetize": { "order": "asc", "caseInsensitive": true }
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.ts?(x)"],
+      "extends": [
+        "plugin:jest/all",
+        "plugin:jest-formatting/recommended"
+      ],
+      "rules": {
+        "jest/no-conditional-expect": "off",
+        "jest/no-hooks": "off",
+        "jest/require-hook": "off",
+        "jest/prefer-expect-assertions": "off",
+        "jest/prefer-lowercase-title": [ "error", { "ignore": ["describe"] } ]
+      }
+    },
+    {
+      "files": ["**/*.test.tsx"],
+      "extends": ["plugin:testing-library/react"]
+    }
+  ]
+}
