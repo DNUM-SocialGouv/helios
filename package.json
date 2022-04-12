@@ -1,7 +1,27 @@
 {
   "name": "helios",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "git@github.com:DNUM-SocialGouv/helios.git",
-  "license": "MIT"
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "lint": "next lint",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "12.1.4",
+    "react": "18.0.0",
+    "react-dom": "18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "17.0.23",
+    "@types/react": "18.0.0",
+    "@types/react-dom": "18.0.0",
+    "eslint": "8.13.0",
+    "eslint-config-next": "12.1.4",
+    "typescript": "4.6.3"
+  },
+  "engines": {
+    "node": "16"
+  }
 }
