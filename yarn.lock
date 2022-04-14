@@ -332,6 +332,11 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@gouvfr/dsfr@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@gouvfr/dsfr/-/dsfr-1.4.1.tgz#71289a18a36f775d5dff46eefb9fc59cb19d6954"
+  integrity sha512-vYWqWall1p+UcyhFr/U/c6Xq4R/vh3Jk+9OEnRufUDiXi18G/mtshweJQLVpPaVMGDIK0EUEAUpd3kdD0D/x9w==
+
 "@humanwhocodes/config-array@^0.9.2":
   version "0.9.5"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.9.5.tgz#2cbaf9a89460da24b5ca6531b8bbfc23e1df50c7"

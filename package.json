@@ -17,6 +17,7 @@
     "tsc": "tsc"
   },
   "dependencies": {
+    "@gouvfr/dsfr": "^1.4.1",
     "next": "12.1.4",
     "react": "18.0.0",
     "react-dom": "18.0.0"
