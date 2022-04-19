@@ -14,4 +14,3 @@
   <dt style="font-weight: 700">et vise</dt>
   <dd>à devenir 6 mois après le déploiement général l’outil de synthèse de référence pour toutes les ARS avec une prise en main intuitive et des mises à jour fluides, fréquentes et attendues.</dd>
 </dl>
-
