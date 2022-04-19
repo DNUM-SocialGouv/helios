@@ -11,6 +11,7 @@ export class WordingFr implements Wording {
       sociaux
     </>
   )
+  readonly TITRE_PAGE_ACCUEIL: string = 'Helios - Accueil'
   readonly ACCÉDER_À_L_ACCUEIL: string = 'Accéder à l’accueil'
   readonly DÉCONNEXION: string = 'Déconnexion'
 }
