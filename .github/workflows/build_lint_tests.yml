@@ -38,4 +38,4 @@ jobs:
           path: ./*
           key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
       - name: Run the tests
-        run: yarn test
+        run: yarn test --passWithNoTests
