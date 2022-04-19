@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import '@gouvfr/dsfr/dist/component/header/header.min.css'
 import '@gouvfr/dsfr/dist/component/logo/logo.min.css'
 
@@ -22,15 +23,36 @@ export const Header = () => {
                     {wording.INTITULÉ_DU_MINISTÈRE_SOCIAL}
                   </p>
                 </div>
-                <div className="fr-header__operator">
-                  <Image
-                    alt={wording.ALT_LOGO_HELIOS}
-                    className="fr-responsive-img"
-                    height="30"
-                    src="/logo_helios_fond_transparent.png"
-                    width="100"
-                  />
-                </div>
+              </div>
+              <div className="fr-header__service">
+                <Link
+                  href="/"
+                  passHref
+                >
+                  <a title={wording.ACCÉDER_À_L_ACCUEIL}>
+                    <Image
+                      alt={wording.ALT_LOGO_HELIOS}
+                      className="fr-responsive-img"
+                      height="30"
+                      src="/logo_helios_fond_transparent.png"
+                      width="100"
+                    />
+                  </a>
+                </Link>
+              </div>
+            </div>
+            <div className="fr-header__tools">
+              <div className="fr-header__tools-links">
+                <ul className="fr-btns-group">
+                  <li>
+                    <a
+                      className="fr-btn fr-fi-logout-box-r-fill"
+                      href="#"
+                    >
+                      {wording.DÉCONNEXION}
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>

@@ -7,11 +7,22 @@ import { Header } from './Header'
 const { wording } = fakeFrontDependenciesContainer
 
 describe('En-tête de page', () => {
-  it('affiche l’intitulé du ministère', () => {
+
+  it('permet d’accéder à la page d’accueil', () => {
     // WHEN
     renderFakeComponent(<Header />)
 
     // THEN
-    expect(screen.getByText(wording.INTITULÉ_DU_MINISTÈRE_SOCIAL)).toBeInTheDocument()
+    const accueil = screen.getByRole('link', { name: wording.ACCÉDER_À_L_ACCUEIL })
+    expect(accueil).toBeInTheDocument()
+  })
+
+  it('permet de se déconnecter', () => {
+    // WHEN
+    renderFakeComponent(<Header />)
+
+    // THEN
+    const déconnexion = screen.getByRole('link', { name: wording.DÉCONNEXION })
+    expect(déconnexion).toBeInTheDocument()
   })
 })
