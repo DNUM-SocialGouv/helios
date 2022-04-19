@@ -1,4 +1,6 @@
 import Image from 'next/image'
+import '@gouvfr/dsfr/dist/component/header/header.min.css'
+import '@gouvfr/dsfr/dist/component/logo/logo.min.css'
 
 import { useDependencies } from '../contexts/useDependencies'
 
@@ -22,7 +24,7 @@ export const Header = () => {
                 </div>
                 <div className="fr-header__operator">
                   <Image
-                    alt="logo d'Helios"
+                    alt={wording.ALT_LOGO_HELIOS}
                     className="fr-responsive-img"
                     height="30"
                     src="/logo_helios_fond_transparent.png"
