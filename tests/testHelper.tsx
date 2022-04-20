@@ -2,6 +2,7 @@ import { render } from '@testing-library/react'
 import { ReactChild } from 'react'
 
 import { FrontDependenciesContainer } from '../src/frontend/app/dependenciesContainer'
+import { Paths } from '../src/frontend/app/Paths'
 import { WordingFr } from '../src/frontend/ui/commun/wording/WordingFr'
 import { DependenciesProvider } from '../src/frontend/ui/contexts/useDependencies'
 
@@ -15,4 +16,7 @@ export const renderFakeComponent = (component: ReactChild) => {
   )
 }
 
-export const fakeFrontDependenciesContainer: FrontDependenciesContainer = { wording: new WordingFr() }
+export const fakeFrontDependenciesContainer: FrontDependenciesContainer = {
+  paths: new Paths(),
+  wording: new WordingFr(),
+}

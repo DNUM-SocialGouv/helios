@@ -6,11 +6,11 @@ import { useDependencies } from '../contexts/useDependencies'
 
 export const Footer = () => {
 
-  const { wording } = useDependencies()
+  const { paths, wording } = useDependencies()
 
   return (
     <footer
-      className="fr-footer"
+      className="fr-footer pied-de-page"
       id="footer"
       role="contentinfo"
     >
@@ -21,7 +21,7 @@ export const Footer = () => {
               {wording.INTITULÉ_DU_MINISTÈRE_SOCIAL}
             </p>
             <Link
-              href="/"
+              href={paths.ACCUEIL}
               passHref
             >
               <a
@@ -87,44 +87,54 @@ export const Footer = () => {
         <div className="fr-footer__bottom">
           <ul className="fr-footer__bottom-list">
             <li className="fr-footer__bottom-item">
-              <a
-                className="fr-footer__bottom-link"
-                href="#"
+              <Link
+                href={paths.PLAN_DU_SITE}
+                passHref
               >
-                Plan du site
-              </a>
+                <a className="fr-footer__bottom-link">
+                  {wording.PLAN_DU_SITE}
+                </a>
+              </Link>
             </li>
             <li className="fr-footer__bottom-item">
-              <a
-                className="fr-footer__bottom-link"
-                href="#"
+              <Link
+                href={paths.ACCESSIBILITÉ}
+                passHref
               >
-                Accessibilité : non/partiellement/totalement conforme
-              </a>
+                <a className="fr-footer__bottom-link">
+                  {wording.ACCESSIBILITÉ}
+                </a>
+              </Link>
             </li>
             <li className="fr-footer__bottom-item">
-              <a
-                className="fr-footer__bottom-link"
-                href="#"
+              <Link
+                href={paths.MENTIONS_LÉGALES}
+                passHref
               >
-                Mentions légales
-              </a>
+                <a className="fr-footer__bottom-link">
+                  {wording.MENTIONS_LÉGALES}
+                </a>
+              </Link>
             </li>
             <li className="fr-footer__bottom-item">
-              <a
-                className="fr-footer__bottom-link"
-                href="#"
+              <Link
+                href={paths.DONNÉES_PERSONNELLES}
+                passHref
               >
-                Données personnelles
-              </a>
+                <a className="fr-footer__bottom-link">
+                  {wording.DONNÉES_PERSONNELLES}
+                </a>
+              </Link>
             </li>
             <li className="fr-footer__bottom-item">
-              <a
-                className="fr-footer__bottom-link"
-                href="#"
+              <Link
+                href={paths.GESTION_COOKIES}
+                passHref
               >
-                Gestion des cookies
-              </a>
+                <a className="fr-footer__bottom-link">
+                  {wording.GESTION_COOKIES}
+                </a>
+              </Link>
             </li>
           </ul>
           <div className="fr-footer__bottom-copy">
