@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:13.6
+    container_name: db_helios
+    ports:
+      - 5432:5432
+    env_file:
+      - .env.docker
+
+  postgres-test:
+    image: postgres:13.6
+    container_name: db_helios_test
+    env_file:
+      - .env.test
+    ports:
+      - 5433:5432
