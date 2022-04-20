@@ -3,6 +3,7 @@ import '@gouvfr/dsfr/dist/core/core.min.css'
 import Head from 'next/head'
 
 import '../frontend/ui/styles/global.css'
+import { Contenu } from '../frontend/ui/commun/Contenu'
 import { Footer } from '../frontend/ui/commun/Footer'
 import { Header } from '../frontend/ui/commun/Header'
 import { DependenciesProvider } from '../frontend/ui/contexts/useDependencies'
@@ -19,7 +20,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <DependenciesProvider>
         <Header />
-        <Component {...pageProps} />
+        <Contenu>
+          <Component {...pageProps} />
+        </Contenu>
         <Footer />
       </DependenciesProvider>
     </>

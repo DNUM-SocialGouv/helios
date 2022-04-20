@@ -12,12 +12,10 @@ export default function PlanDuSite() {
           {wording.TITRE_PAGE_PLAN_DU_SITE}
         </title>
       </Head>
-      <main className="fr-container fr-mt-9w">
-        <h1>
-          {wording.PLAN_DU_SITE}
-        </h1>
-        <p>En construction</p>
-      </main>
+      <h1>
+        {wording.PLAN_DU_SITE}
+      </h1>
+      <p>En construction</p>
     </>
   )
 }
