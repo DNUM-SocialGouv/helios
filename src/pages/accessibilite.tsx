@@ -1,9 +1,16 @@
 import Head from 'next/head'
 
-import { useDependencies } from '../frontend/ui/contexts/useDependencies'
+import { useDependencies } from '../frontend/ui/commun/contexts/useDependencies'
+import { useFileDArianne } from '../frontend/ui/commun/hooks/useFileDArianne'
 
-export default function PlanDuSite() {
+export default function Accessibilité() {
   const { wording } = useDependencies()
+  useFileDArianne([
+    {
+      chemin: '',
+      label: wording.ACCESSIBILITÉ,
+    },
+  ])
 
   return (
     <>
@@ -15,7 +22,9 @@ export default function PlanDuSite() {
       <h1>
         {wording.ACCESSIBILITÉ}
       </h1>
-      <p>En construction</p>
+      <p>
+        {wording.EN_CONSTRUCTION}
+      </p>
     </>
   )
 }

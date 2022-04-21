@@ -1,22 +1,22 @@
-import { render } from '@testing-library/react'
+import { render, RenderResult } from '@testing-library/react'
 import { ReactChild } from 'react'
 
-import { FrontDependenciesContainer } from '../src/frontend/app/dependenciesContainer'
-import { Paths } from '../src/frontend/app/Paths'
-import { WordingFr } from '../src/frontend/ui/commun/wording/WordingFr'
-import { DependenciesProvider } from '../src/frontend/ui/contexts/useDependencies'
+import { FilDArianneHandler } from '../src/frontend/configuration/FilDArianneHandler'
+import { FrontDependencies } from '../src/frontend/configuration/frontDependencies'
+import { Paths } from '../src/frontend/configuration/Paths'
+import { WordingFr } from '../src/frontend/configuration/wording/WordingFr'
+import { DependenciesProvider } from '../src/frontend/ui/commun/contexts/useDependencies'
 
-export const renderFakeComponent = (component: ReactChild) => {
-  const dependencies: FrontDependenciesContainer = fakeFrontDependenciesContainer
-
+export const renderFakeComponent = (component: ReactChild): RenderResult => {
   return render(
-    <DependenciesProvider dependencies={dependencies}>
+    <DependenciesProvider dependencies={fakeFrontDependencies}>
       {component}
     </DependenciesProvider>
   )
 }
 
-export const fakeFrontDependenciesContainer: FrontDependenciesContainer = {
+export const fakeFrontDependencies: FrontDependencies = {
+  filDArianneHandler: new FilDArianneHandler(),
   paths: new Paths(),
   wording: new WordingFr(),
 }

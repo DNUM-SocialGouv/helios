@@ -60,19 +60,19 @@ const securityHeaders = [
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  ignoreDuringBuilds: true,
-  reactStrictMode: true,
-  poweredByHeader: false,
   async headers() {
     return process.env['NODE_ENV'] !== 'development'
       ? [
         {
-          source: '/:path*',
           headers: securityHeaders,
+          source: '/:path*',
         },
       ]
       : []
   },
+  ignoreDuringBuilds: true,
+  poweredByHeader: false,
+  reactStrictMode: true,
 }
 
 module.exports = nextConfig

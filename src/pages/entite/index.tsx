@@ -6,12 +6,8 @@ import { Entite } from '../../frontend/ui/entite/Entite'
 export default function PageEntite() {
   useFileDArianne([
     {
-      chemin: '/',
-      label: 'Accueil',
-    },
-    {
-      chemin: '/entite',
-      label: 'Entité',
+      chemin: '',
+      label: 'Entité Juridique',
     },
   ])
 
