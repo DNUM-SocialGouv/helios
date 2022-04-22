@@ -2,6 +2,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import '@gouvfr/dsfr/dist/component/header/header.min.css'
 import '@gouvfr/dsfr/dist/component/logo/logo.min.css'
+import '@gouvfr/dsfr/dist/component/link/link.min.css'
+import '@gouvfr/dsfr/dist/component/modal/modal.min.css'
 
 import { useDependencies } from '../contexts/useDependencies'
 import { FilDArianne } from '../FilDArianne/FilDArianne'
@@ -57,7 +59,7 @@ export const Header = () => {
                   <ul className="fr-links-group">
                     <li>
                       <a
-                        className="fr-btn fr-fi-logout-box-r-fill"
+                        className="fr-link fr-fi-logout-box-r-fill"
                         href="#"
                       >
                         {wording.DÉCONNEXION}
@@ -69,8 +71,22 @@ export const Header = () => {
             </div>
           </div>
         </div>
+        <div
+          aria-labelledby="fr-btn-menu-mobile"
+          className="fr-header__menu fr-modal"
+          id="modal-833"
+        >
+          <div className="fr-container">
+            <button
+              aria-controls="modal-833"
+              className="fr-link--close fr-link"
+            >
+              {wording.FERMER}
+            </button>
+            <div className="fr-header__menu-links"></div>
+          </div>
+        </div>
       </header>
-
       <FilDArianne />
     </>
   )

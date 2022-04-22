@@ -4,7 +4,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import path from 'path'
 
 export default function handler(_req: NextApiRequest, res: NextApiResponse) {
-  const filePath = path.join('node_modules/@gouvfr/dsfr/dist/core/core.module.min.js')
+  const filePath = path.join('node_modules/@gouvfr/dsfr/dist/dsfr/dsfr.module.min.js')
   const stat = fs.statSync(filePath)
 
   res.writeHead(200, {

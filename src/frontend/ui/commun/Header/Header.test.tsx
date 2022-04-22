@@ -22,6 +22,8 @@ describe('En-tête de page', () => {
     // THEN
     const menu = screen.getByRole('button', { name: wording.MENU })
     expect(menu).toHaveAttribute('title', wording.MENU)
+    const fermer = screen.getByRole('button', { name: wording.FERMER })
+    expect(fermer).toBeInTheDocument()
   })
 
   it('affiche un lien pour se déconnecter', () => {

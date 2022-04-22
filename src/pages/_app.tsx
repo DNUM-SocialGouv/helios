@@ -25,7 +25,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <Footer />
 
       <Script
-        src="/api/dsfr/core"
+        src="/api/dsfr/dsfr"
         strategy="lazyOnload"
       />
     </DependenciesProvider>
