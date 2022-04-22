@@ -32,6 +32,7 @@ export const Header = () => {
                       data-fr-opened="false"
                       id="fr-btn-menu-mobile"
                       title={wording.MENU}
+                      type="button"
                     >
                       {wording.MENU}
                     </button>
@@ -80,6 +81,7 @@ export const Header = () => {
             <button
               aria-controls="modal-833"
               className="fr-link--close fr-link"
+              type="button"
             >
               {wording.FERMER}
             </button>

@@ -27,6 +27,7 @@ export const FilDArianne = () => {
           aria-controls="breadcrumb-1"
           aria-expanded="false"
           className="fr-breadcrumb__button"
+          type="button"
         >
           {wording.VOIR_LE_FIL_D_ARIANE}
         </button>
