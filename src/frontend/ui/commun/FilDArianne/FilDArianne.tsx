@@ -2,11 +2,11 @@ import Link from 'next/link'
 import '@gouvfr/dsfr/dist/component/breadcrumb/breadcrumb.min.css'
 
 import { useDependencies } from '../contexts/useDependencies'
-import { useFileDArianne } from '../hooks/useFileDArianne'
+import { useFilDArianne } from '../hooks/useFileDArianne'
 
 export const FilDArianne = () => {
   const { wording } = useDependencies()
-  const { filDArianne } = useFileDArianne([])
+  const { filDArianne } = useFilDArianne([])
 
   if (filDArianne.length === 0) return null
 

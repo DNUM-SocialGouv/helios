@@ -1,11 +1,11 @@
 import Head from 'next/head'
 
 import { useDependencies } from '../frontend/ui/commun/contexts/useDependencies'
-import { useFileDArianne } from '../frontend/ui/commun/hooks/useFileDArianne'
+import { useFilDArianne } from '../frontend/ui/commun/hooks/useFileDArianne'
 
 export default function GestionDesCookies() {
   const { wording } = useDependencies()
-  useFileDArianne([
+  useFilDArianne([
     {
       chemin: '',
       label: wording.GESTION_COOKIES,
