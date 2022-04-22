@@ -1,6 +1,6 @@
 name: Build, lint and tests
 
-on: push
+on: pull_request
 
 jobs:
   build:
@@ -38,4 +38,4 @@ jobs:
           path: ./*
           key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
       - name: Run the tests
-        run: yarn test --passWithNoTests
+        run: yarn test

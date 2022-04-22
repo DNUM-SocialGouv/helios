@@ -64,7 +64,9 @@
     "quote-props": ["error", "as-needed"],
     "quotes": ["error", "single", { "avoidEscape": true }],
     "semi": ["error", "never"],
+    "sort-keys": ["error"],
     "yoda": "error",
+    "@typescript-eslint/array-type": ["error", { "ArrayOption": "array" }],
     "@typescript-eslint/naming-convention": [
       "error",
       {
@@ -88,7 +90,7 @@
     "react/jsx-max-props-per-line": [1, { "when": "always" }],
     "react/jsx-one-expression-per-line": ["error", { "allow": "literal" }],
     "react/jsx-sort-props": "error",
-    "react/jsx-space-before-closing": "error",
+    "react/jsx-tag-spacing": ["error", { "beforeSelfClosing": "always" }],
     "import/newline-after-import": "error",
     "import/no-duplicates": "error",
     "import/no-extraneous-dependencies": "error",
@@ -96,7 +98,7 @@
     "import/order": [
       "warn",
       {
-        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "groups": [["builtin", "external"], ["internal", "parent", "sibling", "index", "object", "type"]],
         "newlines-between": "always",
         "alphabetize": { "order": "asc", "caseInsensitive": true }
       }

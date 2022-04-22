@@ -13,7 +13,7 @@ const securityHeaders = [
    **/
   {
     key: 'Content-Security-Policy',
-    value: "default-src https: 'unsafe-inline'; script-src https: 'unsafe-eval'; img-src https: data:;",
+    value: "default-src https: 'unsafe-inline'; script-src https: 'unsafe-eval'; img-src https: data:; font-src 'self' data:;",
   },
   /**
    * Permissions-Policy, see: https://scotthelme.co.uk/goodbye-feature-policy-and-hello-permissions-policy/
@@ -60,19 +60,20 @@ const securityHeaders = [
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  ignoreDuringBuilds: true,
-  reactStrictMode: true,
-  poweredByHeader: false,
   async headers() {
     return process.env['NODE_ENV'] !== 'development'
       ? [
         {
-          source: '/:path*',
           headers: securityHeaders,
+          source: '/:path*',
         },
       ]
       : []
   },
+  ignoreDuringBuilds: true,
+  poweredByHeader: false,
+  reactStrictMode: true,
+  swcMinify: true,
 }
 
 module.exports = nextConfig

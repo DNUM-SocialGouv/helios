@@ -1,38 +1,25 @@
-module.exports = {
-  rootDir: './',
-  resetMocks: true,
+const nextJest = require('next/jest')
+
+const createJestConfig = nextJest({ dir: './' })
+
+const customJestConfig = {
   clearMocks: true,
-  restoreMocks: true,
-  moduleFileExtensions: [
-    'js',
-    'ts',
-    'tsx',
-  ],
-  moduleNameMapper: { '\\.(css)$': '<rootDir>/styleMock.ts' },
-  testMatch: [
-    '<rootDir>/src/**/*(*.)@(test).ts?(x)'
-  ],
-  testEnvironment: 'jest-environment-jsdom',
-  setupFilesAfterEnv: [
-    './jest.setup.js'
-  ],
-  coverageDirectory: '<rootDir>/coverage',
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
     '!**/node_modules/**',
     '!src/pages/**',
   ],
-  transform: {
-    '^.+\\.(t|j)sx?$': [
-      '@swc/jest', {
-        jsc: {
-          transform: {
-            react: {
-              runtime: 'automatic',
-            },
-          },
-        },
-      },
-    ]
-  },
+  coverageDirectory: '<rootDir>/coverage',
+  moduleFileExtensions: [
+    'js',
+    'ts',
+    'tsx',
+  ],
+  resetMocks: true,
+  restoreMocks: true,
+  setupFilesAfterEnv: ['./jest.setup.js'],
+  testEnvironment: 'jest-environment-jsdom',
+  testMatch: ['<rootDir>/src/**/*(*.)@(test).ts?(x)'],
 }
+
+module.exports = createJestConfig(customJestConfig)
