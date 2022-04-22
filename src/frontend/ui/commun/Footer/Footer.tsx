@@ -2,11 +2,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import '@gouvfr/dsfr/dist/component/footer/footer.min.css'
 
+import { Paths } from '../../../configuration/Paths'
 import { useDependencies } from '../contexts/useDependencies'
 import styles from './Footer.module.css'
 
 export const Footer = () => {
-  const { paths, wording } = useDependencies()
+  const { wording } = useDependencies()
 
   return (
     <footer
@@ -20,7 +21,7 @@ export const Footer = () => {
               {wording.INTITULÉ_DU_MINISTÈRE_SOCIAL}
             </p>
             <Link
-              href={paths.ACCUEIL}
+              href={Paths.ACCUEIL}
               passHref
             >
               <a
@@ -89,7 +90,7 @@ export const Footer = () => {
           <ul className="fr-footer__bottom-list">
             <li className="fr-footer__bottom-item">
               <Link
-                href={paths.PLAN_DU_SITE}
+                href={Paths.PLAN_DU_SITE}
                 passHref
               >
                 <a className="fr-footer__bottom-link">
@@ -99,7 +100,7 @@ export const Footer = () => {
             </li>
             <li className="fr-footer__bottom-item">
               <Link
-                href={paths.ACCESSIBILITÉ}
+                href={Paths.ACCESSIBILITÉ}
                 passHref
               >
                 <a className="fr-footer__bottom-link">
@@ -109,7 +110,7 @@ export const Footer = () => {
             </li>
             <li className="fr-footer__bottom-item">
               <Link
-                href={paths.MENTIONS_LÉGALES}
+                href={Paths.MENTIONS_LÉGALES}
                 passHref
               >
                 <a className="fr-footer__bottom-link">
@@ -119,7 +120,7 @@ export const Footer = () => {
             </li>
             <li className="fr-footer__bottom-item">
               <Link
-                href={paths.DONNÉES_PERSONNELLES}
+                href={Paths.DONNÉES_PERSONNELLES}
                 passHref
               >
                 <a className="fr-footer__bottom-link">
@@ -129,7 +130,7 @@ export const Footer = () => {
             </li>
             <li className="fr-footer__bottom-item">
               <Link
-                href={paths.GESTION_COOKIES}
+                href={Paths.GESTION_COOKIES}
                 passHref
               >
                 <a className="fr-footer__bottom-link">
