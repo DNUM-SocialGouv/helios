@@ -1,10 +1,9 @@
 import { screen } from '@testing-library/react'
 
 import { fakeFrontDependencies, renderFakeComponent } from '../../../../../tests/testHelper'
-import { Paths } from '../../../configuration/Paths'
 import { Footer } from './Footer'
 
-const { wording } = fakeFrontDependencies
+const { paths, wording } = fakeFrontDependencies
 
 describe('Le pied de page', () => {
   it('affiche un lien pour accéder à la page d’accueil', () => {
@@ -13,7 +12,7 @@ describe('Le pied de page', () => {
 
     // THEN
     const accueil = screen.getByRole('link', { name: wording.ACCUEIL })
-    expect(accueil).toHaveAttribute('href', Paths.ACCUEIL)
+    expect(accueil).toHaveAttribute('href', paths.ACCUEIL)
   })
 
   it('affiche une présentation de trois lignes', () => {
@@ -57,7 +56,7 @@ describe('Le pied de page', () => {
 
     // THEN
     const planeDuSite = screen.getByRole('link', { name: wording.PLAN_DU_SITE })
-    expect(planeDuSite).toHaveAttribute('href', Paths.PLAN_DU_SITE)
+    expect(planeDuSite).toHaveAttribute('href', paths.PLAN_DU_SITE)
   })
 
   it('affiche un lien pour accéder à la page d’informations sur l’accessibilité', () => {
@@ -66,7 +65,7 @@ describe('Le pied de page', () => {
 
     // THEN
     const accessibilité = screen.getByRole('link', { name: wording.ACCESSIBILITÉ })
-    expect(accessibilité).toHaveAttribute('href', Paths.ACCESSIBILITÉ)
+    expect(accessibilité).toHaveAttribute('href', paths.ACCESSIBILITÉ)
   })
 
   it('affiche un lien pour accéder aux mentions légales', () => {
@@ -75,7 +74,7 @@ describe('Le pied de page', () => {
 
     // THEN
     const mentionsLégales = screen.getByRole('link', { name: wording.MENTIONS_LÉGALES })
-    expect(mentionsLégales).toHaveAttribute('href', Paths.MENTIONS_LÉGALES)
+    expect(mentionsLégales).toHaveAttribute('href', paths.MENTIONS_LÉGALES)
   })
 
   it('affiche un lien pour accéder à la page d’informations relatives aux données personnelles', () => {
@@ -84,7 +83,7 @@ describe('Le pied de page', () => {
 
     // THEN
     const donnéesPersonnelles = screen.getByRole('link', { name: wording.DONNÉES_PERSONNELLES })
-    expect(donnéesPersonnelles).toHaveAttribute('href', Paths.DONNÉES_PERSONNELLES)
+    expect(donnéesPersonnelles).toHaveAttribute('href', paths.DONNÉES_PERSONNELLES)
   })
 
   it('affiche un lien pour accéder à la page d’informations relatives à la gestion des cookies', () => {
@@ -93,6 +92,6 @@ describe('Le pied de page', () => {
 
     // THEN
     const gestionDesCookies = screen.getByRole('link', { name: wording.GESTION_COOKIES })
-    expect(gestionDesCookies).toHaveAttribute('href', Paths.GESTION_COOKIES)
+    expect(gestionDesCookies).toHaveAttribute('href', paths.GESTION_COOKIES)
   })
 })

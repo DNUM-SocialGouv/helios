@@ -1,15 +1,17 @@
 import Link from 'next/link'
 
-import { Paths } from '../../configuration/Paths'
+import { useDependencies } from '../commun/contexts/useDependencies'
 
 export const Accueil = () => {
+  const { paths } = useDependencies()
+
   return (
     <div className="fr-mt-5w">
       <h1>Accueil</h1>
       <p>Ceci est la page d’accueil de l’application Hélios</p>
       <p>
         <Link
-          href={Paths.ENTITE}
+          href={paths.ENTITE}
           passHref
         >
           <a>

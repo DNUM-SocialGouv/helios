@@ -1,10 +1,9 @@
 import { screen } from '@testing-library/react'
 
 import { fakeFrontDependencies, renderFakeComponent } from '../../../../../tests/testHelper'
-import { Paths } from '../../../configuration/Paths'
 import { Header } from './Header'
 
-const { wording } = fakeFrontDependencies
+const { paths, wording } = fakeFrontDependencies
 
 describe('En-tête de page', () => {
   it('affiche un lien pour accéder à la page d’accueil', () => {
@@ -13,7 +12,7 @@ describe('En-tête de page', () => {
 
     // THEN
     const accueil = screen.getByRole('link', { name: wording.ACCUEIL })
-    expect(accueil).toHaveAttribute('href', Paths.ACCUEIL)
+    expect(accueil).toHaveAttribute('href', paths.ACCUEIL)
   })
 
   it('affiche un menu en mobile pour afficher la déconnexion', () => {
