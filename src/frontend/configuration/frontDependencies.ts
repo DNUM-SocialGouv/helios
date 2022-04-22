@@ -9,10 +9,12 @@ export type FrontDependencies = {
   wording: Wording
 }
 
-export function frontDependencies(): FrontDependencies {
+function createFrontDependencies(): FrontDependencies {
   return {
     filDArianneHandler: new FilDArianneHandler(),
     paths: new Paths(),
     wording: new WordingFr(),
   }
 }
+
+export const frontDependencies = createFrontDependencies()

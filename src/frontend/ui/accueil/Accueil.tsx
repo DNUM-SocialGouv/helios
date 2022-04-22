@@ -6,9 +6,9 @@ export const Accueil = () => {
   const { paths } = useDependencies()
 
   return (
-    <>
+    <div className="fr-mt-5w">
       <h1>Accueil</h1>
-      <p>Ceci est la page d’accueil de l’application Helios</p>
+      <p>Ceci est la page d’accueil de l’application Hélios</p>
       <p>
         <Link
           href={paths.ENTITE}
@@ -19,6 +19,6 @@ export const Accueil = () => {
           </a>
         </Link>
       </p>
-    </>
+    </div>
   )
 }

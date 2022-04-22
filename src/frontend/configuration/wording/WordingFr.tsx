@@ -12,6 +12,7 @@ export class WordingFr implements Wording {
     </>
   )
   readonly ACCUEIL: string = 'Accueil'
+  readonly MENU: string = 'Menu'
   readonly DÉCONNEXION: string = 'Déconnexion'
 
   // Titre des pages
@@ -28,6 +29,10 @@ export class WordingFr implements Wording {
 
   // Footer
   readonly PRESENTATION: string = 'Texte sur 3 lignes à demander à Daisy'
+  readonly LEGIFRANCE: string = 'legifrance.gouv.fr'
+  readonly GOUVERNEMENT: string = 'gouvernement.fr'
+  readonly SERVICE_PUBLIC: string = 'service-public.fr'
+  readonly DATA_GOUV: string = 'data.gouv.fr'
   readonly PLAN_DU_SITE: string = 'Plan du site'
   readonly ACCESSIBILITÉ: string = 'Accessibilité : partiellement conforme'
   readonly MENTIONS_LÉGALES: string = 'Mentions légales'

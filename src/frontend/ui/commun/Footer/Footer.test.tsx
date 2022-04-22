@@ -1,7 +1,6 @@
 import { screen } from '@testing-library/react'
 
 import { fakeFrontDependencies, renderFakeComponent } from '../../../../../tests/testHelper'
-
 import { Footer } from './Footer'
 
 const { paths, wording } = fakeFrontDependencies
@@ -30,22 +29,22 @@ describe('Le pied de page', () => {
     renderFakeComponent(<Footer />)
 
     // THEN
-    const legifrance = screen.getByText('legifrance.gouv.fr')
+    const legifrance = screen.getByText(wording.LEGIFRANCE)
     expect(legifrance).toHaveAttribute('href', 'https://legifrance.gouv.fr')
     expect(legifrance).toHaveAttribute('rel', 'external noopener noreferrer')
     expect(legifrance).toHaveAttribute('target', '_blank')
 
-    const gouvernement = screen.getByText('gouvernement.fr')
+    const gouvernement = screen.getByText(wording.GOUVERNEMENT)
     expect(gouvernement).toHaveAttribute('href', 'https://gouvernement.fr')
     expect(gouvernement).toHaveAttribute('rel', 'external noopener noreferrer')
     expect(gouvernement).toHaveAttribute('target', '_blank')
 
-    const servicePublic = screen.getByText('service-public.fr')
+    const servicePublic = screen.getByText(wording.SERVICE_PUBLIC)
     expect(servicePublic).toHaveAttribute('href', 'https://service-public.fr')
     expect(servicePublic).toHaveAttribute('rel', 'external noopener noreferrer')
     expect(servicePublic).toHaveAttribute('target', '_blank')
 
-    const dataGouv = screen.getByText('data.gouv.fr')
+    const dataGouv = screen.getByText(wording.DATA_GOUV)
     expect(dataGouv).toHaveAttribute('href', 'https://data.gouv.fr')
     expect(dataGouv).toHaveAttribute('rel', 'external noopener noreferrer')
     expect(dataGouv).toHaveAttribute('target', '_blank')

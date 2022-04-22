@@ -2,7 +2,7 @@ import { createContext, ReactNode, useContext } from 'react'
 
 import { frontDependencies, FrontDependencies } from '../../../configuration/frontDependencies'
 
-const DependenciesContext = createContext<FrontDependencies>(frontDependencies())
+const DependenciesContext = createContext<FrontDependencies>(frontDependencies)
 
 export function useDependencies() {
   const dependencies = useContext<FrontDependencies>(DependenciesContext)

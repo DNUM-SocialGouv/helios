@@ -1,10 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
-
 import '@gouvfr/dsfr/dist/component/footer/footer.min.css'
 
 import { useDependencies } from '../contexts/useDependencies'
-
 import styles from './Footer.module.css'
 
 export const Footer = () => {
@@ -51,7 +49,7 @@ export const Footer = () => {
                   rel="external noopener noreferrer"
                   target="_blank"
                 >
-                  legifrance.gouv.fr
+                  {wording.LEGIFRANCE}
                 </a>
               </li>
               <li className="fr-footer__content-item">
@@ -61,7 +59,7 @@ export const Footer = () => {
                   rel="external noopener noreferrer"
                   target="_blank"
                 >
-                  gouvernement.fr
+                  {wording.GOUVERNEMENT}
                 </a>
               </li>
               <li className="fr-footer__content-item">
@@ -71,7 +69,7 @@ export const Footer = () => {
                   rel="external noopener noreferrer"
                   target="_blank"
                 >
-                  service-public.fr
+                  {wording.SERVICE_PUBLIC}
                 </a>
               </li>
               <li className="fr-footer__content-item">
@@ -81,7 +79,7 @@ export const Footer = () => {
                   rel="external noopener noreferrer"
                   target="_blank"
                 >
-                  data.gouv.fr
+                  {wording.DATA_GOUV}
                 </a>
               </li>
             </ul>

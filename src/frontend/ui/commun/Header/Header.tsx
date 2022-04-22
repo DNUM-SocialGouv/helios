@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
-
 import '@gouvfr/dsfr/dist/component/header/header.min.css'
 import '@gouvfr/dsfr/dist/component/logo/logo.min.css'
+
 import { useDependencies } from '../contexts/useDependencies'
 import { FilDArianne } from '../FilDArianne/FilDArianne'
 
@@ -11,10 +11,7 @@ export const Header = () => {
 
   return (
     <>
-      <header
-        className="fr-header"
-        role="banner"
-      >
+      <header className="fr-header">
         <div className="fr-header__body">
           <div className="fr-container">
             <div className="fr-header__body-row">
@@ -24,6 +21,18 @@ export const Header = () => {
                     <p className="fr-logo">
                       {wording.INTITULÉ_DU_MINISTÈRE_SOCIAL}
                     </p>
+                  </div>
+                  <div className="fr-header__navbar">
+                    <button
+                      aria-controls="modal-833"
+                      aria-haspopup="menu"
+                      className="fr-btn--menu fr-btn"
+                      data-fr-opened="false"
+                      id="fr-btn-menu-mobile"
+                      title={wording.MENU}
+                    >
+                      {wording.MENU}
+                    </button>
                   </div>
                 </div>
                 <div className="fr-header__service">
@@ -45,7 +54,7 @@ export const Header = () => {
               </div>
               <div className="fr-header__tools">
                 <div className="fr-header__tools-links">
-                  <ul className="fr-btns-group">
+                  <ul className="fr-links-group">
                     <li>
                       <a
                         className="fr-btn fr-fi-logout-box-r-fill"

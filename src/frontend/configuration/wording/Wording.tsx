@@ -3,6 +3,8 @@ import { ReactChild } from 'react'
 export interface Wording {
   // Header
   readonly INTITULÉ_DU_MINISTÈRE_SOCIAL: ReactChild
+  readonly ACCUEIL: string
+  readonly MENU: string
   readonly DÉCONNEXION: string
 
   // Titre des pages
@@ -19,7 +21,10 @@ export interface Wording {
 
   // Footer
   readonly PRESENTATION: string
-  readonly ACCUEIL: string
+  readonly LEGIFRANCE: string
+  readonly GOUVERNEMENT: string
+  readonly SERVICE_PUBLIC: string
+  readonly DATA_GOUV: string
   readonly PLAN_DU_SITE: string
   readonly ACCESSIBILITÉ: string
   readonly MENTIONS_LÉGALES: string

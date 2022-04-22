@@ -1,5 +1,4 @@
 import Link from 'next/link'
-
 import '@gouvfr/dsfr/dist/component/breadcrumb/breadcrumb.min.css'
 
 import { useDependencies } from '../contexts/useDependencies'
