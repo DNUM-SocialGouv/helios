@@ -17,12 +17,12 @@ export class WordingFr implements Wording {
   readonly FERMER: string = 'Fermer'
 
   // Titre des pages
-  readonly TITRE_PAGE_ACCUEIL: string = 'Accueil - Hélios'
-  readonly TITRE_PAGE_PLAN_DU_SITE: string = 'Plan du site - Hélios'
-  readonly TITRE_PAGE_ACCESSIBILITÉ: string = 'Accessibilité - Hélios'
-  readonly TITRE_PAGE_MENTIONS_LÉGALES: string = 'Mentions légales - Hélios'
-  readonly TITRE_PAGE_DONNÉES_PERSONNELLES: string = 'Données personnelles - Hélios'
-  readonly TITRE_PAGE_GESTION_COOKIES: string = 'Gestion des cookies - Hélios'
+  readonly TITRE_PAGE_ACCUEIL: string = 'Accueil - Helios'
+  readonly TITRE_PAGE_PLAN_DU_SITE: string = 'Plan du site - Helios'
+  readonly TITRE_PAGE_ACCESSIBILITÉ: string = 'Accessibilité - Helios'
+  readonly TITRE_PAGE_MENTIONS_LÉGALES: string = 'Mentions légales - Helios'
+  readonly TITRE_PAGE_DONNÉES_PERSONNELLES: string = 'Données personnelles - Helios'
+  readonly TITRE_PAGE_GESTION_COOKIES: string = 'Gestion des cookies - Helios'
 
   // Fil d'ariane
   readonly VOUS_ÊTES_ICI: string = 'Vous êtes ici :'
