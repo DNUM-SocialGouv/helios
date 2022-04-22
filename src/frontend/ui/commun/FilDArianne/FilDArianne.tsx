@@ -36,28 +36,29 @@ export const FilDArianne = () => {
         >
           <ol className="fr-breadcrumb__list">
             {
-              AccueilEtfilDArianne.map((item, index) => {
-                return item.chemin === '' ? (
-                  <li
-                    aria-current="page"
-                    className="fr-breadcrumb__link"
-                    key={index}
-                  >
-                    {item.label}
-                  </li>
-                ) : (
-                  <li key={index}>
-                    <Link
-                      href={item.chemin}
-                      passHref
-                    >
-                      <a className="fr-breadcrumb__link">
+              AccueilEtfilDArianne.map((item, index) => (
+                <li key={index}>
+                  {
+                    item.chemin === '' ? (
+                      <a
+                        aria-current="page"
+                        className="fr-breadcrumb__link"
+                      >
                         {item.label}
                       </a>
-                    </Link>
-                  </li>
-                )
-              })
+                    ) : (
+                      <Link
+                        href={item.chemin}
+                        passHref
+                      >
+                        <a className="fr-breadcrumb__link">
+                          {item.label}
+                        </a>
+                      </Link>
+                    )
+                  }
+                </li>
+              ))
             }
           </ol>
         </div>
