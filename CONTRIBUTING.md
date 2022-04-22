@@ -18,7 +18,7 @@ yarn
 
 ## Tests
 
-Pour lancer les tous tests:
+Pour lancer tous les tests:
 
 ```sh
 npm run test
@@ -35,7 +35,7 @@ yarn test
  ┣ 📂 public                      ->  Assets statiques
  ┣ 📂 src
  ┃  ┣ 📂 frontend
- ┃  ┃  ┣ 📂 app                   ->  Ce qui n'est pas React
+ ┃  ┃  ┣ 📂 configuration         ->  Ce qui n'est pas React
  ┃  ┃  ┗ 📂 ui                    ->  Composants, hooks, context React
  ┃  ┣ 📂 pages                    ->  Routing de Next
  ┃  ┗ 📂 backend
@@ -71,7 +71,7 @@ yarn test
 
 ### Code
 
-- le code est en **français**
+- le code est en **français** - on utilise les accents à l'exception des noms de fichier dans le dossier `src/pages`
 
 - le **camelCase** est utilisé pour les variables et les fonctions
 
