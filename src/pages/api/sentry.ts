@@ -1,6 +1,6 @@
 import { withSentry, captureException } from '@sentry/nextjs'
 import { NextApiRequest, NextApiResponse } from 'next'
-import url from 'url'
+import { URL } from 'url'
 
 const sentryHost = 'sentry.fabrique.social.gouv.fr'
 const knownProjectIds = ['74']
@@ -12,13 +12,13 @@ async function handler(request: NextApiRequest, response: NextApiResponse) {
 
     const header = JSON.parse(pieces[0])
 
-    const { host, path } = url.parse(header.dsn)
-    if (host !== sentryHost) {
-      throw new Error(`invalid host: ${host}`)
+    const targetURL = new URL(header.dsn)
+    if (targetURL.host !== sentryHost) {
+      throw new Error(`invalid host: ${targetURL.host}`)
     }
 
-    const projectId = path?.endsWith('/') ? path.slice(0, -1) : path
-    if (projectId !== null && !knownProjectIds.includes(projectId)) {
+    const projectId = targetURL.pathname.replaceAll('/', '')
+    if (!knownProjectIds.includes(projectId)) {
       throw new Error(`invalid project id: ${projectId}`)
     }
 
