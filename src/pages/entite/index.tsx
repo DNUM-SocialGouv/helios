@@ -11,6 +11,8 @@ export default function PageEntite() {
     },
   ])
 
+  throw new Error('PageEntite')
+
   return (
     <>
       <Head>
