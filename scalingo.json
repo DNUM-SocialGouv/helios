@@ -1,0 +1,7 @@
+{
+  "env": {
+    "SENTRY_ENV": {
+      "value": "review-app"
+    }
+  }
+}
