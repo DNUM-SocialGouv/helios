@@ -18,13 +18,6 @@ export const Accueil = () => {
             Lien vers une entité juridique
           </a>
         </Link>
-        <button
-          onClick={() => {
-            throw new Error()
-          }}
-        >
-          Génère une erreur
-        </button>
       </p>
     </div>
   )
