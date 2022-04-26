@@ -2,34 +2,36 @@ import { withSentry, captureException } from '@sentry/nextjs'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { URL } from 'url'
 
-const sentryHost = 'sentry.fabrique.social.gouv.fr'
-const knownProjectIds = ['74']
+export const config = { api: { externalResolver: true } }
 
 async function handler(request: NextApiRequest, response: NextApiResponse) {
+  const knownSentry = process.env['SENTRY_DSN'] || ''
+  const knownSentryURL = new URL(knownSentry)
+
   try {
-    const envelope = request.body
-    const pieces = envelope.split('\n')
+    const body = request.body
+    const pieces = body.split('\n')
 
     const header = JSON.parse(pieces[0])
 
     const targetURL = new URL(header.dsn)
-    if (targetURL.host !== sentryHost) {
-      throw new Error(`invalid host: ${targetURL.host}`)
+
+    if (targetURL.host !== knownSentryURL.host) {
+      throw new Error(`[Helios] invalid host: ${targetURL.host}`)
     }
 
-    const projectId = targetURL.pathname.replaceAll('/', '')
-    if (!knownProjectIds.includes(projectId)) {
-      throw new Error(`invalid project id: ${projectId}`)
+    if (targetURL.pathname !== knownSentryURL.pathname) {
+      throw new Error(`[Helios] invalid project id: ${targetURL.pathname}`)
     }
 
-    const sentryURL = `https://${sentryHost}/api/${projectId}/envelope/`
+    const sentryURL = `https://${knownSentryURL.host}/api${knownSentryURL.pathname}/envelope/`
     const sentryResponse = await fetch(sentryURL, {
-      body: envelope,
+      body,
       method: 'POST',
     })
     return sentryResponse.json()
-  } catch (e) {
-    captureException(e)
+  } catch (error) {
+    captureException(error)
     return response.status(400).json({ status: 'invalid request' })
   }
 }
