@@ -1,11 +1,18 @@
 import * as Sentry from '@sentry/nextjs'
-import NextErrorComponent from 'next/error'
+import { NextPageContext } from 'next'
+import NextErrorComponent, { ErrorProps } from 'next/error'
 
-// type PageErrorProps = ErrorProps & {
-//   hasGetInitialPropsRun: boolean
-// }
+type PageErrorProps = {
+  err: Error
+  statusCode: number
+  hasGetInitialPropsRun: boolean
+}
 
-const MyError = ({ statusCode, hasGetInitialPropsRun, err }: any) => {
+type PageErrorServerProps = ErrorProps & {
+  hasGetInitialPropsRun: boolean
+}
+
+const MyError = ({ statusCode, hasGetInitialPropsRun, err }: PageErrorProps) => {
   if (!hasGetInitialPropsRun && err) {
     // getInitialProps is not called in case of
     // https://github.com/vercel/next.js/issues/8592. As a workaround, we pass
@@ -17,18 +24,21 @@ const MyError = ({ statusCode, hasGetInitialPropsRun, err }: any) => {
   return <NextErrorComponent statusCode={statusCode} />
 }
 
-MyError.getInitialProps = async (context: any) => {
-  const errorInitialProps = await NextErrorComponent.getInitialProps(context) as any
+MyError.getInitialProps = async (context: NextPageContext): Promise<PageErrorServerProps> => {
+  const errorInitialProps = await NextErrorComponent.getInitialProps(context)
 
   const { res, err, asPath } = context
 
   // Workaround for https://github.com/vercel/next.js/issues/8592, mark when
   // getInitialProps has run
-  errorInitialProps.hasGetInitialPropsRun = true
+  const pageErrorProps: PageErrorServerProps = {
+    ...errorInitialProps,
+    hasGetInitialPropsRun: true,
+  }
 
   // Returning early because we don't want to log 404 errors to Sentry.
   if (res?.statusCode === 404) {
-    return errorInitialProps
+    return pageErrorProps
   }
 
   // Running on the server, the response object (`res`) is available.
@@ -51,7 +61,7 @@ MyError.getInitialProps = async (context: any) => {
     // https://vercel.com/docs/platform/limits#streaming-responses
     await Sentry.flush(2000)
 
-    return errorInitialProps
+    return pageErrorProps
   }
 
   // If this point is reached, getInitialProps was called without any
@@ -62,7 +72,7 @@ MyError.getInitialProps = async (context: any) => {
   )
   await Sentry.flush(2000)
 
-  return errorInitialProps
+  return pageErrorProps
 }
 
 export default MyError
