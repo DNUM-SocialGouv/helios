@@ -15,7 +15,7 @@ const securityHeaders = [
    **/
   {
     key: 'Content-Security-Policy',
-    value: "default-src https: 'unsafe-inline'; script-src https: sentry.fabrique.social.gouv.fr 'unsafe-eval'; img-src https: data:; font-src 'self' data:;",
+    value: "default-src https: 'unsafe-inline'; script-src https: social.gouv.fr 'unsafe-eval'; img-src https: data:; font-src 'self' data:;",
   },
   /**
    * Permissions-Policy, see: https://scotthelme.co.uk/goodbye-feature-policy-and-hello-permissions-policy/
