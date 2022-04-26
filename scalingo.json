@@ -2,6 +2,9 @@
   "env": {
     "SENTRY_ENV": {
       "value": "review-app"
+    },
+    "NEXT_PUBLIC_SENTRY_ENV": {
+      "value": "review-app"
     }
   }
 }

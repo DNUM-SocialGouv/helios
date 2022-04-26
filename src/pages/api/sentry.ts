@@ -4,7 +4,7 @@ import { URL } from 'url'
 
 export const config = { api: { externalResolver: true } }
 
-async function handler(request: NextApiRequest, response: NextApiResponse) {
+async function sentry(request: NextApiRequest, response: NextApiResponse) {
   const knownSentry = process.env['SENTRY_DSN'] || ''
   const knownSentryURL = new URL(knownSentry)
 
@@ -36,4 +36,4 @@ async function handler(request: NextApiRequest, response: NextApiResponse) {
   }
 }
 
-export default withSentry(handler)
+export default withSentry(sentry)

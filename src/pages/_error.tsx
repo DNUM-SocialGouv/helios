@@ -2,15 +2,15 @@ import * as Sentry from '@sentry/nextjs'
 import { NextPageContext } from 'next'
 import NextErrorComponent, { ErrorProps } from 'next/error'
 
-type PageErrorProps = {
+type PageErrorProps = Readonly<{
   error: Error
   statusCode: number
   hasGetInitialPropsRun: boolean
-}
+}>
 
-type PageErrorServerProps = ErrorProps & {
+type PageErrorServerProps = ErrorProps & Readonly<{
   hasGetInitialPropsRun: boolean
-}
+}>
 
 export default function PageError({ statusCode, hasGetInitialPropsRun, error }: PageErrorProps) {
   if (!hasGetInitialPropsRun && error) {
