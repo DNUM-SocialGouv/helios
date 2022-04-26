@@ -1,3 +1,5 @@
+const { withSentryConfig } = require('@sentry/nextjs');
+
 const securityHeaders = [
   /**
    * Strict-Transport-Security, see: https://scotthelme.co.uk/hsts-the-missing-link-in-tls/
@@ -76,4 +78,6 @@ const nextConfig = {
   swcMinify: true,
 }
 
-module.exports = nextConfig
+const sentryWebpackPluginOptions = { silent: true }
+
+module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions)

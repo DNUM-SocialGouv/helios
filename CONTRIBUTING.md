@@ -4,13 +4,14 @@
 
 ### Pré-requis
 
-NodeJS 16 est utilisé dans notre dépôt. Il est recommandé d'utiliser [nvm](https://letscodepare.com/blog/how-to-install-nvm-node-version-manager-on-linux) pour l'installer.
+- NodeJS 16 est utilisé dans notre dépôt. Il est recommandé d'utiliser [nvm](https://letscodepare.com/blog/how-to-install-nvm-node-version-manager-on-linux) pour l'installer
 
 ```sh
 nvm install v16
 ```
 
-Compléter le [cours de NextJs](https://nextjs.org/learn/foundations/about-nextjs) pour comprendre la philosophie du framework.
+- Compléter le [cours de NextJs](https://nextjs.org/learn/foundations/about-nextjs) pour comprendre la philosophie du framework
+- Créer un fichier `.env.local` et demander aux développeurs les variables à y renseigner
 
 ### Installer les *node_modules* localement
 
