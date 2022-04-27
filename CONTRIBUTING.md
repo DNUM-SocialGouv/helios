@@ -51,6 +51,21 @@ yarn tsc
 yarn deadcode
 ```
 
+## Connexion à la base de données locale
+
+```sh
+yarn psql:local
+```
+
+## Connexion à la base de données de production
+
+```sh
+curl -O https://cli-dl.scalingo.io/install && bash install
+yarn psql:production
+```
+
+Il faut faire partie de l'équipe sur Scalingo pour y avoir accès.
+
 ## Arborescence
 
 ```

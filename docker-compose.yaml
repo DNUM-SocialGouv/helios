@@ -1,18 +1,32 @@
-version: '3.7'
+version: '3.9'
 
 services:
   postgres:
     image: postgres:13.6
     container_name: db_helios
     ports:
-      - 5432:5432
+      - target: 5432
+        published: 5432
     env_file:
       - .env.docker
+    volumes:
+      - type: volume
+        source: postgres_data
+        target: /var/lib/postgresql/data
 
   postgres-test:
     image: postgres:13.6
     container_name: db_helios_test
-    env_file:
-      - .env.test
     ports:
-      - 5433:5432
+      - target: 5432
+        published: 5433
+    env_file:
+      - .env.docker
+    volumes:
+      - type: volume
+        source: postgres_data_test
+        target: /var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+  postgres_data_test:
