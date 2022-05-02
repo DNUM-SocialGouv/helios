@@ -2,6 +2,10 @@
 
 COMMIT_MSG_FILE=$1
 
+if [[ -d ".git/rebase-merge" ]]; then
+  exit 0
+fi
+
 if [ -z "$BRANCHES_TO_SKIP" ]; then
   BRANCHES_TO_SKIP=(master develop test)
 fi
