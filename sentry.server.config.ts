@@ -1,6 +1,10 @@
 import * as Sentry from '@sentry/nextjs'
 
+import { dependencies } from './src/backend/configuration/dependencies'
+
+const { environmentVariables } = dependencies
+
 Sentry.init({
-  dsn: process.env['SENTRY_DSN'],
+  dsn: environmentVariables.SENTRY_DSN,
   tracesSampleRate: 1.0,
 })

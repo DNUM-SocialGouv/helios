@@ -2,8 +2,8 @@ version: '3.9'
 
 services:
   postgres:
-    image: postgres:13.6
-    container_name: db_helios
+    image: postgres:13.6-alpine
+    container_name: helios_db
     ports:
       - target: 5432
         published: 5432
@@ -15,8 +15,8 @@ services:
         target: /var/lib/postgresql/data
 
   postgres-test:
-    image: postgres:13.6
-    container_name: db_helios_test
+    image: postgres:13.6-alpine
+    container_name: helios_test_db
     ports:
       - target: 5432
         published: 5433
