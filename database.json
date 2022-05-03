@@ -1,0 +1,11 @@
+{
+  "dev": {
+    "driver": "pg",
+    "user": "helios",
+    "password": "h3li0s",
+    "host": "localhost",
+    "database": "helios",
+    "port": "5432"
+  },
+  "sql-file" : true
+}

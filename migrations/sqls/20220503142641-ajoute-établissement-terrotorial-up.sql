@@ -1,5 +1,3 @@
-SET search_path TO helios;
-
 CREATE TABLE ÉtablissementTerritorial
 (
     catégorieAgrégatÉtablissement VARCHAR(255) NOT NULL,

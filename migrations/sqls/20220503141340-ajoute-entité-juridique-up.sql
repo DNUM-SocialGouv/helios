@@ -1,7 +1,3 @@
-CREATE SCHEMA IF NOT EXISTS helios;
-
-SET search_path TO helios;
-
 CREATE TABLE EntitéJuridique
 (
     catégorieÉtablissement VARCHAR(255) NOT NULL,
