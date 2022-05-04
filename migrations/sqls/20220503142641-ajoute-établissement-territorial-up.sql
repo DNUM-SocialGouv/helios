@@ -16,6 +16,7 @@ CREATE TABLE ÉtablissementTerritorial
     dateCaducité VARCHAR(255) NOT NULL,
     dateFermeture VARCHAR(255) NOT NULL,
     dateMaj VARCHAR(255) NOT NULL,
+    dateMiseAJourSource VARCHAR(255) NOT NULL,
     dateModificationSiret VARCHAR(255) NOT NULL,
     dateOuverture VARCHAR(255) NOT NULL,
     département VARCHAR(255) NOT NULL,

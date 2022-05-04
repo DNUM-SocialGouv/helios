@@ -11,7 +11,6 @@ CREATE TABLE EntitéJuridique
     dateCréation VARCHAR(255) NOT NULL,
     dateFermeture VARCHAR(255) NOT NULL,
     dateMiseAJour VARCHAR(255) NOT NULL,
-    dateMiseAJourSource VARCHAR(255) NOT NULL,
     dateModificationSiren VARCHAR(255) NOT NULL,
     département VARCHAR(255) NOT NULL,
     libelléCatégoriÉtablissement VARCHAR(255) NOT NULL,
