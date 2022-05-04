@@ -16,7 +16,7 @@ export interface Wording {
   readonly TITRE_PAGE_DONNÉES_PERSONNELLES: string
   readonly TITRE_PAGE_GESTION_COOKIES: string
 
-  // Fil d'ariane
+  // Bread Crumb
   readonly VOUS_ÊTES_ICI: string
   readonly VOIR_LE_FIL_D_ARIANE: string
 

@@ -1,12 +1,12 @@
 import Head from 'next/head'
 
-import { Accueil } from '../frontend/ui/accueil/Accueil'
 import { useDependencies } from '../frontend/ui/commun/contexts/useDependencies'
-import { useFilDArianne } from '../frontend/ui/commun/hooks/useFileDArianne'
+import { useBreadcrumb } from '../frontend/ui/commun/hooks/useBreadcrumb'
+import { Home } from '../frontend/ui/home/Home'
 
 export default function PageDAccueil() {
   const { wording } = useDependencies()
-  useFilDArianne([])
+  useBreadcrumb([])
 
   return (
     <>
@@ -15,7 +15,7 @@ export default function PageDAccueil() {
           {wording.TITRE_PAGE_ACCUEIL}
         </title>
       </Head>
-      <Accueil />
+      <Home />
     </>
   )
 }

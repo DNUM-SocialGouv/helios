@@ -1,13 +1,13 @@
 import Head from 'next/head'
 
-import { useFilDArianne } from '../../frontend/ui/commun/hooks/useFileDArianne'
+import { useBreadcrumb } from '../../frontend/ui/commun/hooks/useBreadcrumb'
 import { Entite } from '../../frontend/ui/entite/Entite'
 
 export default function PageEntite() {
-  useFilDArianne([
+  useBreadcrumb([
     {
-      chemin: '',
       label: 'Entité Juridique',
+      path: '',
     },
   ])
 

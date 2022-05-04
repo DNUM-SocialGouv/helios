@@ -10,8 +10,8 @@
 nvm install v16
 ```
 
-- Compléter le [cours de NextJs](https://nextjs.org/learn/foundations/about-nextjs) pour comprendre la philosophie du framework
-- Créer un fichier `.env.local` et demander aux développeurs les variables à y renseigner
+- Compléter le [cours de NextJs](https://nextjs.org/learn/foundations/about-nextjs) pour comprendre la philosophie du framework ;
+- Créer un fichier `.env.local`, copier les variables de `.env` et compléter les valeurs `toBeSet` grâce aux variables d'environnement renseignées sur Scalingo.
 
 ### Installer les *node_modules* localement
 
@@ -62,13 +62,21 @@ yarn psql:local
 ```
 
 ### Connexion à la base de données de production
-
+### Prérequis 
+1. Faire partie de l'équipe Helios sur Scalingo. 
+2. Installer la CLI Scalingo :
 ```sh
 curl -O https://cli-dl.scalingo.io/install && bash install
+```
+3. Si besoin, se connecter à son compte Scalingo via la CLI avec son e-mail et mot de passe
+```sh
+scalingo login
+```
+### Commande 
+```sh
 yarn psql:production
 ```
 
-Il faut faire partie de l'équipe sur Scalingo pour y avoir accès.
 
 ## Migrations
 
@@ -143,7 +151,7 @@ yarn db-migrate up
 
 ### Code
 
-- le code est en **français** - on utilise les accents à l'exception des noms de fichier dans le dossier `src/pages`
+- le code métier est en **français** [plus de détails dans l'ADR 1](./ADR/ADR_1_les_langues_dans_le_code.md)- on utilise les accents à l'exception des noms de fichier dans le dossier `src/pages`
   > le métier et les développeurs sont français
 
 - le **camelCase** est utilisé pour les variables et les fonctions
@@ -200,7 +208,7 @@ interface Repository<T> {
 
 #### Frontend
 
-- pas de texte brute, utiliser l’interface *Wording*
+- pas de texte brut, utiliser l’interface *Wording*
 
 - déporter au maximum l’intelligence des composants graphiques (.tsx) dans des **hooks** pour épurer leur HTML
 
@@ -208,13 +216,13 @@ interface Repository<T> {
 
 - utiliser le DSFR au maximum sinon, écrire le CSS dans un fichier à part (*\<Composant>.module.css*) et l'importer dans le composant
 
-- chaque composant du DSFR doit importé son CSS (minifié) et celui de ses dépendances, le CSS **core** étant déjà importé globalement
+- chaque composant du DSFR doit importer son CSS (minifié) et celui de ses dépendances, le CSS **core** étant déjà importé globalement
   > Réduire au maximum la taille des fichiers téléchargés
 
 - le javascript du DSFR est importé globalement
 
-### Test
+### Tests
 
 - Les fichiers de tests sont placés aux côtés du fichier testé
 
-- Les fichiers de tests portent le nom du fichier testé, et suffixés de `.test.ts(x?)`
+- Les fichiers de tests portent le nom du fichier testé et sont suffixés par `.test.ts(x?)`

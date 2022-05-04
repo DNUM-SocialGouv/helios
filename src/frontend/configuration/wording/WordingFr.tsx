@@ -24,7 +24,7 @@ export class WordingFr implements Wording {
   readonly TITRE_PAGE_DONNÉES_PERSONNELLES: string = 'Données personnelles - Helios'
   readonly TITRE_PAGE_GESTION_COOKIES: string = 'Gestion des cookies - Helios'
 
-  // Fil d'ariane
+  // Breadcrumb
   readonly VOUS_ÊTES_ICI: string = 'Vous êtes ici :'
   readonly VOIR_LE_FIL_D_ARIANE: string = 'Voir le fil d’Ariane'
 

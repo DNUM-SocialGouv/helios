@@ -2,20 +2,20 @@ import Link from 'next/link'
 import '@gouvfr/dsfr/dist/component/breadcrumb/breadcrumb.min.css'
 
 import { useDependencies } from '../contexts/useDependencies'
-import { useFilDArianne } from '../hooks/useFileDArianne'
+import { useBreadcrumb } from '../hooks/useBreadcrumb'
 
-export const FilDArianne = () => {
+export const Breadcrumb = () => {
   const { wording } = useDependencies()
-  const { filDArianne } = useFilDArianne([])
+  const { breadcrumb } = useBreadcrumb([])
 
-  if (filDArianne.length === 0) return null
+  if (breadcrumb.length === 0) return null
 
-  const AccueilEtfilDArianne = [
+  const HomeAndBreadcrumb = [
     {
-      chemin: '/',
       label: wording.ACCUEIL,
+      path: '/',
     },
-  ].concat(filDArianne)
+  ].concat(breadcrumb)
 
   return (
     <section className="fr-container">
@@ -37,10 +37,10 @@ export const FilDArianne = () => {
         >
           <ol className="fr-breadcrumb__list">
             {
-              AccueilEtfilDArianne.map((item, index) => (
+              HomeAndBreadcrumb.map((item, index) => (
                 <li key={index}>
                   {
-                    item.chemin === '' ? (
+                    item.path === '' ? (
                       <a
                         aria-current="page"
                         className="fr-breadcrumb__link"
@@ -49,7 +49,7 @@ export const FilDArianne = () => {
                       </a>
                     ) : (
                       <Link
-                        href={item.chemin}
+                        href={item.path}
                         passHref
                       >
                         <a className="fr-breadcrumb__link">

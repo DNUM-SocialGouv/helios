@@ -1,17 +1,17 @@
-import { FilDArianneHandler } from './FilDArianneHandler'
+import { BreadcrumbHandler } from './BreadcrumbHandler'
 import { Paths } from './Paths'
 import { Wording } from './wording/Wording'
 import { WordingFr } from './wording/WordingFr'
 
 export type FrontDependencies = {
-  filDArianneHandler: FilDArianneHandler
+  breadcrumbHandler: BreadcrumbHandler
   paths: Paths
   wording: Wording
 }
 
 function createFrontDependencies(): FrontDependencies {
   return {
-    filDArianneHandler: new FilDArianneHandler(),
+    breadcrumbHandler: new BreadcrumbHandler(),
     paths: new Paths(),
     wording: new WordingFr(),
   }

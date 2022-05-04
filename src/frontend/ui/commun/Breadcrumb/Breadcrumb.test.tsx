@@ -8,14 +8,14 @@ import PageEntite from '../../../../pages/entite'
 import GestionDesCookies from '../../../../pages/gestion-des-cookies'
 import MentionsLégales from '../../../../pages/mentions-legales'
 import PlanDuSite from '../../../../pages/plan-du-site'
-import { FilDArianne } from './FilDArianne'
+import { Breadcrumb } from './Breadcrumb'
 
-describe('Le fil d’Arianne', () => {
+describe('Le fil d’Ariane (breadcrumb)', () => {
   it('n’est pas affiché sur la page d’accueil', () => {
     // WHEN
     renderFakeComponent(
       <>
-        <FilDArianne />
+        <Breadcrumb />
         <PageDAccueil />
       </>
     )
@@ -37,16 +37,16 @@ describe('Le fil d’Arianne', () => {
     // WHEN
     renderFakeComponent(
       <>
-        <FilDArianne />
+        <Breadcrumb />
         <Page />
       </>
     )
 
     // THEN
-    const filDArianne = screen.getByRole('navigation')
-    const niveaux = within(filDArianne).getAllByRole('listitem')
-    expect(niveaux).toHaveLength(2)
-    expect(within(niveaux[0]).getByRole('link')).toBeInTheDocument()
-    expect(within(niveaux[1]).queryByRole('link')).not.toBeInTheDocument()
+    const breadcrumb = screen.getByRole('navigation')
+    const levels = within(breadcrumb).getAllByRole('listitem')
+    expect(levels).toHaveLength(2)
+    expect(within(levels[0]).getByRole('link')).toBeInTheDocument()
+    expect(within(levels[1]).queryByRole('link')).not.toBeInTheDocument()
   })
 })

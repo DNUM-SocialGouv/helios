@@ -5,8 +5,8 @@ import '@gouvfr/dsfr/dist/component/logo/logo.min.css'
 import '@gouvfr/dsfr/dist/component/link/link.min.css'
 import '@gouvfr/dsfr/dist/component/modal/modal.min.css'
 
+import { Breadcrumb } from '../Breadcrumb/Breadcrumb'
 import { useDependencies } from '../contexts/useDependencies'
-import { FilDArianne } from '../FilDArianne/FilDArianne'
 
 export const Header = () => {
   const { wording } = useDependencies()
@@ -89,7 +89,7 @@ export const Header = () => {
           </div>
         </div>
       </header>
-      <FilDArianne />
+      <Breadcrumb />
     </>
   )
 }
