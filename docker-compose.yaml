@@ -8,7 +8,7 @@ services:
       - target: 5432
         published: 5432
     env_file:
-      - .env.docker
+      - .env
     volumes:
       - type: volume
         source: postgres_data
@@ -21,7 +21,7 @@ services:
       - target: 5432
         published: 5433
     env_file:
-      - .env.docker
+      - .env
     volumes:
       - type: volume
         source: postgres_data_test

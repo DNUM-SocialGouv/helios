@@ -1,10 +1,10 @@
 {
   "dev": {
     "driver": "pg",
-    "user": "helios",
-    "password": "h3li0s",
+    "user": {"ENV": "POSTGRES_USER"},
+    "password": {"ENV": "POSTGRES_PASSWORD"},
     "host": "localhost",
-    "database": "helios",
+    "database": {"ENV": "POSTGRES_DB"},
     "port": "5432"
   },
   "prod": {
