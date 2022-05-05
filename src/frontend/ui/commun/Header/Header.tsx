@@ -21,7 +21,7 @@ export const Header = () => {
                 <div className="fr-header__brand-top">
                   <div className="fr-header__logo">
                     <p className="fr-logo">
-                      {wording.INTITULÉ_DU_MINISTÈRE_SOCIAL}
+                      {wording.INTITULÉ_RÉPUBLIQUE_FRANÇAISE}
                     </p>
                   </div>
                   <div className="fr-header__navbar">
@@ -47,9 +47,9 @@ export const Header = () => {
                       <Image
                         alt=""
                         className="fr-responsive-img"
-                        height="30"
-                        src="/logo.png"
-                        width="100"
+                        height="80"
+                        src="/logo.svg"
+                        width="80"
                       />
                     </a>
                   </Link>
