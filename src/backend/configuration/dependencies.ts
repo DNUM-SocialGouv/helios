@@ -1,11 +1,13 @@
 import { EnvironmentVariables } from '../shared/entities/EnvironmentVariables'
-import { NodeEnvironmentVariables } from '../shared/gateways/NodeEnvironmentVariables'
+import { dotEnvConfig } from '../shared/gateways/dot-env/dotEnvConfig'
+import { NodeEnvironmentVariables } from '../shared/gateways/node-environnement-variables/NodeEnvironmentVariables'
 
 type Dependencies = Readonly<{
   environmentVariables: EnvironmentVariables
 }>
 
-const instantiateDependencies = (): Dependencies => {
+const _instantiateDependencies = (): Dependencies => {
+  dotEnvConfig()
   const environmentVariables = new NodeEnvironmentVariables()
 
   return { environmentVariables }
@@ -16,7 +18,7 @@ class DependenciesSingleton {
 
   static getInstance(): Dependencies {
     if (!DependenciesSingleton.instance) {
-      DependenciesSingleton.instance = instantiateDependencies()
+      DependenciesSingleton.instance = _instantiateDependencies()
     }
 
     return DependenciesSingleton.instance
