@@ -72,6 +72,11 @@ Il faut faire partie de l'équipe sur Scalingo pour y avoir accès.
 
 ## Migrations
 
+Les migrations centralisent les modifications faites aux bases de données pour pouvoir les (re)jouer sur tous les environnements.
+
+Elles sont utiles dès lors que l'on veut:
+- créer ou supprimer des tables, des colonnes, des index ou des contraintes
+
 ### Créer une migration pour les bases de données
 
 ```sh
@@ -89,6 +94,8 @@ yarn db-migrate up
 ```
 
 > Plus d’infos sur [db-migrate](https://db-migrate.readthedocs.io/en/latest/Getting%20Started/usage/)
+
+> Les migrations sont jouées automatiquement lors de chaque déploiement sur Scalingo grâce à la commande du `Procfile`
 
 ## Arborescence
 
