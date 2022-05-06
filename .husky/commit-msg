@@ -6,25 +6,10 @@ if [[ -d ".git/rebase-merge" ]]; then
   exit 0
 fi
 
-if [ -z "$BRANCHES_TO_SKIP" ]; then
-  BRANCHES_TO_SKIP=(master develop test)
-fi
-
 BRANCH_NAME=$(git symbolic-ref --short HEAD)
 
-if grep --quiet --regexp "^hel-[0-9]*/.*" <<< $BRANCH_NAME; then
+if [ -n "$BRANCH_NAME" ] && grep --quiet --regexp "^hel-[0-9]*/.*" <<< $BRANCH_NAME; then
   TICKET="${BRANCH_NAME%/*}"
 
-  BRANCH_EXCLUDED=$(printf "%s\n" "${BRANCHES_TO_SKIP[@]}" | grep -c "^$BRANCH_NAME$")
-
-  if [ -n "$BRANCH_NAME" ] && ! [[ $BRANCH_EXCLUDED -eq 1 ]]; then
-    sed -i.bak -e "1s/^/($TICKET) /" $COMMIT_MSG_FILE
-  fi
-else
-  echo 'Le nom de branche doit correspondre à : hel-<#ticket>/<description-de-la-branche>'
-  echo '(ex: hel-123/refacto-use-cases)'
-  echo
-  echo 'Pour bypasser ce hook utiliser la commande:'
-  echo "  git commit -n -m \"$(cat $COMMIT_MSG_FILE)\""
-  exit 1
+  sed -i.bak -e "1s/^/($TICKET) /" $COMMIT_MSG_FILE
 fi

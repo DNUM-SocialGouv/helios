@@ -17,7 +17,7 @@ export const Footer = () => {
         <div className="fr-footer__body">
           <div className="fr-footer__brand fr-enlarge-link">
             <p className="fr-logo">
-              {wording.INTITULÉ_DU_MINISTÈRE_SOCIAL}
+              {wording.INTITULÉ_RÉPUBLIQUE_FRANÇAISE}
             </p>
             <Link
               href={paths.ACCUEIL}
@@ -30,8 +30,8 @@ export const Footer = () => {
                 <Image
                   alt=""
                   className="fr-responsive-img"
-                  height="30"
-                  src="/logo.png"
+                  height="100"
+                  src="/logo.svg"
                   width="100"
                 />
               </a>

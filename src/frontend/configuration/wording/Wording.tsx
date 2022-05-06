@@ -2,7 +2,7 @@ import { ReactChild } from 'react'
 
 export interface Wording {
   // Header
-  readonly INTITULÉ_DU_MINISTÈRE_SOCIAL: ReactChild
+  readonly INTITULÉ_RÉPUBLIQUE_FRANÇAISE: ReactChild
   readonly ACCUEIL: string
   readonly MENU: string
   readonly DÉCONNEXION: string

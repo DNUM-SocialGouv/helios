@@ -4,11 +4,11 @@ import { Wording } from './Wording'
 
 export class WordingFr implements Wording {
   // Header
-  readonly INTITULÉ_DU_MINISTÈRE_SOCIAL: ReactChild = (
+  readonly INTITULÉ_RÉPUBLIQUE_FRANÇAISE: ReactChild = (
     <>
-      Ministères
+      République
       <br />
-      sociaux
+      Française
     </>
   )
   readonly ACCUEIL: string = 'Accueil'
