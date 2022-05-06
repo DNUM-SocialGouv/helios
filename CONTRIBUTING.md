@@ -72,7 +72,7 @@ Il faut faire partie de l'équipe sur Scalingo pour y avoir accès.
 
 ## Migrations
 
-### Créer une migration pour les base de données
+### Créer une migration pour les bases de données
 
 ```sh
 yarn db-migrate create <nom_de_la_migration>
@@ -82,7 +82,7 @@ Un fichier *.js* est auto-généré sous `./migrations`. Il faut ensuite remplir
 
 ### Appliquer les migrations
 
-Les migrations sont appliquées automatiquement avec la commande `yarn dev`. Voici tout de même comment les appliquer manuellement, une fois la base de données démarrée:
+Les migrations sont appliquées automatiquement avec la commande `yarn dev`. Voici tout de même comment les appliquer manuellement, une fois la base de données démarrée :
 
 ```sh
 yarn db-migrate up

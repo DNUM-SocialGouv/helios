@@ -17,6 +17,6 @@ CREATE TABLE ÉtablissementTerritorial
 
     CONSTRAINT établissement_territorial_entité_juridique_finess_fk
         FOREIGN KEY (numéroFinessEntitéJuridique)
-        REFERENCES EntitéJuridique (numéroFiness)
+        REFERENCES EntitéJuridique (numéroFinessEntitéJuridique)
         ON DELETE CASCADE
 );
