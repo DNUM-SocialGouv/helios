@@ -104,26 +104,26 @@ describe('Récupération des entités juridiques de la source de données FINESS
     expect(entitésJuridiques).toStrictEqual<EntitéJuridique[]>(
       [
         {
+          adresseAcheminement: '01117 OYONNAX CEDEX',
+          adresseNuméroVoie: '1',
+          adresseTypeVoie: 'RTE',
+          adresseVoie: 'DE VEYZIAT',
           dateMiseAJourSource: '20211214',
-          ligneAcheminement: '01117 OYONNAX CEDEX',
           numéroFiness: '010008407',
-          numéroVoie: '1',
           raisonSociale: 'CH DU HAUT BUGEY',
           statutJuridique: '14',
-          typeVoie: 'RTE',
           téléphone: '0474731001',
-          voie: 'DE VEYZIAT',
         },
         {
+          adresseAcheminement: '59650 VILLENEUVE D ASCQ',
+          adresseNuméroVoie: '20',
+          adresseTypeVoie: 'AV',
+          adresseVoie: 'DE LA RECONNAISSANCE',
           dateMiseAJourSource: '20211214',
-          ligneAcheminement: '59650 VILLENEUVE D ASCQ',
           numéroFiness: '590000741',
-          numéroVoie: '20',
           raisonSociale: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
           statutJuridique: '73',
-          typeVoie: 'AV',
           téléphone: '0826666900',
-          voie: 'DE LA RECONNAISSANCE',
         },
       ]
     )

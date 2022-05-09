@@ -198,18 +198,18 @@ export class ÉtablissementTerritorialFinessLoader implements ÉtablissementTerr
     const valueOrEmpty = (value?: string): string => value || ''
 
     return {
+      adresseAcheminement: valueOrEmpty(établissementTerritorialIdentitéFiness.ligneacheminement._text),
+      adresseNuméroVoie: valueOrEmpty(établissementTerritorialIdentitéFiness.numvoie._text),
+      adresseTypeVoie: valueOrEmpty(établissementTerritorialIdentitéFiness.typvoie._text),
+      adresseVoie: valueOrEmpty(établissementTerritorialIdentitéFiness.voie._text),
       catégorieÉtablissement: valueOrEmpty(établissementTerritorialIdentitéFiness.categetab._text),
       courriel: valueOrEmpty(établissementTerritorialIdentitéFiness.courriel._text),
       dateMiseAJourSource,
-      ligneAcheminement: valueOrEmpty(établissementTerritorialIdentitéFiness.ligneacheminement._text),
       numéroFinessEntitéJuridique: valueOrEmpty(établissementTerritorialIdentitéFiness.nofinessej._text),
       numéroFinessÉtablissementTerritorial: valueOrEmpty(établissementTerritorialIdentitéFiness.nofinesset._text),
-      numéroVoie: valueOrEmpty(établissementTerritorialIdentitéFiness.numvoie._text),
       raisonSociale: valueOrEmpty(établissementTerritorialIdentitéFiness.rs._text),
-      typeVoie: valueOrEmpty(établissementTerritorialIdentitéFiness.typvoie._text),
       typeÉtablissement: valueOrEmpty(établissementTerritorialIdentitéFiness.typeet._text),
       téléphone: valueOrEmpty(établissementTerritorialIdentitéFiness.telephone._text),
-      voie: valueOrEmpty(établissementTerritorialIdentitéFiness.voie._text),
     }
   }
 }

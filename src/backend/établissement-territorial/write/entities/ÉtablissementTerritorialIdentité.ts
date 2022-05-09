@@ -1,14 +1,14 @@
 export type ÉtablissementTerritorialIdentité = Readonly<{
+  adresseAcheminement: string
+  adresseNuméroVoie: string
+  adresseTypeVoie: string
+  adresseVoie: string
   catégorieÉtablissement: string
   courriel: string
   dateMiseAJourSource: string
-  ligneAcheminement: string
   numéroFinessEntitéJuridique: string
   numéroFinessÉtablissementTerritorial: string
-  numéroVoie: string
   raisonSociale: string
   téléphone: string
   typeÉtablissement: string
-  typeVoie: string
-  voie: string
 }>

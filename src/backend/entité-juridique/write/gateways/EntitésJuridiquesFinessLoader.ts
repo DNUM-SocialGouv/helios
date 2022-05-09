@@ -149,15 +149,15 @@ export class EntitésJuridiquesFinessLoader implements EntitésJuridiquesLoader 
     const valueOrEmpty = (value?: string): string => value || ''
 
     return {
+      adresseAcheminement: valueOrEmpty(entitésJuridiquesFiness.ligneacheminement._text),
+      adresseNuméroVoie: valueOrEmpty(entitésJuridiquesFiness.numvoie._text),
+      adresseTypeVoie: valueOrEmpty(entitésJuridiquesFiness.typvoie._text),
+      adresseVoie: valueOrEmpty(entitésJuridiquesFiness.voie._text),
       dateMiseAJourSource,
-      ligneAcheminement: valueOrEmpty(entitésJuridiquesFiness.ligneacheminement._text),
       numéroFiness: valueOrEmpty(entitésJuridiquesFiness.nofiness._text),
-      numéroVoie: valueOrEmpty(entitésJuridiquesFiness.numvoie._text),
       raisonSociale: valueOrEmpty(entitésJuridiquesFiness.rs._text),
       statutJuridique: valueOrEmpty(entitésJuridiquesFiness.statutjuridique._text),
-      typeVoie: valueOrEmpty(entitésJuridiquesFiness.typvoie._text),
       téléphone: valueOrEmpty(entitésJuridiquesFiness.telephone._text),
-      voie: valueOrEmpty(entitésJuridiquesFiness.voie._text),
     }
   }
 }
