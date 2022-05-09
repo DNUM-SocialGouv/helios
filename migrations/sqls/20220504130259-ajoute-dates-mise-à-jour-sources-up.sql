@@ -2,9 +2,9 @@ CREATE TYPE sourceDeDonnées AS ENUM ('FINESS');
 
 CREATE TABLE DateMiseÀJourSource
 (
-    source sourceDeDonnées,
     dernièreMiseÀJour DATE NOT NULL,
+    source sourceDeDonnées,
 
-    CONSTRAINT source_pk
+    CONSTRAINT source_primary_key
         PRIMARY KEY (source)
 );

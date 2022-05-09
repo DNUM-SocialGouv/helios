@@ -72,10 +72,9 @@ Il faut faire partie de l'équipe sur Scalingo pour y avoir accès.
 
 ## Migrations
 
-Les migrations centralisent les modifications faites aux bases de données pour pouvoir les (re)jouer sur tous les environnements.
+Les migrations centralisent les modifications faites aux bases de données pour pouvoir les (re)jouer sur tous les environnements. A chaque modification est attribuée une version de la base ce qui permet d'arriver à l'état finale quelque soit l'état initial.
 
-Elles sont utiles dès lors que l'on veut:
-- créer ou supprimer des tables, des colonnes, des index ou des contraintes
+Elles sont nécessaires dès lors que l'on veut créer ou supprimer des tables, des colonnes, des index ou des contraintes.
 
 ### Créer une migration pour les bases de données
 
@@ -87,7 +86,7 @@ Un fichier *.js* est auto-généré sous `./migrations`. Il faut ensuite remplir
 
 ### Appliquer les migrations
 
-Les migrations sont appliquées automatiquement avec la commande `yarn dev`. Voici tout de même comment les appliquer manuellement, une fois la base de données démarrée :
+Avec la commande `yarn dev`, les migrations sont appliquées en même temps que le lancement de la base de développement. Voici tout de même comment les appliquer indépendamment, une fois la base de données démarrée :
 
 ```sh
 yarn db-migrate up
