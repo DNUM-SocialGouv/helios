@@ -7,8 +7,9 @@ if [[ -d ".git/rebase-merge" ]]; then
 fi
 
 BRANCH_NAME=$(git symbolic-ref --short HEAD)
+COMMIT_MSG="$(cat $COMMIT_MSG_FILE)"
 
-if [ -n "$BRANCH_NAME" ] && grep --quiet --regexp "^hel-[0-9]*/.*" <<< $BRANCH_NAME; then
+if [ -n "$BRANCH_NAME" ] && grep --quiet --regexp "^hel-[0-9]*/.*" <<< $BRANCH_NAME && ! grep --quiet --regexp "^(hel-[0-9]*).*" <<< $COMMIT_MSG; then
   TICKET="${BRANCH_NAME%/*}"
 
   sed -i.bak -e "1s/^/($TICKET) /" $COMMIT_MSG_FILE

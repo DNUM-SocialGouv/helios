@@ -19,7 +19,9 @@ nvm install v16
 yarn
 ```
 
-## Lancer l'application en mode développement (avec hot-reload)
+## Développement
+
+### Lancer l'application en mode développement (avec hot-reload)
 
 ```sh
 yarn dev
@@ -27,37 +29,39 @@ yarn dev
 
 > Visiter: http://localhost:3000
 
-## Lancer tous les tests
+> Cette commande lance aussi la base de donnée locale et les migrations associées
+
+### Lancer tous les tests
 
 ```sh
 yarn test
 ```
 
-## Lancer le linter *eslint*
+### Lancer le linter *eslint*
 
 ```sh
 yarn lint
 ```
 
-## Lancer la vérification des types (TypeScript)
+### Lancer la vérification des types (TypeScript)
 
 ```sh
 yarn tsc
 ```
 
-## Vérifier qu’il n’y a pas de code mort
+### Vérifier qu’il n’y a pas de code mort
 
 ```sh
 yarn deadcode
 ```
 
-## Connexion à la base de données locale
+### Connexion à la base de données locale
 
 ```sh
 yarn psql:local
 ```
 
-## Connexion à la base de données de production
+### Connexion à la base de données de production
 
 ```sh
 curl -O https://cli-dl.scalingo.io/install && bash install
@@ -65,6 +69,32 @@ yarn psql:production
 ```
 
 Il faut faire partie de l'équipe sur Scalingo pour y avoir accès.
+
+## Migrations
+
+Les migrations centralisent les modifications faites aux bases de données pour pouvoir les (re)jouer sur tous les environnements. A chaque modification est attribuée une version de la base ce qui permet d'arriver à l'état finale quelque soit l'état initial.
+
+Elles sont nécessaires dès lors que l'on veut créer ou supprimer des tables, des colonnes, des index ou des contraintes.
+
+### Créer une migration pour les bases de données
+
+```sh
+yarn db-migrate create <nom_de_la_migration>
+```
+
+Un fichier *.js* est auto-généré sous `./migrations`. Il faut ensuite remplir les deux fichiers *SQL* (*up* & *down*) situés sous `./migrations/sqls`.
+
+### Appliquer les migrations
+
+Avec la commande `yarn dev`, les migrations sont appliquées en même temps que le lancement de la base de développement. Voici tout de même comment les appliquer indépendamment, une fois la base de données démarrée :
+
+```sh
+yarn db-migrate up
+```
+
+> Plus d’infos sur [db-migrate](https://db-migrate.readthedocs.io/en/latest/Getting%20Started/usage/)
+
+> Les migrations sont jouées automatiquement lors de chaque déploiement sur Scalingo grâce à la commande du `Procfile`
 
 ## Arborescence
 
