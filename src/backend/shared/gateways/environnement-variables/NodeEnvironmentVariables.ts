@@ -1,6 +1,9 @@
 import { EnvironmentVariables } from '../../entities/EnvironmentVariables'
+import { Logger } from '../../entities/Logger'
 
 export class NodeEnvironmentVariables implements EnvironmentVariables {
+  constructor(readonly logger: Logger) {}
+
   readonly SENTRY_AUTH_TOKEN: string = this.getOrElse('SENTRY_AUTH_TOKEN')
   readonly SENTRY_DSN: string = this.getOrElse('SENTRY_DSN')
 
@@ -14,7 +17,7 @@ export class NodeEnvironmentVariables implements EnvironmentVariables {
 
   private getOrElse(key: string): string {
     if (process.env[key] === 'toBeSet') {
-      console.error(`----- WARNING ----- La variable d’environnement "${key}" est manquante.`)
+      this.logger.error(`----- WARNING ----- La variable d’environnement "${key}" est manquante.`)
 
       return ''
     }

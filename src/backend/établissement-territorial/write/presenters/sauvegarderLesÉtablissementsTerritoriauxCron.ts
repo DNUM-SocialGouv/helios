@@ -1,18 +1,10 @@
-import { dependencies } from '../../../configuration/dependencies'
-import { convertXmlToJs } from '../../../shared/gateways/xml-to-js/convertXmlToJs'
-import { récupérerLesÉtablissementsTerritoriauxLoader } from '../gateways/établissementTerritorialFinessLoader'
-import { sauvegarderLesÉtablissementsTerritoriaux } from '../use_cases/sauvegarderLesÉtablissementsTerritoriaux'
+import { Dependencies, dependencies } from '../../../configuration/dependencies'
+import { SauvegarderLesÉtablissementsTerritoriaux } from '../use-cases/SauvegarderLesÉtablissementsTerritoriaux'
 
-async function sauvegarderLesÉtablissementsTerritoriauxCron() {
-  const { environmentVariables } = dependencies
+async function sauvegarderLesÉtablissementsTerritoriauxCron(dependencies: Dependencies) {
+  const sauvegarderLesÉtablissementsTerritoriaux = new SauvegarderLesÉtablissementsTerritoriaux(dependencies.établissementTerritorialFinessLoader)
 
-  const result = sauvegarderLesÉtablissementsTerritoriaux(
-    récupérerLesÉtablissementsTerritoriauxLoader,
-    convertXmlToJs,
-    environmentVariables.SFTP_LOCAL_PATH
-  )
-
-  console.info(result)
+  console.info(sauvegarderLesÉtablissementsTerritoriaux.handle())
 }
 
-sauvegarderLesÉtablissementsTerritoriauxCron()
+sauvegarderLesÉtablissementsTerritoriauxCron(dependencies)

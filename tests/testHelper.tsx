@@ -1,7 +1,8 @@
 import { render, RenderResult } from '@testing-library/react'
 import { ReactChild } from 'react'
 
-import { EnvironmentVariables } from '../src/backend/shared/entities/EnvironmentVariables'
+import { Dependencies } from '../src/backend/configuration/dependencies'
+import { Logger } from '../src/backend/shared/entities/Logger'
 import { BreadcrumbHandler } from '../src/frontend/configuration/BreadcrumbHandler'
 import { FrontDependencies } from '../src/frontend/configuration/frontDependencies'
 import { Paths } from '../src/frontend/configuration/Paths'
@@ -22,14 +23,27 @@ export const fakeFrontDependencies: FrontDependencies = {
   wording: new WordingFr(),
 }
 
-export const environmentVariables: EnvironmentVariables = {
-  SENTRY_AUTH_TOKEN: '1234567890',
-  SENTRY_DSN: 'https://fake-sentry.io/11',
-  SFTP_HOST: 'localhost',
-  SFTP_IS_DEBUG: 'false',
-  SFTP_LOCAL_PATH: 'data_test/fake_finess_local_path',
-  SFTP_PASSWORD: 'fake_passw0rd',
-  SFTP_PORT: '22',
-  SFTP_PRIVATE_KEY: 'privateKey',
-  SFTP_USERNAME: 'usr_finess_ls',
+export const fakeDependencies: Dependencies = {
+  downloadDataSource: { handle: jest.fn() },
+  entitésJuridiquesFinessLoader: { récupérerLesEntitésJuridiques: jest.fn() },
+  environmentVariables: {
+    SENTRY_AUTH_TOKEN: '1234567890',
+    SENTRY_DSN: 'https://fake-sentry.io/11',
+    SFTP_HOST: 'localhost',
+    SFTP_IS_DEBUG: 'false',
+    SFTP_LOCAL_PATH: 'data_test',
+    SFTP_PASSWORD: 'fake_passw0rd',
+    SFTP_PORT: '22',
+    SFTP_PRIVATE_KEY: 'privateKey',
+    SFTP_USERNAME: 'usr_finess_ls',
+  }
+  ,
+  unzipDataSource: { handle: jest.fn() },
+  établissementTerritorialFinessLoader: { récupérerLesÉtablissementsTerritoriaux: jest.fn() },
+}
+
+export const fakeLogger: Logger = {
+  debug: jest.fn(),
+  error: jest.fn(),
+  info: jest.fn(),
 }

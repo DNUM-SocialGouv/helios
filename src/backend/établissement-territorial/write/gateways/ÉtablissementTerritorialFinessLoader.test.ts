@@ -1,15 +1,16 @@
 import { mkdirSync, rmSync, writeFileSync } from 'fs'
 
-import { environmentVariables } from '../../../../../tests/testHelper'
-import { convertXmlToJs } from '../../../shared/gateways/xml-to-js/convertXmlToJs'
-import { ÉtablissementTerritorialIdentité } from '../entities/ÉtablissementTerritorial'
-import { récupérerLesÉtablissementsTerritoriauxLoader } from './établissementTerritorialFinessLoader'
+import { fakeDependencies } from '../../../../../tests/testHelper'
+import { NodeXmlToJs } from '../../../shared/gateways/xml-to-js/NodeXmlToJs'
+import { ÉtablissementTerritorialIdentité } from '../entities/ÉtablissementTerritorialIdentité'
+import { ÉtablissementTerritorialFinessLoader } from './ÉtablissementTerritorialFinessLoader'
 
 describe('Récupération des établissements territoriaux de la source de données FINESS', () => {
-  const chemin = `${environmentVariables.SFTP_LOCAL_PATH}/finess/simple`
+  const localPath = `${fakeDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess`
+  const finessLocalPath = `${localPath}/finess/simple`
 
   beforeEach(() => {
-    const contenuXML = `<?xml version="1.0" encoding="UTF-8"?>
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
     <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
       <structureet>
         <nofinesset>010000040</nofinesset>
@@ -114,125 +115,47 @@ describe('Récupération des établissements territoriaux de la source de donné
         <numuai xsi:nil="true"/>
       </structureet>
     </fluxfiness>`
-    mkdirSync(chemin, { recursive: true })
-    writeFileSync(`${chemin}/finess_cs1400102_stock_20211214-0336.xml`, contenuXML)
+    mkdirSync(finessLocalPath, { recursive: true })
+    writeFileSync(`${finessLocalPath}/finess_cs1400102_stock_20211214-0336.xml`, xml)
   })
 
   afterEach(() => {
-    rmSync(chemin, { recursive: true })
+    rmSync(localPath, { recursive: true })
   })
 
   it('récupérer les établissements territoriaux de la source de données FINESS', () => {
-    // GIVEN
-    const localPath = environmentVariables.SFTP_LOCAL_PATH
-
     // WHEN
-    const établissementsTerritoriaux = récupérerLesÉtablissementsTerritoriauxLoader(convertXmlToJs, localPath)
+    const établissementTerritorialFinessLoader = new ÉtablissementTerritorialFinessLoader(new NodeXmlToJs(), localPath)
+    const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupérerLesÉtablissementsTerritoriaux()
 
     // THEN
     expect(établissementsTerritoriaux).toStrictEqual<ÉtablissementTerritorialIdentité[]>(
       [
         {
-          catégorieAgrégatÉtablissement: '1102',
           catégorieÉtablissement: '355',
-          codeApe: '',
-          codeMft: '03',
-          codePays: '',
-          codePostal: '01130',
-          codeSph: '1',
-          commune: '269',
-          complémentDistribution: '',
-          complémentRaisonSociale: '',
-          complémentVoie: '',
           courriel: '',
-          dateAutorisation: '1901-01-01',
-          dateCaducité: '',
-          dateFermeture: '2007-04-20',
-          dateMaj: '2008-01-17',
           dateMiseAJourSource: '20211214',
-          dateModificationSiret: '2009-01-01',
-          dateOuverture: '1901-01-01',
-          département: '01',
-          indicateurCaducité: '',
-          libelléCatégorieAgrégatÉtablissement: 'Centres Hospitaliers',
-          libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
-          libelléCommune: 'NANTUA',
-          libelléCourtCatégorieAgrégatÉtablissement: 'Centres Hospitaliers',
-          libelléCourtCatégorieÉtablissement: 'C.H.',
-          libelléCourtMft: 'ARS / DG EPS',
-          libelléCourtSph: 'Etab.public de santé',
-          libelléDépartement: 'AIN',
-          libelléMft: 'ARS établissements Publics de santé dotation globale',
-          libelléPays: '',
-          libelléSph: 'Etablissement public de santé',
-          lieuDitBoîtePostale: 'BP 116',
           ligneAcheminement: '01130 NANTUA',
-          natureÉtablissement: 'G',
           numéroFinessEntitéJuridique: '010008407',
-          numéroFinessÉtablissementPrincipal: '010000057',
           numéroFinessÉtablissementTerritorial: '010000040',
           numéroVoie: '50',
-          numéroÉducationNationale: '',
-          origineModificationSiret: 'SAISIE',
           raisonSociale: 'CH NANTUA',
-          raisonSocialeLongue: 'CENTRE HOSPITALIER NANTUA',
-          siret: '26011021800047',
-          typeFermeture: 'DEF',
           typeVoie: 'R',
           typeÉtablissement: 'S',
-          télécopie: '0774750663',
           téléphone: '0474754800',
           voie: 'PAUL PAINLEVE',
         },
         {
-          catégorieAgrégatÉtablissement: '1102',
           catégorieÉtablissement: '355',
-          codeApe: '',
-          codeMft: '03',
-          codePays: '',
-          codePostal: '01100',
-          codeSph: '1',
-          commune: '283',
-          complémentDistribution: '',
-          complémentRaisonSociale: '',
-          complémentVoie: '',
           courriel: '',
-          dateAutorisation: '1901-01-01',
-          dateCaducité: '',
-          dateFermeture: '2007-04-20',
-          dateMaj: '2018-10-26',
           dateMiseAJourSource: '20211214',
-          dateModificationSiret: '2009-01-01',
-          dateOuverture: '1901-01-01',
-          département: '01',
-          indicateurCaducité: '',
-          libelléCatégorieAgrégatÉtablissement: 'Centres Hospitaliers',
-          libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
-          libelléCommune: 'OYONNAX',
-          libelléCourtCatégorieAgrégatÉtablissement: 'Centres Hospitaliers',
-          libelléCourtCatégorieÉtablissement: 'C.H.',
-          libelléCourtMft: 'ARS / DG EPS',
-          libelléCourtSph: 'Etab.public de santé',
-          libelléDépartement: 'AIN',
-          libelléMft: 'ARS établissements Publics de santé dotation globale',
-          libelléPays: '',
-          libelléSph: 'Etablissement public de santé',
-          lieuDitBoîtePostale: '',
           ligneAcheminement: '01100 OYONNAX',
-          natureÉtablissement: 'G',
           numéroFinessEntitéJuridique: '010008407',
-          numéroFinessÉtablissementPrincipal: '010005239',
           numéroFinessÉtablissementTerritorial: '010000057',
           numéroVoie: '',
-          numéroÉducationNationale: '',
-          origineModificationSiret: 'SAISIE',
           raisonSociale: 'CH OYONNAX',
-          raisonSocialeLongue: 'CENTRE HOSPITALIER OYONNAX',
-          siret: '26011021800013',
-          typeFermeture: 'DEF',
           typeVoie: 'RTE',
           typeÉtablissement: 'S',
-          télécopie: '0774731002',
           téléphone: '0474731001',
           voie: 'DE VEYZIAT',
         },

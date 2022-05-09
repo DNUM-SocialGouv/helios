@@ -1,14 +1,13 @@
-import { dependencies } from '../../configuration/dependencies'
-import { DownloadDataSourceToLocal } from '../entities/DownloadDataSourceToLocal'
-import { UnzipLocalDataSource } from '../entities/UnzipLocalDataSource'
-import { downloadDataSourceToLocal } from '../gateways/download-data-source/downloadDataSourceToLocal'
-import { unzipLocalDataSource } from '../gateways/unzip/unzipLocalDataSource'
-import { retrieveDataSourceFromFinessToLocal } from '../use_cases/retrieveDataSourceFromFinessToLocal'
+import { Dependencies, dependencies } from '../../configuration/dependencies'
+import { RetrieveDataSourceFromFinessToLocal } from '../use-cases/RetrieveDataSourceFromFinessToLocal'
 
-const retrieveDataSourceFromFinessToLocalCron = (downloadDataSourceToLocal: DownloadDataSourceToLocal, unzipLocalDataSource: UnzipLocalDataSource) => {
-  const { environmentVariables } = dependencies
+const retrieveDataSourceFromFinessToLocalCron = (dependencies: Dependencies) => {
+  const retrieveDataSourceFromFinessToLocal = new RetrieveDataSourceFromFinessToLocal(
+    dependencies.downloadDataSource,
+    dependencies.unzipDataSource
+  )
 
-  retrieveDataSourceFromFinessToLocal(downloadDataSourceToLocal, unzipLocalDataSource, environmentVariables)
+  retrieveDataSourceFromFinessToLocal.handle()
 }
 
-retrieveDataSourceFromFinessToLocalCron(downloadDataSourceToLocal, unzipLocalDataSource)
+retrieveDataSourceFromFinessToLocalCron(dependencies)

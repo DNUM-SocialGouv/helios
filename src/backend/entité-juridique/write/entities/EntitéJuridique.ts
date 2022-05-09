@@ -1,38 +1,11 @@
 export type EntitéJuridique = Readonly<{
-  catégorieÉtablissement: string
-  codeApe: string
-  codePays: string
-  codePostal: string
-  commune: string
-  complémentDistribution: string
-  complémentRaisonSociale: string
-  complémentVoie: string
-  dateCréation: string
-  dateFermeture: string
-  dateMiseAJour: string
   dateMiseAJourSource: string
-  dateModificationSiren: string
-  département: string
-  libelléCatégoriÉtablissement: string
-  libelléCommune: string
-  libelléCourtCatégoriÉtablissement: string
-  libelléCourtStatutJuridique: string
-  libelléDépartement: string
-  libelléPays: string
-  libelléStatutJuridique: string
-  lieuDitBoîtePostale: string
   ligneAcheminement: string
   numéroFiness: string
   numéroVoie: string
-  origineModificationSiren: string
-  qualificationCréation: string
   raisonSociale: string
-  raisonSocialeLongue: string
-  siren: string
   statutJuridique: string
-  typeFermeture: string
-  typeVoie: string
-  télécopie: string
   téléphone: string
+  typeVoie: string
   voie: string
 }>

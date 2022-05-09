@@ -1,15 +1,16 @@
 import { mkdirSync, rmSync, writeFileSync } from 'fs'
 
-import { environmentVariables } from '../../../../../tests/testHelper'
-import { convertXmlToJs } from '../../../shared/gateways/xml-to-js/convertXmlToJs'
+import { fakeDependencies } from '../../../../../tests/testHelper'
+import { NodeXmlToJs } from '../../../shared/gateways/xml-to-js/NodeXmlToJs'
 import { EntitéJuridique } from '../entities/EntitéJuridique'
-import { récupérerLesEntitésJuridiquesLoader } from './entitéJuridiqueFinessLoader'
+import { EntitésJuridiquesFinessLoader } from './EntitésJuridiquesFinessLoader'
 
 describe('Récupération des entités juridiques de la source de données FINESS', () => {
-  const chemin = `${environmentVariables.SFTP_LOCAL_PATH}/finess/simple`
+  const localPath = `${fakeDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess`
+  const finessLocalPath = `${localPath}/finess/simple`
 
   beforeEach(() => {
-    const contenuXML = `<?xml version="1.0" encoding="UTF-8"?>
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
     <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
       <structureej>
         <nofiness>010008407</nofiness>
@@ -86,97 +87,41 @@ describe('Récupération des entités juridiques de la source de données FINESS
         <qualifcreation>GEN</qualifcreation>
       </structureej>
     </fluxfiness>`
-    mkdirSync(chemin, { recursive: true })
-    writeFileSync(`${chemin}/finess_cs1400101_stock_20211214-0333.xml`, contenuXML)
+    mkdirSync(finessLocalPath, { recursive: true })
+    writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, xml)
   })
 
   afterEach(() => {
-    rmSync(chemin, { recursive: true })
+    rmSync(localPath, { recursive: true })
   })
 
   it('récupérer les entités juridiques de la source de données FINESS', () => {
-    // GIVEN
-    const localPath = environmentVariables.SFTP_LOCAL_PATH
-
     // WHEN
-    const entitéJuridique = récupérerLesEntitésJuridiquesLoader(convertXmlToJs, localPath)
+    const entitéJuridiqueFinessLoader = new EntitésJuridiquesFinessLoader(new NodeXmlToJs(), localPath)
+    const entitésJuridiques = entitéJuridiqueFinessLoader.récupérerLesEntitésJuridiques()
 
     // THEN
-    expect(entitéJuridique).toStrictEqual<EntitéJuridique[]>(
+    expect(entitésJuridiques).toStrictEqual<EntitéJuridique[]>(
       [
         {
-          catégorieÉtablissement: '355',
-          codeApe: '8730A',
-          codePays: '',
-          codePostal: '01117',
-          commune: '283',
-          complémentDistribution: '',
-          complémentRaisonSociale: '',
-          complémentVoie: '',
-          dateCréation: '2001-01-01',
-          dateFermeture: '',
-          dateMiseAJour: '2020-02-04',
           dateMiseAJourSource: '20211214',
-          dateModificationSiren: '2011-02-07',
-          département: '01',
-          libelléCatégoriÉtablissement: 'Centre Hospitalier (C.H.)',
-          libelléCommune: 'OYONNAX',
-          libelléCourtCatégoriÉtablissement: 'C.H.',
-          libelléCourtStatutJuridique: 'Etb.Pub.Intcom.Hosp.',
-          libelléDépartement: 'AIN',
-          libelléPays: '',
-          libelléStatutJuridique: "Etablissement Public Intercommunal d'Hospitalisation",
-          lieuDitBoîtePostale: 'CS 20100',
           ligneAcheminement: '01117 OYONNAX CEDEX',
           numéroFiness: '010008407',
           numéroVoie: '1',
-          origineModificationSiren: 'RMESSMAIA_AUTO',
-          qualificationCréation: 'GEN',
           raisonSociale: 'CH DU HAUT BUGEY',
-          raisonSocialeLongue: 'CENTRE HOSPITALIER DU HAUT BUGEY',
-          siren: '260110218',
           statutJuridique: '14',
-          typeFermeture: '',
           typeVoie: 'RTE',
-          télécopie: '0474731002',
           téléphone: '0474731001',
           voie: 'DE VEYZIAT',
         },
         {
-          catégorieÉtablissement: '',
-          codeApe: '8610Z',
-          codePays: '',
-          codePostal: '59650',
-          commune: '009',
-          complémentDistribution: '',
-          complémentRaisonSociale: '',
-          complémentVoie: '',
-          dateCréation: '2001-01-01',
-          dateFermeture: '',
-          dateMiseAJour: '2012-09-14',
           dateMiseAJourSource: '20211214',
-          dateModificationSiren: '2012-09-26',
-          département: '59',
-          libelléCatégoriÉtablissement: '',
-          libelléCommune: 'VILLENEUVE D ASCQ',
-          libelléCourtCatégoriÉtablissement: '',
-          libelléCourtStatutJuridique: 'Société Anonyme',
-          libelléDépartement: 'NORD',
-          libelléPays: '',
-          libelléStatutJuridique: 'Société Anonyme (S.A.)',
-          lieuDitBoîtePostale: 'QUARTIER DU RECUEIL',
           ligneAcheminement: '59650 VILLENEUVE D ASCQ',
           numéroFiness: '590000741',
           numéroVoie: '20',
-          origineModificationSiren: 'SIRETISATION',
-          qualificationCréation: 'GEN',
           raisonSociale: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
-          raisonSocialeLongue: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
-          siren: '476780333',
           statutJuridique: '73',
-          typeFermeture: '',
           typeVoie: 'AV',
-          télécopie: '0320995678',
           téléphone: '0826666900',
           voie: 'DE LA RECONNAISSANCE',
         },

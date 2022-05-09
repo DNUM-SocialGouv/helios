@@ -1,12 +1,10 @@
-import { dependencies } from '../../../configuration/dependencies'
-import { convertXmlToJs } from '../../../shared/gateways/xml-to-js/convertXmlToJs'
-import { récupérerLesEntitésJuridiquesLoader } from '../gateways/entitéJuridiqueFinessLoader'
-import { sauvegarderLesEntitésJuridiques } from '../use_cases/sauvegarderLesEntitésJuridiques'
+import { Dependencies, dependencies } from '../../../configuration/dependencies'
+import { SauvegarderLesEntitésJuridiques } from '../use-cases/SauvegarderLesEntitésJuridiques'
 
-async function sauvegarderLesEntitésJuridiquesCron() {
-  const { environmentVariables } = dependencies
+async function sauvegarderLesEntitésJuridiquesCron(dependencies: Dependencies) {
+  const sauvegarderLesEntitésJuridiques = new SauvegarderLesEntitésJuridiques(dependencies.entitésJuridiquesFinessLoader)
 
-  console.info(sauvegarderLesEntitésJuridiques(récupérerLesEntitésJuridiquesLoader, convertXmlToJs, environmentVariables.SFTP_LOCAL_PATH))
+  console.info(sauvegarderLesEntitésJuridiques.handle())
 }
 
-sauvegarderLesEntitésJuridiquesCron()
+sauvegarderLesEntitésJuridiquesCron(dependencies)
