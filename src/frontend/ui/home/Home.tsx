@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 import { useDependencies } from '../commun/contexts/useDependencies'
 
-export const Accueil = () => {
+export const Home = () => {
   const { paths } = useDependencies()
 
   return (

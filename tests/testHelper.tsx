@@ -1,7 +1,7 @@
 import { render, RenderResult } from '@testing-library/react'
 import { ReactChild } from 'react'
 
-import { FilDArianneHandler } from '../src/frontend/configuration/FilDArianneHandler'
+import { BreadcrumbHandler } from '../src/frontend/configuration/BreadcrumbHandler'
 import { FrontDependencies } from '../src/frontend/configuration/frontDependencies'
 import { Paths } from '../src/frontend/configuration/Paths'
 import { WordingFr } from '../src/frontend/configuration/wording/WordingFr'
@@ -16,7 +16,7 @@ export const renderFakeComponent = (component: ReactChild): RenderResult => {
 }
 
 export const fakeFrontDependencies: FrontDependencies = {
-  filDArianneHandler: new FilDArianneHandler(),
+  breadcrumbHandler: new BreadcrumbHandler(),
   paths: new Paths(),
   wording: new WordingFr(),
 }

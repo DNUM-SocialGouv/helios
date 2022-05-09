@@ -1,14 +1,14 @@
 import Head from 'next/head'
 
 import { useDependencies } from '../frontend/ui/commun/contexts/useDependencies'
-import { useFilDArianne } from '../frontend/ui/commun/hooks/useFileDArianne'
+import { useBreadcrumb } from '../frontend/ui/commun/hooks/useBreadcrumb'
 
 export default function DonnéesPersonnelles() {
   const { wording } = useDependencies()
-  useFilDArianne([
+  useBreadcrumb([
     {
-      chemin: '',
       label: wording.DONNÉES_PERSONNELLES,
+      path: '',
     },
   ])
 
