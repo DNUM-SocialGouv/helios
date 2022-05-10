@@ -45,3 +45,5 @@ L'architecture choisie permet :
 
 - un découplage entre la récupération des données des sources externes et le service des données pour les fiches de synthèse ;
 - un découplage entre le métier et l'infrastructure dans les parties data-crawler et backend.
+
+Backend et data-crawler ne doivent pas être dépendants l'un de l'autre.
