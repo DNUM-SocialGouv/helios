@@ -1,6 +1,5 @@
 import { screen, within } from '@testing-library/react'
 
-import { renderFakeComponent } from '../../../../../tests/testHelper'
 import PageDAccueil from '../../../../pages'
 import Accessibilité from '../../../../pages/accessibilite'
 import DonnéesPersonnelles from '../../../../pages/donnees-personnelles'
@@ -8,6 +7,7 @@ import PageEntite from '../../../../pages/entite'
 import GestionDesCookies from '../../../../pages/gestion-des-cookies'
 import MentionsLégales from '../../../../pages/mentions-legales'
 import PlanDuSite from '../../../../pages/plan-du-site'
+import { renderFakeComponent } from '../../../testHelperFrontend'
 import { Breadcrumb } from './Breadcrumb'
 
 describe('Le fil d’Ariane (breadcrumb)', () => {

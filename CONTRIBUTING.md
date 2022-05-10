@@ -104,6 +104,27 @@ yarn db-migrate up
 
 > Les migrations sont jouées automatiquement lors de chaque déploiement sur Scalingo grâce à la commande du `Procfile`
 
+## SFTP local
+
+Un SFTP (image Docker) est lancé avec l'application.
+
+Un échantillon des données FINESS sont dans `data_set`.
+
+> Une clé public SSH `$HOME/.ssh/sftp_local.pub` sera demandée pour l'authentification au SFTP local.
+
+### Simuler le téléchagement des données FINESS
+
+```sh
+yarn retrieveFiness
+```
+
+### Simuler l'archivage de FINESS
+
+```sh
+yarn saveEJ
+yarn saveET
+```
+
 ## Arborescence
 
 ```

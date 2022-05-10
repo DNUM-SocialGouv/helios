@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react'
 
-import { fakeFrontDependencies, renderFakeComponent } from '../../../../../tests/testHelper'
+import { fakeFrontDependencies, renderFakeComponent } from '../../../testHelperFrontend'
 import { Footer } from './Footer'
 
 const { paths, wording } = fakeFrontDependencies

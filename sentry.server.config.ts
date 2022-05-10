@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/nextjs'
 
-import { dependencies } from './src/backend/configuration/dependencies'
+import { dependencies } from './src/backend/technique/configuration/dependencies'
 
 const { environmentVariables } = dependencies
 

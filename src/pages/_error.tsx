@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/nextjs'
 import { NextPageContext } from 'next'
 import NextErrorComponent, { ErrorProps } from 'next/error'
 
-import { ErreurHelios } from '../backend/shared/entities/ErreurHelios'
+import { HeliosError } from '../backend/technique/shared/entities/HeliosError'
 
 type PageErrorProps = Readonly<{
   error: Error
@@ -45,7 +45,7 @@ PageError.getInitialProps = async (context: NextPageContext): Promise<PageErrorS
   }
 
   Sentry.captureException(
-    new ErreurHelios(`_error.ts getInitialProps missing data at path: ${asPath}`)
+    new HeliosError(`_error.ts getInitialProps missing data at path: ${asPath}`)
   )
   await Sentry.flush(2000)
 
