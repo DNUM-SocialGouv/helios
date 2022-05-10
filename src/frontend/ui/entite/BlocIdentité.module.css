@@ -1,0 +1,9 @@
+.grille-indicateurs {
+  gap: 4rem;
+}
+
+.colonne-indicateurs {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}

@@ -28,6 +28,21 @@ export class WordingFr implements Wording {
   readonly VOUS_ÊTES_ICI: string = 'Vous êtes ici :'
   readonly VOIR_LE_FIL_D_ARIANE: string = 'Voir le fil d’Ariane'
 
+  // Bloc Identité
+  readonly TITRE_BLOC_IDENTITÉ: string = 'fiche d’identité'
+  readonly NOM_DE_L_ÉTABLISSEMENT: string = 'Nom de l’établissement'
+  readonly NUMÉRO_FINESS: string = 'Numéro FINESS'
+  readonly ADRESSE: string = 'Adresse'
+  readonly TÉLÉPHONE_ET_EMAIL: string = 'Téléphone et e-mail'
+  readonly NOM_DU_DIRECTEUR: string = 'Nom du directeur'
+  readonly STATUT_DE_L_ÉTABLISSEMENT: string = 'Statut de l’établissement'
+  readonly DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM: string = 'Date d’entrée en vigueur du CPOM'
+  readonly ENTITÉ_JURIDIQUE_DE_RATTACHEMENT: string = 'Entité juridique de rattachement'
+  readonly CATÉGORIE_DE_L_ÉTABLISSEMENT: string = 'Catégorie de l’établissement'
+  readonly MONO_ÉTABLISSEMENT: string = 'Mono-établissement'
+  readonly ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE: string = 'Établissement Principal/Secondaire'
+  readonly SITE_INTERNET: string = 'Site internet'
+
   // Footer
   readonly PRESENTATION: string = 'Texte sur 3 lignes à demander à Daisy'
   readonly LEGIFRANCE: string = 'legifrance.gouv.fr'

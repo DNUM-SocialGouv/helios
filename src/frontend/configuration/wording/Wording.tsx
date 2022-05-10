@@ -20,6 +20,21 @@ export interface Wording {
   readonly VOUS_ÊTES_ICI: string
   readonly VOIR_LE_FIL_D_ARIANE: string
 
+  // Bloc Identité
+  readonly TITRE_BLOC_IDENTITÉ: string
+  readonly NOM_DE_L_ÉTABLISSEMENT: string
+  readonly NUMÉRO_FINESS: string
+  readonly ADRESSE: string
+  readonly TÉLÉPHONE_ET_EMAIL: string
+  readonly NOM_DU_DIRECTEUR: string
+  readonly STATUT_DE_L_ÉTABLISSEMENT: string
+  readonly DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM: string
+  readonly ENTITÉ_JURIDIQUE_DE_RATTACHEMENT: string
+  readonly CATÉGORIE_DE_L_ÉTABLISSEMENT: string
+  readonly MONO_ÉTABLISSEMENT: string
+  readonly ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE: string
+  readonly SITE_INTERNET: string
+
   // Footer
   readonly PRESENTATION: string
   readonly LEGIFRANCE: string

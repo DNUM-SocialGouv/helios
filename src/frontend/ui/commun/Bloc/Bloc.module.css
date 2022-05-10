@@ -1,0 +1,14 @@
+.titre-bloc {
+  background: var(--blue-france-sun-113-625);
+  color: var(--text-inverted-grey);
+  font-size: unset;
+  line-height: unset;
+  margin: 0;
+  padding: 0.75rem 1rem;
+  text-transform: uppercase;
+}
+
+.contenu-bloc {
+  background: #F6F6F6;
+  padding: 1rem 1rem 0.5rem;
+}
