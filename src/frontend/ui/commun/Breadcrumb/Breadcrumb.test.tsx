@@ -7,7 +7,7 @@ import PageEntite from '../../../../pages/entite'
 import GestionDesCookies from '../../../../pages/gestion-des-cookies'
 import MentionsLégales from '../../../../pages/mentions-legales'
 import PlanDuSite from '../../../../pages/plan-du-site'
-import { renderFakeComponent } from '../../../testHelperFrontend'
+import { renderFakeComponent } from '../../../testHelper'
 import { Breadcrumb } from './Breadcrumb'
 
 describe('Le fil d’Ariane (breadcrumb)', () => {
