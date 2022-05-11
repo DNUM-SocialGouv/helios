@@ -50,7 +50,7 @@
         "ignoreRegExpLiterals": true
       }
     ],
-    "no-console": ["error", { "allow": ["debug", "info", "error"] }],
+    "no-console": ["error"],
     "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0, "maxBOF": 0 }],
     "no-multi-spaces": "error",
     "no-param-reassign": "error",
@@ -70,6 +70,7 @@
     "@typescript-eslint/naming-convention": [
       "error",
       {
+        "leadingUnderscore": "allow",
         "selector": "variable",
         "format": [
           "camelCase",

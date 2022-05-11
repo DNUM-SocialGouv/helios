@@ -7,6 +7,7 @@ CREATE TABLE ÉtablissementTerritorial
     catégorieÉtablissement VARCHAR(255) NOT NULL,
     courriel VARCHAR(255) NOT NULL,
     numéroFinessEntitéJuridique VARCHAR(255) NOT NULL,
+    numéroFinessÉtablissementPrincipal VARCHAR(255) NOT NULL,
     numéroFinessÉtablissementTerritorial VARCHAR(255) NOT NULL,
     raisonSociale VARCHAR(255) NOT NULL,
     téléphone VARCHAR(255) NOT NULL,
