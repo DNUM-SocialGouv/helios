@@ -3,12 +3,12 @@ import { SauvegarderLesEntitésJuridiquesUseCase } from './SauvegarderLesEntité
 
 describe('Sauvegarde des entités juridiques', () => {
   it('récupérer les établissements territoriaux de plusieurs sources de données', () => {
-    const sauvegarderLesEntitésJuridiques = new SauvegarderLesEntitésJuridiquesUseCase(fakeDataCrawlerDependencies.entitésJuridiquesFinessLoader)
+    const sauvegarderLesEntitésJuridiques = new SauvegarderLesEntitésJuridiquesUseCase(fakeDataCrawlerDependencies.finessEntitéJuridiqueLoader)
 
     // WHEN
     sauvegarderLesEntitésJuridiques.handle()
 
     // THEN
-    expect(fakeDataCrawlerDependencies.entitésJuridiquesFinessLoader.récupérerLesEntitésJuridiques).toHaveBeenCalledWith()
+    expect(fakeDataCrawlerDependencies.finessEntitéJuridiqueLoader.récupérerLesEntitésJuridiques).toHaveBeenCalledWith()
   })
 })

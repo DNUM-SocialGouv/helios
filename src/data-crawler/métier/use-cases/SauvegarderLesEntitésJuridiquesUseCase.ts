@@ -1,11 +1,11 @@
 import { EntitéJuridique } from '../entities/EntitéJuridique'
-import { EntitésJuridiquesLoader } from '../gateways/EntitésJuridiquesLoader'
+import { EntitéJuridiqueLoader } from '../gateways/EntitéJuridiqueLoader'
 
 export class SauvegarderLesEntitésJuridiquesUseCase {
-  constructor(private readonly entitésJuridiquesFinessLoader: EntitésJuridiquesLoader) {}
+  constructor(private readonly finessEntitésJuridiquesLoader: EntitéJuridiqueLoader) {}
 
   handle(): EntitéJuridique[] {
-    const entitésJuridiques = this.entitésJuridiquesFinessLoader.récupérerLesEntitésJuridiques()
+    const entitésJuridiques = this.finessEntitésJuridiquesLoader.récupérerLesEntitésJuridiques()
 
     return entitésJuridiques
   }

@@ -1,7 +1,7 @@
 import { readdirSync } from 'fs'
 
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
-import { EntitésJuridiquesLoader } from '../../../métier/gateways/EntitésJuridiquesLoader'
+import { EntitéJuridiqueLoader } from '../../../métier/gateways/EntitéJuridiqueLoader'
 import { XmlToJs } from '../../../métier/gateways/XmlToJs'
 
 type EntitéJuridiqueFiness = Readonly<{
@@ -118,7 +118,7 @@ export type EntitéJuridiqueFluxFiness = Readonly<{
   }>
 }>
 
-export class FinessEntitésJuridiquesLoader implements EntitésJuridiquesLoader {
+export class FinessEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
   private readonly préfixeDuFichierEntitéJuridique = 'finess_cs1400101_stock_'
 
   constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string) {}
@@ -154,9 +154,9 @@ export class FinessEntitésJuridiquesLoader implements EntitésJuridiquesLoader 
       adresseTypeVoie: valueOrEmpty(entitésJuridiquesFiness.typvoie._text),
       adresseVoie: valueOrEmpty(entitésJuridiquesFiness.voie._text),
       dateMiseAJourSource,
-      numéroFiness: valueOrEmpty(entitésJuridiquesFiness.nofiness._text),
+      libelléStatutJuridique: valueOrEmpty(entitésJuridiquesFiness.libstatutjuridique._text),
+      numéroFinessEntitéJuridique: valueOrEmpty(entitésJuridiquesFiness.nofiness._text),
       raisonSociale: valueOrEmpty(entitésJuridiquesFiness.rs._text),
-      statutJuridique: valueOrEmpty(entitésJuridiquesFiness.statutjuridique._text),
       téléphone: valueOrEmpty(entitésJuridiquesFiness.telephone._text),
     }
   }

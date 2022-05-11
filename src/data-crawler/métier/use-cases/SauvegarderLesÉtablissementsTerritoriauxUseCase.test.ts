@@ -4,13 +4,13 @@ import { SauvegarderLesÉtablissementsTerritoriauxUseCase } from './SauvegarderL
 describe('Sauvegarde des établissements territoriaux', () => {
   it('récupérer les établissements territoriaux de plusieurs sources de données', () => {
     const sauvegarderLesÉtablissementsTerritoriaux = new SauvegarderLesÉtablissementsTerritoriauxUseCase(
-      fakeDataCrawlerDependencies.établissementTerritorialFinessLoader
+      fakeDataCrawlerDependencies.finessÉtablissementTerritorialLoader
     )
 
     // WHEN
     sauvegarderLesÉtablissementsTerritoriaux.handle()
 
     // THEN
-    expect(fakeDataCrawlerDependencies.établissementTerritorialFinessLoader.récupérerLesÉtablissementsTerritoriaux).toHaveBeenCalledWith()
+    expect(fakeDataCrawlerDependencies.finessÉtablissementTerritorialLoader.récupérerLesÉtablissementsTerritoriaux).toHaveBeenCalledWith()
   })
 })

@@ -3,7 +3,7 @@ import { mkdirSync, rmSync, writeFileSync } from 'fs'
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { fakeDataCrawlerDependencies } from '../../../testHelper'
 import { NodeXmlToJs } from '../xml-to-js/NodeXmlToJs'
-import { FinessEntitésJuridiquesLoader } from './FinessEntitésJuridiquesLoader'
+import { FinessEntitéJuridiqueLoader } from './FinessEntitéJuridiqueLoader'
 
 describe('Récupération des entités juridiques de la source de données FINESS', () => {
   const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess`
@@ -97,7 +97,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
 
   it('récupérer les entités juridiques de la source de données FINESS', () => {
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessEntitésJuridiquesLoader(new NodeXmlToJs(), localPath)
+    const entitéJuridiqueFinessLoader = new FinessEntitéJuridiqueLoader(new NodeXmlToJs(), localPath)
     const entitésJuridiques = entitéJuridiqueFinessLoader.récupérerLesEntitésJuridiques()
 
     // THEN
@@ -109,9 +109,9 @@ describe('Récupération des entités juridiques de la source de données FINESS
           adresseTypeVoie: 'RTE',
           adresseVoie: 'DE VEYZIAT',
           dateMiseAJourSource: '20211214',
-          numéroFiness: '010008407',
+          libelléStatutJuridique: "Etablissement Public Intercommunal d'Hospitalisation",
+          numéroFinessEntitéJuridique: '010008407',
           raisonSociale: 'CH DU HAUT BUGEY',
-          statutJuridique: '14',
           téléphone: '0474731001',
         },
         {
@@ -120,9 +120,9 @@ describe('Récupération des entités juridiques de la source de données FINESS
           adresseTypeVoie: 'AV',
           adresseVoie: 'DE LA RECONNAISSANCE',
           dateMiseAJourSource: '20211214',
-          numéroFiness: '590000741',
+          libelléStatutJuridique: 'Société Anonyme (S.A.)',
+          numéroFinessEntitéJuridique: '590000741',
           raisonSociale: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
-          statutJuridique: '73',
           téléphone: '0826666900',
         },
       ]

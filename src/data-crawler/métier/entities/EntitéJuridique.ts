@@ -4,8 +4,8 @@ export type EntitéJuridique = Readonly<{
   adresseTypeVoie: string
   adresseVoie: string
   dateMiseAJourSource: string
-  numéroFiness: string
+  libelléStatutJuridique: string
+  numéroFinessEntitéJuridique: string
   raisonSociale: string
-  statutJuridique: string
   téléphone: string
 }>

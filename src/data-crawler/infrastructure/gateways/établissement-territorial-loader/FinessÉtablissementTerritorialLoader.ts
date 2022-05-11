@@ -206,6 +206,7 @@ export class FinessÉtablissementTerritorialLoader implements ÉtablissementTerr
       courriel: valueOrEmpty(établissementTerritorialIdentitéFiness.courriel._text),
       dateMiseAJourSource,
       numéroFinessEntitéJuridique: valueOrEmpty(établissementTerritorialIdentitéFiness.nofinessej._text),
+      numéroFinessÉtablissementPrincipal: valueOrEmpty(établissementTerritorialIdentitéFiness.nofinessppal._text),
       numéroFinessÉtablissementTerritorial: valueOrEmpty(établissementTerritorialIdentitéFiness.nofinesset._text),
       raisonSociale: valueOrEmpty(établissementTerritorialIdentitéFiness.rs._text),
       typeÉtablissement: valueOrEmpty(établissementTerritorialIdentitéFiness.typeet._text),

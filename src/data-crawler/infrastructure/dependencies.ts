@@ -1,11 +1,11 @@
 import { DownloadRawData } from '../métier/gateways/DownloadRawData'
-import { EntitésJuridiquesLoader } from '../métier/gateways/EntitésJuridiquesLoader'
+import { EntitéJuridiqueLoader } from '../métier/gateways/EntitéJuridiqueLoader'
 import { EnvironmentVariables } from '../métier/gateways/EnvironmentVariables'
 import { UnzipRawData } from '../métier/gateways/UnzipRawData'
 import { ÉtablissementTerritorialLoader } from '../métier/gateways/ÉtablissementTerritorialLoader'
 import { dotEnvConfig } from './gateways/dot-env/dotEnvConfig'
 import { SftpDownloadRawData } from './gateways/download-raw-data/SftpDownloadRawData'
-import { FinessEntitésJuridiquesLoader } from './gateways/entité-juridique-loader/FinessEntitésJuridiquesLoader'
+import { FinessEntitéJuridiqueLoader } from './gateways/entité-juridique-loader/FinessEntitéJuridiqueLoader'
 import { NodeEnvironmentVariables } from './gateways/environnement-variables/NodeEnvironmentVariables'
 import { ConsoleLogger } from './gateways/logger/ConsoleLogger'
 import { GunzipUnzipRawData } from './gateways/unzip-raw-data/GunzipUnzipRawData'
@@ -14,10 +14,10 @@ import { FinessÉtablissementTerritorialLoader } from './gateways/établissement
 
 export type Dependencies = Readonly<{
   downloadRawData: DownloadRawData
-  entitésJuridiquesFinessLoader: EntitésJuridiquesLoader
   environmentVariables: EnvironmentVariables
+  finessEntitéJuridiqueLoader: EntitéJuridiqueLoader
+  finessÉtablissementTerritorialLoader: ÉtablissementTerritorialLoader
   unzipRawData: UnzipRawData
-  établissementTerritorialFinessLoader: ÉtablissementTerritorialLoader
 }>
 
 const _instantiateDependencies = (): Dependencies => {
@@ -28,10 +28,10 @@ const _instantiateDependencies = (): Dependencies => {
 
   return {
     downloadRawData: new SftpDownloadRawData(environmentVariables, logger),
-    entitésJuridiquesFinessLoader: new FinessEntitésJuridiquesLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),
     environmentVariables,
+    finessEntitéJuridiqueLoader: new FinessEntitéJuridiqueLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),
+    finessÉtablissementTerritorialLoader: new FinessÉtablissementTerritorialLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),
     unzipRawData: new GunzipUnzipRawData(environmentVariables, logger),
-    établissementTerritorialFinessLoader: new FinessÉtablissementTerritorialLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),
   }
 }
 

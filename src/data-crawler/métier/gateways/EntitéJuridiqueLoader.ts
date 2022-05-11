@@ -1,5 +1,5 @@
 import { EntitéJuridique } from '../entities/EntitéJuridique'
 
-export interface EntitésJuridiquesLoader {
+export interface EntitéJuridiqueLoader {
   récupérerLesEntitésJuridiques(): EntitéJuridique[]
 }

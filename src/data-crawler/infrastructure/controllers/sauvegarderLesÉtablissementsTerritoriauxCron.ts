@@ -2,7 +2,7 @@ import { SauvegarderLesÉtablissementsTerritoriauxUseCase } from '../../métier/
 import { dependencies, Dependencies } from '../dependencies'
 
 async function sauvegarderLesÉtablissementsTerritoriauxCron(dependencies: Dependencies) {
-  const sauvegarderLesÉtablissementsTerritoriaux = new SauvegarderLesÉtablissementsTerritoriauxUseCase(dependencies.établissementTerritorialFinessLoader)
+  const sauvegarderLesÉtablissementsTerritoriaux = new SauvegarderLesÉtablissementsTerritoriauxUseCase(dependencies.finessÉtablissementTerritorialLoader)
 
   sauvegarderLesÉtablissementsTerritoriaux.handle()
 }

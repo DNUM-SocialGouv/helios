@@ -124,12 +124,5 @@
       "files": ["**/*.test.tsx"],
       "extends": ["plugin:testing-library/react"]
     }
-    // {
-    //   "files": ["src/backend/**/*.ts"],
-    //   "excludedFiles": "src/backend/shared/**/*.ts",
-    //   "rules": {
-    //     "import/no-nodejs-modules": ["error"]
-    //   }
-    // }
   ]
 }

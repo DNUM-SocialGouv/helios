@@ -7,6 +7,7 @@ export type ÉtablissementTerritorialIdentité = Readonly<{
   courriel: string
   dateMiseAJourSource: string
   numéroFinessEntitéJuridique: string
+  numéroFinessÉtablissementPrincipal: string
   numéroFinessÉtablissementTerritorial: string
   raisonSociale: string
   téléphone: string
