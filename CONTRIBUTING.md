@@ -172,7 +172,7 @@ yarn saveET
 
 ### Code
 
-- le code métier est en **français** [plus de détails dans l'ADR 1](./ADR/ADR_1_les_langues_dans_le_code.md)- on utilise les accents à l'exception des noms de fichier dans le dossier `src/pages`
+- le code métier est en **français** [plus de détails dans l'ADR 1](./ADR/ADR-1-les-langues-dans-le-code.md)- on utilise les accents à l'exception des noms de fichier dans le dossier `src/pages`
   > le métier et les développeurs sont français
 
 - le **camelCase** est utilisé pour les variables et les fonctions

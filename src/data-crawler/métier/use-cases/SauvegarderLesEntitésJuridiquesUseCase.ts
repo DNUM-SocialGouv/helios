@@ -1,12 +1,15 @@
-import { EntitéJuridique } from '../entities/EntitéJuridique'
 import { EntitéJuridiqueLoader } from '../gateways/EntitéJuridiqueLoader'
+import { EntitéJuridiqueRepository } from '../gateways/EntitéJuridiqueRepository'
 
 export class SauvegarderLesEntitésJuridiquesUseCase {
-  constructor(private readonly finessEntitésJuridiquesLoader: EntitéJuridiqueLoader) {}
+  constructor(
+    private readonly finessEntitéJuridiqueLoader: EntitéJuridiqueLoader,
+    private readonly finessEntitéJuridiqueRepository: EntitéJuridiqueRepository
+  ) {}
 
-  handle(): EntitéJuridique[] {
-    const entitésJuridiques = this.finessEntitésJuridiquesLoader.récupérerLesEntitésJuridiques()
+  async handle(): Promise<void> {
+    const entitésJuridiques = this.finessEntitéJuridiqueLoader.récupérerLesEntitésJuridiques()
 
-    return entitésJuridiques
+    await this.finessEntitéJuridiqueRepository.save(entitésJuridiques)
   }
 }

@@ -1,12 +1,15 @@
-import { ÉtablissementTerritorialIdentité } from '../entities/ÉtablissementTerritorialIdentité'
 import { ÉtablissementTerritorialLoader } from '../gateways/ÉtablissementTerritorialLoader'
+import { ÉtablissementTerritorialRepository } from '../gateways/ÉtablissementTerritorialRepository'
 
 export class SauvegarderLesÉtablissementsTerritoriauxUseCase {
-  constructor(private readonly établissementTerritorialLoader: ÉtablissementTerritorialLoader) {}
+  constructor(
+    private readonly établissementTerritorialLoader: ÉtablissementTerritorialLoader,
+    private readonly établissementTerritorialRepository: ÉtablissementTerritorialRepository
+  ) {}
 
-  handle(): ÉtablissementTerritorialIdentité[] {
+  async handle(): Promise<void> {
     const établissementsTerritoriaux = this.établissementTerritorialLoader.récupérerLesÉtablissementsTerritoriaux()
 
-    return établissementsTerritoriaux
+    await this.établissementTerritorialRepository.save(établissementsTerritoriaux)
   }
 }

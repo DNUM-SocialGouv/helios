@@ -18,10 +18,11 @@
     "saveET": "TS_NODE_TRANSPILE_ONLY=true node --loader ts-node/esm --max-old-space-size=8192 src/data-crawler/infrastructure/controllers/sauvegarderLesÉtablissementsTerritoriauxCron.ts",
     "start": "next start",
     "start:db": "docker-compose down && docker-compose up -d && yarn db-migrate up",
-    "test": "jest",
+    "test": "yarn db-migrate up --env test && jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "db": "TS_NODE_TRANSPILE_ONLY=true node db.ts"
   },
   "dependencies": {
     "@gouvfr/dsfr": "1.4.1",
@@ -29,8 +30,10 @@
     "db-migrate": "^0.11.13",
     "db-migrate-pg": "^1.2.2",
     "dotenv-defaults": "^5.0.0",
+    "knex": "^2.0.0",
     "minify-stream": "^2.1.0",
     "next": "12.1.4",
+    "pg": "^8.7.3",
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "ssh2": "^1.9.0",
