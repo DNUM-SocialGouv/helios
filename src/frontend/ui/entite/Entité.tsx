@@ -1,6 +1,6 @@
 import { BlocIdentité } from './BlocIdentité'
 
-export const Entite = () => {
+export const Entité = () => {
   return (
     <>
       <h1>

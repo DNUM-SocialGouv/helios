@@ -12,7 +12,7 @@ type BlocProps = Readonly<{
 export const Bloc = ({ titre, children }: BlocProps) => {
 
   return (
-    <section>
+    <section aria-label={titre}>
       <h3 className={styles['titre-bloc']}>
         {titre}
       </h3>

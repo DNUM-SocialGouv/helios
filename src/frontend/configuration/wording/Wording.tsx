@@ -20,12 +20,16 @@ export interface Wording {
   readonly VOUS_ÊTES_ICI: string
   readonly VOIR_LE_FIL_D_ARIANE: string
 
+  // Fiches
+  readonly MISE_À_JOUR: string
+  readonly SOURCE: string
+
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string
   readonly NOM_DE_L_ÉTABLISSEMENT: string
   readonly NUMÉRO_FINESS: string
   readonly ADRESSE: string
-  readonly TÉLÉPHONE_ET_EMAIL: string
+  readonly TÉLÉPHONE: string
   readonly NOM_DU_DIRECTEUR: string
   readonly STATUT_DE_L_ÉTABLISSEMENT: string
   readonly DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM: string
