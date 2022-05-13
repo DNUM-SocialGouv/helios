@@ -6,7 +6,7 @@ import { NodeXmlToJs } from '../xml-to-js/NodeXmlToJs'
 import { FinessÉtablissementTerritorialLoader } from './FinessÉtablissementTerritorialLoader'
 
 describe('Récupération des établissements territoriaux de la source de données FINESS', () => {
-  const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess`
+  const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_et`
   const finessLocalPath = `${localPath}/finess/simple`
 
   beforeEach(() => {
