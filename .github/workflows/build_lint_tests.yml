@@ -49,8 +49,8 @@ jobs:
     steps:
       - name: Install PostgreSQL client
         run: |
-          apt-get update
-          apt-get install --yes postgresql-client
+          sudo apt-get update
+          sudo apt-get install --yes postgresql-client
       - name: Query database
         run: psql -h postgres -d helios -U helios -c 'SELECT 1;'
         env:
