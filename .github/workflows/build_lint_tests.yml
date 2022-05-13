@@ -54,7 +54,7 @@ jobs:
       - name: Query database
         run: psql -h postgres -d helios -U helios -c 'SELECT 1;'
         env:
-          PGPASSWORD: postgres_password
+          PGPASSWORD: h3li0s
       - uses: actions/cache@v2
         id: restore-build
         with:
