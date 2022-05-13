@@ -8,5 +8,6 @@ CREATE TABLE DateMiseÀJourSource
     CONSTRAINT source_primary_key
         PRIMARY KEY (source)
 );
-
+SELECT NOW();
 SET TIMEZONE='Europe/Paris';
+SELECT NOW();
