@@ -4,8 +4,8 @@ import { FinessÉtablissementTerritorialRepository } from './FinessÉtablissemen
 
 describe('Sauvegarde de l’établissement territorial', () => {
   beforeEach(async () => {
-    await fakeDataCrawlerDependencies.database.raw('DELETE FROM EntitéJuridique')
     await fakeDataCrawlerDependencies.database.raw('DELETE FROM ÉtablissementTerritorialIdentité')
+    await fakeDataCrawlerDependencies.database.raw('DELETE FROM EntitéJuridique')
     await fakeDataCrawlerDependencies.database.raw('DELETE FROM DateMiseÀJourSource')
   })
 
