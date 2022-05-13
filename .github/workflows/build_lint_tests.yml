@@ -31,7 +31,30 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     needs: build
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: helios
+          POSTGRES_PASSWORD: h3li0s
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: helios
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
+      - name: Install PostgreSQL client
+        run: |
+          apt-get update
+          apt-get install --yes postgresql-client
+      - name: Query database
+        run: psql -h postgres -d helios -U helios -c 'SELECT 1;'
+        env:
+          PGPASSWORD: postgres_password
       - uses: actions/cache@v2
         id: restore-build
         with:
