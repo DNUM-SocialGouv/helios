@@ -25,6 +25,8 @@ import { EnvironmentVariables } from './src/data-crawler/métier/gateways/Enviro
       }
       dataSource = await typeOrmOrm(environmentVariables)
     } else {
+      console.log('node env =', process.env['NODE_ENV'])
+
       dataSource = (await dependencies).database
     }
     await dataSource.runMigrations()

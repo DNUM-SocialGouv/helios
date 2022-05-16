@@ -6,7 +6,7 @@ import { ÉtablissementTerritorialIdentitéEntity } from '../../../../../migrati
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { getFakeDataCrawlerDependencies } from '../../../testHelper'
 import { Dependencies } from '../../dependencies'
-import { FinessÉtablissementTerritorialRepository } from './FinessÉtablissementTerritialRepository'
+import { TypeORMÉtablissementTerritorialRepository } from './TypeORMÉtablissementTerritorialRepository'
 
 describe('Sauvegarde de l’établissement territorial', () => {
   let fakeDataCrawlerDependencies: Dependencies
@@ -77,7 +77,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
         source: SourceDeDonnées.FINESS,
       },
     ])
-    const finessÉtablissementTerritorialRepository = new FinessÉtablissementTerritorialRepository(database)
+    const finessÉtablissementTerritorialRepository = new TypeORMÉtablissementTerritorialRepository(database)
     const établissementTerritorial1: ÉtablissementTerritorialIdentité = {
       adresseAcheminement: '01130 NANTUA',
       adresseNuméroVoie: '50',

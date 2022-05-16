@@ -11,18 +11,14 @@ export const typeOrmOrm: Orm<DataSource> = async (environmentVariables: Environm
     database: environmentVariables['POSTGRES_DB'],
     entities: [DateMiseÀJourSourceEntity, EntitéJuridiqueEntity, ÉtablissementTerritorialIdentitéEntity],
     host: 'localhost',
-    // logging: [environmentVariables['ORM_DEBUG']] as LoggerOptions,
-    logging: 'all',
+    logging: [environmentVariables['ORM_DEBUG']] as LoggerOptions,
     migrations: ['./migrations/*.ts'],
     password: environmentVariables['POSTGRES_PASSWORD'],
     port: Number(environmentVariables['POSTGRES_PORT']),
-    // sert pour le debug
-    // synchronize: true,
     type: 'postgres',
     username: environmentVariables['POSTGRES_USER'],
   })
   await dataSource.initialize()
-  // await dataSource.runMigrations()
 
   return dataSource
 }

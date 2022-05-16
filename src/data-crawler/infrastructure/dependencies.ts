@@ -17,7 +17,7 @@ import { typeOrmOrm } from './gateways/orm/typeOrmOrm'
 import { GunzipUnzipRawData } from './gateways/unzip-raw-data/GunzipUnzipRawData'
 import { NodeXmlToJs } from './gateways/xml-to-js/NodeXmlToJs'
 import { FinessÉtablissementTerritorialLoader } from './gateways/établissement-territorial-loader/FinessÉtablissementTerritorialLoader'
-import { FinessÉtablissementTerritorialRepository } from './gateways/établissement-territorial-repository/FinessÉtablissementTerritialRepository'
+import { TypeORMÉtablissementTerritorialRepository } from './gateways/établissement-territorial-repository/TypeORMÉtablissementTerritorialRepository'
 
 export type Dependencies = Readonly<{
   database: DataSource
@@ -44,7 +44,7 @@ const _instantiateDependencies = async (): Promise<Dependencies> => {
     finessEntitéJuridiqueLoader: new FinessEntitéJuridiqueLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),
     finessEntitéJuridiqueRepository: new TypeORMEntitéJuridiqueRepository(database),
     finessÉtablissementTerritorialLoader: new FinessÉtablissementTerritorialLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),
-    finessÉtablissementTerritorialRepository: new FinessÉtablissementTerritorialRepository(database),
+    finessÉtablissementTerritorialRepository: new TypeORMÉtablissementTerritorialRepository(database),
     unzipRawData: new GunzipUnzipRawData(environmentVariables, logger),
   }
 }
