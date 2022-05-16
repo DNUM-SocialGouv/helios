@@ -1,4 +1,4 @@
-import { dependencies } from './src/data-crawler/infrastructure/dependencies'
+import { dependencies } from '../src/data-crawler/infrastructure/dependencies'
 
 (async () => {
   try {

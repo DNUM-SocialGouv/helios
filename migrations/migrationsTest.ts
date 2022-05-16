@@ -1,5 +1,5 @@
-import { typeOrmOrm } from './src/data-crawler/infrastructure/gateways/orm/typeOrmOrm'
-import { EnvironmentVariables } from './src/data-crawler/métier/gateways/EnvironmentVariables'
+import { typeOrmOrm } from '../src/data-crawler/infrastructure/gateways/orm/typeOrmOrm'
+import { EnvironmentVariables } from '../src/data-crawler/métier/gateways/EnvironmentVariables'
 
 (async () => {
   try {

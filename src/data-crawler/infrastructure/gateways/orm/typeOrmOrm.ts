@@ -7,9 +7,6 @@ import { EnvironmentVariables } from '../../../métier/gateways/EnvironmentVaria
 import { Orm } from '../../../métier/gateways/Orm'
 
 export const typeOrmOrm: Orm<DataSource> = async (environmentVariables: EnvironmentVariables): Promise<DataSource> => {
-  console.log('raw', environmentVariables['POSTGRES_PORT'])
-  console.log('num', Number(environmentVariables['POSTGRES_PORT']))
-
   const dataSource = new DataSource({
     database: environmentVariables['POSTGRES_DB'],
     entities: [DateMiseÀJourSourceEntity, EntitéJuridiqueEntity, ÉtablissementTerritorialIdentitéEntity],
