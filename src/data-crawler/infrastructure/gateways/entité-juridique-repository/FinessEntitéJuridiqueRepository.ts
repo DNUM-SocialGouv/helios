@@ -1,23 +1,27 @@
+import { EntitéJuridiqueEntity } from '../../../../../migrations/entities/EntitéJuridiqueEntity'
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { EntitéJuridiqueRepository } from '../../../métier/gateways/EntitéJuridiqueRepository'
 
 export class FinessEntitéJuridiqueRepository implements EntitéJuridiqueRepository {
-  constructor(private readonly database: any) {}
+  constructor(private readonly dataSourceInit: any) {}
 
   async save(entitésJuridiques: EntitéJuridique[]): Promise<void> {
-    //TODO: une requête par ligne pas top => à optimiser (multi VALUES)
-    for (const entitéJuridique of entitésJuridiques) {
-      await this.database.raw('INSERT INTO EntitéJuridique (adresseAcheminement, adresseNuméroVoie, adresseTypeVoie, adresseVoie, numéroFinessEntitéJuridique, raisonSociale, libelléStatutJuridique, téléphone) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT (numéroFinessEntitéJuridique) DO UPDATE SET adresseAcheminement = EXCLUDED.adresseAcheminement, adresseNuméroVoie = EXCLUDED.adresseNuméroVoie, adresseTypeVoie = EXCLUDED.adresseTypeVoie, adresseVoie = EXCLUDED.adresseVoie, numéroFinessEntitéJuridique = EXCLUDED.numéroFinessEntitéJuridique, raisonSociale = EXCLUDED.raisonSociale, libelléStatutJuridique = EXCLUDED.libelléStatutJuridique, téléphone = EXCLUDED.téléphone',
-        [
-          entitéJuridique.adresseAcheminement,
-          entitéJuridique.adresseNuméroVoie,
-          entitéJuridique.adresseTypeVoie,
-          entitéJuridique.adresseVoie,
-          entitéJuridique.numéroFinessEntitéJuridique,
-          entitéJuridique.raisonSociale,
-          entitéJuridique.libelléStatutJuridique,
-          entitéJuridique.téléphone,
-        ])
+    const dataSource = await this.dataSourceInit()
+    const entitésJuridiquesLength = entitésJuridiques.length
+    const batchSize = 20
+
+    for (let index = 0; index < entitésJuridiquesLength; index = index + batchSize) {
+      const entitésJuridiquesBatch = []
+
+      for (let index2 = 0; index2 < batchSize; index2++) {
+        if (entitésJuridiques[index + index2]) {
+          entitésJuridiquesBatch.push(entitésJuridiques[index + index2])
+        }
+      }
+
+      await dataSource
+        .getRepository(EntitéJuridiqueEntity)
+        .upsert(entitésJuridiquesBatch, ['numéroFinessEntitéJuridique'])
     }
   }
 }

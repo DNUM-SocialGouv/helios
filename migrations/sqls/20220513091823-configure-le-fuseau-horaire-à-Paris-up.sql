@@ -1,1 +1,0 @@
-SET TIMEZONE='Europe/Paris';

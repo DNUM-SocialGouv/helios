@@ -1,5 +1,5 @@
 import { Dependencies } from './infrastructure/dependencies'
-import { knexOrm } from './infrastructure/gateways/orm/knexOrm'
+import { typeOrmOrm } from './infrastructure/gateways/orm/typeOrmOrm'
 import { EnvironmentVariables } from './métier/gateways/EnvironmentVariables'
 import { Logger } from './métier/gateways/Logger'
 
@@ -21,7 +21,7 @@ const environmentVariables: EnvironmentVariables = {
 }
 
 export const fakeDataCrawlerDependencies: Dependencies = {
-  database: knexOrm(environmentVariables),
+  dataSourceInit: typeOrmOrm(environmentVariables),
   downloadRawData: { handle: jest.fn() },
   environmentVariables,
   finessEntitéJuridiqueLoader: { récupérerLesEntitésJuridiques: jest.fn() },

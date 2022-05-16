@@ -11,14 +11,14 @@ import { FinessEntitéJuridiqueLoader } from './gateways/entité-juridique-loade
 import { FinessEntitéJuridiqueRepository } from './gateways/entité-juridique-repository/FinessEntitéJuridiqueRepository'
 import { NodeEnvironmentVariables } from './gateways/environnement-variables/NodeEnvironmentVariables'
 import { ConsoleLogger } from './gateways/logger/ConsoleLogger'
-import { knexOrm } from './gateways/orm/knexOrm'
+import { typeOrmOrm } from './gateways/orm/typeOrmOrm'
 import { GunzipUnzipRawData } from './gateways/unzip-raw-data/GunzipUnzipRawData'
 import { NodeXmlToJs } from './gateways/xml-to-js/NodeXmlToJs'
 import { FinessÉtablissementTerritorialLoader } from './gateways/établissement-territorial-loader/FinessÉtablissementTerritorialLoader'
 import { FinessÉtablissementTerritorialRepository } from './gateways/établissement-territorial-repository/FinessÉtablissementTerritialRepository'
 
 export type Dependencies = Readonly<{
-  database: any
+  dataSourceInit: any
   downloadRawData: DownloadRawData
   environmentVariables: EnvironmentVariables
   finessEntitéJuridiqueLoader: EntitéJuridiqueLoader
@@ -33,16 +33,16 @@ const _instantiateDependencies = (): Dependencies => {
   const logger = new ConsoleLogger()
   const environmentVariables = new NodeEnvironmentVariables(logger)
   const xmlToJs = new NodeXmlToJs()
-  const database = knexOrm(environmentVariables)
+  const dataSourceInit = typeOrmOrm(environmentVariables)
 
   return {
-    database,
+    dataSourceInit,
     downloadRawData: new SftpDownloadRawData(environmentVariables, logger),
     environmentVariables,
     finessEntitéJuridiqueLoader: new FinessEntitéJuridiqueLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),
-    finessEntitéJuridiqueRepository: new FinessEntitéJuridiqueRepository(database),
+    finessEntitéJuridiqueRepository: new FinessEntitéJuridiqueRepository(dataSourceInit),
     finessÉtablissementTerritorialLoader: new FinessÉtablissementTerritorialLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),
-    finessÉtablissementTerritorialRepository: new FinessÉtablissementTerritorialRepository(database),
+    finessÉtablissementTerritorialRepository: new FinessÉtablissementTerritorialRepository(dataSourceInit),
     unzipRawData: new GunzipUnzipRawData(environmentVariables, logger),
   }
 }
