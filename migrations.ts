@@ -6,7 +6,11 @@ import { EnvironmentVariables } from './src/data-crawler/métier/gateways/Enviro
   try {
     let dataSource
 
+    console.log(process.env['NODE_ENV'])
+
     if (process.env['NODE_ENV'] === 'test') {
+      console.log('test')
+
       const environmentVariables: EnvironmentVariables = {
         ORM_DEBUG: 'true',
         POSTGRES_DB: 'helios',
@@ -25,6 +29,7 @@ import { EnvironmentVariables } from './src/data-crawler/métier/gateways/Enviro
       }
       dataSource = await typeOrmOrm(environmentVariables)
     } else {
+      console.log('pas test')
       dataSource = (await dependencies).database
     }
     await dataSource.runMigrations()
