@@ -2,7 +2,9 @@ import { dependencies } from './src/data-crawler/infrastructure/dependencies'
 import { typeOrmOrm } from './src/data-crawler/infrastructure/gateways/orm/typeOrmOrm'
 import { EnvironmentVariables } from './src/data-crawler/métier/gateways/EnvironmentVariables'
 
+console.log('toto')
 (async () => {
+  console.log('titi')
   try {
     let dataSource
 
