@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm'
 
-import { DateMiseÀJourSourceEntity, SourceDeDonnées } from '../../../../../migrations/entities/DateMiseÀJourSourceEntity'
-import { ÉtablissementTerritorialIdentitéEntity } from '../../../../../migrations/entities/ÉtablissementTerritorialIdentitéEntity'
+import { DateMiseÀJourSourceEntity, SourceDeDonnées } from '../../../../../database/entities/DateMiseÀJourSourceEntity'
+import { ÉtablissementTerritorialIdentitéEntity } from '../../../../../database/entities/ÉtablissementTerritorialIdentitéEntity'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { ÉtablissementTerritorialRepository } from '../../../métier/gateways/ÉtablissementTerritorialRepository'
 

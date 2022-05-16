@@ -1,7 +1,7 @@
 import { DataSource, Repository } from 'typeorm'
 
-import { DateMiseÀJourSourceEntity, SourceDeDonnées } from '../../../../../migrations/entities/DateMiseÀJourSourceEntity'
-import { EntitéJuridiqueEntity } from '../../../../../migrations/entities/EntitéJuridiqueEntity'
+import { DateMiseÀJourSourceEntity, SourceDeDonnées } from '../../../../../database/entities/DateMiseÀJourSourceEntity'
+import { EntitéJuridiqueEntity } from '../../../../../database/entities/EntitéJuridiqueEntity'
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { getFakeDataCrawlerDependencies } from '../../../testHelper'
 import { Dependencies } from '../../dependencies'

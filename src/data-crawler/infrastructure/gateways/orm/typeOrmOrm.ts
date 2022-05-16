@@ -1,8 +1,8 @@
 import { DataSource, LoggerOptions } from 'typeorm'
 
-import { DateMiseÀJourSourceEntity } from '../../../../../migrations/entities/DateMiseÀJourSourceEntity'
-import { EntitéJuridiqueEntity } from '../../../../../migrations/entities/EntitéJuridiqueEntity'
-import { ÉtablissementTerritorialIdentitéEntity } from '../../../../../migrations/entities/ÉtablissementTerritorialIdentitéEntity'
+import { DateMiseÀJourSourceEntity } from '../../../../../database/entities/DateMiseÀJourSourceEntity'
+import { EntitéJuridiqueEntity } from '../../../../../database/entities/EntitéJuridiqueEntity'
+import { ÉtablissementTerritorialIdentitéEntity } from '../../../../../database/entities/ÉtablissementTerritorialIdentitéEntity'
 import { EnvironmentVariables } from '../../../métier/gateways/EnvironmentVariables'
 import { Orm } from '../../../métier/gateways/Orm'
 
@@ -12,7 +12,7 @@ export const typeOrmOrm: Orm<DataSource> = async (environmentVariables: Environm
     entities: [DateMiseÀJourSourceEntity, EntitéJuridiqueEntity, ÉtablissementTerritorialIdentitéEntity],
     host: 'localhost',
     logging: [environmentVariables['ORM_DEBUG']] as LoggerOptions,
-    migrations: ['./migrations/*.ts'],
+    migrations: ['./database/migrations/*.ts'],
     password: environmentVariables['POSTGRES_PASSWORD'],
     port: Number(environmentVariables['POSTGRES_PORT']),
     type: 'postgres',
