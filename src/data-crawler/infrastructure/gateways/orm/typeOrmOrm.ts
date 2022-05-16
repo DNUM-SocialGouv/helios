@@ -14,7 +14,7 @@ export const typeOrmOrm: Orm<DataSource> = async (environmentVariables: Environm
     logging: [environmentVariables['ORM_DEBUG']] as LoggerOptions,
     migrations: ['./migrations/*.ts'],
     password: environmentVariables['POSTGRES_PASSWORD'],
-    port: Number(environmentVariables['POSTGRES_PORT']),
+    port: 5433,
     type: 'postgres',
     username: environmentVariables['POSTGRES_USER'],
   })
