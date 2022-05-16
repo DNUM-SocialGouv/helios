@@ -1,7 +1,14 @@
-import { fakeDataCrawlerDependencies } from '../../testHelper'
+import { Dependencies } from '../../infrastructure/dependencies'
+import { getFakeDataCrawlerDependencies } from '../../testHelper'
 import { SauvegarderLesÉtablissementsTerritoriauxUseCase } from './SauvegarderLesÉtablissementsTerritoriauxUseCase'
 
 describe('Sauvegarde des établissements territoriaux', () => {
+  let fakeDataCrawlerDependencies: Dependencies
+
+  beforeAll(async () => {
+    fakeDataCrawlerDependencies = await getFakeDataCrawlerDependencies()
+  })
+
   it('récupérer les établissements territoriaux de plusieurs sources de données', () => {
     const sauvegarderLesÉtablissementsTerritoriaux = new SauvegarderLesÉtablissementsTerritoriauxUseCase(
       fakeDataCrawlerDependencies.finessÉtablissementTerritorialLoader,

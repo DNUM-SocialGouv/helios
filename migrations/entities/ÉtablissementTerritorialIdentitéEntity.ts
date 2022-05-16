@@ -16,7 +16,7 @@ export class ÉtablissementTerritorialIdentitéEntity {
   @Column({ length: 255, name: 'adressevoie' })
   public adresseVoie!: string
 
-  @Column({ length: 3, name: 'catégorieÉtablissement' })
+  @Column({ length: 3, name: 'catÉtablissement' })
   public catégorieÉtablissement!: string
 
   @Column({ length: 255, name: 'courriel' })
@@ -24,7 +24,10 @@ export class ÉtablissementTerritorialIdentitéEntity {
 
   @ManyToOne(() => EntitéJuridiqueEntity, (entitéJuridiqueEntity) => entitéJuridiqueEntity.établissementTerritorialIdentitéEntity, { nullable: false, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'numérofinessentitéjuridique', referencedColumnName: 'numéroFinessEntitéJuridique' })
-  public numéroFinessEntitéJuridique!: EntitéJuridiqueEntity
+  public entitéJuridique!: EntitéJuridiqueEntity
+
+  @Column({ length: 9, name: 'numérofinessentitéjuridique' })
+  public numéroFinessEntitéJuridique!: string
 
   @Column({ length: 9, name: 'numérofinessÉtablissementprincipal' })
   public numéroFinessÉtablissementPrincipal!: string

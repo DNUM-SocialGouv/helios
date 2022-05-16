@@ -20,15 +20,17 @@ const environmentVariables: EnvironmentVariables = {
   SFTP_USERNAME: 'usr_finess_ls',
 }
 
-export const fakeDataCrawlerDependencies: Dependencies = {
-  dataSourceInit: typeOrmOrm(environmentVariables),
-  downloadRawData: { handle: jest.fn() },
-  environmentVariables,
-  finessEntitéJuridiqueLoader: { récupérerLesEntitésJuridiques: jest.fn() },
-  finessEntitéJuridiqueRepository: { save: jest.fn() },
-  finessÉtablissementTerritorialLoader: { récupérerLesÉtablissementsTerritoriaux: jest.fn() },
-  finessÉtablissementTerritorialRepository: { save: jest.fn() },
-  unzipRawData: { handle: jest.fn() },
+export const getFakeDataCrawlerDependencies = async (): Promise<Dependencies> => {
+  return {
+    database: await typeOrmOrm(environmentVariables),
+    downloadRawData: { handle: jest.fn() },
+    environmentVariables,
+    finessEntitéJuridiqueLoader: { récupérerLesEntitésJuridiques: jest.fn() },
+    finessEntitéJuridiqueRepository: { save: jest.fn() },
+    finessÉtablissementTerritorialLoader: { récupérerLesÉtablissementsTerritoriaux: jest.fn() },
+    finessÉtablissementTerritorialRepository: { save: jest.fn() },
+    unzipRawData: { handle: jest.fn() },
+  }
 }
 
 export const fakeLogger: Logger = {

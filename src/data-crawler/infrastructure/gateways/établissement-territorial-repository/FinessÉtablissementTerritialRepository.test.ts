@@ -1,80 +1,83 @@
-import { DateMiseÀJourSourceEntity } from '../../../../../migrations/entities/DateMiseÀJourSourceEntity'
+import { DataSource, Repository } from 'typeorm'
+
+import { DateMiseÀJourSourceEntity, SourceDeDonnées } from '../../../../../migrations/entities/DateMiseÀJourSourceEntity'
 import { EntitéJuridiqueEntity } from '../../../../../migrations/entities/EntitéJuridiqueEntity'
 import { ÉtablissementTerritorialIdentitéEntity } from '../../../../../migrations/entities/ÉtablissementTerritorialIdentitéEntity'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
-import { fakeDataCrawlerDependencies } from '../../../testHelper'
+import { getFakeDataCrawlerDependencies } from '../../../testHelper'
+import { Dependencies } from '../../dependencies'
 import { FinessÉtablissementTerritorialRepository } from './FinessÉtablissementTerritialRepository'
 
 describe('Sauvegarde de l’établissement territorial', () => {
-  let dataSource: any
+  let fakeDataCrawlerDependencies: Dependencies
+  let database: DataSource
+  let entitéJuridiqueRepository: Repository<EntitéJuridiqueEntity>
+  let établissementTerritorialIdentitéRepository: Repository<ÉtablissementTerritorialIdentitéEntity>
+  let dateMiseÀJourSourceRepository: Repository<DateMiseÀJourSourceEntity>
 
   beforeAll(async () => {
-    dataSource = await fakeDataCrawlerDependencies.dataSourceInit()
+    fakeDataCrawlerDependencies = await getFakeDataCrawlerDependencies()
+    database = fakeDataCrawlerDependencies.database
+    entitéJuridiqueRepository = fakeDataCrawlerDependencies.database.getRepository(EntitéJuridiqueEntity)
+    établissementTerritorialIdentitéRepository = fakeDataCrawlerDependencies.database.getRepository(ÉtablissementTerritorialIdentitéEntity)
+    dateMiseÀJourSourceRepository = fakeDataCrawlerDependencies.database.getRepository(DateMiseÀJourSourceEntity)
   })
 
   beforeEach(async () => {
-    await dataSource.remove(ÉtablissementTerritorialIdentitéEntity)
-    await dataSource.remove(EntitéJuridiqueEntity)
-    await dataSource.remove(DateMiseÀJourSourceEntity)
+    await établissementTerritorialIdentitéRepository.query('DELETE FROM ÉtablissementTerritorialIdentité;')
+    await entitéJuridiqueRepository.query('DELETE FROM EntitéJuridique;')
+    await dateMiseÀJourSourceRepository.query('DELETE FROM DateMiseÀJourSource;')
   })
 
   afterAll(async () => {
-    await dataSource.destroy()
+    await database.destroy()
   })
 
-  it.skip('sauvegarder une établissement territorial et sa date de mise à jour FINESS même s’il existe déjà', async () => {
+  it('sauvegarder une établissement territorial et sa date de mise à jour FINESS même s’il existe déjà', async () => {
     // GIVEN
-    await dataSource
-      .getRepository(EntitéJuridiqueEntity)
-      .insert([
-        {
-          adresseAcheminement: 'fake',
-          adresseNuméroVoie: 'fake',
-          adresseTypeVoie: 'fake',
-          adresseVoie: 'fake',
-          libelléStatutJuridique: 'fake',
-          numéroFinessEntitéJuridique: '010018407',
-          raisonSociale: 'fake',
-          téléphone: 'fake',
-        },
-        {
-          adresseAcheminement: 'fake',
-          adresseNuméroVoie: 'fake',
-          adresseTypeVoie: 'fake',
-          adresseVoie: 'fake',
-          libelléStatutJuridique: 'fake',
-          numéroFinessEntitéJuridique: '590000741',
-          raisonSociale: 'fake',
-          téléphone: 'fake',
-        },
-      ])
-    await dataSource
-      .getRepository(ÉtablissementTerritorialIdentitéEntity)
-      .insert([
-        {
-          adresseAcheminement: 'fake',
-          adresseNuméroVoie: 'fake',
-          adresseTypeVoie: 'fake',
-          adresseVoie: 'fake',
-          catégorieÉtablissement: 'fake',
-          courriel: 'fake',
-          numéroFinessEntitéJuridique: '010018407',
-          numéroFinessÉtablissementPrincipal: 'fake',
-          numéroFinessÉtablissementTerritorial: '010000040',
-          raisonSociale: 'fake',
-          typeÉtablissement: 'fake',
-          téléphone: 'fake',
-        },
-      ])
-    await dataSource
-      .getRepository(DateMiseÀJourSourceEntity)
-      .insert([
-        {
-          dernièreMiseÀJour: '20200102',
-          source: 'FINESS',
-        },
-      ])
-    const finessÉtablissementTerritorialRepository = new FinessÉtablissementTerritorialRepository(dataSource)
+    const entitéJuridique1 = new EntitéJuridiqueEntity()
+    entitéJuridique1.adresseAcheminement = 'fake'
+    entitéJuridique1.adresseNuméroVoie = 'fake'
+    entitéJuridique1.adresseTypeVoie = 'fake'
+    entitéJuridique1.adresseVoie = 'fake'
+    entitéJuridique1.libelléStatutJuridique = 'fake'
+    entitéJuridique1.numéroFinessEntitéJuridique = '010018407'
+    entitéJuridique1.raisonSociale = 'fake'
+    entitéJuridique1.téléphone = 'fake'
+
+    const entitéJuridique2 = new EntitéJuridiqueEntity()
+    entitéJuridique2.adresseAcheminement = 'fake'
+    entitéJuridique2.adresseNuméroVoie = 'fake'
+    entitéJuridique2.adresseTypeVoie = 'fake'
+    entitéJuridique2.adresseVoie = 'fake'
+    entitéJuridique2.libelléStatutJuridique = 'fake'
+    entitéJuridique2.numéroFinessEntitéJuridique = '590000741'
+    entitéJuridique2.raisonSociale = 'fake'
+    entitéJuridique2.téléphone = 'fake'
+    await entitéJuridiqueRepository.insert([entitéJuridique1, entitéJuridique2])
+
+    const établissementTerritorialIdentité1 = new ÉtablissementTerritorialIdentitéEntity()
+    établissementTerritorialIdentité1.adresseAcheminement = 'fake',
+    établissementTerritorialIdentité1.adresseNuméroVoie = 'fake',
+    établissementTerritorialIdentité1.adresseTypeVoie = 'fake',
+    établissementTerritorialIdentité1.adresseVoie = 'fake',
+    établissementTerritorialIdentité1.catégorieÉtablissement = 'fak',
+    établissementTerritorialIdentité1.courriel = 'fake',
+    établissementTerritorialIdentité1.numéroFinessEntitéJuridique = entitéJuridique1.numéroFinessEntitéJuridique,
+    établissementTerritorialIdentité1.numéroFinessÉtablissementPrincipal = 'fake',
+    établissementTerritorialIdentité1.numéroFinessÉtablissementTerritorial = '010000040',
+    établissementTerritorialIdentité1.raisonSociale = 'fake',
+    établissementTerritorialIdentité1.typeÉtablissement = 'F',
+    établissementTerritorialIdentité1.téléphone = 'fake',
+    await établissementTerritorialIdentitéRepository.insert([établissementTerritorialIdentité1])
+
+    await dateMiseÀJourSourceRepository.insert([
+      {
+        dernièreMiseÀJour: '20200102',
+        source: SourceDeDonnées.FINESS,
+      },
+    ])
+    const finessÉtablissementTerritorialRepository = new FinessÉtablissementTerritorialRepository(database)
     const établissementTerritorial1: ÉtablissementTerritorialIdentité = {
       adresseAcheminement: '01130 NANTUA',
       adresseNuméroVoie: '50',
@@ -111,45 +114,45 @@ describe('Sauvegarde de l’établissement territorial', () => {
     await finessÉtablissementTerritorialRepository.save(établissementsTerritoriaux)
 
     // THEN
-    const établissementsTerritoriauxQuery = await dataSource
-      .getRepository(DateMiseÀJourSourceEntity)
-      .find({ order: { numéroFinessEntitéJuridique: 'ASC' } })
-    expect(établissementsTerritoriauxQuery.rows).toStrictEqual([
-      {
-        adresseacheminement: '01130 NANTUA',
-        adressenumérovoie: '50',
-        adressetypevoie: 'R',
-        adressevoie: 'PAUL PAINLEVE',
-        catégorieÉtablissement: '355',
-        courriel: 'a@example.com',
-        numérofinessentitéjuridique: '010018407',
-        numérofinessÉtablissementprincipal: '010000057',
-        numérofinessÉtablissementterritorial: '010000040',
-        raisonsociale: 'CH NANTUA',
-        typeÉtablissement: 'S',
-        téléphone: '0102030405',
-      },
-      {
-        adresseacheminement: '59650 VILLENEUVE D ASCQ',
-        adressenumérovoie: '20',
-        adressetypevoie: 'AV',
-        adressevoie: 'DE LA RECONNAISSANCE',
-        catégorieÉtablissement: '365',
-        courriel: 'b@example.com',
-        numérofinessentitéjuridique: '590000741',
-        numérofinessÉtablissementprincipal: '',
-        numérofinessÉtablissementterritorial: '590782553',
-        raisonsociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-        typeÉtablissement: 'P',
-        téléphone: '0102030406',
-      },
-    ])
-    const dateMiseÀJourSourceQuery = await dataSource
-      .getRepository(DateMiseÀJourSourceEntity)
-      .find({ where: { source: 'FINESS' } })
-    expect(dateMiseÀJourSourceQuery.rows[0]).toStrictEqual({
-      dernièremiseÀjour: new Date('2022-02-02T23:00:00.000Z'),
-      source: 'FINESS',
-    })
+    const établissementsTerritoriauxSauvés = await établissementTerritorialIdentitéRepository
+      .find({ order: { numéroFinessÉtablissementTerritorial: 'ASC' } })
+
+    const établissementTerritorial1MisAJourAttendu = new ÉtablissementTerritorialIdentitéEntity()
+    établissementTerritorial1MisAJourAttendu.adresseAcheminement = '01130 NANTUA'
+    établissementTerritorial1MisAJourAttendu.adresseNuméroVoie = '50'
+    établissementTerritorial1MisAJourAttendu.adresseTypeVoie = 'R'
+    établissementTerritorial1MisAJourAttendu.adresseVoie = 'PAUL PAINLEVE'
+    établissementTerritorial1MisAJourAttendu.catégorieÉtablissement = '355'
+    établissementTerritorial1MisAJourAttendu.courriel = 'a@example.com'
+    établissementTerritorial1MisAJourAttendu.numéroFinessEntitéJuridique = '010018407'
+    établissementTerritorial1MisAJourAttendu.numéroFinessÉtablissementPrincipal = '010000057'
+    établissementTerritorial1MisAJourAttendu.numéroFinessÉtablissementTerritorial = '010000040'
+    établissementTerritorial1MisAJourAttendu.raisonSociale = 'CH NANTUA'
+    établissementTerritorial1MisAJourAttendu.typeÉtablissement = 'S'
+    établissementTerritorial1MisAJourAttendu.téléphone = '0102030405'
+    const établissementTerritorial2MisAJourAttendu = new ÉtablissementTerritorialIdentitéEntity()
+    établissementTerritorial2MisAJourAttendu.adresseAcheminement = '59650 VILLENEUVE D ASCQ'
+    établissementTerritorial2MisAJourAttendu.adresseNuméroVoie = '20'
+    établissementTerritorial2MisAJourAttendu.adresseTypeVoie = 'AV'
+    établissementTerritorial2MisAJourAttendu.adresseVoie = 'DE LA RECONNAISSANCE'
+    établissementTerritorial2MisAJourAttendu.catégorieÉtablissement = '365'
+    établissementTerritorial2MisAJourAttendu.courriel = 'b@example.com'
+    établissementTerritorial2MisAJourAttendu.numéroFinessEntitéJuridique = '590000741'
+    établissementTerritorial2MisAJourAttendu.numéroFinessÉtablissementPrincipal = ''
+    établissementTerritorial2MisAJourAttendu.numéroFinessÉtablissementTerritorial = '590782553'
+    établissementTerritorial2MisAJourAttendu.raisonSociale = 'HOPITAL PRIVE DE VILLENEUVE DASCQ'
+    établissementTerritorial2MisAJourAttendu.typeÉtablissement = 'P'
+    établissementTerritorial2MisAJourAttendu.téléphone = '0102030406'
+
+    expect(établissementsTerritoriauxSauvés).toStrictEqual(
+      [établissementTerritorial1MisAJourAttendu, établissementTerritorial2MisAJourAttendu]
+    )
+    // const dateMiseÀJourSourceQuery = await dataSource
+    //   .getRepository(DateMiseÀJourSourceEntity)
+    //   .find({ where: { source: 'FINESS' } })
+    // expect(dateMiseÀJourSourceQuery.rows[0]).toStrictEqual({
+    //   dernièremiseÀjour: new Date('2022-02-02T23:00:00.000Z'),
+    //   source: 'FINESS',
+    // })
   })
 })

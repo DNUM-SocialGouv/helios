@@ -9,7 +9,7 @@ export class ÉtablissementTerritorialIdentité1652627040870 implements Migratio
           adresseNuméroVoie VARCHAR(5) NOT NULL,
           adresseTypeVoie VARCHAR(4) NOT NULL,
           adresseVoie VARCHAR(255) NOT NULL,
-          catégorieÉtablissement VARCHAR(3) NOT NULL,
+          catÉtablissement VARCHAR(3) NOT NULL,
           courriel VARCHAR(255) NOT NULL,
           numéroFinessEntitéJuridique VARCHAR(9) NOT NULL,
           numéroFinessÉtablissementPrincipal VARCHAR(9) NOT NULL,

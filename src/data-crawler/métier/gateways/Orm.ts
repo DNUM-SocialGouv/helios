@@ -1,3 +1,3 @@
 import { EnvironmentVariables } from './EnvironmentVariables'
 
-export type Orm = (environmentVariables: EnvironmentVariables) => void
+export type Orm<T> = (environmentVariables: EnvironmentVariables) => Promise<T>

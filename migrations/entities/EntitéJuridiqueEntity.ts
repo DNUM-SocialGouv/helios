@@ -30,7 +30,7 @@ export class EntitéJuridiqueEntity {
 
   @OneToMany(
     () => ÉtablissementTerritorialIdentitéEntity,
-    (établissementTerritorialIdentitéEntity) => établissementTerritorialIdentitéEntity.numéroFinessEntitéJuridique
+    (établissementTerritorialIdentitéEntity) => établissementTerritorialIdentitéEntity.entitéJuridique
   )
   public établissementTerritorialIdentitéEntity!: ÉtablissementTerritorialIdentitéEntity[]
 }

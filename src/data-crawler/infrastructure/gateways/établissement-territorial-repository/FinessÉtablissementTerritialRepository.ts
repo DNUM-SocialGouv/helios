@@ -1,13 +1,14 @@
-import { DateMiseÀJourSourceEntity } from '../../../../../migrations/entities/DateMiseÀJourSourceEntity'
+import { DataSource } from 'typeorm'
+
+import { DateMiseÀJourSourceEntity, SourceDeDonnées } from '../../../../../migrations/entities/DateMiseÀJourSourceEntity'
 import { ÉtablissementTerritorialIdentitéEntity } from '../../../../../migrations/entities/ÉtablissementTerritorialIdentitéEntity'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { ÉtablissementTerritorialRepository } from '../../../métier/gateways/ÉtablissementTerritorialRepository'
 
 export class FinessÉtablissementTerritorialRepository implements ÉtablissementTerritorialRepository {
-  constructor(private readonly dataSourceInit: any) {}
+  constructor(private readonly dataSource: DataSource) {}
 
   async save(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[]): Promise<void> {
-    const dataSource = await this.dataSourceInit()
     const établissementsTerritoriauxIdentitéLength = établissementsTerritoriauxIdentité.length
     const batchSize = 20
 
@@ -20,17 +21,17 @@ export class FinessÉtablissementTerritorialRepository implements Établissement
         }
       }
 
-      await dataSource
+      await this.dataSource
         .getRepository(ÉtablissementTerritorialIdentitéEntity)
         .upsert(établissementsTerritoriauxIdentitéBatch, ['numéroFinessÉtablissementTerritorial'])
     }
 
-    await dataSource
+    await this.dataSource
       .getRepository(DateMiseÀJourSourceEntity)
       .upsert([
         {
           dernièreMiseÀJour: établissementsTerritoriauxIdentité[0].dateMiseAJourSource,
-          source: 'FINESS',
+          source: SourceDeDonnées.FINESS,
         },
       ], ['source'])
   }

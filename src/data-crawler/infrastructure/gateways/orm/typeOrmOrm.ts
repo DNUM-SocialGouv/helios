@@ -6,7 +6,7 @@ import { ÉtablissementTerritorialIdentitéEntity } from '../../../../../migrati
 import { EnvironmentVariables } from '../../../métier/gateways/EnvironmentVariables'
 import { Orm } from '../../../métier/gateways/Orm'
 
-export const typeOrmOrm: Orm = (environmentVariables: EnvironmentVariables) => async (): Promise<DataSource> => {
+export const typeOrmOrm: Orm<DataSource> = async (environmentVariables: EnvironmentVariables): Promise<DataSource> => {
   const dataSource = new DataSource({
     database: environmentVariables['POSTGRES_DB'],
     entities: [DateMiseÀJourSourceEntity, EntitéJuridiqueEntity, ÉtablissementTerritorialIdentitéEntity],

@@ -1,3 +1,5 @@
+import { DataSource } from 'typeorm'
+
 import { DownloadRawData } from '../métier/gateways/DownloadRawData'
 import { EntitéJuridiqueLoader } from '../métier/gateways/EntitéJuridiqueLoader'
 import { EntitéJuridiqueRepository } from '../métier/gateways/EntitéJuridiqueRepository'
@@ -8,7 +10,7 @@ import { ÉtablissementTerritorialRepository } from '../métier/gateways/Établi
 import { dotEnvConfig } from './gateways/dot-env/dotEnvConfig'
 import { SftpDownloadRawData } from './gateways/download-raw-data/SftpDownloadRawData'
 import { FinessEntitéJuridiqueLoader } from './gateways/entité-juridique-loader/FinessEntitéJuridiqueLoader'
-import { FinessEntitéJuridiqueRepository } from './gateways/entité-juridique-repository/FinessEntitéJuridiqueRepository'
+import { TypeORMEntitéJuridiqueRepository } from './gateways/entité-juridique-repository/TypeORMEntitéJuridiqueRepository'
 import { NodeEnvironmentVariables } from './gateways/environnement-variables/NodeEnvironmentVariables'
 import { ConsoleLogger } from './gateways/logger/ConsoleLogger'
 import { typeOrmOrm } from './gateways/orm/typeOrmOrm'
@@ -18,7 +20,7 @@ import { FinessÉtablissementTerritorialLoader } from './gateways/établissement
 import { FinessÉtablissementTerritorialRepository } from './gateways/établissement-territorial-repository/FinessÉtablissementTerritialRepository'
 
 export type Dependencies = Readonly<{
-  dataSourceInit: any
+  database: DataSource
   downloadRawData: DownloadRawData
   environmentVariables: EnvironmentVariables
   finessEntitéJuridiqueLoader: EntitéJuridiqueLoader
@@ -28,21 +30,21 @@ export type Dependencies = Readonly<{
   unzipRawData: UnzipRawData
 }>
 
-const _instantiateDependencies = (): Dependencies => {
+const _instantiateDependencies = async (): Promise<Dependencies> => {
   dotEnvConfig()
   const logger = new ConsoleLogger()
   const environmentVariables = new NodeEnvironmentVariables(logger)
   const xmlToJs = new NodeXmlToJs()
-  const dataSourceInit = typeOrmOrm(environmentVariables)
+  const database = await typeOrmOrm(environmentVariables)
 
   return {
-    dataSourceInit,
+    database,
     downloadRawData: new SftpDownloadRawData(environmentVariables, logger),
     environmentVariables,
     finessEntitéJuridiqueLoader: new FinessEntitéJuridiqueLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),
-    finessEntitéJuridiqueRepository: new FinessEntitéJuridiqueRepository(dataSourceInit),
+    finessEntitéJuridiqueRepository: new TypeORMEntitéJuridiqueRepository(database),
     finessÉtablissementTerritorialLoader: new FinessÉtablissementTerritorialLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),
-    finessÉtablissementTerritorialRepository: new FinessÉtablissementTerritorialRepository(dataSourceInit),
+    finessÉtablissementTerritorialRepository: new FinessÉtablissementTerritorialRepository(database),
     unzipRawData: new GunzipUnzipRawData(environmentVariables, logger),
   }
 }
@@ -50,9 +52,9 @@ const _instantiateDependencies = (): Dependencies => {
 class DependenciesSingleton {
   private static instance: Dependencies
 
-  static getInstance(): Dependencies {
+  static async getInstance(): Promise<Dependencies> {
     if (!DependenciesSingleton.instance) {
-      DependenciesSingleton.instance = _instantiateDependencies()
+      DependenciesSingleton.instance = await _instantiateDependencies()
     }
 
     return DependenciesSingleton.instance

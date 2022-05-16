@@ -1,7 +1,14 @@
-import { fakeDataCrawlerDependencies } from '../../testHelper'
+import { Dependencies } from '../../infrastructure/dependencies'
+import { getFakeDataCrawlerDependencies } from '../../testHelper'
 import { SauvegarderLesEntitésJuridiquesUseCase } from './SauvegarderLesEntitésJuridiquesUseCase'
 
 describe('Sauvegarde des entités juridiques', () => {
+  let fakeDataCrawlerDependencies: Dependencies
+
+  beforeAll(async () => {
+    fakeDataCrawlerDependencies = await getFakeDataCrawlerDependencies()
+  })
+
   it('récupérer les entités juridiques de plusieurs sources de données', async () => {
     const sauvegarderLesEntitésJuridiques = new SauvegarderLesEntitésJuridiquesUseCase(
       fakeDataCrawlerDependencies.finessEntitéJuridiqueLoader,

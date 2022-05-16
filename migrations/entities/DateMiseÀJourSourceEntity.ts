@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm'
 
-enum SourceDeDonnées {
+export enum SourceDeDonnées {
   FINESS = 'FINESS'
 }
 

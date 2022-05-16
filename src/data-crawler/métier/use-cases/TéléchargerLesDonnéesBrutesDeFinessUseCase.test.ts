@@ -1,7 +1,14 @@
-import { fakeDataCrawlerDependencies } from '../../testHelper'
+import { Dependencies } from '../../infrastructure/dependencies'
+import { getFakeDataCrawlerDependencies } from '../../testHelper'
 import { TéléchargerLesDonnéesBrutesDeFinessUseCase } from './TéléchargerLesDonnéesBrutesDeFinessUseCase'
 
 describe('Récupération des sources de données FINESS en local', () => {
+  let fakeDataCrawlerDependencies: Dependencies
+
+  beforeAll(async () => {
+    fakeDataCrawlerDependencies = await getFakeDataCrawlerDependencies()
+  })
+
   it('récupérer les sources de données FINESS en local', async () => {
     // GIVEN
     const sourceDeDonnées = 'FINESS'
