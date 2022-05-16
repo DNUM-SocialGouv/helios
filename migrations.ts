@@ -23,9 +23,9 @@ import { EnvironmentVariables } from './src/data-crawler/métier/gateways/Enviro
         SFTP_PRIVATE_KEY: 'privateKey',
         SFTP_USERNAME: 'usr_finess_ls',
       }
-      dataSource = await typeOrmOrm(environmentVariables)()
+      dataSource = await typeOrmOrm(environmentVariables)
     } else {
-      dataSource = await dependencies.dataSourceInit()
+      dataSource = (await dependencies).database
     }
     await dataSource.runMigrations()
     await dataSource.destroy()
