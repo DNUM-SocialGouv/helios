@@ -5,8 +5,8 @@ import { TéléchargerLesDonnéesBrutesDeFinessUseCase } from './TéléchargerLe
 describe('Récupération des sources de données FINESS en local', () => {
   let fakeDataCrawlerDependencies: Dependencies
 
-  beforeAll(async () => {
-    fakeDataCrawlerDependencies = await getFakeDataCrawlerDependencies()
+  beforeAll(() => {
+    fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
   })
 
   it('récupérer les sources de données FINESS en local', async () => {

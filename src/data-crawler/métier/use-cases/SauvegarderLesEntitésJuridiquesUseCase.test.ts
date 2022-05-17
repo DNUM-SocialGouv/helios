@@ -5,8 +5,8 @@ import { SauvegarderLesEntitésJuridiquesUseCase } from './SauvegarderLesEntité
 describe('Sauvegarde des entités juridiques', () => {
   let fakeDataCrawlerDependencies: Dependencies
 
-  beforeAll(async () => {
-    fakeDataCrawlerDependencies = await getFakeDataCrawlerDependencies()
+  beforeAll(() => {
+    fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
   })
 
   it('récupérer les entités juridiques de plusieurs sources de données', async () => {

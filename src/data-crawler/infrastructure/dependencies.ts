@@ -1,5 +1,3 @@
-import { DataSource } from 'typeorm'
-
 import { DownloadRawData } from '../métier/gateways/DownloadRawData'
 import { EntitéJuridiqueLoader } from '../métier/gateways/EntitéJuridiqueLoader'
 import { EntitéJuridiqueRepository } from '../métier/gateways/EntitéJuridiqueRepository'
@@ -20,7 +18,6 @@ import { FinessÉtablissementTerritorialLoader } from './gateways/établissement
 import { TypeORMÉtablissementTerritorialRepository } from './gateways/établissement-territorial-repository/TypeORMÉtablissementTerritorialRepository'
 
 export type Dependencies = Readonly<{
-  database: DataSource
   downloadRawData: DownloadRawData
   environmentVariables: EnvironmentVariables
   finessEntitéJuridiqueLoader: EntitéJuridiqueLoader
@@ -38,7 +35,6 @@ const _instantiateDependencies = async (): Promise<Dependencies> => {
   const database = await typeOrmOrm(environmentVariables)
 
   return {
-    database,
     downloadRawData: new SftpDownloadRawData(environmentVariables, logger),
     environmentVariables,
     finessEntitéJuridiqueLoader: new FinessEntitéJuridiqueLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),

@@ -5,8 +5,8 @@ import { SauvegarderLesÉtablissementsTerritoriauxUseCase } from './SauvegarderL
 describe('Sauvegarde des établissements territoriaux', () => {
   let fakeDataCrawlerDependencies: Dependencies
 
-  beforeAll(async () => {
-    fakeDataCrawlerDependencies = await getFakeDataCrawlerDependencies()
+  beforeAll(() => {
+    fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
   })
 
   it('récupérer les établissements territoriaux de plusieurs sources de données', () => {

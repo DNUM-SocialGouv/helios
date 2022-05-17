@@ -11,8 +11,8 @@ describe('Téléchargement d’une source de données via un SFTP', () => {
   const localPath = 'fake/local/path'
   let fakeDataCrawlerDependencies: Dependencies
 
-  beforeAll(async () => {
-    fakeDataCrawlerDependencies = await getFakeDataCrawlerDependencies()
+  beforeAll(() => {
+    fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
   })
 
   afterEach(() => {

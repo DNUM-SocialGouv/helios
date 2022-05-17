@@ -20,9 +20,12 @@ const environmentVariables: EnvironmentVariables = {
   SFTP_USERNAME: 'usr_finess_ls',
 }
 
-export const getFakeDataCrawlerDependencies = async (): Promise<Dependencies> => {
+export async function getDatabase() {
+  return await typeOrmOrm(environmentVariables)
+}
+
+export const getFakeDataCrawlerDependencies = (): Dependencies => {
   return {
-    database: await typeOrmOrm(environmentVariables),
     downloadRawData: { handle: jest.fn() },
     environmentVariables,
     finessEntitéJuridiqueLoader: { récupérerLesEntitésJuridiques: jest.fn() },

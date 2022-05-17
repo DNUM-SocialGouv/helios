@@ -11,8 +11,8 @@ describe('Récupération des établissements territoriaux de la source de donné
   let finessLocalPath: string
   let fakeDataCrawlerDependencies: Dependencies
 
-  beforeAll(async () => {
-    fakeDataCrawlerDependencies = await getFakeDataCrawlerDependencies()
+  beforeAll(() => {
+    fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
     localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_et`
     finessLocalPath = `${localPath}/finess/simple`
   })

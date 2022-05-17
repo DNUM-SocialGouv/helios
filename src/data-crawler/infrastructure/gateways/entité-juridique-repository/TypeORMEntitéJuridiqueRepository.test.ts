@@ -3,21 +3,18 @@ import { DataSource, Repository } from 'typeorm'
 import { DateMiseÀJourSourceEntity, SourceDeDonnées } from '../../../../../database/entities/DateMiseÀJourSourceEntity'
 import { EntitéJuridiqueEntity } from '../../../../../database/entities/EntitéJuridiqueEntity'
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
-import { getFakeDataCrawlerDependencies } from '../../../testHelper'
-import { Dependencies } from '../../dependencies'
+import { getDatabase } from '../../../testHelper'
 import { TypeORMEntitéJuridiqueRepository } from './TypeORMEntitéJuridiqueRepository'
 
 describe('Sauvegarde de l’entité juridique', () => {
-  let fakeDataCrawlerDependencies: Dependencies
   let database: DataSource
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueEntity>
   let dateMiseÀJourSourceRepository: Repository<DateMiseÀJourSourceEntity>
 
   beforeAll(async () => {
-    fakeDataCrawlerDependencies = await getFakeDataCrawlerDependencies()
-    database = fakeDataCrawlerDependencies.database
-    entitéJuridiqueRepository = fakeDataCrawlerDependencies.database.getRepository(EntitéJuridiqueEntity)
-    dateMiseÀJourSourceRepository = fakeDataCrawlerDependencies.database.getRepository(DateMiseÀJourSourceEntity)
+    database = await getDatabase()
+    entitéJuridiqueRepository = database.getRepository(EntitéJuridiqueEntity)
+    dateMiseÀJourSourceRepository = database.getRepository(DateMiseÀJourSourceEntity)
   })
 
   beforeEach(async () => {

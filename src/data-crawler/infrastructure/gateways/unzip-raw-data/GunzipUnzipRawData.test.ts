@@ -7,8 +7,8 @@ import { GunzipUnzipRawData } from './GunzipUnzipRawData'
 describe('Décompression d’une source de données', () => {
   let fakeDataCrawlerDependencies: Dependencies
 
-  beforeAll(async () => {
-    fakeDataCrawlerDependencies = await getFakeDataCrawlerDependencies()
+  beforeAll(() => {
+    fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
   })
 
   it('décompresser une source de données avec la commande gunzip', async () => {

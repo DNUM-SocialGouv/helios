@@ -4,23 +4,20 @@ import { DateMiseÀJourSourceEntity, SourceDeDonnées } from '../../../../../dat
 import { EntitéJuridiqueEntity } from '../../../../../database/entities/EntitéJuridiqueEntity'
 import { ÉtablissementTerritorialIdentitéEntity } from '../../../../../database/entities/ÉtablissementTerritorialIdentitéEntity'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
-import { getFakeDataCrawlerDependencies } from '../../../testHelper'
-import { Dependencies } from '../../dependencies'
+import { getDatabase } from '../../../testHelper'
 import { TypeORMÉtablissementTerritorialRepository } from './TypeORMÉtablissementTerritorialRepository'
 
 describe('Sauvegarde de l’établissement territorial', () => {
-  let fakeDataCrawlerDependencies: Dependencies
   let database: DataSource
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueEntity>
   let établissementTerritorialIdentitéRepository: Repository<ÉtablissementTerritorialIdentitéEntity>
   let dateMiseÀJourSourceRepository: Repository<DateMiseÀJourSourceEntity>
 
   beforeAll(async () => {
-    fakeDataCrawlerDependencies = await getFakeDataCrawlerDependencies()
-    database = fakeDataCrawlerDependencies.database
-    entitéJuridiqueRepository = fakeDataCrawlerDependencies.database.getRepository(EntitéJuridiqueEntity)
-    établissementTerritorialIdentitéRepository = fakeDataCrawlerDependencies.database.getRepository(ÉtablissementTerritorialIdentitéEntity)
-    dateMiseÀJourSourceRepository = fakeDataCrawlerDependencies.database.getRepository(DateMiseÀJourSourceEntity)
+    database = await getDatabase()
+    entitéJuridiqueRepository = database.getRepository(EntitéJuridiqueEntity)
+    établissementTerritorialIdentitéRepository = database.getRepository(ÉtablissementTerritorialIdentitéEntity)
+    dateMiseÀJourSourceRepository = database.getRepository(DateMiseÀJourSourceEntity)
   })
 
   beforeEach(async () => {

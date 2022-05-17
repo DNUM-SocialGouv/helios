@@ -11,8 +11,8 @@ describe('Récupération des entités juridiques de la source de données FINESS
   let localPath: string
   let finessLocalPath: string
 
-  beforeAll(async () => {
-    fakeDataCrawlerDependencies = await getFakeDataCrawlerDependencies()
+  beforeAll(() => {
+    fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
     localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_ej`
     finessLocalPath = `${localPath}/finess/simple`
   })
