@@ -1,7 +1,5 @@
-import { MigrationInterface, QueryRunner } from 'typeorm'
-
-export class DateMiseÀJourSource1652627053530 implements MigrationInterface {
-  public async up(queryRunner: QueryRunner): Promise<void> {
+class DateMiseÀJourSource1652627053530 {
+  async up(queryRunner) {
     await queryRunner.query(
       `CREATE TYPE sourceDeDonnées AS ENUM ('FINESS');
 
@@ -16,10 +14,12 @@ export class DateMiseÀJourSource1652627053530 implements MigrationInterface {
     )
   }
 
-  public async down(queryRunner: QueryRunner): Promise<void> {
+  async down(queryRunner) {
     await queryRunner.query(
       `DROP TABLE DateMiseÀJourSource;
       DROP TYPE sourceDeDonnées;`
     )
   }
 }
+
+module.exports = DateMiseÀJourSource1652627053530
