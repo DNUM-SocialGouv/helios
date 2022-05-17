@@ -125,6 +125,13 @@ yarn saveEJ
 yarn saveET
 ```
 
+### Peupler la base de donnée à partir des fichiers du SFTP de test
+
+```sh
+yarn populateDatabase
+```
+Execute `retrieveFiness`, `saveEJ` et `saveET`
+
 ## Arborescence
 
 ```
