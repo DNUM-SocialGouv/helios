@@ -143,12 +143,11 @@ describe('Sauvegarde de l’établissement territorial', () => {
     expect(établissementsTerritoriauxSauvés).toStrictEqual(
       [établissementTerritorial1MisAJourAttendu, établissementTerritorial2MisAJourAttendu]
     )
-    // const dateMiseÀJourSourceQuery = await dataSource
-    //   .getRepository(DateMiseÀJourSourceEntity)
-    //   .find({ where: { source: 'FINESS' } })
-    // expect(dateMiseÀJourSourceQuery.rows[0]).toStrictEqual({
-    //   dernièremiseÀjour: new Date('2022-02-02T23:00:00.000Z'),
-    //   source: 'FINESS',
-    // })
+    const dateMiseÀJourSourceSauvée = await dateMiseÀJourSourceRepository
+      .find({ where: { source: SourceDeDonnées.FINESS } })
+    const dateMiseÀJourSourceAttendue = new DateMiseÀJourSourceModel()
+    dateMiseÀJourSourceAttendue.source = SourceDeDonnées.FINESS
+    dateMiseÀJourSourceAttendue.dernièreMiseÀJour = '2022-02-03'
+    expect(dateMiseÀJourSourceSauvée).toStrictEqual([dateMiseÀJourSourceAttendue])
   })
 })

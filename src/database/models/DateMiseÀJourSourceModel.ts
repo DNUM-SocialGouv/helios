@@ -7,7 +7,7 @@ export enum SourceDeDonnées {
 @Entity({ name: 'datemiseÀjoursource' })
 export class DateMiseÀJourSourceModel {
   @Column({ name: 'dernièremiseÀjour', type: 'date' })
-  public dernièreMiseÀJour!: Date
+  public dernièreMiseÀJour!: string
 
   @PrimaryColumn({
     enum: SourceDeDonnées,
