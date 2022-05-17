@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm'
 
-import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
+import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { EntitéJuridiqueRepository } from '../../../métier/gateways/EntitéJuridiqueRepository'
 

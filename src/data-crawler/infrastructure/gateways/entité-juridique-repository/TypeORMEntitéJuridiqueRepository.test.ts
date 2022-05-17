@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm'
 
-import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../../database/models/DateMiseÀJourSourceModel'
-import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
+import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../database/models/DateMiseÀJourSourceModel'
+import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { getOrm } from '../../../testHelper'
 import { TypeORMEntitéJuridiqueRepository } from './TypeORMEntitéJuridiqueRepository'

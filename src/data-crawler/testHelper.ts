@@ -4,8 +4,8 @@ import { EnvironmentVariables } from './métier/gateways/EnvironmentVariables'
 import { Logger } from './métier/gateways/Logger'
 
 const environmentVariables: EnvironmentVariables = {
-  ORM_DEBUG: 'true',
   DATABASE_URL: 'postgres://helios:h3li0s@localhost:5433/helios',
+  ORM_DEBUG: 'true',
   SENTRY_AUTH_TOKEN: '1234567890',
   SENTRY_DSN: 'https://fake-sentry.io/11',
   SFTP_HOST: 'localhost',

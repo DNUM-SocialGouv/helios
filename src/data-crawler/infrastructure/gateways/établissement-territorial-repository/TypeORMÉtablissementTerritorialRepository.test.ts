@@ -1,8 +1,8 @@
 import { Repository } from 'typeorm'
 
-import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../../database/models/DateMiseÀJourSourceModel'
-import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
-import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
+import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../database/models/DateMiseÀJourSourceModel'
+import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
+import { ÉtablissementTerritorialIdentitéModel } from '../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { getOrm } from '../../../testHelper'
 import { TypeORMÉtablissementTerritorialRepository } from './TypeORMÉtablissementTerritorialRepository'
