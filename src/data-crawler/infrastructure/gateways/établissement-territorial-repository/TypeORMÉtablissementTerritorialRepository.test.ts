@@ -1,4 +1,4 @@
-import { DataSource, Repository } from 'typeorm'
+import { Repository } from 'typeorm'
 
 import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../database/models/DateMiseÀJourSourceModel'
 import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
@@ -8,13 +8,12 @@ import { getOrm } from '../../../testHelper'
 import { TypeORMÉtablissementTerritorialRepository } from './TypeORMÉtablissementTerritorialRepository'
 
 describe('Sauvegarde de l’établissement territorial', () => {
-  let orm: Promise<DataSource>
+  const orm = getOrm()
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>
   let établissementTerritorialIdentitéRepository: Repository<ÉtablissementTerritorialIdentitéModel>
   let dateMiseÀJourSourceRepository: Repository<DateMiseÀJourSourceModel>
 
   beforeAll(async () => {
-    orm = getOrm()
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel)
     établissementTerritorialIdentitéRepository = (await orm).getRepository(ÉtablissementTerritorialIdentitéModel)
     dateMiseÀJourSourceRepository = (await orm).getRepository(DateMiseÀJourSourceModel)

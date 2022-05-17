@@ -2,20 +2,13 @@ import { mkdirSync, rmSync, writeFileSync } from 'fs'
 
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { getFakeDataCrawlerDependencies } from '../../../testHelper'
-import { Dependencies } from '../../dependencies'
 import { NodeXmlToJs } from '../xml-to-js/NodeXmlToJs'
 import { FinessXMLEntitéJuridiqueLoader } from './FinessXMLEntitéJuridiqueLoader'
 
 describe('Récupération des entités juridiques de la source de données FINESS', () => {
-  let fakeDataCrawlerDependencies: Dependencies
-  let localPath: string
-  let finessLocalPath: string
-
-  beforeAll(() => {
-    fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
-    localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_ej`
-    finessLocalPath = `${localPath}/finess/simple`
-  })
+  const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
+  const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_ej`
+  const finessLocalPath = `${localPath}/finess/simple`
 
   beforeEach(() => {
     const xml = `<?xml version="1.0" encoding="UTF-8"?>

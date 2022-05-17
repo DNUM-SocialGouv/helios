@@ -2,20 +2,13 @@ import { mkdirSync, rmSync, writeFileSync } from 'fs'
 
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { getFakeDataCrawlerDependencies } from '../../../testHelper'
-import { Dependencies } from '../../dependencies'
 import { NodeXmlToJs } from '../xml-to-js/NodeXmlToJs'
 import { FinessXMLÉtablissementTerritorialLoader } from './FinessXMLÉtablissementTerritorialLoader'
 
 describe('Récupération des établissements territoriaux de la source de données FINESS', () => {
-  let localPath: string
-  let finessLocalPath: string
-  let fakeDataCrawlerDependencies: Dependencies
-
-  beforeAll(() => {
-    fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
-    localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_et`
-    finessLocalPath = `${localPath}/finess/simple`
-  })
+  const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
+  const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_et`
+  const finessLocalPath = `${localPath}/finess/simple`
 
   beforeEach(() => {
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
