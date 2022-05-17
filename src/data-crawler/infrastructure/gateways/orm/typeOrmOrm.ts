@@ -8,15 +8,15 @@ import { Orm } from '../../../métier/gateways/Orm'
 
 export const typeOrmOrm: Orm<DataSource> = (environmentVariables: EnvironmentVariables): Promise<DataSource> => {
   const dataSource = new DataSource({
-    database: environmentVariables['POSTGRES_DB'],
+    database: environmentVariables.POSTGRES_DB,
     entities: [DateMiseÀJourSourceModel, EntitéJuridiqueModel, ÉtablissementTerritorialIdentitéModel],
     host: 'localhost',
-    logging: [environmentVariables['ORM_DEBUG']] as LoggerOptions,
+    logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
     migrations: ['./src/database/migrations/*.ts'],
-    password: environmentVariables['POSTGRES_PASSWORD'],
-    port: Number(environmentVariables['POSTGRES_PORT']),
+    password: environmentVariables.POSTGRES_PASSWORD,
+    port: Number(environmentVariables.POSTGRES_PORT),
     type: 'postgres',
-    username: environmentVariables['POSTGRES_USER'],
+    username: environmentVariables.POSTGRES_USER,
   })
   return dataSource.initialize()
 }

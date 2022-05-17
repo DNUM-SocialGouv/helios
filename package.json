@@ -29,11 +29,8 @@
   "dependencies": {
     "@gouvfr/dsfr": "1.4.1",
     "@sentry/nextjs": "^6.19.6",
-    "db-migrate": "^0.11.13",
-    "db-migrate-pg": "^1.2.2",
     "dotenv-defaults": "^5.0.0",
     "full-icu": "^1.4.0",
-    "knex": "^2.0.0",
     "minify-stream": "^2.1.0",
     "next": "12.1.4",
     "pg": "^8.7.3",
