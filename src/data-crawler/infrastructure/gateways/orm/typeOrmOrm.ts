@@ -10,7 +10,7 @@ export const typeOrmOrm: Orm<DataSource> = (environmentVariables: EnvironmentVar
   const dataSource = new DataSource({
     entities: [DateMiseÀJourSourceModel, EntitéJuridiqueModel, ÉtablissementTerritorialIdentitéModel],
     logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
-    migrations: ['./src/database/migrations/*.ts'],
+    migrations: ['./database/migrations/*.ts'],
     type: 'postgres',
     url: environmentVariables.DATABASE_URL,
   })

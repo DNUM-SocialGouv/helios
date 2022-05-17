@@ -10,7 +10,7 @@
     "dev": "yarn migrations && next dev",
     "lint": "next lint --dir src",
     "lint:fix": "yarn lint --fix",
-    "migrations": "TS_NODE_TRANSPILE_ONLY=true node --loader ts-node/esm ./src/database/migrations.ts",
+    "migrations": "TS_NODE_TRANSPILE_ONLY=true node --loader ts-node/esm ./database/migrations.ts",
     "psql:local": "docker-compose up -d postgres && docker exec -it helios_db psql -U helios helios",
     "psql:production": "scalingo -a helios pgsql-console",
     "postinstall": "husky install",
