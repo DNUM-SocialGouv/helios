@@ -32,15 +32,15 @@ const _instantiateDependencies = (): Dependencies => {
   const logger = new ConsoleLogger()
   const environmentVariables = new NodeEnvironmentVariables(logger)
   const xmlToJs = new NodeXmlToJs()
-  const database = typeOrmOrm(environmentVariables)
+  const orm = typeOrmOrm(environmentVariables)
 
   return {
     downloadRawData: new SftpDownloadRawData(environmentVariables, logger),
     environmentVariables,
     finessEntitéJuridiqueLoader: new FinessEntitéJuridiqueLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),
-    finessEntitéJuridiqueRepository: new TypeORMEntitéJuridiqueRepository(database),
+    finessEntitéJuridiqueRepository: new TypeORMEntitéJuridiqueRepository(orm),
     finessÉtablissementTerritorialLoader: new FinessÉtablissementTerritorialLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),
-    finessÉtablissementTerritorialRepository: new TypeORMÉtablissementTerritorialRepository(database),
+    finessÉtablissementTerritorialRepository: new TypeORMÉtablissementTerritorialRepository(orm),
     unzipRawData: new GunzipUnzipRawData(environmentVariables, logger),
   }
 }

@@ -1,5 +1,5 @@
-import { typeOrmOrm } from '../src/data-crawler/infrastructure/gateways/orm/typeOrmOrm'
-import { EnvironmentVariables } from '../src/data-crawler/métier/gateways/EnvironmentVariables'
+import { typeOrmOrm } from '../data-crawler/infrastructure/gateways/orm/typeOrmOrm'
+import { EnvironmentVariables } from '../data-crawler/métier/gateways/EnvironmentVariables'
 
 (async () => {
   try {
@@ -23,6 +23,7 @@ import { EnvironmentVariables } from '../src/data-crawler/métier/gateways/Envir
     await dataSource.runMigrations()
     await dataSource.destroy()
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Error while connecting to the database', error)
     return error
   }

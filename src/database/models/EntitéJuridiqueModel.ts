@@ -1,9 +1,9 @@
 import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm'
 
-import { ÉtablissementTerritorialIdentitéEntity } from './ÉtablissementTerritorialIdentitéEntity'
+import { ÉtablissementTerritorialIdentitéModel } from './ÉtablissementTerritorialIdentitéModel'
 
 @Entity({ name: 'entitéjuridique' })
-export class EntitéJuridiqueEntity {
+export class EntitéJuridiqueModel {
   @Column({ length: 255, name: 'adresseacheminement' })
   public adresseAcheminement!: string
 
@@ -29,8 +29,8 @@ export class EntitéJuridiqueEntity {
   public téléphone!: string
 
   @OneToMany(
-    () => ÉtablissementTerritorialIdentitéEntity,
+    () => ÉtablissementTerritorialIdentitéModel,
     (établissementTerritorialIdentitéEntity) => établissementTerritorialIdentitéEntity.entitéJuridique
   )
-  public établissementTerritorialIdentitéEntity!: ÉtablissementTerritorialIdentitéEntity[]
+  public établissementTerritorialIdentitéEntity!: ÉtablissementTerritorialIdentitéModel[]
 }

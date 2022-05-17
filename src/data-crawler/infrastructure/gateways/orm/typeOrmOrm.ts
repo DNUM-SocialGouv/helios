@@ -1,15 +1,15 @@
 import { DataSource, LoggerOptions } from 'typeorm'
 
-import { DateMiseÀJourSourceEntity } from '../../../../../database/entities/DateMiseÀJourSourceEntity'
-import { EntitéJuridiqueEntity } from '../../../../../database/entities/EntitéJuridiqueEntity'
-import { ÉtablissementTerritorialIdentitéEntity } from '../../../../../database/entities/ÉtablissementTerritorialIdentitéEntity'
+import { DateMiseÀJourSourceModel } from '../../../../database/models/DateMiseÀJourSourceModel'
+import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
+import { ÉtablissementTerritorialIdentitéModel } from '../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { EnvironmentVariables } from '../../../métier/gateways/EnvironmentVariables'
 import { Orm } from '../../../métier/gateways/Orm'
 
 export const typeOrmOrm: Orm<DataSource> = (environmentVariables: EnvironmentVariables): Promise<DataSource> => {
   const dataSource = new DataSource({
     database: environmentVariables['POSTGRES_DB'],
-    entities: [DateMiseÀJourSourceEntity, EntitéJuridiqueEntity, ÉtablissementTerritorialIdentitéEntity],
+    entities: [DateMiseÀJourSourceModel, EntitéJuridiqueModel, ÉtablissementTerritorialIdentitéModel],
     host: 'localhost',
     logging: [environmentVariables['ORM_DEBUG']] as LoggerOptions,
     migrations: ['./database/migrations/*.ts'],

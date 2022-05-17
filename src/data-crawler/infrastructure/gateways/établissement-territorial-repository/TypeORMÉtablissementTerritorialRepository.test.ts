@@ -1,23 +1,23 @@
 import { DataSource, Repository } from 'typeorm'
 
-import { DateMiseÀJourSourceEntity, SourceDeDonnées } from '../../../../../database/entities/DateMiseÀJourSourceEntity'
-import { EntitéJuridiqueEntity } from '../../../../../database/entities/EntitéJuridiqueEntity'
-import { ÉtablissementTerritorialIdentitéEntity } from '../../../../../database/entities/ÉtablissementTerritorialIdentitéEntity'
+import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../database/models/DateMiseÀJourSourceModel'
+import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
+import { ÉtablissementTerritorialIdentitéModel } from '../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
-import { getDatabase } from '../../../testHelper'
+import { getOrm } from '../../../testHelper'
 import { TypeORMÉtablissementTerritorialRepository } from './TypeORMÉtablissementTerritorialRepository'
 
 describe('Sauvegarde de l’établissement territorial', () => {
-  let database: Promise<DataSource>
-  let entitéJuridiqueRepository: Repository<EntitéJuridiqueEntity>
-  let établissementTerritorialIdentitéRepository: Repository<ÉtablissementTerritorialIdentitéEntity>
-  let dateMiseÀJourSourceRepository: Repository<DateMiseÀJourSourceEntity>
+  let orm: Promise<DataSource>
+  let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>
+  let établissementTerritorialIdentitéRepository: Repository<ÉtablissementTerritorialIdentitéModel>
+  let dateMiseÀJourSourceRepository: Repository<DateMiseÀJourSourceModel>
 
   beforeAll(async () => {
-    database = getDatabase()
-    entitéJuridiqueRepository = (await database).getRepository(EntitéJuridiqueEntity)
-    établissementTerritorialIdentitéRepository = (await database).getRepository(ÉtablissementTerritorialIdentitéEntity)
-    dateMiseÀJourSourceRepository = (await database).getRepository(DateMiseÀJourSourceEntity)
+    orm = getOrm()
+    entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel)
+    établissementTerritorialIdentitéRepository = (await orm).getRepository(ÉtablissementTerritorialIdentitéModel)
+    dateMiseÀJourSourceRepository = (await orm).getRepository(DateMiseÀJourSourceModel)
   })
 
   beforeEach(async () => {
@@ -27,12 +27,12 @@ describe('Sauvegarde de l’établissement territorial', () => {
   })
 
   afterAll(async () => {
-    await(await database).destroy()
+    await(await orm).destroy()
   })
 
   it('sauvegarder une établissement territorial et sa date de mise à jour FINESS même s’il existe déjà', async () => {
     // GIVEN
-    const entitéJuridique1 = new EntitéJuridiqueEntity()
+    const entitéJuridique1 = new EntitéJuridiqueModel()
     entitéJuridique1.adresseAcheminement = 'fake'
     entitéJuridique1.adresseNuméroVoie = 'fake'
     entitéJuridique1.adresseTypeVoie = 'fake'
@@ -42,7 +42,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
     entitéJuridique1.raisonSociale = 'fake'
     entitéJuridique1.téléphone = 'fake'
 
-    const entitéJuridique2 = new EntitéJuridiqueEntity()
+    const entitéJuridique2 = new EntitéJuridiqueModel()
     entitéJuridique2.adresseAcheminement = 'fake'
     entitéJuridique2.adresseNuméroVoie = 'fake'
     entitéJuridique2.adresseTypeVoie = 'fake'
@@ -53,7 +53,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
     entitéJuridique2.téléphone = 'fake'
     await entitéJuridiqueRepository.insert([entitéJuridique1, entitéJuridique2])
 
-    const établissementTerritorialIdentité1 = new ÉtablissementTerritorialIdentitéEntity()
+    const établissementTerritorialIdentité1 = new ÉtablissementTerritorialIdentitéModel()
     établissementTerritorialIdentité1.adresseAcheminement = 'fake',
     établissementTerritorialIdentité1.adresseNuméroVoie = 'fake',
     établissementTerritorialIdentité1.adresseTypeVoie = 'fake',
@@ -74,7 +74,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
         source: SourceDeDonnées.FINESS,
       },
     ])
-    const finessÉtablissementTerritorialRepository = new TypeORMÉtablissementTerritorialRepository(database)
+    const finessÉtablissementTerritorialRepository = new TypeORMÉtablissementTerritorialRepository(orm)
     const établissementTerritorial1: ÉtablissementTerritorialIdentité = {
       adresseAcheminement: '01130 NANTUA',
       adresseNuméroVoie: '50',
@@ -114,7 +114,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
     const établissementsTerritoriauxSauvés = await établissementTerritorialIdentitéRepository
       .find({ order: { numéroFinessÉtablissementTerritorial: 'ASC' } })
 
-    const établissementTerritorial1MisAJourAttendu = new ÉtablissementTerritorialIdentitéEntity()
+    const établissementTerritorial1MisAJourAttendu = new ÉtablissementTerritorialIdentitéModel()
     établissementTerritorial1MisAJourAttendu.adresseAcheminement = '01130 NANTUA'
     établissementTerritorial1MisAJourAttendu.adresseNuméroVoie = '50'
     établissementTerritorial1MisAJourAttendu.adresseTypeVoie = 'R'
@@ -127,7 +127,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
     établissementTerritorial1MisAJourAttendu.raisonSociale = 'CH NANTUA'
     établissementTerritorial1MisAJourAttendu.typeÉtablissement = 'S'
     établissementTerritorial1MisAJourAttendu.téléphone = '0102030405'
-    const établissementTerritorial2MisAJourAttendu = new ÉtablissementTerritorialIdentitéEntity()
+    const établissementTerritorial2MisAJourAttendu = new ÉtablissementTerritorialIdentitéModel()
     établissementTerritorial2MisAJourAttendu.adresseAcheminement = '59650 VILLENEUVE D ASCQ'
     établissementTerritorial2MisAJourAttendu.adresseNuméroVoie = '20'
     établissementTerritorial2MisAJourAttendu.adresseTypeVoie = 'AV'

@@ -1,20 +1,20 @@
 import { DataSource, Repository } from 'typeorm'
 
-import { DateMiseÀJourSourceEntity, SourceDeDonnées } from '../../../../../database/entities/DateMiseÀJourSourceEntity'
-import { EntitéJuridiqueEntity } from '../../../../../database/entities/EntitéJuridiqueEntity'
+import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../database/models/DateMiseÀJourSourceModel'
+import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
-import { getDatabase } from '../../../testHelper'
+import { getOrm } from '../../../testHelper'
 import { TypeORMEntitéJuridiqueRepository } from './TypeORMEntitéJuridiqueRepository'
 
 describe('Sauvegarde de l’entité juridique', () => {
-  let database: Promise<DataSource>
-  let entitéJuridiqueRepository: Repository<EntitéJuridiqueEntity>
-  let dateMiseÀJourSourceRepository: Repository<DateMiseÀJourSourceEntity>
+  let orm: Promise<DataSource>
+  let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>
+  let dateMiseÀJourSourceRepository: Repository<DateMiseÀJourSourceModel>
 
   beforeAll(async () => {
-    database = getDatabase()
-    entitéJuridiqueRepository = (await database).getRepository(EntitéJuridiqueEntity)
-    dateMiseÀJourSourceRepository = (await database).getRepository(DateMiseÀJourSourceEntity)
+    orm = getOrm()
+    entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel)
+    dateMiseÀJourSourceRepository = (await orm).getRepository(DateMiseÀJourSourceModel)
   })
 
   beforeEach(async () => {
@@ -23,12 +23,12 @@ describe('Sauvegarde de l’entité juridique', () => {
   })
 
   afterAll(async () => {
-    await (await database).destroy()
+    await (await orm).destroy()
   })
 
   it('sauvegarder une entité juridique et sa date de mise à jour FINESS même si elle existe déjà', async () => {
     // GIVEN
-    const entitéJuridique = new EntitéJuridiqueEntity()
+    const entitéJuridique = new EntitéJuridiqueModel()
     entitéJuridique.adresseAcheminement = 'fake'
     entitéJuridique.adresseNuméroVoie = 'fake'
     entitéJuridique.adresseTypeVoie = 'fake'
@@ -46,7 +46,7 @@ describe('Sauvegarde de l’entité juridique', () => {
       },
     ])
 
-    const finessEntitéJuridiqueRepository = new TypeORMEntitéJuridiqueRepository(database)
+    const finessEntitéJuridiqueRepository = new TypeORMEntitéJuridiqueRepository(orm)
     const entitéJuridique1: EntitéJuridique = {
       adresseAcheminement: '01117 OYONNAX CEDEX',
       adresseNuméroVoie: '1',
@@ -76,7 +76,7 @@ describe('Sauvegarde de l’entité juridique', () => {
 
     // THEN
     const entitésJuridiquesQuery = await entitéJuridiqueRepository.find({ order: { numéroFinessEntitéJuridique: 'ASC' } })
-    const entitéJuridiqueMisÀJourAttendu1 = new EntitéJuridiqueEntity()
+    const entitéJuridiqueMisÀJourAttendu1 = new EntitéJuridiqueModel()
     entitéJuridiqueMisÀJourAttendu1.adresseAcheminement = '01117 OYONNAX CEDEX'
     entitéJuridiqueMisÀJourAttendu1.adresseNuméroVoie = '1'
     entitéJuridiqueMisÀJourAttendu1.adresseTypeVoie = 'RTE'
@@ -85,7 +85,7 @@ describe('Sauvegarde de l’entité juridique', () => {
     entitéJuridiqueMisÀJourAttendu1.numéroFinessEntitéJuridique = '010018407'
     entitéJuridiqueMisÀJourAttendu1.raisonSociale = 'CH DU HAUT BUGEY'
     entitéJuridiqueMisÀJourAttendu1.téléphone = '0102030406'
-    const entitéJuridiqueMisÀJourAttendu2 = new EntitéJuridiqueEntity()
+    const entitéJuridiqueMisÀJourAttendu2 = new EntitéJuridiqueModel()
     entitéJuridiqueMisÀJourAttendu2.adresseAcheminement = '59650 VILLENEUVE D ASCQ'
     entitéJuridiqueMisÀJourAttendu2.adresseNuméroVoie = '20'
     entitéJuridiqueMisÀJourAttendu2.adresseTypeVoie = 'AV'

@@ -50,7 +50,7 @@
         "ignoreRegExpLiterals": true
       }
     ],
-    "no-console": ["error"],
+    "no-console": "error",
     "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0, "maxBOF": 0 }],
     "no-multi-spaces": "error",
     "no-param-reassign": "error",

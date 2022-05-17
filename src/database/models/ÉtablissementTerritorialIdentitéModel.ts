@@ -1,9 +1,9 @@
 import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm'
 
-import { EntitéJuridiqueEntity } from './EntitéJuridiqueEntity'
+import { EntitéJuridiqueModel } from './EntitéJuridiqueModel'
 
 @Entity({ name: 'Établissementterritorialidentité' })
-export class ÉtablissementTerritorialIdentitéEntity {
+export class ÉtablissementTerritorialIdentitéModel {
   @Column({ length: 255, name: 'adresseacheminement' })
   public adresseAcheminement!: string
 
@@ -22,9 +22,9 @@ export class ÉtablissementTerritorialIdentitéEntity {
   @Column({ length: 255, name: 'courriel' })
   public courriel!: string
 
-  @ManyToOne(() => EntitéJuridiqueEntity, (entitéJuridiqueEntity) => entitéJuridiqueEntity.établissementTerritorialIdentitéEntity, { nullable: false, onDelete: 'CASCADE' })
+  @ManyToOne(() => EntitéJuridiqueModel, (entitéJuridiqueEntity) => entitéJuridiqueEntity.établissementTerritorialIdentitéEntity, { nullable: false, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'numérofinessentitéjuridique', referencedColumnName: 'numéroFinessEntitéJuridique' })
-  public entitéJuridique!: EntitéJuridiqueEntity
+  public entitéJuridique!: EntitéJuridiqueModel
 
   @Column({ length: 9, name: 'numérofinessentitéjuridique' })
   public numéroFinessEntitéJuridique!: string

@@ -20,7 +20,7 @@ const environmentVariables: EnvironmentVariables = {
   SFTP_USERNAME: 'usr_finess_ls',
 }
 
-export function getDatabase() {
+export function getOrm() {
   return typeOrmOrm(environmentVariables)
 }
 
