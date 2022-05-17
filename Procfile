@@ -1,1 +1,1 @@
-postdeploy: yarn db-migrate up --env prod
+postdeploy: yarn migrations
