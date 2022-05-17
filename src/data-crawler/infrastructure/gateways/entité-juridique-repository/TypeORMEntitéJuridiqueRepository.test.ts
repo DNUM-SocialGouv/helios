@@ -7,14 +7,14 @@ import { getDatabase } from '../../../testHelper'
 import { TypeORMEntitéJuridiqueRepository } from './TypeORMEntitéJuridiqueRepository'
 
 describe('Sauvegarde de l’entité juridique', () => {
-  let database: DataSource
+  let database: Promise<DataSource>
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueEntity>
   let dateMiseÀJourSourceRepository: Repository<DateMiseÀJourSourceEntity>
 
   beforeAll(async () => {
-    database = await getDatabase()
-    entitéJuridiqueRepository = database.getRepository(EntitéJuridiqueEntity)
-    dateMiseÀJourSourceRepository = database.getRepository(DateMiseÀJourSourceEntity)
+    database = getDatabase()
+    entitéJuridiqueRepository = (await database).getRepository(EntitéJuridiqueEntity)
+    dateMiseÀJourSourceRepository = (await database).getRepository(DateMiseÀJourSourceEntity)
   })
 
   beforeEach(async () => {
@@ -23,7 +23,7 @@ describe('Sauvegarde de l’entité juridique', () => {
   })
 
   afterAll(async () => {
-    await database.destroy()
+    await (await database).destroy()
   })
 
   it('sauvegarder une entité juridique et sa date de mise à jour FINESS même si elle existe déjà', async () => {

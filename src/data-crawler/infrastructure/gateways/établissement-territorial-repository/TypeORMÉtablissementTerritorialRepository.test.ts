@@ -8,16 +8,16 @@ import { getDatabase } from '../../../testHelper'
 import { TypeORMÉtablissementTerritorialRepository } from './TypeORMÉtablissementTerritorialRepository'
 
 describe('Sauvegarde de l’établissement territorial', () => {
-  let database: DataSource
+  let database: Promise<DataSource>
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueEntity>
   let établissementTerritorialIdentitéRepository: Repository<ÉtablissementTerritorialIdentitéEntity>
   let dateMiseÀJourSourceRepository: Repository<DateMiseÀJourSourceEntity>
 
   beforeAll(async () => {
-    database = await getDatabase()
-    entitéJuridiqueRepository = database.getRepository(EntitéJuridiqueEntity)
-    établissementTerritorialIdentitéRepository = database.getRepository(ÉtablissementTerritorialIdentitéEntity)
-    dateMiseÀJourSourceRepository = database.getRepository(DateMiseÀJourSourceEntity)
+    database = getDatabase()
+    entitéJuridiqueRepository = (await database).getRepository(EntitéJuridiqueEntity)
+    établissementTerritorialIdentitéRepository = (await database).getRepository(ÉtablissementTerritorialIdentitéEntity)
+    dateMiseÀJourSourceRepository = (await database).getRepository(DateMiseÀJourSourceEntity)
   })
 
   beforeEach(async () => {
@@ -27,7 +27,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
   })
 
   afterAll(async () => {
-    await database.destroy()
+    await(await database).destroy()
   })
 
   it('sauvegarder une établissement territorial et sa date de mise à jour FINESS même s’il existe déjà', async () => {

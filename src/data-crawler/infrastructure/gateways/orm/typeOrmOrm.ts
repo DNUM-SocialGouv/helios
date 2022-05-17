@@ -6,7 +6,7 @@ import { ÉtablissementTerritorialIdentitéEntity } from '../../../../../databas
 import { EnvironmentVariables } from '../../../métier/gateways/EnvironmentVariables'
 import { Orm } from '../../../métier/gateways/Orm'
 
-export const typeOrmOrm: Orm<DataSource> = async (environmentVariables: EnvironmentVariables): Promise<DataSource> => {
+export const typeOrmOrm: Orm<DataSource> = (environmentVariables: EnvironmentVariables): Promise<DataSource> => {
   const dataSource = new DataSource({
     database: environmentVariables['POSTGRES_DB'],
     entities: [DateMiseÀJourSourceEntity, EntitéJuridiqueEntity, ÉtablissementTerritorialIdentitéEntity],
@@ -18,7 +18,5 @@ export const typeOrmOrm: Orm<DataSource> = async (environmentVariables: Environm
     type: 'postgres',
     username: environmentVariables['POSTGRES_USER'],
   })
-  await dataSource.initialize()
-
-  return dataSource
+  return dataSource.initialize()
 }

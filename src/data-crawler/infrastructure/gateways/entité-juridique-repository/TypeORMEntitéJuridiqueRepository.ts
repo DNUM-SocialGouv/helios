@@ -5,7 +5,7 @@ import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { EntitéJuridiqueRepository } from '../../../métier/gateways/EntitéJuridiqueRepository'
 
 export class TypeORMEntitéJuridiqueRepository implements EntitéJuridiqueRepository {
-  constructor(private readonly dataSource: DataSource) {}
+  constructor(private readonly dataSource: Promise<DataSource>) {}
 
   async save(entitésJuridiques: EntitéJuridique[], batchSize: number = 20): Promise<void> {
     const entitésJuridiquesLength = entitésJuridiques.length
@@ -30,7 +30,7 @@ export class TypeORMEntitéJuridiqueRepository implements EntitéJuridiqueReposi
   }
 
   private async upsertBatch(entitésJuridiques: EntitéJuridique[]) {
-    await this.dataSource
+    await(await this.dataSource)
       .getRepository(EntitéJuridiqueEntity)
       .upsert(entitésJuridiques, ['numéroFinessEntitéJuridique'])
   }

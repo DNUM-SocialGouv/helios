@@ -20,8 +20,8 @@ const environmentVariables: EnvironmentVariables = {
   SFTP_USERNAME: 'usr_finess_ls',
 }
 
-export async function getDatabase() {
-  return await typeOrmOrm(environmentVariables)
+export function getDatabase() {
+  return typeOrmOrm(environmentVariables)
 }
 
 export const getFakeDataCrawlerDependencies = (): Dependencies => {

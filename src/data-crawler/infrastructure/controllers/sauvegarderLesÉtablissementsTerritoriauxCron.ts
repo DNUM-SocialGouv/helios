@@ -1,8 +1,7 @@
 import { SauvegarderLesÉtablissementsTerritoriauxUseCase } from '../../métier/use-cases/SauvegarderLesÉtablissementsTerritoriauxUseCase'
 import { dependencies, Dependencies } from '../dependencies'
 
-async function sauvegarderLesÉtablissementsTerritoriauxCron(initDependencies: Promise<Dependencies>) {
-  const dependencies = await initDependencies
+async function sauvegarderLesÉtablissementsTerritoriauxCron(dependencies: Dependencies) {
   const sauvegarderLesÉtablissementsTerritoriaux = new SauvegarderLesÉtablissementsTerritoriauxUseCase(
     dependencies.finessÉtablissementTerritorialLoader,
     dependencies.finessÉtablissementTerritorialRepository

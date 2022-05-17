@@ -27,12 +27,12 @@ export type Dependencies = Readonly<{
   unzipRawData: UnzipRawData
 }>
 
-const _instantiateDependencies = async (): Promise<Dependencies> => {
+const _instantiateDependencies = (): Dependencies => {
   dotEnvConfig()
   const logger = new ConsoleLogger()
   const environmentVariables = new NodeEnvironmentVariables(logger)
   const xmlToJs = new NodeXmlToJs()
-  const database = await typeOrmOrm(environmentVariables)
+  const database = typeOrmOrm(environmentVariables)
 
   return {
     downloadRawData: new SftpDownloadRawData(environmentVariables, logger),
@@ -48,9 +48,9 @@ const _instantiateDependencies = async (): Promise<Dependencies> => {
 class DependenciesSingleton {
   private static instance: Dependencies
 
-  static async getInstance(): Promise<Dependencies> {
+  static getInstance(): Dependencies {
     if (!DependenciesSingleton.instance) {
-      DependenciesSingleton.instance = await _instantiateDependencies()
+      DependenciesSingleton.instance = _instantiateDependencies()
     }
 
     return DependenciesSingleton.instance

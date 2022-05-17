@@ -6,7 +6,7 @@ import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/É
 import { ÉtablissementTerritorialRepository } from '../../../métier/gateways/ÉtablissementTerritorialRepository'
 
 export class TypeORMÉtablissementTerritorialRepository implements ÉtablissementTerritorialRepository {
-  constructor(private readonly dataSource: DataSource) {}
+  constructor(private readonly dataSource: Promise<DataSource>) {}
 
   async save(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[], batchSize: number = 20): Promise<void> {
     const établissementsTerritoriauxIdentitéLength = établissementsTerritoriauxIdentité.length
@@ -31,7 +31,7 @@ export class TypeORMÉtablissementTerritorialRepository implements Établissemen
   }
 
   private async upsertDateDeMiseÀJour(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[]) {
-    await this.dataSource
+    await (await this.dataSource)
       .getRepository(DateMiseÀJourSourceEntity)
       .upsert([
         {
@@ -42,7 +42,7 @@ export class TypeORMÉtablissementTerritorialRepository implements Établissemen
   }
 
   private async upsertBatch(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[]) {
-    await this.dataSource
+    await(await this.dataSource)
       .getRepository(ÉtablissementTerritorialIdentitéEntity)
       .upsert(établissementsTerritoriauxIdentité, ['numéroFinessÉtablissementTerritorial'])
   }
