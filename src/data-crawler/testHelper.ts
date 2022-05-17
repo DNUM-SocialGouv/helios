@@ -27,12 +27,12 @@ export function getOrm() {
 export const getFakeDataCrawlerDependencies = (): Dependencies => {
   return {
     downloadRawData: { handle: jest.fn() },
-    environmentVariables,
     entitéJuridiqueLoader: { récupérerLesEntitésJuridiques: jest.fn() },
     entitéJuridiqueRepository: { save: jest.fn() },
+    environmentVariables,
+    unzipRawData: { handle: jest.fn() },
     établissementTerritorialLoader: { récupérerLesÉtablissementsTerritoriaux: jest.fn() },
     établissementTerritorialRepository: { save: jest.fn() },
-    unzipRawData: { handle: jest.fn() },
   }
 }
 
