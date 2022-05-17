@@ -12,7 +12,7 @@ export const typeOrmOrm: Orm<DataSource> = (environmentVariables: EnvironmentVar
     logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
     migrations: ['./src/database/migrations/*.ts'],
     type: 'postgres',
-    url: environmentVariables.POSTGRES_URL,
+    url: environmentVariables.DATABASE_URL,
   })
   return dataSource.initialize()
 }

@@ -6,12 +6,7 @@ export class NodeEnvironmentVariables implements EnvironmentVariables {
 
   readonly ORM_DEBUG: string = this.getOrElse('ORM_DEBUG')
 
-  readonly POSTGRES_DB: string = this.getOrElse('POSTGRES_DB')
-  readonly POSTGRES_PASSWORD: string = this.getOrElse('POSTGRES_PASSWORD')
-  readonly POSTGRES_PORT: string = this.getOrElse('POSTGRES_PORT')
-  readonly POSTGRES_USER: string = this.getOrElse('POSTGRES_USER')
-
-  readonly POSTGRES_URL: string = this.getOrElse('DATABASE_URL')
+  readonly DATABASE_URL: string = this.getOrElse('DATABASE_URL')
 
   readonly SENTRY_AUTH_TOKEN: string = this.getOrElse('SENTRY_AUTH_TOKEN')
   readonly SENTRY_DSN: string = this.getOrElse('SENTRY_DSN')
