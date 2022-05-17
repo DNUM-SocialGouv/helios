@@ -1,13 +1,14 @@
 import fs from 'fs'
 import Client from 'ssh2-sftp-client'
 
-import { fakeDataCrawlerDependencies, fakeLogger } from '../../../testHelper'
+import { getFakeDataCrawlerDependencies, fakeLogger } from '../../../testHelper'
 import { SftpDownloadRawData } from './SftpDownloadRawData'
 
 describe('Téléchargement d’une source de données via un SFTP', () => {
   const dataSource = 'FAKE_DATASOURCE_NAME'
   const sftpPath = 'fake_path'
   const localPath = 'fake/local/path'
+  const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
 
   afterEach(() => {
     fs.rmSync('data_test/fake', { recursive: true })

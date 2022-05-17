@@ -2,9 +2,13 @@ import { SauvegarderLesEntitésJuridiquesUseCase } from '../../métier/use-cases
 import { dependencies, Dependencies } from '../dependencies'
 
 async function sauvegarderLesEntitésJuridiquesCron(dependencies: Dependencies) {
-  const sauvegarderLesEntitésJuridiques = new SauvegarderLesEntitésJuridiquesUseCase(dependencies.finessEntitéJuridiqueLoader)
+  const sauvegarderLesEntitésJuridiques = new SauvegarderLesEntitésJuridiquesUseCase(
+    dependencies.entitéJuridiqueLoader,
+    dependencies.entitéJuridiqueRepository
+  )
 
-  sauvegarderLesEntitésJuridiques.handle()
+  await sauvegarderLesEntitésJuridiques.handle()
+  setTimeout(() => process.exit(0), 1000)
 }
 
 sauvegarderLesEntitésJuridiquesCron(dependencies)

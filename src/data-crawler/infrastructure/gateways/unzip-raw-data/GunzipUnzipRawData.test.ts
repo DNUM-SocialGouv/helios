@@ -1,9 +1,11 @@
 import child from 'child_process'
 
-import { fakeDataCrawlerDependencies, fakeLogger } from '../../../testHelper'
+import { fakeLogger, getFakeDataCrawlerDependencies } from '../../../testHelper'
 import { GunzipUnzipRawData } from './GunzipUnzipRawData'
 
 describe('Décompression d’une source de données', () => {
+  const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
+
   it('décompresser une source de données avec la commande gunzip', async () => {
     // GIVEN
     const dataSource = 'fake-data-source'

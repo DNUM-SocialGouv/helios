@@ -1,12 +1,13 @@
 import { mkdirSync, rmSync, writeFileSync } from 'fs'
 
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
-import { fakeDataCrawlerDependencies } from '../../../testHelper'
+import { getFakeDataCrawlerDependencies } from '../../../testHelper'
 import { NodeXmlToJs } from '../xml-to-js/NodeXmlToJs'
-import { FinessEntitéJuridiqueLoader } from './FinessEntitéJuridiqueLoader'
+import { FinessXMLEntitéJuridiqueLoader } from './FinessXMLEntitéJuridiqueLoader'
 
 describe('Récupération des entités juridiques de la source de données FINESS', () => {
-  const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess`
+  const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
+  const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_ej`
   const finessLocalPath = `${localPath}/finess/simple`
 
   beforeEach(() => {
@@ -97,7 +98,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
 
   it('récupérer les entités juridiques de la source de données FINESS', () => {
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessEntitéJuridiqueLoader(new NodeXmlToJs(), localPath)
+    const entitéJuridiqueFinessLoader = new FinessXMLEntitéJuridiqueLoader(new NodeXmlToJs(), localPath)
     const entitésJuridiques = entitéJuridiqueFinessLoader.récupérerLesEntitésJuridiques()
 
     // THEN

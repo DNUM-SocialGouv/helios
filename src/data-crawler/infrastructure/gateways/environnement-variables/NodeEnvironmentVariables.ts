@@ -4,6 +4,10 @@ import { Logger } from '../../../métier/gateways/Logger'
 export class NodeEnvironmentVariables implements EnvironmentVariables {
   constructor(readonly logger: Logger) {}
 
+  readonly ORM_DEBUG: string = this.getOrElse('ORM_DEBUG')
+
+  readonly DATABASE_URL: string = this.getOrElse('DATABASE_URL')
+
   readonly SENTRY_AUTH_TOKEN: string = this.getOrElse('SENTRY_AUTH_TOKEN')
   readonly SENTRY_DSN: string = this.getOrElse('SENTRY_DSN')
 
