@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "amibroken": "yarn deadcode && yarn lint && yarn test && yarn tsc",
+    "amibroken": "yarn deadcode && yarn lint && yarn tsc && yarn test",
     "build": "next build",
     "deadcode": "ts-prune --ignore 'src/pages'",
     "depcheck": "depcheck",
