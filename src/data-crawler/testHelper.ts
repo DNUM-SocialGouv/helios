@@ -28,10 +28,10 @@ export const getFakeDataCrawlerDependencies = (): Dependencies => {
   return {
     downloadRawData: { handle: jest.fn() },
     environmentVariables,
-    finessEntitéJuridiqueLoader: { récupérerLesEntitésJuridiques: jest.fn() },
-    finessEntitéJuridiqueRepository: { save: jest.fn() },
-    finessÉtablissementTerritorialLoader: { récupérerLesÉtablissementsTerritoriaux: jest.fn() },
-    finessÉtablissementTerritorialRepository: { save: jest.fn() },
+    entitéJuridiqueLoader: { récupérerLesEntitésJuridiques: jest.fn() },
+    entitéJuridiqueRepository: { save: jest.fn() },
+    établissementTerritorialLoader: { récupérerLesÉtablissementsTerritoriaux: jest.fn() },
+    établissementTerritorialRepository: { save: jest.fn() },
     unzipRawData: { handle: jest.fn() },
   }
 }

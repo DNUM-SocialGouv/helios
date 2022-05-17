@@ -4,7 +4,7 @@ import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/É
 import { getFakeDataCrawlerDependencies } from '../../../testHelper'
 import { Dependencies } from '../../dependencies'
 import { NodeXmlToJs } from '../xml-to-js/NodeXmlToJs'
-import { FinessÉtablissementTerritorialLoader } from './FinessÉtablissementTerritorialLoader'
+import { FinessXMLÉtablissementTerritorialLoader } from './FinessXMLÉtablissementTerritorialLoader'
 
 describe('Récupération des établissements territoriaux de la source de données FINESS', () => {
   let localPath: string
@@ -133,7 +133,7 @@ describe('Récupération des établissements territoriaux de la source de donné
 
   it('récupérer les établissements territoriaux de la source de données FINESS', () => {
     // WHEN
-    const établissementTerritorialFinessLoader = new FinessÉtablissementTerritorialLoader(new NodeXmlToJs(), localPath)
+    const établissementTerritorialFinessLoader = new FinessXMLÉtablissementTerritorialLoader(new NodeXmlToJs(), localPath)
     const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupérerLesÉtablissementsTerritoriaux()
 
     // THEN

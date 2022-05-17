@@ -46,7 +46,7 @@ describe('Sauvegarde de l’entité juridique', () => {
       },
     ])
 
-    const finessEntitéJuridiqueRepository = new TypeORMEntitéJuridiqueRepository(orm)
+    const typeORMEntitéJuridiqueRepository = new TypeORMEntitéJuridiqueRepository(orm)
     const entitéJuridique1: EntitéJuridique = {
       adresseAcheminement: '01117 OYONNAX CEDEX',
       adresseNuméroVoie: '1',
@@ -72,7 +72,7 @@ describe('Sauvegarde de l’entité juridique', () => {
     const entitésJuridiques = [entitéJuridique1, entitéJuridique2]
 
     // WHEN
-    await finessEntitéJuridiqueRepository.save(entitésJuridiques)
+    await typeORMEntitéJuridiqueRepository.save(entitésJuridiques)
 
     // THEN
     const entitésJuridiquesQuery = await entitéJuridiqueRepository.find({ order: { numéroFinessEntitéJuridique: 'ASC' } })

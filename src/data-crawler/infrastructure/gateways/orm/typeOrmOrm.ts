@@ -12,7 +12,7 @@ export const typeOrmOrm: Orm<DataSource> = (environmentVariables: EnvironmentVar
     entities: [DateMiseÀJourSourceModel, EntitéJuridiqueModel, ÉtablissementTerritorialIdentitéModel],
     host: 'localhost',
     logging: [environmentVariables['ORM_DEBUG']] as LoggerOptions,
-    migrations: ['./database/migrations/*.ts'],
+    migrations: ['./src/database/migrations/*.ts'],
     password: environmentVariables['POSTGRES_PASSWORD'],
     port: Number(environmentVariables['POSTGRES_PORT']),
     type: 'postgres',

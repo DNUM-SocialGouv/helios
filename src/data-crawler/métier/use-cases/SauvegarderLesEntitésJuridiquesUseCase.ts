@@ -3,13 +3,13 @@ import { EntitéJuridiqueRepository } from '../gateways/EntitéJuridiqueReposito
 
 export class SauvegarderLesEntitésJuridiquesUseCase {
   constructor(
-    private readonly finessEntitéJuridiqueLoader: EntitéJuridiqueLoader,
-    private readonly finessEntitéJuridiqueRepository: EntitéJuridiqueRepository
+    private readonly entitéJuridiqueLoader: EntitéJuridiqueLoader,
+    private readonly entitéJuridiqueRepository: EntitéJuridiqueRepository
   ) {}
 
   async handle(): Promise<void> {
-    const entitésJuridiques = this.finessEntitéJuridiqueLoader.récupérerLesEntitésJuridiques()
+    const entitésJuridiques = this.entitéJuridiqueLoader.récupérerLesEntitésJuridiques()
 
-    await this.finessEntitéJuridiqueRepository.save(entitésJuridiques)
+    await this.entitéJuridiqueRepository.save(entitésJuridiques)
   }
 }

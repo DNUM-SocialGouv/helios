@@ -3,8 +3,8 @@ import { dependencies, Dependencies } from '../dependencies'
 
 async function sauvegarderLesEntitésJuridiquesCron(dependencies: Dependencies) {
   const sauvegarderLesEntitésJuridiques = new SauvegarderLesEntitésJuridiquesUseCase(
-    dependencies.finessEntitéJuridiqueLoader,
-    dependencies.finessEntitéJuridiqueRepository
+    dependencies.entitéJuridiqueLoader,
+    dependencies.entitéJuridiqueRepository
   )
 
   await sauvegarderLesEntitésJuridiques.handle()

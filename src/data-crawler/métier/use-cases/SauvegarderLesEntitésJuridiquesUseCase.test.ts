@@ -1,31 +1,28 @@
-import { Dependencies } from '../../infrastructure/dependencies'
 import { getFakeDataCrawlerDependencies } from '../../testHelper'
 import { SauvegarderLesEntitésJuridiquesUseCase } from './SauvegarderLesEntitésJuridiquesUseCase'
 
 describe('Sauvegarde des entités juridiques', () => {
-  let fakeDataCrawlerDependencies: Dependencies
-
-  beforeAll(() => {
-    fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
-  })
+  const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
 
   it('récupérer les entités juridiques de plusieurs sources de données', async () => {
+    // GIVEN
     const sauvegarderLesEntitésJuridiques = new SauvegarderLesEntitésJuridiquesUseCase(
-      fakeDataCrawlerDependencies.finessEntitéJuridiqueLoader,
-      fakeDataCrawlerDependencies.finessEntitéJuridiqueRepository
+      fakeDataCrawlerDependencies.entitéJuridiqueLoader,
+      fakeDataCrawlerDependencies.entitéJuridiqueRepository
     )
 
     // WHEN
     await sauvegarderLesEntitésJuridiques.handle()
 
     // THEN
-    expect(fakeDataCrawlerDependencies.finessEntitéJuridiqueLoader.récupérerLesEntitésJuridiques).toHaveBeenCalledWith()
+    expect(fakeDataCrawlerDependencies.entitéJuridiqueLoader.récupérerLesEntitésJuridiques).toHaveBeenCalledWith()
   })
 
   it('sauvegarder les entités juridiques de plusieurs sources de données', async () => {
+    // GIVEN
     const sauvegarderLesEntitésJuridiques = new SauvegarderLesEntitésJuridiquesUseCase(
-      fakeDataCrawlerDependencies.finessEntitéJuridiqueLoader,
-      fakeDataCrawlerDependencies.finessEntitéJuridiqueRepository
+      fakeDataCrawlerDependencies.entitéJuridiqueLoader,
+      fakeDataCrawlerDependencies.entitéJuridiqueRepository
     )
     const entitésJuridiques = [
       {
@@ -51,12 +48,12 @@ describe('Sauvegarde des entités juridiques', () => {
         téléphone: '0102030405',
       },
     ]
-    jest.spyOn(fakeDataCrawlerDependencies.finessEntitéJuridiqueLoader, 'récupérerLesEntitésJuridiques').mockReturnValue(entitésJuridiques)
+    jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueLoader, 'récupérerLesEntitésJuridiques').mockReturnValue(entitésJuridiques)
 
     // WHEN
     await sauvegarderLesEntitésJuridiques.handle()
 
     // THEN
-    expect(fakeDataCrawlerDependencies.finessEntitéJuridiqueRepository.save).toHaveBeenCalledWith(entitésJuridiques)
+    expect(fakeDataCrawlerDependencies.entitéJuridiqueRepository.save).toHaveBeenCalledWith(entitésJuridiques)
   })
 })

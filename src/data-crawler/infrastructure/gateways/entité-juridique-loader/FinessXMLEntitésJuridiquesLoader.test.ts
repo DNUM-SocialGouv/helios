@@ -4,7 +4,7 @@ import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { getFakeDataCrawlerDependencies } from '../../../testHelper'
 import { Dependencies } from '../../dependencies'
 import { NodeXmlToJs } from '../xml-to-js/NodeXmlToJs'
-import { FinessEntitéJuridiqueLoader } from './FinessEntitéJuridiqueLoader'
+import { FinessXMLEntitéJuridiqueLoader } from './FinessXMLEntitéJuridiqueLoader'
 
 describe('Récupération des entités juridiques de la source de données FINESS', () => {
   let fakeDataCrawlerDependencies: Dependencies
@@ -105,7 +105,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
 
   it('récupérer les entités juridiques de la source de données FINESS', () => {
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessEntitéJuridiqueLoader(new NodeXmlToJs(), localPath)
+    const entitéJuridiqueFinessLoader = new FinessXMLEntitéJuridiqueLoader(new NodeXmlToJs(), localPath)
     const entitésJuridiques = entitéJuridiqueFinessLoader.récupérerLesEntitésJuridiques()
 
     // THEN

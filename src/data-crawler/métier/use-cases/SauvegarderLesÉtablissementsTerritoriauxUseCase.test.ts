@@ -1,31 +1,28 @@
-import { Dependencies } from '../../infrastructure/dependencies'
 import { getFakeDataCrawlerDependencies } from '../../testHelper'
 import { SauvegarderLesÉtablissementsTerritoriauxUseCase } from './SauvegarderLesÉtablissementsTerritoriauxUseCase'
 
 describe('Sauvegarde des établissements territoriaux', () => {
-  let fakeDataCrawlerDependencies: Dependencies
-
-  beforeAll(() => {
-    fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
-  })
+  const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
 
   it('récupérer les établissements territoriaux de plusieurs sources de données', () => {
+    // GIVEN
     const sauvegarderLesÉtablissementsTerritoriaux = new SauvegarderLesÉtablissementsTerritoriauxUseCase(
-      fakeDataCrawlerDependencies.finessÉtablissementTerritorialLoader,
-      fakeDataCrawlerDependencies.finessÉtablissementTerritorialRepository
+      fakeDataCrawlerDependencies.établissementTerritorialLoader,
+      fakeDataCrawlerDependencies.établissementTerritorialRepository
     )
 
     // WHEN
     sauvegarderLesÉtablissementsTerritoriaux.handle()
 
     // THEN
-    expect(fakeDataCrawlerDependencies.finessÉtablissementTerritorialLoader.récupérerLesÉtablissementsTerritoriaux).toHaveBeenCalledWith()
+    expect(fakeDataCrawlerDependencies.établissementTerritorialLoader.récupérerLesÉtablissementsTerritoriaux).toHaveBeenCalledWith()
   })
 
   it('sauvegarder les établissements territoriaux de plusieurs sources de données', async () => {
+    // GIVEN
     const sauvegarderLesÉtablissementsTerritoriaux = new SauvegarderLesÉtablissementsTerritoriauxUseCase(
-      fakeDataCrawlerDependencies.finessÉtablissementTerritorialLoader,
-      fakeDataCrawlerDependencies.finessÉtablissementTerritorialRepository
+      fakeDataCrawlerDependencies.établissementTerritorialLoader,
+      fakeDataCrawlerDependencies.établissementTerritorialRepository
     )
     const établissementsTerritoriaux = [
       {
@@ -59,12 +56,12 @@ describe('Sauvegarde des établissements territoriaux', () => {
         téléphone: '0102030406',
       },
     ]
-    jest.spyOn(fakeDataCrawlerDependencies.finessÉtablissementTerritorialLoader, 'récupérerLesÉtablissementsTerritoriaux').mockReturnValue(établissementsTerritoriaux)
+    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialLoader, 'récupérerLesÉtablissementsTerritoriaux').mockReturnValue(établissementsTerritoriaux)
 
     // WHEN
     await sauvegarderLesÉtablissementsTerritoriaux.handle()
 
     // THEN
-    expect(fakeDataCrawlerDependencies.finessÉtablissementTerritorialRepository.save).toHaveBeenCalledWith(établissementsTerritoriaux)
+    expect(fakeDataCrawlerDependencies.établissementTerritorialRepository.save).toHaveBeenCalledWith(établissementsTerritoriaux)
   })
 })

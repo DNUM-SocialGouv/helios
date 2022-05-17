@@ -74,7 +74,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
         source: SourceDeDonnées.FINESS,
       },
     ])
-    const finessÉtablissementTerritorialRepository = new TypeORMÉtablissementTerritorialRepository(orm)
+    const typeORMÉtablissementTerritorialRepository = new TypeORMÉtablissementTerritorialRepository(orm)
     const établissementTerritorial1: ÉtablissementTerritorialIdentité = {
       adresseAcheminement: '01130 NANTUA',
       adresseNuméroVoie: '50',
@@ -108,7 +108,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
     const établissementsTerritoriaux = [établissementTerritorial1, établissementTerritorial2]
 
     // WHEN
-    await finessÉtablissementTerritorialRepository.save(établissementsTerritoriaux)
+    await typeORMÉtablissementTerritorialRepository.save(établissementsTerritoriaux)
 
     // THEN
     const établissementsTerritoriauxSauvés = await établissementTerritorialIdentitéRepository
