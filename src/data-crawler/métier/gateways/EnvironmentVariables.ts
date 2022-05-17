@@ -1,10 +1,7 @@
 export interface EnvironmentVariables {
   readonly ORM_DEBUG: string
 
-  readonly POSTGRES_DB: string
-  readonly POSTGRES_PASSWORD: string
-  readonly POSTGRES_PORT: string
-  readonly POSTGRES_USER: string
+  readonly POSTGRES_URL: string
 
   readonly SENTRY_AUTH_TOKEN: string
   readonly SENTRY_DSN: string
