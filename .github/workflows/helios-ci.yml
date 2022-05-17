@@ -57,7 +57,7 @@ jobs:
       - name: Run the tests
         run: yarn test
         env:
-          POSTGRES_PORT: 5433
+          DATABASE_URL: postgres://helios:h3li0s@localhost:5433/helios
 
   build:
     runs-on: ubuntu-latest
