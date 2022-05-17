@@ -22,7 +22,7 @@ export class ÉtablissementTerritorialIdentitéModel {
   @Column({ length: 255, name: 'courriel' })
   public courriel!: string
 
-  @ManyToOne(() => EntitéJuridiqueModel, (entitéJuridiqueEntity) => entitéJuridiqueEntity.établissementTerritorialIdentitéEntity, { nullable: false, onDelete: 'CASCADE' })
+  @ManyToOne(() => EntitéJuridiqueModel, { nullable: false, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'numérofinessentitéjuridique', referencedColumnName: 'numéroFinessEntitéJuridique' })
   public entitéJuridique!: EntitéJuridiqueModel
 
