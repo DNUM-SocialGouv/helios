@@ -1,8 +1,8 @@
 import { DataSource, LoggerOptions } from 'typeorm'
 
-import { DateMiseÀJourSourceModel } from '../../../../database/models/DateMiseÀJourSourceModel'
-import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
-import { ÉtablissementTerritorialIdentitéModel } from '../../../../database/models/ÉtablissementTerritorialIdentitéModel'
+import { DateMiseÀJourSourceModel } from '../../../../../database/models/DateMiseÀJourSourceModel'
+import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
+import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { EnvironmentVariables } from '../../../métier/gateways/EnvironmentVariables'
 import { Orm } from '../../../métier/gateways/Orm'
 
