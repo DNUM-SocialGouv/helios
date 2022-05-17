@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "amibroken": "yarn deadcode && yarn lint && yarn tsc && yarn test",
+    "amibroken": "yarn deadcode && yarn lint && yarn tsc && yarn test && yarn build",
     "build": "next build",
     "deadcode": "ts-prune --ignore 'src/pages'",
     "depcheck": "depcheck",
@@ -14,6 +14,7 @@
     "psql:local": "docker-compose up -d postgres && docker exec -it helios_db psql -U helios helios",
     "psql:production": "scalingo -a helios pgsql-console",
     "postinstall": "husky install",
+    "populateDatabase": "yarn retrieveFiness && yarn saveEJ && yarn saveET",
     "retrieveFiness": "TS_NODE_TRANSPILE_ONLY=true node --loader ts-node/esm src/data-crawler/infrastructure/controllers/téléchargerLesDonnéesBrutesDeFinessCron.ts",
     "saveEJ": "TS_NODE_TRANSPILE_ONLY=true node --loader ts-node/esm --max-old-space-size=8192 src/data-crawler/infrastructure/controllers/sauvegarderLesEntitésJuridiquesCron.ts",
     "saveET": "TS_NODE_TRANSPILE_ONLY=true node --loader ts-node/esm --max-old-space-size=8192 src/data-crawler/infrastructure/controllers/sauvegarderLesÉtablissementsTerritoriauxCron.ts",
