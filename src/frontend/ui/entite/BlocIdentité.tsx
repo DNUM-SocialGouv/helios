@@ -44,7 +44,7 @@ export const BlocIdentité = () => {
             dateDeMiseÀJour="07/07/2021"
             label={wording.NOM_DU_DIRECTEUR}
             source="FINESS"
-            valeur="DVADAURE LAURE"
+            valeur="À venir"
           />
           <Indicateur
             dateDeMiseÀJour="07/07/2021"

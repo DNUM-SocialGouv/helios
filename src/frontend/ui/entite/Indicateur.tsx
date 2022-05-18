@@ -1,9 +1,9 @@
 import { useDependencies } from '../commun/contexts/useDependencies'
 
 type IndicateurProps = Readonly<{
-  dateDeMiseÀJour: string;
+  dateDeMiseÀJour?: string;
   label: string;
-  source: string;
+  source?: string;
   valeur: string;
 }>
 
