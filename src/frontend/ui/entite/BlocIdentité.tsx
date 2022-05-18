@@ -41,9 +41,7 @@ export const BlocIdentité = () => {
           className={'fr-col ' + styles['colonne-indicateurs']}
         >
           <Indicateur
-            dateDeMiseÀJour="07/07/2021"
             label={wording.NOM_DU_DIRECTEUR}
-            source="FINESS"
             valeur="À venir"
           />
           <Indicateur
@@ -53,10 +51,8 @@ export const BlocIdentité = () => {
             valeur="Public"
           />
           <Indicateur
-            dateDeMiseÀJour="07/07/2021"
             label={wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM}
-            source="FINESS"
-            valeur="01/01/2019"
+            valeur="À venir"
           />
         </div>
       </div>

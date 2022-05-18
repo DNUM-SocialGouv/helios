@@ -69,8 +69,8 @@ describe('La page Entité Juridique', () => {
 
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
-      const nomDuDirecteur = within(ficheDIdentité).getByText('À venir')
-      expect(nomDuDirecteur).toBeInTheDocument()
+      const indicateursÀVenir = within(ficheDIdentité).getAllByText('À venir')
+      expect(indicateursÀVenir[0]).toBeInTheDocument()
       const labelNomDuDirecteur = within(ficheDIdentité).getByText(wording.NOM_DU_DIRECTEUR, { exact: false })
       expect(labelNomDuDirecteur).toBeInTheDocument()
     })
@@ -89,7 +89,17 @@ describe('La page Entité Juridique', () => {
       expect(majEtSource[4]).toBeInTheDocument()
     })
 
-    it.todo('la date d’entrée en vigueur du CPOM')
+    it('la date d’entrée en vigueur du CPOM', () => {
+      // WHEN
+      renderFakeComponent(<EntitéJuridique />)
+
+      // THEN
+      const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+      const indicateursÀVenir = within(ficheDIdentité).getAllByText('À venir')
+      expect(indicateursÀVenir[1]).toBeInTheDocument()
+      const labelDateDEntréeEnVigueurDuCPOM = within(ficheDIdentité).getByText(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM, { exact: false })
+      expect(labelDateDEntréeEnVigueurDuCPOM).toBeInTheDocument()
+    })
 
     it('ne devrait afficher que 5 mise à jour et sources de données', () => {
       // WHEN
@@ -99,6 +109,16 @@ describe('La page Entité Juridique', () => {
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
       const majEtSource = within(ficheDIdentité).getAllByText('Màj : 07/07/2021 - Source : FINESS')
       expect(majEtSource).toHaveLength(5)
+    })
+
+    it('devrait avoir deux indicateurs à venir', () => {
+      // WHEN
+      renderFakeComponent(<EntitéJuridique />)
+
+      // THEN
+      const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+      const majEtSource = within(ficheDIdentité).getAllByText('À venir')
+      expect(majEtSource).toHaveLength(2)
     })
   })
 })

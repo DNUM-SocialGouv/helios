@@ -10,8 +10,10 @@ type IndicateurProps = Readonly<{
 export const Indicateur = ({ dateDeMiseÀJour, label, source, valeur }: IndicateurProps) => {
   const { wording } = useDependencies()
   const labelEtSéparateur = `${label} - `
-  const miseÀJourEtSource = `${wording.MISE_À_JOUR} : ${dateDeMiseÀJour} - ${wording.SOURCE} : ${source}`
-
+  let miseÀJourEtSource = ''
+  if (dateDeMiseÀJour !== undefined && source !== undefined) {
+    miseÀJourEtSource = `${wording.MISE_À_JOUR} : ${dateDeMiseÀJour} - ${wording.SOURCE} : ${source}`
+  }
   return (
     <div>
       <p className="fr-m-0">
