@@ -1,6 +1,6 @@
 import { screen, within } from '@testing-library/react'
 
-import { fakeFrontDependencies, renderFakeComponent } from '../../testHelper'
+import { fakeFrontDependencies, nodeTextMatcher, renderFakeComponent, trimHtml } from '../../testHelper'
 import { EntitéJuridique } from './EntitéJuridique'
 
 const { wording } = fakeFrontDependencies
@@ -16,7 +16,6 @@ describe('La page Entité Juridique', () => {
       const nomDeLÉtablissement = within(ficheDIdentité).getByText('CENTRE HOSPITALIER DE SAINT BRIEUC')
       expect(nomDeLÉtablissement).toBeInTheDocument()
       const labelÉtablissement = within(ficheDIdentité).getByText(wording.NOM_DE_L_ÉTABLISSEMENT, { exact: false })
-      console.log(screen.debug(labelÉtablissement))
       expect(labelÉtablissement.textContent).toBe(`${wording.NOM_DE_L_ÉTABLISSEMENT} - Màj : 07/07/2021 - Source : FINESS`)
     })
 
@@ -89,9 +88,9 @@ describe('La page Entité Juridique', () => {
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
       const indicateursÀVenir = within(ficheDIdentité).getAllByText('À venir')
       expect(indicateursÀVenir[1]).toBeInTheDocument()
-      const labelDateDEntréeEnVigueurDuCPOM = within(ficheDIdentité).getByText(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM, { exact: false })
+      const labelDateDEntréeEnVigueurDuCPOM = within(ficheDIdentité).getByText(nodeTextMatcher(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
       expect(labelDateDEntréeEnVigueurDuCPOM).toBeInTheDocument()
-      expect(labelDateDEntréeEnVigueurDuCPOM.textContent).toBe(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM)
+      expect(labelDateDEntréeEnVigueurDuCPOM.textContent).toBe(trimHtml(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
     })
 
     it('ne devrait afficher que 5 mise à jour et sources de données', () => {
