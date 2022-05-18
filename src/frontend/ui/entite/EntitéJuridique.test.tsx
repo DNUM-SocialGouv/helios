@@ -17,8 +17,7 @@ describe('La page Entité Juridique', () => {
       expect(nomDeLÉtablissement).toBeInTheDocument()
       const labelÉtablissement = within(ficheDIdentité).getByText(wording.NOM_DE_L_ÉTABLISSEMENT, { exact: false })
       expect(labelÉtablissement).toBeInTheDocument()
-      const majEtSource = within(ficheDIdentité).getAllByText('Màj : 07/07/2021 - Source : FINESS')
-      expect(majEtSource[0]).toBeInTheDocument()
+      expect(labelÉtablissement.textContent).toBe('Nom de l’établissement - Màj : 07/07/2021 - Source : FINESS')
     })
 
     it('le numéro FINESS', () => {
@@ -29,10 +28,10 @@ describe('La page Entité Juridique', () => {
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
       const numéroFINESS = within(ficheDIdentité).getByText('220000020')
       expect(numéroFINESS).toBeInTheDocument()
-      const labelÉtablissement = within(ficheDIdentité).getByText(wording.NUMÉRO_FINESS, { exact: false })
-      expect(labelÉtablissement).toBeInTheDocument()
-      const majEtSource = within(ficheDIdentité).getAllByText('Màj : 07/07/2021 - Source : FINESS')
-      expect(majEtSource[1]).toBeInTheDocument()
+      const labelNuméroFINESS = within(ficheDIdentité).getByText(wording.NUMÉRO_FINESS, { exact: false })
+      expect(labelNuméroFINESS).toBeInTheDocument()
+      expect(labelNuméroFINESS.textContent).toBe('Nom de l’établissement - Màj : 07/07/2021 - Source : FINESS')
+
     })
 
     it('l’adresse', () => {
@@ -73,6 +72,7 @@ describe('La page Entité Juridique', () => {
       expect(indicateursÀVenir[0]).toBeInTheDocument()
       const labelNomDuDirecteur = within(ficheDIdentité).getByText(wording.NOM_DU_DIRECTEUR, { exact: false })
       expect(labelNomDuDirecteur).toBeInTheDocument()
+      expect(labelNomDuDirecteur.textContent).toBe(wording.NOM_DU_DIRECTEUR)
     })
 
     it('le statut de l’établissement', () => {
@@ -99,6 +99,7 @@ describe('La page Entité Juridique', () => {
       expect(indicateursÀVenir[1]).toBeInTheDocument()
       const labelDateDEntréeEnVigueurDuCPOM = within(ficheDIdentité).getByText(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM, { exact: false })
       expect(labelDateDEntréeEnVigueurDuCPOM).toBeInTheDocument()
+      expect(labelDateDEntréeEnVigueurDuCPOM.textContent).toBe(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM)
     })
 
     it('ne devrait afficher que 5 mise à jour et sources de données', () => {
