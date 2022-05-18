@@ -13,8 +13,11 @@ describe('La page Entité Juridique', () => {
 
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
-      const nomDeLÉtablissement = within(ficheDIdentité).getByText()
+      const nomDeLÉtablissement = within(ficheDIdentité).getByText("CENTRE HOSPITALIER DE SAINT BRIEUC")
       expect(nomDeLÉtablissement).toBeInTheDocument()
+
+      const labelÉtablissement = within(ficheDIdentité).getByText("Nom de l’établissement - Màj : 07/07/2021 - Source : FINESS")
+      expect(labelÉtablissement).toBeInTheDocument()
     })
 
     it.todo('le numéro FINESS')
