@@ -16,8 +16,7 @@ describe('La page Entité Juridique', () => {
       const nomDeLÉtablissement = within(ficheDIdentité).getByText('CENTRE HOSPITALIER DE SAINT BRIEUC')
       expect(nomDeLÉtablissement).toBeInTheDocument()
       const labelÉtablissement = within(ficheDIdentité).getByText(wording.NOM_DE_L_ÉTABLISSEMENT, { exact: false })
-      expect(labelÉtablissement).toBeInTheDocument()
-      expect(labelÉtablissement.textContent).toBe('Nom de l’établissement - Màj : 07/07/2021 - Source : FINESS')
+      expect(labelÉtablissement.textContent).toBe(`${wording.NOM_DE_L_ÉTABLISSEMENT} - Màj : 07/07/2021 - Source : FINESS`)
     })
 
     it('le numéro FINESS', () => {
@@ -29,9 +28,7 @@ describe('La page Entité Juridique', () => {
       const numéroFINESS = within(ficheDIdentité).getByText('220000020')
       expect(numéroFINESS).toBeInTheDocument()
       const labelNuméroFINESS = within(ficheDIdentité).getByText(wording.NUMÉRO_FINESS, { exact: false })
-      expect(labelNuméroFINESS).toBeInTheDocument()
-      expect(labelNuméroFINESS.textContent).toBe('Nom de l’établissement - Màj : 07/07/2021 - Source : FINESS')
-
+      expect(labelNuméroFINESS.textContent).toBe(`${wording.NUMÉRO_FINESS} - Màj : 07/07/2021 - Source : FINESS`)
     })
 
     it('l’adresse', () => {
@@ -43,9 +40,7 @@ describe('La page Entité Juridique', () => {
       const adresse = within(ficheDIdentité).getByText('10 Rue Marcel Proust 22023 ST BRIEUC CEDEX 1')
       expect(adresse).toBeInTheDocument()
       const labelAdresse = within(ficheDIdentité).getByText(wording.ADRESSE, { exact: false })
-      expect(labelAdresse).toBeInTheDocument()
-      const majEtSource = within(ficheDIdentité).getAllByText('Màj : 07/07/2021 - Source : FINESS')
-      expect(majEtSource[2]).toBeInTheDocument()
+      expect(labelAdresse.textContent).toBe(`${wording.ADRESSE} - Màj : 07/07/2021 - Source : FINESS`)
     })
 
     it('le téléphone', () => {
@@ -57,9 +52,7 @@ describe('La page Entité Juridique', () => {
       const téléphone = within(ficheDIdentité).getByText('02 96 01 71 23')
       expect(téléphone).toBeInTheDocument()
       const labelTéléphone = within(ficheDIdentité).getByText(wording.TÉLÉPHONE, { exact: false })
-      expect(labelTéléphone).toBeInTheDocument()
-      const majEtSource = within(ficheDIdentité).getAllByText('Màj : 07/07/2021 - Source : FINESS')
-      expect(majEtSource[3]).toBeInTheDocument()
+      expect(labelTéléphone.textContent).toBe(`${wording.TÉLÉPHONE} - Màj : 07/07/2021 - Source : FINESS`)
     })
 
     it('le nom du directeur', () => {
@@ -84,9 +77,7 @@ describe('La page Entité Juridique', () => {
       const statutÉtablissement = within(ficheDIdentité).getByText('Public')
       expect(statutÉtablissement).toBeInTheDocument()
       const labelStatutÉtablissement = within(ficheDIdentité).getByText(wording.STATUT_DE_L_ÉTABLISSEMENT, { exact: false })
-      expect(labelStatutÉtablissement).toBeInTheDocument()
-      const majEtSource = within(ficheDIdentité).getAllByText('Màj : 07/07/2021 - Source : FINESS')
-      expect(majEtSource[4]).toBeInTheDocument()
+      expect(labelStatutÉtablissement.textContent).toBe(`${wording.STATUT_DE_L_ÉTABLISSEMENT} - Màj : 07/07/2021 - Source : FINESS`)
     })
 
     it('la date d’entrée en vigueur du CPOM', () => {
