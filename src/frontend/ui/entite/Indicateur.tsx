@@ -8,7 +8,6 @@ type IndicateurProps = Readonly<{
 }>
 
 export const Indicateur = ({ dateDeMiseÀJour, label, source, valeur }: IndicateurProps) => {
-
   const { wording } = useDependencies()
   const labelEtSéparateur = `${label} - `
   const miseÀJourEtSource = `${wording.MISE_À_JOUR} : ${dateDeMiseÀJour} - ${wording.SOURCE} : ${source}`

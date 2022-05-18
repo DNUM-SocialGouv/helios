@@ -1,7 +1,7 @@
 import Head from 'next/head'
 
 import { useBreadcrumb } from '../../frontend/ui/commun/hooks/useBreadcrumb'
-import { Entité } from '../../frontend/ui/entite/Entité'
+import { EntitéJuridique } from '../../frontend/ui/entite/EntitéJuridique'
 
 export default function PageEntite() {
   useBreadcrumb([
@@ -18,7 +18,7 @@ export default function PageEntite() {
           Entité Juridique
         </title>
       </Head>
-      <Entité />
+      <EntitéJuridique />
     </>
   )
 }
