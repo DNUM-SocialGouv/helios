@@ -21,7 +21,20 @@ describe('La page Entité Juridique', () => {
       expect(majEtSource[0]).toBeInTheDocument()
     })
 
-    it.todo('le numéro FINESS')
+    it('le numéro FINESS', () => {
+
+      // WHEN
+      renderFakeComponent(<EntitéJuridique />)
+
+      // THEN
+      const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+      const numéroFINESS = within(ficheDIdentité).getByText('220000020')
+      expect(numéroFINESS).toBeInTheDocument()
+      const labelÉtablissement = within(ficheDIdentité).getByText('Numéro FINESS', { exact: false })
+      expect(labelÉtablissement).toBeInTheDocument()
+      const majEtSource = within(ficheDIdentité).getAllByText('Màj : 07/07/2021 - Source : FINESS')
+      expect(majEtSource[0]).toBeInTheDocument()
+    })
 
     it.todo('l’adresse')
 
