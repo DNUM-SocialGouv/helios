@@ -1,5 +1,5 @@
 import { render, RenderResult } from '@testing-library/react'
-import { ReactChild, ReactElement } from 'react'
+import { ReactChild } from 'react'
 
 import { BreadcrumbHandler } from './configuration/BreadcrumbHandler'
 import { FrontDependencies } from './configuration/frontDependencies'
@@ -40,7 +40,12 @@ export const trimHtml = (reactElement: ReactChild): string => {
   return sentence
 }
 
-export const nodeTextMatcher = (wording: ReactChild) => (_: any, node: Element | null) => {
+export const nodeReactChildMatcher = (wording: ReactChild) => (_: any, node: Element | null) => {
   const hasText = (node: Element | null) => node?.textContent === trimHtml(wording)
+  return hasText(node)
+}
+
+export const nodeTextMatcher = (wording: string) => (_: any, node: Element | null) => {
+  const hasText = (node: Element | null) => node?.textContent === wording
   return hasText(node)
 }

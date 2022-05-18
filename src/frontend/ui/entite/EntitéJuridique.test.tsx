@@ -1,6 +1,6 @@
 import { screen, within } from '@testing-library/react'
 
-import { fakeFrontDependencies, nodeTextMatcher, renderFakeComponent, trimHtml } from '../../testHelper'
+import { fakeFrontDependencies, nodeReactChildMatcher, nodeTextMatcher, renderFakeComponent, trimHtml } from '../../testHelper'
 import { EntitéJuridique } from './EntitéJuridique'
 
 const { wording } = fakeFrontDependencies
@@ -88,18 +88,18 @@ describe('La page Entité Juridique', () => {
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
       const indicateursÀVenir = within(ficheDIdentité).getAllByText('À venir')
       expect(indicateursÀVenir[1]).toBeInTheDocument()
-      const labelDateDEntréeEnVigueurDuCPOM = within(ficheDIdentité).getByText(nodeTextMatcher(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
+      const labelDateDEntréeEnVigueurDuCPOM = within(ficheDIdentité).getByText(nodeReactChildMatcher(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
       expect(labelDateDEntréeEnVigueurDuCPOM).toBeInTheDocument()
       expect(labelDateDEntréeEnVigueurDuCPOM.textContent).toBe(trimHtml(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
     })
 
-    it('ne devrait afficher que 5 mise à jour et sources de données', () => {
+    it('ne devrait afficher que 5 mises à jour et sources de données', () => {
       // WHEN
       renderFakeComponent(<EntitéJuridique />)
 
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
-      const majEtSource = within(ficheDIdentité).getAllByText('Màj : 07/07/2021 - Source : FINESS')
+      const majEtSource = within(ficheDIdentité).getAllByText(nodeTextMatcher('Màj : 07/07/2021 - Source : FINESS'))
       expect(majEtSource).toHaveLength(5)
     })
 
