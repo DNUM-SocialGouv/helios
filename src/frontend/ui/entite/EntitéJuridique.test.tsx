@@ -16,6 +16,7 @@ describe('La page Entité Juridique', () => {
       const nomDeLÉtablissement = within(ficheDIdentité).getByText('CENTRE HOSPITALIER DE SAINT BRIEUC')
       expect(nomDeLÉtablissement).toBeInTheDocument()
       const labelÉtablissement = within(ficheDIdentité).getByText(wording.NOM_DE_L_ÉTABLISSEMENT, { exact: false })
+      console.log(screen.debug(labelÉtablissement))
       expect(labelÉtablissement.textContent).toBe(`${wording.NOM_DE_L_ÉTABLISSEMENT} - Màj : 07/07/2021 - Source : FINESS`)
     })
 

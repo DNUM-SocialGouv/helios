@@ -29,7 +29,7 @@ export class WordingFr implements Wording {
   readonly VOIR_LE_FIL_D_ARIANE: string = 'Voir le fil d’Ariane'
 
   // Fiches
-  readonly MISE_À_JOUR: string = 'Màj'
+  readonly MISE_À_JOUR: ReactChild = (<abbr title="Mise à jour">Màj</abbr>)
   readonly SOURCE: string = 'Source'
 
   // Bloc Identité
@@ -40,7 +40,12 @@ export class WordingFr implements Wording {
   readonly TÉLÉPHONE: string = 'Téléphone'
   readonly NOM_DU_DIRECTEUR: string = 'Nom du directeur'
   readonly STATUT_DE_L_ÉTABLISSEMENT: string = 'Statut de l’établissement'
-  readonly DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM: string = 'Date d’entrée en vigueur du CPOM'
+  readonly DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM: ReactChild = (
+    <>
+      Date d’entrée en vigueur du
+      <abbr title="Contrat Pluriannuel d’Objectifs et de Moyens">CPOM</abbr>
+    </>
+  )
   readonly ENTITÉ_JURIDIQUE_DE_RATTACHEMENT: string = 'Entité juridique de rattachement'
   readonly CATÉGORIE_DE_L_ÉTABLISSEMENT: string = 'Catégorie de l’établissement'
   readonly MONO_ÉTABLISSEMENT: string = 'Mono-établissement'
