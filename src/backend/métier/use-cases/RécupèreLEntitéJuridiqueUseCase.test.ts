@@ -2,7 +2,7 @@ import { ÉtablissementJuridiqueLoader } from '../gateways/ÉtablissementJuridiq
 import { RécupèreLEntitéJuridiqueUseCase } from './RécupèreLEntitéJuridiqueUseCase'
 
 describe('La récupération d’une entité juridique', () => {
-  it('récupère la fiche identité de l’entité juridique', () => {
+  it('récupère la fiche identité de l’entité juridique', async () => {
     // GIVEN
     const numéroFINESS = '123456789'
     const ficheIdentité = {
@@ -21,10 +21,11 @@ describe('La récupération d’une entité juridique', () => {
     const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(établissementJuridiqueLoader)
 
     // WHEN
-    const ficheIdentitéRécupérée = récupèreLEntitéJuridiqueUseCase.exécute(numéroFINESS)
+    const ficheIdentitéRécupérée = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFINESS)
 
     // THEN
-
     expect(ficheIdentitéRécupérée).toStrictEqual(ficheIdentité)
+    expect(mockedChargeParNuméroFINESS).toHaveBeenCalledWith(numéroFINESS)
+    expect(mockedChargeParNuméroFINESS).toHaveBeenCalledTimes(1)
   })
 })

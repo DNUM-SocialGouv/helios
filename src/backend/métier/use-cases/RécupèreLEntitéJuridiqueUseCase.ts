@@ -4,7 +4,7 @@ export class RécupèreLEntitéJuridiqueUseCase {
   constructor(private établissementJuridiqueLoader: ÉtablissementJuridiqueLoader) {
   }
 
-  exécute(numéroFINESS: string) {
-    return this.établissementJuridiqueLoader.chargeParNuméroFINESS(numéroFINESS)
+  async exécute(numéroFINESS: string) {
+    return await this.établissementJuridiqueLoader.chargeParNuméroFINESS(numéroFINESS)
   }
 }
