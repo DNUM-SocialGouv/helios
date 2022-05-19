@@ -1,7 +1,7 @@
-import { ÉtablissementJuridiqueLoader } from '../gateways/ÉtablissementJuridiqueLoader'
+import { EntitéJuridiqueLoader } from '../gateways/EntitéJuridiqueLoader'
 
 export class RécupèreLEntitéJuridiqueUseCase {
-  constructor(private établissementJuridiqueLoader: ÉtablissementJuridiqueLoader) {
+  constructor(private établissementJuridiqueLoader: EntitéJuridiqueLoader) {
   }
 
   async exécute(numéroFINESS: string) {

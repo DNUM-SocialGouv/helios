@@ -1,5 +1,5 @@
 import { EntitéJuridique } from '../entities/EntitéJuridique'
 
-export interface ÉtablissementJuridiqueLoader {
+export interface EntitéJuridiqueLoader {
     chargeParNuméroFINESS(numéroFINESS: string): Promise<EntitéJuridique>
 }

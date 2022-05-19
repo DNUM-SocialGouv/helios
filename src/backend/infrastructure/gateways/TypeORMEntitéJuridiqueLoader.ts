@@ -3,7 +3,7 @@ import { DataSource } from 'typeorm'
 import { EntitéJuridiqueModel } from '../../../database/models/EntitéJuridiqueModel'
 import { EntitéJuridique } from '../../métier/entities/EntitéJuridique'
 
-export class ÉtablissementJuridiqueLoader {
+export class TypeORMEntitéJuridiqueLoader {
   constructor(private readonly orm: Promise<DataSource>) {}
 
   async chargeParNuméroFINESS(numéroFINESS: string): Promise<EntitéJuridique> {
