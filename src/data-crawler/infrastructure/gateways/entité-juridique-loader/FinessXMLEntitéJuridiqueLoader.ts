@@ -123,29 +123,29 @@ export class FinessXMLEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
 
   constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string) {}
 
-  récupérerLesEntitésJuridiques(): EntitéJuridique[] {
-    const cheminDuFichierEntitéJuridique = this.récupérerLeCheminDuFichierEntitéJuridique(this.localPath)
+  récupèreLesEntitésJuridiques(): EntitéJuridique[] {
+    const cheminDuFichierEntitéJuridique = this.récupèreLeCheminDuFichierEntitéJuridique(this.localPath)
 
-    const dateDeMiseAJourDeLaSource = this.récupérerLaDateDeMiseAJourDeLaSource(cheminDuFichierEntitéJuridique)
+    const dateDeMiseAJourDeLaSource = this.récupèreLaDateDeMiseAJourDeLaSource(cheminDuFichierEntitéJuridique)
 
     const entitésJuridiquesFluxFiness = this.convertXmlToJs.handle<EntitéJuridiqueFluxFiness>(cheminDuFichierEntitéJuridique)
 
     return entitésJuridiquesFluxFiness.fluxfiness.structureej.map(
-      (entitéJuridique: EntitéJuridiqueFiness) => this.mapToEntitésJuridiques(entitéJuridique, dateDeMiseAJourDeLaSource)
+      (entitéJuridique: EntitéJuridiqueFiness) => this.construitLEntitéJuridique(entitéJuridique, dateDeMiseAJourDeLaSource)
     )
   }
 
-  private récupérerLeCheminDuFichierEntitéJuridique(localPath: string): string {
+  private récupèreLeCheminDuFichierEntitéJuridique(localPath: string): string {
     const fichiersDuRépertoireSimple = readdirSync(`${localPath}/finess/simple`)
 
     return localPath + '/finess/simple/' + fichiersDuRépertoireSimple.filter((fichier) => fichier.includes(this.préfixeDuFichierEntitéJuridique))
   }
 
-  private récupérerLaDateDeMiseAJourDeLaSource(cheminDuFichierEntitéJuridique: string): string {
+  private récupèreLaDateDeMiseAJourDeLaSource(cheminDuFichierEntitéJuridique: string): string {
     return cheminDuFichierEntitéJuridique.split(this.préfixeDuFichierEntitéJuridique)[1].slice(0, 8)
   }
 
-  private mapToEntitésJuridiques(entitésJuridiquesFiness: EntitéJuridiqueFiness, dateMiseAJourSource: string): EntitéJuridique {
+  private construitLEntitéJuridique(entitésJuridiquesFiness: EntitéJuridiqueFiness, dateMiseAJourSource: string): EntitéJuridique {
     const valueOrEmpty = (value?: string): string => value || ''
 
     return {

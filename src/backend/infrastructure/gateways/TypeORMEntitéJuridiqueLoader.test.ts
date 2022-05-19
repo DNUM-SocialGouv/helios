@@ -3,6 +3,7 @@ import { Repository } from 'typeorm'
 import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../database/models/DateMiseÀJourSourceModel'
 import { EntitéJuridiqueModel } from '../../../database/models/EntitéJuridiqueModel'
 import { EntitéJuridique } from '../../métier/entities/EntitéJuridique'
+import { EntitéJuridiqueNonTrouvée } from '../../métier/entities/EntitéJuridiqueNonTrouvée'
 import { getOrm } from '../../testHelper'
 import { TypeORMEntitéJuridiqueLoader } from './TypeORMEntitéJuridiqueLoader'
 
@@ -78,9 +79,9 @@ describe('Entité juridique loader', () => {
     const exceptionAttendue = new EntitéJuridiqueNonTrouvée()
 
     // WHEN
-    const entitéJuridiqueChargée = await typeORMEntitéJuridiqueLoader.chargeParNuméroFINESS(numéroFINESS)
+    const exceptionReçue = await typeORMEntitéJuridiqueLoader.chargeParNuméroFINESS(numéroFINESS)
 
     // THEN
-    expect(entitéJuridiqueChargée).toStrictEqual(entitéJuridiqueAttendue)
+    expect(exceptionReçue).toStrictEqual(exceptionAttendue)
   })
 })

@@ -1,5 +1,5 @@
 export class EntitéJuridiqueNonTrouvée extends Error {
-  constructor(override readonly message: string) {
+  constructor() {
     super('L’entité n’a pas été trouvée')
   }
 }

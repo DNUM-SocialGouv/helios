@@ -99,7 +99,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
   it('récupérer les entités juridiques de la source de données FINESS', () => {
     // WHEN
     const entitéJuridiqueFinessLoader = new FinessXMLEntitéJuridiqueLoader(new NodeXmlToJs(), localPath)
-    const entitésJuridiques = entitéJuridiqueFinessLoader.récupérerLesEntitésJuridiques()
+    const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiques()
 
     // THEN
     expect(entitésJuridiques).toStrictEqual<EntitéJuridique[]>(
