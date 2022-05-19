@@ -1,10 +1,10 @@
 import { BlocIdentité } from './BlocIdentité'
 
-export const EntitéJuridique = () => {
+export const EntitéJuridique = ({ titre }: { titre: string}) => {
   return (
     <>
       <h1>
-        Entité Juridique
+        {titre}
       </h1>
       <BlocIdentité />
     </>
