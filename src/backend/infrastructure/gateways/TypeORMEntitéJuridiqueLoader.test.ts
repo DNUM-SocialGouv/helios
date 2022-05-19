@@ -25,7 +25,7 @@ describe('Entité juridique loader', () => {
     await (await orm).destroy()
   })
 
-  it('charge par numéro FINESS', async () => {
+  it('charge par numéro FINESS lorsque l’entité juridique est en base', async () => {
     // GIVEN
     const entitéJuridique = new EntitéJuridiqueModel()
     entitéJuridique.adresseAcheminement = '75000 Paris'
@@ -57,6 +57,26 @@ describe('Entité juridique loader', () => {
       raisonSociale: 'Nom de l’entité juridique',
       téléphone: '0123456789',
     }
+    // WHEN
+    const entitéJuridiqueChargée = await typeORMEntitéJuridiqueLoader.chargeParNuméroFINESS(numéroFINESS)
+
+    // THEN
+    expect(entitéJuridiqueChargée).toStrictEqual(entitéJuridiqueAttendue)
+  })
+
+  it('retourne une exception lorsque l’entité juridique n’est pas en base', async () => {
+    // GIVEN
+    await dateMiseÀJourSourceRepository.insert([
+      {
+        dernièreMiseÀJour: '20220514',
+        source: SourceDeDonnées.FINESS,
+      },
+    ])
+
+    const numéroFINESS = '012345678'
+    const typeORMEntitéJuridiqueLoader = new TypeORMEntitéJuridiqueLoader(orm)
+    const exceptionAttendue = new EntitéJuridiqueNonTrouvée()
+
     // WHEN
     const entitéJuridiqueChargée = await typeORMEntitéJuridiqueLoader.chargeParNuméroFINESS(numéroFINESS)
 
