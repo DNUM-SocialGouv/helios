@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  {{> header }}
+  <body>
+    <p>Hello {{ adresse }}</p>
+    <p class="fr-mt-0-5v">Hello {{ téléphone }}</p>
+    <p>Hello {{ numéroFINESS }}</p>
+  </body>
+  {{> footer }}
+  <script>
+    window.customElements.define('info-dsfr', class extends HTMLElement {
+      observedAttributes = ['message'];
+      messageContainer = "";
+
+      constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.innerHTML = `
+        <style>
+          .hidden {
+            display: none;
+          }
+          .visible {
+            display: block;
+          }
+          span {
+            display: block;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+          }
+        </style>
+        <div>
+          <span id="toclick">click me</span>
+          <div class="hidden" id="my-message"></div>
+        </div>`;
+        console.log('ctor');
+        const message = this.getAttribute('message');
+        this.messageContainer = this.shadowRoot.querySelector('#my-message');
+        this.messageContainer.innerText = message;
+        this.shadowRoot.querySelector('#toclick').addEventListener('click', () => {
+          console.log('click');
+          this.messageContainer.classList.toggle('hidden');
+          this.messageContainer.classList.toggle('visible');
+        });
+        const chart = new ChartJs(this.shadowRoot.querySelector('canvas'));
+        chart.render();
+      }
+
+      attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'message') {
+          this.messageContainer.innerText = newValue;
+        }
+      }
+    });
+  </script>
+</html>
