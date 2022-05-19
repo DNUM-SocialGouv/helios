@@ -1,14 +1,10 @@
+import { ÉtablissementJuridiqueLoader } from '../gateways/ÉtablissementJuridiqueLoader'
+
 export class RécupèreLEntitéJuridiqueUseCase {
+  constructor(private établissementJuridiqueLoader: ÉtablissementJuridiqueLoader) {
+  }
 
   exécute(numéroFINESS: string) {
-    return {
-      adresseNuméroVoie: '6',
-      adresseTypeVoie: 'AV',
-      adresseVoie: 'rue de la Paix',
-      nom: 'Nom de l’entité juridique',
-      numéroFINESS,
-      statut: 'statut',
-      téléphone: '0123456789',
-    }
+    return this.établissementJuridiqueLoader.chargeParNuméroFINESS(numéroFINESS)
   }
 }
