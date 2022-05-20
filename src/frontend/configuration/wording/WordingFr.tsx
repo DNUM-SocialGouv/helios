@@ -1,4 +1,4 @@
-import { ReactChild } from 'react'
+import { ReactChild, ReactElement } from 'react'
 
 import { Wording } from './Wording'
 
@@ -35,7 +35,7 @@ export class WordingFr implements Wording {
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string = 'fiche d’identité'
   readonly NOM_DE_L_ÉTABLISSEMENT: string = 'Nom de l’établissement'
-  readonly NUMÉRO_FINESS: ReactChild = (
+  readonly NUMÉRO_FINESS: ReactElement = (
     <>
       {'Numéro '}
       <abbr title="Fichier National des Établissements Sanitaires et Sociaux">FINESS</abbr>
@@ -45,7 +45,7 @@ export class WordingFr implements Wording {
   readonly TÉLÉPHONE: string = 'Téléphone'
   readonly NOM_DU_DIRECTEUR: string = 'Nom du directeur'
   readonly STATUT_DE_L_ÉTABLISSEMENT: string = 'Statut de l’établissement'
-  readonly DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM: ReactChild = (
+  readonly DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM: ReactElement = (
     <>
       {'Date d’entrée en vigueur du '}
       <abbr title="Contrat Pluriannuel d’Objectifs et de Moyens">CPOM</abbr>

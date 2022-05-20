@@ -1,5 +1,5 @@
 import { render, RenderResult } from '@testing-library/react'
-import { ReactChild } from 'react'
+import { ReactChild, ReactElement } from 'react'
 
 import { BreadcrumbHandler } from './configuration/BreadcrumbHandler'
 import { FrontDependencies } from './configuration/frontDependencies'
@@ -21,7 +21,7 @@ export const fakeFrontDependencies: FrontDependencies = {
   wording: new WordingFr(),
 }
 
-export const trimHtml = (reactElement: ReactChild): string => {
+export const trimHtml = (reactElement: ReactElement): string => {
   let sentence = ''
   if (reactElement.props.children instanceof Array) {
     for (const children1 of reactElement.props.children) {
@@ -40,7 +40,7 @@ export const trimHtml = (reactElement: ReactChild): string => {
   return sentence
 }
 
-export const nodeReactChildMatcher = (wording: ReactChild) => (_: any, node: Element | null) => {
+export const nodeReactChildMatcher = (wording: ReactElement) => (_: any, node: Element | null) => {
   const hasText = (node: Element | null) => node?.textContent === trimHtml(wording)
   return hasText(node)
 }

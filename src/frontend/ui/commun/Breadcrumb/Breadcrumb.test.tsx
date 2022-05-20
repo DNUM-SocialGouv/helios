@@ -1,6 +1,5 @@
 import { screen, within } from '@testing-library/react'
 
-import { EntitéJuridique } from '../../../../backend/métier/entities/EntitéJuridique'
 import PageDAccueil from '../../../../pages'
 import Accessibilité from '../../../../pages/accessibilite'
 import DonnéesPersonnelles from '../../../../pages/donnees-personnelles'
@@ -8,6 +7,7 @@ import GestionDesCookies from '../../../../pages/gestion-des-cookies'
 import MentionsLégales from '../../../../pages/mentions-legales'
 import PlanDuSite from '../../../../pages/plan-du-site'
 import { renderFakeComponent } from '../../../testHelper'
+import { EntitéJuridiqueViewModel } from '../../entité-juridique/EntitéJuridiqueViewModel'
 import { PageEntitéJuridique } from '../../entité-juridique/PageEntitéJuridique'
 import { Breadcrumb } from './Breadcrumb'
 
@@ -52,7 +52,7 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
 
   it('affiche le chemin jusqu’à la page entité juridique', () => {
     // GIVEN
-    const entitéJuridique: EntitéJuridique = {
+    const entitéJuridiqueViewModel = new EntitéJuridiqueViewModel({
       adresseAcheminement: '22023 ST BRIEUC CEDEX 1',
       adresseNuméroVoie: '10',
       adresseTypeVoie: 'Rue',
@@ -62,13 +62,13 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
       numéroFinessEntitéJuridique: '220000020',
       raisonSociale: 'CENTRE HOSPITALIER DE SAINT BRIEUC',
       téléphone: '0123456789',
-    }
+    })
 
     // WHEN
     renderFakeComponent(
       <>
         <Breadcrumb />
-        <PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridique} />
+        <PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
       </>
     )
 
