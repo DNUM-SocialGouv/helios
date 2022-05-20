@@ -1,10 +1,10 @@
 import { DataSource } from 'typeorm'
 
-import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../database/models/DateMiseÀJourSourceModel'
-import { EntitéJuridiqueModel } from '../../../database/models/EntitéJuridiqueModel'
-import { EntitéJuridique } from '../../métier/entities/EntitéJuridique'
-import { EntitéJuridiqueNonTrouvée } from '../../métier/entities/EntitéJuridiqueNonTrouvée'
-import { EntitéJuridiqueLoader } from '../../métier/gateways/EntitéJuridiqueLoader'
+import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../database/models/DateMiseÀJourSourceModel'
+import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
+import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
+import { EntitéJuridiqueNonTrouvée } from '../../../métier/entities/EntitéJuridiqueNonTrouvée'
+import { EntitéJuridiqueLoader } from '../../../métier/gateways/EntitéJuridiqueLoader'
 
 export class TypeORMEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
   constructor(private readonly orm: Promise<DataSource>) {}

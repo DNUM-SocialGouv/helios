@@ -1,10 +1,10 @@
 import { EntitéJuridiqueLoader } from '../métier/gateways/EntitéJuridiqueLoader'
 import { EnvironmentVariables } from '../métier/gateways/EnvironmentVariables'
 import { dotEnvConfig } from './gateways/dot-env/dotEnvConfig'
+import { TypeORMEntitéJuridiqueLoader } from './gateways/entité-juridique-loader/TypeORMEntitéJuridiqueLoader'
 import { NodeEnvironmentVariables } from './gateways/environnement-variables/NodeEnvironmentVariables'
 import { ConsoleLogger } from './gateways/logger/ConsoleLogger'
 import { typeOrmOrm } from './gateways/orm/typeOrmOrm'
-import { TypeORMEntitéJuridiqueLoader } from './gateways/TypeORMEntitéJuridiqueLoader'
 
 export type Dependencies = Readonly<{
   environmentVariables: EnvironmentVariables

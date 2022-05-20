@@ -1,15 +1,15 @@
-import { useRouter } from 'next/router'
+import { GetServerSidePropsContext } from 'next'
 
 import { récupèreLEntitéJuridiqueEndpoint } from '../../backend/infrastructure/controllers/récupèreLEntitéJuridiqueEndpoint'
-import { EntitéJuridique } from '../../frontend/ui/entite/EntitéJuridique'
+import { dependencies } from '../../backend/infrastructure/dependencies'
+import { PageEntitéJuridique } from '../../frontend/ui/entite/PageEntitéJuridique'
 
-export default function router() {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const router = useRouter()
-  const { numéroFINESS } = router.query
+export default function Router({ entitéJuridique }) {
+  return <PageEntitéJuridique entitéJuridique={entitéJuridique} />
+}
 
-  // call controller in infra -> use-case -> loader -> etc
-  const data = récupèreLEntitéJuridiqueEndpoint(numéroFINESS)
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const entitéJuridique = await récupèreLEntitéJuridiqueEndpoint(dependencies, context.query.numéroFINESS)
 
-  return <EntitéJuridique titre={data} />
+  return { props: { entitéJuridique } }
 }

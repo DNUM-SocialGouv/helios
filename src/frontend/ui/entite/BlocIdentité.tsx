@@ -1,9 +1,14 @@
+import { EntitéJuridique } from '../../../backend/métier/entities/EntitéJuridique'
 import { Bloc } from '../commun/Bloc/Bloc'
 import { useDependencies } from '../commun/contexts/useDependencies'
 import styles from './BlocIdentité.module.css'
 import { Indicateur } from './Indicateur'
 
-export const BlocIdentité = () => {
+type BlocIdentitéType = {
+  entitéJuridique: EntitéJuridique
+}
+
+export const BlocIdentité = ({ entitéJuridique }: BlocIdentitéType) => {
   const { wording } = useDependencies()
 
   return (
@@ -13,28 +18,28 @@ export const BlocIdentité = () => {
           className={'fr-col ' + styles['colonne-indicateurs']}
         >
           <Indicateur
-            dateDeMiseÀJour="07/07/2021"
+            dateDeMiseÀJour={entitéJuridique.dateMiseAJourSource}
             label={wording.NOM_DE_L_ÉTABLISSEMENT}
             source="FINESS"
-            valeur="CENTRE HOSPITALIER DE SAINT BRIEUC"
+            valeur={entitéJuridique.raisonSociale}
           />
           <Indicateur
-            dateDeMiseÀJour="07/07/2021"
+            dateDeMiseÀJour={entitéJuridique.dateMiseAJourSource}
             label={wording.NUMÉRO_FINESS}
             source="FINESS"
-            valeur="220000020"
+            valeur={entitéJuridique.numéroFinessEntitéJuridique}
           />
           <Indicateur
-            dateDeMiseÀJour="07/07/2021"
+            dateDeMiseÀJour={entitéJuridique.dateMiseAJourSource}
             label={wording.ADRESSE}
             source="FINESS"
-            valeur="10 Rue Marcel Proust 22023 ST BRIEUC CEDEX 1"
+            valeur={entitéJuridique.adresseNuméroVoie + ' ' + entitéJuridique.adresseTypeVoie + ' ' + entitéJuridique.adresseVoie + ' ' + entitéJuridique.adresseAcheminement}
           />
           <Indicateur
-            dateDeMiseÀJour="07/07/2021"
+            dateDeMiseÀJour={entitéJuridique.dateMiseAJourSource}
             label={wording.TÉLÉPHONE}
             source="FINESS"
-            valeur="02 96 01 71 23"
+            valeur={entitéJuridique.téléphone}
           />
         </div>
         <div
@@ -45,10 +50,10 @@ export const BlocIdentité = () => {
             valeur="À venir"
           />
           <Indicateur
-            dateDeMiseÀJour="07/07/2021"
+            dateDeMiseÀJour={entitéJuridique.dateMiseAJourSource}
             label={wording.STATUT_DE_L_ÉTABLISSEMENT}
             source="FINESS"
-            valeur="Public"
+            valeur={entitéJuridique.libelléStatutJuridique}
           />
           <Indicateur
             label={wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM}

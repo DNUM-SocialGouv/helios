@@ -48,7 +48,7 @@ describe('Sauvegarde des entités juridiques', () => {
         téléphone: '0102030405',
       },
     ]
-    jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueLoader, 'récupérerLesEntitésJuridiques').mockReturnValue(entitésJuridiques)
+    jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueLoader, 'récupèreLesEntitésJuridiques').mockReturnValue(entitésJuridiques)
 
     // WHEN
     await sauvegarderLesEntitésJuridiques.handle()

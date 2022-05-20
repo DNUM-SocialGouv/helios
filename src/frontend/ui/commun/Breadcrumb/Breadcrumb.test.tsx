@@ -3,11 +3,11 @@ import { screen, within } from '@testing-library/react'
 import PageDAccueil from '../../../../pages'
 import Accessibilité from '../../../../pages/accessibilite'
 import DonnéesPersonnelles from '../../../../pages/donnees-personnelles'
-import PageEntite from '../../../../pages/entite'
 import GestionDesCookies from '../../../../pages/gestion-des-cookies'
 import MentionsLégales from '../../../../pages/mentions-legales'
 import PlanDuSite from '../../../../pages/plan-du-site'
 import { renderFakeComponent } from '../../../testHelper'
+import { PageEntitéJuridique } from '../../entite/PageEntitéJuridique'
 import { Breadcrumb } from './Breadcrumb'
 
 describe('Le fil d’Ariane (breadcrumb)', () => {
@@ -31,7 +31,7 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
       DonnéesPersonnelles,
       GestionDesCookies,
       PlanDuSite,
-      PageEntite,
+      PageEntitéJuridique,
     ]
   )('affiche le chemin jusqu’à la page courante', (Page) => {
     // WHEN

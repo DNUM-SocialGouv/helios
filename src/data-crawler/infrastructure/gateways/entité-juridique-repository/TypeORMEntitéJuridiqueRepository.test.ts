@@ -98,6 +98,4 @@ describe('Sauvegarde de l’entité juridique', () => {
       entitéJuridiqueMisÀJourAttendu2,
     ])
   })
-
-  it.todo('sauvegarde une entité juridique avec uniquement le numéro FINESS renseigné')
 })

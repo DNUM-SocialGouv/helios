@@ -21,8 +21,8 @@ describe('La récupération d’une entité juridique', () => {
     const mockedChargeParNuméroFINESS = jest.fn(async () => {
       return entitéJuridique
     })
-    const établissementJuridiqueLoader: EntitéJuridiqueLoader = { chargeParNuméroFINESS: mockedChargeParNuméroFINESS }
-    const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(établissementJuridiqueLoader)
+    const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeParNuméroFINESS: mockedChargeParNuméroFINESS }
+    const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader)
 
     // WHEN
     const ficheIdentitéRécupérée = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFINESS)
@@ -39,18 +39,16 @@ describe('La récupération d’une entité juridique', () => {
     const mockedChargeParNuméroFINESS = jest.fn(async () => {
       return new EntitéJuridiqueNonTrouvée('123456789')
     })
-    const établissementJuridiqueLoader: EntitéJuridiqueLoader = { chargeParNuméroFINESS: mockedChargeParNuméroFINESS }
-    const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(établissementJuridiqueLoader)
+    const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeParNuméroFINESS: mockedChargeParNuméroFINESS }
+    const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader)
 
     // WHEN
     try {
       await récupèreLEntitéJuridiqueUseCase.exécute(numéroFINESS)
       throw new Error('Une alerte d’entité juridique non trouvée aurait dû être levée')
     } catch (error) {
-
+      // THEN
+      expect(error.message).toBe('[Helios] L’entité juridique 123456789 n’a pas été trouvée')
     }
-    // THEN
-    await expect(récupèreLEntitéJuridiqueUseCase.exécute(numéroFINESS)).resolves.toThrow(EntitéJuridiqueNonTrouvée)
-    await expect(récupèreLEntitéJuridiqueUseCase.exécute(numéroFINESS)).resolves.toThrow('L’entité juridique 123456789 n’a pas été trouvée')
   })
 })

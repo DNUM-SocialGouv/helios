@@ -1,4 +1,4 @@
-import { fakeLogger } from '../../../testHelper'
+import { fakeLogger } from '../../../../data-crawler/testHelper'
 import { NodeEnvironmentVariables } from './NodeEnvironmentVariables'
 
 describe('Gestion des variables d’environnement', () => {
@@ -12,13 +12,13 @@ describe('Gestion des variables d’environnement', () => {
 
   it('retourne une phrase explicite quand la valeur n’est pas dans le fichier .env', () => {
     // GIVEN
-    process.env['SFTP_HOST'] = 'toBeSet'
+    process.env['ORM_DEBUG'] = 'toBeSet'
 
     // WHEN
     const nodeEnvironmentVariables = new NodeEnvironmentVariables(fakeLogger)
 
     // THEN
-    expect(fakeLogger.error).toHaveBeenCalledWith('----- WARNING ----- La variable d’environnement "SFTP_HOST" est manquante.')
-    expect(nodeEnvironmentVariables.SFTP_HOST).toBe('')
+    expect(fakeLogger.error).toHaveBeenCalledWith('----- WARNING ----- La variable d’environnement "ORM_DEBUG" est manquante.')
+    expect(nodeEnvironmentVariables.ORM_DEBUG).toBe('')
   })
 })

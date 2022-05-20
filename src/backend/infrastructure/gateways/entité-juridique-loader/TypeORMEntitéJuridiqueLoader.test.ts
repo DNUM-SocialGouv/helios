@@ -1,10 +1,10 @@
 import { Repository } from 'typeorm'
 
-import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../database/models/DateMiseÀJourSourceModel'
-import { EntitéJuridiqueModel } from '../../../database/models/EntitéJuridiqueModel'
-import { EntitéJuridique } from '../../métier/entities/EntitéJuridique'
-import { EntitéJuridiqueNonTrouvée } from '../../métier/entities/EntitéJuridiqueNonTrouvée'
-import { getOrm } from '../../testHelper'
+import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../database/models/DateMiseÀJourSourceModel'
+import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
+import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
+import { EntitéJuridiqueNonTrouvée } from '../../../métier/entities/EntitéJuridiqueNonTrouvée'
+import { getOrm } from '../../../testHelper'
 import { TypeORMEntitéJuridiqueLoader } from './TypeORMEntitéJuridiqueLoader'
 
 describe('Entité juridique loader', () => {
@@ -58,6 +58,7 @@ describe('Entité juridique loader', () => {
       raisonSociale: 'Nom de l’entité juridique',
       téléphone: '0123456789',
     }
+
     // WHEN
     const entitéJuridiqueChargée = await typeORMEntitéJuridiqueLoader.chargeParNuméroFINESS(numéroFINESS)
 
@@ -65,7 +66,7 @@ describe('Entité juridique loader', () => {
     expect(entitéJuridiqueChargée).toStrictEqual(entitéJuridiqueAttendue)
   })
 
-  it('retourne une exception lorsque l’entité juridique n’est pas en base', async () => {
+  it('signale que l’entité juridique n’a pas été trouvée lorsque l’entité juridique n’existe pas', async () => {
     // GIVEN
     await dateMiseÀJourSourceRepository.insert([
       {
@@ -83,8 +84,5 @@ describe('Entité juridique loader', () => {
 
     // THEN
     expect(exceptionReçue).toStrictEqual(exceptionAttendue)
-    expect(async () => {
-      await typeORMEntitéJuridiqueLoader.chargeParNuméroFINESS(numéroFINESS)
-    }).not.toThrow()
   })
 })

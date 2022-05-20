@@ -1,7 +1,7 @@
 import { screen, within } from '@testing-library/react'
 
 import { fakeFrontDependencies, nodeReactChildMatcher, nodeTextMatcher, renderFakeComponent, trimHtml } from '../../testHelper'
-import { EntitéJuridique } from './EntitéJuridique'
+import { PageEntitéJuridique } from './PageEntitéJuridique'
 
 const { wording } = fakeFrontDependencies
 
@@ -9,7 +9,7 @@ describe('La page Entité Juridique', () => {
   describe('affiche la fiche d’identité de l’entité', () => {
     it('le nom de l’établissement', () => {
       // WHEN
-      renderFakeComponent(<EntitéJuridique />)
+      renderFakeComponent(<PageEntitéJuridique />)
 
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -21,7 +21,7 @@ describe('La page Entité Juridique', () => {
 
     it('le numéro FINESS', () => {
       // WHEN
-      renderFakeComponent(<EntitéJuridique />)
+      renderFakeComponent(<PageEntitéJuridique />)
 
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -33,7 +33,7 @@ describe('La page Entité Juridique', () => {
 
     it('l’adresse', () => {
       // WHEN
-      renderFakeComponent(<EntitéJuridique />)
+      renderFakeComponent(<PageEntitéJuridique />)
 
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -45,7 +45,7 @@ describe('La page Entité Juridique', () => {
 
     it('le téléphone', () => {
       // WHEN
-      renderFakeComponent(<EntitéJuridique />)
+      renderFakeComponent(<PageEntitéJuridique />)
 
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -57,7 +57,7 @@ describe('La page Entité Juridique', () => {
 
     it('le nom du directeur', () => {
       // WHEN
-      renderFakeComponent(<EntitéJuridique />)
+      renderFakeComponent(<PageEntitéJuridique />)
 
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -70,7 +70,7 @@ describe('La page Entité Juridique', () => {
 
     it('le statut de l’établissement', () => {
       // WHEN
-      renderFakeComponent(<EntitéJuridique />)
+      renderFakeComponent(<PageEntitéJuridique />)
 
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -82,7 +82,7 @@ describe('La page Entité Juridique', () => {
 
     it('la date d’entrée en vigueur du CPOM', () => {
       // WHEN
-      renderFakeComponent(<EntitéJuridique />)
+      renderFakeComponent(<PageEntitéJuridique />)
 
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -95,7 +95,7 @@ describe('La page Entité Juridique', () => {
 
     it('ne devrait afficher que 5 mises à jour et sources de données', () => {
       // WHEN
-      renderFakeComponent(<EntitéJuridique />)
+      renderFakeComponent(<PageEntitéJuridique />)
 
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -105,7 +105,7 @@ describe('La page Entité Juridique', () => {
 
     it('devrait avoir deux indicateurs à venir', () => {
       // WHEN
-      renderFakeComponent(<EntitéJuridique />)
+      renderFakeComponent(<PageEntitéJuridique />)
 
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })

@@ -5,5 +5,5 @@ export class Paths {
   readonly MENTIONS_LÉGALES: string = '/mentions-legales'
   readonly DONNÉES_PERSONNELLES: string = '/donnees-personnelles'
   readonly GESTION_COOKIES: string = '/gestion-des-cookies'
-  readonly ENTITE: string = '/entite'
+  readonly ENTITE: string = '/entite-juridique'
 }
