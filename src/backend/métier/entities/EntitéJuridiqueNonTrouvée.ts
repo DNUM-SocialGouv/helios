@@ -1,5 +1,5 @@
 export class EntitéJuridiqueNonTrouvée extends Error {
-  constructor() {
-    super('L’entité juridique n’a pas été trouvée')
+  constructor(numéroFINESS: string) {
+    super(`L’entité juridique ${numéroFINESS} n’a pas été trouvée`)
   }
 }

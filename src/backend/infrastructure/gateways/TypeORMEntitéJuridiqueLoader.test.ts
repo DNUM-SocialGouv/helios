@@ -83,5 +83,6 @@ describe('Entité juridique loader', () => {
 
     // THEN
     expect(exceptionReçue).toStrictEqual(exceptionAttendue)
+    expect(typeORMEntitéJuridiqueLoader.chargeParNuméroFINESS(numéroFINESS)).not.toThrow()
   })
 })
