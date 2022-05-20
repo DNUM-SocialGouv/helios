@@ -76,13 +76,15 @@ describe('Entité juridique loader', () => {
 
     const numéroFINESS = '012345678'
     const typeORMEntitéJuridiqueLoader = new TypeORMEntitéJuridiqueLoader(orm)
-    const exceptionAttendue = new EntitéJuridiqueNonTrouvée()
+    const exceptionAttendue = new EntitéJuridiqueNonTrouvée('012345678')
 
     // WHEN
     const exceptionReçue = await typeORMEntitéJuridiqueLoader.chargeParNuméroFINESS(numéroFINESS)
 
     // THEN
     expect(exceptionReçue).toStrictEqual(exceptionAttendue)
-    expect(typeORMEntitéJuridiqueLoader.chargeParNuméroFINESS(numéroFINESS)).not.toThrow()
+    expect(async () => {
+      await typeORMEntitéJuridiqueLoader.chargeParNuméroFINESS(numéroFINESS)
+    }).not.toThrow()
   })
 })

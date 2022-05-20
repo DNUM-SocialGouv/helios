@@ -13,7 +13,7 @@ export class TypeORMEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
     const entitéJuridiqueModel = await this.chargeLEntitéJuridiqueModel(numéroFINESS)
 
     if (!entitéJuridiqueModel) {
-      return new EntitéJuridiqueNonTrouvée()
+      return new EntitéJuridiqueNonTrouvée(numéroFINESS)
     }
 
     const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()

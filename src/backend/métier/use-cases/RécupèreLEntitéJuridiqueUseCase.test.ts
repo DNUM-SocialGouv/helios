@@ -31,10 +31,9 @@ describe('La récupération d’une entité juridique', () => {
     expect(ficheIdentitéRécupérée).toStrictEqual(entitéJuridique)
     expect(mockedChargeParNuméroFINESS).toHaveBeenCalledWith(numéroFINESS)
     expect(mockedChargeParNuméroFINESS).toHaveBeenCalledTimes(1)
-    await expect(récupèreLEntitéJuridiqueUseCase.exécute(numéroFINESS)).resolves.not.toThrow()
   })
 
-  it('récupère la fiche identité de l’entité juridique', async () => {
+  it('lève une alerte si l’entité juridique liée au numéro FINESS n’est pas trouvée', async () => {
     // GIVEN
     const numéroFINESS = '123456789'
     const mockedChargeParNuméroFINESS = jest.fn(async () => {
@@ -44,6 +43,12 @@ describe('La récupération d’une entité juridique', () => {
     const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(établissementJuridiqueLoader)
 
     // WHEN
+    try {
+      await récupèreLEntitéJuridiqueUseCase.exécute(numéroFINESS)
+      throw new Error('Une alerte d’entité juridique non trouvée aurait dû être levée')
+    } catch (error) {
+
+    }
     // THEN
     await expect(récupèreLEntitéJuridiqueUseCase.exécute(numéroFINESS)).resolves.toThrow(EntitéJuridiqueNonTrouvée)
     await expect(récupèreLEntitéJuridiqueUseCase.exécute(numéroFINESS)).resolves.toThrow('L’entité juridique 123456789 n’a pas été trouvée')
