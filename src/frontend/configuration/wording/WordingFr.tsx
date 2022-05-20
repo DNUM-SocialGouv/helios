@@ -43,7 +43,8 @@ export class WordingFr implements Wording {
   readonly DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM: ReactChild = (
     <>
       Date d’entrée en vigueur du
-      <abbr title="Contrat Pluriannuel d’Objectifs et de Moyens"> CPOM</abbr>
+      {' '}
+      <abbr title="Contrat Pluriannuel d’Objectifs et de Moyens">CPOM</abbr>
     </>
   )
   readonly ENTITÉ_JURIDIQUE_DE_RATTACHEMENT: string = 'Entité juridique de rattachement'
