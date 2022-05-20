@@ -22,8 +22,10 @@ services:
     ports:
       - target: 5432
         published: 5432
-    env_file:
-      - .env
+    environment:
+      POSTGRES_DB: helios
+      POSTGRES_USER: helios
+      POSTGRES_PASSWORD: h3li0s
     volumes:
       - type: volume
         source: postgres_data
@@ -35,8 +37,10 @@ services:
     ports:
       - target: 5432
         published: 5433
-    env_file:
-      - .env
+    environment:
+      POSTGRES_DB: helios
+      POSTGRES_USER: helios
+      POSTGRES_PASSWORD: h3li0s
     volumes:
       - type: volume
         source: postgres_data_test
