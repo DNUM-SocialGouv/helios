@@ -12,7 +12,7 @@ export class EntitéJuridiqueViewModel {
   }
 
   public get numéroFiness(): string {
-    return this.entitéJuridique.numéroFinessEntitéJuridique
+    return this.insèreUnEspaceTousLesNCaractères(this.entitéJuridique.numéroFinessEntitéJuridique, 3)
   }
 
   public get adresse(): string {
@@ -32,7 +32,11 @@ export class EntitéJuridiqueViewModel {
   }
 
   private formateLeNuméroDeTéléphone(téléphone: string): string {
-    return téléphone.split('').map((letter, index) => index % 2 ? letter + ' ' : letter).join('').trimEnd()
+    return this.insèreUnEspaceTousLesNCaractères(téléphone, 2)
+  }
+
+  private insèreUnEspaceTousLesNCaractères(str: string, nombreDeCaractères: number): string {
+    return str.split('').map((letter, index) => index % nombreDeCaractères === 0 ? ' ' + letter : letter).join('').trim()
   }
 
   private formateLaDate(date: string): string {

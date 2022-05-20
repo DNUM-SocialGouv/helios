@@ -35,7 +35,12 @@ export class WordingFr implements Wording {
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string = 'fiche d’identité'
   readonly NOM_DE_L_ÉTABLISSEMENT: string = 'Nom de l’établissement'
-  readonly NUMÉRO_FINESS: string = 'Numéro FINESS'
+  readonly NUMÉRO_FINESS: ReactChild = (
+    <>
+      {'Numéro '}
+      <abbr title="Fichier National des Établissements Sanitaires et Sociaux">FINESS</abbr>
+    </>
+  )
   readonly ADRESSE: string = 'Adresse'
   readonly TÉLÉPHONE: string = 'Téléphone'
   readonly NOM_DU_DIRECTEUR: string = 'Nom du directeur'
