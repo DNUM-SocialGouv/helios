@@ -44,8 +44,3 @@ export const nodeReactChildMatcher = (wording: ReactChild) => (_: any, node: Ele
   const hasText = (node: Element | null) => node?.textContent === trimHtml(wording)
   return hasText(node)
 }
-
-export const nodeTextMatcher = (wording: string) => (_: any, node: Element | null) => {
-  const hasText = (node: Element | null) => node?.textContent === wording
-  return hasText(node)
-}

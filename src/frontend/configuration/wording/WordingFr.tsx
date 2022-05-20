@@ -29,7 +29,7 @@ export class WordingFr implements Wording {
   readonly VOIR_LE_FIL_D_ARIANE: string = 'Voir le fil d’Ariane'
 
   // Fiches
-  readonly MISE_À_JOUR: ReactChild = (<abbr title="Mise à jour">Màj</abbr>)
+  readonly MISE_À_JOUR: string = 'Mise à jour'
   readonly SOURCE: string = 'Source'
 
   // Bloc Identité
@@ -42,8 +42,7 @@ export class WordingFr implements Wording {
   readonly STATUT_DE_L_ÉTABLISSEMENT: string = 'Statut de l’établissement'
   readonly DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM: ReactChild = (
     <>
-      Date d’entrée en vigueur du
-      {' '}
+      {'Date d’entrée en vigueur du '}
       <abbr title="Contrat Pluriannuel d’Objectifs et de Moyens">CPOM</abbr>
     </>
   )

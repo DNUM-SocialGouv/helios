@@ -14,7 +14,7 @@ export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéType) 
   return (
     <Bloc titre={wording.TITRE_BLOC_IDENTITÉ}>
       <div className={'fr-grid-row ' + styles['grille-indicateurs']}>
-        <ul
+        <div
           className={'fr-col ' + styles['colonne-indicateurs']}
         >
           <Indicateur
@@ -41,7 +41,10 @@ export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéType) 
             source="FINESS"
             valeur={entitéJuridiqueViewModel.téléphone}
           />
-
+        </div>
+        <div
+          className={'fr-col ' + styles['colonne-indicateurs']}
+        >
           <Indicateur
             label={wording.NOM_DU_DIRECTEUR}
             valeur="À venir"
@@ -56,7 +59,7 @@ export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéType) 
             label={wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM}
             valeur="À venir"
           />
-        </ul>
+        </div>
       </div>
     </Bloc>
   )

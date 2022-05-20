@@ -21,7 +21,7 @@ export interface Wording {
   readonly VOIR_LE_FIL_D_ARIANE: string
 
   // Fiches
-  readonly MISE_À_JOUR: ReactChild
+  readonly MISE_À_JOUR: string
   readonly SOURCE: string
 
   // Bloc Identité

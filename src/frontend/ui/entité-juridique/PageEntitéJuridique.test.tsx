@@ -1,6 +1,6 @@
 import { screen, within } from '@testing-library/react'
 
-import { fakeFrontDependencies, nodeReactChildMatcher, nodeTextMatcher, renderFakeComponent, trimHtml } from '../../testHelper'
+import { fakeFrontDependencies, nodeReactChildMatcher, renderFakeComponent, trimHtml } from '../../testHelper'
 import { EntitéJuridiqueViewModel } from './EntitéJuridiqueViewModel'
 import { PageEntitéJuridique } from './PageEntitéJuridique'
 
@@ -28,7 +28,7 @@ describe('La page Entité Juridique', () => {
     const nomDeLÉtablissement = within(ficheDIdentité).getByText('CENTRE HOSPITALIER DE SAINT BRIEUC')
     expect(nomDeLÉtablissement).toBeInTheDocument()
     const labelÉtablissement = within(ficheDIdentité).getByText(wording.NOM_DE_L_ÉTABLISSEMENT, { exact: false })
-    expect(labelÉtablissement.textContent).toBe(`${wording.NOM_DE_L_ÉTABLISSEMENT} - Màj : 07/07/2021 - Source : FINESS`)
+    expect(labelÉtablissement.textContent).toBe(`${wording.NOM_DE_L_ÉTABLISSEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
   })
 
   it('affiche le numéro FINESS dans le bloc identité', () => {
@@ -40,7 +40,7 @@ describe('La page Entité Juridique', () => {
     const numéroFINESS = within(ficheDIdentité).getByText('220000020')
     expect(numéroFINESS).toBeInTheDocument()
     const labelNuméroFINESS = within(ficheDIdentité).getByText(wording.NUMÉRO_FINESS, { exact: false })
-    expect(labelNuméroFINESS.textContent).toBe(`${wording.NUMÉRO_FINESS} - Màj : 07/07/2021 - Source : FINESS`)
+    expect(labelNuméroFINESS.textContent).toBe(`${wording.NUMÉRO_FINESS} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
   })
 
   it('affiche l’adresse dans le bloc identité', () => {
@@ -52,7 +52,7 @@ describe('La page Entité Juridique', () => {
     const adresse = within(ficheDIdentité).getByText('10 Rue Marcel Proust 22023 ST BRIEUC CEDEX 1')
     expect(adresse).toBeInTheDocument()
     const labelAdresse = within(ficheDIdentité).getByText(wording.ADRESSE, { exact: false })
-    expect(labelAdresse.textContent).toBe(`${wording.ADRESSE} - Màj : 07/07/2021 - Source : FINESS`)
+    expect(labelAdresse.textContent).toBe(`${wording.ADRESSE} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
   })
 
   it('affiche le téléphone dans le bloc identité', () => {
@@ -64,7 +64,7 @@ describe('La page Entité Juridique', () => {
     const téléphone = within(ficheDIdentité).getByText('02 96 01 71 23')
     expect(téléphone).toBeInTheDocument()
     const labelTéléphone = within(ficheDIdentité).getByText(wording.TÉLÉPHONE, { exact: false })
-    expect(labelTéléphone.textContent).toBe(`${wording.TÉLÉPHONE} - Màj : 07/07/2021 - Source : FINESS`)
+    expect(labelTéléphone.textContent).toBe(`${wording.TÉLÉPHONE} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
   })
 
   it('affiche le nom du directeur dans le bloc identité', () => {
@@ -89,7 +89,7 @@ describe('La page Entité Juridique', () => {
     const statutÉtablissement = within(ficheDIdentité).getByText('Public')
     expect(statutÉtablissement).toBeInTheDocument()
     const labelStatutÉtablissement = within(ficheDIdentité).getByText(wording.STATUT_DE_L_ÉTABLISSEMENT, { exact: false })
-    expect(labelStatutÉtablissement.textContent).toBe(`${wording.STATUT_DE_L_ÉTABLISSEMENT} - Màj : 07/07/2021 - Source : FINESS`)
+    expect(labelStatutÉtablissement.textContent).toBe(`${wording.STATUT_DE_L_ÉTABLISSEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
   })
 
   it('affiche la date d’entrée en vigueur du CPOM dans le bloc identité', () => {
@@ -111,7 +111,7 @@ describe('La page Entité Juridique', () => {
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
-    const majEtSource = within(ficheDIdentité).getAllByText(nodeTextMatcher('Màj : 07/07/2021 - Source : FINESS'))
+    const majEtSource = within(ficheDIdentité).getAllByText(`${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
     expect(majEtSource).toHaveLength(5)
   })
 
