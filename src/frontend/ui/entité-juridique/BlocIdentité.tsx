@@ -1,65 +1,62 @@
-import { EntitéJuridique } from '../../../backend/métier/entities/EntitéJuridique'
 import { Bloc } from '../commun/Bloc/Bloc'
 import { useDependencies } from '../commun/contexts/useDependencies'
 import styles from './BlocIdentité.module.css'
+import { EntitéJuridiqueViewModel } from './EntitéJuridiqueViewModel'
 import { Indicateur } from './Indicateur'
 
 type BlocIdentitéType = {
-  entitéJuridique: EntitéJuridique
+  entitéJuridiqueViewModel: EntitéJuridiqueViewModel
 }
 
-export const BlocIdentité = ({ entitéJuridique }: BlocIdentitéType) => {
+export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéType) => {
   const { wording } = useDependencies()
 
   return (
     <Bloc titre={wording.TITRE_BLOC_IDENTITÉ}>
       <div className={'fr-grid-row ' + styles['grille-indicateurs']}>
-        <div
+        <ul
           className={'fr-col ' + styles['colonne-indicateurs']}
         >
           <Indicateur
-            dateDeMiseÀJour={entitéJuridique.dateMiseAJourSource}
+            dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJour}
             label={wording.NOM_DE_L_ÉTABLISSEMENT}
             source="FINESS"
-            valeur={entitéJuridique.raisonSociale}
+            valeur={entitéJuridiqueViewModel.nomDeLÉtablissement}
           />
           <Indicateur
-            dateDeMiseÀJour={entitéJuridique.dateMiseAJourSource}
+            dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJour}
             label={wording.NUMÉRO_FINESS}
             source="FINESS"
-            valeur={entitéJuridique.numéroFinessEntitéJuridique}
+            valeur={entitéJuridiqueViewModel.numéroFiness}
           />
           <Indicateur
-            dateDeMiseÀJour={entitéJuridique.dateMiseAJourSource}
+            dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJour}
             label={wording.ADRESSE}
             source="FINESS"
-            valeur={entitéJuridique.adresseNuméroVoie + ' ' + entitéJuridique.adresseTypeVoie + ' ' + entitéJuridique.adresseVoie + ' ' + entitéJuridique.adresseAcheminement}
+            valeur={entitéJuridiqueViewModel.adresse}
           />
           <Indicateur
-            dateDeMiseÀJour={entitéJuridique.dateMiseAJourSource}
+            dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJour}
             label={wording.TÉLÉPHONE}
             source="FINESS"
-            valeur={entitéJuridique.téléphone}
+            valeur={entitéJuridiqueViewModel.téléphone}
           />
-        </div>
-        <div
-          className={'fr-col ' + styles['colonne-indicateurs']}
-        >
+
           <Indicateur
             label={wording.NOM_DU_DIRECTEUR}
             valeur="À venir"
           />
           <Indicateur
-            dateDeMiseÀJour={entitéJuridique.dateMiseAJourSource}
+            dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJour}
             label={wording.STATUT_DE_L_ÉTABLISSEMENT}
             source="FINESS"
-            valeur={entitéJuridique.libelléStatutJuridique}
+            valeur={entitéJuridiqueViewModel.statutDeLÉtablissement}
           />
           <Indicateur
             label={wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM}
             valeur="À venir"
           />
-        </div>
+        </ul>
       </div>
     </Bloc>
   )
