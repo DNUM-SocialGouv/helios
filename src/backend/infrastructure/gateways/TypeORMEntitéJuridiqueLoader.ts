@@ -33,13 +33,13 @@ export class TypeORMEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
       .findOneBy({ numéroFinessEntitéJuridique: numéroFINESS })
   }
 
-  private construitLEntitéJuridique(entitéJuridiqueModel: EntitéJuridiqueModel, dateDeMiseAJourModel: DateMiseÀJourSourceModel | null) {
+  private construitLEntitéJuridique(entitéJuridiqueModel: EntitéJuridiqueModel, dateDeMiseAJourModel: DateMiseÀJourSourceModel | null): EntitéJuridique {
     return {
       adresseAcheminement: entitéJuridiqueModel.adresseAcheminement,
       adresseNuméroVoie: entitéJuridiqueModel.adresseNuméroVoie,
       adresseTypeVoie: entitéJuridiqueModel.adresseTypeVoie,
       adresseVoie: entitéJuridiqueModel.adresseVoie,
-      dateMiseAJourSource: dateDeMiseAJourModel?.dernièreMiseÀJour,
+      dateMiseAJourSource: dateDeMiseAJourModel ? dateDeMiseAJourModel.dernièreMiseÀJour : '',
       libelléStatutJuridique: entitéJuridiqueModel.libelléStatutJuridique,
       numéroFinessEntitéJuridique: entitéJuridiqueModel.numéroFinessEntitéJuridique,
       raisonSociale: entitéJuridiqueModel.raisonSociale,
