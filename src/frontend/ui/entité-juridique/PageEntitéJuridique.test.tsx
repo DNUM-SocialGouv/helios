@@ -135,7 +135,7 @@ describe('La page Entité Juridique', () => {
     expect(majEtSource).toHaveLength(2)
   })
 
-  it('affiche N/A (non applicable) quand une valeur est vide', () => {
+  it('affiche "non renseigné" quand une valeur est vide', () => {
     // GIVEN
     const entitéJuridiqueViewModelAvecUneValeurVide = new EntitéJuridiqueViewModel({
       adresseAcheminement: '22023 ST BRIEUC CEDEX 1',
@@ -143,10 +143,10 @@ describe('La page Entité Juridique', () => {
       adresseTypeVoie: 'Rue',
       adresseVoie: 'Marcel Proust',
       dateMiseAJourSource: '2021-07-07',
-      libelléStatutJuridique: 'Public',
+      libelléStatutJuridique: '',
       numéroFinessEntitéJuridique: '220000020',
-      raisonSociale: '',
-      téléphone: '0296017123',
+      raisonSociale: 'CENTRE HOSPITALIER DE SAINT BRIEUC',
+      téléphone: '',
     }, wording)
 
     // WHEN
@@ -155,7 +155,7 @@ describe('La page Entité Juridique', () => {
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const nomDeLÉtablissement = within(indicateurs[0]).getByText('N/A', { selector: 'abbr' })
-    expect(nomDeLÉtablissement).toHaveAttribute('title', 'Non applicable')
+    const téléphone = within(indicateurs[3]).getByText(wording.NON_RENSEIGNÉ, { selector: 'p' })
+    expect(téléphone).toBeInTheDocument()
   })
 })

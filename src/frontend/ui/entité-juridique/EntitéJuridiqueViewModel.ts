@@ -1,5 +1,3 @@
-import { ReactElement } from 'react'
-
 import { EntitéJuridique } from '../../../backend/métier/entities/EntitéJuridique'
 import { Wording } from '../../configuration/wording/Wording'
 
@@ -10,8 +8,8 @@ export class EntitéJuridiqueViewModel {
     return `EJ - ${this.numéroFiness}${this.ajouteLeNomDeLEntitéJuridiqueSiRenseigné()}`
   }
 
-  public get nomDeLEntitéJuridique(): string | ReactElement {
-    return this.valeurOuNonApplicable(this.entitéJuridique.raisonSociale)
+  public get nomDeLEntitéJuridique(): string {
+    return this.entitéJuridique.raisonSociale
   }
 
   public get numéroFiness(): string {
@@ -22,12 +20,12 @@ export class EntitéJuridiqueViewModel {
     return `${this.entitéJuridique.adresseNuméroVoie} ${this.entitéJuridique.adresseTypeVoie} ${this.entitéJuridique.adresseVoie} ${this.entitéJuridique.adresseAcheminement}`
   }
 
-  public get statutDeLEntitéJuridique(): string | ReactElement {
-    return this.valeurOuNonApplicable(this.entitéJuridique.libelléStatutJuridique)
+  public get statutDeLEntitéJuridique(): string {
+    return this.entitéJuridique.libelléStatutJuridique
   }
 
-  public get téléphone(): string | ReactElement {
-    return this.valeurOuNonApplicable(this.formateLeNuméroDeTéléphone(this.entitéJuridique.téléphone))
+  public get téléphone(): string {
+    return this.valeurOuNonRenseigné(this.formateLeNuméroDeTéléphone(this.entitéJuridique.téléphone))
   }
 
   public get dateDeMiseÀJour(): string {
@@ -41,8 +39,8 @@ export class EntitéJuridiqueViewModel {
     return ''
   }
 
-  private valeurOuNonApplicable(valeur: string): string | ReactElement {
-    return valeur === '' ? this.wording.NON_APPLICABLE : valeur
+  private valeurOuNonRenseigné(valeur: string): string {
+    return valeur === '' ? this.wording.NON_RENSEIGNÉ : valeur
   }
 
   private formateLeNuméroDeTéléphone(téléphone: string): string {

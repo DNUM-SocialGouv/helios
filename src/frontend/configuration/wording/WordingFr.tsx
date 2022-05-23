@@ -31,7 +31,7 @@ export class WordingFr implements Wording {
   // Fiches
   readonly MISE_À_JOUR: string = 'Mise à jour'
   readonly SOURCE: string = 'Source'
-  readonly NON_APPLICABLE: ReactElement = (<abbr title="Non applicable">N/A</abbr>)
+  readonly NON_RENSEIGNÉ: string = 'Non renseigné'
 
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string = 'fiche d’identité'

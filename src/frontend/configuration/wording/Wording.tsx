@@ -23,7 +23,7 @@ export interface Wording {
   // Fiches
   readonly MISE_À_JOUR: string
   readonly SOURCE: string
-  readonly NON_APPLICABLE: ReactElement
+  readonly NON_RENSEIGNÉ: string
 
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string
