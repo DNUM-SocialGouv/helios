@@ -1,14 +1,14 @@
 import { getFakeDataCrawlerDependencies } from '../../testHelper'
-import { TéléchargerLesDonnéesBrutesDeFinessUseCase } from './TéléchargerLesDonnéesBrutesDeFinessUseCase'
+import { TéléchargeLesDonnéesBrutesDeFinessUseCase } from './TéléchargeLesDonnéesBrutesDeFinessUseCase'
 
 describe('Récupération des sources de données FINESS en local', () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
 
-  it('récupérer les sources de données FINESS en local', async () => {
+  it('récupére les sources de données FINESS en local', async () => {
     // GIVEN
     const sourceDeDonnées = 'FINESS'
     const cheminSftp = 'flux_finess'
-    const téléchargerLesDonnéesBrutesDeFiness = new TéléchargerLesDonnéesBrutesDeFinessUseCase(
+    const téléchargerLesDonnéesBrutesDeFiness = new TéléchargeLesDonnéesBrutesDeFinessUseCase(
       fakeDataCrawlerDependencies.downloadRawData,
       fakeDataCrawlerDependencies.unzipRawData
     )
@@ -27,7 +27,7 @@ describe('Récupération des sources de données FINESS en local', () => {
     jest.spyOn(fakeDataCrawlerDependencies.downloadRawData, 'handle').mockImplementation(jest.fn(async () => {
       await Promise.reject(new Error(messageDerreur))
     }))
-    const téléchargerLesDonnéesBrutesDeFiness = new TéléchargerLesDonnéesBrutesDeFinessUseCase(
+    const téléchargerLesDonnéesBrutesDeFiness = new TéléchargeLesDonnéesBrutesDeFinessUseCase(
       fakeDataCrawlerDependencies.downloadRawData,
       fakeDataCrawlerDependencies.unzipRawData
     )
@@ -48,7 +48,7 @@ describe('Récupération des sources de données FINESS en local', () => {
     jest.spyOn(fakeDataCrawlerDependencies.unzipRawData, 'handle').mockImplementation(jest.fn(async () => {
       await Promise.reject(new Error(messageDerreur))
     }))
-    const téléchargerLesDonnéesBrutesDeFiness = new TéléchargerLesDonnéesBrutesDeFinessUseCase(
+    const téléchargerLesDonnéesBrutesDeFiness = new TéléchargeLesDonnéesBrutesDeFinessUseCase(
       fakeDataCrawlerDependencies.downloadRawData,
       fakeDataCrawlerDependencies.unzipRawData
     )

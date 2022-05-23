@@ -29,7 +29,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
     await(await orm).destroy()
   })
 
-  it('sauvegarder une établissement territorial et sa date de mise à jour FINESS même s’il existe déjà', async () => {
+  it('sauvegarde un établissement territorial et sa date de mise à jour FINESS même s’il existe déjà', async () => {
     // GIVEN
     const entitéJuridique1 = new EntitéJuridiqueModel()
     entitéJuridique1.adresseAcheminement = 'fake'

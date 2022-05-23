@@ -124,10 +124,10 @@ describe('Récupération des établissements territoriaux de la source de donné
     rmSync(localPath, { recursive: true })
   })
 
-  it('récupérer les établissements territoriaux de la source de données FINESS', () => {
+  it('récupère les établissements territoriaux de la source de données FINESS', () => {
     // WHEN
     const établissementTerritorialFinessLoader = new FinessXMLÉtablissementTerritorialLoader(new NodeXmlToJs(), localPath)
-    const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupérerLesÉtablissementsTerritoriaux()
+    const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriaux()
 
     // THEN
     expect(établissementsTerritoriaux).toStrictEqual<ÉtablissementTerritorialIdentité[]>(

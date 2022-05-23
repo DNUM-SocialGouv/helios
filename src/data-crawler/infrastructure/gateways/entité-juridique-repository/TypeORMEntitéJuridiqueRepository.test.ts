@@ -25,7 +25,7 @@ describe('Sauvegarde de l’entité juridique', () => {
     await (await orm).destroy()
   })
 
-  it('sauvegarder une entité juridique et sa date de mise à jour FINESS même si elle existe déjà', async () => {
+  it('sauvegarde une entité juridique et sa date de mise à jour FINESS même si elle existe déjà', async () => {
     // GIVEN
     const entitéJuridique = new EntitéJuridiqueModel()
     entitéJuridique.adresseAcheminement = 'fake'

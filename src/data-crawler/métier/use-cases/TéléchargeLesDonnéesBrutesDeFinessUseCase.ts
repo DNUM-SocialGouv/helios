@@ -2,7 +2,7 @@ import { HeliosError } from '../../infrastructure/HeliosError'
 import { DownloadRawData } from '../gateways/DownloadRawData'
 import { UnzipRawData } from '../gateways/UnzipRawData'
 
-export class TéléchargerLesDonnéesBrutesDeFinessUseCase {
+export class TéléchargeLesDonnéesBrutesDeFinessUseCase {
   constructor(
     private readonly downloadDataSource: DownloadRawData,
     private readonly unzipRawData: UnzipRawData

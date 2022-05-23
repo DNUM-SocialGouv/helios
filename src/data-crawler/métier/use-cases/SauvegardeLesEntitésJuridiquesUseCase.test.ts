@@ -1,12 +1,12 @@
 import { getFakeDataCrawlerDependencies } from '../../testHelper'
-import { SauvegarderLesEntitésJuridiquesUseCase } from './SauvegarderLesEntitésJuridiquesUseCase'
+import { SauvegardeLesEntitésJuridiquesUseCase } from './SauvegardeLesEntitésJuridiquesUseCase'
 
 describe('Sauvegarde des entités juridiques', () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
 
-  it('récupérer les entités juridiques de plusieurs sources de données', async () => {
+  it('récupére les entités juridiques de plusieurs sources de données', async () => {
     // GIVEN
-    const sauvegarderLesEntitésJuridiques = new SauvegarderLesEntitésJuridiquesUseCase(
+    const sauvegarderLesEntitésJuridiques = new SauvegardeLesEntitésJuridiquesUseCase(
       fakeDataCrawlerDependencies.entitéJuridiqueLoader,
       fakeDataCrawlerDependencies.entitéJuridiqueRepository
     )
@@ -18,9 +18,9 @@ describe('Sauvegarde des entités juridiques', () => {
     expect(fakeDataCrawlerDependencies.entitéJuridiqueLoader.récupèreLesEntitésJuridiques).toHaveBeenCalledWith()
   })
 
-  it('sauvegarder les entités juridiques de plusieurs sources de données', async () => {
+  it('sauvegarde les entités juridiques de plusieurs sources de données', async () => {
     // GIVEN
-    const sauvegarderLesEntitésJuridiques = new SauvegarderLesEntitésJuridiquesUseCase(
+    const sauvegarderLesEntitésJuridiques = new SauvegardeLesEntitésJuridiquesUseCase(
       fakeDataCrawlerDependencies.entitéJuridiqueLoader,
       fakeDataCrawlerDependencies.entitéJuridiqueRepository
     )

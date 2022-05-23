@@ -14,7 +14,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
     rmSync(localPath, { recursive: true })
   })
 
-  it('récupérer les entités juridiques de la source de données FINESS', () => {
+  it('récupère les entités juridiques de la source de données FINESS', () => {
     // GIVEN
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
     <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -128,7 +128,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
     )
   })
 
-  it('renseigner une string vide lorsque la valeur d’un champ n’est pas renseignée', () => {
+  it('renseigne une string vide lorsque la valeur d’un champ n’est pas renseignée', () => {
     // GIVEN
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
     <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">

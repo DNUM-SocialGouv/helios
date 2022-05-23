@@ -1,26 +1,26 @@
 import { getFakeDataCrawlerDependencies } from '../../testHelper'
-import { SauvegarderLesÉtablissementsTerritoriauxUseCase } from './SauvegarderLesÉtablissementsTerritoriauxUseCase'
+import { SauvegardeLesÉtablissementsTerritoriauxUseCase } from './SauvegardeLesÉtablissementsTerritoriauxUseCase'
 
 describe('Sauvegarde des établissements territoriaux', () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
 
-  it('récupérer les établissements territoriaux de plusieurs sources de données', () => {
+  it('récupére les établissements territoriaux de plusieurs sources de données', () => {
     // GIVEN
-    const sauvegarderLesÉtablissementsTerritoriaux = new SauvegarderLesÉtablissementsTerritoriauxUseCase(
+    const sauvegardeLesÉtablissementsTerritoriaux = new SauvegardeLesÉtablissementsTerritoriauxUseCase(
       fakeDataCrawlerDependencies.établissementTerritorialLoader,
       fakeDataCrawlerDependencies.établissementTerritorialRepository
     )
 
     // WHEN
-    sauvegarderLesÉtablissementsTerritoriaux.handle()
+    sauvegardeLesÉtablissementsTerritoriaux.handle()
 
     // THEN
-    expect(fakeDataCrawlerDependencies.établissementTerritorialLoader.récupérerLesÉtablissementsTerritoriaux).toHaveBeenCalledWith()
+    expect(fakeDataCrawlerDependencies.établissementTerritorialLoader.récupèreLesÉtablissementsTerritoriaux).toHaveBeenCalledWith()
   })
 
-  it('sauvegarder les établissements territoriaux de plusieurs sources de données', async () => {
+  it('sauvegarde les établissements territoriaux de plusieurs sources de données', async () => {
     // GIVEN
-    const sauvegarderLesÉtablissementsTerritoriaux = new SauvegarderLesÉtablissementsTerritoriauxUseCase(
+    const sauvegardeLesÉtablissementsTerritoriaux = new SauvegardeLesÉtablissementsTerritoriauxUseCase(
       fakeDataCrawlerDependencies.établissementTerritorialLoader,
       fakeDataCrawlerDependencies.établissementTerritorialRepository
     )
@@ -56,10 +56,10 @@ describe('Sauvegarde des établissements territoriaux', () => {
         téléphone: '0102030406',
       },
     ]
-    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialLoader, 'récupérerLesÉtablissementsTerritoriaux').mockReturnValue(établissementsTerritoriaux)
+    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialLoader, 'récupèreLesÉtablissementsTerritoriaux').mockReturnValue(établissementsTerritoriaux)
 
     // WHEN
-    await sauvegarderLesÉtablissementsTerritoriaux.handle()
+    await sauvegardeLesÉtablissementsTerritoriaux.handle()
 
     // THEN
     expect(fakeDataCrawlerDependencies.établissementTerritorialRepository.save).toHaveBeenCalledWith(établissementsTerritoriaux)

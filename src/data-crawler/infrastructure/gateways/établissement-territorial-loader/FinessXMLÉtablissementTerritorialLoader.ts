@@ -165,33 +165,33 @@ export class FinessXMLÉtablissementTerritorialLoader implements ÉtablissementT
 
   constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string) {}
 
-  récupérerLesÉtablissementsTerritoriaux(): ÉtablissementTerritorialIdentité[] {
-    const cheminDuFichierÉtablissementTerritorialIdentité = this.récupérerLeCheminDuFichierÉtablissementTerritorialIdentité(this.localPath)
+  récupèreLesÉtablissementsTerritoriaux(): ÉtablissementTerritorialIdentité[] {
+    const cheminDuFichierÉtablissementTerritorialIdentité = this.récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(this.localPath)
 
-    const dateDeMiseAJourDeLaSource = this.récupérerLaDateDeMiseAJourDeLaSource(cheminDuFichierÉtablissementTerritorialIdentité)
+    const dateDeMiseAJourDeLaSource = this.récupèreLaDateDeMiseAJourDeLaSource(cheminDuFichierÉtablissementTerritorialIdentité)
 
     const établissementTerritorialFluxFinessIdentité = this.convertXmlToJs.handle
       <ÉtablissementTerritorialIdentitéFluxFiness>(cheminDuFichierÉtablissementTerritorialIdentité)
 
     const établissementsTerritoriauxIdentité = établissementTerritorialFluxFinessIdentité.fluxfiness.structureet.map(
       (établissementTerritorialIdentité: ÉtablissementTerritorialIdentitéFiness) =>
-        this.mapToÉtablissementTerritorialIdentité(établissementTerritorialIdentité, dateDeMiseAJourDeLaSource)
+        this.construitÉtablissementTerritorialIdentité(établissementTerritorialIdentité, dateDeMiseAJourDeLaSource)
     )
 
     return établissementsTerritoriauxIdentité
   }
 
-  private récupérerLeCheminDuFichierÉtablissementTerritorialIdentité(localPath: string): string {
+  private récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(localPath: string): string {
     const fichiersDuRépertoireSimple = readdirSync(`${localPath}/finess/simple`)
 
     return localPath + '/finess/simple/' + fichiersDuRépertoireSimple.filter((fichier) => fichier.includes(this.préfixeDuFichierÉtablissementTerritorialIdentité))
   }
 
-  private récupérerLaDateDeMiseAJourDeLaSource(cheminDuFichierÉtablissementTerritorial: string): string {
+  private récupèreLaDateDeMiseAJourDeLaSource(cheminDuFichierÉtablissementTerritorial: string): string {
     return cheminDuFichierÉtablissementTerritorial.split(this.préfixeDuFichierÉtablissementTerritorialIdentité)[1].slice(0, 8)
   }
 
-  private mapToÉtablissementTerritorialIdentité(
+  private construitÉtablissementTerritorialIdentité(
     établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness,
     dateMiseAJourSource: string
   ): ÉtablissementTerritorialIdentité {
