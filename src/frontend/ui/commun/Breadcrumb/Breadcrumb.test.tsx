@@ -6,10 +6,12 @@ import DonnéesPersonnelles from '../../../../pages/donnees-personnelles'
 import GestionDesCookies from '../../../../pages/gestion-des-cookies'
 import MentionsLégales from '../../../../pages/mentions-legales'
 import PlanDuSite from '../../../../pages/plan-du-site'
-import { renderFakeComponent } from '../../../testHelper'
+import { fakeFrontDependencies, renderFakeComponent } from '../../../testHelper'
 import { EntitéJuridiqueViewModel } from '../../entité-juridique/EntitéJuridiqueViewModel'
 import { PageEntitéJuridique } from '../../entité-juridique/PageEntitéJuridique'
 import { Breadcrumb } from './Breadcrumb'
+
+const { wording } = fakeFrontDependencies
 
 describe('Le fil d’Ariane (breadcrumb)', () => {
   it('n’est pas affiché sur la page d’accueil', () => {
@@ -62,7 +64,7 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
       numéroFinessEntitéJuridique: '220000020',
       raisonSociale: 'CENTRE HOSPITALIER DE SAINT BRIEUC',
       téléphone: '0123456789',
-    })
+    }, wording)
 
     // WHEN
     renderFakeComponent(

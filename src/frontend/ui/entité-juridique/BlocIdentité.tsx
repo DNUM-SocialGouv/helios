@@ -21,7 +21,7 @@ export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéType) 
             dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJour}
             label={wording.NOM_DE_L_ÉTABLISSEMENT}
             source={wording.FINESS}
-            valeur={entitéJuridiqueViewModel.nomDeLÉtablissement}
+            valeur={entitéJuridiqueViewModel.nomDeLEntitéJuridique}
           />
           <Indicateur
             dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJour}
@@ -49,7 +49,7 @@ export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéType) 
             dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJour}
             label={wording.STATUT_DE_L_ÉTABLISSEMENT}
             source={wording.FINESS}
-            valeur={entitéJuridiqueViewModel.statutDeLÉtablissement}
+            valeur={entitéJuridiqueViewModel.statutDeLEntitéJuridique}
           />
           <Indicateur
             label={wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM}

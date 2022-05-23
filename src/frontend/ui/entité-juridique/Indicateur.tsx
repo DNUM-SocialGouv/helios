@@ -6,19 +6,17 @@ type IndicateurProps = Readonly<{
   dateDeMiseÀJour?: string;
   label: ReactChild;
   source?: ReactChild;
-  valeur: string;
+  valeur: ReactChild;
 }>
 
 export const Indicateur = ({ dateDeMiseÀJour, label, source, valeur }: IndicateurProps) => {
   const { wording } = useDependencies()
   let séparateur = ''
   let miseÀJourEtSource = ''
-  let miseÀJour: ReactChild = <></>
 
   if (dateDeMiseÀJour !== undefined && source !== undefined) {
     séparateur = ' - '
-    miseÀJourEtSource = ` : ${dateDeMiseÀJour} - ${wording.SOURCE} : `
-    miseÀJour = wording.MISE_À_JOUR
+    miseÀJourEtSource = `${wording.MISE_À_JOUR} : ${dateDeMiseÀJour} - ${wording.SOURCE} : `
   }
 
   return (
@@ -27,7 +25,6 @@ export const Indicateur = ({ dateDeMiseÀJour, label, source, valeur }: Indicate
         {label}
         {séparateur}
         <span className="fr-text--xs">
-          {miseÀJour}
           {miseÀJourEtSource}
           {source}
         </span>

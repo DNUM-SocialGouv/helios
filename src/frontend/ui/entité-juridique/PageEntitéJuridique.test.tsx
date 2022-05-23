@@ -17,7 +17,7 @@ describe('La page Entité Juridique', () => {
     numéroFinessEntitéJuridique: '220000020',
     raisonSociale: 'CENTRE HOSPITALIER DE SAINT BRIEUC',
     téléphone: '0296017123',
-  })
+  }, wording)
 
   it('affiche le nom de l’établissement dans le bloc identité', () => {
     // WHEN
@@ -28,8 +28,8 @@ describe('La page Entité Juridique', () => {
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const labelÉtablissement = within(indicateurs[0]).getByText(`${wording.NOM_DE_L_ÉTABLISSEMENT} -`, { selector: 'p' })
     expect(labelÉtablissement.textContent).toBe(`${wording.NOM_DE_L_ÉTABLISSEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
-    const abbréviationFiness = within(indicateurs[0]).getByText('FINESS', { selector: 'abbr' })
-    expect(abbréviationFiness).toHaveAttribute('title', 'Fichier National des Établissements Sanitaires et Sociaux')
+    const abréviationFiness = within(indicateurs[0]).getByText('FINESS', { selector: 'abbr' })
+    expect(abréviationFiness).toHaveAttribute('title', 'Fichier National des Établissements Sanitaires et Sociaux')
     const nomDeLÉtablissement = within(indicateurs[0]).getByText('CENTRE HOSPITALIER DE SAINT BRIEUC', { selector: 'p' })
     expect(nomDeLÉtablissement).toBeInTheDocument()
   })
@@ -109,8 +109,8 @@ describe('La page Entité Juridique', () => {
     const labelDateDEntréeEnVigueurDuCPOM = within(indicateurs[6]).getByText(nodeReactChildMatcher(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
     expect(labelDateDEntréeEnVigueurDuCPOM).toBeInTheDocument()
     expect(labelDateDEntréeEnVigueurDuCPOM.textContent).toBe(trimHtml(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
-    const abbréviationCpom = within(indicateurs[6]).getByText('CPOM', { selector: 'abbr' })
-    expect(abbréviationCpom).toHaveAttribute('title', 'Contrat Pluriannuel d’Objectifs et de Moyens')
+    const abréviationCpom = within(indicateurs[6]).getByText('CPOM', { selector: 'abbr' })
+    expect(abréviationCpom).toHaveAttribute('title', 'Contrat Pluriannuel d’Objectifs et de Moyens')
     const indicateurÀVenir = within(indicateurs[6]).getByText('À venir')
     expect(indicateurÀVenir).toBeInTheDocument()
   })
@@ -147,7 +147,7 @@ describe('La page Entité Juridique', () => {
       numéroFinessEntitéJuridique: '220000020',
       raisonSociale: '',
       téléphone: '0296017123',
-    })
+    }, wording)
 
     // WHEN
     renderFakeComponent(<PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridiqueViewModelAvecUneValeurVide} />)
@@ -155,7 +155,7 @@ describe('La page Entité Juridique', () => {
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const nomDeLÉtablissement = within(indicateurs[0]).getByText('N/A', { selector: 'p' })
-    expect(nomDeLÉtablissement).toBeInTheDocument()
+    const nomDeLÉtablissement = within(indicateurs[0]).getByText('N/A', { selector: 'abbr' })
+    expect(nomDeLÉtablissement).toHaveAttribute('title', 'Non applicable')
   })
 })
