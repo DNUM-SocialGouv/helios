@@ -6,14 +6,14 @@ import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { EntitéJuridiqueNonTrouvée } from '../../../métier/entities/EntitéJuridiqueNonTrouvée'
 import { EntitéJuridiqueLoader } from '../../../métier/gateways/EntitéJuridiqueLoader'
 
-export class TypeORMEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
+export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
   constructor(private readonly orm: Promise<DataSource>) {}
 
-  async chargeParNuméroFiness(numéroFINESS: string): Promise<EntitéJuridique | EntitéJuridiqueNonTrouvée> {
-    const entitéJuridiqueModel = await this.chargeLEntitéJuridiqueModel(numéroFINESS)
+  async chargeParNuméroFiness(numéroFiness: string): Promise<EntitéJuridique | EntitéJuridiqueNonTrouvée> {
+    const entitéJuridiqueModel = await this.chargeLEntitéJuridiqueModel(numéroFiness)
 
     if (!entitéJuridiqueModel) {
-      return new EntitéJuridiqueNonTrouvée(numéroFINESS)
+      return new EntitéJuridiqueNonTrouvée(numéroFiness)
     }
 
     const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
@@ -27,10 +27,10 @@ export class TypeORMEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
       .findOneBy({ source: SourceDeDonnées.FINESS })
   }
 
-  private async chargeLEntitéJuridiqueModel(numéroFINESS: string) {
+  private async chargeLEntitéJuridiqueModel(numéroFiness: string) {
     return await (await this.orm)
       .getRepository(EntitéJuridiqueModel)
-      .findOneBy({ numéroFinessEntitéJuridique: numéroFINESS })
+      .findOneBy({ numéroFinessEntitéJuridique: numéroFiness })
   }
 
   private construitLEntitéJuridique(entitéJuridiqueModel: EntitéJuridiqueModel, dateDeMiseAJourModel: DateMiseÀJourSourceModel | null): EntitéJuridique {

@@ -5,7 +5,7 @@ import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridi
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { getOrm } from '../../../testHelper'
-import { TypeORMÉtablissementTerritorialRepository } from './TypeORMÉtablissementTerritorialRepository'
+import { TypeOrmÉtablissementTerritorialRepository } from './TypeOrmÉtablissementTerritorialRepository'
 
 describe('Sauvegarde de l’établissement territorial', () => {
   const orm = getOrm()
@@ -73,7 +73,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
         source: SourceDeDonnées.FINESS,
       },
     ])
-    const typeORMÉtablissementTerritorialRepository = new TypeORMÉtablissementTerritorialRepository(orm)
+    const typeOrmÉtablissementTerritorialRepository = new TypeOrmÉtablissementTerritorialRepository(orm)
     const établissementTerritorial1: ÉtablissementTerritorialIdentité = {
       adresseAcheminement: '01130 NANTUA',
       adresseNuméroVoie: '50',
@@ -107,7 +107,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
     const établissementsTerritoriaux = [établissementTerritorial1, établissementTerritorial2]
 
     // WHEN
-    await typeORMÉtablissementTerritorialRepository.sauvegarde(établissementsTerritoriaux)
+    await typeOrmÉtablissementTerritorialRepository.sauvegarde(établissementsTerritoriaux)
 
     // THEN
     const établissementsTerritoriauxSauvés = await établissementTerritorialIdentitéRepository

@@ -4,7 +4,7 @@ import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridi
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { EntitéJuridiqueRepository } from '../../../métier/gateways/EntitéJuridiqueRepository'
 
-export class TypeORMEntitéJuridiqueRepository implements EntitéJuridiqueRepository {
+export class TypeOrmEntitéJuridiqueRepository implements EntitéJuridiqueRepository {
   constructor(private readonly orm: Promise<DataSource>) {}
 
   async sauvegarde(entitésJuridiques: EntitéJuridique[], batchSize: number = 20): Promise<void> {

@@ -3,7 +3,7 @@ import { mkdirSync, rmSync, writeFileSync } from 'fs'
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { getFakeDataCrawlerDependencies } from '../../../testHelper'
 import { NodeXmlToJs } from '../xml-to-js/NodeXmlToJs'
-import { FinessXMLEntitéJuridiqueLoader } from './FinessXMLEntitéJuridiqueLoader'
+import { FinessXmlEntitéJuridiqueLoader } from './FinessXmlEntitéJuridiqueLoader'
 
 describe('Récupération des entités juridiques de la source de données FINESS', () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
@@ -96,7 +96,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
     mkdirSync(finessLocalPath, { recursive: true })
     writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, xml)
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessXMLEntitéJuridiqueLoader(new NodeXmlToJs(), localPath)
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueLoader(new NodeXmlToJs(), localPath)
     const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiques()
 
     // THEN
@@ -128,8 +128,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
     )
   })
 
-  //TODO revoir la formulation du test
-  it('renseigne une string vide lorsque la valeur d’un champ n’est pas renseignée', () => {
+  it('ne renvoie pas de valeur lorsque la valeur d’un champ n’est pas renseignée', () => {
     // GIVEN
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
     <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -211,7 +210,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
     mkdirSync(finessLocalPath, { recursive: true })
     writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, xml)
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessXMLEntitéJuridiqueLoader(new NodeXmlToJs(), localPath)
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueLoader(new NodeXmlToJs(), localPath)
     const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiques()
 
     // THEN

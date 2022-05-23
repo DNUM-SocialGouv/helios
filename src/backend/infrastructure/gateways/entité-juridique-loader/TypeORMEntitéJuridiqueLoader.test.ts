@@ -5,7 +5,7 @@ import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridi
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { EntitéJuridiqueNonTrouvée } from '../../../métier/entities/EntitéJuridiqueNonTrouvée'
 import { getOrm } from '../../../testHelper'
-import { TypeORMEntitéJuridiqueLoader } from './TypeORMEntitéJuridiqueLoader'
+import { TypeOrmEntitéJuridiqueLoader } from './TypeOrmEntitéJuridiqueLoader'
 
 describe('Entité juridique loader', () => {
   const orm = getOrm()
@@ -46,7 +46,7 @@ describe('Entité juridique loader', () => {
     ])
 
     const numéroFiness = '012345678'
-    const typeORMEntitéJuridiqueLoader = new TypeORMEntitéJuridiqueLoader(orm)
+    const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm)
     const entitéJuridiqueAttendue: EntitéJuridique = {
       adresseAcheminement: '75000 Paris',
       adresseNuméroVoie: '6',
@@ -60,7 +60,7 @@ describe('Entité juridique loader', () => {
     }
 
     // WHEN
-    const entitéJuridiqueChargée = await typeORMEntitéJuridiqueLoader.chargeParNuméroFiness(numéroFiness)
+    const entitéJuridiqueChargée = await typeOrmEntitéJuridiqueLoader.chargeParNuméroFiness(numéroFiness)
 
     // THEN
     expect(entitéJuridiqueChargée).toStrictEqual(entitéJuridiqueAttendue)
@@ -75,12 +75,12 @@ describe('Entité juridique loader', () => {
       },
     ])
 
-    const numéroFINESS = '012345678'
-    const typeORMEntitéJuridiqueLoader = new TypeORMEntitéJuridiqueLoader(orm)
+    const numéroFiness = '012345678'
+    const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm)
     const exceptionAttendue = new EntitéJuridiqueNonTrouvée('012345678')
 
     // WHEN
-    const exceptionReçue = await typeORMEntitéJuridiqueLoader.chargeParNuméroFiness(numéroFINESS)
+    const exceptionReçue = await typeOrmEntitéJuridiqueLoader.chargeParNuméroFiness(numéroFiness)
 
     // THEN
     expect(exceptionReçue).toStrictEqual(exceptionAttendue)

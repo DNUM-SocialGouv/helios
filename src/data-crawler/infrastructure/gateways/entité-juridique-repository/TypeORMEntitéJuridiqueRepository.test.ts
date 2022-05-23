@@ -4,7 +4,7 @@ import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../databas
 import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { getOrm } from '../../../testHelper'
-import { TypeORMEntitéJuridiqueRepository } from './TypeORMEntitéJuridiqueRepository'
+import { TypeOrmEntitéJuridiqueRepository } from './TypeOrmEntitéJuridiqueRepository'
 
 describe('Sauvegarde de l’entité juridique', () => {
   const orm = getOrm()
@@ -45,7 +45,7 @@ describe('Sauvegarde de l’entité juridique', () => {
       },
     ])
 
-    const typeORMEntitéJuridiqueRepository = new TypeORMEntitéJuridiqueRepository(orm)
+    const typeOrmEntitéJuridiqueRepository = new TypeOrmEntitéJuridiqueRepository(orm)
     const entitéJuridique1: EntitéJuridique = {
       adresseAcheminement: '01117 OYONNAX CEDEX',
       adresseNuméroVoie: '1',
@@ -71,7 +71,7 @@ describe('Sauvegarde de l’entité juridique', () => {
     const entitésJuridiques = [entitéJuridique1, entitéJuridique2]
 
     // WHEN
-    await typeORMEntitéJuridiqueRepository.sauvegarde(entitésJuridiques)
+    await typeOrmEntitéJuridiqueRepository.sauvegarde(entitésJuridiques)
 
     // THEN
     const entitésJuridiquesQuery = await entitéJuridiqueRepository.find({ order: { numéroFinessEntitéJuridique: 'ASC' } })

@@ -5,7 +5,7 @@ import { ÉtablissementTerritorialIdentitéModel } from '../../../../database/mo
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { ÉtablissementTerritorialRepository } from '../../../métier/gateways/ÉtablissementTerritorialRepository'
 
-export class TypeORMÉtablissementTerritorialRepository implements ÉtablissementTerritorialRepository {
+export class TypeOrmÉtablissementTerritorialRepository implements ÉtablissementTerritorialRepository {
   constructor(private readonly orm: Promise<DataSource>) {}
 
   async sauvegarde(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[], batchSize: number = 20): Promise<void> {

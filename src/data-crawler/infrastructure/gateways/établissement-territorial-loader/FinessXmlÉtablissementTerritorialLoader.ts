@@ -160,7 +160,7 @@ export type ÉtablissementTerritorialIdentitéFluxFiness = Readonly<{
   }
 }>
 
-export class FinessXMLÉtablissementTerritorialLoader implements ÉtablissementTerritorialLoader {
+export class FinessXmlÉtablissementTerritorialLoader implements ÉtablissementTerritorialLoader {
   private readonly préfixeDuFichierÉtablissementTerritorialIdentité = 'finess_cs1400102_stock_'
 
   constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string) {}

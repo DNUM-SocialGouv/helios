@@ -41,10 +41,10 @@ describe('La page Entité Juridique', () => {
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelNuméroFINESS = within(indicateurs[1]).getByText('Numéro', { exact: false, selector: 'p' })
-    expect(labelNuméroFINESS.textContent).toBe(`${wording.NUMÉRO_FINESS} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
-    const numéroFINESS = within(indicateurs[1]).getByText('220 000 020', { selector: 'p' })
-    expect(numéroFINESS).toBeInTheDocument()
+    const labelNuméroFiness = within(indicateurs[1]).getByText('Numéro', { exact: false, selector: 'p' })
+    expect(labelNuméroFiness.textContent).toBe(`${wording.NUMÉRO_FINESS} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
+    const numéroFiness = within(indicateurs[1]).getByText('220 000 020', { selector: 'p' })
+    expect(numéroFiness).toBeInTheDocument()
   })
 
   it('affiche l’adresse dans le bloc identité', () => {
@@ -106,9 +106,9 @@ describe('La page Entité Juridique', () => {
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelDateDEntréeEnVigueurDuCPOM = within(indicateurs[6]).getByText(nodeReactChildMatcher(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
-    expect(labelDateDEntréeEnVigueurDuCPOM).toBeInTheDocument()
-    expect(labelDateDEntréeEnVigueurDuCPOM.textContent).toBe(trimHtml(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
+    const labelDateDEntréeEnVigueurDuCpom = within(indicateurs[6]).getByText(nodeReactChildMatcher(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
+    expect(labelDateDEntréeEnVigueurDuCpom).toBeInTheDocument()
+    expect(labelDateDEntréeEnVigueurDuCpom.textContent).toBe(trimHtml(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
     const abréviationCpom = within(indicateurs[6]).getByText('CPOM', { selector: 'abbr' })
     expect(abréviationCpom).toHaveAttribute('title', 'Contrat Pluriannuel d’Objectifs et de Moyens')
     const indicateurÀVenir = within(indicateurs[6]).getByText('À venir')

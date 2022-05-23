@@ -1,7 +1,7 @@
 import { EntitéJuridiqueLoader } from '../métier/gateways/EntitéJuridiqueLoader'
 import { EnvironmentVariables } from '../métier/gateways/EnvironmentVariables'
 import { dotEnvConfig } from './gateways/dot-env/dotEnvConfig'
-import { TypeORMEntitéJuridiqueLoader } from './gateways/entité-juridique-loader/TypeORMEntitéJuridiqueLoader'
+import { TypeOrmEntitéJuridiqueLoader } from './gateways/entité-juridique-loader/TypeOrmEntitéJuridiqueLoader'
 import { NodeEnvironmentVariables } from './gateways/environnement-variables/NodeEnvironmentVariables'
 import { ConsoleLogger } from './gateways/logger/ConsoleLogger'
 import { typeOrmOrm } from './gateways/orm/typeOrmOrm'
@@ -18,7 +18,7 @@ const _instantiateDependencies = (): Dependencies => {
   const orm = typeOrmOrm(environmentVariables)
 
   return {
-    entitéJuridiqueLoader: new TypeORMEntitéJuridiqueLoader(orm),
+    entitéJuridiqueLoader: new TypeOrmEntitéJuridiqueLoader(orm),
     environmentVariables,
   }
 }

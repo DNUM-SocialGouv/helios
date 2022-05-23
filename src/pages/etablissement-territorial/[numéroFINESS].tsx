@@ -4,7 +4,7 @@ export default function router() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter()
 
-  const { numéroFINESS } = router.query
+  const { numéroFiness } = router.query
 
-  return numéroFINESS
+  return numéroFiness
 }
