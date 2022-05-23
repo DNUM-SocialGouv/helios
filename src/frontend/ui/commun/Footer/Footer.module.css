@@ -2,3 +2,9 @@
   bottom: 0;
   position: absolute;
 }
+
+@media (max-width: 992px) {
+  .pied-de-page {
+    position: unset;
+  }
+}
