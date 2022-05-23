@@ -143,7 +143,7 @@ describe('La page Entité Juridique', () => {
       adresseTypeVoie: 'Rue',
       adresseVoie: 'Marcel Proust',
       dateMiseAJourSource: '2021-07-07',
-      libelléStatutJuridique: '',
+      libelléStatutJuridique: 'Public',
       numéroFinessEntitéJuridique: '220000020',
       raisonSociale: 'CENTRE HOSPITALIER DE SAINT BRIEUC',
       téléphone: '',
@@ -157,5 +157,29 @@ describe('La page Entité Juridique', () => {
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const téléphone = within(indicateurs[3]).getByText(wording.NON_RENSEIGNÉ, { selector: 'p' })
     expect(téléphone).toBeInTheDocument()
+  })
+
+  it('affiche l’adresse incomplète lorsqu’il manque des champs d’adresse', () => {
+    // GIVEN
+    const entitéJuridiqueViewModelAvecUneValeurVide = new EntitéJuridiqueViewModel({
+      adresseAcheminement: '22023 ST BRIEUC CEDEX 1',
+      adresseNuméroVoie: '10',
+      adresseTypeVoie: '',
+      adresseVoie: 'Marcel Proust',
+      dateMiseAJourSource: '2021-07-07',
+      libelléStatutJuridique: 'Public',
+      numéroFinessEntitéJuridique: '220000020',
+      raisonSociale: 'CENTRE HOSPITALIER DE SAINT BRIEUC',
+      téléphone: '01234567',
+    }, wording)
+
+    // WHEN
+    renderFakeComponent(<PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridiqueViewModelAvecUneValeurVide} />)
+
+    // THEN
+    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+    const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
+    const adresseIncomplète = within(indicateurs[2]).getByText('10 Marcel Proust 22023 ST BRIEUC CEDEX 1', { selector: 'p' })
+    expect(adresseIncomplète).toBeInTheDocument()
   })
 })
