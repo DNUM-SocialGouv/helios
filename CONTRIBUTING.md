@@ -211,6 +211,10 @@ const MonComposant = (props: Props) => {
 
 - Les verbes des noms des méthodes sont à l'impératif (exemple : `sauvegardeLesEntitésJuridiques`)
 
+- La méthode exécutant un *use case* s'appelle toujours `exécute`
+
+- Les acronymes dans les noms de variables s'écrivent comme un mot standard. Exemple : `numéroFiness`
+
 - les types sont immutables (utiliser `Readonly<T>`)
   > Pour éviter qu’un objet ne change au milieu d’un traitement et que ce soit difficile à analyser
 

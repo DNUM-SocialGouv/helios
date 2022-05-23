@@ -6,7 +6,7 @@ export class RécupèreLEntitéJuridiqueUseCase {
   constructor(private entitéJuridiqueLoader: EntitéJuridiqueLoader) {}
 
   async exécute(numéroFINESS: string): Promise<EntitéJuridique> {
-    const entitéJuridiqueOuErreur = await this.entitéJuridiqueLoader.chargeParNuméroFINESS(numéroFINESS)
+    const entitéJuridiqueOuErreur = await this.entitéJuridiqueLoader.chargeParNuméroFiness(numéroFINESS)
 
     if (entitéJuridiqueOuErreur instanceof EntitéJuridiqueNonTrouvée) {
       throw entitéJuridiqueOuErreur

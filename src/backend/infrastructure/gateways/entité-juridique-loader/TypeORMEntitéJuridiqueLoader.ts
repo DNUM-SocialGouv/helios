@@ -9,7 +9,7 @@ import { EntitéJuridiqueLoader } from '../../../métier/gateways/EntitéJuridiq
 export class TypeORMEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
   constructor(private readonly orm: Promise<DataSource>) {}
 
-  async chargeParNuméroFINESS(numéroFINESS: string): Promise<EntitéJuridique | EntitéJuridiqueNonTrouvée> {
+  async chargeParNuméroFiness(numéroFINESS: string): Promise<EntitéJuridique | EntitéJuridiqueNonTrouvée> {
     const entitéJuridiqueModel = await this.chargeLEntitéJuridiqueModel(numéroFINESS)
 
     if (!entitéJuridiqueModel) {

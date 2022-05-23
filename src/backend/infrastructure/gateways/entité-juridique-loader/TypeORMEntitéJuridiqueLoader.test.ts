@@ -45,7 +45,7 @@ describe('Entité juridique loader', () => {
       },
     ])
 
-    const numéroFINESS = '012345678'
+    const numéroFiness = '012345678'
     const typeORMEntitéJuridiqueLoader = new TypeORMEntitéJuridiqueLoader(orm)
     const entitéJuridiqueAttendue: EntitéJuridique = {
       adresseAcheminement: '75000 Paris',
@@ -54,13 +54,13 @@ describe('Entité juridique loader', () => {
       adresseVoie: 'rue de la Paix',
       dateMiseAJourSource: '2022-05-14',
       libelléStatutJuridique: 'statut',
-      numéroFinessEntitéJuridique: numéroFINESS,
+      numéroFinessEntitéJuridique: numéroFiness,
       raisonSociale: 'Nom de l’entité juridique',
       téléphone: '0123456789',
     }
 
     // WHEN
-    const entitéJuridiqueChargée = await typeORMEntitéJuridiqueLoader.chargeParNuméroFINESS(numéroFINESS)
+    const entitéJuridiqueChargée = await typeORMEntitéJuridiqueLoader.chargeParNuméroFiness(numéroFiness)
 
     // THEN
     expect(entitéJuridiqueChargée).toStrictEqual(entitéJuridiqueAttendue)
@@ -80,7 +80,7 @@ describe('Entité juridique loader', () => {
     const exceptionAttendue = new EntitéJuridiqueNonTrouvée('012345678')
 
     // WHEN
-    const exceptionReçue = await typeORMEntitéJuridiqueLoader.chargeParNuméroFINESS(numéroFINESS)
+    const exceptionReçue = await typeORMEntitéJuridiqueLoader.chargeParNuméroFiness(numéroFINESS)
 
     // THEN
     expect(exceptionReçue).toStrictEqual(exceptionAttendue)

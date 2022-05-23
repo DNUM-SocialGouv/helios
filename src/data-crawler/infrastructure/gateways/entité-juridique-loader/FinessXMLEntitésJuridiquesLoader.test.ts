@@ -128,16 +128,17 @@ describe('Récupération des entités juridiques de la source de données FINESS
     )
   })
 
+  //TODO revoir la formulation du test
   it('renseigne une string vide lorsque la valeur d’un champ n’est pas renseignée', () => {
     // GIVEN
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
     <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
       <structureej>
         <nofiness>010008407</nofiness>
-        <rs xsi:nil="true"/>
+        <rs>CH DU HAUT BUGEY</rs>
         <rslongue>CENTRE HOSPITALIER DU HAUT BUGEY</rslongue>
         <complrs xsi:nil="true"/>
-        <numvoie>1</numvoie>
+        <numvoie xsi:nil="true"/>
         <typvoie>RTE</typvoie>
         <voie>DE VEYZIAT</voie>
         <compvoie xsi:nil="true"/>
@@ -218,13 +219,13 @@ describe('Récupération des entités juridiques de la source de données FINESS
       [
         {
           adresseAcheminement: '01117 OYONNAX CEDEX',
-          adresseNuméroVoie: '1',
+          adresseNuméroVoie: '',
           adresseTypeVoie: 'RTE',
           adresseVoie: 'DE VEYZIAT',
           dateMiseAJourSource: '20211214',
           libelléStatutJuridique: "Etablissement Public Intercommunal d'Hospitalisation",
           numéroFinessEntitéJuridique: '010008407',
-          raisonSociale: '',
+          raisonSociale: 'CH DU HAUT BUGEY',
           téléphone: '',
         },
         {
