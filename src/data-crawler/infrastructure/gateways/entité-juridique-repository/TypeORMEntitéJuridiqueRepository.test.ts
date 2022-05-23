@@ -71,7 +71,7 @@ describe('Sauvegarde de l’entité juridique', () => {
     const entitésJuridiques = [entitéJuridique1, entitéJuridique2]
 
     // WHEN
-    await typeORMEntitéJuridiqueRepository.save(entitésJuridiques)
+    await typeORMEntitéJuridiqueRepository.sauvegarde(entitésJuridiques)
 
     // THEN
     const entitésJuridiquesQuery = await entitéJuridiqueRepository.find({ order: { numéroFinessEntitéJuridique: 'ASC' } })

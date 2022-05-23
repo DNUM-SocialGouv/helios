@@ -54,6 +54,6 @@ describe('Sauvegarde des entités juridiques', () => {
     await sauvegarderLesEntitésJuridiques.handle()
 
     // THEN
-    expect(fakeDataCrawlerDependencies.entitéJuridiqueRepository.save).toHaveBeenCalledWith(entitésJuridiques)
+    expect(fakeDataCrawlerDependencies.entitéJuridiqueRepository.sauvegarde).toHaveBeenCalledWith(entitésJuridiques)
   })
 })

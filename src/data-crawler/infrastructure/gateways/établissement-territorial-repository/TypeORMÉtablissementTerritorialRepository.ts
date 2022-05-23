@@ -8,19 +8,19 @@ import { ÉtablissementTerritorialRepository } from '../../../métier/gateways/�
 export class TypeORMÉtablissementTerritorialRepository implements ÉtablissementTerritorialRepository {
   constructor(private readonly orm: Promise<DataSource>) {}
 
-  async save(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[], batchSize: number = 20): Promise<void> {
+  async sauvegarde(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[], batchSize: number = 20): Promise<void> {
     const établissementsTerritoriauxIdentitéLength = établissementsTerritoriauxIdentité.length
 
     for (let index = 0; index < établissementsTerritoriauxIdentitéLength; index = index + batchSize) {
-      const établissementsTerritoriauxIdentitéBatch = this.createBatch(batchSize, établissementsTerritoriauxIdentité, index)
+      const établissementsTerritoriauxIdentitéBatch = this.créeLeBatch(batchSize, établissementsTerritoriauxIdentité, index)
 
-      await this.upsertBatch(établissementsTerritoriauxIdentitéBatch)
+      await this.metsÀJourLeBatch(établissementsTerritoriauxIdentitéBatch)
     }
 
-    await this.upsertDateDeMiseÀJour(établissementsTerritoriauxIdentité)
+    await this.metsÀJourLaDateDeMiseÀJour(établissementsTerritoriauxIdentité)
   }
 
-  private createBatch(batchSize: number, établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[], index: number) {
+  private créeLeBatch(batchSize: number, établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[], index: number) {
     const établissementsTerritoriauxIdentitéBatch = []
     for (let indexInBatch = 0; indexInBatch < batchSize; indexInBatch++) {
       if (établissementsTerritoriauxIdentité[index + indexInBatch]) {
@@ -30,7 +30,7 @@ export class TypeORMÉtablissementTerritorialRepository implements Établissemen
     return établissementsTerritoriauxIdentitéBatch
   }
 
-  private async upsertDateDeMiseÀJour(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[]) {
+  private async metsÀJourLaDateDeMiseÀJour(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[]) {
     await (await this.orm)
       .getRepository(DateMiseÀJourSourceModel)
       .upsert([
@@ -41,7 +41,7 @@ export class TypeORMÉtablissementTerritorialRepository implements Établissemen
       ], ['source'])
   }
 
-  private async upsertBatch(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[]) {
+  private async metsÀJourLeBatch(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[]) {
     await(await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
       .upsert(établissementsTerritoriauxIdentité, ['numéroFinessÉtablissementTerritorial'])

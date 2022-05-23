@@ -107,7 +107,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
     const établissementsTerritoriaux = [établissementTerritorial1, établissementTerritorial2]
 
     // WHEN
-    await typeORMÉtablissementTerritorialRepository.save(établissementsTerritoriaux)
+    await typeORMÉtablissementTerritorialRepository.sauvegarde(établissementsTerritoriaux)
 
     // THEN
     const établissementsTerritoriauxSauvés = await établissementTerritorialIdentitéRepository

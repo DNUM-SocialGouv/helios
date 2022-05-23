@@ -203,7 +203,13 @@ const MonComposant = (props: Props) => {
 }
 ```
 
-- les fichiers portent le nom de leur export
+- Les noms des répertoires sont en **kebab-case** et en français (sans accent pour le répertoire `./src/pages`)
+
+- Les fichiers portent le nom de leur export
+
+- On suffixe les fichiers par leur nomenclature technique (loader, repository, use case, end point, CRON), sauf pour les entities
+
+- Les verbes des noms des méthodes sont à l'impératif (exemple : `sauvegardeLesEntitésJuridiques`)
 
 - les types sont immutables (utiliser `Readonly<T>`)
   > Pour éviter qu’un objet ne change au milieu d’un traitement et que ce soit difficile à analyser
@@ -254,3 +260,5 @@ interface Repository<T> {
 - Les fichiers de tests sont placés aux côtés du fichier testé
 
 - Les fichiers de tests portent le nom du fichier testé et sont suffixés par `.test.ts(x?)`
+
+- Les verbes décrivant une action de méthode sont à l'impératif, comme c'est le cas dans la méthode testée

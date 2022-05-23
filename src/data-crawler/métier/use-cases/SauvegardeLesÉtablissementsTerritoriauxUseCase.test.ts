@@ -62,6 +62,6 @@ describe('Sauvegarde des établissements territoriaux', () => {
     await sauvegardeLesÉtablissementsTerritoriaux.handle()
 
     // THEN
-    expect(fakeDataCrawlerDependencies.établissementTerritorialRepository.save).toHaveBeenCalledWith(établissementsTerritoriaux)
+    expect(fakeDataCrawlerDependencies.établissementTerritorialRepository.sauvegarde).toHaveBeenCalledWith(établissementsTerritoriaux)
   })
 })

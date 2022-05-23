@@ -7,17 +7,17 @@ import { EntitéJuridiqueRepository } from '../../../métier/gateways/EntitéJur
 export class TypeORMEntitéJuridiqueRepository implements EntitéJuridiqueRepository {
   constructor(private readonly orm: Promise<DataSource>) {}
 
-  async save(entitésJuridiques: EntitéJuridique[], batchSize: number = 20): Promise<void> {
+  async sauvegarde(entitésJuridiques: EntitéJuridique[], batchSize: number = 20): Promise<void> {
     const entitésJuridiquesLength = entitésJuridiques.length
 
     for (let index = 0; index < entitésJuridiquesLength; index = index + batchSize) {
-      const entitésJuridiquesBatch = this.createBatch(batchSize, entitésJuridiques, index)
+      const entitésJuridiquesBatch = this.créeLeBatch(batchSize, entitésJuridiques, index)
 
-      await this.upsertBatch(entitésJuridiquesBatch)
+      await this.metsÀJourLeBatch(entitésJuridiquesBatch)
     }
   }
 
-  private createBatch(batchSize: number, entitésJuridiques: EntitéJuridique[], index: number) {
+  private créeLeBatch(batchSize: number, entitésJuridiques: EntitéJuridique[], index: number) {
     const entitésJuridiquesBatch = []
 
     for (let indexInBatch = 0; indexInBatch < batchSize; indexInBatch++) {
@@ -29,7 +29,7 @@ export class TypeORMEntitéJuridiqueRepository implements EntitéJuridiqueReposi
     return entitésJuridiquesBatch
   }
 
-  private async upsertBatch(entitésJuridiques: EntitéJuridique[]) {
+  private async metsÀJourLeBatch(entitésJuridiques: EntitéJuridique[]) {
     await(await this.orm)
       .getRepository(EntitéJuridiqueModel)
       .upsert(entitésJuridiques, ['numéroFinessEntitéJuridique'])
