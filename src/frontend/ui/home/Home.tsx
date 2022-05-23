@@ -24,7 +24,7 @@ export const Home = () => {
           passHref
         >
           <a>
-            Lien vers HOPITAL PRIVE DE VILLENEUVE D'ASCQ
+            Lien vers HOPITAL PRIVE DE VILLENEUVE D’ASCQ
           </a>
         </Link>
       </p>

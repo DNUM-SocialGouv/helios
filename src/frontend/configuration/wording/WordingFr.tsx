@@ -35,12 +35,7 @@ export class WordingFr implements Wording {
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string = 'fiche d’identité'
   readonly NOM_DE_L_ÉTABLISSEMENT: string = 'Nom de l’établissement'
-  readonly NUMÉRO_FINESS: ReactElement = (
-    <>
-      {'Numéro '}
-      <abbr title="Fichier National des Établissements Sanitaires et Sociaux">FINESS</abbr>
-    </>
-  )
+  readonly NUMÉRO_FINESS: string = 'Numéro FINESS'
   readonly ADRESSE: string = 'Adresse'
   readonly TÉLÉPHONE: string = 'Téléphone'
   readonly NOM_DU_DIRECTEUR: string = 'Nom du directeur'
@@ -56,6 +51,9 @@ export class WordingFr implements Wording {
   readonly MONO_ÉTABLISSEMENT: string = 'Mono-établissement'
   readonly ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE: string = 'Établissement Principal/Secondaire'
   readonly SITE_INTERNET: string = 'Site internet'
+
+  // Source
+  readonly FINESS: ReactElement = (<abbr title="Fichier National des Établissements Sanitaires et Sociaux">FINESS</abbr>)
 
   // Footer
   readonly PRESENTATION: string = 'Texte sur 3 lignes à demander à Daisy'

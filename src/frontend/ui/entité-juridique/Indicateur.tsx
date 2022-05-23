@@ -14,11 +14,13 @@ export const Indicateur = ({ dateDeMiseÀJour, label, source, valeur }: Indicate
   let séparateur = ''
   let miseÀJourEtSource = ''
   let miseÀJour: ReactChild = <></>
+
   if (dateDeMiseÀJour !== undefined && source !== undefined) {
     séparateur = ' - '
-    miseÀJourEtSource = ` : ${dateDeMiseÀJour} - ${wording.SOURCE} : ${source}`
+    miseÀJourEtSource = ` : ${dateDeMiseÀJour} - ${wording.SOURCE} : `
     miseÀJour = wording.MISE_À_JOUR
   }
+
   return (
     <li>
       <p className="fr-m-0">
@@ -27,6 +29,7 @@ export const Indicateur = ({ dateDeMiseÀJour, label, source, valeur }: Indicate
         <span className="fr-text--xs">
           {miseÀJour}
           {miseÀJourEtSource}
+          {source}
         </span>
       </p>
       <p className="fr-m-0 fr-text--bold">

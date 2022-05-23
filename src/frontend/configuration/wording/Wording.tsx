@@ -27,7 +27,7 @@ export interface Wording {
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string
   readonly NOM_DE_L_ÉTABLISSEMENT: string
-  readonly NUMÉRO_FINESS: ReactElement
+  readonly NUMÉRO_FINESS: string
   readonly ADRESSE: string
   readonly TÉLÉPHONE: string
   readonly NOM_DU_DIRECTEUR: string
@@ -38,6 +38,9 @@ export interface Wording {
   readonly MONO_ÉTABLISSEMENT: string
   readonly ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE: string
   readonly SITE_INTERNET: string
+
+  // Source
+  readonly FINESS: ReactElement
 
   // Footer
   readonly PRESENTATION: string

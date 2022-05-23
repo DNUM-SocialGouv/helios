@@ -28,6 +28,8 @@ describe('La page Entité Juridique', () => {
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const labelÉtablissement = within(indicateurs[0]).getByText(`${wording.NOM_DE_L_ÉTABLISSEMENT} -`, { selector: 'p' })
     expect(labelÉtablissement.textContent).toBe(`${wording.NOM_DE_L_ÉTABLISSEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
+    const abbréviationFiness = within(indicateurs[0]).getByText('FINESS', { selector: 'abbr' })
+    expect(abbréviationFiness).toHaveAttribute('title', 'Fichier National des Établissements Sanitaires et Sociaux')
     const nomDeLÉtablissement = within(indicateurs[0]).getByText('CENTRE HOSPITALIER DE SAINT BRIEUC', { selector: 'p' })
     expect(nomDeLÉtablissement).toBeInTheDocument()
   })
@@ -40,7 +42,7 @@ describe('La page Entité Juridique', () => {
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const labelNuméroFINESS = within(indicateurs[1]).getByText('Numéro', { exact: false, selector: 'p' })
-    expect(labelNuméroFINESS.textContent).toBe(`${trimHtml(wording.NUMÉRO_FINESS)} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
+    expect(labelNuméroFINESS.textContent).toBe(`${wording.NUMÉRO_FINESS} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
     const numéroFINESS = within(indicateurs[1]).getByText('220 000 020', { selector: 'p' })
     expect(numéroFINESS).toBeInTheDocument()
   })
@@ -107,21 +109,23 @@ describe('La page Entité Juridique', () => {
     const labelDateDEntréeEnVigueurDuCPOM = within(indicateurs[6]).getByText(nodeReactChildMatcher(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
     expect(labelDateDEntréeEnVigueurDuCPOM).toBeInTheDocument()
     expect(labelDateDEntréeEnVigueurDuCPOM.textContent).toBe(trimHtml(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
+    const abbréviationCpom = within(indicateurs[6]).getByText('CPOM', { selector: 'abbr' })
+    expect(abbréviationCpom).toHaveAttribute('title', 'Contrat Pluriannuel d’Objectifs et de Moyens')
     const indicateurÀVenir = within(indicateurs[6]).getByText('À venir')
     expect(indicateurÀVenir).toBeInTheDocument()
   })
 
-  it('affiche ne devrait afficher que 5 mises à jour et sources de données dans le bloc identité', () => {
+  it('ne devrait afficher que 5 mises à jour et sources de données dans le bloc identité', () => {
     // WHEN
     renderFakeComponent(<PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridiqueViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
-    const majEtSource = within(ficheDIdentité).getAllByText(`${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
+    const majEtSource = within(ficheDIdentité).getAllByText(`${wording.MISE_À_JOUR} : 07/07/2021 - Source :`, { exact: false })
     expect(majEtSource).toHaveLength(5)
   })
 
-  it('affiche devrait avoir deux indicateurs à venir dans le bloc identité', () => {
+  it('devrait avoir deux indicateurs à venir dans le bloc identité', () => {
     // WHEN
     renderFakeComponent(<PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridiqueViewModel} />)
 
@@ -129,5 +133,29 @@ describe('La page Entité Juridique', () => {
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const majEtSource = within(ficheDIdentité).getAllByText('À venir')
     expect(majEtSource).toHaveLength(2)
+  })
+
+  it('affiche N/A (non applicable) quand une valeur est vide', () => {
+    // GIVEN
+    const entitéJuridiqueViewModelAvecUneValeurVide = new EntitéJuridiqueViewModel({
+      adresseAcheminement: '22023 ST BRIEUC CEDEX 1',
+      adresseNuméroVoie: '10',
+      adresseTypeVoie: 'Rue',
+      adresseVoie: 'Marcel Proust',
+      dateMiseAJourSource: '2021-07-07',
+      libelléStatutJuridique: 'Public',
+      numéroFinessEntitéJuridique: '220000020',
+      raisonSociale: '',
+      téléphone: '0296017123',
+    })
+
+    // WHEN
+    renderFakeComponent(<PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridiqueViewModelAvecUneValeurVide} />)
+
+    // THEN
+    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+    const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
+    const nomDeLÉtablissement = within(indicateurs[0]).getByText('N/A', { selector: 'p' })
+    expect(nomDeLÉtablissement).toBeInTheDocument()
   })
 })
