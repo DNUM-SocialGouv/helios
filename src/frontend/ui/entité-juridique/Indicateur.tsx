@@ -4,28 +4,31 @@ import { useDependencies } from '../commun/contexts/useDependencies'
 
 type IndicateurProps = Readonly<{
   dateDeMiseÀJour?: string;
-  label: ReactChild;
+  nomDeLIndicateur: ReactChild;
   source?: ReactChild;
   valeur: ReactChild;
 }>
 
-export const Indicateur = ({ dateDeMiseÀJour, label, source, valeur }: IndicateurProps) => {
+export const Indicateur = ({ dateDeMiseÀJour, nomDeLIndicateur, source, valeur }: IndicateurProps) => {
   const { wording } = useDependencies()
   let séparateur = ''
-  let miseÀJourEtSource = ''
+  let miseÀJour = ''
+  let wordingSource = ''
 
   if (dateDeMiseÀJour !== undefined && source !== undefined) {
     séparateur = ' - '
-    miseÀJourEtSource = `${wording.MISE_À_JOUR} : ${dateDeMiseÀJour} - ${wording.SOURCE} : `
+    miseÀJour = `${wording.MISE_À_JOUR} : ${dateDeMiseÀJour} - `
+    wordingSource = `${wording.SOURCE} : `
   }
 
   return (
     <li>
       <p className="fr-m-0">
-        {label}
+        {nomDeLIndicateur}
         {séparateur}
         <span className="fr-text--xs">
-          {miseÀJourEtSource}
+          {miseÀJour}
+          {wordingSource}
           {source}
         </span>
       </p>

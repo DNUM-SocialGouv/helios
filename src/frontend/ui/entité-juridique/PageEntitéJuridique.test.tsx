@@ -115,7 +115,7 @@ describe('La page Entité Juridique', () => {
     expect(indicateurÀVenir).toBeInTheDocument()
   })
 
-  it('ne devrait afficher que 5 mises à jour et sources de données dans le bloc identité', () => {
+  it('n’affiche que 5 mises à jour et sources de données dans le bloc identité', () => {
     // WHEN
     renderFakeComponent(<PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridiqueViewModel} />)
 
@@ -125,7 +125,7 @@ describe('La page Entité Juridique', () => {
     expect(majEtSource).toHaveLength(5)
   })
 
-  it('devrait avoir deux indicateurs à venir dans le bloc identité', () => {
+  it('affiche deux indicateurs à venir dans le bloc identité', () => {
     // WHEN
     renderFakeComponent(<PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridiqueViewModel} />)
 

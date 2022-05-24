@@ -3,14 +3,13 @@ import Link from 'next/link'
 import '@gouvfr/dsfr/dist/component/footer/footer.min.css'
 
 import { useDependencies } from '../contexts/useDependencies'
-import styles from './Footer.module.css'
 
 export const Footer = () => {
   const { paths, wording } = useDependencies()
 
   return (
     <footer
-      className={'fr-footer ' + styles['pied-de-page']}
+      className="fr-footer"
       role="contentinfo"
     >
       <div className="fr-container">

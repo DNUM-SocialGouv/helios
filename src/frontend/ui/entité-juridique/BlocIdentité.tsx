@@ -18,40 +18,40 @@ export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéType) 
       >
         <Indicateur
           dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJour}
-          label={wording.NOM_DE_L_ÉTABLISSEMENT}
+          nomDeLIndicateur={wording.NOM_DE_L_ÉTABLISSEMENT}
           source={wording.FINESS}
           valeur={entitéJuridiqueViewModel.nomDeLEntitéJuridique}
         />
         <Indicateur
           dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJour}
-          label={wording.NUMÉRO_FINESS}
+          nomDeLIndicateur={wording.NUMÉRO_FINESS}
           source={wording.FINESS}
           valeur={entitéJuridiqueViewModel.numéroFiness}
         />
         <Indicateur
           dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJour}
-          label={wording.ADRESSE}
+          nomDeLIndicateur={wording.ADRESSE}
           source={wording.FINESS}
           valeur={entitéJuridiqueViewModel.adresse}
         />
         <Indicateur
           dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJour}
-          label={wording.TÉLÉPHONE}
+          nomDeLIndicateur={wording.TÉLÉPHONE}
           source={wording.FINESS}
           valeur={entitéJuridiqueViewModel.téléphone}
         />
         <Indicateur
-          label={wording.NOM_DU_DIRECTEUR}
+          nomDeLIndicateur={wording.NOM_DU_DIRECTEUR}
           valeur="À venir"
         />
         <Indicateur
           dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJour}
-          label={wording.STATUT_DE_L_ÉTABLISSEMENT}
+          nomDeLIndicateur={wording.STATUT_DE_L_ÉTABLISSEMENT}
           source={wording.FINESS}
           valeur={entitéJuridiqueViewModel.statutDeLEntitéJuridique}
         />
         <Indicateur
-          label={wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM}
+          nomDeLIndicateur={wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM}
           valeur="À venir"
         />
       </ul>
