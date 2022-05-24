@@ -40,7 +40,7 @@ export const trimHtml = (reactElement: ReactElement): string => {
   return sentence
 }
 
-export const nodeReactChildMatcher = (wording: ReactElement) => (_: any, node: Element | null) => {
+export const htmlNodeAndReactChildMatcher = (wording: ReactElement) => (_: any, node: Element | null) => {
   const hasText = (node: Element | null) => node?.textContent === trimHtml(wording)
   return hasText(node)
 }

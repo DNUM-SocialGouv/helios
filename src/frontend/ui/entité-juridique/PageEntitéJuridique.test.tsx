@@ -1,6 +1,6 @@
 import { screen, within } from '@testing-library/react'
 
-import { fakeFrontDependencies, nodeReactChildMatcher, renderFakeComponent, trimHtml } from '../../testHelper'
+import { fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent, trimHtml } from '../../testHelper'
 import { EntitéJuridiqueViewModel } from './EntitéJuridiqueViewModel'
 import { PageEntitéJuridique } from './PageEntitéJuridique'
 
@@ -106,7 +106,7 @@ describe('La page Entité Juridique', () => {
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelDateDEntréeEnVigueurDuCpom = within(indicateurs[6]).getByText(nodeReactChildMatcher(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
+    const labelDateDEntréeEnVigueurDuCpom = within(indicateurs[6]).getByText(htmlNodeAndReactChildMatcher(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
     expect(labelDateDEntréeEnVigueurDuCpom).toBeInTheDocument()
     expect(labelDateDEntréeEnVigueurDuCpom.textContent).toBe(trimHtml(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
     const abréviationCpom = within(indicateurs[6]).getByText('CPOM', { selector: 'abbr' })

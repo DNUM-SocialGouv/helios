@@ -1,5 +1,3 @@
-import '@gouvfr/dsfr/dist/component/link/link.min.css'
-import '@gouvfr/dsfr/dist/component/accordion/accordion.min.css'
 import { ReactChild } from 'react'
 
 import styles from './Bloc.module.css'
