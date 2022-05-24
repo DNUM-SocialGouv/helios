@@ -1,4 +1,4 @@
-import { ReactChild } from 'react'
+import { ReactChild, ReactElement } from 'react'
 
 export interface Wording {
   // Header
@@ -19,6 +19,29 @@ export interface Wording {
   // Bread Crumb
   readonly VOUS_ÊTES_ICI: string
   readonly VOIR_LE_FIL_D_ARIANE: string
+
+  // Fiches
+  readonly MISE_À_JOUR: string
+  readonly SOURCE: string
+  readonly NON_RENSEIGNÉ: string
+
+  // Bloc Identité
+  readonly TITRE_BLOC_IDENTITÉ: string
+  readonly NOM_DE_L_ÉTABLISSEMENT: string
+  readonly NUMÉRO_FINESS: string
+  readonly ADRESSE: string
+  readonly TÉLÉPHONE: string
+  readonly NOM_DU_DIRECTEUR: string
+  readonly STATUT_DE_L_ÉTABLISSEMENT: string
+  readonly DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM: ReactElement
+  readonly ENTITÉ_JURIDIQUE_DE_RATTACHEMENT: string
+  readonly CATÉGORIE_DE_L_ÉTABLISSEMENT: string
+  readonly MONO_ÉTABLISSEMENT: string
+  readonly ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE: string
+  readonly SITE_INTERNET: string
+
+  // Source
+  readonly FINESS: ReactElement
 
   // Footer
   readonly PRESENTATION: string

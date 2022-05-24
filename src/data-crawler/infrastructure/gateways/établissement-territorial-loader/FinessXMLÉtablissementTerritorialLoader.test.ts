@@ -3,7 +3,7 @@ import { mkdirSync, rmSync, writeFileSync } from 'fs'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { getFakeDataCrawlerDependencies } from '../../../testHelper'
 import { NodeXmlToJs } from '../xml-to-js/NodeXmlToJs'
-import { FinessXMLÉtablissementTerritorialLoader } from './FinessXMLÉtablissementTerritorialLoader'
+import { FinessXmlÉtablissementTerritorialLoader } from './FinessXmlÉtablissementTerritorialLoader'
 
 describe('Récupération des établissements territoriaux de la source de données FINESS', () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
@@ -124,10 +124,10 @@ describe('Récupération des établissements territoriaux de la source de donné
     rmSync(localPath, { recursive: true })
   })
 
-  it('récupérer les établissements territoriaux de la source de données FINESS', () => {
+  it('récupère les établissements territoriaux de la source de données FINESS', () => {
     // WHEN
-    const établissementTerritorialFinessLoader = new FinessXMLÉtablissementTerritorialLoader(new NodeXmlToJs(), localPath)
-    const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupérerLesÉtablissementsTerritoriaux()
+    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialLoader(new NodeXmlToJs(), localPath)
+    const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriaux()
 
     // THEN
     expect(établissementsTerritoriaux).toStrictEqual<ÉtablissementTerritorialIdentité[]>(
