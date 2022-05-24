@@ -1,10 +1,20 @@
-import { useRouter } from 'next/router'
+import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 
-export default function router() {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const router = useRouter()
+import { récupèreLÉtablissementTerritorialEndpoint } from '../../backend/infrastructure/controllers/récupèreLÉtablissementTerritorialEndpoint'
+import { dependencies } from '../../backend/infrastructure/dependencies'
+import { ÉtablissementTerritorialIdentité } from '../../backend/métier/entities/ÉtablissementTerritorialIdentité'
+import { useDependencies } from '../../frontend/ui/commun/contexts/useDependencies'
 
-  const { numéroFiness } = router.query
+export default function Router({ établissementTerritorial }: { établissementTerritorial: ÉtablissementTerritorialIdentité }) {
+  const { wording } = useDependencies()
+  return <br />
+}
 
-  return numéroFiness
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+  try {
+    const établissementTerritorial = await récupèreLÉtablissementTerritorialEndpoint(dependencies, context.query['numéroFINESS'] as string)
+    return { props: { établissementTerritorial } }
+  } catch (error) {
+    return { notFound: true }
+  }
 }
