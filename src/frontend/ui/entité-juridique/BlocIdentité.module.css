@@ -1,14 +1,14 @@
-.grille-indicateurs {
-  gap: 4rem;
-}
-
-.colonne-indicateurs {
+.liste-indicateurs {
   gap: 1rem;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   grid-auto-flow: column;
+  grid-template-columns: repeat(2, 1fr);
   grid-template-rows: auto auto auto auto;
   width: 100%;
   list-style-type: none;
   padding: 0;
+}
+
+.liste-indicateurs li {
+  padding-bottom: 0;
 }

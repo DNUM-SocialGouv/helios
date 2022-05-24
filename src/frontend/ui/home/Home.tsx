@@ -11,7 +11,7 @@ export const Home = () => {
       <p>Ceci est la page d’accueil de l’application Helios</p>
       <p>
         <Link
-          href={paths.ENTITE + '/010008407'}
+          href={paths.ENTITÉ_JURIDIQUE + '/010008407'}
           passHref
         >
           <a>
@@ -20,7 +20,7 @@ export const Home = () => {
         </Link>
         <br />
         <Link
-          href={paths.ENTITE + '/590000741'}
+          href={paths.ENTITÉ_JURIDIQUE + '/590000741'}
           passHref
         >
           <a>
