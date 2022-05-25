@@ -3,12 +3,24 @@ import { ÉtablissementTerritorialIdentité } from '../../../backend/métier/ent
 export class ÉtablissementTerritorialViewModel {
   constructor(private readonly établissementTerritorialIdentité: ÉtablissementTerritorialIdentité) {}
 
+  public get nomDeLÉtablissementTerritorial(): string {
+    return this.établissementTerritorialIdentité.raisonSociale
+  }
+
+  public get numéroFinessÉtablissementTerritorial(): string {
+    return this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorialIdentité.numéroFinessÉtablissementTerritorial, 3)
+  }
+
+  public get adresse(): string {
+    return `${this.établissementTerritorialIdentité.adresseNuméroVoie} ${this.établissementTerritorialIdentité.adresseTypeVoie} ${this.établissementTerritorialIdentité.adresseVoie} ${this.établissementTerritorialIdentité.adresseAcheminement}`
+  }
+
   public get dateDeMiseÀJour(): string {
     return this.formateLaDate(this.établissementTerritorialIdentité.dateMiseAJourSource)
   }
 
-  public get nomDeLÉtablissementTerritorial(): string {
-    return this.établissementTerritorialIdentité.raisonSociale
+  private insèreUnEspaceTousLesNCaractères(str: string, nombreDeCaractères: number): string {
+    return str.split('').map((letter, index) => index % nombreDeCaractères === 0 ? ' ' + letter : letter).join('').trim()
   }
 
   private formateLaDate(date: string): string {

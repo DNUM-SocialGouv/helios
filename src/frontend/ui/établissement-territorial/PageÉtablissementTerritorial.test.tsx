@@ -37,4 +37,49 @@ describe('La page Établissement territorial', () => {
     const nomDeLÉtablissement = within(indicateurs[0]).getByText('CH NANTUA', { selector: 'p' })
     expect(nomDeLÉtablissement).toBeInTheDocument()
   })
+
+  it('affiche le numéro FINESS dans le bloc identité', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+
+    // THEN
+    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+    const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
+    const labelNuméroFiness = within(indicateurs[1]).getByText('Numéro', { exact: false, selector: 'p' })
+    expect(labelNuméroFiness.textContent).toBe(`${wording.NUMÉRO_FINESS} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
+    const numéroFiness = within(indicateurs[1]).getByText('010 000 040', { selector: 'p' })
+    expect(numéroFiness).toBeInTheDocument()
+  })
+
+  it('affiche l’adresse dans le bloc identité', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+
+    // THEN
+    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+    const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
+    const labelAdresse = within(indicateurs[2]).getByText(`${wording.ADRESSE} -`, { selector: 'p' })
+    expect(labelAdresse.textContent).toBe(`${wording.ADRESSE} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
+    const adresse = within(indicateurs[2]).getByText('50 R PAUL PAINLEVE 01130 NANTUA', { selector: 'p' })
+    expect(adresse).toBeInTheDocument()
+  })
+
+  it.todo('affiche le téléphone et e-mail dans le bloc identité')
+
+  it.todo('affiche l’entité juridique de rattachement dans le bloc identité')
+
+  it.todo('affiche la catégorie de l’établissement dans le bloc identité')
+
+  it.todo('affiche le nom du directeur dans le bloc identité')
+
+  it.todo('affiche le statut de l’établissement dans le bloc identité')
+
+  it.todo('affiche l’indicateur de mono-établissement dans le bloc identité')
+
+  it.todo('affiche l’indicateur de d’établissement principal ou secondaire dans le bloc identité')
+
+  it.todo('affiche le site internet cliquable dans le bloc identité')
+
+  it.todo('affiche la date d’entrée en vigueur du CPOM dans le bloc identité')
+
 })
