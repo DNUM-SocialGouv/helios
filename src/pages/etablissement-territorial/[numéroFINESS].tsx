@@ -3,11 +3,12 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { récupèreLÉtablissementTerritorialEndpoint } from '../../backend/infrastructure/controllers/récupèreLÉtablissementTerritorialEndpoint'
 import { dependencies } from '../../backend/infrastructure/dependencies'
 import { ÉtablissementTerritorialIdentité } from '../../backend/métier/entities/ÉtablissementTerritorialIdentité'
-import { useDependencies } from '../../frontend/ui/commun/contexts/useDependencies'
+import { PageÉtablissementTerritorial } from '../../frontend/ui/établissement-territorial/PageÉtablissementTerritorial'
+import { ÉtablissementTerritorialViewModel } from '../../frontend/ui/établissement-territorial/ÉtablissementTerritorialViewModel'
 
 export default function Router({ établissementTerritorial }: { établissementTerritorial: ÉtablissementTerritorialIdentité }) {
-  const { wording } = useDependencies()
-  return <br />
+  const établissementTerritorialViewModel = new ÉtablissementTerritorialViewModel(établissementTerritorial)
+  return <PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />
 }
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
