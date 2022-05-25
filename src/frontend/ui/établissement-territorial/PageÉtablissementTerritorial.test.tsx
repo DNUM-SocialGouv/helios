@@ -64,7 +64,18 @@ describe('La page Établissement territorial', () => {
     expect(adresse).toBeInTheDocument()
   })
 
-  it.todo('affiche le téléphone et e-mail dans le bloc identité')
+  it('affiche le téléphone et e-mail dans le bloc identité', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+
+    // THEN
+    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+    const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
+    const labelTéléphoneEtEmail = within(indicateurs[3]).getByText(`${wording.TÉLÉPHONE_ET_EMAIL}  -`, { selector: 'p' })
+    expect(labelTéléphoneEtEmail.textContent).toBe(`${wording.TÉLÉPHONE_ET_EMAIL} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
+    const téléphoneEtEmail = within(indicateurs[3]).getByText('04 74 75 48 00     a@example.com', { selector: 'p' })
+    expect(téléphoneEtEmail).toBeInTheDocument()
+  })
 
   it.todo('affiche l’entité juridique de rattachement dans le bloc identité')
 

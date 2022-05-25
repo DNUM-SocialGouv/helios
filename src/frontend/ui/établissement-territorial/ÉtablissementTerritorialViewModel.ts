@@ -15,6 +15,10 @@ export class ÉtablissementTerritorialViewModel {
     return `${this.établissementTerritorialIdentité.adresseNuméroVoie} ${this.établissementTerritorialIdentité.adresseTypeVoie} ${this.établissementTerritorialIdentité.adresseVoie} ${this.établissementTerritorialIdentité.adresseAcheminement}`
   }
 
+  public get téléphoneEtEmail(): string {
+    return `${this.établissementTerritorialIdentité.téléphone} ${this.établissementTerritorialIdentité.courriel}`
+  }
+
   public get dateDeMiseÀJour(): string {
     return this.formateLaDate(this.établissementTerritorialIdentité.dateMiseAJourSource)
   }
