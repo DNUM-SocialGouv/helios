@@ -9,7 +9,7 @@ services:
         published: 22
     volumes:
       - type: bind
-        source: $PWD/data_set
+        source: $PWD/sftp-local-data
         target: /home/usr_finess_ls
       - type: bind
         source: $HOME/.ssh/sftp_local.pub
@@ -43,9 +43,9 @@ services:
       POSTGRES_PASSWORD: h3li0s
     volumes:
       - type: volume
-        source: postgres_data_test
+        source: postgres_local-storage
         target: /var/lib/postgresql/data
 
 volumes:
   postgres_data:
-  postgres_data_test:
+  postgres_local-storage:

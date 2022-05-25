@@ -11,7 +11,7 @@ describe('Téléchargement d’une source de données via un SFTP', () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
 
   afterEach(() => {
-    fs.rmSync('data_test/fake', { recursive: true })
+    fs.rmSync('local-storage/fake', { recursive: true })
   })
 
   it('crée un répertoire au nom de la source de données avant de la télécharger', async () => {
@@ -23,7 +23,7 @@ describe('Téléchargement d’une source de données via un SFTP', () => {
     await sftpDownloadDataSource.handle(dataSource, sftpPath, localPath)
 
     // THEN
-    expect(fs.existsSync('data_test/fake/local')).toBe(true)
+    expect(fs.existsSync('local-storage/fake/local')).toBe(true)
   })
 
   it('efface tous les fichiers du répertoire de la source de données pour éviter d’utiliser d’anciennes données', async () => {

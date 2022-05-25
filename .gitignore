@@ -36,5 +36,5 @@ yarn-error.log*
 *.tsbuildinfo
 
 # Helios
-data_test
-data_set/.ssh
+local-storage
+sftp-local-data/.ssh

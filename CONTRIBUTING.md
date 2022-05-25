@@ -62,8 +62,8 @@ yarn psql:local
 ```
 
 ### Connexion à la base de données de production
-### Prérequis 
-1. Faire partie de l'équipe Helios sur Scalingo. 
+### Prérequis
+1. Faire partie de l'équipe Helios sur Scalingo.
 2. Installer la CLI Scalingo :
 ```sh
 curl -O https://cli-dl.scalingo.io/install && bash install
@@ -72,7 +72,7 @@ curl -O https://cli-dl.scalingo.io/install && bash install
 ```sh
 scalingo login
 ```
-### Commande 
+### Commande
 ```sh
 yarn psql:production
 ```
@@ -108,7 +108,7 @@ yarn db-migrate up
 
 Un SFTP (image Docker) est lancé avec l'application.
 
-Un échantillon des données FINESS sont dans `data_set`.
+Un échantillon des données FINESS sont dans `sftp-local-data`.
 
 > Une clé public SSH `$HOME/.ssh/sftp_local.pub` sera demandée pour l'authentification au SFTP local.
 

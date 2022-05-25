@@ -10,7 +10,7 @@ const environmentVariables: EnvironmentVariables = {
   SENTRY_DSN: 'https://fake-sentry.io/11',
   SFTP_HOST: 'localhost',
   SFTP_IS_DEBUG: 'false',
-  SFTP_LOCAL_PATH: 'data_test',
+  SFTP_LOCAL_PATH: 'local-storage',
   SFTP_PASSWORD: 'fake_passw0rd',
   SFTP_PORT: '22',
   SFTP_PRIVATE_KEY: 'privateKey',
