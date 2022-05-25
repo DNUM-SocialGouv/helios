@@ -18,7 +18,9 @@ export const Titre = ({ children }: TypeTitre) => {
         src={logoEntitéJuridique}
         width="27"
       />
-      <span>{children}</span>
+      <span>
+        {children}
+      </span>
     </h1>
   )
 }
