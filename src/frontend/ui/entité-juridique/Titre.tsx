@@ -13,11 +13,12 @@ export const Titre = ({ children }: TypeTitre) => {
     <h1 className={styles['titre']}>
       <Image
         alt=""
+        className={styles['img']}
         height="27"
         src={logoEntitéJuridique}
         width="27"
       />
-      {children}
+      <span>{children}</span>
     </h1>
   )
 }

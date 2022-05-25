@@ -1,3 +1,5 @@
 .titre {
   color: var(--text-action-high-blue-france);
+  display: flex;
+  gap: 19px;
 }
