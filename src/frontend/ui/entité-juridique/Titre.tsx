@@ -1,22 +1,23 @@
 import Image from 'next/image'
+import { ReactElement } from 'react'
 
-import { EntitéJuridiqueViewModel } from './EntitéJuridiqueViewModel'
 import logoEntitéJuridique from './logo-entité-juridique.svg'
+import styles from './Titre.module.css'
 
 type TypeTitre = Readonly<{
-    entitéJuridiqueViewModel: EntitéJuridiqueViewModel
+  children: ReactElement | string
 }>
 
-export const Titre = ({ entitéJuridiqueViewModel }: TypeTitre) => {
+export const Titre = ({ children }: TypeTitre) => {
   return (
-    <h1>
+    <h1 className={styles['titre']}>
       <Image
         alt=""
         height="27"
         src={logoEntitéJuridique}
         width="27"
       />
-      {entitéJuridiqueViewModel.titre}
+      {children}
     </h1>
   )
 }

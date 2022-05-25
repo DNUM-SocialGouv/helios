@@ -1,10 +1,8 @@
-import Image from 'next/image'
-
 import { useDependencies } from '../commun/contexts/useDependencies'
 import { useBreadcrumb } from '../commun/hooks/useBreadcrumb'
 import { BlocIdentité } from './BlocIdentité'
 import { EntitéJuridiqueViewModel } from './EntitéJuridiqueViewModel'
-import logoEntitéJuridique from './logo-entité-juridique.svg'
+import { Titre } from './Titre'
 
 type TypeEntitéJuridique = Readonly<{
   entitéJuridiqueViewModel: EntitéJuridiqueViewModel
@@ -22,15 +20,9 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel }: TypeEntitéJ
 
   return (
     <>
-      <h1>
-        <Image
-          alt=""
-          height="27"
-          src={logoEntitéJuridique}
-          width="27"
-        />
+      <Titre>
         {entitéJuridiqueViewModel.titre}
-      </h1>
+      </Titre>
       <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
     </>
   )
