@@ -77,7 +77,7 @@ describe('La page Établissement territorial', () => {
     expect(téléphoneEtEmail).toBeInTheDocument()
   })
 
-  it('affiche l’entité juridique de rattachement dans le bloc identité', () => {
+  it.skip('affiche l’entité juridique de rattachement dans le bloc identité', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
 
@@ -91,7 +91,18 @@ describe('La page Établissement territorial', () => {
 
   })
 
-  it.todo('affiche la catégorie de l’établissement dans le bloc identité')
+  it.todo('affiche la catégorie de l’établissement dans le bloc identité', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+
+    // THEN
+    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+    const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
+    const labelCatégorieDeLÉtablissement = within(indicateurs[5]).getByText(`${wording.CATÉGORIE_DE_L_ÉTABLISSEMENT} -`, { selector: 'p' })
+    expect(labelCatégorieDeLÉtablissement.textContent).toBe(`${wording.CATÉGORIE_DE_L_ÉTABLISSEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
+    const catégorieDeLÉtablissement = within(indicateurs[5]).getByText('355 - Centre Hospitalier (C.H.)', { selector: 'p' })
+    expect(catégorieDeLÉtablissement).toBeInTheDocument()
+  })
 
   it.todo('affiche le nom du directeur dans le bloc identité')
 

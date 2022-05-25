@@ -25,6 +25,10 @@ export class ÉtablissementTerritorialViewModel {
     return `EJ - ${numéroFinessEntitéJuridiqueFormaté} - JE SAIS PO`
   }
 
+  public get catégorieDeLÉtablissement(): string {
+    return this.établissementTerritorialIdentité.catégorieÉtablissement
+  }
+
   public get dateDeMiseÀJour(): string {
     return this.formateLaDate(this.établissementTerritorialIdentité.dateMiseAJourSource)
   }
