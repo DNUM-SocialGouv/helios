@@ -1,4 +1,3 @@
-import { useDependencies } from '../commun/contexts/useDependencies'
 import { useBreadcrumb } from '../commun/hooks/useBreadcrumb'
 import { BlocIdentité } from './BlocIdentité'
 import { EntitéJuridiqueViewModel } from './EntitéJuridiqueViewModel'
@@ -9,11 +8,9 @@ type TypeEntitéJuridique = Readonly<{
 }>
 
 export const PageEntitéJuridique = ({ entitéJuridiqueViewModel }: TypeEntitéJuridique) => {
-  const { wording } = useDependencies()
-
   useBreadcrumb([
     {
-      label: wording.DONNÉES_PERSONNELLES,
+      label: entitéJuridiqueViewModel.titre,
       path: '',
     },
   ])
