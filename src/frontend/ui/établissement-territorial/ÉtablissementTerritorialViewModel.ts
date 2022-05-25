@@ -16,7 +16,13 @@ export class ÉtablissementTerritorialViewModel {
   }
 
   public get téléphoneEtEmail(): string {
-    return `${this.établissementTerritorialIdentité.téléphone} ${this.établissementTerritorialIdentité.courriel}`
+    const téléphoneFormaté = this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorialIdentité.téléphone, 2)
+    return `${téléphoneFormaté}     ${this.établissementTerritorialIdentité.courriel}`
+  }
+
+  public get entitéJuridiqueDeRattachement(): string {
+    const numéroFinessEntitéJuridiqueFormaté = this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorialIdentité.numéroFinessEntitéJuridique, 3)
+    return `EJ - ${numéroFinessEntitéJuridiqueFormaté} - JE SAIS PO`
   }
 
   public get dateDeMiseÀJour(): string {

@@ -71,13 +71,25 @@ describe('La page Établissement territorial', () => {
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelTéléphoneEtEmail = within(indicateurs[3]).getByText(`${wording.TÉLÉPHONE_ET_EMAIL}  -`, { selector: 'p' })
+    const labelTéléphoneEtEmail = within(indicateurs[3]).getByText(`${wording.TÉLÉPHONE_ET_EMAIL} -`, { selector: 'p' })
     expect(labelTéléphoneEtEmail.textContent).toBe(`${wording.TÉLÉPHONE_ET_EMAIL} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
-    const téléphoneEtEmail = within(indicateurs[3]).getByText('04 74 75 48 00     a@example.com', { selector: 'p' })
+    const téléphoneEtEmail = within(indicateurs[3]).getByText('04 74 75 48 00     a@example.com', { collapseWhitespace: false, selector: 'p' })
     expect(téléphoneEtEmail).toBeInTheDocument()
   })
 
-  it.todo('affiche l’entité juridique de rattachement dans le bloc identité')
+  it('affiche l’entité juridique de rattachement dans le bloc identité', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+
+    // THEN
+    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+    const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
+    const labelEntitéJuridiqueDeRattachement = within(indicateurs[4]).getByText(`${wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT} -`, { selector: 'p' })
+    expect(labelEntitéJuridiqueDeRattachement.textContent).toBe(`${wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
+    const entitéJuridiqueDeRattachement = within(indicateurs[4]).getByText('EJ - 010 008 407 - ENTITÉ JURIDIQUE', { selector: 'p' })
+    expect(entitéJuridiqueDeRattachement).toBeInTheDocument()
+
+  })
 
   it.todo('affiche la catégorie de l’établissement dans le bloc identité')
 
