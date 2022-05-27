@@ -49,6 +49,10 @@ export const BlocIdentitéMédicoSocial = ({ établissementTerritorialViewModel 
           source={wording.FINESS}
           valeur={établissementTerritorialViewModel.catégorieDeLÉtablissement}
         />
+        <IndicateurIdentité
+          nomDeLIndicateur={wording.NOM_DU_DIRECTEUR}
+          valeur="À venir"
+        />
       </ul>
     </Bloc>
   )

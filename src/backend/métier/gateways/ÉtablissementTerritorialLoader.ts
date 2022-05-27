@@ -3,4 +3,5 @@ import { ÉtablissementTerritorialNonTrouvée } from '../entities/Établissement
 
 export interface ÉtablissementTerritorialLoader {
   chargeParNuméroFiness(numéroFiness: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialNonTrouvée>
+  compteLesÉtablissementsDUneMêmeEntité(numéroFinessEntitéJuridique: string): Promise<number>
 }

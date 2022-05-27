@@ -89,10 +89,9 @@ describe('La page Établissement territorial', () => {
     expect(labelEntitéJuridiqueDeRattachement.textContent).toBe(`${wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
     const entitéJuridiqueDeRattachement = within(indicateurs[4]).getByText('EJ - 010 008 407 - ENTITÉ JURIDIQUE', { selector: 'p' })
     expect(entitéJuridiqueDeRattachement).toBeInTheDocument()
-
   })
 
-  it('affiche la catégorie de l’établissement dans le bloc identité', () => {
+  it('affiche la catégorie de l’établissement dans le bloc identité avec son libellé', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
 
@@ -105,11 +104,44 @@ describe('La page Établissement territorial', () => {
     expect(catégorieDeLÉtablissement).toBeInTheDocument()
   })
 
-  it.todo('affiche le nom du directeur dans le bloc identité')
+  it('affiche le nom du directeur dans le bloc identité', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
 
-  it.todo('affiche le statut de l’établissement dans le bloc identité')
+    // THEN
+    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+    const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
+    const labelNomDuDirecteur = within(indicateurs[6]).getByText(wording.NOM_DU_DIRECTEUR, { selector: 'p' })
+    expect(labelNomDuDirecteur.textContent).toBe(wording.NOM_DU_DIRECTEUR)
+    const indicateurÀVenir = within(indicateurs[6]).getByText('À venir', { selector: 'p' })
+    expect(indicateurÀVenir).toBeInTheDocument()
+  })
 
-  it.todo('affiche l’indicateur de mono-établissement dans le bloc identité')
+  it.skip('affiche le statut de l’établissement dans le bloc identité', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+
+    // THEN
+    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+    const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
+    const labelStatutÉtablissement = within(indicateurs[7]).getByText(`${wording.STATUT_DE_L_ÉTABLISSEMENT} -`, { selector: 'p' })
+    expect(labelStatutÉtablissement.textContent).toBe(`${wording.STATUT_DE_L_ÉTABLISSEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
+    const statutÉtablissement = within(indicateurs[7]).getByText('Public')
+    expect(statutÉtablissement).toBeInTheDocument()
+  })
+
+  it('affiche l’indicateur de mono-établissement dans le bloc identité', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+
+    // THEN
+    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+    const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
+    const labelIndicateurMonoÉtablissement = within(indicateurs[8]).getByText(`${wording.MONO_ÉTABLISSEMENT} -`, { selector: 'p' })
+    expect(labelIndicateurMonoÉtablissement.textContent).toBe(`${wording.MONO_ÉTABLISSEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
+    const indicateurMonoÉtablissement = within(indicateurs[8]).getByText('Oui')
+    expect(indicateurMonoÉtablissement).toBeInTheDocument()
+  })
 
   it.todo('affiche l’indicateur de d’établissement principal ou secondaire dans le bloc identité')
 

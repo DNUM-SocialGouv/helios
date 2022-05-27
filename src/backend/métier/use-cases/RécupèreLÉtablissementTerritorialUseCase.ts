@@ -12,9 +12,13 @@ export class RécupèreLÉtablissementTerritorialUseCase {
       throw établissementTerritorialOuErreur
     }
 
-    // const toto = loader.donneMoiLaRaisonSocialeDuparent(établissementTerritorialOuErreur.numéroFinessEJ)
+    // const nb_et_dans_ej = loader.compteLesÉtablissementsDUneMêmeEntité(numéroFinessEJ)
 
-    // const etfinal = New ÉtablissementTerritorialIdentité(établissementTerritorialOuErreur, toto, mono)
+    // const raisonSocialeParent = loader.chargeLaRaisonSocialeDuparent(établissementTerritorialOuErreur.numéroFinessEJ)
+
+    // const statutJuridique = loader.chargeLeStatutJuridiqueDUnEJ(établissementTerritorialOuErreur.numéroFinessEJ)
+
+    // const etfinal = New ÉtablissementTerritorialIdentité(établissementTerritorialOuErreur, raisonSocialeParent, nb_et_dans_ej, statutJuridique)
 
     return établissementTerritorialOuErreur
   }

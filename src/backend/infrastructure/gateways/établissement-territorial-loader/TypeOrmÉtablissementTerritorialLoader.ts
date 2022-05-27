@@ -23,6 +23,10 @@ export class TypeOrmÉtablissementTerritorialLoader implements ÉtablissementTer
     return this.construitLÉtablissementTerritorial(établissementTerritorialModel, dateDeMiseAJourModel)
   }
 
+  async compteLesÉtablissementsDUneMêmeEntité(numéroFinessEntitéJuridique: string): Promise<number> {
+    throw new Error('Method not implemented.')
+  }
+
   private async chargeLaDateDeMiseÀJourModel() {
     return await (await this.orm)
       .getRepository(DateMiseÀJourSourceModel)
