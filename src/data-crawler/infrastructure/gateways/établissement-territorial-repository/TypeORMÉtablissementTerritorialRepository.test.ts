@@ -59,6 +59,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
     établissementTerritorialIdentité1.adresseVoie = 'fake',
     établissementTerritorialIdentité1.catégorieÉtablissement = 'fak',
     établissementTerritorialIdentité1.courriel = 'fake',
+    établissementTerritorialIdentité1.libelléCatégorieÉtablissement = 'fake',
     établissementTerritorialIdentité1.numéroFinessEntitéJuridique = entitéJuridique1.numéroFinessEntitéJuridique,
     établissementTerritorialIdentité1.numéroFinessÉtablissementPrincipal = 'fake',
     établissementTerritorialIdentité1.numéroFinessÉtablissementTerritorial = '010000040',
@@ -82,6 +83,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
       catégorieÉtablissement: '355',
       courriel: 'a@example.com',
       dateMiseAJourSource: '20220203',
+      libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
       numéroFinessEntitéJuridique: '010018407',
       numéroFinessÉtablissementPrincipal: '010000057',
       numéroFinessÉtablissementTerritorial: '010000040',
@@ -97,6 +99,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
       catégorieÉtablissement: '365',
       courriel: 'b@example.com',
       dateMiseAJourSource: '20220203',
+      libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
       numéroFinessEntitéJuridique: '590000741',
       numéroFinessÉtablissementPrincipal: '',
       numéroFinessÉtablissementTerritorial: '590782553',
@@ -120,6 +123,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
     établissementTerritorial1MisAJourAttendu.adresseVoie = 'PAUL PAINLEVE'
     établissementTerritorial1MisAJourAttendu.catégorieÉtablissement = '355'
     établissementTerritorial1MisAJourAttendu.courriel = 'a@example.com'
+    établissementTerritorial1MisAJourAttendu.libelléCatégorieÉtablissement = 'Centre Hospitalier (C.H.)'
     établissementTerritorial1MisAJourAttendu.numéroFinessEntitéJuridique = '010018407'
     établissementTerritorial1MisAJourAttendu.numéroFinessÉtablissementPrincipal = '010000057'
     établissementTerritorial1MisAJourAttendu.numéroFinessÉtablissementTerritorial = '010000040'
@@ -133,6 +137,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
     établissementTerritorial2MisAJourAttendu.adresseVoie = 'DE LA RECONNAISSANCE'
     établissementTerritorial2MisAJourAttendu.catégorieÉtablissement = '365'
     établissementTerritorial2MisAJourAttendu.courriel = 'b@example.com'
+    établissementTerritorial2MisAJourAttendu.libelléCatégorieÉtablissement = 'Centre Hospitalier (C.H.)'
     établissementTerritorial2MisAJourAttendu.numéroFinessEntitéJuridique = '590000741'
     établissementTerritorial2MisAJourAttendu.numéroFinessÉtablissementPrincipal = ''
     établissementTerritorial2MisAJourAttendu.numéroFinessÉtablissementTerritorial = '590782553'

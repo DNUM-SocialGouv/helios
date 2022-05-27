@@ -1,4 +1,5 @@
 import { getFakeDataCrawlerDependencies } from '../../testHelper'
+import { ÉtablissementTerritorialIdentité } from '../entities/ÉtablissementTerritorialIdentité'
 import { SauvegardeLesÉtablissementsTerritoriauxUseCase } from './SauvegardeLesÉtablissementsTerritoriauxUseCase'
 
 describe('Sauvegarde des établissements territoriaux', () => {
@@ -24,7 +25,7 @@ describe('Sauvegarde des établissements territoriaux', () => {
       fakeDataCrawlerDependencies.établissementTerritorialLoader,
       fakeDataCrawlerDependencies.établissementTerritorialRepository
     )
-    const établissementsTerritoriaux = [
+    const établissementsTerritoriaux: ÉtablissementTerritorialIdentité[] = [
       {
         adresseAcheminement: '01130 NANTUA',
         adresseNuméroVoie: '50',
@@ -33,6 +34,7 @@ describe('Sauvegarde des établissements territoriaux', () => {
         catégorieÉtablissement: '355',
         courriel: 'a@example.com',
         dateMiseAJourSource: '20220203',
+        libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
         numéroFinessEntitéJuridique: '010018407',
         numéroFinessÉtablissementPrincipal: '010000057',
         numéroFinessÉtablissementTerritorial: '010000040',
@@ -48,6 +50,7 @@ describe('Sauvegarde des établissements territoriaux', () => {
         catégorieÉtablissement: '365',
         courriel: 'b@example.com',
         dateMiseAJourSource: '20220203',
+        libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
         numéroFinessEntitéJuridique: '590000741',
         numéroFinessÉtablissementPrincipal: '',
         numéroFinessÉtablissementTerritorial: '590782553',

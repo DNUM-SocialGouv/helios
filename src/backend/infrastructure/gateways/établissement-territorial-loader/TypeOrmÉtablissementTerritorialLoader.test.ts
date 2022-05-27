@@ -58,6 +58,7 @@ describe('Établissement territorial loader', () => {
     établissementTerritorialModel.adresseVoie = 'PAUL PAINLEVE'
     établissementTerritorialModel.catégorieÉtablissement = '355'
     établissementTerritorialModel.courriel = 'a@example.com'
+    établissementTerritorialModel.libelléCatégorieÉtablissement = 'Centre hospitalier (C.H.)'
     établissementTerritorialModel.numéroFinessEntitéJuridique = numéroFinessEntitéJuridique
     établissementTerritorialModel.numéroFinessÉtablissementPrincipal = '010018407'
     établissementTerritorialModel.numéroFinessÉtablissementTerritorial = numéroFinessET

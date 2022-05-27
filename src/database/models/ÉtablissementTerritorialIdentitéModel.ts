@@ -19,7 +19,7 @@ export class ÉtablissementTerritorialIdentitéModel {
   @Column({ length: 3, name: 'catÉtablissement' })
   public catégorieÉtablissement!: string
 
-  @Column({ length: 255, name: 'libelléCatégorieÉtablissement' })
+  @Column({ length: 255, name: 'libellécatégorieÉtablissement' })
   public libelléCatégorieÉtablissement!: string
 
   @Column({ length: 255, name: 'courriel' })

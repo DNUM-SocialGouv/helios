@@ -205,6 +205,7 @@ export class FinessXmlÉtablissementTerritorialLoader implements ÉtablissementT
       catégorieÉtablissement: valueOrEmpty(établissementTerritorialIdentitéFiness.categetab._text),
       courriel: valueOrEmpty(établissementTerritorialIdentitéFiness.courriel._text),
       dateMiseAJourSource,
+      libelléCatégorieÉtablissement: valueOrEmpty(établissementTerritorialIdentitéFiness.libcategetab._text),
       numéroFinessEntitéJuridique: valueOrEmpty(établissementTerritorialIdentitéFiness.nofinessej._text),
       numéroFinessÉtablissementPrincipal: valueOrEmpty(établissementTerritorialIdentitéFiness.nofinessppal._text),
       numéroFinessÉtablissementTerritorial: valueOrEmpty(établissementTerritorialIdentitéFiness.nofinesset._text),
