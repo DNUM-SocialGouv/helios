@@ -75,6 +75,7 @@ describe('Établissement territorial loader', () => {
       catégorieÉtablissement: '355',
       courriel: 'a@example.com',
       dateMiseAJourSource: '2022-05-14',
+      libelléCatégorieÉtablissement: 'Centre hospitalier (C.H.)',
       numéroFinessEntitéJuridique: numéroFinessEntitéJuridique,
       numéroFinessÉtablissementPrincipal: '010018407',
       numéroFinessÉtablissementTerritorial: numéroFinessET,

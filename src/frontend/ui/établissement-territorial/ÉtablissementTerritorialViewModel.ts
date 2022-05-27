@@ -26,7 +26,7 @@ export class ÉtablissementTerritorialViewModel {
   }
 
   public get catégorieDeLÉtablissement(): string {
-    return this.établissementTerritorialIdentité.catégorieÉtablissement
+    return `${this.établissementTerritorialIdentité.catégorieÉtablissement} - ${this.établissementTerritorialIdentité.libelléCatégorieÉtablissement}`
   }
 
   public get dateDeMiseÀJour(): string {

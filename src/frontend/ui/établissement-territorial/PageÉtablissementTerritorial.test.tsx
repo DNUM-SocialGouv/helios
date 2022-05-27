@@ -15,6 +15,7 @@ describe('La page Établissement territorial', () => {
     catégorieÉtablissement : '355',
     courriel : 'a@example.com',
     dateMiseAJourSource : '2021-07-07',
+    libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
     numéroFinessEntitéJuridique : '010008407',
     numéroFinessÉtablissementPrincipal : '010000057',
     numéroFinessÉtablissementTerritorial: '010000040',
@@ -91,7 +92,7 @@ describe('La page Établissement territorial', () => {
 
   })
 
-  it.todo('affiche la catégorie de l’établissement dans le bloc identité', () => {
+  it('affiche la catégorie de l’établissement dans le bloc identité', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
 

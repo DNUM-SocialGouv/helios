@@ -15,6 +15,7 @@ describe('La récupération d’un établissement territorial', () => {
       catégorieÉtablissement: '355',
       courriel: 'a@example.com',
       dateMiseAJourSource: '20220203',
+      libelléCatégorieÉtablissement: 'Centre hospitalier (C.H.)',
       numéroFinessEntitéJuridique: '010018407',
       numéroFinessÉtablissementPrincipal: '010000057',
       numéroFinessÉtablissementTerritorial: numéroFinessET,

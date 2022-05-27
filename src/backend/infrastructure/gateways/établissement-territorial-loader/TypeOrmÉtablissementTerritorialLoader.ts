@@ -41,6 +41,7 @@ export class TypeOrmÉtablissementTerritorialLoader implements ÉtablissementTer
       catégorieÉtablissement: établissementTerritorialModel.catégorieÉtablissement,
       courriel: établissementTerritorialModel.courriel,
       dateMiseAJourSource: dateDeMiseAJourModel ? dateDeMiseAJourModel.dernièreMiseÀJour : '',
+      libelléCatégorieÉtablissement: établissementTerritorialModel.libelléCatégorieÉtablissement,
       numéroFinessEntitéJuridique: établissementTerritorialModel.numéroFinessEntitéJuridique,
       numéroFinessÉtablissementPrincipal: établissementTerritorialModel.numéroFinessÉtablissementPrincipal,
       numéroFinessÉtablissementTerritorial: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
