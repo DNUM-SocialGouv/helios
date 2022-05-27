@@ -24,7 +24,9 @@ export class TypeOrmÉtablissementTerritorialLoader implements ÉtablissementTer
   }
 
   async compteLesÉtablissementsDUneMêmeEntité(numéroFinessEntitéJuridique: string): Promise<number> {
-    throw new Error('Method not implemented.')
+    return await (await this.orm)
+      .getRepository(ÉtablissementTerritorialIdentitéModel)
+      .countBy({ numéroFinessEntitéJuridique: numéroFinessEntitéJuridique })
   }
 
   private async chargeLaDateDeMiseÀJourModel() {
