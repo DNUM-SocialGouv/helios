@@ -1,4 +1,5 @@
 import { ÉtablissementTerritorialIdentité } from '../entities/ÉtablissementTerritorialIdentité'
+import { ÉtablissementTerritorialMédicoSocialIdentité } from '../entities/ÉtablissementTerritorialMédicoSocial/ÉtablissementTerritorialMédicoSocialIdentité'
 import { ÉtablissementTerritorialNonTrouvée } from '../entities/ÉtablissementTerritorialNonTrouvée'
 import { ÉtablissementTerritorialLoader } from '../gateways/ÉtablissementTerritorialLoader'
 import { RécupèreLÉtablissementTerritorialUseCase } from './RécupèreLÉtablissementTerritorialUseCase'
@@ -26,14 +27,22 @@ describe('La récupération d’un établissement territorial', () => {
     const mockedChargeParNuméroFiness = jest.fn(async () => {
       return ficheIdentitéÉtablissementTerritorial
     })
-    const établissementTerritorialLoader: ÉtablissementTerritorialLoader = { chargeParNuméroFiness: mockedChargeParNuméroFiness }
+    const mockedCompteLesÉtablissementsDUneMêmeEntité = jest.fn(async () => {
+      return 1
+    })
+    const établissementTerritorialLoader: ÉtablissementTerritorialLoader =
+      { chargeParNuméroFiness: mockedChargeParNuméroFiness, compteLesÉtablissementsDUneMêmeEntité: mockedCompteLesÉtablissementsDUneMêmeEntité }
     const récupèreLÉtablissementTerritorialUseCase = new RécupèreLÉtablissementTerritorialUseCase(établissementTerritorialLoader)
 
     // WHEN
     const ficheIdentitéRécupérée = await récupèreLÉtablissementTerritorialUseCase.exécute(numéroFinessET)
 
     // THEN
-    expect(ficheIdentitéRécupérée).toStrictEqual(ficheIdentitéÉtablissementTerritorial)
+    const ficheIdentitéÉtablissementTerritorialMédicoSocial: ÉtablissementTerritorialMédicoSocialIdentité = {
+      ...ficheIdentitéÉtablissementTerritorial,
+      estMonoÉtablissement: true,
+    }
+    expect(ficheIdentitéRécupérée).toStrictEqual(ficheIdentitéÉtablissementTerritorialMédicoSocial)
     expect(mockedChargeParNuméroFiness).toHaveBeenCalledWith(numéroFinessET)
     expect(mockedChargeParNuméroFiness).toHaveBeenCalledTimes(1)
   })
@@ -44,7 +53,8 @@ describe('La récupération d’un établissement territorial', () => {
     const mockedChargeParNuméroFiness = jest.fn(async () => {
       return new ÉtablissementTerritorialNonTrouvée('123456789')
     })
-    const établissementTerritorialLoader: ÉtablissementTerritorialLoader = { chargeParNuméroFiness: mockedChargeParNuméroFiness }
+    const établissementTerritorialLoader: ÉtablissementTerritorialLoader =
+      { chargeParNuméroFiness: mockedChargeParNuméroFiness, compteLesÉtablissementsDUneMêmeEntité: jest.fn() }
     const récupèreLÉtablissementTerritorialUseCase = new RécupèreLÉtablissementTerritorialUseCase(établissementTerritorialLoader)
 
     // WHEN
