@@ -1,3 +1,4 @@
+import { ÉtablissementTerritorialTestFactory } from '../../test/ÉtablissementTerritorialTestFactory'
 import { ÉtablissementTerritorialIdentité } from '../entities/ÉtablissementTerritorialIdentité'
 import { ÉtablissementTerritorialMédicoSocialIdentité } from '../entities/ÉtablissementTerritorialMédicoSocial/ÉtablissementTerritorialMédicoSocialIdentité'
 import { ÉtablissementTerritorialNonTrouvée } from '../entities/ÉtablissementTerritorialNonTrouvée'
@@ -8,22 +9,9 @@ describe('La récupération d’un établissement territorial', () => {
   it('récupère la fiche identité de l’établissement territorial', async () => {
     // GIVEN
     const numéroFinessET = '123456789'
-    const ficheIdentitéÉtablissementTerritorial: ÉtablissementTerritorialIdentité = {
-      adresseAcheminement: '01130 NANTUA',
-      adresseNuméroVoie: '50',
-      adresseTypeVoie: 'R',
-      adresseVoie: 'PAUL PAINLEVE',
-      catégorieÉtablissement: '355',
-      courriel: 'a@example.com',
-      dateMiseAJourSource: '20220203',
-      libelléCatégorieÉtablissement: 'Centre hospitalier (C.H.)',
-      numéroFinessEntitéJuridique: '010018407',
-      numéroFinessÉtablissementPrincipal: '010000057',
-      numéroFinessÉtablissementTerritorial: numéroFinessET,
-      raisonSociale: 'CH NANTUA',
-      typeÉtablissement: 'S',
-      téléphone: '0102030405',
-    }
+    const ficheIdentitéÉtablissementTerritorial: ÉtablissementTerritorialIdentité = ÉtablissementTerritorialTestFactory.créeÉtablissementTerritorial(
+      { numéroFinessÉtablissementTerritorial: numéroFinessET }
+    )
     const mockedChargeParNuméroFiness = jest.fn(async () => {
       return ficheIdentitéÉtablissementTerritorial
     })

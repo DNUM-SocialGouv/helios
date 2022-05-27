@@ -2,8 +2,10 @@ import { Repository } from 'typeorm'
 
 import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../database/models/DateMiseÀJourSourceModel'
 import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
+import { EntitéJuridiqueModelTestFactory } from '../../../../database/test/EntitéJuridiqueModelTestFactory'
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { EntitéJuridiqueNonTrouvée } from '../../../métier/entities/EntitéJuridiqueNonTrouvée'
+import { EntitéJuridiqueTestFactory } from '../../../test/EntitéJuridiqueTestFactory'
 import { getOrm } from '../../../testHelper'
 import { TypeOrmEntitéJuridiqueLoader } from './TypeOrmEntitéJuridiqueLoader'
 
@@ -28,15 +30,8 @@ describe('Entité juridique loader', () => {
 
   it('charge par numéro FINESS lorsque l’entité juridique est en base', async () => {
     // GIVEN
-    const entitéJuridique = new EntitéJuridiqueModel()
-    entitéJuridique.adresseAcheminement = '75000 Paris'
-    entitéJuridique.adresseNuméroVoie = '6'
-    entitéJuridique.adresseTypeVoie = 'AV'
-    entitéJuridique.adresseVoie = 'rue de la Paix'
-    entitéJuridique.libelléStatutJuridique = 'statut'
-    entitéJuridique.numéroFinessEntitéJuridique = '012345678'
-    entitéJuridique.raisonSociale = 'Nom de l’entité juridique'
-    entitéJuridique.téléphone = '0123456789'
+    const numéroFiness = '010018407'
+    const entitéJuridique = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel({ numéroFinessEntitéJuridique: numéroFiness })
     await entitéJuridiqueRepository.insert(entitéJuridique)
     await dateMiseÀJourSourceRepository.insert([
       {
@@ -45,19 +40,8 @@ describe('Entité juridique loader', () => {
       },
     ])
 
-    const numéroFiness = '012345678'
     const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm)
-    const entitéJuridiqueAttendue: EntitéJuridique = {
-      adresseAcheminement: '75000 Paris',
-      adresseNuméroVoie: '6',
-      adresseTypeVoie: 'AV',
-      adresseVoie: 'rue de la Paix',
-      dateMiseAJourSource: '2022-05-14',
-      libelléStatutJuridique: 'statut',
-      numéroFinessEntitéJuridique: numéroFiness,
-      raisonSociale: 'Nom de l’entité juridique',
-      téléphone: '0123456789',
-    }
+    const entitéJuridiqueAttendue: EntitéJuridique = EntitéJuridiqueTestFactory.créeEntitéJuridique()
 
     // WHEN
     const entitéJuridiqueChargée = await typeOrmEntitéJuridiqueLoader.chargeParNuméroFiness(numéroFiness)
