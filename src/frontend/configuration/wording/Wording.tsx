@@ -24,6 +24,8 @@ export interface Wording {
   readonly MISE_À_JOUR: string
   readonly SOURCE: string
   readonly NON_RENSEIGNÉ: string
+  readonly OUI: string
+  readonly NON: string
 
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string
@@ -39,6 +41,8 @@ export interface Wording {
   readonly CATÉGORIE_DE_L_ÉTABLISSEMENT: string
   readonly MONO_ÉTABLISSEMENT: string
   readonly ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE: string
+  readonly PRINCIPAL: string
+  readonly SECONDAIRE: string
   readonly SITE_INTERNET: string
 
   // Source

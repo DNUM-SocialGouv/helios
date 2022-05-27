@@ -32,6 +32,8 @@ export class WordingFr implements Wording {
   readonly MISE_À_JOUR: string = 'Mise à jour'
   readonly SOURCE: string = 'Source'
   readonly NON_RENSEIGNÉ: string = 'Non renseigné'
+  readonly OUI: string = 'Oui'
+  readonly NON: string = 'Non'
 
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string = 'fiche d’identité'
@@ -52,6 +54,8 @@ export class WordingFr implements Wording {
   readonly CATÉGORIE_DE_L_ÉTABLISSEMENT: string = 'Catégorie de l’établissement'
   readonly MONO_ÉTABLISSEMENT: string = 'Mono-établissement'
   readonly ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE: string = 'Établissement Principal/Secondaire'
+  readonly PRINCIPAL: string = 'Principal'
+  readonly SECONDAIRE: string = 'Secondaire'
   readonly SITE_INTERNET: string = 'Site internet'
 
   // Source

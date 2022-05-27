@@ -2,12 +2,14 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 
 import { récupèreLÉtablissementTerritorialEndpoint } from '../../backend/infrastructure/controllers/récupèreLÉtablissementTerritorialEndpoint'
 import { dependencies } from '../../backend/infrastructure/dependencies'
-import { ÉtablissementTerritorialIdentité } from '../../backend/métier/entities/ÉtablissementTerritorialIdentité'
+import { ÉtablissementTerritorialMédicoSocialIdentité } from '../../backend/métier/entities/ÉtablissementTerritorialMédicoSocial/ÉtablissementTerritorialMédicoSocialIdentité'
+import { useDependencies } from '../../frontend/ui/commun/contexts/useDependencies'
 import { PageÉtablissementTerritorial } from '../../frontend/ui/établissement-territorial/PageÉtablissementTerritorial'
 import { ÉtablissementTerritorialViewModel } from '../../frontend/ui/établissement-territorial/ÉtablissementTerritorialViewModel'
 
-export default function Router({ établissementTerritorial }: { établissementTerritorial: ÉtablissementTerritorialIdentité }) {
-  const établissementTerritorialViewModel = new ÉtablissementTerritorialViewModel(établissementTerritorial)
+export default function Router({ établissementTerritorialMédicoSocial }: { établissementTerritorialMédicoSocial: ÉtablissementTerritorialMédicoSocialIdentité }) {
+  const { wording } = useDependencies()
+  const établissementTerritorialViewModel = new ÉtablissementTerritorialViewModel(établissementTerritorialMédicoSocial, wording)
   return <PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />
 }
 

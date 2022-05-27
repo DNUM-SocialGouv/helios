@@ -1,6 +1,6 @@
 import { screen, within } from '@testing-library/react'
 
-import { fakeFrontDependencies, renderFakeComponent } from '../../testHelper'
+import { fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent, trimHtml } from '../../testHelper'
 import { PageÉtablissementTerritorial } from './PageÉtablissementTerritorial'
 import { ÉtablissementTerritorialViewModel } from './ÉtablissementTerritorialViewModel'
 
@@ -15,6 +15,7 @@ describe('La page Établissement territorial', () => {
     catégorieÉtablissement : '355',
     courriel : 'a@example.com',
     dateMiseAJourSource : '2021-07-07',
+    estMonoÉtablissement: true,
     libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
     numéroFinessEntitéJuridique : '010008407',
     numéroFinessÉtablissementPrincipal : '010000057',
@@ -22,7 +23,7 @@ describe('La page Établissement territorial', () => {
     raisonSociale : 'CH NANTUA',
     typeÉtablissement : 'S',
     téléphone : '0474754800',
-  })
+  }, wording)
 
   it('affiche le nom de l’établissement dans le bloc identité', () => {
     // WHEN
@@ -137,16 +138,193 @@ describe('La page Établissement territorial', () => {
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelIndicateurMonoÉtablissement = within(indicateurs[8]).getByText(`${wording.MONO_ÉTABLISSEMENT} -`, { selector: 'p' })
-    expect(labelIndicateurMonoÉtablissement.textContent).toBe(`${wording.MONO_ÉTABLISSEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
-    const indicateurMonoÉtablissement = within(indicateurs[8]).getByText('Oui')
-    expect(indicateurMonoÉtablissement).toBeInTheDocument()
+    const labelMonoÉtablissement = within(indicateurs[8]).getByText(`${wording.MONO_ÉTABLISSEMENT} -`, { selector: 'p' })
+    expect(labelMonoÉtablissement.textContent).toBe(`${wording.MONO_ÉTABLISSEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
+    const monoÉtablissement = within(indicateurs[8]).getByText(wording.OUI)
+    expect(monoÉtablissement).toBeInTheDocument()
   })
 
-  it.todo('affiche l’indicateur de d’établissement principal ou secondaire dans le bloc identité')
+  describe('l’indicateur d’établissement principal ou secondaire dans le bloc identité', () => {
+    it('affiche "Principale" si l’établissement est un établissement principale', () => {
+      // GIVEN
+      const établissementTerritorialPrincipal = new ÉtablissementTerritorialViewModel({
+        adresseAcheminement: '01130 NANTUA',
+        adresseNuméroVoie : '50',
+        adresseTypeVoie : 'R',
+        adresseVoie : 'PAUL PAINLEVE',
+        catégorieÉtablissement : '355',
+        courriel : 'a@example.com',
+        dateMiseAJourSource : '2021-07-07',
+        estMonoÉtablissement: true,
+        libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
+        numéroFinessEntitéJuridique : '010008407',
+        numéroFinessÉtablissementPrincipal : '',
+        numéroFinessÉtablissementTerritorial: '010000040',
+        raisonSociale : 'CH NANTUA',
+        typeÉtablissement : 'P',
+        téléphone : '0474754800',
+      }, wording)
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialPrincipal} />)
 
-  it.todo('affiche le site internet cliquable dans le bloc identité')
+      // THEN
+      const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+      const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
+      const labelÉtablissementPrincipalOuSecondaire = within(indicateurs[9]).getByText(`${wording.ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE} -`, { selector: 'p' })
+      expect(labelÉtablissementPrincipalOuSecondaire.textContent).toBe(`${wording.ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
+      const établissementPrincipalOuSecondaire = within(indicateurs[9]).getByText(wording.PRINCIPAL)
+      expect(établissementPrincipalOuSecondaire).toBeInTheDocument()
+    })
 
-  it.todo('affiche la date d’entrée en vigueur du CPOM dans le bloc identité')
+    it('affiche "Secondaire" et le numéro Finess de l’établissement principale si l’établissement n’est pas un établissement principale', () => {
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
 
+      // THEN
+      const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+      const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
+      const labelÉtablissementPrincipalOuSecondaire = within(indicateurs[9]).getByText(`${wording.ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE} -`, { selector: 'p' })
+      expect(labelÉtablissementPrincipalOuSecondaire.textContent).toBe(`${wording.ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
+      const établissementPrincipalOuSecondaire = within(indicateurs[9]).getByText(`${wording.SECONDAIRE} 010 000 057`)
+      expect(établissementPrincipalOuSecondaire).toBeInTheDocument()
+    })
+  })
+
+  it.skip('affiche le site internet dans le bloc identité', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+
+    // THEN
+    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+    const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
+    const labelSiteInternet = within(indicateurs[10]).getByText(`${wording.SITE_INTERNET} -`, { selector: 'p' })
+    expect(labelSiteInternet.textContent).toBe(`${wording.SITE_INTERNET} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
+    const siteInternet = within(indicateurs[10]).getByText('www.example.com')
+    expect(siteInternet).toBeInTheDocument()
+  })
+
+  it('affiche la date d’entrée en vigueur du CPOM dans le bloc identité', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+
+    // THEN
+    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+    const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
+    const labelDateDEntréeEnVigueurDuCpom = within(indicateurs[11]).getByText(htmlNodeAndReactChildMatcher(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
+    expect(labelDateDEntréeEnVigueurDuCpom).toBeInTheDocument()
+    expect(labelDateDEntréeEnVigueurDuCpom.textContent).toBe(trimHtml(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
+    const abréviationCpom = within(indicateurs[11]).getByText('CPOM', { selector: 'abbr' })
+    expect(abréviationCpom).toHaveAttribute('title', 'Contrat Pluriannuel d’Objectifs et de Moyens')
+    const indicateurÀVenir = within(indicateurs[11]).getByText('À venir')
+    expect(indicateurÀVenir).toBeInTheDocument()
+  })
+
+  it('n’affiche que 10 mises à jour et sources de données dans le bloc identité', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+
+    // THEN
+    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+    const majEtSource = within(ficheDIdentité).getAllByText(`${wording.MISE_À_JOUR} : 07/07/2021 - Source :`, { exact: false })
+    expect(majEtSource).toHaveLength(10)
+  })
+
+  it('affiche deux indicateurs à venir dans le bloc identité', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+
+    // THEN
+    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+    const majEtSource = within(ficheDIdentité).getAllByText('À venir')
+    expect(majEtSource).toHaveLength(2)
+  })
+
+  describe('affiche "non renseigné" quand une valeur est vide', () => {
+    it('pour le téléphone', () => {
+      const établissementTerritorialSansTéléphone = new ÉtablissementTerritorialViewModel({
+        adresseAcheminement: '01130 NANTUA',
+        adresseNuméroVoie : '50',
+        adresseTypeVoie : 'R',
+        adresseVoie : 'PAUL PAINLEVE',
+        catégorieÉtablissement : '355',
+        courriel : 'a@example.com',
+        dateMiseAJourSource : '2021-07-07',
+        estMonoÉtablissement: true,
+        libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
+        numéroFinessEntitéJuridique : '010008407',
+        numéroFinessÉtablissementPrincipal : '010000057',
+        numéroFinessÉtablissementTerritorial: '010000040',
+        raisonSociale : 'CH NANTUA',
+        typeÉtablissement : 'S',
+        téléphone : '',
+      }, wording)
+
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialSansTéléphone} />)
+
+      // THEN
+      const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+      const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
+      const téléphoneEtEmail = within(indicateurs[3]).getByText(`${wording.NON_RENSEIGNÉ}     a@example.com`, { collapseWhitespace: false, selector: 'p' })
+      expect(téléphoneEtEmail).toBeInTheDocument()
+    })
+
+    it('pour l’e-mail', () => {
+      const établissementTerritorialSansTéléphone = new ÉtablissementTerritorialViewModel({
+        adresseAcheminement: '01130 NANTUA',
+        adresseNuméroVoie : '50',
+        adresseTypeVoie : 'R',
+        adresseVoie : 'PAUL PAINLEVE',
+        catégorieÉtablissement : '355',
+        courriel : '',
+        dateMiseAJourSource : '2021-07-07',
+        estMonoÉtablissement: true,
+        libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
+        numéroFinessEntitéJuridique : '010008407',
+        numéroFinessÉtablissementPrincipal : '010000057',
+        numéroFinessÉtablissementTerritorial: '010000040',
+        raisonSociale : 'CH NANTUA',
+        typeÉtablissement : 'S',
+        téléphone : '0474754800',
+      }, wording)
+
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialSansTéléphone} />)
+
+      // THEN
+      const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+      const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
+      const téléphoneEtEmail = within(indicateurs[3]).getByText(`04 74 75 48 00     ${wording.NON_RENSEIGNÉ}`, { collapseWhitespace: false, selector: 'p' })
+      expect(téléphoneEtEmail).toBeInTheDocument()
+    })
+  })
+
+  it('affiche l’adresse incomplète lorsqu’il manque des champs d’adresse', () => {
+    const établissementTerritorialSansAdresseVoie = new ÉtablissementTerritorialViewModel({
+      adresseAcheminement: '01130 NANTUA',
+      adresseNuméroVoie : '50',
+      adresseTypeVoie : 'R',
+      adresseVoie : '',
+      catégorieÉtablissement : '355',
+      courriel : 'a@example.com',
+      dateMiseAJourSource : '2021-07-07',
+      estMonoÉtablissement: true,
+      libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
+      numéroFinessEntitéJuridique : '010008407',
+      numéroFinessÉtablissementPrincipal : '010000057',
+      numéroFinessÉtablissementTerritorial: '010000040',
+      raisonSociale : 'CH NANTUA',
+      typeÉtablissement : 'S',
+      téléphone : '0474754800',
+    }, wording)
+
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialSansAdresseVoie} />)
+
+    // THEN
+    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+    const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
+    const adresseIncomplète = within(indicateurs[2]).getByText('50 R 01130 NANTUA', { selector: 'p' })
+    expect(adresseIncomplète).toBeInTheDocument()
+  })
 })
