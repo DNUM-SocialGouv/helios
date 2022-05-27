@@ -7,9 +7,10 @@ import { useDependencies } from '../../frontend/ui/commun/contexts/useDependenci
 import { PageÉtablissementTerritorial } from '../../frontend/ui/établissement-territorial/PageÉtablissementTerritorial'
 import { ÉtablissementTerritorialViewModel } from '../../frontend/ui/établissement-territorial/ÉtablissementTerritorialViewModel'
 
-export default function Router({ établissementTerritorialMédicoSocial }: { établissementTerritorialMédicoSocial: ÉtablissementTerritorialMédicoSocialIdentité }) {
+export default function Router({ établissementTerritorial }:
+  { établissementTerritorial: ÉtablissementTerritorialMédicoSocialIdentité }) {
   const { wording } = useDependencies()
-  const établissementTerritorialViewModel = new ÉtablissementTerritorialViewModel(établissementTerritorialMédicoSocial, wording)
+  const établissementTerritorialViewModel = new ÉtablissementTerritorialViewModel(établissementTerritorial, wording)
   return <PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />
 }
 

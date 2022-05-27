@@ -1,8 +1,8 @@
 import { Bloc } from '../commun/Bloc/Bloc'
 import { useDependencies } from '../commun/contexts/useDependencies'
+import { IndicateurIdentité } from '../commun/IndicateurIdentité/IndicateurIdentité'
 import styles from './BlocIdentité.module.css'
 import { EntitéJuridiqueViewModel } from './EntitéJuridiqueViewModel'
-import { IndicateurIdentité } from '../commun/IndicateurIdentité/IndicateurIdentité'
 
 type BlocIdentitéType = {
   entitéJuridiqueViewModel: EntitéJuridiqueViewModel
