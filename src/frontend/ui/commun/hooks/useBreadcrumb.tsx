@@ -5,7 +5,7 @@ import { useDependencies } from '../contexts/useDependencies'
 
 export function useBreadcrumb(initialBreadcrumb: Breadcrumb) {
   const { breadcrumbHandler } = useDependencies()
-  const [breadcrumb, setBreadcrumb] = useState<Breadcrumb>(initialBreadcrumb || [])
+  const [breadcrumb, setBreadcrumb] = useState<Breadcrumb>(initialBreadcrumb)
 
   useEffect(() => {
     breadcrumbHandler.updateBreadCrum(breadcrumb)

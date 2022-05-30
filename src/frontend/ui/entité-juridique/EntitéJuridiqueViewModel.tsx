@@ -18,7 +18,7 @@ export class EntitéJuridiqueViewModel {
     )
   }
 
-  public get titreOnglet(): string {
+  public get titreBrute(): string {
     return `EJ - ${this.numéroFiness}${this.ajouteLeNomDeLEntitéJuridiqueSiRenseigné()}`
   }
 

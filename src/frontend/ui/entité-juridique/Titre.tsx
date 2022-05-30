@@ -10,17 +10,16 @@ type TypeTitre = Readonly<{
 
 export const Titre = ({ children }: TypeTitre) => {
   return (
-    <h1 className={styles['titre']}>
+    <div className={styles['titre']}>
       <Image
         alt=""
-        className={styles['img']}
         height="27"
         src={LogoEntitéJuridique}
         width="27"
       />
-      <span>
+      <h1>
         {children}
-      </span>
-    </h1>
+      </h1>
+    </div>
   )
 }

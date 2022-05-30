@@ -21,11 +21,11 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel }: TypeEntitéJ
     <>
       <Head>
         <title>
-          {entitéJuridiqueViewModel.titreOnglet}
+          {entitéJuridiqueViewModel.titreBrute}
         </title>
       </Head>
       <Titre>
-        {entitéJuridiqueViewModel.titre}
+        {entitéJuridiqueViewModel.titreBrute}
       </Titre>
       <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
     </>
