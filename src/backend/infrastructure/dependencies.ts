@@ -11,7 +11,7 @@ import { TypeOrmÉtablissementTerritorialLoader } from './gateways/établissemen
 export type Dependencies = Readonly<{
   environmentVariables: EnvironmentVariables
   entitéJuridiqueLoader: EntitéJuridiqueLoader
-  établissementTerritorial: ÉtablissementTerritorialLoader
+  établissementTerritorialLoader: ÉtablissementTerritorialLoader
 }>
 
 const _instantiateDependencies = (): Dependencies => {
@@ -23,7 +23,7 @@ const _instantiateDependencies = (): Dependencies => {
   return {
     entitéJuridiqueLoader: new TypeOrmEntitéJuridiqueLoader(orm),
     environmentVariables,
-    établissementTerritorial: new TypeOrmÉtablissementTerritorialLoader(orm),
+    établissementTerritorialLoader: new TypeOrmÉtablissementTerritorialLoader(orm),
   }
 }
 

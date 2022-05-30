@@ -29,7 +29,7 @@ export class TypeOrmÉtablissementTerritorialLoader implements ÉtablissementTer
       .getRepository(ÉtablissementTerritorialIdentitéModel)
       .countBy({ numéroFinessEntitéJuridique: numéroFinessEntitéJuridique })
 
-    return { estMonoÉtablissement : nombreDÉtablissementTerritoriauxDansLEntitéJuridique === 1 }
+    return { estMonoÉtablissement: nombreDÉtablissementTerritoriauxDansLEntitéJuridique === 1 }
   }
 
   private async chargeLaDateDeMiseÀJourModel() {

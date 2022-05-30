@@ -149,7 +149,7 @@ describe('La page Établissement territorial', () => {
   })
 
   describe('l’indicateur d’établissement principal ou secondaire dans le bloc identité', () => {
-    it('affiche "Principale" si l’établissement est un établissement principale', () => {
+    it('affiche "Principal" si l’établissement est un établissement principal', () => {
       // GIVEN
       const établissementTerritorialPrincipal = new ÉtablissementTerritorialViewModel({
         adresseAcheminement: '01130 NANTUA',
@@ -184,7 +184,7 @@ describe('La page Établissement territorial', () => {
       expect(établissementPrincipalOuSecondaire).toBeInTheDocument()
     })
 
-    it('affiche "Secondaire" et le numéro Finess de l’établissement principale si l’établissement n’est pas un établissement principale', () => {
+    it('affiche "Secondaire" et le numéro Finess de l’établissement principal si l’établissement n’est pas un établissement principal', () => {
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
 

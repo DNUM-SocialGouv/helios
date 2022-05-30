@@ -51,15 +51,15 @@ describe('Établissement territorial loader', () => {
     )
     await établissementTerritorialRepository.insert(établissementTerritorialModel)
 
-    const établissementTerritorialAttendue: ÉtablissementTerritorialIdentité = ÉtablissementTerritorialTestFactory.créeÉtablissementTerritorial(
-      { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial }
-    )
     const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialLoader(orm)
 
     // WHEN
     const établissementTerritorialChargée = await typeOrmÉtablissementTerritorialLoader.chargeParNuméroFiness(numéroFinessÉtablissementTerritorial)
 
     // THEN
+    const établissementTerritorialAttendue: ÉtablissementTerritorialIdentité = ÉtablissementTerritorialTestFactory.créeÉtablissementTerritorial(
+      { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial }
+    )
     expect(établissementTerritorialChargée).toStrictEqual(établissementTerritorialAttendue)
   })
 
@@ -71,15 +71,14 @@ describe('Établissement territorial loader', () => {
         source: SourceDeDonnées.FINESS,
       },
     ])
-
     const numéroFiness = '012345678'
     const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialLoader(orm)
-    const exceptionAttendue = new ÉtablissementTerritorialNonTrouvée('012345678')
 
     // WHEN
     const exceptionReçue = await typeOrmÉtablissementTerritorialLoader.chargeParNuméroFiness(numéroFiness)
 
     // THEN
+    const exceptionAttendue = new ÉtablissementTerritorialNonTrouvée('012345678')
     expect(exceptionReçue).toStrictEqual(exceptionAttendue)
   })
 

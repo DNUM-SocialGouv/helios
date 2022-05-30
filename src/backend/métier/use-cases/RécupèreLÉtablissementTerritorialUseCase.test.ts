@@ -11,9 +11,10 @@ import { RécupèreLÉtablissementTerritorialUseCase } from './RécupèreLÉtabl
 describe('La récupération d’un établissement territorial', () => {
   it('récupère la fiche identité de l’établissement territorial', async () => {
     // GIVEN
-    const numéroFinessET = '123456789'
+    const numéroFinessÉtablissementTerritorial = '123456789'
+    const numéroFinessEntitéJuridique = '987654321'
     const ficheIdentitéÉtablissementTerritorial: ÉtablissementTerritorialIdentité = ÉtablissementTerritorialTestFactory.créeÉtablissementTerritorial(
-      { numéroFinessÉtablissementTerritorial: numéroFinessET }
+      { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial }
     )
     const mockedChargeParNuméroFiness = jest.fn(async () => {
       return ficheIdentitéÉtablissementTerritorial
@@ -30,11 +31,11 @@ describe('La récupération d’un établissement territorial', () => {
     const établissementTerritorialLoader: ÉtablissementTerritorialLoader =
       { chargeParNuméroFiness: mockedChargeParNuméroFiness, estUnMonoÉtablissement: mockedEstUnMonoÉtablissement }
     const entitéJuridiqueLoader: EntitéJuridiqueLoader =
-    { chargeLEntitéJuridiqueDeRattachement: mockedChargeLEntitéJuridiqueDeRattachement, chargeParNuméroFiness: jest.fn() }
+      { chargeLEntitéJuridiqueDeRattachement: mockedChargeLEntitéJuridiqueDeRattachement, chargeParNuméroFiness: jest.fn() }
     const récupèreLÉtablissementTerritorialUseCase = new RécupèreLÉtablissementTerritorialUseCase(établissementTerritorialLoader, entitéJuridiqueLoader)
 
     // WHEN
-    const ficheIdentitéRécupérée = await récupèreLÉtablissementTerritorialUseCase.exécute(numéroFinessET)
+    const ficheIdentitéRécupérée = await récupèreLÉtablissementTerritorialUseCase.exécute(numéroFinessÉtablissementTerritorial)
 
     // THEN
     const entitéJuridiqueDeRattachement: EntitéJuridiqueDeRattachement = {
@@ -48,8 +49,12 @@ describe('La récupération d’un établissement territorial', () => {
     }
 
     expect(ficheIdentitéRécupérée).toStrictEqual(ficheIdentitéÉtablissementTerritorialMédicoSocial)
-    expect(mockedChargeParNuméroFiness).toHaveBeenCalledWith(numéroFinessET)
+    expect(mockedChargeParNuméroFiness).toHaveBeenCalledWith(numéroFinessÉtablissementTerritorial)
     expect(mockedChargeParNuméroFiness).toHaveBeenCalledTimes(1)
+    expect(mockedEstUnMonoÉtablissement).toHaveBeenCalledWith(numéroFinessÉtablissementTerritorial)
+    expect(mockedEstUnMonoÉtablissement).toHaveBeenCalledTimes(1)
+    expect(mockedChargeLEntitéJuridiqueDeRattachement).toHaveBeenCalledWith(numéroFinessEntitéJuridique)
+    expect(mockedChargeLEntitéJuridiqueDeRattachement).toHaveBeenCalledTimes(1)
   })
 
   it('lève une alerte si l’établissement territorial liée au numéro FINESS n’est pas trouvé', async () => {
