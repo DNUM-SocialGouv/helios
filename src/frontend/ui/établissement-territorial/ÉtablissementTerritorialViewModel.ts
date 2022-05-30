@@ -19,7 +19,7 @@ export class ÉtablissementTerritorialViewModel {
   public get téléphoneEtEmail(): string {
     const téléphoneFormaté = this.valeurOuNonRenseigné(this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorialIdentité.téléphone, 2))
     const email = this.valeurOuNonRenseigné(this.établissementTerritorialIdentité.courriel)
-    return `${téléphoneFormaté}     ${email}`
+    return `${téléphoneFormaté} | ${email}`
   }
 
   public get entitéJuridiqueDeRattachement(): string {

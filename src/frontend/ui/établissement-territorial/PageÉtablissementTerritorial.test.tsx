@@ -79,7 +79,7 @@ describe('La page Établissement territorial', () => {
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const labelTéléphoneEtEmail = within(indicateurs[3]).getByText(`${wording.TÉLÉPHONE_ET_EMAIL} -`, { selector: 'p' })
     expect(labelTéléphoneEtEmail.textContent).toBe(`${wording.TÉLÉPHONE_ET_EMAIL} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
-    const téléphoneEtEmail = within(indicateurs[3]).getByText('04 74 75 48 00     a@example.com', { collapseWhitespace: false, selector: 'p' })
+    const téléphoneEtEmail = within(indicateurs[3]).getByText('04 74 75 48 00 | a@example.com', { selector: 'p' })
     expect(téléphoneEtEmail).toBeInTheDocument()
   })
 
@@ -198,19 +198,6 @@ describe('La page Établissement territorial', () => {
     })
   })
 
-  it.skip('affiche le site internet dans le bloc identité', () => {
-    // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
-
-    // THEN
-    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
-    const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelSiteInternet = within(indicateurs[10]).getByText(`${wording.SITE_INTERNET} -`, { selector: 'p' })
-    expect(labelSiteInternet.textContent).toBe(`${wording.SITE_INTERNET} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
-    const siteInternet = within(indicateurs[10]).getByText('www.example.com')
-    expect(siteInternet).toBeInTheDocument()
-  })
-
   it('affiche la date d’entrée en vigueur du CPOM dans le bloc identité', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
@@ -218,23 +205,23 @@ describe('La page Établissement territorial', () => {
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelDateDEntréeEnVigueurDuCpom = within(indicateurs[11]).getByText(htmlNodeAndReactChildMatcher(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
+    const labelDateDEntréeEnVigueurDuCpom = within(indicateurs[10]).getByText(htmlNodeAndReactChildMatcher(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
     expect(labelDateDEntréeEnVigueurDuCpom).toBeInTheDocument()
     expect(labelDateDEntréeEnVigueurDuCpom.textContent).toBe(trimHtml(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
-    const abréviationCpom = within(indicateurs[11]).getByText('CPOM', { selector: 'abbr' })
+    const abréviationCpom = within(indicateurs[10]).getByText('CPOM', { selector: 'abbr' })
     expect(abréviationCpom).toHaveAttribute('title', 'Contrat Pluriannuel d’Objectifs et de Moyens')
-    const indicateurÀVenir = within(indicateurs[11]).getByText('À venir')
+    const indicateurÀVenir = within(indicateurs[10]).getByText('À venir')
     expect(indicateurÀVenir).toBeInTheDocument()
   })
 
-  it('n’affiche que 10 mises à jour et sources de données dans le bloc identité', () => {
+  it('n’affiche que 9 mises à jour et sources de données dans le bloc identité', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const majEtSource = within(ficheDIdentité).getAllByText(`${wording.MISE_À_JOUR} : 07/07/2021 - Source :`, { exact: false })
-    expect(majEtSource).toHaveLength(10)
+    expect(majEtSource).toHaveLength(9)
   })
 
   it('affiche deux indicateurs à venir dans le bloc identité', () => {
@@ -277,7 +264,7 @@ describe('La page Établissement territorial', () => {
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
       const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-      const téléphoneEtEmail = within(indicateurs[3]).getByText(`${wording.NON_RENSEIGNÉ}     a@example.com`, { collapseWhitespace: false, selector: 'p' })
+      const téléphoneEtEmail = within(indicateurs[3]).getByText(`${wording.NON_RENSEIGNÉ} | a@example.com`, { selector: 'p' })
       expect(téléphoneEtEmail).toBeInTheDocument()
     })
 
@@ -310,7 +297,7 @@ describe('La page Établissement territorial', () => {
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
       const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-      const téléphoneEtEmail = within(indicateurs[3]).getByText(`04 74 75 48 00     ${wording.NON_RENSEIGNÉ}`, { collapseWhitespace: false, selector: 'p' })
+      const téléphoneEtEmail = within(indicateurs[3]).getByText(`04 74 75 48 00 | ${wording.NON_RENSEIGNÉ}`, { selector: 'p' })
       expect(téléphoneEtEmail).toBeInTheDocument()
     })
   })

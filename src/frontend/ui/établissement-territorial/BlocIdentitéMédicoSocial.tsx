@@ -73,12 +73,6 @@ export const BlocIdentitéMédicoSocial = ({ établissementTerritorialViewModel 
           valeur={établissementTerritorialViewModel.principalOuSecondaire}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialViewModel.dateDeMiseÀJour}
-          nomDeLIndicateur={wording.SITE_INTERNET}
-          source={wording.FINESS}
-          valeur=""
-        />
-        <IndicateurIdentité
           nomDeLIndicateur={wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM}
           valeur="À venir"
         />
