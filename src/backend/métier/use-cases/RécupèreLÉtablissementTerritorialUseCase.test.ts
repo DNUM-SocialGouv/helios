@@ -1,5 +1,6 @@
 import { ÉtablissementTerritorialTestFactory } from '../../test/ÉtablissementTerritorialTestFactory'
 import { ÉtablissementTerritorialIdentité } from '../entities/ÉtablissementTerritorialIdentité'
+import { EntitéJuridiqueDeRattachement } from '../entities/ÉtablissementTerritorialMédicoSocial/EntitéJuridiqueDeRattachement'
 import { ÉtablissementTerritorialMédicoSocialIdentité } from '../entities/ÉtablissementTerritorialMédicoSocial/ÉtablissementTerritorialMédicoSocialIdentité'
 import { ÉtablissementTerritorialNonTrouvée } from '../entities/ÉtablissementTerritorialNonTrouvée'
 import { ÉtablissementTerritorialLoader } from '../gateways/ÉtablissementTerritorialLoader'
@@ -26,10 +27,16 @@ describe('La récupération d’un établissement territorial', () => {
     const ficheIdentitéRécupérée = await récupèreLÉtablissementTerritorialUseCase.exécute(numéroFinessET)
 
     // THEN
+    const entitéJuridiqueDeRattachement: EntitéJuridiqueDeRattachement = {
+      statutJuridique : '',
+      raisonSociale : 'Centre Hospitalier',
+    }
     const ficheIdentitéÉtablissementTerritorialMédicoSocial: ÉtablissementTerritorialMédicoSocialIdentité = {
       ...ficheIdentitéÉtablissementTerritorial,
+      entitéJuridiqueDeRattachement,
       estMonoÉtablissement: true,
     }
+
     expect(ficheIdentitéRécupérée).toStrictEqual(ficheIdentitéÉtablissementTerritorialMédicoSocial)
     expect(mockedChargeParNuméroFiness).toHaveBeenCalledWith(numéroFinessET)
     expect(mockedChargeParNuméroFiness).toHaveBeenCalledTimes(1)

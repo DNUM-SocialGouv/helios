@@ -25,9 +25,11 @@ export class TypeOrmÉtablissementTerritorialLoader implements ÉtablissementTer
   }
 
   async estUnMonoÉtablissement(numéroFinessEntitéJuridique: string): Promise<MonoÉtablissement> {
-    // return await (await this.orm)
-    //   .getRepository(ÉtablissementTerritorialIdentitéModel)
-    //   .countBy({ numéroFinessEntitéJuridique: numéroFinessEntitéJuridique })
+    const nombreDÉtablissementTerritoriauxDansLEntitéJuridique = await (await this.orm)
+      .getRepository(ÉtablissementTerritorialIdentitéModel)
+      .countBy({ numéroFinessEntitéJuridique: numéroFinessEntitéJuridique })
+
+    return { estMonoÉtablissement : nombreDÉtablissementTerritoriauxDansLEntitéJuridique === 1 }
   }
 
   private async chargeLaDateDeMiseÀJourModel() {

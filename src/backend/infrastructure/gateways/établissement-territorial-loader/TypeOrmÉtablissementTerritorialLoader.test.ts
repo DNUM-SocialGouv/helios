@@ -109,10 +109,10 @@ describe('Établissement territorial loader', () => {
       const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialLoader(orm)
 
       // WHEN
-      const estUnMonoÉtablissement = await typeOrmÉtablissementTerritorialLoader.estUnMonoÉtablissement(numéroFinessEntitéJuridique)
+      const monoÉtablissement = await typeOrmÉtablissementTerritorialLoader.estUnMonoÉtablissement(numéroFinessEntitéJuridique)
 
       // THEN
-      expect(estUnMonoÉtablissement).toBeFalsy()
+      expect(monoÉtablissement.estMonoÉtablissement).toBeFalsy()
     })
 
     it('quand un seul établissement est rattaché à la même entité juridique', async () => {
@@ -133,10 +133,10 @@ describe('Établissement territorial loader', () => {
       const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialLoader(orm)
 
       // WHEN
-      const estUnMonoÉtablissement = await typeOrmÉtablissementTerritorialLoader.estUnMonoÉtablissement(numéroFinessEntitéJuridique)
+      const monoÉtablissement = await typeOrmÉtablissementTerritorialLoader.estUnMonoÉtablissement(numéroFinessEntitéJuridique)
 
       // THEN
-      expect(estUnMonoÉtablissement).toBeTruthy()
+      expect(monoÉtablissement.estMonoÉtablissement).toBeTruthy()
     })
   })
 })
