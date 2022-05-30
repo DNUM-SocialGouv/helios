@@ -21,7 +21,7 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel }: TypeEntitéJ
     <>
       <Head>
         <title>
-          {entitéJuridiqueViewModel.titre}
+          {entitéJuridiqueViewModel.titreOnglet}
         </title>
       </Head>
       <Titre>

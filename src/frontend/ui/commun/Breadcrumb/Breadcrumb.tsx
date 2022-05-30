@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { ReactChild } from 'react'
 import '@gouvfr/dsfr/dist/component/breadcrumb/breadcrumb.min.css'
 
 import { useDependencies } from '../contexts/useDependencies'
@@ -12,7 +13,7 @@ export const Breadcrumb = () => {
 
   const HomeAndBreadcrumb = [
     {
-      label: wording.ACCUEIL,
+      label: wording.ACCUEIL as ReactChild,
       path: '/',
     },
   ].concat(breadcrumb)

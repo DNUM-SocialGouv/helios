@@ -1,10 +1,24 @@
+import { ReactElement } from 'react'
+
 import { EntitéJuridique } from '../../../backend/métier/entities/EntitéJuridique'
 import { Wording } from '../../configuration/wording/Wording'
 
 export class EntitéJuridiqueViewModel {
   constructor(private readonly entitéJuridique: EntitéJuridique, private readonly wording: Wording) {}
 
-  public get titre(): string {
+  public get titre(): ReactElement {
+    return (
+      <>
+        <abbr title="Entité juridique">EJ</abbr>
+        &nbsp;
+        {'- '}
+        {this.numéroFiness}
+        {this.ajouteLeNomDeLEntitéJuridiqueSiRenseigné()}
+      </>
+    )
+  }
+
+  public get titreOnglet(): string {
     return `EJ - ${this.numéroFiness}${this.ajouteLeNomDeLEntitéJuridiqueSiRenseigné()}`
   }
 

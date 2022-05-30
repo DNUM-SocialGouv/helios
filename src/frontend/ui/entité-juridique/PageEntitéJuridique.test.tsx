@@ -188,6 +188,6 @@ describe('La page Entité Juridique', () => {
     renderFakeComponent(<PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridiqueViewModel} />)
 
     // THEN
-    expect(document.title).toBe(entitéJuridiqueViewModel.titre)
+    expect(document.title).toBe(entitéJuridiqueViewModel.titreOnglet)
   })
 })

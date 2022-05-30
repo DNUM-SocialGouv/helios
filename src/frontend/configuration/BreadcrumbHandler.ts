@@ -1,6 +1,8 @@
+import { ReactChild } from 'react'
+
 export type Breadcrumb = Readonly<{
+  label: ReactChild
   path: string
-  label: string
 }>[]
 
 type DispatchBreadcrumbUpdate = (breadCrumb: Breadcrumb) => void
