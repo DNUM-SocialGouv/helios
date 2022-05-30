@@ -60,7 +60,10 @@ describe('La récupération d’un établissement territorial', () => {
     })
     const établissementTerritorialLoader: ÉtablissementTerritorialLoader =
       { chargeParNuméroFiness: mockedChargeParNuméroFiness, estUnMonoÉtablissement: jest.fn() }
-    const récupèreLÉtablissementTerritorialUseCase = new RécupèreLÉtablissementTerritorialUseCase(établissementTerritorialLoader)
+    const entitéJuridiqueLoader: EntitéJuridiqueLoader =
+      { chargeLEntitéJuridiqueDeRattachement: jest.fn(), chargeParNuméroFiness: jest.fn() }
+
+    const récupèreLÉtablissementTerritorialUseCase = new RécupèreLÉtablissementTerritorialUseCase(établissementTerritorialLoader, entitéJuridiqueLoader)
 
     // WHEN
     try {

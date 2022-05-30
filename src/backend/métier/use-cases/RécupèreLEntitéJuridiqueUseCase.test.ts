@@ -12,7 +12,7 @@ describe('La récupération d’une entité juridique', () => {
     const mockedChargeParNuméroFiness = jest.fn(async () => {
       return entitéJuridique
     })
-    const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeParNuméroFiness: mockedChargeParNuméroFiness }
+    const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeLEntitéJuridiqueDeRattachement: jest.fn(), chargeParNuméroFiness: mockedChargeParNuméroFiness }
     const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader)
 
     // WHEN
@@ -30,7 +30,7 @@ describe('La récupération d’une entité juridique', () => {
     const mockedChargeParNuméroFiness = jest.fn(async () => {
       return new EntitéJuridiqueNonTrouvée('123456789')
     })
-    const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeParNuméroFiness: mockedChargeParNuméroFiness }
+    const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeLEntitéJuridiqueDeRattachement: jest.fn(), chargeParNuméroFiness: mockedChargeParNuméroFiness }
     const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader)
 
     // WHEN

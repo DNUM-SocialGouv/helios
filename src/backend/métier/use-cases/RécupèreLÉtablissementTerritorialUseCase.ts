@@ -6,16 +6,18 @@ import { ÉtablissementTerritorialLoader } from '../gateways/ÉtablissementTerri
 export class RécupèreLÉtablissementTerritorialUseCase {
   constructor(private établissementTerritorialLoader: ÉtablissementTerritorialLoader, private entitéJuridiqueLoader: EntitéJuridiqueLoader) {}
 
-  async exécute(numéroFinessET: string): Promise<ÉtablissementTerritorialMédicoSocialIdentité> {
-    const établissementTerritorialOuErreur = await this.établissementTerritorialLoader.chargeParNuméroFiness(numéroFinessET)
+  async exécute(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialMédicoSocialIdentité> {
+    const établissementTerritorialOuErreur = await this.établissementTerritorialLoader.chargeParNuméroFiness(numéroFinessÉtablissementTerritorial)
 
     if (établissementTerritorialOuErreur instanceof ÉtablissementTerritorialNonTrouvée) {
       throw établissementTerritorialOuErreur
     }
 
-    const { estMonoÉtablissement } = await this.établissementTerritorialLoader.estUnMonoÉtablissement(numéroFinessET)
+    const { estMonoÉtablissement } = await this.établissementTerritorialLoader.estUnMonoÉtablissement(numéroFinessÉtablissementTerritorial)
 
-    const entitéJuridiqueDeRattachement = await this.entitéJuridiqueLoader.chargeLEntitéJuridiqueDeRattachement(numéroFinessET)
+    const entitéJuridiqueDeRattachement = await this.entitéJuridiqueLoader.chargeLEntitéJuridiqueDeRattachement(
+      établissementTerritorialOuErreur.numéroFinessEntitéJuridique
+    )
 
     return {
       ...établissementTerritorialOuErreur,

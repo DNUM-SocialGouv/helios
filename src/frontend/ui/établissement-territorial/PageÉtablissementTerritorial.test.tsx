@@ -15,6 +15,10 @@ describe('La page Établissement territorial', () => {
     catégorieÉtablissement : '355',
     courriel : 'a@example.com',
     dateMiseAJourSource : '2021-07-07',
+    entitéJuridiqueDeRattachement: {
+      raisonSociale : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+      statutJuridique : 'Société Anonyme (S.A.)',
+    },
     estMonoÉtablissement: true,
     libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
     numéroFinessEntitéJuridique : '010008407',
@@ -79,7 +83,7 @@ describe('La page Établissement territorial', () => {
     expect(téléphoneEtEmail).toBeInTheDocument()
   })
 
-  it.skip('affiche l’entité juridique de rattachement dans le bloc identité', () => {
+  it('affiche l’entité juridique de rattachement dans le bloc identité', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
 
@@ -88,7 +92,7 @@ describe('La page Établissement territorial', () => {
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const labelEntitéJuridiqueDeRattachement = within(indicateurs[4]).getByText(`${wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT} -`, { selector: 'p' })
     expect(labelEntitéJuridiqueDeRattachement.textContent).toBe(`${wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
-    const entitéJuridiqueDeRattachement = within(indicateurs[4]).getByText('EJ - 010 008 407 - ENTITÉ JURIDIQUE', { selector: 'p' })
+    const entitéJuridiqueDeRattachement = within(indicateurs[4]).getByText('EJ - 010 008 407 - HOPITAL PRIVE DE VILLENEUVE DASCQ', { selector: 'p' })
     expect(entitéJuridiqueDeRattachement).toBeInTheDocument()
   })
 
@@ -118,7 +122,7 @@ describe('La page Établissement territorial', () => {
     expect(indicateurÀVenir).toBeInTheDocument()
   })
 
-  it.skip('affiche le statut de l’établissement dans le bloc identité', () => {
+  it('affiche le statut de l’établissement dans le bloc identité', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
 
@@ -127,7 +131,7 @@ describe('La page Établissement territorial', () => {
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const labelStatutÉtablissement = within(indicateurs[7]).getByText(`${wording.STATUT_DE_L_ÉTABLISSEMENT} -`, { selector: 'p' })
     expect(labelStatutÉtablissement.textContent).toBe(`${wording.STATUT_DE_L_ÉTABLISSEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
-    const statutÉtablissement = within(indicateurs[7]).getByText('Public')
+    const statutÉtablissement = within(indicateurs[7]).getByText('Société Anonyme (S.A.)')
     expect(statutÉtablissement).toBeInTheDocument()
   })
 
@@ -155,6 +159,10 @@ describe('La page Établissement territorial', () => {
         catégorieÉtablissement : '355',
         courriel : 'a@example.com',
         dateMiseAJourSource : '2021-07-07',
+        entitéJuridiqueDeRattachement: {
+          raisonSociale : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+          statutJuridique : 'Société Anonyme (S.A.)',
+        },
         estMonoÉtablissement: true,
         libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
         numéroFinessEntitéJuridique : '010008407',
@@ -249,6 +257,10 @@ describe('La page Établissement territorial', () => {
         catégorieÉtablissement : '355',
         courriel : 'a@example.com',
         dateMiseAJourSource : '2021-07-07',
+        entitéJuridiqueDeRattachement: {
+          raisonSociale : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+          statutJuridique : 'Société Anonyme (S.A.)',
+        },
         estMonoÉtablissement: true,
         libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
         numéroFinessEntitéJuridique : '010008407',
@@ -278,6 +290,10 @@ describe('La page Établissement territorial', () => {
         catégorieÉtablissement : '355',
         courriel : '',
         dateMiseAJourSource : '2021-07-07',
+        entitéJuridiqueDeRattachement: {
+          raisonSociale : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+          statutJuridique : 'Société Anonyme (S.A.)',
+        },
         estMonoÉtablissement: true,
         libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
         numéroFinessEntitéJuridique : '010008407',
@@ -308,6 +324,10 @@ describe('La page Établissement territorial', () => {
       catégorieÉtablissement : '355',
       courriel : 'a@example.com',
       dateMiseAJourSource : '2021-07-07',
+      entitéJuridiqueDeRattachement: {
+        raisonSociale : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+        statutJuridique : 'Société Anonyme (S.A.)',
+      },
       estMonoÉtablissement: true,
       libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
       numéroFinessEntitéJuridique : '010008407',
