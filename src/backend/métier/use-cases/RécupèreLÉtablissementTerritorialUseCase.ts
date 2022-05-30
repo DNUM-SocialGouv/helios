@@ -1,4 +1,3 @@
-import { ÉtablissementTerritorialMédicoSocial } from '../entities/ÉtablissementTerritorialMédicoSocial/ÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialIdentité } from '../entities/ÉtablissementTerritorialMédicoSocial/ÉtablissementTerritorialMédicoSocialIdentité'
 import { ÉtablissementTerritorialNonTrouvée } from '../entities/ÉtablissementTerritorialNonTrouvée'
 import { ÉtablissementTerritorialLoader } from '../gateways/ÉtablissementTerritorialLoader'
@@ -13,18 +12,17 @@ export class RécupèreLÉtablissementTerritorialUseCase {
       throw établissementTerritorialOuErreur
     }
 
-    const nombreDÉtablissementTerritoriauxDansLEntitéJuridique = await this.établissementTerritorialLoader.compteLesÉtablissementsDUneMêmeEntité(
-      établissementTerritorialOuErreur.numéroFinessEntitéJuridique
-    )
+    // const estMonoÉtablissement = await this.établissementTerritorialLoader.estUnMonoÉtablissement(numéroFinessET)
 
-    // const raisonSocialeParent = loader.chargeLaRaisonSocialeDuparent(établissementTerritorialOuErreur.numéroFinessEJ)
+    // const entitéJuridiqueDeRattachement = await this.entitéJuridiqueLoader.chargeLEntitéJuridique(numéroFinessET)
 
-    // const statutJuridique = loader.chargeLeStatutJuridiqueDUnEJ(établissementTerritorialOuErreur.numéroFinessEJ)
-
-    const établissementTerritorialMédicoSocial = new ÉtablissementTerritorialMédicoSocial(
-      établissementTerritorialOuErreur, nombreDÉtablissementTerritoriauxDansLEntitéJuridique
-    )
-
-    return établissementTerritorialMédicoSocial.serialize()
+    return {
+      ...établissementTerritorialOuErreur,
+      entitéJuridiqueDeRattachement: {
+        raisonSociale: '',
+        statutJuridique: '',
+      },
+      estMonoÉtablissement: false,
+    }
   }
 }

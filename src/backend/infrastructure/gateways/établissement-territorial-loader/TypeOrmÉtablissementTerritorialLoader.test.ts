@@ -83,35 +83,60 @@ describe('Établissement territorial loader', () => {
     expect(exceptionReçue).toStrictEqual(exceptionAttendue)
   })
 
-  it('compte le nombre d’établissement(s) affiliés à une même entité juridique', async () => {
-    // GIVEN
-    const numéroFinessEntitéJuridique = '111222333'
-    const autreNuméroFinessEntitéJuridique = '333222111'
+  describe('permet de savoir si un établissement est le seul affilié à son entité juridique', () => {
+    it('quand plusieurs établissements sont rattachés à la même entité juridique', async () => {
+      // GIVEN
+      const numéroFinessEntitéJuridique = '111222333'
+      const autreNuméroFinessEntitéJuridique = '333222111'
 
-    const entitéJuridiqueAyantDesÉtablissementsModel = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel({ numéroFinessEntitéJuridique })
-    const entitéJuridiqueSansÉtablissementsModel = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel(
-      { numéroFinessEntitéJuridique: autreNuméroFinessEntitéJuridique }
-    )
-    await entitéJuridiqueRepository.insert([entitéJuridiqueAyantDesÉtablissementsModel, entitéJuridiqueSansÉtablissementsModel])
+      const entitéJuridiqueAyantDesÉtablissementsModel = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel({ numéroFinessEntitéJuridique })
+      const entitéJuridiqueSansÉtablissementsModel = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel(
+        { numéroFinessEntitéJuridique: autreNuméroFinessEntitéJuridique }
+      )
+      await entitéJuridiqueRepository.insert([entitéJuridiqueAyantDesÉtablissementsModel, entitéJuridiqueSansÉtablissementsModel])
 
-    const établissementTerritorial1AffiliéModel =
-      ÉtablissementTerritorialIdentitéModelTestFactory.créeÉtablissementTerritorialIdentitéModel({ numéroFinessEntitéJuridique })
-    const établissementTerritorial2AffiliéModel =
-      ÉtablissementTerritorialIdentitéModelTestFactory.créeAutreÉtablissementTerritorialIdentitéModel({ numéroFinessEntitéJuridique })
-    const établissementTerritorialNonAffiliéModel = ÉtablissementTerritorialIdentitéModelTestFactory.créeÉtablissementTerritorialIdentitéModel(
-      { numéroFinessEntitéJuridique: autreNuméroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial: '321654987' }
-    )
-    await établissementTerritorialRepository.insert(
-      [établissementTerritorial1AffiliéModel, établissementTerritorial2AffiliéModel, établissementTerritorialNonAffiliéModel]
-    )
+      const établissementTerritorial1AffiliéModel =
+        ÉtablissementTerritorialIdentitéModelTestFactory.créeÉtablissementTerritorialIdentitéModel({ numéroFinessEntitéJuridique })
+      const établissementTerritorial2AffiliéModel =
+        ÉtablissementTerritorialIdentitéModelTestFactory.créeAutreÉtablissementTerritorialIdentitéModel({ numéroFinessEntitéJuridique })
+      const établissementTerritorialNonAffiliéModel = ÉtablissementTerritorialIdentitéModelTestFactory.créeÉtablissementTerritorialIdentitéModel(
+        { numéroFinessEntitéJuridique: autreNuméroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial: '321654987' }
+      )
+      await établissementTerritorialRepository.insert(
+        [établissementTerritorial1AffiliéModel, établissementTerritorial2AffiliéModel, établissementTerritorialNonAffiliéModel]
+      )
 
-    const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialLoader(orm)
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialLoader(orm)
 
-    // WHEN
-    const nombreDÉtablissementsAffiliés = await typeOrmÉtablissementTerritorialLoader.compteLesÉtablissementsDUneMêmeEntité(numéroFinessEntitéJuridique)
+      // WHEN
+      const estUnMonoÉtablissement = await typeOrmÉtablissementTerritorialLoader.estUnMonoÉtablissement(numéroFinessEntitéJuridique)
 
-    // THEN
-    const nombreDÉtablissementsAffiliésAttendu = 2
-    expect(nombreDÉtablissementsAffiliés).toStrictEqual(nombreDÉtablissementsAffiliésAttendu)
+      // THEN
+      expect(estUnMonoÉtablissement).toBeFalsy()
+    })
+
+    it('quand un seul établissement est rattaché à la même entité juridique', async () => {
+      // GIVEN
+      const numéroFinessEntitéJuridique = '111222333'
+      const autreNuméroFinessEntitéJuridique = '333222111'
+
+      const entitéJuridiqueAyantDesÉtablissementsModel = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel({ numéroFinessEntitéJuridique })
+      const entitéJuridiqueSansÉtablissementsModel = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel(
+        { numéroFinessEntitéJuridique: autreNuméroFinessEntitéJuridique }
+      )
+      await entitéJuridiqueRepository.insert([entitéJuridiqueAyantDesÉtablissementsModel, entitéJuridiqueSansÉtablissementsModel])
+
+      const établissementTerritorial1AffiliéModel =
+        ÉtablissementTerritorialIdentitéModelTestFactory.créeÉtablissementTerritorialIdentitéModel({ numéroFinessEntitéJuridique })
+      await établissementTerritorialRepository.insert(établissementTerritorial1AffiliéModel)
+
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialLoader(orm)
+
+      // WHEN
+      const estUnMonoÉtablissement = await typeOrmÉtablissementTerritorialLoader.estUnMonoÉtablissement(numéroFinessEntitéJuridique)
+
+      // THEN
+      expect(estUnMonoÉtablissement).toBeTruthy()
+    })
   })
 })

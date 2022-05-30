@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm'
 import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../database/models/DateMiseÀJourSourceModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
+import { MonoÉtablissement } from '../../../métier/entities/ÉtablissementTerritorialMédicoSocial/MonoÉtablissement'
 import { ÉtablissementTerritorialNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialNonTrouvée'
 import { ÉtablissementTerritorialLoader } from '../../../métier/gateways/ÉtablissementTerritorialLoader'
 
@@ -23,10 +24,10 @@ export class TypeOrmÉtablissementTerritorialLoader implements ÉtablissementTer
     return this.construitLÉtablissementTerritorial(établissementTerritorialModel, dateDeMiseAJourModel)
   }
 
-  async compteLesÉtablissementsDUneMêmeEntité(numéroFinessEntitéJuridique: string): Promise<number> {
-    return await (await this.orm)
-      .getRepository(ÉtablissementTerritorialIdentitéModel)
-      .countBy({ numéroFinessEntitéJuridique: numéroFinessEntitéJuridique })
+  async estUnMonoÉtablissement(numéroFinessEntitéJuridique: string): Promise<MonoÉtablissement> {
+    // return await (await this.orm)
+    //   .getRepository(ÉtablissementTerritorialIdentitéModel)
+    //   .countBy({ numéroFinessEntitéJuridique: numéroFinessEntitéJuridique })
   }
 
   private async chargeLaDateDeMiseÀJourModel() {

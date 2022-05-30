@@ -19,7 +19,7 @@ describe('La récupération d’un établissement territorial', () => {
       return 1
     })
     const établissementTerritorialLoader: ÉtablissementTerritorialLoader =
-      { chargeParNuméroFiness: mockedChargeParNuméroFiness, compteLesÉtablissementsDUneMêmeEntité: mockedCompteLesÉtablissementsDUneMêmeEntité }
+      { chargeParNuméroFiness: mockedChargeParNuméroFiness, estUnMonoÉtablissement: mockedCompteLesÉtablissementsDUneMêmeEntité }
     const récupèreLÉtablissementTerritorialUseCase = new RécupèreLÉtablissementTerritorialUseCase(établissementTerritorialLoader)
 
     // WHEN
@@ -42,7 +42,7 @@ describe('La récupération d’un établissement territorial', () => {
       return new ÉtablissementTerritorialNonTrouvée('123456789')
     })
     const établissementTerritorialLoader: ÉtablissementTerritorialLoader =
-      { chargeParNuméroFiness: mockedChargeParNuméroFiness, compteLesÉtablissementsDUneMêmeEntité: jest.fn() }
+      { chargeParNuméroFiness: mockedChargeParNuméroFiness, estUnMonoÉtablissement: jest.fn() }
     const récupèreLÉtablissementTerritorialUseCase = new RécupèreLÉtablissementTerritorialUseCase(établissementTerritorialLoader)
 
     // WHEN
