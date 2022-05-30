@@ -73,37 +73,22 @@ describe('Entité juridique loader', () => {
     })
   })
 
-  describe('charge les informations d’une entité juridique de rattachement', () => {
-    it('charge l’entité juridique de rattachement par numéro FINESS lorsque l’entité juridique est en base', async () => {
-      // GIVEN
-      const numéroFiness = '010018407'
-      const entitéJuridique = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel({ numéroFinessEntitéJuridique: numéroFiness })
-      await entitéJuridiqueRepository.insert(entitéJuridique)
+  it('charge l’entité juridique de rattachement par numéro FINESS lorsque l’entité juridique est en base', async () => {
+    // GIVEN
+    const numéroFiness = '010018407'
+    const entitéJuridique = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel({ numéroFinessEntitéJuridique: numéroFiness })
+    await entitéJuridiqueRepository.insert(entitéJuridique)
 
-      const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm)
+    const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm)
 
-      // WHEN
-      const entitéJuridiqueChargée = await typeOrmEntitéJuridiqueLoader.chargeLEntitéJuridiqueDeRattachement(numéroFiness)
+    // WHEN
+    const entitéJuridiqueChargée = await typeOrmEntitéJuridiqueLoader.chargeLEntitéJuridiqueDeRattachement(numéroFiness)
 
-      // THEN
-      const entitéJuridiqueDeRattachementAttendue: EntitéJuridiqueDeRattachement = {
-        raisonSociale: 'CH DU HAUT BUGEY',
-        statutJuridique: 'Etablissement Public Intercommunal dHospitalisation',
-      }
-      expect(entitéJuridiqueChargée).toStrictEqual(entitéJuridiqueDeRattachementAttendue)
-    })
-
-    it('signale que l’entité juridique n’a pas été trouvée lorsque l’entité juridique n’existe pas', async () => {
-      // GIVEN
-      const numéroFiness = '012345678'
-      const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm)
-      const exceptionAttendue = new EntitéJuridiqueNonTrouvée('012345678')
-
-      // WHEN
-      const exceptionReçue = await typeOrmEntitéJuridiqueLoader.chargeLEntitéJuridiqueDeRattachement(numéroFiness)
-
-      // THEN
-      expect(exceptionReçue).toStrictEqual(exceptionAttendue)
-    })
+    // THEN
+    const entitéJuridiqueDeRattachementAttendue: EntitéJuridiqueDeRattachement = {
+      raisonSociale: 'CH DU HAUT BUGEY',
+      statutJuridique: 'Etablissement Public Intercommunal dHospitalisation',
+    }
+    expect(entitéJuridiqueChargée).toStrictEqual(entitéJuridiqueDeRattachementAttendue)
   })
 })
