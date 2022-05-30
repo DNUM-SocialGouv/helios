@@ -1,3 +1,5 @@
+import Head from 'next/head'
+
 import { useBreadcrumb } from '../commun/hooks/useBreadcrumb'
 import { BlocIdentité } from './BlocIdentité'
 import { EntitéJuridiqueViewModel } from './EntitéJuridiqueViewModel'
@@ -17,6 +19,11 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel }: TypeEntitéJ
 
   return (
     <>
+      <Head>
+        <title>
+          {entitéJuridiqueViewModel.titre}
+        </title>
+      </Head>
       <Titre>
         {entitéJuridiqueViewModel.titre}
       </Titre>

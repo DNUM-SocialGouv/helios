@@ -1,5 +1,9 @@
 .titre {
   color: var(--text-action-high-blue-france);
   display: flex;
-  gap: 19px;
+  gap: 1.2rem;
+}
+
+.titre span:nth-child(1) {
+  min-width: 1.7rem;
 }

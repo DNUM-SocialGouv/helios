@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { ReactElement } from 'react'
 
-import logoEntitéJuridique from './logo-entité-juridique.svg'
+import LogoEntitéJuridique from './logo-entité-juridique.svg'
 import styles from './Titre.module.css'
 
 type TypeTitre = Readonly<{
@@ -15,7 +15,7 @@ export const Titre = ({ children }: TypeTitre) => {
         alt=""
         className={styles['img']}
         height="27"
-        src={logoEntitéJuridique}
+        src={LogoEntitéJuridique}
         width="27"
       />
       <span>

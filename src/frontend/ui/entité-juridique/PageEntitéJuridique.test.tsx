@@ -182,4 +182,12 @@ describe('La page Entité Juridique', () => {
     const adresseIncomplète = within(indicateurs[2]).getByText('10 Marcel Proust 22023 ST BRIEUC CEDEX 1', { selector: 'p' })
     expect(adresseIncomplète).toBeInTheDocument()
   })
+
+  it('affiche le titre dans l’onglet', () => {
+    // WHEN
+    renderFakeComponent(<PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridiqueViewModel} />)
+
+    // THEN
+    expect(document.title).toBe(entitéJuridiqueViewModel.titre)
+  })
 })
