@@ -1,8 +1,10 @@
 import { ÉtablissementTerritorialTestFactory } from '../../test/ÉtablissementTerritorialTestFactory'
 import { ÉtablissementTerritorialIdentité } from '../entities/ÉtablissementTerritorialIdentité'
 import { EntitéJuridiqueDeRattachement } from '../entities/ÉtablissementTerritorialMédicoSocial/EntitéJuridiqueDeRattachement'
+import { MonoÉtablissement } from '../entities/ÉtablissementTerritorialMédicoSocial/MonoÉtablissement'
 import { ÉtablissementTerritorialMédicoSocialIdentité } from '../entities/ÉtablissementTerritorialMédicoSocial/ÉtablissementTerritorialMédicoSocialIdentité'
 import { ÉtablissementTerritorialNonTrouvée } from '../entities/ÉtablissementTerritorialNonTrouvée'
+import { EntitéJuridiqueLoader } from '../gateways/EntitéJuridiqueLoader'
 import { ÉtablissementTerritorialLoader } from '../gateways/ÉtablissementTerritorialLoader'
 import { RécupèreLÉtablissementTerritorialUseCase } from './RécupèreLÉtablissementTerritorialUseCase'
 
@@ -16,25 +18,33 @@ describe('La récupération d’un établissement territorial', () => {
     const mockedChargeParNuméroFiness = jest.fn(async () => {
       return ficheIdentitéÉtablissementTerritorial
     })
-    const mockedCompteLesÉtablissementsDUneMêmeEntité = jest.fn(async () => {
-      return 1
+    const mockedEstUnMonoÉtablissement = jest.fn(async (): Promise<MonoÉtablissement> => {
+      return { estMonoÉtablissement: false }
+    })
+    const mockedChargeLEntitéJuridiqueDeRattachement = jest.fn(async (): Promise<EntitéJuridiqueDeRattachement> => {
+      return {
+        raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+        statutJuridique: 'Société Anonyme (S.A.)',
+      }
     })
     const établissementTerritorialLoader: ÉtablissementTerritorialLoader =
-      { chargeParNuméroFiness: mockedChargeParNuméroFiness, estUnMonoÉtablissement: mockedCompteLesÉtablissementsDUneMêmeEntité }
-    const récupèreLÉtablissementTerritorialUseCase = new RécupèreLÉtablissementTerritorialUseCase(établissementTerritorialLoader)
+      { chargeParNuméroFiness: mockedChargeParNuméroFiness, estUnMonoÉtablissement: mockedEstUnMonoÉtablissement }
+    const entitéJuridiqueLoader: EntitéJuridiqueLoader =
+    { chargeLEntitéJuridiqueDeRattachement: mockedChargeLEntitéJuridiqueDeRattachement, chargeParNuméroFiness: jest.fn() }
+    const récupèreLÉtablissementTerritorialUseCase = new RécupèreLÉtablissementTerritorialUseCase(établissementTerritorialLoader, entitéJuridiqueLoader)
 
     // WHEN
     const ficheIdentitéRécupérée = await récupèreLÉtablissementTerritorialUseCase.exécute(numéroFinessET)
 
     // THEN
     const entitéJuridiqueDeRattachement: EntitéJuridiqueDeRattachement = {
-      statutJuridique : '',
-      raisonSociale : 'Centre Hospitalier',
+      raisonSociale : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+      statutJuridique : 'Société Anonyme (S.A.)',
     }
     const ficheIdentitéÉtablissementTerritorialMédicoSocial: ÉtablissementTerritorialMédicoSocialIdentité = {
       ...ficheIdentitéÉtablissementTerritorial,
       entitéJuridiqueDeRattachement,
-      estMonoÉtablissement: true,
+      estMonoÉtablissement: false,
     }
 
     expect(ficheIdentitéRécupérée).toStrictEqual(ficheIdentitéÉtablissementTerritorialMédicoSocial)
