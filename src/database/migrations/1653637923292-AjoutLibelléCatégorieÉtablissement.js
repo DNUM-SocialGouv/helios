@@ -3,7 +3,7 @@ class AjoutLibelléCatégorieÉtablissement1653637923292 {
   async up(queryRunner) {
     await queryRunner.query(
       `ALTER TABLE ÉtablissementTerritorialIdentité
-      ADD libelléCatégorieÉtablissement VARCHAR(255) NOT NULL;`
+      ADD libelléCatégorieÉtablissement VARCHAR(255) NOT NULL DEFAULT ('');`
     )
   }
 
