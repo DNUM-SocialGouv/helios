@@ -13,13 +13,14 @@ export class ÉtablissementTerritorialViewModel {
             &nbsp;
         {'- '}
         {this.numéroFinessÉtablissementTerritorial}
+        {' - '}
         {this.nomDeLÉtablissementTerritorial}
       </>
     )
   }
 
   public get titre(): string {
-    return `ET - ${this.numéroFinessÉtablissementTerritorial}${this.nomDeLÉtablissementTerritorial}`
+    return `ET - ${this.numéroFinessÉtablissementTerritorial} - ${this.nomDeLÉtablissementTerritorial}`
   }
 
   public get nomDeLÉtablissementTerritorial(): string {

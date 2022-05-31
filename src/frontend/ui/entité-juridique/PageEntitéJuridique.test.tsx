@@ -28,28 +28,6 @@ describe('La page Entité Juridique', () => {
     expect(titre).toBeInTheDocument()
   })
 
-  it('affiche le titre : "EJ - numéro de FINESS" uniquement si le nom de l’entité juridique n’est pas renseigné', () => {
-    // GIVEN
-    const entitéJuridiqueViewModelAvecUneRaisonSocialeVide = new EntitéJuridiqueViewModel({
-      adresseAcheminement: '22023 ST BRIEUC CEDEX 1',
-      adresseNuméroVoie: '10',
-      adresseTypeVoie: 'Rue',
-      adresseVoie: 'Marcel Proust',
-      dateMiseAJourSource: '2021-07-07',
-      libelléStatutJuridique: 'Public',
-      numéroFinessEntitéJuridique: '220000020',
-      raisonSociale: '',
-      téléphone: '0296017123',
-    }, wording)
-
-    // WHEN
-    renderFakeComponent(<PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridiqueViewModelAvecUneRaisonSocialeVide} />)
-
-    // THEN
-    const titre = screen.getByRole('heading', { level: 1, name: 'EJ - 220 000 020' })
-    expect(titre).toBeInTheDocument()
-  })
-
   it('affiche le nom de l’établissement dans le bloc identité', () => {
     // WHEN
     renderFakeComponent(<PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridiqueViewModel} />)

@@ -4,6 +4,7 @@ import { useDependencies } from '../commun/contexts/useDependencies'
 import { useBreadcrumb } from '../commun/hooks/useBreadcrumb'
 import { Titre } from '../commun/Titre/Titre'
 import { BlocIdentitéMédicoSocial } from './BlocIdentitéMédicoSocial'
+import LogoÉtablissementTerritorial from './logo-établissement-territorial-médico-social.svg'
 import { ÉtablissementTerritorialViewModel } from './ÉtablissementTerritorialViewModel'
 
 type TypeÉtablissementTerritorial = Readonly<{
@@ -27,7 +28,7 @@ export const PageÉtablissementTerritorial = ({ établissementTerritorialViewMod
           {établissementTerritorialViewModel.titre}
         </title>
       </Head>
-      <Titre>
+      <Titre logo={LogoÉtablissementTerritorial}>
         {établissementTerritorialViewModel.titre}
       </Titre>
       <BlocIdentitéMédicoSocial établissementTerritorialViewModel={établissementTerritorialViewModel} />

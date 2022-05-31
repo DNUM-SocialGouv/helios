@@ -1,8 +1,6 @@
 import { screen, within } from '@testing-library/react'
 
 import { fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent, trimHtml } from '../../testHelper'
-import { EntitéJuridiqueViewModel } from '../entité-juridique/EntitéJuridiqueViewModel'
-import { PageEntitéJuridique } from '../entité-juridique/PageEntitéJuridique'
 import { PageÉtablissementTerritorial } from './PageÉtablissementTerritorial'
 import { ÉtablissementTerritorialViewModel } from './ÉtablissementTerritorialViewModel'
 
@@ -35,28 +33,6 @@ describe('La page Établissement territorial', () => {
 
     // THEN
     const titre = screen.getByRole('heading', { level: 1, name: 'ET - 010 000 040 - CH NANTUA' })
-    expect(titre).toBeInTheDocument()
-  })
-
-  it('affiche le titre : "ET - numéro de FINESS" uniquement si le nom de l’établissement n’est pas renseigné', () => {
-    // GIVEN
-    const entitéJuridiqueViewModelAvecUneRaisonSocialeVide = new EntitéJuridiqueViewModel({
-      adresseAcheminement: '22023 ST BRIEUC CEDEX 1',
-      adresseNuméroVoie: '10',
-      adresseTypeVoie: 'Rue',
-      adresseVoie: 'Marcel Proust',
-      dateMiseAJourSource: '2021-07-07',
-      libelléStatutJuridique: 'Public',
-      numéroFinessEntitéJuridique: '220000020',
-      raisonSociale: '',
-      téléphone: '0296017123',
-    }, wording)
-
-    // WHEN
-    renderFakeComponent(<PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridiqueViewModelAvecUneRaisonSocialeVide} />)
-
-    // THEN
-    const titre = screen.getByRole('heading', { level: 1, name: 'EJ - 220 000 020' })
     expect(titre).toBeInTheDocument()
   })
 
