@@ -1,5 +1,8 @@
+import Head from 'next/head'
+
 import { useDependencies } from '../commun/contexts/useDependencies'
 import { useBreadcrumb } from '../commun/hooks/useBreadcrumb'
+import { Titre } from '../commun/Titre/Titre'
 import { BlocIdentitéMédicoSocial } from './BlocIdentitéMédicoSocial'
 import { ÉtablissementTerritorialViewModel } from './ÉtablissementTerritorialViewModel'
 
@@ -19,9 +22,14 @@ export const PageÉtablissementTerritorial = ({ établissementTerritorialViewMod
 
   return (
     <>
-      <h1>
-        {établissementTerritorialViewModel.nomDeLÉtablissementTerritorial}
-      </h1>
+      <Head>
+        <title>
+          {établissementTerritorialViewModel.titre}
+        </title>
+      </Head>
+      <Titre>
+        {établissementTerritorialViewModel.titre}
+      </Titre>
       <BlocIdentitéMédicoSocial établissementTerritorialViewModel={établissementTerritorialViewModel} />
     </>
   )

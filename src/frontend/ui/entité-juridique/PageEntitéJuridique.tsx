@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { useBreadcrumb } from '../commun/hooks/useBreadcrumb'
 import { BlocIdentité } from './BlocIdentité'
 import { EntitéJuridiqueViewModel } from './EntitéJuridiqueViewModel'
-import { Titre } from './Titre'
+import { Titre } from '../commun/Titre/Titre'
 
 type TypeEntitéJuridique = Readonly<{
   entitéJuridiqueViewModel: EntitéJuridiqueViewModel

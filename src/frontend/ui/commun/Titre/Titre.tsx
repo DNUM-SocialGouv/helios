@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { ReactElement } from 'react'
 
-import LogoEntitéJuridique from './logo-entité-juridique.svg'
+import LogoEntitéJuridique from '../../entité-juridique/logo-entité-juridique.svg'
 import styles from './Titre.module.css'
 
 type TypeTitre = Readonly<{

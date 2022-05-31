@@ -1,13 +1,15 @@
 import { screen, within } from '@testing-library/react'
 
 import { fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent, trimHtml } from '../../testHelper'
+import { EntitéJuridiqueViewModel } from '../entité-juridique/EntitéJuridiqueViewModel'
+import { PageEntitéJuridique } from '../entité-juridique/PageEntitéJuridique'
 import { PageÉtablissementTerritorial } from './PageÉtablissementTerritorial'
 import { ÉtablissementTerritorialViewModel } from './ÉtablissementTerritorialViewModel'
 
 const { wording } = fakeFrontDependencies
 
 describe('La page Établissement territorial', () => {
-  const établissementTerritorial = new ÉtablissementTerritorialViewModel({
+  const établissementTerritorialViewModel = new ÉtablissementTerritorialViewModel({
     adresseAcheminement: '01130 NANTUA',
     adresseNuméroVoie : '50',
     adresseTypeVoie : 'R',
@@ -27,9 +29,40 @@ describe('La page Établissement territorial', () => {
     téléphone : '0474754800',
   }, wording)
 
+  it('affiche le titre : "ET - numéro de FINESS - nom de l’établissement"', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
+
+    // THEN
+    const titre = screen.getByRole('heading', { level: 1, name: 'ET - 010 000 040 - CH NANTUA' })
+    expect(titre).toBeInTheDocument()
+  })
+
+  it('affiche le titre : "ET - numéro de FINESS" uniquement si le nom de l’établissement n’est pas renseigné', () => {
+    // GIVEN
+    const entitéJuridiqueViewModelAvecUneRaisonSocialeVide = new EntitéJuridiqueViewModel({
+      adresseAcheminement: '22023 ST BRIEUC CEDEX 1',
+      adresseNuméroVoie: '10',
+      adresseTypeVoie: 'Rue',
+      adresseVoie: 'Marcel Proust',
+      dateMiseAJourSource: '2021-07-07',
+      libelléStatutJuridique: 'Public',
+      numéroFinessEntitéJuridique: '220000020',
+      raisonSociale: '',
+      téléphone: '0296017123',
+    }, wording)
+
+    // WHEN
+    renderFakeComponent(<PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridiqueViewModelAvecUneRaisonSocialeVide} />)
+
+    // THEN
+    const titre = screen.getByRole('heading', { level: 1, name: 'EJ - 220 000 020' })
+    expect(titre).toBeInTheDocument()
+  })
+
   it('affiche le nom de l’établissement dans le bloc identité', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -44,7 +77,7 @@ describe('La page Établissement territorial', () => {
 
   it('affiche le numéro FINESS dans le bloc identité', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -57,7 +90,7 @@ describe('La page Établissement territorial', () => {
 
   it('affiche l’adresse dans le bloc identité', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -70,7 +103,7 @@ describe('La page Établissement territorial', () => {
 
   it('affiche le téléphone et e-mail dans le bloc identité', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -83,7 +116,7 @@ describe('La page Établissement territorial', () => {
 
   it('affiche l’entité juridique de rattachement dans le bloc identité', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -96,7 +129,7 @@ describe('La page Établissement territorial', () => {
 
   it('affiche la catégorie de l’établissement dans le bloc identité avec son libellé', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -109,7 +142,7 @@ describe('La page Établissement territorial', () => {
 
   it('affiche le nom du directeur dans le bloc identité', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -122,7 +155,7 @@ describe('La page Établissement territorial', () => {
 
   it('affiche le statut de l’établissement dans le bloc identité', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -135,7 +168,7 @@ describe('La page Établissement territorial', () => {
 
   it('affiche l’indicateur de mono-établissement dans le bloc identité', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -182,7 +215,7 @@ describe('La page Établissement territorial', () => {
 
     it('affiche "Secondaire" et le numéro Finess de l’établissement principal si l’établissement n’est pas un établissement principal', () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+      renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -196,7 +229,7 @@ describe('La page Établissement territorial', () => {
 
   it('affiche la date d’entrée en vigueur du CPOM dans le bloc identité', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -212,7 +245,7 @@ describe('La page Établissement territorial', () => {
 
   it('n’affiche que 9 mises à jour et sources de données dans le bloc identité', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -222,7 +255,7 @@ describe('La page Établissement territorial', () => {
 
   it('affiche deux indicateurs à venir dans le bloc identité', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })

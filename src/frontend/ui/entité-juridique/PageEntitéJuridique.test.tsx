@@ -19,7 +19,7 @@ describe('La page Entité Juridique', () => {
     téléphone: '0296017123',
   }, wording)
 
-  it('affiche le titre : "EJ - numéro de FINESS - nom de l’établissement"', () => {
+  it('affiche le titre : "EJ - numéro de FINESS - nom de l’entité juridique"', () => {
     // WHEN
     renderFakeComponent(<PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridiqueViewModel} />)
 
@@ -28,7 +28,7 @@ describe('La page Entité Juridique', () => {
     expect(titre).toBeInTheDocument()
   })
 
-  it('affiche le titre : "EJ - numéro de FINESS" uniquement si le nom de l’établissement n’est pas renseigné', () => {
+  it('affiche le titre : "EJ - numéro de FINESS" uniquement si le nom de l’entité juridique n’est pas renseigné', () => {
     // GIVEN
     const entitéJuridiqueViewModelAvecUneRaisonSocialeVide = new EntitéJuridiqueViewModel({
       adresseAcheminement: '22023 ST BRIEUC CEDEX 1',
