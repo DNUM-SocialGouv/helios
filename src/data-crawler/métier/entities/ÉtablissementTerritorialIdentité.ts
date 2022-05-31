@@ -1,3 +1,5 @@
+import { DomaineÉtablissementTerritorial } from './DomaineÉtablissementTerritorial'
+
 export type ÉtablissementTerritorialIdentité = Readonly<{
   adresseAcheminement: string
   adresseNuméroVoie: string
@@ -6,6 +8,7 @@ export type ÉtablissementTerritorialIdentité = Readonly<{
   catégorieÉtablissement: string
   courriel: string
   dateMiseAJourSource: string
+  domaine: DomaineÉtablissementTerritorial
   libelléCatégorieÉtablissement: string
   numéroFinessEntitéJuridique: string
   numéroFinessÉtablissementPrincipal: string

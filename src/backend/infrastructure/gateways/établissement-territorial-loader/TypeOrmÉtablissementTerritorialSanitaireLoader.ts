@@ -1,35 +1,29 @@
 import { DataSource } from 'typeorm'
 
+import { DomaineÉtablissementTerritorial } from '../../../../data-crawler/métier/entities/DomaineÉtablissementTerritorial'
 import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../database/models/DateMiseÀJourSourceModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
-import { MonoÉtablissement } from '../../../métier/entities/ÉtablissementTerritorialMédicoSocial/MonoÉtablissement'
-import { ÉtablissementTerritorialNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialNonTrouvée'
-import { ÉtablissementTerritorialLoader } from '../../../métier/gateways/ÉtablissementTerritorialLoader'
+import { ÉtablissementTerritorialSanitaireNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialSanitaireNonTrouvée'
+import { ÉtablissementTerritorialSanitaireLoader } from '../../../métier/gateways/ÉtablissementTerritorialSanitaireLoader'
 
-export class TypeOrmÉtablissementTerritorialLoader implements ÉtablissementTerritorialLoader {
+export class TypeOrmÉtablissementTerritorialSanitaireLoader implements ÉtablissementTerritorialSanitaireLoader {
   constructor(private readonly orm: Promise<DataSource>) {}
 
-  async chargeParNuméroFiness(numéroFinessET: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialNonTrouvée> {
+  async chargeParNuméroFiness(numéroFinessET: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialSanitaireNonTrouvée> {
     const établissementTerritorialModel = await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
-      .findOneBy({ numéroFinessÉtablissementTerritorial: numéroFinessET })
-
+      .findOneBy({
+        domaine: DomaineÉtablissementTerritorial.SANITAIRE,
+        numéroFinessÉtablissementTerritorial: numéroFinessET,
+      })
     if (!établissementTerritorialModel) {
-      return new ÉtablissementTerritorialNonTrouvée(numéroFinessET)
+      return new ÉtablissementTerritorialSanitaireNonTrouvée(numéroFinessET)
     }
 
     const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
 
-    return this.construitLÉtablissementTerritorial(établissementTerritorialModel, dateDeMiseAJourModel)
-  }
-
-  async estUnMonoÉtablissement(numéroFinessEntitéJuridique: string): Promise<MonoÉtablissement> {
-    const nombreDÉtablissementTerritoriauxDansLEntitéJuridique = await (await this.orm)
-      .getRepository(ÉtablissementTerritorialIdentitéModel)
-      .countBy({ numéroFinessEntitéJuridique: numéroFinessEntitéJuridique })
-
-    return { estMonoÉtablissement: nombreDÉtablissementTerritoriauxDansLEntitéJuridique === 1 }
+    return this.construitLÉtablissementTerritorialSanitaire(établissementTerritorialModel, dateDeMiseAJourModel)
   }
 
   private async chargeLaDateDeMiseÀJourModel() {
@@ -38,7 +32,7 @@ export class TypeOrmÉtablissementTerritorialLoader implements ÉtablissementTer
       .findOneBy({ source: SourceDeDonnées.FINESS })
   }
 
-  private construitLÉtablissementTerritorial(
+  private construitLÉtablissementTerritorialSanitaire(
     établissementTerritorialModel: ÉtablissementTerritorialIdentitéModel,
     dateDeMiseAJourModel: DateMiseÀJourSourceModel | null
   ): ÉtablissementTerritorialIdentité {

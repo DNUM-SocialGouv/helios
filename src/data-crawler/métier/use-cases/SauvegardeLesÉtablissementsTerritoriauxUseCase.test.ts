@@ -1,4 +1,5 @@
 import { getFakeDataCrawlerDependencies } from '../../testHelper'
+import { DomaineÉtablissementTerritorial } from '../entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialIdentité } from '../entities/ÉtablissementTerritorialIdentité'
 import { SauvegardeLesÉtablissementsTerritoriauxUseCase } from './SauvegardeLesÉtablissementsTerritoriauxUseCase'
 
@@ -34,6 +35,7 @@ describe('Sauvegarde des établissements territoriaux', () => {
         catégorieÉtablissement: '355',
         courriel: 'a@example.com',
         dateMiseAJourSource: '20220203',
+        domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
         libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
         numéroFinessEntitéJuridique: '010018407',
         numéroFinessÉtablissementPrincipal: '010000057',
@@ -50,6 +52,7 @@ describe('Sauvegarde des établissements territoriaux', () => {
         catégorieÉtablissement: '365',
         courriel: 'b@example.com',
         dateMiseAJourSource: '20220203',
+        domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
         libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
         numéroFinessEntitéJuridique: '590000741',
         numéroFinessÉtablissementPrincipal: '',

@@ -87,10 +87,10 @@ Elles sont nécessaires dès lors que l'on veut créer ou supprimer des tables, 
 ### Créer une migration pour les bases de données
 
 ```sh
-yarn typeorm migration:create src/database/migrations/<NomDeMigration>
+yarn typeorm migration:create src/database/migrations/<NomDeMigration> --outputJs
 ```
 
-Un fichier *.ts* est auto-généré sous `src/database/migrations`. Il faut modifier le fichier auto-généré pour le passer en *.js* (enlever les types, l'*implements* de l'interface de typeorm, les mot-clés *public* et rajouter la classe en *module.exports*). Enfin compléter les deux méthodes *up* et *down*.
+Un fichier *.js* est auto-généré sous `src/database/migrations`. Il faut modifier le fichier auto-généré. Enfin compléter les deux méthodes *up* et *down*.
 
 ### Appliquer les migrations
 

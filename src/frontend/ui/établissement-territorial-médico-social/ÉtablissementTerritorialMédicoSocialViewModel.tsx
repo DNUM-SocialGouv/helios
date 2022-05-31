@@ -3,7 +3,7 @@ import { ReactElement } from 'react'
 import { ÉtablissementTerritorialMédicoSocialIdentité } from '../../../backend/métier/entities/ÉtablissementTerritorialMédicoSocial/ÉtablissementTerritorialMédicoSocialIdentité'
 import { Wording } from '../../configuration/wording/Wording'
 
-export class ÉtablissementTerritorialViewModel {
+export class ÉtablissementTerritorialMédicoSocialViewModel {
   constructor(private readonly établissementTerritorialIdentité: ÉtablissementTerritorialMédicoSocialIdentité, private readonly wording: Wording) {}
 
   public get titre(): string {

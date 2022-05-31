@@ -1,6 +1,6 @@
 import { ÉtablissementTerritorialMédicoSocialIdentité } from '../../backend/métier/entities/ÉtablissementTerritorialMédicoSocial/ÉtablissementTerritorialMédicoSocialIdentité'
 import { Wording } from '../configuration/wording/Wording'
-import { ÉtablissementTerritorialViewModel } from '../ui/établissement-territorial/ÉtablissementTerritorialViewModel'
+import { ÉtablissementTerritorialMédicoSocialViewModel } from '../ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel'
 
 export class ÉtablissementTerritorialMédicoSocialViewModelTestFactory {
   private static établissementTerritorial1: ÉtablissementTerritorialMédicoSocialIdentité = {
@@ -25,8 +25,8 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestFactory {
 
   public static créeÉtablissementTerritorialViewModel(
     wording: Wording, champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialIdentité>
-  ): ÉtablissementTerritorialViewModel {
-    return new ÉtablissementTerritorialViewModel({
+  ): ÉtablissementTerritorialMédicoSocialViewModel {
+    return new ÉtablissementTerritorialMédicoSocialViewModel({
       ...ÉtablissementTerritorialMédicoSocialViewModelTestFactory.établissementTerritorial1,
       ...champsSurchargés,
     }, wording)

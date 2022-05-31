@@ -1,3 +1,4 @@
+import { DomaineÉtablissementTerritorial } from '../../data-crawler/métier/entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialIdentitéModel } from '../models/ÉtablissementTerritorialIdentitéModel'
 
 export class ÉtablissementTerritorialIdentitéModelTestFactory {
@@ -9,8 +10,9 @@ export class ÉtablissementTerritorialIdentitéModelTestFactory {
     établissementTerritorialModel.adresseNuméroVoie = champsSurchargés?.adresseNuméroVoie || '50'
     établissementTerritorialModel.adresseTypeVoie = champsSurchargés?.adresseTypeVoie || 'R'
     établissementTerritorialModel.adresseVoie = champsSurchargés?.adresseVoie || 'PAUL PAINLEVE'
-    établissementTerritorialModel.catégorieÉtablissement = champsSurchargés?.catégorieÉtablissement || '355'
+    établissementTerritorialModel.catégorieÉtablissement = champsSurchargés?.catégorieÉtablissement || '159'
     établissementTerritorialModel.courriel = champsSurchargés?.courriel || 'a@example.com'
+    établissementTerritorialModel.domaine = champsSurchargés?.domaine || DomaineÉtablissementTerritorial.MÉDICO_SOCIAL
     établissementTerritorialModel.libelléCatégorieÉtablissement = champsSurchargés?.libelléCatégorieÉtablissement || 'Centre hospitalier (C.H.)'
     établissementTerritorialModel.numéroFinessEntitéJuridique = champsSurchargés?.numéroFinessEntitéJuridique || '010008407'
     établissementTerritorialModel.numéroFinessÉtablissementPrincipal = champsSurchargés?.numéroFinessÉtablissementPrincipal || '010018407'

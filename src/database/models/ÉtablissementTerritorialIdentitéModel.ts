@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm'
 
+import { DomaineÉtablissementTerritorial } from '../../data-crawler/métier/entities/DomaineÉtablissementTerritorial'
 import { EntitéJuridiqueModel } from './EntitéJuridiqueModel'
 
 @Entity({ name: 'Établissementterritorialidentité' })
@@ -19,15 +20,22 @@ export class ÉtablissementTerritorialIdentitéModel {
   @Column({ length: 3, name: 'catÉtablissement' })
   public catégorieÉtablissement!: string
 
-  @Column({ length: 255, name: 'libellécatégorieÉtablissement' })
-  public libelléCatégorieÉtablissement!: string
-
   @Column({ length: 255, name: 'courriel' })
   public courriel!: string
+
+  @Column({
+    enum: DomaineÉtablissementTerritorial,
+    enumName: 'domaineet',
+    type: 'enum',
+  })
+  public domaine!: DomaineÉtablissementTerritorial
 
   @ManyToOne(() => EntitéJuridiqueModel, { nullable: false, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'numérofinessentitéjuridique', referencedColumnName: 'numéroFinessEntitéJuridique' })
   public entitéJuridique!: EntitéJuridiqueModel
+
+  @Column({ length: 255, name: 'libellécatégorieÉtablissement' })
+  public libelléCatégorieÉtablissement!: string
 
   @Column({ length: 9, name: 'numérofinessentitéjuridique' })
   public numéroFinessEntitéJuridique!: string

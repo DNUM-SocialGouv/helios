@@ -3,13 +3,13 @@ import { ÉtablissementTerritorialIdentité } from '../entities/ÉtablissementTe
 import { EntitéJuridiqueDeRattachement } from '../entities/ÉtablissementTerritorialMédicoSocial/EntitéJuridiqueDeRattachement'
 import { MonoÉtablissement } from '../entities/ÉtablissementTerritorialMédicoSocial/MonoÉtablissement'
 import { ÉtablissementTerritorialMédicoSocialIdentité } from '../entities/ÉtablissementTerritorialMédicoSocial/ÉtablissementTerritorialMédicoSocialIdentité'
-import { ÉtablissementTerritorialNonTrouvée } from '../entities/ÉtablissementTerritorialNonTrouvée'
+import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
 import { EntitéJuridiqueLoader } from '../gateways/EntitéJuridiqueLoader'
-import { ÉtablissementTerritorialLoader } from '../gateways/ÉtablissementTerritorialLoader'
-import { RécupèreLÉtablissementTerritorialUseCase } from './RécupèreLÉtablissementTerritorialUseCase'
+import { ÉtablissementTerritorialMédicoSocialLoader } from '../gateways/ÉtablissementTerritorialMédicoSocialLoader'
+import { RécupèreLÉtablissementTerritorialMédicoSocialUseCase } from './RécupèreLÉtablissementTerritorialMédicoSocialUseCase'
 
-describe('La récupération d’un établissement territorial', () => {
-  it('récupère la fiche identité de l’établissement territorial', async () => {
+describe('La récupération d’un établissement territorial médico-social', () => {
+  it('récupère la fiche identité de l’établissement territorial médico-social', async () => {
     // GIVEN
     const numéroFinessÉtablissementTerritorial = '123456789'
     const numéroFinessEntitéJuridique = '987654321'
@@ -28,11 +28,12 @@ describe('La récupération d’un établissement territorial', () => {
         statutJuridique: 'Société Anonyme (S.A.)',
       }
     })
-    const établissementTerritorialLoader: ÉtablissementTerritorialLoader =
+    const établissementTerritorialLoader: ÉtablissementTerritorialMédicoSocialLoader =
       { chargeParNuméroFiness: mockedChargeParNuméroFiness, estUnMonoÉtablissement: mockedEstUnMonoÉtablissement }
     const entitéJuridiqueLoader: EntitéJuridiqueLoader =
       { chargeLEntitéJuridiqueDeRattachement: mockedChargeLEntitéJuridiqueDeRattachement, chargeParNuméroFiness: jest.fn() }
-    const récupèreLÉtablissementTerritorialUseCase = new RécupèreLÉtablissementTerritorialUseCase(établissementTerritorialLoader, entitéJuridiqueLoader)
+    const récupèreLÉtablissementTerritorialUseCase =
+      new RécupèreLÉtablissementTerritorialMédicoSocialUseCase(établissementTerritorialLoader, entitéJuridiqueLoader)
 
     // WHEN
     const ficheIdentitéRécupérée = await récupèreLÉtablissementTerritorialUseCase.exécute(numéroFinessÉtablissementTerritorial)
@@ -61,14 +62,15 @@ describe('La récupération d’un établissement territorial', () => {
     // GIVEN
     const numéroFiness = '123456789'
     const mockedChargeParNuméroFiness = jest.fn(async () => {
-      return new ÉtablissementTerritorialNonTrouvée('123456789')
+      return new ÉtablissementTerritorialMédicoSocialNonTrouvée('123456789')
     })
-    const établissementTerritorialLoader: ÉtablissementTerritorialLoader =
+    const établissementTerritorialLoader: ÉtablissementTerritorialMédicoSocialLoader =
       { chargeParNuméroFiness: mockedChargeParNuméroFiness, estUnMonoÉtablissement: jest.fn() }
     const entitéJuridiqueLoader: EntitéJuridiqueLoader =
       { chargeLEntitéJuridiqueDeRattachement: jest.fn(), chargeParNuméroFiness: jest.fn() }
 
-    const récupèreLÉtablissementTerritorialUseCase = new RécupèreLÉtablissementTerritorialUseCase(établissementTerritorialLoader, entitéJuridiqueLoader)
+    const récupèreLÉtablissementTerritorialUseCase =
+      new RécupèreLÉtablissementTerritorialMédicoSocialUseCase(établissementTerritorialLoader, entitéJuridiqueLoader)
 
     // WHEN
     try {
@@ -76,7 +78,7 @@ describe('La récupération d’un établissement territorial', () => {
       throw new Error('Une alerte d’établissement territorial non trouvée aurait dû être levée')
     } catch (error) {
       // THEN
-      expect(error.message).toBe('[Helios] L’établissement territorial 123456789 n’a pas été trouvé')
+      expect(error.message).toBe('[Helios] L’établissement territorial médico-social 123456789 n’a pas été trouvé')
     }
   })
 })
