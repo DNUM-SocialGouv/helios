@@ -8,9 +8,11 @@ import MentionsLégales from '../../../../pages/mentions-legales'
 import PlanDuSite from '../../../../pages/plan-du-site'
 import { EntitéJuridiqueViewModelTestFactory } from '../../../test/EntitéJuridiqueViewModelTestFactory'
 import { ÉtablissementTerritorialMédicoSocialViewModelTestFactory } from '../../../test/ÉtablissementTerritorialMédicoSocialViewModelTestFactory'
+import { ÉtablissementTerritorialRattachéViewModelTestFactory } from '../../../test/ÉtablissementTerritorialRattachéViewModelTestFactory'
 import { ÉtablissementTerritorialSanitaireViewModelTestFactory } from '../../../test/ÉtablissementTerritorialSanitaireViewModelTestFactory'
 import { fakeFrontDependencies, renderFakeComponent } from '../../../testHelper'
 import { PageEntitéJuridique } from '../../entité-juridique/PageEntitéJuridique'
+import { ÉtablissementTerritorialRattachéViewModel } from '../../entité-juridique/ÉtablissementTerritorialRattachéViewModel'
 import { PageÉtablissementTerritorialMédicoSocial } from '../../établissement-territorial-médico-social/PageÉtablissementTerritorialMédicoSocial'
 import { PageÉtablissementTerritorialSanitaire } from '../../établissement-territorial-sanitaire/PageÉtablissementTerritorialSanitaire'
 import { Breadcrumb } from './Breadcrumb'
@@ -63,12 +65,19 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
   it('affiche le chemin jusqu’à la page entité juridique', () => {
     // GIVEN
     const entitéJuridiqueViewModel = EntitéJuridiqueViewModelTestFactory.créeEntitéJuridiqueViewModel(wording)
+    const établissementsTerritoriauxRattachésViewModels: ÉtablissementTerritorialRattachéViewModel[] = [
+      ÉtablissementTerritorialRattachéViewModelTestFactory.créeÉtablissementTerritorialRattaché(wording),
+      ÉtablissementTerritorialRattachéViewModelTestFactory.créeAutreÉtablissementTerritorialRattaché(wording),
+    ]
 
     // WHEN
     renderFakeComponent(
       <>
         <Breadcrumb />
-        <PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
+        <PageEntitéJuridique
+          entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+          établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
+        />
       </>
     )
 

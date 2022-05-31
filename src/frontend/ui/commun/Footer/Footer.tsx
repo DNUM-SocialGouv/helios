@@ -9,7 +9,7 @@ export const Footer = () => {
 
   return (
     <footer
-      className="fr-footer"
+      className="fr-footer fr-mt-6w"
       role="contentinfo"
     >
       <div className="fr-container">

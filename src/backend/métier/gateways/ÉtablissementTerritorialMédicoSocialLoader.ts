@@ -1,5 +1,5 @@
+import { MonoÉtablissement } from '../entities/établissement-territorial-médico-social/MonoÉtablissement'
 import { ÉtablissementTerritorialIdentité } from '../entities/ÉtablissementTerritorialIdentité'
-import { MonoÉtablissement } from '../entities/ÉtablissementTerritorialMédicoSocial/MonoÉtablissement'
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
 
 export interface ÉtablissementTerritorialMédicoSocialLoader {

@@ -1,6 +1,7 @@
 import { EntitéJuridiqueLoader } from '../métier/gateways/EntitéJuridiqueLoader'
 import { EnvironmentVariables } from '../métier/gateways/EnvironmentVariables'
 import { ÉtablissementTerritorialMédicoSocialLoader } from '../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader'
+import { ÉtablissementTerritorialRattachéLoader } from '../métier/gateways/ÉtablissementTerritorialRattachéLoader'
 import { ÉtablissementTerritorialSanitaireLoader } from '../métier/gateways/ÉtablissementTerritorialSanitaireLoader'
 import { dotEnvConfig } from './gateways/dot-env/dotEnvConfig'
 import { TypeOrmEntitéJuridiqueLoader } from './gateways/entité-juridique-loader/TypeOrmEntitéJuridiqueLoader'
@@ -8,12 +9,14 @@ import { NodeEnvironmentVariables } from './gateways/environnement-variables/Nod
 import { ConsoleLogger } from './gateways/logger/ConsoleLogger'
 import { typeOrmOrm } from './gateways/orm/typeOrmOrm'
 import { TypeOrmÉtablissementTerritorialMédicoSocialLoader } from './gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialMédicoSocialLoader'
+import { TypeOrmÉtablissementTerritorialRattachéLoader } from './gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialRattachéLoader'
 import { TypeOrmÉtablissementTerritorialSanitaireLoader } from './gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialSanitaireLoader'
 
 export type Dependencies = Readonly<{
   environmentVariables: EnvironmentVariables
   entitéJuridiqueLoader: EntitéJuridiqueLoader
   établissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader
+  établissementTerritorialRattachéLoader: ÉtablissementTerritorialRattachéLoader
   établissementTerritorialSanitaireLoader: ÉtablissementTerritorialSanitaireLoader
 }>
 
@@ -27,6 +30,7 @@ const _instantiateDependencies = (): Dependencies => {
     entitéJuridiqueLoader: new TypeOrmEntitéJuridiqueLoader(orm),
     environmentVariables,
     établissementTerritorialMédicoSocialLoader: new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm),
+    établissementTerritorialRattachéLoader: new TypeOrmÉtablissementTerritorialRattachéLoader(orm),
     établissementTerritorialSanitaireLoader: new TypeOrmÉtablissementTerritorialSanitaireLoader(orm),
   }
 }

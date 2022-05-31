@@ -2,9 +2,9 @@ import { DataSource } from 'typeorm'
 
 import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../database/models/DateMiseÀJourSourceModel'
 import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
-import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
+import { EntitéJuridique } from '../../../métier/entities/entité-juridique/EntitéJuridique'
 import { EntitéJuridiqueNonTrouvée } from '../../../métier/entities/EntitéJuridiqueNonTrouvée'
-import { EntitéJuridiqueDeRattachement } from '../../../métier/entities/ÉtablissementTerritorialMédicoSocial/EntitéJuridiqueDeRattachement'
+import { EntitéJuridiqueDeRattachement } from '../../../métier/entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement'
 import { EntitéJuridiqueLoader } from '../../../métier/gateways/EntitéJuridiqueLoader'
 
 export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {

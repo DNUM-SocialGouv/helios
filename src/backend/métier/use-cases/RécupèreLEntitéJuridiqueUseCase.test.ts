@@ -1,5 +1,5 @@
 import { EntitéJuridiqueTestFactory } from '../../test/EntitéJuridiqueTestFactory'
-import { EntitéJuridique } from '../entities/EntitéJuridique'
+import { EntitéJuridique } from '../entities/entité-juridique/EntitéJuridique'
 import { EntitéJuridiqueNonTrouvée } from '../entities/EntitéJuridiqueNonTrouvée'
 import { EntitéJuridiqueLoader } from '../gateways/EntitéJuridiqueLoader'
 import { RécupèreLEntitéJuridiqueUseCase } from './RécupèreLEntitéJuridiqueUseCase'

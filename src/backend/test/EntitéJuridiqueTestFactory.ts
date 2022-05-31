@@ -1,4 +1,4 @@
-import { EntitéJuridique } from '../métier/entities/EntitéJuridique'
+import { EntitéJuridique } from '../métier/entities/entité-juridique/EntitéJuridique'
 
 export class EntitéJuridiqueTestFactory {
   private static entitéJurique1: EntitéJuridique = {

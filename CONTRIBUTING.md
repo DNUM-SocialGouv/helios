@@ -272,3 +272,5 @@ interface Repository<T> {
 - Les fichiers de tests portent le nom du fichier testé et sont suffixés par `.test.ts(x?)`
 
 - Les verbes décrivant une action de méthode sont à l'impératif, comme c'est le cas dans la méthode testée
+
+- Les objets attendus sont déclarés dans la partie *THEN* des tests

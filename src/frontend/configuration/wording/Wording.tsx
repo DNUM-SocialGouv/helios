@@ -19,6 +19,7 @@ export interface Wording {
   // Bread Crumb
   readonly VOUS_ÊTES_ICI: string
   readonly VOIR_LE_FIL_D_ARIANE: string
+  readonly ENTITÉ_JURIDIQUE: string
 
   // Fiches
   readonly MISE_À_JOUR: string
@@ -44,6 +45,11 @@ export interface Wording {
   readonly PRINCIPAL: string
   readonly SECONDAIRE: string
   readonly SITE_INTERNET: string
+
+  // Liste des établissements rattachés
+  readonly ÉTABLISSEMENT_TERRITORIAL: string
+  readonly TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS: string
+  readonly ÉTABLISSEMENTS_RATTACHÉS: string
 
   // Source
   readonly FINESS: ReactElement

@@ -1,11 +1,11 @@
 import { Repository } from 'typeorm'
 
-import { DomaineÉtablissementTerritorial } from '../../../../data-crawler/métier/entities/DomaineÉtablissementTerritorial'
 import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../database/models/DateMiseÀJourSourceModel'
 import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { EntitéJuridiqueModelTestFactory } from '../../../../database/test/EntitéJuridiqueModelTestFactory'
 import { ÉtablissementTerritorialIdentitéModelTestFactory } from '../../../../database/test/ÉtablissementTerritorialIdentitéModelTestFactory'
+import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { ÉtablissementTerritorialSanitaireNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialSanitaireNonTrouvée'
 import { ÉtablissementTerritorialTestFactory } from '../../../test/ÉtablissementTerritorialTestFactory'

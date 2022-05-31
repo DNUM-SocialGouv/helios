@@ -33,6 +33,7 @@ export class ÉtablissementTerritorialIdentitéModelTestFactory {
     établissementTerritorialModel.adresseVoie = champsSurchargés?.adresseVoie || 'DE LA RECONNAISSANCE'
     établissementTerritorialModel.catégorieÉtablissement = champsSurchargés?.catégorieÉtablissement || '365'
     établissementTerritorialModel.courriel = champsSurchargés?.courriel || 'b@example.com'
+    établissementTerritorialModel.domaine = champsSurchargés?.domaine || DomaineÉtablissementTerritorial.SANITAIRE
     établissementTerritorialModel.libelléCatégorieÉtablissement = champsSurchargés?.libelléCatégorieÉtablissement || 'Centre Hospitalier (C.H.)'
     établissementTerritorialModel.numéroFinessEntitéJuridique = champsSurchargés?.numéroFinessEntitéJuridique || '590000741'
     établissementTerritorialModel.numéroFinessÉtablissementPrincipal = champsSurchargés?.numéroFinessÉtablissementPrincipal || ''

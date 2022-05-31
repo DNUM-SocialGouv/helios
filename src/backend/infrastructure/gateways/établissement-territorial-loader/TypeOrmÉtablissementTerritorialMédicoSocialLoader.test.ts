@@ -1,11 +1,11 @@
 import { Repository } from 'typeorm'
 
-import { DomaineÉtablissementTerritorial } from '../../../../data-crawler/métier/entities/DomaineÉtablissementTerritorial'
 import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../database/models/DateMiseÀJourSourceModel'
 import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { EntitéJuridiqueModelTestFactory } from '../../../../database/test/EntitéJuridiqueModelTestFactory'
 import { ÉtablissementTerritorialIdentitéModelTestFactory } from '../../../../database/test/ÉtablissementTerritorialIdentitéModelTestFactory'
+import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
 import { ÉtablissementTerritorialTestFactory } from '../../../test/ÉtablissementTerritorialTestFactory'
@@ -177,5 +177,4 @@ describe('Établissement territorial médico-social loader', () => {
       expect(monoÉtablissement.estMonoÉtablissement).toBeTruthy()
     })
   })
-
 })
