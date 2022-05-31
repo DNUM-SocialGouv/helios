@@ -1,18 +1,16 @@
 import { screen, within } from '@testing-library/react'
 
-import { EntitéJuridique } from '../../../../backend/métier/entities/EntitéJuridique'
-import { ÉtablissementTerritorialMédicoSocialIdentité } from '../../../../backend/métier/entities/ÉtablissementTerritorialMédicoSocial/ÉtablissementTerritorialMédicoSocialIdentité'
 import PageDAccueil from '../../../../pages'
 import Accessibilité from '../../../../pages/accessibilite'
 import DonnéesPersonnelles from '../../../../pages/donnees-personnelles'
 import GestionDesCookies from '../../../../pages/gestion-des-cookies'
 import MentionsLégales from '../../../../pages/mentions-legales'
 import PlanDuSite from '../../../../pages/plan-du-site'
+import { EntitéJuridiqueViewModelTestFactory } from '../../../test/EntitéJuridiqueViewModelTestFactory'
+import { ÉtablissementTerritorialMédicoSocialViewModelTestFactory } from '../../../test/ÉtablissementTerritorialMédicoSocialViewModelTestFactory'
 import { fakeFrontDependencies, renderFakeComponent } from '../../../testHelper'
-import { EntitéJuridiqueViewModel } from '../../entité-juridique/EntitéJuridiqueViewModel'
 import { PageEntitéJuridique } from '../../entité-juridique/PageEntitéJuridique'
 import { PageÉtablissementTerritorial } from '../../établissement-territorial/PageÉtablissementTerritorial'
-import { ÉtablissementTerritorialViewModel } from '../../établissement-territorial/ÉtablissementTerritorialViewModel'
 import { Breadcrumb } from './Breadcrumb'
 
 const { paths, wording } = fakeFrontDependencies
@@ -62,18 +60,7 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
 
   it('affiche le chemin jusqu’à la page entité juridique', () => {
     // GIVEN
-    const entitéJuridique: EntitéJuridique = {
-      adresseAcheminement: '22023 ST BRIEUC CEDEX 1',
-      adresseNuméroVoie: '10',
-      adresseTypeVoie: 'Rue',
-      adresseVoie: 'Marcel Proust',
-      dateMiseAJourSource: '2021-07-07',
-      libelléStatutJuridique: 'Public',
-      numéroFinessEntitéJuridique: '220000020',
-      raisonSociale: 'CENTRE HOSPITALIER DE SAINT BRIEUC',
-      téléphone: '0123456789',
-    }
-    const entitéJuridiqueViewModel = new EntitéJuridiqueViewModel(entitéJuridique, wording)
+    const entitéJuridiqueViewModel = EntitéJuridiqueViewModelTestFactory.créeEntitéJuridiqueViewModel(wording)
 
     // WHEN
     renderFakeComponent(
@@ -98,26 +85,7 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
 
   it('affiche le chemin jusqu’à la page établissement territorial', () => {
     // GIVEN
-    const établissementTerritorial: ÉtablissementTerritorialMédicoSocialIdentité = {
-      adresseAcheminement: '01130 NANTUA',
-      adresseNuméroVoie : '50',
-      adresseTypeVoie : 'R',
-      adresseVoie : 'PAUL PAINLEVE',
-      catégorieÉtablissement : '355',
-      courriel : 'a@example.com',
-      dateMiseAJourSource : '2021-07-07',
-      estMonoÉtablissement: true,
-      libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
-      numéroFinessEntitéJuridique : '010008407',
-      numéroFinessÉtablissementPrincipal : '010000057',
-      numéroFinessÉtablissementTerritorial: '010000040',
-      raisonSociale : 'CH NANTUA',
-      raisonSocialeDeLEntitéDeRattachement : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-      statutJuridique : 'Société Anonyme (S.A.)',
-      typeÉtablissement : 'S',
-      téléphone : '0474754800',
-    }
-    const établissementTerritorialViewModel = new ÉtablissementTerritorialViewModel(établissementTerritorial, wording)
+    const établissementTerritorialViewModel = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording)
 
     // WHEN
     renderFakeComponent(

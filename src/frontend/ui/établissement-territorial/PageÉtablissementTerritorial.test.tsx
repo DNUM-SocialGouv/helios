@@ -1,31 +1,13 @@
 import { screen, within } from '@testing-library/react'
 
+import { ÉtablissementTerritorialMédicoSocialViewModelTestFactory } from '../../test/ÉtablissementTerritorialMédicoSocialViewModelTestFactory'
 import { fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent, trimHtml } from '../../testHelper'
 import { PageÉtablissementTerritorial } from './PageÉtablissementTerritorial'
-import { ÉtablissementTerritorialViewModel } from './ÉtablissementTerritorialViewModel'
 
 const { wording } = fakeFrontDependencies
 
 describe('La page Établissement territorial', () => {
-  const établissementTerritorialViewModel = new ÉtablissementTerritorialViewModel({
-    adresseAcheminement: '01130 NANTUA',
-    adresseNuméroVoie : '50',
-    adresseTypeVoie : 'R',
-    adresseVoie : 'PAUL PAINLEVE',
-    catégorieÉtablissement : '355',
-    courriel : 'a@example.com',
-    dateMiseAJourSource : '2021-07-07',
-    estMonoÉtablissement: true,
-    libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
-    numéroFinessEntitéJuridique : '010008407',
-    numéroFinessÉtablissementPrincipal : '010000057',
-    numéroFinessÉtablissementTerritorial: '010000040',
-    raisonSociale : 'CH NANTUA',
-    raisonSocialeDeLEntitéDeRattachement : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-    statutJuridique : 'Société Anonyme (S.A.)',
-    typeÉtablissement : 'S',
-    téléphone : '0474754800',
-  }, wording)
+  const établissementTerritorialViewModel = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording)
 
   it('affiche le titre : "ET - numéro de FINESS - nom de l’établissement"', () => {
     // WHEN
@@ -158,25 +140,8 @@ describe('La page Établissement territorial', () => {
   describe('l’indicateur d’établissement principal ou secondaire dans le bloc identité', () => {
     it('affiche "Principal" si l’établissement est un établissement principal', () => {
       // GIVEN
-      const établissementTerritorialPrincipal = new ÉtablissementTerritorialViewModel({
-        adresseAcheminement: '01130 NANTUA',
-        adresseNuméroVoie : '50',
-        adresseTypeVoie : 'R',
-        adresseVoie : 'PAUL PAINLEVE',
-        catégorieÉtablissement : '355',
-        courriel : 'a@example.com',
-        dateMiseAJourSource : '2021-07-07',
-        estMonoÉtablissement: true,
-        libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
-        numéroFinessEntitéJuridique : '010008407',
-        numéroFinessÉtablissementPrincipal : '',
-        numéroFinessÉtablissementTerritorial: '010000040',
-        raisonSociale : 'CH NANTUA',
-        raisonSocialeDeLEntitéDeRattachement : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-        statutJuridique : 'Société Anonyme (S.A.)',
-        typeÉtablissement : 'P',
-        téléphone : '0474754800',
-      }, wording)
+      const établissementTerritorialPrincipal = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording, { typeÉtablissement: 'P' })
+
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialPrincipal} />)
 
@@ -190,8 +155,11 @@ describe('La page Établissement territorial', () => {
     })
 
     it('affiche "Secondaire" et le numéro Finess de l’établissement principal si l’établissement n’est pas un établissement principal', () => {
+      // GIVEN
+      const établissementTerritorialSecondaire = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording, { typeÉtablissement: 'S' })
+
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
+      renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialSecondaire} />)
 
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -241,25 +209,7 @@ describe('La page Établissement territorial', () => {
 
   describe('affiche "non renseigné" quand une valeur est vide', () => {
     it('pour le téléphone', () => {
-      const établissementTerritorialSansTéléphone = new ÉtablissementTerritorialViewModel({
-        adresseAcheminement: '01130 NANTUA',
-        adresseNuméroVoie : '50',
-        adresseTypeVoie : 'R',
-        adresseVoie : 'PAUL PAINLEVE',
-        catégorieÉtablissement : '355',
-        courriel : 'a@example.com',
-        dateMiseAJourSource : '2021-07-07',
-        estMonoÉtablissement: true,
-        libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
-        numéroFinessEntitéJuridique : '010008407',
-        numéroFinessÉtablissementPrincipal : '010000057',
-        numéroFinessÉtablissementTerritorial: '010000040',
-        raisonSociale : 'CH NANTUA',
-        raisonSocialeDeLEntitéDeRattachement : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-        statutJuridique : 'Société Anonyme (S.A.)',
-        typeÉtablissement : 'S',
-        téléphone : '',
-      }, wording)
+      const établissementTerritorialSansTéléphone = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording, { téléphone: '' })
 
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialSansTéléphone} />)
@@ -272,28 +222,10 @@ describe('La page Établissement territorial', () => {
     })
 
     it('pour l’e-mail', () => {
-      const établissementTerritorialSansTéléphone = new ÉtablissementTerritorialViewModel({
-        adresseAcheminement: '01130 NANTUA',
-        adresseNuméroVoie : '50',
-        adresseTypeVoie : 'R',
-        adresseVoie : 'PAUL PAINLEVE',
-        catégorieÉtablissement : '355',
-        courriel : '',
-        dateMiseAJourSource : '2021-07-07',
-        estMonoÉtablissement: true,
-        libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
-        numéroFinessEntitéJuridique : '010008407',
-        numéroFinessÉtablissementPrincipal : '010000057',
-        numéroFinessÉtablissementTerritorial: '010000040',
-        raisonSociale : 'CH NANTUA',
-        raisonSocialeDeLEntitéDeRattachement : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-        statutJuridique : 'Société Anonyme (S.A.)',
-        typeÉtablissement : 'S',
-        téléphone : '0474754800',
-      }, wording)
+      const établissementTerritorialSansCourriel = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording, { courriel: '' })
 
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialSansTéléphone} />)
+      renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialSansCourriel} />)
 
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -304,25 +236,7 @@ describe('La page Établissement territorial', () => {
   })
 
   it('affiche l’adresse incomplète lorsqu’il manque des champs d’adresse', () => {
-    const établissementTerritorialSansAdresseVoie = new ÉtablissementTerritorialViewModel({
-      adresseAcheminement: '01130 NANTUA',
-      adresseNuméroVoie : '50',
-      adresseTypeVoie : 'R',
-      adresseVoie : '',
-      catégorieÉtablissement : '355',
-      courriel : 'a@example.com',
-      dateMiseAJourSource : '2021-07-07',
-      estMonoÉtablissement: true,
-      libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
-      numéroFinessEntitéJuridique : '010008407',
-      numéroFinessÉtablissementPrincipal : '010000057',
-      numéroFinessÉtablissementTerritorial: '010000040',
-      raisonSociale : 'CH NANTUA',
-      raisonSocialeDeLEntitéDeRattachement : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-      statutJuridique : 'Société Anonyme (S.A.)',
-      typeÉtablissement : 'S',
-      téléphone : '0474754800',
-    }, wording)
+    const établissementTerritorialSansAdresseVoie = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording, { adresseVoie: '' })
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialSansAdresseVoie} />)
