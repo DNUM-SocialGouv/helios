@@ -24,7 +24,7 @@ export class ÉtablissementTerritorialViewModel {
 
   public get entitéJuridiqueDeRattachement(): string {
     const numéroFinessEntitéJuridiqueFormaté = this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorialIdentité.numéroFinessEntitéJuridique, 3)
-    const nomDeLEntitéJuridique = this.établissementTerritorialIdentité.entitéJuridiqueDeRattachement.raisonSociale
+    const nomDeLEntitéJuridique = this.établissementTerritorialIdentité.raisonSocialeDeLEntitéDeRattachement
     return `EJ - ${numéroFinessEntitéJuridiqueFormaté} - ${nomDeLEntitéJuridique}`
   }
 
@@ -33,7 +33,7 @@ export class ÉtablissementTerritorialViewModel {
   }
 
   public get statutDeLÉtablissement(): string {
-    return this.établissementTerritorialIdentité.entitéJuridiqueDeRattachement.statutJuridique
+    return this.établissementTerritorialIdentité.statutJuridique
   }
 
   public get monoÉtablissement(): string {

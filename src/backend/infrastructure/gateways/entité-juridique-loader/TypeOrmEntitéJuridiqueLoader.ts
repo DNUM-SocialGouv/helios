@@ -28,7 +28,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
       .findOneBy({ numéroFinessEntitéJuridique: numéroFiness })
 
     return {
-      raisonSociale: entitéJuridiqueDeRattachement ? entitéJuridiqueDeRattachement.raisonSociale : '',
+      raisonSocialeDeLEntitéDeRattachement: entitéJuridiqueDeRattachement ? entitéJuridiqueDeRattachement.raisonSociale : '',
       statutJuridique: entitéJuridiqueDeRattachement ? entitéJuridiqueDeRattachement.libelléStatutJuridique : '',
     }
   }

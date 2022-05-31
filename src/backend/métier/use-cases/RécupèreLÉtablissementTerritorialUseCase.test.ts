@@ -24,7 +24,7 @@ describe('La récupération d’un établissement territorial', () => {
     })
     const mockedChargeLEntitéJuridiqueDeRattachement = jest.fn(async (): Promise<EntitéJuridiqueDeRattachement> => {
       return {
-        raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+        raisonSocialeDeLEntitéDeRattachement: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
         statutJuridique: 'Société Anonyme (S.A.)',
       }
     })
@@ -39,12 +39,12 @@ describe('La récupération d’un établissement territorial', () => {
 
     // THEN
     const entitéJuridiqueDeRattachement: EntitéJuridiqueDeRattachement = {
-      raisonSociale : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+      raisonSocialeDeLEntitéDeRattachement : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
       statutJuridique : 'Société Anonyme (S.A.)',
     }
     const ficheIdentitéÉtablissementTerritorialMédicoSocial: ÉtablissementTerritorialMédicoSocialIdentité = {
       ...ficheIdentitéÉtablissementTerritorial,
-      entitéJuridiqueDeRattachement,
+      ...entitéJuridiqueDeRattachement,
       estMonoÉtablissement: false,
     }
 

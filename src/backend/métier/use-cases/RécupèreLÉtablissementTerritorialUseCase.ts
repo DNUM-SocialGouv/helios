@@ -21,7 +21,7 @@ export class RécupèreLÉtablissementTerritorialUseCase {
 
     return {
       ...établissementTerritorialOuErreur,
-      entitéJuridiqueDeRattachement,
+      ...entitéJuridiqueDeRattachement,
       estMonoÉtablissement,
     }
   }

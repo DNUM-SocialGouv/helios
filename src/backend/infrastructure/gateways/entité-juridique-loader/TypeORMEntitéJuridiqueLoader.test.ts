@@ -86,7 +86,7 @@ describe('Entité juridique loader', () => {
 
     // THEN
     const entitéJuridiqueDeRattachementAttendue: EntitéJuridiqueDeRattachement = {
-      raisonSociale: 'CH DU HAUT BUGEY',
+      raisonSocialeDeLEntitéDeRattachement: 'CH DU HAUT BUGEY',
       statutJuridique: 'Etablissement Public Intercommunal dHospitalisation',
     }
     expect(entitéJuridiqueChargée).toStrictEqual(entitéJuridiqueDeRattachementAttendue)
