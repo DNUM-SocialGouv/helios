@@ -1,6 +1,6 @@
-![Logo Helios](./public/logo.png)
+![Logo Helios](./public/logo.svg)
 
-![Build, lint & tests](https://github.com/DNUM-SocialGouv/helios/actions/workflows/build_lint_tests.yml/badge.svg)
+[![Install, build, lint and tests](https://github.com/DNUM-SocialGouv/helios/actions/workflows/helios-ci.yml/badge.svg)](https://github.com/DNUM-SocialGouv/helios/actions/workflows/helios-ci.yml)
 
 <dl>
   <dt><strong>Pour</strong></dt>
@@ -14,3 +14,5 @@
   <dt><strong>et vise</strong></dt>
   <dd>à devenir 6 mois après le déploiement général l’outil de synthèse de référence pour toutes les ARS avec une prise en main intuitive et des mises à jour fluides, fréquentes et attendues.</dd>
 </dl>
+
+Pour participer au développement, consulter notre [contributing](./CONTRIBUTING.md).
