@@ -23,6 +23,19 @@ export class ÉtablissementTerritorialViewModel {
     return `ET - ${this.numéroFinessÉtablissementTerritorial} - ${this.nomDeLÉtablissementTerritorial}`
   }
 
+  public get titreAccessibleDeLEntitéJuridique(): ReactElement {
+    return (
+      <>
+        <abbr title="Entité Juridique">EJ</abbr>
+          &nbsp;
+        {'- '}
+        {this.numéroFinessEntitéJuridique}
+        {' - '}
+        {this.nomDeLÉtablissementTerritorial}
+      </>
+    )
+  }
+
   public get nomDeLÉtablissementTerritorial(): string {
     return this.établissementTerritorialIdentité.raisonSociale
   }
@@ -42,9 +55,13 @@ export class ÉtablissementTerritorialViewModel {
   }
 
   public get entitéJuridiqueDeRattachement(): string {
-    const numéroFinessEntitéJuridiqueFormaté = this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorialIdentité.numéroFinessEntitéJuridique, 3)
+    const numéroFinessEntitéJuridiqueFormaté = this.numéroFinessDeLEntitéJuridiqueDeRattachementFormaté
     const nomDeLEntitéJuridique = this.établissementTerritorialIdentité.raisonSocialeDeLEntitéDeRattachement
     return `EJ - ${numéroFinessEntitéJuridiqueFormaté} - ${nomDeLEntitéJuridique}`
+  }
+
+  public get numéroFinessDeLEntitéJuridiqueDeRattachementFormaté() {
+    return this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorialIdentité.numéroFinessEntitéJuridique, 3)
   }
 
   public get catégorieDeLÉtablissement(): string {

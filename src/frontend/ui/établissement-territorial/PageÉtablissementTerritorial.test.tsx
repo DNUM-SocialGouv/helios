@@ -333,4 +333,12 @@ describe('La page Établissement territorial', () => {
     const adresseIncomplète = within(indicateurs[2]).getByText('50 R 01130 NANTUA', { selector: 'p' })
     expect(adresseIncomplète).toBeInTheDocument()
   })
+
+  it('affiche le titre dans l’onglet', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
+
+    // THEN
+    expect(document.title).toBe(établissementTerritorialViewModel.titre)
+  })
 })
