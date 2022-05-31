@@ -21,7 +21,7 @@ export class ÉtablissementTerritorialViewModel {
     )
   }
 
-  public get numéroFinessEntitéJuridiqueBrute(): string {
+  public get numéroFinessEntitéJuridiqueBrut(): string {
     return this.établissementTerritorialIdentité.numéroFinessEntitéJuridique
   }
 

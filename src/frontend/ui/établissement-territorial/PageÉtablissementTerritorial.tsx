@@ -17,7 +17,7 @@ export const PageÉtablissementTerritorial = ({ établissementTerritorialViewMod
   useBreadcrumb([
     {
       label: établissementTerritorialViewModel.titreAccessibleDeLEntitéJuridique,
-      path: `${paths.ENTITÉ_JURIDIQUE}/${établissementTerritorialViewModel.numéroFinessEntitéJuridiqueBrute}`,
+      path: `${paths.ENTITÉ_JURIDIQUE}/${établissementTerritorialViewModel.numéroFinessEntitéJuridiqueBrut}`,
     },
     {
       label: établissementTerritorialViewModel.nomDeLÉtablissementTerritorial,
