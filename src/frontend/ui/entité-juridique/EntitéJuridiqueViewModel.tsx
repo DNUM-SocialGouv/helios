@@ -13,13 +13,14 @@ export class EntitéJuridiqueViewModel {
         &nbsp;
         {'- '}
         {this.numéroFiness}
-        {this.ajouteLeNomDeLEntitéJuridiqueSiRenseigné()}
+        {' - '}
+        {this.nomDeLEntitéJuridique}
       </>
     )
   }
 
   public get titre(): string {
-    return `EJ - ${this.numéroFiness}${this.ajouteLeNomDeLEntitéJuridiqueSiRenseigné()}`
+    return `EJ - ${this.numéroFiness} - ${this.nomDeLEntitéJuridique}`
   }
 
   public get nomDeLEntitéJuridique(): string {
@@ -44,13 +45,6 @@ export class EntitéJuridiqueViewModel {
 
   public get dateDeMiseÀJour(): string {
     return this.formateLaDate(this.entitéJuridique.dateMiseAJourSource)
-  }
-
-  private ajouteLeNomDeLEntitéJuridiqueSiRenseigné() {
-    if (this.entitéJuridique.raisonSociale !== '') {
-      return ` - ${this.entitéJuridique.raisonSociale}`
-    }
-    return ''
   }
 
   private valeurOuNonRenseigné(valeur: string): string {

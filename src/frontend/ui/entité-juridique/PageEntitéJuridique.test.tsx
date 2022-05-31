@@ -1,52 +1,20 @@
 import { screen, within } from '@testing-library/react'
 
+import { EntitéJuridiqueViewModelTestFactory } from '../../test/EntitéJuridiqueViewModelTestFactory'
 import { fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent, trimHtml } from '../../testHelper'
-import { EntitéJuridiqueViewModel } from './EntitéJuridiqueViewModel'
 import { PageEntitéJuridique } from './PageEntitéJuridique'
 
 const { wording } = fakeFrontDependencies
 
 describe('La page Entité Juridique', () => {
-  const entitéJuridiqueViewModel = new EntitéJuridiqueViewModel({
-    adresseAcheminement: '22023 ST BRIEUC CEDEX 1',
-    adresseNuméroVoie: '10',
-    adresseTypeVoie: 'Rue',
-    adresseVoie: 'Marcel Proust',
-    dateMiseAJourSource: '2021-07-07',
-    libelléStatutJuridique: 'Public',
-    numéroFinessEntitéJuridique: '220000020',
-    raisonSociale: 'CENTRE HOSPITALIER DE SAINT BRIEUC',
-    téléphone: '0296017123',
-  }, wording)
+  const entitéJuridiqueViewModel = EntitéJuridiqueViewModelTestFactory.créeEntitéJuridiqueViewModel(wording)
 
-  it('affiche le titre : "EJ - numéro de FINESS - nom de l’établissement"', () => {
+  it('affiche le titre : "EJ - numéro de FINESS - nom de l’entité juridique"', () => {
     // WHEN
     renderFakeComponent(<PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridiqueViewModel} />)
 
     // THEN
     const titre = screen.getByRole('heading', { level: 1, name: 'EJ - 220 000 020 - CENTRE HOSPITALIER DE SAINT BRIEUC' })
-    expect(titre).toBeInTheDocument()
-  })
-
-  it('affiche le titre : "EJ - numéro de FINESS" uniquement si le nom de l’établissement n’est pas renseigné', () => {
-    // GIVEN
-    const entitéJuridiqueViewModelAvecUneRaisonSocialeVide = new EntitéJuridiqueViewModel({
-      adresseAcheminement: '22023 ST BRIEUC CEDEX 1',
-      adresseNuméroVoie: '10',
-      adresseTypeVoie: 'Rue',
-      adresseVoie: 'Marcel Proust',
-      dateMiseAJourSource: '2021-07-07',
-      libelléStatutJuridique: 'Public',
-      numéroFinessEntitéJuridique: '220000020',
-      raisonSociale: '',
-      téléphone: '0296017123',
-    }, wording)
-
-    // WHEN
-    renderFakeComponent(<PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridiqueViewModelAvecUneRaisonSocialeVide} />)
-
-    // THEN
-    const titre = screen.getByRole('heading', { level: 1, name: 'EJ - 220 000 020' })
     expect(titre).toBeInTheDocument()
   })
 
@@ -168,17 +136,7 @@ describe('La page Entité Juridique', () => {
 
   it('affiche "non renseigné" quand une valeur est vide', () => {
     // GIVEN
-    const entitéJuridiqueViewModelAvecUneValeurVide = new EntitéJuridiqueViewModel({
-      adresseAcheminement: '22023 ST BRIEUC CEDEX 1',
-      adresseNuméroVoie: '10',
-      adresseTypeVoie: 'Rue',
-      adresseVoie: 'Marcel Proust',
-      dateMiseAJourSource: '2021-07-07',
-      libelléStatutJuridique: 'Public',
-      numéroFinessEntitéJuridique: '220000020',
-      raisonSociale: 'CENTRE HOSPITALIER DE SAINT BRIEUC',
-      téléphone: '',
-    }, wording)
+    const entitéJuridiqueViewModelAvecUneValeurVide = EntitéJuridiqueViewModelTestFactory.créeEntitéJuridiqueViewModel(wording, { téléphone: '' })
 
     // WHEN
     renderFakeComponent(<PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridiqueViewModelAvecUneValeurVide} />)
@@ -192,17 +150,7 @@ describe('La page Entité Juridique', () => {
 
   it('affiche l’adresse incomplète lorsqu’il manque des champs d’adresse', () => {
     // GIVEN
-    const entitéJuridiqueViewModelAvecUneValeurVide = new EntitéJuridiqueViewModel({
-      adresseAcheminement: '22023 ST BRIEUC CEDEX 1',
-      adresseNuméroVoie: '10',
-      adresseTypeVoie: '',
-      adresseVoie: 'Marcel Proust',
-      dateMiseAJourSource: '2021-07-07',
-      libelléStatutJuridique: 'Public',
-      numéroFinessEntitéJuridique: '220000020',
-      raisonSociale: 'CENTRE HOSPITALIER DE SAINT BRIEUC',
-      téléphone: '01234567',
-    }, wording)
+    const entitéJuridiqueViewModelAvecUneValeurVide = EntitéJuridiqueViewModelTestFactory.créeEntitéJuridiqueViewModel(wording, { adresseTypeVoie: '' })
 
     // WHEN
     renderFakeComponent(<PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridiqueViewModelAvecUneValeurVide} />)

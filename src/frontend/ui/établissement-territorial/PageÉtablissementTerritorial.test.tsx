@@ -1,35 +1,26 @@
 import { screen, within } from '@testing-library/react'
 
+import { ÉtablissementTerritorialMédicoSocialViewModelTestFactory } from '../../test/ÉtablissementTerritorialMédicoSocialViewModelTestFactory'
 import { fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent, trimHtml } from '../../testHelper'
 import { PageÉtablissementTerritorial } from './PageÉtablissementTerritorial'
-import { ÉtablissementTerritorialViewModel } from './ÉtablissementTerritorialViewModel'
 
 const { wording } = fakeFrontDependencies
 
 describe('La page Établissement territorial', () => {
-  const établissementTerritorial = new ÉtablissementTerritorialViewModel({
-    adresseAcheminement: '01130 NANTUA',
-    adresseNuméroVoie : '50',
-    adresseTypeVoie : 'R',
-    adresseVoie : 'PAUL PAINLEVE',
-    catégorieÉtablissement : '355',
-    courriel : 'a@example.com',
-    dateMiseAJourSource : '2021-07-07',
-    estMonoÉtablissement: true,
-    libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
-    numéroFinessEntitéJuridique : '010008407',
-    numéroFinessÉtablissementPrincipal : '010000057',
-    numéroFinessÉtablissementTerritorial: '010000040',
-    raisonSociale : 'CH NANTUA',
-    raisonSocialeDeLEntitéDeRattachement : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-    statutJuridique : 'Société Anonyme (S.A.)',
-    typeÉtablissement : 'S',
-    téléphone : '0474754800',
-  }, wording)
+  const établissementTerritorialViewModel = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording)
+
+  it('affiche le titre : "ET - numéro de FINESS - nom de l’établissement"', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
+
+    // THEN
+    const titre = screen.getByRole('heading', { level: 1, name: 'ET - 010 000 040 - CH NANTUA' })
+    expect(titre).toBeInTheDocument()
+  })
 
   it('affiche le nom de l’établissement dans le bloc identité', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -44,7 +35,7 @@ describe('La page Établissement territorial', () => {
 
   it('affiche le numéro FINESS dans le bloc identité', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -57,7 +48,7 @@ describe('La page Établissement territorial', () => {
 
   it('affiche l’adresse dans le bloc identité', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -70,7 +61,7 @@ describe('La page Établissement territorial', () => {
 
   it('affiche le téléphone et e-mail dans le bloc identité', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -83,7 +74,7 @@ describe('La page Établissement territorial', () => {
 
   it('affiche l’entité juridique de rattachement dans le bloc identité', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -96,7 +87,7 @@ describe('La page Établissement territorial', () => {
 
   it('affiche la catégorie de l’établissement dans le bloc identité avec son libellé', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -109,7 +100,7 @@ describe('La page Établissement territorial', () => {
 
   it('affiche le nom du directeur dans le bloc identité', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -122,7 +113,7 @@ describe('La page Établissement territorial', () => {
 
   it('affiche le statut de l’établissement dans le bloc identité', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -135,7 +126,7 @@ describe('La page Établissement territorial', () => {
 
   it('affiche l’indicateur de mono-établissement dans le bloc identité', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -149,25 +140,8 @@ describe('La page Établissement territorial', () => {
   describe('l’indicateur d’établissement principal ou secondaire dans le bloc identité', () => {
     it('affiche "Principal" si l’établissement est un établissement principal', () => {
       // GIVEN
-      const établissementTerritorialPrincipal = new ÉtablissementTerritorialViewModel({
-        adresseAcheminement: '01130 NANTUA',
-        adresseNuméroVoie : '50',
-        adresseTypeVoie : 'R',
-        adresseVoie : 'PAUL PAINLEVE',
-        catégorieÉtablissement : '355',
-        courriel : 'a@example.com',
-        dateMiseAJourSource : '2021-07-07',
-        estMonoÉtablissement: true,
-        libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
-        numéroFinessEntitéJuridique : '010008407',
-        numéroFinessÉtablissementPrincipal : '',
-        numéroFinessÉtablissementTerritorial: '010000040',
-        raisonSociale : 'CH NANTUA',
-        raisonSocialeDeLEntitéDeRattachement : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-        statutJuridique : 'Société Anonyme (S.A.)',
-        typeÉtablissement : 'P',
-        téléphone : '0474754800',
-      }, wording)
+      const établissementTerritorialPrincipal = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording, { typeÉtablissement: 'P' })
+
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialPrincipal} />)
 
@@ -181,8 +155,11 @@ describe('La page Établissement territorial', () => {
     })
 
     it('affiche "Secondaire" et le numéro Finess de l’établissement principal si l’établissement n’est pas un établissement principal', () => {
+      // GIVEN
+      const établissementTerritorialSecondaire = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording, { typeÉtablissement: 'S' })
+
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+      renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialSecondaire} />)
 
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -196,7 +173,7 @@ describe('La page Établissement territorial', () => {
 
   it('affiche la date d’entrée en vigueur du CPOM dans le bloc identité', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -212,7 +189,7 @@ describe('La page Établissement territorial', () => {
 
   it('n’affiche que 9 mises à jour et sources de données dans le bloc identité', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -222,7 +199,7 @@ describe('La page Établissement territorial', () => {
 
   it('affiche deux indicateurs à venir dans le bloc identité', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorial} />)
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -232,25 +209,7 @@ describe('La page Établissement territorial', () => {
 
   describe('affiche "non renseigné" quand une valeur est vide', () => {
     it('pour le téléphone', () => {
-      const établissementTerritorialSansTéléphone = new ÉtablissementTerritorialViewModel({
-        adresseAcheminement: '01130 NANTUA',
-        adresseNuméroVoie : '50',
-        adresseTypeVoie : 'R',
-        adresseVoie : 'PAUL PAINLEVE',
-        catégorieÉtablissement : '355',
-        courriel : 'a@example.com',
-        dateMiseAJourSource : '2021-07-07',
-        estMonoÉtablissement: true,
-        libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
-        numéroFinessEntitéJuridique : '010008407',
-        numéroFinessÉtablissementPrincipal : '010000057',
-        numéroFinessÉtablissementTerritorial: '010000040',
-        raisonSociale : 'CH NANTUA',
-        raisonSocialeDeLEntitéDeRattachement : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-        statutJuridique : 'Société Anonyme (S.A.)',
-        typeÉtablissement : 'S',
-        téléphone : '',
-      }, wording)
+      const établissementTerritorialSansTéléphone = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording, { téléphone: '' })
 
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialSansTéléphone} />)
@@ -263,28 +222,10 @@ describe('La page Établissement territorial', () => {
     })
 
     it('pour l’e-mail', () => {
-      const établissementTerritorialSansTéléphone = new ÉtablissementTerritorialViewModel({
-        adresseAcheminement: '01130 NANTUA',
-        adresseNuméroVoie : '50',
-        adresseTypeVoie : 'R',
-        adresseVoie : 'PAUL PAINLEVE',
-        catégorieÉtablissement : '355',
-        courriel : '',
-        dateMiseAJourSource : '2021-07-07',
-        estMonoÉtablissement: true,
-        libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
-        numéroFinessEntitéJuridique : '010008407',
-        numéroFinessÉtablissementPrincipal : '010000057',
-        numéroFinessÉtablissementTerritorial: '010000040',
-        raisonSociale : 'CH NANTUA',
-        raisonSocialeDeLEntitéDeRattachement : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-        statutJuridique : 'Société Anonyme (S.A.)',
-        typeÉtablissement : 'S',
-        téléphone : '0474754800',
-      }, wording)
+      const établissementTerritorialSansCourriel = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording, { courriel: '' })
 
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialSansTéléphone} />)
+      renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialSansCourriel} />)
 
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -295,25 +236,7 @@ describe('La page Établissement territorial', () => {
   })
 
   it('affiche l’adresse incomplète lorsqu’il manque des champs d’adresse', () => {
-    const établissementTerritorialSansAdresseVoie = new ÉtablissementTerritorialViewModel({
-      adresseAcheminement: '01130 NANTUA',
-      adresseNuméroVoie : '50',
-      adresseTypeVoie : 'R',
-      adresseVoie : '',
-      catégorieÉtablissement : '355',
-      courriel : 'a@example.com',
-      dateMiseAJourSource : '2021-07-07',
-      estMonoÉtablissement: true,
-      libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
-      numéroFinessEntitéJuridique : '010008407',
-      numéroFinessÉtablissementPrincipal : '010000057',
-      numéroFinessÉtablissementTerritorial: '010000040',
-      raisonSociale : 'CH NANTUA',
-      raisonSocialeDeLEntitéDeRattachement : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-      statutJuridique : 'Société Anonyme (S.A.)',
-      typeÉtablissement : 'S',
-      téléphone : '0474754800',
-    }, wording)
+    const établissementTerritorialSansAdresseVoie = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording, { adresseVoie: '' })
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialSansAdresseVoie} />)
@@ -323,5 +246,13 @@ describe('La page Établissement territorial', () => {
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const adresseIncomplète = within(indicateurs[2]).getByText('50 R 01130 NANTUA', { selector: 'p' })
     expect(adresseIncomplète).toBeInTheDocument()
+  })
+
+  it('affiche le titre dans l’onglet', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />)
+
+    // THEN
+    expect(document.title).toBe(établissementTerritorialViewModel.titre)
   })
 })
