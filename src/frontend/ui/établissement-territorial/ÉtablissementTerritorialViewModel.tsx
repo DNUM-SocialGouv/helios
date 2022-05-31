@@ -6,19 +6,6 @@ import { Wording } from '../../configuration/wording/Wording'
 export class ÉtablissementTerritorialViewModel {
   constructor(private readonly établissementTerritorialIdentité: ÉtablissementTerritorialMédicoSocialIdentité, private readonly wording: Wording) {}
 
-  public get titreAccessible(): ReactElement {
-    return (
-      <>
-        <abbr title="Établissement Territorial">ET</abbr>
-            &nbsp;
-        {'- '}
-        {this.numéroFinessÉtablissementTerritorial}
-        {' - '}
-        {this.nomDeLÉtablissementTerritorial}
-      </>
-    )
-  }
-
   public get titre(): string {
     return `ET - ${this.numéroFinessÉtablissementTerritorial} - ${this.nomDeLÉtablissementTerritorial}`
   }
@@ -26,14 +13,16 @@ export class ÉtablissementTerritorialViewModel {
   public get titreAccessibleDeLEntitéJuridique(): ReactElement {
     return (
       <>
-        <abbr title="Entité Juridique">EJ</abbr>
+        <abbr title="Entité juridique">EJ</abbr>
           &nbsp;
         {'- '}
-        {this.numéroFinessEntitéJuridique}
-        {' - '}
-        {this.nomDeLÉtablissementTerritorial}
+        {this.formateLeTitreDeLEntitéJuridiqueDeRattachement}
       </>
     )
+  }
+
+  public get numéroFinessEntitéJuridiqueBrute(): string {
+    return this.établissementTerritorialIdentité.numéroFinessEntitéJuridique
   }
 
   public get nomDeLÉtablissementTerritorial(): string {
@@ -55,13 +44,8 @@ export class ÉtablissementTerritorialViewModel {
   }
 
   public get entitéJuridiqueDeRattachement(): string {
-    const numéroFinessEntitéJuridiqueFormaté = this.numéroFinessDeLEntitéJuridiqueDeRattachementFormaté
-    const nomDeLEntitéJuridique = this.établissementTerritorialIdentité.raisonSocialeDeLEntitéDeRattachement
-    return `EJ - ${numéroFinessEntitéJuridiqueFormaté} - ${nomDeLEntitéJuridique}`
-  }
-
-  public get numéroFinessDeLEntitéJuridiqueDeRattachementFormaté() {
-    return this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorialIdentité.numéroFinessEntitéJuridique, 3)
+    const titreDeLEntitéJuridiqueDeRattachement = this.formateLeTitreDeLEntitéJuridiqueDeRattachement
+    return `EJ - ${titreDeLEntitéJuridiqueDeRattachement}`
   }
 
   public get catégorieDeLÉtablissement(): string {
@@ -84,6 +68,12 @@ export class ÉtablissementTerritorialViewModel {
 
   public get dateDeMiseÀJour(): string {
     return this.formateLaDate(this.établissementTerritorialIdentité.dateMiseAJourSource)
+  }
+
+  private get formateLeTitreDeLEntitéJuridiqueDeRattachement() {
+    const numéroFinessEntitéJuridiqueFormaté = this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorialIdentité.numéroFinessEntitéJuridique, 3)
+    const nomDeLEntitéJuridique = this.établissementTerritorialIdentité.raisonSocialeDeLEntitéDeRattachement
+    return `${numéroFinessEntitéJuridiqueFormaté} - ${nomDeLEntitéJuridique}`
   }
 
   private insèreUnEspaceTousLesNCaractères(str: string, nombreDeCaractères: number): string {

@@ -140,5 +140,6 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     expect(abréviationEj).toHaveAttribute('title', 'Entité juridique')
     expect(within(levels[1]).getByText('- 010 008 407 - HOPITAL PRIVE DE VILLENEUVE DASCQ')).toBeInTheDocument()
     expect(within(levels[2]).queryByRole('link')).not.toBeInTheDocument()
+    expect(within(levels[2]).getByText('CH NANTUA')).toBeInTheDocument()
   })
 })
