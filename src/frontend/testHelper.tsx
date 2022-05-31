@@ -7,6 +7,15 @@ import { Paths } from './configuration/Paths'
 import { WordingFr } from './configuration/wording/WordingFr'
 import { DependenciesProvider } from './ui/commun/contexts/useDependencies'
 
+// Cela permet de pouvoir tester ce qu'il y a dans <head>.
+// https://github.com/vercel/next.js/discussions/11060
+jest.mock('next/head', () => (
+  {
+    __esModule: true,
+    default: ({ children }: { children: ReactElement[] }) => children,
+  }
+))
+
 export const renderFakeComponent = (component: ReactChild): RenderResult => {
   return render(
     <DependenciesProvider dependencies={fakeFrontDependencies}>

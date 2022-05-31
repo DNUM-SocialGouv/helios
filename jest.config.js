@@ -7,6 +7,7 @@ const customJestConfig = {
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
     '!**/node_modules/**',
+    '!src/database/**',
     '!src/pages/**',
   ],
   coverageDirectory: '<rootDir>/coverage',

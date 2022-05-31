@@ -29,13 +29,13 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
 
   it.each(
     [
-      Accessibilité,
-      MentionsLégales,
-      DonnéesPersonnelles,
-      GestionDesCookies,
-      PlanDuSite,
+      [Accessibilité, wording.ACCESSIBILITÉ],
+      [MentionsLégales, wording.MENTIONS_LÉGALES],
+      [DonnéesPersonnelles, wording.DONNÉES_PERSONNELLES],
+      [GestionDesCookies, wording.GESTION_COOKIES],
+      [PlanDuSite, wording.PLAN_DU_SITE],
     ]
-  )('affiche le chemin jusqu’à la page courante', (Page) => {
+  )('affiche le chemin jusqu’à la page courante', (Page, expected) => {
     // WHEN
     renderFakeComponent(
       <>
@@ -49,12 +49,16 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     const levels = within(breadcrumb).getAllByRole('listitem')
     expect(levels).toHaveLength(2)
     expect(within(levels[0]).getByRole('link')).toBeInTheDocument()
+    const accueil = within(levels[0]).getByText(wording.ACCUEIL)
+    expect(accueil).toHaveAttribute('href', '/')
     expect(within(levels[1]).queryByRole('link')).not.toBeInTheDocument()
+    const breadCrumbText = within(levels[1]).getByText(expected)
+    expect(breadCrumbText).toBeInTheDocument()
   })
 
   it('affiche le chemin jusqu’à la page entité juridique', () => {
     // GIVEN
-    const entitéJuridiqueViewModel = new EntitéJuridiqueViewModel({
+    const entitéJuridique = {
       adresseAcheminement: '22023 ST BRIEUC CEDEX 1',
       adresseNuméroVoie: '10',
       adresseTypeVoie: 'Rue',
@@ -64,7 +68,8 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
       numéroFinessEntitéJuridique: '220000020',
       raisonSociale: 'CENTRE HOSPITALIER DE SAINT BRIEUC',
       téléphone: '0123456789',
-    }, wording)
+    }
+    const entitéJuridiqueViewModel = new EntitéJuridiqueViewModel(entitéJuridique, wording)
 
     // WHEN
     renderFakeComponent(
@@ -79,6 +84,11 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     const levels = within(breadcrumb).getAllByRole('listitem')
     expect(levels).toHaveLength(2)
     expect(within(levels[0]).getByRole('link')).toBeInTheDocument()
+    const accueil = within(levels[0]).getByText(wording.ACCUEIL)
+    expect(accueil).toHaveAttribute('href', '/')
     expect(within(levels[1]).queryByRole('link')).not.toBeInTheDocument()
+    const abréviationEj = within(levels[1]).getByText('EJ', { selector: 'abbr' })
+    expect(abréviationEj).toHaveAttribute('title', 'Entité juridique')
+    expect(within(levels[1]).getByText('- 220 000 020 - CENTRE HOSPITALIER DE SAINT BRIEUC')).toBeInTheDocument()
   })
 })

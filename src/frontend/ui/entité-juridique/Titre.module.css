@@ -1,0 +1,11 @@
+.titre {
+  display: flex;
+  gap: 1.2rem;
+  margin: var(--title-spacing);
+}
+
+.titre h1 {
+  color: var(--text-action-high-blue-france);
+  margin: 0;
+  min-width: 1.7rem;
+}
