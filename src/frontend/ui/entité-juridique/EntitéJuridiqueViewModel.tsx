@@ -6,7 +6,7 @@ import { Wording } from '../../configuration/wording/Wording'
 export class EntitéJuridiqueViewModel {
   constructor(private readonly entitéJuridique: EntitéJuridique, private readonly wording: Wording) {}
 
-  public get titre(): ReactElement {
+  public get titreAccessible(): ReactElement {
     return (
       <>
         <abbr title="Entité juridique">EJ</abbr>
@@ -18,7 +18,7 @@ export class EntitéJuridiqueViewModel {
     )
   }
 
-  public get titreBrute(): string {
+  public get titre(): string {
     return `EJ - ${this.numéroFiness}${this.ajouteLeNomDeLEntitéJuridiqueSiRenseigné()}`
   }
 

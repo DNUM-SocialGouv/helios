@@ -12,7 +12,7 @@ type TypeEntitéJuridique = Readonly<{
 export const PageEntitéJuridique = ({ entitéJuridiqueViewModel }: TypeEntitéJuridique) => {
   useBreadcrumb([
     {
-      label: entitéJuridiqueViewModel.titre,
+      label: entitéJuridiqueViewModel.titreAccessible,
       path: '',
     },
   ])
@@ -21,11 +21,11 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel }: TypeEntitéJ
     <>
       <Head>
         <title>
-          {entitéJuridiqueViewModel.titreBrute}
+          {entitéJuridiqueViewModel.titre}
         </title>
       </Head>
       <Titre>
-        {entitéJuridiqueViewModel.titreBrute}
+        {entitéJuridiqueViewModel.titre}
       </Titre>
       <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
     </>
