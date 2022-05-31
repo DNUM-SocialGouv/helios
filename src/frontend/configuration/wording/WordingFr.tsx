@@ -32,6 +32,8 @@ export class WordingFr implements Wording {
   readonly MISE_À_JOUR: string = 'Mise à jour'
   readonly SOURCE: string = 'Source'
   readonly NON_RENSEIGNÉ: string = 'Non renseigné'
+  readonly OUI: string = 'Oui'
+  readonly NON: string = 'Non'
 
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string = 'fiche d’identité'
@@ -39,6 +41,7 @@ export class WordingFr implements Wording {
   readonly NUMÉRO_FINESS: string = 'Numéro FINESS'
   readonly ADRESSE: string = 'Adresse'
   readonly TÉLÉPHONE: string = 'Téléphone'
+  readonly TÉLÉPHONE_ET_EMAIL: string = 'Téléphone et e-mail'
   readonly NOM_DU_DIRECTEUR: string = 'Nom du directeur'
   readonly STATUT_DE_L_ÉTABLISSEMENT: string = 'Statut de l’établissement'
   readonly DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM: ReactElement = (
@@ -51,6 +54,8 @@ export class WordingFr implements Wording {
   readonly CATÉGORIE_DE_L_ÉTABLISSEMENT: string = 'Catégorie de l’établissement'
   readonly MONO_ÉTABLISSEMENT: string = 'Mono-établissement'
   readonly ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE: string = 'Établissement Principal/Secondaire'
+  readonly PRINCIPAL: string = 'Principal'
+  readonly SECONDAIRE: string = 'Secondaire'
   readonly SITE_INTERNET: string = 'Site internet'
 
   // Source

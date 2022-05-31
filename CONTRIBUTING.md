@@ -62,8 +62,8 @@ yarn psql:local
 ```
 
 ### Connexion à la base de données de production
-### Prérequis 
-1. Faire partie de l'équipe Helios sur Scalingo. 
+### Prérequis
+1. Faire partie de l'équipe Helios sur Scalingo.
 2. Installer la CLI Scalingo :
 ```sh
 curl -O https://cli-dl.scalingo.io/install && bash install
@@ -72,7 +72,7 @@ curl -O https://cli-dl.scalingo.io/install && bash install
 ```sh
 scalingo login
 ```
-### Commande 
+### Commande
 ```sh
 yarn psql:production
 ```
@@ -87,20 +87,26 @@ Elles sont nécessaires dès lors que l'on veut créer ou supprimer des tables, 
 ### Créer une migration pour les bases de données
 
 ```sh
-yarn db-migrate create <nom_de_la_migration>
+yarn typeorm migration:create src/database/migrations/<NomDeMigration>
 ```
 
-Un fichier *.js* est auto-généré sous `./migrations`. Il faut ensuite remplir les deux fichiers *SQL* (*up* & *down*) situés sous `./migrations/sqls`.
+Un fichier *.ts* est auto-généré sous `src/database/migrations`. Il faut modifier le fichier auto-généré pour le passer en *.js* (enlever les types, l'*implements* de l'interface de typeorm, les mot-clés *public* et rajouter la classe en *module.exports*). Enfin compléter les deux méthodes *up* et *down*.
 
 ### Appliquer les migrations
 
 Avec la commande `yarn dev`, les migrations sont appliquées en même temps que le lancement de la base de développement. Voici tout de même comment les appliquer indépendamment, une fois la base de données démarrée :
 
 ```sh
-yarn db-migrate up
+yarn typeorm migration:run
 ```
 
-> Plus d’infos sur [db-migrate](https://db-migrate.readthedocs.io/en/latest/Getting%20Started/usage/)
+Et pour appliquer les migrations *down* (applique seulement 1 seule migration) :
+
+```sh
+yarn typeorm migration:revert
+```
+
+> Plus d’infos sur [typeorm.io](https://typeorm.io/migrations)
 
 > Les migrations sont jouées automatiquement lors de chaque déploiement sur Scalingo grâce à la commande du `Procfile`
 

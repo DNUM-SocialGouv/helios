@@ -1,10 +1,24 @@
-import { useRouter } from 'next/router'
+import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 
-export default function router() {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const router = useRouter()
+import { récupèreLÉtablissementTerritorialEndpoint } from '../../backend/infrastructure/controllers/récupèreLÉtablissementTerritorialEndpoint'
+import { dependencies } from '../../backend/infrastructure/dependencies'
+import { ÉtablissementTerritorialMédicoSocialIdentité } from '../../backend/métier/entities/ÉtablissementTerritorialMédicoSocial/ÉtablissementTerritorialMédicoSocialIdentité'
+import { useDependencies } from '../../frontend/ui/commun/contexts/useDependencies'
+import { PageÉtablissementTerritorial } from '../../frontend/ui/établissement-territorial/PageÉtablissementTerritorial'
+import { ÉtablissementTerritorialViewModel } from '../../frontend/ui/établissement-territorial/ÉtablissementTerritorialViewModel'
 
-  const { numéroFiness } = router.query
+export default function Router({ établissementTerritorial }:
+  { établissementTerritorial: ÉtablissementTerritorialMédicoSocialIdentité }) {
+  const { wording } = useDependencies()
+  const établissementTerritorialViewModel = new ÉtablissementTerritorialViewModel(établissementTerritorial, wording)
+  return <PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />
+}
 
-  return numéroFiness
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+  try {
+    const établissementTerritorial = await récupèreLÉtablissementTerritorialEndpoint(dependencies, context.query['numéroFINESS'] as string)
+    return { props: { établissementTerritorial } }
+  } catch (error) {
+    return { notFound: true }
+  }
 }

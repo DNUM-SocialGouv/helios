@@ -24,6 +24,8 @@ export interface Wording {
   readonly MISE_À_JOUR: string
   readonly SOURCE: string
   readonly NON_RENSEIGNÉ: string
+  readonly OUI: string
+  readonly NON: string
 
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string
@@ -31,6 +33,7 @@ export interface Wording {
   readonly NUMÉRO_FINESS: string
   readonly ADRESSE: string
   readonly TÉLÉPHONE: string
+  readonly TÉLÉPHONE_ET_EMAIL: string
   readonly NOM_DU_DIRECTEUR: string
   readonly STATUT_DE_L_ÉTABLISSEMENT: string
   readonly DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM: ReactElement
@@ -38,6 +41,8 @@ export interface Wording {
   readonly CATÉGORIE_DE_L_ÉTABLISSEMENT: string
   readonly MONO_ÉTABLISSEMENT: string
   readonly ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE: string
+  readonly PRINCIPAL: string
+  readonly SECONDAIRE: string
   readonly SITE_INTERNET: string
 
   // Source

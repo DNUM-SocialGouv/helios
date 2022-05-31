@@ -1,6 +1,6 @@
 import { ReactChild } from 'react'
 
-import { useDependencies } from '../commun/contexts/useDependencies'
+import { useDependencies } from '../contexts/useDependencies'
 
 type IndicateurProps = Readonly<{
   dateDeMiseÀJour?: string;
@@ -9,7 +9,7 @@ type IndicateurProps = Readonly<{
   valeur: ReactChild;
 }>
 
-export const Indicateur = ({ dateDeMiseÀJour, nomDeLIndicateur, source, valeur }: IndicateurProps) => {
+export const IndicateurIdentité = ({ dateDeMiseÀJour, nomDeLIndicateur, source, valeur }: IndicateurProps) => {
   const { wording } = useDependencies()
   let séparateur = ''
   let miseÀJour = ''

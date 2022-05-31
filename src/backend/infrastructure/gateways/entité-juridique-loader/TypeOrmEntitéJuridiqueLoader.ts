@@ -4,6 +4,7 @@ import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../databas
 import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { EntitéJuridiqueNonTrouvée } from '../../../métier/entities/EntitéJuridiqueNonTrouvée'
+import { EntitéJuridiqueDeRattachement } from '../../../métier/entities/ÉtablissementTerritorialMédicoSocial/EntitéJuridiqueDeRattachement'
 import { EntitéJuridiqueLoader } from '../../../métier/gateways/EntitéJuridiqueLoader'
 
 export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
@@ -19,6 +20,17 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
     const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
 
     return this.construitLEntitéJuridique(entitéJuridiqueModel, dateDeMiseAJourModel)
+  }
+
+  async chargeLEntitéJuridiqueDeRattachement(numéroFiness: string): Promise<EntitéJuridiqueDeRattachement> {
+    const entitéJuridiqueDeRattachement = await (await this.orm)
+      .getRepository(EntitéJuridiqueModel)
+      .findOneBy({ numéroFinessEntitéJuridique: numéroFiness })
+
+    return {
+      raisonSocialeDeLEntitéDeRattachement: entitéJuridiqueDeRattachement ? entitéJuridiqueDeRattachement.raisonSociale : '',
+      statutJuridique: entitéJuridiqueDeRattachement ? entitéJuridiqueDeRattachement.libelléStatutJuridique : '',
+    }
   }
 
   private async chargeLaDateDeMiseÀJourModel() {

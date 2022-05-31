@@ -1,3 +1,4 @@
+import { EntitéJuridiqueTestFactory } from '../../test/EntitéJuridiqueTestFactory'
 import { EntitéJuridique } from '../entities/EntitéJuridique'
 import { EntitéJuridiqueNonTrouvée } from '../entities/EntitéJuridiqueNonTrouvée'
 import { EntitéJuridiqueLoader } from '../gateways/EntitéJuridiqueLoader'
@@ -7,21 +8,11 @@ describe('La récupération d’une entité juridique', () => {
   it('récupère la fiche identité de l’entité juridique', async () => {
     // GIVEN
     const numéroFiness = '123456789'
-    const entitéJuridique: EntitéJuridique = {
-      adresseAcheminement: '75000 Paris',
-      adresseNuméroVoie: '6',
-      adresseTypeVoie: 'AV',
-      adresseVoie: 'rue de la Paix',
-      dateMiseAJourSource: '20220514',
-      libelléStatutJuridique: 'statut',
-      numéroFinessEntitéJuridique: numéroFiness,
-      raisonSociale: 'Nom de l’entité juridique',
-      téléphone: '0123456789',
-    }
+    const entitéJuridique: EntitéJuridique = EntitéJuridiqueTestFactory.créeEntitéJuridique({ numéroFinessEntitéJuridique: numéroFiness })
     const mockedChargeParNuméroFiness = jest.fn(async () => {
       return entitéJuridique
     })
-    const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeParNuméroFiness: mockedChargeParNuméroFiness }
+    const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeLEntitéJuridiqueDeRattachement: jest.fn(), chargeParNuméroFiness: mockedChargeParNuméroFiness }
     const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader)
 
     // WHEN
@@ -39,7 +30,7 @@ describe('La récupération d’une entité juridique', () => {
     const mockedChargeParNuméroFiness = jest.fn(async () => {
       return new EntitéJuridiqueNonTrouvée('123456789')
     })
-    const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeParNuméroFiness: mockedChargeParNuméroFiness }
+    const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeLEntitéJuridiqueDeRattachement: jest.fn(), chargeParNuméroFiness: mockedChargeParNuméroFiness }
     const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader)
 
     // WHEN
