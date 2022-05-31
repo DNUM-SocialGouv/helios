@@ -193,7 +193,7 @@ describe('La page Établissement territorial', () => {
       const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
       const labelÉtablissementPrincipalOuSecondaire = within(indicateurs[9]).getByText(`${wording.ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE} -`, { selector: 'p' })
       expect(labelÉtablissementPrincipalOuSecondaire.textContent).toBe(`${wording.ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
-      const établissementPrincipalOuSecondaire = within(indicateurs[9]).getByText(`${wording.SECONDAIRE} 010 000 057`)
+      const établissementPrincipalOuSecondaire = within(indicateurs[9]).getByText(`${wording.SECONDAIRE} (${wording.PRINCIPAL} : 010 000 057)`)
       expect(établissementPrincipalOuSecondaire).toBeInTheDocument()
     })
   })

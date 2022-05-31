@@ -43,7 +43,7 @@ export class ÉtablissementTerritorialViewModel {
   public get principalOuSecondaire(): string {
     return this.établissementTerritorialIdentité.typeÉtablissement === 'P' ?
       this.wording.PRINCIPAL :
-      `${this.wording.SECONDAIRE} ${this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal, 3)}`
+      `${this.wording.SECONDAIRE} (${this.wording.PRINCIPAL} : ${this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal, 3)})`
   }
 
   public get dateDeMiseÀJour(): string {
