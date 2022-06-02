@@ -243,4 +243,12 @@ describe('La page Établissement territorial sanitaire', () => {
     const adresseIncomplète = within(indicateurs[2]).getByText('50 R 01130 NANTUA', { selector: 'p' })
     expect(adresseIncomplète).toBeInTheDocument()
   })
+
+  it('affiche le titre dans l’onglet', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+
+    // THEN
+    expect(document.title).toBe(établissementTerritorialSanitaire.titre)
+  })
 })

@@ -4,6 +4,10 @@ import { Wording } from '../../configuration/wording/Wording'
 export class ÉtablissementTerritorialSanitaireViewModel {
   constructor(private readonly établissementTerritorialIdentité: ÉtablissementTerritorialSanitaireIdentité, private readonly wording: Wording) {}
 
+  public get titre(): string {
+    return `ET - ${this.numéroFinessÉtablissementTerritorial} - ${this.nomDeLÉtablissementTerritorial}`
+  }
+
   public get nomDeLÉtablissementTerritorial(): string {
     return this.établissementTerritorialIdentité.raisonSociale
   }

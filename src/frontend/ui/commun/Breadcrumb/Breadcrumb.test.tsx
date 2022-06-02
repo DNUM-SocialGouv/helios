@@ -12,6 +12,9 @@ import { fakeFrontDependencies, renderFakeComponent } from '../../../testHelper'
 import { PageEntitéJuridique } from '../../entité-juridique/PageEntitéJuridique'
 import { PageÉtablissementTerritorialMédicoSocial } from '../../établissement-territorial-médico-social/PageÉtablissementTerritorialMédicoSocial'
 import { Breadcrumb } from './Breadcrumb'
+import {
+  PageÉtablissementTerritorialSanitaire
+} from "../../établissement-territorial-sanitaire/PageÉtablissementTerritorialSanitaire";
 
 const { paths, wording } = fakeFrontDependencies
 
@@ -83,7 +86,7 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     expect(within(levels[1]).getByText('- 220 000 020 - CENTRE HOSPITALIER DE SAINT BRIEUC')).toBeInTheDocument()
   })
 
-  it('affiche le chemin jusqu’à la page établissement territorial', () => {
+  it('affiche le chemin jusqu’à la page établissement territorial médico-social', () => {
     // GIVEN
     const établissementTerritorialViewModel = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording)
 
@@ -92,6 +95,34 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
       <>
         <Breadcrumb />
         <PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialViewModel} />
+      </>
+    )
+
+    // THEN
+    const breadcrumb = screen.getByRole('navigation')
+    const levels = within(breadcrumb).getAllByRole('listitem')
+    expect(levels).toHaveLength(3)
+    expect(within(levels[0]).getByRole('link')).toBeInTheDocument()
+    const accueil = within(levels[0]).getByText(wording.ACCUEIL)
+    expect(accueil).toHaveAttribute('href', '/')
+    const lienEntitéJuridique = within(levels[1]).getByRole('link')
+    expect(lienEntitéJuridique).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/010008407`)
+    const abréviationEj = within(levels[1]).getByText('EJ', { selector: 'abbr' })
+    expect(abréviationEj).toHaveAttribute('title', 'Entité juridique')
+    expect(within(levels[1]).getByText('- 010 008 407 - HOPITAL PRIVE DE VILLENEUVE DASCQ')).toBeInTheDocument()
+    expect(within(levels[2]).queryByRole('link')).not.toBeInTheDocument()
+    expect(within(levels[2]).getByText('CH NANTUA')).toBeInTheDocument()
+  })
+
+  it('affiche le chemin jusqu’à la page établissement territorial sanitaire', () => {
+    // GIVEN
+    const établissementTerritorialViewModel = ÉtablissementTerritorialSanitaireViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording)
+
+    // WHEN
+    renderFakeComponent(
+      <>
+        <Breadcrumb />
+        <PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialViewModel} />
       </>
     )
 
