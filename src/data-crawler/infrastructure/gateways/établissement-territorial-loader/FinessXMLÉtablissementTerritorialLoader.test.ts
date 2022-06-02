@@ -1,5 +1,6 @@
 import { mkdirSync, rmSync, writeFileSync } from 'fs'
 
+import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { getFakeDataCrawlerDependencies } from '../../../testHelper'
 import { NodeXmlToJs } from '../xml-to-js/NodeXmlToJs'
@@ -9,6 +10,7 @@ describe('Récupération des établissements territoriaux de la source de donné
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
   const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_et`
   const finessLocalPath = `${localPath}/finess/simple`
+  const nomenclatureLocalPath = `${localPath}/finess/nomenclature`
 
   beforeEach(() => {
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -87,7 +89,7 @@ describe('Récupération des établissements territoriaux de la source de donné
         <telephone>0474731001</telephone>
         <telecopie>0774731002</telecopie>
         <courriel xsi:nil="true"/>
-        <categetab>355</categetab>
+        <categetab>111</categetab>
         <libcategetab>Centre Hospitalier (C.H.)</libcategetab>
         <libcourtcategetab>C.H.</libcourtcategetab>
         <categagretab>1102</categagretab>
@@ -118,6 +120,46 @@ describe('Récupération des établissements territoriaux de la source de donné
     </fluxfiness>`
     mkdirSync(finessLocalPath, { recursive: true })
     writeFileSync(`${finessLocalPath}/finess_cs1400102_stock_20211214-0336.xml`, xml)
+
+    mkdirSync(nomenclatureLocalPath, { recursive: true })
+    const xmlNomenclature = `<?xml version="1.0" encoding="UTF-8"?>
+    <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <nomenclcategorieETavecagr>
+        <code>355</code>
+        <libelle>Centre Hospitalier (C.H.)</libelle>
+        <libellecourt>C.H.</libellecourt>
+        <domaine>SAN</domaine>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1102</codeagr3>
+        <libelleagr3>Centres Hospitaliers</libelleagr3>
+        <libellecourtagr3>Centres Hospitaliers</libellecourtagr3>
+        <codeagr2>1100</codeagr2>
+        <libelleagr2>Etablissements Hospitaliers</libelleagr2>
+        <libellecourtagr2>Etab.Hospitaliers</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Etablissements Relevant de la Loi Hospitalière</libelleagr1>
+        <libellecourtagr1>Etab.Loi Hospital.</libellecourtagr1>
+      </nomenclcategorieETavecagr>
+      <nomenclcategorieETavecagr>
+        <code>111</code>
+        <libelle>Centre Hospitalier (C.H.)</libelle>
+        <libellecourt>C.H.</libellecourt>
+        <domaine>SOC</domaine>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1102</codeagr3>
+        <libelleagr3>Centres Hospitaliers</libelleagr3>
+        <libellecourtagr3>Centres Hospitaliers</libellecourtagr3>
+        <codeagr2>1100</codeagr2>
+        <libelleagr2>Etablissements Hospitaliers</libelleagr2>
+        <libellecourtagr2>Etab.Hospitaliers</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Etablissements Relevant de la Loi Hospitalière</libelleagr1>
+        <libellecourtagr1>Etab.Loi Hospital.</libellecourtagr1>
+      </nomenclcategorieETavecagr>
+    </fluxfiness>`
+    writeFileSync(`${nomenclatureLocalPath}/finess_cs1500106_stock_20211214-0417.xml`, xmlNomenclature)
   })
 
   afterEach(() => {
@@ -140,6 +182,7 @@ describe('Récupération des établissements territoriaux de la source de donné
           catégorieÉtablissement: '355',
           courriel: '',
           dateMiseAJourSource: '20211214',
+          domaine: DomaineÉtablissementTerritorial.SANITAIRE,
           libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
           numéroFinessEntitéJuridique: '010008407',
           numéroFinessÉtablissementPrincipal: '010000057',
@@ -153,9 +196,10 @@ describe('Récupération des établissements territoriaux de la source de donné
           adresseNuméroVoie: '',
           adresseTypeVoie: 'RTE',
           adresseVoie: 'DE VEYZIAT',
-          catégorieÉtablissement: '355',
+          catégorieÉtablissement: '111',
           courriel: '',
           dateMiseAJourSource: '20211214',
+          domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
           libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
           numéroFinessEntitéJuridique: '010008407',
           numéroFinessÉtablissementPrincipal: '010005239',

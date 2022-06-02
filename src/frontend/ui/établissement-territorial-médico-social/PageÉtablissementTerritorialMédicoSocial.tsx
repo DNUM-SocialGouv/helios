@@ -5,13 +5,13 @@ import { useBreadcrumb } from '../commun/hooks/useBreadcrumb'
 import { Titre } from '../commun/Titre/Titre'
 import { BlocIdentitéMédicoSocial } from './BlocIdentitéMédicoSocial'
 import LogoÉtablissementTerritorial from './logo-établissement-territorial-médico-social.svg'
-import { ÉtablissementTerritorialViewModel } from './ÉtablissementTerritorialViewModel'
+import { ÉtablissementTerritorialMédicoSocialViewModel } from './ÉtablissementTerritorialMédicoSocialViewModel'
 
 type TypeÉtablissementTerritorial = Readonly<{
-  établissementTerritorialViewModel: ÉtablissementTerritorialViewModel
+  établissementTerritorialViewModel: ÉtablissementTerritorialMédicoSocialViewModel
 }>
 
-export const PageÉtablissementTerritorial = ({ établissementTerritorialViewModel }: TypeÉtablissementTerritorial) => {
+export const PageÉtablissementTerritorialMédicoSocial = ({ établissementTerritorialViewModel }: TypeÉtablissementTerritorial) => {
   const { paths } = useDependencies()
 
   useBreadcrumb([
@@ -35,7 +35,7 @@ export const PageÉtablissementTerritorial = ({ établissementTerritorialViewMod
       <Titre logo={LogoÉtablissementTerritorial}>
         {établissementTerritorialViewModel.titre}
       </Titre>
-      <BlocIdentitéMédicoSocial établissementTerritorialViewModel={établissementTerritorialViewModel} />
+      <BlocIdentitéMédicoSocial établissementTerritorialMédicoSocialViewModel={établissementTerritorialViewModel} />
     </>
   )
 }

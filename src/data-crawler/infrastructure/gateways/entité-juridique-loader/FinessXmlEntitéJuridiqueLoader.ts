@@ -112,7 +112,7 @@ type EntitéJuridiqueFiness = Readonly<{
   }>
 }>
 
-export type EntitéJuridiqueFluxFiness = Readonly<{
+type EntitéJuridiqueFluxFiness = Readonly<{
   fluxfiness: Readonly<{
     structureej: EntitéJuridiqueFiness[]
   }>

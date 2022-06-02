@@ -10,7 +10,7 @@ import { EntitéJuridiqueViewModelTestFactory } from '../../../test/EntitéJurid
 import { ÉtablissementTerritorialMédicoSocialViewModelTestFactory } from '../../../test/ÉtablissementTerritorialMédicoSocialViewModelTestFactory'
 import { fakeFrontDependencies, renderFakeComponent } from '../../../testHelper'
 import { PageEntitéJuridique } from '../../entité-juridique/PageEntitéJuridique'
-import { PageÉtablissementTerritorial } from '../../établissement-territorial/PageÉtablissementTerritorial'
+import { PageÉtablissementTerritorialMédicoSocial } from '../../établissement-territorial-médico-social/PageÉtablissementTerritorialMédicoSocial'
 import { Breadcrumb } from './Breadcrumb'
 
 const { paths, wording } = fakeFrontDependencies
@@ -91,7 +91,7 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     renderFakeComponent(
       <>
         <Breadcrumb />
-        <PageÉtablissementTerritorial établissementTerritorialViewModel={établissementTerritorialViewModel} />
+        <PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialViewModel} />
       </>
     )
 
