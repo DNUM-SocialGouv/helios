@@ -10,11 +10,15 @@ type TypeÉtablissementTerritorial = Readonly<{
 }>
 
 export const PageÉtablissementTerritorialSanitaire = ({ établissementTerritorialViewModel }: TypeÉtablissementTerritorial) => {
-  const { wording } = useDependencies()
+  const { paths } = useDependencies()
 
   useBreadcrumb([
     {
-      label: wording.DONNÉES_PERSONNELLES,
+      label: établissementTerritorialViewModel.titreAccessibleDeLEntitéJuridique,
+      path: `${paths.ENTITÉ_JURIDIQUE}/${établissementTerritorialViewModel.numéroFinessEntitéJuridiqueBrut}`,
+    },
+    {
+      label: établissementTerritorialViewModel.nomDeLÉtablissementTerritorial,
       path: '',
     },
   ])

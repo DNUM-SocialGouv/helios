@@ -1,9 +1,9 @@
-import { ÉtablissementTerritorialMédicoSocialIdentité } from '../../backend/métier/entities/ÉtablissementTerritorialMédicoSocial/ÉtablissementTerritorialMédicoSocialIdentité'
+import { ÉtablissementTerritorialSanitaireIdentité } from '../../backend/métier/entities/ÉtablissementTerritorialSanitaire/ÉtablissementTerritorialSanitaireIdentité'
 import { Wording } from '../configuration/wording/Wording'
-import { ÉtablissementTerritorialMédicoSocialViewModel } from '../ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel'
+import { ÉtablissementTerritorialSanitaireViewModel } from '../ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel'
 
-export class ÉtablissementTerritorialMédicoSocialViewModelTestFactory {
-  private static établissementTerritorial1: ÉtablissementTerritorialMédicoSocialIdentité = {
+export class ÉtablissementTerritorialSanitaireViewModelTestFactory {
+  private static établissementTerritorial1: ÉtablissementTerritorialSanitaireIdentité = {
     adresseAcheminement: '01130 NANTUA',
     adresseNuméroVoie : '50',
     adresseTypeVoie : 'R',
@@ -11,7 +11,6 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestFactory {
     catégorieÉtablissement : '355',
     courriel : 'a@example.com',
     dateMiseAJourSource : '2021-07-07',
-    estMonoÉtablissement: true,
     libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
     numéroFinessEntitéJuridique : '010008407',
     numéroFinessÉtablissementPrincipal : '010000057',
@@ -24,10 +23,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestFactory {
   }
 
   public static créeÉtablissementTerritorialViewModel(
-    wording: Wording, champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialIdentité>
-  ): ÉtablissementTerritorialMédicoSocialViewModel {
-    return new ÉtablissementTerritorialMédicoSocialViewModel({
-      ...ÉtablissementTerritorialMédicoSocialViewModelTestFactory.établissementTerritorial1,
+    wording: Wording, champsSurchargés?: Partial<ÉtablissementTerritorialSanitaireIdentité>
+  ): ÉtablissementTerritorialSanitaireViewModel {
+    return new ÉtablissementTerritorialSanitaireViewModel({
+      ...ÉtablissementTerritorialSanitaireViewModelTestFactory.établissementTerritorial1,
       ...champsSurchargés,
     }, wording)
   }
