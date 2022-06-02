@@ -8,9 +8,11 @@ import MentionsLégales from '../../../../pages/mentions-legales'
 import PlanDuSite from '../../../../pages/plan-du-site'
 import { EntitéJuridiqueViewModelTestFactory } from '../../../test/EntitéJuridiqueViewModelTestFactory'
 import { ÉtablissementTerritorialMédicoSocialViewModelTestFactory } from '../../../test/ÉtablissementTerritorialMédicoSocialViewModelTestFactory'
+import { ÉtablissementTerritorialSanitaireViewModelTestFactory } from '../../../test/ÉtablissementTerritorialSanitaireViewModelTestFactory'
 import { fakeFrontDependencies, renderFakeComponent } from '../../../testHelper'
 import { PageEntitéJuridique } from '../../entité-juridique/PageEntitéJuridique'
 import { PageÉtablissementTerritorialMédicoSocial } from '../../établissement-territorial-médico-social/PageÉtablissementTerritorialMédicoSocial'
+import { PageÉtablissementTerritorialSanitaire } from '../../établissement-territorial-sanitaire/PageÉtablissementTerritorialSanitaire'
 import { Breadcrumb } from './Breadcrumb'
 
 const { paths, wording } = fakeFrontDependencies
@@ -83,15 +85,44 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     expect(within(levels[1]).getByText('- 220 000 020 - CENTRE HOSPITALIER DE SAINT BRIEUC')).toBeInTheDocument()
   })
 
-  it('affiche le chemin jusqu’à la page établissement territorial', () => {
+  it('affiche le chemin jusqu’à la page établissement territorial médico-social', () => {
     // GIVEN
-    const établissementTerritorialViewModel = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording)
+    const établissementTerritorialMédicoSocialViewModel =
+        ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording)
 
     // WHEN
     renderFakeComponent(
       <>
         <Breadcrumb />
-        <PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialViewModel} />
+        <PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocialViewModel} />
+      </>
+    )
+
+    // THEN
+    const breadcrumb = screen.getByRole('navigation')
+    const levels = within(breadcrumb).getAllByRole('listitem')
+    expect(levels).toHaveLength(3)
+    expect(within(levels[0]).getByRole('link')).toBeInTheDocument()
+    const accueil = within(levels[0]).getByText(wording.ACCUEIL)
+    expect(accueil).toHaveAttribute('href', '/')
+    const lienEntitéJuridique = within(levels[1]).getByRole('link')
+    expect(lienEntitéJuridique).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/010008407`)
+    const abréviationEj = within(levels[1]).getByText('EJ', { selector: 'abbr' })
+    expect(abréviationEj).toHaveAttribute('title', 'Entité juridique')
+    expect(within(levels[1]).getByText('- 010 008 407 - CH DU HAUT BUGEY')).toBeInTheDocument()
+    expect(within(levels[2]).queryByRole('link')).not.toBeInTheDocument()
+    expect(within(levels[2]).getByText('IFAS CH DU HAUT BUGEY')).toBeInTheDocument()
+  })
+
+  it('affiche le chemin jusqu’à la page établissement territorial sanitaire', () => {
+    // GIVEN
+    const établissementTerritorialSanitaireViewModel = ÉtablissementTerritorialSanitaireViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording)
+
+    // WHEN
+    renderFakeComponent(
+      <>
+        <Breadcrumb />
+        <PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaireViewModel} />
       </>
     )
 

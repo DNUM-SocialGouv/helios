@@ -26,6 +26,15 @@ describe('La page Établissement territorial sanitaire', () => {
     téléphone : '0474754800',
   }, wording)
 
+  it('affiche le titre : "ET - numéro de FINESS - nom de l’établissement"', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+
+    // THEN
+    const titre = screen.getByRole('heading', { level: 1, name: 'ET - 010 000 040 - CH NANTUA' })
+    expect(titre).toBeInTheDocument()
+  })
+
   it('affiche le nom de l’établissement dans le bloc identité', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
@@ -242,5 +251,13 @@ describe('La page Établissement territorial sanitaire', () => {
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const adresseIncomplète = within(indicateurs[2]).getByText('50 R 01130 NANTUA', { selector: 'p' })
     expect(adresseIncomplète).toBeInTheDocument()
+  })
+
+  it('affiche le titre dans l’onglet', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+
+    // THEN
+    expect(document.title).toBe(établissementTerritorialSanitaire.titre)
   })
 })
