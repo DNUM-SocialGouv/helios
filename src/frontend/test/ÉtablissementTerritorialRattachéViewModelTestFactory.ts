@@ -1,7 +1,7 @@
 import { ÉtablissementTerritorialRattaché } from '../../backend/métier/entities/entité-juridique/ÉtablissementTerritorialRattaché'
 import { DomaineÉtablissementTerritorial } from '../../data-crawler/métier/entities/DomaineÉtablissementTerritorial'
 import { Wording } from '../configuration/wording/Wording'
-import { ÉtablissementTerritorialRattachéViewModel } from '../ui/entité-juridique/ÉtablissementTerritorialRattachéViewModel'
+import { ÉtablissementTerritorialRattachéViewModel } from '../ui/entité-juridique/liste-des-établissements/ÉtablissementTerritorialRattachéViewModel'
 
 export class ÉtablissementTerritorialRattachéViewModelTestFactory {
   private static établissementTerritorialRattaché1: ÉtablissementTerritorialRattaché = {

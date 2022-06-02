@@ -14,7 +14,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   public get titreAccessibleDeLEntitéJuridique(): ReactElement {
     return (
       <>
-        <abbr title="Entité juridique">EJ</abbr>
+        <abbr title={this.wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
           &nbsp;
         {'- '}
         {this.formateLeTitreDeLEntitéJuridiqueDeRattachement}

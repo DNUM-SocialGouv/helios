@@ -80,4 +80,20 @@ describe('Établissement territorial rattaché loader', () => {
     ]
     expect(établissementsTerritoriaux).toStrictEqual(établissementsTerritoriauxAttendus)
   })
+
+  it('renvoie une liste vide quand aucun établissement n’est rattaché à une entité juridique', async () => {
+    // GIVEN
+    const numéroFinessEntitéJuridique = '123456789'
+    const entitéJuridiqueModel = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel({ numéroFinessEntitéJuridique })
+    await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
+
+    const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialRattachéLoader(orm)
+
+    // WHEN
+    const établissementsTerritoriaux =
+      await typeOrmÉtablissementTerritorialLoader.chargeLesÉtablissementsDeLEntitéJuridiqueDeRattachement(numéroFinessEntitéJuridique)
+
+    // THEN
+    expect(établissementsTerritoriaux).toStrictEqual([])
+  })
 })

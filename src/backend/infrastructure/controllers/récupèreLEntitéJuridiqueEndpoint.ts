@@ -1,7 +1,7 @@
 import { EntitéJuridique } from '../../métier/entities/entité-juridique/EntitéJuridique'
 import { ÉtablissementTerritorialRattaché } from '../../métier/entities/entité-juridique/ÉtablissementTerritorialRattaché'
 import { RécupèreLEntitéJuridiqueUseCase } from '../../métier/use-cases/RécupèreLEntitéJuridiqueUseCase'
-import { RécupèreLesÉtablissementsTerritoriauxRattachésUseCase } from '../../métier/use-cases/RécupèreLesÉtablissementsTerritoriauxRattachésÀLEntitéJuridique'
+import { RécupèreLesÉtablissementsTerritoriauxRattachésUseCase } from '../../métier/use-cases/RécupèreLesÉtablissementsTerritoriauxRattachésÀLEntitéJuridiqueUseCase'
 import { Dependencies } from '../dependencies'
 
 export async function récupèreLEntitéJuridiqueEndpoint(

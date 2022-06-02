@@ -4,8 +4,8 @@ import { DomaineÉtablissementTerritorial } from '../../../backend/métier/entit
 import { EntitéJuridiqueViewModelTestFactory } from '../../test/EntitéJuridiqueViewModelTestFactory'
 import { ÉtablissementTerritorialRattachéViewModelTestFactory } from '../../test/ÉtablissementTerritorialRattachéViewModelTestFactory'
 import { fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent, trimHtml } from '../../testHelper'
+import { ÉtablissementTerritorialRattachéViewModel } from './liste-des-établissements/ÉtablissementTerritorialRattachéViewModel'
 import { PageEntitéJuridique } from './PageEntitéJuridique'
-import { ÉtablissementTerritorialRattachéViewModel } from './ÉtablissementTerritorialRattachéViewModel'
 
 const { paths, wording } = fakeFrontDependencies
 

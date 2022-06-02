@@ -8,10 +8,20 @@ export class TypeOrmÉtablissementTerritorialRattachéLoader implements Établis
   constructor(private readonly orm: Promise<DataSource>) {}
 
   async chargeLesÉtablissementsDeLEntitéJuridiqueDeRattachement(numéroFinessEntitéJuridique: string): Promise<ÉtablissementTerritorialRattaché[]> {
-    const établissementsTerritoriauxModels = await (await this.orm)
-      .getRepository(ÉtablissementTerritorialIdentitéModel)
-      .find({ order: { raisonSociale: 'ASC' }, where: { numéroFinessEntitéJuridique: numéroFinessEntitéJuridique } })
+    const établissementsTerritoriauxModels = await this.chargeLesÉtablissementsRattachésÀLEntitéJuridique(numéroFinessEntitéJuridique)
 
+    return this.construitLesÉtablissementsTerritoriauxRattachés(établissementsTerritoriauxModels)
+  }
+
+  private async chargeLesÉtablissementsRattachésÀLEntitéJuridique(numéroFinessEntitéJuridique: string) {
+    return await (await this.orm)
+      .getRepository(ÉtablissementTerritorialIdentitéModel)
+      .find({ order: { raisonSociale: 'ASC' }, where: { numéroFinessEntitéJuridique } })
+  }
+
+  private construitLesÉtablissementsTerritoriauxRattachés(
+    établissementsTerritoriauxModels: ÉtablissementTerritorialIdentitéModel[]
+  ): ÉtablissementTerritorialRattaché[] {
     return établissementsTerritoriauxModels.map((établissementTerritorialModel): ÉtablissementTerritorialRattaché => {
       return {
         domaine: établissementTerritorialModel.domaine,

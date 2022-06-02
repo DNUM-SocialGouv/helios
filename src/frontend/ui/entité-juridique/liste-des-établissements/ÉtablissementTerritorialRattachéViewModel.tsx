@@ -1,11 +1,11 @@
 import Image from 'next/image'
 import { ReactElement } from 'react'
 
-import { DomaineÉtablissementTerritorial } from '../../../backend/métier/entities/DomaineÉtablissementTerritorial'
-import { ÉtablissementTerritorialRattaché } from '../../../backend/métier/entities/entité-juridique/ÉtablissementTerritorialRattaché'
-import { Paths } from '../../configuration/Paths'
-import { Wording } from '../../configuration/wording/Wording'
-import { StringFormater } from '../commun/StringFormater'
+import { DomaineÉtablissementTerritorial } from '../../../../backend/métier/entities/DomaineÉtablissementTerritorial'
+import { ÉtablissementTerritorialRattaché } from '../../../../backend/métier/entities/entité-juridique/ÉtablissementTerritorialRattaché'
+import { Paths } from '../../../configuration/Paths'
+import { Wording } from '../../../configuration/wording/Wording'
+import { StringFormater } from '../../commun/StringFormater'
 import logoÉtablissementTerritorialMédicoSocial from './logo-établissement-territorial-médico-social-noir.svg'
 import logoÉtablissementTerritorialSanitaire from './logo-établissement-territorial-sanitaire-noir.svg'
 
@@ -16,7 +16,7 @@ export class ÉtablissementTerritorialRattachéViewModel {
     return this.établissementTerritorialRattaché.numéroFiness
   }
 
-  public get label(): ReactElement {
+  public get identifiant(): ReactElement {
     const numéroFinessFormaté = StringFormater.formateLeNuméroFiness(this.numéroFiness)
     return (
       <>
