@@ -109,9 +109,9 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     expect(lienEntitéJuridique).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/010008407`)
     const abréviationEj = within(levels[1]).getByText('EJ', { selector: 'abbr' })
     expect(abréviationEj).toHaveAttribute('title', 'Entité juridique')
-    expect(within(levels[1]).getByText('- 010 008 407 - HOPITAL PRIVE DE VILLENEUVE DASCQ')).toBeInTheDocument()
+    expect(within(levels[1]).getByText('- 010 008 407 - CH DU HAUT BUGEY')).toBeInTheDocument()
     expect(within(levels[2]).queryByRole('link')).not.toBeInTheDocument()
-    expect(within(levels[2]).getByText('CH NANTUA')).toBeInTheDocument()
+    expect(within(levels[2]).getByText('IFAS CH DU HAUT BUGEY')).toBeInTheDocument()
   })
 
   it('affiche le chemin jusqu’à la page établissement territorial sanitaire', () => {

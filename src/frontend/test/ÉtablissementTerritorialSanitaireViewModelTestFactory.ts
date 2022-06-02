@@ -13,7 +13,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestFactory {
     dateMiseAJourSource : '2021-07-07',
     libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
     numéroFinessEntitéJuridique : '010008407',
-    numéroFinessÉtablissementPrincipal : '010000057',
+    numéroFinessÉtablissementPrincipal : '010045057',
     numéroFinessÉtablissementTerritorial: '010000040',
     raisonSociale : 'CH NANTUA',
     raisonSocialeDeLEntitéDeRattachement : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',

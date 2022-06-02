@@ -81,7 +81,7 @@ describe('La page Établissement territorial', () => {
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const labelEntitéJuridiqueDeRattachement = within(indicateurs[4]).getByText(`${wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT} -`, { selector: 'p' })
     expect(labelEntitéJuridiqueDeRattachement.textContent).toBe(`${wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
-    const entitéJuridiqueDeRattachement = within(indicateurs[4]).getByText('EJ - 010 008 407 - HOPITAL PRIVE DE VILLENEUVE DASCQ', { selector: 'p' })
+    const entitéJuridiqueDeRattachement = within(indicateurs[4]).getByText('EJ - 010 008 407 - CH DU HAUT BUGEY', { selector: 'p' })
     expect(entitéJuridiqueDeRattachement).toBeInTheDocument()
   })
 
@@ -94,7 +94,7 @@ describe('La page Établissement territorial', () => {
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const labelCatégorieDeLÉtablissement = within(indicateurs[5]).getByText(`${wording.CATÉGORIE_DE_L_ÉTABLISSEMENT} -`, { selector: 'p' })
     expect(labelCatégorieDeLÉtablissement.textContent).toBe(`${wording.CATÉGORIE_DE_L_ÉTABLISSEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
-    const catégorieDeLÉtablissement = within(indicateurs[5]).getByText('355 - Centre Hospitalier (C.H.)', { selector: 'p' })
+    const catégorieDeLÉtablissement = within(indicateurs[5]).getByText('300 - Ecoles Formant aux Professions Sanitaires', { selector: 'p' })
     expect(catégorieDeLÉtablissement).toBeInTheDocument()
   })
 
@@ -120,13 +120,17 @@ describe('La page Établissement territorial', () => {
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const labelStatutÉtablissement = within(indicateurs[7]).getByText(`${wording.STATUT_DE_L_ÉTABLISSEMENT} -`, { selector: 'p' })
     expect(labelStatutÉtablissement.textContent).toBe(`${wording.STATUT_DE_L_ÉTABLISSEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
-    const statutÉtablissement = within(indicateurs[7]).getByText('Société Anonyme (S.A.)')
+    const statutÉtablissement = within(indicateurs[7]).getByText('Etablissement Public Intercommunal d’Hospitalisation')
     expect(statutÉtablissement).toBeInTheDocument()
   })
 
   it('affiche l’indicateur de mono-établissement dans le bloc identité', () => {
+    // GIVEN
+    const établissementTerritorialMonoÉtablissement =
+      ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording, { estMonoÉtablissement: true })
+
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMonoÉtablissement} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -163,7 +167,7 @@ describe('La page Établissement territorial', () => {
       const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
       const labelÉtablissementPrincipalOuSecondaire = within(indicateurs[9]).getByText(`${wording.ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE} -`, { selector: 'p' })
       expect(labelÉtablissementPrincipalOuSecondaire.textContent).toBe(`${wording.ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
-      const établissementPrincipalOuSecondaire = within(indicateurs[9]).getByText(`${wording.SECONDAIRE} (${wording.PRINCIPAL} : 010 000 057)`)
+      const établissementPrincipalOuSecondaire = within(indicateurs[9]).getByText(`${wording.SECONDAIRE} (${wording.PRINCIPAL} : 010 005 239)`)
       expect(établissementPrincipalOuSecondaire).toBeInTheDocument()
     })
   })
@@ -227,7 +231,7 @@ describe('La page Établissement territorial', () => {
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
       const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-      const téléphoneEtEmail = within(indicateurs[3]).getByText(`04 74 75 48 00 | ${wording.NON_RENSEIGNÉ}`, { selector: 'p' })
+      const téléphoneEtEmail = within(indicateurs[3]).getByText(`01 23 45 67 89 | ${wording.NON_RENSEIGNÉ}`, { selector: 'p' })
       expect(téléphoneEtEmail).toBeInTheDocument()
     })
   })
@@ -241,7 +245,7 @@ describe('La page Établissement territorial', () => {
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const adresseIncomplète = within(indicateurs[2]).getByText('50 R 01130 NANTUA', { selector: 'p' })
+    const adresseIncomplète = within(indicateurs[2]).getByText('1 RTE 01117 OYONNAX CEDEX', { selector: 'p' })
     expect(adresseIncomplète).toBeInTheDocument()
   })
 
