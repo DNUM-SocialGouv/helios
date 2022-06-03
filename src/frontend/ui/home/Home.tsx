@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { ReactElement } from 'react'
 
 import { useDependencies } from '../commun/contexts/useDependencies'
@@ -23,12 +24,19 @@ export const Home = () => {
       </h3>
       <ol className="fr-raw-list fr-text--bold fr-raw-link">
         {
-          entitésJuridiques.map((entitéJuriduqe) =>
+          entitésJuridiques.map((entitéJuridique) =>
             <ListItem
-              key={entitéJuriduqe.numéroFiness}
-              label={entitéJuriduqe.identifiant}
-              lien={`${paths.ENTITÉ_JURIDIQUE}/${entitéJuriduqe.numéroFiness}`}
-              logo={LogoEntitéJuridiqueNoir}
+              key={entitéJuridique.numéroFiness}
+              label={entitéJuridique.identifiant}
+              lien={`${paths.ENTITÉ_JURIDIQUE}/${entitéJuridique.numéroFiness}`}
+              logo={<>
+                <Image
+                  alt=""
+                  height="22"
+                  src={LogoEntitéJuridiqueNoir}
+                  width="22"
+                />
+              </>}
             />)
         }
       </ol>
