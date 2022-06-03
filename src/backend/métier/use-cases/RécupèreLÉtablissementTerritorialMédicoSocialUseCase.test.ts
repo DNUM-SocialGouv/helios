@@ -1,8 +1,8 @@
 import { ÉtablissementTerritorialTestFactory } from '../../test/ÉtablissementTerritorialTestFactory'
+import { EntitéJuridiqueDeRattachement } from '../entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement'
+import { MonoÉtablissement } from '../entities/établissement-territorial-médico-social/MonoÉtablissement'
+import { ÉtablissementTerritorialMédicoSocialIdentité } from '../entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialIdentité'
 import { ÉtablissementTerritorialIdentité } from '../entities/ÉtablissementTerritorialIdentité'
-import { EntitéJuridiqueDeRattachement } from '../entities/ÉtablissementTerritorialMédicoSocial/EntitéJuridiqueDeRattachement'
-import { MonoÉtablissement } from '../entities/ÉtablissementTerritorialMédicoSocial/MonoÉtablissement'
-import { ÉtablissementTerritorialMédicoSocialIdentité } from '../entities/ÉtablissementTerritorialMédicoSocial/ÉtablissementTerritorialMédicoSocialIdentité'
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
 import { EntitéJuridiqueLoader } from '../gateways/EntitéJuridiqueLoader'
 import { ÉtablissementTerritorialMédicoSocialLoader } from '../gateways/ÉtablissementTerritorialMédicoSocialLoader'
@@ -29,7 +29,10 @@ describe('La récupération d’un établissement territorial médico-social', (
       }
     })
     const établissementTerritorialLoader: ÉtablissementTerritorialMédicoSocialLoader =
-      { chargeParNuméroFiness: mockedChargeParNuméroFiness, estUnMonoÉtablissement: mockedEstUnMonoÉtablissement }
+      {
+        chargeParNuméroFiness: mockedChargeParNuméroFiness,
+        estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
+      }
     const entitéJuridiqueLoader: EntitéJuridiqueLoader =
       { chargeLEntitéJuridiqueDeRattachement: mockedChargeLEntitéJuridiqueDeRattachement, chargeParNuméroFiness: jest.fn() }
     const récupèreLÉtablissementTerritorialUseCase =

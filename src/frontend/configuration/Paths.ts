@@ -6,4 +6,6 @@ export class Paths {
   readonly DONNÉES_PERSONNELLES: string = '/donnees-personnelles'
   readonly GESTION_COOKIES: string = '/gestion-des-cookies'
   readonly ENTITÉ_JURIDIQUE: string = '/entite-juridique'
+  readonly ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL: string = '/etablissement-territorial-medico-social'
+  readonly ÉTABLISSEMENT_TERRITORIAL_SANITAIRE: string = '/etablissement-territorial-sanitaire'
 }

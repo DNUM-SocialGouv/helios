@@ -1,7 +1,8 @@
 import { ReactElement } from 'react'
 
-import { EntitéJuridique } from '../../../backend/métier/entities/EntitéJuridique'
+import { EntitéJuridique } from '../../../backend/métier/entities/entité-juridique/EntitéJuridique'
 import { Wording } from '../../configuration/wording/Wording'
+import { StringFormater } from '../commun/StringFormater'
 
 export class EntitéJuridiqueViewModel {
   constructor(private readonly entitéJuridique: EntitéJuridique, private readonly wording: Wording) {}
@@ -9,7 +10,7 @@ export class EntitéJuridiqueViewModel {
   public get titreAccessible(): ReactElement {
     return (
       <>
-        <abbr title="Entité juridique">EJ</abbr>
+        <abbr title={this.wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
         &nbsp;
         {'- '}
         {this.numéroFiness}
@@ -28,7 +29,7 @@ export class EntitéJuridiqueViewModel {
   }
 
   public get numéroFiness(): string {
-    return this.insèreUnEspaceTousLesNCaractères(this.entitéJuridique.numéroFinessEntitéJuridique, 3)
+    return StringFormater.formateLeNuméroFiness(this.entitéJuridique.numéroFinessEntitéJuridique)
   }
 
   public get adresse(): string {
@@ -40,26 +41,14 @@ export class EntitéJuridiqueViewModel {
   }
 
   public get téléphone(): string {
-    return this.valeurOuNonRenseigné(this.formateLeNuméroDeTéléphone(this.entitéJuridique.téléphone))
+    return this.valeurOuNonRenseigné(StringFormater.formateLeNuméroDeTéléphone(this.entitéJuridique.téléphone))
   }
 
   public get dateDeMiseÀJour(): string {
-    return this.formateLaDate(this.entitéJuridique.dateMiseAJourSource)
+    return StringFormater.formateLaDate(this.entitéJuridique.dateMiseAJourSource)
   }
 
   private valeurOuNonRenseigné(valeur: string): string {
     return valeur === '' ? this.wording.NON_RENSEIGNÉ : valeur
-  }
-
-  private formateLeNuméroDeTéléphone(téléphone: string): string {
-    return this.insèreUnEspaceTousLesNCaractères(téléphone, 2)
-  }
-
-  private insèreUnEspaceTousLesNCaractères(str: string, nombreDeCaractères: number): string {
-    return str.split('').map((letter, index) => index % nombreDeCaractères === 0 ? ' ' + letter : letter).join('').trim()
-  }
-
-  private formateLaDate(date: string): string {
-    return new Date(date).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })
   }
 }

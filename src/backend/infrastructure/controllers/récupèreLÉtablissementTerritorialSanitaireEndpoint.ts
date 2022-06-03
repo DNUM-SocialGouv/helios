@@ -1,4 +1,4 @@
-import { ÉtablissementTerritorialSanitaireIdentité } from '../../métier/entities/ÉtablissementTerritorialSanitaire/ÉtablissementTerritorialSanitaireIdentité'
+import { ÉtablissementTerritorialSanitaireIdentité } from '../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireIdentité'
 import { RécupèreLÉtablissementTerritorialSanitaireUseCase } from '../../métier/use-cases/RécupèreLÉtablissementTerritorialSanitaireUseCase'
 import { Dependencies } from '../dependencies'
 

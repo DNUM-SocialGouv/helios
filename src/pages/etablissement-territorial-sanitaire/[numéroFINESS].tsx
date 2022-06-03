@@ -2,7 +2,7 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 
 import { récupèreLÉtablissementTerritorialSanitaireEndpoint } from '../../backend/infrastructure/controllers/récupèreLÉtablissementTerritorialSanitaireEndpoint'
 import { dependencies } from '../../backend/infrastructure/dependencies'
-import { ÉtablissementTerritorialSanitaireIdentité } from '../../backend/métier/entities/ÉtablissementTerritorialSanitaire/ÉtablissementTerritorialSanitaireIdentité'
+import { ÉtablissementTerritorialSanitaireIdentité } from '../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireIdentité'
 import { useDependencies } from '../../frontend/ui/commun/contexts/useDependencies'
 import { PageÉtablissementTerritorialSanitaire } from '../../frontend/ui/établissement-territorial-sanitaire/PageÉtablissementTerritorialSanitaire'
 import { ÉtablissementTerritorialSanitaireViewModel } from '../../frontend/ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel'

@@ -1,4 +1,4 @@
-import { ÉtablissementTerritorialMédicoSocialIdentité } from '../../backend/métier/entities/ÉtablissementTerritorialMédicoSocial/ÉtablissementTerritorialMédicoSocialIdentité'
+import { ÉtablissementTerritorialMédicoSocialIdentité } from '../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialIdentité'
 import { Wording } from '../configuration/wording/Wording'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from '../ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel'
 

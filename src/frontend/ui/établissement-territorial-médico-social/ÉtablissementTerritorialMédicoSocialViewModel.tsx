@@ -1,7 +1,8 @@
 import { ReactElement } from 'react'
 
-import { ÉtablissementTerritorialMédicoSocialIdentité } from '../../../backend/métier/entities/ÉtablissementTerritorialMédicoSocial/ÉtablissementTerritorialMédicoSocialIdentité'
+import { ÉtablissementTerritorialMédicoSocialIdentité } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialIdentité'
 import { Wording } from '../../configuration/wording/Wording'
+import { StringFormater } from '../commun/StringFormater'
 
 export class ÉtablissementTerritorialMédicoSocialViewModel {
   constructor(private readonly établissementTerritorialIdentité: ÉtablissementTerritorialMédicoSocialIdentité, private readonly wording: Wording) {}
@@ -13,7 +14,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   public get titreAccessibleDeLEntitéJuridique(): ReactElement {
     return (
       <>
-        <abbr title="Entité juridique">EJ</abbr>
+        <abbr title={this.wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
           &nbsp;
         {'- '}
         {this.formateLeTitreDeLEntitéJuridiqueDeRattachement}
@@ -30,7 +31,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   public get numéroFinessÉtablissementTerritorial(): string {
-    return this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorialIdentité.numéroFinessÉtablissementTerritorial, 3)
+    return StringFormater.formateLeNuméroFiness(this.établissementTerritorialIdentité.numéroFinessÉtablissementTerritorial)
   }
 
   public get adresse(): string {
@@ -38,7 +39,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   public get téléphoneEtEmail(): string {
-    const téléphoneFormaté = this.valeurOuNonRenseigné(this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorialIdentité.téléphone, 2))
+    const téléphoneFormaté = this.valeurOuNonRenseigné(StringFormater.formateLeNuméroDeTéléphone(this.établissementTerritorialIdentité.téléphone))
     const email = this.valeurOuNonRenseigné(this.établissementTerritorialIdentité.courriel)
     return `${téléphoneFormaté} | ${email}`
   }
@@ -63,25 +64,17 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   public get principalOuSecondaire(): string {
     return this.établissementTerritorialIdentité.typeÉtablissement === 'P' ?
       this.wording.PRINCIPAL :
-      `${this.wording.SECONDAIRE} (${this.wording.PRINCIPAL} : ${this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal, 3)})`
+      `${this.wording.SECONDAIRE} (${this.wording.PRINCIPAL} : ${StringFormater.formateLeNuméroFiness(this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal)})`
   }
 
   public get dateDeMiseÀJour(): string {
-    return this.formateLaDate(this.établissementTerritorialIdentité.dateMiseAJourSource)
+    return StringFormater.formateLaDate(this.établissementTerritorialIdentité.dateMiseAJourSource)
   }
 
   private get formateLeTitreDeLEntitéJuridiqueDeRattachement() {
-    const numéroFinessEntitéJuridiqueFormaté = this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorialIdentité.numéroFinessEntitéJuridique, 3)
+    const numéroFinessEntitéJuridiqueFormaté = StringFormater.formateLeNuméroFiness(this.établissementTerritorialIdentité.numéroFinessEntitéJuridique)
     const nomDeLEntitéJuridique = this.établissementTerritorialIdentité.raisonSocialeDeLEntitéDeRattachement
     return `${numéroFinessEntitéJuridiqueFormaté} - ${nomDeLEntitéJuridique}`
-  }
-
-  private insèreUnEspaceTousLesNCaractères(str: string, nombreDeCaractères: number): string {
-    return str.split('').map((letter, index) => index % nombreDeCaractères === 0 ? ' ' + letter : letter).join('').trim()
-  }
-
-  private formateLaDate(date: string): string {
-    return new Date(date).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })
   }
 
   private valeurOuNonRenseigné(valeur: string): string {
