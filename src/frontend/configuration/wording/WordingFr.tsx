@@ -29,6 +29,10 @@ export class WordingFr implements Wording {
   readonly VOIR_LE_FIL_D_ARIANE: string = 'Voir le fil d’Ariane'
   readonly ENTITÉ_JURIDIQUE: string = 'Entité juridique'
 
+  // Home
+  readonly TITRE_LISTE_DES_ENTITÉS_JURIDIQUES: string = 'Les entités juridiques'
+  readonly ENTITÉS_JURIDIQUES: string = 'Entité(s) Juridique(s)'
+
   // Fiches
   readonly MISE_À_JOUR: string = 'Mise à jour'
   readonly SOURCE: string = 'Source'

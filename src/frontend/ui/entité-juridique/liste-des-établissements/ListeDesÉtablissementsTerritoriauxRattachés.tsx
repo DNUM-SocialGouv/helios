@@ -1,5 +1,5 @@
 import { useDependencies } from '../../commun/contexts/useDependencies'
-import { LienVersLÉtablissementTerritorial } from './LienVersLÉtablissementTerritorial'
+import { ListItem } from '../../commun/ListItem/ListItem'
 import styles from './ListeDesÉtablissementsTerritoriauxRattachés.module.css'
 import { ÉtablissementTerritorialRattachéViewModel } from './ÉtablissementTerritorialRattachéViewModel'
 
@@ -21,7 +21,7 @@ export const ListeDesÉtablissementsTerritoriauxRattachés = ({ établissementsT
       <ol className={styles['liste-établissements-territoriaux-rattachés'] + ' fr-raw-list fr-text--bold fr-raw-link'}>
         {
           établissementsTerritoriauxRattachésViewModels.map((établissementTerritorialRattachéViewModel: ÉtablissementTerritorialRattachéViewModel) =>
-            <LienVersLÉtablissementTerritorial
+            <ListItem
               key={établissementTerritorialRattachéViewModel.numéroFiness}
               label={établissementTerritorialRattachéViewModel.identifiant}
               lien={établissementTerritorialRattachéViewModel.lienVersLÉtablissement(paths)}
