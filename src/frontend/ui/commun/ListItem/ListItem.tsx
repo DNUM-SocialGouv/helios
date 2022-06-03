@@ -25,6 +25,5 @@ export const ListItem = ({ label, lien, logo }: ListItemType ) => {
         </a>
       </Link>
     </li>
-
   )
 }
