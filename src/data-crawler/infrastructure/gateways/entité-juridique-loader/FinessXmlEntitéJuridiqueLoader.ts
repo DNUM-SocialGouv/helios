@@ -130,9 +130,9 @@ export class FinessXmlEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
 
     const entitésJuridiquesFluxFiness = this.convertXmlToJs.handle<EntitéJuridiqueFluxFiness>(cheminDuFichierEntitéJuridique)
 
-    return entitésJuridiquesFluxFiness.fluxfiness.structureej.map(
-      (entitéJuridique: EntitéJuridiqueFiness) => this.construitLEntitéJuridique(entitéJuridique, dateDeMiseAJourDeLaSource)
-    )
+    return entitésJuridiquesFluxFiness.fluxfiness.structureej
+      .filter((entitésJuridiquesFiness: EntitéJuridiqueFiness) => entitésJuridiquesFiness.datefermeture._text === undefined)
+      .map((entitésJuridiquesFiness: EntitéJuridiqueFiness) => this.construitLEntitéJuridique(entitésJuridiquesFiness, dateDeMiseAJourDeLaSource))
   }
 
   private récupèreLeCheminDuFichierEntitéJuridique(localPath: string): string {

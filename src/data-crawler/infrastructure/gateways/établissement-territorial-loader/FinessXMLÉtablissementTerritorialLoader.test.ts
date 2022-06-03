@@ -60,8 +60,8 @@ describe('Récupération des établissements territoriaux de la source de donné
         <dateouv>1901-01-01</dateouv>
         <datelimite xsi:nil="true"/>
         <indcaduc xsi:nil="true"/>
-        <typefermeture>DEF</typefermeture>
-        <datefermeture>2007-04-20</datefermeture>
+        <typefermeture xsi:nil="true"/>
+        <datefermeture xsi:nil="true"/>
         <dateautor>1901-01-01</dateautor>
         <datemaj>2008-01-17</datemaj>
         <numuai xsi:nil="true"/>
@@ -111,10 +111,61 @@ describe('Récupération des établissements territoriaux de la source de donné
         <dateouv>1901-01-01</dateouv>
         <datelimite xsi:nil="true"/>
         <indcaduc xsi:nil="true"/>
-        <typefermeture>DEF</typefermeture>
-        <datefermeture>2007-04-20</datefermeture>
+        <typefermeture xsi:nil="true"/>
+        <datefermeture xsi:nil="true"/>
         <dateautor>1901-01-01</dateautor>
         <datemaj>2018-10-26</datemaj>
+        <numuai xsi:nil="true"/>
+      </structureet>
+      <structureet>
+        <nofinesset>010787190</nofinesset>
+        <nofinessej>010000164</nofinessej>
+        <rs>[Fermé] SMUR POLYCLINIQUE AMBERIEU</rs>
+        <rslongue>SMUR POLYCLINIQUE AMBERIEU EN BUGEY</rslongue>
+        <complrs xsi:nil="true"/>
+        <compldistrib xsi:nil="true"/>
+        <numvoie>17</numvoie>
+        <typvoie>R</typvoie>
+        <voie>AIME VINGTRINIER</voie>
+        <compvoie xsi:nil="true"/>
+        <lieuditbp xsi:nil="true"/>
+        <commune>004</commune>
+        <libcommune>AMBERIEU EN BUGEY</libcommune>
+        <departement>01</departement>
+        <libdepartement>AIN</libdepartement>
+        <codepostal>01500</codepostal>
+        <ligneacheminement>01500 AMBERIEU EN BUGEY</ligneacheminement>
+        <codepays xsi:nil="true"/>
+        <libellepays xsi:nil="true"/>
+        <telephone>0474383000</telephone>
+        <telecopie xsi:nil="true"/>
+        <courriel xsi:nil="true"/>
+        <categetab>111</categetab>
+        <libcategetab>Unité Mobile Hospitalière</libcategetab>
+        <libcourtcategetab>Unité Mobile Hosp.</libcourtcategetab>
+        <categagretab>1204</categagretab>
+        <libcategagretab>Urgence et Réanimation</libcategagretab>
+        <libcourtcategagretab>Urgence Réanimation</libcourtcategagretab>
+        <typeet>P</typeet>
+        <nofinessppal xsi:nil="true"/>
+        <natureet>G</natureet>
+        <siret xsi:nil="true"/>
+        <datemodifsiret xsi:nil="true"/>
+        <originemodifsiret xsi:nil="true"/>
+        <codeape xsi:nil="true"/>
+        <codemft>01</codemft>
+        <libmft>Etablissement Tarif Libre</libmft>
+        <libcourtmft>Tarif libre</libcourtmft>
+        <codesph>3</codesph>
+        <libsph>PSPH par concession</libsph>
+        <libcourtsph>PSPH par concession</libcourtsph>
+        <dateouv>1982-03-04</dateouv>
+        <datelimite xsi:nil="true"/>
+        <indcaduc xsi:nil="true"/>
+        <typefermeture>DEF</typefermeture>
+        <datefermeture>1993-01-01</datefermeture>
+        <dateautor>1982-03-04</dateautor>
+        <datemaj>1993-12-09</datemaj>
         <numuai xsi:nil="true"/>
       </structureet>
     </fluxfiness>`
@@ -166,7 +217,7 @@ describe('Récupération des établissements territoriaux de la source de donné
     rmSync(localPath, { recursive: true })
   })
 
-  it('récupère les établissements territoriaux de la source de données FINESS', () => {
+  it('récupère les établissements territoriaux ouverts de la source de données FINESS', () => {
     // WHEN
     const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialLoader(new NodeXmlToJs(), localPath)
     const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriaux()

@@ -233,10 +233,11 @@ export class FinessXmlÉtablissementTerritorialLoader implements ÉtablissementT
     const établissementTerritorialFluxFinessIdentité = this.convertXmlToJs.handle
       <ÉtablissementTerritorialIdentitéFluxFiness>(cheminDuFichierÉtablissementTerritorialIdentité)
 
-    const établissementsTerritoriauxIdentité = établissementTerritorialFluxFinessIdentité.fluxfiness.structureet.map(
-      (établissementTerritorialIdentité: ÉtablissementTerritorialIdentitéFiness) =>
-        this.construitÉtablissementTerritorialIdentité(établissementTerritorialIdentité, dateDeMiseAJourDeLaSource, catégories)
-    )
+    const établissementsTerritoriauxIdentité = établissementTerritorialFluxFinessIdentité.fluxfiness.structureet
+      .filter((établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) =>
+        établissementTerritorialIdentitéFiness.datefermeture._text === undefined)
+      .map((établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) =>
+        this.construitÉtablissementTerritorialIdentité(établissementTerritorialIdentitéFiness, dateDeMiseAJourDeLaSource, catégories))
 
     return établissementsTerritoriauxIdentité
   }

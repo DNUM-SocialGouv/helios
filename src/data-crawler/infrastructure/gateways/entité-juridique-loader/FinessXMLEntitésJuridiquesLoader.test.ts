@@ -14,7 +14,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
     rmSync(localPath, { recursive: true })
   })
 
-  it('récupère les entités juridiques de la source de données FINESS', () => {
+  it('récupère les entités juridiques ouvertes de la source de données FINESS', () => {
     // GIVEN
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
     <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -90,6 +90,43 @@ describe('Récupération des entités juridiques de la source de données FINESS
         <datemaj>2012-09-14</datemaj>
         <datefermeture xsi:nil="true"/>
         <typefermeture xsi:nil="true"/>
+        <qualifcreation>GEN</qualifcreation>
+      </structureej>
+      <structureej>
+        <nofiness>010000164</nofiness>
+        <rs>[Fermé] POLYCLINIQUE D'AMBERIEU</rs>
+        <rslongue>POLYCLINIQUE D'AMBERIEU EN BUGEY</rslongue>
+        <complrs xsi:nil="true"/>
+        <numvoie>17</numvoie>
+        <typvoie>R</typvoie>
+        <voie>AIME VINGTRINIER</voie>
+        <compvoie xsi:nil="true"/>
+        <compldistrib xsi:nil="true"/>
+        <lieuditbp xsi:nil="true"/>
+        <libellepays xsi:nil="true"/>
+        <commune>004</commune>
+        <ligneacheminement>01500 AMBERIEU EN BUGEY</ligneacheminement>
+        <libcommune>AMBERIEU EN BUGEY</libcommune>
+        <departement>01</departement>
+        <libdepartement>AIN</libdepartement>
+        <codepostal>01500</codepostal>
+        <codepays xsi:nil="true"/>
+        <telephone>0474383000</telephone>
+        <telecopie xsi:nil="true"/>
+        <statutjuridique>72</statutjuridique>
+        <libstatutjuridique>Société A Responsabilité Limitée (S.A.R.L.)</libstatutjuridique>
+        <libcourtstatutjuridique>S.A.R.L.</libcourtstatutjuridique>
+        <categetab xsi:nil="true"/>
+        <libcategetab xsi:nil="true"/>
+        <libcourtcategetab xsi:nil="true"/>
+        <siren>304368764</siren>
+        <datemodifsiren>2009-01-01</datemodifsiren>
+        <originemodifsiren>SAISIE</originemodifsiren>
+        <codeape xsi:nil="true"/>
+        <datecrea>2001-01-01</datecrea>
+        <datemaj>2002-07-10</datemaj>
+        <datefermeture>2002-07-10</datefermeture>
+        <typefermeture>NDI</typefermeture>
         <qualifcreation>GEN</qualifcreation>
       </structureej>
     </fluxfiness>`
