@@ -23,7 +23,22 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </main>
       <Footer />
+      <style
+        global
+        jsx
+      >
+        {`
+            #__next {
+              display: flex;
+              flex-direction: column;
+              min-height: 100vh;
+            }
 
+            main {
+              flex-grow: 1;
+            }
+          `}
+      </style>
       <Script
         src="/api/design-system-francais/dsfr"
         strategy="lazyOnload"
