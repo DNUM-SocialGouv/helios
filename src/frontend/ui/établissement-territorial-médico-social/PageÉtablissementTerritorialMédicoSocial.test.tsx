@@ -14,7 +14,7 @@ describe('La page Établissement territorial', () => {
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
 
     // THEN
-    const titre = screen.getByRole('heading', { level: 1, name: 'ET - 010 003 598 - IFAS CH DU HAUT BUGEY' })
+    const titre = screen.getByRole('heading', { level: 1, name: 'ET - 01 0003598 - IFAS CH DU HAUT BUGEY' })
     expect(titre).toBeInTheDocument()
   })
 
@@ -42,8 +42,8 @@ describe('La page Établissement territorial', () => {
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const labelNuméroFiness = within(indicateurs[1]).getByText('Numéro', { exact: false, selector: 'p' })
     expect(labelNuméroFiness.textContent).toBe(`${wording.NUMÉRO_FINESS} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
-    const numéroFiness = within(indicateurs[1]).getByText('010 003 598', { selector: 'p' })
-    expect(numéroFiness).toBeInTheDocument()
+    expect(within(indicateurs[1]).getByText('01', { selector: 'strong' })).toBeInTheDocument()
+    expect(within(indicateurs[1]).getByText('0003598', { selector: 'p' })).toBeInTheDocument()
   })
 
   it('affiche l’adresse dans le bloc identité', () => {
@@ -81,7 +81,7 @@ describe('La page Établissement territorial', () => {
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const labelEntitéJuridiqueDeRattachement = within(indicateurs[4]).getByText(`${wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT} -`, { selector: 'p' })
     expect(labelEntitéJuridiqueDeRattachement.textContent).toBe(`${wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
-    const entitéJuridiqueDeRattachement = within(indicateurs[4]).getByText('EJ - 010 008 407 - CH DU HAUT BUGEY', { selector: 'p' })
+    const entitéJuridiqueDeRattachement = within(indicateurs[4]).getByText('EJ - 01 0008407 - CH DU HAUT BUGEY', { selector: 'p' })
     expect(entitéJuridiqueDeRattachement).toBeInTheDocument()
   })
 
@@ -167,7 +167,7 @@ describe('La page Établissement territorial', () => {
       const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
       const labelÉtablissementPrincipalOuSecondaire = within(indicateurs[9]).getByText(`${wording.ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE} -`, { selector: 'p' })
       expect(labelÉtablissementPrincipalOuSecondaire.textContent).toBe(`${wording.ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
-      const établissementPrincipalOuSecondaire = within(indicateurs[9]).getByText(`${wording.SECONDAIRE} (${wording.PRINCIPAL} : 010 005 239)`)
+      const établissementPrincipalOuSecondaire = within(indicateurs[9]).getByText(`${wording.SECONDAIRE} (${wording.PRINCIPAL} : 01 0005239)`)
       expect(établissementPrincipalOuSecondaire).toBeInTheDocument()
     })
   })

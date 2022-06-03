@@ -32,6 +32,10 @@ export class EntitéJuridiqueViewModel {
     return StringFormater.formateLeNuméroFiness(this.entitéJuridique.numéroFinessEntitéJuridique)
   }
 
+  public get numéroFinessAvecExergueSurLeDépartement(): ReactElement {
+    return StringFormater.formateLeNuméroFinessAvecExergueSurLeDépartement(this.entitéJuridique.numéroFinessEntitéJuridique)
+  }
+
   public get adresse(): string {
     return `${this.entitéJuridique.adresseNuméroVoie} ${this.entitéJuridique.adresseTypeVoie} ${this.entitéJuridique.adresseVoie} ${this.entitéJuridique.adresseAcheminement}`
   }

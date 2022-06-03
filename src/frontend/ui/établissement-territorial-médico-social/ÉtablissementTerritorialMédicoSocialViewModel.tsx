@@ -34,6 +34,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     return StringFormater.formateLeNuméroFiness(this.établissementTerritorialIdentité.numéroFinessÉtablissementTerritorial)
   }
 
+  public get numéroFinessÉtablissementTerritorialAvecExergueSurLeDépartement(): ReactElement {
+    return StringFormater.formateLeNuméroFinessAvecExergueSurLeDépartement(this.établissementTerritorialIdentité.numéroFinessÉtablissementTerritorial)
+  }
+
   public get adresse(): string {
     return `${this.établissementTerritorialIdentité.adresseNuméroVoie} ${this.établissementTerritorialIdentité.adresseTypeVoie} ${this.établissementTerritorialIdentité.adresseVoie} ${this.établissementTerritorialIdentité.adresseAcheminement}`
   }

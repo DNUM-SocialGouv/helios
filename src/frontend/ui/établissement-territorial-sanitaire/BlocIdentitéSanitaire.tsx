@@ -24,7 +24,7 @@ export const BlocIdentitéSanitaire = ({ établissementTerritorialSanitaireViewM
           dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}
           nomDeLIndicateur={wording.NUMÉRO_FINESS}
           source={wording.FINESS}
-          valeur={établissementTerritorialSanitaireViewModel.numéroFinessÉtablissementTerritorial}
+          valeur={établissementTerritorialSanitaireViewModel.numéroFinessÉtablissementTerritorialAvecExergueSurLeDépartement}
         />
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}

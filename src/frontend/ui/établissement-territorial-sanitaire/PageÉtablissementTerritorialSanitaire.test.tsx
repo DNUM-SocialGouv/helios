@@ -31,7 +31,7 @@ describe('La page Établissement territorial sanitaire', () => {
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
 
     // THEN
-    const titre = screen.getByRole('heading', { level: 1, name: 'ET - 010 000 040 - CH NANTUA' })
+    const titre = screen.getByRole('heading', { level: 1, name: 'ET - 01 0000040 - CH NANTUA' })
     expect(titre).toBeInTheDocument()
   })
 
@@ -59,8 +59,8 @@ describe('La page Établissement territorial sanitaire', () => {
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const labelNuméroFiness = within(indicateurs[1]).getByText('Numéro', { exact: false, selector: 'p' })
     expect(labelNuméroFiness.textContent).toBe(`${wording.NUMÉRO_FINESS} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
-    const numéroFiness = within(indicateurs[1]).getByText('010 000 040', { selector: 'p' })
-    expect(numéroFiness).toBeInTheDocument()
+    expect(within(indicateurs[1]).getByText('01', { selector: 'strong' })).toBeInTheDocument()
+    expect(within(indicateurs[1]).getByText('0000040', { selector: 'p' })).toBeInTheDocument()
   })
 
   it('affiche l’adresse dans le bloc identité', () => {
@@ -98,7 +98,7 @@ describe('La page Établissement territorial sanitaire', () => {
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const labelEntitéJuridiqueDeRattachement = within(indicateurs[4]).getByText(`${wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT} -`, { selector: 'p' })
     expect(labelEntitéJuridiqueDeRattachement.textContent).toBe(`${wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
-    const entitéJuridiqueDeRattachement = within(indicateurs[4]).getByText('EJ - 010 008 407 - HOPITAL PRIVE DE VILLENEUVE DASCQ', { selector: 'p' })
+    const entitéJuridiqueDeRattachement = within(indicateurs[4]).getByText('EJ - 01 0008407 - HOPITAL PRIVE DE VILLENEUVE DASCQ', { selector: 'p' })
     expect(entitéJuridiqueDeRattachement).toBeInTheDocument()
   })
 
