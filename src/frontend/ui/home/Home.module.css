@@ -1,0 +1,7 @@
+.liste-entités-juridiques {
+  color: var(--text-action-high-grey);
+}
+
+.liste-entités-juridiques li:not(:last-child) {
+  margin-bottom: 0.375rem;
+}
