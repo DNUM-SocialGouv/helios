@@ -2,6 +2,7 @@ import { AppProps } from 'next/app'
 import Head from 'next/head'
 import Script from 'next/script'
 import '@gouvfr/dsfr/dist/core/core.min.css'
+import '../frontend/ui/commun/global.css'
 
 import { frontDependencies } from '../frontend/configuration/frontDependencies'
 import { DependenciesProvider } from '../frontend/ui/commun/contexts/useDependencies'
@@ -23,7 +24,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </main>
       <Footer />
-
       <Script
         src="/api/design-system-francais/dsfr"
         strategy="lazyOnload"

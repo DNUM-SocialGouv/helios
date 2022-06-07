@@ -21,6 +21,10 @@ export interface Wording {
   readonly VOIR_LE_FIL_D_ARIANE: string
   readonly ENTITÉ_JURIDIQUE: string
 
+  // Home
+  readonly TITRE_LISTE_DES_ENTITÉS_JURIDIQUES: string
+  readonly ENTITÉS_JURIDIQUES: string
+
   // Fiches
   readonly MISE_À_JOUR: string
   readonly SOURCE: string
