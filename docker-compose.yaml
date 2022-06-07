@@ -10,12 +10,12 @@ services:
     volumes:
       - type: bind
         source: $PWD/data_set
-        target: /home/usr_finess_ls
+        target: /home/finess/usr_finess
       - type: bind
         source: $HOME/.ssh/sftp_local.pub
-        target: /home/usr_finess_ls/.ssh/keys/sftp_local.pub
+        target: /home/finess/.ssh/keys/sftp_local.pub
         read_only: true
-    command: usr_finess_ls:helios:1001
+    command: finess::1001
   postgres:
     image: postgres:13.6-alpine
     container_name: helios_db

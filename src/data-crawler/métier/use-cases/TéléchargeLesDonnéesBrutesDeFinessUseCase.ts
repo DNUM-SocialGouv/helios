@@ -10,7 +10,7 @@ export class TéléchargeLesDonnéesBrutesDeFinessUseCase {
 
   async handle() {
     const rawData = 'FINESS'
-    const sftpPath = 'flux_finess'
+    const sftpPath = '../usr_finess/flux_finess'
     const finessLocalPath = 'finess'
 
     try {

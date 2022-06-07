@@ -7,7 +7,7 @@ describe('Récupération des sources de données FINESS en local', () => {
   it('récupére les sources de données FINESS en local', async () => {
     // GIVEN
     const sourceDeDonnées = 'FINESS'
-    const cheminSftp = 'flux_finess'
+    const cheminSftp = '../usr_finess/flux_finess'
     const téléchargerLesDonnéesBrutesDeFiness = new TéléchargeLesDonnéesBrutesDeFinessUseCase(
       fakeDataCrawlerDependencies.downloadRawData,
       fakeDataCrawlerDependencies.unzipRawData
