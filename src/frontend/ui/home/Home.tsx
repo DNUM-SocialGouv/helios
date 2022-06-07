@@ -52,10 +52,10 @@ export const Home = () => {
       aria-label={wording.TITRE_LISTE_DES_ENTITÉS_JURIDIQUES}
       className="fr-mt-5w"
     >
-      <h3>
+      <h1 className="fr-h3">
         {wording.ENTITÉS_JURIDIQUES}
-      </h3>
-      <ol className={ styles['liste-entités-juridiques'] + ' fr-raw-list fr-text--bold fr-raw-link'}>
+      </h1>
+      <ul className={styles['liste-entités-juridiques'] + ' fr-raw-list fr-text--bold fr-raw-link'}>
         {
           entitésJuridiques.map((entitéJuridique) =>
             <ListItem
@@ -72,7 +72,7 @@ export const Home = () => {
               </>}
             />)
         }
-      </ol>
+      </ul>
     </section>
   )
 }
