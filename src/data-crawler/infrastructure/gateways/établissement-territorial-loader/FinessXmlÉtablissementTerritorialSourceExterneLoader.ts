@@ -2,9 +2,9 @@ import { readdirSync } from 'fs'
 
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
+import { EntitéJuridiqueSourceInterneLoader } from '../../../métier/gateways/EntitéJuridiqueSourceInterneLoader'
 import { XmlToJs } from '../../../métier/gateways/XmlToJs'
 import { ÉtablissementTerritorialSourceExterneLoader } from '../../../métier/gateways/ÉtablissementTerritorialSourceExterneLoader'
-import {EntitéJuridiqueSourceInterneLoader} from "../../../métier/gateways/EntitéJuridiqueSourceInterneLoader";
 
 type ÉtablissementTerritorialIdentitéFiness = Readonly<{
   nofinesset: Readonly<{
@@ -231,6 +231,8 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
 
     const catégories = this.convertXmlToJs.handle<CatégorieFluxFiness>(cheminDuFichierCatégorie)
 
+    const numéroFinessDesEntitésJuridiques = this.entitéJuridiqueSourceInterneLoader.récupèreLeNuméroFinessDesEntitésJuridiques()
+
     const établissementTerritorialFluxFinessIdentité = this.convertXmlToJs.handle
       <ÉtablissementTerritorialIdentitéFluxFiness>(cheminDuFichierÉtablissementTerritorialIdentité)
 
@@ -238,8 +240,9 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
       .filter((établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) => {
         const établissementTerritorialCaduque = établissementTerritorialIdentitéFiness.indcaduc._text === 'O'
         const établissementTerritorialFermé = établissementTerritorialIdentitéFiness.datefermeture._text !== undefined
+        const établissementJuridiqueFermé = !numéroFinessDesEntitésJuridiques.includes(établissementTerritorialIdentitéFiness.nofinessej._text)
 
-        return établissementTerritorialCaduque || établissementTerritorialFermé ? false : true
+        return établissementTerritorialCaduque || établissementTerritorialFermé || établissementJuridiqueFermé ? false : true
       })
       .map((établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) =>
         this.construitÉtablissementTerritorialIdentité(établissementTerritorialIdentitéFiness, dateDeMiseAJourDeLaSource, catégories))
