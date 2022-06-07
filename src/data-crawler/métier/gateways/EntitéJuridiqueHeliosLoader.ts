@@ -1,3 +1,3 @@
-export interface EntitéJuridiqueSourceInterneLoader {
+export interface EntitéJuridiqueHeliosLoader {
   récupèreLeNuméroFinessDesEntitésJuridiques(): string[]
 }

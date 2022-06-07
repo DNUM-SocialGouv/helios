@@ -101,8 +101,15 @@ describe('Récupération des établissements territoriaux de la source de donné
     </fluxfiness>`
     mkdirSync(finessLocalPath, { recursive: true })
     writeFileSync(`${finessLocalPath}/finess_cs1400102_stock_20211214-0336.xml`, xml)
+    const mockedRécupèreLeNuméroFinessDesEntitésJuridiques = jest.fn(() => {
+      return ['010008407', '010000164']
+    })
+    const typeOrmEntitéJuridiqueSourceInterneLoader = { récupèreLeNuméroFinessDesEntitésJuridiques: mockedRécupèreLeNuméroFinessDesEntitésJuridiques }
+
     // WHEN
-    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(new NodeXmlToJs(), localPath, {})
+    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(
+      new NodeXmlToJs(), localPath, typeOrmEntitéJuridiqueSourceInterneLoader
+    )
     const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts()
 
     // THEN
@@ -213,8 +220,15 @@ describe('Récupération des établissements territoriaux de la source de donné
     </fluxfiness>`
     mkdirSync(finessLocalPath, { recursive: true })
     writeFileSync(`${finessLocalPath}/finess_cs1400102_stock_20211214-0336.xml`, xml)
+    const mockedRécupèreLeNuméroFinessDesEntitésJuridiques = jest.fn(() => {
+      return ['010008407', '100000983']
+    })
+    const typeOrmEntitéJuridiqueSourceInterneLoader = { récupèreLeNuméroFinessDesEntitésJuridiques: mockedRécupèreLeNuméroFinessDesEntitésJuridiques }
+
     // WHEN
-    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(new NodeXmlToJs(), localPath, {})
+    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(
+      new NodeXmlToJs(), localPath, typeOrmEntitéJuridiqueSourceInterneLoader
+    )
     const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts()
 
     // THEN
@@ -342,4 +356,5 @@ describe('Récupération des établissements territoriaux de la source de donné
       ]
     )
   })
+
 })

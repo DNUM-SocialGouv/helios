@@ -2,7 +2,7 @@ import { readdirSync } from 'fs'
 
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
-import { EntitéJuridiqueSourceInterneLoader } from '../../../métier/gateways/EntitéJuridiqueSourceInterneLoader'
+import { EntitéJuridiqueHeliosLoader } from '../../../métier/gateways/EntitéJuridiqueHeliosLoader'
 import { XmlToJs } from '../../../métier/gateways/XmlToJs'
 import { ÉtablissementTerritorialSourceExterneLoader } from '../../../métier/gateways/ÉtablissementTerritorialSourceExterneLoader'
 
@@ -220,7 +220,8 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
   private readonly préfixeDuFichierÉtablissementTerritorialIdentité = 'finess_cs1400102_stock_'
   private readonly préfixeDuFichierCatégorie = 'finess_cs1500106_stock_'
 
-  constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string, private readonly entitéJuridiqueSourceInterneLoader: EntitéJuridiqueSourceInterneLoader) {}
+  constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string,
+              private readonly entitéJuridiqueHeliosLoader: EntitéJuridiqueHeliosLoader) {}
 
   récupèreLesÉtablissementsTerritoriauxOuverts(): ÉtablissementTerritorialIdentité[] {
     const cheminDuFichierÉtablissementTerritorialIdentité = this.récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(this.localPath)
@@ -231,23 +232,27 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
 
     const catégories = this.convertXmlToJs.handle<CatégorieFluxFiness>(cheminDuFichierCatégorie)
 
-    const numéroFinessDesEntitésJuridiques = this.entitéJuridiqueSourceInterneLoader.récupèreLeNuméroFinessDesEntitésJuridiques()
+    const numéroFinessDesEntitésJuridiques = this.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques()
 
     const établissementTerritorialFluxFinessIdentité = this.convertXmlToJs.handle
       <ÉtablissementTerritorialIdentitéFluxFiness>(cheminDuFichierÉtablissementTerritorialIdentité)
 
     const établissementsTerritoriauxIdentité = établissementTerritorialFluxFinessIdentité.fluxfiness.structureet
-      .filter((établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) => {
-        const établissementTerritorialCaduque = établissementTerritorialIdentitéFiness.indcaduc._text === 'O'
-        const établissementTerritorialFermé = établissementTerritorialIdentitéFiness.datefermeture._text !== undefined
-        const établissementJuridiqueFermé = !numéroFinessDesEntitésJuridiques.includes(établissementTerritorialIdentitéFiness.nofinessej._text)
-
-        return établissementTerritorialCaduque || établissementTerritorialFermé || établissementJuridiqueFermé ? false : true
-      })
+      .filter(this.gardeLesÉtablissementsOuverts(numéroFinessDesEntitésJuridiques))
       .map((établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) =>
         this.construitÉtablissementTerritorialIdentité(établissementTerritorialIdentitéFiness, dateDeMiseAJourDeLaSource, catégories))
 
     return établissementsTerritoriauxIdentité
+  }
+
+  private gardeLesÉtablissementsOuverts(numéroFinessDesEntitésJuridiques: string[]) {
+    return (établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) => {
+      const établissementTerritorialCaduque = établissementTerritorialIdentitéFiness.indcaduc._text === 'O'
+      const établissementTerritorialFermé = établissementTerritorialIdentitéFiness.datefermeture._text !== undefined
+      const établissementJuridiqueFermé = !numéroFinessDesEntitésJuridiques.includes(établissementTerritorialIdentitéFiness.nofinessej._text!)
+
+      return établissementTerritorialCaduque || établissementTerritorialFermé || établissementJuridiqueFermé ? false : true
+    }
   }
 
   private récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(localPath: string): string {
