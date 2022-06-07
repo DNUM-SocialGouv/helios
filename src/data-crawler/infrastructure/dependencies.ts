@@ -1,28 +1,28 @@
 import { DownloadRawData } from '../métier/gateways/DownloadRawData'
-import { EntitéJuridiqueLoader } from '../métier/gateways/EntitéJuridiqueLoader'
+import { EntitéJuridiqueSourceExterneLoader } from '../métier/gateways/EntitéJuridiqueSourceExterneLoader'
 import { EntitéJuridiqueRepository } from '../métier/gateways/EntitéJuridiqueRepository'
 import { EnvironmentVariables } from '../métier/gateways/EnvironmentVariables'
 import { UnzipRawData } from '../métier/gateways/UnzipRawData'
-import { ÉtablissementTerritorialLoader } from '../métier/gateways/ÉtablissementTerritorialLoader'
+import { ÉtablissementTerritorialSourceExterneLoader } from '../métier/gateways/ÉtablissementTerritorialSourceExterneLoader'
 import { ÉtablissementTerritorialRepository } from '../métier/gateways/ÉtablissementTerritorialRepository'
 import { dotEnvConfig } from './gateways/dot-env/dotEnvConfig'
 import { SftpDownloadRawData } from './gateways/download-raw-data/SftpDownloadRawData'
-import { FinessXmlEntitéJuridiqueLoader } from './gateways/entité-juridique-loader/FinessXmlEntitéJuridiqueLoader'
+import { FinessXmlEntitéJuridiqueSourceExterneLoader } from './gateways/entité-juridique-source-externe-loader/FinessXmlEntitéJuridiqueSourceExterneLoader'
 import { TypeOrmEntitéJuridiqueRepository } from './gateways/entité-juridique-repository/TypeOrmEntitéJuridiqueRepository'
 import { NodeEnvironmentVariables } from './gateways/environnement-variables/NodeEnvironmentVariables'
 import { ConsoleLogger } from './gateways/logger/ConsoleLogger'
 import { typeOrmOrm } from './gateways/orm/typeOrmOrm'
 import { GunzipUnzipRawData } from './gateways/unzip-raw-data/GunzipUnzipRawData'
 import { NodeXmlToJs } from './gateways/xml-to-js/NodeXmlToJs'
-import { FinessXmlÉtablissementTerritorialLoader } from './gateways/établissement-territorial-loader/FinessXmlÉtablissementTerritorialLoader'
+import { FinessXmlÉtablissementTerritorialSourceExterneLoader } from './gateways/établissement-territorial-loader/FinessXmlÉtablissementTerritorialSourceExterneLoader'
 import { TypeOrmÉtablissementTerritorialRepository } from './gateways/établissement-territorial-repository/TypeOrmÉtablissementTerritorialRepository'
 
 export type Dependencies = Readonly<{
   downloadRawData: DownloadRawData
   environmentVariables: EnvironmentVariables
-  entitéJuridiqueLoader: EntitéJuridiqueLoader
+  entitéJuridiqueLoader: EntitéJuridiqueSourceExterneLoader
   entitéJuridiqueRepository: EntitéJuridiqueRepository
-  établissementTerritorialLoader: ÉtablissementTerritorialLoader
+  établissementTerritorialLoader: ÉtablissementTerritorialSourceExterneLoader
   établissementTerritorialRepository: ÉtablissementTerritorialRepository
   unzipRawData: UnzipRawData
 }>
@@ -36,11 +36,11 @@ const _instantiateDependencies = (): Dependencies => {
 
   return {
     downloadRawData: new SftpDownloadRawData(environmentVariables, logger),
-    entitéJuridiqueLoader: new FinessXmlEntitéJuridiqueLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),
+    entitéJuridiqueLoader: new FinessXmlEntitéJuridiqueSourceExterneLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),
     entitéJuridiqueRepository: new TypeOrmEntitéJuridiqueRepository(orm),
     environmentVariables,
     unzipRawData: new GunzipUnzipRawData(environmentVariables, logger),
-    établissementTerritorialLoader: new FinessXmlÉtablissementTerritorialLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),
+    établissementTerritorialLoader: new FinessXmlÉtablissementTerritorialSourceExterneLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),
     établissementTerritorialRepository: new TypeOrmÉtablissementTerritorialRepository(orm),
   }
 }

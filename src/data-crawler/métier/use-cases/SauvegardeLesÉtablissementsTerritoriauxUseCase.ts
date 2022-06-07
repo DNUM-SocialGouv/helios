@@ -1,9 +1,9 @@
-import { ÉtablissementTerritorialLoader } from '../gateways/ÉtablissementTerritorialLoader'
+import { ÉtablissementTerritorialSourceExterneLoader } from '../gateways/ÉtablissementTerritorialSourceExterneLoader'
 import { ÉtablissementTerritorialRepository } from '../gateways/ÉtablissementTerritorialRepository'
 
 export class SauvegardeLesÉtablissementsTerritoriauxUseCase {
   constructor(
-    private readonly établissementTerritorialLoader: ÉtablissementTerritorialLoader,
+    private readonly établissementTerritorialLoader: ÉtablissementTerritorialSourceExterneLoader,
     private readonly établissementTerritorialRepository: ÉtablissementTerritorialRepository
   ) {}
 

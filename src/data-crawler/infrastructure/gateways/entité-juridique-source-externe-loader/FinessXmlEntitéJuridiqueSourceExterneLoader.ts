@@ -1,7 +1,7 @@
 import { readdirSync } from 'fs'
 
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
-import { EntitéJuridiqueLoader } from '../../../métier/gateways/EntitéJuridiqueLoader'
+import { EntitéJuridiqueSourceExterneLoader } from '../../../métier/gateways/EntitéJuridiqueSourceExterneLoader'
 import { XmlToJs } from '../../../métier/gateways/XmlToJs'
 
 type EntitéJuridiqueFiness = Readonly<{
@@ -118,7 +118,7 @@ type EntitéJuridiqueFluxFiness = Readonly<{
   }>
 }>
 
-export class FinessXmlEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
+export class FinessXmlEntitéJuridiqueSourceExterneLoader implements EntitéJuridiqueSourceExterneLoader {
   private readonly préfixeDuFichierEntitéJuridique = 'finess_cs1400101_stock_'
 
   constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string) {}

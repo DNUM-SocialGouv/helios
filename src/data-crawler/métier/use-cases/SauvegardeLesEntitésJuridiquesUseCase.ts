@@ -1,9 +1,9 @@
-import { EntitéJuridiqueLoader } from '../gateways/EntitéJuridiqueLoader'
+import { EntitéJuridiqueSourceExterneLoader } from '../gateways/EntitéJuridiqueSourceExterneLoader'
 import { EntitéJuridiqueRepository } from '../gateways/EntitéJuridiqueRepository'
 
 export class SauvegardeLesEntitésJuridiquesUseCase {
   constructor(
-    private readonly entitéJuridiqueLoader: EntitéJuridiqueLoader,
+    private readonly entitéJuridiqueLoader: EntitéJuridiqueSourceExterneLoader,
     private readonly entitéJuridiqueRepository: EntitéJuridiqueRepository
   ) {}
 

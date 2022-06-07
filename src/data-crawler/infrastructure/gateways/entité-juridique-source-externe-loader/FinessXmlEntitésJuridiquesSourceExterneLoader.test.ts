@@ -3,7 +3,7 @@ import { mkdirSync, rmSync, writeFileSync } from 'fs'
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { getFakeDataCrawlerDependencies } from '../../../testHelper'
 import { NodeXmlToJs } from '../xml-to-js/NodeXmlToJs'
-import { FinessXmlEntitéJuridiqueLoader } from './FinessXmlEntitéJuridiqueLoader'
+import { FinessXmlEntitéJuridiqueSourceExterneLoader } from './FinessXmlEntitéJuridiqueSourceExterneLoader'
 
 describe('Récupération des entités juridiques de la source de données FINESS', () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
@@ -14,11 +14,9 @@ describe('Récupération des entités juridiques de la source de données FINESS
     rmSync(localPath, { recursive: true })
   })
 
-  it('récupère les entités juridiques ouvertes de la source de données FINESS', () => {
+  it('récupère uniquement les entités juridiques ouvertes de la source de données FINESS', () => {
     // GIVEN
-    const xml = `<?xml version="1.0" encoding="UTF-8"?>
-    <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <structureej>
+    const ejOuverte1 = `<structureej>
         <nofiness>010008407</nofiness>
         <rs>CH DU HAUT BUGEY</rs>
         <numvoie>1</numvoie>
@@ -29,8 +27,8 @@ describe('Récupération des entités juridiques de la source de données FINESS
         <libstatutjuridique>Etablissement Public Intercommunal d'Hospitalisation</libstatutjuridique>
         <categetab>355</categetab>
         <datefermeture xsi:nil="true"/>
-      </structureej>
-      <structureej>
+      </structureej>`
+    const ejOuverte2 = `<structureej>
         <nofiness>590000741</nofiness>
         <rs>HOPITAL PRIVE DE VILLENEUVE D'ASCQ</rs>
         <numvoie>20</numvoie>
@@ -41,8 +39,8 @@ describe('Récupération des entités juridiques de la source de données FINESS
         <libstatutjuridique>Société Anonyme (S.A.)</libstatutjuridique>
         <categetab xsi:nil="true"/>
         <datefermeture xsi:nil="true"/>
-      </structureej>
-      <structureej>
+      </structureej>`
+    const ejFermée = `<structureej>
         <nofiness>010000164</nofiness>
         <rs>[Fermé] POLYCLINIQUE D'AMBERIEU</rs>
         <numvoie>17</numvoie>
@@ -53,12 +51,17 @@ describe('Récupération des entités juridiques de la source de données FINESS
         <libstatutjuridique>Société A Responsabilité Limitée (S.A.R.L.)</libstatutjuridique>
         <categetab xsi:nil="true"/>
         <datefermeture>2002-07-10</datefermeture>
-      </structureej>
+      </structureej>`
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+    <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      ${ejOuverte1}
+      ${ejOuverte2}
+      ${ejFermée}
     </fluxfiness>`
     mkdirSync(finessLocalPath, { recursive: true })
     writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, xml)
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueLoader(new NodeXmlToJs(), localPath)
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueSourceExterneLoader(new NodeXmlToJs(), localPath)
     const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes()
 
     // THEN
@@ -172,7 +175,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
     mkdirSync(finessLocalPath, { recursive: true })
     writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, xml)
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueLoader(new NodeXmlToJs(), localPath)
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueSourceExterneLoader(new NodeXmlToJs(), localPath)
     const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes()
 
     // THEN

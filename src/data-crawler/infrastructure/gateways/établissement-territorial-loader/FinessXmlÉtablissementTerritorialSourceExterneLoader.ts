@@ -3,7 +3,8 @@ import { readdirSync } from 'fs'
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { XmlToJs } from '../../../métier/gateways/XmlToJs'
-import { ÉtablissementTerritorialLoader } from '../../../métier/gateways/ÉtablissementTerritorialLoader'
+import { ÉtablissementTerritorialSourceExterneLoader } from '../../../métier/gateways/ÉtablissementTerritorialSourceExterneLoader'
+import {EntitéJuridiqueSourceInterneLoader} from "../../../métier/gateways/EntitéJuridiqueSourceInterneLoader";
 
 type ÉtablissementTerritorialIdentitéFiness = Readonly<{
   nofinesset: Readonly<{
@@ -215,11 +216,11 @@ type CatégorieFluxFiness = Readonly<{
   }
 }>
 
-export class FinessXmlÉtablissementTerritorialLoader implements ÉtablissementTerritorialLoader {
+export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements ÉtablissementTerritorialSourceExterneLoader {
   private readonly préfixeDuFichierÉtablissementTerritorialIdentité = 'finess_cs1400102_stock_'
   private readonly préfixeDuFichierCatégorie = 'finess_cs1500106_stock_'
 
-  constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string) {}
+  constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string, private readonly entitéJuridiqueSourceInterneLoader: EntitéJuridiqueSourceInterneLoader) {}
 
   récupèreLesÉtablissementsTerritoriauxOuverts(): ÉtablissementTerritorialIdentité[] {
     const cheminDuFichierÉtablissementTerritorialIdentité = this.récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(this.localPath)
