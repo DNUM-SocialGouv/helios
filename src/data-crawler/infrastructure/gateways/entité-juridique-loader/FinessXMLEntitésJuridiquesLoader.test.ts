@@ -21,120 +21,45 @@ describe('Récupération des entités juridiques de la source de données FINESS
       <structureej>
         <nofiness>010008407</nofiness>
         <rs>CH DU HAUT BUGEY</rs>
-        <rslongue>CENTRE HOSPITALIER DU HAUT BUGEY</rslongue>
-        <complrs xsi:nil="true"/>
         <numvoie>1</numvoie>
         <typvoie>RTE</typvoie>
         <voie>DE VEYZIAT</voie>
-        <compvoie xsi:nil="true"/>
-        <compldistrib xsi:nil="true"/>
-        <lieuditbp>CS 20100</lieuditbp>
-        <libellepays xsi:nil="true"/>
-        <commune>283</commune>
         <ligneacheminement>01117 OYONNAX CEDEX</ligneacheminement>
-        <libcommune>OYONNAX</libcommune>
-        <departement>01</departement>
-        <libdepartement>AIN</libdepartement>
-        <codepostal>01117</codepostal>
-        <codepays xsi:nil="true"/>
         <telephone>0474731001</telephone>
-        <telecopie>0474731002</telecopie>
-        <statutjuridique>14</statutjuridique>
         <libstatutjuridique>Etablissement Public Intercommunal d'Hospitalisation</libstatutjuridique>
-        <libcourtstatutjuridique>Etb.Pub.Intcom.Hosp.</libcourtstatutjuridique>
         <categetab>355</categetab>
-        <libcategetab>Centre Hospitalier (C.H.)</libcategetab>
-        <libcourtcategetab>C.H.</libcourtcategetab>
-        <siren>260110218</siren>
-        <datemodifsiren>2011-02-07</datemodifsiren>
-        <originemodifsiren>RMESSMAIA_AUTO</originemodifsiren>
-        <codeape>8730A</codeape>
-        <datecrea>2001-01-01</datecrea>
-        <datemaj>2020-02-04</datemaj>
         <datefermeture xsi:nil="true"/>
-        <typefermeture xsi:nil="true"/>
-        <qualifcreation>GEN</qualifcreation>
       </structureej>
       <structureej>
         <nofiness>590000741</nofiness>
         <rs>HOPITAL PRIVE DE VILLENEUVE D'ASCQ</rs>
-        <rslongue>HOPITAL PRIVE DE VILLENEUVE D'ASCQ</rslongue>
-        <complrs xsi:nil="true"/>
         <numvoie>20</numvoie>
         <typvoie>AV</typvoie>
         <voie>DE LA RECONNAISSANCE</voie>
-        <compvoie xsi:nil="true"/>
-        <compldistrib xsi:nil="true"/>
-        <lieuditbp>QUARTIER DU RECUEIL</lieuditbp>
-        <libellepays xsi:nil="true"/>
-        <commune>009</commune>
         <ligneacheminement>59650 VILLENEUVE D ASCQ</ligneacheminement>
-        <libcommune>VILLENEUVE D ASCQ</libcommune>
-        <departement>59</departement>
-        <libdepartement>NORD</libdepartement>
-        <codepostal>59650</codepostal>
-        <codepays xsi:nil="true"/>
         <telephone>0826666900</telephone>
-        <telecopie>0320995678</telecopie>
-        <statutjuridique>73</statutjuridique>
         <libstatutjuridique>Société Anonyme (S.A.)</libstatutjuridique>
-        <libcourtstatutjuridique>Société Anonyme</libcourtstatutjuridique>
         <categetab xsi:nil="true"/>
-        <libcategetab xsi:nil="true"/>
-        <libcourtcategetab xsi:nil="true"/>
-        <siren>476780333</siren>
-        <datemodifsiren>2012-09-26</datemodifsiren>
-        <originemodifsiren>SIRETISATION</originemodifsiren>
-        <codeape>8610Z</codeape>
-        <datecrea>2001-01-01</datecrea>
-        <datemaj>2012-09-14</datemaj>
         <datefermeture xsi:nil="true"/>
-        <typefermeture xsi:nil="true"/>
-        <qualifcreation>GEN</qualifcreation>
       </structureej>
       <structureej>
         <nofiness>010000164</nofiness>
         <rs>[Fermé] POLYCLINIQUE D'AMBERIEU</rs>
-        <rslongue>POLYCLINIQUE D'AMBERIEU EN BUGEY</rslongue>
-        <complrs xsi:nil="true"/>
         <numvoie>17</numvoie>
         <typvoie>R</typvoie>
         <voie>AIME VINGTRINIER</voie>
-        <compvoie xsi:nil="true"/>
-        <compldistrib xsi:nil="true"/>
-        <lieuditbp xsi:nil="true"/>
-        <libellepays xsi:nil="true"/>
-        <commune>004</commune>
         <ligneacheminement>01500 AMBERIEU EN BUGEY</ligneacheminement>
-        <libcommune>AMBERIEU EN BUGEY</libcommune>
-        <departement>01</departement>
-        <libdepartement>AIN</libdepartement>
-        <codepostal>01500</codepostal>
-        <codepays xsi:nil="true"/>
         <telephone>0474383000</telephone>
-        <telecopie xsi:nil="true"/>
-        <statutjuridique>72</statutjuridique>
         <libstatutjuridique>Société A Responsabilité Limitée (S.A.R.L.)</libstatutjuridique>
-        <libcourtstatutjuridique>S.A.R.L.</libcourtstatutjuridique>
         <categetab xsi:nil="true"/>
-        <libcategetab xsi:nil="true"/>
-        <libcourtcategetab xsi:nil="true"/>
-        <siren>304368764</siren>
-        <datemodifsiren>2009-01-01</datemodifsiren>
-        <originemodifsiren>SAISIE</originemodifsiren>
-        <codeape xsi:nil="true"/>
-        <datecrea>2001-01-01</datecrea>
-        <datemaj>2002-07-10</datemaj>
         <datefermeture>2002-07-10</datefermeture>
-        <typefermeture>NDI</typefermeture>
-        <qualifcreation>GEN</qualifcreation>
       </structureej>
     </fluxfiness>`
     mkdirSync(finessLocalPath, { recursive: true })
     writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, xml)
     // WHEN
     const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueLoader(new NodeXmlToJs(), localPath)
-    const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiques()
+    const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes()
 
     // THEN
     expect(entitésJuridiques).toStrictEqual<EntitéJuridique[]>(
@@ -248,7 +173,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
     writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, xml)
     // WHEN
     const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueLoader(new NodeXmlToJs(), localPath)
-    const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiques()
+    const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes()
 
     // THEN
     expect(entitésJuridiques).toStrictEqual<EntitéJuridique[]>(

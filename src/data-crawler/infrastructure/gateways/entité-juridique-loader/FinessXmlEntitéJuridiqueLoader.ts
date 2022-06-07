@@ -123,7 +123,7 @@ export class FinessXmlEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
 
   constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string) {}
 
-  récupèreLesEntitésJuridiques(): EntitéJuridique[] {
+  récupèreLesEntitésJuridiquesOuvertes(): EntitéJuridique[] {
     const cheminDuFichierEntitéJuridique = this.récupèreLeCheminDuFichierEntitéJuridique(this.localPath)
 
     const dateDeMiseAJourDeLaSource = this.récupèreLaDateDeMiseAJourDeLaSource(cheminDuFichierEntitéJuridique)

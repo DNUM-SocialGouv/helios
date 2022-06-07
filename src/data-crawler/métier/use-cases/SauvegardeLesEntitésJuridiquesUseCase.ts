@@ -8,7 +8,7 @@ export class SauvegardeLesEntitésJuridiquesUseCase {
   ) {}
 
   async handle(): Promise<void> {
-    const entitésJuridiques = this.entitéJuridiqueLoader.récupèreLesEntitésJuridiques()
+    const entitésJuridiques = this.entitéJuridiqueLoader.récupèreLesEntitésJuridiquesOuvertes()
 
     await this.entitéJuridiqueRepository.sauvegarde(entitésJuridiques)
   }

@@ -1,4 +1,4 @@
-import { fakeLogger } from '../../../../data-crawler/testHelper'
+import { fakeLogger } from '../../../testHelper'
 import { NodeEnvironmentVariables } from './NodeEnvironmentVariables'
 
 describe('Gestion des variables d’environnement', () => {

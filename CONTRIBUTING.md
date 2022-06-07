@@ -27,7 +27,7 @@ yarn
 yarn dev
 ```
 
-> Visiter: http://localhost:3000
+> Visiter : http://localhost:3000
 
 > Cette commande lance aussi la base de donnée locale et les migrations associées
 
@@ -62,21 +62,28 @@ yarn psql:local
 ```
 
 ### Connexion à la base de données de production
-### Prérequis
+
+#### Prérequis
+
 1. Faire partie de l'équipe Helios sur Scalingo.
+
 2. Installer la CLI Scalingo :
+
 ```sh
 curl -O https://cli-dl.scalingo.io/install && bash install
 ```
+
 3. Si besoin, se connecter à son compte Scalingo via la CLI avec son e-mail et mot de passe
+
 ```sh
 scalingo login
 ```
-### Commande
+
+#### Commande
+
 ```sh
 yarn psql:production
 ```
-
 
 ## Migrations
 
@@ -118,6 +125,8 @@ Un échantillon des données FINESS sont dans `data_set`.
 
 > Une clé public SSH `$HOME/.ssh/sftp_local.pub` sera demandée pour l'authentification au SFTP local.
 
+> ATTENTION ! Lors d'une mise à jour des ET, il faut retirer les balises `noautorarhgos` et `noimplarhgos` de la partie `activiteoffresoin` car ce sont des données qui ne doivent pas être partagées.
+
 ### Simuler le téléchagement des données FINESS
 
 ```sh
@@ -136,11 +145,12 @@ yarn saveET
 ```sh
 yarn populateDatabase
 ```
-Execute `retrieveFiness`, `saveEJ` et `saveET`
+
+> Execute `retrieveFiness`, `saveEJ` et `saveET`
 
 ## Arborescence
 
-```
+```text
 📦 helios
  ┣ 📂 .github/workflows           ->  Github Actions
  ┣ 📂 node_modules                ->  Dépendances définies du package.json
@@ -246,7 +256,7 @@ interface Repository<T> {
 ```
 
 - éviter au maximum `null` & `undefined`
-  > cf https://en.wikipedia.org/wiki/Tony_Hoare#Apologies_and_retractions
+  > [Apologies and retractions de Tony_Hoare](https://en.wikipedia.org/wiki/Tony_Hoare#Apologies_and_retractions)
 
 - pas de typage de variables quand il y a une inférence naturelle
 

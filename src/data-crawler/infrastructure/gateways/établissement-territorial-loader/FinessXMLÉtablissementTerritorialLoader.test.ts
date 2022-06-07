@@ -19,154 +19,77 @@ describe('Récupération des établissements territoriaux de la source de donné
         <nofinesset>010000040</nofinesset>
         <nofinessej>010008407</nofinessej>
         <rs>CH NANTUA</rs>
-        <rslongue>CENTRE HOSPITALIER NANTUA</rslongue>
-        <complrs xsi:nil="true"/>
-        <compldistrib xsi:nil="true"/>
         <numvoie>50</numvoie>
         <typvoie>R</typvoie>
         <voie>PAUL PAINLEVE</voie>
-        <compvoie xsi:nil="true"/>
-        <lieuditbp>BP 116</lieuditbp>
-        <commune>269</commune>
-        <libcommune>NANTUA</libcommune>
-        <departement>01</departement>
-        <libdepartement>AIN</libdepartement>
-        <codepostal>01130</codepostal>
         <ligneacheminement>01130 NANTUA</ligneacheminement>
-        <codepays xsi:nil="true"/>
-        <libellepays xsi:nil="true"/>
         <telephone>0474754800</telephone>
-        <telecopie>0774750663</telecopie>
         <courriel xsi:nil="true"/>
         <categetab>355</categetab>
         <libcategetab>Centre Hospitalier (C.H.)</libcategetab>
         <libcourtcategetab>C.H.</libcourtcategetab>
         <categagretab>1102</categagretab>
-        <libcategagretab>Centres Hospitaliers</libcategagretab>
-        <libcourtcategagretab>Centres Hospitaliers</libcourtcategagretab>
         <typeet>S</typeet>
         <nofinessppal>010000057</nofinessppal>
-        <natureet>G</natureet>
-        <siret>26011021800047</siret>
-        <datemodifsiret>2009-01-01</datemodifsiret>
-        <originemodifsiret>SAISIE</originemodifsiret>
-        <codeape xsi:nil="true"/>
-        <codemft>03</codemft>
-        <libmft>ARS établissements Publics de santé dotation globale</libmft>
-        <libcourtmft>ARS / DG EPS</libcourtmft>
-        <codesph>1</codesph>
-        <libsph>Etablissement public de santé</libsph>
-        <libcourtsph>Etab.public de santé</libcourtsph>
-        <dateouv>1901-01-01</dateouv>
-        <datelimite xsi:nil="true"/>
         <indcaduc xsi:nil="true"/>
-        <typefermeture xsi:nil="true"/>
         <datefermeture xsi:nil="true"/>
-        <dateautor>1901-01-01</dateautor>
-        <datemaj>2008-01-17</datemaj>
-        <numuai xsi:nil="true"/>
       </structureet>
       <structureet>
         <nofinesset>010000057</nofinesset>
         <nofinessej>010008407</nofinessej>
         <rs>CH OYONNAX</rs>
-        <rslongue>CENTRE HOSPITALIER OYONNAX</rslongue>
-        <complrs xsi:nil="true"/>
-        <compldistrib xsi:nil="true"/>
         <numvoie xsi:nil="true"/>
         <typvoie>RTE</typvoie>
         <voie>DE VEYZIAT</voie>
-        <compvoie xsi:nil="true"/>
-        <lieuditbp xsi:nil="true"/>
-        <commune>283</commune>
-        <libcommune>OYONNAX</libcommune>
-        <departement>01</departement>
-        <libdepartement>AIN</libdepartement>
-        <codepostal>01100</codepostal>
         <ligneacheminement>01100 OYONNAX</ligneacheminement>
-        <codepays xsi:nil="true"/>
-        <libellepays xsi:nil="true"/>
         <telephone>0474731001</telephone>
-        <telecopie>0774731002</telecopie>
         <courriel xsi:nil="true"/>
-        <categetab>111</categetab>
-        <libcategetab>Centre Hospitalier (C.H.)</libcategetab>
+        <categetab>001</categetab>
+        <libcategetab>Autres lits de m.R.</libcategetab>
         <libcourtcategetab>C.H.</libcourtcategetab>
         <categagretab>1102</categagretab>
-        <libcategagretab>Centres Hospitaliers</libcategagretab>
-        <libcourtcategagretab>Centres Hospitaliers</libcourtcategagretab>
         <typeet>S</typeet>
         <nofinessppal>010005239</nofinessppal>
-        <natureet>G</natureet>
-        <siret>26011021800013</siret>
-        <datemodifsiret>2009-01-01</datemodifsiret>
-        <originemodifsiret>SAISIE</originemodifsiret>
-        <codeape xsi:nil="true"/>
-        <codemft>03</codemft>
-        <libmft>ARS établissements Publics de santé dotation globale</libmft>
-        <libcourtmft>ARS / DG EPS</libcourtmft>
-        <codesph>1</codesph>
-        <libsph>Etablissement public de santé</libsph>
-        <libcourtsph>Etab.public de santé</libcourtsph>
-        <dateouv>1901-01-01</dateouv>
-        <datelimite xsi:nil="true"/>
         <indcaduc xsi:nil="true"/>
-        <typefermeture xsi:nil="true"/>
         <datefermeture xsi:nil="true"/>
-        <dateautor>1901-01-01</dateautor>
-        <datemaj>2018-10-26</datemaj>
-        <numuai xsi:nil="true"/>
       </structureet>
       <structureet>
         <nofinesset>010787190</nofinesset>
         <nofinessej>010000164</nofinessej>
         <rs>[Fermé] SMUR POLYCLINIQUE AMBERIEU</rs>
-        <rslongue>SMUR POLYCLINIQUE AMBERIEU EN BUGEY</rslongue>
-        <complrs xsi:nil="true"/>
-        <compldistrib xsi:nil="true"/>
         <numvoie>17</numvoie>
         <typvoie>R</typvoie>
         <voie>AIME VINGTRINIER</voie>
-        <compvoie xsi:nil="true"/>
-        <lieuditbp xsi:nil="true"/>
-        <commune>004</commune>
-        <libcommune>AMBERIEU EN BUGEY</libcommune>
-        <departement>01</departement>
-        <libdepartement>AIN</libdepartement>
-        <codepostal>01500</codepostal>
         <ligneacheminement>01500 AMBERIEU EN BUGEY</ligneacheminement>
-        <codepays xsi:nil="true"/>
-        <libellepays xsi:nil="true"/>
         <telephone>0474383000</telephone>
-        <telecopie xsi:nil="true"/>
         <courriel xsi:nil="true"/>
-        <categetab>111</categetab>
+        <categetab>001</categetab>
         <libcategetab>Unité Mobile Hospitalière</libcategetab>
         <libcourtcategetab>Unité Mobile Hosp.</libcourtcategetab>
         <categagretab>1204</categagretab>
-        <libcategagretab>Urgence et Réanimation</libcategagretab>
-        <libcourtcategagretab>Urgence Réanimation</libcourtcategagretab>
         <typeet>P</typeet>
         <nofinessppal xsi:nil="true"/>
-        <natureet>G</natureet>
-        <siret xsi:nil="true"/>
-        <datemodifsiret xsi:nil="true"/>
-        <originemodifsiret xsi:nil="true"/>
-        <codeape xsi:nil="true"/>
-        <codemft>01</codemft>
-        <libmft>Etablissement Tarif Libre</libmft>
-        <libcourtmft>Tarif libre</libcourtmft>
-        <codesph>3</codesph>
-        <libsph>PSPH par concession</libsph>
-        <libcourtsph>PSPH par concession</libcourtsph>
-        <dateouv>1982-03-04</dateouv>
-        <datelimite xsi:nil="true"/>
         <indcaduc xsi:nil="true"/>
-        <typefermeture>DEF</typefermeture>
         <datefermeture>1993-01-01</datefermeture>
-        <dateautor>1982-03-04</dateautor>
-        <datemaj>1993-12-09</datemaj>
-        <numuai xsi:nil="true"/>
+      </structureet>
+      <structureet>
+        <nofinesset>100007012</nofinesset>
+        <nofinessej>100000983</nofinessej>
+        <rs>[Caduque] MAISON DE REPOS ET DE CONVALESCENCE</rs>
+        <numvoie xsi:nil="true"/>
+        <typvoie xsi:nil="true"/>
+        <voie xsi:nil="true"/>
+        <ligneacheminement>10400 PONT SUR SEINE</ligneacheminement>
+        <telephone xsi:nil="true"/>
+        <courriel xsi:nil="true"/>
+        <categetab>001</categetab>
+        <libcategetab>Unité Mobile Hospitalière</libcategetab>
+        <libcourtcategetab>Unité Mobile Hosp.</libcourtcategetab>
+        <categagretab>1204</categagretab>
+        <typeet>P</typeet>
+        <nofinessppal xsi:nil="true"/>
+        <indcaduc>O</indcaduc>
+        <datefermeture xsi:nil="true"/>
       </structureet>
     </fluxfiness>`
     mkdirSync(finessLocalPath, { recursive: true })
@@ -178,36 +101,12 @@ describe('Récupération des établissements territoriaux de la source de donné
       <nomenclcategorieETavecagr>
         <code>355</code>
         <libelle>Centre Hospitalier (C.H.)</libelle>
-        <libellecourt>C.H.</libellecourt>
         <domaine>SAN</domaine>
-        <datedeb>1979-01-01</datedeb>
-        <datefin xsi:nil="true"/>
-        <codeagr3>1102</codeagr3>
-        <libelleagr3>Centres Hospitaliers</libelleagr3>
-        <libellecourtagr3>Centres Hospitaliers</libellecourtagr3>
-        <codeagr2>1100</codeagr2>
-        <libelleagr2>Etablissements Hospitaliers</libelleagr2>
-        <libellecourtagr2>Etab.Hospitaliers</libellecourtagr2>
-        <codeagr1>1000</codeagr1>
-        <libelleagr1>Etablissements Relevant de la Loi Hospitalière</libelleagr1>
-        <libellecourtagr1>Etab.Loi Hospital.</libellecourtagr1>
       </nomenclcategorieETavecagr>
       <nomenclcategorieETavecagr>
-        <code>111</code>
-        <libelle>Centre Hospitalier (C.H.)</libelle>
-        <libellecourt>C.H.</libellecourt>
+        <code>001</code>
+        <libelle>Autres lits de m.R.</libelle>
         <domaine>SOC</domaine>
-        <datedeb>1979-01-01</datedeb>
-        <datefin xsi:nil="true"/>
-        <codeagr3>1102</codeagr3>
-        <libelleagr3>Centres Hospitaliers</libelleagr3>
-        <libellecourtagr3>Centres Hospitaliers</libellecourtagr3>
-        <codeagr2>1100</codeagr2>
-        <libelleagr2>Etablissements Hospitaliers</libelleagr2>
-        <libellecourtagr2>Etab.Hospitaliers</libellecourtagr2>
-        <codeagr1>1000</codeagr1>
-        <libelleagr1>Etablissements Relevant de la Loi Hospitalière</libelleagr1>
-        <libellecourtagr1>Etab.Loi Hospital.</libellecourtagr1>
       </nomenclcategorieETavecagr>
     </fluxfiness>`
     writeFileSync(`${nomenclatureLocalPath}/finess_cs1500106_stock_20211214-0417.xml`, xmlNomenclature)
@@ -220,7 +119,7 @@ describe('Récupération des établissements territoriaux de la source de donné
   it('récupère les établissements territoriaux ouverts de la source de données FINESS', () => {
     // WHEN
     const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialLoader(new NodeXmlToJs(), localPath)
-    const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriaux()
+    const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts()
 
     // THEN
     expect(établissementsTerritoriaux).toStrictEqual<ÉtablissementTerritorialIdentité[]>(
@@ -247,11 +146,11 @@ describe('Récupération des établissements territoriaux de la source de donné
           adresseNuméroVoie: '',
           adresseTypeVoie: 'RTE',
           adresseVoie: 'DE VEYZIAT',
-          catégorieÉtablissement: '111',
+          catégorieÉtablissement: '001',
           courriel: '',
           dateMiseAJourSource: '20211214',
           domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
-          libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
+          libelléCatégorieÉtablissement: 'Autres lits de m.R.',
           numéroFinessEntitéJuridique: '010008407',
           numéroFinessÉtablissementPrincipal: '010005239',
           numéroFinessÉtablissementTerritorial: '010000057',

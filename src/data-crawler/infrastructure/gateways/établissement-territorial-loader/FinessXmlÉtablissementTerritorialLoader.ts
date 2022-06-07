@@ -221,7 +221,7 @@ export class FinessXmlÉtablissementTerritorialLoader implements ÉtablissementT
 
   constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string) {}
 
-  récupèreLesÉtablissementsTerritoriaux(): ÉtablissementTerritorialIdentité[] {
+  récupèreLesÉtablissementsTerritoriauxOuverts(): ÉtablissementTerritorialIdentité[] {
     const cheminDuFichierÉtablissementTerritorialIdentité = this.récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(this.localPath)
 
     const cheminDuFichierCatégorie = this.récupèreLeCheminDuFichierCatégorie(this.localPath)
@@ -234,8 +234,12 @@ export class FinessXmlÉtablissementTerritorialLoader implements ÉtablissementT
       <ÉtablissementTerritorialIdentitéFluxFiness>(cheminDuFichierÉtablissementTerritorialIdentité)
 
     const établissementsTerritoriauxIdentité = établissementTerritorialFluxFinessIdentité.fluxfiness.structureet
-      .filter((établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) =>
-        établissementTerritorialIdentitéFiness.datefermeture._text === undefined)
+      .filter((établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) => {
+        const établissementTerritorialCaduque = établissementTerritorialIdentitéFiness.indcaduc._text === 'O'
+        const établissementTerritorialFermé = établissementTerritorialIdentitéFiness.datefermeture._text !== undefined
+
+        return établissementTerritorialCaduque || établissementTerritorialFermé ? false : true
+      })
       .map((établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) =>
         this.construitÉtablissementTerritorialIdentité(établissementTerritorialIdentitéFiness, dateDeMiseAJourDeLaSource, catégories))
 
