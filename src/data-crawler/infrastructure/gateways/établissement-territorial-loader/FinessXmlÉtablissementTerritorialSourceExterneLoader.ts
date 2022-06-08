@@ -245,14 +245,18 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
     return établissementsTerritoriauxIdentité
   }
 
-  private gardeLesÉtablissementsOuverts(numéroFinessDesEntitésJuridiques: string[]) {
+  private gardeLesÉtablissementsOuverts(numéroFinessDesEntitésJuridiques: Promise<string[]>) {
     return (établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) => {
       const établissementTerritorialCaduque = établissementTerritorialIdentitéFiness.indcaduc._text === 'O'
       const établissementTerritorialFermé = établissementTerritorialIdentitéFiness.datefermeture._text !== undefined
-      const établissementJuridiqueFermé = !numéroFinessDesEntitésJuridiques.includes(établissementTerritorialIdentitéFiness.nofinessej._text!)
+      const resolved = Promise.resolve(numéroFinessDesEntitésJuridiques)
+      const établissementJuridiqueFermé = !resolved.includes(établissementTerritorialIdentitéFiness.nofinessej._text!)
 
       return établissementTerritorialCaduque || établissementTerritorialFermé || établissementJuridiqueFermé ? false : true
     }
+  }
+  private async test() {
+
   }
 
   private récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(localPath: string): string {

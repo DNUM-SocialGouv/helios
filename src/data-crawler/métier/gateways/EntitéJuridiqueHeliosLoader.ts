@@ -1,3 +1,3 @@
 export interface EntitéJuridiqueHeliosLoader {
-  récupèreLeNuméroFinessDesEntitésJuridiques(): string[]
+  récupèreLeNuméroFinessDesEntitésJuridiques(): Promise<string[]>
 }

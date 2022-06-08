@@ -2,6 +2,7 @@ import { mkdirSync, rmSync, writeFileSync } from 'fs'
 
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
+import { EntitéJuridiqueHeliosLoader } from '../../../métier/gateways/EntitéJuridiqueHeliosLoader'
 import { getFakeDataCrawlerDependencies } from '../../../testHelper'
 import { NodeXmlToJs } from '../xml-to-js/NodeXmlToJs'
 import { FinessXmlÉtablissementTerritorialSourceExterneLoader } from './FinessXmlÉtablissementTerritorialSourceExterneLoader'
@@ -101,9 +102,7 @@ describe('Récupération des établissements territoriaux de la source de donné
     </fluxfiness>`
     mkdirSync(finessLocalPath, { recursive: true })
     writeFileSync(`${finessLocalPath}/finess_cs1400102_stock_20211214-0336.xml`, xml)
-    const mockedRécupèreLeNuméroFinessDesEntitésJuridiques = jest.fn(() => {
-      return ['010008407', '010000164']
-    })
+    const mockedRécupèreLeNuméroFinessDesEntitésJuridiques = jest.fn().mockResolvedValue(['010008407', '010000164'])
     const typeOrmEntitéJuridiqueSourceInterneLoader = { récupèreLeNuméroFinessDesEntitésJuridiques: mockedRécupèreLeNuméroFinessDesEntitésJuridiques }
 
     // WHEN

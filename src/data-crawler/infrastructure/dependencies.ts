@@ -1,14 +1,15 @@
 import { DownloadRawData } from '../métier/gateways/DownloadRawData'
-import { EntitéJuridiqueSourceExterneLoader } from '../métier/gateways/EntitéJuridiqueSourceExterneLoader'
 import { EntitéJuridiqueRepository } from '../métier/gateways/EntitéJuridiqueRepository'
+import { EntitéJuridiqueSourceExterneLoader } from '../métier/gateways/EntitéJuridiqueSourceExterneLoader'
 import { EnvironmentVariables } from '../métier/gateways/EnvironmentVariables'
 import { UnzipRawData } from '../métier/gateways/UnzipRawData'
-import { ÉtablissementTerritorialSourceExterneLoader } from '../métier/gateways/ÉtablissementTerritorialSourceExterneLoader'
 import { ÉtablissementTerritorialRepository } from '../métier/gateways/ÉtablissementTerritorialRepository'
+import { ÉtablissementTerritorialSourceExterneLoader } from '../métier/gateways/ÉtablissementTerritorialSourceExterneLoader'
 import { dotEnvConfig } from './gateways/dot-env/dotEnvConfig'
 import { SftpDownloadRawData } from './gateways/download-raw-data/SftpDownloadRawData'
-import { FinessXmlEntitéJuridiqueSourceExterneLoader } from './gateways/entité-juridique-source-externe-loader/FinessXmlEntitéJuridiqueSourceExterneLoader'
 import { TypeOrmEntitéJuridiqueRepository } from './gateways/entité-juridique-repository/TypeOrmEntitéJuridiqueRepository'
+import { FinessXmlEntitéJuridiqueSourceExterneLoader } from './gateways/entité-juridique-source-externe-loader/FinessXmlEntitéJuridiqueSourceExterneLoader'
+import { TypeOrmEntitéJuridiqueHeliosLoader } from './gateways/entité-juridique-source-interne-loader/TypeOrmEntitéJuridiqueHeliosLoader'
 import { NodeEnvironmentVariables } from './gateways/environnement-variables/NodeEnvironmentVariables'
 import { ConsoleLogger } from './gateways/logger/ConsoleLogger'
 import { typeOrmOrm } from './gateways/orm/typeOrmOrm'
@@ -33,6 +34,7 @@ const _instantiateDependencies = (): Dependencies => {
   const environmentVariables = new NodeEnvironmentVariables(logger)
   const xmlToJs = new NodeXmlToJs()
   const orm = typeOrmOrm(environmentVariables)
+  const typeOrmEntitéJuridiqueHeliosLoader = new TypeOrmEntitéJuridiqueHeliosLoader(orm)
 
   return {
     downloadRawData: new SftpDownloadRawData(environmentVariables, logger),
@@ -40,7 +42,9 @@ const _instantiateDependencies = (): Dependencies => {
     entitéJuridiqueRepository: new TypeOrmEntitéJuridiqueRepository(orm),
     environmentVariables,
     unzipRawData: new GunzipUnzipRawData(environmentVariables, logger),
-    établissementTerritorialLoader: new FinessXmlÉtablissementTerritorialSourceExterneLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),
+    établissementTerritorialLoader: new FinessXmlÉtablissementTerritorialSourceExterneLoader(
+      xmlToJs, environmentVariables.SFTP_LOCAL_PATH, typeOrmEntitéJuridiqueHeliosLoader
+    ),
     établissementTerritorialRepository: new TypeOrmÉtablissementTerritorialRepository(orm),
   }
 }
