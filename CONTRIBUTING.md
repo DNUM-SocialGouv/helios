@@ -146,6 +146,14 @@ yarn populateDatabase
 
 > Execute `retrieveFiness`, `saveEJ` et `saveET`
 
+### Mettre à jour le jeu de données test
+
+#### FINESS
+
+Dans chaque répertoire (enrichie, nomenclature et simple), il faut mettre un fichier XML zippé contenant les bonnes données, un autre fichier XML zippé avec une date différente et un fichier UNL zippé pour correspondre au SFTP de production.
+
+> ATTENTION ! Lors d'une mise à jour des ET, il faut retirer les balises `noautorarhgos` et `noimplarhgos` de la partie `activiteoffresoin` car ce sont des données qui ne doivent pas être partagées.
+
 ## Arborescence
 
 ```text

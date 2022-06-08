@@ -4,7 +4,7 @@ import Client from 'ssh2-sftp-client'
 import { getFakeDataCrawlerDependencies, fakeLogger } from '../../../testHelper'
 import { FinessSftpDownloadRawData } from './FinessSftpDownloadRawData'
 
-describe('Téléchargement d’une source de données via un SFTP', () => {
+describe('Téléchargement de FINESS via un SFTP', () => {
   const dataSource = 'FAKE_DATASOURCE_NAME'
   const sftpPath = 'fake_path'
   const simpleSftpPath = `${sftpPath}/simple`
@@ -71,7 +71,7 @@ describe('Téléchargement d’une source de données via un SFTP', () => {
     expect(fakeLogger.info).toHaveBeenNthCalledWith(1, `[Helios][${dataSource}] La connexion au SFTP est ouverte.`)
   })
 
-  it('télécharge les fiches d’identité du répertoire "simple"', async () => {
+  it('télécharge les dernières fiches d’identité en date du répertoire "simple"', async () => {
     // GIVEN
     setup()
     const sftpDownloadDataSource = new FinessSftpDownloadRawData(fakeDataCrawlerDependencies.environmentVariables, fakeLogger)
@@ -81,12 +81,12 @@ describe('Téléchargement d’une source de données via un SFTP', () => {
 
     // THEN
     expect(Client.prototype.list).toHaveBeenNthCalledWith(1, simpleSftpPath, '*.xml.gz')
-    expect(Client.prototype.fastGet).toHaveBeenNthCalledWith(1, simpleSftpPath + '/finess_cs1400101_stock_20211214-0333.xml.gz', 'data_test/' + localPath + '/simple/finess_cs1400101_stock_20211214-0333.xml.gz')
-    expect(Client.prototype.fastGet).toHaveBeenNthCalledWith(2, simpleSftpPath + '/finess_cs1400102_stock_20211214-0336.xml.gz', 'data_test/' + localPath + '/simple/finess_cs1400102_stock_20211214-0336.xml.gz')
+    expect(Client.prototype.fastGet).toHaveBeenNthCalledWith(1, `${simpleSftpPath}/finess_cs1400101_stock_20211214-0333.xml.gz`, `data_test/${localPath}/simple/finess_cs1400101_stock_20211214-0333.xml.gz`)
+    expect(Client.prototype.fastGet).toHaveBeenNthCalledWith(2, `${simpleSftpPath}/finess_cs1400102_stock_20211214-0336.xml.gz`, `data_test/${localPath}/simple/finess_cs1400102_stock_20211214-0336.xml.gz`)
     expect(fakeLogger.info).toHaveBeenNthCalledWith(2, `[Helios][${dataSource}] Les deux fichiers contenant les fiches d’identité du répertoire "simple" téléchargés.`)
   })
 
-  it('télécharge les catégories du répertoire "nomenclature"', async () => {
+  it('télécharge les dernières catégories en date du répertoire "nomenclature"', async () => {
     // GIVEN
     setup()
     const sftpDownloadDataSource = new FinessSftpDownloadRawData(fakeDataCrawlerDependencies.environmentVariables, fakeLogger)
@@ -95,7 +95,8 @@ describe('Téléchargement d’une source de données via un SFTP', () => {
     await sftpDownloadDataSource.handle(dataSource, sftpPath, localPath)
 
     // THEN
-    expect(Client.prototype.fastGet).toHaveBeenNthCalledWith(3, nomenclatureSftpPath + '/finess_cs1500106_stock_20211214-0417.xml.gz', 'data_test/' + localPath + '/nomenclature/finess_cs1500106_stock_20211214-0417.xml.gz')
+    expect(Client.prototype.list).toHaveBeenNthCalledWith(2, nomenclatureSftpPath, '*.xml.gz')
+    expect(Client.prototype.fastGet).toHaveBeenNthCalledWith(3, `${nomenclatureSftpPath}/finess_cs1500106_stock_20211214-0417.xml.gz`, `data_test/${localPath}/nomenclature/finess_cs1500106_stock_20211214-0417.xml.gz`)
     expect(fakeLogger.info).toHaveBeenNthCalledWith(3, `[Helios][${dataSource}] Le fichier contenant les catégories du répertoire "nomenclature" téléchargé.`)
   })
 
@@ -131,19 +132,22 @@ describe('Téléchargement d’une source de données via un SFTP', () => {
 })
 
 function setup() {
-  jest.spyOn(fs, 'readFileSync').mockReturnValue('privateKey')
+  jest.spyOn(fs, 'readFileSync').mockReturnValueOnce('privateKey')
   jest.spyOn(Client.prototype, 'connect').mockImplementation((): any => jest.fn())
   jest.spyOn(Client.prototype, 'list')
     .mockImplementationOnce((): any => {
       return [
         { name: 'finess_cs1400101_stock_20211214-0333.xml.gz' },
+        { name: 'finess_cs1400101_stock_20201214-0333.xml.gz' },
+        { name: 'finess_cs1400102_stock_20201214-0336.xml.gz' },
         { name: 'finess_cs1400102_stock_20211214-0336.xml.gz' },
       ]
     })
     .mockImplementationOnce((): any => {
       return [
         { name: 'finess_cs1500106_stock_20211214-0417.xml.gz' },
-        { name: 'finess_cs1500107_stock_20211214-0417.xml.gz' },
+        { name: 'finess_cs1500106_stock_20201214-0417.xml.gz' },
+        { name: 'finess_cs1500107_stock_20221214-0336.xml.gz' },
       ]
     })
   jest.spyOn(Client.prototype, 'fastGet').mockImplementation((): any => jest.fn())
