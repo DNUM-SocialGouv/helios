@@ -125,8 +125,6 @@ Un échantillon des données FINESS sont dans `data_set`.
 
 > Une clé public SSH `$HOME/.ssh/sftp_local.pub` sera demandée pour l'authentification au SFTP local.
 
-> ATTENTION ! Lors d'une mise à jour des ET, il faut retirer les balises `noautorarhgos` et `noimplarhgos` de la partie `activiteoffresoin` car ce sont des données qui ne doivent pas être partagées.
-
 ### Simuler le téléchagement des données FINESS
 
 ```sh
