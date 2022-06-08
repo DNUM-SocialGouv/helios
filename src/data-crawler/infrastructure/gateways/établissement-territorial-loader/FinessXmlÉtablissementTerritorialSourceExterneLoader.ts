@@ -223,7 +223,7 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
   constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string,
               private readonly entitéJuridiqueHeliosLoader: EntitéJuridiqueHeliosLoader) {}
 
-  récupèreLesÉtablissementsTerritoriauxOuverts(): ÉtablissementTerritorialIdentité[] {
+  async récupèreLesÉtablissementsTerritoriauxOuverts(): Promise<ÉtablissementTerritorialIdentité[]> {
     const cheminDuFichierÉtablissementTerritorialIdentité = this.récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(this.localPath)
 
     const cheminDuFichierCatégorie = this.récupèreLeCheminDuFichierCatégorie(this.localPath)
@@ -232,7 +232,7 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
 
     const catégories = this.convertXmlToJs.handle<CatégorieFluxFiness>(cheminDuFichierCatégorie)
 
-    const numéroFinessDesEntitésJuridiques = this.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques()
+    const numéroFinessDesEntitésJuridiques = await this.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques()
 
     const établissementTerritorialFluxFinessIdentité = this.convertXmlToJs.handle
       <ÉtablissementTerritorialIdentitéFluxFiness>(cheminDuFichierÉtablissementTerritorialIdentité)
@@ -245,18 +245,13 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
     return établissementsTerritoriauxIdentité
   }
 
-  private gardeLesÉtablissementsOuverts(numéroFinessDesEntitésJuridiques: Promise<string[]>) {
+  private gardeLesÉtablissementsOuverts(numéroFinessDesEntitésJuridiques: string[]) {
     return (établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) => {
       const établissementTerritorialCaduque = établissementTerritorialIdentitéFiness.indcaduc._text === 'O'
       const établissementTerritorialFermé = établissementTerritorialIdentitéFiness.datefermeture._text !== undefined
-      const resolved = Promise.resolve(numéroFinessDesEntitésJuridiques)
-      const établissementJuridiqueFermé = !resolved.includes(établissementTerritorialIdentitéFiness.nofinessej._text!)
-
-      return établissementTerritorialCaduque || établissementTerritorialFermé || établissementJuridiqueFermé ? false : true
+      const établissementJuridiqueOuvert = numéroFinessDesEntitésJuridiques.includes(établissementTerritorialIdentitéFiness.nofinessej._text as string)
+      return établissementTerritorialCaduque || établissementTerritorialFermé || !établissementJuridiqueOuvert ? false : true
     }
-  }
-  private async test() {
-
   }
 
   private récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(localPath: string): string {

@@ -5,7 +5,7 @@ import { EntitéJuridiqueModelTestFactory } from '../../../../database/test/Enti
 import { getOrm } from '../../../testHelper'
 import { TypeOrmEntitéJuridiqueHeliosLoader } from './TypeOrmEntitéJuridiqueHeliosLoader'
 
-describe('récupère les numéro FINESS des entités Juridiques', () => {
+describe('Gestion des entités juridiques', () => {
   const orm = getOrm()
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>
 
@@ -21,7 +21,7 @@ describe('récupère les numéro FINESS des entités Juridiques', () => {
     await (await orm).destroy()
   })
 
-  it('récupère les numéro FINESS des entités Juridiques', async () => {
+  it('récupère les numéros FINESS des entités juridiques', async () => {
     // GIVEN
     const typeOrmEntitéJuridiqueHeliosLoader = new TypeOrmEntitéJuridiqueHeliosLoader(orm)
     const entitéJuridique1 = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel(
@@ -33,7 +33,7 @@ describe('récupère les numéro FINESS des entités Juridiques', () => {
     await entitéJuridiqueRepository.insert(entitéJuridique1)
     await entitéJuridiqueRepository.insert(entitéJuridique2)
     // WHEN
-    const entitésJuridiquesHelios = typeOrmEntitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques()
+    const entitésJuridiquesHelios = await typeOrmEntitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques()
     // THEN
     expect(entitésJuridiquesHelios).toStrictEqual(['123456789', '900000000'])
   })

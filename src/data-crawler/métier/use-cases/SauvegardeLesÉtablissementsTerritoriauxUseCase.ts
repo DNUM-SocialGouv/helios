@@ -8,7 +8,7 @@ export class SauvegardeLesÉtablissementsTerritoriauxUseCase {
   ) {}
 
   async handle(): Promise<void> {
-    const établissementsTerritoriaux = this.établissementTerritorialLoader.récupèreLesÉtablissementsTerritoriauxOuverts()
+    const établissementsTerritoriaux = await this.établissementTerritorialLoader.récupèreLesÉtablissementsTerritoriauxOuverts()
 
     await this.établissementTerritorialRepository.sauvegarde(établissementsTerritoriaux)
   }

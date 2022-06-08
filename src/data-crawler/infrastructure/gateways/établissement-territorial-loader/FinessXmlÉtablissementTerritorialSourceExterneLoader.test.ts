@@ -2,7 +2,6 @@ import { mkdirSync, rmSync, writeFileSync } from 'fs'
 
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
-import { EntitéJuridiqueHeliosLoader } from '../../../métier/gateways/EntitéJuridiqueHeliosLoader'
 import { getFakeDataCrawlerDependencies } from '../../../testHelper'
 import { NodeXmlToJs } from '../xml-to-js/NodeXmlToJs'
 import { FinessXmlÉtablissementTerritorialSourceExterneLoader } from './FinessXmlÉtablissementTerritorialSourceExterneLoader'
@@ -13,7 +12,7 @@ describe('Récupération des établissements territoriaux de la source de donné
   const finessLocalPath = `${localPath}/finess/simple`
   const nomenclatureLocalPath = `${localPath}/finess/nomenclature`
 
-  beforeEach(() => {
+  beforeEach(async() => {
     mkdirSync(nomenclatureLocalPath, { recursive: true })
     const xmlNomenclature = `<?xml version="1.0" encoding="UTF-8"?>
     <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -35,7 +34,7 @@ describe('Récupération des établissements territoriaux de la source de donné
     rmSync(localPath, { recursive: true })
   })
 
-  it('récupère les établissements territoriaux de la source de données FINESS uniquement s’ils ne sont pas fermés', () => {
+  it('récupère les établissements territoriaux de la source de données FINESS uniquement s’ils ne sont pas fermés', async () => {
     // GIVEN
     const etOuvert1 = `<structureet>
         <nofinesset>010000040</nofinesset>
@@ -104,12 +103,12 @@ describe('Récupération des établissements territoriaux de la source de donné
     writeFileSync(`${finessLocalPath}/finess_cs1400102_stock_20211214-0336.xml`, xml)
     const mockedRécupèreLeNuméroFinessDesEntitésJuridiques = jest.fn().mockResolvedValue(['010008407', '010000164'])
     const typeOrmEntitéJuridiqueSourceInterneLoader = { récupèreLeNuméroFinessDesEntitésJuridiques: mockedRécupèreLeNuméroFinessDesEntitésJuridiques }
-
-    // WHEN
     const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(
       new NodeXmlToJs(), localPath, typeOrmEntitéJuridiqueSourceInterneLoader
     )
-    const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts()
+
+    // WHEN
+    const établissementsTerritoriaux = await établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts()
 
     // THEN
     expect(établissementsTerritoriaux).toStrictEqual<ÉtablissementTerritorialIdentité[]>(
@@ -152,7 +151,7 @@ describe('Récupération des établissements territoriaux de la source de donné
     )
   })
 
-  it('récupère les établissements territoriaux de la source de données FINESS uniquement s’ils ne sont pas caducs', () => {
+  it('récupère les établissements territoriaux de la source de données FINESS uniquement s’ils ne sont pas caducs', async () => {
     // GIVEN
     const etOuvert1 = `<structureet>
         <nofinesset>010000040</nofinesset>
@@ -219,16 +218,14 @@ describe('Récupération des établissements territoriaux de la source de donné
     </fluxfiness>`
     mkdirSync(finessLocalPath, { recursive: true })
     writeFileSync(`${finessLocalPath}/finess_cs1400102_stock_20211214-0336.xml`, xml)
-    const mockedRécupèreLeNuméroFinessDesEntitésJuridiques = jest.fn(() => {
-      return ['010008407', '100000983']
-    })
+    const mockedRécupèreLeNuméroFinessDesEntitésJuridiques = jest.fn().mockResolvedValue(['010008407', '100000983'])
     const typeOrmEntitéJuridiqueSourceInterneLoader = { récupèreLeNuméroFinessDesEntitésJuridiques: mockedRécupèreLeNuméroFinessDesEntitésJuridiques }
 
     // WHEN
     const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(
       new NodeXmlToJs(), localPath, typeOrmEntitéJuridiqueSourceInterneLoader
     )
-    const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts()
+    const établissementsTerritoriaux = await établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts()
 
     // THEN
     expect(établissementsTerritoriaux).toStrictEqual<ÉtablissementTerritorialIdentité[]>(
@@ -271,13 +268,11 @@ describe('Récupération des établissements territoriaux de la source de donné
     )
   })
 
-  it('récupère les établissements territoriaux de la source de données FINESS uniquement si leur EJ associé est ouvert donc existe en base', () => {
+  it('récupère les établissements territoriaux de la source de données FINESS uniquement si leur EJ associé est ouvert donc existe en base', async () => {
     // GIVEN
     const numéroFinessDeLEjEnBase = '010008407'
     const numéroFinessDeLEjFermé = '010008408'
-    const mockedRécupèreLeNuméroFinessDesEntitésJuridiques = jest.fn(() => {
-      return [numéroFinessDeLEjEnBase]
-    })
+    const mockedRécupèreLeNuméroFinessDesEntitésJuridiques = jest.fn().mockResolvedValue([numéroFinessDeLEjEnBase])
     const typeOrmEntitéJuridiqueSourceInterneLoader = { récupèreLeNuméroFinessDesEntitésJuridiques: mockedRécupèreLeNuméroFinessDesEntitésJuridiques }
     const etOuvertAssociéÀLEjExistant = `<structureet>
         <nofinesset>010000040</nofinesset>
@@ -330,7 +325,7 @@ describe('Récupération des établissements territoriaux de la source de donné
     )
 
     // WHEN
-    const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts()
+    const établissementsTerritoriaux = await établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts()
 
     // THEN
     expect(établissementsTerritoriaux).toStrictEqual<ÉtablissementTerritorialIdentité[]>(

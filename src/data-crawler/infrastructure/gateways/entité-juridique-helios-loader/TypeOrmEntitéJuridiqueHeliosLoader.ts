@@ -14,7 +14,7 @@ export class TypeOrmEntitéJuridiqueHeliosLoader implements EntitéJuridiqueHeli
   }
 
   private construitUnTableauDeNuméroFiness(entitésJuridiques: EntitéJuridiqueModel[]): string[] {
-    return entitésJuridiques.map((EJ) => EJ.numéroFinessEntitéJuridique)
+    return entitésJuridiques.map((entitéJuridique) => entitéJuridique.numéroFinessEntitéJuridique)
   }
 
 }

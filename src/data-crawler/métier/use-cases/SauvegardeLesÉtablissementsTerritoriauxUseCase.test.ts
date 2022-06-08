@@ -62,7 +62,7 @@ describe('Sauvegarde des établissements territoriaux', () => {
         téléphone: '0102030406',
       },
     ]
-    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts').mockReturnValue(établissementsTerritoriaux)
+    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts').mockResolvedValue(établissementsTerritoriaux)
 
     // WHEN
     await sauvegardeLesÉtablissementsTerritoriaux.handle()
