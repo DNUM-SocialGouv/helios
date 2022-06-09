@@ -3,7 +3,7 @@ import { EntitéJuridiqueHeliosLoader } from '../gateways/EntitéJuridiqueHelios
 import { EntitéJuridiqueRepository } from '../gateways/EntitéJuridiqueRepository'
 import { EntitéJuridiqueSourceExterneLoader } from '../gateways/EntitéJuridiqueSourceExterneLoader'
 
-export class MetÀJourLesEntitésJuridiquesUseCase {
+export class MetsÀJourLesEntitésJuridiquesUseCase {
   constructor(
     private readonly entitéJuridiqueSourceExterneLoader: EntitéJuridiqueSourceExterneLoader,
     private readonly entitéJuridiqueHeliosRepository: EntitéJuridiqueRepository,
@@ -13,19 +13,20 @@ export class MetÀJourLesEntitésJuridiquesUseCase {
   async exécute(): Promise<void> {
     const entitésJuridiquesOuvertes = this.entitéJuridiqueSourceExterneLoader.récupèreLesEntitésJuridiquesOuvertes()
 
-    await this.supprimeLesEntitésJuridiquesRécemmentFermées(entitésJuridiquesOuvertes)
+    const entitésJuridiquesÀSupprimer = await this.extraisLesEntitésJuridiquesRécemmentFermées(entitésJuridiquesOuvertes)
+
+    await this.entitéJuridiqueHeliosRepository.supprime(entitésJuridiquesÀSupprimer)
 
     await this.entitéJuridiqueHeliosRepository.sauvegarde(entitésJuridiquesOuvertes)
   }
 
-  private async supprimeLesEntitésJuridiquesRécemmentFermées(entitésJuridiquesOuvertes: EntitéJuridique[]) {
+  private async extraisLesEntitésJuridiquesRécemmentFermées(entitésJuridiquesOuvertes: EntitéJuridique[]): Promise<string[]> {
     const entitéJuridiquesEnBase = await this.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques()
 
-    const entitésJuridiquesÀSupprimer = entitéJuridiquesEnBase.filter(
+    return entitéJuridiquesEnBase.filter(
       (entitéJuridiqueEnBase) => !entitésJuridiquesOuvertes.find(
         (entitéJuridiqueOuverte) => entitéJuridiqueOuverte.numéroFinessEntitéJuridique === entitéJuridiqueEnBase
       )
     )
-    await this.entitéJuridiqueHeliosRepository.supprime(entitésJuridiquesÀSupprimer)
   }
 }
