@@ -15,6 +15,10 @@ services:
         source: $HOME/.ssh/sftp_local.pub
         target: /home/finess/.ssh/keys/sftp_local.pub
         read_only: true
+      - type: bind
+        source: $PWD/data_set/.ssh/sshd_config
+        target: /etc/ssh/sshd_config
+        read_only: true
     command: finess::1001
   postgres:
     image: postgres:13.6-alpine

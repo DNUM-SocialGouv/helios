@@ -123,9 +123,42 @@ Un SFTP (image Docker) est lancé avec l'application.
 
 Un échantillon des données FINESS sont dans `data_set`.
 
-> Une clé public SSH `$HOME/.ssh/sftp_local.pub` sera demandée pour l'authentification au SFTP local.
 
-### Simuler le téléchagement des données FINESS
+### Configuration
+
+Une clé publique SSH `$HOME/.ssh/sftp_local.pub` sera demandée pour l'authentification au SFTP local.
+
+Il est nécessaire de changer les *KEX algorithms* dans `sshd_config` pour coller à ceux utilisés par le SFTP cible. 
+Pour cela, créer un fichier `data_set/.ssh/sshd_config` et compléter ce *template* :
+
+```text
+# Secure defaults
+# See: https://stribika.github.io/2015/01/04/secure-secure-shell.html
+Protocol 2
+HostKey /etc/ssh/ssh_host_ed25519_key
+HostKey /etc/ssh/ssh_host_rsa_key
+
+# Faster connection
+# See: https://github.com/atmoz/sftp/issues/11
+UseDNS no
+
+# Limited access
+PermitRootLogin no
+X11Forwarding no
+AllowTcpForwarding no
+
+# Force sftp and chroot jail
+Subsystem sftp internal-sftp
+ForceCommand internal-sftp
+ChrootDirectory %h
+
+# Enable this for more logs
+#LogLevel VERBOSE
+
+KexAlgorithms <algorithme1>,<algorithme1>,...
+```
+
+### Simuler le téléchargement des données FINESS
 
 ```sh
 yarn retrieveFiness

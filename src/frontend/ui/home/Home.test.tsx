@@ -34,15 +34,15 @@ describe('La page d’Accueil', () => {
     expect(within(entitéJuridiqueAvecEtMédicoSocial).getByText('- 750 060 758 - SARL DOMITYS NORD OUEST')).toBeInTheDocument()
 
     const entitéJuridiqueSansEt = within(listeDesEntitésJuridiques[2]).getByRole('link')
-    expect(entitéJuridiqueSansEt).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/010000289`)
-    expect(within(entitéJuridiqueSansEt).getByText('- 010 000 289 - MAISON DE REPOS VIEUX MOULIN')).toBeInTheDocument()
+    expect(entitéJuridiqueSansEt).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/500020839`)
+    expect(within(entitéJuridiqueSansEt).getByText('- 500 020 839 - GCSMS "PRESQU\'ÎLE"')).toBeInTheDocument()
 
     const entitéJuridiqueAvecPlusieursEt= within(listeDesEntitésJuridiques[3]).getByRole('link')
     expect(entitéJuridiqueAvecPlusieursEt).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/750721334`)
     expect(within(entitéJuridiqueAvecPlusieursEt).getByText('- 750 721 334 - CROIX ROUGE FRANCAISE')).toBeInTheDocument()
 
     const entitéJuridiqueAvecUnLongNom = within(listeDesEntitésJuridiques[4]).getByRole('link')
-    expect(entitéJuridiqueAvecUnLongNom).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/240015842`)
-    expect(within(entitéJuridiqueAvecUnLongNom).getByText('- 240 015 842 - COMMUNAUTE DE COMMUNES DU PAYS VERNOIS')).toBeInTheDocument()
+    expect(entitéJuridiqueAvecUnLongNom).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/210012142`)
+    expect(within(entitéJuridiqueAvecUnLongNom).getByText('- 210 012 142 - CTRE HOSPITALIER DE LA HAUTE COTE D OR')).toBeInTheDocument()
   })
 })
