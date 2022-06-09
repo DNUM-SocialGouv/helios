@@ -3,7 +3,7 @@ import { mkdirSync, rmSync, writeFileSync } from 'fs'
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { getFakeDataCrawlerDependencies } from '../../../testHelper'
 import { NodeXmlToJs } from '../xml-to-js/NodeXmlToJs'
-import { FinessXmlEntitéJuridiqueLoader } from './FinessXmlEntitéJuridiqueLoader'
+import { FinessXmlEntitéJuridiqueSourceExterneLoader } from './FinessXmlEntitéJuridiqueSourceExterneLoader'
 
 describe('Récupération des entités juridiques de la source de données FINESS', () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
@@ -14,90 +14,55 @@ describe('Récupération des entités juridiques de la source de données FINESS
     rmSync(localPath, { recursive: true })
   })
 
-  it('récupère les entités juridiques de la source de données FINESS', () => {
+  it('récupère uniquement les entités juridiques ouvertes de la source de données FINESS', () => {
     // GIVEN
-    const xml = `<?xml version="1.0" encoding="UTF-8"?>
-    <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      <structureej>
+    const ejOuverte1 = `<structureej>
         <nofiness>010008407</nofiness>
         <rs>CH DU HAUT BUGEY</rs>
-        <rslongue>CENTRE HOSPITALIER DU HAUT BUGEY</rslongue>
-        <complrs xsi:nil="true"/>
         <numvoie>1</numvoie>
         <typvoie>RTE</typvoie>
         <voie>DE VEYZIAT</voie>
-        <compvoie xsi:nil="true"/>
-        <compldistrib xsi:nil="true"/>
-        <lieuditbp>CS 20100</lieuditbp>
-        <libellepays xsi:nil="true"/>
-        <commune>283</commune>
         <ligneacheminement>01117 OYONNAX CEDEX</ligneacheminement>
-        <libcommune>OYONNAX</libcommune>
-        <departement>01</departement>
-        <libdepartement>AIN</libdepartement>
-        <codepostal>01117</codepostal>
-        <codepays xsi:nil="true"/>
         <telephone>0474731001</telephone>
-        <telecopie>0474731002</telecopie>
-        <statutjuridique>14</statutjuridique>
         <libstatutjuridique>Etablissement Public Intercommunal d'Hospitalisation</libstatutjuridique>
-        <libcourtstatutjuridique>Etb.Pub.Intcom.Hosp.</libcourtstatutjuridique>
         <categetab>355</categetab>
-        <libcategetab>Centre Hospitalier (C.H.)</libcategetab>
-        <libcourtcategetab>C.H.</libcourtcategetab>
-        <siren>260110218</siren>
-        <datemodifsiren>2011-02-07</datemodifsiren>
-        <originemodifsiren>RMESSMAIA_AUTO</originemodifsiren>
-        <codeape>8730A</codeape>
-        <datecrea>2001-01-01</datecrea>
-        <datemaj>2020-02-04</datemaj>
         <datefermeture xsi:nil="true"/>
-        <typefermeture xsi:nil="true"/>
-        <qualifcreation>GEN</qualifcreation>
-      </structureej>
-      <structureej>
+      </structureej>`
+    const ejOuverte2 = `<structureej>
         <nofiness>590000741</nofiness>
         <rs>HOPITAL PRIVE DE VILLENEUVE D'ASCQ</rs>
-        <rslongue>HOPITAL PRIVE DE VILLENEUVE D'ASCQ</rslongue>
-        <complrs xsi:nil="true"/>
         <numvoie>20</numvoie>
         <typvoie>AV</typvoie>
         <voie>DE LA RECONNAISSANCE</voie>
-        <compvoie xsi:nil="true"/>
-        <compldistrib xsi:nil="true"/>
-        <lieuditbp>QUARTIER DU RECUEIL</lieuditbp>
-        <libellepays xsi:nil="true"/>
-        <commune>009</commune>
         <ligneacheminement>59650 VILLENEUVE D ASCQ</ligneacheminement>
-        <libcommune>VILLENEUVE D ASCQ</libcommune>
-        <departement>59</departement>
-        <libdepartement>NORD</libdepartement>
-        <codepostal>59650</codepostal>
-        <codepays xsi:nil="true"/>
         <telephone>0826666900</telephone>
-        <telecopie>0320995678</telecopie>
-        <statutjuridique>73</statutjuridique>
         <libstatutjuridique>Société Anonyme (S.A.)</libstatutjuridique>
-        <libcourtstatutjuridique>Société Anonyme</libcourtstatutjuridique>
         <categetab xsi:nil="true"/>
-        <libcategetab xsi:nil="true"/>
-        <libcourtcategetab xsi:nil="true"/>
-        <siren>476780333</siren>
-        <datemodifsiren>2012-09-26</datemodifsiren>
-        <originemodifsiren>SIRETISATION</originemodifsiren>
-        <codeape>8610Z</codeape>
-        <datecrea>2001-01-01</datecrea>
-        <datemaj>2012-09-14</datemaj>
         <datefermeture xsi:nil="true"/>
-        <typefermeture xsi:nil="true"/>
-        <qualifcreation>GEN</qualifcreation>
-      </structureej>
+      </structureej>`
+    const ejFermée = `<structureej>
+        <nofiness>010000164</nofiness>
+        <rs>[Fermé] POLYCLINIQUE D'AMBERIEU</rs>
+        <numvoie>17</numvoie>
+        <typvoie>R</typvoie>
+        <voie>AIME VINGTRINIER</voie>
+        <ligneacheminement>01500 AMBERIEU EN BUGEY</ligneacheminement>
+        <telephone>0474383000</telephone>
+        <libstatutjuridique>Société A Responsabilité Limitée (S.A.R.L.)</libstatutjuridique>
+        <categetab xsi:nil="true"/>
+        <datefermeture>2002-07-10</datefermeture>
+      </structureej>`
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+    <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      ${ejOuverte1}
+      ${ejOuverte2}
+      ${ejFermée}
     </fluxfiness>`
     mkdirSync(finessLocalPath, { recursive: true })
     writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, xml)
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueLoader(new NodeXmlToJs(), localPath)
-    const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiques()
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueSourceExterneLoader(new NodeXmlToJs(), localPath)
+    const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes()
 
     // THEN
     expect(entitésJuridiques).toStrictEqual<EntitéJuridique[]>(
@@ -210,8 +175,8 @@ describe('Récupération des entités juridiques de la source de données FINESS
     mkdirSync(finessLocalPath, { recursive: true })
     writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, xml)
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueLoader(new NodeXmlToJs(), localPath)
-    const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiques()
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueSourceExterneLoader(new NodeXmlToJs(), localPath)
+    const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes()
 
     // THEN
     expect(entitésJuridiques).toStrictEqual<EntitéJuridique[]>(

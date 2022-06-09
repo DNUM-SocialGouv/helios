@@ -1,7 +1,7 @@
 import { readdirSync } from 'fs'
 
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
-import { EntitéJuridiqueLoader } from '../../../métier/gateways/EntitéJuridiqueLoader'
+import { EntitéJuridiqueSourceExterneLoader } from '../../../métier/gateways/EntitéJuridiqueSourceExterneLoader'
 import { XmlToJs } from '../../../métier/gateways/XmlToJs'
 
 type EntitéJuridiqueFiness = Readonly<{
@@ -118,21 +118,21 @@ type EntitéJuridiqueFluxFiness = Readonly<{
   }>
 }>
 
-export class FinessXmlEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
+export class FinessXmlEntitéJuridiqueSourceExterneLoader implements EntitéJuridiqueSourceExterneLoader {
   private readonly préfixeDuFichierEntitéJuridique = 'finess_cs1400101_stock_'
 
   constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string) {}
 
-  récupèreLesEntitésJuridiques(): EntitéJuridique[] {
+  récupèreLesEntitésJuridiquesOuvertes(): EntitéJuridique[] {
     const cheminDuFichierEntitéJuridique = this.récupèreLeCheminDuFichierEntitéJuridique(this.localPath)
 
     const dateDeMiseAJourDeLaSource = this.récupèreLaDateDeMiseAJourDeLaSource(cheminDuFichierEntitéJuridique)
 
     const entitésJuridiquesFluxFiness = this.convertXmlToJs.handle<EntitéJuridiqueFluxFiness>(cheminDuFichierEntitéJuridique)
 
-    return entitésJuridiquesFluxFiness.fluxfiness.structureej.map(
-      (entitéJuridique: EntitéJuridiqueFiness) => this.construitLEntitéJuridique(entitéJuridique, dateDeMiseAJourDeLaSource)
-    )
+    return entitésJuridiquesFluxFiness.fluxfiness.structureej
+      .filter((entitésJuridiquesFiness: EntitéJuridiqueFiness) => entitésJuridiquesFiness.datefermeture._text === undefined)
+      .map((entitésJuridiquesFiness: EntitéJuridiqueFiness) => this.construitLEntitéJuridique(entitésJuridiquesFiness, dateDeMiseAJourDeLaSource))
   }
 
   private récupèreLeCheminDuFichierEntitéJuridique(localPath: string): string {

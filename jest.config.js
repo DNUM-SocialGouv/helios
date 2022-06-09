@@ -9,6 +9,7 @@ const customJestConfig = {
     '!**/node_modules/**',
     '!src/database/**',
     '!src/pages/**',
+    '!src/**/test-factories/**',
   ],
   coverageDirectory: '<rootDir>/coverage',
   moduleFileExtensions: [

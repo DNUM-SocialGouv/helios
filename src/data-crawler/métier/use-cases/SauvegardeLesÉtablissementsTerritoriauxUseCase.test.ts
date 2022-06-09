@@ -17,7 +17,7 @@ describe('Sauvegarde des établissements territoriaux', () => {
     sauvegardeLesÉtablissementsTerritoriaux.handle()
 
     // THEN
-    expect(fakeDataCrawlerDependencies.établissementTerritorialLoader.récupèreLesÉtablissementsTerritoriaux).toHaveBeenCalledWith()
+    expect(fakeDataCrawlerDependencies.établissementTerritorialLoader.récupèreLesÉtablissementsTerritoriauxOuverts).toHaveBeenCalledWith()
   })
 
   it('sauvegarde les établissements territoriaux de plusieurs sources de données', async () => {
@@ -62,7 +62,7 @@ describe('Sauvegarde des établissements territoriaux', () => {
         téléphone: '0102030406',
       },
     ]
-    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialLoader, 'récupèreLesÉtablissementsTerritoriaux').mockReturnValue(établissementsTerritoriaux)
+    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts').mockResolvedValue(établissementsTerritoriaux)
 
     // WHEN
     await sauvegardeLesÉtablissementsTerritoriaux.handle()

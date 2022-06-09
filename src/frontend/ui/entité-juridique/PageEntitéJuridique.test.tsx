@@ -1,8 +1,8 @@
 import { screen, within } from '@testing-library/react'
 
 import { DomaineÉtablissementTerritorial } from '../../../backend/métier/entities/DomaineÉtablissementTerritorial'
-import { EntitéJuridiqueViewModelTestFactory } from '../../test/EntitéJuridiqueViewModelTestFactory'
-import { ÉtablissementTerritorialRattachéViewModelTestFactory } from '../../test/ÉtablissementTerritorialRattachéViewModelTestFactory'
+import { EntitéJuridiqueViewModelTestFactory } from '../../test-factories/EntitéJuridiqueViewModelTestFactory'
+import { ÉtablissementTerritorialRattachéViewModelTestFactory } from '../../test-factories/ÉtablissementTerritorialRattachéViewModelTestFactory'
 import { fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent, trimHtml } from '../../testHelper'
 import { ÉtablissementTerritorialRattachéViewModel } from './liste-des-établissements/ÉtablissementTerritorialRattachéViewModel'
 import { PageEntitéJuridique } from './PageEntitéJuridique'

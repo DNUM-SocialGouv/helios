@@ -65,6 +65,7 @@
     "quotes": ["error", "single", { "avoidEscape": true }],
     "semi": ["error", "never"],
     "sort-keys": ["error"],
+    "space-before-blocks": "error",
     "yoda": "error",
     "@typescript-eslint/array-type": ["error", { "ArrayOption": "array" }],
     "@typescript-eslint/naming-convention": [
@@ -96,6 +97,31 @@
     "import/no-duplicates": "error",
     "import/no-extraneous-dependencies": "error",
     "import/no-mutable-exports": "error",
+    "import/no-restricted-paths": ["error", {
+      "basePath": "src",
+      "zones": [
+        {
+          "target": "data-crawler",
+          "from": "backend",
+          "message": "Le backend est fermé au data-crawler."
+        },
+        {
+          "target": "backend",
+          "from": "data-crawler",
+          "message": "Le data-crawler est fermé au backend."
+        },
+        {
+          "target": "frontend",
+          "from": "data-crawler",
+          "message": "Le data-crawler est fermé au frontend."
+        },
+        {
+          "target": "pages",
+          "from": "data-crawler",
+          "message": "Le data-crawler est fermé aux pages."
+        }
+      ]
+    }],
     "import/order": [
       "warn",
       {

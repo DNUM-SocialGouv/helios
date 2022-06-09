@@ -1,5 +1,5 @@
+import { DomaineÉtablissementTerritorial } from '../../backend/métier/entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialRattaché } from '../../backend/métier/entities/entité-juridique/ÉtablissementTerritorialRattaché'
-import { DomaineÉtablissementTerritorial } from '../../data-crawler/métier/entities/DomaineÉtablissementTerritorial'
 import { Wording } from '../configuration/wording/Wording'
 import { ÉtablissementTerritorialRattachéViewModel } from '../ui/entité-juridique/liste-des-établissements/ÉtablissementTerritorialRattachéViewModel'
 
