@@ -121,7 +121,7 @@ describe('Sauvegarde de l’entité juridique', () => {
     await expect(entitéJuridiqueRepository.count()).resolves.toBe(0)
   })
 
-  it('supprime une entité juridique avec ses établissements rattachés', async () => {
+  it('supprime une entité juridique avec ses établissements territoriaux rattachés', async () => {
     // GIVEN
     const numéroFinessEntitéJuridique = '010018407'
     await entitéJuridiqueRepository.insert([EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel({ numéroFinessEntitéJuridique })])
