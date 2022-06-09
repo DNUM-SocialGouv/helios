@@ -47,7 +47,7 @@ const _instantiateDependencies = (): Dependencies => {
     unzipRawData: new GunzipUnzipRawData(environmentVariables, logger),
     établissementTerritorialHeliosRepository: new TypeOrmÉtablissementTerritorialRepository(orm),
     établissementTerritorialSourceExterneLoader: new FinessXmlÉtablissementTerritorialSourceExterneLoader(
-      xmlToJs, environmentVariables.SFTP_LOCAL_PATH, typeOrmEntitéJuridiqueHeliosLoader
+      xmlToJs, environmentVariables.SFTP_LOCAL_PATH
     ),
   }
 }

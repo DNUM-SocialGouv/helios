@@ -6,25 +6,28 @@ import { SauvegardeLesÉtablissementsTerritoriauxUseCase } from './SauvegardeLes
 describe('Sauvegarde des établissements territoriaux', () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
 
-  it('récupére les établissements territoriaux de plusieurs sources de données', () => {
+  it('récupére les établissements territoriaux de plusieurs sources de données', async () => {
     // GIVEN
     const sauvegardeLesÉtablissementsTerritoriaux = new SauvegardeLesÉtablissementsTerritoriauxUseCase(
       fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader,
-      fakeDataCrawlerDependencies.établissementTerritorialHeliosRepository
+      fakeDataCrawlerDependencies.établissementTerritorialHeliosRepository,
+      fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader
     )
+    jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader, 'récupèreLeNuméroFinessDesEntitésJuridiques').mockResolvedValue(['123456789'])
 
     // WHEN
-    sauvegardeLesÉtablissementsTerritoriaux.exécute()
+    await sauvegardeLesÉtablissementsTerritoriaux.exécute()
 
     // THEN
-    expect(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader.récupèreLesÉtablissementsTerritoriauxOuverts).toHaveBeenCalledWith()
+    expect(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader.récupèreLesÉtablissementsTerritoriauxOuverts).toHaveBeenCalledWith(['123456789'])
   })
 
   it('sauvegarde les établissements territoriaux de plusieurs sources de données', async () => {
     // GIVEN
     const sauvegardeLesÉtablissementsTerritoriaux = new SauvegardeLesÉtablissementsTerritoriauxUseCase(
       fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader,
-      fakeDataCrawlerDependencies.établissementTerritorialHeliosRepository
+      fakeDataCrawlerDependencies.établissementTerritorialHeliosRepository,
+      fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader
     )
     const établissementsTerritoriaux: ÉtablissementTerritorialIdentité[] = [
       {

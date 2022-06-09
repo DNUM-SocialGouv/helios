@@ -4,7 +4,8 @@ import { dependencies, Dependencies } from '../dependencies'
 async function sauvegardeLesÉtablissementsTerritoriauxCron(dependencies: Dependencies) {
   const sauvegardeLesÉtablissementsTerritoriaux = new SauvegardeLesÉtablissementsTerritoriauxUseCase(
     dependencies.établissementTerritorialSourceExterneLoader,
-    dependencies.établissementTerritorialHeliosRepository
+    dependencies.établissementTerritorialHeliosRepository,
+    dependencies.entitéJuridiqueHeliosLoader
   )
 
   await sauvegardeLesÉtablissementsTerritoriaux.exécute()
