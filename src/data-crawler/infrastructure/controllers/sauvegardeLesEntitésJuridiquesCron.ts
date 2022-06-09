@@ -7,7 +7,7 @@ async function sauvegardeLesEntitésJuridiquesCron(dependencies: Dependencies) {
     dependencies.entitéJuridiqueRepository
   )
 
-  await sauvegardeLesEntitésJuridiques.handle()
+  await sauvegardeLesEntitésJuridiques.exécute()
   setTimeout(() => process.exit(0), 1000)
 }
 

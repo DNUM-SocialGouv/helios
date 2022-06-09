@@ -5,7 +5,7 @@ import { XmlToJs } from '../../../métier/gateways/XmlToJs'
 import { HeliosError } from '../../HeliosError'
 
 export class NodeXmlToJs implements XmlToJs {
-  handle<T>(xmlPath: string): T {
+  exécute<T>(xmlPath: string): T {
     try {
       const xml = readFileSync(xmlPath, 'utf8')
 

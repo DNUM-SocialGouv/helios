@@ -7,7 +7,7 @@ async function sauvegardeLesÉtablissementsTerritoriauxCron(dependencies: Depend
     dependencies.établissementTerritorialRepository
   )
 
-  await sauvegardeLesÉtablissementsTerritoriaux.handle()
+  await sauvegardeLesÉtablissementsTerritoriaux.exécute()
   setTimeout(() => process.exit(0), 1000)
 }
 

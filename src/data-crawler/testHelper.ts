@@ -10,6 +10,7 @@ const environmentVariables: EnvironmentVariables = {
   SENTRY_DSN: 'https://fake-sentry.io/11',
   SFTP_HOST: 'localhost',
   SFTP_IS_DEBUG: 'false',
+  SFTP_KEX_ALGORITHMS: '["algo1", "algo2"]',
   SFTP_LOCAL_PATH: 'data_test',
   SFTP_PASSWORD: 'fake_passw0rd',
   SFTP_PORT: '22',
@@ -23,11 +24,11 @@ export function getOrm() {
 
 export const getFakeDataCrawlerDependencies = (): Dependencies => {
   return {
-    downloadRawData: { handle: jest.fn() },
     entitéJuridiqueLoader: { récupèreLesEntitésJuridiquesOuvertes: jest.fn() },
     entitéJuridiqueRepository: { sauvegarde: jest.fn() },
     environmentVariables,
-    unzipRawData: { handle: jest.fn() },
+    finessDownloadRawData: { exécute: jest.fn() },
+    unzipRawData: { exécute: jest.fn() },
     établissementTerritorialLoader: { récupèreLesÉtablissementsTerritoriauxOuverts: jest.fn() },
     établissementTerritorialRepository: { sauvegarde: jest.fn() },
   }

@@ -8,6 +8,7 @@ export interface EnvironmentVariables {
 
   readonly SFTP_HOST: string
   readonly SFTP_IS_DEBUG: string
+  readonly SFTP_KEX_ALGORITHMS: string
   readonly SFTP_LOCAL_PATH: string
   readonly SFTP_PASSWORD: string
   readonly SFTP_PORT: string

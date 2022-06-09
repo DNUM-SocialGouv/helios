@@ -12,7 +12,7 @@ describe('Sauvegarde des entités juridiques', () => {
     )
 
     // WHEN
-    await sauvegarderLesEntitésJuridiques.handle()
+    await sauvegarderLesEntitésJuridiques.exécute()
 
     // THEN
     expect(fakeDataCrawlerDependencies.entitéJuridiqueLoader.récupèreLesEntitésJuridiquesOuvertes).toHaveBeenCalledWith()
@@ -51,7 +51,7 @@ describe('Sauvegarde des entités juridiques', () => {
     jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueLoader, 'récupèreLesEntitésJuridiquesOuvertes').mockReturnValue(entitésJuridiques)
 
     // WHEN
-    await sauvegarderLesEntitésJuridiques.handle()
+    await sauvegarderLesEntitésJuridiques.exécute()
 
     // THEN
     expect(fakeDataCrawlerDependencies.entitéJuridiqueRepository.sauvegarde).toHaveBeenCalledWith(entitésJuridiques)

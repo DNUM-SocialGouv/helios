@@ -14,7 +14,7 @@ describe('Sauvegarde des établissements territoriaux', () => {
     )
 
     // WHEN
-    sauvegardeLesÉtablissementsTerritoriaux.handle()
+    sauvegardeLesÉtablissementsTerritoriaux.exécute()
 
     // THEN
     expect(fakeDataCrawlerDependencies.établissementTerritorialLoader.récupèreLesÉtablissementsTerritoriauxOuverts).toHaveBeenCalledWith()
@@ -65,7 +65,7 @@ describe('Sauvegarde des établissements territoriaux', () => {
     jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts').mockResolvedValue(établissementsTerritoriaux)
 
     // WHEN
-    await sauvegardeLesÉtablissementsTerritoriaux.handle()
+    await sauvegardeLesÉtablissementsTerritoriaux.exécute()
 
     // THEN
     expect(fakeDataCrawlerDependencies.établissementTerritorialRepository.sauvegarde).toHaveBeenCalledWith(établissementsTerritoriaux)

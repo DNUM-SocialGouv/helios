@@ -1,3 +1,3 @@
 export interface UnzipRawData {
-  handle(rawData: string, localPath: string): void
+  exécute(rawData: string, localPath: string): void
 }

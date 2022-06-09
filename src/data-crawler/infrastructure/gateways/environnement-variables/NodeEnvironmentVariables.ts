@@ -13,6 +13,7 @@ export class NodeEnvironmentVariables implements EnvironmentVariables {
 
   readonly SFTP_HOST: string = this.getOrElse('SFTP_HOST')
   readonly SFTP_IS_DEBUG: string = this.getOrElse('SFTP_IS_DEBUG')
+  readonly SFTP_KEX_ALGORITHMS: string = this.getOrElse('SFTP_KEX_ALGORITHMS')
   readonly SFTP_LOCAL_PATH: string = this.getOrElse('SFTP_LOCAL_PATH')
   readonly SFTP_PASSWORD: string = this.getOrElse('SFTP_PASSWORD')
   readonly SFTP_PORT: string = this.getOrElse('SFTP_PORT')

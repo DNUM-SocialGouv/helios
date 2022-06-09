@@ -8,7 +8,7 @@ import { HeliosError } from '../../HeliosError'
 export class GunzipUnzipRawData implements UnzipRawData {
   constructor(private readonly environmentVariables: EnvironmentVariables, private readonly logger: Logger) {}
 
-  handle(rawData: string, localPath: string) {
+  exécute(rawData: string, localPath: string) {
     try {
       execSync(`gunzip -rf ${this.environmentVariables.SFTP_LOCAL_PATH}/${localPath}`)
       this.logger.info(`[Helios][${rawData}] Sources de données décompressées.`)
