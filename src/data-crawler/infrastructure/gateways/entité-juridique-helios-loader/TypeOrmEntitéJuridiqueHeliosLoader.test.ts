@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm'
 
 import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
-import { EntitéJuridiqueModelTestFactory } from '../../../../database/test/EntitéJuridiqueModelTestFactory'
+import { EntitéJuridiqueModelTestFactory } from '../../../../database/test-factories/EntitéJuridiqueModelTestFactory'
 import { getOrm } from '../../../testHelper'
 import { TypeOrmEntitéJuridiqueHeliosLoader } from './TypeOrmEntitéJuridiqueHeliosLoader'
 
@@ -32,8 +32,10 @@ describe('Gestion des entités juridiques', () => {
     )
     await entitéJuridiqueRepository.insert(entitéJuridique1)
     await entitéJuridiqueRepository.insert(entitéJuridique2)
+
     // WHEN
     const entitésJuridiquesHelios = await typeOrmEntitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques()
+
     // THEN
     expect(entitésJuridiquesHelios).toStrictEqual(['123456789', '900000000'])
   })

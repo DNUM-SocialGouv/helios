@@ -1,4 +1,4 @@
-import { EntitéJuridiqueTestFactory } from '../../test/EntitéJuridiqueTestFactory'
+import { EntitéJuridiqueTestFactory } from '../../test-factories/EntitéJuridiqueTestFactory'
 import { EntitéJuridique } from '../entities/entité-juridique/EntitéJuridique'
 import { EntitéJuridiqueNonTrouvée } from '../entities/EntitéJuridiqueNonTrouvée'
 import { EntitéJuridiqueLoader } from '../gateways/EntitéJuridiqueLoader'

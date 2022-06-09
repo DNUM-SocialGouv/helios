@@ -268,7 +268,7 @@ describe('Récupération des établissements territoriaux de la source de donné
     )
   })
 
-  it('récupère les établissements territoriaux de la source de données FINESS uniquement si leur EJ associé est ouvert donc existe en base', async () => {
+  it('récupère les établissements territoriaux de la source de données FINESS uniquement si leur EJ associée est ouverte donc existe en base', async () => {
     // GIVEN
     const numéroFinessDeLEjEnBase = '010008407'
     const numéroFinessDeLEjFermé = '010008408'

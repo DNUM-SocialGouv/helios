@@ -1,6 +1,6 @@
 import { screen, within } from '@testing-library/react'
 
-import { ÉtablissementTerritorialMédicoSocialViewModelTestFactory } from '../../test/ÉtablissementTerritorialMédicoSocialViewModelTestFactory'
+import { ÉtablissementTerritorialMédicoSocialViewModelTestFactory } from '../../test-factories/ÉtablissementTerritorialMédicoSocialViewModelTestFactory'
 import { fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent, trimHtml } from '../../testHelper'
 import { PageÉtablissementTerritorialMédicoSocial } from './PageÉtablissementTerritorialMédicoSocial'
 

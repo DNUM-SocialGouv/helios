@@ -220,7 +220,8 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
   private readonly préfixeDuFichierÉtablissementTerritorialIdentité = 'finess_cs1400102_stock_'
   private readonly préfixeDuFichierCatégorie = 'finess_cs1500106_stock_'
 
-  constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string,
+  constructor(private readonly convertXmlToJs: XmlToJs,
+              private readonly localPath: string,
               private readonly entitéJuridiqueHeliosLoader: EntitéJuridiqueHeliosLoader) {}
 
   async récupèreLesÉtablissementsTerritoriauxOuverts(): Promise<ÉtablissementTerritorialIdentité[]> {
@@ -247,11 +248,24 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
 
   private gardeLesÉtablissementsOuverts(numéroFinessDesEntitésJuridiques: string[]) {
     return (établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) => {
-      const établissementTerritorialCaduque = établissementTerritorialIdentitéFiness.indcaduc._text === 'O'
-      const établissementTerritorialFermé = établissementTerritorialIdentitéFiness.datefermeture._text !== undefined
-      const établissementJuridiqueOuvert = numéroFinessDesEntitésJuridiques.includes(établissementTerritorialIdentitéFiness.nofinessej._text as string)
-      return établissementTerritorialCaduque || établissementTerritorialFermé || !établissementJuridiqueOuvert ? false : true
+      return !(
+        this.établissementTerritorialEstCaduc(établissementTerritorialIdentitéFiness) ||
+        this.établissementTerritorialEstFermé(établissementTerritorialIdentitéFiness) ||
+        !this.entitéJuridiqueDeRattachementEstOuverte(établissementTerritorialIdentitéFiness, numéroFinessDesEntitésJuridiques) )
     }
+  }
+
+  private établissementTerritorialEstCaduc(établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) {
+    return établissementTerritorialIdentitéFiness.indcaduc._text === 'O'
+  }
+
+  private établissementTerritorialEstFermé(établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) {
+    return établissementTerritorialIdentitéFiness.datefermeture._text !== undefined
+  }
+
+  private entitéJuridiqueDeRattachementEstOuverte(établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness,
+    numéroFinessDesEntitésJuridiques: string[]) {
+    return numéroFinessDesEntitésJuridiques.includes(établissementTerritorialIdentitéFiness.nofinessej._text as string)
   }
 
   private récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(localPath: string): string {
