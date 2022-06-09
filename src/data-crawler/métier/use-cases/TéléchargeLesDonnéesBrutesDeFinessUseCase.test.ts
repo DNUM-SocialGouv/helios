@@ -14,17 +14,17 @@ describe('Récupération des sources de données FINESS en local', () => {
     )
 
     // WHEN
-    await téléchargerLesDonnéesBrutesDeFiness.handle()
+    await téléchargerLesDonnéesBrutesDeFiness.exécute()
 
     // THEN
-    await expect(fakeDataCrawlerDependencies.finessDownloadRawData.handle).toHaveBeenCalledWith(sourceDeDonnées, cheminSftp, 'finess')
-    await expect(fakeDataCrawlerDependencies.unzipRawData.handle).toHaveBeenCalledWith(sourceDeDonnées, 'finess')
+    await expect(fakeDataCrawlerDependencies.finessDownloadRawData.exécute).toHaveBeenCalledWith(sourceDeDonnées, cheminSftp, 'finess')
+    await expect(fakeDataCrawlerDependencies.unzipRawData.exécute).toHaveBeenCalledWith(sourceDeDonnées, 'finess')
   })
 
   it('une erreur est survenue lors du téléchargement des données', async () => {
     // GIVEN
     const messageDerreur = 'téléchargement interrompu'
-    jest.spyOn(fakeDataCrawlerDependencies.finessDownloadRawData, 'handle').mockImplementation(jest.fn(async () => {
+    jest.spyOn(fakeDataCrawlerDependencies.finessDownloadRawData, 'exécute').mockImplementation(jest.fn(async () => {
       await Promise.reject(new Error(messageDerreur))
     }))
     const téléchargerLesDonnéesBrutesDeFiness = new TéléchargeLesDonnéesBrutesDeFinessUseCase(
@@ -34,7 +34,7 @@ describe('Récupération des sources de données FINESS en local', () => {
 
     try {
       // WHEN
-      await téléchargerLesDonnéesBrutesDeFiness.handle()
+      await téléchargerLesDonnéesBrutesDeFiness.exécute()
       throw new Error('ne devrait pas passer ici')
     } catch (error) {
       // THEN
@@ -45,7 +45,7 @@ describe('Récupération des sources de données FINESS en local', () => {
   it('une erreur est survenue lors du la décompression des fichiers', async () => {
     // GIVEN
     const messageDerreur = 'décompression interrompue'
-    jest.spyOn(fakeDataCrawlerDependencies.unzipRawData, 'handle').mockImplementation(jest.fn(async () => {
+    jest.spyOn(fakeDataCrawlerDependencies.unzipRawData, 'exécute').mockImplementation(jest.fn(async () => {
       await Promise.reject(new Error(messageDerreur))
     }))
     const téléchargerLesDonnéesBrutesDeFiness = new TéléchargeLesDonnéesBrutesDeFinessUseCase(
@@ -55,7 +55,7 @@ describe('Récupération des sources de données FINESS en local', () => {
 
     try {
       // WHEN
-      await téléchargerLesDonnéesBrutesDeFiness.handle()
+      await téléchargerLesDonnéesBrutesDeFiness.exécute()
       throw new Error('ne devrait pas passer ici')
     } catch (error) {
       // THEN

@@ -7,7 +7,7 @@ const téléchargeLesDonnéesBrutesDeFinessCron = (dependencies: Dependencies) =
     dependencies.unzipRawData
   )
 
-  téléchargeLesDonnéesBrutesDeFinessUseCase.handle()
+  téléchargeLesDonnéesBrutesDeFinessUseCase.exécute()
 }
 
 téléchargeLesDonnéesBrutesDeFinessCron(dependencies)

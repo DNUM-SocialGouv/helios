@@ -16,13 +16,14 @@ describe('Téléchargement de FINESS via un SFTP', () => {
     fs.rmSync('data_test/source-fake', { recursive: true })
   })
 
-  it('efface tous les fichiers du répertoire de la source de données pour éviter d’utiliser d’anciennes données', async () => {
+  it('efface les dossiers contenant les anciens fichiers téléchargés en local pour éviter d’utiliser d’anciennes données', async () => {
     // GIVEN
-    setup()
+    simuleLeConnecteurDuSftp()
+    simuleLaLectureDeLaClefPrivée()
     const sftpDownloadDataSource = new FinessSftpDownloadRawData(fakeDataCrawlerDependencies.environmentVariables, fakeLogger)
 
     // WHEN
-    await sftpDownloadDataSource.handle(dataSource, sftpPath, localPath)
+    await sftpDownloadDataSource.exécute(dataSource, sftpPath, localPath)
 
     // THEN
     expect(fs.existsSync(localPath)).toBe(false)
@@ -30,11 +31,12 @@ describe('Téléchargement de FINESS via un SFTP', () => {
 
   it('crée le répertoire "simple"', async () => {
     // GIVEN
-    setup()
+    simuleLeConnecteurDuSftp()
+    simuleLaLectureDeLaClefPrivée()
     const sftpDownloadDataSource = new FinessSftpDownloadRawData(fakeDataCrawlerDependencies.environmentVariables, fakeLogger)
 
     // WHEN
-    await sftpDownloadDataSource.handle(dataSource, sftpPath, localPath)
+    await sftpDownloadDataSource.exécute(dataSource, sftpPath, localPath)
 
     // THEN
     expect(fs.existsSync('data_test/source-fake/simple')).toBe(true)
@@ -42,11 +44,12 @@ describe('Téléchargement de FINESS via un SFTP', () => {
 
   it('crée le répertoire "nomenclature"', async () => {
     // GIVEN
-    setup()
+    simuleLeConnecteurDuSftp()
+    simuleLaLectureDeLaClefPrivée()
     const sftpDownloadDataSource = new FinessSftpDownloadRawData(fakeDataCrawlerDependencies.environmentVariables, fakeLogger)
 
     // WHEN
-    await sftpDownloadDataSource.handle(dataSource, sftpPath, localPath)
+    await sftpDownloadDataSource.exécute(dataSource, sftpPath, localPath)
 
     // THEN
     expect(fs.existsSync('data_test/source-fake/nomenclature')).toBe(true)
@@ -54,14 +57,16 @@ describe('Téléchargement de FINESS via un SFTP', () => {
 
   it('se connecte au SFTP', async () => {
     // GIVEN
-    setup()
+    simuleLeConnecteurDuSftp()
+    simuleLaLectureDeLaClefPrivée()
     const sftpDownloadDataSource = new FinessSftpDownloadRawData(fakeDataCrawlerDependencies.environmentVariables, fakeLogger)
 
     // WHEN
-    await sftpDownloadDataSource.handle(dataSource, sftpPath, localPath)
+    await sftpDownloadDataSource.exécute(dataSource, sftpPath, localPath)
 
     // THEN
     expect(Client.prototype.connect).toHaveBeenCalledWith({
+      algorithms: { kex: ['diffie-hellman-group-exchange-sha1', 'diffie-hellman-group14-sha1', 'diffie-hellman-group1-sha1'] },
       debug: undefined,
       host: 'localhost',
       port: 22,
@@ -73,11 +78,12 @@ describe('Téléchargement de FINESS via un SFTP', () => {
 
   it('télécharge les dernières fiches d’identité en date du répertoire "simple"', async () => {
     // GIVEN
-    setup()
+    simuleLeConnecteurDuSftp()
+    simuleLaLectureDeLaClefPrivée()
     const sftpDownloadDataSource = new FinessSftpDownloadRawData(fakeDataCrawlerDependencies.environmentVariables, fakeLogger)
 
     // WHEN
-    await sftpDownloadDataSource.handle(dataSource, sftpPath, localPath)
+    await sftpDownloadDataSource.exécute(dataSource, sftpPath, localPath)
 
     // THEN
     expect(Client.prototype.list).toHaveBeenNthCalledWith(1, simpleSftpPath, '*.xml.gz')
@@ -88,11 +94,12 @@ describe('Téléchargement de FINESS via un SFTP', () => {
 
   it('télécharge les dernières catégories en date du répertoire "nomenclature"', async () => {
     // GIVEN
-    setup()
+    simuleLeConnecteurDuSftp()
+    simuleLaLectureDeLaClefPrivée()
     const sftpDownloadDataSource = new FinessSftpDownloadRawData(fakeDataCrawlerDependencies.environmentVariables, fakeLogger)
 
     // WHEN
-    await sftpDownloadDataSource.handle(dataSource, sftpPath, localPath)
+    await sftpDownloadDataSource.exécute(dataSource, sftpPath, localPath)
 
     // THEN
     expect(Client.prototype.list).toHaveBeenNthCalledWith(2, nomenclatureSftpPath, '*.xml.gz')
@@ -102,27 +109,29 @@ describe('Téléchargement de FINESS via un SFTP', () => {
 
   it('se déconnecte du SFTP', async () => {
     // GIVEN
-    setup()
+    simuleLaLectureDeLaClefPrivée()
+    simuleLeConnecteurDuSftp()
     const sftpDownloadDataSource = new FinessSftpDownloadRawData(fakeDataCrawlerDependencies.environmentVariables, fakeLogger)
 
     // WHEN
-    await sftpDownloadDataSource.handle(dataSource, sftpPath, localPath)
+    await sftpDownloadDataSource.exécute(dataSource, sftpPath, localPath)
 
     // THEN
     expect(fakeLogger.info).toHaveBeenNthCalledWith(4, `[Helios][${dataSource}] Le connexion au SFTP est fermée.`)
     expect(Client.prototype.end).toHaveBeenCalledWith()
   })
 
-  it('se connecte au SFTP avec une mauvaise configuration et a un message d’erreur', async () => {
+  it('quand il se connecte au SFTP avec une mauvaise configuration il a un message d’erreur', async () => {
     // GIVEN
-    setup()
+    simuleLaLectureDeLaClefPrivée()
+    simuleLeConnecteurDuSftp()
     const errorMessage = 'connexion impossible'
     jest.spyOn(Client.prototype, 'connect').mockImplementation(async (): Promise<any> => await Promise.reject(new Error(errorMessage)))
     const sftpDownloadDataSource = new FinessSftpDownloadRawData(fakeDataCrawlerDependencies.environmentVariables, fakeLogger)
 
     try {
       // WHEN
-      await sftpDownloadDataSource.handle(dataSource, sftpPath, localPath)
+      await sftpDownloadDataSource.exécute(dataSource, sftpPath, localPath)
       throw new Error('ne devrait pas passer ici')
     } catch (error) {
       // THEN
@@ -131,8 +140,11 @@ describe('Téléchargement de FINESS via un SFTP', () => {
   })
 })
 
-function setup() {
+function simuleLaLectureDeLaClefPrivée() {
   jest.spyOn(fs, 'readFileSync').mockReturnValueOnce('privateKey')
+}
+
+function simuleLeConnecteurDuSftp() {
   jest.spyOn(Client.prototype, 'connect').mockImplementation((): any => jest.fn())
   jest.spyOn(Client.prototype, 'list')
     .mockImplementationOnce((): any => {

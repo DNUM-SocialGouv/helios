@@ -7,7 +7,7 @@ describe('Conversion d’un fichier XML en un objet JavaScript', () => {
     const nodeXmlToJs = new NodeXmlToJs()
 
     // WHEN
-    const js = nodeXmlToJs.handle(xmlPath)
+    const js = nodeXmlToJs.exécute(xmlPath)
 
     // THEN
     expect(js).toStrictEqual({ structure: { key1: { _text: 'value1' }, key2: { _text: 'value2' } } })
@@ -20,7 +20,7 @@ describe('Conversion d’un fichier XML en un objet JavaScript', () => {
 
     try {
       // WHEN
-      nodeXmlToJs.handle(xmlPath)
+      nodeXmlToJs.exécute(xmlPath)
       throw new Error('ne devrait pas passer ici')
     } catch (error) {
       // THEN
@@ -35,7 +35,7 @@ describe('Conversion d’un fichier XML en un objet JavaScript', () => {
 
     try {
       // WHEN
-      nodeXmlToJs.handle(xmlPath)
+      nodeXmlToJs.exécute(xmlPath)
       throw new Error('ne devrait pas passer ici')
     } catch (error) {
       // THEN

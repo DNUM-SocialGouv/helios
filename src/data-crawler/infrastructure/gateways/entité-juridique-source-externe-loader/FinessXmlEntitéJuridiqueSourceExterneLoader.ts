@@ -128,7 +128,7 @@ export class FinessXmlEntitéJuridiqueSourceExterneLoader implements EntitéJuri
 
     const dateDeMiseAJourDeLaSource = this.récupèreLaDateDeMiseAJourDeLaSource(cheminDuFichierEntitéJuridique)
 
-    const entitésJuridiquesFluxFiness = this.convertXmlToJs.handle<EntitéJuridiqueFluxFiness>(cheminDuFichierEntitéJuridique)
+    const entitésJuridiquesFluxFiness = this.convertXmlToJs.exécute<EntitéJuridiqueFluxFiness>(cheminDuFichierEntitéJuridique)
 
     return entitésJuridiquesFluxFiness.fluxfiness.structureej
       .filter((entitésJuridiquesFiness: EntitéJuridiqueFiness) => entitésJuridiquesFiness.datefermeture._text === undefined)

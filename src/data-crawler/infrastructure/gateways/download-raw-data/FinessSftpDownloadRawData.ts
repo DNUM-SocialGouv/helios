@@ -18,10 +18,11 @@ export class FinessSftpDownloadRawData implements DownloadRawData {
     this.sftp = new Client()
   }
 
-  async handle(rawData: string, sftpPath: string, localPath: string) {
+  async exécute(rawData: string, sftpPath: string, localPath: string) {
     this.simpleSftpPath = `${sftpPath}/simple`
     this.nomenclatureSftpPath = `${sftpPath}/nomenclature`
 
+    this.removeDirectories(localPath)
     this.makeDirectories(localPath)
 
     try {
@@ -34,15 +35,18 @@ export class FinessSftpDownloadRawData implements DownloadRawData {
     }
   }
 
-  private makeDirectories(localPath: string) {
+  private removeDirectories(localPath: string) {
     rmSync(`${this.environmentVariables.SFTP_LOCAL_PATH}/${localPath}`, { force: true, recursive: true })
+  }
 
+  private makeDirectories(localPath: string) {
     mkdirSync(`${this.environmentVariables.SFTP_LOCAL_PATH}/${localPath}/simple`, { recursive: true })
     mkdirSync(`${this.environmentVariables.SFTP_LOCAL_PATH}/${localPath}/nomenclature`, { recursive: true })
   }
 
   private async connect(rawData: string) {
     const configuration: ConnectConfig = {
+      algorithms: { kex: ['diffie-hellman-group-exchange-sha1', 'diffie-hellman-group14-sha1', 'diffie-hellman-group1-sha1'] },
       debug: this.environmentVariables.SFTP_IS_DEBUG === 'false' ? undefined : this.logger.debug,
       host: this.environmentVariables.SFTP_HOST,
       port: Number(this.environmentVariables.SFTP_PORT),
@@ -56,29 +60,37 @@ export class FinessSftpDownloadRawData implements DownloadRawData {
 
   private async downloadFichesIdentité(rawData: string, localPath: string) {
     const fichesIdentitéFiles = await this.sftp.list(this.simpleSftpPath, '*.xml.gz')
-    const fichesIdentitéEjOrdered = fichesIdentitéFiles
-      .filter((ficheIdentité) => ficheIdentité.name.includes('finess_cs1400101_stock_'))
-      .sort(this.sortByLastDate)
-    const fichesIdentitéEtOrdered = fichesIdentitéFiles
-      .filter((ficheIdentité) => ficheIdentité.name.includes('finess_cs1400102_stock_'))
-      .sort(this.sortByLastDate)
-    await this.sftp.fastGet(`${this.simpleSftpPath}/${fichesIdentitéEjOrdered[0].name}`, `${this.environmentVariables.SFTP_LOCAL_PATH}/${localPath}/simple/${fichesIdentitéEjOrdered[0].name}`)
-    await this.sftp.fastGet(`${this.simpleSftpPath}/${fichesIdentitéEtOrdered[0].name}`, `${this.environmentVariables.SFTP_LOCAL_PATH}/${localPath}/simple/${fichesIdentitéEtOrdered[0].name}`)
+    const entitéJuridiqueFileName = 'finess_cs1400101_stock_'
+    const établissementTerritorialFileName = 'finess_cs1400102_stock_'
+
+    await this.downloadFile(fichesIdentitéFiles, `${localPath}/simple`, this.simpleSftpPath, entitéJuridiqueFileName)
+
+    await this.downloadFile(fichesIdentitéFiles, `${localPath}/simple`, this.simpleSftpPath, établissementTerritorialFileName)
+
     this.logger.info(`[Helios][${rawData}] Les deux fichiers contenant les fiches d’identité du répertoire "simple" téléchargés.`)
   }
 
   private async downloadCatégories(rawData: string, localPath: string) {
     const nomenclatureFiles = await this.sftp.list(this.nomenclatureSftpPath, '*.xml.gz')
-    const catégories = nomenclatureFiles
-      .filter((nomenclature) => nomenclature.name.includes('finess_cs1500106_stock_'))
-      .sort(this.sortByLastDate)
-    await this.sftp.fastGet(`${this.nomenclatureSftpPath}/${catégories[0].name}`, `${this.environmentVariables.SFTP_LOCAL_PATH}/${localPath}/nomenclature/${catégories[0].name}`)
+    const catégoriesFileName = 'finess_cs1500106_stock_'
+
+    await this.downloadFile(nomenclatureFiles, `${localPath}/nomenclature`, this.nomenclatureSftpPath, catégoriesFileName)
+
     this.logger.info(`[Helios][${rawData}] Le fichier contenant les catégories du répertoire "nomenclature" téléchargé.`)
   }
 
   private async disconnect(rawData: string) {
     this.logger.info(`[Helios][${rawData}] Le connexion au SFTP est fermée.`)
+
     return await this.sftp.end()
+  }
+
+  private async downloadFile(files: FileInfo[], localPath: string, remotePath: string, fileName: string) {
+    const orderedFiles = files
+      .filter((file: FileInfo) => file.name.includes(fileName))
+      .sort(this.sortByLastDate)
+
+    await this.sftp.fastGet(`${remotePath}/${orderedFiles[0].name}`, `${this.environmentVariables.SFTP_LOCAL_PATH}/${localPath}/${orderedFiles[0].name}`)
   }
 
   private sortByLastDate(a: FileInfo, b: FileInfo) {

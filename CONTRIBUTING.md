@@ -150,7 +150,7 @@ yarn populateDatabase
 
 #### FINESS
 
-Dans chaque répertoire (enrichie, nomenclature et simple), il faut mettre un fichier XML zippé contenant les bonnes données, un autre fichier XML zippé avec une date différente et un fichier UNL zippé pour correspondre au SFTP de production.
+Dans chaque répertoire (enrichi, nomenclature et simple), il faut mettre un fichier XML zippé contenant les bonnes données, un autre fichier XML zippé avec une date différente et un fichier UNL zippé pour correspondre au SFTP de production.
 
 > ATTENTION ! Lors d'une mise à jour des ET, il faut retirer les balises `noautorarhgos` et `noimplarhgos` de la partie `activiteoffresoin` car ce sont des données qui ne doivent pas être partagées.
 
@@ -233,7 +233,7 @@ const MonComposant = (props: Props) => {
 
 - Les verbes des noms des méthodes sont à l'impératif (exemple : `sauvegardeLesEntitésJuridiques`)
 
-- La méthode exécutant un *use case* s'appelle toujours `exécute`
+- Une classe ayant qu'une seule méthode (ie : *use case*, *gateways*...) s'appelle toujours `exécute`
 
 - Les acronymes dans les noms de variables s'écrivent comme un mot standard. Exemple : `numéroFiness`
 

@@ -14,7 +14,7 @@ describe('Décompression d’une source de données', () => {
     const gunzipUnzipDataSource = new GunzipUnzipRawData(fakeDataCrawlerDependencies.environmentVariables, fakeLogger)
 
     // WHEN
-    gunzipUnzipDataSource.handle(dataSource, localPath)
+    gunzipUnzipDataSource.exécute(dataSource, localPath)
 
     // THEN
     expect(child.execSync).toHaveBeenCalledWith(`gunzip -rf ${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/${localPath}`)
@@ -33,7 +33,7 @@ describe('Décompression d’une source de données', () => {
 
     try {
       // WHEN
-      gunzipUnzipDataSource.handle(dataSource, localPath)
+      gunzipUnzipDataSource.exécute(dataSource, localPath)
       throw new Error('ne devrait pas passer ici')
     } catch (error) {
       // THEN

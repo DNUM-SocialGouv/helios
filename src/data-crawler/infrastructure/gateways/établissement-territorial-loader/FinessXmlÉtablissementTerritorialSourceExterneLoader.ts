@@ -231,11 +231,11 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
 
     const dateDeMiseAJourDeLaSource = this.récupèreLaDateDeMiseAJourDeLaSource(cheminDuFichierÉtablissementTerritorialIdentité)
 
-    const catégories = this.convertXmlToJs.handle<CatégorieFluxFiness>(cheminDuFichierCatégorie)
+    const catégories = this.convertXmlToJs.exécute<CatégorieFluxFiness>(cheminDuFichierCatégorie)
 
     const numéroFinessDesEntitésJuridiques = await this.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques()
 
-    const établissementTerritorialFluxFinessIdentité = this.convertXmlToJs.handle
+    const établissementTerritorialFluxFinessIdentité = this.convertXmlToJs.exécute
       <ÉtablissementTerritorialIdentitéFluxFiness>(cheminDuFichierÉtablissementTerritorialIdentité)
 
     const établissementsTerritoriauxIdentité = établissementTerritorialFluxFinessIdentité.fluxfiness.structureet
