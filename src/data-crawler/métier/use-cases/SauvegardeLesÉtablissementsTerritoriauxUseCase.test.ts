@@ -9,22 +9,22 @@ describe('Sauvegarde des établissements territoriaux', () => {
   it('récupére les établissements territoriaux de plusieurs sources de données', () => {
     // GIVEN
     const sauvegardeLesÉtablissementsTerritoriaux = new SauvegardeLesÉtablissementsTerritoriauxUseCase(
-      fakeDataCrawlerDependencies.établissementTerritorialLoader,
-      fakeDataCrawlerDependencies.établissementTerritorialRepository
+      fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader,
+      fakeDataCrawlerDependencies.établissementTerritorialHeliosRepository
     )
 
     // WHEN
     sauvegardeLesÉtablissementsTerritoriaux.exécute()
 
     // THEN
-    expect(fakeDataCrawlerDependencies.établissementTerritorialLoader.récupèreLesÉtablissementsTerritoriauxOuverts).toHaveBeenCalledWith()
+    expect(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader.récupèreLesÉtablissementsTerritoriauxOuverts).toHaveBeenCalledWith()
   })
 
   it('sauvegarde les établissements territoriaux de plusieurs sources de données', async () => {
     // GIVEN
     const sauvegardeLesÉtablissementsTerritoriaux = new SauvegardeLesÉtablissementsTerritoriauxUseCase(
-      fakeDataCrawlerDependencies.établissementTerritorialLoader,
-      fakeDataCrawlerDependencies.établissementTerritorialRepository
+      fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader,
+      fakeDataCrawlerDependencies.établissementTerritorialHeliosRepository
     )
     const établissementsTerritoriaux: ÉtablissementTerritorialIdentité[] = [
       {
@@ -62,12 +62,12 @@ describe('Sauvegarde des établissements territoriaux', () => {
         téléphone: '0102030406',
       },
     ]
-    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts').mockResolvedValue(établissementsTerritoriaux)
+    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts').mockResolvedValue(établissementsTerritoriaux)
 
     // WHEN
     await sauvegardeLesÉtablissementsTerritoriaux.exécute()
 
     // THEN
-    expect(fakeDataCrawlerDependencies.établissementTerritorialRepository.sauvegarde).toHaveBeenCalledWith(établissementsTerritoriaux)
+    expect(fakeDataCrawlerDependencies.établissementTerritorialHeliosRepository.sauvegarde).toHaveBeenCalledWith(établissementsTerritoriaux)
   })
 })

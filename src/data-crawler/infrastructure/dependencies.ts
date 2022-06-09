@@ -1,4 +1,5 @@
 import { DownloadRawData } from '../métier/gateways/DownloadRawData'
+import { EntitéJuridiqueHeliosLoader } from '../métier/gateways/EntitéJuridiqueHeliosLoader'
 import { EntitéJuridiqueRepository } from '../métier/gateways/EntitéJuridiqueRepository'
 import { EntitéJuridiqueSourceExterneLoader } from '../métier/gateways/EntitéJuridiqueSourceExterneLoader'
 import { EnvironmentVariables } from '../métier/gateways/EnvironmentVariables'
@@ -20,11 +21,12 @@ import { TypeOrmÉtablissementTerritorialRepository } from './gateways/établiss
 
 export type Dependencies = Readonly<{
   environmentVariables: EnvironmentVariables
-  entitéJuridiqueLoader: EntitéJuridiqueSourceExterneLoader
-  entitéJuridiqueRepository: EntitéJuridiqueRepository
+  entitéJuridiqueSourceExterneLoader: EntitéJuridiqueSourceExterneLoader
+  entitéJuridiqueHeliosRepository: EntitéJuridiqueRepository
+  entitéJuridiqueHeliosLoader: EntitéJuridiqueHeliosLoader
   finessDownloadRawData: DownloadRawData
-  établissementTerritorialLoader: ÉtablissementTerritorialSourceExterneLoader
-  établissementTerritorialRepository: ÉtablissementTerritorialRepository
+  établissementTerritorialSourceExterneLoader: ÉtablissementTerritorialSourceExterneLoader
+  établissementTerritorialHeliosRepository: ÉtablissementTerritorialRepository
   unzipRawData: UnzipRawData
 }>
 
@@ -37,15 +39,16 @@ const _instantiateDependencies = (): Dependencies => {
   const typeOrmEntitéJuridiqueHeliosLoader = new TypeOrmEntitéJuridiqueHeliosLoader(orm)
 
   return {
-    entitéJuridiqueLoader: new FinessXmlEntitéJuridiqueSourceExterneLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),
-    entitéJuridiqueRepository: new TypeOrmEntitéJuridiqueRepository(orm),
+    entitéJuridiqueHeliosLoader: typeOrmEntitéJuridiqueHeliosLoader,
+    entitéJuridiqueHeliosRepository: new TypeOrmEntitéJuridiqueRepository(orm),
+    entitéJuridiqueSourceExterneLoader: new FinessXmlEntitéJuridiqueSourceExterneLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),
     environmentVariables,
     finessDownloadRawData: new FinessSftpDownloadRawData(environmentVariables, logger),
     unzipRawData: new GunzipUnzipRawData(environmentVariables, logger),
-    établissementTerritorialLoader: new FinessXmlÉtablissementTerritorialSourceExterneLoader(
+    établissementTerritorialHeliosRepository: new TypeOrmÉtablissementTerritorialRepository(orm),
+    établissementTerritorialSourceExterneLoader: new FinessXmlÉtablissementTerritorialSourceExterneLoader(
       xmlToJs, environmentVariables.SFTP_LOCAL_PATH, typeOrmEntitéJuridiqueHeliosLoader
     ),
-    établissementTerritorialRepository: new TypeOrmÉtablissementTerritorialRepository(orm),
   }
 }
 
