@@ -87,8 +87,24 @@ describe('Téléchargement de FINESS via un SFTP', () => {
 
     // THEN
     expect(Client.prototype.list).toHaveBeenNthCalledWith(1, simpleSftpPath, '*.xml.gz')
-    expect(Client.prototype.fastGet).toHaveBeenNthCalledWith(1, `${simpleSftpPath}/finess_cs1400101_stock_20211214-0333.xml.gz`, `data_test/${localPath}/simple/finess_cs1400101_stock_20211214-0333.xml.gz`)
-    expect(Client.prototype.fastGet).toHaveBeenNthCalledWith(2, `${simpleSftpPath}/finess_cs1400102_stock_20211214-0336.xml.gz`, `data_test/${localPath}/simple/finess_cs1400102_stock_20211214-0336.xml.gz`)
+    expect(Client.prototype.fastGet).toHaveBeenNthCalledWith(
+      1,
+      `${simpleSftpPath}/finess_cs1400101_stock_20211214-0333.xml.gz`,
+      `data_test/${localPath}/simple/finess_cs1400101_stock_20211214-0333.xml.gz`,
+      {
+        chunkSize: 1000000,
+        concurrency: 2,
+      }
+    )
+    expect(Client.prototype.fastGet).toHaveBeenNthCalledWith(
+      2,
+      `${simpleSftpPath}/finess_cs1400102_stock_20211214-0336.xml.gz`,
+      `data_test/${localPath}/simple/finess_cs1400102_stock_20211214-0336.xml.gz`,
+      {
+        chunkSize: 1000000,
+        concurrency: 2,
+      }
+    )
     expect(fakeLogger.info).toHaveBeenNthCalledWith(2, `[Helios][${dataSource}] Les deux fichiers contenant les fiches d’identité du répertoire "simple" téléchargés.`)
   })
 
@@ -103,7 +119,15 @@ describe('Téléchargement de FINESS via un SFTP', () => {
 
     // THEN
     expect(Client.prototype.list).toHaveBeenNthCalledWith(2, nomenclatureSftpPath, '*.xml.gz')
-    expect(Client.prototype.fastGet).toHaveBeenNthCalledWith(3, `${nomenclatureSftpPath}/finess_cs1500106_stock_20211214-0417.xml.gz`, `data_test/${localPath}/nomenclature/finess_cs1500106_stock_20211214-0417.xml.gz`)
+    expect(Client.prototype.fastGet).toHaveBeenNthCalledWith(
+      3,
+      `${nomenclatureSftpPath}/finess_cs1500106_stock_20211214-0417.xml.gz`,
+      `data_test/${localPath}/nomenclature/finess_cs1500106_stock_20211214-0417.xml.gz`,
+      {
+        chunkSize: 1000000,
+        concurrency: 2,
+      }
+    )
     expect(fakeLogger.info).toHaveBeenNthCalledWith(3, `[Helios][${dataSource}] Le fichier contenant les catégories du répertoire "nomenclature" téléchargé.`)
   })
 

@@ -90,7 +90,14 @@ export class FinessSftpDownloadRawData implements DownloadRawData {
       .filter((file: FileInfo) => file.name.includes(fileName))
       .sort(this.sortByLastDate)
 
-    await this.sftp.fastGet(`${remotePath}/${orderedFiles[0].name}`, `${this.environmentVariables.SFTP_LOCAL_PATH}/${localPath}/${orderedFiles[0].name}`)
+    await this.sftp.fastGet(
+      `${remotePath}/${orderedFiles[0].name}`,
+      `${this.environmentVariables.SFTP_LOCAL_PATH}/${localPath}/${orderedFiles[0].name}`,
+      {
+        chunkSize: 1000000,
+        concurrency: 2,
+      }
+    )
   }
 
   private sortByLastDate(a: FileInfo, b: FileInfo) {
