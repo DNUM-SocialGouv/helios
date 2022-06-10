@@ -20,6 +20,12 @@ export class TypeOrmÉtablissementTerritorialRepository implements Établissemen
     await this.metsÀJourLaDateDeMiseÀJour(établissementsTerritoriauxIdentité)
   }
 
+  async supprime(numérosFinessDesÉtablissementsTerritoriaux: string[]): Promise<void> {
+    await(await this.orm)
+      .getRepository(ÉtablissementTerritorialIdentitéModel)
+      .delete(numérosFinessDesÉtablissementsTerritoriaux)
+  }
+
   private créeLeBatch(batchSize: number, établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[], index: number) {
     const établissementsTerritoriauxIdentitéBatch = []
     for (let indexInBatch = 0; indexInBatch < batchSize; indexInBatch++) {

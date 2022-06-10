@@ -3,6 +3,8 @@ import { Repository } from 'typeorm'
 import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../database/models/DateMiseÀJourSourceModel'
 import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../database/models/ÉtablissementTerritorialIdentitéModel'
+import { EntitéJuridiqueModelTestFactory } from '../../../../database/test-factories/EntitéJuridiqueModelTestFactory'
+import { ÉtablissementTerritorialIdentitéModelTestFactory } from '../../../../database/test-factories/ÉtablissementTerritorialIdentitéModelTestFactory'
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { getOrm } from '../../../testHelper'
@@ -159,5 +161,27 @@ describe('Sauvegarde de l’établissement territorial', () => {
     dateMiseÀJourSourceAttendue.source = SourceDeDonnées.FINESS
     dateMiseÀJourSourceAttendue.dernièreMiseÀJour = '2022-02-03'
     expect(dateMiseÀJourSourceSauvée).toStrictEqual([dateMiseÀJourSourceAttendue])
+  })
+
+  it('supprime un établissement territorial qu’il soit persisté ou non', async () => {
+    // GIVEN
+    const numéroFinessEntitéJuridique = '010018407'
+    const entitéJuridique = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel({ numéroFinessEntitéJuridique })
+    await entitéJuridiqueRepository.insert([entitéJuridique])
+    const numéroFinessÉtablissementTerritorialPasEnBase = '123456789'
+    const numéroFinessÉtablissementTerritorial = '999777444'
+
+    await établissementTerritorialIdentitéRepository.insert(
+      ÉtablissementTerritorialIdentitéModelTestFactory.créeÉtablissementTerritorialIdentitéModel(
+        { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial }
+      )
+    )
+    const typeOrmÉtablissementTerritorialRepository = new TypeOrmÉtablissementTerritorialRepository(orm)
+
+    // WHEN
+    await typeOrmÉtablissementTerritorialRepository.supprime([numéroFinessÉtablissementTerritorial, numéroFinessÉtablissementTerritorialPasEnBase])
+
+    // THEN
+    await expect(établissementTerritorialIdentitéRepository.count()).resolves.toBe(0)
   })
 })
