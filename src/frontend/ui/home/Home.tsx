@@ -27,9 +27,9 @@ export const Home = () => {
     {
       identifiant: <>
         <abbr title={wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
-        &nbsp;- 010 000 289 - MAISON DE REPOS VIEUX MOULIN
+        &nbsp;- 500 020 839 - GCSMS &quot;PRESQU&apos;ÎLE&quot;
       </>,
-      numéroFiness: '010000289',
+      numéroFiness: '500020839',
     },
     {
       identifiant: <>
@@ -41,9 +41,9 @@ export const Home = () => {
     {
       identifiant: <>
         <abbr title={wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
-        &nbsp;- 240 015 842 - COMMUNAUTE DE COMMUNES DU PAYS VERNOIS
+        &nbsp;- 210 012 142 - CTRE HOSPITALIER DE LA HAUTE COTE D OR
       </>,
-      numéroFiness: '240015842',
+      numéroFiness: '210012142',
     },
   ]
 
