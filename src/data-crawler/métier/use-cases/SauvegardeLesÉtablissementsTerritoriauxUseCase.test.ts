@@ -6,7 +6,7 @@ import { SauvegardeLesÉtablissementsTerritoriauxUseCase } from './SauvegardeLes
 describe('Sauvegarde des établissements territoriaux', () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
 
-  it('récupére les établissements territoriaux de plusieurs sources de données', async () => {
+  it('récupère les établissements territoriaux de plusieurs sources de données', async () => {
     // GIVEN
     const sauvegardeLesÉtablissementsTerritoriaux = new SauvegardeLesÉtablissementsTerritoriauxUseCase(
       fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader,
