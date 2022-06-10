@@ -5,6 +5,8 @@ import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { EntitéJuridiqueRepository } from '../../../métier/gateways/EntitéJuridiqueRepository'
 
 export class TypeOrmEntitéJuridiqueRepository implements EntitéJuridiqueRepository {
+  private readonly CHUNK_SIZE_POUR_SUPPRESSION = 3000
+
   constructor(private readonly orm: Promise<DataSource>) {}
 
   async sauvegarde(entitésJuridiques: EntitéJuridique[], batchSize: number = 20): Promise<void> {
@@ -18,13 +20,21 @@ export class TypeOrmEntitéJuridiqueRepository implements EntitéJuridiqueReposi
   }
 
   async supprime(numérosFinessDEntitésJuridiques: string[]): Promise<void> {
-    const supp = numérosFinessDEntitésJuridiques.map((finess) => {
-      return { numéroFinessEntitéJuridique: finess }
-    }) as EntitéJuridiqueModel[]
+    const entitésJuridiquesÀSupprimer = this.construitLesEntitésJuridiquesModels(numérosFinessDEntitésJuridiques)
 
-    await(await this.orm)
+    await this.supprimeLesEntitésJuridiques(entitésJuridiquesÀSupprimer)
+  }
+
+  private async supprimeLesEntitésJuridiques(entitésJuridiquesÀSupprimer: EntitéJuridiqueModel[]) {
+    await (await this.orm)
       .getRepository(EntitéJuridiqueModel)
-      .remove(supp, { chunk: 1000 })
+      .remove(entitésJuridiquesÀSupprimer, { chunk: this.CHUNK_SIZE_POUR_SUPPRESSION })
+  }
+
+  private construitLesEntitésJuridiquesModels(numérosFinessDEntitésJuridiques: string[]) {
+    return numérosFinessDEntitésJuridiques.map((numéroFiness) => {
+      return { numéroFinessEntitéJuridique: numéroFiness }
+    }) as EntitéJuridiqueModel[]
   }
 
   private créeLeBatch(batchSize: number, entitésJuridiques: EntitéJuridique[], index: number) {

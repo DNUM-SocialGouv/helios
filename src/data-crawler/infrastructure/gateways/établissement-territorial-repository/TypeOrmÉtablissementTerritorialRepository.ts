@@ -6,6 +6,8 @@ import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/É
 import { ÉtablissementTerritorialRepository } from '../../../métier/gateways/ÉtablissementTerritorialRepository'
 
 export class TypeOrmÉtablissementTerritorialRepository implements ÉtablissementTerritorialRepository {
+  private readonly CHUNK_SIZE_POUR_SUPPRESSION = 3000
+
   constructor(private readonly orm: Promise<DataSource>) {}
 
   async sauvegarde(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[], batchSize: number = 20): Promise<void> {
@@ -21,31 +23,21 @@ export class TypeOrmÉtablissementTerritorialRepository implements Établissemen
   }
 
   async supprime(numérosFinessDesÉtablissementsTerritoriaux: string[]): Promise<void> {
-    // const supp = numérosFinessDesÉtablissementsTerritoriaux.map((finess): Partial<ÉtablissementTerritorialIdentitéModel> => (
-    //   {
-    //     adresseAcheminement: '',
-    //     adresseNuméroVoie: '',
-    //     adresseTypeVoie: '',
-    //     adresseVoie: '',
-    //     catégorieÉtablissement: '',
-    //     courriel: '',
-    //     libelléCatégorieÉtablissement: '',
-    //     numéroFinessEntitéJuridique: '',
-    //     numéroFinessÉtablissementPrincipal: '',
-    //     numéroFinessÉtablissementTerritorial: finess,
-    //     raisonSociale: '',
-    //     typeÉtablissement: '',
-    //     téléphone: '',
-    //   }
-    // )) as ÉtablissementTerritorialIdentitéModel[]
+    const établissementsTerritoriauxÀSupprimer = this.construitLesÉtablissementsTerritoriauxModels(numérosFinessDesÉtablissementsTerritoriaux)
 
-    await(await this.orm)
+    await this.supprimeLesÉtablissementsTerritoriaux(établissementsTerritoriauxÀSupprimer)
+  }
+
+  private async supprimeLesÉtablissementsTerritoriaux(établissementsTerritoriauxÀSupprimer: ÉtablissementTerritorialIdentitéModel[]) {
+    await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
-      .createQueryBuilder()
-      .delete()
-      .from(ÉtablissementTerritorialIdentitéModel)
-      .where('numéroFinessÉtablissementTerritorial IN (:...t)', { t: numérosFinessDesÉtablissementsTerritoriaux })
-      .execute()
+      .remove(établissementsTerritoriauxÀSupprimer, { chunk: this.CHUNK_SIZE_POUR_SUPPRESSION })
+  }
+
+  private construitLesÉtablissementsTerritoriauxModels(numérosFinessDesÉtablissementsTerritoriaux: string[]) {
+    return numérosFinessDesÉtablissementsTerritoriaux.map((numéroFiness) => (
+      { numéroFinessÉtablissementTerritorial: numéroFiness }
+    )) as ÉtablissementTerritorialIdentitéModel[]
   }
 
   private créeLeBatch(batchSize: number, établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[], index: number) {
