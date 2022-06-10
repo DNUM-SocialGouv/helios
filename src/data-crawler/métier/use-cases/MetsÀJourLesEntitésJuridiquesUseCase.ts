@@ -12,10 +12,14 @@ export class MetsÀJourLesEntitésJuridiquesUseCase {
 
   async exécute(): Promise<void> {
     const entitésJuridiquesOuvertes = this.entitéJuridiqueSourceExterneLoader.récupèreLesEntitésJuridiquesOuvertes()
+    console.log('nb entités ouvertes', entitésJuridiquesOuvertes.length)
 
     const entitésJuridiquesÀSupprimer = await this.extraisLesEntitésJuridiquesRécemmentFermées(entitésJuridiquesOuvertes)
 
+    console.log('nb entités à delete', entitésJuridiquesÀSupprimer.length)
+
     await this.entitéJuridiqueHeliosRepository.supprime(entitésJuridiquesÀSupprimer)
+    console.log('entités deleted', entitésJuridiquesÀSupprimer.length)
 
     await this.entitéJuridiqueHeliosRepository.sauvegarde(entitésJuridiquesOuvertes)
   }

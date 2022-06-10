@@ -21,9 +21,31 @@ export class TypeOrmÉtablissementTerritorialRepository implements Établissemen
   }
 
   async supprime(numérosFinessDesÉtablissementsTerritoriaux: string[]): Promise<void> {
+    // const supp = numérosFinessDesÉtablissementsTerritoriaux.map((finess): Partial<ÉtablissementTerritorialIdentitéModel> => (
+    //   {
+    //     adresseAcheminement: '',
+    //     adresseNuméroVoie: '',
+    //     adresseTypeVoie: '',
+    //     adresseVoie: '',
+    //     catégorieÉtablissement: '',
+    //     courriel: '',
+    //     libelléCatégorieÉtablissement: '',
+    //     numéroFinessEntitéJuridique: '',
+    //     numéroFinessÉtablissementPrincipal: '',
+    //     numéroFinessÉtablissementTerritorial: finess,
+    //     raisonSociale: '',
+    //     typeÉtablissement: '',
+    //     téléphone: '',
+    //   }
+    // )) as ÉtablissementTerritorialIdentitéModel[]
+
     await(await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
-      .delete(numérosFinessDesÉtablissementsTerritoriaux)
+      .createQueryBuilder()
+      .delete()
+      .from(ÉtablissementTerritorialIdentitéModel)
+      .where('numéroFinessÉtablissementTerritorial IN (:...t)', { t: numérosFinessDesÉtablissementsTerritoriaux })
+      .execute()
   }
 
   private créeLeBatch(batchSize: number, établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[], index: number) {

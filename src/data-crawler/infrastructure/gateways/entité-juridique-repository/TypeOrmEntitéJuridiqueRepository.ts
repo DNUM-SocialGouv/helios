@@ -18,9 +18,13 @@ export class TypeOrmEntitéJuridiqueRepository implements EntitéJuridiqueReposi
   }
 
   async supprime(numérosFinessDEntitésJuridiques: string[]): Promise<void> {
+    const supp = numérosFinessDEntitésJuridiques.map((finess) => {
+      return { numéroFinessEntitéJuridique: finess }
+    }) as EntitéJuridiqueModel[]
+
     await(await this.orm)
       .getRepository(EntitéJuridiqueModel)
-      .delete(numérosFinessDEntitésJuridiques)
+      .remove(supp, { chunk: 1000 })
   }
 
   private créeLeBatch(batchSize: number, entitésJuridiques: EntitéJuridique[], index: number) {
