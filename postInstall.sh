@@ -7,5 +7,3 @@ yarn migrations
 
 # Ecris le fichier ssh private key
 echo "$SSH_KEY" | base64 --decode > $SFTP_PRIVATE_KEY
-
-
