@@ -3,7 +3,7 @@ import { DomaineÉtablissementTerritorial } from '../entities/DomaineÉtablissem
 import { ÉtablissementTerritorialIdentité } from '../entities/ÉtablissementTerritorialIdentité'
 import { MetsÀJourLesÉtablissementsTerritoriauxUseCase } from './MetsÀJourLesÉtablissementsTerritoriauxUseCase'
 
-describe('Sauvegarde des établissements territoriaux', () => {
+describe('Mise à jour des établissements territoriaux', () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
 
   it('récupère les établissements territoriaux de plusieurs sources de données', async () => {

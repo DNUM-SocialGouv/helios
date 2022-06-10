@@ -18,7 +18,6 @@ export class MetsÀJourLesÉtablissementsTerritoriauxUseCase {
       await this.établissementTerritorialSourceExterneLoader.récupèreLesÉtablissementsTerritoriauxOuverts(numéroFinessDesEntitésJuridiques)
 
     const établissementsTerritoriauxÀSupprimer = await this.extraisLesÉtablissementsTerritoriauxRécemmentFermés(établissementsTerritoriauxOuverts)
-
     await this.établissementTerritorialHeliosRepository.supprime(établissementsTerritoriauxÀSupprimer)
 
     await this.établissementTerritorialHeliosRepository.sauvegarde(établissementsTerritoriauxOuverts)
