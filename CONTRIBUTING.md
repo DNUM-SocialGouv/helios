@@ -290,3 +290,4 @@ interface Repository<T> {
 - Les verbes décrivant une action de méthode sont à l'impératif, comme c'est le cas dans la méthode testée
 
 - Les objets attendus sont déclarés dans la partie *THEN* des tests
+
