@@ -1,3 +1,4 @@
+import { ÉtablissementTerritorialIdentité } from '../entities/ÉtablissementTerritorialIdentité'
 import { EntitéJuridiqueHeliosLoader } from '../gateways/EntitéJuridiqueHeliosLoader'
 import { ÉtablissementTerritorialHeliosLoader } from '../gateways/ÉtablissementTerritorialHeliosLoader'
 import { ÉtablissementTerritorialRepository } from '../gateways/ÉtablissementTerritorialRepository'
@@ -23,7 +24,7 @@ export class MetsÀJourLesÉtablissementsTerritoriauxUseCase {
     await this.établissementTerritorialHeliosRepository.sauvegarde(établissementsTerritoriauxOuverts)
   }
 
-  private async extraisLesÉtablissementsTerritoriauxRécemmentFermés(établissementsTerritoriauxOuverts: Readonly<{ adresseAcheminement: string; adresseNuméroVoie: string; adresseTypeVoie: string; adresseVoie: string; catégorieÉtablissement: string; courriel: string; dateMiseAJourSource: string; domaine: import('/Users/thierry.gonard/repo/helios/helios/src/data-crawler/métier/entities/DomaineÉtablissementTerritorial').DomaineÉtablissementTerritorial; libelléCatégorieÉtablissement: string; numéroFinessEntitéJuridique: string; numéroFinessÉtablissementPrincipal: string; numéroFinessÉtablissementTerritorial: string; raisonSociale: string; téléphone: string; typeÉtablissement: string }>[]) {
+  private async extraisLesÉtablissementsTerritoriauxRécemmentFermés(établissementsTerritoriauxOuverts: ÉtablissementTerritorialIdentité[]) {
     const numéroFinessDesÉtablissementsTerritoriauxEnBase =
       await this.établissementTerritorialHeliosLoader.récupèreLeNuméroFinessDesÉtablissementsTerritoriaux()
 
