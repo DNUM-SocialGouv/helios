@@ -1,19 +1,21 @@
 import { getFakeDataCrawlerDependencies } from '../../testHelper'
 import { DomaineÉtablissementTerritorial } from '../entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialIdentité } from '../entities/ÉtablissementTerritorialIdentité'
-import { SauvegardeLesÉtablissementsTerritoriauxUseCase } from './SauvegardeLesÉtablissementsTerritoriauxUseCase'
+import { MetsÀJourLesÉtablissementsTerritoriauxUseCase } from './MetsÀJourLesÉtablissementsTerritoriauxUseCase'
 
 describe('Sauvegarde des établissements territoriaux', () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
 
   it('récupère les établissements territoriaux de plusieurs sources de données', async () => {
     // GIVEN
-    const sauvegardeLesÉtablissementsTerritoriaux = new SauvegardeLesÉtablissementsTerritoriauxUseCase(
+    const sauvegardeLesÉtablissementsTerritoriaux = new MetsÀJourLesÉtablissementsTerritoriauxUseCase(
       fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader,
       fakeDataCrawlerDependencies.établissementTerritorialHeliosRepository,
-      fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader
+      fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader,
+      fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader
     )
     jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader, 'récupèreLeNuméroFinessDesEntitésJuridiques').mockResolvedValue(['123456789'])
+    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader, 'récupèreLeNuméroFinessDesÉtablissementsTerritoriaux').mockResolvedValue([])
 
     // WHEN
     await sauvegardeLesÉtablissementsTerritoriaux.exécute()
@@ -24,10 +26,11 @@ describe('Sauvegarde des établissements territoriaux', () => {
 
   it('sauvegarde les établissements territoriaux de plusieurs sources de données', async () => {
     // GIVEN
-    const sauvegardeLesÉtablissementsTerritoriaux = new SauvegardeLesÉtablissementsTerritoriauxUseCase(
+    const sauvegardeLesÉtablissementsTerritoriaux = new MetsÀJourLesÉtablissementsTerritoriauxUseCase(
       fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader,
       fakeDataCrawlerDependencies.établissementTerritorialHeliosRepository,
-      fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader
+      fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader,
+      fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader
     )
     const établissementsTerritoriaux: ÉtablissementTerritorialIdentité[] = [
       {
@@ -66,11 +69,56 @@ describe('Sauvegarde des établissements territoriaux', () => {
       },
     ]
     jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts').mockResolvedValue(établissementsTerritoriaux)
+    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader, 'récupèreLeNuméroFinessDesÉtablissementsTerritoriaux').mockResolvedValue([])
 
     // WHEN
     await sauvegardeLesÉtablissementsTerritoriaux.exécute()
 
     // THEN
     expect(fakeDataCrawlerDependencies.établissementTerritorialHeliosRepository.sauvegarde).toHaveBeenCalledWith(établissementsTerritoriaux)
+  })
+
+  it('supprime les établissements territoriaux qui ne sont plus récupérés par les sources externes', async () => {
+    // GIVEN
+    const sauvegardeLesÉtablissementsTerritoriaux = new MetsÀJourLesÉtablissementsTerritoriauxUseCase(
+      fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader,
+      fakeDataCrawlerDependencies.établissementTerritorialHeliosRepository,
+      fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader,
+      fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader
+    )
+
+    const numéroFinessÉtablissementTerritorialToujoursOuvert = '010018407'
+    const établissementTerritorialOuvert = [
+      {
+        adresseAcheminement: '01130 NANTUA',
+        adresseNuméroVoie: '50',
+        adresseTypeVoie: 'R',
+        adresseVoie: 'PAUL PAINLEVE',
+        catégorieÉtablissement: '355',
+        courriel: 'a@example.com',
+        dateMiseAJourSource: '20220203',
+        domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
+        libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
+        numéroFinessEntitéJuridique: '010018407',
+        numéroFinessÉtablissementPrincipal: '010000057',
+        numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorialToujoursOuvert,
+        raisonSociale: 'CH NANTUA',
+        typeÉtablissement: 'S',
+        téléphone: '0102030405',
+      },
+    ]
+    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts').mockResolvedValue(établissementTerritorialOuvert)
+
+    const numérosFinessDesÉtablissementsEnBase = [
+      numéroFinessÉtablissementTerritorialToujoursOuvert,
+      '123456789',
+    ]
+    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader, 'récupèreLeNuméroFinessDesÉtablissementsTerritoriaux').mockResolvedValue(numérosFinessDesÉtablissementsEnBase)
+
+    // WHEN
+    await sauvegardeLesÉtablissementsTerritoriaux.exécute()
+
+    // THEN
+    expect(fakeDataCrawlerDependencies.établissementTerritorialHeliosRepository.supprime).toHaveBeenCalledWith(['123456789'])
   })
 })

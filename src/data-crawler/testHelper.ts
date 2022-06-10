@@ -30,7 +30,8 @@ export const getFakeDataCrawlerDependencies = (): Dependencies => {
     environmentVariables,
     finessDownloadRawData: { exécute: jest.fn() },
     unzipRawData: { exécute: jest.fn() },
-    établissementTerritorialHeliosRepository: { sauvegarde: jest.fn() },
+    établissementTerritorialHeliosLoader: { récupèreLeNuméroFinessDesÉtablissementsTerritoriaux: jest.fn() },
+    établissementTerritorialHeliosRepository: { sauvegarde: jest.fn(), supprime: jest.fn() },
     établissementTerritorialSourceExterneLoader: { récupèreLesÉtablissementsTerritoriauxOuverts: jest.fn() },
   }
 }
