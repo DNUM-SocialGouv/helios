@@ -9,7 +9,7 @@ import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { getOrm } from '../../../testHelper'
 import { TypeOrmEntitéJuridiqueHeliosRepository } from './TypeOrmEntitéJuridiqueHeliosRepository'
 
-describe('Sauvegarde des l’entité juridique', () => {
+describe('Sauvegarde des entités juridiques', () => {
   const orm = getOrm()
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>
   let établissementTerritorialIdentitéRepository: Repository<ÉtablissementTerritorialIdentitéModel>
