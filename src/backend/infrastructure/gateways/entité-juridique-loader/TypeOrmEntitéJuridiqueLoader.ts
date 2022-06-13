@@ -19,7 +19,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
 
     const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
 
-    return this.construitLEntitéJuridique(entitéJuridiqueModel, dateDeMiseAJourModel)
+    return this.construisLEntitéJuridique(entitéJuridiqueModel, dateDeMiseAJourModel)
   }
 
   async chargeLEntitéJuridiqueDeRattachement(numéroFiness: string): Promise<EntitéJuridiqueDeRattachement> {
@@ -45,7 +45,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
       .findOneBy({ numéroFinessEntitéJuridique: numéroFiness })
   }
 
-  private construitLEntitéJuridique(entitéJuridiqueModel: EntitéJuridiqueModel, dateDeMiseAJourModel: DateMiseÀJourSourceModel | null): EntitéJuridique {
+  private construisLEntitéJuridique(entitéJuridiqueModel: EntitéJuridiqueModel, dateDeMiseAJourModel: DateMiseÀJourSourceModel | null): EntitéJuridique {
     return {
       adresseAcheminement: entitéJuridiqueModel.adresseAcheminement,
       adresseNuméroVoie: entitéJuridiqueModel.adresseNuméroVoie,

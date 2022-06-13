@@ -10,7 +10,7 @@ export class TypeOrmÉtablissementTerritorialRattachéLoader implements Établis
   async chargeLesÉtablissementsDeLEntitéJuridiqueDeRattachement(numéroFinessEntitéJuridique: string): Promise<ÉtablissementTerritorialRattaché[]> {
     const établissementsTerritoriauxModels = await this.chargeLesÉtablissementsRattachésÀLEntitéJuridique(numéroFinessEntitéJuridique)
 
-    return this.construitLesÉtablissementsTerritoriauxRattachés(établissementsTerritoriauxModels)
+    return this.construisLesÉtablissementsTerritoriauxRattachés(établissementsTerritoriauxModels)
   }
 
   private async chargeLesÉtablissementsRattachésÀLEntitéJuridique(numéroFinessEntitéJuridique: string) {
@@ -19,7 +19,7 @@ export class TypeOrmÉtablissementTerritorialRattachéLoader implements Établis
       .find({ order: { raisonSociale: 'ASC' }, where: { numéroFinessEntitéJuridique } })
   }
 
-  private construitLesÉtablissementsTerritoriauxRattachés(
+  private construisLesÉtablissementsTerritoriauxRattachés(
     établissementsTerritoriauxModels: ÉtablissementTerritorialIdentitéModel[]
   ): ÉtablissementTerritorialRattaché[] {
     return établissementsTerritoriauxModels.map((établissementTerritorialModel): ÉtablissementTerritorialRattaché => {

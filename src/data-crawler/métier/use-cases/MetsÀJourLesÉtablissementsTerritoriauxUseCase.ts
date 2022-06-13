@@ -16,20 +16,24 @@ export class MetsÀJourLesÉtablissementsTerritoriauxUseCase {
     const numéroFinessDesEntitésJuridiques = await this.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques()
     const établissementsTerritoriauxOuverts =
       await this.établissementTerritorialSourceExterneLoader.récupèreLesÉtablissementsTerritoriauxOuverts(numéroFinessDesEntitésJuridiques)
+    const établissementsTerritoriauxSauvegardés = await this.établissementTerritorialHeliosLoader.récupèreLeNuméroFinessDesÉtablissementsTerritoriaux()
 
-    const établissementsTerritoriauxÀSupprimer = await this.extraisLesÉtablissementsTerritoriauxRécemmentFermés(établissementsTerritoriauxOuverts)
+    const établissementsTerritoriauxÀSupprimer = this.extraisLesÉtablissementsTerritoriauxRécemmentFermés(
+      établissementsTerritoriauxOuverts,
+      établissementsTerritoriauxSauvegardés
+    )
     await this.établissementTerritorialHeliosRepository.supprime(établissementsTerritoriauxÀSupprimer)
 
     await this.établissementTerritorialHeliosRepository.sauvegarde(établissementsTerritoriauxOuverts)
   }
 
-  private async extraisLesÉtablissementsTerritoriauxRécemmentFermés(établissementsTerritoriauxOuverts: ÉtablissementTerritorialIdentité[]) {
-    const numéroFinessDesÉtablissementsTerritoriauxEnBase =
-      await this.établissementTerritorialHeliosLoader.récupèreLeNuméroFinessDesÉtablissementsTerritoriaux()
-
-    return numéroFinessDesÉtablissementsTerritoriauxEnBase.filter(
-      (établissementTerritorialEnBase) => !établissementsTerritoriauxOuverts.find(
-        (établissementTerritorialOuverte) => établissementTerritorialOuverte.numéroFinessÉtablissementTerritorial === établissementTerritorialEnBase
+  private extraisLesÉtablissementsTerritoriauxRécemmentFermés(
+    établissementsTerritoriauxOuverts: ÉtablissementTerritorialIdentité[],
+    établissementsTerritoriauxSauvegardés: string[]
+  ) {
+    return établissementsTerritoriauxSauvegardés.filter(
+      (établissementTerritorialSauvegardé) => !établissementsTerritoriauxOuverts.find(
+        (établissementTerritorialOuverte) => établissementTerritorialOuverte.numéroFinessÉtablissementTerritorial === établissementTerritorialSauvegardé
       )
     )
   }

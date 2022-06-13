@@ -163,12 +163,11 @@ describe('Sauvegarde de l’établissement territorial', () => {
     expect(dateMiseÀJourSourceSauvée).toStrictEqual([dateMiseÀJourSourceAttendue])
   })
 
-  it('supprime un établissement territorial qu’il soit persisté ou non', async () => {
+  it('supprime un établissement territorial quand il est en base', async () => {
     // GIVEN
     const numéroFinessEntitéJuridique = '010018407'
     const entitéJuridique = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel({ numéroFinessEntitéJuridique })
     await entitéJuridiqueRepository.insert([entitéJuridique])
-    const numéroFinessÉtablissementTerritorialPasEnBase = '123456789'
     const numéroFinessÉtablissementTerritorial = '999777444'
 
     await établissementTerritorialIdentitéRepository.insert(
@@ -179,7 +178,19 @@ describe('Sauvegarde de l’établissement territorial', () => {
     const typeOrmÉtablissementTerritorialRepository = new TypeOrmÉtablissementTerritorialRepository(orm)
 
     // WHEN
-    await typeOrmÉtablissementTerritorialRepository.supprime([numéroFinessÉtablissementTerritorial, numéroFinessÉtablissementTerritorialPasEnBase])
+    await typeOrmÉtablissementTerritorialRepository.supprime([numéroFinessÉtablissementTerritorial])
+
+    // THEN
+    await expect(établissementTerritorialIdentitéRepository.count()).resolves.toBe(0)
+  })
+
+  it('ne lève pas d’alerte si établissement territorial à supprimer n’est pas en base', async () => {
+    // GIVEN
+    const numéroFinessÉtablissementTerritorialPasEnBase = '123456789'
+    const typeOrmÉtablissementTerritorialRepository = new TypeOrmÉtablissementTerritorialRepository(orm)
+
+    // WHEN
+    await typeOrmÉtablissementTerritorialRepository.supprime([numéroFinessÉtablissementTerritorialPasEnBase])
 
     // THEN
     await expect(établissementTerritorialIdentitéRepository.count()).resolves.toBe(0)

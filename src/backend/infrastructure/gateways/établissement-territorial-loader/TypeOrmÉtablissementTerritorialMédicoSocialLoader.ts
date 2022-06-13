@@ -25,7 +25,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
 
     const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
 
-    return this.construitLÉtablissementTerritorialMédicoSocial(établissementTerritorialModel, dateDeMiseAJourModel)
+    return this.construisLÉtablissementTerritorialMédicoSocial(établissementTerritorialModel, dateDeMiseAJourModel)
   }
 
   async estUnMonoÉtablissement(numéroFinessEntitéJuridique: string): Promise<MonoÉtablissement> {
@@ -42,7 +42,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       .findOneBy({ source: SourceDeDonnées.FINESS })
   }
 
-  private construitLÉtablissementTerritorialMédicoSocial(
+  private construisLÉtablissementTerritorialMédicoSocial(
     établissementTerritorialModel: ÉtablissementTerritorialIdentitéModel,
     dateDeMiseAJourModel: DateMiseÀJourSourceModel | null
   ): ÉtablissementTerritorialIdentité {

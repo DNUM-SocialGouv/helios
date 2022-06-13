@@ -10,10 +10,10 @@ export class TypeOrmÉtablissementTerritorialHeliosLoader implements Établissem
     const établissementsTerritoriaux = await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
       .find({ select: { numéroFinessÉtablissementTerritorial: true } })
-    return this.construitUnTableauDeNuméroFiness(établissementsTerritoriaux)
+    return this.listeLesNumérosFiness(établissementsTerritoriaux)
   }
 
-  private construitUnTableauDeNuméroFiness(établissementTerritorialIdentitéModels: ÉtablissementTerritorialIdentitéModel[]): string[] {
+  private listeLesNumérosFiness(établissementTerritorialIdentitéModels: ÉtablissementTerritorialIdentitéModel[]): string[] {
     return établissementTerritorialIdentitéModels.map((établissementTerritorial) => établissementTerritorial.numéroFinessÉtablissementTerritorial)
   }
 }

@@ -237,7 +237,7 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
     const établissementsTerritoriauxIdentité = établissementTerritorialFluxFinessIdentité.fluxfiness.structureet
       .filter(this.gardeLesÉtablissementsOuverts(numéroFinessDesEntitésJuridiques))
       .map((établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) =>
-        this.construitÉtablissementTerritorialIdentité(établissementTerritorialIdentitéFiness, dateDeMiseAJourDeLaSource, catégories))
+        this.construisÉtablissementTerritorialIdentité(établissementTerritorialIdentitéFiness, dateDeMiseAJourDeLaSource, catégories))
 
     return établissementsTerritoriauxIdentité
   }
@@ -280,7 +280,7 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
     return cheminDuFichierÉtablissementTerritorial.split(this.préfixeDuFichierÉtablissementTerritorialIdentité)[1].slice(0, 8)
   }
 
-  private construitÉtablissementTerritorialIdentité(
+  private construisÉtablissementTerritorialIdentité(
     établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness,
     dateMiseAJourSource: string,
     catégories: CatégorieFluxFiness
@@ -295,7 +295,7 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
       catégorieÉtablissement: valueOrEmpty(établissementTerritorialIdentitéFiness.categetab._text),
       courriel: valueOrEmpty(établissementTerritorialIdentitéFiness.courriel._text),
       dateMiseAJourSource,
-      domaine: this.construitLeDomaine(établissementTerritorialIdentitéFiness, catégories),
+      domaine: this.construisLeDomaine(établissementTerritorialIdentitéFiness, catégories),
       libelléCatégorieÉtablissement: valueOrEmpty(établissementTerritorialIdentitéFiness.libcategetab._text),
       numéroFinessEntitéJuridique: valueOrEmpty(établissementTerritorialIdentitéFiness.nofinessej._text),
       numéroFinessÉtablissementPrincipal: valueOrEmpty(établissementTerritorialIdentitéFiness.nofinessppal._text),
@@ -306,7 +306,7 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
     }
   }
 
-  private construitLeDomaine(
+  private construisLeDomaine(
     établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness,
     catégories: CatégorieFluxFiness
   ): DomaineÉtablissementTerritorial {

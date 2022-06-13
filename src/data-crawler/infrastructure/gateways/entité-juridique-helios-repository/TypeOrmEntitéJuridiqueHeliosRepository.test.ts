@@ -7,9 +7,9 @@ import { EntitéJuridiqueModelTestFactory } from '../../../../database/test-fact
 import { ÉtablissementTerritorialIdentitéModelTestFactory } from '../../../../database/test-factories/ÉtablissementTerritorialIdentitéModelTestFactory'
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { getOrm } from '../../../testHelper'
-import { TypeOrmEntitéJuridiqueRepository } from './TypeOrmEntitéJuridiqueRepository'
+import { TypeOrmEntitéJuridiqueHeliosRepository } from './TypeOrmEntitéJuridiqueHeliosRepository'
 
-describe('Sauvegarde de l’entité juridique', () => {
+describe('Sauvegarde des l’entité juridique', () => {
   const orm = getOrm()
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>
   let établissementTerritorialIdentitéRepository: Repository<ÉtablissementTerritorialIdentitéModel>
@@ -51,7 +51,7 @@ describe('Sauvegarde de l’entité juridique', () => {
       },
     ])
 
-    const typeOrmEntitéJuridiqueRepository = new TypeOrmEntitéJuridiqueRepository(orm)
+    const typeOrmEntitéJuridiqueRepository = new TypeOrmEntitéJuridiqueHeliosRepository(orm)
     const entitéJuridique1: EntitéJuridique = {
       adresseAcheminement: '01117 OYONNAX CEDEX',
       adresseNuméroVoie: '1',
@@ -105,17 +105,29 @@ describe('Sauvegarde de l’entité juridique', () => {
     ])
   })
 
-  it('supprime une entité juridique que celle-ci soit persistée ou non', async () => {
+  it('supprime une entité juridique quand celle-ci est en base', async () => {
     // GIVEN
     const numéroFinessEntitéJuridique = '010018407'
-    const numéroFinessEntitéJuridiquePasEnBase = '123456789'
     const entitéJuridique = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel({ numéroFinessEntitéJuridique })
     await entitéJuridiqueRepository.insert([entitéJuridique])
 
-    const typeOrmEntitéJuridiqueRepository = new TypeOrmEntitéJuridiqueRepository(orm)
+    const typeOrmEntitéJuridiqueRepository = new TypeOrmEntitéJuridiqueHeliosRepository(orm)
 
     // WHEN
-    await typeOrmEntitéJuridiqueRepository.supprime([numéroFinessEntitéJuridique, numéroFinessEntitéJuridiquePasEnBase])
+    await typeOrmEntitéJuridiqueRepository.supprime([numéroFinessEntitéJuridique])
+
+    // THEN
+    await expect(entitéJuridiqueRepository.count()).resolves.toBe(0)
+  })
+
+  it('ne lève pas d’alerte si l’entité juridique à supprimer n’est pas en base', async () => {
+    // GIVEN
+    const numéroFinessEntitéJuridiquePasEnBase = '123456789'
+
+    const typeOrmEntitéJuridiqueRepository = new TypeOrmEntitéJuridiqueHeliosRepository(orm)
+
+    // WHEN
+    await typeOrmEntitéJuridiqueRepository.supprime([numéroFinessEntitéJuridiquePasEnBase])
 
     // THEN
     await expect(entitéJuridiqueRepository.count()).resolves.toBe(0)
@@ -131,7 +143,7 @@ describe('Sauvegarde de l’entité juridique', () => {
       ÉtablissementTerritorialIdentitéModelTestFactory.créeAutreÉtablissementTerritorialIdentitéModel({ numéroFinessEntitéJuridique }),
     ])
 
-    const typeOrmEntitéJuridiqueRepository = new TypeOrmEntitéJuridiqueRepository(orm)
+    const typeOrmEntitéJuridiqueRepository = new TypeOrmEntitéJuridiqueHeliosRepository(orm)
 
     // WHEN
     await typeOrmEntitéJuridiqueRepository.supprime([numéroFinessEntitéJuridique])

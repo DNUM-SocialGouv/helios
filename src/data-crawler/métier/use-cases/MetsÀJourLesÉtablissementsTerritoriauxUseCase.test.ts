@@ -6,7 +6,7 @@ import { MetsÀJourLesÉtablissementsTerritoriauxUseCase } from './MetsÀJourLes
 describe('Mise à jour des établissements territoriaux', () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
 
-  it('récupère les établissements territoriaux de plusieurs sources de données', async () => {
+  it('récupère les établissements territoriaux des sources de données externes', async () => {
     // GIVEN
     const sauvegardeLesÉtablissementsTerritoriaux = new MetsÀJourLesÉtablissementsTerritoriauxUseCase(
       fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader,
@@ -24,7 +24,7 @@ describe('Mise à jour des établissements territoriaux', () => {
     expect(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader.récupèreLesÉtablissementsTerritoriauxOuverts).toHaveBeenCalledWith(['123456789'])
   })
 
-  it('sauvegarde les établissements territoriaux de plusieurs sources de données', async () => {
+  it('sauvegarde les établissements territoriaux des sources de données externes', async () => {
     // GIVEN
     const sauvegardeLesÉtablissementsTerritoriaux = new MetsÀJourLesÉtablissementsTerritoriauxUseCase(
       fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader,
@@ -78,7 +78,7 @@ describe('Mise à jour des établissements territoriaux', () => {
     expect(fakeDataCrawlerDependencies.établissementTerritorialHeliosRepository.sauvegarde).toHaveBeenCalledWith(établissementsTerritoriaux)
   })
 
-  it('supprime les établissements territoriaux qui ne sont plus récupérés par les sources externes', async () => {
+  it('extrais les établissements territoriaux fermés pour les supprimer', async () => {
     // GIVEN
     const sauvegardeLesÉtablissementsTerritoriaux = new MetsÀJourLesÉtablissementsTerritoriauxUseCase(
       fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader,

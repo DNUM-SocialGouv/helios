@@ -7,7 +7,7 @@ import { ÉtablissementTerritorialIdentitéModelTestFactory } from '../../../../
 import { getOrm } from '../../../testHelper'
 import { TypeOrmÉtablissementTerritorialHeliosLoader } from './TypeOrmÉtablissementTerritorialHeliosLoader'
 
-describe('La récupération des établissements territoriaux en interne', () => {
+describe('La récupération des établissements territoriaux d’Helios', () => {
   const orm = getOrm()
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>
   let établissementTerritorialRepository: Repository<ÉtablissementTerritorialIdentitéModel>

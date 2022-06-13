@@ -9,7 +9,7 @@ async function metsÀJourLesEntitésJuridiquesCron(dependencies: Dependencies) {
   )
 
   await metsÀJourLesEntitésJuridiquesUseCase.exécute()
-  setTimeout(() => process.exit(0), 1000)
+  setTimeout(() => process.exit(0), dependencies.DÉLAI_D_ARRÊT_DES_TÂCHES_EN_MS)
 }
 
 metsÀJourLesEntitésJuridiquesCron(dependencies)

@@ -1,30 +1,29 @@
 import { EntitéJuridique } from '../entities/EntitéJuridique'
 import { EntitéJuridiqueHeliosLoader } from '../gateways/EntitéJuridiqueHeliosLoader'
-import { EntitéJuridiqueRepository } from '../gateways/EntitéJuridiqueRepository'
+import { EntitéJuridiqueHeliosRepository } from '../gateways/EntitéJuridiqueHeliosRepository'
 import { EntitéJuridiqueSourceExterneLoader } from '../gateways/EntitéJuridiqueSourceExterneLoader'
 
 export class MetsÀJourLesEntitésJuridiquesUseCase {
   constructor(
     private readonly entitéJuridiqueSourceExterneLoader: EntitéJuridiqueSourceExterneLoader,
-    private readonly entitéJuridiqueHeliosRepository: EntitéJuridiqueRepository,
+    private readonly entitéJuridiqueHeliosRepository: EntitéJuridiqueHeliosRepository,
     private readonly entitéJuridiqueHeliosLoader: EntitéJuridiqueHeliosLoader
   ) {}
 
   async exécute(): Promise<void> {
     const entitésJuridiquesOuvertes = this.entitéJuridiqueSourceExterneLoader.récupèreLesEntitésJuridiquesOuvertes()
+    const entitéJuridiquesSauvegardées = await this.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques()
 
-    const entitésJuridiquesÀSupprimer = await this.extraisLesEntitésJuridiquesRécemmentFermées(entitésJuridiquesOuvertes)
+    const entitésJuridiquesÀSupprimer = this.extraisLesEntitésJuridiquesRécemmentFermées(entitésJuridiquesOuvertes, entitéJuridiquesSauvegardées)
     await this.entitéJuridiqueHeliosRepository.supprime(entitésJuridiquesÀSupprimer)
 
     await this.entitéJuridiqueHeliosRepository.sauvegarde(entitésJuridiquesOuvertes)
   }
 
-  private async extraisLesEntitésJuridiquesRécemmentFermées(entitésJuridiquesOuvertes: EntitéJuridique[]): Promise<string[]> {
-    const entitéJuridiquesEnBase = await this.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques()
-
-    return entitéJuridiquesEnBase.filter(
-      (entitéJuridiqueEnBase) => !entitésJuridiquesOuvertes.find(
-        (entitéJuridiqueOuverte) => entitéJuridiqueOuverte.numéroFinessEntitéJuridique === entitéJuridiqueEnBase
+  private extraisLesEntitésJuridiquesRécemmentFermées(entitésJuridiquesOuvertes: EntitéJuridique[], entitéJuridiquesSauvegardées: string[]): string[] {
+    return entitéJuridiquesSauvegardées.filter(
+      (entitéJuridiqueSauvegardée) => !entitésJuridiquesOuvertes.find(
+        (entitéJuridiqueOuverte) => entitéJuridiqueOuverte.numéroFinessEntitéJuridique === entitéJuridiqueSauvegardée
       )
     )
   }

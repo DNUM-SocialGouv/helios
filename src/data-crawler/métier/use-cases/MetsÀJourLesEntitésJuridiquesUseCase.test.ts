@@ -4,7 +4,7 @@ import { MetsÀJourLesEntitésJuridiquesUseCase } from './MetsÀJourLesEntitésJ
 describe('Mise à jour des entités juridiques', () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
 
-  it('récupère les entités juridiques de plusieurs sources de données', async () => {
+  it('récupère les entités juridiques des sources de données externes', async () => {
     // GIVEN
     const sauvegarderLesEntitésJuridiques = new MetsÀJourLesEntitésJuridiquesUseCase(
       fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader,
@@ -22,7 +22,7 @@ describe('Mise à jour des entités juridiques', () => {
     expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques).toHaveBeenCalledWith()
   })
 
-  it('sauvegarde les entités juridiques de plusieurs sources de données', async () => {
+  it('sauvegarde les entités juridiques des sources de données externes', async () => {
     // GIVEN
     const sauvegarderLesEntitésJuridiques = new MetsÀJourLesEntitésJuridiquesUseCase(
       fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader,
@@ -63,7 +63,7 @@ describe('Mise à jour des entités juridiques', () => {
     expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository.sauvegarde).toHaveBeenCalledWith(entitésJuridiques)
   })
 
-  it('supprime les entités juridiques qui ne sont plus récupérées par les sources externes', async () => {
+  it('extrais les entités juridiques qui ont fermé pour les supprimer', async () => {
     // GIVEN
     const sauvegarderLesEntitésJuridiques = new MetsÀJourLesEntitésJuridiquesUseCase(
       fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader,

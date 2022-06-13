@@ -6,7 +6,7 @@ import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/É
 import { ÉtablissementTerritorialRepository } from '../../../métier/gateways/ÉtablissementTerritorialRepository'
 
 export class TypeOrmÉtablissementTerritorialRepository implements ÉtablissementTerritorialRepository {
-  private readonly CHUNK_SIZE_POUR_SUPPRESSION = 3000
+  private readonly TAILLE_DE_FRAGMENT = 3000
 
   constructor(private readonly orm: Promise<DataSource>) {}
 
@@ -23,7 +23,7 @@ export class TypeOrmÉtablissementTerritorialRepository implements Établissemen
   }
 
   async supprime(numérosFinessDesÉtablissementsTerritoriaux: string[]): Promise<void> {
-    const établissementsTerritoriauxÀSupprimer = this.construitLesÉtablissementsTerritoriauxModels(numérosFinessDesÉtablissementsTerritoriaux)
+    const établissementsTerritoriauxÀSupprimer = this.construisLesÉtablissementsTerritoriauxModels(numérosFinessDesÉtablissementsTerritoriaux)
 
     await this.supprimeLesÉtablissementsTerritoriaux(établissementsTerritoriauxÀSupprimer)
   }
@@ -31,10 +31,10 @@ export class TypeOrmÉtablissementTerritorialRepository implements Établissemen
   private async supprimeLesÉtablissementsTerritoriaux(établissementsTerritoriauxÀSupprimer: ÉtablissementTerritorialIdentitéModel[]) {
     await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
-      .remove(établissementsTerritoriauxÀSupprimer, { chunk: this.CHUNK_SIZE_POUR_SUPPRESSION })
+      .remove(établissementsTerritoriauxÀSupprimer, { chunk: this.TAILLE_DE_FRAGMENT })
   }
 
-  private construitLesÉtablissementsTerritoriauxModels(numérosFinessDesÉtablissementsTerritoriaux: string[]) {
+  private construisLesÉtablissementsTerritoriauxModels(numérosFinessDesÉtablissementsTerritoriaux: string[]) {
     return numérosFinessDesÉtablissementsTerritoriaux.map((numéroFiness) => (
       { numéroFinessÉtablissementTerritorial: numéroFiness }
     )) as ÉtablissementTerritorialIdentitéModel[]
@@ -62,6 +62,7 @@ export class TypeOrmÉtablissementTerritorialRepository implements Établissemen
   }
 
   private async metsÀJourLeBatch(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[]) {
+
     await(await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
       .upsert(établissementsTerritoriauxIdentité, ['numéroFinessÉtablissementTerritorial'])

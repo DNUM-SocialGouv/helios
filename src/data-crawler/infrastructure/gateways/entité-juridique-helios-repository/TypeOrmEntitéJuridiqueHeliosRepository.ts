@@ -2,10 +2,10 @@ import { DataSource } from 'typeorm'
 
 import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
-import { EntitéJuridiqueRepository } from '../../../métier/gateways/EntitéJuridiqueRepository'
+import { EntitéJuridiqueHeliosRepository } from '../../../métier/gateways/EntitéJuridiqueHeliosRepository'
 
-export class TypeOrmEntitéJuridiqueRepository implements EntitéJuridiqueRepository {
-  private readonly CHUNK_SIZE_POUR_SUPPRESSION = 3000
+export class TypeOrmEntitéJuridiqueHeliosRepository implements EntitéJuridiqueHeliosRepository {
+  private readonly TAILLE_DE_FRAGMENT = 3000
 
   constructor(private readonly orm: Promise<DataSource>) {}
 
@@ -20,7 +20,7 @@ export class TypeOrmEntitéJuridiqueRepository implements EntitéJuridiqueReposi
   }
 
   async supprime(numérosFinessDEntitésJuridiques: string[]): Promise<void> {
-    const entitésJuridiquesÀSupprimer = this.construitLesEntitésJuridiquesModels(numérosFinessDEntitésJuridiques)
+    const entitésJuridiquesÀSupprimer = this.construisLesEntitésJuridiquesModels(numérosFinessDEntitésJuridiques)
 
     await this.supprimeLesEntitésJuridiques(entitésJuridiquesÀSupprimer)
   }
@@ -28,10 +28,10 @@ export class TypeOrmEntitéJuridiqueRepository implements EntitéJuridiqueReposi
   private async supprimeLesEntitésJuridiques(entitésJuridiquesÀSupprimer: EntitéJuridiqueModel[]) {
     await (await this.orm)
       .getRepository(EntitéJuridiqueModel)
-      .remove(entitésJuridiquesÀSupprimer, { chunk: this.CHUNK_SIZE_POUR_SUPPRESSION })
+      .remove(entitésJuridiquesÀSupprimer, { chunk: this.TAILLE_DE_FRAGMENT })
   }
 
-  private construitLesEntitésJuridiquesModels(numérosFinessDEntitésJuridiques: string[]) {
+  private construisLesEntitésJuridiquesModels(numérosFinessDEntitésJuridiques: string[]) {
     return numérosFinessDEntitésJuridiques.map((numéroFiness) => {
       return { numéroFinessEntitéJuridique: numéroFiness }
     }) as EntitéJuridiqueModel[]
