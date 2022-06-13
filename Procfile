@@ -1,1 +1,2 @@
-postdeploy: ./postInstall.sh
+postdeploy: yarn migrations
+web: ./start.sh

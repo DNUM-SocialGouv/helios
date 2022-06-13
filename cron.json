@@ -3,6 +3,10 @@
     {
       "command": "0 4 * * * yarn populateDatabase",
       "size": "XL"
+    },
+    {
+      "command": "*/10 * * * * yarn populateDatabase",
+      "size": "XL"
     }
   ]
 }
