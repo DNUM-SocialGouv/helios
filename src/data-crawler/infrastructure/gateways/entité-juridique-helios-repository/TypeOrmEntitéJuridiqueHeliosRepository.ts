@@ -3,14 +3,16 @@ import { DataSource } from 'typeorm'
 import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { EntitéJuridiqueHeliosRepository } from '../../../métier/gateways/EntitéJuridiqueHeliosRepository'
+import { Logger } from '../../../métier/gateways/Logger'
 
 export class TypeOrmEntitéJuridiqueHeliosRepository implements EntitéJuridiqueHeliosRepository {
   private readonly TAILLE_DE_FRAGMENT = 3000
 
-  constructor(private readonly orm: Promise<DataSource>) {}
+  constructor(private readonly orm: Promise<DataSource>, private logger: Logger) {}
 
   async sauvegarde(entitésJuridiques: EntitéJuridique[], batchSize: number = 20): Promise<void> {
     const entitésJuridiquesLength = entitésJuridiques.length
+    this.logger.info(`[Helios] Sauvegarde ${entitésJuridiquesLength} entités juridiques.`)
 
     for (let index = 0; index < entitésJuridiquesLength; index = index + batchSize) {
       const entitésJuridiquesBatch = this.créeLeBatch(batchSize, entitésJuridiques, index)
@@ -22,6 +24,7 @@ export class TypeOrmEntitéJuridiqueHeliosRepository implements EntitéJuridique
   async supprime(numérosFinessDEntitésJuridiques: string[]): Promise<void> {
     const entitésJuridiquesÀSupprimer = this.construisLesEntitésJuridiquesModels(numérosFinessDEntitésJuridiques)
 
+    this.logger.info(`[Helios] Supprime ${entitésJuridiquesÀSupprimer.length} entités juridiques.`)
     await this.supprimeLesEntitésJuridiques(entitésJuridiquesÀSupprimer)
   }
 

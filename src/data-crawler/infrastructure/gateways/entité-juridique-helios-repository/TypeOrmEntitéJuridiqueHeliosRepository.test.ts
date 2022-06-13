@@ -6,7 +6,7 @@ import { ÉtablissementTerritorialIdentitéModel } from '../../../../database/mo
 import { EntitéJuridiqueModelTestFactory } from '../../../../database/test-factories/EntitéJuridiqueModelTestFactory'
 import { ÉtablissementTerritorialIdentitéModelTestFactory } from '../../../../database/test-factories/ÉtablissementTerritorialIdentitéModelTestFactory'
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
-import { getOrm } from '../../../testHelper'
+import { fakeLogger, getOrm } from '../../../testHelper'
 import { TypeOrmEntitéJuridiqueHeliosRepository } from './TypeOrmEntitéJuridiqueHeliosRepository'
 
 describe('Sauvegarde des entités juridiques', () => {
@@ -51,7 +51,7 @@ describe('Sauvegarde des entités juridiques', () => {
       },
     ])
 
-    const typeOrmEntitéJuridiqueRepository = new TypeOrmEntitéJuridiqueHeliosRepository(orm)
+    const typeOrmEntitéJuridiqueRepository = new TypeOrmEntitéJuridiqueHeliosRepository(orm, fakeLogger)
     const entitéJuridique1: EntitéJuridique = {
       adresseAcheminement: '01117 OYONNAX CEDEX',
       adresseNuméroVoie: '1',
@@ -111,7 +111,7 @@ describe('Sauvegarde des entités juridiques', () => {
     const entitéJuridique = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel({ numéroFinessEntitéJuridique })
     await entitéJuridiqueRepository.insert([entitéJuridique])
 
-    const typeOrmEntitéJuridiqueRepository = new TypeOrmEntitéJuridiqueHeliosRepository(orm)
+    const typeOrmEntitéJuridiqueRepository = new TypeOrmEntitéJuridiqueHeliosRepository(orm, fakeLogger)
 
     // WHEN
     await typeOrmEntitéJuridiqueRepository.supprime([numéroFinessEntitéJuridique])
@@ -124,7 +124,7 @@ describe('Sauvegarde des entités juridiques', () => {
     // GIVEN
     const numéroFinessEntitéJuridiquePasEnBase = '123456789'
 
-    const typeOrmEntitéJuridiqueRepository = new TypeOrmEntitéJuridiqueHeliosRepository(orm)
+    const typeOrmEntitéJuridiqueRepository = new TypeOrmEntitéJuridiqueHeliosRepository(orm, fakeLogger)
 
     // WHEN
     await typeOrmEntitéJuridiqueRepository.supprime([numéroFinessEntitéJuridiquePasEnBase])
@@ -143,7 +143,7 @@ describe('Sauvegarde des entités juridiques', () => {
       ÉtablissementTerritorialIdentitéModelTestFactory.créeAutreÉtablissementTerritorialIdentitéModel({ numéroFinessEntitéJuridique }),
     ])
 
-    const typeOrmEntitéJuridiqueRepository = new TypeOrmEntitéJuridiqueHeliosRepository(orm)
+    const typeOrmEntitéJuridiqueRepository = new TypeOrmEntitéJuridiqueHeliosRepository(orm, fakeLogger)
 
     // WHEN
     await typeOrmEntitéJuridiqueRepository.supprime([numéroFinessEntitéJuridique])

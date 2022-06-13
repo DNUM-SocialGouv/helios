@@ -2,6 +2,7 @@ import { readdirSync } from 'fs'
 
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { EntitéJuridiqueSourceExterneLoader } from '../../../métier/gateways/EntitéJuridiqueSourceExterneLoader'
+import { Logger } from '../../../métier/gateways/Logger'
 import { XmlToJs } from '../../../métier/gateways/XmlToJs'
 
 type EntitéJuridiqueFiness = Readonly<{
@@ -121,18 +122,28 @@ type EntitéJuridiqueFluxFiness = Readonly<{
 export class FinessXmlEntitéJuridiqueSourceExterneLoader implements EntitéJuridiqueSourceExterneLoader {
   private readonly préfixeDuFichierEntitéJuridique = 'finess_cs1400101_stock_'
 
-  constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string) {}
+  constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string, private logger: Logger) {}
 
   récupèreLesEntitésJuridiquesOuvertes(): EntitéJuridique[] {
     const cheminDuFichierEntitéJuridique = this.récupèreLeCheminDuFichierEntitéJuridique(this.localPath)
 
     const dateDeMiseAJourDeLaSource = this.récupèreLaDateDeMiseAJourDeLaSource(cheminDuFichierEntitéJuridique)
+    this.logger.info(`[Helios][FINESS] Date de mise à jour des fichiers FINESS des entités juridiques: ${dateDeMiseAJourDeLaSource}`)
 
     const entitésJuridiquesFluxFiness = this.convertXmlToJs.exécute<EntitéJuridiqueFluxFiness>(cheminDuFichierEntitéJuridique)
+    const entitésJuridiquesFiness = entitésJuridiquesFluxFiness.fluxfiness.structureej
+    this.logger.info(`[Helios][FINESS] ${entitésJuridiquesFiness.length} entités juridiques récupérées depuis FINESS.`)
 
-    return entitésJuridiquesFluxFiness.fluxfiness.structureej
-      .filter((entitésJuridiquesFiness: EntitéJuridiqueFiness) => entitésJuridiquesFiness.datefermeture._text === undefined)
-      .map((entitésJuridiquesFiness: EntitéJuridiqueFiness) => this.construisLEntitéJuridique(entitésJuridiquesFiness, dateDeMiseAJourDeLaSource))
+    const entitésJuridiquesFinessOuvertes = this.conserveLesEntitésJuridiquesOuvertes(entitésJuridiquesFiness)
+    this.logger.info(`[Helios][FINESS] ${entitésJuridiquesFinessOuvertes.length} entités juridiques sont ouvertes.`)
+
+    return entitésJuridiquesFinessOuvertes.map(
+      (entitéJuridiqueFinessOuverte: EntitéJuridiqueFiness) => this.construisLEntitéJuridique(entitéJuridiqueFinessOuverte, dateDeMiseAJourDeLaSource)
+    )
+  }
+
+  private conserveLesEntitésJuridiquesOuvertes(entitésJuridiquesFiness: EntitéJuridiqueFiness[]) {
+    return entitésJuridiquesFiness.filter((entitéJuridiqueFiness: EntitéJuridiqueFiness) => entitéJuridiqueFiness.datefermeture._text === undefined)
   }
 
   private récupèreLeCheminDuFichierEntitéJuridique(localPath: string): string {

@@ -7,7 +7,7 @@ import { EntitéJuridiqueModelTestFactory } from '../../../../database/test-fact
 import { ÉtablissementTerritorialIdentitéModelTestFactory } from '../../../../database/test-factories/ÉtablissementTerritorialIdentitéModelTestFactory'
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
-import { getOrm } from '../../../testHelper'
+import { fakeLogger, getOrm } from '../../../testHelper'
 import { TypeOrmÉtablissementTerritorialRepository } from './TypeOrmÉtablissementTerritorialRepository'
 
 describe('Sauvegarde de l’établissement territorial', () => {
@@ -77,7 +77,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
         source: SourceDeDonnées.FINESS,
       },
     ])
-    const typeOrmÉtablissementTerritorialRepository = new TypeOrmÉtablissementTerritorialRepository(orm)
+    const typeOrmÉtablissementTerritorialRepository = new TypeOrmÉtablissementTerritorialRepository(orm, fakeLogger)
     const établissementTerritorial1: ÉtablissementTerritorialIdentité = {
       adresseAcheminement: '01130 NANTUA',
       adresseNuméroVoie: '50',
@@ -175,7 +175,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
         { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial }
       )
     )
-    const typeOrmÉtablissementTerritorialRepository = new TypeOrmÉtablissementTerritorialRepository(orm)
+    const typeOrmÉtablissementTerritorialRepository = new TypeOrmÉtablissementTerritorialRepository(orm, fakeLogger)
 
     // WHEN
     await typeOrmÉtablissementTerritorialRepository.supprime([numéroFinessÉtablissementTerritorial])
@@ -187,7 +187,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
   it('ne lève pas d’alerte si établissement territorial à supprimer n’est pas en base', async () => {
     // GIVEN
     const numéroFinessÉtablissementTerritorialPasEnBase = '123456789'
-    const typeOrmÉtablissementTerritorialRepository = new TypeOrmÉtablissementTerritorialRepository(orm)
+    const typeOrmÉtablissementTerritorialRepository = new TypeOrmÉtablissementTerritorialRepository(orm, fakeLogger)
 
     // WHEN
     await typeOrmÉtablissementTerritorialRepository.supprime([numéroFinessÉtablissementTerritorialPasEnBase])

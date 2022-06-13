@@ -1,7 +1,7 @@
 import { mkdirSync, rmSync, writeFileSync } from 'fs'
 
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
-import { getFakeDataCrawlerDependencies } from '../../../testHelper'
+import { fakeLogger, getFakeDataCrawlerDependencies } from '../../../testHelper'
 import { NodeXmlToJs } from '../xml-to-js/NodeXmlToJs'
 import { FinessXmlEntitéJuridiqueSourceExterneLoader } from './FinessXmlEntitéJuridiqueSourceExterneLoader'
 
@@ -61,7 +61,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
     mkdirSync(finessLocalPath, { recursive: true })
     writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, xml)
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueSourceExterneLoader(new NodeXmlToJs(), localPath)
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger)
     const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes()
 
     // THEN
@@ -175,7 +175,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
     mkdirSync(finessLocalPath, { recursive: true })
     writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, xml)
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueSourceExterneLoader(new NodeXmlToJs(), localPath)
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger)
     const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes()
 
     // THEN
