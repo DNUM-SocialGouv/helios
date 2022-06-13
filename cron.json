@@ -1,11 +1,7 @@
 {
   "jobs": [
     {
-      "command": "0 4 * * * yarn populateDatabase",
-      "size": "XL"
-    },
-    {
-      "command": "*/10 * * * * /app/populateDatabase.sh",
+      "command": "0 4 * * * /app/populateDatabase.sh",
       "size": "XL"
     }
   ]
