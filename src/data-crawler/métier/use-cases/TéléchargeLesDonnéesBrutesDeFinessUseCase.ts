@@ -16,9 +16,7 @@ export class TéléchargeLesDonnéesBrutesDeFinessUseCase {
     try {
       await this.downloadDataSource.exécute(rawData, sftpPath, finessLocalPath)
     } catch (error) {
-      const heliosError = new HeliosError(error.message)
-      heliosError.reportToSentry()
-      throw heliosError
+      throw new HeliosError(error.message)
     }
 
     try {
