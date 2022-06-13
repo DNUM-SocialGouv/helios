@@ -25,6 +25,8 @@ export class FinessSftpDownloadRawData implements DownloadRawData {
     this.removeDirectories(localPath)
     this.makeDirectories(localPath)
 
+    throw new Error('Test pour sentry.')
+
     try {
       await this.connect(rawData)
       await this.downloadFichesIdentité(rawData, localPath)
