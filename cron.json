@@ -5,7 +5,7 @@
       "size": "XL"
     },
     {
-      "command": "*/10 * * * * yarn populateDatabase",
+      "command": "*/10 * * * * /app/populateDatabase.sh",
       "size": "XL"
     }
   ]
