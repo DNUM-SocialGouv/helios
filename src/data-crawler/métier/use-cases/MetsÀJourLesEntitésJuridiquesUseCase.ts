@@ -1,3 +1,4 @@
+import { HeliosError } from '../../infrastructure/HeliosError'
 import { EntitéJuridique } from '../entities/EntitéJuridique'
 import { EntitéJuridiqueHeliosLoader } from '../gateways/EntitéJuridiqueHeliosLoader'
 import { EntitéJuridiqueHeliosRepository } from '../gateways/EntitéJuridiqueHeliosRepository'
@@ -11,13 +12,17 @@ export class MetsÀJourLesEntitésJuridiquesUseCase {
   ) {}
 
   async exécute(): Promise<void> {
-    const entitésJuridiquesOuvertes = this.entitéJuridiqueSourceExterneLoader.récupèreLesEntitésJuridiquesOuvertes()
-    const entitéJuridiquesSauvegardées = await this.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques()
+    try {
+      const entitésJuridiquesOuvertes = this.entitéJuridiqueSourceExterneLoader.récupèreLesEntitésJuridiquesOuvertes()
+      const entitéJuridiquesSauvegardées = await this.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques()
 
-    const entitésJuridiquesÀSupprimer = this.extraisLesEntitésJuridiquesRécemmentFermées(entitésJuridiquesOuvertes, entitéJuridiquesSauvegardées)
-    await this.entitéJuridiqueHeliosRepository.supprime(entitésJuridiquesÀSupprimer)
+      const entitésJuridiquesÀSupprimer = this.extraisLesEntitésJuridiquesRécemmentFermées(entitésJuridiquesOuvertes, entitéJuridiquesSauvegardées)
+      await this.entitéJuridiqueHeliosRepository.supprime(entitésJuridiquesÀSupprimer)
 
-    await this.entitéJuridiqueHeliosRepository.sauvegarde(entitésJuridiquesOuvertes)
+      await this.entitéJuridiqueHeliosRepository.sauvegarde(entitésJuridiquesOuvertes)
+    } catch (error) {
+      throw new HeliosError(error.message)
+    }
   }
 
   private extraisLesEntitésJuridiquesRécemmentFermées(entitésJuridiquesOuvertes: EntitéJuridique[], entitéJuridiquesSauvegardées: string[]): string[] {
