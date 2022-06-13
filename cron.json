@@ -1,0 +1,8 @@
+{
+  "jobs": [
+    {
+      "command": "0 4 * * * /app/populateDatabase.sh",
+      "size": "XL"
+    }
+  ]
+}
