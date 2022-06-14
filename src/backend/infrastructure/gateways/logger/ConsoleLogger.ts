@@ -3,14 +3,14 @@ import { Logger } from '../../../métier/gateways/Logger'
 
 export class ConsoleLogger implements Logger {
   debug(message: string): void {
-    console.debug(message)
+    console.debug(`[Helios] ${message}`)
   }
 
   error(message: string): void {
-    console.error(message)
+    console.error(`[Helios] ${message}`)
   }
 
   info(message: string): void {
-    console.info(message)
+    console.info(`[Helios] ${message}`)
   }
 }

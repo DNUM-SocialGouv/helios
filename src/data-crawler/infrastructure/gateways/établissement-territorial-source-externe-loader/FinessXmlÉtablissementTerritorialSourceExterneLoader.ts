@@ -220,9 +220,11 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
   private readonly préfixeDuFichierÉtablissementTerritorialIdentité = 'finess_cs1400102_stock_'
   private readonly préfixeDuFichierCatégorie = 'finess_cs1500106_stock_'
 
-  constructor(private readonly convertXmlToJs: XmlToJs,
-              private readonly localPath: string,
-              private logger: Logger) {}
+  constructor(
+    private readonly convertXmlToJs: XmlToJs,
+    private readonly localPath: string,
+    private logger: Logger
+  ) {}
 
   async récupèreLesÉtablissementsTerritoriauxOuverts(numéroFinessDesEntitésJuridiques: string[]): Promise<ÉtablissementTerritorialIdentité[]> {
     const cheminDuFichierÉtablissementTerritorialIdentité = this.récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(this.localPath)
@@ -230,17 +232,17 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
     const cheminDuFichierCatégorie = this.récupèreLeCheminDuFichierCatégorie(this.localPath)
 
     const dateDeMiseAJourDeLaSource = this.récupèreLaDateDeMiseAJourDeLaSource(cheminDuFichierÉtablissementTerritorialIdentité)
-    this.logger.info(`[Helios][FINESS] Date de mise à jour des fichiers FINESS des établissements territoriaux : ${dateDeMiseAJourDeLaSource}`)
+    this.logger.info(`[FINESS] Date de mise à jour des fichiers FINESS des établissements territoriaux : ${dateDeMiseAJourDeLaSource}`)
 
     const catégories = this.convertXmlToJs.exécute<CatégorieFluxFiness>(cheminDuFichierCatégorie)
 
     const établissementTerritorialFluxFinessIdentité = this.convertXmlToJs.exécute
       <ÉtablissementTerritorialIdentitéFluxFiness>(cheminDuFichierÉtablissementTerritorialIdentité)
     const établissementTerritoriauxFluxFiness = établissementTerritorialFluxFinessIdentité.fluxfiness.structureet
-    this.logger.info(`[Helios][FINESS] ${établissementTerritoriauxFluxFiness.length} établissements territoriaux récupérés depuis FINESS.`)
+    this.logger.info(`[FINESS] ${établissementTerritoriauxFluxFiness.length} établissements territoriaux récupérés depuis FINESS.`)
 
     const établissementsTerritoriauxFinessOuverts = this.conserveLesÉtablissementsOuverts(établissementTerritoriauxFluxFiness, numéroFinessDesEntitésJuridiques)
-    this.logger.info(`[Helios][FINESS] ${établissementsTerritoriauxFinessOuverts.length} établissements territoriaux sont ouverts.`)
+    this.logger.info(`[FINESS] ${établissementsTerritoriauxFinessOuverts.length} établissements territoriaux sont ouverts.`)
 
     return établissementsTerritoriauxFinessOuverts
       .map((établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) =>

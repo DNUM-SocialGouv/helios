@@ -73,7 +73,7 @@ describe('Téléchargement de FINESS via un SFTP', () => {
       privateKey: 'privateKey',
       username: 'usr_finess_ls',
     })
-    expect(fakeLogger.info).toHaveBeenNthCalledWith(1, `[Helios][${dataSource}] La connexion au SFTP est ouverte.`)
+    expect(fakeLogger.info).toHaveBeenNthCalledWith(1, `[${dataSource}] La connexion au SFTP est ouverte.`)
   })
 
   it('télécharge les dernières fiches d’identité en date du répertoire "simple"', async () => {
@@ -105,7 +105,7 @@ describe('Téléchargement de FINESS via un SFTP', () => {
         concurrency: 2,
       }
     )
-    expect(fakeLogger.info).toHaveBeenNthCalledWith(2, `[Helios][${dataSource}] Les deux fichiers contenant les fiches d’identité du répertoire "simple" téléchargés.`)
+    expect(fakeLogger.info).toHaveBeenNthCalledWith(2, `[${dataSource}] Les deux fichiers contenant les fiches d’identité du répertoire "simple" téléchargés.`)
   })
 
   it('télécharge les dernières catégories en date du répertoire "nomenclature"', async () => {
@@ -128,7 +128,7 @@ describe('Téléchargement de FINESS via un SFTP', () => {
         concurrency: 2,
       }
     )
-    expect(fakeLogger.info).toHaveBeenNthCalledWith(3, `[Helios][${dataSource}] Le fichier contenant les catégories du répertoire "nomenclature" téléchargé.`)
+    expect(fakeLogger.info).toHaveBeenNthCalledWith(3, `[${dataSource}] Le fichier contenant les catégories du répertoire "nomenclature" téléchargé.`)
   })
 
   it('se déconnecte du SFTP', async () => {
@@ -141,7 +141,7 @@ describe('Téléchargement de FINESS via un SFTP', () => {
     await sftpDownloadDataSource.exécute(dataSource, sftpPath, localPath)
 
     // THEN
-    expect(fakeLogger.info).toHaveBeenNthCalledWith(4, `[Helios][${dataSource}] Le connexion au SFTP est fermée.`)
+    expect(fakeLogger.info).toHaveBeenNthCalledWith(4, `[${dataSource}] Le connexion au SFTP est fermée.`)
     expect(Client.prototype.end).toHaveBeenCalledWith()
   })
 

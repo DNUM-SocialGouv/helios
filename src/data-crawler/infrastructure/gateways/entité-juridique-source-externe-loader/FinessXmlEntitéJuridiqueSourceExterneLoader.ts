@@ -128,14 +128,14 @@ export class FinessXmlEntitéJuridiqueSourceExterneLoader implements EntitéJuri
     const cheminDuFichierEntitéJuridique = this.récupèreLeCheminDuFichierEntitéJuridique(this.localPath)
 
     const dateDeMiseAJourDeLaSource = this.récupèreLaDateDeMiseAJourDeLaSource(cheminDuFichierEntitéJuridique)
-    this.logger.info(`[Helios][FINESS] Date de mise à jour des fichiers FINESS des entités juridiques : ${dateDeMiseAJourDeLaSource}`)
+    this.logger.info(`[FINESS] Date de mise à jour des fichiers FINESS des entités juridiques : ${dateDeMiseAJourDeLaSource}`)
 
     const entitésJuridiquesFluxFiness = this.convertXmlToJs.exécute<EntitéJuridiqueFluxFiness>(cheminDuFichierEntitéJuridique)
     const entitésJuridiquesFiness = entitésJuridiquesFluxFiness.fluxfiness.structureej
-    this.logger.info(`[Helios][FINESS] ${entitésJuridiquesFiness.length} entités juridiques récupérées depuis FINESS.`)
+    this.logger.info(`[FINESS] ${entitésJuridiquesFiness.length} entités juridiques récupérées depuis FINESS.`)
 
     const entitésJuridiquesFinessOuvertes = this.conserveLesEntitésJuridiquesOuvertes(entitésJuridiquesFiness)
-    this.logger.info(`[Helios][FINESS] ${entitésJuridiquesFinessOuvertes.length} entités juridiques sont ouvertes.`)
+    this.logger.info(`[FINESS] ${entitésJuridiquesFinessOuvertes.length} entités juridiques sont ouvertes.`)
 
     return entitésJuridiquesFinessOuvertes.map(
       (entitéJuridiqueFinessOuverte: EntitéJuridiqueFiness) => this.construisLEntitéJuridique(entitéJuridiqueFinessOuverte, dateDeMiseAJourDeLaSource)

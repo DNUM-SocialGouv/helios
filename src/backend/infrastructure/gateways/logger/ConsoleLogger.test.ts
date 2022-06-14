@@ -13,7 +13,7 @@ describe('Logger', () => {
     logger.debug(message)
 
     // THEN
-    expect(console.debug).toHaveBeenCalledWith(message)
+    expect(console.debug).toHaveBeenCalledWith(`[Helios] ${message}`)
   })
 
   it('affiche un message d’erreur', () => {
@@ -25,7 +25,7 @@ describe('Logger', () => {
     logger.error(message)
 
     // THEN
-    expect(console.error).toHaveBeenCalledWith(message)
+    expect(console.error).toHaveBeenCalledWith(`[Helios] ${message}`)
   })
 
   it('affiche un message d’information', () => {
@@ -37,6 +37,6 @@ describe('Logger', () => {
     logger.info(message)
 
     // THEN
-    expect(console.info).toHaveBeenCalledWith(message)
+    expect(console.info).toHaveBeenCalledWith(`[Helios] ${message}`)
   })
 })

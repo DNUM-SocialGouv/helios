@@ -120,7 +120,7 @@ describe('Sauvegarde des entités juridiques', () => {
     await expect(entitéJuridiqueRepository.count()).resolves.toBe(0)
   })
 
-  it('ne lève pas d’alerte si l’entité juridique à supprimer n’est pas en base', async () => {
+  it('ne signale pas d’alerte si l’entité juridique à supprimer n’est pas en base', async () => {
     // GIVEN
     const numéroFinessEntitéJuridiquePasEnBase = '123456789'
 

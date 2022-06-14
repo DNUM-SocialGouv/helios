@@ -11,7 +11,7 @@ export class GunzipUnzipRawData implements UnzipRawData {
   exécute(rawData: string, localPath: string) {
     try {
       execSync(`gunzip -rf ${this.environmentVariables.SFTP_LOCAL_PATH}/${localPath}`)
-      this.logger.info(`[Helios][${rawData}] Sources de données décompressées.`)
+      this.logger.info(`[${rawData}] Sources de données décompressées.`)
     } catch (error) {
       throw new HeliosError(`[${rawData}] Une erreur est survenue lors de la décompression du répertoire ${localPath} : ${error.message}`)
     }

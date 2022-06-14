@@ -18,7 +18,7 @@ describe('Décompression d’une source de données', () => {
 
     // THEN
     expect(child.execSync).toHaveBeenCalledWith(`gunzip -rf ${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/${localPath}`)
-    expect(fakeLogger.info).toHaveBeenCalledWith(`[Helios][${dataSource}] Sources de données décompressées.`)
+    expect(fakeLogger.info).toHaveBeenCalledWith(`[${dataSource}] Sources de données décompressées.`)
   })
 
   it('une erreur est survenue lors de la décompression d’une source de données', () => {

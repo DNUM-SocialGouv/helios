@@ -184,7 +184,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
     await expect(établissementTerritorialIdentitéRepository.count()).resolves.toBe(0)
   })
 
-  it('ne lève pas d’alerte si établissement territorial à supprimer n’est pas en base', async () => {
+  it('ne signale pas d’alerte si établissement territorial à supprimer n’est pas en base', async () => {
     // GIVEN
     const numéroFinessÉtablissementTerritorialPasEnBase = '123456789'
     const typeOrmÉtablissementTerritorialRepository = new TypeOrmÉtablissementTerritorialRepository(orm, fakeLogger)

@@ -100,7 +100,7 @@ describe('Mise à jour des entités juridiques', () => {
     expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository.supprime).toHaveBeenCalledWith(['123456789'])
   })
 
-  it('lève une alerte si la récupération des entités juridiques échoue', async () => {
+  it('signale une alerte si la récupération des entités juridiques échoue', async () => {
     // GIVEN
     const messageDerreur = 'téléchargement interrompu'
     const sauvegarderLesEntitésJuridiques = new MetsÀJourLesEntitésJuridiquesUseCase(

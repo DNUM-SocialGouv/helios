@@ -12,16 +12,17 @@ export class TypeOrmÉtablissementTerritorialRepository implements Établissemen
   constructor(private readonly orm: Promise<DataSource>, private logger: Logger) {}
 
   async sauvegarde(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[]): Promise<void> {
-    this.logger.info(`[Helios] Sauvegarde ${établissementsTerritoriauxIdentité.length} fiches d’identité d’établissements territoriaux.`)
     await this.sauvegardeLesÉtablissementsTerritoriaux(établissementsTerritoriauxIdentité)
+    this.logger.info(`Sauvegarde ${établissementsTerritoriauxIdentité.length} fiches d’identité d’établissements territoriaux.`)
     await this.metsÀJourLaDateDeMiseÀJour(établissementsTerritoriauxIdentité)
   }
 
   async supprime(numérosFinessDesÉtablissementsTerritoriaux: string[]): Promise<void> {
     const établissementsTerritoriauxÀSupprimer = this.construisLesÉtablissementsTerritoriauxModels(numérosFinessDesÉtablissementsTerritoriaux)
-    this.logger.info(`[Helios] Supprime ${établissementsTerritoriauxÀSupprimer.length} fiches d’identité d’établissements territoriaux.`)
 
     await this.supprimeLesÉtablissementsTerritoriaux(établissementsTerritoriauxÀSupprimer)
+
+    this.logger.info(`Supprime ${établissementsTerritoriauxÀSupprimer.length} fiches d’identité d’établissements territoriaux.`)
   }
 
   private async supprimeLesÉtablissementsTerritoriaux(établissementsTerritoriauxÀSupprimer: ÉtablissementTerritorialIdentitéModel[]) {
