@@ -7,8 +7,8 @@ module.exports = {
       },
     },
     collect: {
-      startServerCommand: 'yarn start',
-      url: ['http://localhost:3000/'],
+      startServerCommand: 'PORT=3001 npm start',
+      url: ['http://localhost:3001/'],
     },
     upload: { target: 'temporary-public-storage' },
   },
