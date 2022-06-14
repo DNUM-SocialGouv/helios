@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/nextjs'
+
 import { EntitéJuridiqueLoader } from '../métier/gateways/EntitéJuridiqueLoader'
 import { EnvironmentVariables } from '../métier/gateways/EnvironmentVariables'
 import { ÉtablissementTerritorialMédicoSocialLoader } from '../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader'
@@ -25,6 +27,11 @@ const _instantiateDependencies = (): Dependencies => {
   const logger = new ConsoleLogger()
   const environmentVariables = new NodeEnvironmentVariables(logger)
   const orm = typeOrmOrm(environmentVariables)
+
+  Sentry.init({
+    dsn: environmentVariables.SENTRY_DSN,
+    tracesSampleRate: 1.0,
+  })
 
   return {
     entitéJuridiqueLoader: new TypeOrmEntitéJuridiqueLoader(orm),

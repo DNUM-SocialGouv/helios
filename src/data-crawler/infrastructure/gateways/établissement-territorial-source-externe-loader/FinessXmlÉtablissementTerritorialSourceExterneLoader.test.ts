@@ -2,7 +2,7 @@ import { mkdirSync, rmSync, writeFileSync } from 'fs'
 
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
-import { getFakeDataCrawlerDependencies } from '../../../testHelper'
+import { fakeLogger, getFakeDataCrawlerDependencies } from '../../../testHelper'
 import { NodeXmlToJs } from '../xml-to-js/NodeXmlToJs'
 import { FinessXmlÉtablissementTerritorialSourceExterneLoader } from './FinessXmlÉtablissementTerritorialSourceExterneLoader'
 
@@ -102,7 +102,7 @@ describe('Récupération des établissements territoriaux de la source de donné
     mkdirSync(finessLocalPath, { recursive: true })
     writeFileSync(`${finessLocalPath}/finess_cs1400102_stock_20211214-0336.xml`, xml)
     const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(
-      new NodeXmlToJs(), localPath
+      new NodeXmlToJs(), localPath, fakeLogger
     )
 
     // WHEN
@@ -219,7 +219,7 @@ describe('Récupération des établissements territoriaux de la source de donné
 
     // WHEN
     const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(
-      new NodeXmlToJs(), localPath
+      new NodeXmlToJs(), localPath, fakeLogger
     )
     const établissementsTerritoriaux = await établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts(['010008407', '100000983'])
 
@@ -315,7 +315,7 @@ describe('Récupération des établissements territoriaux de la source de donné
     writeFileSync(`${finessLocalPath}/finess_cs1400102_stock_20211214-0336.xml`, xml)
 
     const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(
-      new NodeXmlToJs(), localPath
+      new NodeXmlToJs(), localPath, fakeLogger
     )
 
     // WHEN

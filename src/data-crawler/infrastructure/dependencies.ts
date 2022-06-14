@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/nextjs'
+
 import { DownloadRawData } from '../métier/gateways/DownloadRawData'
 import { EntitéJuridiqueHeliosLoader } from '../métier/gateways/EntitéJuridiqueHeliosLoader'
 import { EntitéJuridiqueHeliosRepository } from '../métier/gateways/EntitéJuridiqueHeliosRepository'
@@ -42,18 +44,24 @@ const _instantiateDependencies = (): Dependencies => {
   const orm = typeOrmOrm(environmentVariables)
   const typeOrmEntitéJuridiqueHeliosLoader = new TypeOrmEntitéJuridiqueHeliosLoader(orm)
 
+  Sentry.init({
+    dsn: environmentVariables.SENTRY_DSN,
+    environment: process.env.NODE_ENV === undefined ? 'development' : process.env.NODE_ENV,
+    tracesSampleRate: 1.0,
+  })
+
   return {
     DÉLAI_D_ARRÊT_DES_TÂCHES_EN_MS: 1000,
     entitéJuridiqueHeliosLoader: typeOrmEntitéJuridiqueHeliosLoader,
-    entitéJuridiqueHeliosRepository: new TypeOrmEntitéJuridiqueHeliosRepository(orm),
-    entitéJuridiqueSourceExterneLoader: new FinessXmlEntitéJuridiqueSourceExterneLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),
+    entitéJuridiqueHeliosRepository: new TypeOrmEntitéJuridiqueHeliosRepository(orm, logger),
+    entitéJuridiqueSourceExterneLoader: new FinessXmlEntitéJuridiqueSourceExterneLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH, logger),
     environmentVariables,
     finessDownloadRawData: new FinessSftpDownloadRawData(environmentVariables, logger),
     unzipRawData: new GunzipUnzipRawData(environmentVariables, logger),
     établissementTerritorialHeliosLoader: new TypeOrmÉtablissementTerritorialHeliosLoader(orm),
-    établissementTerritorialHeliosRepository: new TypeOrmÉtablissementTerritorialRepository(orm),
+    établissementTerritorialHeliosRepository: new TypeOrmÉtablissementTerritorialRepository(orm, logger),
     établissementTerritorialSourceExterneLoader: new FinessXmlÉtablissementTerritorialSourceExterneLoader(
-      xmlToJs, environmentVariables.SFTP_LOCAL_PATH
+      xmlToJs, environmentVariables.SFTP_LOCAL_PATH, logger
     ),
   }
 }

@@ -55,7 +55,7 @@ export class FinessSftpDownloadRawData implements DownloadRawData {
     }
 
     await this.sftp.connect(configuration)
-    this.logger.info(`[Helios][${rawData}] La connexion au SFTP est ouverte.`)
+    this.logger.info(`[${rawData}] La connexion au SFTP est ouverte.`)
   }
 
   private async downloadFichesIdentité(rawData: string, localPath: string) {
@@ -67,7 +67,7 @@ export class FinessSftpDownloadRawData implements DownloadRawData {
 
     await this.downloadFile(fichesIdentitéFiles, `${localPath}/simple`, this.simpleSftpPath, établissementTerritorialFileName)
 
-    this.logger.info(`[Helios][${rawData}] Les deux fichiers contenant les fiches d’identité du répertoire "simple" téléchargés.`)
+    this.logger.info(`[${rawData}] Les deux fichiers contenant les fiches d’identité du répertoire "simple" téléchargés.`)
   }
 
   private async downloadCatégories(rawData: string, localPath: string) {
@@ -76,11 +76,11 @@ export class FinessSftpDownloadRawData implements DownloadRawData {
 
     await this.downloadFile(nomenclatureFiles, `${localPath}/nomenclature`, this.nomenclatureSftpPath, catégoriesFileName)
 
-    this.logger.info(`[Helios][${rawData}] Le fichier contenant les catégories du répertoire "nomenclature" téléchargé.`)
+    this.logger.info(`[${rawData}] Le fichier contenant les catégories du répertoire "nomenclature" téléchargé.`)
   }
 
   private async disconnect(rawData: string) {
-    this.logger.info(`[Helios][${rawData}] Le connexion au SFTP est fermée.`)
+    this.logger.info(`[${rawData}] Le connexion au SFTP est fermée.`)
 
     return await this.sftp.end()
   }

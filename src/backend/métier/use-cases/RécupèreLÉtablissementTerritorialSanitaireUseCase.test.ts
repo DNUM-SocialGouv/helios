@@ -51,7 +51,7 @@ describe('La récupération d’un établissement territorial sanitaire', () => 
     expect(mockedChargeLEntitéJuridiqueDeRattachement).toHaveBeenCalledTimes(1)
   })
 
-  it('lève une alerte si l’établissement territorial liée au numéro FINESS n’est pas trouvé', async () => {
+  it('signale une alerte si l’établissement territorial liée au numéro FINESS n’est pas trouvé', async () => {
     // GIVEN
     const numéroFiness = '123456789'
     const mockedChargeParNuméroFiness = jest.fn(async () => {

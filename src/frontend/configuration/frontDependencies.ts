@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/nextjs'
+
 import { BreadcrumbHandler } from './BreadcrumbHandler'
 import { Paths } from './Paths'
 import { Wording } from './wording/Wording'
@@ -10,6 +12,11 @@ export type FrontDependencies = {
 }
 
 function createFrontDependencies(): FrontDependencies {
+  Sentry.init({
+    dsn: process.env['NEXT_PUBLIC_SENTRY_DSN'],
+    tracesSampleRate: 1.0,
+  })
+
   return {
     breadcrumbHandler: new BreadcrumbHandler(),
     paths: new Paths(),

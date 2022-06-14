@@ -121,4 +121,28 @@ describe('Mise à jour des établissements territoriaux', () => {
     // THEN
     expect(fakeDataCrawlerDependencies.établissementTerritorialHeliosRepository.supprime).toHaveBeenCalledWith(['123456789'])
   })
+
+  it('signale une alerte si la récupération des entités juridiques échoue', async () => {
+    // GIVEN
+    const messageDerreur = 'téléchargement interrompu'
+    const sauvegardeLesÉtablissementsTerritoriaux = new MetsÀJourLesÉtablissementsTerritoriauxUseCase(
+      fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader,
+      fakeDataCrawlerDependencies.établissementTerritorialHeliosRepository,
+      fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader,
+      fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader
+    )
+
+    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts').mockImplementation(() => {
+      throw new Error(messageDerreur)
+    })
+
+    try {
+      // WHEN
+      await sauvegardeLesÉtablissementsTerritoriaux.exécute()
+      throw new Error('ne devrait pas passer ici')
+    } catch (error) {
+      // THEN
+      expect(error.message).toBe(`[Helios] ${messageDerreur}`)
+    }
+  })
 })

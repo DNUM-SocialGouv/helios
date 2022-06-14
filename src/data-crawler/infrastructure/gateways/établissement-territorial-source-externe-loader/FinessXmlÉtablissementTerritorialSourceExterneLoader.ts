@@ -2,6 +2,7 @@ import { readdirSync } from 'fs'
 
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
+import { Logger } from '../../../métier/gateways/Logger'
 import { XmlToJs } from '../../../métier/gateways/XmlToJs'
 import { ÉtablissementTerritorialSourceExterneLoader } from '../../../métier/gateways/ÉtablissementTerritorialSourceExterneLoader'
 
@@ -219,8 +220,11 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
   private readonly préfixeDuFichierÉtablissementTerritorialIdentité = 'finess_cs1400102_stock_'
   private readonly préfixeDuFichierCatégorie = 'finess_cs1500106_stock_'
 
-  constructor(private readonly convertXmlToJs: XmlToJs,
-              private readonly localPath: string) {}
+  constructor(
+    private readonly convertXmlToJs: XmlToJs,
+    private readonly localPath: string,
+    private logger: Logger
+  ) {}
 
   async récupèreLesÉtablissementsTerritoriauxOuverts(numéroFinessDesEntitésJuridiques: string[]): Promise<ÉtablissementTerritorialIdentité[]> {
     const cheminDuFichierÉtablissementTerritorialIdentité = this.récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(this.localPath)
@@ -228,27 +232,33 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
     const cheminDuFichierCatégorie = this.récupèreLeCheminDuFichierCatégorie(this.localPath)
 
     const dateDeMiseAJourDeLaSource = this.récupèreLaDateDeMiseAJourDeLaSource(cheminDuFichierÉtablissementTerritorialIdentité)
+    this.logger.info(`[FINESS] Date de mise à jour des fichiers FINESS des établissements territoriaux : ${dateDeMiseAJourDeLaSource}`)
 
     const catégories = this.convertXmlToJs.exécute<CatégorieFluxFiness>(cheminDuFichierCatégorie)
 
     const établissementTerritorialFluxFinessIdentité = this.convertXmlToJs.exécute
       <ÉtablissementTerritorialIdentitéFluxFiness>(cheminDuFichierÉtablissementTerritorialIdentité)
+    const établissementTerritoriauxFluxFiness = établissementTerritorialFluxFinessIdentité.fluxfiness.structureet
+    this.logger.info(`[FINESS] ${établissementTerritoriauxFluxFiness.length} établissements territoriaux récupérés depuis FINESS.`)
 
-    const établissementsTerritoriauxIdentité = établissementTerritorialFluxFinessIdentité.fluxfiness.structureet
-      .filter(this.gardeLesÉtablissementsOuverts(numéroFinessDesEntitésJuridiques))
+    const établissementsTerritoriauxFinessOuverts = this.conserveLesÉtablissementsOuverts(établissementTerritoriauxFluxFiness, numéroFinessDesEntitésJuridiques)
+    this.logger.info(`[FINESS] ${établissementsTerritoriauxFinessOuverts.length} établissements territoriaux sont ouverts.`)
+
+    return établissementsTerritoriauxFinessOuverts
       .map((établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) =>
         this.construisÉtablissementTerritorialIdentité(établissementTerritorialIdentitéFiness, dateDeMiseAJourDeLaSource, catégories))
-
-    return établissementsTerritoriauxIdentité
   }
 
-  private gardeLesÉtablissementsOuverts(numéroFinessDesEntitésJuridiques: string[]) {
-    return (établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) => {
+  private conserveLesÉtablissementsOuverts(
+    établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness[],
+    numéroFinessDesEntitésJuridiques: string[]
+  ) {
+    return établissementTerritorialIdentitéFiness.filter((établissementTerritorialIdentitéFiness) => {
       return !(
         this.établissementTerritorialEstCaduc(établissementTerritorialIdentitéFiness) ||
         this.établissementTerritorialEstFermé(établissementTerritorialIdentitéFiness) ||
         !this.entitéJuridiqueDeRattachementEstOuverte(établissementTerritorialIdentitéFiness, numéroFinessDesEntitésJuridiques) )
-    }
+    })
   }
 
   private établissementTerritorialEstCaduc(établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) {

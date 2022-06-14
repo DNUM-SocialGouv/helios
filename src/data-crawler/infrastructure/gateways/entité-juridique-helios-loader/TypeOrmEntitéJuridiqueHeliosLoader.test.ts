@@ -30,14 +30,13 @@ describe('La récupération des entités juridiques d’Helios', () => {
     const entitéJuridique2 = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel(
       { numéroFinessEntitéJuridique: '900000000' }
     )
-    await entitéJuridiqueRepository.insert(entitéJuridique1)
-    await entitéJuridiqueRepository.insert(entitéJuridique2)
+    await entitéJuridiqueRepository.insert([entitéJuridique1, entitéJuridique2])
 
     // WHEN
     const entitésJuridiquesHelios = await typeOrmEntitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques()
 
     // THEN
-    expect(entitésJuridiquesHelios).toStrictEqual(['123456789', '900000000'])
+    expect(entitésJuridiquesHelios).toContain('123456789')
+    expect(entitésJuridiquesHelios).toContain('900000000')
   })
-
 })

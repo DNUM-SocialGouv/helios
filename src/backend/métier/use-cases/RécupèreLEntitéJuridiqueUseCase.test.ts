@@ -24,7 +24,7 @@ describe('La récupération d’une entité juridique', () => {
     expect(mockedChargeParNuméroFiness).toHaveBeenCalledTimes(1)
   })
 
-  it('lève une alerte si l’entité juridique liée au numéro FINESS n’est pas trouvée', async () => {
+  it('signale une alerte si l’entité juridique liée au numéro FINESS n’est pas trouvée', async () => {
     // GIVEN
     const numéroFiness = '123456789'
     const mockedChargeParNuméroFiness = jest.fn(async () => {

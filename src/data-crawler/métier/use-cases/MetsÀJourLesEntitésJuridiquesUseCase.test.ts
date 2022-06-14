@@ -99,4 +99,27 @@ describe('Mise à jour des entités juridiques', () => {
     // THEN
     expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository.supprime).toHaveBeenCalledWith(['123456789'])
   })
+
+  it('signale une alerte si la récupération des entités juridiques échoue', async () => {
+    // GIVEN
+    const messageDerreur = 'téléchargement interrompu'
+    const sauvegarderLesEntitésJuridiques = new MetsÀJourLesEntitésJuridiquesUseCase(
+      fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader,
+      fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository,
+      fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader
+    )
+
+    jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, 'récupèreLesEntitésJuridiquesOuvertes').mockImplementation(() => {
+      throw new Error(messageDerreur)
+    })
+
+    try {
+      // WHEN
+      await sauvegarderLesEntitésJuridiques.exécute()
+      throw new Error('ne devrait pas passer ici')
+    } catch (error) {
+      // THEN
+      expect(error.message).toBe(`[Helios] ${messageDerreur}`)
+    }
+  })
 })
