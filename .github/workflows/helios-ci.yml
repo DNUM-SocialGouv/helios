@@ -16,6 +16,17 @@ jobs:
           path: ./*
           key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
 
+  lighthouseci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+        - run: npm install && npm install -g @lhci/cli@0.8.x
+        - run: npm run build
+        - run: lhci autorun
+
   lint:
     runs-on: ubuntu-latest
     needs: install
