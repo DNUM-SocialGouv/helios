@@ -2,7 +2,7 @@ import dotenv from 'dotenv-defaults'
 
 import { dotEnvConfig } from './dotEnvConfig'
 
-describe('Charge les variables d’environnements en dehors de NextJs', () => {
+describe('Gestion des variables d’environnements en dehors de NextJs', () => {
   it('charge les fichiers .env et .env.local en utf8', () => {
     // GIVEN
     jest.spyOn(dotenv, 'config').mockImplementation(jest.fn())

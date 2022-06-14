@@ -5,7 +5,7 @@ import { Home } from './Home'
 
 const { paths, wording } = fakeFrontDependencies
 
-describe('Affiche la page d’Accueil', () => {
+describe('La page d’Accueil', () => {
   it('affiche le titre de la liste', () => {
     // WHEN
     renderFakeComponent(<Home />)

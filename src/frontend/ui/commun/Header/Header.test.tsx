@@ -5,7 +5,7 @@ import { Header } from './Header'
 
 const { paths, wording } = fakeFrontDependencies
 
-describe('Affiche l’en-tête de page', () => {
+describe('En-tête de page', () => {
   it('affiche un lien pour accéder à la page d’accueil', () => {
     // WHEN
     renderFakeComponent(<Header />)

@@ -5,7 +5,7 @@ import { getFakeDataCrawlerDependencies } from '../../../testHelper'
 import { NodeXmlToJs } from '../xml-to-js/NodeXmlToJs'
 import { FinessXmlEntitéJuridiqueSourceExterneLoader } from './FinessXmlEntitéJuridiqueSourceExterneLoader'
 
-describe('Récupère les entités juridiques de la source de données FINESS', () => {
+describe('Récupération des entités juridiques de la source de données FINESS', () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
   const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_ej`
   const finessLocalPath = `${localPath}/finess/simple`

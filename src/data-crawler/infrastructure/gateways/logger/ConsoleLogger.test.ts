@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { ConsoleLogger } from './ConsoleLogger'
 
-describe('gére le logger', () => {
+describe('Logger', () => {
   const message = 'any message'
 
   it('affiche un message de debug', () => {

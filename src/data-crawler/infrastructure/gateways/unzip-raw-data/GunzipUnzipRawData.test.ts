@@ -3,7 +3,7 @@ import child from 'child_process'
 import { fakeLogger, getFakeDataCrawlerDependencies } from '../../../testHelper'
 import { GunzipUnzipRawData } from './GunzipUnzipRawData'
 
-describe('Décompresse une source de données', () => {
+describe('Décompression d’une source de données', () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
 
   it('décompresse une source de données avec la commande gunzip', async () => {

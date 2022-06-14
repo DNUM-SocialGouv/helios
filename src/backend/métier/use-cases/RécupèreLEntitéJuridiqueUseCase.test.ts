@@ -4,7 +4,7 @@ import { EntitéJuridiqueNonTrouvée } from '../entities/EntitéJuridiqueNonTrou
 import { EntitéJuridiqueLoader } from '../gateways/EntitéJuridiqueLoader'
 import { RécupèreLEntitéJuridiqueUseCase } from './RécupèreLEntitéJuridiqueUseCase'
 
-describe('Récupère une entité juridique', () => {
+describe('La récupération d’une entité juridique', () => {
   it('récupère la fiche identité de l’entité juridique', async () => {
     // GIVEN
     const numéroFiness = '123456789'

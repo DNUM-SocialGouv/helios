@@ -1,10 +1,10 @@
 import { getFakeDataCrawlerDependencies } from '../../testHelper'
 import { TéléchargeLesDonnéesBrutesDeFinessUseCase } from './TéléchargeLesDonnéesBrutesDeFinessUseCase'
 
-describe('Récupère les sources de données FINESS en local', () => {
+describe('Récupération des sources de données FINESS en local', () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
 
-  it('récupére les sources de données FINESS en local', async () => {
+  it('récupère les sources de données FINESS en local', async () => {
     // GIVEN
     const sourceDeDonnées = 'FINESS'
     const cheminSftp = '../usr_finess/flux_finess'

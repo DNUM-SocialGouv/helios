@@ -4,7 +4,7 @@ import Client from 'ssh2-sftp-client'
 import { getFakeDataCrawlerDependencies, fakeLogger } from '../../../testHelper'
 import { FinessSftpDownloadRawData } from './FinessSftpDownloadRawData'
 
-describe('Télécharge FINESS via un SFTP', () => {
+describe('Téléchargement de FINESS via un SFTP', () => {
   const dataSource = 'FAKE_DATASOURCE_NAME'
   const sftpPath = 'fake_path'
   const simpleSftpPath = `${sftpPath}/simple`

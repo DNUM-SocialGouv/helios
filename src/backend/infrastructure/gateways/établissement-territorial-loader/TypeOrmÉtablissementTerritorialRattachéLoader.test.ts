@@ -10,7 +10,7 @@ import { ÉtablissementTerritorialRattaché } from '../../../métier/entities/en
 import { getOrm } from '../../../testHelper'
 import { TypeOrmÉtablissementTerritorialRattachéLoader } from './TypeOrmÉtablissementTerritorialRattachéLoader'
 
-describe('Charge les établissements territoriaux rattachés', () => {
+describe('Établissement territorial rattaché loader', () => {
   const orm = getOrm()
   let établissementTerritorialRepository: Repository<ÉtablissementTerritorialIdentitéModel>
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>

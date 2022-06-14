@@ -6,7 +6,7 @@ import { getFakeDataCrawlerDependencies } from '../../../testHelper'
 import { NodeXmlToJs } from '../xml-to-js/NodeXmlToJs'
 import { FinessXmlÉtablissementTerritorialSourceExterneLoader } from './FinessXmlÉtablissementTerritorialSourceExterneLoader'
 
-describe('Récupère des établissements territoriaux de la source de données FINESS', () => {
+describe('Récupération des établissements territoriaux de la source de données FINESS', () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
   const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_et`
   const finessLocalPath = `${localPath}/finess/simple`
@@ -34,7 +34,7 @@ describe('Récupère des établissements territoriaux de la source de données F
     rmSync(localPath, { recursive: true })
   })
 
-  it('récupére les établissements territoriaux de la source de données FINESS uniquement s’ils ne sont pas fermés', async () => {
+  it('récupère les établissements territoriaux de la source de données FINESS uniquement s’ils ne sont pas fermés', async () => {
     // GIVEN
     const etOuvert1 = `<structureet>
         <nofinesset>010000040</nofinesset>
@@ -151,7 +151,7 @@ describe('Récupère des établissements territoriaux de la source de données F
     )
   })
 
-  it('récupére les établissements territoriaux de la source de données FINESS uniquement s’ils ne sont pas caducs', async () => {
+  it('récupère les établissements territoriaux de la source de données FINESS uniquement s’ils ne sont pas caducs', async () => {
     // GIVEN
     const etOuvert1 = `<structureet>
         <nofinesset>010000040</nofinesset>
@@ -268,7 +268,7 @@ describe('Récupère des établissements territoriaux de la source de données F
     )
   })
 
-  it('récupére les établissements territoriaux de la source de données FINESS uniquement si leur EJ associée est ouverte donc existe en base', async () => {
+  it('récupère les établissements territoriaux de la source de données FINESS uniquement si leur EJ associée est ouverte donc existe en base', async () => {
     // GIVEN
     const numéroFinessDeLEjEnBase = '010008407'
     const numéroFinessDeLEjFermé = '010008408'

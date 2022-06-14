@@ -1,6 +1,6 @@
 import { NodeXmlToJs } from './NodeXmlToJs'
 
-describe('Convertis un fichier XML en un objet JavaScript', () => {
+describe('Conversion d’un fichier XML en un objet JavaScript', () => {
   it('convertis un fichier XML en un objet JavaScript', () => {
     // GIVEN
     const xmlPath = `${__dirname}/structure_correct.xml`
