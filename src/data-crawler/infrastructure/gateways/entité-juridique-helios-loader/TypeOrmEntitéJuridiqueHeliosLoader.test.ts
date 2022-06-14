@@ -5,7 +5,7 @@ import { EntitéJuridiqueModelTestFactory } from '../../../../database/test-fact
 import { getOrm } from '../../../testHelper'
 import { TypeOrmEntitéJuridiqueHeliosLoader } from './TypeOrmEntitéJuridiqueHeliosLoader'
 
-describe('Gestion des entités juridiques', () => {
+describe('La récupération des entités juridiques d’Helios', () => {
   const orm = getOrm()
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>
 

@@ -128,7 +128,7 @@ Un échantillon des données FINESS sont dans `data_set`.
 
 Une clé publique SSH `$HOME/.ssh/sftp_local.pub` sera demandée pour l'authentification au SFTP local.
 
-Il est nécessaire de changer les *KEX algorithms* dans `sshd_config` pour coller à ceux utilisés par le SFTP cible. 
+Il est nécessaire de changer les *KEX algorithms* dans `sshd_config` pour coller à ceux utilisés par le SFTP cible.
 Pour cela, créer un fichier `data_set/.ssh/sshd_config` et compléter ce *template* :
 
 ```text
@@ -167,8 +167,8 @@ yarn retrieveFiness
 ### Simuler l'archivage de FINESS
 
 ```sh
-yarn saveEJ
-yarn saveET
+yarn updateEJ
+yarn updateET
 ```
 
 ### Peupler la base de donnée à partir des fichiers du SFTP de test
@@ -177,7 +177,7 @@ yarn saveET
 yarn populateDatabase
 ```
 
-> Execute `retrieveFiness`, `saveEJ` et `saveET`
+> Execute `retrieveFiness`, `updateEJ` et `updateET`
 
 ### Mettre à jour le jeu de données test
 
@@ -263,6 +263,7 @@ const MonComposant = (props: Props) => {
 - Les fichiers portent le nom de leur export
 
 - On suffixe les fichiers par leur nomenclature technique (loader, repository, use case, end point, CRON), sauf pour les entities
+> Dans le *data-crawler*, ce suffixe est complété de la manière suivante : (*XXXX**SourceExterne**Loader*, *XXXX**Helios**Repository*) pour distinguer les accès externes / internes.
 
 - Les verbes des noms des méthodes sont à l'impératif (exemple : `sauvegardeLesEntitésJuridiques`)
 

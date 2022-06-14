@@ -132,7 +132,7 @@ export class FinessXmlEntitéJuridiqueSourceExterneLoader implements EntitéJuri
 
     return entitésJuridiquesFluxFiness.fluxfiness.structureej
       .filter((entitésJuridiquesFiness: EntitéJuridiqueFiness) => entitésJuridiquesFiness.datefermeture._text === undefined)
-      .map((entitésJuridiquesFiness: EntitéJuridiqueFiness) => this.construitLEntitéJuridique(entitésJuridiquesFiness, dateDeMiseAJourDeLaSource))
+      .map((entitésJuridiquesFiness: EntitéJuridiqueFiness) => this.construisLEntitéJuridique(entitésJuridiquesFiness, dateDeMiseAJourDeLaSource))
   }
 
   private récupèreLeCheminDuFichierEntitéJuridique(localPath: string): string {
@@ -145,7 +145,7 @@ export class FinessXmlEntitéJuridiqueSourceExterneLoader implements EntitéJuri
     return cheminDuFichierEntitéJuridique.split(this.préfixeDuFichierEntitéJuridique)[1].slice(0, 8)
   }
 
-  private construitLEntitéJuridique(entitésJuridiquesFiness: EntitéJuridiqueFiness, dateMiseAJourSource: string): EntitéJuridique {
+  private construisLEntitéJuridique(entitésJuridiquesFiness: EntitéJuridiqueFiness, dateMiseAJourSource: string): EntitéJuridique {
     const valueOrEmpty = (value?: string): string => value || ''
 
     return {

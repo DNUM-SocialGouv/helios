@@ -23,13 +23,16 @@ export function getOrm() {
 
 export const getFakeDataCrawlerDependencies = (): Dependencies => {
   return {
-    entitéJuridiqueLoader: { récupèreLesEntitésJuridiquesOuvertes: jest.fn() },
-    entitéJuridiqueRepository: { sauvegarde: jest.fn() },
+    DÉLAI_D_ARRÊT_DES_TÂCHES_EN_MS: 1000,
+    entitéJuridiqueHeliosLoader: { récupèreLeNuméroFinessDesEntitésJuridiques: jest.fn() },
+    entitéJuridiqueHeliosRepository: { sauvegarde: jest.fn(), supprime: jest.fn() },
+    entitéJuridiqueSourceExterneLoader: { récupèreLesEntitésJuridiquesOuvertes: jest.fn() },
     environmentVariables,
     finessDownloadRawData: { exécute: jest.fn() },
     unzipRawData: { exécute: jest.fn() },
-    établissementTerritorialLoader: { récupèreLesÉtablissementsTerritoriauxOuverts: jest.fn() },
-    établissementTerritorialRepository: { sauvegarde: jest.fn() },
+    établissementTerritorialHeliosLoader: { récupèreLeNuméroFinessDesÉtablissementsTerritoriaux: jest.fn() },
+    établissementTerritorialHeliosRepository: { sauvegarde: jest.fn(), supprime: jest.fn() },
+    établissementTerritorialSourceExterneLoader: { récupèreLesÉtablissementsTerritoriauxOuverts: jest.fn() },
   }
 }
 

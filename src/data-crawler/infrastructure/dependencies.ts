@@ -1,30 +1,36 @@
 import { DownloadRawData } from '../métier/gateways/DownloadRawData'
-import { EntitéJuridiqueRepository } from '../métier/gateways/EntitéJuridiqueRepository'
+import { EntitéJuridiqueHeliosLoader } from '../métier/gateways/EntitéJuridiqueHeliosLoader'
+import { EntitéJuridiqueHeliosRepository } from '../métier/gateways/EntitéJuridiqueHeliosRepository'
 import { EntitéJuridiqueSourceExterneLoader } from '../métier/gateways/EntitéJuridiqueSourceExterneLoader'
 import { EnvironmentVariables } from '../métier/gateways/EnvironmentVariables'
 import { UnzipRawData } from '../métier/gateways/UnzipRawData'
+import { ÉtablissementTerritorialHeliosLoader } from '../métier/gateways/ÉtablissementTerritorialHeliosLoader'
 import { ÉtablissementTerritorialRepository } from '../métier/gateways/ÉtablissementTerritorialRepository'
 import { ÉtablissementTerritorialSourceExterneLoader } from '../métier/gateways/ÉtablissementTerritorialSourceExterneLoader'
 import { dotEnvConfig } from './gateways/dot-env/dotEnvConfig'
 import { FinessSftpDownloadRawData } from './gateways/download-raw-data/FinessSftpDownloadRawData'
 import { TypeOrmEntitéJuridiqueHeliosLoader } from './gateways/entité-juridique-helios-loader/TypeOrmEntitéJuridiqueHeliosLoader'
-import { TypeOrmEntitéJuridiqueRepository } from './gateways/entité-juridique-repository/TypeOrmEntitéJuridiqueRepository'
+import { TypeOrmEntitéJuridiqueHeliosRepository } from './gateways/entité-juridique-helios-repository/TypeOrmEntitéJuridiqueHeliosRepository'
 import { FinessXmlEntitéJuridiqueSourceExterneLoader } from './gateways/entité-juridique-source-externe-loader/FinessXmlEntitéJuridiqueSourceExterneLoader'
 import { NodeEnvironmentVariables } from './gateways/environnement-variables/NodeEnvironmentVariables'
 import { ConsoleLogger } from './gateways/logger/ConsoleLogger'
 import { typeOrmOrm } from './gateways/orm/typeOrmOrm'
 import { GunzipUnzipRawData } from './gateways/unzip-raw-data/GunzipUnzipRawData'
 import { NodeXmlToJs } from './gateways/xml-to-js/NodeXmlToJs'
-import { FinessXmlÉtablissementTerritorialSourceExterneLoader } from './gateways/établissement-territorial-loader/FinessXmlÉtablissementTerritorialSourceExterneLoader'
+import { TypeOrmÉtablissementTerritorialHeliosLoader } from './gateways/établissement-territorial-helios-loader/TypeOrmÉtablissementTerritorialHeliosLoader'
 import { TypeOrmÉtablissementTerritorialRepository } from './gateways/établissement-territorial-repository/TypeOrmÉtablissementTerritorialRepository'
+import { FinessXmlÉtablissementTerritorialSourceExterneLoader } from './gateways/établissement-territorial-source-externe-loader/FinessXmlÉtablissementTerritorialSourceExterneLoader'
 
 export type Dependencies = Readonly<{
+  DÉLAI_D_ARRÊT_DES_TÂCHES_EN_MS: number
   environmentVariables: EnvironmentVariables
-  entitéJuridiqueLoader: EntitéJuridiqueSourceExterneLoader
-  entitéJuridiqueRepository: EntitéJuridiqueRepository
+  entitéJuridiqueSourceExterneLoader: EntitéJuridiqueSourceExterneLoader
+  entitéJuridiqueHeliosRepository: EntitéJuridiqueHeliosRepository
+  entitéJuridiqueHeliosLoader: EntitéJuridiqueHeliosLoader
   finessDownloadRawData: DownloadRawData
-  établissementTerritorialLoader: ÉtablissementTerritorialSourceExterneLoader
-  établissementTerritorialRepository: ÉtablissementTerritorialRepository
+  établissementTerritorialSourceExterneLoader: ÉtablissementTerritorialSourceExterneLoader
+  établissementTerritorialHeliosLoader: ÉtablissementTerritorialHeliosLoader
+  établissementTerritorialHeliosRepository: ÉtablissementTerritorialRepository
   unzipRawData: UnzipRawData
 }>
 
@@ -37,15 +43,18 @@ const _instantiateDependencies = (): Dependencies => {
   const typeOrmEntitéJuridiqueHeliosLoader = new TypeOrmEntitéJuridiqueHeliosLoader(orm)
 
   return {
-    entitéJuridiqueLoader: new FinessXmlEntitéJuridiqueSourceExterneLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),
-    entitéJuridiqueRepository: new TypeOrmEntitéJuridiqueRepository(orm),
+    DÉLAI_D_ARRÊT_DES_TÂCHES_EN_MS: 1000,
+    entitéJuridiqueHeliosLoader: typeOrmEntitéJuridiqueHeliosLoader,
+    entitéJuridiqueHeliosRepository: new TypeOrmEntitéJuridiqueHeliosRepository(orm),
+    entitéJuridiqueSourceExterneLoader: new FinessXmlEntitéJuridiqueSourceExterneLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH),
     environmentVariables,
     finessDownloadRawData: new FinessSftpDownloadRawData(environmentVariables, logger),
     unzipRawData: new GunzipUnzipRawData(environmentVariables, logger),
-    établissementTerritorialLoader: new FinessXmlÉtablissementTerritorialSourceExterneLoader(
-      xmlToJs, environmentVariables.SFTP_LOCAL_PATH, typeOrmEntitéJuridiqueHeliosLoader
+    établissementTerritorialHeliosLoader: new TypeOrmÉtablissementTerritorialHeliosLoader(orm),
+    établissementTerritorialHeliosRepository: new TypeOrmÉtablissementTerritorialRepository(orm),
+    établissementTerritorialSourceExterneLoader: new FinessXmlÉtablissementTerritorialSourceExterneLoader(
+      xmlToJs, environmentVariables.SFTP_LOCAL_PATH
     ),
-    établissementTerritorialRepository: new TypeOrmÉtablissementTerritorialRepository(orm),
   }
 }
 

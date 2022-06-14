@@ -2,4 +2,5 @@ import { ÉtablissementTerritorialIdentité } from '../entities/ÉtablissementTe
 
 export interface ÉtablissementTerritorialRepository {
   sauvegarde(établissementsTerritoriaux: ÉtablissementTerritorialIdentité[], batchSize?: number): Promise<void>
+  supprime(numérosFinessDesÉtablissementsTerritoriaux: string[]): Promise<void>
 }

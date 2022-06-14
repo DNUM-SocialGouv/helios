@@ -23,7 +23,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
 
     const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
 
-    return this.construitLÉtablissementTerritorialSanitaire(établissementTerritorialModel, dateDeMiseAJourModel)
+    return this.construisLÉtablissementTerritorialSanitaire(établissementTerritorialModel, dateDeMiseAJourModel)
   }
 
   private async chargeLaDateDeMiseÀJourModel() {
@@ -32,7 +32,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       .findOneBy({ source: SourceDeDonnées.FINESS })
   }
 
-  private construitLÉtablissementTerritorialSanitaire(
+  private construisLÉtablissementTerritorialSanitaire(
     établissementTerritorialModel: ÉtablissementTerritorialIdentitéModel,
     dateDeMiseAJourModel: DateMiseÀJourSourceModel | null
   ): ÉtablissementTerritorialIdentité {

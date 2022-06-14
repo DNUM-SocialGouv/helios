@@ -6,33 +6,32 @@ import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/É
 import { ÉtablissementTerritorialRepository } from '../../../métier/gateways/ÉtablissementTerritorialRepository'
 
 export class TypeOrmÉtablissementTerritorialRepository implements ÉtablissementTerritorialRepository {
+  private readonly TAILLE_DE_FRAGMENT = 3000
+
   constructor(private readonly orm: Promise<DataSource>) {}
 
-  async sauvegarde(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[], batchSize: number = 20): Promise<void> {
-    const établissementsTerritoriauxIdentitéLength = établissementsTerritoriauxIdentité.length
-
-    for (let index = 0; index < établissementsTerritoriauxIdentitéLength; index = index + batchSize) {
-      const établissementsTerritoriauxIdentitéBatch = this.créeLeBatch(batchSize, établissementsTerritoriauxIdentité, index)
-
-      await this.metsÀJourLeBatch(établissementsTerritoriauxIdentitéBatch)
-    }
-
+  async sauvegarde(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[]): Promise<void> {
+    await this.sauvegardeLesÉtablissementsTerritoriaux(établissementsTerritoriauxIdentité)
     await this.metsÀJourLaDateDeMiseÀJour(établissementsTerritoriauxIdentité)
   }
 
-  private créeLeBatch(batchSize: number, établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[], index: number) {
-    const établissementsTerritoriauxIdentitéBatch = []
-    for (let indexInBatch = 0; indexInBatch < batchSize; indexInBatch++) {
-      if (établissementsTerritoriauxIdentité[index + indexInBatch]) {
-        établissementsTerritoriauxIdentitéBatch.push(établissementsTerritoriauxIdentité[index + indexInBatch])
-      }
-    }
-    return établissementsTerritoriauxIdentitéBatch
+  async supprime(numérosFinessDesÉtablissementsTerritoriaux: string[]): Promise<void> {
+    const établissementsTerritoriauxÀSupprimer = this.construisLesÉtablissementsTerritoriauxModels(numérosFinessDesÉtablissementsTerritoriaux)
+    await this.supprimeLesÉtablissementsTerritoriaux(établissementsTerritoriauxÀSupprimer)
+  }
+
+  private async supprimeLesÉtablissementsTerritoriaux(établissementsTerritoriauxÀSupprimer: ÉtablissementTerritorialIdentitéModel[]) {
+    await (await this.repository()).remove(établissementsTerritoriauxÀSupprimer, { chunk: this.TAILLE_DE_FRAGMENT })
+  }
+
+  private construisLesÉtablissementsTerritoriauxModels(numérosFinessDesÉtablissementsTerritoriaux: string[]) {
+    return numérosFinessDesÉtablissementsTerritoriaux.map((numéroFiness) => (
+      { numéroFinessÉtablissementTerritorial: numéroFiness }
+    )) as ÉtablissementTerritorialIdentitéModel[]
   }
 
   private async metsÀJourLaDateDeMiseÀJour(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[]) {
-    await (await this.orm)
-      .getRepository(DateMiseÀJourSourceModel)
+    await (await this.dateMiseÀJourRepository())
       .upsert([
         {
           dernièreMiseÀJour: établissementsTerritoriauxIdentité[0].dateMiseAJourSource,
@@ -41,9 +40,15 @@ export class TypeOrmÉtablissementTerritorialRepository implements Établissemen
       ], ['source'])
   }
 
-  private async metsÀJourLeBatch(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[]) {
-    await(await this.orm)
-      .getRepository(ÉtablissementTerritorialIdentitéModel)
-      .upsert(établissementsTerritoriauxIdentité, ['numéroFinessÉtablissementTerritorial'])
+  private async sauvegardeLesÉtablissementsTerritoriaux(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[]) {
+    await (await this.repository()).save(établissementsTerritoriauxIdentité, { chunk: this.TAILLE_DE_FRAGMENT })
+  }
+
+  private async repository() {
+    return (await this.orm).getRepository(ÉtablissementTerritorialIdentitéModel)
+  }
+
+  private async dateMiseÀJourRepository() {
+    return (await this.orm).getRepository(DateMiseÀJourSourceModel)
   }
 }

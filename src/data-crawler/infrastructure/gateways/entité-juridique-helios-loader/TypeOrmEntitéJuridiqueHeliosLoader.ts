@@ -10,11 +10,10 @@ export class TypeOrmEntitéJuridiqueHeliosLoader implements EntitéJuridiqueHeli
     const entitésJuridiques = await (await this.orm)
       .getRepository(EntitéJuridiqueModel)
       .find({ select: { numéroFinessEntitéJuridique: true } })
-    return this.construitUnTableauDeNuméroFiness(entitésJuridiques)
+    return this.listeLesNumérosFiness(entitésJuridiques)
   }
 
-  private construitUnTableauDeNuméroFiness(entitésJuridiques: EntitéJuridiqueModel[]): string[] {
+  private listeLesNumérosFiness(entitésJuridiques: EntitéJuridiqueModel[]): string[] {
     return entitésJuridiques.map((entitéJuridique) => entitéJuridique.numéroFinessEntitéJuridique)
   }
-
 }
