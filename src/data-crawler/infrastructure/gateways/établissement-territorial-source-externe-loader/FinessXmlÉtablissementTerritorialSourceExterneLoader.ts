@@ -230,17 +230,17 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
     const cheminDuFichierCatégorie = this.récupèreLeCheminDuFichierCatégorie(this.localPath)
 
     const dateDeMiseAJourDeLaSource = this.récupèreLaDateDeMiseAJourDeLaSource(cheminDuFichierÉtablissementTerritorialIdentité)
-    this.logger.info(`[Helios][FINESS] Date de mise à jour des fichiers FINESS des établissements territoriaux: ${dateDeMiseAJourDeLaSource}`)
+    this.logger.info(`[Helios][FINESS] Date de mise à jour des fichiers FINESS des établissements territoriaux : ${dateDeMiseAJourDeLaSource}`)
 
     const catégories = this.convertXmlToJs.exécute<CatégorieFluxFiness>(cheminDuFichierCatégorie)
 
     const établissementTerritorialFluxFinessIdentité = this.convertXmlToJs.exécute
       <ÉtablissementTerritorialIdentitéFluxFiness>(cheminDuFichierÉtablissementTerritorialIdentité)
     const établissementTerritoriauxFluxFiness = établissementTerritorialFluxFinessIdentité.fluxfiness.structureet
-    this.logger.info(`[Helios][FINESS] ${établissementTerritoriauxFluxFiness.length} établissement territoriaux récupérés depuis FINESS.`)
+    this.logger.info(`[Helios][FINESS] ${établissementTerritoriauxFluxFiness.length} établissements territoriaux récupérés depuis FINESS.`)
 
     const établissementsTerritoriauxFinessOuverts = this.conserveLesÉtablissementsOuverts(établissementTerritoriauxFluxFiness, numéroFinessDesEntitésJuridiques)
-    this.logger.info(`[Helios][FINESS] ${établissementsTerritoriauxFinessOuverts.length} établissement territoriaux sont ouverts.`)
+    this.logger.info(`[Helios][FINESS] ${établissementsTerritoriauxFinessOuverts.length} établissements territoriaux sont ouverts.`)
 
     return établissementsTerritoriauxFinessOuverts
       .map((établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) =>

@@ -128,7 +128,7 @@ export class FinessXmlEntitéJuridiqueSourceExterneLoader implements EntitéJuri
     const cheminDuFichierEntitéJuridique = this.récupèreLeCheminDuFichierEntitéJuridique(this.localPath)
 
     const dateDeMiseAJourDeLaSource = this.récupèreLaDateDeMiseAJourDeLaSource(cheminDuFichierEntitéJuridique)
-    this.logger.info(`[Helios][FINESS] Date de mise à jour des fichiers FINESS des entités juridiques: ${dateDeMiseAJourDeLaSource}`)
+    this.logger.info(`[Helios][FINESS] Date de mise à jour des fichiers FINESS des entités juridiques : ${dateDeMiseAJourDeLaSource}`)
 
     const entitésJuridiquesFluxFiness = this.convertXmlToJs.exécute<EntitéJuridiqueFluxFiness>(cheminDuFichierEntitéJuridique)
     const entitésJuridiquesFiness = entitésJuridiquesFluxFiness.fluxfiness.structureej
