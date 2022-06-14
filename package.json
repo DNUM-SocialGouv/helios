@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@gouvfr/dsfr": "1.4.1",
-    "@sentry/nextjs": "^6.19.6",
+    "@sentry/nextjs": "^7.1.1",
     "dotenv-defaults": "^5.0.0",
     "full-icu": "^1.4.0",
     "minify-stream": "^2.1.0",
