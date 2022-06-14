@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/nextjs'
+
 import { DownloadRawData } from '../métier/gateways/DownloadRawData'
 import { EntitéJuridiqueHeliosLoader } from '../métier/gateways/EntitéJuridiqueHeliosLoader'
 import { EntitéJuridiqueHeliosRepository } from '../métier/gateways/EntitéJuridiqueHeliosRepository'
@@ -41,6 +43,11 @@ const _instantiateDependencies = (): Dependencies => {
   const xmlToJs = new NodeXmlToJs()
   const orm = typeOrmOrm(environmentVariables)
   const typeOrmEntitéJuridiqueHeliosLoader = new TypeOrmEntitéJuridiqueHeliosLoader(orm)
+
+  Sentry.init({
+    dsn: environmentVariables.SENTRY_DSN,
+    tracesSampleRate: 1.0,
+  })
 
   return {
     DÉLAI_D_ARRÊT_DES_TÂCHES_EN_MS: 1000,
