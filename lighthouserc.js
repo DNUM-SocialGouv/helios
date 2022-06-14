@@ -6,10 +6,7 @@ module.exports = {
         'categories:performance': ['warn', { minScore: 1 }],
       },
     },
-    collect: {
-      startServerCommand: 'PORT=3001 npm start',
-      url: ['http://localhost:3001/'],
-    },
+    collect: { url: ['http://localhost:3000/'] },
     upload: { target: 'temporary-public-storage' },
   },
 }
