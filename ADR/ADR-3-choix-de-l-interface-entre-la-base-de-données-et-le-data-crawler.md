@@ -10,7 +10,8 @@ Les données issues de sources externes doivent être enregistrées dans notre b
 
 ## Décision
 
--
+- Nous utiliserons TypeORM
+- Nous intéragisserons directement avec la base de données
 
 ## Éléments de décision
 
@@ -27,13 +28,10 @@ Les différentes façons pour que notre dataCrawler interagisse avec notre backe
 ### Les arguments
 
 - Si on utilise l'ORM, c'est plus facile d'interagir avec l'API pour ne pas avoir de redondance dans la mise en place de l'ORM
-- 
+- L'utilisation d'un ORM permet d'avoir un code plus modulable et maintenable
+- L'ORM permet d'avoir des requêttes plus optimisées et stables
 
 ## Conséquences
 
-Notre code sera bilingue :
-- les parties associées au métier seront en français ;
-- les parties associées à la technique seront en anglais ;
-- sa documentation et la description des cas de test seront en français.
-
-À noter que les noms des fichiers dans *pages* ne comportent pas d'accent à cause de contraintes techniques de Next. Cependant, le reste des fichiers et le code en a.
+- Le Back-End et le Data-crawler seront indépendants, mais ils peuvent communiquer
+- On peut communiquer avec la base via les repository

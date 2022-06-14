@@ -1,7 +1,7 @@
 import { fakeLogger } from '../../../testHelper'
 import { NodeEnvironmentVariables } from './NodeEnvironmentVariables'
 
-describe('Gestion des variables d’environnement', () => {
+describe('Charge les variables d’environnement', () => {
   it('retourne la valeur définie dans le fichier .env', () => {
     // WHEN
     const nodeEnvironmentVariables = new NodeEnvironmentVariables(fakeLogger)

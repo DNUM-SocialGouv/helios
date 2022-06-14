@@ -3,7 +3,7 @@ import { ÉtablissementTerritorialRattaché } from '../entities/entité-juridiqu
 import { ÉtablissementTerritorialRattachéLoader } from '../gateways/ÉtablissementTerritorialRattachéLoader'
 import { RécupèreLesÉtablissementsTerritoriauxRattachésUseCase } from './RécupèreLesÉtablissementsTerritoriauxRattachésÀLEntitéJuridiqueUseCase'
 
-describe('La récupération des établissements territoriaux rattachés à une entité juridique', () => {
+describe('Récupère des établissements territoriaux rattachés à une entité juridique', () => {
   it('récupère la liste des établissements territoriaux', async () => {
     // GIVEN
     const numéroFiness = '123456789'

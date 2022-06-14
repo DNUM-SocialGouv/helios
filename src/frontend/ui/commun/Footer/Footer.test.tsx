@@ -5,7 +5,7 @@ import { Footer } from './Footer'
 
 const { paths, wording } = fakeFrontDependencies
 
-describe('Le pied de page', () => {
+describe('Affiche le pied de page', () => {
   it('affiche un lien pour accéder à la page d’accueil', () => {
     // WHEN
     renderFakeComponent(<Footer />)

@@ -19,8 +19,8 @@ import { Breadcrumb } from './Breadcrumb'
 
 const { paths, wording } = fakeFrontDependencies
 
-describe('Le fil d’Ariane (breadcrumb)', () => {
-  it('n’est pas affiché sur la page d’accueil', () => {
+describe('Gére le fil d’Ariane (breadcrumb)', () => {
+  it('ne s’affiche pas sur la page d’accueil', () => {
     // WHEN
     renderFakeComponent(
       <>

@@ -7,7 +7,7 @@ import { EntitéJuridiqueLoader } from '../gateways/EntitéJuridiqueLoader'
 import { ÉtablissementTerritorialSanitaireLoader } from '../gateways/ÉtablissementTerritorialSanitaireLoader'
 import { RécupèreLÉtablissementTerritorialSanitaireUseCase } from './RécupèreLÉtablissementTerritorialSanitaireUseCase'
 
-describe('La récupération d’un établissement territorial sanitaire', () => {
+describe('Récupère un établissement territorial sanitaire', () => {
   it('récupère la fiche identité de l’établissement territorial sanitaire', async () => {
     // GIVEN
     const numéroFinessÉtablissementTerritorial = '123456789'

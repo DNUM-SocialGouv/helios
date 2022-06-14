@@ -10,7 +10,7 @@ import { EntitéJuridiqueTestFactory } from '../../../test-factories/EntitéJuri
 import { getOrm } from '../../../testHelper'
 import { TypeOrmEntitéJuridiqueLoader } from './TypeOrmEntitéJuridiqueLoader'
 
-describe('Entité juridique loader', () => {
+describe('Charge des entités juridiques', () => {
   const orm = getOrm()
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>
   let dateMiseÀJourSourceRepository: Repository<DateMiseÀJourSourceModel>

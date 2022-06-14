@@ -12,7 +12,7 @@ import { ÉtablissementTerritorialTestFactory } from '../../../test-factories/É
 import { getOrm } from '../../../testHelper'
 import { TypeOrmÉtablissementTerritorialSanitaireLoader } from './TypeOrmÉtablissementTerritorialSanitaireLoader'
 
-describe('Établissement territorial sanitaire loader', () => {
+describe('Charge les établissements territoriaux sanitaires', () => {
   const orm = getOrm()
   let établissementTerritorialRepository: Repository<ÉtablissementTerritorialIdentitéModel>
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>

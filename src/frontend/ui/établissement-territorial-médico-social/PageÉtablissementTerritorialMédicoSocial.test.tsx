@@ -6,7 +6,7 @@ import { PageÉtablissementTerritorialMédicoSocial } from './PageÉtablissement
 
 const { wording } = fakeFrontDependencies
 
-describe('La page Établissement territorial', () => {
+describe('Affiche la page Établissement territorial', () => {
   const établissementTerritorialMédicoSocial = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording)
 
   it('affiche le titre : "ET - numéro de FINESS - nom de l’établissement"', () => {

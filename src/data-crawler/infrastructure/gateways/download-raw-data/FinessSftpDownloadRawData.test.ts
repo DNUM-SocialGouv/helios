@@ -4,7 +4,7 @@ import Client from 'ssh2-sftp-client'
 import { getFakeDataCrawlerDependencies, fakeLogger } from '../../../testHelper'
 import { FinessSftpDownloadRawData } from './FinessSftpDownloadRawData'
 
-describe('Téléchargement de FINESS via un SFTP', () => {
+describe('Télécharge FINESS via un SFTP', () => {
   const dataSource = 'FAKE_DATASOURCE_NAME'
   const sftpPath = 'fake_path'
   const simpleSftpPath = `${sftpPath}/simple`
@@ -145,7 +145,7 @@ describe('Téléchargement de FINESS via un SFTP', () => {
     expect(Client.prototype.end).toHaveBeenCalledWith()
   })
 
-  it('quand il se connecte au SFTP avec une mauvaise configuration il a un message d’erreur', async () => {
+  it('signale un message d’erreur quand il se connecte au SFTP avec une mauvaise configuration', async () => {
     // GIVEN
     simuleLaLectureDeLaClefPrivée()
     simuleLeConnecteurDuSftp()

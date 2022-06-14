@@ -9,7 +9,7 @@ import { PageEntitéJuridique } from './PageEntitéJuridique'
 
 const { paths, wording } = fakeFrontDependencies
 
-describe('La page Entité Juridique', () => {
+describe('Affiche la page Entité Juridique', () => {
   const entitéJuridiqueViewModel = EntitéJuridiqueViewModelTestFactory.créeEntitéJuridiqueViewModel(wording)
 
   const établissementsTerritoriauxRattachésViewModels: ÉtablissementTerritorialRattachéViewModel[] = [

@@ -6,7 +6,7 @@ import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTer
 
 const { wording } = fakeFrontDependencies
 
-describe('La page Établissement territorial sanitaire', () => {
+describe('Affiche la page Établissement territorial sanitaire', () => {
   const établissementTerritorialSanitaire = new ÉtablissementTerritorialSanitaireViewModel({
     adresseAcheminement: '01130 NANTUA',
     adresseNuméroVoie : '50',

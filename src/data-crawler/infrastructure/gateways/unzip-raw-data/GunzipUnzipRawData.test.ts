@@ -3,7 +3,7 @@ import child from 'child_process'
 import { fakeLogger, getFakeDataCrawlerDependencies } from '../../../testHelper'
 import { GunzipUnzipRawData } from './GunzipUnzipRawData'
 
-describe('Décompression d’une source de données', () => {
+describe('Décompresse une source de données', () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
 
   it('décompresse une source de données avec la commande gunzip', async () => {
@@ -21,7 +21,7 @@ describe('Décompression d’une source de données', () => {
     expect(fakeLogger.info).toHaveBeenCalledWith(`[Helios][${dataSource}] Sources de données décompressées.`)
   })
 
-  it('une erreur est survenue lors de la décompression d’une source de données', () => {
+  it('signale une erreur lors de la décompression d’une source de données', () => {
     // GIVEN
     const dataSource = 'fake-data-source'
     const localPath = 'fake_local_path'
