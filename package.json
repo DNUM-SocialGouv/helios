@@ -24,8 +24,7 @@
     "test": "NODE_ENV=test yarn migrations && NODE_ICU_DATA=node_modules/full-icu TZ=Europe/Paris jest --runInBand",
     "test:watch": "NODE_ENV=test yarn migrations && yarn test --watch",
     "test:coverage": "NODE_ENV=test yarn migrations && yarn test --coverage",
-    "tsc": "tsc",
-    "typeorm": "typeorm-ts-node-esm"
+    "tsc": "tsc"
   },
   "dependencies": {
     "@gouvfr/dsfr": "1.4.1",

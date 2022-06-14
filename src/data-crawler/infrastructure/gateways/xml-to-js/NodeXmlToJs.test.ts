@@ -13,7 +13,7 @@ describe('Conversion d’un fichier XML en un objet JavaScript', () => {
     expect(js).toStrictEqual({ structure: { key1: { _text: 'value1' }, key2: { _text: 'value2' } } })
   })
 
-  it('une erreur est survenue car le chemin du fichier XML est incorrect', () => {
+  it('signale une erreur car le chemin du fichier XML est incorrect', () => {
     // GIVEN
     const xmlPath = '/mauvais_chemin.xml'
     const nodeXmlToJs = new NodeXmlToJs()
@@ -28,7 +28,7 @@ describe('Conversion d’un fichier XML en un objet JavaScript', () => {
     }
   })
 
-  it('une erreur est survenue car le XML est mal formaté', () => {
+  it('signale une erreur car le XML est mal formaté', () => {
     // GIVEN
     const xmlPath = `${__dirname}/structure_incorrect.xml`
     const nodeXmlToJs = new NodeXmlToJs()

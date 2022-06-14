@@ -145,7 +145,7 @@ describe('Téléchargement de FINESS via un SFTP', () => {
     expect(Client.prototype.end).toHaveBeenCalledWith()
   })
 
-  it('quand il se connecte au SFTP avec une mauvaise configuration il a un message d’erreur', async () => {
+  it('signale un message d’erreur quand il se connecte au SFTP avec une mauvaise configuration', async () => {
     // GIVEN
     simuleLaLectureDeLaClefPrivée()
     simuleLeConnecteurDuSftp()

@@ -4,7 +4,7 @@ import { TéléchargeLesDonnéesBrutesDeFinessUseCase } from './TéléchargeLesD
 describe('Récupération des sources de données FINESS en local', () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
 
-  it('récupére les sources de données FINESS en local', async () => {
+  it('récupère les sources de données FINESS en local', async () => {
     // GIVEN
     const sourceDeDonnées = 'FINESS'
     const cheminSftp = '../usr_finess/flux_finess'
@@ -21,7 +21,7 @@ describe('Récupération des sources de données FINESS en local', () => {
     await expect(fakeDataCrawlerDependencies.unzipRawData.exécute).toHaveBeenCalledWith(sourceDeDonnées, 'finess')
   })
 
-  it('une erreur est survenue lors du téléchargement des données', async () => {
+  it('signale quand une erreur est survenue lors du téléchargement des données', async () => {
     // GIVEN
     const messageDerreur = 'téléchargement interrompu'
     jest.spyOn(fakeDataCrawlerDependencies.finessDownloadRawData, 'exécute').mockImplementation(jest.fn(async () => {
@@ -42,7 +42,7 @@ describe('Récupération des sources de données FINESS en local', () => {
     }
   })
 
-  it('une erreur est survenue lors du la décompression des fichiers', async () => {
+  it('signale quand une erreur est survenue lors du la décompression des fichiers', async () => {
     // GIVEN
     const messageDerreur = 'décompression interrompue'
     jest.spyOn(fakeDataCrawlerDependencies.unzipRawData, 'exécute').mockImplementation(jest.fn(async () => {

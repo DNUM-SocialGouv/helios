@@ -1,8 +1,8 @@
 # ADR 3 : Choix de l'interface entre la base de données et le data crawler
 
 * Status: en cours de discussion
-* Décideurs: Fabien Mercier, Thierry Gonard, Sofía Calcagno
-* Date: -
+* Décideurs: Fabien Mercier, Thierry Gonard, Sofía Calcagno, Mehdi Akrim
+* Date: 2022-06-14
 
 ## Contexte
 
@@ -10,7 +10,8 @@ Les données issues de sources externes doivent être enregistrées dans notre b
 
 ## Décision
 
--
+- Le data crawler utilisera le même ORM que le backend : TypeORM
+- Le data crawler interagira directement avec la base de données
 
 ## Éléments de décision
 
@@ -26,14 +27,17 @@ Les différentes façons pour que notre dataCrawler interagisse avec notre backe
 
 ### Les arguments
 
-- Si on utilise l'ORM, c'est plus facile d'interagir avec l'API pour ne pas avoir de redondance dans la mise en place de l'ORM
-- 
+**Pour l'ORM**
+- L'utilisation d'un ORM permet d'avoir un code plus maintenable : le refactoring est plus facile. Si le nom d'une table change, on pourra refactorer l'objet plus facilement qu'une chaine de caractères contenant la requête SQL.
+- La complexité de notre traitement des données est gérable avec un ORM. Nous faisons du transfert de données d'une source et un format à un autre, sans beaucoup de transformations, ce qui est gérable sans passer par des requêtes SQL en dur.
+- TypeORM permet la sauvegarde par batchs
+
+**Pour l'écriture directement en base plutôt qu'en passant par l'API**
+- C'est moins complexe qu'appeler une API : nous n'avons pas besoin de développer des routes
+- On a moins besoin de vérifier nos données et nos appels, vu que c'est nous qui les faisons et non un utilisateur
+- Ça nous permet de ne pas avoir de dépendances entre le backend et le data crawler
 
 ## Conséquences
 
-Notre code sera bilingue :
-- les parties associées au métier seront en français ;
-- les parties associées à la technique seront en anglais ;
-- sa documentation et la description des cas de test seront en français.
-
-À noter que les noms des fichiers dans *pages* ne comportent pas d'accent à cause de contraintes techniques de Next. Cependant, le reste des fichiers et le code en a.
+- Le backend et le data crawler ne communiquent pas. L'évolution de l'interface de l'un n'impacte pas l'évolution de l'interface de l'autre
+- Le backend et le data crawler sont couplés par la base : Ils utilisent tous les deux le même ORM, connecté à la même base de données, définie dans `src/database`

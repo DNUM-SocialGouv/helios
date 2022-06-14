@@ -21,7 +21,7 @@ describe('Décompression d’une source de données', () => {
     expect(fakeLogger.info).toHaveBeenCalledWith(`[Helios][${dataSource}] Sources de données décompressées.`)
   })
 
-  it('une erreur est survenue lors de la décompression d’une source de données', () => {
+  it('signale une erreur lors de la décompression d’une source de données', () => {
     // GIVEN
     const dataSource = 'fake-data-source'
     const localPath = 'fake_local_path'
