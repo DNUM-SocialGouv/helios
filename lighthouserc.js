@@ -2,12 +2,16 @@ module.exports = {
   ci: {
     assert: {
       assertions: {
-        'categories:accessibility': ['error', { minScore: 1 }],
-        'categories:performance': ['warn', { minScore: 1 }],
+        'categories:accessibility': ['error', { minScore: 0.95 }],
+        'categories:best-practices': ['error', { minScore: 0.95 }],
+        'categories:performance': ['error', { minScore: 0.95 }],
       },
     },
     collect: {
-      emulatedFormFactor: 'desktop',
+      settings: {
+        onlyCategories: ['accessibility', 'best-practices', 'performance'],
+        preset: 'desktop',
+      },
       url: [
         'http://localhost:3000/',
         'http://localhost:3000/entite-juridique/010008407',
