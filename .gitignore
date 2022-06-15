@@ -38,3 +38,4 @@ yarn-error.log*
 # Helios
 data_test
 data_set/.ssh
+sshd_config

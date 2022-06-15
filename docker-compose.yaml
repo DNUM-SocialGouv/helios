@@ -16,7 +16,7 @@ services:
         target: /home/finess/.ssh/keys/sftp_local.pub
         read_only: true
       - type: bind
-        source: $PWD/data_set/.ssh/sshd_config
+        source: $PWD/sshd_config/sshd_config
         target: /etc/ssh/sshd_config
         read_only: true
     command: finess::1001
