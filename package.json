@@ -22,9 +22,9 @@
     "start": "next start",
     "start:db": "docker-compose down && docker-compose up -d && while ! docker-compose logs | grep -q 'listening on IPv4 address'; do echo 'Waiting for database'; sleep 0.5; done; yarn migrations",
     "test": "NODE_ENV=test yarn migrations && NODE_ICU_DATA=node_modules/full-icu TZ=Europe/Paris jest --runInBand",
+    "test:accessibility": "lhci autorun",
     "test:watch": "NODE_ENV=test yarn migrations && yarn test --watch",
     "test:coverage": "NODE_ENV=test yarn migrations && yarn test --coverage",
-    "test:accessibility": "lhci autorun",
     "tsc": "tsc"
   },
   "dependencies": {
