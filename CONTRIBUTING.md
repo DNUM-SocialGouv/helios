@@ -60,7 +60,7 @@ yarn deadcode
 Prérequis : 
 - avoir installé Chrome
 - avoir lancé la base de données
-- avoir lancé
+- avoir lancé l'application
 
 ```sh
 yarn test:accessibility
