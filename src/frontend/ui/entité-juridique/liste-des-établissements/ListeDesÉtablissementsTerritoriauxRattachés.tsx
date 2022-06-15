@@ -15,9 +15,9 @@ export const ListeDesÉtablissementsTerritoriauxRattachés = ({ établissementsT
       aria-label={wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS}
       className="fr-mt-4w"
     >
-      <h3>
+      <h2 className="fr-h3">
         {wording.ÉTABLISSEMENTS_RATTACHÉS}
-      </h3>
+      </h2>
       <ol className={styles['liste-établissements-territoriaux-rattachés'] + ' fr-raw-list fr-text--bold fr-raw-link'}>
         {
           établissementsTerritoriauxRattachésViewModels.map((établissementTerritorialRattachéViewModel: ÉtablissementTerritorialRattachéViewModel) =>

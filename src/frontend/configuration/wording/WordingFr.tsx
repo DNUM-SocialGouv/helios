@@ -84,6 +84,7 @@ export class WordingFr implements Wording {
   readonly GESTION_COOKIES: string = 'Gestion des cookies'
   readonly MENTION_LICENCE: string = 'Sauf mention contraire, tous les contenus de ce site sont sous '
   readonly LICENCE_ETALAB: string = 'licence etalab-2.0'
+  readonly NOUVELLE_FENÊTRE: string = 'nouvelle Fenêtre'
 
   readonly EN_CONSTRUCTION: string = 'Demander à Daisy ce que l’on doit écrire.'
 }
