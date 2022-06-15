@@ -10,6 +10,8 @@ type ÉtablissementsTerritoriauxRattachésType = Readonly<{
 export const ListeDesÉtablissementsTerritoriauxRattachés = ({ établissementsTerritoriauxRattachésViewModels }: ÉtablissementsTerritoriauxRattachésType) => {
   const { paths, wording } = useDependencies()
 
+  if (établissementsTerritoriauxRattachésViewModels.length === 0) return null
+
   return (
     <section
       aria-label={wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS}

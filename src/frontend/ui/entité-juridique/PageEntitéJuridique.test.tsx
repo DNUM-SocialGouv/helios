@@ -266,5 +266,17 @@ describe('La page Entité Juridique', () => {
       expect(établissementTerritorial2).toHaveAttribute('href', `${paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL}/590782553`)
       expect(within(établissementTerritorial2).getByText('- 590 782 553 - HOPITAL PRIVE DE VILLENEUVE DASCQ')).toBeInTheDocument()
     })
+
+    it('n’affiche pas la liste des établissements territoriaux rattachés quand l’entité juridique n’en a pas', () => {
+      // WHEN
+      renderFakeComponent(<PageEntitéJuridique
+        entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+        établissementsTerritoriauxRattachésViewModels={[]}
+      />)
+
+      // THEN
+      const établissementTerritoriauxRattachés = screen.queryByRole('region', { name: wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS })
+      expect(établissementTerritoriauxRattachés).not.toBeInTheDocument()
+    })
   })
 })
