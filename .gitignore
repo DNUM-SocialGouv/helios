@@ -42,3 +42,4 @@ sshd_config
 
 # Lighthouse CI
 .lighthouseci/
+lighthouse-ci-reports
