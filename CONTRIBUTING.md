@@ -123,13 +123,12 @@ Un SFTP (image Docker) est lancé avec l'application.
 
 Un échantillon des données FINESS sont dans `data_set`.
 
-
 ### Configuration
 
 Une clé publique SSH `$HOME/.ssh/sftp_local.pub` sera demandée pour l'authentification au SFTP local.
 
 Il est nécessaire de changer les *KEX algorithms* dans `sshd_config` pour coller à ceux utilisés par le SFTP cible.
-Pour cela, créer un fichier `data_set/.ssh/sshd_config` et compléter ce *template* :
+Pour cela, créer un fichier `sshd_config/sshd_config` et compléter ce *template* :
 
 ```text
 # Secure defaults
@@ -155,7 +154,7 @@ ChrootDirectory %h
 # Enable this for more logs
 #LogLevel VERBOSE
 
-KexAlgorithms <algorithme1>,<algorithme1>,...
+KexAlgorithms <algorithme1>,<algorithme1>,demander à l'équipe
 ```
 
 ### Simuler le téléchargement des données FINESS
