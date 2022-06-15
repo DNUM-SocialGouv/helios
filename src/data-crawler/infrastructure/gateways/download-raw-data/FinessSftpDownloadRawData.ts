@@ -46,7 +46,7 @@ export class FinessSftpDownloadRawData implements DownloadRawData {
 
   private async connect(rawData: string) {
     const configuration: ConnectConfig = {
-      algorithms: { kex: JSON.parse(this.environmentVariables.SFTP_KEX_ALGORITHMS) },
+      algorithms: { kex: this.environmentVariables.SFTP_KEX_ALGORITHMS.split(',') },
       debug: this.environmentVariables.SFTP_IS_DEBUG === 'false' ? undefined : this.logger.debug,
       host: this.environmentVariables.SFTP_HOST,
       port: Number(this.environmentVariables.SFTP_PORT),

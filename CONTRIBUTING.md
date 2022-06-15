@@ -154,7 +154,7 @@ ChrootDirectory %h
 # Enable this for more logs
 #LogLevel VERBOSE
 
-KexAlgorithms <algorithme1>,<algorithme1>,demander à l'équipe
+KexAlgorithms <algorithme1>,<algorithme2>,demander à l'équipe
 ```
 
 ### Simuler le téléchargement des données FINESS
