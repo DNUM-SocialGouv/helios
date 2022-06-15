@@ -39,3 +39,6 @@ yarn-error.log*
 data_test
 data_set/.ssh
 sshd_config
+
+# Lighthouse CI
+.lighthouseci/

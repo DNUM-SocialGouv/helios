@@ -55,6 +55,17 @@ yarn tsc
 yarn deadcode
 ```
 
+### Lancer lighthouse-ci (tests d'accessibilité)
+
+Prérequis : 
+- avoir installé Chrome
+- avoir lancé la base de données
+- avoir lancé
+
+```sh
+yarn test:accessibility
+```
+
 ### Connexion à la base de données locale
 
 ```sh

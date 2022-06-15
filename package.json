@@ -24,6 +24,7 @@
     "test": "NODE_ENV=test yarn migrations && NODE_ICU_DATA=node_modules/full-icu TZ=Europe/Paris jest --runInBand",
     "test:watch": "NODE_ENV=test yarn migrations && yarn test --watch",
     "test:coverage": "NODE_ENV=test yarn migrations && yarn test --coverage",
+    "test:accessibility": "lhci autorun",
     "tsc": "tsc"
   },
   "dependencies": {
@@ -42,6 +43,7 @@
     "xml-js": "^1.6.11"
   },
   "devDependencies": {
+    "@lhci/cli": "^0.9.0",
     "@swc/core": "^1.2.168",
     "@swc/jest": "^0.2.20",
     "@testing-library/jest-dom": "^5.16.4",
