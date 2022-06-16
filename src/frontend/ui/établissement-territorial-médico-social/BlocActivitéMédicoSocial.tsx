@@ -22,15 +22,22 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
     ChartDataLabels
   )
 
+  const chartColors = [
+    '#4E68BB',
+    '#4E68BB',
+    '#000091',
+  ]
+  const dataPoints = [70, 121, 67]
+  dataPoints.forEach((dataPoint, index) => {
+    if (dataPoint > 120) {
+      chartColors[index] = '#C9191E'
+    }
+  })
   const data = {
     datasets: [
       {
-        backgroundColor: [
-          '#4E68BB',
-          '#4E68BB',
-          '#000091',
-        ],
-        data: [94, 97, 101],
+        backgroundColor: chartColors,
+        data: dataPoints,
       },
     ],
     labels: ['2019', '2020', '2021'],
@@ -49,7 +56,14 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
         formatter: Math.round,
       },
     },
-    scales: { y: { beginAtZero: true } },
+    scales: {
+      y:
+        {
+          display: true,
+          max: 120,
+          min: 0,
+        },
+    },
   }
 
   return (
