@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { useDependencies } from '../commun/contexts/useDependencies'
 import { useBreadcrumb } from '../commun/hooks/useBreadcrumb'
 import { Titre } from '../commun/Titre/Titre'
+import { BlocActivitéMédicoSocial } from './BlocActivitéMédicoSocial'
 import { BlocIdentitéMédicoSocial } from './BlocIdentitéMédicoSocial'
 import LogoÉtablissementTerritorial from './logo-établissement-territorial-médico-social.svg'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from './ÉtablissementTerritorialMédicoSocialViewModel'
@@ -36,6 +37,7 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ établissementTerri
         {établissementTerritorialViewModel.titre}
       </Titre>
       <BlocIdentitéMédicoSocial établissementTerritorialMédicoSocialViewModel={établissementTerritorialViewModel} />
+      <BlocActivitéMédicoSocial établissementTerritorialMédicoSocialViewModel={établissementTerritorialViewModel} />
     </>
   )
 }
