@@ -29,25 +29,29 @@ describe('Le pied de page', () => {
     renderFakeComponent(<Footer />)
 
     // THEN
-    const legifrance = screen.getByText(wording.LEGIFRANCE)
+    const legifrance = screen.getByRole('link', { name: `${wording.LEGIFRANCE} - ${wording.NOUVELLE_FENÊTRE}` })
     expect(legifrance).toHaveAttribute('href', 'https://legifrance.gouv.fr')
     expect(legifrance).toHaveAttribute('rel', 'external noopener noreferrer')
     expect(legifrance).toHaveAttribute('target', '_blank')
+    expect(legifrance.textContent).toBe(wording.LEGIFRANCE)
 
-    const gouvernement = screen.getByText(wording.GOUVERNEMENT)
+    const gouvernement = screen.getByRole('link', { name: `${wording.GOUVERNEMENT} - ${wording.NOUVELLE_FENÊTRE}` })
     expect(gouvernement).toHaveAttribute('href', 'https://gouvernement.fr')
     expect(gouvernement).toHaveAttribute('rel', 'external noopener noreferrer')
     expect(gouvernement).toHaveAttribute('target', '_blank')
+    expect(gouvernement.textContent).toBe(wording.GOUVERNEMENT)
 
-    const servicePublic = screen.getByText(wording.SERVICE_PUBLIC)
+    const servicePublic = screen.getByRole('link', { name: `${wording.SERVICE_PUBLIC} - ${wording.NOUVELLE_FENÊTRE}` })
     expect(servicePublic).toHaveAttribute('href', 'https://service-public.fr')
     expect(servicePublic).toHaveAttribute('rel', 'external noopener noreferrer')
     expect(servicePublic).toHaveAttribute('target', '_blank')
+    expect(servicePublic.textContent).toBe(wording.SERVICE_PUBLIC)
 
-    const dataGouv = screen.getByText(wording.DATA_GOUV)
+    const dataGouv = screen.getByRole('link', { name: `${wording.DATA_GOUV} - ${wording.NOUVELLE_FENÊTRE}` })
     expect(dataGouv).toHaveAttribute('href', 'https://data.gouv.fr')
     expect(dataGouv).toHaveAttribute('rel', 'external noopener noreferrer')
     expect(dataGouv).toHaveAttribute('target', '_blank')
+    expect(dataGouv.textContent).toBe(wording.DATA_GOUV)
   })
 
   it('affiche un lien pour accéder au plan du site', () => {
@@ -93,5 +97,19 @@ describe('Le pied de page', () => {
     // THEN
     const gestionDesCookies = screen.getByRole('link', { name: wording.GESTION_COOKIES })
     expect(gestionDesCookies).toHaveAttribute('href', paths.GESTION_COOKIES)
+  })
+
+  it('affiche la mention que tout le contenu est sous une licence', () => {
+    // WHEN
+    renderFakeComponent(<Footer />)
+
+    // THEN
+    const licence = screen.getByText(wording.LICENCE_ETALAB)
+    expect(licence).toBeInTheDocument()
+    const lienLicence = screen.getByRole('link', { name: `${wording.LICENCE_ETALAB} - ${wording.NOUVELLE_FENÊTRE}` })
+    expect(lienLicence).toHaveAttribute('href', 'https://github.com/etalab/licence-ouverte/blob/master/LO.md')
+    expect(lienLicence).toHaveAttribute('rel', 'external noopener noreferrer')
+    expect(lienLicence).toHaveAttribute('target', '_blank')
+    expect(lienLicence.textContent).toBe(wording.LICENCE_ETALAB)
   })
 })

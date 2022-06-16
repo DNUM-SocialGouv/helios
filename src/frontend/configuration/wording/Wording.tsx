@@ -71,6 +71,7 @@ export interface Wording {
   readonly GESTION_COOKIES: string
   readonly MENTION_LICENCE: string
   readonly LICENCE_ETALAB: string
+  readonly NOUVELLE_FENÊTRE: string
 
   readonly EN_CONSTRUCTION: string
 }

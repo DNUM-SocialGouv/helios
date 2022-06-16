@@ -55,6 +55,19 @@ yarn tsc
 yarn deadcode
 ```
 
+### Lancer lighthouse-ci (tests d'accessibilité)
+
+Prérequis :
+
+- avoir installé Chrome
+  - Si WSL alors regarder l'[installation de Jenkins](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/getting-started.md#configure-your-ci-provider)
+- avoir lancé la base de données
+- avoir lancé l'application
+
+```sh
+yarn test:accessibility
+```
+
 ### Connexion à la base de données locale
 
 ```sh

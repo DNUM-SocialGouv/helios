@@ -47,6 +47,7 @@ export const Footer = () => {
                   href="https://legifrance.gouv.fr"
                   rel="external noopener noreferrer"
                   target="_blank"
+                  title={`${wording.LEGIFRANCE} - ${wording.NOUVELLE_FENÊTRE}`}
                 >
                   {wording.LEGIFRANCE}
                 </a>
@@ -57,6 +58,7 @@ export const Footer = () => {
                   href="https://gouvernement.fr"
                   rel="external noopener noreferrer"
                   target="_blank"
+                  title={`${wording.GOUVERNEMENT} - ${wording.NOUVELLE_FENÊTRE}`}
                 >
                   {wording.GOUVERNEMENT}
                 </a>
@@ -67,6 +69,7 @@ export const Footer = () => {
                   href="https://service-public.fr"
                   rel="external noopener noreferrer"
                   target="_blank"
+                  title={`${wording.SERVICE_PUBLIC} - ${wording.NOUVELLE_FENÊTRE}`}
                 >
                   {wording.SERVICE_PUBLIC}
                 </a>
@@ -77,6 +80,7 @@ export const Footer = () => {
                   href="https://data.gouv.fr"
                   rel="external noopener noreferrer"
                   target="_blank"
+                  title={`${wording.DATA_GOUV} - ${wording.NOUVELLE_FENÊTRE}`}
                 >
                   {wording.DATA_GOUV}
                 </a>
@@ -144,6 +148,7 @@ export const Footer = () => {
                 href="https://github.com/etalab/licence-ouverte/blob/master/LO.md"
                 rel="external noopener noreferrer"
                 target="_blank"
+                title={`${wording.LICENCE_ETALAB} - ${wording.NOUVELLE_FENÊTRE}`}
               >
                 {wording.LICENCE_ETALAB}
               </a>

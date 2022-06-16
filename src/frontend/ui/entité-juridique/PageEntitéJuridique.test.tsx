@@ -229,7 +229,7 @@ describe('La page Entité Juridique', () => {
 
       // THEN
       const établissementTerritoriauxRattachés = screen.getByRole('region', { name: wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS })
-      expect(within(établissementTerritoriauxRattachés).getByRole('heading', { level: 3, name: wording.ÉTABLISSEMENTS_RATTACHÉS })).toBeInTheDocument()
+      expect(within(établissementTerritoriauxRattachés).getByRole('heading', { level: 2, name: wording.ÉTABLISSEMENTS_RATTACHÉS })).toBeInTheDocument()
     })
 
     it('affiche la liste des établissements rattachés avec un lien pour accéder à chaque établissement comportant le numéro FINESS de l’établissement et son nom', () => {
