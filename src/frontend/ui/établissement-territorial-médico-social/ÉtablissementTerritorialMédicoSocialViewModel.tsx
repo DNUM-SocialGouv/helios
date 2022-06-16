@@ -1,11 +1,40 @@
+import { ChartData, Chart as ChartJS, CategoryScale, LinearScale, BarElement, PointElement, LineElement } from 'chart.js'
+import ChartDataLabels, { Context } from 'chartjs-plugin-datalabels'
 import { ReactElement } from 'react'
+import { Bar } from 'react-chartjs-2'
 
 import { ÉtablissementTerritorialMédicoSocialIdentité } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialIdentité'
 import { Wording } from '../../configuration/wording/Wording'
 import { StringFormater } from '../commun/StringFormater'
 
 export class ÉtablissementTerritorialMédicoSocialViewModel {
-  constructor(private readonly établissementTerritorialIdentité: ÉtablissementTerritorialMédicoSocialIdentité, private readonly wording: Wording) {}
+  readonly valeurAtypique: number
+  readonly fondDeCouleurPourPremierHistogramme: string[]
+  readonly fondDeCouleurPourSecondHistogramme: string[]
+
+  constructor(private readonly établissementTerritorialIdentité: ÉtablissementTerritorialMédicoSocialIdentité, private readonly wording: Wording) {
+    // TODO: à modifier avec les données du backend
+    this.valeurAtypique = 120
+    this.fondDeCouleurPourSecondHistogramme = [
+      '#E8EDFF',
+      '#E8EDFF',
+      '#E8EDFF',
+    ]
+    this.fondDeCouleurPourPremierHistogramme = [
+      '#4E68BB',
+      '#4E68BB',
+      '#000091',
+    ]
+
+    ChartJS.register(
+      CategoryScale,
+      LinearScale,
+      BarElement,
+      ChartDataLabels,
+      PointElement,
+      LineElement
+    )
+  }
 
   public get titre(): string {
     return `ET - ${this.numéroFinessÉtablissementTerritorial} - ${this.nomDeLÉtablissementTerritorial}`
@@ -71,6 +100,135 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     return StringFormater.formateLaDate(this.établissementTerritorialIdentité.dateMiseAJourSource)
   }
 
+  public get tauxOccupationHébergementPermanent(): JSX.Element {
+    // TODO: à modifier avec les données du backend
+    const dataPoints = [94, 97, 101]
+    const chartColors = this.construitFondDeCouleurDesHistogrammes(dataPoints)
+    // TODO: à modifier avec les données du backend
+    const labels = ['2019', '2020', '2021']
+    const labelsColor = this.construitCouleurDuLabel(dataPoints)
+
+    const data: ChartData = {
+      datasets: [
+        {
+          borderColor: '#929292',
+          borderDash: [3, 3],
+          data: [100, 100, 100],
+          datalabels: { display: false },
+          type: 'line',
+        },
+        {
+          backgroundColor: chartColors,
+          data: dataPoints,
+          datalabels: { labels: { title: { color: labelsColor } } },
+          type: 'bar',
+        },
+        {
+          backgroundColor: this.fondDeCouleurPourSecondHistogramme,
+          data: [100, 100, 100],
+          datalabels: { display: false },
+          type: 'bar',
+        },
+      ],
+      labels,
+    }
+
+    return (
+      <Bar
+        // @ts-ignore
+        data={data}
+        // @ts-ignore
+        options={this.optionsHistogramme()}
+      />
+    )
+  }
+
+  public get tauxOccupationHébergementTemporaire(): JSX.Element {
+    // TODO: à modifier avec les données du backend
+    const dataPoints = [70, 121, 67]
+    const chartColors = this.construitFondDeCouleurDesHistogrammes(dataPoints)
+    // TODO: à modifier avec les données du backend
+    const labels = ['2019', '2020', '2021']
+    const labelsColor = this.construitCouleurDuLabel(dataPoints)
+
+    const data: ChartData = {
+      datasets: [
+        {
+          borderColor: '#929292',
+          borderDash: [3, 3],
+          data: [100, 100, 100],
+          datalabels: { display: false },
+          type: 'line',
+        },
+        {
+          backgroundColor: chartColors,
+          data: dataPoints,
+          datalabels: { labels: { title: { color: labelsColor } } },
+          type: 'bar',
+        },
+        {
+          backgroundColor: this.fondDeCouleurPourSecondHistogramme,
+          data: [100, 100, 100],
+          datalabels: { display: false },
+          type: 'bar',
+        },
+      ],
+      labels,
+    }
+
+    return (
+      <Bar
+        // @ts-ignore
+        data={data}
+        // @ts-ignore
+        options={this.optionsHistogramme()}
+      />
+    )
+  }
+
+  public get tauxOccupationHébergementAccueilDeJour(): JSX.Element {
+    // TODO: à modifier avec les données du backend
+    const dataPoints = [0, 15, 20]
+    const chartColors = this.construitFondDeCouleurDesHistogrammes(dataPoints)
+    // TODO: à modifier avec les données du backend
+    const labels = ['2019', '2020', '2021']
+    const labelsColor = this.construitCouleurDuLabel(dataPoints)
+
+    const data: ChartData = {
+      datasets: [
+        {
+          borderColor: '#929292',
+          borderDash: [3, 3],
+          data: [100, 100, 100],
+          datalabels: { display: false },
+          type: 'line',
+        },
+        {
+          backgroundColor: chartColors,
+          data: dataPoints,
+          datalabels: { labels: { title: { color: labelsColor } } },
+          type: 'bar',
+        },
+        {
+          backgroundColor: this.fondDeCouleurPourSecondHistogramme,
+          data: [100, 100, 100],
+          datalabels: { display: false },
+          type: 'bar',
+        },
+      ],
+      labels,
+    }
+
+    return (
+      <Bar
+        // @ts-ignore
+        data={data}
+        // @ts-ignore
+        options={this.optionsHistogramme()}
+      />
+    )
+  }
+
   private get formateLeTitreDeLEntitéJuridiqueDeRattachement() {
     const numéroFinessEntitéJuridiqueFormaté = StringFormater.formateLeNuméroFiness(this.établissementTerritorialIdentité.numéroFinessEntitéJuridique)
     const nomDeLEntitéJuridique = this.établissementTerritorialIdentité.raisonSocialeDeLEntitéDeRattachement
@@ -79,5 +237,65 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
 
   private valeurOuNonRenseigné(valeur: string): string {
     return valeur === '' ? this.wording.NON_RENSEIGNÉ : valeur
+  }
+
+  private optionsHistogramme() {
+    return {
+      animation: false,
+      plugins: {
+        datalabels: {
+          align: 'end',
+          anchor: 'start',
+          font: {
+            family: 'Marianne',
+            size: 16,
+            weight: 'bold',
+          },
+          formatter: (value: string, _context: Context): string => value + ' %',
+        },
+      },
+      radius: false,
+      scales: {
+        x: {
+          grid: {
+            drawBorder: false,
+            drawOnChartArea: false,
+            drawTicks: false,
+          },
+          stacked: true,
+          ticks: { color: '#000' },
+        },
+        y: {
+          display: false,
+          max: this.valeurAtypique,
+          min: 0,
+        },
+      },
+    }
+  }
+
+  private construitFondDeCouleurDesHistogrammes(dataPoints: number[]) {
+    const fondDeCouleurDesHistogrammes = [...this.fondDeCouleurPourPremierHistogramme]
+
+    dataPoints.forEach((dataPoint: number, index: number) => {
+      if (dataPoint > this.valeurAtypique) {
+        fondDeCouleurDesHistogrammes[index] = '#C9191E'
+      }
+    })
+
+    return fondDeCouleurDesHistogrammes
+  }
+
+  private construitCouleurDuLabel(dataPoints: number[]): string[] {
+    const maxAvantDePerdreLeContraste = 20
+    const couleurDesLabels = ['white', 'white', 'white']
+
+    dataPoints.forEach((dataPoint: number, index: number) => {
+      if (dataPoint < maxAvantDePerdreLeContraste) {
+        couleurDesLabels[index] = 'black'
+      }
+    })
+
+    return couleurDesLabels
   }
 }

@@ -63,6 +63,12 @@ export class WordingFr implements Wording {
   readonly SECONDAIRE: string = 'Secondaire'
   readonly SITE_INTERNET: string = 'Site internet'
 
+  // Bloc Activité
+  readonly TITRE_BLOC_ACTIVITÉ: string = 'activité'
+  readonly TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT: string = 'Taux d’occupation en hébergement permanent'
+  readonly TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE: string = 'Taux d’occupation en hébergement temporaire'
+  readonly TAUX_OCCUPATION_HÉBERGEMENT_ACCUEIL_DE_JOUR: string = 'Taux d’occupation en accueil de jour'
+
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string = 'Établissement territorial'
   readonly TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS: string = 'Les établissements rattachés'
@@ -70,6 +76,7 @@ export class WordingFr implements Wording {
 
   // Source
   readonly FINESS: ReactElement = (<abbr title="Fichier National des Établissements Sanitaires et Sociaux">FINESS</abbr>)
+  readonly DIAMANT: ReactElement = (<abbr title="Décisionnel Inter ARS pour la Maîtrise et ANTicipation">DIAMANT</abbr>)
 
   // Footer
   readonly PRESENTATION: string = 'Texte sur 3 lignes à demander à Daisy'

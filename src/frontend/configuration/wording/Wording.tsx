@@ -50,6 +50,12 @@ export interface Wording {
   readonly SECONDAIRE: string
   readonly SITE_INTERNET: string
 
+  // Bloc Activité
+  readonly TITRE_BLOC_ACTIVITÉ: string
+  readonly TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT: string
+  readonly TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE: string
+  readonly TAUX_OCCUPATION_HÉBERGEMENT_ACCUEIL_DE_JOUR: string
+
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string
   readonly TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS: string
@@ -57,6 +63,7 @@ export interface Wording {
 
   // Source
   readonly FINESS: ReactElement
+  readonly DIAMANT: ReactElement
 
   // Footer
   readonly PRESENTATION: string
