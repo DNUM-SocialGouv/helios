@@ -4,6 +4,7 @@ import { EntitéJuridiqueHeliosLoader } from '../gateways/EntitéJuridiqueHelios
 import { ÉtablissementTerritorialHeliosLoader } from '../gateways/ÉtablissementTerritorialHeliosLoader'
 import { ÉtablissementTerritorialRepository } from '../gateways/ÉtablissementTerritorialRepository'
 import { ÉtablissementTerritorialSourceExterneLoader } from '../gateways/ÉtablissementTerritorialSourceExterneLoader'
+import { détecteLesObjetsÀSupprimer } from './détecteLesObjetsÀSupprimer'
 
 export class MetsÀJourLesÉtablissementsTerritoriauxUseCase {
   constructor(
@@ -38,19 +39,11 @@ export class MetsÀJourLesÉtablissementsTerritoriauxUseCase {
     établissementsTerritoriauxOuverts: ÉtablissementTerritorialIdentité[],
     établissementsTerritoriauxSauvegardés: string[]
   ) {
-    const établissementsTerritoriauxOuvertsSet = new Set(
+    const numérosFinessDesÉtablissementsTerritoriauxOuverts = new Set(
       établissementsTerritoriauxOuverts.map((établissementTerritorial) => établissementTerritorial.numéroFinessÉtablissementTerritorial)
     )
-    const établissementsTerritoriauxSauvegardésSet = new Set(établissementsTerritoriauxSauvegardés)
+    const numérosFinessDesÉtablissementsTerritoriauxSauvegardés = new Set(établissementsTerritoriauxSauvegardés)
 
-    const entitésJuridiquesRécemmentFermées = []
-
-    for (const numéroFinessEntitéJuridique of établissementsTerritoriauxSauvegardésSet) {
-      if (!établissementsTerritoriauxOuvertsSet.has(numéroFinessEntitéJuridique)) {
-        entitésJuridiquesRécemmentFermées.push(numéroFinessEntitéJuridique)
-      }
-    }
-
-    return entitésJuridiquesRécemmentFermées
+    return détecteLesObjetsÀSupprimer(numérosFinessDesÉtablissementsTerritoriauxOuverts, numérosFinessDesÉtablissementsTerritoriauxSauvegardés)
   }
 }

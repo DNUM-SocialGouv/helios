@@ -3,6 +3,7 @@ import { EntitéJuridique } from '../entities/EntitéJuridique'
 import { EntitéJuridiqueHeliosLoader } from '../gateways/EntitéJuridiqueHeliosLoader'
 import { EntitéJuridiqueHeliosRepository } from '../gateways/EntitéJuridiqueHeliosRepository'
 import { EntitéJuridiqueSourceExterneLoader } from '../gateways/EntitéJuridiqueSourceExterneLoader'
+import { détecteLesObjetsÀSupprimer } from './détecteLesObjetsÀSupprimer'
 
 export class MetsÀJourLesEntitésJuridiquesUseCase {
   constructor(
@@ -27,17 +28,9 @@ export class MetsÀJourLesEntitésJuridiquesUseCase {
   }
 
   private extraisLesEntitésJuridiquesRécemmentFermées(entitésJuridiquesOuvertes: EntitéJuridique[], entitéJuridiquesSauvegardées: string[]): string[] {
-    const entitésJuridiquesOuvertesSet = new Set(entitésJuridiquesOuvertes.map((entitéJuridique) => entitéJuridique.numéroFinessEntitéJuridique))
-    const entitésJuridiquesSauvegardéesSet = new Set(entitéJuridiquesSauvegardées)
+    const numérosFinessDesEntitésJuridiquesOuvertes = new Set(entitésJuridiquesOuvertes.map((entitéJuridique) => entitéJuridique.numéroFinessEntitéJuridique))
+    const numérosFinessDesEntitésJuridiquesSauvegardées = new Set(entitéJuridiquesSauvegardées)
 
-    const entitésJuridiquesRécemmentFermées = []
-
-    for (const numéroFinessEntitéJuridique of entitésJuridiquesSauvegardéesSet) {
-      if (!entitésJuridiquesOuvertesSet.has(numéroFinessEntitéJuridique)) {
-        entitésJuridiquesRécemmentFermées.push(numéroFinessEntitéJuridique)
-      }
-    }
-
-    return entitésJuridiquesRécemmentFermées
+    return détecteLesObjetsÀSupprimer(numérosFinessDesEntitésJuridiquesOuvertes, numérosFinessDesEntitésJuridiquesSauvegardées)
   }
 }
