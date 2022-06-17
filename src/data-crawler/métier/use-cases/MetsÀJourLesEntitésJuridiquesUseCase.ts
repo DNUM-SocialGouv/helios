@@ -23,7 +23,7 @@ export class MetsÀJourLesEntitésJuridiquesUseCase {
 
       const entitésJuridiquesÀSupprimer = this.extraisLesEntitésJuridiquesRécemmentFermées(entitésJuridiquesOuvertes, entitéJuridiquesSauvegardées)
       const t3 = performance.now()
-      console.log(`Temps de récupération des entités juridiques à supprimer: ${t3 - t2}ms`)
+      console.log(`Temps d'extraction des entités juridiques à supprimer: ${t3 - t2}ms`)
 
       await this.entitéJuridiqueHeliosRepository.supprime(entitésJuridiquesÀSupprimer)
       const t4 = performance.now()
