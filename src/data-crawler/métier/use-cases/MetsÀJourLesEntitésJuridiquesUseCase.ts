@@ -38,10 +38,17 @@ export class MetsÀJourLesEntitésJuridiquesUseCase {
   }
 
   private extraisLesEntitésJuridiquesRécemmentFermées(entitésJuridiquesOuvertes: EntitéJuridique[], entitéJuridiquesSauvegardées: string[]): string[] {
-    return entitéJuridiquesSauvegardées.filter(
-      (entitéJuridiqueSauvegardée) => !entitésJuridiquesOuvertes.find(
-        (entitéJuridiqueOuverte) => entitéJuridiqueOuverte.numéroFinessEntitéJuridique === entitéJuridiqueSauvegardée
-      )
-    )
+    const entitésJuridiquesOuvertesSet = new Set(entitésJuridiquesOuvertes.map((entitéJuridique) => entitéJuridique.numéroFinessEntitéJuridique))
+    const entitésJuridiquesSauvegardéesSet = new Set(entitéJuridiquesSauvegardées)
+
+    const entitésJuridiquesRécemmentFermées = []
+
+    for (const numéroFinessEntitéJuridique of entitésJuridiquesSauvegardéesSet) {
+      if (!entitésJuridiquesOuvertesSet.has(numéroFinessEntitéJuridique)) {
+        entitésJuridiquesRécemmentFermées.push(numéroFinessEntitéJuridique)
+      }
+    }
+
+    return entitésJuridiquesRécemmentFermées
   }
 }

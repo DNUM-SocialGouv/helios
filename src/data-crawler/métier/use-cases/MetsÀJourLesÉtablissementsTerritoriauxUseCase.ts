@@ -35,7 +35,7 @@ export class MetsÀJourLesÉtablissementsTerritoriauxUseCase {
         établissementsTerritoriauxSauvegardés
       )
       const t4 = performance.now()
-      console.log(`Temps de extraction des établissements territoriaux à supprimer en ${t4 - t3}ms`)
+      console.log(`Temps d'extraction des établissements territoriaux à supprimer en ${t4 - t3}ms`)
 
       await this.établissementTerritorialHeliosRepository.supprime(établissementsTerritoriauxÀSupprimer)
       const t5 = performance.now()
@@ -54,10 +54,19 @@ export class MetsÀJourLesÉtablissementsTerritoriauxUseCase {
     établissementsTerritoriauxOuverts: ÉtablissementTerritorialIdentité[],
     établissementsTerritoriauxSauvegardés: string[]
   ) {
-    return établissementsTerritoriauxSauvegardés.filter(
-      (établissementTerritorialSauvegardé) => !établissementsTerritoriauxOuverts.find(
-        (établissementTerritorialOuverte) => établissementTerritorialOuverte.numéroFinessÉtablissementTerritorial === établissementTerritorialSauvegardé
-      )
+    const établissementsTerritoriauxOuvertsSet = new Set(
+      établissementsTerritoriauxOuverts.map((établissementTerritorial) => établissementTerritorial.numéroFinessÉtablissementTerritorial)
     )
+    const établissementsTerritoriauxSauvegardésSet = new Set(établissementsTerritoriauxSauvegardés)
+
+    const entitésJuridiquesRécemmentFermées = []
+
+    for (const numéroFinessEntitéJuridique of établissementsTerritoriauxSauvegardésSet) {
+      if (!établissementsTerritoriauxOuvertsSet.has(numéroFinessEntitéJuridique)) {
+        entitésJuridiquesRécemmentFermées.push(numéroFinessEntitéJuridique)
+      }
+    }
+
+    return entitésJuridiquesRécemmentFermées
   }
 }
