@@ -9,7 +9,7 @@ export class TypeOrmÉtablissementTerritorialHeliosLoader implements Établissem
   async récupèreLeNuméroFinessDesÉtablissementsTerritoriaux(): Promise<string[]> {
     const établissementsTerritoriaux = await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
-      .find({ select: { numéroFinessÉtablissementTerritorial: true } })
+      .find({ order: { numéroFinessÉtablissementTerritorial: 'ASC' }, select: { numéroFinessÉtablissementTerritorial: true } })
     return this.listeLesNumérosFiness(établissementsTerritoriaux)
   }
 

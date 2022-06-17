@@ -3,6 +3,7 @@ import { EntitéJuridique } from '../entities/EntitéJuridique'
 import { EntitéJuridiqueHeliosLoader } from '../gateways/EntitéJuridiqueHeliosLoader'
 import { EntitéJuridiqueHeliosRepository } from '../gateways/EntitéJuridiqueHeliosRepository'
 import { EntitéJuridiqueSourceExterneLoader } from '../gateways/EntitéJuridiqueSourceExterneLoader'
+import { détecteLesObjetsÀSupprimer } from './détecteLesObjetsÀSupprimer'
 
 export class MetsÀJourLesEntitésJuridiquesUseCase {
   constructor(
@@ -17,6 +18,7 @@ export class MetsÀJourLesEntitésJuridiquesUseCase {
       const entitéJuridiquesSauvegardées = await this.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques()
 
       const entitésJuridiquesÀSupprimer = this.extraisLesEntitésJuridiquesRécemmentFermées(entitésJuridiquesOuvertes, entitéJuridiquesSauvegardées)
+
       await this.entitéJuridiqueHeliosRepository.supprime(entitésJuridiquesÀSupprimer)
 
       await this.entitéJuridiqueHeliosRepository.sauvegarde(entitésJuridiquesOuvertes)
@@ -26,10 +28,9 @@ export class MetsÀJourLesEntitésJuridiquesUseCase {
   }
 
   private extraisLesEntitésJuridiquesRécemmentFermées(entitésJuridiquesOuvertes: EntitéJuridique[], entitéJuridiquesSauvegardées: string[]): string[] {
-    return entitéJuridiquesSauvegardées.filter(
-      (entitéJuridiqueSauvegardée) => !entitésJuridiquesOuvertes.find(
-        (entitéJuridiqueOuverte) => entitéJuridiqueOuverte.numéroFinessEntitéJuridique === entitéJuridiqueSauvegardée
-      )
-    )
+    const numérosFinessDesEntitésJuridiquesOuvertes = new Set(entitésJuridiquesOuvertes.map((entitéJuridique) => entitéJuridique.numéroFinessEntitéJuridique))
+    const numérosFinessDesEntitésJuridiquesSauvegardées = new Set(entitéJuridiquesSauvegardées)
+
+    return détecteLesObjetsÀSupprimer(numérosFinessDesEntitésJuridiquesOuvertes, numérosFinessDesEntitésJuridiquesSauvegardées)
   }
 }

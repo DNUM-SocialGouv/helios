@@ -14,6 +14,7 @@ describe('Mise à jour des établissements territoriaux', () => {
       fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader,
       fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader
     )
+    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts').mockReturnValue([])
     jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader, 'récupèreLeNuméroFinessDesEntitésJuridiques').mockResolvedValue(['123456789'])
     jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader, 'récupèreLeNuméroFinessDesÉtablissementsTerritoriaux').mockResolvedValue([])
 
@@ -68,7 +69,7 @@ describe('Mise à jour des établissements territoriaux', () => {
         téléphone: '0102030406',
       },
     ]
-    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts').mockResolvedValue(établissementsTerritoriaux)
+    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts').mockReturnValue(établissementsTerritoriaux)
     jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader, 'récupèreLeNuméroFinessDesÉtablissementsTerritoriaux').mockResolvedValue([])
 
     // WHEN
@@ -107,7 +108,7 @@ describe('Mise à jour des établissements territoriaux', () => {
         téléphone: '0102030405',
       },
     ]
-    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts').mockResolvedValue(établissementTerritorialOuvert)
+    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts').mockReturnValue(établissementTerritorialOuvert)
 
     const numérosFinessDesÉtablissementsEnBase = [
       numéroFinessÉtablissementTerritorialToujoursOuvert,

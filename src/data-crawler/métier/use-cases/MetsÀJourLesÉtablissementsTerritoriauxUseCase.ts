@@ -4,6 +4,7 @@ import { EntitéJuridiqueHeliosLoader } from '../gateways/EntitéJuridiqueHelios
 import { ÉtablissementTerritorialHeliosLoader } from '../gateways/ÉtablissementTerritorialHeliosLoader'
 import { ÉtablissementTerritorialRepository } from '../gateways/ÉtablissementTerritorialRepository'
 import { ÉtablissementTerritorialSourceExterneLoader } from '../gateways/ÉtablissementTerritorialSourceExterneLoader'
+import { détecteLesObjetsÀSupprimer } from './détecteLesObjetsÀSupprimer'
 
 export class MetsÀJourLesÉtablissementsTerritoriauxUseCase {
   constructor(
@@ -18,12 +19,14 @@ export class MetsÀJourLesÉtablissementsTerritoriauxUseCase {
       const numéroFinessDesEntitésJuridiques = await this.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques()
       const établissementsTerritoriauxOuverts =
         await this.établissementTerritorialSourceExterneLoader.récupèreLesÉtablissementsTerritoriauxOuverts(numéroFinessDesEntitésJuridiques)
+
       const établissementsTerritoriauxSauvegardés = await this.établissementTerritorialHeliosLoader.récupèreLeNuméroFinessDesÉtablissementsTerritoriaux()
 
       const établissementsTerritoriauxÀSupprimer = this.extraisLesÉtablissementsTerritoriauxRécemmentFermés(
         établissementsTerritoriauxOuverts,
         établissementsTerritoriauxSauvegardés
       )
+
       await this.établissementTerritorialHeliosRepository.supprime(établissementsTerritoriauxÀSupprimer)
 
       await this.établissementTerritorialHeliosRepository.sauvegarde(établissementsTerritoriauxOuverts)
@@ -36,10 +39,11 @@ export class MetsÀJourLesÉtablissementsTerritoriauxUseCase {
     établissementsTerritoriauxOuverts: ÉtablissementTerritorialIdentité[],
     établissementsTerritoriauxSauvegardés: string[]
   ) {
-    return établissementsTerritoriauxSauvegardés.filter(
-      (établissementTerritorialSauvegardé) => !établissementsTerritoriauxOuverts.find(
-        (établissementTerritorialOuverte) => établissementTerritorialOuverte.numéroFinessÉtablissementTerritorial === établissementTerritorialSauvegardé
-      )
+    const numérosFinessDesÉtablissementsTerritoriauxOuverts = new Set(
+      établissementsTerritoriauxOuverts.map((établissementTerritorial) => établissementTerritorial.numéroFinessÉtablissementTerritorial)
     )
+    const numérosFinessDesÉtablissementsTerritoriauxSauvegardés = new Set(établissementsTerritoriauxSauvegardés)
+
+    return détecteLesObjetsÀSupprimer(numérosFinessDesÉtablissementsTerritoriauxOuverts, numérosFinessDesÉtablissementsTerritoriauxSauvegardés)
   }
 }

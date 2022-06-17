@@ -9,7 +9,7 @@ export class TypeOrmEntitéJuridiqueHeliosLoader implements EntitéJuridiqueHeli
   async récupèreLeNuméroFinessDesEntitésJuridiques(): Promise<string[]> {
     const entitésJuridiques = await (await this.orm)
       .getRepository(EntitéJuridiqueModel)
-      .find({ select: { numéroFinessEntitéJuridique: true } })
+      .find({ order: { numéroFinessEntitéJuridique: 'ASC' }, select: { numéroFinessEntitéJuridique: true } })
     return this.listeLesNumérosFiness(entitésJuridiques)
   }
 

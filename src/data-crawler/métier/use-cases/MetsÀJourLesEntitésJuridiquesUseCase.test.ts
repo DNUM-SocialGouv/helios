@@ -12,6 +12,7 @@ describe('Mise à jour des entités juridiques', () => {
       fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader
     )
 
+    jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, 'récupèreLesEntitésJuridiquesOuvertes').mockReturnValue([])
     jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader, 'récupèreLeNuméroFinessDesEntitésJuridiques').mockResolvedValue([])
 
     // WHEN

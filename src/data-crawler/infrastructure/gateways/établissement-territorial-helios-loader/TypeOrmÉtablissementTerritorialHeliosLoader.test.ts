@@ -26,7 +26,7 @@ describe('La récupération des établissements territoriaux d’Helios', () => 
     await (await orm).destroy()
   })
 
-  it('récupère tous les numéros FINESS des établissements territoriaux', async () => {
+  it('récupère tous les numéros FINESS des établissements territoriaux dans l’ordre croissant', async () => {
     // GIVEN
     const entitéJuridique1 = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel(
       { numéroFinessEntitéJuridique: '123456789' }
@@ -40,8 +40,8 @@ describe('La récupération des établissements territoriaux d’Helios', () => 
     const numéroFinessÉtablissement2 = '222222222'
     const numéroFinessÉtablissement3 = '333333333'
     await établissementTerritorialRepository.insert([
-      ÉtablissementTerritorialIdentitéModelTestFactory.créeÉtablissementTerritorialIdentitéModel({ numéroFinessEntitéJuridique: '123456789', numéroFinessÉtablissementTerritorial: numéroFinessÉtablissement1 }),
       ÉtablissementTerritorialIdentitéModelTestFactory.créeAutreÉtablissementTerritorialIdentitéModel({ numéroFinessEntitéJuridique: '123456789', numéroFinessÉtablissementTerritorial: numéroFinessÉtablissement2 }),
+      ÉtablissementTerritorialIdentitéModelTestFactory.créeÉtablissementTerritorialIdentitéModel({ numéroFinessEntitéJuridique: '123456789', numéroFinessÉtablissementTerritorial: numéroFinessÉtablissement1 }),
       ÉtablissementTerritorialIdentitéModelTestFactory.créeÉtablissementTerritorialIdentitéModel({ numéroFinessEntitéJuridique: '987654321', numéroFinessÉtablissementTerritorial: numéroFinessÉtablissement3 }),
     ])
     const typeOrmÉtablissementTerritorialHeliosLoader = new TypeOrmÉtablissementTerritorialHeliosLoader(orm)

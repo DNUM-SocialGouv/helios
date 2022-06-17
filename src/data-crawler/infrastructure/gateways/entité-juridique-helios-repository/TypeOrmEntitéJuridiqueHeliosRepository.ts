@@ -6,7 +6,7 @@ import { EntitéJuridiqueHeliosRepository } from '../../../métier/gateways/Enti
 import { Logger } from '../../../métier/gateways/Logger'
 
 export class TypeOrmEntitéJuridiqueHeliosRepository implements EntitéJuridiqueHeliosRepository {
-  private readonly TAILLE_DE_FRAGMENT = 3000
+  private readonly TAILLE_DE_FRAGMENT = 50
 
   constructor(private readonly orm: Promise<DataSource>, private logger: Logger) {}
 

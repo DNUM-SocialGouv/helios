@@ -7,7 +7,7 @@ import { Logger } from '../../../métier/gateways/Logger'
 import { ÉtablissementTerritorialRepository } from '../../../métier/gateways/ÉtablissementTerritorialRepository'
 
 export class TypeOrmÉtablissementTerritorialRepository implements ÉtablissementTerritorialRepository {
-  private readonly TAILLE_DE_FRAGMENT = 3000
+  private readonly TAILLE_DE_FRAGMENT = 50
 
   constructor(private readonly orm: Promise<DataSource>, private logger: Logger) {}
 
