@@ -226,7 +226,7 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
     private logger: Logger
   ) {}
 
-  async récupèreLesÉtablissementsTerritoriauxOuverts(numéroFinessDesEntitésJuridiques: string[]): Promise<ÉtablissementTerritorialIdentité[]> {
+  récupèreLesÉtablissementsTerritoriauxOuverts(numéroFinessDesEntitésJuridiques: string[]): ÉtablissementTerritorialIdentité[] {
     const cheminDuFichierÉtablissementTerritorialIdentité = this.récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(this.localPath)
 
     const cheminDuFichierCatégorie = this.récupèreLeCheminDuFichierCatégorie(this.localPath)
