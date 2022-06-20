@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <horodatage>
+        <emetteur>finess</emetteur>
+        <destinataire>finess</destinataire>
+        <versionmessage>1</versionmessage>
+        <fluxnum>2005</fluxnum>
+        <datemaj>2021-12-14</datemaj>
+    </horodatage>
+    <structureej>
+        <nofiness>010000016</nofiness>
+        <rs>MAISON DE RETRAITE - DIVONNE-LES-BAINS</rs>
+        <rslongue>MAISON DE RETRAITE RESIDENCE DES ANCIENS - DIVONNE-LES-BAINS</rslongue>
+        <complrs xsi:nil="true"/>
+        <numvoie>240</numvoie>
+        <typvoie>R</typvoie>
+        <voie>GUY DE MAUPASSANT</voie>
+        <compvoie xsi:nil="true"/>
+        <compldistrib xsi:nil="true"/>
+        <lieuditbp xsi:nil="true"/>
+        <libellepays xsi:nil="true"/>
+        <commune>143</commune>
+        <ligneacheminement>01220 DIVONNE LES BAINS</ligneacheminement>
+        <libcommune>DIVONNE LES BAINS</libcommune>
+        <departement>01</departement>
+        <libdepartement>AIN</libdepartement>
+        <codepostal>01220</codepostal>
+        <codepays xsi:nil="true"/>
+        <telephone>0450201235</telephone>
+        <telecopie xsi:nil="true"/>
+        <statutjuridique>21</statutjuridique>
+        <libstatutjuridique>Etablissement Social et Médico-Social Communal</libstatutjuridique>
+        <libcourtstatutjuridique>Etb.Social Communal</libcourtstatutjuridique>
+        <categetab xsi:nil="true"/>
+        <libcategetab xsi:nil="true"/>
+        <libcourtcategetab xsi:nil="true"/>
+        <siren>260104633</siren>
+        <datemodifsiren>2010-01-01</datemodifsiren>
+        <originemodifsiren>RMESSMAIA_AUTO</originemodifsiren>
+        <codeape>8710A</codeape>
+        <datecrea>1994-01-01</datecrea>
+        <datemaj>2019-03-04</datemaj>
+        <datefermeture>2019-03-03</datefermeture>
+        <typefermeture>DEF</typefermeture>
+        <qualifcreation>GEN</qualifcreation>
+    </structureej>
+    <structureej>
+        <nofiness>010000156</nofiness>
+        <rs>CLINIQUE CONVERT</rs>
+        <rslongue>CLINIQUE CONVERT</rslongue>
+        <complrs xsi:nil="true"/>
+        <numvoie>62</numvoie>
+        <typvoie>AV</typvoie>
+        <voie>DE JASSERON</voie>
+        <compvoie xsi:nil="true"/>
+        <compldistrib xsi:nil="true"/>
+        <lieuditbp xsi:nil="true"/>
+        <libellepays xsi:nil="true"/>
+        <commune>053</commune>
+        <ligneacheminement>01000 BOURG EN BRESSE</ligneacheminement>
+        <libcommune>BOURG EN BRESSE</libcommune>
+        <departement>01</departement>
+        <libdepartement>AIN</libdepartement>
+        <codepostal>01000</codepostal>
+        <codepays xsi:nil="true"/>
+        <telephone>0428631234</telephone>
+        <telecopie xsi:nil="true"/>
+        <statutjuridique>73</statutjuridique>
+        <libstatutjuridique>Société Anonyme (S.A.)</libstatutjuridique>
+        <libcourtstatutjuridique>Société Anonyme</libcourtstatutjuridique>
+        <categetab xsi:nil="true"/>
+        <libcategetab xsi:nil="true"/>
+        <libcourtcategetab xsi:nil="true"/>
+        <siren>772201489</siren>
+        <datemodifsiren>2011-02-07</datemodifsiren>
+        <originemodifsiren>RMESSMAIA_AUTO</originemodifsiren>
+        <codeape>8610Z</codeape>
+        <datecrea>2001-01-01</datecrea>
+        <datemaj>2021-10-18</datemaj>
+        <datefermeture xsi:nil="true"/>
+        <typefermeture xsi:nil="true"/>
+        <qualifcreation>GEN</qualifcreation>
+    </structureej>
+</fluxfiness>
