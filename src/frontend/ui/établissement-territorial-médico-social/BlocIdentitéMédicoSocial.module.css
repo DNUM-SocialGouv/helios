@@ -12,3 +12,13 @@
 .liste-indicateurs li {
   padding-bottom: 0;
 }
+
+@media (max-width: 36em) {
+  .liste-indicateurs {
+    display: inherit;
+  }
+
+  .liste-indicateurs li {
+    margin-bottom: 1rem;
+  }
+}

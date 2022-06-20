@@ -8,10 +8,7 @@ export const Footer = () => {
   const { paths, wording } = useDependencies()
 
   return (
-    <footer
-      className="fr-footer fr-mt-6w"
-      role="contentinfo"
-    >
+    <footer className="fr-footer fr-mt-6w">
       <div className="fr-container">
         <div className="fr-footer__body">
           <div className="fr-footer__brand fr-enlarge-link">
