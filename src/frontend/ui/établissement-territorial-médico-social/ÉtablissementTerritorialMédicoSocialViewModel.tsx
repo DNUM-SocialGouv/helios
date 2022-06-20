@@ -113,9 +113,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
         {
           borderColor: '#929292',
           borderDash: [3, 3],
-          data: [100, 100, 100],
+          data: [{ x: -1, y: 100 }, { x: 2, y: 100 }],
           datalabels: { display: false },
           type: 'line',
+          xAxisID: 'xLine',
         },
         {
           backgroundColor: chartColors,
@@ -156,9 +157,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
         {
           borderColor: '#929292',
           borderDash: [3, 3],
-          data: [100, 100, 100],
+          data: [{ x: -1, y: 100 }, { x: 2, y: 100 }],
           datalabels: { display: false },
           type: 'line',
+          xAxisID: 'xLine',
         },
         {
           backgroundColor: chartColors,
@@ -199,9 +201,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
         {
           borderColor: '#929292',
           borderDash: [3, 3],
-          data: [100, 100, 100],
+          data: [{ x: -1, y: 100 }, { x: 2, y: 100 }],
           datalabels: { display: false },
           type: 'line',
+          xAxisID: 'xLine',
         },
         {
           backgroundColor: chartColors,
@@ -214,6 +217,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
           data: [100, 100, 100],
           datalabels: { display: false },
           type: 'bar',
+          xAxisID: 'x',
         },
       ],
       labels,
@@ -263,8 +267,12 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
             drawTicks: false,
           },
           stacked: true,
-          ticks: { color: '#000' },
+          ticks: {
+            color: '#000',
+            font: { weight: ['normal', 'normal', 'bold'] },
+          },
         },
+        xLine: { display: false, max: 1, min: 0, type: 'linear' },
         y: {
           display: false,
           max: this.valeurAtypique,
