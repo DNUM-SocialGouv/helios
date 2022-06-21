@@ -12,7 +12,10 @@ export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéType) 
   const { wording } = useDependencies()
 
   return (
-    <Bloc titre={wording.TITRE_BLOC_IDENTITÉ}>
+    <Bloc
+      estCeIdentité={true}
+      titre={wording.TITRE_BLOC_IDENTITÉ}
+    >
       <ul
         className={styles['liste-indicateurs']}
       >

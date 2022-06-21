@@ -1,6 +1,4 @@
 .titre-bloc {
-  background: var(--blue-france-sun-113-625);
-  color: var(--text-inverted-grey);
   font-size: unset;
   line-height: unset;
   margin: 0;
@@ -8,7 +6,18 @@
   text-transform: uppercase;
 }
 
+.titre-bloc-identité {
+  background: var(--blue-france-sun-113-625);
+  color: var(--text-inverted-grey);
+}
+
+.titre-bloc-détail {
+  background: var(--blue-france-850-200);
+  color: var(--blue-france-sun-113-625);
+}
+
 .contenu-bloc {
   background: var(--background-alt-grey);
   padding: 1rem 1rem 1.5rem;
+  margin-bottom: 1.5rem;
 }

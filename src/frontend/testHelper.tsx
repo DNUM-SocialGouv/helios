@@ -18,7 +18,7 @@ jest.mock('next/head', () => (
 
 export const renderFakeComponent = (component: ReactChild): RenderResult => {
   return render(
-    <DependenciesProvider dependencies={fakeFrontDependencies}>
+    <DependenciesProvider>
       {component}
     </DependenciesProvider>
   )

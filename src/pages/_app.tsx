@@ -4,14 +4,13 @@ import Script from 'next/script'
 import '@gouvfr/dsfr/dist/core/core.min.css'
 import '../frontend/ui/commun/global.css'
 
-import { frontDependencies } from '../frontend/configuration/frontDependencies'
 import { DependenciesProvider } from '../frontend/ui/commun/contexts/useDependencies'
 import { Footer } from '../frontend/ui/commun/Footer/Footer'
 import { Header } from '../frontend/ui/commun/Header/Header'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <DependenciesProvider dependencies={frontDependencies}>
+    <DependenciesProvider>
       <Head>
         <meta charSet="utf-8" />
         <meta

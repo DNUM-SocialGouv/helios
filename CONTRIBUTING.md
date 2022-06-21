@@ -329,10 +329,12 @@ interface Repository<T> {
 
 ### Tests
 
-- Les fichiers de tests sont placés aux côtés du fichier testé
+- Les fichiers de tests sont placés aux côtés du fichier testé ;
 
-- Les fichiers de tests portent le nom du fichier testé et sont suffixés par `.test.ts(x?)`
+- Les fichiers de tests portent le nom du fichier testé et sont suffixés par `.test.ts(x?)` ;
 
-- Les verbes décrivant une action de méthode sont à l'impératif, comme c'est le cas dans la méthode testée
+- Les verbes décrivant une action de méthode sont à l'impératif, comme c'est le cas dans la méthode testée ;
 
-- Les objets attendus sont déclarés dans la partie *THEN* des tests
+- Les objets attendus sont déclarés dans la partie *THEN* des tests ;
+
+- Les graphiques (canvas) ne sont pas testés. On teste leur alternative textuel (tableau).

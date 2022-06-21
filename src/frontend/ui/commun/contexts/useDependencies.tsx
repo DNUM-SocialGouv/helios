@@ -12,11 +12,10 @@ export function useDependencies() {
 
 type DependenciesProviderProps = Readonly<{
   children: ReactNode
-  dependencies: FrontDependencies
 }>
 
-export const DependenciesProvider = ({ children, dependencies }: DependenciesProviderProps) => (
-  <DependenciesContext.Provider value={dependencies}>
+export const DependenciesProvider = ({ children }: DependenciesProviderProps) => (
+  <DependenciesContext.Provider value={frontDependencies}>
     {children}
   </DependenciesContext.Provider>
 )

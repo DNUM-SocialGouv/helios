@@ -1,0 +1,10 @@
+.liste-indicateurs {
+  gap: 1rem;
+  display: grid;
+  grid-template-areas:
+    "Graph Graph Graph";
+  grid-template-columns: repeat(3, 1fr);
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}

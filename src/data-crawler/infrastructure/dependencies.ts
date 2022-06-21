@@ -36,7 +36,7 @@ export type Dependencies = Readonly<{
   unzipRawData: UnzipRawData
 }>
 
-const _instantiateDependencies = (): Dependencies => {
+const createDependencies = (): Dependencies => {
   dotEnvConfig()
   const logger = new ConsoleLogger()
   const environmentVariables = new NodeEnvironmentVariables(logger)
@@ -66,16 +66,4 @@ const _instantiateDependencies = (): Dependencies => {
   }
 }
 
-class DependenciesSingleton {
-  private static instance: Dependencies
-
-  static getInstance(): Dependencies {
-    if (!DependenciesSingleton.instance) {
-      DependenciesSingleton.instance = _instantiateDependencies()
-    }
-
-    return DependenciesSingleton.instance
-  }
-}
-
-export const dependencies = DependenciesSingleton.getInstance()
+export const dependencies = createDependencies()
