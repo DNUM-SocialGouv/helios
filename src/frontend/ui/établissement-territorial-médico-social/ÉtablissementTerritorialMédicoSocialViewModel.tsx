@@ -1,4 +1,4 @@
-import { ChartData, Chart as ChartJS, CategoryScale, LinearScale, BarElement, PointElement, LineElement } from 'chart.js'
+import { ChartData, Chart as ChartJS, CategoryScale, LinearScale, BarElement, PointElement, LineElement, LineController } from 'chart.js'
 import ChartDataLabels, { Context } from 'chartjs-plugin-datalabels'
 import { ReactElement } from 'react'
 import { Bar } from 'react-chartjs-2'
@@ -33,12 +33,13 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     ]
 
     ChartJS.register(
-      CategoryScale,
-      LinearScale,
       BarElement,
+      CategoryScale,
       ChartDataLabels,
-      PointElement,
-      LineElement
+      LinearScale,
+      LineController,
+      LineElement,
+      PointElement
     )
   }
 
