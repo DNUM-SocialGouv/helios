@@ -1,3 +1,5 @@
+import sys
+
 import pandas as pd
 from numpy import NaN
 
@@ -11,10 +13,12 @@ def conserveLesÉtablissementsOuverts(établissements: pd.DataFrame) -> pd.DataF
 
 
 def main():
+    fichier = sys.argv[1]
+
     logger = configure_logger()
 
     établissements_territoriaux_finess = charge_un_fichier_xml(
-        "./établissements_territoriaux.xml.gz", ".//structureet"
+        fichier, ".//structureet"
     )
     logger.info(établissements_territoriaux_finess.shape[0])
 

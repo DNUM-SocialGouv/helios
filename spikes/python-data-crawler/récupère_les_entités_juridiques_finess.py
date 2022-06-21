@@ -1,3 +1,5 @@
+import sys
+
 import pandas as pd
 from sqlalchemy import create_engine
 
@@ -51,10 +53,9 @@ def sauvegarde_les_entités_juridiques(entités_juridiques: pd.DataFrame):
 
 
 def main():
+    fichier = sys.argv[1]
     logger = configure_logger()
-    entités_juridiques_finess = charge_un_fichier_xml(
-        "./entités_juridiques.xml.gz", ".//structureej"
-    )
+    entités_juridiques_finess = charge_un_fichier_xml(fichier, ".//structureej")
     logger.info(entités_juridiques_finess.shape[0])
 
     entités_juridiques_ouvertes_finess = conserve_les_entités_juridiques_ouvertes(
