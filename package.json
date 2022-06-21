@@ -5,6 +5,7 @@
   "scripts": {
     "amibroken": "yarn deadcode && yarn lint && yarn tsc && yarn test && yarn build",
     "bash:production": "scalingo -a helios run bash",
+    "bash:production:xl": "scalingo -a helios run --size XL bash",
     "build": "next build",
     "deadcode": "ts-prune --ignore 'src/pages'",
     "depcheck": "depcheck",
