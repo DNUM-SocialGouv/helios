@@ -4,12 +4,12 @@ import styles from './Bloc.module.css'
 
 type BlocProps = Readonly<{
   children?: ReactChild | ReactChild[];
-  estCeLePrincipal?: boolean,
+  estCeIdentité?: boolean,
   titre: string;
 }>
 
-export const Bloc = ({ children, estCeLePrincipal = false, titre }: BlocProps) => {
-  const classeDuTitre = estCeLePrincipal ? styles['titre-bloc-principal'] : styles['titre-bloc-secondaire']
+export const Bloc = ({ children, estCeIdentité = false, titre }: BlocProps) => {
+  const classeDuTitre = estCeIdentité ? styles['titre-bloc-identité'] : styles['titre-bloc-détail']
 
   return (
     <section aria-label={titre}>

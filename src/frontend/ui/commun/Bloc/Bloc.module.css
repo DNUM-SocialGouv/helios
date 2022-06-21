@@ -6,12 +6,12 @@
   text-transform: uppercase;
 }
 
-.titre-bloc-principal {
+.titre-bloc-identité {
   background: var(--blue-france-sun-113-625);
   color: var(--text-inverted-grey);
 }
 
-.titre-bloc-secondaire {
+.titre-bloc-détail {
   background: var(--blue-france-850-200);
   color: var(--blue-france-sun-113-625);
 }

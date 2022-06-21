@@ -2,7 +2,7 @@
   gap: 1rem;
   display: grid;
   grid-template-areas:
-    "header header header";
+    "Graph Graph Graph";
   grid-template-columns: repeat(3, 1fr);
   list-style-type: none;
   padding: 0;

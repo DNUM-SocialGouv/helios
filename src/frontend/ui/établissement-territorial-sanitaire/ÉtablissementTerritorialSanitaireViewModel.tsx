@@ -16,7 +16,7 @@ export class ÉtablissementTerritorialSanitaireViewModel {
         <abbr title={this.wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
         &nbsp;
         {'- '}
-        {this.formateLeTitreDeLEntitéJuridiqueDeRattachement}
+        {this.formateLeTitreDeLEntitéJuridiqueDeRattachement()}
       </>
     )
   }
@@ -61,7 +61,7 @@ export class ÉtablissementTerritorialSanitaireViewModel {
     return this.formateLaDate(this.établissementTerritorialIdentité.dateMiseAJourSource)
   }
 
-  private get formateLeTitreDeLEntitéJuridiqueDeRattachement() {
+  private formateLeTitreDeLEntitéJuridiqueDeRattachement() {
     const numéroFinessEntitéJuridiqueFormaté = this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorialIdentité.numéroFinessEntitéJuridique, 3)
     const nomDeLEntitéJuridique = this.établissementTerritorialIdentité.raisonSocialeDeLEntitéDeRattachement
     return `${numéroFinessEntitéJuridiqueFormaté} - ${nomDeLEntitéJuridique}`

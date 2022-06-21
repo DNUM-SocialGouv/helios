@@ -13,7 +13,7 @@ export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéType) 
 
   return (
     <Bloc
-      estCeLePrincipal={true}
+      estCeIdentité={true}
       titre={wording.TITRE_BLOC_IDENTITÉ}
     >
       <ul

@@ -13,7 +13,7 @@ export const BlocIdentitéMédicoSocial = ({ établissementTerritorialMédicoSoc
 
   return (
     <Bloc
-      estCeLePrincipal={true}
+      estCeIdentité={true}
       titre={wording.TITRE_BLOC_IDENTITÉ}
     >
       <ul className={styles['liste-indicateurs']}>

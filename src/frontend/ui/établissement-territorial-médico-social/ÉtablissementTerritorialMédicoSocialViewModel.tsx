@@ -11,19 +11,25 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   readonly valeurAtypique: number
   readonly fondDeCouleurPourPremierHistogramme: string[]
   readonly fondDeCouleurPourSecondHistogramme: string[]
+  readonly couleurDuFond: string = '#E8EDFF'
+  readonly couleurDuFondHistogrammePrimaire: string = '#000091'
+  readonly couleurDuFondHistogrammeSecondaire: string = '#4E68BB'
+  readonly couleurDuFondDeLaLigne: string = '#929292'
+  readonly couleurDuFondHistogrammeDeDépassement: string = '#C9191E'
+  readonly couleurDelAbscisse: string = '#000'
 
   constructor(private readonly établissementTerritorialIdentité: ÉtablissementTerritorialMédicoSocialIdentité, private readonly wording: Wording) {
     // TODO: à modifier avec les données du backend
     this.valeurAtypique = 120
     this.fondDeCouleurPourSecondHistogramme = [
-      '#E8EDFF',
-      '#E8EDFF',
-      '#E8EDFF',
+      this.couleurDuFond,
+      this.couleurDuFond,
+      this.couleurDuFond,
     ]
     this.fondDeCouleurPourPremierHistogramme = [
-      '#4E68BB',
-      '#4E68BB',
-      '#000091',
+      this.couleurDuFondHistogrammeSecondaire,
+      this.couleurDuFondHistogrammeSecondaire,
+      this.couleurDuFondHistogrammePrimaire,
     ]
 
     ChartJS.register(
@@ -46,7 +52,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
         <abbr title={this.wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
           &nbsp;
         {'- '}
-        {this.formateLeTitreDeLEntitéJuridiqueDeRattachement}
+        {this.formateLeTitreDeLEntitéJuridiqueDeRattachement()}
       </>
     )
   }
@@ -74,7 +80,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   public get entitéJuridiqueDeRattachement(): string {
-    const titreDeLEntitéJuridiqueDeRattachement = this.formateLeTitreDeLEntitéJuridiqueDeRattachement
+    const titreDeLEntitéJuridiqueDeRattachement = this.formateLeTitreDeLEntitéJuridiqueDeRattachement()
     return `EJ - ${titreDeLEntitéJuridiqueDeRattachement}`
   }
 
@@ -103,117 +109,60 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   public get tauxOccupationHébergementPermanent(): JSX.Element {
     // TODO: à modifier avec les données du backend
     const dataPoints = [94, 97, 101]
-    const chartColors = this.construitFondDeCouleurDesHistogrammes(dataPoints)
+    const chartColors = this.construisLeFondDeCouleurDesHistogrammes(dataPoints)
     // TODO: à modifier avec les données du backend
     const labels = ['2019', '2020', '2021']
-    const labelsColor = this.construitCouleurDuLabel(dataPoints)
+    const labelsColor = this.construisLaCouleurDuLabel(dataPoints)
 
-    const data: ChartData = {
-      datasets: [
-        {
-          borderColor: '#929292',
-          borderDash: [3, 3],
-          data: [100, 100, 100],
-          datalabels: { display: false },
-          type: 'line',
-        },
-        {
-          backgroundColor: chartColors,
-          data: dataPoints,
-          datalabels: { labels: { title: { color: labelsColor } } },
-          type: 'bar',
-        },
-        {
-          backgroundColor: this.fondDeCouleurPourSecondHistogramme,
-          data: [100, 100, 100],
-          datalabels: { display: false },
-          type: 'bar',
-        },
-      ],
-      labels,
-    }
-
-    return (
-      <Bar
-        // @ts-ignore
-        data={data}
-        // @ts-ignore
-        options={this.optionsHistogramme()}
-      />
-    )
+    return this.afficheUnHistogramme(chartColors, dataPoints, labelsColor, labels)
   }
 
   public get tauxOccupationHébergementTemporaire(): JSX.Element {
     // TODO: à modifier avec les données du backend
     const dataPoints = [70, 121, 67]
-    const chartColors = this.construitFondDeCouleurDesHistogrammes(dataPoints)
+    const chartColors = this.construisLeFondDeCouleurDesHistogrammes(dataPoints)
     // TODO: à modifier avec les données du backend
     const labels = ['2019', '2020', '2021']
-    const labelsColor = this.construitCouleurDuLabel(dataPoints)
+    const labelsColor = this.construisLaCouleurDuLabel(dataPoints)
 
-    const data: ChartData = {
-      datasets: [
-        {
-          borderColor: '#929292',
-          borderDash: [3, 3],
-          data: [100, 100, 100],
-          datalabels: { display: false },
-          type: 'line',
-        },
-        {
-          backgroundColor: chartColors,
-          data: dataPoints,
-          datalabels: { labels: { title: { color: labelsColor } } },
-          type: 'bar',
-        },
-        {
-          backgroundColor: this.fondDeCouleurPourSecondHistogramme,
-          data: [100, 100, 100],
-          datalabels: { display: false },
-          type: 'bar',
-        },
-      ],
-      labels,
-    }
-
-    return (
-      <Bar
-        // @ts-ignore
-        data={data}
-        // @ts-ignore
-        options={this.optionsHistogramme()}
-      />
-    )
+    return this.afficheUnHistogramme(chartColors, dataPoints, labelsColor, labels)
   }
 
   public get tauxOccupationHébergementAccueilDeJour(): JSX.Element {
     // TODO: à modifier avec les données du backend
     const dataPoints = [0, 15, 20]
-    const chartColors = this.construitFondDeCouleurDesHistogrammes(dataPoints)
+    const chartColors = this.construisLeFondDeCouleurDesHistogrammes(dataPoints)
     // TODO: à modifier avec les données du backend
     const labels = ['2019', '2020', '2021']
-    const labelsColor = this.construitCouleurDuLabel(dataPoints)
+    const labelsColor = this.construisLaCouleurDuLabel(dataPoints)
 
+    return this.afficheUnHistogramme(chartColors, dataPoints, labelsColor, labels)
+  }
+
+  private afficheUnHistogramme(chartColors: string[], dataPoints: number[], labelsColor: string[], labels: string[]): JSX.Element {
     const data: ChartData = {
       datasets: [
         {
-          borderColor: '#929292',
+          borderColor: this.couleurDuFondDeLaLigne,
           borderDash: [3, 3],
-          data: [100, 100, 100],
+          data: [{ x: -1, y: 100 }, { x: 2, y: 100 }],
           datalabels: { display: false },
           type: 'line',
+          xAxisID: 'xLine',
         },
         {
           backgroundColor: chartColors,
           data: dataPoints,
           datalabels: { labels: { title: { color: labelsColor } } },
           type: 'bar',
+          xAxisID: 'x',
         },
         {
           backgroundColor: this.fondDeCouleurPourSecondHistogramme,
           data: [100, 100, 100],
           datalabels: { display: false },
           type: 'bar',
+          xAxisID: 'x',
         },
       ],
       labels,
@@ -229,7 +178,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     )
   }
 
-  private get formateLeTitreDeLEntitéJuridiqueDeRattachement() {
+  private formateLeTitreDeLEntitéJuridiqueDeRattachement() {
     const numéroFinessEntitéJuridiqueFormaté = StringFormater.formateLeNuméroFiness(this.établissementTerritorialIdentité.numéroFinessEntitéJuridique)
     const nomDeLEntitéJuridique = this.établissementTerritorialIdentité.raisonSocialeDeLEntitéDeRattachement
     return `${numéroFinessEntitéJuridiqueFormaté} - ${nomDeLEntitéJuridique}`
@@ -263,8 +212,12 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
             drawTicks: false,
           },
           stacked: true,
-          ticks: { color: '#000' },
+          ticks: {
+            color: this.couleurDelAbscisse,
+            font: { weight: ['normal', 'normal', 'bold'] },
+          },
         },
+        xLine: { display: false, max: 1, min: 0, type: 'linear' },
         y: {
           display: false,
           max: this.valeurAtypique,
@@ -274,19 +227,19 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     }
   }
 
-  private construitFondDeCouleurDesHistogrammes(dataPoints: number[]) {
+  private construisLeFondDeCouleurDesHistogrammes(dataPoints: number[]) {
     const fondDeCouleurDesHistogrammes = [...this.fondDeCouleurPourPremierHistogramme]
 
     dataPoints.forEach((dataPoint: number, index: number) => {
       if (dataPoint > this.valeurAtypique) {
-        fondDeCouleurDesHistogrammes[index] = '#C9191E'
+        fondDeCouleurDesHistogrammes[index] = this.couleurDuFondHistogrammeDeDépassement
       }
     })
 
     return fondDeCouleurDesHistogrammes
   }
 
-  private construitCouleurDuLabel(dataPoints: number[]): string[] {
+  private construisLaCouleurDuLabel(dataPoints: number[]): string[] {
     const maxAvantDePerdreLeContraste = 20
     const couleurDesLabels = ['white', 'white', 'white']
 

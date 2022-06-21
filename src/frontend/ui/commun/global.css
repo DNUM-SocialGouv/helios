@@ -1,9 +1,13 @@
+:root {
+  --mobile: 36em;
+}
+
 #__next {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 main {
-    flex-grow: 1;
+  flex-grow: 1;
 }
