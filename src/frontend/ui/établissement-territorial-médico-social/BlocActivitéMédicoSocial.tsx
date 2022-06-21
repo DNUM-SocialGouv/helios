@@ -35,6 +35,34 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
         >
           {établissementTerritorialMédicoSocialViewModel.tauxOccupationHébergementAccueilDeJour}
         </IndicateurGraphique>
+        <IndicateurGraphique
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+          nomDeLIndicateur={wording.TAUX_RÉALISATION_ACTIVITÉ}
+          source={wording.DIAMANT}
+        >
+          {établissementTerritorialMédicoSocialViewModel.tauxRéalisationActivité}
+        </IndicateurGraphique>
+        <IndicateurGraphique
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+          nomDeLIndicateur={wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES_SUR_PERIODE}
+          source={wording.DIAMANT}
+        >
+          {établissementTerritorialMédicoSocialViewModel.fileActiveDesPersonnesAccompagnéesSurLaPériode}
+        </IndicateurGraphique>
+        <IndicateurGraphique
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+          nomDeLIndicateur={wording.NOMBRE_MOYEN_JOURNÉE_ABSENCE_PERSONNES_ACCOMPAGNÉES_SUR_PERIODE}
+          source={wording.DIAMANT}
+        >
+          {établissementTerritorialMédicoSocialViewModel.nombreMoyenJournéesAbsenceDesPersonnesAccompagnésSurPeriode}
+        </IndicateurGraphique>
+        <IndicateurGraphique
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+          nomDeLIndicateur={wording.DURÉE_MOEYNNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES}
+          source={wording.DIAMANT}
+        >
+          {établissementTerritorialMédicoSocialViewModel.duréeMoyenneSéjourEtAcompagnementDesPersonnesSorties}
+        </IndicateurGraphique>
       </ul>
     </Bloc>
   )

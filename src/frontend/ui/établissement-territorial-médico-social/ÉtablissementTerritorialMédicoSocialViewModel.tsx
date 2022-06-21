@@ -11,12 +11,13 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   readonly valeurAtypique: number
   readonly fondDeCouleurPourPremierHistogramme: string[]
   readonly fondDeCouleurPourSecondHistogramme: string[]
-  readonly couleurDuFond: string = '#E8EDFF'
+  readonly couleurDuFond: string = '#FFFFFF'
   readonly couleurDuFondHistogrammePrimaire: string = '#000091'
   readonly couleurDuFondHistogrammeSecondaire: string = '#4E68BB'
   readonly couleurDuFondDeLaLigne: string = '#929292'
   readonly couleurDuFondHistogrammeDeDépassement: string = '#C9191E'
   readonly couleurDelAbscisse: string = '#000'
+  readonly couleurDeLaValeur: string = '#3A3A3A'
 
   constructor(private readonly établissementTerritorialIdentité: ÉtablissementTerritorialMédicoSocialIdentité, private readonly wording: Wording) {
     // TODO: à modifier avec les données du backend
@@ -139,6 +140,50 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     return this.afficheUnHistogramme(chartColors, dataPoints, labelsColor, labels)
   }
 
+  public get tauxRéalisationActivité(): JSX.Element {
+    // TODO: à modifier avec les données du backend
+    const dataPoints = [100, 94, 96]
+    const chartColors = this.construisLeFondDeCouleurDesHistogrammes(dataPoints)
+    // TODO: à modifier avec les données du backend
+    const labels = ['2019', '2020', '2021']
+    const labelsColor = this.construisLaCouleurDuLabel(dataPoints)
+
+    return this.afficheUnHistogramme(chartColors, dataPoints, labelsColor, labels)
+  }
+
+  public get fileActiveDesPersonnesAccompagnéesSurLaPériode(): JSX.Element {
+    // TODO: à modifier avec les données du backend
+    const dataPoints = [340, 280, 300]
+    const chartColors = this.fondDeCouleurPourPremierHistogramme
+    // TODO: à modifier avec les données du backend
+    const labels = ['2019', '2020', '2021']
+    const labelsColor = this.construisLaCouleurDuLabel(dataPoints, true)
+
+    return this.afficheUnHistogrammeHorizontal(chartColors, dataPoints, labelsColor, labels)
+  }
+
+  public get nombreMoyenJournéesAbsenceDesPersonnesAccompagnésSurPeriode(): JSX.Element {
+    // TODO: à modifier avec les données du backend
+    const dataPoints = [87, 90, 22]
+    const chartColors = this.fondDeCouleurPourPremierHistogramme
+    // TODO: à modifier avec les données du backend
+    const labels = ['2021', '2020', '2019']
+    const labelsColor = this.construisLaCouleurDuLabel(dataPoints, true)
+
+    return this.afficheUnHistogrammeHorizontal(chartColors, dataPoints, labelsColor, labels)
+  }
+
+  public get duréeMoyenneSéjourEtAcompagnementDesPersonnesSorties(): JSX.Element {
+    // TODO: à modifier avec les données du backend
+    const dataPoints = [1013, 994, 990]
+    const chartColors = this.fondDeCouleurPourPremierHistogramme
+    // TODO: à modifier avec les données du backend
+    const labels = ['2021', '2020', '2019']
+    const labelsColor = this.construisLaCouleurDuLabel(dataPoints, true)
+
+    return this.afficheUnHistogrammeHorizontal(chartColors, dataPoints, labelsColor, labels)
+  }
+
   private afficheUnHistogramme(chartColors: string[], dataPoints: number[], labelsColor: string[], labels: string[]): JSX.Element {
     const data: ChartData = {
       datasets: [
@@ -174,6 +219,30 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
         data={data}
         // @ts-ignore
         options={this.optionsHistogramme()}
+      />
+    )
+  }
+
+  private afficheUnHistogrammeHorizontal(chartColors: string[], dataPoints: number[], labelsColor: string[], labels: string[]): JSX.Element {
+    const data: ChartData = {
+      datasets: [
+        {
+          backgroundColor: chartColors,
+          data: dataPoints,
+          datalabels: { labels: { title: { color: labelsColor } } },
+          type: 'bar',
+          yAxisID: 'y',
+        },
+      ],
+      labels,
+    }
+
+    return (
+      <Bar
+        // @ts-ignore
+        data={data}
+        // @ts-ignore
+        options={this.optionsHistogrammeHorizontal(Math.max(...dataPoints))}
       />
     )
   }
@@ -226,6 +295,44 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
       },
     }
   }
+  private optionsHistogrammeHorizontal(maxValue: number) {
+    return {
+      animation: false,
+      indexAxis: 'y',
+      plugins: {
+        datalabels: {
+          align: 'end',
+          anchor: 'end',
+          font: {
+            family: 'Marianne',
+            size: 14,
+            weight: 'normal',
+          },
+          formatter: (value: string, _context: Context): string => value,
+        },
+      },
+      radius: false,
+      scales: {
+        x: {
+          display: false,
+          max: maxValue + 200,
+          min: 0,
+          stacked: true,
+        },
+        y: {
+          grid: {
+            drawBorder: false,
+            drawOnChartArea: false,
+            drawTicks: false,
+          },
+          ticks: {
+            color: this.couleurDelAbscisse,
+            font: { weight: ['normal', 'normal', 'bold'] },
+          },
+        },
+      },
+    }
+  }
 
   private construisLeFondDeCouleurDesHistogrammes(dataPoints: number[]) {
     const fondDeCouleurDesHistogrammes = [...this.fondDeCouleurPourPremierHistogramme]
@@ -239,9 +346,9 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     return fondDeCouleurDesHistogrammes
   }
 
-  private construisLaCouleurDuLabel(dataPoints: number[]): string[] {
+  private construisLaCouleurDuLabel(dataPoints: number[], isHorizontal: boolean = false): string[] {
     const maxAvantDePerdreLeContraste = 20
-    const couleurDesLabels = ['white', 'white', 'white']
+    const couleurDesLabels = isHorizontal ? Array(3).fill(this.couleurDeLaValeur) : Array(3).fill(this.couleurDuFond)
 
     dataPoints.forEach((dataPoint: number, index: number) => {
       if (dataPoint < maxAvantDePerdreLeContraste) {
