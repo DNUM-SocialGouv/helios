@@ -1,5 +1,5 @@
 .liste-indicateurs {
-  column-gap: .5rem;
+  column-gap: 3.5rem;
   display: grid;
   grid-template-areas:
   "graph1 graph1 graph2 graph2 graph3 graph3"
@@ -10,6 +10,11 @@
   row-gap: 2rem;
   padding: 0;
   width: 100%;
+}
+.liste-indicateurs li {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .liste-indicateurs li:nth-child(1) {
