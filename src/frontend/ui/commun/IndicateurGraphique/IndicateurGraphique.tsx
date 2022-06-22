@@ -23,14 +23,16 @@ export const IndicateurGraphique = ({ dateDeMiseÀJour, nomDeLIndicateur, source
 
   return (
     <li>
-      <p className="fr-m-0">
-        {nomDeLIndicateur}
-      </p>
-      <p className="fr-text--xs">
-        {miseÀJour}
-        {wordingSource}
-        {source}
-      </p>
+      <div>
+        <p className="fr-m-0">
+          {nomDeLIndicateur}
+        </p>
+        <p className="fr-text--xs">
+          {miseÀJour}
+          {wordingSource}
+          {source}
+        </p>
+      </div>
       <div className={styles['graphe']}>
         {children}
       </div>
