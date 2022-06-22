@@ -1,9 +1,9 @@
 import { Repository } from 'typeorm'
 
-import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
-import { ÉtablissementTerritorialIdentitéModel } from '../../../../database/models/ÉtablissementTerritorialIdentitéModel'
-import { EntitéJuridiqueModelTestFactory } from '../../../../database/test-factories/EntitéJuridiqueModelTestFactory'
-import { ÉtablissementTerritorialIdentitéModelTestFactory } from '../../../../database/test-factories/ÉtablissementTerritorialIdentitéModelTestFactory'
+import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
+import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
+import { EntitéJuridiqueModelTestFactory } from '../../../../../database/test-factories/EntitéJuridiqueModelTestFactory'
+import { ÉtablissementTerritorialIdentitéModelTestFactory } from '../../../../../database/test-factories/ÉtablissementTerritorialIdentitéModelTestFactory'
 import { getOrm } from '../../../testHelper'
 import { TypeOrmÉtablissementTerritorialHeliosLoader } from './TypeOrmÉtablissementTerritorialHeliosLoader'
 

@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pandas = "*"
+sqlalchemy = "*"
+psycopg2 = "*"
+
+[dev-packages]
+jupyter = "*"
+ipykernel = "*"
+
+[requires]
+python_version = "3.10"

@@ -4,10 +4,12 @@ const createJestConfig = nextJest({ dir: './' })
 
 const customJestConfig = {
   clearMocks: true,
+  // TODO
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
+    'data-crawler/**/*.{ts,tsx}',
     '!**/node_modules/**',
-    '!src/database/**',
+    '!database/**',
     '!src/pages/**',
     '!src/**/test-factories/**',
   ],
@@ -21,7 +23,10 @@ const customJestConfig = {
   restoreMocks: true,
   setupFilesAfterEnv: ['./jest.setup.js'],
   testEnvironment: 'jest-environment-jsdom',
-  testMatch: ['<rootDir>/src/**/*(*.)@(test).ts?(x)'],
+  testMatch: [
+    '<rootDir>/src/**/*(*.)@(test).ts?(x)',
+    '<rootDir>/data-crawler/**/*(*.)@(test).ts?(x)',
+  ],
 }
 
 async function jestConfig() {

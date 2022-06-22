@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm'
 
-import { ÉtablissementTerritorialIdentitéModel } from '../../../../database/models/ÉtablissementTerritorialIdentitéModel'
+import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { ÉtablissementTerritorialRattaché } from '../../../métier/entities/entité-juridique/ÉtablissementTerritorialRattaché'
 import { ÉtablissementTerritorialRattachéLoader } from '../../../métier/gateways/ÉtablissementTerritorialRattachéLoader'
 
