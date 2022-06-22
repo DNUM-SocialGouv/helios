@@ -3,6 +3,14 @@
     {
       "command": "0 4 * * 1-5 /app/populateDatabase.sh",
       "size": "XL"
+    },
+    {
+      "command": "0 22 * * * yarn stop:production",
+      "size": "S"
+    },
+    {
+      "command": "0 7 * * * yarn start:production",
+      "size": "S"
     }
   ]
 }
