@@ -39,6 +39,14 @@ export class WordingFr implements Wording {
   readonly NON_RENSEIGNÉ: string = 'Non renseigné'
   readonly OUI: string = 'Oui'
   readonly NON: string = 'Non'
+  readonly DÉTAILS: string = 'Détails'
+
+  // Info bulle
+  readonly ÉLÉMENTS_DE_COMPRÉHENSION: string = 'Éléments de compréhension'
+  readonly FRÉQUENCE: string = 'Fréquence'
+  readonly MODE_DE_CALCUL: string = 'Mode de calcul'
+  readonly SOURCES: string = 'Sources'
+  readonly INFOS_COMPLÉMENTAIRES: string = 'Informations complémentaires'
 
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string = 'fiche d’identité'
