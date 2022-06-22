@@ -1,6 +1,6 @@
 # ADR 3 : Choix de l'interface entre la base de données et le data crawler
 
-* Status: en cours de discussion
+* Status: accepté
 * Décideurs: Fabien Mercier, Thierry Gonard, Sofía Calcagno, Mehdi Akrim
 * Date: 2022-06-14
 
