@@ -10,6 +10,13 @@ jobs:
         uses: actions/checkout@master
       - name: Install node modules
         run: yarn --frozen-lockfile --check-files
+      - name: Setup Python
+          uses: actions/setup-python@v2
+          with:
+            python-version: "3.10"
+      - name: Install pipenv
+        run: |
+          python -m pip install --upgrade pipenv
       - uses: actions/cache@v2
         id: cache-build
         with:
