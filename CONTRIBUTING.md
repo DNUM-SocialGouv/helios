@@ -360,7 +360,7 @@ interface Repository<T> {
 
 #### Python
 
-- le **snakeCase** est utilisé pour les variables et les fonctions
+- le **snake_case** est utilisé pour les variables et les fonctions
 
 ```python
 nom_de_ma_variable = 'valeur'
