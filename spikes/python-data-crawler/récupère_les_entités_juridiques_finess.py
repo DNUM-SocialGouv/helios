@@ -34,6 +34,10 @@ def construis_la_table_des_entités_juridiques(
                 "telephone": "téléphone",
             }
         )
+        .assign(
+            telephone=lambda x: x["telephone"].str.replace('"', ""),
+            numvoie=lambda x: x["numvoie"].str.replace('"', ""),
+        )
         .dropna(subset=["numérofinessentitéjuridique"])
         .set_index("numérofinessentitéjuridique")
     )
@@ -42,31 +46,33 @@ def construis_la_table_des_entités_juridiques(
 def conserve_les_entités_juridiques_ouvertes(
     entités_juridiques: pd.DataFrame,
 ) -> pd.DataFrame:
-    return entités_juridiques.dropna(subset=["datefermeture"])
+    return entités_juridiques[entités_juridiques["datefermeture"].isna()]
 
 
 def sauvegarde_les_entités_juridiques(entités_juridiques: pd.DataFrame):
-    engine = create_engine("postgresql://helios:h3li0s@localhost:5432/helios")
-    entités_juridiques.to_sql(
-        "EntitéJuridiquePandas", con=engine, if_exists="replace", index=True
-    )
+    engine = create_engine("postgresql://helios:h3li0s@localhost:5433/helios")
+    with engine.begin():
+        engine.execute("DELETE FROM EntitéJuridique")
+        entités_juridiques.to_sql(
+            "EntitéJuridique", con=engine, if_exists="append", index=True
+        )
 
 
 def main():
     fichier = sys.argv[1]
     logger = configure_logger()
     entités_juridiques_finess = charge_un_fichier_xml(fichier, ".//structureej")
-    logger.info(entités_juridiques_finess.shape[0])
+    logger.warn(entités_juridiques_finess.shape[0])
 
     entités_juridiques_ouvertes_finess = conserve_les_entités_juridiques_ouvertes(
         entités_juridiques_finess
     )
-    logger.info(entités_juridiques_ouvertes_finess.shape[0])
+    logger.warn(entités_juridiques_ouvertes_finess.shape[0])
 
     entités_juridiques = construis_la_table_des_entités_juridiques(
         entités_juridiques_ouvertes_finess
     )
-    logger.info(entités_juridiques.shape[0])
+    logger.warn(entités_juridiques.shape[0])
 
     sauvegarde_les_entités_juridiques(entités_juridiques)
 
