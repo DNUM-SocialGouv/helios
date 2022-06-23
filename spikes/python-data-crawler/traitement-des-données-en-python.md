@@ -6,6 +6,7 @@ Aujourd'hui, nous utilisons typescript pour récupérer des données externes et
 
 - Nous pensons qu'utiliser du python plutôt que le typescript pour le traitement de données nous permettra :
   - de traiter plus aisément les données issues fichiers des sources externes (xml, csv)
+  - d'améliorer notre performance dans le traitement des données
   - de s’aligner avec les techniques utilisées lors des explorations de données
   - tout en nous permettant de maintenir nos pratiques de développement
 
