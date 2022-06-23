@@ -247,14 +247,35 @@ Dans chaque répertoire (enrichi, nomenclature et simple), il faut mettre un fic
  ┃           ┣ 📂 controllers
  ┃           ┣ 📂 gateways
  ┃           ┗ 📂 use-cases
+ ┣ 📜 .buildpacks                 ->  Configuration ESLint
+ ┣ 📜 .env
+ ┣ 📜 .env.local
+ ┣ 📜 .env.test
  ┣ 📜 .eslintrc                   ->  Configuration ESLint
+ ┣ 📜 .gitignore
+ ┣ 📜 .lintstagedrc
+ ┣ 📜 .pylintrc
+ ┣ 📜 CONTRIBUTING.md
+ ┣ 📜 cron.json
+ ┣ 📜 cron.json                   ->  Définition des CRON
+ ┣ 📜 docker-compose.yaml
+ ┣ 📜 index.d.ts
  ┣ 📜 jest.config.js              ->  Configuration de Jest
- ┣ 📜 next.config.json            ->  Configuration de Next
+ ┣ 📜 jest.setup.js
+ ┣ 📜 lighthouserc.js
+ ┣ 📜 mypy.ini
+ ┣ 📜 next.config.js              ->  Configuration de Next
+ ┣ 📜 next-env.d.ts
  ┣ 📜 package.json                ->  Configuration du projet Node
- ┣ 📜 tsconfig.json               ->  Configuration du TypeScript
  ┣ 📜 Pipfile                     ->  Configuration du projet python
+ ┣ 📜 Pipfile.lock
+ ┣ 📜 populateDatabase.sh
  ┣ 📜 Procfile                    ->  Configuration pour Scalingo
- ┗ 📜 cron.json                   ->  Définition des CRON
+ ┣ 📜 README.md
+ ┣ 📜 sentry.properties
+ ┣ 📜 tsconfig.json               ->  Configuration du TypeScript
+ ┣ 📜 tsconfig.tsbuildinfo
+ ┗ 📜 yarn.lock
 ```
 
 ## Conventions
