@@ -17,9 +17,7 @@ jobs:
         run: |
           python -m pip install pipenv
           pipenv install
-          pwd
-          ls
-          ls ~/.local/share/virtualenvs
+          which pipenv
       - name: Cache environment
         id: cache-build
         uses: actions/cache@v3
