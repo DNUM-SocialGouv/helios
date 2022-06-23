@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@master
       - name: Install node modules
         run: yarn --frozen-lockfile --check-files
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: cache-build
         with:
           path: ./*
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: install
     steps:
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: restore-build
         with:
           path: ./*
@@ -49,7 +49,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: restore-build
         with:
           path: ./*
@@ -63,7 +63,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: install
     steps:
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: restore-build
         with:
           path: ./*
