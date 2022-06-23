@@ -86,7 +86,7 @@ jobs:
           python-version: '3.10'
           cache: 'pipenv'
       - name: Install dependencies
-        run: pipenv install
+        run: pipenv install --dev
       - name: Lint
         run: pipenv run lint
       - name: Type check
