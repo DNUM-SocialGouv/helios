@@ -26,7 +26,7 @@ jobs:
             ./*
             /home/runner/.local/share/virtualenvs/
             /opt/hostedtoolcache/Python/3.10.5/
-          key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
+          key: ${{ hashFiles('package.json') }}-${{ hashFiles('Pipfile.lock') }}
 
   lint:
     runs-on: ubuntu-latest
@@ -38,7 +38,7 @@ jobs:
           path: |
             ./*
             ~/.local/share/virtualenvs
-          key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
+          key: ${{ hashFiles('package.json') }}-${{ hashFiles('Pipfile.lock') }}
       - name: Run the linter
         run: |
           pwd
@@ -71,7 +71,7 @@ jobs:
         id: restore-build
         with:
           path: ./*
-          key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
+          key: ${{ hashFiles('package.json') }}-${{ hashFiles('Pipfile.lock') }}
       - name: Run the tests
         run: yarn test
         env:
@@ -85,7 +85,7 @@ jobs:
         id: restore-build
         with:
           path: ./*
-          key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
+          key: ${{ hashFiles('package.json') }}-${{ hashFiles('Pipfile.lock') }}
       - name: Build the app
         run: yarn build
         env:
