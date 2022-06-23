@@ -33,7 +33,9 @@ jobs:
       - uses: actions/cache@v3
         id: restore-build
         with:
-          path: ./*
+          path: |
+            ./*
+            ~/.local/share/virtualenvs
           key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
       - name: Run the linter
         run: yarn lint
