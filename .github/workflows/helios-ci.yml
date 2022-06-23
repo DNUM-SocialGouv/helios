@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@master
       - name: Install node modules
         run: yarn --frozen-lockfile --check-files
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: cache-build
         with:
           path: ./*
@@ -18,20 +18,30 @@ jobs:
       - name: Set up Python
         id: setup-python
         uses: actions/setup-python@v2
+      - name: Install pipenv
+        run: |
+          pip install pipenv
+      - name: Cache Pipenv virtualenv
+        uses: actions/cache@v3
+        id: pipenv-cache
+        with:
+          path: ~/.local/share/virtualenvs
+          key: ${{ runner.os }}-pipenv-v3-${{ hashFiles('**/Pipfile.lock') }}
 
   lint:
     runs-on: ubuntu-latest
     needs: install
     steps:
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: restore-build
         with:
           path: ./*
           key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
       - uses: actions/cache@v3
+        id: restore-python-env
         with:
           path: ~/.local/share/virtualenvs
-          key: ${{ runner.os }}-python-${{ steps.setup-python.outputs.python-version }}-pipenv-${{ hashFiles('Pipfile.lock') }}
+          key: ${{ runner.os }}-pipenv-v3-${{ hashFiles('**/Pipfile.lock') }}
       - name: Run the linter
         run: yarn lint
       - name: Run the typescript
@@ -56,7 +66,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: restore-build
         with:
           path: ./*
@@ -70,7 +80,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: install
     steps:
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: restore-build
         with:
           path: ./*
