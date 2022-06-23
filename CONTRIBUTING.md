@@ -253,29 +253,27 @@ Dans chaque répertoire (enrichi, nomenclature et simple), il faut mettre un fic
  ┣ 📜 .env.test                   ->  Env de test
  ┣ 📜 .eslintrc                   ->  Configuration ESLint
  ┣ 📜 .gitignore                  ->  Fichiers à ne pas commiter
- ┣ 📜 .lintstagedrc
- ┣ 📜 .pylintrc
- ┣ 📜 CONTRIBUTING.md
- ┣ 📜 cron.json
+ ┣ 📜 .pylintrc                   ->  Configuration du linter python
+ ┣ 📜 CONTRIBUTING.md             ->  Vous êtes ici
  ┣ 📜 cron.json                   ->  Définition des CRON
- ┣ 📜 docker-compose.yaml
- ┣ 📜 index.d.ts
+ ┣ 📜 docker-compose.yaml         ->  Pour simuler l'infra de prod
+ ┣ 📜 index.d.ts                  ->  Configuration des types de typescript
  ┣ 📜 jest.config.js              ->  Configuration de Jest
- ┣ 📜 jest.setup.js
- ┣ 📜 lighthouserc.js
- ┣ 📜 mypy.ini
+ ┣ 📜 jest.setup.js               ->  Actions à exécuter avant tous les tests
+ ┣ 📜 lighthouserc.js             ->  Configuration des scans d'accessibilité, perf, bonnes pratiques
+ ┣ 📜 mypy.ini                    ->  Configuration des tests de typage python
  ┣ 📜 next.config.js              ->  Configuration de Next
- ┣ 📜 next-env.d.ts
+ ┣ 📜 next-env.d.ts               ->  Fichier généré par Next
  ┣ 📜 package.json                ->  Configuration du projet Node
  ┣ 📜 Pipfile                     ->  Configuration du projet python
- ┣ 📜 Pipfile.lock
- ┣ 📜 populateDatabase.sh
+ ┣ 📜 Pipfile.lock                ->  Dépendances du projet python
+ ┣ 📜 populateDatabase.sh         ->  Script
  ┣ 📜 Procfile                    ->  Configuration pour Scalingo
- ┣ 📜 README.md
- ┣ 📜 sentry.properties
+ ┣ 📜 README.md                   ->  Description du projet
+ ┣ 📜 sentry.properties           ->  Configuration de Sentry
  ┣ 📜 tsconfig.json               ->  Configuration du TypeScript
- ┣ 📜 tsconfig.tsbuildinfo
- ┗ 📜 yarn.lock
+ ┣ 📜 tsconfig.tsbuildinfo        ->  Fichier généré 
+ ┗ 📜 yarn.lock                   ->  Dépendances typescript
 ```
 
 ## Conventions
