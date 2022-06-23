@@ -98,27 +98,16 @@
     "import/no-extraneous-dependencies": "error",
     "import/no-mutable-exports": "error",
     "import/no-restricted-paths": ["error", {
-      "basePath": "src",
       "zones": [
         {
           "target": "data-crawler",
-          "from": "backend",
-          "message": "Le backend est fermé au data-crawler."
+          "from": "src",
+          "message": "L'application est fermée au data-crawler."
         },
         {
-          "target": "backend",
+          "target": "src",
           "from": "data-crawler",
-          "message": "Le data-crawler est fermé au backend."
-        },
-        {
-          "target": "frontend",
-          "from": "data-crawler",
-          "message": "Le data-crawler est fermé au frontend."
-        },
-        {
-          "target": "pages",
-          "from": "data-crawler",
-          "message": "Le data-crawler est fermé aux pages."
+          "message": "Le data-crawler est fermé à l'application."
         }
       ]
     }],

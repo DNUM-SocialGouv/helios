@@ -1,6 +1,6 @@
 # ADR 3 : Choix de l'interface entre la base de données et le data crawler
 
-* Status: en cours de discussion
+* Status: accepté
 * Décideurs: Fabien Mercier, Thierry Gonard, Sofía Calcagno, Mehdi Akrim
 * Date: 2022-06-14
 
@@ -40,4 +40,4 @@ Les différentes façons pour que notre dataCrawler interagisse avec notre backe
 ## Conséquences
 
 - Le backend et le data crawler ne communiquent pas. L'évolution de l'interface de l'un n'impacte pas l'évolution de l'interface de l'autre
-- Le backend et le data crawler sont couplés par la base : Ils utilisent tous les deux le même ORM, connecté à la même base de données, définie dans `src/database`
+- Le backend et le data crawler sont couplés par la base : Ils utilisent tous les deux le même ORM, connecté à la même base de données, définie dans `./database`

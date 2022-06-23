@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm'
 
-import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
-import { EntitéJuridiqueModelTestFactory } from '../../../../database/test-factories/EntitéJuridiqueModelTestFactory'
+import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
+import { EntitéJuridiqueModelTestFactory } from '../../../../../database/test-factories/EntitéJuridiqueModelTestFactory'
 import { getOrm } from '../../../testHelper'
 import { TypeOrmEntitéJuridiqueHeliosLoader } from './TypeOrmEntitéJuridiqueHeliosLoader'
 

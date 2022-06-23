@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm'
 
-import { DomaineÉtablissementTerritorial } from '../../data-crawler/métier/entities/DomaineÉtablissementTerritorial'
+import { DomaineÉtablissementTerritorial } from '../../data-crawler/legacy/métier/entities/DomaineÉtablissementTerritorial'
 import { EntitéJuridiqueModel } from './EntitéJuridiqueModel'
 
 @Entity({ name: 'Établissementterritorialidentité' })

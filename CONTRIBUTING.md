@@ -4,7 +4,9 @@
 
 ### Pré-requis
 
-- NodeJS 16 est utilisé dans notre dépôt. Il est recommandé d'utiliser [nvm](https://letscodepare.com/blog/how-to-install-nvm-node-version-manager-on-linux) pour l'installer
+#### TypeScript
+
+NodeJS 16 est utilisé dans notre dépôt. Il est recommandé d'utiliser [nvm](https://letscodepare.com/blog/how-to-install-nvm-node-version-manager-on-linux) pour l'installer
 
 ```sh
 nvm install v16
@@ -13,11 +15,22 @@ nvm install v16
 - Compléter le [cours de NextJs](https://nextjs.org/learn/foundations/about-nextjs) pour comprendre la philosophie du framework ;
 - Créer un fichier `.env.local`, copier les variables de `.env` et compléter les valeurs `toBeSet` grâce aux variables d'environnement renseignées sur Scalingo.
 
-### Installer les *node_modules* localement
+Pour installer les *node_modules* localement
 
 ```sh
 yarn
 ```
+
+#### Python
+
+Les traitements de données sont effectués en python (version 3.10) et notamment grâce à [pandas](https://pandas.pydata.org/docs/user_guide/index.html). Il est recommandé d'utiliser [pipenv](https://pipenv.pypa.io/en/latest/) pour créer l'environnement virtuel dédié
+
+```sh
+pipenv install
+```
+
+> Pipenv installe l'environnement virtuel sous `$HOME/.local` par défaut, mais il est possible de le stocker au même niveau que le dépôt grâce à la commande `PIPENV_VENV_IN_PROJECT=1 pipenv install`
+
 
 ## Développement
 
@@ -107,10 +120,10 @@ Elles sont nécessaires dès lors que l'on veut créer ou supprimer des tables, 
 ### Créer une migration pour les bases de données
 
 ```sh
-yarn typeorm migration:create src/database/migrations/<NomDeMigration> --outputJs
+yarn typeorm migration:create database/migrations/<NomDeMigration> --outputJs
 ```
 
-Un fichier *.js* est auto-généré sous `src/database/migrations`. Il faut modifier le fichier auto-généré. Enfin compléter les deux méthodes *up* et *down*.
+Un fichier *.js* est auto-généré sous `database/migrations`. Il faut modifier le fichier auto-généré. Enfin compléter les deux méthodes *up* et *down*.
 
 ### Appliquer les migrations
 
@@ -206,6 +219,15 @@ Dans chaque répertoire (enrichi, nomenclature et simple), il faut mettre un fic
  ┣ 📂 .github/workflows           ->  Github Actions
  ┣ 📂 node_modules                ->  Dépendances définies du package.json
  ┣ 📂 public                      ->  Assets statiques
+ ┣ 📂 data-crawler
+ ┃  ┣ 📂 legacy                   ->  Récupération des données FINESS
+ ┃  ┣ 📂 extract
+ ┃  ┣ 📂 transform
+ ┃  ┗ 📂 load
+ ┣ 📂 database
+ ┃  ┣ 📂 migrations               ->  Les migrations
+ ┃  ┣ 📂 models                   ->  Définition des modèles des tables
+ ┃  ┗ 📜 migrations.ts            ->  Pont d'entrée de lancement des migrations
  ┣ 📂 src
  ┃  ┣ 📂 frontend
  ┃  ┃  ┣ 📂 configuration         ->  Ce qui n'est pas React
@@ -225,11 +247,33 @@ Dans chaque répertoire (enrichi, nomenclature et simple), il faut mettre un fic
  ┃           ┣ 📂 controllers
  ┃           ┣ 📂 gateways
  ┃           ┗ 📂 use-cases
+ ┣ 📜 .buildpacks                 ->  Configuration ESLint
+ ┣ 📜 .env                        ->  Valeurs par défaut de l'env
+ ┣ 📜 .env.local                  ->  Env local
+ ┣ 📜 .env.test                   ->  Env de test
  ┣ 📜 .eslintrc                   ->  Configuration ESLint
+ ┣ 📜 .gitignore                  ->  Fichiers à ne pas commiter
+ ┣ 📜 .pylintrc                   ->  Configuration du linter python
+ ┣ 📜 CONTRIBUTING.md             ->  Vous êtes ici
+ ┣ 📜 cron.json                   ->  Définition des CRON
+ ┣ 📜 docker-compose.yaml         ->  Pour simuler l'infra de prod
+ ┣ 📜 index.d.ts                  ->  Configuration des types de typescript
  ┣ 📜 jest.config.js              ->  Configuration de Jest
- ┣ 📜 next.config.json            ->  Configuration de Next
- ┣ 📜 package.json                ->  Configuration du projet
- ┗ 📜 tsconfig.json               ->  Configuration du TypeScript
+ ┣ 📜 jest.setup.js               ->  Actions à exécuter avant tous les tests
+ ┣ 📜 lighthouserc.js             ->  Configuration des scans d'accessibilité, perf, bonnes pratiques
+ ┣ 📜 mypy.ini                    ->  Configuration des tests de typage python
+ ┣ 📜 next.config.js              ->  Configuration de Next
+ ┣ 📜 next-env.d.ts               ->  Fichier généré par Next
+ ┣ 📜 package.json                ->  Configuration du projet Node
+ ┣ 📜 Pipfile                     ->  Configuration du projet python
+ ┣ 📜 Pipfile.lock                ->  Dépendances du projet python
+ ┣ 📜 populateDatabase.sh         ->  Script
+ ┣ 📜 Procfile                    ->  Configuration pour Scalingo
+ ┣ 📜 README.md                   ->  Description du projet
+ ┣ 📜 sentry.properties           ->  Configuration de Sentry
+ ┣ 📜 tsconfig.json               ->  Configuration du TypeScript
+ ┣ 📜 tsconfig.tsbuildinfo        ->  Fichier généré 
+ ┗ 📜 yarn.lock                   ->  Dépendances typescript
 ```
 
 ## Conventions
@@ -248,6 +292,19 @@ Dans chaque répertoire (enrichi, nomenclature et simple), il faut mettre un fic
 
 - le code métier est en **français** [plus de détails dans l'ADR 1](./ADR/ADR-1-les-langues-dans-le-code.md)- on utilise les accents à l'exception des noms de fichier dans le dossier `src/pages`
   > le métier et les développeurs sont français
+
+- Les noms des répertoires sont en **kebab-case** et en français (sans accent pour le répertoire `./src/pages`)
+
+- On suffixe les fichiers par leur nomenclature technique (loader, repository, use case, end point, CRON), sauf pour les entities
+> Dans le *data-crawler*, ce suffixe est complété de la manière suivante : (*XXXX**SourceExterne**Loader*, *XXXX**Helios**Repository*) pour distinguer les accès externes / internes.
+
+- Les verbes des noms des méthodes sont à l'impératif (exemple : `sauvegardeLesEntitésJuridiques`)
+
+- Une classe ayant qu'une seule méthode (ie : *use case*, *gateways*...) s'appelle toujours `exécute`
+
+- Les acronymes dans les noms de variables s'écrivent comme un mot standard. Exemple : `numéroFiness`
+
+#### TypeScript
 
 - le **camelCase** est utilisé pour les variables et les fonctions
 
@@ -270,18 +327,7 @@ const MonComposant = (props: Props) => {
 }
 ```
 
-- Les noms des répertoires sont en **kebab-case** et en français (sans accent pour le répertoire `./src/pages`)
-
 - Les fichiers portent le nom de leur export
-
-- On suffixe les fichiers par leur nomenclature technique (loader, repository, use case, end point, CRON), sauf pour les entities
-> Dans le *data-crawler*, ce suffixe est complété de la manière suivante : (*XXXX**SourceExterne**Loader*, *XXXX**Helios**Repository*) pour distinguer les accès externes / internes.
-
-- Les verbes des noms des méthodes sont à l'impératif (exemple : `sauvegardeLesEntitésJuridiques`)
-
-- Une classe ayant qu'une seule méthode (ie : *use case*, *gateways*...) s'appelle toujours `exécute`
-
-- Les acronymes dans les noms de variables s'écrivent comme un mot standard. Exemple : `numéroFiness`
 
 - les types sont immutables (utiliser `Readonly<T>`)
   > Pour éviter qu’un objet ne change au milieu d’un traitement et que ce soit difficile à analyser
@@ -311,6 +357,24 @@ interface Repository<T> {
   > [Apologies and retractions de Tony_Hoare](https://en.wikipedia.org/wiki/Tony_Hoare#Apologies_and_retractions)
 
 - pas de typage de variables quand il y a une inférence naturelle
+
+#### Python
+
+- le **snake_case** est utilisé pour les variables et les fonctions
+
+```python
+nom_de_ma_variable = 'valeur'
+
+def nom_de_ma_fonction(paramètre1: type) -> TypeDeRetour:
+  pass
+```
+
+- le **PascalCase** est utilisé pour les classes
+
+```python
+class NomDeMaClasse:
+  pass
+```
 
 #### Frontend
 

@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@master
       - name: Install node modules
         run: yarn --frozen-lockfile --check-files
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: cache-build
         with:
           path: ./*
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: install
     steps:
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: restore-build
         with:
           path: ./*
@@ -49,7 +49,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: restore-build
         with:
           path: ./*
@@ -63,7 +63,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: install
     steps:
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: restore-build
         with:
           path: ./*
@@ -72,3 +72,22 @@ jobs:
         run: yarn build
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this branch
+        uses: actions/checkout@master
+      - name: Install pipenv
+        run: pipx install pipenv
+      - name: Setup pipenv
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pipenv'
+      - name: Install dependencies
+        run: pipenv install --dev
+      - name: Lint
+        run: pipenv run lint
+      - name: Type check
+        run: pipenv run typecheck
