@@ -1,6 +1,6 @@
 # Devrions-nous utiliser python pour traiter les données des sources externes ?
 
-L’utilisation de pandas est fréquente et robuste pour traiter facilement et rapidement des données.
+Aujourd'hui, nous utilisons typescript pour récupérer des données externes et nous commençons à en voir les limites (vitesse, évolutivité du code). Nous voulons déterminer si utiliser python et pandas répond à ces douleurs.
 
 ## Hypothèse falsifiable
 
