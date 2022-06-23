@@ -24,8 +24,8 @@ jobs:
         with:
           path: |
             ./*
-            ~/.local/share/virtualenvs
-            /opt/hostedtoolcache/
+            /home/runner/.local/share/virtualenvs/
+            /opt/hostedtoolcache/Python/3.10.5/
           key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
 
   lint:
