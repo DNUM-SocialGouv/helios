@@ -58,7 +58,7 @@ Afin de savoir si l’utilisation de python est envisageable, on se demande s'il
 
 - nous allons développer les nouveaux traitements de données en python, notamment pour la source externe DIAMANT ;
 - en revanche, les anciens traitements seront - pour le moment - maintenus en TypeScript ;
-- [✅] VALIDATED
+- [✅] VALIDÉ
 
 ## Prochaines étapes
 
