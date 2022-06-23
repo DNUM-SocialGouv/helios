@@ -248,11 +248,11 @@ Dans chaque répertoire (enrichi, nomenclature et simple), il faut mettre un fic
  ┃           ┣ 📂 gateways
  ┃           ┗ 📂 use-cases
  ┣ 📜 .buildpacks                 ->  Configuration ESLint
- ┣ 📜 .env
- ┣ 📜 .env.local
- ┣ 📜 .env.test
+ ┣ 📜 .env                        ->  Valeurs par défaut de l'env
+ ┣ 📜 .env.local                  ->  Env local
+ ┣ 📜 .env.test                   ->  Env de test
  ┣ 📜 .eslintrc                   ->  Configuration ESLint
- ┣ 📜 .gitignore
+ ┣ 📜 .gitignore                  ->  Fichiers à ne pas commiter
  ┣ 📜 .lintstagedrc
  ┣ 📜 .pylintrc
  ┣ 📜 CONTRIBUTING.md
