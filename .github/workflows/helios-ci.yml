@@ -72,3 +72,22 @@ jobs:
         run: yarn build
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this branch
+        uses: actions/checkout@master
+      - name: Install pipenv
+        run: pipx install pipenv
+      - name: Setup pipenv
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pipenv'
+      - name: Install dependencies
+        run: pipenv install
+      - name: Lint
+        run: pipenv run lint
+      - name: Type check
+        run: pipenv run typecheck
