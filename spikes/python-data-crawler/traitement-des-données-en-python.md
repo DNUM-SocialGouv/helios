@@ -1,4 +1,4 @@
-# Devrions-nous utiliser python pour traiter les données des sources externes
+# Devrions-nous utiliser python pour traiter les données des sources externes ?
 
 L’utilisation de pandas est fréquente et robuste pour traiter facilement et rapidement des données.
 
