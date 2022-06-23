@@ -10,7 +10,7 @@
     "deadcode": "ts-prune --ignore 'src/pages'",
     "depcheck": "depcheck",
     "dev": "yarn start:db && next dev",
-    "lint": "npx eslint src database data-crawler && pipenv run lint && pipenv run typecheck",
+    "lint": "npx eslint src database data-crawler",
     "lint:fix": "yarn lint --fix",
     "migrations": "TS_NODE_TRANSPILE_ONLY=true node --loader ts-node/esm ./database/migrations.ts",
     "psql:local": "docker-compose up -d postgres && docker exec -it helios_db psql -U helios helios",
