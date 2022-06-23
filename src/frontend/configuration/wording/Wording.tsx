@@ -40,6 +40,10 @@ export interface Wording {
   readonly SOURCES: string
   readonly INFOS_COMPLÉMENTAIRES: string
 
+  // Indicateurs
+  readonly AFFICHER_LA_TRANSCRIPTION: string
+  readonly ANNÉE: string
+
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string
   readonly NOM_DE_L_ÉTABLISSEMENT: string

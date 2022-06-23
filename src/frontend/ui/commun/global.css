@@ -11,3 +11,7 @@
 main {
   flex-grow: 1;
 }
+
+.fr-accordion::before {
+  box-shadow: inherit !important;
+}
