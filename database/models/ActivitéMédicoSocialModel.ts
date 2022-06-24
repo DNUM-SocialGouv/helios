@@ -12,7 +12,7 @@ export class ActivitéMédicoSocialModel {
   @Column({ length: 9, name: 'numérofinessÉtablissementterritorial' })
   public numéroFinessÉtablissementTerritorial!: string
 
-  @Column({ name: 'tauxDOccupationDesLitsAutorisésEnAccueil', type: 'float' })
+  @Column({ name: 'tauxDOccupationDesLitsAutorisésEnAccueilDeJour', type: 'float' })
   public tauxDOccupationDesLitsAutorisésEnAccueil: number | undefined
 
   @Column({ name: 'tauxDOccupationDesLitsAutorisésEnHébergementTemporaire', type: 'float' })
