@@ -2,12 +2,12 @@ import { ReactChild } from 'react'
 
 import { ContenuDuTauxOccupation } from './ContenuDuTauxOccupation'
 
-type ContenuDuTauxOccupationEnAccueilDeJourProps = Readonly<{
+type ContenuDuTauxOccupationHébergementTemporaireProps = Readonly<{
   dateDeMiseÀJour: string
   source: ReactChild
 }>
 
-export const ContenuDuTauxOccupationEnAccueilDeJour = ({ dateDeMiseÀJour, source }: ContenuDuTauxOccupationEnAccueilDeJourProps) => {
+export const ContenuTauxOccupationHébergementTemporaire = ({ dateDeMiseÀJour, source }: ContenuDuTauxOccupationHébergementTemporaireProps) => {
   return <ContenuDuTauxOccupation
     dateDeMiseÀJour={dateDeMiseÀJour}
     source={source}

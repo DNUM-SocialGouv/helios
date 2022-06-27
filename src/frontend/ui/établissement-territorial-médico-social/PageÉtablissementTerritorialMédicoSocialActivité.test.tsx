@@ -52,7 +52,7 @@ describe('La page Établissement territorial - Bloc activité', () => {
     // THEN
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
     const indicateurs = within(activité).getAllByRole('listitem')
-    const tauxOccupationHébergementAccueilDeJour = within(indicateurs[2]).getByText(wording.TAUX_OCCUPATION_HÉBERGEMENT_ACCUEIL_DE_JOUR, { selector: 'p' })
+    const tauxOccupationHébergementAccueilDeJour = within(indicateurs[2]).getByText(wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, { selector: 'p' })
     expect(tauxOccupationHébergementAccueilDeJour).toBeInTheDocument()
     const dateMiseAJour = within(indicateurs[2]).getAllByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
     expect(dateMiseAJour[0]).toBeInTheDocument()
@@ -88,7 +88,7 @@ describe('La page Établissement territorial - Bloc activité', () => {
     // THEN
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
     const indicateurs = within(activité).getAllByRole('listitem')
-    const fileActiveDesPersonnesAccompagnéesSurLaPériode = within(indicateurs[4]).getByText(wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES_SUR_PERIODE, { selector: 'p' })
+    const fileActiveDesPersonnesAccompagnéesSurLaPériode = within(indicateurs[4]).getByText(wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, { selector: 'p' })
     expect(fileActiveDesPersonnesAccompagnéesSurLaPériode).toBeInTheDocument()
     const dateMiseAJour = within(indicateurs[4]).getByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
     expect(dateMiseAJour).toBeInTheDocument()
@@ -106,7 +106,7 @@ describe('La page Établissement territorial - Bloc activité', () => {
     // THEN
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
     const indicateurs = within(activité).getAllByRole('listitem')
-    const nombreMoyenDeJournéesDAbsenceDesPersonnesAccompagnéesSurLaPériode = within(indicateurs[5]).getByText(wording.NOMBRE_MOYEN_JOURNÉE_ABSENCE_PERSONNES_ACCOMPAGNÉES_SUR_PERIODE, { selector: 'p' })
+    const nombreMoyenDeJournéesDAbsenceDesPersonnesAccompagnéesSurLaPériode = within(indicateurs[5]).getByText(wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, { selector: 'p' })
     expect(nombreMoyenDeJournéesDAbsenceDesPersonnesAccompagnéesSurLaPériode).toBeInTheDocument()
     const dateMiseAJour = within(indicateurs[5]).getByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
     expect(dateMiseAJour).toBeInTheDocument()
@@ -124,7 +124,7 @@ describe('La page Établissement territorial - Bloc activité', () => {
     // THEN
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
     const indicateurs = within(activité).getAllByRole('listitem')
-    const duréeMoyenneSéjourEtAccompagnementDesPersonnesSortiesDéfinitivementAuCoursDeLAnnée = within(indicateurs[6]).getByText(wording.DURÉE_MOEYNNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, { selector: 'p' })
+    const duréeMoyenneSéjourEtAccompagnementDesPersonnesSortiesDéfinitivementAuCoursDeLAnnée = within(indicateurs[6]).getByText(wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, { selector: 'p' })
     expect(duréeMoyenneSéjourEtAccompagnementDesPersonnesSortiesDéfinitivementAuCoursDeLAnnée).toBeInTheDocument()
     const dateMiseAJour = within(indicateurs[6]).getByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
     expect(dateMiseAJour).toBeInTheDocument()
@@ -139,7 +139,7 @@ describe('La page Établissement territorial - Bloc activité', () => {
     [
       [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0],
       [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1],
-      [wording.TAUX_OCCUPATION_HÉBERGEMENT_ACCUEIL_DE_JOUR, 2],
+      [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 2],
     ]
   )('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails"', (titreSection, identifiant) => {
     // GIVEN
@@ -172,7 +172,7 @@ describe('La page Établissement territorial - Bloc activité', () => {
     [
       [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0],
       [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1],
-      [wording.TAUX_OCCUPATION_HÉBERGEMENT_ACCUEIL_DE_JOUR, 2],
+      [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 2],
     ]
   )('ferme l’info bulle après avoir cliqué sur le bouton "Fermer"', (titreSection, identifiant) => {
     // GIVEN

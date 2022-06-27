@@ -2,9 +2,9 @@ import { Bloc } from '../commun/Bloc/Bloc'
 import { useDependencies } from '../commun/contexts/useDependencies'
 import { IndicateurGraphique } from '../commun/IndicateurGraphique/IndicateurGraphique'
 import styles from './BlocActivitéMédicoSocial.module.css'
-import { ContenuDuTauxOccupationEnAccueilDeJour } from './InfoBulle/ContenuDuTauxOccupationEnAccueilDeJour'
-import { ContenuDuTauxOccupationHébergementPermanent } from './InfoBulle/ContenuDuTauxOccupationHébergementPermanent'
-import { ContenuDuTauxOccupationHébergementTemporaire } from './InfoBulle/ContenuDuTauxOccupationHébergementTemporaire'
+import { ContenuTauxOccupationAccueilDeJour } from './InfoBulle/ContenuTauxOccupationAccueilDeJour'
+import { ContenuTauxOccupationHébergementPermanent } from './InfoBulle/ContenuTauxOccupationHébergementPermanent'
+import { ContenuTauxOccupationHébergementTemporaire } from './InfoBulle/ContenuTauxOccupationHébergementTemporaire'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from './ÉtablissementTerritorialMédicoSocialViewModel'
 
 type BlocActivitéMédicoSocialType = {
@@ -18,7 +18,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
     <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
       <ul className={styles['liste-indicateurs']}>
         <IndicateurGraphique
-          contenuInfoBulle={<ContenuDuTauxOccupationHébergementPermanent
+          contenuInfoBulle={<ContenuTauxOccupationHébergementPermanent
             dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
             source={wording.DIAMANT}
           />}
@@ -30,7 +30,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
           {établissementTerritorialMédicoSocialViewModel.tauxOccupationHébergementPermanent}
         </IndicateurGraphique>
         <IndicateurGraphique
-          contenuInfoBulle={<ContenuDuTauxOccupationHébergementTemporaire
+          contenuInfoBulle={<ContenuTauxOccupationHébergementTemporaire
             dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
             source={wording.DIAMANT}
           />}
@@ -42,16 +42,16 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
           {établissementTerritorialMédicoSocialViewModel.tauxOccupationHébergementTemporaire}
         </IndicateurGraphique>
         <IndicateurGraphique
-          contenuInfoBulle={<ContenuDuTauxOccupationEnAccueilDeJour
+          contenuInfoBulle={<ContenuTauxOccupationAccueilDeJour
             dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
             source={wording.DIAMANT}
           />}
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
           identifiant="activite-3"
-          nomDeLIndicateur={wording.TAUX_OCCUPATION_HÉBERGEMENT_ACCUEIL_DE_JOUR}
+          nomDeLIndicateur={wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR}
           source={wording.DIAMANT}
         >
-          {établissementTerritorialMédicoSocialViewModel.tauxOccupationHébergementAccueilDeJour}
+          {établissementTerritorialMédicoSocialViewModel.tauxOccupationAccueilDeJour}
         </IndicateurGraphique>
         <IndicateurGraphique
           contenuInfoBulle={<></>}
@@ -66,28 +66,28 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
           contenuInfoBulle={<></>}
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
           identifiant="activite-5"
-          nomDeLIndicateur={wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES_SUR_PERIODE}
+          nomDeLIndicateur={wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES}
           source={wording.DIAMANT}
         >
-          {établissementTerritorialMédicoSocialViewModel.fileActiveDesPersonnesAccompagnéesSurLaPériode}
+          {établissementTerritorialMédicoSocialViewModel.fileActivePersonnesAccompagnées}
         </IndicateurGraphique>
         <IndicateurGraphique
           contenuInfoBulle={<></>}
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
           identifiant="activite-6"
-          nomDeLIndicateur={wording.NOMBRE_MOYEN_JOURNÉE_ABSENCE_PERSONNES_ACCOMPAGNÉES_SUR_PERIODE}
+          nomDeLIndicateur={wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES}
           source={wording.DIAMANT}
         >
-          {établissementTerritorialMédicoSocialViewModel.nombreMoyenJournéesAbsenceDesPersonnesAccompagnésSurPeriode}
+          {établissementTerritorialMédicoSocialViewModel.nombreMoyenJournéesAbsencePersonnesAccompagnées}
         </IndicateurGraphique>
         <IndicateurGraphique
           contenuInfoBulle={<></>}
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
           identifiant="activite-7"
-          nomDeLIndicateur={wording.DURÉE_MOEYNNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES}
+          nomDeLIndicateur={wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES}
           source={wording.DIAMANT}
         >
-          {établissementTerritorialMédicoSocialViewModel.duréeMoyenneSéjourEtAcompagnementDesPersonnesSorties}
+          {établissementTerritorialMédicoSocialViewModel.duréeMoyenneSéjourAcompagnementDesPersonnesSorties}
         </IndicateurGraphique>
       </ul>
     </Bloc>
