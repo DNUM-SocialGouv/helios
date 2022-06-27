@@ -4,6 +4,7 @@ import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../../data
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { MonoÉtablissement } from '../../../métier/entities/établissement-territorial-médico-social/MonoÉtablissement'
+import { ÉtablissementTerritorialMédicoSocialActivité } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
 import { ÉtablissementTerritorialMédicoSocialLoader } from '../../../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader'
@@ -11,7 +12,8 @@ import { ÉtablissementTerritorialMédicoSocialLoader } from '../../../métier/g
 export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements ÉtablissementTerritorialMédicoSocialLoader {
   constructor(private readonly orm: Promise<DataSource>) {}
 
-  async chargeActivitéParNuméroFiness(numéroFiness: string): Promise<ÉtablissementTerritorialMédicoSocialActivité[] | ÉtablissementTerritorialMédicoSocialNonTrouvée> {
+  async chargeActivitéParNuméroFiness(numéroFiness: string):
+    Promise<ÉtablissementTerritorialMédicoSocialActivité[] | ÉtablissementTerritorialMédicoSocialNonTrouvée> {
     return [{}]
   }
 

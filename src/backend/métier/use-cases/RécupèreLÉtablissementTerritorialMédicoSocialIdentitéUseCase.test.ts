@@ -1,4 +1,5 @@
 import { ÉtablissementTerritorialTestFactory } from '../../test-factories/ÉtablissementTerritorialTestFactory'
+import { fakeÉtablissementTerritorialMédicoSocialLoader } from '../../testHelper'
 import { EntitéJuridiqueDeRattachement } from '../entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement'
 import { MonoÉtablissement } from '../entities/établissement-territorial-médico-social/MonoÉtablissement'
 import { ÉtablissementTerritorialMédicoSocialIdentité } from '../entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialIdentité'
@@ -28,11 +29,9 @@ describe('La récupération d’un établissement territorial médico-social ide
         statutJuridique: 'Société Anonyme (S.A.)',
       }
     })
-    const établissementTerritorialLoader: ÉtablissementTerritorialMédicoSocialLoader =
-      {
-        chargeIdentitéParNuméroFiness: mockedChargeParNuméroFiness,
-        estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
-      }
+    const établissementTerritorialLoader: ÉtablissementTerritorialMédicoSocialLoader = fakeÉtablissementTerritorialMédicoSocialLoader
+    établissementTerritorialLoader.chargeIdentitéParNuméroFiness = mockedChargeParNuméroFiness
+    établissementTerritorialLoader.estUnMonoÉtablissement = mockedEstUnMonoÉtablissement
     const entitéJuridiqueLoader: EntitéJuridiqueLoader =
       { chargeLEntitéJuridiqueDeRattachement: mockedChargeLEntitéJuridiqueDeRattachement, chargeParNuméroFiness: jest.fn() }
     const récupèreLÉtablissementTerritorialUseCase =
@@ -67,8 +66,8 @@ describe('La récupération d’un établissement territorial médico-social ide
     const mockedChargeParNuméroFiness = jest.fn(async () => {
       return new ÉtablissementTerritorialMédicoSocialNonTrouvée('123456789')
     })
-    const établissementTerritorialLoader: ÉtablissementTerritorialMédicoSocialLoader =
-      { chargeIdentitéParNuméroFiness: mockedChargeParNuméroFiness, estUnMonoÉtablissement: jest.fn() }
+    const établissementTerritorialLoader: ÉtablissementTerritorialMédicoSocialLoader = fakeÉtablissementTerritorialMédicoSocialLoader
+    établissementTerritorialLoader.chargeIdentitéParNuméroFiness = mockedChargeParNuméroFiness
     const entitéJuridiqueLoader: EntitéJuridiqueLoader =
       { chargeLEntitéJuridiqueDeRattachement: jest.fn(), chargeParNuméroFiness: jest.fn() }
 
