@@ -1,0 +1,1 @@
+TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX = "activitémédicosocial"
