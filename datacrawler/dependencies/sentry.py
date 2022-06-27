@@ -1,5 +1,6 @@
 import sentry_sdk
-from datacrawler.dependencies.variablesdenvironnement import VariablesDEnvironnement
+
+from datacrawler.dependencies.variables_d_environnement import VariablesDEnvironnement
 
 
 def initialise_sentry(variables_d_environnement: VariablesDEnvironnement):

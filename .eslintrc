@@ -100,14 +100,14 @@
     "import/no-restricted-paths": ["error", {
       "zones": [
         {
-          "target": "data-crawler",
+          "target": "datacrawler",
           "from": "src",
-          "message": "L'application est fermée au data-crawler."
+          "message": "L'application est fermée au datacrawler."
         },
         {
           "target": "src",
-          "from": "data-crawler",
-          "message": "Le data-crawler est fermé à l'application."
+          "from": "datacrawler",
+          "message": "Le datacrawler est fermé à l'application."
         }
       ]
     }],

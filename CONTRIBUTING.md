@@ -219,7 +219,7 @@ Dans chaque répertoire (enrichi, nomenclature et simple), il faut mettre un fic
  ┣ 📂 .github/workflows           ->  Github Actions
  ┣ 📂 node_modules                ->  Dépendances définies du package.json
  ┣ 📂 public                      ->  Assets statiques
- ┣ 📂 data-crawler
+ ┣ 📂 datacrawler
  ┃  ┣ 📂 legacy                   ->  Récupération des données FINESS
  ┃  ┣ 📂 extract
  ┃  ┣ 📂 transform
@@ -294,7 +294,7 @@ Dans chaque répertoire (enrichi, nomenclature et simple), il faut mettre un fic
   > le métier et les développeurs sont français
 
 - On suffixe les fichiers par leur nomenclature technique (loader, repository, use case, end point, CRON), sauf pour les entities
-> Dans le *data-crawler*, ce suffixe est complété de la manière suivante : (*XXXX**SourceExterne**Loader*, *XXXX**Helios**Repository*) pour distinguer les accès externes / internes.
+> Dans le *datacrawler*, ce suffixe est complété de la manière suivante : (*XXXX**SourceExterne**Loader*, *XXXX**Helios**Repository*) pour distinguer les accès externes / internes.
 
 - Les verbes des noms des méthodes sont à l'impératif (exemple : `sauvegardeLesEntitésJuridiques`)
 

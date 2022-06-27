@@ -1,18 +1,17 @@
-import os
 from logging import Logger
-from typing import TypedDict
-
-from dotenv import dotenv_values
+from typing import Callable, Dict, TypedDict
 
 
 class VariablesDEnvironnement(TypedDict):
     SENTRY_DSN: str
 
 
-def lis_les_variables_d_environnement(logger: Logger) -> VariablesDEnvironnement:
+def récupère_les_variables_d_environnement(
+    logger: Logger, variables_d_environnement: Dict[str, str], lis_les_variables_d_environnement_du_fichier: Callable
+) -> VariablesDEnvironnement:
     config = {
-        **os.environ,
-        **dotenv_values(".env.local"),
+        **variables_d_environnement,
+        **lis_les_variables_d_environnement_du_fichier(".env.local"),
     }
 
     def signale_si_la_variable_n_est_pas_présente(nom_de_variable: str) -> str:

@@ -22,7 +22,7 @@ pytest-mock = "3.7.0"
 python_version = "3.10"
 
 [scripts]
-lint = 'pylint --rcfile .pylintrc data-crawler/load/ data-crawler/transform'
-typecheck = 'mypy --config mypy.ini --namespace-packages -p data-crawler.transform -p data-crawler.load'
+lint = 'pylint --rcfile .pylintrc datacrawler/load/ datacrawler/transform'
+typecheck = 'mypy --config mypy.ini --namespace-packages -p datacrawler.transform -p datacrawler.load'
 activitesEMS = 'python -m datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux'
 test = "pytest"
