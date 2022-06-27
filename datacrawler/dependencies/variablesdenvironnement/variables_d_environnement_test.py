@@ -4,10 +4,10 @@ from pytest import LogCaptureFixture
 from pytest_mock import MockerFixture
 
 
-def test_retourne_la_valeur_définie_dans_l_environnement(mocker: MockerFixture):
+def test_retourne_la_valeur_définie_dans_le_fichier_d_environnement(mocker: MockerFixture):
     # GIVEN
     logger = crée_le_logger()
-    mocker.patch("datacrawler.dependencies.variablesdenvironnement.os.environ", {"SENTRY_DSN": "test"})
+    mocker.patch("datacrawler.dependencies.variablesdenvironnement.dotenv_values", lambda _path: {"SENTRY_DSN": "test"})
 
     # WHEN
     variables_d_environnement = lis_les_variables_d_environnement(logger)
@@ -19,7 +19,7 @@ def test_retourne_la_valeur_définie_dans_l_environnement(mocker: MockerFixture)
 def test_retourne_une_phrase_explicite_quand_la_valeur_n_est_pas_dans_l_environnement(mocker: MockerFixture, caplog: LogCaptureFixture):
     # GIVEN
     logger = crée_le_logger()
-    mocker.patch("datacrawler.dependencies.variablesdenvironnement.os.environ", {})
+    mocker.patch("datacrawler.dependencies.variablesdenvironnement.dotenv_values", lambda _path: {})
 
     # WHEN
     lis_les_variables_d_environnement(logger)
