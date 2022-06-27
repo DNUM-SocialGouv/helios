@@ -31,6 +31,14 @@ export interface Wording {
   readonly NON_RENSEIGNÉ: string
   readonly OUI: string
   readonly NON: string
+  readonly DÉTAILS: string
+
+  // Info bulle
+  readonly ÉLÉMENTS_DE_COMPRÉHENSION: string
+  readonly FRÉQUENCE: string
+  readonly MODE_DE_CALCUL: string
+  readonly SOURCES: string
+  readonly INFOS_COMPLÉMENTAIRES: string
 
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string
