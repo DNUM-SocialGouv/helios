@@ -25,7 +25,7 @@ Avec le temps, nous avons identifié quelques limites à ce choix :
 
 - Nous avons un code préexistant en qui marche pour l'extraction, la transformation et l'écriture en base, en typescript ;
 - Il n'y a pas d'avantage comparatif à l'utilisation de python plutôt que typescript pour l'extraction de données des sources extérieures ;
-- La transformation de données avec pandas est beaucoup plus simple et rapide qu'avec typescript (voir spike python-datacrawler) ;
+- La transformation de données avec pandas est beaucoup plus simple et rapide qu'avec typescript (voir spike python-data-crawler) ;
 - pandas permet d'écrire les données de façon efficace via la méthode `to_sql` des DataFrames.
 
 ## Conséquences
