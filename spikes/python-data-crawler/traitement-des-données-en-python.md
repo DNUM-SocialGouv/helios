@@ -62,5 +62,5 @@ Afin de savoir si l’utilisation de python est envisageable, on se demande s'il
 
 ## Prochaines étapes
 
-- reconsidérer l'architecture de notre dépôt pour laisser la place au python notamment au niveau du data-crawler
-- remonter au plus au niveau de l'arborescence la partie *database* qui lie l'écriture en base (data-crawler) de la lecture (application web - backend / frontend)
+- reconsidérer l'architecture de notre dépôt pour laisser la place au python notamment au niveau du datacrawler
+- remonter au plus au niveau de l'arborescence la partie *database* qui lie l'écriture en base (datacrawler) de la lecture (application web - backend / frontend)

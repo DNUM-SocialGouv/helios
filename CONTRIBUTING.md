@@ -219,7 +219,7 @@ Dans chaque répertoire (enrichi, nomenclature et simple), il faut mettre un fic
  ┣ 📂 .github/workflows           ->  Github Actions
  ┣ 📂 node_modules                ->  Dépendances définies du package.json
  ┣ 📂 public                      ->  Assets statiques
- ┣ 📂 data-crawler
+ ┣ 📂 datacrawler
  ┃  ┣ 📂 legacy                   ->  Récupération des données FINESS
  ┃  ┣ 📂 extract
  ┃  ┣ 📂 transform
@@ -272,7 +272,7 @@ Dans chaque répertoire (enrichi, nomenclature et simple), il faut mettre un fic
  ┣ 📜 README.md                   ->  Description du projet
  ┣ 📜 sentry.properties           ->  Configuration de Sentry
  ┣ 📜 tsconfig.json               ->  Configuration du TypeScript
- ┣ 📜 tsconfig.tsbuildinfo        ->  Fichier généré 
+ ┣ 📜 tsconfig.tsbuildinfo        ->  Fichier généré
  ┗ 📜 yarn.lock                   ->  Dépendances typescript
 ```
 
@@ -293,10 +293,8 @@ Dans chaque répertoire (enrichi, nomenclature et simple), il faut mettre un fic
 - le code métier est en **français** [plus de détails dans l'ADR 1](./ADR/ADR-1-les-langues-dans-le-code.md)- on utilise les accents à l'exception des noms de fichier dans le dossier `src/pages`
   > le métier et les développeurs sont français
 
-- Les noms des répertoires sont en **kebab-case** et en français (sans accent pour le répertoire `./src/pages`)
-
 - On suffixe les fichiers par leur nomenclature technique (loader, repository, use case, end point, CRON), sauf pour les entities
-> Dans le *data-crawler*, ce suffixe est complété de la manière suivante : (*XXXX**SourceExterne**Loader*, *XXXX**Helios**Repository*) pour distinguer les accès externes / internes.
+> Dans le *datacrawler*, ce suffixe est complété de la manière suivante : (*XXXX**SourceExterne**Loader*, *XXXX**Helios**Repository*) pour distinguer les accès externes / internes.
 
 - Les verbes des noms des méthodes sont à l'impératif (exemple : `sauvegardeLesEntitésJuridiques`)
 
@@ -307,6 +305,8 @@ Dans chaque répertoire (enrichi, nomenclature et simple), il faut mettre un fic
 #### TypeScript
 
 - le **camelCase** est utilisé pour les variables et les fonctions
+
+- Les noms des répertoires sont en **kebab-case** et en français (sans accent pour le répertoire `./src/pages`)
 
 ```TypeScript
 const nomDeMaVariable = 'valeur'
@@ -360,7 +360,7 @@ interface Repository<T> {
 
 #### Python
 
-- le **snake_case** est utilisé pour les variables et les fonctions
+- le **snake_case** est utilisé pour les variables, les fonctions et les noms des fichiers et des répertoires
 
 ```python
 nom_de_ma_variable = 'valeur'

@@ -91,3 +91,5 @@ jobs:
         run: pipenv run lint
       - name: Type check
         run: pipenv run typecheck
+      - name: Test
+        run: pipenv run test

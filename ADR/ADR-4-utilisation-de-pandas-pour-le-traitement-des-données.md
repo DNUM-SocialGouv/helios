@@ -6,12 +6,12 @@
 
 ## Contexte
 
-Nous avons implémenté un data-crawler en typescript afin de :
+Nous avons implémenté un datacrawler en typescript afin de :
 - extraire les données de nos sources externes (sftp FINESS à ce jour) ;
 - transformer ces données pour notre cas d'usage ;
 - écrire ces données en base.
 Avec le temps, nous avons identifié quelques limites à ce choix :
-- nous ne sommes pas satisfaits des performances du data-crawler, que nous avons dû refactorer pour qu'il s'exécute en moins de 15 minutes (limite de temps pour les CRON sur Scalingo) 
+- nous ne sommes pas satisfaits des performances du datacrawler, que nous avons dû refactorer pour qu'il s'exécute en moins de 15 minutes (limite de temps pour les CRON sur Scalingo)
 - son développement en typescript représente une charge importante par rapport à l'utilisation de pandas
 
 ## Décision
@@ -23,7 +23,7 @@ Avec le temps, nous avons identifié quelques limites à ce choix :
 
 ## Éléments de décision
 
-- Nous avons un code préexistant en qui marche pour l'extraction, la transformation et l'écriture en base, en typescript ; 
+- Nous avons un code préexistant en qui marche pour l'extraction, la transformation et l'écriture en base, en typescript ;
 - Il n'y a pas d'avantage comparatif à l'utilisation de python plutôt que typescript pour l'extraction de données des sources extérieures ;
 - La transformation de données avec pandas est beaucoup plus simple et rapide qu'avec typescript (voir spike python-data-crawler) ;
 - pandas permet d'écrire les données de façon efficace via la méthode `to_sql` des DataFrames.
@@ -38,13 +38,13 @@ Avec le temps, nous avons identifié quelques limites à ce choix :
   - mypy ;
   - pytest ou unittest (décision définitive lors de l'écriture de notre premier test) ;
 - Nous avons intégré ces tests dans `package.json` pour qu'ils soient joués dans la CI ;
-- Nous abandonnons la clean archi pour data-crawler ;
-- L'organisation de notre code évolue : 
+- Nous abandonnons la clean archi pour datacrawler ;
+- L'organisation de notre code évolue :
   - nous regroupons nos applicatifs "web" dans un dossier `src` à la racine (nous sommes contraints par next.js sur le nommage des composants l'utilisant) :
     - `backendend`
     - `frontend`
     - `pages`
-  - nous regroupons le code historique et nouveau permettant la récupération des données dans un dossier `data-crawler` à la racine. Il est divisé en :
+  - nous regroupons le code historique et nouveau permettant la récupération des données dans un dossier `datacrawler` à la racine. Il est divisé en :
     - `extract` pour le code typescript se connectant aux sources de données extérieures ;
     - `legacy` pour le code historique en typescript permettant le traitement des données des fiches d'identité ;
     - `load` pour le code python permettant d'écrire les données en base ;
