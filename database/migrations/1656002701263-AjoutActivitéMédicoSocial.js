@@ -18,7 +18,6 @@ class AjoutActivitéMédicoSocial1656002701263 {
               FOREIGN KEY (numéroFinessÉtablissementTerritorial)
                   REFERENCES ÉtablissementTerritorialIdentité (numéroFinessÉtablissementTerritorial)
                   ON DELETE CASCADE
-         
       );`
     )
   }
@@ -26,7 +25,6 @@ class AjoutActivitéMédicoSocial1656002701263 {
   async down(queryRunner) {
     await queryRunner.query('DROP TABLE ActivitéMédicoSocial')
   }
-
 }
 
 module.exports = AjoutActivitéMédicoSocial1656002701263

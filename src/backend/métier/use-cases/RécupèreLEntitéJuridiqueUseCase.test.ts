@@ -27,9 +27,7 @@ describe('La récupération d’une entité juridique', () => {
   it('signale une alerte si l’entité juridique liée au numéro FINESS n’est pas trouvée', async () => {
     // GIVEN
     const numéroFiness = '123456789'
-    const mockedChargeParNuméroFiness = jest.fn(async () => {
-      return new EntitéJuridiqueNonTrouvée('123456789')
-    })
+    const mockedChargeParNuméroFiness = jest.fn().mockReturnValueOnce(new EntitéJuridiqueNonTrouvée(numéroFiness))
     const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeLEntitéJuridiqueDeRattachement: jest.fn(), chargeParNuméroFiness: mockedChargeParNuméroFiness }
     const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader)
 
