@@ -3,12 +3,12 @@ import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../entities/�
 import { EntitéJuridiqueLoader } from '../gateways/EntitéJuridiqueLoader'
 import { ÉtablissementTerritorialMédicoSocialLoader } from '../gateways/ÉtablissementTerritorialMédicoSocialLoader'
 
-export class RécupèreLÉtablissementTerritorialMédicoSocialUseCase {
+export class RécupèreLÉtablissementTerritorialMédicoSocialIdentitéUseCase {
   constructor(private établissementTerritorialLoader: ÉtablissementTerritorialMédicoSocialLoader, private entitéJuridiqueLoader: EntitéJuridiqueLoader) {}
 
   async exécute(numéroFinessÉtablissementTerritorialMédicoSocial: string): Promise<ÉtablissementTerritorialMédicoSocialIdentité> {
     const établissementTerritorialMédicoSocialOuErreur =
-      await this.établissementTerritorialLoader.chargeParNuméroFiness(numéroFinessÉtablissementTerritorialMédicoSocial)
+      await this.établissementTerritorialLoader.chargeIdentitéParNuméroFiness(numéroFinessÉtablissementTerritorialMédicoSocial)
 
     if (établissementTerritorialMédicoSocialOuErreur instanceof ÉtablissementTerritorialMédicoSocialNonTrouvée) {
       throw établissementTerritorialMédicoSocialOuErreur

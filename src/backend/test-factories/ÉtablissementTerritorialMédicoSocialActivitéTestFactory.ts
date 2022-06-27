@@ -12,7 +12,10 @@ export class ÉtablissementTerritorialMédicoSocialActivitéTestFactory {
     tauxDOccupationDesPlacesAutoriséesEnHébergementPermanent: 80,
     tauxDeRéalisationDeLActivité: 80,
   }
-  public static créeÉtablissementTerritorialMédicoSocialActivité(champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialActivité>): ÉtablissementTerritorialMédicoSocialActivité {
+
+  public static créeÉtablissementTerritorialMédicoSocialActivité(
+    champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialActivité>
+  ): ÉtablissementTerritorialMédicoSocialActivité {
     return {
       ...ÉtablissementTerritorialMédicoSocialActivitéTestFactory.activité,
       ...champsSurchargés,

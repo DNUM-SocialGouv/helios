@@ -56,7 +56,7 @@ describe('Établissement territorial médico-social loader', () => {
       const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
 
       // WHEN
-      const établissementTerritorialChargée = await typeOrmÉtablissementTerritorialLoader.chargeParNuméroFiness(numéroFinessÉtablissementTerritorial)
+      const établissementTerritorialChargée = await typeOrmÉtablissementTerritorialLoader.chargeIdentitéParNuméroFiness(numéroFinessÉtablissementTerritorial)
 
       // THEN
       const établissementTerritorialAttendu: ÉtablissementTerritorialIdentité = ÉtablissementTerritorialTestFactory.créeÉtablissementTerritorial(
@@ -81,7 +81,7 @@ describe('Établissement territorial médico-social loader', () => {
       const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
 
       // WHEN
-      const exceptionReçue = await typeOrmÉtablissementTerritorialLoader.chargeParNuméroFiness(numéroFiness)
+      const exceptionReçue = await typeOrmÉtablissementTerritorialLoader.chargeIdentitéParNuméroFiness(numéroFiness)
 
       // THEN
       const exceptionAttendue = new ÉtablissementTerritorialMédicoSocialNonTrouvée('012345678')
@@ -113,7 +113,7 @@ describe('Établissement territorial médico-social loader', () => {
       const typeOrmÉtablissementTerritorialMédicoSocialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
 
       // WHEN
-      const exceptionReçue = await typeOrmÉtablissementTerritorialMédicoSocialLoader.chargeParNuméroFiness(numéroFinessÉtablissementTerritorial)
+      const exceptionReçue = await typeOrmÉtablissementTerritorialMédicoSocialLoader.chargeIdentitéParNuméroFiness(numéroFinessÉtablissementTerritorial)
 
       // THEN
       const exceptionAttendue = new ÉtablissementTerritorialMédicoSocialNonTrouvée('012345678')

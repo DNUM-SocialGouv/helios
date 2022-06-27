@@ -1,6 +1,7 @@
 import { typeOrmOrm } from './infrastructure/gateways/orm/typeOrmOrm'
 import { EnvironmentVariables } from './métier/gateways/EnvironmentVariables'
 import { Logger } from './métier/gateways/Logger'
+import { ÉtablissementTerritorialMédicoSocialLoader } from './métier/gateways/ÉtablissementTerritorialMédicoSocialLoader'
 
 const environmentVariables: EnvironmentVariables = {
   DATABASE_URL: 'postgres://helios:h3li0s@localhost:5433/helios',
@@ -17,4 +18,11 @@ export const fakeLogger: Logger = {
   debug: jest.fn(),
   error: jest.fn(),
   info: jest.fn(),
+}
+
+export const fakeÉtablissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader =
+{
+  chargeActivitéParNuméroFiness: jest.fn(),
+  chargeIdentitéParNuméroFiness: jest.fn(),
+  estUnMonoÉtablissement: jest.fn(),
 }

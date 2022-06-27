@@ -11,7 +11,11 @@ import { ÉtablissementTerritorialMédicoSocialLoader } from '../../../métier/g
 export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements ÉtablissementTerritorialMédicoSocialLoader {
   constructor(private readonly orm: Promise<DataSource>) {}
 
-  async chargeParNuméroFiness(numéroFinessET: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialMédicoSocialNonTrouvée> {
+  async chargeActivitéParNuméroFiness(numéroFiness: string): Promise<ÉtablissementTerritorialMédicoSocialActivité[] | ÉtablissementTerritorialMédicoSocialNonTrouvée> {
+    return [{}]
+  }
+
+  async chargeIdentitéParNuméroFiness(numéroFinessET: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialMédicoSocialNonTrouvée> {
     const établissementTerritorialModel = await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
       .findOneBy({

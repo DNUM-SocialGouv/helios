@@ -6,9 +6,9 @@ import { ÉtablissementTerritorialIdentité } from '../entities/ÉtablissementTe
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
 import { EntitéJuridiqueLoader } from '../gateways/EntitéJuridiqueLoader'
 import { ÉtablissementTerritorialMédicoSocialLoader } from '../gateways/ÉtablissementTerritorialMédicoSocialLoader'
-import { RécupèreLÉtablissementTerritorialMédicoSocialUseCase } from './RécupèreLÉtablissementTerritorialMédicoSocialUseCase'
+import { RécupèreLÉtablissementTerritorialMédicoSocialIdentitéUseCase } from './RécupèreLÉtablissementTerritorialMédicoSocialIdentitéUseCase'
 
-describe('La récupération d’un établissement territorial médico-social', () => {
+describe('La récupération d’un établissement territorial médico-social identité', () => {
   it('récupère la fiche identité de l’établissement territorial médico-social', async () => {
     // GIVEN
     const numéroFinessÉtablissementTerritorial = '123456789'
@@ -30,13 +30,13 @@ describe('La récupération d’un établissement territorial médico-social', (
     })
     const établissementTerritorialLoader: ÉtablissementTerritorialMédicoSocialLoader =
       {
-        chargeParNuméroFiness: mockedChargeParNuméroFiness,
+        chargeIdentitéParNuméroFiness: mockedChargeParNuméroFiness,
         estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
       }
     const entitéJuridiqueLoader: EntitéJuridiqueLoader =
       { chargeLEntitéJuridiqueDeRattachement: mockedChargeLEntitéJuridiqueDeRattachement, chargeParNuméroFiness: jest.fn() }
     const récupèreLÉtablissementTerritorialUseCase =
-      new RécupèreLÉtablissementTerritorialMédicoSocialUseCase(établissementTerritorialLoader, entitéJuridiqueLoader)
+      new RécupèreLÉtablissementTerritorialMédicoSocialIdentitéUseCase(établissementTerritorialLoader, entitéJuridiqueLoader)
 
     // WHEN
     const ficheIdentitéRécupérée = await récupèreLÉtablissementTerritorialUseCase.exécute(numéroFinessÉtablissementTerritorial)
@@ -68,12 +68,12 @@ describe('La récupération d’un établissement territorial médico-social', (
       return new ÉtablissementTerritorialMédicoSocialNonTrouvée('123456789')
     })
     const établissementTerritorialLoader: ÉtablissementTerritorialMédicoSocialLoader =
-      { chargeParNuméroFiness: mockedChargeParNuméroFiness, estUnMonoÉtablissement: jest.fn() }
+      { chargeIdentitéParNuméroFiness: mockedChargeParNuméroFiness, estUnMonoÉtablissement: jest.fn() }
     const entitéJuridiqueLoader: EntitéJuridiqueLoader =
       { chargeLEntitéJuridiqueDeRattachement: jest.fn(), chargeParNuméroFiness: jest.fn() }
 
     const récupèreLÉtablissementTerritorialUseCase =
-      new RécupèreLÉtablissementTerritorialMédicoSocialUseCase(établissementTerritorialLoader, entitéJuridiqueLoader)
+      new RécupèreLÉtablissementTerritorialMédicoSocialIdentitéUseCase(établissementTerritorialLoader, entitéJuridiqueLoader)
 
     // WHEN
     try {

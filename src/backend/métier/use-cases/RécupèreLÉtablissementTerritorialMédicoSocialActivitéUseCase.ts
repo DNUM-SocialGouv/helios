@@ -1,15 +1,15 @@
 import { ÉtablissementTerritorialMédicoSocialActivité } from '../entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
-import { ÉtablissementTerritorialMédicoSocialActivitéNonTrouvée } from '../entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivitéNonTrouvé'
-import { ÉtablissementTerritorialMédicoSocialActivitéLoader } from '../gateways/ÉtablissementTerritorialMédicoSocialActivitéLoader'
+import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
+import { ÉtablissementTerritorialMédicoSocialLoader } from '../gateways/ÉtablissementTerritorialMédicoSocialLoader'
 
 export class RécupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase {
-  constructor(private établissementTerritorialMédicoSocialActivitéLoader: ÉtablissementTerritorialMédicoSocialActivitéLoader) {}
+  constructor(private établissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader) {}
 
   async exécute(numéroFinessÉtablissementTerritorialMédicoSocial: string): Promise<ÉtablissementTerritorialMédicoSocialActivité[]> {
     const établissementTerritorialMédicoSocialActivitéOuErreur =
-      await this.établissementTerritorialMédicoSocialActivitéLoader.chargeParNuméroFiness(numéroFinessÉtablissementTerritorialMédicoSocial)
+      await this.établissementTerritorialMédicoSocialLoader.chargeActivitéParNuméroFiness(numéroFinessÉtablissementTerritorialMédicoSocial)
 
-    if (établissementTerritorialMédicoSocialActivitéOuErreur instanceof ÉtablissementTerritorialMédicoSocialActivitéNonTrouvée) {
+    if (établissementTerritorialMédicoSocialActivitéOuErreur instanceof ÉtablissementTerritorialMédicoSocialNonTrouvée) {
       throw établissementTerritorialMédicoSocialActivitéOuErreur
     }
 

@@ -1,7 +1,6 @@
 import { ÉtablissementTerritorialMédicoSocialActivitéTestFactory } from '../../test-factories/ÉtablissementTerritorialMédicoSocialActivitéTestFactory'
-import { ÉtablissementTerritorialMédicoSocialActivité } from '../entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
-import { ÉtablissementTerritorialMédicoSocialActivitéNonTrouvée } from '../entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivitéNonTrouvé'
-import { ÉtablissementTerritorialMédicoSocialActivitéLoader } from '../gateways/ÉtablissementTerritorialMédicoSocialActivitéLoader'
+import { fakeÉtablissementTerritorialMédicoSocialLoader } from '../../testHelper'
+import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
 import { RécupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase } from './RécupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase'
 
 describe('Récupération de l’activité d’un établissement territorial médico-social', () => {
@@ -19,13 +18,12 @@ describe('Récupération de l’activité d’un établissement territorial méd
         { année: 2021, numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial }
       ),
     ]
-    const mockedChargeParNuméroFiness = jest.fn(async (): Promise<ÉtablissementTerritorialMédicoSocialActivité[]> => {
-      return activités
-    })
-    const établissementTerritorialMédicoSocialActivitéLoader: ÉtablissementTerritorialMédicoSocialActivitéLoader =
-      { chargeParNuméroFiness: mockedChargeParNuméroFiness }
+    const mockedChargeParNuméroFiness = jest.fn().mockReturnValue(activités)
+    const mockedÉtablissementTerritorialMédicoSocialLoader = fakeÉtablissementTerritorialMédicoSocialLoader
+    mockedÉtablissementTerritorialMédicoSocialLoader.chargeActivitéParNuméroFiness = mockedChargeParNuméroFiness
+
     const récupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase =
-      new RécupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase(établissementTerritorialMédicoSocialActivitéLoader)
+      new RécupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase(fakeÉtablissementTerritorialMédicoSocialLoader)
 
     // WHEN
     const activitésRécupérés = await récupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase.exécute(numéroFinessÉtablissementTerritorial)
@@ -41,12 +39,11 @@ describe('Récupération de l’activité d’un établissement territorial méd
     // GIVEN
     const numéroFinessÉtablissementTerritorial = '123456789'
     const mockedChargeParNuméroFiness =
-      jest.fn().mockReturnValueOnce(new ÉtablissementTerritorialMédicoSocialActivitéNonTrouvée(numéroFinessÉtablissementTerritorial))
-
-    const établissementTerritorialMédicoSocialActivitéLoader: ÉtablissementTerritorialMédicoSocialActivitéLoader =
-      { chargeParNuméroFiness: mockedChargeParNuméroFiness }
+      jest.fn().mockReturnValueOnce(new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial))
+    const mockedÉtablissementTerritorialMédicoSocialLoader = fakeÉtablissementTerritorialMédicoSocialLoader
+    mockedÉtablissementTerritorialMédicoSocialLoader.chargeActivitéParNuméroFiness = mockedChargeParNuméroFiness
     const récupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase =
-      new RécupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase(établissementTerritorialMédicoSocialActivitéLoader)
+      new RécupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase(fakeÉtablissementTerritorialMédicoSocialLoader)
 
     // WHEN
     try {
@@ -54,7 +51,7 @@ describe('Récupération de l’activité d’un établissement territorial méd
       throw new Error('Une alerte d’établissement territorial médico-social activité non trouvée aurait dû être levée')
     } catch (error) {
       // THEN
-      expect(error.message).toBe('[Helios] L’activité de l’établissement territorial médico-social 123456789 n’a pas été trouvée')
+      expect(error.message).toBe('[Helios] L’établissement territorial médico-social 123456789 n’a pas été trouvé')
     }
   })
 })
