@@ -12,11 +12,11 @@ export class ActivitéMédicoSocialModel {
   @Column({ length: 9, name: 'numérofinessÉtablissementterritorial' })
   public numéroFinessÉtablissementTerritorial!: string
 
-  @Column({ name: 'tauxDOccupationDesLitsAutorisésEnAccueilDeJour', type: 'float' })
-  public tauxDOccupationDesLitsAutorisésEnAccueil: number | undefined
+  @Column({ name: 'tauxDOccupationDesLitsAutorisésEnAccueilDeJour', nullable: true, type: 'float' })
+  public tauxDOccupationDesLitsAutorisésEnAccueil!: number
 
-  @Column({ name: 'tauxDOccupationDesLitsAutorisésEnHébergementTemporaire', type: 'float' })
-  public tauxDOccupationDesLitsAutorisésEnHébergementTemporaire: number | undefined
-  @Column({ name: 'tauxDOccupationDesPlacesAutoriséesEnHébergementPermanent', type: 'float' })
-  public tauxDOccupationDesPlacesAutoriséesEnHébergementPermanent: number | undefined
+  @Column({ name: 'tauxDOccupationDesLitsAutorisésEnHébergementTemporaire', nullable: true, type: 'float' })
+  public tauxDOccupationDesLitsAutorisésEnHébergementTemporaire!: number
+  @Column({ name: 'tauxDOccupationDesPlacesAutoriséesEnHébergementPermanent', nullable: true, type: 'float' })
+  public tauxDOccupationDesPlacesAutoriséesEnHébergementPermanent!: number
 }
