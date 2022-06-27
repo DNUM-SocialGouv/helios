@@ -1,4 +1,4 @@
-from datacrawler.dependencies import initialise_les_dépendances
+from datacrawler.dependencies.dépendances import initialise_les_dépendances
 
 
 def exécute():

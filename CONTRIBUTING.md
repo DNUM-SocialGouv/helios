@@ -360,9 +360,7 @@ interface Repository<T> {
 
 #### Python
 
-- le **snake_case** est utilisé pour les variables, les fonctions et les noms des fichiers
-
-- les noms des répertoires sont en 1 seul mot ou tout attaché
+- le **snake_case** est utilisé pour les variables, les fonctions et les noms des fichiers et des répertoires
 
 ```python
 nom_de_ma_variable = 'valeur'
