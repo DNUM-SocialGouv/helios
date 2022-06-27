@@ -1,3 +1,5 @@
+from typing import Callable
+
 import pandas as pd
 
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
@@ -8,7 +10,10 @@ def exécute():
     initialise_les_dépendances()
 
 
-def transforme_les_activités_des_établissements_médico_sociaux(chemin_du_fichier: str) -> pd.DataFrame:
+def transforme_les_activités_des_établissements_médico_sociaux(
+        chemin_du_fichier: str,
+        lis_le_fichier_csv: Callable = lis_le_fichier_csv
+) -> pd.DataFrame:
     colonnes_du_fichier_à_lire = [
         "Taux d'occupation des places autorisées en hébergement permanent",
         "Taux d'occupation des lits autorisés en hébergement temporaire",
