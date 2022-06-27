@@ -7,7 +7,7 @@ type ContenuDuTauxOccupationHébergementPermanentProps = Readonly<{
   source: ReactChild
 }>
 
-export const ContenuDuTauxOccupationHébergementPermanent = ({ dateDeMiseÀJour, source }: ContenuDuTauxOccupationHébergementPermanentProps) => {
+export const ContenuTauxOccupationHébergementPermanent = ({ dateDeMiseÀJour, source }: ContenuDuTauxOccupationHébergementPermanentProps) => {
   return <ContenuDuTauxOccupation
     dateDeMiseÀJour={dateDeMiseÀJour}
     source={source}

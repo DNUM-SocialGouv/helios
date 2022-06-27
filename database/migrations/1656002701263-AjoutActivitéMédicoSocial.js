@@ -5,9 +5,13 @@ class AjoutActivitéMédicoSocial1656002701263 {
       (
           année INT NOT NULL,
           numéroFinessÉtablissementTerritorial VARCHAR(9) NOT NULL,
-          tauxDOccupationEnAccueilDeJour FLOAT,
-          tauxDOccupationEnHébergementTemporaire FLOAT,
-          tauxDOccupationEnHébergementPermanent FLOAT,
+          tauxOccupationAccueilDeJour FLOAT,
+          tauxOccupationHébergementTemporaire FLOAT,
+          tauxOccupationHébergementPermanent FLOAT,
+          tauxRéalisationActivité FLOAT,
+          fileActivePersonnesAccompagnées FLOAT,
+          nombreMoyenJournéesAbsencePersonnesAccompagnées FLOAT,
+          duréeMoyenneSéjourAccompagnementPersonnesSorties FLOAT,
           PRIMARY KEY (année, numéroFinessÉtablissementTerritorial),
 
           CONSTRAINT activité_médico_social_établissement_territorial_finess_foreign_key

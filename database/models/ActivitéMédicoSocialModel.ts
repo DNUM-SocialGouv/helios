@@ -12,12 +12,24 @@ export class ActivitéMédicoSocialModel {
   @PrimaryColumn({ length: 9, name: 'numérofinessÉtablissementterritorial' })
   public numéroFinessÉtablissementTerritorial!: string
 
-  @Column({ name: 'tauxDOccupationEnAccueilDeJour', nullable: true, type: 'float' })
-  public tauxDOccupationDesLitsAutorisésEnAccueil!: number
+  @Column({ name: 'tauxOccupationAccueilDeJour', nullable: true, type: 'float' })
+  public tauxOccupationAccueilDeJour!: number
 
-  @Column({ name: 'tauxDOccupationEnHébergementTemporaire', nullable: true, type: 'float' })
-  public tauxDOccupationDesLitsAutorisésEnHébergementTemporaire!: number
+  @Column({ name: 'tauxOccupationHébergementTemporaire', nullable: true, type: 'float' })
+  public tauxOccupationHébergementTemporaire!: number
 
-  @Column({ name: 'tauxDOccupationEnHébergementPermanent', nullable: true, type: 'float' })
-  public tauxDOccupationDesPlacesAutoriséesEnHébergementPermanent!: number
+  @Column({ name: 'tauxOccupationHébergementPermanent', nullable: true, type: 'float' })
+  public tauxOccupationHébergementPermanent!: number
+
+  @Column({ name: 'tauxRéalisationActivité', nullable: true, type: 'float' })
+  public tauxRéalisationActivité!: number
+
+  @Column({ name: 'fileActivePersonnesAccompagnées', nullable: true, type: 'float' })
+  public fileActivePersonnesAccompagnées!: number
+
+  @Column({ name: 'nombreMoyenJournéesAbsencePersonnesAccompagnées', nullable: true, type: 'float' })
+  public nombreMoyenJournéesAbsencePersonnesAccompagnées!: number
+
+  @Column({ name: 'duréeMoyenneSéjourAccompagnementPersonnesSorties', nullable: true, type: 'float' })
+  public duréeMoyenneSéjourAccompagnementPersonnesSorties!: number
 }

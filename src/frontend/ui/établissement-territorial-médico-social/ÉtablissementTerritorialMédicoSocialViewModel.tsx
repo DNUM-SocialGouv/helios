@@ -130,7 +130,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     return this.afficheUnHistogrammeVertical(chartColors, dataPoints, labelsColor, labels)
   }
 
-  public get tauxOccupationHébergementAccueilDeJour(): JSX.Element {
+  public get tauxOccupationAccueilDeJour(): JSX.Element {
     // TODO: à modifier avec les données du backend
     const dataPoints = [0, 15, 20]
     const chartColors = this.construisLeFondDeCouleurDesHistogrammes(dataPoints)
@@ -152,7 +152,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     return this.afficheUnHistogrammeVertical(chartColors, dataPoints, labelsColor, labels)
   }
 
-  public get fileActiveDesPersonnesAccompagnéesSurLaPériode(): JSX.Element {
+  public get fileActivePersonnesAccompagnées(): JSX.Element {
     // TODO: à modifier avec les données du backend
     const dataPoints = [340, 280, 300]
     const chartColors = this.fondDeCouleurPourPremierHistogramme
@@ -163,7 +163,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     return this.afficheUnHistogrammeHorizontal(chartColors, dataPoints, labelsColor, labels)
   }
 
-  public get nombreMoyenJournéesAbsenceDesPersonnesAccompagnésSurPeriode(): JSX.Element {
+  public get nombreMoyenJournéesAbsencePersonnesAccompagnées(): JSX.Element {
     // TODO: à modifier avec les données du backend
     const dataPoints = [87, 90, 22]
     const chartColors = this.fondDeCouleurPourPremierHistogramme
@@ -174,7 +174,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     return this.afficheUnHistogrammeHorizontal(chartColors, dataPoints, labelsColor, labels)
   }
 
-  public get duréeMoyenneSéjourEtAcompagnementDesPersonnesSorties(): JSX.Element {
+  public get duréeMoyenneSéjourAcompagnementDesPersonnesSorties(): JSX.Element {
     // TODO: à modifier avec les données du backend
     const dataPoints = [1013, 994, 990]
     const chartColors = this.fondDeCouleurPourPremierHistogramme
