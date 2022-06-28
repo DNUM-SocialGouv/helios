@@ -7,20 +7,20 @@ export class ActivitéMédicoSocialModel {
   @PrimaryColumn({ name: 'année', type: 'int' })
   public année!: number
 
-  @PrimaryColumn({ length: 9, name: 'numérofinessÉtablissementterritorial' })
+  @PrimaryColumn({ length: 9, name: 'numerofiness' })
   public numéroFinessÉtablissementTerritorial!: string
 
   @ManyToOne(() => ÉtablissementTerritorialIdentitéModel, { nullable: false, onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'numérofinessÉtablissementterritorial', referencedColumnName: 'numéroFinessÉtablissementTerritorial' })
+  @JoinColumn({ name: 'numerofiness', referencedColumnName: 'numéroFinessÉtablissementTerritorial' })
   public établissementTerritorial!: ÉtablissementTerritorialIdentitéModel
 
   @Column({ name: 'tauxoccupationaccueildejour', nullable: true, type: 'float' })
   public tauxOccupationAccueilDeJour!: number
 
-  @Column({ name: 'tauxoccupationhébergementtemporaire', nullable: true, type: 'float' })
+  @Column({ name: 'tauxoccupationhebergementtemporaire', nullable: true, type: 'float' })
   public tauxOccupationHébergementTemporaire!: number
 
-  @Column({ name: 'tauxoccupationhébergementpermanent', nullable: true, type: 'float' })
+  @Column({ name: 'tauxoccupationhebergementpermanent', nullable: true, type: 'float' })
   public tauxOccupationHébergementPermanent!: number
 
   @Column({ name: 'tauxréalisationactivité', nullable: true, type: 'float' })

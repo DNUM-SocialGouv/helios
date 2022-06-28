@@ -18,11 +18,15 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     const activitésÉtablissementTerritorialModel = await (await this.orm)
       .getRepository(ActivitéMédicoSocialModel)
       .findBy({ numéroFinessÉtablissementTerritorial: numéroFinessET })
-    // const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
 
-    return activitésÉtablissementTerritorialModel.map(
-      (activitéÉtablissementTerritorialModel) => this.construisLÉtablissementTerritorialMédicoSocialActivité(activitéÉtablissementTerritorialModel)
-    )
+    if (activitésÉtablissementTerritorialModel.length === 0) {
+      return new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessET)
+    }
+
+    const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
+
+    return activitésÉtablissementTerritorialModel.map((activitéÉtablissementTerritorialModel) =>
+      this.construisLÉtablissementTerritorialMédicoSocialActivité(activitéÉtablissementTerritorialModel, dateDeMiseAJourModel))
   }
 
   async chargeIdentitéParNuméroFiness(numéroFinessET: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialMédicoSocialNonTrouvée> {
@@ -79,11 +83,12 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
   }
 
   private construisLÉtablissementTerritorialMédicoSocialActivité(
-    établissementTerritorialModel: ActivitéMédicoSocialModel
-    // dateDeMiseAJourModel: DateMiseÀJourSourceModel | null
+    établissementTerritorialModel: ActivitéMédicoSocialModel,
+    dateDeMiseAJourModel: DateMiseÀJourSourceModel | null
   ): ÉtablissementTerritorialMédicoSocialActivité {
     return {
       année: établissementTerritorialModel.année,
+      dateMiseAJourSource: dateDeMiseAJourModel ? dateDeMiseAJourModel.dernièreMiseÀJour : '',
       duréeMoyenneSéjourAccompagnementPersonnesSorties: établissementTerritorialModel.duréeMoyenneSéjourAccompagnementPersonnesSorties,
       fileActivePersonnesAccompagnées: établissementTerritorialModel.fileActivePersonnesAccompagnées,
       nombreMoyenJournéesAbsencePersonnesAccompagnées: établissementTerritorialModel.nombreMoyenJournéesAbsencePersonnesAccompagnées,

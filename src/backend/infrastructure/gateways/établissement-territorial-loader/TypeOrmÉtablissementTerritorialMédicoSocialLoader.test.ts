@@ -28,10 +28,10 @@ describe('Établissement territorial médico-social loader', () => {
   })
 
   beforeEach(async () => {
-    await activitéMédicoSocialModelRepository.query('DELETE FROM ActivitéMédicoSocial;')
-    await établissementTerritorialIdentitéRepository.query('DELETE FROM ÉtablissementTerritorialIdentité;')
-    await entitéJuridiqueRepository.query('DELETE FROM EntitéJuridique;')
-    await dateMiseÀJourSourceRepository.query('DELETE FROM DateMiseÀJourSource;')
+    await (await orm).createQueryBuilder().delete().from(ActivitéMédicoSocialModel).execute()
+    await (await orm).createQueryBuilder().delete().from(ÉtablissementTerritorialIdentitéModel).execute()
+    await (await orm).createQueryBuilder().delete().from(EntitéJuridiqueModel).execute()
+    await (await orm).createQueryBuilder().delete().from(DateMiseÀJourSourceModel).execute()
   })
 
   afterAll(async () => {
@@ -73,7 +73,7 @@ describe('Établissement territorial médico-social loader', () => {
       expect(établissementTerritorialChargé).toStrictEqual(établissementTerritorialAttendu)
     })
 
-    it('signale que l’établissement territorial n’a pas été trouvée lorsque l’établissement territorial n’existe pas', async () => {
+    it('signale que l’identité n’a pas été trouvée lorsque l’établissement territorial n’existe pas', async () => {
       // GIVEN
       await dateMiseÀJourSourceRepository.insert([
         {
@@ -81,14 +81,14 @@ describe('Établissement territorial médico-social loader', () => {
           source: SourceDeDonnées.FINESS,
         },
       ])
-      const numéroFiness = '012345678'
+      const numéroFinessÉtablissementTerritorial = '012345678'
       const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
 
       // WHEN
-      const exceptionReçue = await typeOrmÉtablissementTerritorialLoader.chargeIdentitéParNuméroFiness(numéroFiness)
+      const exceptionReçue = await typeOrmÉtablissementTerritorialLoader.chargeIdentitéParNuméroFiness(numéroFinessÉtablissementTerritorial)
 
       // THEN
-      const exceptionAttendue = new ÉtablissementTerritorialMédicoSocialNonTrouvée('012345678')
+      const exceptionAttendue = new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial)
       expect(exceptionReçue).toStrictEqual(exceptionAttendue)
     })
 
@@ -126,7 +126,7 @@ describe('Établissement territorial médico-social loader', () => {
   })
 
   describe('Permet de charger l’activité d’un établissement médico-social par son numéro FINESS', () => {
-    it.only('charge l’activité d’un établissement territorial médico-social', async () => {
+    it('charge l’activité d’un établissement territorial médico-social', async () => {
       // GIVEN
       const numéroFinessEntitéJuridique = '111222333'
       const entitéJuridiqueModel = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel({ numéroFinessEntitéJuridique })
@@ -163,6 +163,25 @@ describe('Établissement territorial médico-social loader', () => {
         ÉtablissementTerritorialTestFactory.créeUneActivité({ année: 2021, numéroFinessÉtablissementTerritorial }),
       ]
       expect(activitéChargée).toStrictEqual(activitéAttendue)
+    })
+
+    it('signale que l’activité n’a pas été trouvée lorsque l’établissement territorial n’existe pas', async () => {
+      // GIVEN
+      await dateMiseÀJourSourceRepository.insert([
+        {
+          dernièreMiseÀJour: '20220514',
+          source: SourceDeDonnées.FINESS,
+        },
+      ])
+      const numéroFinessÉtablissementTerritorial = '012345678'
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
+
+      // WHEN
+      const exceptionReçue = await typeOrmÉtablissementTerritorialLoader.chargeActivitéParNuméroFiness(numéroFinessÉtablissementTerritorial)
+
+      // THEN
+      const exceptionAttendue = new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial)
+      expect(exceptionReçue).toStrictEqual(exceptionAttendue)
     })
   })
 

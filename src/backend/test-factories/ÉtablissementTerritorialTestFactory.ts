@@ -26,7 +26,7 @@ export class ÉtablissementTerritorialTestFactory {
     adresseVoie: 'DE LA RECONNAISSANCE',
     catégorieÉtablissement: '365',
     courriel: 'b@example.com',
-    dateMiseAJourSource: '20220203',
+    dateMiseAJourSource: '2022-02-03',
     libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
     numéroFinessEntitéJuridique: '590000741',
     numéroFinessÉtablissementPrincipal: '',
@@ -38,6 +38,7 @@ export class ÉtablissementTerritorialTestFactory {
 
   private static activité: ÉtablissementTerritorialMédicoSocialActivité = {
     année: 2019,
+    dateMiseAJourSource: '2022-05-14',
     duréeMoyenneSéjourAccompagnementPersonnesSorties: 80,
     fileActivePersonnesAccompagnées: 80,
     nombreMoyenJournéesAbsencePersonnesAccompagnées: 80,
