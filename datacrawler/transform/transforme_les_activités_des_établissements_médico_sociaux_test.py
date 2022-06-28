@@ -2,9 +2,9 @@ from unittest.mock import MagicMock
 
 import pandas as pd
 from numpy import NaN
+from sqlalchemy import create_mock_engine
 
-from datacrawler.load.activités_des_établissements_médico_sociaux import TableActivitésDesÉtablissementsMédicoSociaux
-from datacrawler.transform.diamant.ann_errd_ej_et import ColonnesDuFichierAnnErrdEjEt
+from datacrawler.transform.diamant.équivalences_diamant_helios import index_des_activités_médico_sociales
 from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux import transforme_les_activités_des_établissements_médico_sociaux
 
 
@@ -16,11 +16,11 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         données_diamant = pd.DataFrame(
             [
                 {
-                    ColonnesDuFichierAnnErrdEjEt.numéro_finess_établissement_territorial: "010001261",
-                    ColonnesDuFichierAnnErrdEjEt.année: 2018,
-                    ColonnesDuFichierAnnErrdEjEt.taux_occupation_hébergement_permanent: 0.99779299847793002,
-                    ColonnesDuFichierAnnErrdEjEt.taux_occupation_hébergement_temporaire: 0.93698630136986305,
-                    ColonnesDuFichierAnnErrdEjEt.taux_occupation_accueil_de_jour: 0.48012820512820514,
+                    "Finess": "010001261",
+                    "Année": 2018,
+                    "Taux d'occupation des lits autorisés en accueil de jour": 0.48012820512820514,
+                    "Taux d'occupation des lits autorisés en hébergement temporaire": 0.93698630136986305,
+                    "Taux d'occupation des places autorisées en hébergement permanent": 0.99779299847793002,
                 }
             ]
         )
@@ -33,28 +33,28 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         data_frame_attendu = pd.DataFrame(
             [
                 {
-                    TableActivitésDesÉtablissementsMédicoSociaux.numéro_finess_établissement_territorial: "010001261",
-                    TableActivitésDesÉtablissementsMédicoSociaux.année: 2018,
-                    TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_hébergement_permanent: 0.99779299847793002,
-                    TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_hébergement_temporaire: 0.93698630136986305,
-                    TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_accueil_de_jour: 0.48012820512820514,
+                    "numérofinessÉtablissementterritorial": "010001261",
+                    "année": 2018,
+                    "tauxoccupationaccueildejour": 0.48012820512820514,
+                    "tauxoccupationhébergementtemporaire": 0.93698630136986305,
+                    "tauxoccupationhébergementpermanent": 0.99779299847793002,
                 }
             ],
-        ).set_index([TableActivitésDesÉtablissementsMédicoSociaux.année, TableActivitésDesÉtablissementsMédicoSociaux.numéro_finess_établissement_territorial])
+        ).set_index(index_des_activités_médico_sociales)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
         colonnes_attendues = [
-            ColonnesDuFichierAnnErrdEjEt.numéro_finess_établissement_territorial,
-            ColonnesDuFichierAnnErrdEjEt.année,
-            ColonnesDuFichierAnnErrdEjEt.taux_occupation_hébergement_permanent,
-            ColonnesDuFichierAnnErrdEjEt.taux_occupation_hébergement_temporaire,
-            ColonnesDuFichierAnnErrdEjEt.taux_occupation_accueil_de_jour,
+            "Finess",
+            "Année",
+            "Taux d'occupation des lits autorisés en accueil de jour",
+            "Taux d'occupation des lits autorisés en hébergement temporaire",
+            "Taux d'occupation des places autorisées en hébergement permanent",
         ]
         types_attendus = {
-            ColonnesDuFichierAnnErrdEjEt.numéro_finess_établissement_territorial: str,
-            ColonnesDuFichierAnnErrdEjEt.année: int,
-            ColonnesDuFichierAnnErrdEjEt.taux_occupation_hébergement_permanent: float,
-            ColonnesDuFichierAnnErrdEjEt.taux_occupation_hébergement_temporaire: float,
-            ColonnesDuFichierAnnErrdEjEt.taux_occupation_accueil_de_jour: float,
+            "Finess": str,
+            "Année": int,
+            "Taux d'occupation des lits autorisés en accueil de jour": float,
+            "Taux d'occupation des lits autorisés en hébergement temporaire": float,
+            "Taux d'occupation des places autorisées en hébergement permanent": float,
         }
         lis_le_fichier_csv.assert_called_once_with(chemin_du_fichier, colonnes_attendues, types_attendus)
 
@@ -65,11 +65,11 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         données_diamant = pd.DataFrame(
             [
                 {
-                    ColonnesDuFichierAnnErrdEjEt.numéro_finess_établissement_territorial: NaN,
-                    ColonnesDuFichierAnnErrdEjEt.année: 2018,
-                    ColonnesDuFichierAnnErrdEjEt.taux_occupation_hébergement_permanent: 0.99779299847793002,
-                    ColonnesDuFichierAnnErrdEjEt.taux_occupation_hébergement_temporaire: 0.93698630136986305,
-                    ColonnesDuFichierAnnErrdEjEt.taux_occupation_accueil_de_jour: 0.48012820512820514,
+                    "Finess": NaN,
+                    "Année": 2018,
+                    "Taux d'occupation des lits autorisés en accueil de jour": 0.48012820512820514,
+                    "Taux d'occupation des lits autorisés en hébergement temporaire": 0.93698630136986305,
+                    "Taux d'occupation des places autorisées en hébergement permanent": 0.99779299847793002,
                 }
             ]
         )
@@ -82,25 +82,23 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         data_frame_attendu = (
             pd.DataFrame(
                 columns=[
-                    TableActivitésDesÉtablissementsMédicoSociaux.numéro_finess_établissement_territorial,
-                    TableActivitésDesÉtablissementsMédicoSociaux.année,
-                    TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_hébergement_permanent,
-                    TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_hébergement_temporaire,
-                    TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_accueil_de_jour,
+                    "numérofinessÉtablissementterritorial",
+                    "année",
+                    "tauxoccupationaccueildejour",
+                    "tauxoccupationhébergementtemporaire",
+                    "tauxoccupationhébergementpermanent",
                 ],
             )
             .astype(
                 {
-                    TableActivitésDesÉtablissementsMédicoSociaux.numéro_finess_établissement_territorial: str,
-                    TableActivitésDesÉtablissementsMédicoSociaux.année: int,
-                    TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_hébergement_permanent: float,
-                    TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_hébergement_temporaire: float,
-                    TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_accueil_de_jour: float,
+                    "numérofinessÉtablissementterritorial": str,
+                    "année": int,
+                    "tauxoccupationaccueildejour": float,
+                    "tauxoccupationhébergementtemporaire": float,
+                    "tauxoccupationhébergementpermanent": float,
                 }
             )
-            .set_index(
-                [TableActivitésDesÉtablissementsMédicoSociaux.année, TableActivitésDesÉtablissementsMédicoSociaux.numéro_finess_établissement_territorial]
-            )
+            .set_index(index_des_activités_médico_sociales)
         )
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
 
@@ -111,11 +109,11 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         données_diamant = pd.DataFrame(
             [
                 {
-                    ColonnesDuFichierAnnErrdEjEt.numéro_finess_établissement_territorial: "010001261",
-                    ColonnesDuFichierAnnErrdEjEt.année: NaN,
-                    ColonnesDuFichierAnnErrdEjEt.taux_occupation_hébergement_permanent: 0.99779299847793002,
-                    ColonnesDuFichierAnnErrdEjEt.taux_occupation_hébergement_temporaire: 0.93698630136986305,
-                    ColonnesDuFichierAnnErrdEjEt.taux_occupation_accueil_de_jour: 0.48012820512820514,
+                    "Finess": "010001261",
+                    "Année": NaN,
+                    "Taux d'occupation des lits autorisés en accueil de jour": 0.48012820512820514,
+                    "Taux d'occupation des lits autorisés en hébergement temporaire": 0.93698630136986305,
+                    "Taux d'occupation des places autorisées en hébergement permanent": 0.99779299847793002,
                 }
             ]
         )
@@ -128,25 +126,23 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         data_frame_attendu = (
             pd.DataFrame(
                 columns=[
-                    TableActivitésDesÉtablissementsMédicoSociaux.numéro_finess_établissement_territorial,
-                    TableActivitésDesÉtablissementsMédicoSociaux.année,
-                    TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_hébergement_permanent,
-                    TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_hébergement_temporaire,
-                    TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_accueil_de_jour,
+                    "numérofinessÉtablissementterritorial",
+                    "année",
+                    "tauxoccupationaccueildejour",
+                    "tauxoccupationhébergementtemporaire",
+                    "tauxoccupationhébergementpermanent",
                 ],
             )
             .astype(
                 {
-                    TableActivitésDesÉtablissementsMédicoSociaux.numéro_finess_établissement_territorial: str,
-                    TableActivitésDesÉtablissementsMédicoSociaux.année: int,
-                    TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_hébergement_permanent: float,
-                    TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_hébergement_temporaire: float,
-                    TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_accueil_de_jour: float,
+                    "numérofinessÉtablissementterritorial": str,
+                    "année": int,
+                    "tauxoccupationaccueildejour": float,
+                    "tauxoccupationhébergementtemporaire": float,
+                    "tauxoccupationhébergementpermanent": float,
                 }
             )
-            .set_index(
-                [TableActivitésDesÉtablissementsMédicoSociaux.année, TableActivitésDesÉtablissementsMédicoSociaux.numéro_finess_établissement_territorial]
-            )
+            .set_index(index_des_activités_médico_sociales)
         )
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
 
@@ -157,11 +153,11 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         données_diamant = pd.DataFrame(
             [
                 {
-                    ColonnesDuFichierAnnErrdEjEt.numéro_finess_établissement_territorial: "010001261",
-                    ColonnesDuFichierAnnErrdEjEt.année: 2018,
-                    ColonnesDuFichierAnnErrdEjEt.taux_occupation_hébergement_permanent: NaN,
-                    ColonnesDuFichierAnnErrdEjEt.taux_occupation_hébergement_temporaire: NaN,
-                    ColonnesDuFichierAnnErrdEjEt.taux_occupation_accueil_de_jour: NaN,
+                    "Finess": "010001261",
+                    "Année": 2018,
+                    "Taux d'occupation des lits autorisés en accueil de jour": NaN,
+                    "Taux d'occupation des lits autorisés en hébergement temporaire": NaN,
+                    "Taux d'occupation des places autorisées en hébergement permanent": NaN,
                 }
             ]
         )
@@ -174,14 +170,14 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         data_frame_attendu = pd.DataFrame(
             [
                 {
-                    TableActivitésDesÉtablissementsMédicoSociaux.numéro_finess_établissement_territorial: "010001261",
-                    TableActivitésDesÉtablissementsMédicoSociaux.année: 2018,
-                    TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_hébergement_permanent: NaN,
-                    TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_hébergement_temporaire: NaN,
-                    TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_accueil_de_jour: NaN,
+                    "numérofinessÉtablissementterritorial": "010001261",
+                    "année": 2018,
+                    "tauxoccupationaccueildejour": NaN,
+                    "tauxoccupationhébergementtemporaire": NaN,
+                    "tauxoccupationhébergementpermanent": NaN,
                 }
             ],
-        ).set_index([TableActivitésDesÉtablissementsMédicoSociaux.année, TableActivitésDesÉtablissementsMédicoSociaux.numéro_finess_établissement_territorial])
+        ).set_index(index_des_activités_médico_sociales)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
 
     def test_ne_considère_qu_une_seule_fois_un_même_couple_année_numéro_finess(self):
@@ -191,18 +187,18 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         données_diamant = pd.DataFrame(
             [
                 {
-                    ColonnesDuFichierAnnErrdEjEt.numéro_finess_établissement_territorial: "010001261",
-                    ColonnesDuFichierAnnErrdEjEt.année: 2018,
-                    ColonnesDuFichierAnnErrdEjEt.taux_occupation_hébergement_permanent: 0.99779299847793002,
-                    ColonnesDuFichierAnnErrdEjEt.taux_occupation_hébergement_temporaire: NaN,
-                    ColonnesDuFichierAnnErrdEjEt.taux_occupation_accueil_de_jour: 0.48012820512820514,
+                    "Finess": "010001261",
+                    "Année": 2018,
+                    "Taux d'occupation des lits autorisés en accueil de jour": 0.48012820512820514,
+                    "Taux d'occupation des lits autorisés en hébergement temporaire": NaN,
+                    "Taux d'occupation des places autorisées en hébergement permanent": 0.99779299847793002,
                 },
                 {
-                    ColonnesDuFichierAnnErrdEjEt.numéro_finess_établissement_territorial: "010001261",
-                    ColonnesDuFichierAnnErrdEjEt.année: 2018,
-                    ColonnesDuFichierAnnErrdEjEt.taux_occupation_hébergement_permanent: NaN,
-                    ColonnesDuFichierAnnErrdEjEt.taux_occupation_hébergement_temporaire: 0.93698630136986305,
-                    ColonnesDuFichierAnnErrdEjEt.taux_occupation_accueil_de_jour: NaN,
+                    "Finess": "010001261",
+                    "Année": 2018,
+                    "Taux d'occupation des lits autorisés en accueil de jour": NaN,
+                    "Taux d'occupation des lits autorisés en hébergement temporaire": 0.93698630136986305,
+                    "Taux d'occupation des places autorisées en hébergement permanent": NaN,
                 },
             ]
         )
@@ -215,12 +211,12 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         data_frame_attendu = pd.DataFrame(
             [
                 {
-                    TableActivitésDesÉtablissementsMédicoSociaux.numéro_finess_établissement_territorial: "010001261",
-                    TableActivitésDesÉtablissementsMédicoSociaux.année: 2018,
-                    TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_hébergement_permanent: 0.99779299847793002,
-                    TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_hébergement_temporaire: NaN,
-                    TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_accueil_de_jour: 0.48012820512820514,
+                    "numérofinessÉtablissementterritorial": "010001261",
+                    "année": 2018,
+                    "tauxoccupationaccueildejour": 0.48012820512820514,
+                    "tauxoccupationhébergementtemporaire": NaN,
+                    "tauxoccupationhébergementpermanent": 0.99779299847793002,
                 }
             ],
-        ).set_index([TableActivitésDesÉtablissementsMédicoSociaux.année, TableActivitésDesÉtablissementsMédicoSociaux.numéro_finess_établissement_territorial])
+        ).set_index(index_des_activités_médico_sociales)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)

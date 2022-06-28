@@ -1,59 +1,32 @@
-from typing import Callable
+from typing import Callable, Dict
 
 import pandas as pd
 
-from datacrawler.dependencies.dépendances import initialise_les_dépendances
-from datacrawler.load.activités_des_établissements_médico_sociaux import TableActivitésDesÉtablissementsMédicoSociaux
-from datacrawler.transform.diamant.ann_errd_ej_et import ColonnesDuFichierAnnErrdEjEt
+from datacrawler.transform.diamant.équivalences_diamant_helios import (
+    ColonneHelios,
+    colonnes_à_lire_ann_errd_ej_et,
+    index_des_activités_médico_sociales,
+    équivalences_diamant_helios,
+)
 from datacrawler.transform.lecteur_csv.lecteur_csv import lis_le_fichier_csv
 
 
-def exécute():
-    initialise_les_dépendances()
+def extrais_l_equivalence_des_types_des_colonnes(équivalences: Dict[str, ColonneHelios]):
+    return {nom_diamant: colonne_diamant["type"] for nom_diamant, colonne_diamant in équivalences.items()}
+
+
+def extrais_l_equivalence_des_noms_des_colonnes(équivalences: Dict[str, ColonneHelios]):
+    return {nom_diamant: colonne_diamant["nom"] for nom_diamant, colonne_diamant in équivalences.items()}
 
 
 def transforme_les_activités_des_établissements_médico_sociaux(chemin_du_fichier: str, lis_le_csv: Callable = lis_le_fichier_csv) -> pd.DataFrame:
-    colonnes_du_fichier_à_lire = [
-        ColonnesDuFichierAnnErrdEjEt.numéro_finess_établissement_territorial,
-        ColonnesDuFichierAnnErrdEjEt.année,
-        ColonnesDuFichierAnnErrdEjEt.taux_occupation_hébergement_permanent,
-        ColonnesDuFichierAnnErrdEjEt.taux_occupation_hébergement_temporaire,
-        ColonnesDuFichierAnnErrdEjEt.taux_occupation_accueil_de_jour,
-    ]
-    types_des_colonnes = {
-        ColonnesDuFichierAnnErrdEjEt.numéro_finess_établissement_territorial: str,
-        ColonnesDuFichierAnnErrdEjEt.année: int,
-        ColonnesDuFichierAnnErrdEjEt.taux_occupation_hébergement_permanent: float,
-        ColonnesDuFichierAnnErrdEjEt.taux_occupation_hébergement_temporaire: float,
-        ColonnesDuFichierAnnErrdEjEt.taux_occupation_accueil_de_jour: float,
-    }
-    contenu = lis_le_csv(chemin_du_fichier, colonnes_du_fichier_à_lire, types_des_colonnes)
+    types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_helios)
+
+    contenu = lis_le_csv(chemin_du_fichier, colonnes_à_lire_ann_errd_ej_et, types_des_colonnes)
 
     return (
-        contenu.dropna(subset=[ColonnesDuFichierAnnErrdEjEt.année, ColonnesDuFichierAnnErrdEjEt.numéro_finess_établissement_territorial])
-        .rename(
-            columns={
-                ColonnesDuFichierAnnErrdEjEt.numéro_finess_établissement_territorial: TableActivitésDesÉtablissementsMédicoSociaux.numéro_finess_établissement_territorial,
-                ColonnesDuFichierAnnErrdEjEt.année: TableActivitésDesÉtablissementsMédicoSociaux.année,
-                ColonnesDuFichierAnnErrdEjEt.taux_occupation_hébergement_permanent: TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_hébergement_permanent,
-                ColonnesDuFichierAnnErrdEjEt.taux_occupation_hébergement_temporaire: TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_hébergement_temporaire,
-                ColonnesDuFichierAnnErrdEjEt.taux_occupation_accueil_de_jour: TableActivitésDesÉtablissementsMédicoSociaux.taux_occupation_accueil_de_jour,
-            }
-        )
-        .drop_duplicates(
-            subset=[
-                TableActivitésDesÉtablissementsMédicoSociaux.année,
-                TableActivitésDesÉtablissementsMédicoSociaux.numéro_finess_établissement_territorial,
-            ]
-        )
-        .set_index(
-            [
-                TableActivitésDesÉtablissementsMédicoSociaux.année,
-                TableActivitésDesÉtablissementsMédicoSociaux.numéro_finess_établissement_territorial,
-            ]
-        )
+        contenu.rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_diamant_helios))
+        .dropna(subset=index_des_activités_médico_sociales)
+        .drop_duplicates(subset=index_des_activités_médico_sociales)
+        .set_index(index_des_activités_médico_sociales)
     )
-
-
-if __name__ == "__main__":
-    exécute()
