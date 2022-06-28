@@ -1,16 +1,17 @@
 import { ÉtablissementTerritorialMédicoSocialActivité } from '../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
 
+// TODO: à mettre dans ÉtablissementTerritorialTestFactory
 export class ÉtablissementTerritorialMédicoSocialActivitéTestFactory {
   private static activité: ÉtablissementTerritorialMédicoSocialActivité = {
     année: 2019,
-    duréeMoyenneSéjourDesPersonnesSortiesDéfinitivement: 80,
-    fileActiveDesPersonnesAccompagnésSurPériode: 80,
-    nombreMoyenJournéeAbsenceDesPersonnesAccompagnésSurPériode: 80,
+    duréeMoyenneSéjourAccompagnementPersonnesSorties: 80,
+    fileActivePersonnesAccompagnées: 80,
+    nombreMoyenJournéesAbsencePersonnesAccompagnées: 80,
     numéroFinessÉtablissementTerritorial: '123456789',
-    tauxDOccupationDesLitsAutorisésEnAccueil: 80,
-    tauxDOccupationDesLitsAutorisésEnHébergementTemporaire: 80,
-    tauxDOccupationDesPlacesAutoriséesEnHébergementPermanent: 80,
-    tauxDeRéalisationDeLActivité: 80,
+    tauxOccupationAccueilDeJour: 80,
+    tauxOccupationHébergementPermanent: 80,
+    tauxOccupationHébergementTemporaire: 80,
+    tauxRéalisationActivité: 80,
   }
 
   public static créeÉtablissementTerritorialMédicoSocialActivité(

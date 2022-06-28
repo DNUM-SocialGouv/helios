@@ -4,7 +4,8 @@ import { ÉtablissementTerritorialIdentité } from '../entities/ÉtablissementTe
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
 
 export interface ÉtablissementTerritorialMédicoSocialLoader {
-  chargeActivitéParNuméroFiness(numéroFiness: string): Promise<ÉtablissementTerritorialMédicoSocialActivité[] | ÉtablissementTerritorialMédicoSocialNonTrouvée>
-  chargeIdentitéParNuméroFiness(numéroFiness: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialMédicoSocialNonTrouvée>
+  chargeActivitéParNuméroFiness(numéroFinessET: string):
+    Promise<ÉtablissementTerritorialMédicoSocialActivité[] | ÉtablissementTerritorialMédicoSocialNonTrouvée>
+  chargeIdentitéParNuméroFiness(numéroFinessET: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialMédicoSocialNonTrouvée>
   estUnMonoÉtablissement(numéroFinessEntitéJuridique: string): Promise<MonoÉtablissement>
 }

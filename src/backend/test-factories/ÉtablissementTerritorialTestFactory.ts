@@ -1,3 +1,4 @@
+import { ÉtablissementTerritorialMédicoSocialActivité } from '../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
 import { ÉtablissementTerritorialIdentité } from '../métier/entities/ÉtablissementTerritorialIdentité'
 
 export class ÉtablissementTerritorialTestFactory {
@@ -35,6 +36,18 @@ export class ÉtablissementTerritorialTestFactory {
     téléphone: '0102030406',
   }
 
+  private static activité: ÉtablissementTerritorialMédicoSocialActivité = {
+    année: 2019,
+    duréeMoyenneSéjourAccompagnementPersonnesSorties: 80,
+    fileActivePersonnesAccompagnées: 80,
+    nombreMoyenJournéesAbsencePersonnesAccompagnées: 80,
+    numéroFinessÉtablissementTerritorial: '123456789',
+    tauxOccupationAccueilDeJour: 80,
+    tauxOccupationHébergementPermanent: 80,
+    tauxOccupationHébergementTemporaire: 80,
+    tauxRéalisationActivité: 80,
+  }
+
   public static créeÉtablissementTerritorial(champsSurchargés?: Partial<ÉtablissementTerritorialIdentité>): ÉtablissementTerritorialIdentité {
     return {
       ...ÉtablissementTerritorialTestFactory.établissementTerritorial1,
@@ -45,6 +58,15 @@ export class ÉtablissementTerritorialTestFactory {
   public static créeAutreÉtablissementTerritorial(champsSurchargés?: Partial<ÉtablissementTerritorialIdentité>): ÉtablissementTerritorialIdentité {
     return {
       ...ÉtablissementTerritorialTestFactory.établissementTerritorial2,
+      ...champsSurchargés,
+    }
+  }
+
+  public static créeUneActivité(
+    champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialActivité>
+  ): ÉtablissementTerritorialMédicoSocialActivité {
+    return {
+      ...ÉtablissementTerritorialTestFactory.activité,
       ...champsSurchargés,
     }
   }
