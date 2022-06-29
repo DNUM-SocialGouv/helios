@@ -2,22 +2,21 @@ from unittest.mock import MagicMock
 
 import pandas as pd
 from numpy import NaN
-from sqlalchemy import create_engine
 
 from datacrawler.transform.diamant.équivalences_diamant_helios import index_des_activités_médico_sociales
-from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux import \
-    transforme_les_activités_des_établissements_médico_sociaux
+from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux import transforme_les_activités_des_établissements_médico_sociaux
 
 
 class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
     def test_lis_le_fichier_diamant_renomme_les_colonnes_et_crée_l_index(self):
         # GIVEN
         chemin_du_fichier = "chemin/vers_le.csv"
-        lis_le_fichier_csv = MagicMock()
+        mock_lis_le_fichier_csv = MagicMock()
+        numéro_finess_établissement = "010001261"
         données_diamant = pd.DataFrame(
             [
                 {
-                    "Finess": "010001261",
+                    "Finess": numéro_finess_établissement,
                     "Année": 2018,
                     "Taux d'occupation des lits autorisés en accueil de jour": 0.48012820512820514,
                     "Taux d'occupation des lits autorisés en hébergement temporaire": 0.93698630136986305,
@@ -25,11 +24,20 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
                 }
             ]
         )
-        lis_le_fichier_csv.return_value = données_diamant
+        mock_lis_le_fichier_csv.return_value = données_diamant
+        mock_trouve_les_finess_des_établissements = MagicMock()
+        mock_trouve_les_finess_des_établissements.return_value = pd.DataFrame(
+            [
+                {
+                    "numérofinessÉtablissementterritorial": numéro_finess_établissement,
+                }
+            ]
+        )
 
         # WHEN
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(chemin_du_fichier,
-                                                                                          lis_le_fichier_csv)
+        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
+            chemin_du_fichier, mock_lis_le_fichier_csv, mock_trouve_les_finess_des_établissements
+        )
 
         # THEN
         data_frame_attendu = pd.DataFrame(
@@ -58,12 +66,12 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
             "Taux d'occupation des lits autorisés en hébergement temporaire": float,
             "Taux d'occupation des places autorisées en hébergement permanent": float,
         }
-        lis_le_fichier_csv.assert_called_once_with(chemin_du_fichier, colonnes_attendues, types_attendus)
+        mock_lis_le_fichier_csv.assert_called_once_with(chemin_du_fichier, colonnes_attendues, types_attendus)
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self):
         # GIVEN
         chemin_du_fichier = "chemin/vers_le.csv"
-        lis_le_fichier_csv = MagicMock()
+        mock_lis_le_fichier_csv = MagicMock()
         données_diamant = pd.DataFrame(
             [
                 {
@@ -75,11 +83,20 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
                 }
             ]
         )
-        lis_le_fichier_csv.return_value = données_diamant
+        mock_lis_le_fichier_csv.return_value = données_diamant
+        mock_trouve_les_finess_des_établissements = MagicMock()
+        mock_trouve_les_finess_des_établissements.return_value = pd.DataFrame(
+            [
+                {
+                    "numérofinessÉtablissementterritorial": "123456789",
+                }
+            ]
+        )
 
         # WHEN
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(chemin_du_fichier,
-                                                                                          lis_le_fichier_csv)
+        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
+            chemin_du_fichier, mock_lis_le_fichier_csv, mock_trouve_les_finess_des_établissements
+        )
 
         # THEN
         data_frame_attendu = (
@@ -92,7 +109,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
                     "tauxoccupationhébergementpermanent",
                 ],
             )
-                .astype(
+            .astype(
                 {
                     "numérofinessÉtablissementterritorial": str,
                     "année": int,
@@ -101,18 +118,19 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
                     "tauxoccupationhébergementpermanent": float,
                 }
             )
-                .set_index(index_des_activités_médico_sociales)
+            .set_index(index_des_activités_médico_sociales)
         )
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
 
     def test_supprime_les_lignes_ne_mentionnant_pas_l_année(self):
         # GIVEN
         chemin_du_fichier = "chemin/vers_le.csv"
-        lis_le_fichier_csv = MagicMock()
+        mock_lis_le_fichier_csv = MagicMock()
+        numéro_finess_établissement = "010001261"
         données_diamant = pd.DataFrame(
             [
                 {
-                    "Finess": "010001261",
+                    "Finess": numéro_finess_établissement,
                     "Année": NaN,
                     "Taux d'occupation des lits autorisés en accueil de jour": 0.48012820512820514,
                     "Taux d'occupation des lits autorisés en hébergement temporaire": 0.93698630136986305,
@@ -120,11 +138,20 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
                 }
             ]
         )
-        lis_le_fichier_csv.return_value = données_diamant
+        mock_lis_le_fichier_csv.return_value = données_diamant
+        mock_trouve_les_finess_des_établissements = MagicMock()
+        mock_trouve_les_finess_des_établissements.return_value = pd.DataFrame(
+            [
+                {
+                    "numérofinessÉtablissementterritorial": numéro_finess_établissement,
+                }
+            ]
+        )
 
         # WHEN
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(chemin_du_fichier,
-                                                                                          lis_le_fichier_csv)
+        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
+            chemin_du_fichier, mock_lis_le_fichier_csv, mock_trouve_les_finess_des_établissements
+        )
 
         # THEN
         data_frame_attendu = (
@@ -137,7 +164,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
                     "tauxoccupationhébergementpermanent",
                 ],
             )
-                .astype(
+            .astype(
                 {
                     "numérofinessÉtablissementterritorial": str,
                     "année": int,
@@ -146,18 +173,19 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
                     "tauxoccupationhébergementpermanent": float,
                 }
             )
-                .set_index(index_des_activités_médico_sociales)
+            .set_index(index_des_activités_médico_sociales)
         )
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
 
     def test_renseigne_la_ligne_même_si_aucun_taux_n_est_renseigné(self):
         # GIVEN
         chemin_du_fichier = "chemin/vers_le.csv"
-        lis_le_fichier_csv = MagicMock()
+        mock_lis_le_fichier_csv = MagicMock()
+        numéro_finess_établissement = "010001261"
         données_diamant = pd.DataFrame(
             [
                 {
-                    "Finess": "010001261",
+                    "Finess": numéro_finess_établissement,
                     "Année": 2018,
                     "Taux d'occupation des lits autorisés en accueil de jour": NaN,
                     "Taux d'occupation des lits autorisés en hébergement temporaire": NaN,
@@ -165,17 +193,26 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
                 }
             ]
         )
-        lis_le_fichier_csv.return_value = données_diamant
+        mock_lis_le_fichier_csv.return_value = données_diamant
+        mock_trouve_les_finess_des_établissements = MagicMock()
+        mock_trouve_les_finess_des_établissements.return_value = pd.DataFrame(
+            [
+                {
+                    "numérofinessÉtablissementterritorial": numéro_finess_établissement,
+                }
+            ]
+        )
 
         # WHEN
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(chemin_du_fichier,
-                                                                                          lis_le_fichier_csv)
+        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
+            chemin_du_fichier, mock_lis_le_fichier_csv, mock_trouve_les_finess_des_établissements
+        )
 
         # THEN
         data_frame_attendu = pd.DataFrame(
             [
                 {
-                    "numérofinessÉtablissementterritorial": "010001261",
+                    "numérofinessÉtablissementterritorial": numéro_finess_établissement,
                     "année": 2018,
                     "tauxoccupationaccueildejour": NaN,
                     "tauxoccupationhébergementtemporaire": NaN,
@@ -188,18 +225,19 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
     def test_ne_considère_qu_une_seule_fois_un_même_couple_année_numéro_finess(self):
         # GIVEN
         chemin_du_fichier = "chemin/vers_le.csv"
-        lis_le_fichier_csv = MagicMock()
+        mock_lis_le_fichier_csv = MagicMock()
+        numéro_finess_établissement = "010001261"
         données_diamant = pd.DataFrame(
             [
                 {
-                    "Finess": "010001261",
+                    "Finess": numéro_finess_établissement,
                     "Année": 2018,
                     "Taux d'occupation des lits autorisés en accueil de jour": 0.48012820512820514,
                     "Taux d'occupation des lits autorisés en hébergement temporaire": NaN,
                     "Taux d'occupation des places autorisées en hébergement permanent": 0.99779299847793002,
                 },
                 {
-                    "Finess": "010001261",
+                    "Finess": numéro_finess_établissement,
                     "Année": 2018,
                     "Taux d'occupation des lits autorisés en accueil de jour": NaN,
                     "Taux d'occupation des lits autorisés en hébergement temporaire": 0.93698630136986305,
@@ -207,17 +245,26 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
                 },
             ]
         )
-        lis_le_fichier_csv.return_value = données_diamant
+        mock_lis_le_fichier_csv.return_value = données_diamant
+        mock_trouve_les_finess_des_établissements = MagicMock()
+        mock_trouve_les_finess_des_établissements.return_value = pd.DataFrame(
+            [
+                {
+                    "numérofinessÉtablissementterritorial": numéro_finess_établissement,
+                }
+            ]
+        )
 
         # WHEN
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(chemin_du_fichier,
-                                                                                          lis_le_fichier_csv)
+        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
+            chemin_du_fichier, mock_lis_le_fichier_csv, mock_trouve_les_finess_des_établissements
+        )
 
         # THEN
         data_frame_attendu = pd.DataFrame(
             [
                 {
-                    "numérofinessÉtablissementterritorial": "010001261",
+                    "numérofinessÉtablissementterritorial": numéro_finess_établissement,
                     "année": 2018,
                     "tauxoccupationaccueildejour": 0.48012820512820514,
                     "tauxoccupationhébergementtemporaire": NaN,
@@ -254,9 +301,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
 
         # WHEN
         données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
-            chemin_du_fichier,
-            lis_le_fichier_csv,
-            trouve_les_finess_des_établissements
+            chemin_du_fichier, lis_le_fichier_csv, trouve_les_finess_des_établissements
         )
 
         # THEN
