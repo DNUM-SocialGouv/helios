@@ -1,5 +1,6 @@
 import pandas as pd
 import pandas.testing
+from numpy import NaN
 from sqlalchemy import create_engine
 
 from datacrawler.ajoute_les_activités_des_établissements_médico_sociaux import ajoute_les_activités_des_établissements_médico_sociaux
@@ -26,14 +27,18 @@ class TestAcceptance:
         data_frame_attendu = pd.DataFrame(
             [
                 {
-                    "numérofinessÉtablissementterritorial": "010001261",
                     "année": 2018,
-                    "tauxoccupationhébergementpermanent": 0.99779299847793002,
-                    "tauxoccupationhébergementtemporaire": 0.93698630136986305,
+                    "numérofinessÉtablissementterritorial": "010001261",
                     "tauxoccupationaccueildejour": 0.48012820512820514,
+                    "tauxoccupationhébergementtemporaire": 0.93698630136986305,
+                    "tauxoccupationhébergementpermanent": 0.99779299847793002,
+                    "tauxréalisationactivité": NaN,
+                    "fileactivepersonnesaccompagnées": NaN,
+                    "nombremoyenjournéesabsencepersonnesaccompagnées": NaN,
+                    "duréemoyenneséjouraccompagnementpersonnessorties": NaN,
                 }
             ],
-        ).set_index(index_des_activités_médico_sociales)
+        )
 
         data_frame = pd.read_sql_table(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, self.base_de_données)
 

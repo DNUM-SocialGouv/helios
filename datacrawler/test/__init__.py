@@ -17,7 +17,7 @@ def sauvegarde_une_entité_juridique_en_base(numéro_finess: str, base_de_donné
     téléphone
   )
 VALUES (
-    {numéro_finess},
+    '{numéro_finess}',
     'rs',
     '00000 VILLE',
     '12',
@@ -55,9 +55,9 @@ VALUES (
     'nom de rue',
     '100',
     '',
-    {numéro_finess_entité_juridique},
+    '{numéro_finess_entité_juridique}',
     '',
-    {numéro_finess_établissement},
+    '{numéro_finess_établissement}',
     'rs',
     '',
     'P',
