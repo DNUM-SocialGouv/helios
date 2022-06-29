@@ -1,5 +1,6 @@
 from functools import partial
 
+from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
@@ -16,3 +17,6 @@ def ajoute_les_activités_des_établissements_médico_sociaux(chemin_du_fichier:
     )
 
     sauvegarde_les_activités_des_établissements_médico_sociaux(base_de_données, activités_des_établissements_médico_sociaux)
+
+if __name__ == '__main__':
+    base_de_données = create_engine()
