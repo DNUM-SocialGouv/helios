@@ -19,7 +19,7 @@ class TestLisLeFichierCsv:
         # THEN
         pd.testing.assert_frame_equal(données, pd.DataFrame(
             {
-                'Finess': ['010001261'],
+                'Finess': ['010003598'],
                 'MS Résultat net comptable ERRD': [3034.379999999893]
             }
         ))

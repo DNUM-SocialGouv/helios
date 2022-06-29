@@ -1,5 +1,6 @@
 import os
 from functools import partial
+from logging import Logger
 
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
@@ -13,7 +14,11 @@ from datacrawler.transform.transforme_les_activités_des_établissements_médico
     transforme_les_activités_des_établissements_médico_sociaux
 
 
-def ajoute_les_activités_des_établissements_médico_sociaux(chemin_du_fichier: str, base_de_données: Engine):
+def ajoute_les_activités_des_établissements_médico_sociaux(
+        chemin_du_fichier: str,
+        base_de_données: Engine,
+        logger:Logger
+):
     récupère_les_numéros_finess_des_établissements_connus = partial(
         récupère_les_numéros_finess_des_établissements_de_la_base, base_de_données=base_de_données)
 
@@ -34,4 +39,5 @@ if __name__ == "__main__":
         if 'ANN_ERRD_EJ_ET' in nom_de_fichier
     ][0]
     chemin_du_fichier = os.path.join(variables_d_environnement['DNUM_SFTP_LOCAL_PATH'], fichier_ann_errd_ej_et)
-    ajoute_les_activités_des_établissements_médico_sociaux(chemin_du_fichier, base_de_données)
+    logger.info(f"Cherche les activités pour les ET médico-sociaux dans le fichier {chemin_du_fichier}")
+    ajoute_les_activités_des_établissements_médico_sociaux(chemin_du_fichier, base_de_données, logger)
