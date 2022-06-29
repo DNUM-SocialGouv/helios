@@ -139,7 +139,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     const labels = ['2019', '2020', '2021']
     const labelsColor = this.construisLaCouleurDuLabel(dataPoints)
 
-    return this.afficheUnHistogrammeVertical(chartColors, dataPoints, labelsColor, labels, this.wording.TAUX_OCCUPATION_HÉBERGEMENT_ACCUEIL_DE_JOUR)
+    return this.afficheUnHistogrammeVertical(chartColors, dataPoints, labelsColor, labels, this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR)
   }
 
   public get tauxRéalisationActivité(): JSX.Element {
@@ -161,7 +161,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     const labels = ['2019', '2020', '2021']
     const labelsColor = this.construisLaCouleurDuLabel(dataPoints, true)
 
-    return this.afficheUnHistogrammeHorizontal(chartColors, dataPoints, labelsColor, labels, this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES_SUR_PERIODE)
+    return this.afficheUnHistogrammeHorizontal(chartColors, dataPoints, labelsColor, labels, this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES)
   }
 
   public get nombreMoyenJournéesAbsencePersonnesAccompagnées(): JSX.Element {
@@ -173,7 +173,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     const labelsColor = this.construisLaCouleurDuLabel(dataPoints, true)
 
     return this.afficheUnHistogrammeHorizontal(chartColors, dataPoints, labelsColor, labels,
-      this.wording.NOMBRE_MOYEN_JOURNÉE_ABSENCE_PERSONNES_ACCOMPAGNÉES_SUR_PERIODE)
+      this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES)
   }
 
   public get duréeMoyenneSéjourAcompagnementDesPersonnesSorties(): JSX.Element {
@@ -184,7 +184,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     const labels = ['2019', '2020', '2021']
     const labelsColor = this.construisLaCouleurDuLabel(dataPoints, true)
 
-    return this.afficheUnHistogrammeHorizontal(chartColors, dataPoints, labelsColor, labels, this.wording.DURÉE_MOEYNNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES)
+    return this.afficheUnHistogrammeHorizontal(chartColors, dataPoints, labelsColor, labels, this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES)
   }
 
   private afficheUnHistogrammeVertical(chartColors: string[], dataPoints: number[], labelsColor: string[], labels: string[], identifiant: string): JSX.Element {

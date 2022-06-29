@@ -161,7 +161,7 @@ describe('La page Établissement territorial - Bloc activité', () => {
 
       const tableau = within(indicateur[2]).getByRole('table')
       const annéeLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.ANNÉE })
-      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.TAUX_OCCUPATION_HÉBERGEMENT_ACCUEIL_DE_JOUR })
+      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR })
       expect(annéeLigneDEnTête).toBeInTheDocument()
       expect(indicateurLigneDEnTête).toBeInTheDocument()
 
@@ -277,7 +277,7 @@ describe('La page Établissement territorial - Bloc activité', () => {
 
       const tableau = within(indicateur[4]).getByRole('table')
       const annéeLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.ANNÉE })
-      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES_SUR_PERIODE })
+      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES })
       expect(annéeLigneDEnTête).toBeInTheDocument()
       expect(indicateurLigneDEnTête).toBeInTheDocument()
 
@@ -335,7 +335,7 @@ describe('La page Établissement territorial - Bloc activité', () => {
 
       const tableau = within(indicateur[5]).getByRole('table')
       const annéeLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.ANNÉE })
-      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.NOMBRE_MOYEN_JOURNÉE_ABSENCE_PERSONNES_ACCOMPAGNÉES_SUR_PERIODE })
+      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES })
       expect(annéeLigneDEnTête).toBeInTheDocument()
       expect(indicateurLigneDEnTête).toBeInTheDocument()
 
@@ -365,7 +365,7 @@ describe('La page Établissement territorial - Bloc activité', () => {
       // THEN
       const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
       const indicateurs = within(activité).getAllByRole('listitem')
-      const duréeMoyenneSéjourEtAccompagnementDesPersonnesSortiesDéfinitivementAuCoursDeLAnnée = within(indicateurs[6]).getByText(wording.DURÉE_MOEYNNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, { selector: 'p' })
+      const duréeMoyenneSéjourEtAccompagnementDesPersonnesSortiesDéfinitivementAuCoursDeLAnnée = within(indicateurs[6]).getByText(wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, { selector: 'p' })
       expect(duréeMoyenneSéjourEtAccompagnementDesPersonnesSortiesDéfinitivementAuCoursDeLAnnée).toBeInTheDocument()
       const dateMiseAJour = within(indicateurs[6]).getByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
       expect(dateMiseAJour).toBeInTheDocument()
@@ -390,7 +390,7 @@ describe('La page Établissement territorial - Bloc activité', () => {
 
       const tableau = within(indicateur[6]).getByRole('table')
       const annéeLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.ANNÉE })
-      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.DURÉE_MOEYNNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES })
+      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES })
       expect(annéeLigneDEnTête).toBeInTheDocument()
       expect(indicateurLigneDEnTête).toBeInTheDocument()
 
