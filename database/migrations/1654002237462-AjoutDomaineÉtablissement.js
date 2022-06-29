@@ -2,9 +2,9 @@ class AjoutDomaineÉtablissement1654002237462 {
 
   async up(queryRunner) {
     await queryRunner.query(
-      `CREATE TYPE domaineET AS ENUM ('Médico-social','Sanitaire');
-      ALTER TABLE ÉtablissementTerritorialIdentité
-      ADD domaine domaineET NOT NULL DEFAULT ('Médico-social');`
+      `CREATE TYPE domaine_et AS ENUM ('Médico-social','Sanitaire');
+      ALTER TABLE etablissement_territorial_identite
+      ADD domaine domaine_et NOT NULL DEFAULT ('Médico-social');`
     )
   }
 
@@ -12,7 +12,7 @@ class AjoutDomaineÉtablissement1654002237462 {
     await queryRunner.query(
       `ALTER TABLE ÉtablissementTerritorialIdentité
       DROP COLUMN domaine;
-      DROP TYPE domaineET;`
+      DROP TYPE domaine_et;`
     )
   }
 }

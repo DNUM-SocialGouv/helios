@@ -1,25 +1,25 @@
 class EntitéJuridique1652626977208 {
   async up(queryRunner) {
     await queryRunner.query(
-      `CREATE TABLE EntitéJuridique
+      `CREATE TABLE entite_juridique
       (
-          adresseAcheminement VARCHAR(255) NOT NULL,
-          adresseNuméroVoie VARCHAR(5) NOT NULL,
-          adresseTypeVoie VARCHAR(4) NOT NULL,
-          adresseVoie VARCHAR(255) NOT NULL,
-          libelléStatutJuridique VARCHAR(255) NOT NULL,
-          numéroFinessEntitéJuridique VARCHAR(9) NOT NULL,
-          raisonSociale VARCHAR(255) NOT NULL,
-          téléphone VARCHAR(10) NOT NULL,
+          adresse_acheminement VARCHAR(255) NOT NULL,
+          adresse_numero_voie VARCHAR(5) NOT NULL,
+          adresse_type_voie VARCHAR(4) NOT NULL,
+          adresse_voie VARCHAR(255) NOT NULL,
+          libelle_statut_juridique VARCHAR(255) NOT NULL,
+          numero_finess_entite_juridique VARCHAR(9) NOT NULL,
+          raison_sociale VARCHAR(255) NOT NULL,
+          telephone VARCHAR(10) NOT NULL,
 
-          CONSTRAINT entité_juridique_primary_key PRIMARY KEY (numéroFinessEntitéJuridique)
+          CONSTRAINT entite_juridique_primary_key PRIMARY KEY (numero_finess_entite_juridique)
       );`
     )
   }
 
   async down(queryRunner) {
     await queryRunner.query(
-      'DROP TABLE EntitéJuridique;'
+      'DROP TABLE entite_juridique;'
     )
   }
 }

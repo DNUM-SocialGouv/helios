@@ -1,29 +1,29 @@
 class AjoutActivitéMédicoSocial1656002701263 {
   async up(queryRunner) {
     await queryRunner.query(
-      `CREATE TABLE ActivitéMédicoSocial
+      `CREATE TABLE activite_medico_social
       (
-          année INT NOT NULL,
-          numérofinessÉtablissementterritorial VARCHAR(9) NOT NULL,
-          tauxOccupationAccueilDeJour FLOAT,
-          tauxOccupationHebergementTemporaire FLOAT,
-          tauxOccupationHebergementPermanent FLOAT,
-          tauxRéalisationActivité FLOAT,
-          fileActivePersonnesAccompagnées FLOAT,
-          nombreMoyenJournéesAbsencePersonnesAccompagnées FLOAT,
-          duréeMoyenneSéjourAccompagnementPersonnesSorties FLOAT,
-          PRIMARY KEY (année, numérofinessÉtablissementterritorial),
+          annee INT NOT NULL,
+          numero_finess_etablissement_territorial VARCHAR(9) NOT NULL,
+          taux_occupation_accueil_de_jour FLOAT,
+          taux_occupation_en_hebergement_temporaire FLOAT,
+          taux_occupation_en_hebergement_permanent FLOAT,
+          taux_realisation_activite FLOAT,
+          file_active_personnes_accompagnees FLOAT,
+          nombre_moyen_journees_absence_personnes_accompagnees FLOAT,
+          duree_moyenne_sejour_accompagnement_personnes_sorties FLOAT,
+          PRIMARY KEY (annee, numero_finess_etablissement_territorial),
 
-          CONSTRAINT activité_médico_social_établissement_territorial_finess_foreign_key
-              FOREIGN KEY (numérofinessÉtablissementterritorial)
-                  REFERENCES ÉtablissementTerritorialIdentité (numéroFinessÉtablissementTerritorial)
+          CONSTRAINT activite_medico_social_etablissement_territorial_finess_foreign_key
+              FOREIGN KEY (numero_finess_etablissement_territorial)
+                  REFERENCES etablissement_territorial_identite (numero_finess_etablissement_territorial)
                   ON DELETE CASCADE
       );`
     )
   }
 
   async down(queryRunner) {
-    await queryRunner.query('DROP TABLE ActivitéMédicoSocial')
+    await queryRunner.query('DROP TABLE activite_medico_social')
   }
 }
 
