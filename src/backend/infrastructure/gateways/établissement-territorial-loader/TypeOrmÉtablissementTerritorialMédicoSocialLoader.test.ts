@@ -129,19 +129,6 @@ describe('Établissement territorial médico-social loader', () => {
       ]
       expect(activitéChargée).toStrictEqual(activitéAttendue)
     })
-
-    it('signale que l’activité n’a pas été trouvée lorsque l’établissement territorial n’existe pas', async () => {
-      // GIVEN
-      await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestFactory.crée()])
-      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
-
-      // WHEN
-      const exceptionReçue = await typeOrmÉtablissementTerritorialLoader.chargeActivité(numéroFinessÉtablissementTerritorial)
-
-      // THEN
-      const exceptionAttendue = new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial)
-      expect(exceptionReçue).toStrictEqual(exceptionAttendue)
-    })
   })
 
   describe('permet de savoir si un établissement est le seul affilié à son entité juridique', () => {

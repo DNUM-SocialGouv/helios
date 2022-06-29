@@ -26,10 +26,6 @@ export class RécupèreLÉtablissementTerritorialMédicoSocialUseCase {
     const établissementTerritorialMédicoSocialActivitéOuErreur =
       await this.établissementTerritorialMédicoSocialLoader.chargeActivité(numéroFinessÉtablissementTerritorial)
 
-    if (établissementTerritorialMédicoSocialActivitéOuErreur instanceof ÉtablissementTerritorialMédicoSocialNonTrouvée) {
-      throw établissementTerritorialMédicoSocialActivitéOuErreur
-    }
-
     return {
       activité: établissementTerritorialMédicoSocialActivitéOuErreur,
       identité: {

@@ -25,8 +25,18 @@ export default function Router(
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
   try {
-    const { entitéJuridique, établissementsTerritoriauxRattachés } = await récupèreLEntitéJuridiqueEndpoint(dependencies, context.query['numéroFINESS'] as string)
-    return { props: { entitéJuridique, établissementsTerritoriauxRattachés } }
+    const entitéJuridiqueEndpoint = await récupèreLEntitéJuridiqueEndpoint(dependencies, context.query['numéroFINESS'] as string)
+
+    if (entitéJuridiqueEndpoint === undefined) {
+      return { notFound: true }
+    }
+
+    return {
+      props: {
+        entitéJuridique: entitéJuridiqueEndpoint.entitéJuridique,
+        établissementsTerritoriauxRattachés: entitéJuridiqueEndpoint.établissementsTerritoriauxRattachés,
+      },
+    }
   } catch (error) {
     return { notFound: true }
   }

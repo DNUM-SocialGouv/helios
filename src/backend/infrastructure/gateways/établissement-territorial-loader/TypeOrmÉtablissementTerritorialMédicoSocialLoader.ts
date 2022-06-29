@@ -15,19 +15,14 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
 
   async chargeActivité(
     numéroFinessÉtablissementTerritorial: string
-  ): Promise<ÉtablissementTerritorialMédicoSocialActivité[] | ÉtablissementTerritorialMédicoSocialNonTrouvée> {
+  ): Promise<ÉtablissementTerritorialMédicoSocialActivité[]> {
     const activitésÉtablissementTerritorialModel = await (await this.orm)
       .getRepository(ActivitéMédicoSocialModel)
       .findBy({ numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial })
 
-    if (activitésÉtablissementTerritorialModel.length === 0) {
-      return new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial)
-    }
-
     const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
 
-    return activitésÉtablissementTerritorialModel.map((activitéÉtablissementTerritorialModel) =>
-      this.construisLÉtablissementTerritorialMédicoSocialActivité(activitéÉtablissementTerritorialModel, dateDeMiseAJourModel))
+    return this.construisActivité(activitésÉtablissementTerritorialModel, dateDeMiseAJourModel)
   }
 
   async chargeIdentité(
@@ -46,7 +41,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
 
     const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
 
-    return this.construisLÉtablissementTerritorialMédicoSocial(établissementTerritorialModel, dateDeMiseAJourModel)
+    return this.construisIdentité(établissementTerritorialModel, dateDeMiseAJourModel)
   }
 
   async estUnMonoÉtablissement(numéroFinessEntitéJuridique: string): Promise<MonoÉtablissement> {
@@ -63,7 +58,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       .findOneBy({ source: SourceDeDonnées.FINESS })
   }
 
-  private construisLÉtablissementTerritorialMédicoSocial(
+  private construisIdentité(
     établissementTerritorialModel: ÉtablissementTerritorialIdentitéModel,
     dateDeMiseAJourModel: DateMiseÀJourSourceModel | null
   ): ÉtablissementTerritorialIdentité {
@@ -85,21 +80,22 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     }
   }
 
-  private construisLÉtablissementTerritorialMédicoSocialActivité(
-    établissementTerritorialModel: ActivitéMédicoSocialModel,
+  private construisActivité(
+    activitésÉtablissementTerritorialModel: ActivitéMédicoSocialModel[],
     dateDeMiseAJourModel: DateMiseÀJourSourceModel | null
-  ): ÉtablissementTerritorialMédicoSocialActivité {
-    return {
-      année: établissementTerritorialModel.année,
-      dateMiseAJourSource: dateDeMiseAJourModel ? dateDeMiseAJourModel.dernièreMiseÀJour : '',
-      duréeMoyenneSéjourAccompagnementPersonnesSorties: établissementTerritorialModel.duréeMoyenneSéjourAccompagnementPersonnesSorties,
-      fileActivePersonnesAccompagnées: établissementTerritorialModel.fileActivePersonnesAccompagnées,
-      nombreMoyenJournéesAbsencePersonnesAccompagnées: établissementTerritorialModel.nombreMoyenJournéesAbsencePersonnesAccompagnées,
-      numéroFinessÉtablissementTerritorial: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
-      tauxOccupationAccueilDeJour: établissementTerritorialModel.tauxOccupationAccueilDeJour,
-      tauxOccupationHébergementPermanent: établissementTerritorialModel.tauxOccupationHébergementPermanent,
-      tauxOccupationHébergementTemporaire: établissementTerritorialModel.tauxOccupationHébergementTemporaire,
-      tauxRéalisationActivité: établissementTerritorialModel.tauxRéalisationActivité,
-    }
+  ): ÉtablissementTerritorialMédicoSocialActivité[] {
+    return activitésÉtablissementTerritorialModel.map((établissementTerritorialModel) =>
+      ({
+        année: établissementTerritorialModel.année,
+        dateMiseAJourSource: dateDeMiseAJourModel ? dateDeMiseAJourModel.dernièreMiseÀJour : '',
+        duréeMoyenneSéjourAccompagnementPersonnesSorties: établissementTerritorialModel.duréeMoyenneSéjourAccompagnementPersonnesSorties,
+        fileActivePersonnesAccompagnées: établissementTerritorialModel.fileActivePersonnesAccompagnées,
+        nombreMoyenJournéesAbsencePersonnesAccompagnées: établissementTerritorialModel.nombreMoyenJournéesAbsencePersonnesAccompagnées,
+        numéroFinessÉtablissementTerritorial: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
+        tauxOccupationAccueilDeJour: établissementTerritorialModel.tauxOccupationAccueilDeJour,
+        tauxOccupationHébergementPermanent: établissementTerritorialModel.tauxOccupationHébergementPermanent,
+        tauxOccupationHébergementTemporaire: établissementTerritorialModel.tauxOccupationHébergementTemporaire,
+        tauxRéalisationActivité: établissementTerritorialModel.tauxRéalisationActivité,
+      }))
   }
 }

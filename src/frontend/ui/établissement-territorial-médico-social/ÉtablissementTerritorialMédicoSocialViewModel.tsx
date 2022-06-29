@@ -60,24 +60,24 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   public get numéroFinessEntitéJuridiqueBrut(): string {
-    return this.établissementTerritorialIdentité.numéroFinessEntitéJuridique
+    return this.établissementTerritorialIdentité.identité.numéroFinessEntitéJuridique
   }
 
   public get nomDeLÉtablissementTerritorial(): string {
-    return this.établissementTerritorialIdentité.raisonSociale
+    return this.établissementTerritorialIdentité.identité.raisonSociale
   }
 
   public get numéroFinessÉtablissementTerritorial(): string {
-    return StringFormater.formateLeNuméroFiness(this.établissementTerritorialIdentité.numéroFinessÉtablissementTerritorial)
+    return StringFormater.formateLeNuméroFiness(this.établissementTerritorialIdentité.identité.numéroFinessÉtablissementTerritorial)
   }
 
   public get adresse(): string {
-    return `${this.établissementTerritorialIdentité.adresseNuméroVoie} ${this.établissementTerritorialIdentité.adresseTypeVoie} ${this.établissementTerritorialIdentité.adresseVoie} ${this.établissementTerritorialIdentité.adresseAcheminement}`
+    return `${this.établissementTerritorialIdentité.identité.adresseNuméroVoie} ${this.établissementTerritorialIdentité.identité.adresseTypeVoie} ${this.établissementTerritorialIdentité.identité.adresseVoie} ${this.établissementTerritorialIdentité.identité.adresseAcheminement}`
   }
 
   public get téléphoneEtEmail(): string {
-    const téléphoneFormaté = this.valeurOuNonRenseigné(StringFormater.formateLeNuméroDeTéléphone(this.établissementTerritorialIdentité.téléphone))
-    const email = this.valeurOuNonRenseigné(this.établissementTerritorialIdentité.courriel)
+    const téléphoneFormaté = this.valeurOuNonRenseigné(StringFormater.formateLeNuméroDeTéléphone(this.établissementTerritorialIdentité.identité.téléphone))
+    const email = this.valeurOuNonRenseigné(this.établissementTerritorialIdentité.identité.courriel)
     return `${téléphoneFormaté} | ${email}`
   }
 
@@ -87,25 +87,25 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   public get catégorieDeLÉtablissement(): string {
-    return `${this.établissementTerritorialIdentité.catégorieÉtablissement} - ${this.établissementTerritorialIdentité.libelléCatégorieÉtablissement}`
+    return `${this.établissementTerritorialIdentité.identité.catégorieÉtablissement} - ${this.établissementTerritorialIdentité.identité.libelléCatégorieÉtablissement}`
   }
 
   public get statutDeLÉtablissement(): string {
-    return this.établissementTerritorialIdentité.statutJuridique
+    return this.établissementTerritorialIdentité.identité.statutJuridique
   }
 
   public get monoÉtablissement(): string {
-    return this.établissementTerritorialIdentité.estMonoÉtablissement ? this.wording.OUI : this.wording.NON
+    return this.établissementTerritorialIdentité.identité.estMonoÉtablissement ? this.wording.OUI : this.wording.NON
   }
 
   public get principalOuSecondaire(): string {
-    return this.établissementTerritorialIdentité.typeÉtablissement === 'P' ?
+    return this.établissementTerritorialIdentité.identité.typeÉtablissement === 'P' ?
       this.wording.PRINCIPAL :
-      `${this.wording.SECONDAIRE} (${this.wording.PRINCIPAL} : ${StringFormater.formateLeNuméroFiness(this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal)})`
+      `${this.wording.SECONDAIRE} (${this.wording.PRINCIPAL} : ${StringFormater.formateLeNuméroFiness(this.établissementTerritorialIdentité.identité.numéroFinessÉtablissementPrincipal)})`
   }
 
   public get dateDeMiseÀJour(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialIdentité.dateMiseAJourSource)
+    return StringFormater.formateLaDate(this.établissementTerritorialIdentité.identité.dateMiseAJourSource)
   }
 
   public get tauxOccupationHébergementPermanent(): JSX.Element {
@@ -249,8 +249,8 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   private formateLeTitreDeLEntitéJuridiqueDeRattachement() {
-    const numéroFinessEntitéJuridiqueFormaté = StringFormater.formateLeNuméroFiness(this.établissementTerritorialIdentité.numéroFinessEntitéJuridique)
-    const nomDeLEntitéJuridique = this.établissementTerritorialIdentité.raisonSocialeDeLEntitéDeRattachement
+    const numéroFinessEntitéJuridiqueFormaté = StringFormater.formateLeNuméroFiness(this.établissementTerritorialIdentité.identité.numéroFinessEntitéJuridique)
+    const nomDeLEntitéJuridique = this.établissementTerritorialIdentité.identité.raisonSocialeDeLEntitéDeRattachement
     return `${numéroFinessEntitéJuridiqueFormaté} - ${nomDeLEntitéJuridique}`
   }
 

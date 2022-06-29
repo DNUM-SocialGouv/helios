@@ -2,7 +2,7 @@ import { ÉtablissementTerritorialMédicoSocialActivité } from '../métier/enti
 import { ÉtablissementTerritorialIdentité } from '../métier/entities/ÉtablissementTerritorialIdentité'
 
 export class ÉtablissementTerritorialTestFactory {
-  private static établissementTerritorial1: ÉtablissementTerritorialIdentité = {
+  private static médicoSocial: ÉtablissementTerritorialIdentité = {
     adresseAcheminement: '01130 NANTUA',
     adresseNuméroVoie: '50',
     adresseTypeVoie: 'R',
@@ -19,14 +19,14 @@ export class ÉtablissementTerritorialTestFactory {
     téléphone: '0102030405',
   }
 
-  private static établissementTerritorial2: ÉtablissementTerritorialIdentité = {
+  private static sanitaire: ÉtablissementTerritorialIdentité = {
     adresseAcheminement: '59650 VILLENEUVE D ASCQ',
     adresseNuméroVoie: '20',
     adresseTypeVoie: 'AV',
     adresseVoie: 'DE LA RECONNAISSANCE',
     catégorieÉtablissement: '365',
     courriel: 'b@example.com',
-    dateMiseAJourSource: '2022-02-03',
+    dateMiseAJourSource: '2022-05-14',
     libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
     numéroFinessEntitéJuridique: '590000741',
     numéroFinessÉtablissementPrincipal: '',
@@ -51,14 +51,14 @@ export class ÉtablissementTerritorialTestFactory {
 
   public static créeUneIdentitéMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialIdentité>): ÉtablissementTerritorialIdentité {
     return {
-      ...ÉtablissementTerritorialTestFactory.établissementTerritorial1,
+      ...ÉtablissementTerritorialTestFactory.médicoSocial,
       ...champsSurchargés,
     }
   }
 
   public static créeUneIdentitéSanitaire(champsSurchargés?: Partial<ÉtablissementTerritorialIdentité>): ÉtablissementTerritorialIdentité {
     return {
-      ...ÉtablissementTerritorialTestFactory.établissementTerritorial2,
+      ...ÉtablissementTerritorialTestFactory.sanitaire,
       ...champsSurchargés,
     }
   }
