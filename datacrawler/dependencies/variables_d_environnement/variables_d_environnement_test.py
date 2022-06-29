@@ -14,7 +14,7 @@ class TestVariablesDEnvironnement:
         mock_variables_d_environnement: dict = {}
 
         mock_lis_les_variables_d_environnement_du_fichier = MagicMock()
-        mock_lis_les_variables_d_environnement_du_fichier.return_value = {"SENTRY_DSN": "test"}
+        mock_lis_les_variables_d_environnement_du_fichier.return_value = {"SENTRY_DSN": "test", "SCALINGO_POSTGRESQL_URL_ALCHEMY": "test"}
 
         # WHEN
         variables_d_environnement = récupère_les_variables_d_environnement(
@@ -31,11 +31,11 @@ class TestVariablesDEnvironnement:
         mock_variables_d_environnement: dict = {}
 
         mock_lis_les_variables_d_environnement_du_fichier = MagicMock()
-        mock_lis_les_variables_d_environnement_du_fichier.return_value = {}
+        mock_lis_les_variables_d_environnement_du_fichier.return_value = {"SENTRY_DSN": "test"}
 
         # WHEN
         récupère_les_variables_d_environnement(logger, mock_variables_d_environnement, mock_lis_les_variables_d_environnement_du_fichier)
 
         # THEN
         log = caplog.records.pop()
-        assert log.message == '----- WARNING ----- La variable d’environnement "SENTRY_DSN" est manquante.'
+        assert log.message == '----- WARNING ----- La variable d’environnement "SCALINGO_POSTGRESQL_URL_ALCHEMY" est manquante.'
