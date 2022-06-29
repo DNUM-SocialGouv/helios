@@ -49,21 +49,21 @@ export class ÉtablissementTerritorialTestFactory {
     tauxRéalisationActivité: 80,
   }
 
-  public static créeÉtablissementTerritorial(champsSurchargés?: Partial<ÉtablissementTerritorialIdentité>): ÉtablissementTerritorialIdentité {
+  public static créeUneIdentitéMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialIdentité>): ÉtablissementTerritorialIdentité {
     return {
       ...ÉtablissementTerritorialTestFactory.établissementTerritorial1,
       ...champsSurchargés,
     }
   }
 
-  public static créeAutreÉtablissementTerritorial(champsSurchargés?: Partial<ÉtablissementTerritorialIdentité>): ÉtablissementTerritorialIdentité {
+  public static créeUneIdentitéSanitaire(champsSurchargés?: Partial<ÉtablissementTerritorialIdentité>): ÉtablissementTerritorialIdentité {
     return {
       ...ÉtablissementTerritorialTestFactory.établissementTerritorial2,
       ...champsSurchargés,
     }
   }
 
-  public static créeUneActivité(
+  public static créeUneActivitéMédicoSocial(
     champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialActivité>
   ): ÉtablissementTerritorialMédicoSocialActivité {
     return {

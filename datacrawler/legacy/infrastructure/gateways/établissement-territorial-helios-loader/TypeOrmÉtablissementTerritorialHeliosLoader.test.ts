@@ -28,10 +28,10 @@ describe('La récupération des établissements territoriaux d’Helios', () => 
 
   it('récupère tous les numéros FINESS des établissements territoriaux dans l’ordre croissant', async () => {
     // GIVEN
-    const entitéJuridique1 = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel(
+    const entitéJuridique1 = EntitéJuridiqueModelTestFactory.crée(
       { numéroFinessEntitéJuridique: '123456789' }
     )
-    const entitéJuridique2 = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel(
+    const entitéJuridique2 = EntitéJuridiqueModelTestFactory.crée(
       { numéroFinessEntitéJuridique: '987654321' }
     )
     await entitéJuridiqueRepository.insert([entitéJuridique1, entitéJuridique2])
@@ -40,9 +40,9 @@ describe('La récupération des établissements territoriaux d’Helios', () => 
     const numéroFinessÉtablissement2 = '222222222'
     const numéroFinessÉtablissement3 = '333333333'
     await établissementTerritorialRepository.insert([
-      ÉtablissementTerritorialIdentitéModelTestFactory.créeAutreÉtablissementTerritorialIdentitéModel({ numéroFinessEntitéJuridique: '123456789', numéroFinessÉtablissementTerritorial: numéroFinessÉtablissement2 }),
-      ÉtablissementTerritorialIdentitéModelTestFactory.créeÉtablissementTerritorialIdentitéModel({ numéroFinessEntitéJuridique: '123456789', numéroFinessÉtablissementTerritorial: numéroFinessÉtablissement1 }),
-      ÉtablissementTerritorialIdentitéModelTestFactory.créeÉtablissementTerritorialIdentitéModel({ numéroFinessEntitéJuridique: '987654321', numéroFinessÉtablissementTerritorial: numéroFinessÉtablissement3 }),
+      ÉtablissementTerritorialIdentitéModelTestFactory.créeSanitaire({ numéroFinessEntitéJuridique: '123456789', numéroFinessÉtablissementTerritorial: numéroFinessÉtablissement2 }),
+      ÉtablissementTerritorialIdentitéModelTestFactory.créeMédicoSocial({ numéroFinessEntitéJuridique: '123456789', numéroFinessÉtablissementTerritorial: numéroFinessÉtablissement1 }),
+      ÉtablissementTerritorialIdentitéModelTestFactory.créeMédicoSocial({ numéroFinessEntitéJuridique: '987654321', numéroFinessÉtablissementTerritorial: numéroFinessÉtablissement3 }),
     ])
     const typeOrmÉtablissementTerritorialHeliosLoader = new TypeOrmÉtablissementTerritorialHeliosLoader(orm)
 

@@ -1,5 +1,5 @@
 import { ÉtablissementTerritorialTestFactory } from '../../test-factories/ÉtablissementTerritorialTestFactory'
-import { fakeÉtablissementTerritorialMédicoSocialLoader } from '../../testHelper'
+import { fakeÉtablissementTerritorialMédicoSocialLoader, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from '../../testHelper'
 import { EntitéJuridiqueDeRattachement } from '../entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement'
 import { ÉtablissementTerritorialMédicoSocialIdentité } from '../entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialIdentité'
 import { ÉtablissementTerritorialIdentité } from '../entities/ÉtablissementTerritorialIdentité'
@@ -10,21 +10,17 @@ import { RécupèreLÉtablissementTerritorialMédicoSocialIdentitéUseCase } fro
 describe('La récupération d’un établissement territorial médico-social identité', () => {
   it('récupère la fiche identité de l’établissement territorial médico-social', async () => {
     // GIVEN
-    const numéroFinessÉtablissementTerritorial = '123456789'
-    const numéroFinessEntitéJuridique = '987654321'
-    const ficheIdentitéÉtablissementTerritorial: ÉtablissementTerritorialIdentité = ÉtablissementTerritorialTestFactory.créeÉtablissementTerritorial(
+    const ficheIdentitéÉtablissementTerritorial: ÉtablissementTerritorialIdentité = ÉtablissementTerritorialTestFactory.créeUneIdentitéMédicoSocial(
       { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial }
     )
-    const mockedChargeParNuméroFiness = jest.fn().mockReturnValueOnce(ficheIdentitéÉtablissementTerritorial)
+    const mockedChargeParNuméroFiness = jest.fn().mockResolvedValueOnce(ficheIdentitéÉtablissementTerritorial)
     const mockedEstUnMonoÉtablissement = jest.fn().mockResolvedValueOnce({ estMonoÉtablissement: false })
-    const mockedChargeLEntitéJuridiqueDeRattachement = jest.fn(async (): Promise<EntitéJuridiqueDeRattachement> => {
-      return {
-        raisonSocialeDeLEntitéDeRattachement: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-        statutJuridique: 'Société Anonyme (S.A.)',
-      }
+    const mockedChargeLEntitéJuridiqueDeRattachement = jest.fn().mockResolvedValueOnce({
+      raisonSocialeDeLEntitéDeRattachement: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+      statutJuridique: 'Société Anonyme (S.A.)',
     })
     const établissementTerritorialLoader = fakeÉtablissementTerritorialMédicoSocialLoader
-    établissementTerritorialLoader.chargeIdentitéParNuméroFiness = mockedChargeParNuméroFiness
+    établissementTerritorialLoader.chargeIdentité = mockedChargeParNuméroFiness
     établissementTerritorialLoader.estUnMonoÉtablissement = mockedEstUnMonoÉtablissement
     const entitéJuridiqueLoader: EntitéJuridiqueLoader =
       { chargeLEntitéJuridiqueDeRattachement: mockedChargeLEntitéJuridiqueDeRattachement, chargeParNuméroFiness: jest.fn() }
@@ -56,10 +52,10 @@ describe('La récupération d’un établissement territorial médico-social ide
 
   it('signale une alerte si l’établissement territorial liée au numéro FINESS n’est pas trouvé', async () => {
     // GIVEN
-    const numéroFiness = '123456789'
-    const mockedChargeParNuméroFiness = jest.fn().mockResolvedValueOnce(new ÉtablissementTerritorialMédicoSocialNonTrouvée('123456789'))
+    const mockedChargeParNuméroFiness =
+      jest.fn().mockResolvedValueOnce(new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial))
     const établissementTerritorialLoader = fakeÉtablissementTerritorialMédicoSocialLoader
-    établissementTerritorialLoader.chargeIdentitéParNuméroFiness = mockedChargeParNuméroFiness
+    établissementTerritorialLoader.chargeIdentité = mockedChargeParNuméroFiness
     const entitéJuridiqueLoader: EntitéJuridiqueLoader =
       { chargeLEntitéJuridiqueDeRattachement: jest.fn(), chargeParNuméroFiness: jest.fn() }
 
@@ -68,7 +64,7 @@ describe('La récupération d’un établissement territorial médico-social ide
 
     // WHEN
     try {
-      await récupèreLÉtablissementTerritorialUseCase.exécute(numéroFiness)
+      await récupèreLÉtablissementTerritorialUseCase.exécute(numéroFinessEntitéJuridique)
       throw new Error('Une alerte d’établissement territorial non trouvée aurait dû être levée')
     } catch (error) {
       // THEN

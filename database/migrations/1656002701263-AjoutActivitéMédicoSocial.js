@@ -4,7 +4,7 @@ class AjoutActivitéMédicoSocial1656002701263 {
       `CREATE TABLE ActivitéMédicoSocial
       (
           année INT NOT NULL,
-          numeroFiness VARCHAR(9) NOT NULL,
+          numérofinessÉtablissementterritorial VARCHAR(9) NOT NULL,
           tauxOccupationAccueilDeJour FLOAT,
           tauxOccupationHebergementTemporaire FLOAT,
           tauxOccupationHebergementPermanent FLOAT,
@@ -12,10 +12,10 @@ class AjoutActivitéMédicoSocial1656002701263 {
           fileActivePersonnesAccompagnées FLOAT,
           nombreMoyenJournéesAbsencePersonnesAccompagnées FLOAT,
           duréeMoyenneSéjourAccompagnementPersonnesSorties FLOAT,
-          PRIMARY KEY (année, numeroFiness),
+          PRIMARY KEY (année, numérofinessÉtablissementterritorial),
 
           CONSTRAINT activité_médico_social_établissement_territorial_finess_foreign_key
-              FOREIGN KEY (numeroFiness)
+              FOREIGN KEY (numérofinessÉtablissementterritorial)
                   REFERENCES ÉtablissementTerritorialIdentité (numéroFinessÉtablissementTerritorial)
                   ON DELETE CASCADE
       );`

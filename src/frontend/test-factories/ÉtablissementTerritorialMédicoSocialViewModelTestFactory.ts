@@ -23,7 +23,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestFactory {
     téléphone : '0123456789',
   }
 
-  public static créeÉtablissementTerritorialViewModel(
+  public static crée(
     wording: Wording, champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialIdentité>
   ): ÉtablissementTerritorialMédicoSocialViewModel {
     return new ÉtablissementTerritorialMédicoSocialViewModel({

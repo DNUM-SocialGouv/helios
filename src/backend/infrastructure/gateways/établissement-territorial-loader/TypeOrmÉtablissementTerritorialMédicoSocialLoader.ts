@@ -13,14 +13,15 @@ import { ÉtablissementTerritorialMédicoSocialLoader } from '../../../métier/g
 export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements ÉtablissementTerritorialMédicoSocialLoader {
   constructor(private readonly orm: Promise<DataSource>) {}
 
-  async chargeActivitéParNuméroFiness(numéroFinessET: string):
-    Promise<ÉtablissementTerritorialMédicoSocialActivité[] | ÉtablissementTerritorialMédicoSocialNonTrouvée> {
+  async chargeActivité(
+    numéroFinessÉtablissementTerritorial: string
+  ): Promise<ÉtablissementTerritorialMédicoSocialActivité[] | ÉtablissementTerritorialMédicoSocialNonTrouvée> {
     const activitésÉtablissementTerritorialModel = await (await this.orm)
       .getRepository(ActivitéMédicoSocialModel)
-      .findBy({ numéroFinessÉtablissementTerritorial: numéroFinessET })
+      .findBy({ numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial })
 
     if (activitésÉtablissementTerritorialModel.length === 0) {
-      return new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessET)
+      return new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial)
     }
 
     const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
@@ -29,16 +30,18 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       this.construisLÉtablissementTerritorialMédicoSocialActivité(activitéÉtablissementTerritorialModel, dateDeMiseAJourModel))
   }
 
-  async chargeIdentitéParNuméroFiness(numéroFinessET: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialMédicoSocialNonTrouvée> {
+  async chargeIdentité(
+    numéroFinessÉtablissementTerritorial: string
+  ): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialMédicoSocialNonTrouvée> {
     const établissementTerritorialModel = await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
       .findOneBy({
         domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
-        numéroFinessÉtablissementTerritorial: numéroFinessET,
+        numéroFinessÉtablissementTerritorial,
       })
 
     if (!établissementTerritorialModel) {
-      return new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessET)
+      return new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial)
     }
 
     const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
@@ -54,7 +57,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     return { estMonoÉtablissement: nombreDÉtablissementTerritoriauxDansLEntitéJuridique === 1 }
   }
 
-  private async chargeLaDateDeMiseÀJourModel() {
+  private async chargeLaDateDeMiseÀJourModel(): Promise<DateMiseÀJourSourceModel | null> {
     return await (await this.orm)
       .getRepository(DateMiseÀJourSourceModel)
       .findOneBy({ source: SourceDeDonnées.FINESS })

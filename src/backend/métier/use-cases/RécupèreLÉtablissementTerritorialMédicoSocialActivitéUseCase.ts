@@ -5,9 +5,9 @@ import { ÉtablissementTerritorialMédicoSocialLoader } from '../gateways/Établ
 export class RécupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase {
   constructor(private établissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader) {}
 
-  async exécute(numéroFinessÉtablissementTerritorialMédicoSocial: string): Promise<ÉtablissementTerritorialMédicoSocialActivité[]> {
+  async exécute(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialMédicoSocialActivité[]> {
     const établissementTerritorialMédicoSocialActivitéOuErreur =
-      await this.établissementTerritorialMédicoSocialLoader.chargeActivitéParNuméroFiness(numéroFinessÉtablissementTerritorialMédicoSocial)
+      await this.établissementTerritorialMédicoSocialLoader.chargeActivité(numéroFinessÉtablissementTerritorial)
 
     if (établissementTerritorialMédicoSocialActivitéOuErreur instanceof ÉtablissementTerritorialMédicoSocialNonTrouvée) {
       throw établissementTerritorialMédicoSocialActivitéOuErreur

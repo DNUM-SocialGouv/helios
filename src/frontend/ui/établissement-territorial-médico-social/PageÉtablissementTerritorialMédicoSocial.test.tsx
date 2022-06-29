@@ -7,7 +7,7 @@ import { PageÉtablissementTerritorialMédicoSocial } from './PageÉtablissement
 const { wording } = fakeFrontDependencies
 
 describe('La page Établissement territorial', () => {
-  const établissementTerritorialMédicoSocial = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording)
+  const établissementTerritorialMédicoSocial = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.crée(wording)
 
   it('affiche le titre : "ET - numéro de FINESS - nom de l’établissement"', () => {
     // WHEN
@@ -127,7 +127,7 @@ describe('La page Établissement territorial', () => {
   it('affiche l’indicateur de mono-établissement dans le bloc identité', () => {
     // GIVEN
     const établissementTerritorialMonoÉtablissement =
-      ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording, { estMonoÉtablissement: true })
+      ÉtablissementTerritorialMédicoSocialViewModelTestFactory.crée(wording, { estMonoÉtablissement: true })
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMonoÉtablissement} />)
@@ -144,7 +144,7 @@ describe('La page Établissement territorial', () => {
   describe('l’indicateur d’établissement principal ou secondaire dans le bloc identité', () => {
     it('affiche "Principal" si l’établissement est un établissement principal', () => {
       // GIVEN
-      const établissementTerritorialPrincipal = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording, { typeÉtablissement: 'P' })
+      const établissementTerritorialPrincipal = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.crée(wording, { typeÉtablissement: 'P' })
 
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialPrincipal} />)
@@ -210,7 +210,7 @@ describe('La page Établissement territorial', () => {
 
   describe('affiche "non renseigné" quand une valeur est vide', () => {
     it('pour le téléphone', () => {
-      const établissementTerritorialSansTéléphone = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording, { téléphone: '' })
+      const établissementTerritorialSansTéléphone = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.crée(wording, { téléphone: '' })
 
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansTéléphone} />)
@@ -223,7 +223,7 @@ describe('La page Établissement territorial', () => {
     })
 
     it('pour l’e-mail', () => {
-      const établissementTerritorialSansCourriel = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording, { courriel: '' })
+      const établissementTerritorialSansCourriel = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.crée(wording, { courriel: '' })
 
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansCourriel} />)
@@ -237,7 +237,7 @@ describe('La page Établissement territorial', () => {
   })
 
   it('affiche l’adresse incomplète lorsqu’il manque des champs d’adresse', () => {
-    const établissementTerritorialSansAdresseVoie = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording, { adresseVoie: '' })
+    const établissementTerritorialSansAdresseVoie = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.crée(wording, { adresseVoie: '' })
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansAdresseVoie} />)

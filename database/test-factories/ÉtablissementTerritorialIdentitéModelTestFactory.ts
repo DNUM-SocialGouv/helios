@@ -2,7 +2,7 @@ import { DomaineÉtablissementTerritorial } from '../../datacrawler/legacy/méti
 import { ÉtablissementTerritorialIdentitéModel } from '../models/ÉtablissementTerritorialIdentitéModel'
 
 export class ÉtablissementTerritorialIdentitéModelTestFactory {
-  public static créeÉtablissementTerritorialIdentitéModel(
+  public static créeMédicoSocial(
     champsSurchargés?: Partial<ÉtablissementTerritorialIdentitéModel>
   ): ÉtablissementTerritorialIdentitéModel {
     const établissementTerritorialModel = new ÉtablissementTerritorialIdentitéModel()
@@ -23,7 +23,7 @@ export class ÉtablissementTerritorialIdentitéModelTestFactory {
     return établissementTerritorialModel
   }
 
-  public static créeAutreÉtablissementTerritorialIdentitéModel(
+  public static créeSanitaire(
     champsSurchargés?: Partial<ÉtablissementTerritorialIdentitéModel>
   ): ÉtablissementTerritorialIdentitéModel {
     const établissementTerritorialModel = new ÉtablissementTerritorialIdentitéModel()

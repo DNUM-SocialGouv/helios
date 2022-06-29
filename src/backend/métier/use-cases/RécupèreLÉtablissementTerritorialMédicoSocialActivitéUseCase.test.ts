@@ -1,26 +1,25 @@
-import { ÉtablissementTerritorialMédicoSocialActivitéTestFactory } from '../../test-factories/ÉtablissementTerritorialMédicoSocialActivitéTestFactory'
-import { fakeÉtablissementTerritorialMédicoSocialLoader } from '../../testHelper'
+import { ÉtablissementTerritorialTestFactory } from '../../test-factories/ÉtablissementTerritorialTestFactory'
+import { fakeÉtablissementTerritorialMédicoSocialLoader, numéroFinessÉtablissementTerritorial } from '../../testHelper'
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
 import { RécupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase } from './RécupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase'
 
 describe('Récupération de l’activité d’un établissement territorial médico-social', () => {
   it('récupère les activités de l’établissement territorial médico-social', async () => {
     // GIVEN
-    const numéroFinessÉtablissementTerritorial = '123456789'
     const activités = [
-      ÉtablissementTerritorialMédicoSocialActivitéTestFactory.créeÉtablissementTerritorialMédicoSocialActivité(
+      ÉtablissementTerritorialTestFactory.créeUneActivitéMédicoSocial(
         { année: 2019, numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial }
       ),
-      ÉtablissementTerritorialMédicoSocialActivitéTestFactory.créeÉtablissementTerritorialMédicoSocialActivité(
+      ÉtablissementTerritorialTestFactory.créeUneActivitéMédicoSocial(
         { année: 2020, numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial }
       ),
-      ÉtablissementTerritorialMédicoSocialActivitéTestFactory.créeÉtablissementTerritorialMédicoSocialActivité(
+      ÉtablissementTerritorialTestFactory.créeUneActivitéMédicoSocial(
         { année: 2021, numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial }
       ),
     ]
-    const mockedChargeParNuméroFiness = jest.fn().mockReturnValue(activités)
+    const mockedChargeParNuméroFiness = jest.fn().mockResolvedValueOnce(activités)
     const mockedÉtablissementTerritorialMédicoSocialLoader = fakeÉtablissementTerritorialMédicoSocialLoader
-    mockedÉtablissementTerritorialMédicoSocialLoader.chargeActivitéParNuméroFiness = mockedChargeParNuméroFiness
+    mockedÉtablissementTerritorialMédicoSocialLoader.chargeActivité = mockedChargeParNuméroFiness
 
     const récupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase =
       new RécupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase(fakeÉtablissementTerritorialMédicoSocialLoader)
@@ -37,11 +36,10 @@ describe('Récupération de l’activité d’un établissement territorial méd
 
   it('signale une alerte si l’activité de l’établissement territorial médico-social n’est pas trouvée', async () => {
     // GIVEN
-    const numéroFinessÉtablissementTerritorial = '123456789'
     const mockedChargeParNuméroFiness =
-      jest.fn().mockReturnValueOnce(new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial))
+      jest.fn().mockResolvedValueOnce(new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial))
     const mockedÉtablissementTerritorialMédicoSocialLoader = fakeÉtablissementTerritorialMédicoSocialLoader
-    mockedÉtablissementTerritorialMédicoSocialLoader.chargeActivitéParNuméroFiness = mockedChargeParNuméroFiness
+    mockedÉtablissementTerritorialMédicoSocialLoader.chargeActivité = mockedChargeParNuméroFiness
     const récupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase =
       new RécupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase(fakeÉtablissementTerritorialMédicoSocialLoader)
 

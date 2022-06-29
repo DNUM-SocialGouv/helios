@@ -108,7 +108,7 @@ describe('Sauvegarde des entités juridiques', () => {
   it('supprime une entité juridique quand celle-ci est en base', async () => {
     // GIVEN
     const numéroFinessEntitéJuridique = '010018407'
-    const entitéJuridique = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel({ numéroFinessEntitéJuridique })
+    const entitéJuridique = EntitéJuridiqueModelTestFactory.crée({ numéroFinessEntitéJuridique })
     await entitéJuridiqueRepository.insert([entitéJuridique])
 
     const typeOrmEntitéJuridiqueRepository = new TypeOrmEntitéJuridiqueHeliosRepository(orm, fakeLogger)
@@ -136,11 +136,11 @@ describe('Sauvegarde des entités juridiques', () => {
   it('supprime une entité juridique avec ses établissements territoriaux rattachés', async () => {
     // GIVEN
     const numéroFinessEntitéJuridique = '010018407'
-    await entitéJuridiqueRepository.insert([EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel({ numéroFinessEntitéJuridique })])
+    await entitéJuridiqueRepository.insert([EntitéJuridiqueModelTestFactory.crée({ numéroFinessEntitéJuridique })])
 
     await établissementTerritorialIdentitéRepository.insert([
-      ÉtablissementTerritorialIdentitéModelTestFactory.créeÉtablissementTerritorialIdentitéModel({ numéroFinessEntitéJuridique }),
-      ÉtablissementTerritorialIdentitéModelTestFactory.créeAutreÉtablissementTerritorialIdentitéModel({ numéroFinessEntitéJuridique }),
+      ÉtablissementTerritorialIdentitéModelTestFactory.créeMédicoSocial({ numéroFinessEntitéJuridique }),
+      ÉtablissementTerritorialIdentitéModelTestFactory.créeSanitaire({ numéroFinessEntitéJuridique }),
     ])
 
     const typeOrmEntitéJuridiqueRepository = new TypeOrmEntitéJuridiqueHeliosRepository(orm, fakeLogger)

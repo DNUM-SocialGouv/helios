@@ -64,7 +64,7 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
 
   it('affiche le chemin jusqu’à la page entité juridique', () => {
     // GIVEN
-    const entitéJuridiqueViewModel = EntitéJuridiqueViewModelTestFactory.créeEntitéJuridiqueViewModel(wording)
+    const entitéJuridiqueViewModel = EntitéJuridiqueViewModelTestFactory.crée(wording)
     const établissementsTerritoriauxRattachésViewModels: ÉtablissementTerritorialRattachéViewModel[] = [
       ÉtablissementTerritorialRattachéViewModelTestFactory.créeÉtablissementTerritorialRattaché(wording),
       ÉtablissementTerritorialRattachéViewModelTestFactory.créeAutreÉtablissementTerritorialRattaché(wording),
@@ -97,7 +97,7 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
   it('affiche le chemin jusqu’à la page établissement territorial médico-social', () => {
     // GIVEN
     const établissementTerritorialMédicoSocialViewModel =
-        ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording)
+        ÉtablissementTerritorialMédicoSocialViewModelTestFactory.crée(wording)
 
     // WHEN
     renderFakeComponent(
@@ -125,7 +125,7 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
 
   it('affiche le chemin jusqu’à la page établissement territorial sanitaire', () => {
     // GIVEN
-    const établissementTerritorialSanitaireViewModel = ÉtablissementTerritorialSanitaireViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording)
+    const établissementTerritorialSanitaireViewModel = ÉtablissementTerritorialSanitaireViewModelTestFactory.crée(wording)
 
     // WHEN
     renderFakeComponent(

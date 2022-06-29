@@ -7,11 +7,11 @@ export class ActivitéMédicoSocialModel {
   @PrimaryColumn({ name: 'année', type: 'int' })
   public année!: number
 
-  @PrimaryColumn({ length: 9, name: 'numerofiness' })
+  @PrimaryColumn({ length: 9, name: 'numérofinessÉtablissementterritorial' })
   public numéroFinessÉtablissementTerritorial!: string
 
   @ManyToOne(() => ÉtablissementTerritorialIdentitéModel, { nullable: false, onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'numerofiness', referencedColumnName: 'numéroFinessÉtablissementTerritorial' })
+  @JoinColumn({ name: 'numérofinessÉtablissementterritorial', referencedColumnName: 'numéroFinessÉtablissementTerritorial' })
   public établissementTerritorial!: ÉtablissementTerritorialIdentitéModel
 
   @Column({ name: 'tauxoccupationaccueildejour', nullable: true, type: 'float' })

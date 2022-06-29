@@ -10,7 +10,7 @@ import { PageEntitéJuridique } from './PageEntitéJuridique'
 const { paths, wording } = fakeFrontDependencies
 
 describe('La page Entité Juridique', () => {
-  const entitéJuridiqueViewModel = EntitéJuridiqueViewModelTestFactory.créeEntitéJuridiqueViewModel(wording)
+  const entitéJuridiqueViewModel = EntitéJuridiqueViewModelTestFactory.crée(wording)
 
   const établissementsTerritoriauxRattachésViewModels: ÉtablissementTerritorialRattachéViewModel[] = [
     ÉtablissementTerritorialRattachéViewModelTestFactory.créeÉtablissementTerritorialRattaché(wording),
@@ -186,7 +186,7 @@ describe('La page Entité Juridique', () => {
 
     it('affiche "non renseigné" quand une valeur est vide', () => {
       // GIVEN
-      const entitéJuridiqueViewModelAvecUneValeurVide = EntitéJuridiqueViewModelTestFactory.créeEntitéJuridiqueViewModel(wording, { téléphone: '' })
+      const entitéJuridiqueViewModelAvecUneValeurVide = EntitéJuridiqueViewModelTestFactory.crée(wording, { téléphone: '' })
 
       // WHEN
       renderFakeComponent(<PageEntitéJuridique
@@ -203,7 +203,7 @@ describe('La page Entité Juridique', () => {
 
     it('affiche l’adresse incomplète lorsqu’il manque des champs d’adresse', () => {
       // GIVEN
-      const entitéJuridiqueViewModelAvecUneValeurVide = EntitéJuridiqueViewModelTestFactory.créeEntitéJuridiqueViewModel(wording, { adresseTypeVoie: '' })
+      const entitéJuridiqueViewModelAvecUneValeurVide = EntitéJuridiqueViewModelTestFactory.crée(wording, { adresseTypeVoie: '' })
 
       // WHEN
       renderFakeComponent(<PageEntitéJuridique

@@ -12,23 +12,27 @@ type ÉtablissementTerritorialMédicoSocial = Readonly<{
 export async function récupèreLÉtablissementTerritorialMédicoSocialEndpoint(
   dependencies: Dependencies,
   numéroFinessÉtablissementTerritorialMédicoSocial: string
-): Promise<ÉtablissementTerritorialMédicoSocial> {
-  const récupèreLÉtablissementTerritorialMédicoSocialIdentitéUseCase = new RécupèreLÉtablissementTerritorialMédicoSocialIdentitéUseCase(
-    dependencies.établissementTerritorialMédicoSocialLoader,
-    dependencies.entitéJuridiqueLoader
-  )
+): Promise<ÉtablissementTerritorialMédicoSocial | void> {
+  try {
+    const récupèreLÉtablissementTerritorialMédicoSocialIdentitéUseCase = new RécupèreLÉtablissementTerritorialMédicoSocialIdentitéUseCase(
+      dependencies.établissementTerritorialMédicoSocialLoader,
+      dependencies.entitéJuridiqueLoader
+    )
 
-  const établissementTerritorialMédicoSocialIdentité =
-    await récupèreLÉtablissementTerritorialMédicoSocialIdentitéUseCase.exécute(numéroFinessÉtablissementTerritorialMédicoSocial)
+    const établissementTerritorialMédicoSocialIdentité =
+      await récupèreLÉtablissementTerritorialMédicoSocialIdentitéUseCase.exécute(numéroFinessÉtablissementTerritorialMédicoSocial)
 
-  const récupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase =
-    new RécupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase(dependencies.établissementTerritorialMédicoSocialLoader)
+    const récupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase =
+      new RécupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase(dependencies.établissementTerritorialMédicoSocialLoader)
 
-  const établissementTerritorialMédicoSocialActivité =
-    await récupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase.exécute(numéroFinessÉtablissementTerritorialMédicoSocial)
+    const établissementTerritorialMédicoSocialActivité =
+      await récupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase.exécute(numéroFinessÉtablissementTerritorialMédicoSocial)
 
-  return {
-    activité: établissementTerritorialMédicoSocialActivité,
-    identité: établissementTerritorialMédicoSocialIdentité,
+    return {
+      activité: établissementTerritorialMédicoSocialActivité,
+      identité: établissementTerritorialMédicoSocialIdentité,
+    }
+  } catch (error) {
+    dependencies.logger.error(error)
   }
 }

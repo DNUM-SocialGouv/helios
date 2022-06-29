@@ -3,7 +3,7 @@ import { Wording } from '../configuration/wording/Wording'
 import { ÉtablissementTerritorialSanitaireViewModel } from '../ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel'
 
 export class ÉtablissementTerritorialSanitaireViewModelTestFactory {
-  private static établissementTerritorial1: ÉtablissementTerritorialSanitaireIdentité = {
+  private static établissementTerritorial: ÉtablissementTerritorialSanitaireIdentité = {
     adresseAcheminement: '01130 NANTUA',
     adresseNuméroVoie : '50',
     adresseTypeVoie : 'R',
@@ -22,11 +22,11 @@ export class ÉtablissementTerritorialSanitaireViewModelTestFactory {
     téléphone : '0474754800',
   }
 
-  public static créeÉtablissementTerritorialViewModel(
+  public static crée(
     wording: Wording, champsSurchargés?: Partial<ÉtablissementTerritorialSanitaireIdentité>
   ): ÉtablissementTerritorialSanitaireViewModel {
     return new ÉtablissementTerritorialSanitaireViewModel({
-      ...ÉtablissementTerritorialSanitaireViewModelTestFactory.établissementTerritorial1,
+      ...ÉtablissementTerritorialSanitaireViewModelTestFactory.établissementTerritorial,
       ...champsSurchargés,
     }, wording)
   }

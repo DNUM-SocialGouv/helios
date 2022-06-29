@@ -7,7 +7,7 @@ const customJestConfig = {
   // TODO
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
-    'datacrawler/**/*.{ts,tsx}',
+    'datacrawler/**/*.ts',
     '!**/node_modules/**',
     '!database/**',
     '!src/pages/**',
@@ -25,7 +25,7 @@ const customJestConfig = {
   testEnvironment: 'jest-environment-jsdom',
   testMatch: [
     '<rootDir>/src/**/*(*.)@(test).ts?(x)',
-    '<rootDir>/datacrawler/**/*(*.)@(test).ts?(x)',
+    '<rootDir>/datacrawler/**/*(*.)@(test).ts',
   ],
 }
 

@@ -7,7 +7,7 @@ import { PageÉtablissementTerritorialMédicoSocial } from './PageÉtablissement
 const { wording } = fakeFrontDependencies
 
 describe('La page Établissement territorial - Bloc activité', () => {
-  const établissementTerritorialMédicoSocial = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording)
+  const établissementTerritorialMédicoSocial = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.crée(wording)
 
   it('affiche le taux d’occupation en hébergement permanent', () => {
     // WHEN

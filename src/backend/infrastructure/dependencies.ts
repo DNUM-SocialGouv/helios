@@ -2,6 +2,7 @@ import * as Sentry from '@sentry/nextjs'
 
 import { EntitéJuridiqueLoader } from '../métier/gateways/EntitéJuridiqueLoader'
 import { EnvironmentVariables } from '../métier/gateways/EnvironmentVariables'
+import { Logger } from '../métier/gateways/Logger'
 import { ÉtablissementTerritorialMédicoSocialLoader } from '../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader'
 import { ÉtablissementTerritorialRattachéLoader } from '../métier/gateways/ÉtablissementTerritorialRattachéLoader'
 import { ÉtablissementTerritorialSanitaireLoader } from '../métier/gateways/ÉtablissementTerritorialSanitaireLoader'
@@ -17,6 +18,7 @@ import { TypeOrmÉtablissementTerritorialSanitaireLoader } from './gateways/éta
 export type Dependencies = Readonly<{
   environmentVariables: EnvironmentVariables
   entitéJuridiqueLoader: EntitéJuridiqueLoader
+  logger: Logger
   établissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader
   établissementTerritorialRattachéLoader: ÉtablissementTerritorialRattachéLoader
   établissementTerritorialSanitaireLoader: ÉtablissementTerritorialSanitaireLoader
@@ -36,6 +38,7 @@ const createDependencies = (): Dependencies => {
   return {
     entitéJuridiqueLoader: new TypeOrmEntitéJuridiqueLoader(orm),
     environmentVariables,
+    logger,
     établissementTerritorialMédicoSocialLoader: new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm),
     établissementTerritorialRattachéLoader: new TypeOrmÉtablissementTerritorialRattachéLoader(orm),
     établissementTerritorialSanitaireLoader: new TypeOrmÉtablissementTerritorialSanitaireLoader(orm),

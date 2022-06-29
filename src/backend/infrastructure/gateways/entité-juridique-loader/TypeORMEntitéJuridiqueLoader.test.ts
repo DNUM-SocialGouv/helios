@@ -1,13 +1,13 @@
 import { Repository } from 'typeorm'
 
-import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../../database/models/DateMiseÀJourSourceModel'
+import { DateMiseÀJourSourceModel } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
+import { DateMiseÀJourSourceModelTestFactory } from '../../../../../database/test-factories/DateMiseÀJourSourceModelTestFactory'
 import { EntitéJuridiqueModelTestFactory } from '../../../../../database/test-factories/EntitéJuridiqueModelTestFactory'
-import { EntitéJuridique } from '../../../métier/entities/entité-juridique/EntitéJuridique'
 import { EntitéJuridiqueNonTrouvée } from '../../../métier/entities/EntitéJuridiqueNonTrouvée'
 import { EntitéJuridiqueDeRattachement } from '../../../métier/entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement'
 import { EntitéJuridiqueTestFactory } from '../../../test-factories/EntitéJuridiqueTestFactory'
-import { getOrm } from '../../../testHelper'
+import { clearAllTables, getOrm, numéroFinessEntitéJuridique } from '../../../testHelper'
 import { TypeOrmEntitéJuridiqueLoader } from './TypeOrmEntitéJuridiqueLoader'
 
 describe('Entité juridique loader', () => {
@@ -21,8 +21,7 @@ describe('Entité juridique loader', () => {
   })
 
   beforeEach(async () => {
-    await entitéJuridiqueRepository.query('DELETE FROM EntitéJuridique;')
-    await dateMiseÀJourSourceRepository.query('DELETE FROM DateMiseÀJourSource;')
+    await clearAllTables(await orm)
   })
 
   afterAll(async () => {
@@ -32,57 +31,44 @@ describe('Entité juridique loader', () => {
   describe('charge une fiche identité d’une entité juridique', () => {
     it('charge par numéro FINESS lorsque l’entité juridique est en base', async () => {
       // GIVEN
-      const numéroFiness = '010018407'
-      const entitéJuridique = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel({ numéroFinessEntitéJuridique: numéroFiness })
-      await entitéJuridiqueRepository.insert(entitéJuridique)
-      await dateMiseÀJourSourceRepository.insert([
-        {
-          dernièreMiseÀJour: '20220514',
-          source: SourceDeDonnées.FINESS,
-        },
-      ])
+      const entitéJuridiqueModel = EntitéJuridiqueModelTestFactory.crée({ numéroFinessEntitéJuridique })
+      await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
+      await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestFactory.crée()])
 
       const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm)
-      const entitéJuridiqueAttendue: EntitéJuridique = EntitéJuridiqueTestFactory.créeEntitéJuridique()
 
       // WHEN
-      const entitéJuridiqueChargée = await typeOrmEntitéJuridiqueLoader.chargeParNuméroFiness(numéroFiness)
+      const entitéJuridiqueChargée = await typeOrmEntitéJuridiqueLoader.chargeParNuméroFiness(numéroFinessEntitéJuridique)
 
       // THEN
+      const entitéJuridiqueAttendue = EntitéJuridiqueTestFactory.créeEntitéJuridique()
       expect(entitéJuridiqueChargée).toStrictEqual(entitéJuridiqueAttendue)
     })
 
     it('signale que l’entité juridique n’a pas été trouvée lorsque l’entité juridique n’existe pas', async () => {
       // GIVEN
-      await dateMiseÀJourSourceRepository.insert([
-        {
-          dernièreMiseÀJour: '20220514',
-          source: SourceDeDonnées.FINESS,
-        },
-      ])
+      await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestFactory.crée()])
 
-      const numéroFiness = '012345678'
       const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm)
-      const exceptionAttendue = new EntitéJuridiqueNonTrouvée('012345678')
 
       // WHEN
-      const exceptionReçue = await typeOrmEntitéJuridiqueLoader.chargeParNuméroFiness(numéroFiness)
+      const exceptionReçue = await typeOrmEntitéJuridiqueLoader.chargeParNuméroFiness(numéroFinessEntitéJuridique)
 
       // THEN
+      const exceptionAttendue = new EntitéJuridiqueNonTrouvée(numéroFinessEntitéJuridique)
       expect(exceptionReçue).toStrictEqual(exceptionAttendue)
     })
   })
 
   it('charge l’entité juridique de rattachement par numéro FINESS lorsque l’entité juridique est en base', async () => {
     // GIVEN
-    const numéroFiness = '010018407'
-    const entitéJuridique = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel({ numéroFinessEntitéJuridique: numéroFiness })
-    await entitéJuridiqueRepository.insert(entitéJuridique)
+    const entitéJuridiqueModel = EntitéJuridiqueModelTestFactory.crée({ numéroFinessEntitéJuridique })
+    await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
 
     const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm)
 
     // WHEN
-    const entitéJuridiqueChargée = await typeOrmEntitéJuridiqueLoader.chargeLEntitéJuridiqueDeRattachement(numéroFiness)
+    const entitéJuridiqueChargée = await typeOrmEntitéJuridiqueLoader.chargeLEntitéJuridiqueDeRattachement(numéroFinessEntitéJuridique)
 
     // THEN
     const entitéJuridiqueDeRattachementAttendue: EntitéJuridiqueDeRattachement = {

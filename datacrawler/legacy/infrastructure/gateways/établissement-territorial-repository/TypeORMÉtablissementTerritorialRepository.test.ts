@@ -166,12 +166,12 @@ describe('Sauvegarde de l’établissement territorial', () => {
   it('supprime un établissement territorial quand il est en base', async () => {
     // GIVEN
     const numéroFinessEntitéJuridique = '010018407'
-    const entitéJuridique = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel({ numéroFinessEntitéJuridique })
+    const entitéJuridique = EntitéJuridiqueModelTestFactory.crée({ numéroFinessEntitéJuridique })
     await entitéJuridiqueRepository.insert([entitéJuridique])
     const numéroFinessÉtablissementTerritorial = '999777444'
 
     await établissementTerritorialIdentitéRepository.insert(
-      ÉtablissementTerritorialIdentitéModelTestFactory.créeÉtablissementTerritorialIdentitéModel(
+      ÉtablissementTerritorialIdentitéModelTestFactory.créeMédicoSocial(
         { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial }
       )
     )
