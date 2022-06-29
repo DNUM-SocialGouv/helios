@@ -23,6 +23,6 @@ python_version = "3.10"
 
 [scripts]
 lint = 'pylint --rcfile .pylintrc datacrawler'
-typecheck = 'mypy --config mypy.ini -p datacrawler'
+typecheck = 'mypy --config mypy.ini -p datacrawler --ignore-missing-imports'
 populate_activite_et_medico_social = 'python -m datacrawler.ajoute_les_activités_des_établissements_médico_sociaux'
 test = "pytest"

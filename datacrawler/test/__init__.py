@@ -1,10 +1,12 @@
 import pandas as pd
+from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 
 from datacrawler.load.activités_des_établissements_médico_sociaux import \
     TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX
 from datacrawler.transform.diamant.équivalences_diamant_helios import index_des_activités_médico_sociales
 
+base_de_données_test = create_engine("postgresql://helios:h3li0s@localhost:5433/helios")
 
 def sauvegarde_une_entité_juridique_en_base(numéro_finess: str, base_de_données: Engine) -> None:
     base_de_données.execute(
