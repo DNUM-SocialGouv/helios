@@ -2,6 +2,11 @@ import { Dependencies } from './infrastructure/dependencies'
 import { typeOrmOrm } from './infrastructure/gateways/orm/typeOrmOrm'
 import { EnvironmentVariables } from './métier/gateways/EnvironmentVariables'
 import { Logger } from './métier/gateways/Logger'
+import {DataSource} from "typeorm";
+import {ActivitéMédicoSocialModel} from "../../database/models/ActivitéMédicoSocialModel";
+import {ÉtablissementTerritorialIdentitéModel} from "../../database/models/ÉtablissementTerritorialIdentitéModel";
+import {EntitéJuridiqueModel} from "../../database/models/EntitéJuridiqueModel";
+import {DateMiseÀJourSourceModel} from "../../database/models/DateMiseÀJourSourceModel";
 
 const environmentVariables: EnvironmentVariables = {
   DATABASE_URL: 'postgres://helios:h3li0s@localhost:5433/helios',

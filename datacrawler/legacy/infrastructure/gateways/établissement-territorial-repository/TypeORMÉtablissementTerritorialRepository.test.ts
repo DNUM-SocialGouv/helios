@@ -23,7 +23,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
   })
 
   beforeEach(async () => {
-    await établissementTerritorialIdentitéRepository.query('DELETE FROM etablissement_territorial_identite;')
+    await établissementTerritorialIdentitéRepository.query('DELETE FROM etablissement_territorial;')
     await entitéJuridiqueRepository.query('DELETE FROM entite_juridique;')
     await dateMiseÀJourSourceRepository.query('DELETE FROM date_mise_a_jour_source;')
   })
