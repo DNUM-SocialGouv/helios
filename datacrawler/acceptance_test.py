@@ -1,15 +1,13 @@
+import logging
+
 import pandas as pd
 import pandas.testing
 from numpy import NaN
 from sqlalchemy import create_engine
 
-from datacrawler.ajoute_les_activités_des_établissements_médico_sociaux import \
-    ajoute_les_activités_des_établissements_médico_sociaux
-from datacrawler.dependencies.logger import logger
-from datacrawler.load.activités_des_établissements_médico_sociaux import \
-    TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX
-from datacrawler.test import nettoie_la_base_de_données, sauvegarde_un_établissement_en_base, \
-    sauvegarde_une_entité_juridique_en_base
+from datacrawler.ajoute_les_activités_des_établissements_médico_sociaux import ajoute_les_activités_des_établissements_médico_sociaux
+from datacrawler.load.activités_des_établissements_médico_sociaux import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX
+from datacrawler.test import nettoie_la_base_de_données, sauvegarde_un_établissement_en_base, sauvegarde_une_entité_juridique_en_base
 
 
 class TestAcceptance:
@@ -22,6 +20,7 @@ class TestAcceptance:
         chemin_du_fichier = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
         sauvegarde_une_entité_juridique_en_base("010008407", self.base_de_données)
         sauvegarde_un_établissement_en_base("010003598", "010008407", self.base_de_données)
+        logger = logging.getLogger("Helios")
 
         # WHEN
         ajoute_les_activités_des_établissements_médico_sociaux(chemin_du_fichier, self.base_de_données, logger)
