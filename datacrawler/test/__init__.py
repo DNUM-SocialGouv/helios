@@ -1,7 +1,7 @@
+import pandas as pd
 from sqlalchemy.engine import Engine
 
-from datacrawler.load.activités_des_établissements_médico_sociaux import \
-    TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX
+from datacrawler.load.activités_des_établissements_médico_sociaux import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX
 
 
 def sauvegarde_une_entité_juridique_en_base(numéro_finess: str, base_de_données: Engine) -> None:
@@ -72,3 +72,7 @@ def nettoie_la_base_de_données(base_de_données: Engine) -> None:
     base_de_données.execute("DELETE FROM EntitéJuridique;")
     base_de_données.execute("DELETE FROM Établissementterritorialidentité;")
     base_de_données.execute(f"DELETE FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX};")
+
+
+def sauvegarde_une_activité_en_base(activité: pd.DataFrame, base_de_données: Engine):
+    activité.to_sql()
