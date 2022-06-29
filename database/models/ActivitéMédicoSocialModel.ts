@@ -11,7 +11,7 @@ export class ActivitéMédicoSocialModel {
   public numéroFinessÉtablissementTerritorial!: string
 
   @ManyToOne(() => ÉtablissementTerritorialIdentitéModel, { nullable: false, onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'numero_finess_etablissement_territorial', referencedColumnName: 'numero_finess_etablissement_territorial' })
+  @JoinColumn({ name: 'numero_finess_etablissement_territorial', referencedColumnName: 'numéroFinessÉtablissementTerritorial' })
   public établissementTerritorial!: ÉtablissementTerritorialIdentitéModel
 
   @Column({ name: 'taux_occupation_accueil_de_jour', nullable: true, type: 'float' })

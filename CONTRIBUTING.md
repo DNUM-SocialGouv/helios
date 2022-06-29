@@ -125,6 +125,13 @@ yarn typeorm migration:create database/migrations/<NomDeMigration> --outputJs
 
 Un fichier *.js* est auto-généré sous `database/migrations`. Il faut modifier le fichier auto-généré. Enfin compléter les deux méthodes *up* et *down*.
 
+#### Standards
+
+- Tout en minuscule ;
+- Aucun accent ;
+- Mots séparés par un underscore ;
+- La longueur du champs ne doit pas faire 36/37 caractères sinon il retourne `undefined` quand on utilise `getRepository()`...
+
 ### Appliquer les migrations
 
 Avec la commande `yarn dev`, les migrations sont appliquées en même temps que le lancement de la base de développement. Voici tout de même comment les appliquer indépendamment, une fois la base de données démarrée :

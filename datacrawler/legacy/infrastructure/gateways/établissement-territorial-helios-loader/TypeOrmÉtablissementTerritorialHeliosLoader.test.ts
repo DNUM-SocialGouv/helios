@@ -18,8 +18,8 @@ describe('La récupération des établissements territoriaux d’Helios', () => 
   })
 
   beforeEach(async () => {
-    await entitéJuridiqueRepository.query('DELETE FROM EntitéJuridique;')
-    await établissementTerritorialRepository.query('DELETE FROM ÉtablissementTerritorialIdentité;')
+    await entitéJuridiqueRepository.query('DELETE FROM entite_juridique;')
+    await établissementTerritorialRepository.query('DELETE FROM etablissement_territorial_identite;')
   })
 
   afterAll(async () => {

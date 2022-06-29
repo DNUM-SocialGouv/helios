@@ -25,5 +25,4 @@ export class EntitéJuridiqueModel {
 
   @Column({ length: 10, name: 'telephone' })
   public téléphone!: string
-
 }

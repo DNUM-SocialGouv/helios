@@ -14,7 +14,7 @@ describe('La récupération des entités juridiques d’Helios', () => {
   })
 
   beforeEach(async () => {
-    await entitéJuridiqueRepository.query('DELETE FROM EntitéJuridique;')
+    await entitéJuridiqueRepository.query('DELETE FROM entite_juridique;')
   })
 
   afterAll(async () => {

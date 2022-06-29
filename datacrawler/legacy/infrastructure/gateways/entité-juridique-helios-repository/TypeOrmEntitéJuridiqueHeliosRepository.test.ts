@@ -22,9 +22,9 @@ describe('Sauvegarde des entités juridiques', () => {
   })
 
   beforeEach(async () => {
-    await entitéJuridiqueRepository.query('DELETE FROM EntitéJuridique;')
-    await établissementTerritorialIdentitéRepository.query('DELETE FROM ÉtablissementTerritorialIdentité;')
-    await dateMiseÀJourSourceRepository.query('DELETE FROM DateMiseÀJourSource;')
+    await entitéJuridiqueRepository.query('DELETE FROM entite_juridique;')
+    await établissementTerritorialIdentitéRepository.query('DELETE FROM etablissement_territorial_identite;')
+    await dateMiseÀJourSourceRepository.query('DELETE FROM date_mise_a_jour_source;')
   })
 
   afterAll(async () => {

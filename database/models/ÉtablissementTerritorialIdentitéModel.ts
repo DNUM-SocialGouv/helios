@@ -31,7 +31,7 @@ export class ÉtablissementTerritorialIdentitéModel {
   public domaine!: DomaineÉtablissementTerritorial
 
   @ManyToOne(() => EntitéJuridiqueModel, { nullable: false, onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'numero_finess_entite_juridique', referencedColumnName: 'numero_finess_entite_juridique' })
+  @JoinColumn({ name: 'numero_finess_entite_juridique', referencedColumnName: 'numéroFinessEntitéJuridique' })
   public entitéJuridique!: EntitéJuridiqueModel
 
   @Column({ length: 255, name: 'libelle_categorie_etablissement' })
