@@ -15,4 +15,6 @@ def ajoute_les_activités_des_établissements_médico_sociaux(chemin_du_fichier:
         chemin_du_fichier, récupère_les_numéros_finess_des_établissements_connus, lis_le_fichier_csv
     )
 
+    print(activités_des_établissements_médico_sociaux.head())
+
     sauvegarde_les_activités_des_établissements_médico_sociaux(base_de_données, activités_des_établissements_médico_sociaux)

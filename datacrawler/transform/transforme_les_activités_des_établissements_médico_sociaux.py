@@ -29,13 +29,17 @@ def transforme_les_activités_des_établissements_médico_sociaux(
     types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_helios)
 
     contenu = lis_le_csv(chemin_du_fichier, colonnes_à_lire_ann_errd_ej_et, types_des_colonnes)
+    # print(f"{contenu=}")
 
     établissements_connus = récupère_les_numéros_finess_des_établissements()
 
-    est_dans_finess = contenu["Finess"].isin(établissements_connus["numérofinessÉtablissementterritorial"])
+    bdd = établissements_connus["numérofinessÉtablissementterritorial"]
+    print(f"{bdd=}")
+    est_dans_finess = contenu["Finess"].isin(bdd)
+    titi = contenu[est_dans_finess]
+    print(f"{titi=}")
     return (
-        contenu[est_dans_finess]
-        .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_diamant_helios))
+        titi.rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_diamant_helios))
         .dropna(subset=index_des_activités_médico_sociales)
         .drop_duplicates(subset=index_des_activités_médico_sociales)
         .set_index(index_des_activités_médico_sociales)

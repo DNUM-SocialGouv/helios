@@ -4,8 +4,7 @@ import pandas as pd
 from numpy import NaN
 
 from datacrawler.transform.diamant.équivalences_diamant_helios import index_des_activités_médico_sociales
-from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux import \
-    transforme_les_activités_des_établissements_médico_sociaux
+from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux import transforme_les_activités_des_établissements_médico_sociaux
 
 
 class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
@@ -110,7 +109,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
                     "tauxoccupationhébergementpermanent",
                 ],
             )
-                .astype(
+            .astype(
                 {
                     "numérofinessÉtablissementterritorial": str,
                     "année": int,
@@ -119,7 +118,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
                     "tauxoccupationhébergementpermanent": float,
                 }
             )
-                .set_index(index_des_activités_médico_sociales)
+            .set_index(index_des_activités_médico_sociales)
         )
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
 
@@ -165,7 +164,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
                     "tauxoccupationhébergementpermanent",
                 ],
             )
-                .astype(
+            .astype(
                 {
                     "numérofinessÉtablissementterritorial": str,
                     "année": int,
@@ -174,7 +173,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
                     "tauxoccupationhébergementpermanent": float,
                 }
             )
-                .set_index(index_des_activités_médico_sociales)
+            .set_index(index_des_activités_médico_sociales)
         )
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
 
@@ -278,7 +277,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
     def test_ne_renvoie_pas_les_établissements_non_présents_en_base(self):
         # GIVEN
         chemin_du_fichier = "chemin/vers_le.csv"
-        lis_le_fichier_csv = MagicMock()
+        mock_lis_le_fichier_csv = MagicMock()
         données_diamant = pd.DataFrame(
             [
                 {
@@ -290,9 +289,9 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
                 }
             ]
         )
-        lis_le_fichier_csv.return_value = données_diamant
-        trouve_les_finess_des_établissements = MagicMock()
-        trouve_les_finess_des_établissements.return_value = pd.DataFrame(
+        mock_lis_le_fichier_csv.return_value = données_diamant
+        mock_trouve_les_finess_des_établissements = MagicMock()
+        mock_trouve_les_finess_des_établissements.return_value = pd.DataFrame(
             [
                 {
                     "numérofinessÉtablissementterritorial": "234567891",
@@ -303,8 +302,8 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         # WHEN
 
         données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
-            chemin_du_fichier, trouve_les_finess_des_établissements, lis_le_fichier_csv
+            chemin_du_fichier, mock_trouve_les_finess_des_établissements, mock_lis_le_fichier_csv
         )
         # THEN
         assert données_transformées.shape == (0, 3)
-        trouve_les_finess_des_établissements.assert_called_once_with()
+        mock_trouve_les_finess_des_établissements.assert_called_once_with()

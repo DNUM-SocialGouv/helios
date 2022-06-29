@@ -28,3 +28,21 @@ class TestTrouveLesFinessDesEtablissementsEnBase:
                 }
             ),
         )
+
+    def test_récupère_les_numéros_finess_des_établissements_en_base_quand_ils_commencent_par_zéro(self):
+        # GIVEN
+        sauvegarde_une_entité_juridique_en_base("123456789", self.base_de_données)
+        sauvegarde_un_établissement_en_base("098765432", "123456789", self.base_de_données)
+
+        # WHEN
+        données = récupère_les_numéros_finess_des_établissements_de_la_base(self.base_de_données)
+
+        # THEN
+        pd.testing.assert_frame_equal(
+            données,
+            pd.DataFrame(
+                {
+                    "numérofinessÉtablissementterritorial": ["098765432"],
+                }
+            ),
+        )

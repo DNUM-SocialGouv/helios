@@ -17,7 +17,7 @@ class TestAcceptance:
         # GIVEN
         chemin_du_fichier = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
         sauvegarde_une_entité_juridique_en_base("123456789", self.base_de_données)
-        sauvegarde_un_établissement_en_base("987654321", "123456789", self.base_de_données)
+        sauvegarde_un_établissement_en_base("010001261", "123456789", self.base_de_données)
 
         # WHEN
         ajoute_les_activités_des_établissements_médico_sociaux(chemin_du_fichier, self.base_de_données)
@@ -26,7 +26,7 @@ class TestAcceptance:
         data_frame_attendu = pd.DataFrame(
             [
                 {
-                    "numérofinessÉtablissementterritorial": "987654321",
+                    "numérofinessÉtablissementterritorial": "010001261",
                     "année": 2018,
                     "tauxoccupationhébergementpermanent": 0.99779299847793002,
                     "tauxoccupationhébergementtemporaire": 0.93698630136986305,
