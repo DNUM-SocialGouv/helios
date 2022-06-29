@@ -25,10 +25,10 @@ describe('La page Établissement territorial - Bloc activité', () => {
       expect(transcription).toHaveAttribute('aria-expanded', 'false')
       const abréviation = within(indicateurs[0]).getAllByText('DIAMANT', { selector: 'abbr' })
       expect(abréviation[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
-    const détails = within(indicateurs[0]).getByRole('button', { name: wording.DÉTAILS })
-    expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-1')
-    expect(détails).toHaveAttribute('data-fr-opened', 'false')
-  })
+      const détails = within(indicateurs[0]).getByRole('button', { name: wording.DÉTAILS })
+      expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-1')
+      expect(détails).toHaveAttribute('data-fr-opened', 'false')
+    })
 
     it('affiche un tableau descriptif après un click sur "Afficher la transcription"', () => {
       // GIVEN
@@ -83,10 +83,10 @@ describe('La page Établissement territorial - Bloc activité', () => {
       expect(transcription).toHaveAttribute('aria-expanded', 'false')
       const abréviation = within(indicateurs[1]).getAllByText('DIAMANT', { selector: 'abbr' })
       expect(abréviation[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
-    const détails = within(indicateurs[1]).getByRole('button', { name: wording.DÉTAILS })
-    expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-2')
-    expect(détails).toHaveAttribute('data-fr-opened', 'false')
-  })
+      const détails = within(indicateurs[1]).getByRole('button', { name: wording.DÉTAILS })
+      expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-2')
+      expect(détails).toHaveAttribute('data-fr-opened', 'false')
+    })
 
     it('affiche un tableau descriptif après un click sur "Afficher la transcription"', () => {
       // GIVEN
@@ -141,10 +141,10 @@ describe('La page Établissement territorial - Bloc activité', () => {
       expect(transcription).toHaveAttribute('aria-expanded', 'false')
       const abréviation = within(indicateurs[2]).getAllByText('DIAMANT', { selector: 'abbr' })
       expect(abréviation[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
-    const détails = within(indicateurs[2]).getByRole('button', { name: wording.DÉTAILS })
-    expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-3')
-    expect(détails).toHaveAttribute('data-fr-opened', 'false')
-  })
+      const détails = within(indicateurs[2]).getByRole('button', { name: wording.DÉTAILS })
+      expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-3')
+      expect(détails).toHaveAttribute('data-fr-opened', 'false')
+    })
 
     it('affiche un tableau descriptif après un click sur "Afficher la transcription"', () => {
       // GIVEN
@@ -199,10 +199,10 @@ describe('La page Établissement territorial - Bloc activité', () => {
       expect(transcription).toHaveAttribute('aria-expanded', 'false')
       const abréviation = within(indicateurs[3]).getByText('DIAMANT', { selector: 'abbr' })
       expect(abréviation).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
-    const détails = within(indicateurs[3]).getByRole('button', { name: wording.DÉTAILS })
-    expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-4')
-    expect(détails).toHaveAttribute('data-fr-opened', 'false')
-  })
+      const détails = within(indicateurs[3]).getByRole('button', { name: wording.DÉTAILS })
+      expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-4')
+      expect(détails).toHaveAttribute('data-fr-opened', 'false')
+    })
 
     it('affiche un tableau descriptif après un click sur "Afficher la transcription"', () => {
       // GIVEN
@@ -257,10 +257,10 @@ describe('La page Établissement territorial - Bloc activité', () => {
       expect(transcription).toHaveAttribute('aria-expanded', 'false')
       const abréviation = within(indicateurs[4]).getByText('DIAMANT', { selector: 'abbr' })
       expect(abréviation).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
-    const détails = within(indicateurs[4]).getByRole('button', { name: wording.DÉTAILS })
-    expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-5')
-    expect(détails).toHaveAttribute('data-fr-opened', 'false')
-  })
+      const détails = within(indicateurs[4]).getByRole('button', { name: wording.DÉTAILS })
+      expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-5')
+      expect(détails).toHaveAttribute('data-fr-opened', 'false')
+    })
 
     it('affiche un tableau descriptif après un click sur "Afficher la transcription"', () => {
       // GIVEN
@@ -315,10 +315,10 @@ describe('La page Établissement territorial - Bloc activité', () => {
       expect(transcription).toHaveAttribute('aria-expanded', 'false')
       const abréviation = within(indicateurs[5]).getByText('DIAMANT', { selector: 'abbr' })
       expect(abréviation).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
-    const détails = within(indicateurs[5]).getByRole('button', { name: wording.DÉTAILS })
-    expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-6')
-    expect(détails).toHaveAttribute('data-fr-opened', 'false')
-  })
+      const détails = within(indicateurs[5]).getByRole('button', { name: wording.DÉTAILS })
+      expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-6')
+      expect(détails).toHaveAttribute('data-fr-opened', 'false')
+    })
 
     it('affiche un tableau descriptif après un click sur "Afficher la transcription"', () => {
       // GIVEN
@@ -385,18 +385,31 @@ describe('La page Établissement territorial - Bloc activité', () => {
       // WHEN
       fireEvent.click(transcription)
 
-    // THEN
-    const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
-    const indicateurs = within(activité).getAllByRole('listitem')
-    const duréeMoyenneSéjourEtAccompagnementDesPersonnesSortiesDéfinitivementAuCoursDeLAnnée = within(indicateurs[6]).getByText(wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, { selector: 'p' })
-    expect(duréeMoyenneSéjourEtAccompagnementDesPersonnesSortiesDéfinitivementAuCoursDeLAnnée).toBeInTheDocument()
-    const dateMiseAJour = within(indicateurs[6]).getByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
-    expect(dateMiseAJour).toBeInTheDocument()
-    const abréviation = within(indicateurs[6]).getByText('DIAMANT', { selector: 'abbr' })
-    expect(abréviation).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
-    const détails = within(indicateurs[6]).getByRole('button', { name: wording.DÉTAILS })
-    expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-7')
-    expect(détails).toHaveAttribute('data-fr-opened', 'false')
+      // THEN
+      expect(transcription).toHaveAttribute('aria-expanded', 'true')
+
+      const tableau = within(indicateur[6]).getByRole('table')
+      const annéeLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.ANNÉE })
+      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.DURÉE_MOEYNNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES })
+      expect(annéeLigneDEnTête).toBeInTheDocument()
+      expect(indicateurLigneDEnTête).toBeInTheDocument()
+
+      const lignes = within(tableau).getAllByRole('row')
+      const annéeDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '2019' })
+      expect(annéeDeLaPremièreLigne).toBeInTheDocument()
+      const valeurDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '1013' })
+      expect(valeurDeLaPremièreLigne).toBeInTheDocument()
+
+      const annéeDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '2020' })
+      expect(annéeDeLaDeuxièmeLigne).toBeInTheDocument()
+      const valeurDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '994' })
+      expect(valeurDeLaDeuxièmeLigne).toBeInTheDocument()
+
+      const annéeDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: '2021' })
+      expect(annéeDeLaTroisièmeLigne).toBeInTheDocument()
+      const valeurDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: '990' })
+      expect(valeurDeLaTroisièmeLigne).toBeInTheDocument()
+    })
   })
 
   it.each(
