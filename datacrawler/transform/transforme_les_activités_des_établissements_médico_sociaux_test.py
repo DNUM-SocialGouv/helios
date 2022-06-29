@@ -10,6 +10,7 @@ from datacrawler.transform.transforme_les_activités_des_établissements_médico
 class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
     def test_lis_le_fichier_diamant_renomme_les_colonnes_et_crée_l_index(self):
         # GIVEN
+        logger = MagicMock()
         numéro_finess_établissement = "010001261"
         données_ann_errd_ej_et = pd.DataFrame(
             [
@@ -32,7 +33,9 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
 
         # WHEN
 
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(données_ann_errd_ej_et, numéros_finess_des_établissements_connus)
+        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(données_ann_errd_ej_et,
+                                                                                          numéros_finess_des_établissements_connus,
+                                                                                          logger)
         # THEN
         data_frame_attendu = pd.DataFrame(
             [
@@ -49,6 +52,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self):
         # GIVEN
+        logger = MagicMock()
         données_ann_errd_ej_et = pd.DataFrame(
             [
                 {
@@ -70,7 +74,9 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
 
         # WHEN
 
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(données_ann_errd_ej_et, numéros_finess_des_établissements_connus)
+        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(données_ann_errd_ej_et,
+                                                                                          numéros_finess_des_établissements_connus,
+                                                                                          logger)
         # THEN
         data_frame_attendu = (
             pd.DataFrame(
@@ -97,6 +103,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_l_année(self):
         # GIVEN
+        logger = MagicMock()
         numéro_finess_établissement = "010001261"
         données_ann_errd_ej_et = pd.DataFrame(
             [
@@ -119,7 +126,9 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
 
         # WHEN
 
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(données_ann_errd_ej_et, numéros_finess_des_établissements_connus)
+        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(données_ann_errd_ej_et,
+                                                                                          numéros_finess_des_établissements_connus,
+                                                                                          logger)
         # THEN
         data_frame_attendu = (
             pd.DataFrame(
@@ -146,6 +155,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
 
     def test_renseigne_la_ligne_même_si_aucun_taux_n_est_renseigné(self):
         # GIVEN
+        logger = MagicMock()
         numéro_finess_établissement = "010001261"
         données_ann_errd_ej_et = pd.DataFrame(
             [
@@ -168,7 +178,9 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
 
         # WHEN
 
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(données_ann_errd_ej_et, numéros_finess_des_établissements_connus)
+        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(données_ann_errd_ej_et,
+                                                                                          numéros_finess_des_établissements_connus,
+                                                                                          logger)
         # THEN
         data_frame_attendu = pd.DataFrame(
             [
@@ -185,6 +197,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
 
     def test_ne_considère_qu_une_seule_fois_un_même_couple_année_numéro_finess(self):
         # GIVEN
+        logger = MagicMock()
         numéro_finess_établissement = "010001261"
         données_ann_errd_ej_et = pd.DataFrame(
             [
@@ -214,7 +227,9 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
 
         # WHEN
 
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(données_ann_errd_ej_et, numéros_finess_des_établissements_connus)
+        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(données_ann_errd_ej_et,
+                                                                                          numéros_finess_des_établissements_connus,
+                                                                                          logger)
         # THEN
         data_frame_attendu = pd.DataFrame(
             [
@@ -231,6 +246,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
 
     def test_ne_renvoie_pas_les_établissements_non_présents_en_base(self):
         # GIVEN
+        logger = MagicMock()
         données_ann_errd_ej_et = pd.DataFrame(
             [
                 {
@@ -252,6 +268,8 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
 
         # WHEN
 
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(données_ann_errd_ej_et, numéros_finess_des_établissements_connus)
+        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(données_ann_errd_ej_et,
+                                                                                          numéros_finess_des_établissements_connus,
+                                                                                          logger)
         # THEN
         assert données_transformées.shape == (0, 3)

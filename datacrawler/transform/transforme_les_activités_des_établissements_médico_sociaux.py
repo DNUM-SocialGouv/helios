@@ -1,3 +1,4 @@
+from logging import Logger
 from typing import Dict
 
 import pandas as pd
@@ -13,11 +14,12 @@ def extrais_l_equivalence_des_noms_des_colonnes(équivalences: Dict[str, Colonne
     return {nom_diamant: colonne_diamant["nom"] for nom_diamant, colonne_diamant in équivalences.items()}
 
 
-def transforme_les_activités_des_établissements_médico_sociaux(
-    données_ann_errd_ej_et: pd.DataFrame, numéros_finess_des_établissements_connus: pd.DataFrame
-) -> pd.DataFrame:
+def transforme_les_activités_des_établissements_médico_sociaux(données_ann_errd_ej_et: pd.DataFrame,
+                                                               numéros_finess_des_établissements_connus: pd.DataFrame,
+                                                               logger: Logger) -> pd.DataFrame:
 
     est_dans_finess = données_ann_errd_ej_et["Finess"].isin(numéros_finess_des_établissements_connus["numérofinessÉtablissementterritorial"])
+    logger.info(f'{est_dans_finess.sum()} activités liées à un ET trouvé en base')
     return (
         données_ann_errd_ej_et[est_dans_finess]
         .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_diamant_helios))
