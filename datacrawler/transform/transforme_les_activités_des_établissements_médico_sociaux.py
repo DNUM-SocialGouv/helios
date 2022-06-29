@@ -19,7 +19,7 @@ def transforme_les_activités_des_établissements_médico_sociaux(données_ann_e
                                                                logger: Logger) -> pd.DataFrame:
 
     est_dans_finess = données_ann_errd_ej_et["Finess"].isin(numéros_finess_des_établissements_connus["numérofinessÉtablissementterritorial"])
-    logger.info(f'{est_dans_finess.sum()} activités liées à un ET trouvé en base')
+    logger.info(f'{est_dans_finess.sum()} activités liées à un ET trouvées en base')
     return (
         données_ann_errd_ej_et[est_dans_finess]
         .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_diamant_helios))

@@ -1,7 +1,9 @@
 import pandas as pd
 from sqlalchemy.engine import Engine
 
-from datacrawler.load.activités_des_établissements_médico_sociaux import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX
+from datacrawler.load.activités_des_établissements_médico_sociaux import \
+    TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX
+from datacrawler.transform.diamant.équivalences_diamant_helios import index_des_activités_médico_sociales
 
 
 def sauvegarde_une_entité_juridique_en_base(numéro_finess: str, base_de_données: Engine) -> None:
@@ -30,7 +32,8 @@ VALUES (
     )
 
 
-def sauvegarde_un_établissement_en_base(numéro_finess_établissement: str, numéro_finess_entité_juridique: str, base_de_données: Engine) -> None:
+def sauvegarde_un_établissement_en_base(numéro_finess_établissement: str, numéro_finess_entité_juridique: str,
+                                        base_de_données: Engine) -> None:
     base_de_données.execute(
         f"""INSERT INTO Établissementterritorialidentité (
     adresseacheminement,
@@ -74,5 +77,7 @@ def nettoie_la_base_de_données(base_de_données: Engine) -> None:
     base_de_données.execute(f"DELETE FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX};")
 
 
-def sauvegarde_une_activité_en_base(activité: pd.DataFrame, base_de_données: Engine):
-    activité.to_sql()
+def sauvegarde_une_activité_en_base(activité: pd.DataFrame, base_de_données: Engine) -> None:
+    activité \
+        .set_index(index_des_activités_médico_sociales) \
+        .to_sql(name='activitémédicosocial', con=base_de_données, index=True, if_exists='append')
