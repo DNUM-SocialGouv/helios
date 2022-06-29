@@ -2,7 +2,6 @@ from unittest.mock import MagicMock
 
 import pandas as pd
 from numpy import NaN
-from sqlalchemy import create_mock_engine
 
 from datacrawler.transform.diamant.équivalences_diamant_helios import index_des_activités_médico_sociales
 from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux import transforme_les_activités_des_établissements_médico_sociaux

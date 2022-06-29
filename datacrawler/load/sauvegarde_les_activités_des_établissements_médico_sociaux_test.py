@@ -1,5 +1,4 @@
 import pandas as pd
-from numpy import NaN, dtype
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 
@@ -12,8 +11,26 @@ from datacrawler.load.sauvegarde_les_activités_des_établissements_médico_soci
 
 def sauvegarde_une_entité_juridique(numéro_finess: str, base_de_données: Engine):
     base_de_données.execute(
-        f"""INSERT INTO EntitéJuridique (numérofinessentitéjuridique, raisonsociale, adresseacheminement, adressenumérovoie, adressetypevoie, adressevoie, libelléstatutjuridique, téléphone)
-VALUES ({numéro_finess}, 'rs', '00000 VILLE', '12', 'R', 'nom de rue', 'Public', '0123456789');
+        f"""INSERT INTO EntitéJuridique (
+    numérofinessentitéjuridique,
+    raisonsociale,
+    adresseacheminement,
+    adressenumérovoie,
+    adressetypevoie,
+    adressevoie,
+    libelléstatutjuridique,
+    téléphone
+  )
+VALUES (
+    {numéro_finess},
+    'rs',
+    '00000 VILLE',
+    '12',
+    'R',
+    'nom de rue',
+    'Public',
+    '0123456789'
+  );
 """
     )
 
