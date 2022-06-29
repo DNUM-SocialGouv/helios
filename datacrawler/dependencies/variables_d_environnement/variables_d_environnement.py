@@ -5,6 +5,7 @@ from typing import Callable, Dict, TypedDict
 class VariablesDEnvironnement(TypedDict):
     SENTRY_DSN: str
     DATABASE_URL: str
+    DNUM_SFTP_LOCAL_PATH: str
 
 
 def récupère_les_variables_d_environnement(
@@ -25,4 +26,5 @@ def récupère_les_variables_d_environnement(
     return VariablesDEnvironnement(
         SENTRY_DSN=signale_si_la_variable_n_est_pas_présente("SENTRY_DSN"),
         DATABASE_URL=signale_si_la_variable_n_est_pas_présente("SCALINGO_POSTGRESQL_URL_ALCHEMY"),
+        DNUM_SFTP_LOCAL_PATH=signale_si_la_variable_n_est_pas_présente("DNUM_SFTP_LOCAL_PATH")
     )
