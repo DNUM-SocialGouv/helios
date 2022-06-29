@@ -1,12 +1,12 @@
+import { ÉtablissementTerritorialMédicoSocial } from '../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialActivité } from '../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
-import { ÉtablissementTerritorialMédicoSocialIdentité } from '../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialIdentité'
 import { RécupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase } from '../../métier/use-cases/RécupèreLÉtablissementTerritorialMédicoSocialActivitéUseCase'
-import { RécupèreLÉtablissementTerritorialMédicoSocialIdentitéUseCase } from '../../métier/use-cases/RécupèreLÉtablissementTerritorialMédicoSocialIdentitéUseCase'
+import { RécupèreLÉtablissementTerritorialMédicoSocialUseCase } from '../../métier/use-cases/RécupèreLÉtablissementTerritorialMédicoSocialUseCase'
 import { Dependencies } from '../dependencies'
 
 type ÉtablissementTerritorialMédicoSocial = Readonly<{
   activité: ÉtablissementTerritorialMédicoSocialActivité[]
-  identité: ÉtablissementTerritorialMédicoSocialIdentité
+  identité: ÉtablissementTerritorialMédicoSocial
 }>
 
 export async function récupèreLÉtablissementTerritorialMédicoSocialEndpoint(
@@ -14,7 +14,7 @@ export async function récupèreLÉtablissementTerritorialMédicoSocialEndpoint(
   numéroFinessÉtablissementTerritorialMédicoSocial: string
 ): Promise<ÉtablissementTerritorialMédicoSocial | void> {
   try {
-    const récupèreLÉtablissementTerritorialMédicoSocialIdentitéUseCase = new RécupèreLÉtablissementTerritorialMédicoSocialIdentitéUseCase(
+    const récupèreLÉtablissementTerritorialMédicoSocialIdentitéUseCase = new RécupèreLÉtablissementTerritorialMédicoSocialUseCase(
       dependencies.établissementTerritorialMédicoSocialLoader,
       dependencies.entitéJuridiqueLoader
     )

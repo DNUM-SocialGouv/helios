@@ -3,7 +3,7 @@ import ChartDataLabels, { Context } from 'chartjs-plugin-datalabels'
 import { ReactElement } from 'react'
 import { Bar } from 'react-chartjs-2'
 
-import { ÉtablissementTerritorialMédicoSocialIdentité } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialIdentité'
+import { ÉtablissementTerritorialMédicoSocial } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
 import { Wording } from '../../configuration/wording/Wording'
 import { StringFormater } from '../commun/StringFormater'
 
@@ -19,7 +19,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   readonly couleurDelAbscisse: string = '#161616'
   readonly couleurDeLaValeur: string = '#3A3A3A'
 
-  constructor(private readonly établissementTerritorialIdentité: ÉtablissementTerritorialMédicoSocialIdentité, private readonly wording: Wording) {
+  constructor(private readonly établissementTerritorialIdentité: ÉtablissementTerritorialMédicoSocial, private readonly wording: Wording) {
     // TODO: à modifier avec les données du backend
     this.valeurAtypique = 120
     this.fondDeCouleurPourSecondHistogramme = [

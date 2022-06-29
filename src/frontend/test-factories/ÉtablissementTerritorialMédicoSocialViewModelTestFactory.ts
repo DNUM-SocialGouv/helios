@@ -1,9 +1,9 @@
-import { ÉtablissementTerritorialMédicoSocialIdentité } from '../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialIdentité'
+import { ÉtablissementTerritorialMédicoSocial } from '../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
 import { Wording } from '../configuration/wording/Wording'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from '../ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel'
 
 export class ÉtablissementTerritorialMédicoSocialViewModelTestFactory {
-  private static établissementTerritorial1: ÉtablissementTerritorialMédicoSocialIdentité = {
+  private static établissementTerritorial1: ÉtablissementTerritorialMédicoSocial['identité'] = {
     adresseAcheminement: '01117 OYONNAX CEDEX',
     adresseNuméroVoie : '1',
     adresseTypeVoie : 'RTE',
@@ -24,7 +24,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestFactory {
   }
 
   public static crée(
-    wording: Wording, champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialIdentité>
+    wording: Wording, champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocial>
   ): ÉtablissementTerritorialMédicoSocialViewModel {
     return new ÉtablissementTerritorialMédicoSocialViewModel({
       ...ÉtablissementTerritorialMédicoSocialViewModelTestFactory.établissementTerritorial1,
