@@ -4,7 +4,8 @@ import pandas as pd
 from numpy import NaN
 
 from datacrawler.transform.diamant.équivalences_diamant_helios import index_des_activités_médico_sociales
-from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux import transforme_les_activités_des_établissements_médico_sociaux
+from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux import \
+    transforme_les_activités_des_établissements_médico_sociaux
 
 
 class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
@@ -35,10 +36,10 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
-            chemin_du_fichier, mock_lis_le_fichier_csv, mock_trouve_les_finess_des_établissements
-        )
 
+        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
+            chemin_du_fichier, mock_trouve_les_finess_des_établissements, mock_lis_le_fichier_csv
+        )
         # THEN
         data_frame_attendu = pd.DataFrame(
             [
@@ -94,10 +95,10 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
-            chemin_du_fichier, mock_lis_le_fichier_csv, mock_trouve_les_finess_des_établissements
-        )
 
+        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
+            chemin_du_fichier, mock_trouve_les_finess_des_établissements, mock_lis_le_fichier_csv
+        )
         # THEN
         data_frame_attendu = (
             pd.DataFrame(
@@ -109,7 +110,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
                     "tauxoccupationhébergementpermanent",
                 ],
             )
-            .astype(
+                .astype(
                 {
                     "numérofinessÉtablissementterritorial": str,
                     "année": int,
@@ -118,7 +119,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
                     "tauxoccupationhébergementpermanent": float,
                 }
             )
-            .set_index(index_des_activités_médico_sociales)
+                .set_index(index_des_activités_médico_sociales)
         )
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
 
@@ -149,10 +150,10 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
-            chemin_du_fichier, mock_lis_le_fichier_csv, mock_trouve_les_finess_des_établissements
-        )
 
+        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
+            chemin_du_fichier, mock_trouve_les_finess_des_établissements, mock_lis_le_fichier_csv
+        )
         # THEN
         data_frame_attendu = (
             pd.DataFrame(
@@ -164,7 +165,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
                     "tauxoccupationhébergementpermanent",
                 ],
             )
-            .astype(
+                .astype(
                 {
                     "numérofinessÉtablissementterritorial": str,
                     "année": int,
@@ -173,7 +174,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
                     "tauxoccupationhébergementpermanent": float,
                 }
             )
-            .set_index(index_des_activités_médico_sociales)
+                .set_index(index_des_activités_médico_sociales)
         )
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
 
@@ -204,10 +205,10 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
-            chemin_du_fichier, mock_lis_le_fichier_csv, mock_trouve_les_finess_des_établissements
-        )
 
+        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
+            chemin_du_fichier, mock_trouve_les_finess_des_établissements, mock_lis_le_fichier_csv
+        )
         # THEN
         data_frame_attendu = pd.DataFrame(
             [
@@ -256,10 +257,10 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
-            chemin_du_fichier, mock_lis_le_fichier_csv, mock_trouve_les_finess_des_établissements
-        )
 
+        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
+            chemin_du_fichier, mock_trouve_les_finess_des_établissements, mock_lis_le_fichier_csv
+        )
         # THEN
         data_frame_attendu = pd.DataFrame(
             [
@@ -274,7 +275,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         ).set_index(index_des_activités_médico_sociales)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
 
-    def test_efface_les_établissements_non_présents_en_base(self):
+    def test_ne_renvoie_pas_les_établissements_non_présents_en_base(self):
         # GIVEN
         chemin_du_fichier = "chemin/vers_le.csv"
         lis_le_fichier_csv = MagicMock()
@@ -300,10 +301,10 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
-            chemin_du_fichier, lis_le_fichier_csv, trouve_les_finess_des_établissements
-        )
 
+        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
+            chemin_du_fichier, trouve_les_finess_des_établissements, lis_le_fichier_csv
+        )
         # THEN
         assert données_transformées.shape == (0, 3)
         trouve_les_finess_des_établissements.assert_called_once_with()
