@@ -1,13 +1,13 @@
 import { fireEvent, screen, within } from '@testing-library/react'
 
-import { ÉtablissementTerritorialMédicoSocialViewModelTestFactory } from '../../test-factories/ÉtablissementTerritorialMédicoSocialViewModelTestFactory'
+import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from '../../test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder'
 import { fakeFrontDependencies, renderFakeComponent } from '../../testHelper'
 import { PageÉtablissementTerritorialMédicoSocial } from './PageÉtablissementTerritorialMédicoSocial'
 
 const { wording } = fakeFrontDependencies
 
 describe('La page Établissement territorial - Bloc activité', () => {
-  const établissementTerritorialMédicoSocial = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.crée(wording)
+  const établissementTerritorialMédicoSocial = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording)
 
   it('affiche le taux d’occupation en hébergement permanent', () => {
     // WHEN

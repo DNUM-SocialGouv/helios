@@ -2,11 +2,11 @@ import { Repository } from 'typeorm'
 
 import { DateMiseÀJourSourceModel } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
-import { DateMiseÀJourSourceModelTestFactory } from '../../../../../database/test-factories/DateMiseÀJourSourceModelTestFactory'
-import { EntitéJuridiqueModelTestFactory } from '../../../../../database/test-factories/EntitéJuridiqueModelTestFactory'
+import { DateMiseÀJourSourceModelTestBuilder } from '../../../../../database/test-builder/DateMiseÀJourSourceModelTestBuilder'
+import { EntitéJuridiqueModelTestBuilder } from '../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder'
 import { EntitéJuridiqueNonTrouvée } from '../../../métier/entities/EntitéJuridiqueNonTrouvée'
 import { EntitéJuridiqueDeRattachement } from '../../../métier/entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement'
-import { EntitéJuridiqueTestFactory } from '../../../test-factories/EntitéJuridiqueTestFactory'
+import { EntitéJuridiqueTestBuilder } from '../../../test-builder/EntitéJuridiqueTestBuilder'
 import { clearAllTables, getOrm, numéroFinessEntitéJuridique } from '../../../testHelper'
 import { TypeOrmEntitéJuridiqueLoader } from './TypeOrmEntitéJuridiqueLoader'
 
@@ -31,9 +31,9 @@ describe('Entité juridique loader', () => {
   describe('charge une fiche identité d’une entité juridique', () => {
     it('charge par numéro FINESS lorsque l’entité juridique est en base', async () => {
       // GIVEN
-      const entitéJuridiqueModel = EntitéJuridiqueModelTestFactory.crée({ numéroFinessEntitéJuridique })
+      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
       await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
-      await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestFactory.crée()])
+      await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestBuilder.crée()])
 
       const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm)
 
@@ -41,13 +41,13 @@ describe('Entité juridique loader', () => {
       const entitéJuridiqueChargée = await typeOrmEntitéJuridiqueLoader.chargeParNuméroFiness(numéroFinessEntitéJuridique)
 
       // THEN
-      const entitéJuridiqueAttendue = EntitéJuridiqueTestFactory.créeEntitéJuridique()
+      const entitéJuridiqueAttendue = EntitéJuridiqueTestBuilder.créeEntitéJuridique()
       expect(entitéJuridiqueChargée).toStrictEqual(entitéJuridiqueAttendue)
     })
 
     it('signale que l’entité juridique n’a pas été trouvée lorsque l’entité juridique n’existe pas', async () => {
       // GIVEN
-      await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestFactory.crée()])
+      await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestBuilder.crée()])
 
       const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm)
 
@@ -62,7 +62,7 @@ describe('Entité juridique loader', () => {
 
   it('charge l’entité juridique de rattachement par numéro FINESS lorsque l’entité juridique est en base', async () => {
     // GIVEN
-    const entitéJuridiqueModel = EntitéJuridiqueModelTestFactory.crée({ numéroFinessEntitéJuridique })
+    const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
     await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
 
     const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm)

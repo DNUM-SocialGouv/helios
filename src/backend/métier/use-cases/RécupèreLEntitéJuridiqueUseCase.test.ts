@@ -1,4 +1,4 @@
-import { EntitéJuridiqueTestFactory } from '../../test-factories/EntitéJuridiqueTestFactory'
+import { EntitéJuridiqueTestBuilder } from '../../test-builder/EntitéJuridiqueTestBuilder'
 import { numéroFinessEntitéJuridique } from '../../testHelper'
 import { EntitéJuridiqueNonTrouvée } from '../entities/EntitéJuridiqueNonTrouvée'
 import { EntitéJuridiqueLoader } from '../gateways/EntitéJuridiqueLoader'
@@ -7,7 +7,7 @@ import { RécupèreLEntitéJuridiqueUseCase } from './RécupèreLEntitéJuridiqu
 describe('La récupération d’une entité juridique', () => {
   it('récupère la fiche identité de l’entité juridique', async () => {
     // GIVEN
-    const entitéJuridique = EntitéJuridiqueTestFactory.créeEntitéJuridique({ numéroFinessEntitéJuridique })
+    const entitéJuridique = EntitéJuridiqueTestBuilder.créeEntitéJuridique({ numéroFinessEntitéJuridique })
     const mockedChargeParNuméroFiness = jest.fn().mockResolvedValueOnce(entitéJuridique)
     const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeLEntitéJuridiqueDeRattachement: jest.fn(), chargeParNuméroFiness: mockedChargeParNuméroFiness }
     const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader)

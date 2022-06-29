@@ -1,8 +1,8 @@
 import { screen, within } from '@testing-library/react'
 
 import { DomaineÉtablissementTerritorial } from '../../../backend/métier/entities/DomaineÉtablissementTerritorial'
-import { EntitéJuridiqueViewModelTestFactory } from '../../test-factories/EntitéJuridiqueViewModelTestFactory'
-import { ÉtablissementTerritorialRattachéViewModelTestFactory } from '../../test-factories/ÉtablissementTerritorialRattachéViewModelTestFactory'
+import { EntitéJuridiqueViewModelTestBuilder } from '../../test-builder/EntitéJuridiqueViewModelTestBuilder'
+import { ÉtablissementTerritorialRattachéViewModelTestBuilder } from '../../test-builder/ÉtablissementTerritorialRattachéViewModelTestBuilder'
 import { fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent, trimHtml } from '../../testHelper'
 import { ÉtablissementTerritorialRattachéViewModel } from './liste-des-établissements/ÉtablissementTerritorialRattachéViewModel'
 import { PageEntitéJuridique } from './PageEntitéJuridique'
@@ -10,11 +10,11 @@ import { PageEntitéJuridique } from './PageEntitéJuridique'
 const { paths, wording } = fakeFrontDependencies
 
 describe('La page Entité Juridique', () => {
-  const entitéJuridiqueViewModel = EntitéJuridiqueViewModelTestFactory.crée(wording)
+  const entitéJuridiqueViewModel = EntitéJuridiqueViewModelTestBuilder.crée(wording)
 
   const établissementsTerritoriauxRattachésViewModels: ÉtablissementTerritorialRattachéViewModel[] = [
-    ÉtablissementTerritorialRattachéViewModelTestFactory.créeÉtablissementTerritorialRattaché(wording),
-    ÉtablissementTerritorialRattachéViewModelTestFactory.créeAutreÉtablissementTerritorialRattaché(wording),
+    ÉtablissementTerritorialRattachéViewModelTestBuilder.créeÉtablissementTerritorialRattaché(wording),
+    ÉtablissementTerritorialRattachéViewModelTestBuilder.créeAutreÉtablissementTerritorialRattaché(wording),
   ]
 
   it('affiche le titre dans l’onglet', () => {
@@ -186,7 +186,7 @@ describe('La page Entité Juridique', () => {
 
     it('affiche "non renseigné" quand une valeur est vide', () => {
       // GIVEN
-      const entitéJuridiqueViewModelAvecUneValeurVide = EntitéJuridiqueViewModelTestFactory.crée(wording, { téléphone: '' })
+      const entitéJuridiqueViewModelAvecUneValeurVide = EntitéJuridiqueViewModelTestBuilder.crée(wording, { téléphone: '' })
 
       // WHEN
       renderFakeComponent(<PageEntitéJuridique
@@ -203,7 +203,7 @@ describe('La page Entité Juridique', () => {
 
     it('affiche l’adresse incomplète lorsqu’il manque des champs d’adresse', () => {
       // GIVEN
-      const entitéJuridiqueViewModelAvecUneValeurVide = EntitéJuridiqueViewModelTestFactory.crée(wording, { adresseTypeVoie: '' })
+      const entitéJuridiqueViewModelAvecUneValeurVide = EntitéJuridiqueViewModelTestBuilder.crée(wording, { adresseTypeVoie: '' })
 
       // WHEN
       renderFakeComponent(<PageEntitéJuridique
@@ -235,12 +235,12 @@ describe('La page Entité Juridique', () => {
     it('affiche la liste des établissements rattachés avec un lien pour accéder à chaque établissement comportant le numéro FINESS de l’établissement et son nom', () => {
       // GIVEN
       const établissementsTerritoriauxRattachésViewModels: ÉtablissementTerritorialRattachéViewModel[] = [
-        ÉtablissementTerritorialRattachéViewModelTestFactory.créeÉtablissementTerritorialRattaché(wording, {
+        ÉtablissementTerritorialRattachéViewModelTestBuilder.créeÉtablissementTerritorialRattaché(wording, {
           domaine: DomaineÉtablissementTerritorial.SANITAIRE,
           numéroFiness: '010000040',
           raisonSociale: 'CH NANTUA',
         }),
-        ÉtablissementTerritorialRattachéViewModelTestFactory.créeAutreÉtablissementTerritorialRattaché(wording, {
+        ÉtablissementTerritorialRattachéViewModelTestBuilder.créeAutreÉtablissementTerritorialRattaché(wording, {
           domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
           numéroFiness: '590782553',
           raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',

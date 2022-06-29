@@ -1,4 +1,4 @@
-import { ÉtablissementTerritorialTestFactory } from '../../test-factories/ÉtablissementTerritorialTestFactory'
+import { ÉtablissementTerritorialTestBuilder } from '../../test-builder/ÉtablissementTerritorialTestBuilder'
 import { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from '../../testHelper'
 import { EntitéJuridiqueDeRattachement } from '../entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement'
 import { ÉtablissementTerritorialMédicoSocial } from '../entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
@@ -10,7 +10,7 @@ import { RécupèreLÉtablissementTerritorialMédicoSocialUseCase } from './Réc
 describe('La récupération d’un établissement territorial médico-social', () => {
   it('récupère la fiche identité de l’établissement territorial médico-social', async () => {
     // GIVEN
-    const fakeIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestFactory.créeUneIdentitéMédicoSocial(
+    const fakeIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestBuilder.créeUneIdentitéMédicoSocial(
       { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial }
     )
     const mockedChargeIdentité = jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial)
@@ -84,18 +84,18 @@ describe('La récupération d’un établissement territorial médico-social', (
     // GIVEN
     const mockedEstUnMonoÉtablissement = jest.fn().mockResolvedValueOnce({ estMonoÉtablissement: false })
 
-    const fakeIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestFactory.créeUneIdentitéMédicoSocial(
+    const fakeIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestBuilder.créeUneIdentitéMédicoSocial(
       { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial }
     )
 
     const activités = [
-      ÉtablissementTerritorialTestFactory.créeUneActivitéMédicoSocial(
+      ÉtablissementTerritorialTestBuilder.créeUneActivitéMédicoSocial(
         { année: 2019, numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial }
       ),
-      ÉtablissementTerritorialTestFactory.créeUneActivitéMédicoSocial(
+      ÉtablissementTerritorialTestBuilder.créeUneActivitéMédicoSocial(
         { année: 2020, numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial }
       ),
-      ÉtablissementTerritorialTestFactory.créeUneActivitéMédicoSocial(
+      ÉtablissementTerritorialTestBuilder.créeUneActivitéMédicoSocial(
         { année: 2021, numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial }
       ),
     ]

@@ -4,12 +4,8 @@ import { ActivitéMédicoSocialModel } from '../../../../../database/models/Acti
 import { DateMiseÀJourSourceModel } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
-import { DateMiseÀJourSourceModelTestFactory } from '../../../../../database/test-factories/DateMiseÀJourSourceModelTestFactory'
-import { EntitéJuridiqueModelTestFactory } from '../../../../../database/test-factories/EntitéJuridiqueModelTestFactory'
-import { ÉtablissementTerritorialActivitéModelTestFactory } from '../../../../../database/test-factories/ÉtablissementTerritorialActivitéModelTestFactory'
-import { ÉtablissementTerritorialIdentitéModelTestFactory } from '../../../../../database/test-factories/ÉtablissementTerritorialIdentitéModelTestFactory'
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
-import { ÉtablissementTerritorialTestFactory } from '../../../test-factories/ÉtablissementTerritorialTestFactory'
+import { ÉtablissementTerritorialTestBuilder } from '../../../test-builder/ÉtablissementTerritorialTestBuilder'
 import { clearAllTables, getOrm, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from '../../../testHelper'
 import { TypeOrmÉtablissementTerritorialMédicoSocialLoader } from './TypeOrmÉtablissementTerritorialMédicoSocialLoader'
 
@@ -53,7 +49,7 @@ describe('Établissement territorial médico-social loader', () => {
       const établissementTerritorialChargé = await typeOrmÉtablissementTerritorialLoader.chargeIdentité(numéroFinessÉtablissementTerritorial)
 
       // THEN
-      const établissementTerritorialAttendu = ÉtablissementTerritorialTestFactory.créeUneIdentitéMédicoSocial(
+      const établissementTerritorialAttendu = ÉtablissementTerritorialTestBuilder.créeUneIdentitéMédicoSocial(
         {
           catégorieÉtablissement: '159',
           numéroFinessEntitéJuridique,
@@ -123,9 +119,9 @@ describe('Établissement territorial médico-social loader', () => {
 
       // THEN
       const activitéAttendue = [
-        ÉtablissementTerritorialTestFactory.créeUneActivitéMédicoSocial({ année: 2019, numéroFinessÉtablissementTerritorial }),
-        ÉtablissementTerritorialTestFactory.créeUneActivitéMédicoSocial({ année: 2020, numéroFinessÉtablissementTerritorial }),
-        ÉtablissementTerritorialTestFactory.créeUneActivitéMédicoSocial({ année: 2021, numéroFinessÉtablissementTerritorial }),
+        ÉtablissementTerritorialTestBuilder.créeUneActivitéMédicoSocial({ année: 2019, numéroFinessÉtablissementTerritorial }),
+        ÉtablissementTerritorialTestBuilder.créeUneActivitéMédicoSocial({ année: 2020, numéroFinessÉtablissementTerritorial }),
+        ÉtablissementTerritorialTestBuilder.créeUneActivitéMédicoSocial({ année: 2021, numéroFinessÉtablissementTerritorial }),
       ]
       expect(activitéChargée).toStrictEqual(activitéAttendue)
     })

@@ -2,7 +2,7 @@ import { ÉtablissementTerritorialSanitaireIdentité } from '../../backend/méti
 import { Wording } from '../configuration/wording/Wording'
 import { ÉtablissementTerritorialSanitaireViewModel } from '../ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel'
 
-export class ÉtablissementTerritorialSanitaireViewModelTestFactory {
+export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
   private static établissementTerritorial: ÉtablissementTerritorialSanitaireIdentité = {
     adresseAcheminement: '01130 NANTUA',
     adresseNuméroVoie : '50',
@@ -26,7 +26,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestFactory {
     wording: Wording, champsSurchargés?: Partial<ÉtablissementTerritorialSanitaireIdentité>
   ): ÉtablissementTerritorialSanitaireViewModel {
     return new ÉtablissementTerritorialSanitaireViewModel({
-      ...ÉtablissementTerritorialSanitaireViewModelTestFactory.établissementTerritorial,
+      ...ÉtablissementTerritorialSanitaireViewModelTestBuilder.établissementTerritorial,
       ...champsSurchargés,
     }, wording)
   }

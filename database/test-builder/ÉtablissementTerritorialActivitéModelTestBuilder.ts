@@ -1,6 +1,6 @@
 import { ActivitéMédicoSocialModel } from '../models/ActivitéMédicoSocialModel'
 
-export class ÉtablissementTerritorialActivitéModelTestFactory {
+export class ÉtablissementTerritorialActivitéModelTestBuilder {
   public static crée(
     champsSurchargés?: Partial<ActivitéMédicoSocialModel>
   ): ActivitéMédicoSocialModel {

@@ -1,7 +1,7 @@
 import { DomaineÉtablissementTerritorial } from '../../datacrawler/legacy/métier/entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialIdentitéModel } from '../models/ÉtablissementTerritorialIdentitéModel'
 
-export class ÉtablissementTerritorialIdentitéModelTestFactory {
+export class ÉtablissementTerritorialIdentitéModelTestBuilder {
   public static créeMédicoSocial(
     champsSurchargés?: Partial<ÉtablissementTerritorialIdentitéModel>
   ): ÉtablissementTerritorialIdentitéModel {

@@ -3,8 +3,8 @@ import { Repository } from 'typeorm'
 import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
-import { EntitéJuridiqueModelTestFactory } from '../../../../../database/test-factories/EntitéJuridiqueModelTestFactory'
-import { ÉtablissementTerritorialIdentitéModelTestFactory } from '../../../../../database/test-factories/ÉtablissementTerritorialIdentitéModelTestFactory'
+import { EntitéJuridiqueModelTestBuilder } from '../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder'
+import { ÉtablissementTerritorialIdentitéModelTestBuilder } from '../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder'
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { fakeLogger, getOrm } from '../../../testHelper'
@@ -166,12 +166,12 @@ describe('Sauvegarde de l’établissement territorial', () => {
   it('supprime un établissement territorial quand il est en base', async () => {
     // GIVEN
     const numéroFinessEntitéJuridique = '010018407'
-    const entitéJuridique = EntitéJuridiqueModelTestFactory.crée({ numéroFinessEntitéJuridique })
+    const entitéJuridique = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
     await entitéJuridiqueRepository.insert([entitéJuridique])
     const numéroFinessÉtablissementTerritorial = '999777444'
 
     await établissementTerritorialIdentitéRepository.insert(
-      ÉtablissementTerritorialIdentitéModelTestFactory.créeMédicoSocial(
+      ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial(
         { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial }
       )
     )

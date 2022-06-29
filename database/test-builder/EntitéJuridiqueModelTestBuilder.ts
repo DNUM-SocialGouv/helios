@@ -1,6 +1,6 @@
 import { EntitéJuridiqueModel } from '../models/EntitéJuridiqueModel'
 
-export class EntitéJuridiqueModelTestFactory {
+export class EntitéJuridiqueModelTestBuilder {
   public static crée(champsSurchargés?: Partial<EntitéJuridiqueModel>): EntitéJuridiqueModel {
     const entitéJuridique = new EntitéJuridiqueModel()
     entitéJuridique.adresseAcheminement = champsSurchargés?.adresseAcheminement || '01117 OYONNAX CEDEX'

@@ -3,7 +3,7 @@ import { ÉtablissementTerritorialRattaché } from '../../backend/métier/entiti
 import { Wording } from '../configuration/wording/Wording'
 import { ÉtablissementTerritorialRattachéViewModel } from '../ui/entité-juridique/liste-des-établissements/ÉtablissementTerritorialRattachéViewModel'
 
-export class ÉtablissementTerritorialRattachéViewModelTestFactory {
+export class ÉtablissementTerritorialRattachéViewModelTestBuilder {
   private static établissementTerritorialRattaché1: ÉtablissementTerritorialRattaché = {
     domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
     numéroFiness: '010000040',
@@ -21,7 +21,7 @@ export class ÉtablissementTerritorialRattachéViewModelTestFactory {
     champsSurchargés?: Partial<ÉtablissementTerritorialRattaché>
   ): ÉtablissementTerritorialRattachéViewModel {
     return new ÉtablissementTerritorialRattachéViewModel({
-      ...ÉtablissementTerritorialRattachéViewModelTestFactory.établissementTerritorialRattaché1,
+      ...ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialRattaché1,
       ...champsSurchargés,
     }, wording)
   }
@@ -31,7 +31,7 @@ export class ÉtablissementTerritorialRattachéViewModelTestFactory {
     champsSurchargés?: Partial<ÉtablissementTerritorialRattaché>
   ): ÉtablissementTerritorialRattachéViewModel {
     return new ÉtablissementTerritorialRattachéViewModel({
-      ...ÉtablissementTerritorialRattachéViewModelTestFactory.établissementTerritorialRattaché2,
+      ...ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialRattaché2,
       ...champsSurchargés,
     }, wording)
   }

@@ -19,7 +19,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   readonly couleurDelAbscisse: string = '#161616'
   readonly couleurDeLaValeur: string = '#3A3A3A'
 
-  constructor(private readonly établissementTerritorialIdentité: ÉtablissementTerritorialMédicoSocial, private readonly wording: Wording) {
+  constructor(private readonly établissementTerritorial: ÉtablissementTerritorialMédicoSocial, private readonly wording: Wording) {
     // TODO: à modifier avec les données du backend
     this.valeurAtypique = 120
     this.fondDeCouleurPourSecondHistogramme = [
@@ -60,24 +60,24 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   public get numéroFinessEntitéJuridiqueBrut(): string {
-    return this.établissementTerritorialIdentité.identité.numéroFinessEntitéJuridique
+    return this.établissementTerritorial.identité.numéroFinessEntitéJuridique
   }
 
   public get nomDeLÉtablissementTerritorial(): string {
-    return this.établissementTerritorialIdentité.identité.raisonSociale
+    return this.établissementTerritorial.identité.raisonSociale
   }
 
   public get numéroFinessÉtablissementTerritorial(): string {
-    return StringFormater.formateLeNuméroFiness(this.établissementTerritorialIdentité.identité.numéroFinessÉtablissementTerritorial)
+    return StringFormater.formateLeNuméroFiness(this.établissementTerritorial.identité.numéroFinessÉtablissementTerritorial)
   }
 
   public get adresse(): string {
-    return `${this.établissementTerritorialIdentité.identité.adresseNuméroVoie} ${this.établissementTerritorialIdentité.identité.adresseTypeVoie} ${this.établissementTerritorialIdentité.identité.adresseVoie} ${this.établissementTerritorialIdentité.identité.adresseAcheminement}`
+    return `${this.établissementTerritorial.identité.adresseNuméroVoie} ${this.établissementTerritorial.identité.adresseTypeVoie} ${this.établissementTerritorial.identité.adresseVoie} ${this.établissementTerritorial.identité.adresseAcheminement}`
   }
 
   public get téléphoneEtEmail(): string {
-    const téléphoneFormaté = this.valeurOuNonRenseigné(StringFormater.formateLeNuméroDeTéléphone(this.établissementTerritorialIdentité.identité.téléphone))
-    const email = this.valeurOuNonRenseigné(this.établissementTerritorialIdentité.identité.courriel)
+    const téléphoneFormaté = this.valeurOuNonRenseigné(StringFormater.formateLeNuméroDeTéléphone(this.établissementTerritorial.identité.téléphone))
+    const email = this.valeurOuNonRenseigné(this.établissementTerritorial.identité.courriel)
     return `${téléphoneFormaté} | ${email}`
   }
 
@@ -87,25 +87,25 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   public get catégorieDeLÉtablissement(): string {
-    return `${this.établissementTerritorialIdentité.identité.catégorieÉtablissement} - ${this.établissementTerritorialIdentité.identité.libelléCatégorieÉtablissement}`
+    return `${this.établissementTerritorial.identité.catégorieÉtablissement} - ${this.établissementTerritorial.identité.libelléCatégorieÉtablissement}`
   }
 
   public get statutDeLÉtablissement(): string {
-    return this.établissementTerritorialIdentité.identité.statutJuridique
+    return this.établissementTerritorial.identité.statutJuridique
   }
 
   public get monoÉtablissement(): string {
-    return this.établissementTerritorialIdentité.identité.estMonoÉtablissement ? this.wording.OUI : this.wording.NON
+    return this.établissementTerritorial.identité.estMonoÉtablissement ? this.wording.OUI : this.wording.NON
   }
 
   public get principalOuSecondaire(): string {
-    return this.établissementTerritorialIdentité.identité.typeÉtablissement === 'P' ?
+    return this.établissementTerritorial.identité.typeÉtablissement === 'P' ?
       this.wording.PRINCIPAL :
-      `${this.wording.SECONDAIRE} (${this.wording.PRINCIPAL} : ${StringFormater.formateLeNuméroFiness(this.établissementTerritorialIdentité.identité.numéroFinessÉtablissementPrincipal)})`
+      `${this.wording.SECONDAIRE} (${this.wording.PRINCIPAL} : ${StringFormater.formateLeNuméroFiness(this.établissementTerritorial.identité.numéroFinessÉtablissementPrincipal)})`
   }
 
   public get dateDeMiseÀJour(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialIdentité.identité.dateMiseAJourSource)
+    return StringFormater.formateLaDate(this.établissementTerritorial.identité.dateMiseAJourSource)
   }
 
   public get tauxOccupationHébergementPermanent(): JSX.Element {
@@ -249,8 +249,8 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   private formateLeTitreDeLEntitéJuridiqueDeRattachement() {
-    const numéroFinessEntitéJuridiqueFormaté = StringFormater.formateLeNuméroFiness(this.établissementTerritorialIdentité.identité.numéroFinessEntitéJuridique)
-    const nomDeLEntitéJuridique = this.établissementTerritorialIdentité.identité.raisonSocialeDeLEntitéDeRattachement
+    const numéroFinessEntitéJuridiqueFormaté = StringFormater.formateLeNuméroFiness(this.établissementTerritorial.identité.numéroFinessEntitéJuridique)
+    const nomDeLEntitéJuridique = this.établissementTerritorial.identité.raisonSocialeDeLEntitéDeRattachement
     return `${numéroFinessEntitéJuridiqueFormaté} - ${nomDeLEntitéJuridique}`
   }
 

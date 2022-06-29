@@ -2,7 +2,7 @@ import { ÉtablissementTerritorialMédicoSocial } from '../../backend/métier/en
 import { Wording } from '../configuration/wording/Wording'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from '../ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel'
 
-export class ÉtablissementTerritorialMédicoSocialViewModelTestFactory {
+export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
   private static identité: ÉtablissementTerritorialMédicoSocial['identité'] = {
     adresseAcheminement: '01117 OYONNAX CEDEX',
     adresseNuméroVoie : '1',
@@ -67,11 +67,11 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestFactory {
   ): ÉtablissementTerritorialMédicoSocialViewModel {
     return new ÉtablissementTerritorialMédicoSocialViewModel({
       activité: {
-        ...ÉtablissementTerritorialMédicoSocialViewModelTestFactory.activité,
+        ...ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.activité,
         ...champsSurchargés,
       },
       identité: {
-        ...ÉtablissementTerritorialMédicoSocialViewModelTestFactory.identité,
+        ...ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
         ...champsSurchargés,
       },
     }, wording)

@@ -1,4 +1,4 @@
-import { ÉtablissementTerritorialTestFactory } from '../../test-factories/ÉtablissementTerritorialTestFactory'
+import { ÉtablissementTerritorialTestBuilder } from '../../test-builder/ÉtablissementTerritorialTestBuilder'
 import { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from '../../testHelper'
 import { EntitéJuridiqueDeRattachement } from '../entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement'
 import { ÉtablissementTerritorialSanitaireIdentité } from '../entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireIdentité'
@@ -10,7 +10,7 @@ import { RécupèreLÉtablissementTerritorialSanitaireUseCase } from './Récupè
 describe('La récupération d’un établissement territorial sanitaire', () => {
   it('récupère la fiche identité de l’établissement territorial sanitaire', async () => {
     // GIVEN
-    const ficheIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestFactory.créeUneIdentitéMédicoSocial(
+    const ficheIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestBuilder.créeUneIdentitéMédicoSocial(
       { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial }
     )
     const mockedChargeParNuméroFiness = jest.fn().mockResolvedValueOnce(ficheIdentitéÉtablissementTerritorial)

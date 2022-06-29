@@ -1,7 +1,7 @@
 import { ÉtablissementTerritorialMédicoSocialActivité } from '../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
 import { ÉtablissementTerritorialIdentité } from '../métier/entities/ÉtablissementTerritorialIdentité'
 
-export class ÉtablissementTerritorialTestFactory {
+export class ÉtablissementTerritorialTestBuilder {
   private static médicoSocial: ÉtablissementTerritorialIdentité = {
     adresseAcheminement: '01130 NANTUA',
     adresseNuméroVoie: '50',
@@ -51,14 +51,14 @@ export class ÉtablissementTerritorialTestFactory {
 
   public static créeUneIdentitéMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialIdentité>): ÉtablissementTerritorialIdentité {
     return {
-      ...ÉtablissementTerritorialTestFactory.médicoSocial,
+      ...ÉtablissementTerritorialTestBuilder.médicoSocial,
       ...champsSurchargés,
     }
   }
 
   public static créeUneIdentitéSanitaire(champsSurchargés?: Partial<ÉtablissementTerritorialIdentité>): ÉtablissementTerritorialIdentité {
     return {
-      ...ÉtablissementTerritorialTestFactory.sanitaire,
+      ...ÉtablissementTerritorialTestBuilder.sanitaire,
       ...champsSurchargés,
     }
   }
@@ -67,7 +67,7 @@ export class ÉtablissementTerritorialTestFactory {
     champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialActivité>
   ): ÉtablissementTerritorialMédicoSocialActivité {
     return {
-      ...ÉtablissementTerritorialTestFactory.activité,
+      ...ÉtablissementTerritorialTestBuilder.activité,
       ...champsSurchargés,
     }
   }

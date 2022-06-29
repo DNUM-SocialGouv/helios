@@ -3,12 +3,12 @@ import { Repository } from 'typeorm'
 import { DateMiseÀJourSourceModel } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
-import { DateMiseÀJourSourceModelTestFactory } from '../../../../../database/test-factories/DateMiseÀJourSourceModelTestFactory'
-import { EntitéJuridiqueModelTestFactory } from '../../../../../database/test-factories/EntitéJuridiqueModelTestFactory'
-import { ÉtablissementTerritorialIdentitéModelTestFactory } from '../../../../../database/test-factories/ÉtablissementTerritorialIdentitéModelTestFactory'
+import { DateMiseÀJourSourceModelTestBuilder } from '../../../../../database/test-builder/DateMiseÀJourSourceModelTestBuilder'
+import { EntitéJuridiqueModelTestBuilder } from '../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder'
+import { ÉtablissementTerritorialIdentitéModelTestBuilder } from '../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { ÉtablissementTerritorialSanitaireNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialSanitaireNonTrouvée'
-import { ÉtablissementTerritorialTestFactory } from '../../../test-factories/ÉtablissementTerritorialTestFactory'
+import { ÉtablissementTerritorialTestBuilder } from '../../../test-builder/ÉtablissementTerritorialTestBuilder'
 import { clearAllTables, getOrm, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from '../../../testHelper'
 import { TypeOrmÉtablissementTerritorialSanitaireLoader } from './TypeOrmÉtablissementTerritorialSanitaireLoader'
 
@@ -34,11 +34,11 @@ describe('Établissement territorial sanitaire loader', () => {
 
   it('charge par numéro FINESS quand l’établissement territorial est en base et son domaine est sanitaire', async () => {
     // GIVEN
-    const entitéJuridiqueModel = EntitéJuridiqueModelTestFactory.crée({ numéroFinessEntitéJuridique })
+    const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
     await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
-    await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestFactory.crée()])
+    await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestBuilder.crée()])
 
-    const établissementTerritorialModel = ÉtablissementTerritorialIdentitéModelTestFactory.créeSanitaire(
+    const établissementTerritorialModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire(
       {
         numéroFinessEntitéJuridique,
         numéroFinessÉtablissementTerritorial,
@@ -52,7 +52,7 @@ describe('Établissement territorial sanitaire loader', () => {
     const établissementTerritorialChargée = await typeOrmÉtablissementTerritorialLoader.chargeParNuméroFiness(numéroFinessÉtablissementTerritorial)
 
     // THEN
-    const établissementTerritorialAttendu: ÉtablissementTerritorialIdentité = ÉtablissementTerritorialTestFactory.créeUneIdentitéSanitaire(
+    const établissementTerritorialAttendu: ÉtablissementTerritorialIdentité = ÉtablissementTerritorialTestBuilder.créeUneIdentitéSanitaire(
       {
         numéroFinessEntitéJuridique,
         numéroFinessÉtablissementTerritorial,
@@ -63,7 +63,7 @@ describe('Établissement territorial sanitaire loader', () => {
 
   it('signale que l’établissement territorial n’a pas été trouvé lorsque l’établissement territorial n’existe pas', async () => {
     // GIVEN
-    await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestFactory.crée()])
+    await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestBuilder.crée()])
     const typeOrmÉtablissementTerritorialSanitaireLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm)
 
     // WHEN
@@ -76,11 +76,11 @@ describe('Établissement territorial sanitaire loader', () => {
 
   it('signale que l’établissement territorial n’a pas été trouvé lorsque celui-ci est médico-social', async () => {
     // GIVEN
-    const entitéJuridiqueModel = EntitéJuridiqueModelTestFactory.crée({ numéroFinessEntitéJuridique })
+    const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
     await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
-    await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestFactory.crée()])
+    await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestBuilder.crée()])
 
-    const établissementTerritorialModel = ÉtablissementTerritorialIdentitéModelTestFactory.créeMédicoSocial(
+    const établissementTerritorialModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial(
       {
         numéroFinessEntitéJuridique,
         numéroFinessÉtablissementTerritorial,

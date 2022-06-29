@@ -3,7 +3,7 @@ import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm'
 import { DomaineÉtablissementTerritorial } from '../../datacrawler/legacy/métier/entities/DomaineÉtablissementTerritorial'
 import { EntitéJuridiqueModel } from './EntitéJuridiqueModel'
 
-@Entity({ name: 'etablissement_territorial_identite' })
+@Entity({ name: 'etablissement_territorial' })
 export class ÉtablissementTerritorialIdentitéModel {
   @Column({ length: 255, name: 'adresse_acheminement' })
   public adresseAcheminement!: string
