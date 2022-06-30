@@ -286,7 +286,8 @@ bad-names=foo,
           baz,
           toto,
           tutu,
-          tata
+          tata,
+          titi
 
 # Naming style matching correct class attribute names.
 class-attribute-naming-style=any

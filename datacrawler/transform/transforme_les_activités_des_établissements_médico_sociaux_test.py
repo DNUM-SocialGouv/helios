@@ -99,7 +99,8 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
             )
             .set_index(index_des_activités_médico_sociales)
         )
-        pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
+        # typecheck ignoré. Voir https://github.com/pandas-dev/pandas-stubs/issues/56
+        pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)  # type: ignore
 
     def test_supprime_les_lignes_ne_mentionnant_pas_l_année(self):
         # GIVEN
@@ -151,7 +152,8 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
             )
             .set_index(index_des_activités_médico_sociales)
         )
-        pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
+        # typecheck ignoré. Voir https://github.com/pandas-dev/pandas-stubs/issues/56
+        pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)  # type: ignore
 
     def test_renseigne_la_ligne_même_si_aucun_taux_n_est_renseigné(self):
         # GIVEN
@@ -193,7 +195,8 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
                 }
             ],
         ).set_index(index_des_activités_médico_sociales)
-        pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
+        # typecheck ignoré. Voir https://github.com/pandas-dev/pandas-stubs/issues/56
+        pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)  # type: ignore
 
     def test_ne_considère_qu_une_seule_fois_un_même_couple_année_numéro_finess(self):
         # GIVEN
@@ -242,7 +245,8 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
                 }
             ],
         ).set_index(index_des_activités_médico_sociales)
-        pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
+        # typecheck ignoré. Voir https://github.com/pandas-dev/pandas-stubs/issues/56
+        pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)  # type: ignore
 
     def test_ne_renvoie_pas_les_établissements_non_présents_en_base(self):
         # GIVEN
