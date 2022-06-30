@@ -358,7 +358,7 @@ describe('La page Établissement territorial - Bloc activité', () => {
   })
 
   describe('Durée moyenne de séjour/d’accompagnement des personnes sorties définitivement au cours de l’année (en nombre de jours)', () => {
-    it('affiche la durée moyenne de séjour/d’accompagnement des personnes sorties définitivement au cours de l’année', () => {
+    it.only('affiche la durée moyenne de séjour/d’accompagnement des personnes sorties définitivement au cours de l’année', () => {
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
 
@@ -417,6 +417,10 @@ describe('La page Établissement territorial - Bloc activité', () => {
       [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0],
       [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1],
       [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 2],
+      [wording.TAUX_RÉALISATION_ACTIVITÉ, 3],
+      [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 4],
+      [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5],
+      [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6],
     ]
   )('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails"', (titreSection, identifiant) => {
     // GIVEN

@@ -2,9 +2,13 @@ import { Bloc } from '../commun/Bloc/Bloc'
 import { useDependencies } from '../commun/contexts/useDependencies'
 import { IndicateurGraphique } from '../commun/IndicateurGraphique/IndicateurGraphique'
 import styles from './BlocActivitéMédicoSocial.module.css'
+import { ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties } from './InfoBulle/ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties'
+import { ContenuFileActivePersonnesAccompagnées } from './InfoBulle/ContenuFileActivePersonnesAccompagnées'
+import { ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées } from './InfoBulle/ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées'
 import { ContenuTauxOccupationAccueilDeJour } from './InfoBulle/ContenuTauxOccupationAccueilDeJour'
 import { ContenuTauxOccupationHébergementPermanent } from './InfoBulle/ContenuTauxOccupationHébergementPermanent'
 import { ContenuTauxOccupationHébergementTemporaire } from './InfoBulle/ContenuTauxOccupationHébergementTemporaire'
+import { ContenuTauxRéalisationActivité } from './InfoBulle/ContenuTauxRéalisationActivité'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from './ÉtablissementTerritorialMédicoSocialViewModel'
 
 type BlocActivitéMédicoSocialType = {
@@ -54,7 +58,10 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
           {établissementTerritorialMédicoSocialViewModel.tauxOccupationAccueilDeJour}
         </IndicateurGraphique>
         <IndicateurGraphique
-          contenuInfoBulle={<></>}
+          contenuInfoBulle={<ContenuTauxRéalisationActivité
+            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+            source={wording.DIAMANT}
+          />}
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
           identifiant="activite-4"
           nomDeLIndicateur={wording.TAUX_RÉALISATION_ACTIVITÉ}
@@ -63,7 +70,10 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
           {établissementTerritorialMédicoSocialViewModel.tauxRéalisationActivité}
         </IndicateurGraphique>
         <IndicateurGraphique
-          contenuInfoBulle={<></>}
+          contenuInfoBulle={<ContenuFileActivePersonnesAccompagnées
+            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+            source={wording.DIAMANT}
+          />}
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
           identifiant="activite-5"
           nomDeLIndicateur={wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES}
@@ -72,7 +82,10 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
           {établissementTerritorialMédicoSocialViewModel.fileActivePersonnesAccompagnées}
         </IndicateurGraphique>
         <IndicateurGraphique
-          contenuInfoBulle={<></>}
+          contenuInfoBulle={<ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées
+            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+            source={wording.DIAMANT}
+          />}
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
           identifiant="activite-6"
           nomDeLIndicateur={wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES}
@@ -81,7 +94,10 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
           {établissementTerritorialMédicoSocialViewModel.nombreMoyenJournéesAbsencePersonnesAccompagnées}
         </IndicateurGraphique>
         <IndicateurGraphique
-          contenuInfoBulle={<></>}
+          contenuInfoBulle={<ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties
+            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+            source={wording.DIAMANT}
+          />}
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
           identifiant="activite-7"
           nomDeLIndicateur={wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES}
