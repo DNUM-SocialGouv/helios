@@ -6,12 +6,13 @@ import { Bar } from 'react-chartjs-2'
 import { ÉtablissementTerritorialMédicoSocialIdentité } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialIdentité'
 import { Wording } from '../../configuration/wording/Wording'
 import { StringFormater } from '../commun/StringFormater'
+import { TableIndicateur } from '../commun/TableIndicateur/TableIndicateur'
 
 export class ÉtablissementTerritorialMédicoSocialViewModel {
   readonly valeurAtypique: number
   readonly fondDeCouleurPourPremierHistogramme: string[]
   readonly fondDeCouleurPourSecondHistogramme: string[]
-  readonly couleurDuFond: string = '#FFF'
+  readonly couleurDuFond: string = '#E8EDFF'
   readonly couleurDuFondHistogrammePrimaire: string = '#000091'
   readonly couleurDuFondHistogrammeSecondaire: string = '#4E68BB'
   readonly couleurDuFondDeLaLigne: string = '#929292'
@@ -116,7 +117,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     const labels = ['2019', '2020', '2021']
     const labelsColor = this.construisLaCouleurDuLabel(dataPoints)
 
-    return this.afficheUnHistogrammeVertical(chartColors, dataPoints, labelsColor, labels)
+    return this.afficheUnHistogrammeVertical(chartColors, dataPoints, labelsColor, labels, this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT)
   }
 
   public get tauxOccupationHébergementTemporaire(): JSX.Element {
@@ -127,7 +128,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     const labels = ['2019', '2020', '2021']
     const labelsColor = this.construisLaCouleurDuLabel(dataPoints)
 
-    return this.afficheUnHistogrammeVertical(chartColors, dataPoints, labelsColor, labels)
+    return this.afficheUnHistogrammeVertical(chartColors, dataPoints, labelsColor, labels, this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE)
   }
 
   public get tauxOccupationAccueilDeJour(): JSX.Element {
@@ -138,7 +139,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     const labels = ['2019', '2020', '2021']
     const labelsColor = this.construisLaCouleurDuLabel(dataPoints)
 
-    return this.afficheUnHistogrammeVertical(chartColors, dataPoints, labelsColor, labels)
+    return this.afficheUnHistogrammeVertical(chartColors, dataPoints, labelsColor, labels, this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR)
   }
 
   public get tauxRéalisationActivité(): JSX.Element {
@@ -149,7 +150,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     const labels = ['2019', '2020', '2021']
     const labelsColor = this.construisLaCouleurDuLabel(dataPoints)
 
-    return this.afficheUnHistogrammeVertical(chartColors, dataPoints, labelsColor, labels)
+    return this.afficheUnHistogrammeVertical(chartColors, dataPoints, labelsColor, labels, this.wording.TAUX_RÉALISATION_ACTIVITÉ)
   }
 
   public get fileActivePersonnesAccompagnées(): JSX.Element {
@@ -160,7 +161,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     const labels = ['2019', '2020', '2021']
     const labelsColor = this.construisLaCouleurDuLabel(dataPoints, true)
 
-    return this.afficheUnHistogrammeHorizontal(chartColors, dataPoints, labelsColor, labels)
+    return this.afficheUnHistogrammeHorizontal(chartColors, dataPoints, labelsColor, labels, this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES)
   }
 
   public get nombreMoyenJournéesAbsencePersonnesAccompagnées(): JSX.Element {
@@ -171,7 +172,8 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     const labels = ['2019', '2020', '2021']
     const labelsColor = this.construisLaCouleurDuLabel(dataPoints, true)
 
-    return this.afficheUnHistogrammeHorizontal(chartColors, dataPoints, labelsColor, labels)
+    return this.afficheUnHistogrammeHorizontal(chartColors, dataPoints, labelsColor, labels,
+      this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES)
   }
 
   public get duréeMoyenneSéjourAcompagnementDesPersonnesSorties(): JSX.Element {
@@ -182,10 +184,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     const labels = ['2019', '2020', '2021']
     const labelsColor = this.construisLaCouleurDuLabel(dataPoints, true)
 
-    return this.afficheUnHistogrammeHorizontal(chartColors, dataPoints, labelsColor, labels)
+    return this.afficheUnHistogrammeHorizontal(chartColors, dataPoints, labelsColor, labels, this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES)
   }
 
-  private afficheUnHistogrammeVertical(chartColors: string[], dataPoints: number[], labelsColor: string[], labels: string[]): JSX.Element {
+  private afficheUnHistogrammeVertical(chartColors: string[], dataPoints: number[], labelsColor: string[], labels: string[], identifiant: string): JSX.Element {
     const data: ChartData = {
       datasets: [
         {
@@ -215,16 +217,29 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     }
 
     return (
-      <Bar
-        // @ts-ignore
-        data={data}
-        // @ts-ignore
-        options={this.optionsHistogrammeVertical()}
-      />
+      <>
+        <Bar
+          // @ts-ignore
+          data={data}
+          // @ts-ignore
+          options={this.optionsHistogrammeVertical()}
+        />
+        <TableIndicateur
+          dataPoints={this.ajoutePourcentage(dataPoints)}
+          identifiant={identifiant}
+          labels={labels}
+        />
+      </>
     )
   }
 
-  private afficheUnHistogrammeHorizontal(chartColors: string[], dataPoints: number[], labelsColor: string[], labels: string[]): JSX.Element {
+  private afficheUnHistogrammeHorizontal(
+    chartColors: string[],
+    dataPoints: number[],
+    labelsColor: string[],
+    labels: string[],
+    identifiant: string
+  ): JSX.Element {
     const data: ChartData = {
       datasets: [
         {
@@ -239,12 +254,19 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     }
 
     return (
-      <Bar
-        // @ts-ignore
-        data={data}
-        // @ts-ignore
-        options={this.optionsHistogrammeHorizontal(Math.max(...dataPoints))}
-      />
+      <>
+        <Bar
+          // @ts-ignore
+          data={data}
+          // @ts-ignore
+          options={this.optionsHistogrammeHorizontal(Math.max(...dataPoints))}
+        />
+        <TableIndicateur
+          dataPoints={dataPoints}
+          identifiant={identifiant}
+          labels={labels}
+        />
+      </>
     )
   }
 
@@ -296,6 +318,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
       },
     }
   }
+
   private optionsHistogrammeHorizontal(maxValue: number) {
     return {
       animation: false,
@@ -354,5 +377,9 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     })
 
     return couleurDesLabels
+  }
+
+  private ajoutePourcentage(dataPoints: number[]): string[] {
+    return dataPoints.map((dataPoint) => dataPoint + ' %')
   }
 }

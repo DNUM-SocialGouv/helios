@@ -1,0 +1,11 @@
+.table-header {
+  width: 50%;
+}
+
+.accordion-label {
+  color: var(--blue-france-sun-113-625)
+}
+
+.helios-collapse {
+  padding-top: 0 !important;
+}

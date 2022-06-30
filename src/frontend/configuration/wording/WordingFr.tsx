@@ -48,6 +48,10 @@ export class WordingFr implements Wording {
   readonly SOURCES: string = 'Sources'
   readonly INFOS_COMPLÉMENTAIRES: string = 'Informations complémentaires'
 
+  // Indicateurs
+  readonly AFFICHER_LA_TRANSCRIPTION: string = 'Afficher la transcription'
+  readonly ANNÉE: string = 'Année'
+
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string = 'fiche d’identité'
   readonly NOM_DE_L_ÉTABLISSEMENT: string = 'Nom de l’établissement'

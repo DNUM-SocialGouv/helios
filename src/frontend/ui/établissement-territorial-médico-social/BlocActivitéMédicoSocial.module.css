@@ -15,7 +15,11 @@
 .liste-indicateurs > li {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
+}
+
+.liste-indicateurs > li div:nth-child(1)  {
+  min-height: 7.5rem;
 }
 
 .liste-indicateurs > li:nth-child(1) {
