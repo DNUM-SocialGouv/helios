@@ -17,6 +17,7 @@
   flex-direction: column;
   justify-content: flex-start;
 }
+
 .liste-indicateurs > li div:nth-child(1)  {
   min-height: 7.5rem;
 }

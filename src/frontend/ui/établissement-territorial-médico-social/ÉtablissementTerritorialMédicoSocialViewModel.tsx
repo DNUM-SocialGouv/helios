@@ -215,6 +215,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
       ],
       labels,
     }
+
     return (
       <>
         <Bar
@@ -229,7 +230,6 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
           labels={labels}
         />
       </>
-
     )
   }
 
@@ -267,7 +267,6 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
           labels={labels}
         />
       </>
-
     )
   }
 
@@ -319,6 +318,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
       },
     }
   }
+
   private optionsHistogrammeHorizontal(maxValue: number) {
     return {
       animation: false,
