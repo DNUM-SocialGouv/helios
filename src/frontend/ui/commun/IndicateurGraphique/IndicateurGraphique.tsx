@@ -33,11 +33,10 @@ export const IndicateurGraphique = ({ contenuInfoBulle, dateDeMiseÀJour, identi
         <p className="fr-m-0">
           {nomDeLIndicateur}
         </p>
-        <p className="fr-text--xs">
+        <p className={`fr-text--xs ${styles['titraille']}`}>
           {miseÀJour}
           {wordingSource}
           {source}
-          &nbsp;
           <button
             aria-controls={`nom-info-bulle-${identifiant}`}
             className="fr-btn fr-fi-information-line fr-btn--icon-left fr-btn--tertiary fr-btn--sm"

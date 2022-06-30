@@ -1,3 +1,11 @@
 .graphe {
   width: 90%;
 }
+
+.titraille {
+  margin-bottom: .5rem;
+}
+
+.titraille abbr {
+  margin-right: .5rem;
+}
