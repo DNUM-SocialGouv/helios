@@ -41,15 +41,15 @@ export const ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées =
         <section aria-label={wording.MODE_DE_CALCUL}>
           <p>
             <span className="fr-text--bold">Mode de calcul : </span>
-            <ul>
-              <li>
-                Nombre de jours d’absence des personnes accompagnées dans l’effectif du 01/01 au 31/12
-              </li>
-              <li>
-                Nombre de personnes ayant été absentes au moins une fois dans l’effectif du 01/01 au 31/12
-              </li>
-            </ul>
           </p>
+          <ul>
+            <li>
+              Nombre de jours d’absence des personnes accompagnées dans l’effectif du 01/01 au 31/12
+            </li>
+            <li>
+              Nombre de personnes ayant été absentes au moins une fois dans l’effectif du 01/01 au 31/12
+            </li>
+          </ul>
         </section>
         <section aria-label={wording.SOURCES}>
           <p>

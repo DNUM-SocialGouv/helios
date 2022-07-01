@@ -35,16 +35,16 @@ export const ContenuTauxRéalisationActivité = ({ dateDeMiseÀJour, source }: C
       <section aria-label={wording.MODE_DE_CALCUL}>
         <p>
           <span className="fr-text--bold">Mode de calcul : </span>
-          <ul>
-            <li>
-              Numérateur : Nombre de journées réalisées, y compris hébergement temporaire, accueil de jour et quel que soit
-              le mode d’accompagnement (internat, semi-internat, etc.)
-            </li>
-            <li>
-              Dénominateur : Nombre de journées financées (y compris hébergement temporaire, accueil de jour et quel que soit le mode d’accompagnement.
-            </li>
-          </ul>
         </p>
+        <ul>
+          <li>
+            Numérateur : Nombre de journées réalisées, y compris hébergement temporaire, accueil de jour et quel que soit
+            le mode d’accompagnement (internat, semi-internat, etc.)
+          </li>
+          <li>
+            Dénominateur : Nombre de journées financées (y compris hébergement temporaire, accueil de jour et quel que soit le mode d’accompagnement.
+          </li>
+        </ul>
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
