@@ -27,7 +27,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
             source={wording.DIAMANT}
           />}
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
-          identifiant="activite-1"
+          identifiant="activite-0"
           nomDeLIndicateur={wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT}
           source={wording.DIAMANT}
         >
@@ -39,7 +39,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
             source={wording.DIAMANT}
           />}
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
-          identifiant="activite-2"
+          identifiant="activite-1"
           nomDeLIndicateur={wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE}
           source={wording.DIAMANT}
         >
@@ -51,7 +51,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
             source={wording.DIAMANT}
           />}
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
-          identifiant="activite-3"
+          identifiant="activite-2"
           nomDeLIndicateur={wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR}
           source={wording.DIAMANT}
         >
@@ -63,7 +63,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
             source={wording.DIAMANT}
           />}
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
-          identifiant="activite-4"
+          identifiant="activite-3"
           nomDeLIndicateur={wording.TAUX_RÉALISATION_ACTIVITÉ}
           source={wording.DIAMANT}
         >
@@ -75,7 +75,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
             source={wording.DIAMANT}
           />}
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
-          identifiant="activite-5"
+          identifiant="activite-4"
           nomDeLIndicateur={wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES}
           source={wording.DIAMANT}
         >
@@ -87,7 +87,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
             source={wording.DIAMANT}
           />}
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
-          identifiant="activite-6"
+          identifiant="activite-5"
           nomDeLIndicateur={wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES}
           source={wording.DIAMANT}
         >
@@ -99,7 +99,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
             source={wording.DIAMANT}
           />}
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
-          identifiant="activite-7"
+          identifiant="activite-6"
           nomDeLIndicateur={wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES}
           source={wording.DIAMANT}
         >

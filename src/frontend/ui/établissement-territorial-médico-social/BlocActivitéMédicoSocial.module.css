@@ -49,3 +49,17 @@
 .liste-indicateurs > li:nth-child(7) {
   grid-area: graph7;
 }
+
+@media (max-width: 36em) {
+  .liste-indicateurs {
+    display: inherit;
+  }
+
+  .liste-indicateurs > li {
+    margin-bottom: 1rem;
+  }
+
+  .liste-indicateurs > li div:nth-child(1)  {
+    min-height: 0;
+  }
+}

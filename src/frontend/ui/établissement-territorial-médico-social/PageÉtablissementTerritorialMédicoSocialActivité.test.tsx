@@ -9,27 +9,37 @@ const { wording } = fakeFrontDependencies
 describe('La page Établissement territorial - Bloc activité', () => {
   const établissementTerritorialMédicoSocial = ÉtablissementTerritorialMédicoSocialViewModelTestFactory.créeÉtablissementTerritorialViewModel(wording)
 
+  it.each(
+    [
+      [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0],
+      [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1],
+      [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 2],
+      [wording.TAUX_RÉALISATION_ACTIVITÉ, 3],
+      [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 4],
+      [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5],
+      [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6],
+    ]
+  )('affiche les informations d’un indicateurs', (titreSection, identifiant) => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+
+    // THEN
+    const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
+    const indicateurs = within(activité).getAllByRole('listitem')
+    const titre = within(indicateurs[identifiant]).getByText(titreSection, { selector: 'p' })
+    expect(titre).toBeInTheDocument()
+    const dateMiseAJour = within(indicateurs[identifiant]).getAllByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
+    expect(dateMiseAJour[0]).toBeInTheDocument()
+    const transcription = within(indicateurs[identifiant]).getByText(wording.AFFICHER_LA_TRANSCRIPTION)
+    expect(transcription).toHaveAttribute('aria-expanded', 'false')
+    const abréviation = within(indicateurs[identifiant]).getAllByText('DIAMANT', { selector: 'abbr' })
+    expect(abréviation[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
+    const détails = within(indicateurs[identifiant]).getByRole('button', { name: wording.DÉTAILS })
+    expect(détails).toHaveAttribute('aria-controls', `nom-info-bulle-activite-${identifiant}`)
+    expect(détails).toHaveAttribute('data-fr-opened', 'false')
+  })
+
   describe('Taux d’occupation en hébergement permanent', () => {
-    it('affiche le taux d’occupation en hébergement permanent', () => {
-      // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
-
-      // THEN
-      const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
-      const indicateurs = within(activité).getAllByRole('listitem')
-      const tauxOccupationHébergementPermanent = within(indicateurs[0]).getByText(wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, { selector: 'p' })
-      expect(tauxOccupationHébergementPermanent).toBeInTheDocument()
-      const dateMiseAJour = within(indicateurs[0]).getAllByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
-      expect(dateMiseAJour[0]).toBeInTheDocument()
-      const transcription = within(indicateurs[0]).getByText(wording.AFFICHER_LA_TRANSCRIPTION)
-      expect(transcription).toHaveAttribute('aria-expanded', 'false')
-      const abréviation = within(indicateurs[0]).getAllByText('DIAMANT', { selector: 'abbr' })
-      expect(abréviation[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
-      const détails = within(indicateurs[0]).getByRole('button', { name: wording.DÉTAILS })
-      expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-1')
-      expect(détails).toHaveAttribute('data-fr-opened', 'false')
-    })
-
     it('affiche un tableau descriptif après un click sur "Afficher la transcription"', () => {
       // GIVEN
       renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
@@ -68,26 +78,6 @@ describe('La page Établissement territorial - Bloc activité', () => {
   })
 
   describe('Taux d’occupation en hébergement temporaire', () => {
-    it('affiche le taux d’occupation en hébergement temporaire', () => {
-      // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
-
-      // THEN
-      const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
-      const indicateurs = within(activité).getAllByRole('listitem')
-      const tauxOccupationHébergementTemporaire = within(indicateurs[1]).getByText(wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, { selector: 'p' })
-      expect(tauxOccupationHébergementTemporaire).toBeInTheDocument()
-      const dateMiseAJour = within(indicateurs[1]).getAllByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
-      expect(dateMiseAJour[0]).toBeInTheDocument()
-      const transcription = within(indicateurs[1]).getByText(wording.AFFICHER_LA_TRANSCRIPTION)
-      expect(transcription).toHaveAttribute('aria-expanded', 'false')
-      const abréviation = within(indicateurs[1]).getAllByText('DIAMANT', { selector: 'abbr' })
-      expect(abréviation[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
-      const détails = within(indicateurs[1]).getByRole('button', { name: wording.DÉTAILS })
-      expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-2')
-      expect(détails).toHaveAttribute('data-fr-opened', 'false')
-    })
-
     it('affiche un tableau descriptif après un click sur "Afficher la transcription"', () => {
       // GIVEN
       renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
@@ -126,26 +116,6 @@ describe('La page Établissement territorial - Bloc activité', () => {
   })
 
   describe('Taux d’occupation en accueil de jour', () => {
-    it('affiche le taux d’occupation en accueil de jour', () => {
-      // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
-
-      // THEN
-      const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
-      const indicateurs = within(activité).getAllByRole('listitem')
-      const tauxOccupationHébergementAccueilDeJour = within(indicateurs[2]).getByText(wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, { selector: 'p' })
-      expect(tauxOccupationHébergementAccueilDeJour).toBeInTheDocument()
-      const dateMiseAJour = within(indicateurs[2]).getAllByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
-      expect(dateMiseAJour[0]).toBeInTheDocument()
-      const transcription = within(indicateurs[2]).getByText(wording.AFFICHER_LA_TRANSCRIPTION)
-      expect(transcription).toHaveAttribute('aria-expanded', 'false')
-      const abréviation = within(indicateurs[2]).getAllByText('DIAMANT', { selector: 'abbr' })
-      expect(abréviation[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
-      const détails = within(indicateurs[2]).getByRole('button', { name: wording.DÉTAILS })
-      expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-3')
-      expect(détails).toHaveAttribute('data-fr-opened', 'false')
-    })
-
     it('affiche un tableau descriptif après un click sur "Afficher la transcription"', () => {
       // GIVEN
       renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
@@ -184,26 +154,6 @@ describe('La page Établissement territorial - Bloc activité', () => {
   })
 
   describe('Taux de réalisation de l’activité', () => {
-    it('affiche le taux de réalisation de l’activité', () => {
-      // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
-
-      // THEN
-      const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
-      const indicateurs = within(activité).getAllByRole('listitem')
-      const tauxOccupationRéalisationActivité = within(indicateurs[3]).getByText(wording.TAUX_RÉALISATION_ACTIVITÉ, { selector: 'p' })
-      expect(tauxOccupationRéalisationActivité).toBeInTheDocument()
-      const dateMiseAJour = within(indicateurs[3]).getAllByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
-      expect(dateMiseAJour[0]).toBeInTheDocument()
-      const transcription = within(indicateurs[3]).getByText(wording.AFFICHER_LA_TRANSCRIPTION)
-      expect(transcription).toHaveAttribute('aria-expanded', 'false')
-      const abréviation = within(indicateurs[3]).getAllByText('DIAMANT', { selector: 'abbr' })
-      expect(abréviation[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
-      const détails = within(indicateurs[3]).getByRole('button', { name: wording.DÉTAILS })
-      expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-4')
-      expect(détails).toHaveAttribute('data-fr-opened', 'false')
-    })
-
     it('affiche un tableau descriptif après un click sur "Afficher la transcription"', () => {
       // GIVEN
       renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
@@ -242,26 +192,6 @@ describe('La page Établissement territorial - Bloc activité', () => {
   })
 
   describe('File active des personnes accompagnées sur la période', () => {
-    it('affiche la file active des personnes accompagnées sur la période', () => {
-      // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
-
-      // THEN
-      const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
-      const indicateurs = within(activité).getAllByRole('listitem')
-      const fileActiveDesPersonnesAccompagnéesSurLaPériode = within(indicateurs[4]).getByText(wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, { selector: 'p' })
-      expect(fileActiveDesPersonnesAccompagnéesSurLaPériode).toBeInTheDocument()
-      const dateMiseAJour = within(indicateurs[4]).getAllByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
-      expect(dateMiseAJour[0]).toBeInTheDocument()
-      const transcription = within(indicateurs[4]).getByText(wording.AFFICHER_LA_TRANSCRIPTION)
-      expect(transcription).toHaveAttribute('aria-expanded', 'false')
-      const abréviation = within(indicateurs[4]).getAllByText('DIAMANT', { selector: 'abbr' })
-      expect(abréviation[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
-      const détails = within(indicateurs[4]).getByRole('button', { name: wording.DÉTAILS })
-      expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-5')
-      expect(détails).toHaveAttribute('data-fr-opened', 'false')
-    })
-
     it('affiche un tableau descriptif après un click sur "Afficher la transcription"', () => {
       // GIVEN
       renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
@@ -300,26 +230,6 @@ describe('La page Établissement territorial - Bloc activité', () => {
   })
 
   describe('Nombre moyen de journées d’absence des personnes accompagnées sur la période', () => {
-    it('affiche le nombre moyen de journées d’absence des personnes accompagnées sur la période', () => {
-      // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
-
-      // THEN
-      const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
-      const indicateurs = within(activité).getAllByRole('listitem')
-      const nombreMoyenDeJournéesDAbsenceDesPersonnesAccompagnéesSurLaPériode = within(indicateurs[5]).getByText(wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, { selector: 'p' })
-      expect(nombreMoyenDeJournéesDAbsenceDesPersonnesAccompagnéesSurLaPériode).toBeInTheDocument()
-      const dateMiseAJour = within(indicateurs[5]).getAllByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
-      expect(dateMiseAJour[0]).toBeInTheDocument()
-      const transcription = within(indicateurs[5]).getByText(wording.AFFICHER_LA_TRANSCRIPTION)
-      expect(transcription).toHaveAttribute('aria-expanded', 'false')
-      const abréviation = within(indicateurs[5]).getAllByText('DIAMANT', { selector: 'abbr' })
-      expect(abréviation[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
-      const détails = within(indicateurs[5]).getByRole('button', { name: wording.DÉTAILS })
-      expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-6')
-      expect(détails).toHaveAttribute('data-fr-opened', 'false')
-    })
-
     it('affiche un tableau descriptif après un click sur "Afficher la transcription"', () => {
       // GIVEN
       renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
@@ -358,26 +268,6 @@ describe('La page Établissement territorial - Bloc activité', () => {
   })
 
   describe('Durée moyenne de séjour/d’accompagnement des personnes sorties définitivement au cours de l’année (en nombre de jours)', () => {
-    it('affiche la durée moyenne de séjour/d’accompagnement des personnes sorties définitivement au cours de l’année', () => {
-      // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
-
-      // THEN
-      const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
-      const indicateurs = within(activité).getAllByRole('listitem')
-      const duréeMoyenneSéjourEtAccompagnementDesPersonnesSortiesDéfinitivementAuCoursDeLAnnée = within(indicateurs[6]).getByText(wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, { selector: 'p' })
-      expect(duréeMoyenneSéjourEtAccompagnementDesPersonnesSortiesDéfinitivementAuCoursDeLAnnée).toBeInTheDocument()
-      const dateMiseAJour = within(indicateurs[6]).getAllByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
-      expect(dateMiseAJour[0]).toBeInTheDocument()
-      const transcription = within(indicateurs[6]).getByText(wording.AFFICHER_LA_TRANSCRIPTION)
-      expect(transcription).toHaveAttribute('aria-expanded', 'false')
-      const abréviation = within(indicateurs[6]).getAllByText('DIAMANT', { selector: 'abbr' })
-      expect(abréviation[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
-      const détails = within(indicateurs[6]).getByRole('button', { name: wording.DÉTAILS })
-      expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-7')
-      expect(détails).toHaveAttribute('data-fr-opened', 'false')
-    })
-
     it('affiche un tableau descriptif après un click sur "Afficher la transcription"', () => {
       // GIVEN
       renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
