@@ -25,7 +25,8 @@ export const ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées =
         <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
           <p>
             Cet indicateur est à lire avec le niveau d’activité de la structure et au regard du profil des personnes accompagnées.
-
+            <br />
+            <br />
             L’appellation « personne accompagnée » est le terme actuellement retenu dans les politique sociales et médico-sociales.
             Cette terminologie présente l’avantage de ne pas être stigmatisante et spécialisée (le terme d’accompagnement peut convenir
             pour un enfant d’ITEP ou un adulte de SESSAD ou une personne âgée vivant en établissement ou à domicile).
@@ -40,8 +41,14 @@ export const ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées =
         <section aria-label={wording.MODE_DE_CALCUL}>
           <p>
             <span className="fr-text--bold">Mode de calcul : </span>
-            Nombre de jours d’absence des personnes accompagnées dans l’effectif du 01/01 au 31/12
-            / Nombre de personnes ayant été absentes au moins une fois dans l’effectif du 01/01 au 31/12
+            <ul>
+              <li>
+                Nombre de jours d’absence des personnes accompagnées dans l’effectif du 01/01 au 31/12
+              </li>
+              <li>
+                Nombre de personnes ayant été absentes au moins une fois dans l’effectif du 01/01 au 31/12
+              </li>
+            </ul>
           </p>
         </section>
         <section aria-label={wording.SOURCES}>
