@@ -9,7 +9,7 @@
   padding: 0;
 }
 
-.liste-indicateurs li {
+.liste-indicateurs > li {
   padding-bottom: 0;
 }
 
@@ -18,7 +18,7 @@
     display: inherit;
   }
 
-  .liste-indicateurs li {
+  .liste-indicateurs > li {
     margin-bottom: 1rem;
   }
 }
