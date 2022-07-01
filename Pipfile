@@ -17,12 +17,14 @@ pylint = "2.14.3"
 mypy = "0.961"
 pytest = "7.1.2"
 pytest-mock = "3.7.0"
+black = "22.6.0"
 
 [requires]
 python_version = "3.10"
 
 [scripts]
 lint = 'pylint --rcfile .pylintrc datacrawler'
-typecheck = 'mypy --config mypy.ini -p datacrawler'
-activitesEMS = 'python -m datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux'
+typecheck = 'mypy --config mypy.ini -p datacrawler --ignore-missing-imports'
+populate_activite_et_medico_social = 'python -m datacrawler.ajoute_les_activités_des_établissements_médico_sociaux'
 test = "pytest"
+format = "black datacrawler --line-length 160"

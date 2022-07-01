@@ -74,6 +74,7 @@ disable=bad-inline-option,
         non-ascii-name,
         non-ascii-module-import,
         non-ascii-file-name,
+        logging-fstring-interpolation,
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option

@@ -75,6 +75,22 @@ jobs:
 
   python:
     runs-on: ubuntu-latest
+    needs: install
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: helios
+          POSTGRES_PASSWORD: h3li0s
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: helios
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: Checkout this branch
         uses: actions/checkout@master
@@ -86,10 +102,19 @@ jobs:
           python-version: '3.10'
           cache: 'pipenv'
       - name: Install dependencies
-        run: pipenv install --dev
+        run: pipenv install --dev --deploy
       - name: Lint
         run: pipenv run lint
       - name: Type check
         run: pipenv run typecheck
+      - uses: actions/cache@v3
+        id: restore-build
+        with:
+          path: ./*
+          key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
+      - name: Run the migrations
+        run: yarn migrations
+        env:
+          NODE_ENV: test
       - name: Test
         run: pipenv run test
