@@ -193,12 +193,12 @@ describe('La page Établissement territorial - Bloc activité', () => {
       const indicateurs = within(activité).getAllByRole('listitem')
       const tauxOccupationRéalisationActivité = within(indicateurs[3]).getByText(wording.TAUX_RÉALISATION_ACTIVITÉ, { selector: 'p' })
       expect(tauxOccupationRéalisationActivité).toBeInTheDocument()
-      const dateMiseAJour = within(indicateurs[3]).getByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
-      expect(dateMiseAJour).toBeInTheDocument()
+      const dateMiseAJour = within(indicateurs[3]).getAllByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
+      expect(dateMiseAJour[0]).toBeInTheDocument()
       const transcription = within(indicateurs[3]).getByText(wording.AFFICHER_LA_TRANSCRIPTION)
       expect(transcription).toHaveAttribute('aria-expanded', 'false')
-      const abréviation = within(indicateurs[3]).getByText('DIAMANT', { selector: 'abbr' })
-      expect(abréviation).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
+      const abréviation = within(indicateurs[3]).getAllByText('DIAMANT', { selector: 'abbr' })
+      expect(abréviation[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
       const détails = within(indicateurs[3]).getByRole('button', { name: wording.DÉTAILS })
       expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-4')
       expect(détails).toHaveAttribute('data-fr-opened', 'false')
@@ -251,12 +251,12 @@ describe('La page Établissement territorial - Bloc activité', () => {
       const indicateurs = within(activité).getAllByRole('listitem')
       const fileActiveDesPersonnesAccompagnéesSurLaPériode = within(indicateurs[4]).getByText(wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, { selector: 'p' })
       expect(fileActiveDesPersonnesAccompagnéesSurLaPériode).toBeInTheDocument()
-      const dateMiseAJour = within(indicateurs[4]).getByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
-      expect(dateMiseAJour).toBeInTheDocument()
+      const dateMiseAJour = within(indicateurs[4]).getAllByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
+      expect(dateMiseAJour[0]).toBeInTheDocument()
       const transcription = within(indicateurs[4]).getByText(wording.AFFICHER_LA_TRANSCRIPTION)
       expect(transcription).toHaveAttribute('aria-expanded', 'false')
-      const abréviation = within(indicateurs[4]).getByText('DIAMANT', { selector: 'abbr' })
-      expect(abréviation).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
+      const abréviation = within(indicateurs[4]).getAllByText('DIAMANT', { selector: 'abbr' })
+      expect(abréviation[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
       const détails = within(indicateurs[4]).getByRole('button', { name: wording.DÉTAILS })
       expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-5')
       expect(détails).toHaveAttribute('data-fr-opened', 'false')
@@ -309,12 +309,12 @@ describe('La page Établissement territorial - Bloc activité', () => {
       const indicateurs = within(activité).getAllByRole('listitem')
       const nombreMoyenDeJournéesDAbsenceDesPersonnesAccompagnéesSurLaPériode = within(indicateurs[5]).getByText(wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, { selector: 'p' })
       expect(nombreMoyenDeJournéesDAbsenceDesPersonnesAccompagnéesSurLaPériode).toBeInTheDocument()
-      const dateMiseAJour = within(indicateurs[5]).getByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
-      expect(dateMiseAJour).toBeInTheDocument()
+      const dateMiseAJour = within(indicateurs[5]).getAllByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
+      expect(dateMiseAJour[0]).toBeInTheDocument()
       const transcription = within(indicateurs[5]).getByText(wording.AFFICHER_LA_TRANSCRIPTION)
       expect(transcription).toHaveAttribute('aria-expanded', 'false')
-      const abréviation = within(indicateurs[5]).getByText('DIAMANT', { selector: 'abbr' })
-      expect(abréviation).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
+      const abréviation = within(indicateurs[5]).getAllByText('DIAMANT', { selector: 'abbr' })
+      expect(abréviation[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
       const détails = within(indicateurs[5]).getByRole('button', { name: wording.DÉTAILS })
       expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-6')
       expect(détails).toHaveAttribute('data-fr-opened', 'false')
@@ -358,7 +358,7 @@ describe('La page Établissement territorial - Bloc activité', () => {
   })
 
   describe('Durée moyenne de séjour/d’accompagnement des personnes sorties définitivement au cours de l’année (en nombre de jours)', () => {
-    it.only('affiche la durée moyenne de séjour/d’accompagnement des personnes sorties définitivement au cours de l’année', () => {
+    it('affiche la durée moyenne de séjour/d’accompagnement des personnes sorties définitivement au cours de l’année', () => {
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
 
@@ -367,12 +367,15 @@ describe('La page Établissement territorial - Bloc activité', () => {
       const indicateurs = within(activité).getAllByRole('listitem')
       const duréeMoyenneSéjourEtAccompagnementDesPersonnesSortiesDéfinitivementAuCoursDeLAnnée = within(indicateurs[6]).getByText(wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, { selector: 'p' })
       expect(duréeMoyenneSéjourEtAccompagnementDesPersonnesSortiesDéfinitivementAuCoursDeLAnnée).toBeInTheDocument()
-      const dateMiseAJour = within(indicateurs[6]).getByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
-      expect(dateMiseAJour).toBeInTheDocument()
+      const dateMiseAJour = within(indicateurs[6]).getAllByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
+      expect(dateMiseAJour[0]).toBeInTheDocument()
       const transcription = within(indicateurs[6]).getByText(wording.AFFICHER_LA_TRANSCRIPTION)
       expect(transcription).toHaveAttribute('aria-expanded', 'false')
-      const abréviation = within(indicateurs[6]).getByText('DIAMANT', { selector: 'abbr' })
-      expect(abréviation).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
+      const abréviation = within(indicateurs[6]).getAllByText('DIAMANT', { selector: 'abbr' })
+      expect(abréviation[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
+      const détails = within(indicateurs[6]).getByRole('button', { name: wording.DÉTAILS })
+      expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-7')
+      expect(détails).toHaveAttribute('data-fr-opened', 'false')
     })
 
     it('affiche un tableau descriptif après un click sur "Afficher la transcription"', () => {
@@ -454,6 +457,10 @@ describe('La page Établissement territorial - Bloc activité', () => {
       [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0],
       [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1],
       [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 2],
+      [wording.TAUX_RÉALISATION_ACTIVITÉ, 3],
+      [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 4],
+      [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5],
+      [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6],
     ]
   )('ferme l’info bulle après avoir cliqué sur le bouton "Fermer"', (titreSection, identifiant) => {
     // GIVEN

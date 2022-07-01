@@ -47,7 +47,7 @@ export const ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties =
         <section aria-label={wording.SOURCES}>
           <p>
             <span className="fr-text--bold">Source(s) : </span>
-            Tableau de bord de la performance dans le secteur médico-social - Agence technique de l'information sur l'hospitalisation (ATIH)
+            Tableau de bord de la performance dans le secteur médico-social - Agence technique de l’information sur l’hospitalisation (ATIH)
           </p>
         </section>
         <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
