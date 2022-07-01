@@ -3,6 +3,8 @@ export interface EnvironmentVariables {
 
   readonly DATABASE_URL: string
 
+  readonly SCALINGO_TOKEN: string
+
   readonly SENTRY_AUTH_TOKEN: string
   readonly SENTRY_DSN: string
 }

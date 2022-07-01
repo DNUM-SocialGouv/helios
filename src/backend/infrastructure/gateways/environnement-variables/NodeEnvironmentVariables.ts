@@ -8,6 +8,8 @@ export class NodeEnvironmentVariables implements EnvironmentVariables {
 
   readonly DATABASE_URL: string = this.getOrElse('DATABASE_URL')
 
+  readonly SCALINGO_TOKEN: string = this.getOrElse('SCALINGO_TOKEN')
+
   readonly SENTRY_AUTH_TOKEN: string = this.getOrElse('SENTRY_AUTH_TOKEN')
   readonly SENTRY_DSN: string = this.getOrElse('SENTRY_DSN')
 
