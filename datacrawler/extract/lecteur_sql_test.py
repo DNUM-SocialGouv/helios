@@ -22,7 +22,7 @@ class TestTrouveLesFinessDesEtablissementsEnBase:
             données,
             pd.DataFrame(
                 {
-                    "numérofinessÉtablissementterritorial": ["987654321"],
+                    "numero_finess_etablissement_territorial": ["987654321"],
                 }
             ),
         )
@@ -40,7 +40,7 @@ class TestTrouveLesFinessDesEtablissementsEnBase:
             données,
             pd.DataFrame(
                 {
-                    "numérofinessÉtablissementterritorial": ["098765432"],
+                    "numero_finess_etablissement_territorial": ["098765432"],
                 }
             ),
         )

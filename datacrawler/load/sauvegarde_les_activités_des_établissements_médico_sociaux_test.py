@@ -20,11 +20,11 @@ class TestSauvegardeDesActivitésDesÉtablissementsMédicoSociaux:
         activités_médico_sociales = pd.DataFrame(
             [
                 {
-                    "numérofinessÉtablissementterritorial": numéro_finess_établissement_territorial,
-                    "année": 2018,
-                    "tauxoccupationhébergementpermanent": 0.99779299847793002,
-                    "tauxoccupationhébergementtemporaire": 0.93698630136986305,
-                    "tauxoccupationaccueildejour": 0.48012820512820514,
+                    "numero_finess_etablissement_territorial": numéro_finess_établissement_territorial,
+                    "annee": 2018,
+                    "taux_occupation_en_hebergement_permanent": 0.99779299847793002,
+                    "taux_occupation_en_hebergement_temporaire": 0.93698630136986305,
+                    "taux_occupation_accueil_de_jour": 0.48012820512820514,
                 }
             ],
         ).set_index(index_des_activités_médico_sociales)
@@ -39,15 +39,15 @@ class TestSauvegardeDesActivitésDesÉtablissementsMédicoSociaux:
         activité_attendue = pd.DataFrame(
             [
                 {
-                    "numérofinessÉtablissementterritorial": numéro_finess_établissement_territorial,
-                    "année": 2018,
-                    "tauxoccupationaccueildejour": 0.48012820512820514,
-                    "tauxoccupationhébergementtemporaire": 0.93698630136986305,
-                    "tauxoccupationhébergementpermanent": 0.99779299847793002,
-                    "tauxréalisationactivité": None,
-                    "fileactivepersonnesaccompagnées": None,
-                    "nombremoyenjournéesabsencepersonnesaccompagnées": None,
-                    "duréemoyenneséjouraccompagnementpersonnessorties": None,
+                    "numero_finess_etablissement_territorial": numéro_finess_établissement_territorial,
+                    "annee": 2018,
+                    "taux_occupation_accueil_de_jour": 0.48012820512820514,
+                    "taux_occupation_en_hebergement_temporaire": 0.93698630136986305,
+                    "taux_occupation_en_hebergement_permanent": 0.99779299847793002,
+                    "taux_realisation_activite": None,
+                    "file_active_personnes_accompagnees": None,
+                    "nombre_moyen_journees_absence_personnes_accompagnees": None,
+                    "duree_moyenne_sejour_accompagnement_personnes_sorties": None,
                 }
             ],
         ).set_index(index_des_activités_médico_sociales)

@@ -36,15 +36,21 @@ class TestAjouteLesActivitesDesEtablissementsMedicoSociaux:
         # THEN
         data_frame_attendu = pd.DataFrame(
             {
-                "année": [2018, 2019, 2020, 2018, 2019],
-                "numérofinessÉtablissementterritorial": ["010003598", "010003598", "010003598", "010786259", "010789717"],
-                "tauxoccupationaccueildejour": [0.48012820512820514, 0.36153846153846153, 0.33974358974358976, 0.84863013698630141, NaN],
-                "tauxoccupationhébergementtemporaire": [0.93698630136986305, 0.25136612021857924, 0.75890410958904109, 1.0972602739726027, 0.81369863013698629],
-                "tauxoccupationhébergementpermanent": [0.99779299847793002, 0.93245060949978986, 0.99023972602739729, 0.99532241897761442, NaN],
-                "tauxréalisationactivité": [NaN, NaN, NaN, NaN, NaN],
-                "fileactivepersonnesaccompagnées": [NaN, NaN, NaN, NaN, NaN],
-                "nombremoyenjournéesabsencepersonnesaccompagnées": [NaN, NaN, NaN, NaN, NaN],
-                "duréemoyenneséjouraccompagnementpersonnessorties": [NaN, NaN, NaN, NaN, NaN],
+                "annee": [2018, 2019, 2020, 2018, 2019],
+                "numero_finess_etablissement_territorial": ["010003598", "010003598", "010003598", "010786259", "010789717"],
+                "taux_occupation_accueil_de_jour": [0.48012820512820514, 0.36153846153846153, 0.33974358974358976, 0.84863013698630141, NaN],
+                "taux_occupation_en_hebergement_temporaire": [
+                    0.93698630136986305,
+                    0.25136612021857924,
+                    0.75890410958904109,
+                    1.0972602739726027,
+                    0.81369863013698629,
+                ],
+                "taux_occupation_en_hebergement_permanent": [0.99779299847793002, 0.93245060949978986, 0.99023972602739729, 0.99532241897761442, NaN],
+                "taux_realisation_activite": [NaN, NaN, NaN, NaN, NaN],
+                "file_active_personnes_accompagnees": [NaN, NaN, NaN, NaN, NaN],
+                "nombre_moyen_journees_absence_personnes_accompagnees": [NaN, NaN, NaN, NaN, NaN],
+                "duree_moyenne_sejour_accompagnement_personnes_sorties": [NaN, NaN, NaN, NaN, NaN],
             }
         )
 
@@ -61,15 +67,15 @@ class TestAjouteLesActivitesDesEtablissementsMedicoSociaux:
         sauvegarde_un_établissement_en_base("010789717", "010008407", base_de_données_test)
         table_activité_existante = pd.DataFrame(
             {
-                "année": [2018, 2019],
-                "numérofinessÉtablissementterritorial": ["010003598", "010003598"],
-                "tauxoccupationaccueildejour": [0.48012820512820514, NaN],
-                "tauxoccupationhébergementtemporaire": [0.93698630136986305, NaN],
-                "tauxoccupationhébergementpermanent": [0.99779299847793002, NaN],
-                "tauxréalisationactivité": [NaN, NaN],
-                "fileactivepersonnesaccompagnées": [NaN, NaN],
-                "nombremoyenjournéesabsencepersonnesaccompagnées": [NaN, NaN],
-                "duréemoyenneséjouraccompagnementpersonnessorties": [NaN, NaN],
+                "annee": [2018, 2019],
+                "numero_finess_etablissement_territorial": ["010003598", "010003598"],
+                "taux_occupation_accueil_de_jour": [0.48012820512820514, NaN],
+                "taux_occupation_en_hebergement_temporaire": [0.93698630136986305, NaN],
+                "taux_occupation_en_hebergement_permanent": [0.99779299847793002, NaN],
+                "taux_realisation_activite": [NaN, NaN],
+                "file_active_personnes_accompagnees": [NaN, NaN],
+                "nombre_moyen_journees_absence_personnes_accompagnees": [NaN, NaN],
+                "duree_moyenne_sejour_accompagnement_personnes_sorties": [NaN, NaN],
             }
         )
         sauvegarde_une_activité_en_base(table_activité_existante, base_de_données_test)
@@ -82,15 +88,21 @@ class TestAjouteLesActivitesDesEtablissementsMedicoSociaux:
         # THEN
         data_frame_attendu = pd.DataFrame(
             {
-                "année": [2018, 2019, 2020, 2018, 2019],
-                "numérofinessÉtablissementterritorial": ["010003598", "010003598", "010003598", "010786259", "010789717"],
-                "tauxoccupationaccueildejour": [0.48012820512820514, 0.36153846153846153, 0.33974358974358976, 0.84863013698630141, NaN],
-                "tauxoccupationhébergementtemporaire": [0.93698630136986305, 0.25136612021857924, 0.75890410958904109, 1.0972602739726027, 0.81369863013698629],
-                "tauxoccupationhébergementpermanent": [0.99779299847793002, 0.93245060949978986, 0.99023972602739729, 0.99532241897761442, NaN],
-                "tauxréalisationactivité": [NaN, NaN, NaN, NaN, NaN],
-                "fileactivepersonnesaccompagnées": [NaN, NaN, NaN, NaN, NaN],
-                "nombremoyenjournéesabsencepersonnesaccompagnées": [NaN, NaN, NaN, NaN, NaN],
-                "duréemoyenneséjouraccompagnementpersonnessorties": [NaN, NaN, NaN, NaN, NaN],
+                "annee": [2018, 2019, 2020, 2018, 2019],
+                "numero_finess_etablissement_territorial": ["010003598", "010003598", "010003598", "010786259", "010789717"],
+                "taux_occupation_accueil_de_jour": [0.48012820512820514, 0.36153846153846153, 0.33974358974358976, 0.84863013698630141, NaN],
+                "taux_occupation_en_hebergement_temporaire": [
+                    0.93698630136986305,
+                    0.25136612021857924,
+                    0.75890410958904109,
+                    1.0972602739726027,
+                    0.81369863013698629,
+                ],
+                "taux_occupation_en_hebergement_permanent": [0.99779299847793002, 0.93245060949978986, 0.99023972602739729, 0.99532241897761442, NaN],
+                "taux_realisation_activite": [NaN, NaN, NaN, NaN, NaN],
+                "file_active_personnes_accompagnees": [NaN, NaN, NaN, NaN, NaN],
+                "nombre_moyen_journees_absence_personnes_accompagnees": [NaN, NaN, NaN, NaN, NaN],
+                "duree_moyenne_sejour_accompagnement_personnes_sorties": [NaN, NaN, NaN, NaN, NaN],
             }
         )
 
@@ -106,15 +118,15 @@ class TestAjouteLesActivitesDesEtablissementsMedicoSociaux:
         chemin_du_fichier = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
         table_activité_existante = pd.DataFrame(
             {
-                "année": [2018, 2019],
-                "numérofinessÉtablissementterritorial": ["010003598", "010003598"],
-                "tauxoccupationaccueildejour": [0.48012820512820514, NaN],
-                "tauxoccupationhébergementtemporaire": [0.93698630136986305, NaN],
-                "tauxoccupationhébergementpermanent": [0.99779299847793002, NaN],
-                "tauxréalisationactivité": [NaN, NaN],
-                "fileactivepersonnesaccompagnées": [NaN, NaN],
-                "nombremoyenjournéesabsencepersonnesaccompagnées": [NaN, NaN],
-                "duréemoyenneséjouraccompagnementpersonnessorties": [NaN, NaN],
+                "annee": [2018, 2019],
+                "numero_finess_etablissement_territorial": ["010003598", "010003598"],
+                "taux_occupation_accueil_de_jour": [0.48012820512820514, NaN],
+                "taux_occupation_en_hebergement_temporaire": [0.93698630136986305, NaN],
+                "taux_occupation_en_hebergement_permanent": [0.99779299847793002, NaN],
+                "taux_realisation_activite": [NaN, NaN],
+                "file_active_personnes_accompagnees": [NaN, NaN],
+                "nombre_moyen_journees_absence_personnes_accompagnees": [NaN, NaN],
+                "duree_moyenne_sejour_accompagnement_personnes_sorties": [NaN, NaN],
             }
         )
         sauvegarde_une_activité_en_base(table_activité_existante, base_de_données_test)

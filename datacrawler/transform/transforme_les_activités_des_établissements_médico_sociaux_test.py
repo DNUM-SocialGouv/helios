@@ -26,7 +26,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
-                    "numérofinessÉtablissementterritorial": numéro_finess_établissement,
+                    "numero_finess_etablissement_territorial": numéro_finess_établissement,
                 }
             ]
         )
@@ -40,11 +40,11 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         data_frame_attendu = pd.DataFrame(
             [
                 {
-                    "numérofinessÉtablissementterritorial": "010001261",
-                    "année": 2018,
-                    "tauxoccupationaccueildejour": 0.48012820512820514,
-                    "tauxoccupationhébergementtemporaire": 0.93698630136986305,
-                    "tauxoccupationhébergementpermanent": 0.99779299847793002,
+                    "numero_finess_etablissement_territorial": "010001261",
+                    "annee": 2018,
+                    "taux_occupation_accueil_de_jour": 0.48012820512820514,
+                    "taux_occupation_en_hebergement_temporaire": 0.93698630136986305,
+                    "taux_occupation_en_hebergement_permanent": 0.99779299847793002,
                 }
             ],
         ).set_index(index_des_activités_médico_sociales)
@@ -67,7 +67,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
-                    "numérofinessÉtablissementterritorial": "123456789",
+                    "numero_finess_etablissement_territorial": "123456789",
                 }
             ]
         )
@@ -81,20 +81,20 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         data_frame_attendu = (
             pd.DataFrame(
                 columns=[
-                    "numérofinessÉtablissementterritorial",
-                    "année",
-                    "tauxoccupationaccueildejour",
-                    "tauxoccupationhébergementtemporaire",
-                    "tauxoccupationhébergementpermanent",
+                    "numero_finess_etablissement_territorial",
+                    "annee",
+                    "taux_occupation_accueil_de_jour",
+                    "taux_occupation_en_hebergement_temporaire",
+                    "taux_occupation_en_hebergement_permanent",
                 ],
             )
             .astype(
                 {
-                    "numérofinessÉtablissementterritorial": str,
-                    "année": int,
-                    "tauxoccupationaccueildejour": float,
-                    "tauxoccupationhébergementtemporaire": float,
-                    "tauxoccupationhébergementpermanent": float,
+                    "numero_finess_etablissement_territorial": str,
+                    "annee": int,
+                    "taux_occupation_accueil_de_jour": float,
+                    "taux_occupation_en_hebergement_temporaire": float,
+                    "taux_occupation_en_hebergement_permanent": float,
                 }
             )
             .set_index(index_des_activités_médico_sociales)
@@ -119,7 +119,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
-                    "numérofinessÉtablissementterritorial": numéro_finess_établissement,
+                    "numero_finess_etablissement_territorial": numéro_finess_établissement,
                 }
             ]
         )
@@ -133,20 +133,20 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         data_frame_attendu = (
             pd.DataFrame(
                 columns=[
-                    "numérofinessÉtablissementterritorial",
-                    "année",
-                    "tauxoccupationaccueildejour",
-                    "tauxoccupationhébergementtemporaire",
-                    "tauxoccupationhébergementpermanent",
+                    "numero_finess_etablissement_territorial",
+                    "annee",
+                    "taux_occupation_accueil_de_jour",
+                    "taux_occupation_en_hebergement_temporaire",
+                    "taux_occupation_en_hebergement_permanent",
                 ],
             )
             .astype(
                 {
-                    "numérofinessÉtablissementterritorial": str,
-                    "année": int,
-                    "tauxoccupationaccueildejour": float,
-                    "tauxoccupationhébergementtemporaire": float,
-                    "tauxoccupationhébergementpermanent": float,
+                    "numero_finess_etablissement_territorial": str,
+                    "annee": int,
+                    "taux_occupation_accueil_de_jour": float,
+                    "taux_occupation_en_hebergement_temporaire": float,
+                    "taux_occupation_en_hebergement_permanent": float,
                 }
             )
             .set_index(index_des_activités_médico_sociales)
@@ -171,7 +171,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
-                    "numérofinessÉtablissementterritorial": numéro_finess_établissement,
+                    "numero_finess_etablissement_territorial": numéro_finess_établissement,
                 }
             ]
         )
@@ -185,11 +185,11 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         data_frame_attendu = pd.DataFrame(
             [
                 {
-                    "numérofinessÉtablissementterritorial": numéro_finess_établissement,
-                    "année": 2018,
-                    "tauxoccupationaccueildejour": NaN,
-                    "tauxoccupationhébergementtemporaire": NaN,
-                    "tauxoccupationhébergementpermanent": NaN,
+                    "numero_finess_etablissement_territorial": numéro_finess_établissement,
+                    "annee": 2018,
+                    "taux_occupation_accueil_de_jour": NaN,
+                    "taux_occupation_en_hebergement_temporaire": NaN,
+                    "taux_occupation_en_hebergement_permanent": NaN,
                 }
             ],
         ).set_index(index_des_activités_médico_sociales)
@@ -220,7 +220,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
-                    "numérofinessÉtablissementterritorial": numéro_finess_établissement,
+                    "numero_finess_etablissement_territorial": numéro_finess_établissement,
                 }
             ]
         )
@@ -234,11 +234,11 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         data_frame_attendu = pd.DataFrame(
             [
                 {
-                    "numérofinessÉtablissementterritorial": numéro_finess_établissement,
-                    "année": 2018,
-                    "tauxoccupationaccueildejour": 0.48012820512820514,
-                    "tauxoccupationhébergementtemporaire": NaN,
-                    "tauxoccupationhébergementpermanent": 0.99779299847793002,
+                    "numero_finess_etablissement_territorial": numéro_finess_établissement,
+                    "annee": 2018,
+                    "taux_occupation_accueil_de_jour": 0.48012820512820514,
+                    "taux_occupation_en_hebergement_temporaire": NaN,
+                    "taux_occupation_en_hebergement_permanent": 0.99779299847793002,
                 }
             ],
         ).set_index(index_des_activités_médico_sociales)
@@ -261,7 +261,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
-                    "numérofinessÉtablissementterritorial": "234567891",
+                    "numero_finess_etablissement_territorial": "234567891",
                 }
             ]
         )

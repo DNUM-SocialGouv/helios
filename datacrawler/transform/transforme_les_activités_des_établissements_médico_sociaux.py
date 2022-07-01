@@ -18,7 +18,7 @@ def transforme_les_activités_des_établissements_médico_sociaux(
     données_ann_errd_ej_et: pd.DataFrame, numéros_finess_des_établissements_connus: pd.DataFrame, logger: Logger
 ) -> pd.DataFrame:
 
-    est_dans_finess = données_ann_errd_ej_et["Finess"].isin(numéros_finess_des_établissements_connus["numérofinessÉtablissementterritorial"])
+    est_dans_finess = données_ann_errd_ej_et["Finess"].isin(numéros_finess_des_établissements_connus["numero_finess_etablissement_territorial"])
     logger.info(f"{est_dans_finess.sum()} activités liées à un ET trouvées en base")
     return (
         données_ann_errd_ej_et[est_dans_finess]
