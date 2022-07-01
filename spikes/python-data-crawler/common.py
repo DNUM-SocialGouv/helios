@@ -34,7 +34,7 @@ def charge_un_fichier_xml(chemin: str, xpath: str) -> pd.DataFrame:
 
 </xsl:stylesheet>"""
     # https://pandas.pydata.org/docs/dev/whatsnew/v1.5.0.html#read-xml-now-supports-dtype-converters-and-parse-dates
-    return pd.read_xml(chemin, xpath=xpath, stylesheet=xsl)
+    return pd.read_xml(chemin, xpath=xpath, stylesheet=xsl) # type: ignore
 
 
 def configure_logger() -> Logger:
