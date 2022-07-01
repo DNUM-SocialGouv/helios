@@ -44,31 +44,33 @@ yarn dev
 
 > Cette commande lance aussi la base de donnée locale et les migrations associées
 
-### Lancer tous les tests
+### Typescript
+
+#### Lancer tous les tests
 
 ```sh
 yarn test
 ```
 
-### Lancer le linter *eslint*
+#### Lancer le linter *eslint*
 
 ```sh
 yarn lint
 ```
 
-### Lancer la vérification des types (TypeScript)
+#### Lancer la vérification des types (TypeScript)
 
 ```sh
 yarn tsc
 ```
 
-### Vérifier qu’il n’y a pas de code mort
+#### Vérifier qu’il n’y a pas de code mort
 
 ```sh
 yarn deadcode
 ```
 
-### Lancer lighthouse-ci (tests d'accessibilité)
+#### Lancer lighthouse-ci (tests d'accessibilité)
 
 Prérequis :
 
@@ -81,15 +83,41 @@ Prérequis :
 yarn test:accessibility
 ```
 
-### Connexion à la base de données locale
+### Python
+
+#### Lancer tous les tests
+
+```sh
+pipenv run test
+```
+
+#### Lancer le linter *eslint*
+
+```sh
+pipenv run lint
+```
+
+#### Lancer la vérification des types (TypeScript)
+
+```sh
+pipenv run typecheck
+```
+
+#### Lancer le formattage des fichiers
+```sh
+pipenv run format
+```
+
+### Base de données
+#### Connexion à la base de données locale
 
 ```sh
 yarn psql:local
 ```
 
-### Connexion à la base de données de production
+#### Connexion à la base de données de production
 
-#### Prérequis
+##### Prérequis
 
 1. Faire partie de l'équipe Helios sur Scalingo.
 
