@@ -12,7 +12,7 @@ import { typeOrmOrm } from '../datacrawler/legacy/infrastructure/gateways/orm/ty
     await orm.runMigrations()
     await orm.destroy()
   } catch (error) {
-    logger.error('Error while connecting to the ../database ' + error)
+    logger.error('Error while connecting to the ../database: ' + error)
     return error
   }
 })()

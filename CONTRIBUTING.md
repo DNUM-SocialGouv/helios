@@ -382,6 +382,13 @@ class NomDeMaClasse:
 
 - déporter au maximum l’intelligence des composants graphiques (.tsx) dans des **hooks** pour épurer leur HTML
 
+#### SQL
+
+- Tout en minuscule ;
+- Aucun accent ;
+- Mots séparés par un underscore ;
+- La longueur du champs ne doit pas faire 36/37 caractères sinon il retourne `undefined` quand on utilise `getRepository()`...
+
 ### Système de design de l'État (DSFR)
 
 - utiliser le DSFR au maximum sinon, écrire le CSS dans un fichier à part (*\<Composant>.module.css*) et l'importer dans le composant

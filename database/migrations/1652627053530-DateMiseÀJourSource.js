@@ -1,23 +1,22 @@
 class DateMiseÀJourSource1652627053530 {
   async up(queryRunner) {
     await queryRunner.query(
-      `CREATE TYPE sourceDeDonnées AS ENUM ('FINESS');
+      `CREATE TYPE source_de_donnees AS ENUM ('FINESS');
 
-      CREATE TABLE DateMiseÀJourSource
-      (
-          dernièreMiseÀJour DATE NOT NULL,
-          source sourceDeDonnées,
+      CREATE TABLE date_mise_a_jour_source (
+        derniere_mise_a_jour DATE NOT NULL,
+        source source_de_donnees,
 
-          CONSTRAINT source_primary_key
-              PRIMARY KEY (source)
+        CONSTRAINT source_primary_key
+          PRIMARY KEY (source)
       );`
     )
   }
 
   async down(queryRunner) {
     await queryRunner.query(
-      `DROP TABLE DateMiseÀJourSource;
-      DROP TYPE sourceDeDonnées;`
+      `DROP TABLE date_mise_a_jour_source;
+      DROP TYPE source_de_donnees;`
     )
   }
 }

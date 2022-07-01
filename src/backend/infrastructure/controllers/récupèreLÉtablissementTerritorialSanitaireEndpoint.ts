@@ -5,9 +5,13 @@ import { Dependencies } from '../dependencies'
 export async function récupèreLÉtablissementTerritorialSanitaireEndpoint(
   dependencies: Dependencies,
   numéroFinessÉtablissementTerritorialSanitaire: string
-): Promise<ÉtablissementTerritorialSanitaireIdentité> {
-  const récupèreLÉtablissementTerritorialSanitaireUseCase =
-    new RécupèreLÉtablissementTerritorialSanitaireUseCase(dependencies.établissementTerritorialSanitaireLoader, dependencies.entitéJuridiqueLoader)
+): Promise<ÉtablissementTerritorialSanitaireIdentité | void> {
+  try {
+    const récupèreLÉtablissementTerritorialSanitaireUseCase =
+      new RécupèreLÉtablissementTerritorialSanitaireUseCase(dependencies.établissementTerritorialSanitaireLoader, dependencies.entitéJuridiqueLoader)
 
-  return await récupèreLÉtablissementTerritorialSanitaireUseCase.exécute(numéroFinessÉtablissementTerritorialSanitaire)
+    return await récupèreLÉtablissementTerritorialSanitaireUseCase.exécute(numéroFinessÉtablissementTerritorialSanitaire)
+  } catch (error) {
+    dependencies.logger.error(error)
+  }
 }

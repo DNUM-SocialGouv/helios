@@ -4,17 +4,25 @@ import { RécupèreLEntitéJuridiqueUseCase } from '../../métier/use-cases/Réc
 import { RécupèreLesÉtablissementsTerritoriauxRattachésUseCase } from '../../métier/use-cases/RécupèreLesÉtablissementsTerritoriauxRattachésÀLEntitéJuridiqueUseCase'
 import { Dependencies } from '../dependencies'
 
+type EntitéJuridiqueEndpoint = Readonly<{
+  entitéJuridique: EntitéJuridique
+  établissementsTerritoriauxRattachés: ÉtablissementTerritorialRattaché[]
+}>
+
 export async function récupèreLEntitéJuridiqueEndpoint(
   dependencies: Dependencies,
   numéroFiness: string
-):
-  Promise<{ entitéJuridique: EntitéJuridique, établissementsTerritoriauxRattachés: ÉtablissementTerritorialRattaché[] }> {
-  const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(dependencies.entitéJuridiqueLoader)
-  const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFiness)
+): Promise<EntitéJuridiqueEndpoint | void> {
+  try {
+    const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(dependencies.entitéJuridiqueLoader)
+    const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFiness)
 
-  const récupèreLesÉtablissementsTerritoriauxRattachésUseCase =
-    new RécupèreLesÉtablissementsTerritoriauxRattachésUseCase(dependencies.établissementTerritorialRattachéLoader)
-  const établissementsTerritoriauxRattachés = await récupèreLesÉtablissementsTerritoriauxRattachésUseCase.exécute(numéroFiness)
+    const récupèreLesÉtablissementsTerritoriauxRattachésUseCase =
+      new RécupèreLesÉtablissementsTerritoriauxRattachésUseCase(dependencies.établissementTerritorialRattachéLoader)
+    const établissementsTerritoriauxRattachés = await récupèreLesÉtablissementsTerritoriauxRattachésUseCase.exécute(numéroFiness)
 
-  return { entitéJuridique, établissementsTerritoriauxRattachés }
+    return { entitéJuridique, établissementsTerritoriauxRattachés }
+  } catch (error) {
+    dependencies.logger.error(error)
+  }
 }

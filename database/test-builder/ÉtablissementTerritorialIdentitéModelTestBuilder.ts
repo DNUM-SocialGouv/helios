@@ -1,8 +1,8 @@
 import { DomaineÉtablissementTerritorial } from '../../datacrawler/legacy/métier/entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialIdentitéModel } from '../models/ÉtablissementTerritorialIdentitéModel'
 
-export class ÉtablissementTerritorialIdentitéModelTestFactory {
-  public static créeÉtablissementTerritorialIdentitéModel(
+export class ÉtablissementTerritorialIdentitéModelTestBuilder {
+  public static créeMédicoSocial(
     champsSurchargés?: Partial<ÉtablissementTerritorialIdentitéModel>
   ): ÉtablissementTerritorialIdentitéModel {
     const établissementTerritorialModel = new ÉtablissementTerritorialIdentitéModel()
@@ -23,7 +23,7 @@ export class ÉtablissementTerritorialIdentitéModelTestFactory {
     return établissementTerritorialModel
   }
 
-  public static créeAutreÉtablissementTerritorialIdentitéModel(
+  public static créeSanitaire(
     champsSurchargés?: Partial<ÉtablissementTerritorialIdentitéModel>
   ): ÉtablissementTerritorialIdentitéModel {
     const établissementTerritorialModel = new ÉtablissementTerritorialIdentitéModel()

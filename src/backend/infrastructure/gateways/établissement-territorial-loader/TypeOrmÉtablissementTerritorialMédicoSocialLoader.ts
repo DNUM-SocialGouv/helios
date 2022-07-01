@@ -1,9 +1,11 @@
 import { DataSource } from 'typeorm'
 
+import { ActivitéMédicoSocialModel } from '../../../../../database/models/ActivitéMédicoSocialModel'
 import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { MonoÉtablissement } from '../../../métier/entities/établissement-territorial-médico-social/MonoÉtablissement'
+import { ÉtablissementTerritorialMédicoSocialActivité } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
 import { ÉtablissementTerritorialMédicoSocialLoader } from '../../../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader'
@@ -11,21 +13,35 @@ import { ÉtablissementTerritorialMédicoSocialLoader } from '../../../métier/g
 export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements ÉtablissementTerritorialMédicoSocialLoader {
   constructor(private readonly orm: Promise<DataSource>) {}
 
-  async chargeParNuméroFiness(numéroFinessET: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialMédicoSocialNonTrouvée> {
+  async chargeActivité(
+    numéroFinessÉtablissementTerritorial: string
+  ): Promise<ÉtablissementTerritorialMédicoSocialActivité[]> {
+    const activitésÉtablissementTerritorialModel = await (await this.orm)
+      .getRepository(ActivitéMédicoSocialModel)
+      .findBy({ numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial })
+
+    const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
+
+    return this.construisActivité(activitésÉtablissementTerritorialModel, dateDeMiseAJourModel)
+  }
+
+  async chargeIdentité(
+    numéroFinessÉtablissementTerritorial: string
+  ): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialMédicoSocialNonTrouvée> {
     const établissementTerritorialModel = await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
       .findOneBy({
         domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
-        numéroFinessÉtablissementTerritorial: numéroFinessET,
+        numéroFinessÉtablissementTerritorial,
       })
 
     if (!établissementTerritorialModel) {
-      return new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessET)
+      return new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial)
     }
 
     const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
 
-    return this.construisLÉtablissementTerritorialMédicoSocial(établissementTerritorialModel, dateDeMiseAJourModel)
+    return this.construisIdentité(établissementTerritorialModel, dateDeMiseAJourModel)
   }
 
   async estUnMonoÉtablissement(numéroFinessEntitéJuridique: string): Promise<MonoÉtablissement> {
@@ -36,13 +52,13 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     return { estMonoÉtablissement: nombreDÉtablissementTerritoriauxDansLEntitéJuridique === 1 }
   }
 
-  private async chargeLaDateDeMiseÀJourModel() {
+  private async chargeLaDateDeMiseÀJourModel(): Promise<DateMiseÀJourSourceModel | null> {
     return await (await this.orm)
       .getRepository(DateMiseÀJourSourceModel)
       .findOneBy({ source: SourceDeDonnées.FINESS })
   }
 
-  private construisLÉtablissementTerritorialMédicoSocial(
+  private construisIdentité(
     établissementTerritorialModel: ÉtablissementTerritorialIdentitéModel,
     dateDeMiseAJourModel: DateMiseÀJourSourceModel | null
   ): ÉtablissementTerritorialIdentité {
@@ -62,5 +78,24 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       typeÉtablissement: établissementTerritorialModel.typeÉtablissement,
       téléphone: établissementTerritorialModel.téléphone,
     }
+  }
+
+  private construisActivité(
+    activitésÉtablissementTerritorialModel: ActivitéMédicoSocialModel[],
+    dateDeMiseAJourModel: DateMiseÀJourSourceModel | null
+  ): ÉtablissementTerritorialMédicoSocialActivité[] {
+    return activitésÉtablissementTerritorialModel.map((établissementTerritorialModel) =>
+      ({
+        année: établissementTerritorialModel.année,
+        dateMiseAJourSource: dateDeMiseAJourModel ? dateDeMiseAJourModel.dernièreMiseÀJour : '',
+        duréeMoyenneSéjourAccompagnementPersonnesSorties: établissementTerritorialModel.duréeMoyenneSéjourAccompagnementPersonnesSorties,
+        fileActivePersonnesAccompagnées: établissementTerritorialModel.fileActivePersonnesAccompagnées,
+        nombreMoyenJournéesAbsencePersonnesAccompagnées: établissementTerritorialModel.nombreMoyenJournéesAbsencePersonnesAccompagnées,
+        numéroFinessÉtablissementTerritorial: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
+        tauxOccupationAccueilDeJour: établissementTerritorialModel.tauxOccupationAccueilDeJour,
+        tauxOccupationHébergementPermanent: établissementTerritorialModel.tauxOccupationHébergementPermanent,
+        tauxOccupationHébergementTemporaire: établissementTerritorialModel.tauxOccupationHébergementTemporaire,
+        tauxRéalisationActivité: établissementTerritorialModel.tauxRéalisationActivité,
+      }))
   }
 }

@@ -1,180 +1,184 @@
 import { Repository } from 'typeorm'
 
-import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../../database/models/DateMiseÀJourSourceModel'
+import { ActivitéMédicoSocialModel } from '../../../../../database/models/ActivitéMédicoSocialModel'
+import { DateMiseÀJourSourceModel } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
-import { EntitéJuridiqueModelTestFactory } from '../../../../../database/test-factories/EntitéJuridiqueModelTestFactory'
-import { ÉtablissementTerritorialIdentitéModelTestFactory } from '../../../../../database/test-factories/ÉtablissementTerritorialIdentitéModelTestFactory'
-import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
-import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
+import { DateMiseÀJourSourceModelTestBuilder } from '../../../../../database/test-builder/DateMiseÀJourSourceModelTestBuilder'
+import { EntitéJuridiqueModelTestBuilder } from '../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder'
+import { ÉtablissementTerritorialActivitéModelTestBuilder } from '../../../../../database/test-builder/ÉtablissementTerritorialActivitéModelTestBuilder'
+import { ÉtablissementTerritorialIdentitéModelTestBuilder } from '../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder'
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
-import { ÉtablissementTerritorialTestFactory } from '../../../test-factories/ÉtablissementTerritorialTestFactory'
-import { getOrm } from '../../../testHelper'
+import { ÉtablissementTerritorialTestBuilder } from '../../../test-builder/ÉtablissementTerritorialTestBuilder'
+import { clearAllTables, getOrm, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from '../../../testHelper'
 import { TypeOrmÉtablissementTerritorialMédicoSocialLoader } from './TypeOrmÉtablissementTerritorialMédicoSocialLoader'
 
 describe('Établissement territorial médico-social loader', () => {
   const orm = getOrm()
-  let établissementTerritorialRepository: Repository<ÉtablissementTerritorialIdentitéModel>
+  let activitéMédicoSocialModelRepository: Repository<ActivitéMédicoSocialModel>
+  let établissementTerritorialIdentitéRepository: Repository<ÉtablissementTerritorialIdentitéModel>
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>
   let dateMiseÀJourSourceRepository: Repository<DateMiseÀJourSourceModel>
 
   beforeAll(async () => {
-    établissementTerritorialRepository = (await orm).getRepository(ÉtablissementTerritorialIdentitéModel)
+    activitéMédicoSocialModelRepository = (await orm).getRepository(ActivitéMédicoSocialModel)
+    établissementTerritorialIdentitéRepository = (await orm).getRepository(ÉtablissementTerritorialIdentitéModel)
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel)
     dateMiseÀJourSourceRepository = (await orm).getRepository(DateMiseÀJourSourceModel)
   })
 
   beforeEach(async () => {
-    await établissementTerritorialRepository.query('DELETE FROM ÉtablissementTerritorialIdentité;')
-    await entitéJuridiqueRepository.query('DELETE FROM EntitéJuridique;')
-    await dateMiseÀJourSourceRepository.query('DELETE FROM DateMiseÀJourSource;')
+    await clearAllTables(await orm)
   })
 
   afterAll(async () => {
     await (await orm).destroy()
   })
 
-  describe('Permet de charger un établissement médico-social par son numéro FINESS', () => {
-    it('quand l’établissement territorial est en base et son domaine est médico-social', async () => {
+  describe('Permet de charger l’identité d’un établissement médico-social par son numéro FINESS', () => {
+    it('charge l’identité d’un établissement territorial médico-social', async () => {
       // GIVEN
-      const numéroFinessEntitéJuridique = '111222333'
-      const entitéJuridiqueModel = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel({ numéroFinessEntitéJuridique })
-      await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
-      await dateMiseÀJourSourceRepository.insert([
-        {
-          dernièreMiseÀJour: '20220514',
-          source: SourceDeDonnées.FINESS,
-        },
-      ])
 
-      const numéroFinessÉtablissementTerritorial = '123456789'
-      const établissementTerritorialModel = ÉtablissementTerritorialIdentitéModelTestFactory.créeÉtablissementTerritorialIdentitéModel(
+      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
+      await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
+      await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestBuilder.crée()])
+
+      const établissementTerritorialModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial(
         { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial }
       )
-      await établissementTerritorialRepository.insert(établissementTerritorialModel)
+      await établissementTerritorialIdentitéRepository.insert(établissementTerritorialModel)
 
       const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
 
       // WHEN
-      const établissementTerritorialChargée = await typeOrmÉtablissementTerritorialLoader.chargeParNuméroFiness(numéroFinessÉtablissementTerritorial)
+      const établissementTerritorialChargé = await typeOrmÉtablissementTerritorialLoader.chargeIdentité(numéroFinessÉtablissementTerritorial)
 
       // THEN
-      const établissementTerritorialAttendu: ÉtablissementTerritorialIdentité = ÉtablissementTerritorialTestFactory.créeÉtablissementTerritorial(
+      const établissementTerritorialAttendu = ÉtablissementTerritorialTestBuilder.créeUneIdentitéMédicoSocial(
         {
           catégorieÉtablissement: '159',
           numéroFinessEntitéJuridique,
           numéroFinessÉtablissementTerritorial,
         }
       )
-      expect(établissementTerritorialChargée).toStrictEqual(établissementTerritorialAttendu)
+      expect(établissementTerritorialChargé).toStrictEqual(établissementTerritorialAttendu)
     })
 
-    it('signale que l’établissement territorial n’a pas été trouvée lorsque l’établissement territorial n’existe pas', async () => {
+    it('signale que l’identité n’a pas été trouvée lorsque l’établissement territorial n’existe pas', async () => {
       // GIVEN
-      await dateMiseÀJourSourceRepository.insert([
-        {
-          dernièreMiseÀJour: '20220514',
-          source: SourceDeDonnées.FINESS,
-        },
-      ])
-      const numéroFiness = '012345678'
+      await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestBuilder.crée()])
       const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
 
       // WHEN
-      const exceptionReçue = await typeOrmÉtablissementTerritorialLoader.chargeParNuméroFiness(numéroFiness)
+      const exceptionReçue = await typeOrmÉtablissementTerritorialLoader.chargeIdentité(numéroFinessÉtablissementTerritorial)
 
       // THEN
-      const exceptionAttendue = new ÉtablissementTerritorialMédicoSocialNonTrouvée('012345678')
+      const exceptionAttendue = new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial)
       expect(exceptionReçue).toStrictEqual(exceptionAttendue)
     })
 
     it('signale que l’établissement territorial n’a pas été trouvé lorsque celui-ci est sanitaire', async () => {
       // GIVEN
-      const numéroFinessEntitéJuridique = '123456789'
-      const numéroFinessÉtablissementTerritorial = '012345678'
-      const entitéJuridiqueModel = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel({ numéroFinessEntitéJuridique })
+      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
       await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
-      await dateMiseÀJourSourceRepository.insert([
-        {
-          dernièreMiseÀJour: '20220514',
-          source: SourceDeDonnées.FINESS,
-        },
-      ])
-      const établissementTerritorialModel = ÉtablissementTerritorialIdentitéModelTestFactory.créeÉtablissementTerritorialIdentitéModel(
-        {
-          catégorieÉtablissement: '161',
-          domaine: DomaineÉtablissementTerritorial.SANITAIRE,
-          numéroFinessEntitéJuridique,
-          numéroFinessÉtablissementTerritorial,
-        }
+      await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestBuilder.crée()])
+      const établissementTerritorialModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire(
+        { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial }
       )
-      await établissementTerritorialRepository.insert(établissementTerritorialModel)
+      await établissementTerritorialIdentitéRepository.insert(établissementTerritorialModel)
 
       const typeOrmÉtablissementTerritorialMédicoSocialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
 
       // WHEN
-      const exceptionReçue = await typeOrmÉtablissementTerritorialMédicoSocialLoader.chargeParNuméroFiness(numéroFinessÉtablissementTerritorial)
+      const exceptionReçue = await typeOrmÉtablissementTerritorialMédicoSocialLoader.chargeIdentité(numéroFinessÉtablissementTerritorial)
 
       // THEN
-      const exceptionAttendue = new ÉtablissementTerritorialMédicoSocialNonTrouvée('012345678')
+      const exceptionAttendue = new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial)
       expect(exceptionReçue).toStrictEqual(exceptionAttendue)
+    })
+  })
+
+  describe('Permet de charger l’activité d’un établissement médico-social par son numéro FINESS', () => {
+    it('charge l’activité d’un établissement territorial médico-social', async () => {
+      // GIVEN
+      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
+      await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
+      await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestBuilder.crée()])
+
+      const établissementTerritorialModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial(
+        { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial }
+      )
+      await établissementTerritorialIdentitéRepository.insert(établissementTerritorialModel)
+
+      const activitéMédicoSocialModel2019 = ÉtablissementTerritorialActivitéModelTestBuilder.crée({ année: 2019, numéroFinessÉtablissementTerritorial })
+      const activitéMédicoSocialModel2020 = ÉtablissementTerritorialActivitéModelTestBuilder.crée({ année: 2020, numéroFinessÉtablissementTerritorial })
+      const activitéMédicoSocialModel2021 = ÉtablissementTerritorialActivitéModelTestBuilder.crée({ année: 2021, numéroFinessÉtablissementTerritorial })
+      await activitéMédicoSocialModelRepository.insert(activitéMédicoSocialModel2019)
+      await activitéMédicoSocialModelRepository.insert(activitéMédicoSocialModel2020)
+      await activitéMédicoSocialModelRepository.insert(activitéMédicoSocialModel2021)
+
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
+
+      // WHEN
+      const activitéChargée = await typeOrmÉtablissementTerritorialLoader.chargeActivité(numéroFinessÉtablissementTerritorial)
+
+      // THEN
+      const activitéAttendue = [
+        ÉtablissementTerritorialTestBuilder.créeUneActivitéMédicoSocial({ année: 2019, numéroFinessÉtablissementTerritorial }),
+        ÉtablissementTerritorialTestBuilder.créeUneActivitéMédicoSocial({ année: 2020, numéroFinessÉtablissementTerritorial }),
+        ÉtablissementTerritorialTestBuilder.créeUneActivitéMédicoSocial({ année: 2021, numéroFinessÉtablissementTerritorial }),
+      ]
+      expect(activitéChargée).toStrictEqual(activitéAttendue)
     })
   })
 
   describe('permet de savoir si un établissement est le seul affilié à son entité juridique', () => {
     it('quand plusieurs établissements sont rattachés à la même entité juridique', async () => {
       // GIVEN
-      const numéroFinessEntitéJuridique = '111222333'
       const autreNuméroFinessEntitéJuridique = '333222111'
-
-      const entitéJuridiqueAyantDesÉtablissementsModel = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel({ numéroFinessEntitéJuridique })
-      const entitéJuridiqueSansÉtablissementsModel = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel(
+      const entitéJuridiqueAyantDesÉtablissementsModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
+      const entitéJuridiqueSansÉtablissementsModel = EntitéJuridiqueModelTestBuilder.crée(
         { numéroFinessEntitéJuridique: autreNuméroFinessEntitéJuridique }
       )
       await entitéJuridiqueRepository.insert([entitéJuridiqueAyantDesÉtablissementsModel, entitéJuridiqueSansÉtablissementsModel])
 
-      const établissementTerritorial1AffiliéModel =
-        ÉtablissementTerritorialIdentitéModelTestFactory.créeÉtablissementTerritorialIdentitéModel({ numéroFinessEntitéJuridique })
-      const établissementTerritorial2AffiliéModel =
-        ÉtablissementTerritorialIdentitéModelTestFactory.créeAutreÉtablissementTerritorialIdentitéModel({ numéroFinessEntitéJuridique })
-      const établissementTerritorialNonAffiliéModel = ÉtablissementTerritorialIdentitéModelTestFactory.créeÉtablissementTerritorialIdentitéModel(
+      const établissementTerritorial1AffiliéModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({ numéroFinessEntitéJuridique })
+      const établissementTerritorial2AffiliéModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique })
+      const établissementTerritorialNonAffiliéModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial(
         { numéroFinessEntitéJuridique: autreNuméroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial: '321654987' }
       )
-      await établissementTerritorialRepository.insert(
+      await établissementTerritorialIdentitéRepository.insert(
         [établissementTerritorial1AffiliéModel, établissementTerritorial2AffiliéModel, établissementTerritorialNonAffiliéModel]
       )
 
       const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
 
       // WHEN
-      const monoÉtablissement = await typeOrmÉtablissementTerritorialLoader.estUnMonoÉtablissement(numéroFinessEntitéJuridique)
+      const établissementTerritorial = await typeOrmÉtablissementTerritorialLoader.estUnMonoÉtablissement(numéroFinessEntitéJuridique)
 
       // THEN
-      expect(monoÉtablissement.estMonoÉtablissement).toBeFalsy()
+      expect(établissementTerritorial.estMonoÉtablissement).toBeFalsy()
     })
 
     it('quand un seul établissement est rattaché à la même entité juridique', async () => {
       // GIVEN
-      const numéroFinessEntitéJuridique = '111222333'
       const autreNuméroFinessEntitéJuridique = '333222111'
-
-      const entitéJuridiqueAyantDesÉtablissementsModel = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel({ numéroFinessEntitéJuridique })
-      const entitéJuridiqueSansÉtablissementsModel = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel(
+      const entitéJuridiqueAyantDesÉtablissementsModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
+      const entitéJuridiqueSansÉtablissementsModel = EntitéJuridiqueModelTestBuilder.crée(
         { numéroFinessEntitéJuridique: autreNuméroFinessEntitéJuridique }
       )
       await entitéJuridiqueRepository.insert([entitéJuridiqueAyantDesÉtablissementsModel, entitéJuridiqueSansÉtablissementsModel])
 
-      const établissementTerritorial1AffiliéModel =
-        ÉtablissementTerritorialIdentitéModelTestFactory.créeÉtablissementTerritorialIdentitéModel({ numéroFinessEntitéJuridique })
-      await établissementTerritorialRepository.insert(établissementTerritorial1AffiliéModel)
+      const établissementTerritorial1AffiliéModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({ numéroFinessEntitéJuridique })
+      await établissementTerritorialIdentitéRepository.insert(établissementTerritorial1AffiliéModel)
 
       const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
 
       // WHEN
-      const monoÉtablissement = await typeOrmÉtablissementTerritorialLoader.estUnMonoÉtablissement(numéroFinessEntitéJuridique)
+      const établissementTerritorial = await typeOrmÉtablissementTerritorialLoader.estUnMonoÉtablissement(numéroFinessEntitéJuridique)
 
       // THEN
-      expect(monoÉtablissement.estMonoÉtablissement).toBeTruthy()
+      expect(établissementTerritorial.estMonoÉtablissement).toBeTruthy()
     })
   })
 })

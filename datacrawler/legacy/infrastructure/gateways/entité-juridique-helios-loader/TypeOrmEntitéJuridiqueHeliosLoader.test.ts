@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm'
 
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
-import { EntitéJuridiqueModelTestFactory } from '../../../../../database/test-factories/EntitéJuridiqueModelTestFactory'
+import { EntitéJuridiqueModelTestBuilder } from '../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder'
 import { getOrm } from '../../../testHelper'
 import { TypeOrmEntitéJuridiqueHeliosLoader } from './TypeOrmEntitéJuridiqueHeliosLoader'
 
@@ -14,7 +14,7 @@ describe('La récupération des entités juridiques d’Helios', () => {
   })
 
   beforeEach(async () => {
-    await entitéJuridiqueRepository.query('DELETE FROM EntitéJuridique;')
+    await entitéJuridiqueRepository.query('DELETE FROM entite_juridique;')
   })
 
   afterAll(async () => {
@@ -24,10 +24,10 @@ describe('La récupération des entités juridiques d’Helios', () => {
   it('récupère les numéros FINESS des entités juridiques', async () => {
     // GIVEN
     const typeOrmEntitéJuridiqueHeliosLoader = new TypeOrmEntitéJuridiqueHeliosLoader(orm)
-    const entitéJuridique1 = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel(
+    const entitéJuridique1 = EntitéJuridiqueModelTestBuilder.crée(
       { numéroFinessEntitéJuridique: '900000000' }
     )
-    const entitéJuridique2 = EntitéJuridiqueModelTestFactory.créeEntitéJuridiqueModel(
+    const entitéJuridique2 = EntitéJuridiqueModelTestBuilder.crée(
       { numéroFinessEntitéJuridique: '123456789' }
     )
     await entitéJuridiqueRepository.insert([entitéJuridique1, entitéJuridique2])

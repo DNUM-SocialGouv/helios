@@ -1,5 +1,5 @@
-import { EntitéJuridiqueTestFactory } from '../../test-factories/EntitéJuridiqueTestFactory'
-import { EntitéJuridique } from '../entities/entité-juridique/EntitéJuridique'
+import { EntitéJuridiqueTestBuilder } from '../../test-builder/EntitéJuridiqueTestBuilder'
+import { numéroFinessEntitéJuridique } from '../../testHelper'
 import { EntitéJuridiqueNonTrouvée } from '../entities/EntitéJuridiqueNonTrouvée'
 import { EntitéJuridiqueLoader } from '../gateways/EntitéJuridiqueLoader'
 import { RécupèreLEntitéJuridiqueUseCase } from './RécupèreLEntitéJuridiqueUseCase'
@@ -7,39 +7,33 @@ import { RécupèreLEntitéJuridiqueUseCase } from './RécupèreLEntitéJuridiqu
 describe('La récupération d’une entité juridique', () => {
   it('récupère la fiche identité de l’entité juridique', async () => {
     // GIVEN
-    const numéroFiness = '123456789'
-    const entitéJuridique: EntitéJuridique = EntitéJuridiqueTestFactory.créeEntitéJuridique({ numéroFinessEntitéJuridique: numéroFiness })
-    const mockedChargeParNuméroFiness = jest.fn(async () => {
-      return entitéJuridique
-    })
+    const entitéJuridique = EntitéJuridiqueTestBuilder.créeEntitéJuridique({ numéroFinessEntitéJuridique })
+    const mockedChargeParNuméroFiness = jest.fn().mockResolvedValueOnce(entitéJuridique)
     const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeLEntitéJuridiqueDeRattachement: jest.fn(), chargeParNuméroFiness: mockedChargeParNuméroFiness }
     const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader)
 
     // WHEN
-    const ficheIdentitéRécupérée = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFiness)
+    const ficheIdentitéRécupérée = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique)
 
     // THEN
     expect(ficheIdentitéRécupérée).toStrictEqual(entitéJuridique)
-    expect(mockedChargeParNuméroFiness).toHaveBeenCalledWith(numéroFiness)
+    expect(mockedChargeParNuméroFiness).toHaveBeenCalledWith(numéroFinessEntitéJuridique)
     expect(mockedChargeParNuméroFiness).toHaveBeenCalledTimes(1)
   })
 
   it('signale une alerte si l’entité juridique liée au numéro FINESS n’est pas trouvée', async () => {
     // GIVEN
-    const numéroFiness = '123456789'
-    const mockedChargeParNuméroFiness = jest.fn(async () => {
-      return new EntitéJuridiqueNonTrouvée('123456789')
-    })
+    const mockedChargeParNuméroFiness = jest.fn().mockResolvedValueOnce(new EntitéJuridiqueNonTrouvée(numéroFinessEntitéJuridique))
     const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeLEntitéJuridiqueDeRattachement: jest.fn(), chargeParNuméroFiness: mockedChargeParNuméroFiness }
     const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader)
 
     // WHEN
     try {
-      await récupèreLEntitéJuridiqueUseCase.exécute(numéroFiness)
+      await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique)
       throw new Error('Une alerte d’entité juridique non trouvée aurait dû être levée')
     } catch (error) {
       // THEN
-      expect(error.message).toBe('[Helios] L’entité juridique 123456789 n’a pas été trouvée')
+      expect(error.message).toBe(`[Helios] L’entité juridique ${numéroFinessEntitéJuridique} n’a pas été trouvée`)
     }
   })
 })
