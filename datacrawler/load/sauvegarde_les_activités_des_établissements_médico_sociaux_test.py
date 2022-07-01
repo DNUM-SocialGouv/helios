@@ -1,4 +1,5 @@
 import pandas as pd
+import pandas.testing
 
 from datacrawler.load.activités_des_établissements_médico_sociaux import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX
 from datacrawler.load.sauvegarde_les_activités_des_établissements_médico_sociaux import sauvegarde_les_activités_des_établissements_médico_sociaux
@@ -30,7 +31,8 @@ class TestSauvegardeDesActivitésDesÉtablissementsMédicoSociaux:
         ).set_index(index_des_activités_médico_sociales)
 
         # WHEN
-        sauvegarde_les_activités_des_établissements_médico_sociaux(base_de_données_test, activités_médico_sociales)
+        with base_de_données_test.connect() as connection:
+            sauvegarde_les_activités_des_établissements_médico_sociaux(connection, activités_médico_sociales)
 
         # THEN
         activités_en_base = pd.read_sql(
@@ -51,4 +53,4 @@ class TestSauvegardeDesActivitésDesÉtablissementsMédicoSociaux:
                 }
             ],
         ).set_index(index_des_activités_médico_sociales)
-        pd.testing.assert_frame_equal(activité_attendue, activités_en_base)
+        pandas.testing.assert_frame_equal(activité_attendue, activités_en_base)

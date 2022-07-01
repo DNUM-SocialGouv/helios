@@ -4,11 +4,13 @@ import pandas as pd
 from numpy import NaN
 
 from datacrawler.transform.diamant.équivalences_diamant_helios import index_des_activités_médico_sociales
-from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux import transforme_les_activités_des_établissements_médico_sociaux
+from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.transforme_les_données_ann_errd_ej_et import (
+    transforme_les_données_ann_errd_ej_et,
+)
 
 
-class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
-    def test_lis_le_fichier_diamant_renomme_les_colonnes_et_crée_l_index(self):
+class TestTransformeLesDonnéesAnnErrdEjEt:
+    def test_renomme_les_colonnes_et_crée_l_index(self):
         # GIVEN
         logger = MagicMock()
         numéro_finess_établissement = "010001261"
@@ -32,10 +34,8 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
+        données_transformées = transforme_les_données_ann_errd_ej_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, logger)
 
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
-            données_ann_errd_ej_et, numéros_finess_des_établissements_connus, logger
-        )
         # THEN
         data_frame_attendu = pd.DataFrame(
             [
@@ -48,7 +48,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
                 }
             ],
         ).set_index(index_des_activités_médico_sociales)
-        pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
+        pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)  # type: ignore
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self):
         # GIVEN
@@ -73,10 +73,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
-
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
-            données_ann_errd_ej_et, numéros_finess_des_établissements_connus, logger
-        )
+        données_transformées = transforme_les_données_ann_errd_ej_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, logger)
         # THEN
         data_frame_attendu = (
             pd.DataFrame(
@@ -126,10 +123,8 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
+        données_transformées = transforme_les_données_ann_errd_ej_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, logger)
 
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
-            données_ann_errd_ej_et, numéros_finess_des_établissements_connus, logger
-        )
         # THEN
         data_frame_attendu = (
             pd.DataFrame(
@@ -179,10 +174,8 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
+        données_transformées = transforme_les_données_ann_errd_ej_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, logger)
 
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
-            données_ann_errd_ej_et, numéros_finess_des_établissements_connus, logger
-        )
         # THEN
         data_frame_attendu = pd.DataFrame(
             [
@@ -229,10 +222,8 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
+        données_transformées = transforme_les_données_ann_errd_ej_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, logger)
 
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
-            données_ann_errd_ej_et, numéros_finess_des_établissements_connus, logger
-        )
         # THEN
         data_frame_attendu = pd.DataFrame(
             [
@@ -271,9 +262,7 @@ class TestTransformeLesActivitésDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
+        données_transformées = transforme_les_données_ann_errd_ej_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, logger)
 
-        données_transformées = transforme_les_activités_des_établissements_médico_sociaux(
-            données_ann_errd_ej_et, numéros_finess_des_établissements_connus, logger
-        )
         # THEN
         assert données_transformées.shape == (0, 3)

@@ -1,6 +1,5 @@
 import os
 from logging import Logger
-from typing import Dict, cast
 
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
@@ -8,32 +7,38 @@ from sqlalchemy.engine import Engine
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
+from datacrawler.extract.localise_le_fichier import localise_le_fichier
 from datacrawler.load.activités_des_établissements_médico_sociaux import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX
 from datacrawler.load.sauvegarde_les_activités_des_établissements_médico_sociaux import sauvegarde_les_activités_des_établissements_médico_sociaux
 from datacrawler.transform.diamant.équivalences_diamant_helios import (
     colonnes_à_lire_ann_errd_ej_et,
-    équivalences_diamant_helios,
-    ÉquivalencesDiamantHelios,
-    ColonneHelios,
+    colonnes_à_lire_ann_ms_tdp_et,
+    extrais_l_equivalence_des_types_des_colonnes,
+    équivalences_diamant_ann_errd_ej_et_helios,
+    équivalences_diamant_ann_ms_tdp_et_helios,
 )
 from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux import transforme_les_activités_des_établissements_médico_sociaux
 
 
-def extrais_l_equivalence_des_types_des_colonnes(équivalences: ÉquivalencesDiamantHelios) -> Dict[str, type]:
-    return {nom_diamant: cast(ColonneHelios, colonne_diamant)["type"] for nom_diamant, colonne_diamant in équivalences.items()}
-
-
-def ajoute_les_activités_des_établissements_médico_sociaux(chemin_du_fichier: str, base_de_données: Engine, logger: Logger):
+def ajoute_les_activités_des_établissements_médico_sociaux(fichier_ann_errd_ej_et: str, fichier_ann_ms_tdp_et: str, base_de_données: Engine, logger: Logger):
     logger.info("Récupère les activités des établissements médico-sociaux")
     données_ann_errd_ej_et = lis_le_fichier_csv(
-        chemin_du_fichier, colonnes_à_lire_ann_errd_ej_et, extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_helios)
+        fichier_ann_errd_ej_et,
+        colonnes_à_lire_ann_errd_ej_et,
+        extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_errd_ej_et_helios),
     )
     logger.info(f"{données_ann_errd_ej_et.shape[0]} lignes trouvées dans le fichier ANN_ERRD_EJ_ET")
+    données_ann_ms_tdp_et = lis_le_fichier_csv(
+        fichier_ann_ms_tdp_et,
+        colonnes_à_lire_ann_ms_tdp_et,
+        extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ms_tdp_et_helios),
+    )
+    logger.info(f"{données_ann_errd_ej_et.shape[0]} lignes trouvées dans le fichier ANN_MS_TDP_ET")
 
     numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)
 
     activités_des_établissements_médico_sociaux = transforme_les_activités_des_établissements_médico_sociaux(
-        données_ann_errd_ej_et, numéros_finess_des_établissements_connus, logger
+        données_ann_errd_ej_et, données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, logger
     )
 
     with base_de_données.begin() as connection:
@@ -46,9 +51,16 @@ def ajoute_les_activités_des_établissements_médico_sociaux(chemin_du_fichier:
 if __name__ == "__main__":
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_données_helios = create_engine(variables_d_environnement["DATABASE_URL"])
-    fichier_ann_errd_ej_et = [
-        nom_de_fichier for nom_de_fichier in os.listdir(variables_d_environnement["DNUM_SFTP_LOCAL_PATH"]) if "ANN_ERRD_EJ_ET" in nom_de_fichier
-    ][0]
-    chemin_du_fichier_ann_errd_ej_et = os.path.join(variables_d_environnement["DNUM_SFTP_LOCAL_PATH"], fichier_ann_errd_ej_et)
-    logger_helios.info(f"Cherche les activités pour les ET médico-sociaux dans le fichier {chemin_du_fichier_ann_errd_ej_et}")
-    ajoute_les_activités_des_établissements_médico_sociaux(chemin_du_fichier_ann_errd_ej_et, base_de_données_helios, logger_helios)
+    fichiers = os.listdir(variables_d_environnement["DNUM_SFTP_LOCAL_PATH"])
+    chemin_du_fichier_ann_errd_ej_et = os.path.join(
+        variables_d_environnement["DNUM_SFTP_LOCAL_PATH"], localise_le_fichier(fichiers, "ANN_ERRD_EJ_ET", logger_helios)
+    )
+    chemin_du_fichier_ann_ms_tdp_et = os.path.join(
+        variables_d_environnement["DNUM_SFTP_LOCAL_PATH"], localise_le_fichier(fichiers, "ANN_MS_TDP_ET", logger_helios)
+    )
+    logger_helios.info(
+        f"Cherche les activités pour les ET médico-sociaux dans les fichiers {chemin_du_fichier_ann_errd_ej_et}, {chemin_du_fichier_ann_ms_tdp_et}"
+    )
+    ajoute_les_activités_des_établissements_médico_sociaux(
+        chemin_du_fichier_ann_errd_ej_et, chemin_du_fichier_ann_ms_tdp_et, base_de_données_helios, logger_helios
+    )
