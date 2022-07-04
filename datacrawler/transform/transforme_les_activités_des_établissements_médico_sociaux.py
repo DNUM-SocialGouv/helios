@@ -1,17 +1,22 @@
 from logging import Logger
-from typing import Dict
+from typing import Dict, cast
 
 import pandas as pd
 
-from datacrawler.transform.diamant.équivalences_diamant_helios import ColonneHelios, index_des_activités_médico_sociales, équivalences_diamant_helios
+from datacrawler.transform.diamant.équivalences_diamant_helios import (
+    ColonneHelios,
+    index_des_activités_médico_sociales,
+    équivalences_diamant_helios,
+    ÉquivalencesDiamantHelios,
+)
 
 
-def extrais_l_equivalence_des_types_des_colonnes(équivalences: Dict[str, ColonneHelios]) -> Dict[str, type]:
-    return {nom_diamant: colonne_diamant["type"] for nom_diamant, colonne_diamant in équivalences.items()}
+def extrais_l_equivalence_des_types_des_colonnes(équivalences: ÉquivalencesDiamantHelios) -> Dict[str, type]:
+    return {nom_diamant: cast(ColonneHelios, colonne_diamant)["type"] for nom_diamant, colonne_diamant in équivalences.items()}
 
 
-def extrais_l_equivalence_des_noms_des_colonnes(équivalences: Dict[str, ColonneHelios]) -> Dict[str, str]:
-    return {nom_diamant: colonne_diamant["nom"] for nom_diamant, colonne_diamant in équivalences.items()}
+def extrais_l_equivalence_des_noms_des_colonnes(équivalences: ÉquivalencesDiamantHelios) -> Dict[str, str]:
+    return {nom_diamant: cast(ColonneHelios, colonne_diamant)["nom"] for nom_diamant, colonne_diamant in équivalences.items()}
 
 
 def transforme_les_activités_des_établissements_médico_sociaux(

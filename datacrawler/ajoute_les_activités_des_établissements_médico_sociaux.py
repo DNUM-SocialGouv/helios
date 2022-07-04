@@ -1,6 +1,6 @@
 import os
 from logging import Logger
-from typing import Dict
+from typing import Dict, cast
 
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
@@ -10,12 +10,17 @@ from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
 from datacrawler.load.activités_des_établissements_médico_sociaux import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX
 from datacrawler.load.sauvegarde_les_activités_des_établissements_médico_sociaux import sauvegarde_les_activités_des_établissements_médico_sociaux
-from datacrawler.transform.diamant.équivalences_diamant_helios import ColonneHelios, colonnes_à_lire_ann_errd_ej_et, équivalences_diamant_helios
+from datacrawler.transform.diamant.équivalences_diamant_helios import (
+    colonnes_à_lire_ann_errd_ej_et,
+    équivalences_diamant_helios,
+    ÉquivalencesDiamantHelios,
+    ColonneHelios,
+)
 from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux import transforme_les_activités_des_établissements_médico_sociaux
 
 
-def extrais_l_equivalence_des_types_des_colonnes(équivalences: Dict[str, ColonneHelios]) -> Dict[str, type]:
-    return {nom_diamant: colonne_diamant["type"] for nom_diamant, colonne_diamant in équivalences.items()}
+def extrais_l_equivalence_des_types_des_colonnes(équivalences: ÉquivalencesDiamantHelios) -> Dict[str, type]:
+    return {nom_diamant: cast(ColonneHelios, colonne_diamant)["type"] for nom_diamant, colonne_diamant in équivalences.items()}
 
 
 def ajoute_les_activités_des_établissements_médico_sociaux(chemin_du_fichier: str, base_de_données: Engine, logger: Logger):

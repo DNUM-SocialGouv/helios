@@ -23,10 +23,49 @@ yarn
 
 #### Python
 
-Les traitements de données sont effectués en python (version 3.10) et notamment grâce à [pandas](https://pandas.pydata.org/docs/user_guide/index.html). Il est recommandé d'utiliser [pipenv](https://pipenv.pypa.io/en/latest/) pour créer l'environnement virtuel dédié
+##### Pré-requis
+
+Les traitements de données sont effectués en python (version 3.10) et notamment grâce à [pandas](https://pandas.pydata.org/docs/user_guide/index.html). 
+Avant d'installer python 3.10, assurez-vous d'avoir les librairies suivantes :
+
+```bash
+sudo apt install libbz2-dev libsqlite3-dev libpq-dev
+```
+
+<details>
+  <summary>Dans le cas où vous installeriez python à la main</summary>
+
+- télécharger python
+- dézipper
+- entrer dans le repertoire de python et lancer cette commande :
+
+```bash
+./configure --enable-loadable-sqlite-extensions
+make
+sudo make install
+```
+
+- (optionnel) ajouter alias python=”python3.10” à .bashrc
+</details>
+  
+
+
+Il est recommandé d'utiliser [pipenv](https://pipenv.pypa.io/en/latest/) pour créer l'environnement virtuel dédié
+
+##### Installer l'environnement python
+
+`openssl` est obligatoire pour faire `pipenv install`
+
+Pour installer l'environnement de prod :
 
 ```sh
 pipenv install
+```
+
+Pour installer l'environnement de dev :
+
+```sh
+pipenv install --dev
 ```
 
 > Pipenv installe l'environnement virtuel sous `$HOME/.local` par défaut, mais il est possible de le stocker au même niveau que le dépôt grâce à la commande `PIPENV_VENV_IN_PROJECT=1 pipenv install`
@@ -44,31 +83,33 @@ yarn dev
 
 > Cette commande lance aussi la base de donnée locale et les migrations associées
 
-### Lancer tous les tests
+### Typescript
+
+#### Lancer tous les tests
 
 ```sh
 yarn test
 ```
 
-### Lancer le linter *eslint*
+#### Lancer le linter
 
 ```sh
 yarn lint
 ```
 
-### Lancer la vérification des types (TypeScript)
+#### Lancer la vérification des types
 
 ```sh
 yarn tsc
 ```
 
-### Vérifier qu’il n’y a pas de code mort
+#### Vérifier qu’il n’y a pas de code mort
 
 ```sh
 yarn deadcode
 ```
 
-### Lancer lighthouse-ci (tests d'accessibilité)
+#### Lancer lighthouse-ci (tests d'accessibilité)
 
 Prérequis :
 
@@ -81,15 +122,41 @@ Prérequis :
 yarn test:accessibility
 ```
 
-### Connexion à la base de données locale
+### Python
+
+#### Lancer tous les tests
+
+```sh
+pipenv run test
+```
+
+#### Lancer le linter
+
+```sh
+pipenv run lint
+```
+
+#### Lancer la vérification des types
+
+```sh
+pipenv run typecheck
+```
+
+#### Lancer le formattage des fichiers
+```sh
+pipenv run format
+```
+
+### Base de données
+#### Connexion à la base de données locale
 
 ```sh
 yarn psql:local
 ```
 
-### Connexion à la base de données de production
+#### Connexion à la base de données de production
 
-#### Prérequis
+##### Prérequis
 
 1. Faire partie de l'équipe Helios sur Scalingo.
 
