@@ -1,5 +1,4 @@
 import pandas as pd
-import pandas.testing
 
 from datacrawler.load.activités_des_établissements_médico_sociaux import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX
 from datacrawler.load.sauvegarde_les_activités_des_établissements_médico_sociaux import sauvegarde_les_activités_des_établissements_médico_sociaux
@@ -53,4 +52,4 @@ class TestSauvegardeDesActivitésDesÉtablissementsMédicoSociaux:
                 }
             ],
         ).set_index(index_des_activités_médico_sociales)
-        pandas.testing.assert_frame_equal(activité_attendue, activités_en_base)
+        pd.testing.assert_frame_equal(activité_attendue, activités_en_base)

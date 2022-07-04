@@ -1,5 +1,4 @@
 import pandas as pd
-import pandas.testing
 from numpy import NaN
 
 from datacrawler.transform.diamant.équivalences_diamant_helios import index_des_activités_médico_sociales
@@ -42,7 +41,7 @@ class TestFusionneLesDonnéesAnnErrdEjEtAvecLesDonnéesAnnMsTdpEt:
         )
 
         # THEN
-        pandas.testing.assert_frame_equal(
+        pd.testing.assert_frame_equal(
             données_fusionnées,
             pd.DataFrame(
                 [
@@ -94,7 +93,7 @@ class TestFusionneLesDonnéesAnnErrdEjEtAvecLesDonnéesAnnMsTdpEt:
         )
 
         # THEN
-        pandas.testing.assert_frame_equal(
+        pd.testing.assert_frame_equal(
             données_fusionnées,
             pd.DataFrame(
                 [

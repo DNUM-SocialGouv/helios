@@ -1,7 +1,6 @@
 from unittest.mock import MagicMock
 
 import pandas as pd
-import pandas.testing
 from numpy import NaN
 
 from datacrawler.transform.diamant.équivalences_diamant_helios import index_des_activités_médico_sociales
@@ -52,7 +51,7 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
                 }
             ],
         ).set_index(index_des_activités_médico_sociales)
-        pandas.testing.assert_frame_equal(données_transformées, data_frame_attendu)
+        pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
     def test_ne_renvoie_pas_les_établissements_non_présents_en_base(self):
         # GIVEN
@@ -142,7 +141,7 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
                 }
             ],
         ).set_index(index_des_activités_médico_sociales)
-        pandas.testing.assert_frame_equal(données_transformées, data_frame_attendu)
+        pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self):
         # GIVEN
@@ -194,7 +193,7 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
                 }
             ],
         ).set_index(index_des_activités_médico_sociales)
-        pandas.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
+        pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
 
     def test_supprime_les_lignes_ne_mentionnant_pas_l_année(self):
         # GIVEN
@@ -248,7 +247,7 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
             )
             .set_index(index_des_activités_médico_sociales)
         )
-        pandas.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
+        pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
 
     def test_renvoie_un_unique_taux_de_réalisation_de_l_activité_pour_chaque_couple_année_et_numéro_finess(self):
         # GIVEN
@@ -278,7 +277,7 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
         taux_de_réalisation_unique = récupère_le_taux_de_réalisation_des_établissements(données_ann_ms_tdp_et)
 
         # THEN
-        pandas.testing.assert_frame_equal(
+        pd.testing.assert_frame_equal(
             taux_de_réalisation_unique,
             pd.DataFrame(
                 [

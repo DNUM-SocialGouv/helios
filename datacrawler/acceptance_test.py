@@ -1,7 +1,6 @@
 from unittest.mock import MagicMock, patch
 
 import pandas as pd
-import pandas.testing
 import pytest
 from numpy import NaN
 
@@ -60,7 +59,7 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
 
         data_frame = pd.read_sql_table(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, base_de_données_test)
 
-        pandas.testing.assert_frame_equal(data_frame, data_frame_attendu)
+        pd.testing.assert_frame_equal(data_frame, data_frame_attendu)
 
     def test_supprime_les_données_existantes_avant_de_sauvegarder_les_données_en_base(self):
         # GIVEN
@@ -116,7 +115,7 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
 
         data_frame = pd.read_sql_table(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, base_de_données_test)
 
-        pandas.testing.assert_frame_equal(data_frame, data_frame_attendu)
+        pd.testing.assert_frame_equal(data_frame, data_frame_attendu)
 
     @patch.object(datacrawler.ajoute_les_activités_des_établissements_médico_sociaux, "sauvegarde_les_activités_des_établissements_médico_sociaux")
     def test_revient_à_la_situation_initale_si_l_écriture_des_activités_échoue(self, mocked_sauvegarde_les_activités_des_établissements_médico_sociaux):
@@ -153,4 +152,4 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
         # THEN
         table_activité = pd.read_sql_table(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, base_de_données_test)
 
-        pandas.testing.assert_frame_equal(table_activité, table_activité_existante)
+        pd.testing.assert_frame_equal(table_activité, table_activité_existante)

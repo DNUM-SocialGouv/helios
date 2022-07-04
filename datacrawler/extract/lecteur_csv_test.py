@@ -1,5 +1,4 @@
 import pandas as pd
-import pandas.testing
 from numpy import NaN
 
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
@@ -16,7 +15,7 @@ class TestLisLeFichierCsv:
         données = lis_le_fichier_csv(chemin_du_fichier, colonnes, types_des_colonnes)
 
         # THEN
-        pandas.testing.assert_frame_equal(
+        pd.testing.assert_frame_equal(
             données,
             pd.DataFrame(
                 {
@@ -44,7 +43,7 @@ class TestLisLeFichierCsv:
         données = lis_le_fichier_csv(chemin_du_fichier, colonnes, types_des_colonnes)
 
         # THEN
-        pandas.testing.assert_frame_equal(
+        pd.testing.assert_frame_equal(
             données,
             pd.DataFrame({"Finess": ["010001261", "010001261", "010003598", "010003598", "111111111"], "Nombre de CDD de remplacement": [2, 19, 5, 5, NaN]}),
         )
