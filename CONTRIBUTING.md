@@ -130,13 +130,13 @@ yarn test:accessibility
 pipenv run test
 ```
 
-#### Lancer le linter *eslint*
+#### Lancer le linter
 
 ```sh
 pipenv run lint
 ```
 
-#### Lancer la vérification des types (TypeScript)
+#### Lancer la vérification des types
 
 ```sh
 pipenv run typecheck
