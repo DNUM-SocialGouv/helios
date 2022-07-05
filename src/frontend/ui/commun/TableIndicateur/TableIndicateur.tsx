@@ -8,13 +8,13 @@ import styles from './TableIndicateur.module.css'
 
 type TableIndicateurProps = Readonly<{
     identifiant: string
-    labels: number[]
+    labels: string[]
     dataPoints: string[] | number[]
 }>
 
 type labelDataPoint = {
     dataPoint: string | number
-    label: number
+    label: string
 }
 
 export const TableIndicateur = ({ identifiant, labels, dataPoints }: TableIndicateurProps) => {
@@ -35,7 +35,6 @@ export const TableIndicateur = ({ identifiant, labels, dataPoints }: TableIndica
           aria-expanded={expanded}
           className={'fr-accordion__btn ' + styles['accordion-label']}
           onClick={() => setExpanded(true)}
-          type="button"
         >
           {wording.AFFICHER_LA_TRANSCRIPTION}
         </button>

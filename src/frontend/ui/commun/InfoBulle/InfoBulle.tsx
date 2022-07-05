@@ -44,7 +44,6 @@ export const InfoBulle = ({ contenu, estCeOuvert, identifiant, setEstCeOuvert, t
                   className="fr-btn--close fr-btn"
                   onClick={fermelInfoBulle}
                   title="Fermer la fenêtre modale"
-                  type="button"
                 >
                   {wording.FERMER}
                 </button>

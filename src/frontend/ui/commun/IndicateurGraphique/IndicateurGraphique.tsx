@@ -42,7 +42,6 @@ export const IndicateurGraphique = ({ contenuInfoBulle, dateDeMiseÀJour, identi
             className="fr-btn fr-fi-information-line fr-btn--icon-left fr-btn--tertiary fr-btn--sm"
             data-fr-opened={estCeOuvert}
             onClick={() => setEstCeOuvert(true)}
-            type="button"
           >
             {wording.DÉTAILS}
           </button>

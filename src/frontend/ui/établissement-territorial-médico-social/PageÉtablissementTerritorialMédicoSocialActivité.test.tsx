@@ -3,7 +3,6 @@ import { fireEvent, screen, within } from '@testing-library/react'
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from '../../test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder'
 import { fakeFrontDependencies, renderFakeComponent } from '../../testHelper'
 import { PageÉtablissementTerritorialMédicoSocial } from './PageÉtablissementTerritorialMédicoSocial'
-import { ÉtablissementTerritorialMédicoSocialViewModel } from './ÉtablissementTerritorialMédicoSocialViewModel'
 
 const { wording } = fakeFrontDependencies
 
@@ -40,49 +39,270 @@ describe('La page Établissement territorial - Bloc activité', () => {
     expect(détails).toHaveAttribute('data-fr-opened', 'false')
   })
 
-  it.each(
-    [
-      [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0, '94.4 %', '97.5 %', '101.6 %'],
-      [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1, '70.4 %', '121.5 %', '67.6 %'],
-      [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 2, '0.4 %', '15.5 %', '20.6 %'],
-      [wording.TAUX_RÉALISATION_ACTIVITÉ, 3, '100.4 %', '94.5 %', '96.6 %'],
-      [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 4, '340', '280', '300'],
-      [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5, '87', '90', '22'],
-      [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6, '1013', '994', '990'],
-    ]
-  )('affiche un tableau descriptif après un click sur "Afficher la transcription"', (titreSection, identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
-    const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
-    const indicateurs = within(activité).getAllByRole('listitem')
-    const transcription = within(indicateurs[identifiant]).getByRole('button', { name: wording.AFFICHER_LA_TRANSCRIPTION })
+  describe('Taux d’occupation en hébergement permanent', () => {
+    it('affiche un tableau descriptif après un click sur "Afficher la transcription"', () => {
+      // GIVEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+      const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
+      const indicateur = within(activité).getAllByRole('listitem')
+      const transcription = within(indicateur[0]).getByRole('button', { name: wording.AFFICHER_LA_TRANSCRIPTION })
 
-    // WHEN
-    fireEvent.click(transcription)
+      // WHEN
+      fireEvent.click(transcription)
 
-    // THEN
-    expect(transcription).toHaveAttribute('aria-expanded', 'true')
+      // THEN
+      expect(transcription).toHaveAttribute('aria-expanded', 'true')
 
-    const tableau = within(indicateurs[identifiant]).getByRole('table')
-    const annéeLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.ANNÉE })
-    const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: titreSection })
-    expect(annéeLigneDEnTête).toBeInTheDocument()
-    expect(indicateurLigneDEnTête).toBeInTheDocument()
+      const tableau = within(indicateur[0]).getByRole('table')
+      const annéeLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.ANNÉE })
+      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT })
+      expect(annéeLigneDEnTête).toBeInTheDocument()
+      expect(indicateurLigneDEnTête).toBeInTheDocument()
 
-    const lignes = within(tableau).getAllByRole('row')
-    const annéeDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '2019' })
-    expect(annéeDeLaPremièreLigne).toBeInTheDocument()
-    const valeurDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: valeurIndicateur1 })
-    expect(valeurDeLaPremièreLigne).toBeInTheDocument()
+      const lignes = within(tableau).getAllByRole('row')
+      const annéeDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '2019' })
+      expect(annéeDeLaPremièreLigne).toBeInTheDocument()
+      const valeurDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '94 %' })
+      expect(valeurDeLaPremièreLigne).toBeInTheDocument()
 
-    const annéeDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '2020' })
-    expect(annéeDeLaDeuxièmeLigne).toBeInTheDocument()
-    const valeurDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: valeurIndicateur2 })
-    expect(valeurDeLaDeuxièmeLigne).toBeInTheDocument()
+      const annéeDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '2020' })
+      expect(annéeDeLaDeuxièmeLigne).toBeInTheDocument()
+      const valeurDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '97 %' })
+      expect(valeurDeLaDeuxièmeLigne).toBeInTheDocument()
 
-    const annéeDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: '2021' })
-    expect(annéeDeLaTroisièmeLigne).toBeInTheDocument()
-    const valeurDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: valeurIndicateur3 })
-    expect(valeurDeLaTroisièmeLigne).toBeInTheDocument()
+      const annéeDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: '2021' })
+      expect(annéeDeLaTroisièmeLigne).toBeInTheDocument()
+      const valeurDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: '101 %' })
+      expect(valeurDeLaTroisièmeLigne).toBeInTheDocument()
+    })
+  })
+
+  describe('Taux d’occupation en hébergement temporaire', () => {
+    it('affiche un tableau descriptif après un click sur "Afficher la transcription"', () => {
+      // GIVEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+      const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
+      const indicateur = within(activité).getAllByRole('listitem')
+      const transcription = within(indicateur[1]).getByRole('button', { name: wording.AFFICHER_LA_TRANSCRIPTION })
+
+      // WHEN
+      fireEvent.click(transcription)
+
+      // THEN
+      expect(transcription).toHaveAttribute('aria-expanded', 'true')
+
+      const tableau = within(indicateur[1]).getByRole('table')
+      const annéeLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.ANNÉE })
+      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE })
+      expect(annéeLigneDEnTête).toBeInTheDocument()
+      expect(indicateurLigneDEnTête).toBeInTheDocument()
+
+      const lignes = within(tableau).getAllByRole('row')
+      const annéeDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '2019' })
+      expect(annéeDeLaPremièreLigne).toBeInTheDocument()
+      const valeurDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '70 %' })
+      expect(valeurDeLaPremièreLigne).toBeInTheDocument()
+
+      const annéeDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '2020' })
+      expect(annéeDeLaDeuxièmeLigne).toBeInTheDocument()
+      const valeurDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '121 %' })
+      expect(valeurDeLaDeuxièmeLigne).toBeInTheDocument()
+
+      const annéeDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: '2021' })
+      expect(annéeDeLaTroisièmeLigne).toBeInTheDocument()
+      const valeurDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: '67 %' })
+      expect(valeurDeLaTroisièmeLigne).toBeInTheDocument()
+    })
+  })
+
+  describe('Taux d’occupation en accueil de jour', () => {
+    it('affiche un tableau descriptif après un click sur "Afficher la transcription"', () => {
+      // GIVEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+      const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
+      const indicateur = within(activité).getAllByRole('listitem')
+      const transcription = within(indicateur[2]).getByRole('button', { name: wording.AFFICHER_LA_TRANSCRIPTION })
+
+      // WHEN
+      fireEvent.click(transcription)
+
+      // THEN
+      expect(transcription).toHaveAttribute('aria-expanded', 'true')
+
+      const tableau = within(indicateur[2]).getByRole('table')
+      const annéeLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.ANNÉE })
+      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR })
+      expect(annéeLigneDEnTête).toBeInTheDocument()
+      expect(indicateurLigneDEnTête).toBeInTheDocument()
+
+      const lignes = within(tableau).getAllByRole('row')
+      const annéeDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '2019' })
+      expect(annéeDeLaPremièreLigne).toBeInTheDocument()
+      const valeurDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '0 %' })
+      expect(valeurDeLaPremièreLigne).toBeInTheDocument()
+
+      const annéeDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '2020' })
+      expect(annéeDeLaDeuxièmeLigne).toBeInTheDocument()
+      const valeurDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '15 %' })
+      expect(valeurDeLaDeuxièmeLigne).toBeInTheDocument()
+
+      const annéeDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: '2021' })
+      expect(annéeDeLaTroisièmeLigne).toBeInTheDocument()
+      const valeurDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: '20 %' })
+      expect(valeurDeLaTroisièmeLigne).toBeInTheDocument()
+    })
+  })
+
+  describe('Taux de réalisation de l’activité', () => {
+    it('affiche un tableau descriptif après un click sur "Afficher la transcription"', () => {
+      // GIVEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+      const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
+      const indicateur = within(activité).getAllByRole('listitem')
+      const transcription = within(indicateur[3]).getByRole('button', { name: wording.AFFICHER_LA_TRANSCRIPTION })
+
+      // WHEN
+      fireEvent.click(transcription)
+
+      // THEN
+      expect(transcription).toHaveAttribute('aria-expanded', 'true')
+
+      const tableau = within(indicateur[3]).getByRole('table')
+      const annéeLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.ANNÉE })
+      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.TAUX_RÉALISATION_ACTIVITÉ })
+      expect(annéeLigneDEnTête).toBeInTheDocument()
+      expect(indicateurLigneDEnTête).toBeInTheDocument()
+
+      const lignes = within(tableau).getAllByRole('row')
+      const annéeDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '2019' })
+      expect(annéeDeLaPremièreLigne).toBeInTheDocument()
+      const valeurDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '100 %' })
+      expect(valeurDeLaPremièreLigne).toBeInTheDocument()
+
+      const annéeDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '2020' })
+      expect(annéeDeLaDeuxièmeLigne).toBeInTheDocument()
+      const valeurDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '94 %' })
+      expect(valeurDeLaDeuxièmeLigne).toBeInTheDocument()
+
+      const annéeDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: '2021' })
+      expect(annéeDeLaTroisièmeLigne).toBeInTheDocument()
+      const valeurDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: '96 %' })
+      expect(valeurDeLaTroisièmeLigne).toBeInTheDocument()
+    })
+  })
+
+  describe('File active des personnes accompagnées sur la période', () => {
+    it('affiche un tableau descriptif après un click sur "Afficher la transcription"', () => {
+      // GIVEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+      const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
+      const indicateur = within(activité).getAllByRole('listitem')
+      const transcription = within(indicateur[4]).getByRole('button', { name: wording.AFFICHER_LA_TRANSCRIPTION })
+
+      // WHEN
+      fireEvent.click(transcription)
+
+      // THEN
+      expect(transcription).toHaveAttribute('aria-expanded', 'true')
+
+      const tableau = within(indicateur[4]).getByRole('table')
+      const annéeLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.ANNÉE })
+      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES })
+      expect(annéeLigneDEnTête).toBeInTheDocument()
+      expect(indicateurLigneDEnTête).toBeInTheDocument()
+
+      const lignes = within(tableau).getAllByRole('row')
+      const annéeDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '2019' })
+      expect(annéeDeLaPremièreLigne).toBeInTheDocument()
+      const valeurDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '340' })
+      expect(valeurDeLaPremièreLigne).toBeInTheDocument()
+
+      const annéeDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '2020' })
+      expect(annéeDeLaDeuxièmeLigne).toBeInTheDocument()
+      const valeurDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '280' })
+      expect(valeurDeLaDeuxièmeLigne).toBeInTheDocument()
+
+      const annéeDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: '2021' })
+      expect(annéeDeLaTroisièmeLigne).toBeInTheDocument()
+      const valeurDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: '300' })
+      expect(valeurDeLaTroisièmeLigne).toBeInTheDocument()
+    })
+  })
+
+  describe('Nombre moyen de journées d’absence des personnes accompagnées sur la période', () => {
+    it('affiche un tableau descriptif après un click sur "Afficher la transcription"', () => {
+      // GIVEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+      const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
+      const indicateur = within(activité).getAllByRole('listitem')
+      const transcription = within(indicateur[5]).getByRole('button', { name: wording.AFFICHER_LA_TRANSCRIPTION })
+
+      // WHEN
+      fireEvent.click(transcription)
+
+      // THEN
+      expect(transcription).toHaveAttribute('aria-expanded', 'true')
+
+      const tableau = within(indicateur[5]).getByRole('table')
+      const annéeLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.ANNÉE })
+      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES })
+      expect(annéeLigneDEnTête).toBeInTheDocument()
+      expect(indicateurLigneDEnTête).toBeInTheDocument()
+
+      const lignes = within(tableau).getAllByRole('row')
+      const annéeDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '2019' })
+      expect(annéeDeLaPremièreLigne).toBeInTheDocument()
+      const valeurDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '87' })
+      expect(valeurDeLaPremièreLigne).toBeInTheDocument()
+
+      const annéeDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '2020' })
+      expect(annéeDeLaDeuxièmeLigne).toBeInTheDocument()
+      const valeurDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '90' })
+      expect(valeurDeLaDeuxièmeLigne).toBeInTheDocument()
+
+      const annéeDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: '2021' })
+      expect(annéeDeLaTroisièmeLigne).toBeInTheDocument()
+      const valeurDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: '22' })
+      expect(valeurDeLaTroisièmeLigne).toBeInTheDocument()
+    })
+  })
+
+  describe('Durée moyenne de séjour/d’accompagnement des personnes sorties définitivement au cours de l’année (en nombre de jours)', () => {
+    it('affiche un tableau descriptif après un click sur "Afficher la transcription"', () => {
+      // GIVEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+      const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
+      const indicateur = within(activité).getAllByRole('listitem')
+      const transcription = within(indicateur[6]).getByRole('button', { name: wording.AFFICHER_LA_TRANSCRIPTION })
+
+      // WHEN
+      fireEvent.click(transcription)
+
+      // THEN
+      expect(transcription).toHaveAttribute('aria-expanded', 'true')
+
+      const tableau = within(indicateur[6]).getByRole('table')
+      const annéeLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.ANNÉE })
+      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES })
+      expect(annéeLigneDEnTête).toBeInTheDocument()
+      expect(indicateurLigneDEnTête).toBeInTheDocument()
+
+      const lignes = within(tableau).getAllByRole('row')
+      const annéeDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '2019' })
+      expect(annéeDeLaPremièreLigne).toBeInTheDocument()
+      const valeurDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '1013' })
+      expect(valeurDeLaPremièreLigne).toBeInTheDocument()
+
+      const annéeDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '2020' })
+      expect(annéeDeLaDeuxièmeLigne).toBeInTheDocument()
+      const valeurDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '994' })
+      expect(valeurDeLaDeuxièmeLigne).toBeInTheDocument()
+
+      const annéeDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: '2021' })
+      expect(annéeDeLaTroisièmeLigne).toBeInTheDocument()
+      const valeurDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: '990' })
+      expect(valeurDeLaTroisièmeLigne).toBeInTheDocument()
+    })
   })
 
   it.each(
@@ -147,85 +367,5 @@ describe('La page Établissement territorial - Bloc activité', () => {
 
     // THEN
     expect(détails).toHaveAttribute('data-fr-opened', 'false')
-  })
-
-  it.each(
-    [
-      [0],
-      [1],
-      [2],
-      [3],
-      [4],
-      [5],
-      [6],
-    ]
-  )('n’affiche pas l’indicateur quand ses données sont vide', (identifiant) => {
-    const établissementTerritorialSansActivité = new ÉtablissementTerritorialMédicoSocialViewModel({
-      activité: [
-        {
-          année: 2019,
-          dateMiseAJourSource: '2021-07-07',
-          duréeMoyenneSéjourAccompagnementPersonnesSorties: null,
-          fileActivePersonnesAccompagnées: null,
-          nombreMoyenJournéesAbsencePersonnesAccompagnées: null,
-          numéroFinessÉtablissementTerritorial: '010003598',
-          tauxOccupationAccueilDeJour: null,
-          tauxOccupationHébergementPermanent: null,
-          tauxOccupationHébergementTemporaire: null,
-          tauxRéalisationActivité: null,
-        },
-        {
-          année: 2020,
-          dateMiseAJourSource: '2021-07-07',
-          duréeMoyenneSéjourAccompagnementPersonnesSorties: null,
-          fileActivePersonnesAccompagnées: null,
-          nombreMoyenJournéesAbsencePersonnesAccompagnées: null,
-          numéroFinessÉtablissementTerritorial: '010003598',
-          tauxOccupationAccueilDeJour: null,
-          tauxOccupationHébergementPermanent: null,
-          tauxOccupationHébergementTemporaire: null,
-          tauxRéalisationActivité: null,
-        },
-        {
-          année: 2021,
-          dateMiseAJourSource: '2021-07-07',
-          duréeMoyenneSéjourAccompagnementPersonnesSorties: null,
-          fileActivePersonnesAccompagnées: null,
-          nombreMoyenJournéesAbsencePersonnesAccompagnées: null,
-          numéroFinessÉtablissementTerritorial: '010003598',
-          tauxOccupationAccueilDeJour: null,
-          tauxOccupationHébergementPermanent: null,
-          tauxOccupationHébergementTemporaire: null,
-          tauxRéalisationActivité: null,
-        },
-      ],
-      identité: {
-        adresseAcheminement: '01117 OYONNAX CEDEX',
-        adresseNuméroVoie : '1',
-        adresseTypeVoie : 'RTE',
-        adresseVoie : 'DE VEYZIAT',
-        catégorieÉtablissement : '300',
-        courriel : 'a@example.com',
-        dateMiseAJourSource : '2021-07-07',
-        estMonoÉtablissement: false,
-        libelléCatégorieÉtablissement : 'Ecoles Formant aux Professions Sanitaires',
-        numéroFinessEntitéJuridique : '010008407',
-        numéroFinessÉtablissementPrincipal : '010005239',
-        numéroFinessÉtablissementTerritorial: '010003598',
-        raisonSociale : 'IFAS CH DU HAUT BUGEY',
-        raisonSocialeDeLEntitéDeRattachement : 'CH DU HAUT BUGEY',
-        statutJuridique : 'Etablissement Public Intercommunal d’Hospitalisation',
-        typeÉtablissement : 'S',
-        téléphone : '0123456789',
-      },
-    }, wording)
-
-    // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansActivité} />)
-
-    // THEN
-    const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
-    const indicateurs = within(activité).queryAllByRole('listitem')
-    expect(indicateurs[identifiant]).toBeUndefined()
   })
 })
