@@ -3,14 +3,14 @@ import pandas as pd
 from datacrawler.load.activités_des_établissements_médico_sociaux import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX
 from datacrawler.load.sauvegarde_les_activités_des_établissements_médico_sociaux import sauvegarde_les_activités_des_établissements_médico_sociaux
 from datacrawler.test import base_de_données_test, nettoie_la_base_de_données, sauvegarde_un_établissement_en_base, sauvegarde_une_entité_juridique_en_base
-from datacrawler.transform.diamant.équivalences_diamant_helios import index_des_activités_médico_sociales
+from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.équivalences_diamant_helios import index_des_activités_médico_sociales
 
 
 class TestSauvegardeDesActivitésDesÉtablissementsMédicoSociaux:
-    def setup_method(self):
+    def setup_method(self) -> None:
         nettoie_la_base_de_données(base_de_données_test)
 
-    def test_la_sauvegarde_d_une_activité_d_un_établissement_médico_social(self):
+    def test_la_sauvegarde_d_une_activité_d_un_établissement_médico_social(self) -> None:
         # GIVEN
         numéro_finess_entité_juridique = "111111111"
         numéro_finess_établissement_territorial = "22222222"

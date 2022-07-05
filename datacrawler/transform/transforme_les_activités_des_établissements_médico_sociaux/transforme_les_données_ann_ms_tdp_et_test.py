@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 import pandas as pd
 from numpy import NaN
 
-from datacrawler.transform.diamant.équivalences_diamant_helios import index_des_activités_médico_sociales
+from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.équivalences_diamant_helios import index_des_activités_médico_sociales
 from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.transforme_les_données_ann_ms_tdp_et import (
     récupère_le_taux_de_réalisation_des_établissements,
     transforme_les_données_ann_ms_tdp_et,
@@ -11,7 +11,7 @@ from datacrawler.transform.transforme_les_activités_des_établissements_médico
 
 
 class TestTransformeLesDonnéesAnnMsTdpEt:
-    def test_renomme_les_colonnes_et_crée_l_index(self):
+    def test_renomme_les_colonnes_et_crée_l_index(self) -> None:
         # GIVEN
         logger = MagicMock()
         numéro_finess_établissement = "010001261"
@@ -38,6 +38,7 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
 
         # WHEN
         données_transformées = transforme_les_données_ann_ms_tdp_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, logger)
+
         # THEN
         data_frame_attendu = pd.DataFrame(
             [
@@ -53,7 +54,7 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
         ).set_index(index_des_activités_médico_sociales)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
-    def test_ne_renvoie_pas_les_établissements_non_présents_en_base(self):
+    def test_ne_renvoie_pas_les_établissements_non_présents_en_base(self) -> None:
         # GIVEN
         logger = MagicMock()
         données_ann_ms_tdp_et = pd.DataFrame(
@@ -92,7 +93,7 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
         # THEN
         assert données_transformées.shape == (1, 4)
 
-    def test_ne_considère_qu_une_seule_fois_un_même_couple_année_numéro_finess(self):
+    def test_ne_considère_qu_une_seule_fois_un_même_couple_année_numéro_finess(self) -> None:
         # GIVEN
         logger = MagicMock()
         données_ann_ms_tdp_et = pd.DataFrame(
@@ -143,7 +144,7 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
         ).set_index(index_des_activités_médico_sociales)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
-    def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self):
+    def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self) -> None:
         # GIVEN
         logger = MagicMock()
         données_ann_ms_tdp_et = pd.DataFrame(
@@ -195,7 +196,7 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
         ).set_index(index_des_activités_médico_sociales)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
 
-    def test_supprime_les_lignes_ne_mentionnant_pas_l_année(self):
+    def test_supprime_les_lignes_ne_mentionnant_pas_l_année(self) -> None:
         # GIVEN
         logger = MagicMock()
         numéro_finess_établissement = "010001261"
@@ -249,7 +250,7 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
         )
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
 
-    def test_renvoie_un_unique_taux_de_réalisation_de_l_activité_pour_chaque_couple_année_et_numéro_finess(self):
+    def test_renvoie_un_unique_taux_de_réalisation_de_l_activité_pour_chaque_couple_année_et_numéro_finess(self) -> None:
         # GIVEN
         données_ann_ms_tdp_et = pd.DataFrame(
             [

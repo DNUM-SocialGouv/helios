@@ -7,7 +7,7 @@ from datacrawler.dependencies.variables_d_environnement.variables_d_environnemen
 
 
 class TestVariablesDEnvironnement:
-    def test_retourne_la_valeur_définie_dans_le_fichier_d_environnement(self):
+    def test_retourne_la_valeur_définie_dans_le_fichier_d_environnement(self) -> None:
         # GIVEN
         logger = crée_le_logger()
 
@@ -24,7 +24,7 @@ class TestVariablesDEnvironnement:
         # THEN
         assert variables_d_environnement["SENTRY_DSN"] == "test"
 
-    def test_retourne_une_phrase_explicite_quand_la_valeur_n_est_pas_dans_l_environnement(self, caplog: LogCaptureFixture):
+    def test_retourne_une_phrase_explicite_quand_la_valeur_n_est_pas_dans_l_environnement(self, caplog: LogCaptureFixture) -> None:
         # GIVEN
         logger = crée_le_logger()
 

@@ -5,11 +5,11 @@ import pytest
 from pytest import LogCaptureFixture
 
 from datacrawler.dependencies.logger.logger import crée_le_logger
-from datacrawler.extract.localise_le_fichier import localise_le_fichier
+from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 
 
 class TestLocaliseLeFichier:
-    def test_renvoie_le_chemin_du_fichier_recherché(self):
+    def test_renvoie_le_nom_du_fichier_recherché(self) -> None:
         # GIVEN
         logger = MagicMock()
         préfixe_du_fichier_recherché = "ANN_ERRD_EJ_ET"
@@ -26,21 +26,21 @@ class TestLocaliseLeFichier:
         ]
 
         # WHEN
-        fichier_recherché = localise_le_fichier(liste_des_fichiers, préfixe_du_fichier_recherché, logger)
+        fichier_recherché = trouve_le_nom_du_fichier(liste_des_fichiers, préfixe_du_fichier_recherché, logger)
 
         # THEN
         assert fichier_recherché == f"{préfixe_du_fichier_recherché}_2022_07_03.CSV"
 
-    def test_lève_une_exception_et_log_si_le_fichier_recherché_n_est_pas_présent(self, caplog: LogCaptureFixture):
+    def test_signale_si_le_fichier_recherché_n_est_pas_présent(self, caplog: LogCaptureFixture) -> None:
         # GIVEN
         logger = crée_le_logger()
         préfixe_du_fichier_recherché = "ANN_ERRD_EJ_ET"
 
         # WHEN
         with pytest.raises(FileNotFoundError):
-            localise_le_fichier([], préfixe_du_fichier_recherché, logger)
+            trouve_le_nom_du_fichier([], préfixe_du_fichier_recherché, logger)
 
         # THEN
         log = caplog.records.pop()
         assert log.levelno == logging.FATAL
-        assert log.message == "Le fichier ANN_ERRD_EJ_ET est introuvable dans []."
+        assert log.message == "Le fichier ANN_ERRD_EJ_ET est introuvable parmi les fichiers DIAMANT téléchargés."

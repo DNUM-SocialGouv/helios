@@ -1,14 +1,14 @@
 import pandas as pd
 from numpy import NaN
 
-from datacrawler.transform.diamant.équivalences_diamant_helios import index_des_activités_médico_sociales
+from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.équivalences_diamant_helios import index_des_activités_médico_sociales
 from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.fusionne_les_données_ann_errd_ej_et_avec_ann_ms_tdp_et import (
     fusionne_les_données_ann_errd_ej_et_avec_les_données_ann_ms_tdp_et,
 )
 
 
 class TestFusionneLesDonnéesAnnErrdEjEtAvecLesDonnéesAnnMsTdpEt:
-    def test_fusionne_les_données_ann_errd_ej_et_avec_les_données_ann_ms_tdp_et_pour_un_couple_année_numéro_finess(self):
+    def test_fusionne_les_données_ann_errd_ej_et_avec_les_données_ann_ms_tdp_et_pour_un_couple_année_numéro_finess(self) -> None:
         # GIVEN
         données_ann_errd_ej_et_transformées = pd.DataFrame(
             [
@@ -60,7 +60,7 @@ class TestFusionneLesDonnéesAnnErrdEjEtAvecLesDonnéesAnnMsTdpEt:
             ).set_index(index_des_activités_médico_sociales),
         )
 
-    def test_renvoie_une_ligne_incomplète_si_seul_un_fichier_mentionne_un_couple_année_et_numéro_finess(self):
+    def test_renvoie_une_ligne_avec_valeurs_manquantes_lorsque_l_activité_n_existe_que_dans_un_seul_fichier(self) -> None:
         # GIVEN
         données_ann_errd_ej_et_transformées = pd.DataFrame(
             [

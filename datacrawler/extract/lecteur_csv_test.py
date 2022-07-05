@@ -5,7 +5,7 @@ from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 
 
 class TestLisLeFichierCsv:
-    def test_lis_les_colonnes_demandées_du_fichier_csv(self):
+    def test_lis_les_colonnes_demandées_du_fichie_csv_ann_errd_ej_et(self) -> None:
         # GIVEN
         chemin_du_fichier = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
         colonnes = ["Finess", "MS Résultat net comptable ERRD"]
@@ -33,7 +33,7 @@ class TestLisLeFichierCsv:
             ),
         )
 
-    def test_lis_les_colonnes_demandées_du_fichier_csv_ann_ms_tdp(self):
+    def test_lis_les_colonnes_demandées_du_fichier_csv_ann_ms_tdp(self) -> None:
         # GIVEN
         chemin_du_fichier = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
         colonnes = ["Finess", "Nombre de CDD de remplacement"]

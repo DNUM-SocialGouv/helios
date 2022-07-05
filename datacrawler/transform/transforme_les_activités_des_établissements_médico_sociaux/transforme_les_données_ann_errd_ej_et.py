@@ -2,7 +2,7 @@ from logging import Logger
 
 import pandas as pd
 
-from datacrawler.transform.diamant.équivalences_diamant_helios import (
+from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.équivalences_diamant_helios import (
     extrais_l_equivalence_des_noms_des_colonnes,
     index_des_activités_médico_sociales,
     équivalences_diamant_ann_errd_ej_et_helios,
@@ -13,7 +13,7 @@ def transforme_les_données_ann_errd_ej_et(
     données_ann_errd_ej_et: pd.DataFrame, numéros_finess_des_établissements_connus: pd.DataFrame, logger: Logger
 ) -> pd.DataFrame:
     est_dans_finess = données_ann_errd_ej_et["Finess"].isin(numéros_finess_des_établissements_connus["numero_finess_etablissement_territorial"])
-    logger.info(f"{est_dans_finess.sum()} activités liées à un ET trouvé en base dans le fichier ann_errd_ej_et")
+    logger.info(f"{est_dans_finess.sum()} activités sont liées à un ET trouvé en base dans le fichier ann_errd_ej_et")
 
     return (
         données_ann_errd_ej_et[est_dans_finess]
