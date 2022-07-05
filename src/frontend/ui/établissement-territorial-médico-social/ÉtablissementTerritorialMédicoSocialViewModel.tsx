@@ -115,6 +115,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     return StringFormater.formateLaDate(this.établissementTerritorial.identité.dateMiseAJourSource)
   }
 
+  public get activitéEstElleRemplie(): boolean {
+    return this.établissementTerritorial.activité.length === 0 ? false : true
+  }
+
   public get leTauxOccupationHébergementPermanentEstIlRempli(): boolean {
     return this.estCeQuunChampEstRempli('tauxOccupationHébergementPermanent')
   }
