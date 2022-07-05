@@ -25,6 +25,6 @@ def récupère_les_variables_d_environnement(
 
     return VariablesDEnvironnement(
         SENTRY_DSN=signale_si_la_variable_n_est_pas_présente("SENTRY_DSN"),
-        DATABASE_URL=signale_si_la_variable_n_est_pas_présente("SCALINGO_POSTGRESQL_URL_ALCHEMY"),
+        DATABASE_URL=signale_si_la_variable_n_est_pas_présente("SCALINGO_POSTGRESQL_ALCHEMY_URL"),
         DNUM_SFTP_LOCAL_PATH=signale_si_la_variable_n_est_pas_présente("DNUM_SFTP_LOCAL_PATH"),
     )
