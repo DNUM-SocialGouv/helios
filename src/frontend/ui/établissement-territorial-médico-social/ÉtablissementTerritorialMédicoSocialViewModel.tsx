@@ -4,12 +4,16 @@ import { ReactElement } from 'react'
 import { Bar } from 'react-chartjs-2'
 
 import { ÉtablissementTerritorialMédicoSocial } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
+import { ÉtablissementTerritorialMédicoSocialActivité } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
 import { Wording } from '../../configuration/wording/Wording'
 import { StringFormater } from '../commun/StringFormater'
 import { TableIndicateur } from '../commun/TableIndicateur/TableIndicateur'
 
 export class ÉtablissementTerritorialMédicoSocialViewModel {
-  readonly valeurAtypique: number
+  readonly seuilValeurAtypique: number
+  readonly premièreAnnéeActivité: ÉtablissementTerritorialMédicoSocialActivité
+  readonly deuxièmeAnnéeActivité: ÉtablissementTerritorialMédicoSocialActivité
+  readonly troisièmeAnnéeActivité: ÉtablissementTerritorialMédicoSocialActivité
   readonly fondDeCouleurPourPremierHistogramme: string[]
   readonly fondDeCouleurPourSecondHistogramme: string[]
   readonly couleurDuFond: string = '#E8EDFF'
@@ -21,8 +25,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   readonly couleurDeLaValeur: string = '#3A3A3A'
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialMédicoSocial, private readonly wording: Wording) {
-    // TODO: à modifier avec les données du backend
-    this.valeurAtypique = 120
+    this.seuilValeurAtypique = 120
     this.fondDeCouleurPourSecondHistogramme = [
       this.couleurDuFond,
       this.couleurDuFond,
@@ -33,6 +36,9 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
       this.couleurDuFondHistogrammeSecondaire,
       this.couleurDuFondHistogrammePrimaire,
     ]
+    this.premièreAnnéeActivité = this.établissementTerritorial.activité[0]
+    this.deuxièmeAnnéeActivité = this.établissementTerritorial.activité[1]
+    this.troisièmeAnnéeActivité = this.établissementTerritorial.activité[2]
 
     ChartJS.register(
       BarElement,
@@ -109,85 +115,127 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     return StringFormater.formateLaDate(this.établissementTerritorial.identité.dateMiseAJourSource)
   }
 
+  public get leTauxOccupationHébergementPermanentEstIlRempli(): boolean {
+    return this.estCeQuunChampEstRempli('tauxOccupationHébergementPermanent')
+  }
+
   public get tauxOccupationHébergementPermanent(): JSX.Element {
-    // TODO: à modifier avec les données du backend
-    const dataPoints = [94, 97, 101]
+    const dataPoints = [
+      this.transformeEnTaux(this.premièreAnnéeActivité.tauxOccupationHébergementPermanent as number),
+      this.transformeEnTaux(this.deuxièmeAnnéeActivité.tauxOccupationHébergementPermanent as number),
+      this.transformeEnTaux(this.troisièmeAnnéeActivité.tauxOccupationHébergementPermanent as number),
+    ]
     const chartColors = this.construisLeFondDeCouleurDesHistogrammes(dataPoints)
-    // TODO: à modifier avec les données du backend
-    const labels = ['2019', '2020', '2021']
+    const labels = [this.premièreAnnéeActivité.année, this.deuxièmeAnnéeActivité.année, this.troisièmeAnnéeActivité.année]
     const labelsColor = this.construisLaCouleurDuLabel(dataPoints)
 
     return this.afficheUnHistogrammeVertical(chartColors, dataPoints, labelsColor, labels, this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT)
   }
 
+  public get leTauxOccupationHébergementTemporaireEstIlRempli(): boolean {
+    return this.estCeQuunChampEstRempli('tauxOccupationHébergementTemporaire')
+  }
+
   public get tauxOccupationHébergementTemporaire(): JSX.Element {
-    // TODO: à modifier avec les données du backend
-    const dataPoints = [70, 121, 67]
+    const dataPoints = [
+      this.transformeEnTaux(this.premièreAnnéeActivité.tauxOccupationHébergementTemporaire as number),
+      this.transformeEnTaux(this.deuxièmeAnnéeActivité.tauxOccupationHébergementTemporaire as number),
+      this.transformeEnTaux(this.troisièmeAnnéeActivité.tauxOccupationHébergementTemporaire as number),
+    ]
     const chartColors = this.construisLeFondDeCouleurDesHistogrammes(dataPoints)
-    // TODO: à modifier avec les données du backend
-    const labels = ['2019', '2020', '2021']
+    const labels = [this.premièreAnnéeActivité.année, this.deuxièmeAnnéeActivité.année, this.troisièmeAnnéeActivité.année]
     const labelsColor = this.construisLaCouleurDuLabel(dataPoints)
 
     return this.afficheUnHistogrammeVertical(chartColors, dataPoints, labelsColor, labels, this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE)
   }
 
+  public get leTauxOccupationAccueilDeJourEstIlRempli(): boolean {
+    return this.estCeQuunChampEstRempli('tauxOccupationAccueilDeJour')
+  }
+
   public get tauxOccupationAccueilDeJour(): JSX.Element {
-    // TODO: à modifier avec les données du backend
-    const dataPoints = [0, 15, 20]
+    const dataPoints = [
+      this.transformeEnTaux(this.premièreAnnéeActivité.tauxOccupationAccueilDeJour as number),
+      this.transformeEnTaux(this.deuxièmeAnnéeActivité.tauxOccupationAccueilDeJour as number),
+      this.transformeEnTaux(this.troisièmeAnnéeActivité.tauxOccupationAccueilDeJour as number),
+    ]
     const chartColors = this.construisLeFondDeCouleurDesHistogrammes(dataPoints)
-    // TODO: à modifier avec les données du backend
-    const labels = ['2019', '2020', '2021']
+    const labels = [this.premièreAnnéeActivité.année, this.deuxièmeAnnéeActivité.année, this.troisièmeAnnéeActivité.année]
     const labelsColor = this.construisLaCouleurDuLabel(dataPoints)
 
     return this.afficheUnHistogrammeVertical(chartColors, dataPoints, labelsColor, labels, this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR)
   }
 
+  public get leTauxRéalisationActivitéEstIlRempli(): boolean {
+    return this.estCeQuunChampEstRempli('tauxRéalisationActivité')
+  }
+
   public get tauxRéalisationActivité(): JSX.Element {
-    // TODO: à modifier avec les données du backend
-    const dataPoints = [100, 94, 96]
+    const dataPoints = [
+      this.transformeEnTaux(this.premièreAnnéeActivité.tauxRéalisationActivité as number),
+      this.transformeEnTaux(this.deuxièmeAnnéeActivité.tauxRéalisationActivité as number),
+      this.transformeEnTaux(this.troisièmeAnnéeActivité.tauxRéalisationActivité as number),
+    ]
     const chartColors = this.construisLeFondDeCouleurDesHistogrammes(dataPoints)
-    // TODO: à modifier avec les données du backend
-    const labels = ['2019', '2020', '2021']
+    const labels = [this.premièreAnnéeActivité.année, this.deuxièmeAnnéeActivité.année, this.troisièmeAnnéeActivité.année]
     const labelsColor = this.construisLaCouleurDuLabel(dataPoints)
 
     return this.afficheUnHistogrammeVertical(chartColors, dataPoints, labelsColor, labels, this.wording.TAUX_RÉALISATION_ACTIVITÉ)
   }
 
+  public get laFileActivePersonnesAccompagnéesEstElleRemplie(): boolean {
+    return this.estCeQuunChampEstRempli('fileActivePersonnesAccompagnées')
+  }
+
   public get fileActivePersonnesAccompagnées(): JSX.Element {
-    // TODO: à modifier avec les données du backend
-    const dataPoints = [340, 280, 300]
+    const dataPoints = [
+      this.premièreAnnéeActivité.fileActivePersonnesAccompagnées as number,
+      this.deuxièmeAnnéeActivité.fileActivePersonnesAccompagnées as number,
+      this.troisièmeAnnéeActivité.fileActivePersonnesAccompagnées as number,
+    ]
     const chartColors = this.fondDeCouleurPourPremierHistogramme
-    // TODO: à modifier avec les données du backend
-    const labels = ['2019', '2020', '2021']
+    const labels = [this.premièreAnnéeActivité.année, this.deuxièmeAnnéeActivité.année, this.troisièmeAnnéeActivité.année]
     const labelsColor = this.construisLaCouleurDuLabel(dataPoints, true)
 
     return this.afficheUnHistogrammeHorizontal(chartColors, dataPoints, labelsColor, labels, this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES)
   }
 
+  public get leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRempli(): boolean {
+    return this.estCeQuunChampEstRempli('nombreMoyenJournéesAbsencePersonnesAccompagnées')
+  }
+
   public get nombreMoyenJournéesAbsencePersonnesAccompagnées(): JSX.Element {
-    // TODO: à modifier avec les données du backend
-    const dataPoints = [87, 90, 22]
+    const dataPoints = [
+      this.premièreAnnéeActivité.nombreMoyenJournéesAbsencePersonnesAccompagnées as number,
+      this.deuxièmeAnnéeActivité.nombreMoyenJournéesAbsencePersonnesAccompagnées as number,
+      this.troisièmeAnnéeActivité.nombreMoyenJournéesAbsencePersonnesAccompagnées as number,
+    ]
     const chartColors = this.fondDeCouleurPourPremierHistogramme
-    // TODO: à modifier avec les données du backend
-    const labels = ['2019', '2020', '2021']
+    const labels = [this.premièreAnnéeActivité.année, this.deuxièmeAnnéeActivité.année, this.troisièmeAnnéeActivité.année]
     const labelsColor = this.construisLaCouleurDuLabel(dataPoints, true)
 
     return this.afficheUnHistogrammeHorizontal(chartColors, dataPoints, labelsColor, labels,
       this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES)
   }
 
+  public get laDuréeMoyenneSéjourAcompagnementDesPersonnesSortiesEstElleRempli(): boolean {
+    return this.estCeQuunChampEstRempli('duréeMoyenneSéjourAccompagnementPersonnesSorties')
+  }
+
   public get duréeMoyenneSéjourAcompagnementDesPersonnesSorties(): JSX.Element {
-    // TODO: à modifier avec les données du backend
-    const dataPoints = [1013, 994, 990]
+    const dataPoints = [
+      this.premièreAnnéeActivité.duréeMoyenneSéjourAccompagnementPersonnesSorties as number,
+      this.deuxièmeAnnéeActivité.duréeMoyenneSéjourAccompagnementPersonnesSorties as number,
+      this.troisièmeAnnéeActivité.duréeMoyenneSéjourAccompagnementPersonnesSorties as number,
+    ]
     const chartColors = this.fondDeCouleurPourPremierHistogramme
-    // TODO: à modifier avec les données du backend
-    const labels = ['2019', '2020', '2021']
+    const labels = [this.premièreAnnéeActivité.année, this.deuxièmeAnnéeActivité.année, this.troisièmeAnnéeActivité.année]
     const labelsColor = this.construisLaCouleurDuLabel(dataPoints, true)
 
     return this.afficheUnHistogrammeHorizontal(chartColors, dataPoints, labelsColor, labels, this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES)
   }
 
-  private afficheUnHistogrammeVertical(chartColors: string[], dataPoints: number[], labelsColor: string[], labels: string[], identifiant: string): JSX.Element {
+  private afficheUnHistogrammeVertical(chartColors: string[], dataPoints: number[], labelsColor: string[], labels: number[], identifiant: string): JSX.Element {
     const data: ChartData = {
       datasets: [
         {
@@ -237,7 +285,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     chartColors: string[],
     dataPoints: number[],
     labelsColor: string[],
-    labels: string[],
+    labels: number[],
     identifiant: string
   ): JSX.Element {
     const data: ChartData = {
@@ -312,7 +360,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
         xLine: { display: false, max: 1, min: 0, type: 'linear' },
         y: {
           display: false,
-          max: this.valeurAtypique,
+          max: this.seuilValeurAtypique,
           min: 0,
         },
       },
@@ -358,7 +406,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     const fondDeCouleurDesHistogrammes = [...this.fondDeCouleurPourPremierHistogramme]
 
     dataPoints.forEach((dataPoint: number, index: number) => {
-      if (dataPoint > this.valeurAtypique) {
+      if (dataPoint > this.seuilValeurAtypique) {
         fondDeCouleurDesHistogrammes[index] = this.couleurDuFondHistogrammeDeDépassement
       }
     })
@@ -381,5 +429,24 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
 
   private ajoutePourcentage(dataPoints: number[]): string[] {
     return dataPoints.map((dataPoint) => dataPoint + ' %')
+  }
+
+  private transformeEnTaux(nombre: number): number {
+    return Number((nombre * 100).toFixed(1))
+  }
+
+  private estCeQuunChampEstRempli(champ: string): boolean {
+    if (
+      // @ts-ignore
+      this.premièreAnnéeActivité[champ] === null &&
+      // @ts-ignore
+      this.deuxièmeAnnéeActivité[champ] === null &&
+      // @ts-ignore
+      this.troisièmeAnnéeActivité[champ] === null
+    ) {
+      return false
+    }
+
+    return true
   }
 }
