@@ -10,6 +10,39 @@ const { wording } = fakeFrontDependencies
 describe('La page Établissement territorial - Bloc activité', () => {
   const établissementTerritorialMédicoSocial = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording)
 
+  it('n’affiche pas le bloc activité s’il n’a pas d’indicateurs', () => {
+    // GIVEN
+    const établissementTerritorialSansActivité = new ÉtablissementTerritorialMédicoSocialViewModel({
+      activité: [],
+      identité: {
+        adresseAcheminement: '01117 OYONNAX CEDEX',
+        adresseNuméroVoie : '1',
+        adresseTypeVoie : 'RTE',
+        adresseVoie : 'DE VEYZIAT',
+        catégorieÉtablissement : '300',
+        courriel : 'a@example.com',
+        dateMiseAJourSource : '2021-07-07',
+        estMonoÉtablissement: false,
+        libelléCatégorieÉtablissement : 'Ecoles Formant aux Professions Sanitaires',
+        numéroFinessEntitéJuridique : '010008407',
+        numéroFinessÉtablissementPrincipal : '010005239',
+        numéroFinessÉtablissementTerritorial: '010003598',
+        raisonSociale : 'IFAS CH DU HAUT BUGEY',
+        raisonSocialeDeLEntitéDeRattachement : 'CH DU HAUT BUGEY',
+        statutJuridique : 'Etablissement Public Intercommunal d’Hospitalisation',
+        typeÉtablissement : 'S',
+        téléphone : '0123456789',
+      },
+    }, wording)
+
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansActivité} />)
+
+    // THEN
+    const activité = screen.queryByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
+    expect(activité).not.toBeInTheDocument()
+  })
+
   it.each(
     [
       [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0],

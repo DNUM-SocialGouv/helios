@@ -18,6 +18,8 @@ type BlocActivitéMédicoSocialType = {
 export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSocialViewModel }: BlocActivitéMédicoSocialType) => {
   const { wording } = useDependencies()
 
+  if (!établissementTerritorialMédicoSocialViewModel.activitéEstElleRemplie) return null
+
   return (
     <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
       <ul className={styles['liste-indicateurs']}>
