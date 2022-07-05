@@ -32,7 +32,7 @@ index_des_activités_médico_sociales: List[str] = [
     "Durée moyenne de séjour/d'accompagnement": ColonneHelios(nom="duree_moyenne_sejour_accompagnement_personnes_sorties", type=float),
     "Taux de réalisation de lactivité Tout ESMS (Hors services CAMSP et CMPP)": ColonneHelios(nom="taux_realisation_activite", type=float),
     "Taux de réalisation de lactivité CAMSP et CMPP": ColonneHelios(nom="taux_realisation_activite", type=float),
-    "File active des personnes accompagnées sur la période": ColonneHelios(nom="file_active_personnes_accompagnees", type=int),
+    "File active des personnes accompagnées sur la période": ColonneHelios(nom="file_active_personnes_accompagnees", type=float),
 }
 
 colonnes_à_lire_ann_ms_tdp_et: List[str] = list(équivalences_diamant_ann_ms_tdp_et_helios.keys())
