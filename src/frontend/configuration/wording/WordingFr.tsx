@@ -51,6 +51,7 @@ export class WordingFr implements Wording {
   // Indicateurs
   readonly AFFICHER_LA_TRANSCRIPTION: string = 'Afficher la transcription'
   readonly ANNÉE: string = 'Année'
+  readonly INDICATEURS_VIDES: string = 'Aucune donnée pour cet établissement.'
 
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string = 'fiche d’identité'

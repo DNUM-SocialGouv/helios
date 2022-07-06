@@ -18,5 +18,6 @@ export async function récupèreLÉtablissementTerritorialMédicoSocialEndpoint(
     return établissementTerritorialMédicoSocialIdentité
   } catch (error) {
     dependencies.logger.error(error)
+    throw error
   }
 }

@@ -10,39 +10,6 @@ const { wording } = fakeFrontDependencies
 describe('La page Établissement territorial - Bloc activité', () => {
   const établissementTerritorialMédicoSocial = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording)
 
-  it('n’affiche pas le bloc activité s’il n’a pas d’indicateurs', () => {
-    // GIVEN
-    const établissementTerritorialSansActivité = new ÉtablissementTerritorialMédicoSocialViewModel({
-      activité: [],
-      identité: {
-        adresseAcheminement: '01117 OYONNAX CEDEX',
-        adresseNuméroVoie : '1',
-        adresseTypeVoie : 'RTE',
-        adresseVoie : 'DE VEYZIAT',
-        catégorieÉtablissement : '300',
-        courriel : 'a@example.com',
-        dateMiseAJourSource : '2021-07-07',
-        estMonoÉtablissement: false,
-        libelléCatégorieÉtablissement : 'Ecoles Formant aux Professions Sanitaires',
-        numéroFinessEntitéJuridique : '010008407',
-        numéroFinessÉtablissementPrincipal : '010005239',
-        numéroFinessÉtablissementTerritorial: '010003598',
-        raisonSociale : 'IFAS CH DU HAUT BUGEY',
-        raisonSocialeDeLEntitéDeRattachement : 'CH DU HAUT BUGEY',
-        statutJuridique : 'Etablissement Public Intercommunal d’Hospitalisation',
-        typeÉtablissement : 'S',
-        téléphone : '0123456789',
-      },
-    }, wording)
-
-    // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansActivité} />)
-
-    // THEN
-    const activité = screen.queryByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
-    expect(activité).not.toBeInTheDocument()
-  })
-
   it.each(
     [
       [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0],
@@ -192,7 +159,7 @@ describe('La page Établissement territorial - Bloc activité', () => {
       [5],
       [6],
     ]
-  )('n’affiche pas l’indicateur quand ses données sont vide', (identifiant) => {
+  )('n’affiche pas l’indicateur quand sa valeur est vide', (identifiant) => {
     const établissementTerritorialSansActivité = new ÉtablissementTerritorialMédicoSocialViewModel({
       activité: [
         {
@@ -260,5 +227,109 @@ describe('La page Établissement territorial - Bloc activité', () => {
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
     const indicateurs = within(activité).queryAllByRole('listitem')
     expect(indicateurs[identifiant]).toBeUndefined()
+  })
+
+  it('affiche une phrase à la place des indicateurs lorsque des activités sont renseignées mais les indicateurs sont vides', () => {
+    // GIVEN
+    const établissementTerritorialSansActivité = new ÉtablissementTerritorialMédicoSocialViewModel({
+      activité: [
+        {
+          année: 2019,
+          dateMiseAJourSource: '2021-07-07',
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: null,
+          fileActivePersonnesAccompagnées: null,
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: null,
+          numéroFinessÉtablissementTerritorial: '010003598',
+          tauxOccupationAccueilDeJour: null,
+          tauxOccupationHébergementPermanent: null,
+          tauxOccupationHébergementTemporaire: null,
+          tauxRéalisationActivité: null,
+        },
+        {
+          année: 2020,
+          dateMiseAJourSource: '2021-07-07',
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: null,
+          fileActivePersonnesAccompagnées: null,
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: null,
+          numéroFinessÉtablissementTerritorial: '010003598',
+          tauxOccupationAccueilDeJour: null,
+          tauxOccupationHébergementPermanent: null,
+          tauxOccupationHébergementTemporaire: null,
+          tauxRéalisationActivité: null,
+        },
+        {
+          année: 2021,
+          dateMiseAJourSource: '2021-07-07',
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: null,
+          fileActivePersonnesAccompagnées: null,
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: null,
+          numéroFinessÉtablissementTerritorial: '010003598',
+          tauxOccupationAccueilDeJour: null,
+          tauxOccupationHébergementPermanent: null,
+          tauxOccupationHébergementTemporaire: null,
+          tauxRéalisationActivité: null,
+        },
+      ],
+      identité: {
+        adresseAcheminement: '01117 OYONNAX CEDEX',
+        adresseNuméroVoie : '1',
+        adresseTypeVoie : 'RTE',
+        adresseVoie : 'DE VEYZIAT',
+        catégorieÉtablissement : '300',
+        courriel : 'a@example.com',
+        dateMiseAJourSource : '2021-07-07',
+        estMonoÉtablissement: false,
+        libelléCatégorieÉtablissement : 'Ecoles Formant aux Professions Sanitaires',
+        numéroFinessEntitéJuridique : '010008407',
+        numéroFinessÉtablissementPrincipal : '010005239',
+        numéroFinessÉtablissementTerritorial: '010003598',
+        raisonSociale : 'IFAS CH DU HAUT BUGEY',
+        raisonSocialeDeLEntitéDeRattachement : 'CH DU HAUT BUGEY',
+        statutJuridique : 'Etablissement Public Intercommunal d’Hospitalisation',
+        typeÉtablissement : 'S',
+        téléphone : '0123456789',
+      },
+    }, wording)
+
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansActivité} />)
+
+    // THEN
+    const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
+    const phrase = within(activité).getByText(wording.INDICATEURS_VIDES)
+    expect(phrase).toBeInTheDocument()
+  })
+
+  it('n’affiche pas le bloc activité si aucune activité n’est renseignée', () => {
+    // GIVEN
+    const établissementTerritorialSansActivité = new ÉtablissementTerritorialMédicoSocialViewModel({
+      activité: [],
+      identité: {
+        adresseAcheminement: '01117 OYONNAX CEDEX',
+        adresseNuméroVoie : '1',
+        adresseTypeVoie : 'RTE',
+        adresseVoie : 'DE VEYZIAT',
+        catégorieÉtablissement : '300',
+        courriel : 'a@example.com',
+        dateMiseAJourSource : '2021-07-07',
+        estMonoÉtablissement: false,
+        libelléCatégorieÉtablissement : 'Ecoles Formant aux Professions Sanitaires',
+        numéroFinessEntitéJuridique : '010008407',
+        numéroFinessÉtablissementPrincipal : '010005239',
+        numéroFinessÉtablissementTerritorial: '010003598',
+        raisonSociale : 'IFAS CH DU HAUT BUGEY',
+        raisonSocialeDeLEntitéDeRattachement : 'CH DU HAUT BUGEY',
+        statutJuridique : 'Etablissement Public Intercommunal d’Hospitalisation',
+        typeÉtablissement : 'S',
+        téléphone : '0123456789',
+      },
+    }, wording)
+
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansActivité} />)
+
+    // THEN
+    const activité = screen.queryByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
+    expect(activité).not.toBeInTheDocument()
   })
 })

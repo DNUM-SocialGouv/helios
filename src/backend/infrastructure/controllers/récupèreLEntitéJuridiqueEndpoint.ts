@@ -24,5 +24,6 @@ export async function récupèreLEntitéJuridiqueEndpoint(
     return { entitéJuridique, établissementsTerritoriauxRattachés }
   } catch (error) {
     dependencies.logger.error(error)
+    throw error
   }
 }
