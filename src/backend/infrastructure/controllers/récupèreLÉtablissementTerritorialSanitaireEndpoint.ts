@@ -13,5 +13,6 @@ export async function récupèreLÉtablissementTerritorialSanitaireEndpoint(
     return await récupèreLÉtablissementTerritorialSanitaireUseCase.exécute(numéroFinessÉtablissementTerritorialSanitaire)
   } catch (error) {
     dependencies.logger.error(error)
+    throw error
   }
 }

@@ -20,6 +20,22 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
 
   if (!établissementTerritorialMédicoSocialViewModel.activitéEstElleRemplie) return null
 
+  if (
+    !(établissementTerritorialMédicoSocialViewModel.leTauxOccupationHébergementPermanentEstIlRempli &&
+    établissementTerritorialMédicoSocialViewModel.leTauxOccupationHébergementTemporaireEstIlRempli &&
+    établissementTerritorialMédicoSocialViewModel.leTauxOccupationAccueilDeJourEstIlRempli &&
+    établissementTerritorialMédicoSocialViewModel.leTauxRéalisationActivitéEstIlRempli &&
+    établissementTerritorialMédicoSocialViewModel.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRempli &&
+    établissementTerritorialMédicoSocialViewModel.laFileActivePersonnesAccompagnéesEstElleRemplie &&
+    établissementTerritorialMédicoSocialViewModel.laDuréeMoyenneSéjourAcompagnementDesPersonnesSortiesEstElleRempli)
+  ) {
+    return (
+      <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
+        {wording.INDICATEURS_VIDES}
+      </Bloc>
+    )
+  }
+
   return (
     <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
       <ul className={styles['liste-indicateurs']}>
