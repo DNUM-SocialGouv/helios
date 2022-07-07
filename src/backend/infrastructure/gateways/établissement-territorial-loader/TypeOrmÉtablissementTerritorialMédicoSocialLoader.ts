@@ -18,7 +18,10 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
   ): Promise<ÉtablissementTerritorialMédicoSocialActivité[]> {
     const activitésÉtablissementTerritorialModel = await (await this.orm)
       .getRepository(ActivitéMédicoSocialModel)
-      .findBy({ numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial })
+      .find({
+        order: { année: 'ASC' },
+        where: { numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial },
+      })
 
     const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
 

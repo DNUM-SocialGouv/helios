@@ -18,16 +18,16 @@ type BlocActivitéMédicoSocialType = {
 export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSocialViewModel }: BlocActivitéMédicoSocialType) => {
   const { wording } = useDependencies()
 
-  if (!établissementTerritorialMédicoSocialViewModel.activitéEstElleRemplie) return null
+  if (!établissementTerritorialMédicoSocialViewModel.activitéEstElleRenseignée) return null
 
   if (
-    !(établissementTerritorialMédicoSocialViewModel.leTauxOccupationHébergementPermanentEstIlRempli &&
-    établissementTerritorialMédicoSocialViewModel.leTauxOccupationHébergementTemporaireEstIlRempli &&
-    établissementTerritorialMédicoSocialViewModel.leTauxOccupationAccueilDeJourEstIlRempli &&
-    établissementTerritorialMédicoSocialViewModel.leTauxRéalisationActivitéEstIlRempli &&
-    établissementTerritorialMédicoSocialViewModel.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRempli &&
-    établissementTerritorialMédicoSocialViewModel.laFileActivePersonnesAccompagnéesEstElleRemplie &&
-    établissementTerritorialMédicoSocialViewModel.laDuréeMoyenneSéjourAcompagnementDesPersonnesSortiesEstElleRempli)
+    !établissementTerritorialMédicoSocialViewModel.leTauxOccupationHébergementPermanentEstIlRenseigné &&
+    !établissementTerritorialMédicoSocialViewModel.leTauxOccupationHébergementTemporaireEstIlRenseigné &&
+    !établissementTerritorialMédicoSocialViewModel.leTauxOccupationAccueilDeJourEstIlRenseigné &&
+    !établissementTerritorialMédicoSocialViewModel.leTauxRéalisationActivitéEstIlRenseigné &&
+    !établissementTerritorialMédicoSocialViewModel.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné &&
+    !établissementTerritorialMédicoSocialViewModel.laFileActivePersonnesAccompagnéesEstElleRenseignée &&
+    !établissementTerritorialMédicoSocialViewModel.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée
   ) {
     return (
       <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
@@ -39,7 +39,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
   return (
     <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
       <ul className={styles['liste-indicateurs']}>
-        {établissementTerritorialMédicoSocialViewModel.leTauxOccupationHébergementPermanentEstIlRempli &&
+        {établissementTerritorialMédicoSocialViewModel.leTauxOccupationHébergementPermanentEstIlRenseigné &&
           <IndicateurGraphique
             contenuInfoBulle={<ContenuTauxOccupationHébergementPermanent
               dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
@@ -53,7 +53,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
             {établissementTerritorialMédicoSocialViewModel.tauxOccupationHébergementPermanent}
           </IndicateurGraphique>
         }
-        {établissementTerritorialMédicoSocialViewModel.leTauxOccupationHébergementTemporaireEstIlRempli &&
+        {établissementTerritorialMédicoSocialViewModel.leTauxOccupationHébergementTemporaireEstIlRenseigné &&
           <IndicateurGraphique
             contenuInfoBulle={<ContenuTauxOccupationHébergementTemporaire
               dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
@@ -67,7 +67,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
             {établissementTerritorialMédicoSocialViewModel.tauxOccupationHébergementTemporaire}
           </IndicateurGraphique>
         }
-        {établissementTerritorialMédicoSocialViewModel.leTauxOccupationAccueilDeJourEstIlRempli &&
+        {établissementTerritorialMédicoSocialViewModel.leTauxOccupationAccueilDeJourEstIlRenseigné &&
           <IndicateurGraphique
             contenuInfoBulle={<ContenuTauxOccupationAccueilDeJour
               dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
@@ -81,7 +81,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
             {établissementTerritorialMédicoSocialViewModel.tauxOccupationAccueilDeJour}
           </IndicateurGraphique>
         }
-        {établissementTerritorialMédicoSocialViewModel.leTauxRéalisationActivitéEstIlRempli &&
+        {établissementTerritorialMédicoSocialViewModel.leTauxRéalisationActivitéEstIlRenseigné &&
           <IndicateurGraphique
             contenuInfoBulle={<ContenuTauxRéalisationActivité
               dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
@@ -95,7 +95,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
             {établissementTerritorialMédicoSocialViewModel.tauxRéalisationActivité}
           </IndicateurGraphique>
         }
-        {établissementTerritorialMédicoSocialViewModel.laFileActivePersonnesAccompagnéesEstElleRemplie &&
+        {établissementTerritorialMédicoSocialViewModel.laFileActivePersonnesAccompagnéesEstElleRenseignée &&
           <IndicateurGraphique
             contenuInfoBulle={<ContenuFileActivePersonnesAccompagnées
               dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
@@ -109,7 +109,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
             {établissementTerritorialMédicoSocialViewModel.fileActivePersonnesAccompagnées}
           </IndicateurGraphique>
         }
-        {établissementTerritorialMédicoSocialViewModel.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRempli &&
+        {établissementTerritorialMédicoSocialViewModel.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné &&
           <IndicateurGraphique
             contenuInfoBulle={<ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées
               dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
@@ -123,7 +123,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
             {établissementTerritorialMédicoSocialViewModel.nombreMoyenJournéesAbsencePersonnesAccompagnées}
           </IndicateurGraphique>
         }
-        {établissementTerritorialMédicoSocialViewModel.laDuréeMoyenneSéjourAcompagnementDesPersonnesSortiesEstElleRempli &&
+        {établissementTerritorialMédicoSocialViewModel.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée &&
           <IndicateurGraphique
             contenuInfoBulle={<ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties
               dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
@@ -134,7 +134,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
             nomDeLIndicateur={wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES}
             source={wording.DIAMANT}
           >
-            {établissementTerritorialMédicoSocialViewModel.duréeMoyenneSéjourAcompagnementDesPersonnesSorties}
+            {établissementTerritorialMédicoSocialViewModel.duréeMoyenneSéjourAccompagnementPersonnesSorties}
           </IndicateurGraphique>
         }
       </ul>

@@ -63,13 +63,11 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
   ]
 
   public static crée(
-    wording: Wording, champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocial['identité']>
+    wording: Wording,
+    champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocial['identité']>
   ): ÉtablissementTerritorialMédicoSocialViewModel {
     return new ÉtablissementTerritorialMédicoSocialViewModel({
-      activité: {
-        ...ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.activité,
-        ...champsSurchargés,
-      },
+      activité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.activité,
       identité: {
         ...ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
         ...champsSurchargés,

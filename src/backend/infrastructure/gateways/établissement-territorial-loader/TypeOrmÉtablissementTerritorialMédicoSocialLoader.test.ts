@@ -99,7 +99,7 @@ describe('Établissement territorial médico-social loader', () => {
   })
 
   describe('Permet de charger l’activité d’un établissement médico-social par son numéro FINESS', () => {
-    it('charge l’activité d’un établissement territorial médico-social', async () => {
+    it('charge l’activité d’un établissement territorial médico-social rangé par année', async () => {
       // GIVEN
       const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
       await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
@@ -113,9 +113,9 @@ describe('Établissement territorial médico-social loader', () => {
       const activitéMédicoSocialModel2019 = ÉtablissementTerritorialActivitéModelTestBuilder.crée({ année: 2019, numéroFinessÉtablissementTerritorial })
       const activitéMédicoSocialModel2020 = ÉtablissementTerritorialActivitéModelTestBuilder.crée({ année: 2020, numéroFinessÉtablissementTerritorial })
       const activitéMédicoSocialModel2021 = ÉtablissementTerritorialActivitéModelTestBuilder.crée({ année: 2021, numéroFinessÉtablissementTerritorial })
-      await activitéMédicoSocialModelRepository.insert(activitéMédicoSocialModel2019)
-      await activitéMédicoSocialModelRepository.insert(activitéMédicoSocialModel2020)
       await activitéMédicoSocialModelRepository.insert(activitéMédicoSocialModel2021)
+      await activitéMédicoSocialModelRepository.insert(activitéMédicoSocialModel2020)
+      await activitéMédicoSocialModelRepository.insert(activitéMédicoSocialModel2019)
 
       const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
 

@@ -1,4 +1,4 @@
-export namespace StringFormater{
+export namespace StringFormater {
   export function formateLeNuméroFiness(numéroFiness: string): string {
     return insèreUnEspaceTousLesNCaractères(numéroFiness, 3)
   }
