@@ -2,7 +2,8 @@ import pandas as pd
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 
-from datacrawler.load.activités_des_établissements_médico_sociaux import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX
+from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, \
+    TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES
 from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.équivalences_diamant_helios import index_des_activités_médico_sociales
 
 base_de_données_test = create_engine("postgresql://helios:h3li0s@localhost:5433/helios")
@@ -72,10 +73,11 @@ VALUES (
     )
 
 
-def nettoie_la_base_de_données(base_de_données: Engine) -> None:
+def supprime_les_données_des_tables(base_de_données: Engine) -> None:
     base_de_données.execute("DELETE FROM entite_juridique;")
     base_de_données.execute("DELETE FROM etablissement_territorial;")
     base_de_données.execute(f"DELETE FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX};")
+    base_de_données.execute(f"DELETE FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES};")
 
 
 def sauvegarde_une_activité_en_base(activité: pd.DataFrame, base_de_données: Engine) -> None:
