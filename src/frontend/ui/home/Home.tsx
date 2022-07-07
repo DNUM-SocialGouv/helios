@@ -4,7 +4,6 @@ import { ReactElement } from 'react'
 import { useDependencies } from '../commun/contexts/useDependencies'
 import { ListItem } from '../commun/ListItem/ListItem'
 import LogoÉtablissementTerritorialMédicoSocial from '../entité-juridique/liste-des-établissements/logo-établissement-territorial-médico-social-noir.svg'
-import LogoÉtablissementTerritorialSanitaire from './../entité-juridique/liste-des-établissements/logo-établissement-territorial-sanitaire-noir.svg'
 import styles from './Home.module.css'
 import LogoEntitéJuridiqueNoir from './logo-entité-juridique-noir.svg'
 
@@ -43,7 +42,7 @@ export const Home = () => {
     {
       identifiant: <>
         <abbr title={wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
-        &nbsp;- 210 012 142 - CTRE HOSPITALIER DE LA HAUTE COTE D OR (avec un nom d’établissement très long)
+        &nbsp;- 210 012 142 - CTRE HOSPITALIER DE LA HAUTE COTE D’OR (avec un nom d’établissement très long)
       </>,
       numéroFiness: '210012142',
     },
@@ -52,10 +51,10 @@ export const Home = () => {
     {
       identifiant: <>
         <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        &nbsp;- 660 011 842 - CENTRE DENTAIRE BEJAR (avec aucune activité)
+        &nbsp;- 660 011 859 - SAAD DOMITYS SUD EST LES TOURS D’OR (avec aucune activité)
       </>,
-      numéroFiness: '660011842',
-      typeÉtablissement: 'sanitaire',
+      numéroFiness: '660011859',
+      typeÉtablissement: 'médico-social',
     },
     {
       identifiant: <>
@@ -140,16 +139,12 @@ export const Home = () => {
               <ListItem
                 key={établissementTerritorial.numéroFiness}
                 label={établissementTerritorial.identifiant}
-                lien= {établissementTerritorial.typeÉtablissement === 'sanitaire' ?
-                  `${paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE}/${établissementTerritorial.numéroFiness}` :
-                  `${paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL}/${établissementTerritorial.numéroFiness}`
-                }
+                lien= {`${paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL}/${établissementTerritorial.numéroFiness}`}
                 logo={<>
                   <Image
                     alt=""
                     height="22"
-                    src={établissementTerritorial.typeÉtablissement === 'sanitaire' ?
-                      LogoÉtablissementTerritorialSanitaire : LogoÉtablissementTerritorialMédicoSocial}
+                    src={LogoÉtablissementTerritorialMédicoSocial}
                     width="22"
                   />
                 </>}

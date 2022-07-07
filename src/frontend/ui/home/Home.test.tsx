@@ -43,6 +43,6 @@ describe('La page d’Accueil', () => {
 
     const entitéJuridiqueAvecUnLongNom = within(listeDesEntitésJuridiques[4]).getByRole('link')
     expect(entitéJuridiqueAvecUnLongNom).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/210012142`)
-    expect(within(entitéJuridiqueAvecUnLongNom).getByText('- 210 012 142 - CTRE HOSPITALIER DE LA HAUTE COTE D OR (avec un nom d’établissement très long)')).toBeInTheDocument()
+    expect(within(entitéJuridiqueAvecUnLongNom).getByText('- 210 012 142 - CTRE HOSPITALIER DE LA HAUTE COTE D’OR (avec un nom d’établissement très long)')).toBeInTheDocument()
   })
 })
