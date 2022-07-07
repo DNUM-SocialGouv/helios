@@ -50,7 +50,7 @@ describe('La page Établissement territorial - Bloc activité', () => {
       [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5, '87', '90', '22'],
       [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6, '1013', '994', '990'],
     ]
-  )('affiche un tableau descriptif après un click sur "Afficher la transcription"', (titreSection, identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
+  )('affiche un tableau descriptif avec les trois années après un click sur "Afficher la transcription"', (titreSection, identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
     const indicateurs = within(activité).getAllByRole('listitem')
@@ -83,6 +83,176 @@ describe('La page Établissement territorial - Bloc activité', () => {
     expect(annéeDeLaTroisièmeLigne).toBeInTheDocument()
     const valeurDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: valeurIndicateur3 })
     expect(valeurDeLaTroisièmeLigne).toBeInTheDocument()
+  })
+
+  it.each(
+    [
+      [0, null, 0.97, 1.016],
+      [1, 0.70, null, 0.67],
+      [2, 0.04, 0.155, null],
+      [3, null, 0.94, 0.96],
+      [4, 340, null, 300],
+      [5, 87, 90, null],
+      [6, null, 994, 990],
+    ]
+  )('affiche un tableau descriptif avec deux années après un click sur "Afficher la transcription"', (identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
+    const établissementTerritorialMédicoSocial = new ÉtablissementTerritorialMédicoSocialViewModel({
+      activité: [
+        {
+          année: 2019,
+          dateMiseAJourSource: '2021-07-07',
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: valeurIndicateur1,
+          fileActivePersonnesAccompagnées: valeurIndicateur1,
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: valeurIndicateur1,
+          numéroFinessÉtablissementTerritorial: '010003598',
+          tauxOccupationAccueilDeJour: valeurIndicateur1,
+          tauxOccupationHébergementPermanent: valeurIndicateur1,
+          tauxOccupationHébergementTemporaire: valeurIndicateur1,
+          tauxRéalisationActivité: valeurIndicateur1,
+        },
+        {
+          année: 2020,
+          dateMiseAJourSource: '2021-07-07',
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: valeurIndicateur2,
+          fileActivePersonnesAccompagnées: valeurIndicateur2,
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: valeurIndicateur2,
+          numéroFinessÉtablissementTerritorial: '010003598',
+          tauxOccupationAccueilDeJour: valeurIndicateur2,
+          tauxOccupationHébergementPermanent: valeurIndicateur2,
+          tauxOccupationHébergementTemporaire: valeurIndicateur2,
+          tauxRéalisationActivité: valeurIndicateur2,
+        },
+        {
+          année: 2021,
+          dateMiseAJourSource: '2021-07-07',
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: valeurIndicateur3,
+          fileActivePersonnesAccompagnées: valeurIndicateur3,
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: valeurIndicateur3,
+          numéroFinessÉtablissementTerritorial: '010003598',
+          tauxOccupationAccueilDeJour: valeurIndicateur3,
+          tauxOccupationHébergementPermanent: valeurIndicateur3,
+          tauxOccupationHébergementTemporaire: valeurIndicateur3,
+          tauxRéalisationActivité: valeurIndicateur3,
+        },
+      ],
+      identité: {
+        adresseAcheminement: '01117 OYONNAX CEDEX',
+        adresseNuméroVoie : '1',
+        adresseTypeVoie : 'RTE',
+        adresseVoie : 'DE VEYZIAT',
+        catégorieÉtablissement : '300',
+        courriel : 'a@example.com',
+        dateMiseAJourSource : '2021-07-07',
+        estMonoÉtablissement: false,
+        libelléCatégorieÉtablissement : 'Ecoles Formant aux Professions Sanitaires',
+        numéroFinessEntitéJuridique : '010008407',
+        numéroFinessÉtablissementPrincipal : '010005239',
+        numéroFinessÉtablissementTerritorial: '010003598',
+        raisonSociale : 'IFAS CH DU HAUT BUGEY',
+        raisonSocialeDeLEntitéDeRattachement : 'CH DU HAUT BUGEY',
+        statutJuridique : 'Etablissement Public Intercommunal d’Hospitalisation',
+        typeÉtablissement : 'S',
+        téléphone : '0123456789',
+      },
+    }, wording)
+    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+    const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
+    const indicateurs = within(activité).getAllByRole('listitem')
+    const transcription = within(indicateurs[identifiant]).getByRole('button', { name: wording.AFFICHER_LA_TRANSCRIPTION })
+
+    // WHEN
+    fireEvent.click(transcription)
+
+    // THEN
+    const tableau = within(indicateurs[identifiant]).getByRole('table')
+    const rowgroup = within(tableau).getAllByRole('rowgroup')
+    const lignes = within(rowgroup[1]).getAllByRole('row')
+    expect(lignes).toHaveLength(2)
+  })
+
+  it.each(
+    [
+      [0, null, null, 1.016],
+      [1, 0.70, null, null],
+      [2, null, 0.155, null],
+      [3, null, null, 0.96],
+      [4, 340, null, null],
+      [5, null, 90, null],
+      [6, null, null, 990],
+    ]
+  )('affiche un tableau descriptif avec une seule année après un click sur "Afficher la transcription"', (identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
+    const établissementTerritorialMédicoSocial = new ÉtablissementTerritorialMédicoSocialViewModel({
+      activité: [
+        {
+          année: 2019,
+          dateMiseAJourSource: '2021-07-07',
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: valeurIndicateur1,
+          fileActivePersonnesAccompagnées: valeurIndicateur1,
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: valeurIndicateur1,
+          numéroFinessÉtablissementTerritorial: '010003598',
+          tauxOccupationAccueilDeJour: valeurIndicateur1,
+          tauxOccupationHébergementPermanent: valeurIndicateur1,
+          tauxOccupationHébergementTemporaire: valeurIndicateur1,
+          tauxRéalisationActivité: valeurIndicateur1,
+        },
+        {
+          année: 2020,
+          dateMiseAJourSource: '2021-07-07',
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: valeurIndicateur2,
+          fileActivePersonnesAccompagnées: valeurIndicateur2,
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: valeurIndicateur2,
+          numéroFinessÉtablissementTerritorial: '010003598',
+          tauxOccupationAccueilDeJour: valeurIndicateur2,
+          tauxOccupationHébergementPermanent: valeurIndicateur2,
+          tauxOccupationHébergementTemporaire: valeurIndicateur2,
+          tauxRéalisationActivité: valeurIndicateur2,
+        },
+        {
+          année: 2021,
+          dateMiseAJourSource: '2021-07-07',
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: valeurIndicateur3,
+          fileActivePersonnesAccompagnées: valeurIndicateur3,
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: valeurIndicateur3,
+          numéroFinessÉtablissementTerritorial: '010003598',
+          tauxOccupationAccueilDeJour: valeurIndicateur3,
+          tauxOccupationHébergementPermanent: valeurIndicateur3,
+          tauxOccupationHébergementTemporaire: valeurIndicateur3,
+          tauxRéalisationActivité: valeurIndicateur3,
+        },
+      ],
+      identité: {
+        adresseAcheminement: '01117 OYONNAX CEDEX',
+        adresseNuméroVoie : '1',
+        adresseTypeVoie : 'RTE',
+        adresseVoie : 'DE VEYZIAT',
+        catégorieÉtablissement : '300',
+        courriel : 'a@example.com',
+        dateMiseAJourSource : '2021-07-07',
+        estMonoÉtablissement: false,
+        libelléCatégorieÉtablissement : 'Ecoles Formant aux Professions Sanitaires',
+        numéroFinessEntitéJuridique : '010008407',
+        numéroFinessÉtablissementPrincipal : '010005239',
+        numéroFinessÉtablissementTerritorial: '010003598',
+        raisonSociale : 'IFAS CH DU HAUT BUGEY',
+        raisonSocialeDeLEntitéDeRattachement : 'CH DU HAUT BUGEY',
+        statutJuridique : 'Etablissement Public Intercommunal d’Hospitalisation',
+        typeÉtablissement : 'S',
+        téléphone : '0123456789',
+      },
+    }, wording)
+    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+    const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
+    const indicateurs = within(activité).getAllByRole('listitem')
+    const transcription = within(indicateurs[identifiant]).getByRole('button', { name: wording.AFFICHER_LA_TRANSCRIPTION })
+
+    // WHEN
+    fireEvent.click(transcription)
+
+    // THEN
+    const tableau = within(indicateurs[identifiant]).getByRole('table')
+    const rowgroup = within(tableau).getAllByRole('rowgroup')
+    const lignes = within(rowgroup[1]).getAllByRole('row')
+    expect(lignes).toHaveLength(1)
   })
 
   it.each(
@@ -151,52 +321,61 @@ describe('La page Établissement territorial - Bloc activité', () => {
 
   it.each(
     [
-      [0],
-      [1],
-      [2],
-      [3],
-      [4],
-      [5],
-      [6],
+      [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, null, 1, 1, 1, 1, 1, 1],
+      [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1, null, 1, 1, 1, 1, 1],
+      [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 1, 1, null, 1, 1, 1, 1],
+      [wording.TAUX_RÉALISATION_ACTIVITÉ, 1, 1, 1, null, 1, 1, 1],
+      [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 1, 1, 1, 1, null, 1, 1],
+      [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 1, 1, 1, 1, 1, null, 1],
+      [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 1, 1, 1, 1, 1, 1, null],
     ]
-  )('n’affiche pas l’indicateur quand sa valeur est vide', (identifiant) => {
+  )('n’affiche pas l’indicateur quand sa valeur est vide', (
+    titreSection,
+    indicateur1,
+    indicateur2,
+    indicateur3,
+    indicateur4,
+    indicateur5,
+    indicateur6,
+    indicateur7
+  ) => {
     const établissementTerritorialSansActivité = new ÉtablissementTerritorialMédicoSocialViewModel({
       activité: [
         {
           année: 2019,
           dateMiseAJourSource: '2021-07-07',
-          duréeMoyenneSéjourAccompagnementPersonnesSorties: null,
-          fileActivePersonnesAccompagnées: null,
-          nombreMoyenJournéesAbsencePersonnesAccompagnées: null,
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: indicateur7,
+          fileActivePersonnesAccompagnées: indicateur5,
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: indicateur6,
           numéroFinessÉtablissementTerritorial: '010003598',
-          tauxOccupationAccueilDeJour: null,
-          tauxOccupationHébergementPermanent: null,
-          tauxOccupationHébergementTemporaire: null,
-          tauxRéalisationActivité: null,
+          tauxOccupationAccueilDeJour: indicateur3,
+          tauxOccupationHébergementPermanent: indicateur1,
+          tauxOccupationHébergementTemporaire: indicateur2,
+          tauxRéalisationActivité: indicateur4,
         },
         {
           année: 2020,
           dateMiseAJourSource: '2021-07-07',
-          duréeMoyenneSéjourAccompagnementPersonnesSorties: null,
-          fileActivePersonnesAccompagnées: null,
-          nombreMoyenJournéesAbsencePersonnesAccompagnées: null,
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: indicateur7,
+          fileActivePersonnesAccompagnées: indicateur5,
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: indicateur6,
           numéroFinessÉtablissementTerritorial: '010003598',
-          tauxOccupationAccueilDeJour: null,
-          tauxOccupationHébergementPermanent: null,
-          tauxOccupationHébergementTemporaire: null,
-          tauxRéalisationActivité: null,
+          tauxOccupationAccueilDeJour: indicateur3,
+          tauxOccupationHébergementPermanent: indicateur1,
+          tauxOccupationHébergementTemporaire: indicateur2,
+          tauxRéalisationActivité: indicateur4,
         },
         {
           année: 2021,
           dateMiseAJourSource: '2021-07-07',
-          duréeMoyenneSéjourAccompagnementPersonnesSorties: null,
-          fileActivePersonnesAccompagnées: null,
-          nombreMoyenJournéesAbsencePersonnesAccompagnées: null,
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: indicateur7,
+          fileActivePersonnesAccompagnées: indicateur5,
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: indicateur6,
           numéroFinessÉtablissementTerritorial: '010003598',
-          tauxOccupationAccueilDeJour: null,
-          tauxOccupationHébergementPermanent: null,
-          tauxOccupationHébergementTemporaire: null,
-          tauxRéalisationActivité: null,
+          tauxOccupationAccueilDeJour: indicateur3,
+          tauxOccupationHébergementPermanent: indicateur1,
+          tauxOccupationHébergementTemporaire: indicateur2,
+          tauxRéalisationActivité: indicateur4,
         },
       ],
       identité: {
@@ -226,7 +405,10 @@ describe('La page Établissement territorial - Bloc activité', () => {
     // THEN
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
     const indicateurs = within(activité).queryAllByRole('listitem')
-    expect(indicateurs[identifiant]).toBeUndefined()
+    expect(indicateurs).toHaveLength(6)
+    const liste = within(activité).getByRole('list')
+    const titre = within(liste).queryByText(titreSection, { selector: 'p' })
+    expect(titre).not.toBeInTheDocument()
   })
 
   it('affiche une phrase à la place des indicateurs lorsque des activités sont renseignées mais les indicateurs sont vides', () => {

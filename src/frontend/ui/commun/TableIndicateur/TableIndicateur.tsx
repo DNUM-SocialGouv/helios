@@ -7,25 +7,14 @@ import { useDependencies } from '../contexts/useDependencies'
 import styles from './TableIndicateur.module.css'
 
 type TableIndicateurProps = Readonly<{
-    identifiant: string
-    labels: number[]
-    dataPoints: string[] | number[]
+  identifiant: string
+  libellés: number[]
+  valeurs: (number | string)[]
 }>
 
-type labelDataPoint = {
-    dataPoint: string | number
-    label: number
-}
-
-export const TableIndicateur = ({ identifiant, labels, dataPoints }: TableIndicateurProps) => {
+export const TableIndicateur = ({ identifiant, libellés, valeurs }: TableIndicateurProps) => {
   const { wording } = useDependencies()
-
   const [expanded, setExpanded] = useState(false)
-  const lignesAnnéesValeurs: labelDataPoint[] = [
-    { dataPoint: dataPoints[0], label: labels[0] },
-    { dataPoint: dataPoints[1], label: labels[1] },
-    { dataPoint: dataPoints[2], label: labels[2] },
-  ]
 
   return (
     <section className="fr-accordion">
@@ -60,20 +49,19 @@ export const TableIndicateur = ({ identifiant, labels, dataPoints }: TableIndica
               </tr>
             </thead>
             <tbody>
-              {lignesAnnéesValeurs.map((ligneAnnéeValeur) =>
-                <tr key={ligneAnnéeValeur.label}>
+              {libellés.map((libellé, index) =>
+                <tr key={libellé}>
                   <td>
-                    {ligneAnnéeValeur.label}
+                    {libellé}
                   </td>
                   <td>
-                    {ligneAnnéeValeur.dataPoint}
+                    {valeurs[index]}
                   </td>
                 </tr>)
               }
             </tbody>
           </table>
         </div>
-
       </div>
     </section>
   )
