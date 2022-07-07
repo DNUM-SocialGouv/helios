@@ -23,7 +23,9 @@ export interface Wording {
 
   // Home
   readonly TITRE_LISTE_DES_ENTITÉS_JURIDIQUES: string
+  readonly TITRE_LISTE_DES_ÉTABLISSEMENTS_TERRITORIAUX: string
   readonly ENTITÉS_JURIDIQUES: string
+  readonly ÉTABLISSEMENT_TERRITORIAUX: string
 
   // Fiches
   readonly MISE_À_JOUR: string

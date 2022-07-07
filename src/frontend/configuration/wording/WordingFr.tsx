@@ -31,7 +31,9 @@ export class WordingFr implements Wording {
 
   // Home
   readonly TITRE_LISTE_DES_ENTITÉS_JURIDIQUES: string = 'Les entités juridiques'
+  readonly TITRE_LISTE_DES_ÉTABLISSEMENTS_TERRITORIAUX: string = 'Les établissements territoriaux'
   readonly ENTITÉS_JURIDIQUES: string = 'Entité(s) Juridique(s)'
+  readonly ÉTABLISSEMENT_TERRITORIAUX: string = 'Établissements Territoriaux'
 
   // Fiches
   readonly MISE_À_JOUR: string = 'Mise à jour'
