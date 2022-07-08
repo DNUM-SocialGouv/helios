@@ -1,9 +1,10 @@
-import { ÉtablissementTerritorialSanitaireIdentité } from '../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireIdentité'
+import { ÉtablissementTerritorialMédicoSocial } from '../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
+import { ÉtablissementTerritorialSanitaire } from '../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire'
 import { Wording } from '../configuration/wording/Wording'
 import { ÉtablissementTerritorialSanitaireViewModel } from '../ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel'
 
 export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
-  private static établissementTerritorial: ÉtablissementTerritorialSanitaireIdentité = {
+  private static établissementTerritorial: ÉtablissementTerritorialSanitaire['identité'] = {
     adresseAcheminement: '01130 NANTUA',
     adresseNuméroVoie : '50',
     adresseTypeVoie : 'R',
@@ -23,11 +24,14 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
   }
 
   public static crée(
-    wording: Wording, champsSurchargés?: Partial<ÉtablissementTerritorialSanitaireIdentité>
+    wording: Wording, champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocial['identité']>
   ): ÉtablissementTerritorialSanitaireViewModel {
     return new ÉtablissementTerritorialSanitaireViewModel({
-      ...ÉtablissementTerritorialSanitaireViewModelTestBuilder.établissementTerritorial,
-      ...champsSurchargés,
+      activités: [],
+      identité: {
+        ...ÉtablissementTerritorialSanitaireViewModelTestBuilder.établissementTerritorial,
+        ...champsSurchargés,
+      },
     }, wording)
   }
 }
