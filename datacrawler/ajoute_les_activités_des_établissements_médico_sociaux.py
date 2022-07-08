@@ -12,22 +12,26 @@ from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEM
 from datacrawler.load.sauvegarde_les_activités_des_établissements_médico_sociaux import sauvegarde_les_activités_des_établissements_médico_sociaux
 from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux import transforme_les_activités_des_établissements_médico_sociaux
 from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.équivalences_diamant_helios import (
-    colonnes_à_lire_ann_errd_ej_et, colonnes_à_lire_ann_ms_tdp_et, extrais_l_equivalence_des_types_des_colonnes, équivalences_diamant_ann_errd_ej_et_helios,
-    équivalences_diamant_ann_ms_tdp_et_helios)
+    colonnes_à_lire_ann_errd_ej_et,
+    colonnes_à_lire_ann_ms_tdp_et,
+    extrais_l_equivalence_des_types_des_colonnes,
+    équivalences_diamant_ann_errd_ej_et_helios,
+    équivalences_diamant_ann_ms_tdp_et_helios,
+)
 
 
 def ajoute_les_activités_des_établissements_médico_sociaux(
-    fichier_ann_errd_ej_et: str, fichier_ann_ms_tdp_et: str, base_de_données: Engine, logger: Logger
+    chemin_du_fichier_ann_errd_ej_et: str, chemin_du_fichier_ann_ms_tdp_et: str, base_de_données: Engine, logger: Logger
 ) -> None:
     logger.info("Récupère les activités des établissements médico-sociaux")
     données_ann_errd_ej_et = lis_le_fichier_csv(
-        fichier_ann_errd_ej_et,
+        chemin_du_fichier_ann_errd_ej_et,
         colonnes_à_lire_ann_errd_ej_et,
         extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_errd_ej_et_helios),
     )
     logger.info(f"{données_ann_errd_ej_et.shape[0]} lignes trouvées dans le fichier ANN_ERRD_EJ_ET")
     données_ann_ms_tdp_et = lis_le_fichier_csv(
-        fichier_ann_ms_tdp_et,
+        chemin_du_fichier_ann_ms_tdp_et,
         colonnes_à_lire_ann_ms_tdp_et,
         extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ms_tdp_et_helios),
     )

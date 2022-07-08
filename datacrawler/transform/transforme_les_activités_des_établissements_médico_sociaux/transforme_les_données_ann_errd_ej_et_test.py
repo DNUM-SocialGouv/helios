@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 import pandas as pd
 from numpy import NaN
 
-from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.équivalences_diamant_helios import index_des_activités_médico_sociales
+from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.équivalences_diamant_helios import index_des_activités
 from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.transforme_les_données_ann_errd_ej_et import (
     transforme_les_données_ann_errd_ej_et,
 )
@@ -47,7 +47,7 @@ class TestTransformeLesDonnéesAnnErrdEjEt:
                     "taux_occupation_en_hebergement_permanent": 0.99779299847793002,
                 }
             ],
-        ).set_index(index_des_activités_médico_sociales)
+        ).set_index(index_des_activités)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self) -> None:
@@ -95,7 +95,7 @@ class TestTransformeLesDonnéesAnnErrdEjEt:
                     "taux_occupation_en_hebergement_permanent": float,
                 }
             )
-            .set_index(index_des_activités_médico_sociales)
+            .set_index(index_des_activités)
         )
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
 
@@ -145,7 +145,7 @@ class TestTransformeLesDonnéesAnnErrdEjEt:
                     "taux_occupation_en_hebergement_permanent": float,
                 }
             )
-            .set_index(index_des_activités_médico_sociales)
+            .set_index(index_des_activités)
         )
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
 
@@ -186,7 +186,7 @@ class TestTransformeLesDonnéesAnnErrdEjEt:
                     "taux_occupation_en_hebergement_permanent": NaN,
                 }
             ],
-        ).set_index(index_des_activités_médico_sociales)
+        ).set_index(index_des_activités)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
 
     def test_ne_considère_qu_une_seule_fois_un_même_couple_année_numéro_finess(self) -> None:
@@ -233,7 +233,7 @@ class TestTransformeLesDonnéesAnnErrdEjEt:
                     "taux_occupation_en_hebergement_permanent": 0.99779299847793002,
                 }
             ],
-        ).set_index(index_des_activités_médico_sociales)
+        ).set_index(index_des_activités)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
 
     def test_ne_renvoie_pas_les_établissements_non_présents_en_base(self) -> None:

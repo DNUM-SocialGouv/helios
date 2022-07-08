@@ -2,8 +2,13 @@ import pandas as pd
 
 from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX
 from datacrawler.load.sauvegarde_les_activités_des_établissements_médico_sociaux import sauvegarde_les_activités_des_établissements_médico_sociaux
-from datacrawler.test_helpers import base_de_données_test, supprime_les_données_des_tables, sauvegarde_un_établissement_en_base, sauvegarde_une_entité_juridique_en_base
-from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.équivalences_diamant_helios import index_des_activités_médico_sociales
+from datacrawler.test_helpers import (
+    base_de_données_test,
+    supprime_les_données_des_tables,
+    sauvegarde_un_établissement_en_base,
+    sauvegarde_une_entité_juridique_en_base,
+)
+from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.équivalences_diamant_helios import index_des_activités
 
 
 class TestSauvegardeDesActivitésDesÉtablissementsMédicoSociaux:
@@ -27,7 +32,7 @@ class TestSauvegardeDesActivitésDesÉtablissementsMédicoSociaux:
                     "taux_occupation_accueil_de_jour": 0.48012820512820514,
                 }
             ],
-        ).set_index(index_des_activités_médico_sociales)
+        ).set_index(index_des_activités)
 
         # WHEN
         with base_de_données_test.connect() as connection:
@@ -35,7 +40,7 @@ class TestSauvegardeDesActivitésDesÉtablissementsMédicoSociaux:
 
         # THEN
         activités_en_base = pd.read_sql(
-            f"SELECT * FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX}", base_de_données_test, index_col=index_des_activités_médico_sociales
+            f"SELECT * FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX}", base_de_données_test, index_col=index_des_activités
         )
         activité_attendue = pd.DataFrame(
             [
@@ -51,5 +56,5 @@ class TestSauvegardeDesActivitésDesÉtablissementsMédicoSociaux:
                     "duree_moyenne_sejour_accompagnement_personnes_sorties": None,
                 }
             ],
-        ).set_index(index_des_activités_médico_sociales)
+        ).set_index(index_des_activités)
         pd.testing.assert_frame_equal(activité_attendue, activités_en_base)
