@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm'
 import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
+import { ÉtablissementTerritorialSanitaireActivité } from '../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { ÉtablissementTerritorialSanitaireNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialSanitaireNonTrouvée'
 import { ÉtablissementTerritorialSanitaireLoader } from '../../../métier/gateways/ÉtablissementTerritorialSanitaireLoader'
@@ -10,15 +11,19 @@ import { ÉtablissementTerritorialSanitaireLoader } from '../../../métier/gatew
 export class TypeOrmÉtablissementTerritorialSanitaireLoader implements ÉtablissementTerritorialSanitaireLoader {
   constructor(private readonly orm: Promise<DataSource>) {}
 
-  async chargeIdentité(numéroFinessET: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialSanitaireNonTrouvée> {
+  async chargeActivité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialSanitaireActivité> {
+
+  }
+
+  async chargeIdentité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialSanitaireNonTrouvée> {
     const établissementTerritorialModel = await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
       .findOneBy({
         domaine: DomaineÉtablissementTerritorial.SANITAIRE,
-        numéroFinessÉtablissementTerritorial: numéroFinessET,
+        numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial,
       })
     if (!établissementTerritorialModel) {
-      return new ÉtablissementTerritorialSanitaireNonTrouvée(numéroFinessET)
+      return new ÉtablissementTerritorialSanitaireNonTrouvée(numéroFinessÉtablissementTerritorial)
     }
 
     const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()

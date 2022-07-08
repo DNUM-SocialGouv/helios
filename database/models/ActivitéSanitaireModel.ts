@@ -18,30 +18,29 @@ export class ActivitéSanitaireModel {
   public nombreSéjoursPartielsMédecine!: number
 
   @Column({ name: 'nombre_sejours_partiels_obstetrique', nullable: true, type: 'float' })
-  public NombreSéjoursPartielsObstétrique!: number
+  public nombreSéjoursPartielsObstétrique!: number
 
   @Column({ name: 'nombre_sejours_partiels_chirurgie', nullable: true, type: 'float' })
-  public NombreSéjoursPartielsChirurgie!: number
+  public nombreSéjoursPartielsChirurgie!: number
 
   @Column({ name: 'nombre_sejours_complets_medecine', nullable: true, type: 'float' })
-  public NombreSéjoursCompletsMédecine!: number
+  public nombreSéjoursCompletsMédecine!: number
 
   @Column({ name: 'nombre_sejours_complets_obstetrique', nullable: true, type: 'float' })
-  public NombreSéjoursCompletsObstétrique!: number
+  public nombreSéjoursCompletsObstétrique!: number
 
   @Column({ name: 'nombre_sejours_complets_chirurgie', nullable: true, type: 'float' })
-  public NombreSéjoursCompletsChirurgie!: number
+  public nombreSéjoursCompletsChirurgie!: number
 
   @Column({ name: 'nombre_journees_completes_ssr', nullable: true, type: 'float' })
-  public NombreJournéesCompletesSsr!: number
+  public nombreJournéesCompletesSsr!: number
 
   @Column({ name: 'nombre_journees_partiels_ssr', nullable: true, type: 'float' })
-  public NombreJournéesPartielsSsr!: number
+  public nombreJournéesPartielsSsr!: number
 
   @Column({ name: 'nombre_journees_complete_psy', nullable: true, type: 'float' })
-  public NombreJournéesCompletePsy!: number
+  public nombreJournéesCompletePsy!: number
 
   @Column({ name: 'nombre_journées_partielles_psy', nullable: true, type: 'float' })
-  public NombreJournéesPartiellesPsy!: number
-
+  public nombreJournéesPartiellesPsy!: number
 }
