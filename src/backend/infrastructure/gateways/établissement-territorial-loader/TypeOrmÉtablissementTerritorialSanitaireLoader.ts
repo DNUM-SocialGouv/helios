@@ -1,24 +1,39 @@
 import { DataSource } from 'typeorm'
 
+import { ActivitéSanitaireModel } from '../../../../../database/models/ActivitéSanitaireModel'
 import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
+import { ÉtablissementTerritorialSanitaireActivité } from '../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { ÉtablissementTerritorialSanitaireNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialSanitaireNonTrouvée'
 import { ÉtablissementTerritorialSanitaireLoader } from '../../../métier/gateways/ÉtablissementTerritorialSanitaireLoader'
 
 export class TypeOrmÉtablissementTerritorialSanitaireLoader implements ÉtablissementTerritorialSanitaireLoader {
-  constructor(private readonly orm: Promise<DataSource>) {}
+  constructor(private readonly orm: Promise<DataSource>) { }
 
-  async chargeParNuméroFiness(numéroFinessET: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialSanitaireNonTrouvée> {
+  async chargeActivité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialSanitaireActivité[]> {
+    const activitésÉtablissementTerritorialModel = await (await this.orm)
+      .getRepository(ActivitéSanitaireModel)
+      .find({
+        order: { année: 'ASC' },
+        where: { numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial },
+      })
+
+    const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
+
+    return this.construisActivité(activitésÉtablissementTerritorialModel, dateDeMiseAJourModel)
+  }
+
+  async chargeIdentité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialSanitaireNonTrouvée> {
     const établissementTerritorialModel = await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
       .findOneBy({
         domaine: DomaineÉtablissementTerritorial.SANITAIRE,
-        numéroFinessÉtablissementTerritorial: numéroFinessET,
+        numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial,
       })
     if (!établissementTerritorialModel) {
-      return new ÉtablissementTerritorialSanitaireNonTrouvée(numéroFinessET)
+      return new ÉtablissementTerritorialSanitaireNonTrouvée(numéroFinessÉtablissementTerritorial)
     }
 
     const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
@@ -52,5 +67,27 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       typeÉtablissement: établissementTerritorialModel.typeÉtablissement,
       téléphone: établissementTerritorialModel.téléphone,
     }
+  }
+
+  private construisActivité(
+    activitésÉtablissementTerritorialModel: ActivitéSanitaireModel[],
+    dateDeMiseAJourModel: DateMiseÀJourSourceModel | null
+  ): ÉtablissementTerritorialSanitaireActivité[] {
+    return activitésÉtablissementTerritorialModel.map((établissementTerritorialModel) =>
+      ({
+        année: établissementTerritorialModel.année,
+        dateMiseAJourSource: dateDeMiseAJourModel ? dateDeMiseAJourModel.dernièreMiseÀJour : '',
+        nombreJournéesCompletePsy: établissementTerritorialModel.nombreJournéesCompletePsy,
+        nombreJournéesCompletesSsr: établissementTerritorialModel.nombreJournéesCompletesSsr,
+        nombreJournéesPartiellesPsy: établissementTerritorialModel.nombreJournéesPartiellesPsy,
+        nombreJournéesPartielsSsr: établissementTerritorialModel.nombreJournéesPartielsSsr,
+        nombreSéjoursCompletsChirurgie: établissementTerritorialModel.nombreSéjoursCompletsChirurgie,
+        nombreSéjoursCompletsMédecine: établissementTerritorialModel.nombreSéjoursCompletsMédecine,
+        nombreSéjoursCompletsObstétrique: établissementTerritorialModel.nombreSéjoursCompletsObstétrique,
+        nombreSéjoursPartielsChirurgie: établissementTerritorialModel.nombreSéjoursPartielsChirurgie,
+        nombreSéjoursPartielsMédecine: établissementTerritorialModel.nombreSéjoursPartielsMédecine,
+        nombreSéjoursPartielsObstétrique: établissementTerritorialModel.nombreSéjoursPartielsObstétrique,
+        numéroFinessÉtablissementTerritorial: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
+      }))
   }
 }

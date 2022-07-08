@@ -1,4 +1,4 @@
-import { ÉtablissementTerritorialSanitaireIdentité } from '../entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireIdentité'
+import { ÉtablissementTerritorialSanitaire } from '../entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire'
 import { ÉtablissementTerritorialSanitaireNonTrouvée } from '../entities/ÉtablissementTerritorialSanitaireNonTrouvée'
 import { EntitéJuridiqueLoader } from '../gateways/EntitéJuridiqueLoader'
 import { ÉtablissementTerritorialSanitaireLoader } from '../gateways/ÉtablissementTerritorialSanitaireLoader'
@@ -6,9 +6,9 @@ import { ÉtablissementTerritorialSanitaireLoader } from '../gateways/Établisse
 export class RécupèreLÉtablissementTerritorialSanitaireUseCase {
   constructor(private établissementTerritorialSanitaireLoader: ÉtablissementTerritorialSanitaireLoader, private entitéJuridiqueLoader: EntitéJuridiqueLoader) {}
 
-  async exécute(numéroFinessÉtablissementTerritorialSanitaire: string): Promise<ÉtablissementTerritorialSanitaireIdentité> {
+  async exécute(numéroFinessÉtablissementTerritorialSanitaire: string): Promise<ÉtablissementTerritorialSanitaire> {
     const établissementTerritorialSanitaireOuErreur =
-      await this.établissementTerritorialSanitaireLoader.chargeParNuméroFiness(numéroFinessÉtablissementTerritorialSanitaire)
+      await this.établissementTerritorialSanitaireLoader.chargeIdentité(numéroFinessÉtablissementTerritorialSanitaire)
     if (établissementTerritorialSanitaireOuErreur instanceof ÉtablissementTerritorialSanitaireNonTrouvée) {
       throw établissementTerritorialSanitaireOuErreur
     }
@@ -17,9 +17,15 @@ export class RécupèreLÉtablissementTerritorialSanitaireUseCase {
       établissementTerritorialSanitaireOuErreur.numéroFinessEntitéJuridique
     )
 
+    const établissementTerritorialSanitaireActivités =
+      await this.établissementTerritorialSanitaireLoader.chargeActivité(numéroFinessÉtablissementTerritorialSanitaire)
+
     return {
-      ...établissementTerritorialSanitaireOuErreur,
-      ...entitéJuridiqueDeRattachement,
+      activités: établissementTerritorialSanitaireActivités,
+      identité: {
+        ...établissementTerritorialSanitaireOuErreur,
+        ...entitéJuridiqueDeRattachement,
+      },
     }
   }
 }

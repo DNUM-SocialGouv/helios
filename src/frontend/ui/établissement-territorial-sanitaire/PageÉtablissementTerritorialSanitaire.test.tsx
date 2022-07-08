@@ -1,30 +1,13 @@
 import { screen, within } from '@testing-library/react'
 
+import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from '../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder'
 import { fakeFrontDependencies, renderFakeComponent } from '../../testHelper'
 import { PageÉtablissementTerritorialSanitaire } from './PageÉtablissementTerritorialSanitaire'
-import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTerritorialSanitaireViewModel'
 
 const { wording } = fakeFrontDependencies
 
 describe('La page Établissement territorial sanitaire', () => {
-  const établissementTerritorialSanitaire = new ÉtablissementTerritorialSanitaireViewModel({
-    adresseAcheminement: '01130 NANTUA',
-    adresseNuméroVoie : '50',
-    adresseTypeVoie : 'R',
-    adresseVoie : 'PAUL PAINLEVE',
-    catégorieÉtablissement : '355',
-    courriel : 'a@example.com',
-    dateMiseAJourSource : '2021-07-07',
-    libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
-    numéroFinessEntitéJuridique : '010008407',
-    numéroFinessÉtablissementPrincipal : '010000057',
-    numéroFinessÉtablissementTerritorial: '010000040',
-    raisonSociale : 'CH NANTUA',
-    raisonSocialeDeLEntitéDeRattachement : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-    statutJuridique : 'Société Anonyme (S.A.)',
-    typeÉtablissement : 'S',
-    téléphone : '0474754800',
-  }, wording)
+  const établissementTerritorialSanitaire = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording)
 
   it('affiche le titre : "ET - numéro de FINESS - nom de l’établissement"', () => {
     // WHEN
@@ -163,24 +146,8 @@ describe('La page Établissement territorial sanitaire', () => {
 
   describe('affiche "non renseigné" quand une valeur est vide', () => {
     it('pour le téléphone', () => {
-      const établissementTerritorialSansTéléphone = new ÉtablissementTerritorialSanitaireViewModel({
-        adresseAcheminement: '01130 NANTUA',
-        adresseNuméroVoie : '50',
-        adresseTypeVoie : 'R',
-        adresseVoie : 'PAUL PAINLEVE',
-        catégorieÉtablissement : '355',
-        courriel : 'a@example.com',
-        dateMiseAJourSource : '2021-07-07',
-        libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
-        numéroFinessEntitéJuridique : '010008407',
-        numéroFinessÉtablissementPrincipal : '010000057',
-        numéroFinessÉtablissementTerritorial: '010000040',
-        raisonSociale : 'CH NANTUA',
-        raisonSocialeDeLEntitéDeRattachement : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-        statutJuridique : 'Société Anonyme (S.A.)',
-        typeÉtablissement : 'S',
-        téléphone : '',
-      }, wording)
+      // GIVEN
+      const établissementTerritorialSansTéléphone = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, { téléphone: '' })
 
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansTéléphone} />)
@@ -193,27 +160,11 @@ describe('La page Établissement territorial sanitaire', () => {
     })
 
     it('pour l’e-mail', () => {
-      const établissementTerritorialSansTéléphone = new ÉtablissementTerritorialSanitaireViewModel({
-        adresseAcheminement: '01130 NANTUA',
-        adresseNuméroVoie : '50',
-        adresseTypeVoie : 'R',
-        adresseVoie : 'PAUL PAINLEVE',
-        catégorieÉtablissement : '355',
-        courriel : '',
-        dateMiseAJourSource : '2021-07-07',
-        libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
-        numéroFinessEntitéJuridique : '010008407',
-        numéroFinessÉtablissementPrincipal : '010000057',
-        numéroFinessÉtablissementTerritorial: '010000040',
-        raisonSociale : 'CH NANTUA',
-        raisonSocialeDeLEntitéDeRattachement : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-        statutJuridique : 'Société Anonyme (S.A.)',
-        typeÉtablissement : 'S',
-        téléphone : '0474754800',
-      }, wording)
+      // GIVEN
+      const établissementTerritorialSansEMail = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, { courriel: '' })
 
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansTéléphone} />)
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansEMail} />)
 
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
@@ -224,24 +175,8 @@ describe('La page Établissement territorial sanitaire', () => {
   })
 
   it('affiche l’adresse incomplète lorsqu’il manque des champs d’adresse', () => {
-    const établissementTerritorialSansAdresseVoie = new ÉtablissementTerritorialSanitaireViewModel({
-      adresseAcheminement: '01130 NANTUA',
-      adresseNuméroVoie : '50',
-      adresseTypeVoie : 'R',
-      adresseVoie : '',
-      catégorieÉtablissement : '355',
-      courriel : 'a@example.com',
-      dateMiseAJourSource : '2021-07-07',
-      libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
-      numéroFinessEntitéJuridique : '010008407',
-      numéroFinessÉtablissementPrincipal : '010000057',
-      numéroFinessÉtablissementTerritorial: '010000040',
-      raisonSociale : 'CH NANTUA',
-      raisonSocialeDeLEntitéDeRattachement : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-      statutJuridique : 'Société Anonyme (S.A.)',
-      typeÉtablissement : 'S',
-      téléphone : '0474754800',
-    }, wording)
+    // GIVEN
+    const établissementTerritorialSansAdresseVoie = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, { adresseVoie: '' })
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansAdresseVoie} />)

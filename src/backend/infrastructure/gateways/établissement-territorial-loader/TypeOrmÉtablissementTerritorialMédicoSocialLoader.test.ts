@@ -110,9 +110,15 @@ describe('Établissement territorial médico-social loader', () => {
       )
       await établissementTerritorialIdentitéRepository.insert(établissementTerritorialModel)
 
-      const activitéMédicoSocialModel2019 = ÉtablissementTerritorialActivitéModelTestBuilder.crée({ année: 2019, numéroFinessÉtablissementTerritorial })
-      const activitéMédicoSocialModel2020 = ÉtablissementTerritorialActivitéModelTestBuilder.crée({ année: 2020, numéroFinessÉtablissementTerritorial })
-      const activitéMédicoSocialModel2021 = ÉtablissementTerritorialActivitéModelTestBuilder.crée({ année: 2021, numéroFinessÉtablissementTerritorial })
+      const activitéMédicoSocialModel2019 = ÉtablissementTerritorialActivitéModelTestBuilder.créeMédicoSocial(
+        { année: 2019, numéroFinessÉtablissementTerritorial }
+      )
+      const activitéMédicoSocialModel2020 = ÉtablissementTerritorialActivitéModelTestBuilder.créeMédicoSocial(
+        { année: 2020, numéroFinessÉtablissementTerritorial }
+      )
+      const activitéMédicoSocialModel2021 = ÉtablissementTerritorialActivitéModelTestBuilder.créeMédicoSocial(
+        { année: 2021, numéroFinessÉtablissementTerritorial }
+      )
       await activitéMédicoSocialModelRepository.insert(activitéMédicoSocialModel2021)
       await activitéMédicoSocialModelRepository.insert(activitéMédicoSocialModel2020)
       await activitéMédicoSocialModelRepository.insert(activitéMédicoSocialModel2019)

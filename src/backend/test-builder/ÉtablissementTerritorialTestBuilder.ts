@@ -1,4 +1,5 @@
 import { ÉtablissementTerritorialMédicoSocialActivité } from '../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
+import { ÉtablissementTerritorialSanitaireActivité } from '../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité'
 import { ÉtablissementTerritorialIdentité } from '../métier/entities/ÉtablissementTerritorialIdentité'
 
 export class ÉtablissementTerritorialTestBuilder {
@@ -36,7 +37,7 @@ export class ÉtablissementTerritorialTestBuilder {
     téléphone: '0102030406',
   }
 
-  private static activité: ÉtablissementTerritorialMédicoSocialActivité = {
+  private static activitéMédicoSocial: ÉtablissementTerritorialMédicoSocialActivité = {
     année: 2019,
     dateMiseAJourSource: '2022-05-14',
     duréeMoyenneSéjourAccompagnementPersonnesSorties: 80,
@@ -47,6 +48,22 @@ export class ÉtablissementTerritorialTestBuilder {
     tauxOccupationHébergementPermanent: 80,
     tauxOccupationHébergementTemporaire: 80,
     tauxRéalisationActivité: 80,
+  }
+
+  private static activitéSanitaire: ÉtablissementTerritorialSanitaireActivité = {
+    année: 2016,
+    dateMiseAJourSource: '2022-05-14',
+    nombreJournéesCompletePsy: 60,
+    nombreJournéesCompletesSsr: 60,
+    nombreJournéesPartiellesPsy: 60,
+    nombreJournéesPartielsSsr: 60,
+    nombreSéjoursCompletsChirurgie: 60,
+    nombreSéjoursCompletsMédecine: 60,
+    nombreSéjoursCompletsObstétrique: 60,
+    nombreSéjoursPartielsChirurgie: 60,
+    nombreSéjoursPartielsMédecine: 60,
+    nombreSéjoursPartielsObstétrique: 60,
+    numéroFinessÉtablissementTerritorial: '123456789',
   }
 
   public static créeUneIdentitéMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialIdentité>): ÉtablissementTerritorialIdentité {
@@ -67,7 +84,16 @@ export class ÉtablissementTerritorialTestBuilder {
     champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialActivité>
   ): ÉtablissementTerritorialMédicoSocialActivité {
     return {
-      ...ÉtablissementTerritorialTestBuilder.activité,
+      ...ÉtablissementTerritorialTestBuilder.activitéMédicoSocial,
+      ...champsSurchargés,
+    }
+  }
+
+  public static créeUneActivitéSanitaire(
+    champsSurchargés?: Partial<ÉtablissementTerritorialSanitaireActivité>
+  ): ÉtablissementTerritorialSanitaireActivité {
+    return {
+      ...ÉtablissementTerritorialTestBuilder.activitéSanitaire,
       ...champsSurchargés,
     }
   }
