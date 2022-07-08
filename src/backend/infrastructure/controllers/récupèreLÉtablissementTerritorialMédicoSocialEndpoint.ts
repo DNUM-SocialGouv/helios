@@ -12,10 +12,10 @@ export async function récupèreLÉtablissementTerritorialMédicoSocialEndpoint(
       dependencies.entitéJuridiqueLoader
     )
 
-    const établissementTerritorialMédicoSocialIdentité =
+    const établissementTerritorialMédicoSocial =
       await récupèreLÉtablissementTerritorialMédicoSocialUseCase.exécute(numéroFinessÉtablissementTerritorialMédicoSocial)
 
-    return établissementTerritorialMédicoSocialIdentité
+    return établissementTerritorialMédicoSocial
   } catch (error) {
     dependencies.logger.error(error)
     throw error

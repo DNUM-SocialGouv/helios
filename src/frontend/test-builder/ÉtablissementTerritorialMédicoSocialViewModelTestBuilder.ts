@@ -23,7 +23,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     téléphone : '0123456789',
   }
 
-  private static activité: ÉtablissementTerritorialMédicoSocial['activité'] = [
+  private static activité: ÉtablissementTerritorialMédicoSocial['activités'] = [
     {
       année: 2019,
       dateMiseAJourSource: '2021-07-07',
@@ -67,7 +67,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocial['identité']>
   ): ÉtablissementTerritorialMédicoSocialViewModel {
     return new ÉtablissementTerritorialMédicoSocialViewModel({
-      activité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.activité,
+      activités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.activité,
       identité: {
         ...ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
         ...champsSurchargés,

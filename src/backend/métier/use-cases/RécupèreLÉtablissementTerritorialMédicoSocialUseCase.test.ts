@@ -118,6 +118,6 @@ describe('La récupération d’un établissement territorial médico-social', (
     // THEN
     expect(mockedChargeActivité).toHaveBeenCalledWith(numéroFinessÉtablissementTerritorial)
     expect(mockedChargeActivité).toHaveBeenCalledTimes(1)
-    expect(établissementTerritorialMédicoSocial.activité).toStrictEqual(activités)
+    expect(établissementTerritorialMédicoSocial.activités).toStrictEqual(activités)
   })
 })

@@ -97,7 +97,7 @@ describe('La page Établissement territorial - Bloc activité', () => {
     ]
   )('affiche un tableau descriptif avec deux années après un click sur "Afficher la transcription"', (identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
     const établissementTerritorialMédicoSocial = new ÉtablissementTerritorialMédicoSocialViewModel({
-      activité: [
+      activités: [
         {
           année: 2019,
           dateMiseAJourSource: '2021-07-07',
@@ -182,7 +182,7 @@ describe('La page Établissement territorial - Bloc activité', () => {
     ]
   )('affiche un tableau descriptif avec une seule année après un click sur "Afficher la transcription"', (identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
     const établissementTerritorialMédicoSocial = new ÉtablissementTerritorialMédicoSocialViewModel({
-      activité: [
+      activités: [
         {
           année: 2019,
           dateMiseAJourSource: '2021-07-07',
@@ -340,7 +340,7 @@ describe('La page Établissement territorial - Bloc activité', () => {
     indicateur7
   ) => {
     const établissementTerritorialSansActivité = new ÉtablissementTerritorialMédicoSocialViewModel({
-      activité: [
+      activités: [
         {
           année: 2019,
           dateMiseAJourSource: '2021-07-07',
@@ -414,7 +414,7 @@ describe('La page Établissement territorial - Bloc activité', () => {
   it('affiche une phrase à la place des indicateurs lorsque des activités sont renseignées mais les indicateurs sont vides', () => {
     // GIVEN
     const établissementTerritorialSansActivité = new ÉtablissementTerritorialMédicoSocialViewModel({
-      activité: [
+      activités: [
         {
           année: 2019,
           dateMiseAJourSource: '2021-07-07',
@@ -485,7 +485,7 @@ describe('La page Établissement territorial - Bloc activité', () => {
   it('n’affiche pas le bloc activité si aucune activité n’est renseignée', () => {
     // GIVEN
     const établissementTerritorialSansActivité = new ÉtablissementTerritorialMédicoSocialViewModel({
-      activité: [],
+      activités: [],
       identité: {
         adresseAcheminement: '01117 OYONNAX CEDEX',
         adresseNuméroVoie : '1',

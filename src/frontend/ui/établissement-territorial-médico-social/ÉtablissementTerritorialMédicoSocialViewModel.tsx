@@ -106,7 +106,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   public get activitéEstElleRenseignée(): boolean {
-    return this.établissementTerritorial.activité.length === 0 ? false : true
+    return this.établissementTerritorial.activités.length === 0 ? false : true
   }
 
   public get leTauxOccupationHébergementPermanentEstIlRenseigné(): boolean {
@@ -379,7 +379,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   private construisLesAnnéessEtSesTaux(indicateur: keyof ÉtablissementTerritorialMédicoSocialActivité): number[][] {
     const valeurs: number[] = []
     const années: number[] = []
-    this.établissementTerritorial.activité.forEach((activité: ÉtablissementTerritorialMédicoSocialActivité) => {
+    this.établissementTerritorial.activités.forEach((activité: ÉtablissementTerritorialMédicoSocialActivité) => {
       if (activité[indicateur] !== null) {
         années.push(activité.année)
       }
@@ -396,7 +396,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   private construisLesAnnéessEtSesValeurs(indicateur: keyof ÉtablissementTerritorialMédicoSocialActivité): number[][] {
     const valeurs: number[] = []
     const années: number[] = []
-    this.établissementTerritorial.activité.forEach((activité: ÉtablissementTerritorialMédicoSocialActivité) => {
+    this.établissementTerritorial.activités.forEach((activité: ÉtablissementTerritorialMédicoSocialActivité) => {
       if (activité[indicateur] !== null) {
         années.push(activité.année)
       }
@@ -444,7 +444,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   private lindicateurEstIlRenseigné(indicateur: keyof ÉtablissementTerritorialMédicoSocialActivité): boolean {
-    const annéesVides = this.établissementTerritorial.activité.filter((activité: ÉtablissementTerritorialMédicoSocialActivité) => {
+    const annéesVides = this.établissementTerritorial.activités.filter((activité: ÉtablissementTerritorialMédicoSocialActivité) => {
       return activité[indicateur] === null
     })
 

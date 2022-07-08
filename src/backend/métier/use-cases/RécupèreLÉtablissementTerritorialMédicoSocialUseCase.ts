@@ -27,7 +27,7 @@ export class RécupèreLÉtablissementTerritorialMédicoSocialUseCase {
       await this.établissementTerritorialMédicoSocialLoader.chargeActivité(numéroFinessÉtablissementTerritorial)
 
     return {
-      activité: établissementTerritorialMédicoSocialActivitéOuErreur,
+      activités: établissementTerritorialMédicoSocialActivitéOuErreur,
       identité: {
         ...établissementTerritorialMédicoSocialOuErreur,
         ...entitéJuridiqueDeRattachement,

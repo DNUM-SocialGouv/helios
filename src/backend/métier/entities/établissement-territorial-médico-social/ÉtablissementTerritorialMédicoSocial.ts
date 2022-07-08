@@ -4,7 +4,7 @@ import { MonoÉtablissement } from './MonoÉtablissement'
 import { ÉtablissementTerritorialMédicoSocialActivité } from './ÉtablissementTerritorialMédicoSocialActivité'
 
 export type ÉtablissementTerritorialMédicoSocial = Readonly<{
-  activité: ÉtablissementTerritorialMédicoSocialActivité[]
+  activités: ÉtablissementTerritorialMédicoSocialActivité[]
   identité: ÉtablissementTerritorialIdentité &
     MonoÉtablissement &
     EntitéJuridiqueDeRattachement
