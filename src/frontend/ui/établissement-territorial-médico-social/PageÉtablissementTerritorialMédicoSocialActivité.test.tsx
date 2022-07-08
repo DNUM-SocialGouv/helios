@@ -7,7 +7,7 @@ import { ÉtablissementTerritorialMédicoSocialViewModel } from './Établissemen
 
 const { wording } = fakeFrontDependencies
 
-describe('La page Établissement territorial - Bloc activité', () => {
+describe('La page Établissement territorial Médico-social - Bloc activité', () => {
   const établissementTerritorialMédicoSocial = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording)
 
   it.each(
