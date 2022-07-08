@@ -18,7 +18,7 @@ describe('La récupération d’un établissement territorial sanitaire', () => 
       raisonSocialeDeLEntitéDeRattachement: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
       statutJuridique: 'Société Anonyme (S.A.)',
     })
-    const établissementTerritorialLoader: ÉtablissementTerritorialSanitaireLoader = { chargeParNuméroFiness: mockedChargeParNuméroFiness }
+    const établissementTerritorialLoader: ÉtablissementTerritorialSanitaireLoader = { chargeIdentité: mockedChargeParNuméroFiness }
     const entitéJuridiqueLoader: EntitéJuridiqueLoader =
       { chargeLEntitéJuridiqueDeRattachement: mockedChargeLEntitéJuridiqueDeRattachement, chargeParNuméroFiness: jest.fn() }
     const récupèreLÉtablissementTerritorialUseCase =
@@ -47,7 +47,7 @@ describe('La récupération d’un établissement territorial sanitaire', () => 
   it('signale une alerte si l’établissement territorial liée au numéro FINESS n’est pas trouvé', async () => {
     // GIVEN
     const mockedChargeParNuméroFiness = jest.fn().mockResolvedValueOnce(new ÉtablissementTerritorialSanitaireNonTrouvée(numéroFinessÉtablissementTerritorial))
-    const établissementTerritorialLoader: ÉtablissementTerritorialSanitaireLoader = { chargeParNuméroFiness: mockedChargeParNuméroFiness }
+    const établissementTerritorialLoader: ÉtablissementTerritorialSanitaireLoader = { chargeIdentité: mockedChargeParNuméroFiness }
     const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeLEntitéJuridiqueDeRattachement: jest.fn(), chargeParNuméroFiness: jest.fn() }
     const récupèreLÉtablissementTerritorialUseCase =
       new RécupèreLÉtablissementTerritorialSanitaireUseCase(établissementTerritorialLoader, entitéJuridiqueLoader)
