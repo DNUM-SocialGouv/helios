@@ -1,4 +1,3 @@
-import { ÉtablissementTerritorialMédicoSocial } from '../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialSanitaire } from '../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire'
 import { Wording } from '../configuration/wording/Wording'
 import { ÉtablissementTerritorialSanitaireViewModel } from '../ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel'
@@ -24,7 +23,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
   }
 
   public static crée(
-    wording: Wording, champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocial['identité']>
+    wording: Wording, champsSurchargés?: Partial<ÉtablissementTerritorialSanitaire['identité']>
   ): ÉtablissementTerritorialSanitaireViewModel {
     return new ÉtablissementTerritorialSanitaireViewModel({
       activités: [],
