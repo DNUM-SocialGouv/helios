@@ -55,9 +55,9 @@ def extrais_l_equivalence_des_noms_des_colonnes(équivalences: ÉquivalencesDiam
     "Nombre de séjours HC Médecine": ColonneHelios(nom="nombre_sejours_complets_medecine", type=float),
     "Nombre de séjours HC Chirurgie": ColonneHelios(nom="nombre_sejours_complets_chirurgie", type=float),
     "Nombre de séjours HC Obstétrique": ColonneHelios(nom="nombre_sejours_complets_obstetrique", type=float),
-    "Nombre de journées hospit compléte SSR": ColonneHelios(nom="nombre_journees_completes_ssr", type=float),
+    "Nombre de journées hospit complète SSR": ColonneHelios(nom="nombre_journees_completes_ssr", type=float),
     "Nombre de journées HTP SSR": ColonneHelios(nom="nombre_journees_partiels_ssr", type=float),
-    "Nb journées hospit compléte PSY": ColonneHelios(nom="nombre_journees_complete_psy", type=float),
+    "Nb journées hospit complète PSY": ColonneHelios(nom="nombre_journees_complete_psy", type=float),
     "Nb journées HTP PSY": ColonneHelios(nom="nombre_journées_partielles_psy", type=float),
 }
 

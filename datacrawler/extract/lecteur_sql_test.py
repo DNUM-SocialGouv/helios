@@ -1,7 +1,12 @@
 import pandas as pd
 
 from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
-from datacrawler.test_helpers import base_de_données_test, supprime_les_données_des_tables, sauvegarde_un_établissement_en_base, sauvegarde_une_entité_juridique_en_base
+from datacrawler.test_helpers import (
+    base_de_données_test,
+    supprime_les_données_des_tables,
+    sauvegarde_un_établissement_en_base,
+    sauvegarde_une_entité_juridique_en_base,
+)
 
 
 class TestTrouveLesFinessDesEtablissementsEnBase:

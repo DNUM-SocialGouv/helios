@@ -7,7 +7,7 @@ from sqlalchemy.engine import Engine
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
-from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux import (
+from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.équivalences_diamant_helios import (
     colonnes_à_lire_men_pmsi_annuel,
     extrais_l_equivalence_des_types_des_colonnes,
     équivalences_diamant_men_pmsi_annuel_helios,
@@ -16,7 +16,7 @@ from datacrawler.transform.transforme_les_activités_des_établissements_médico
 
 def ajoute_les_activités_des_établissements_sanitaires(chemin_du_fichier_men_pmsi_annuel: str, base_de_données: Engine, logger: Logger) -> None:
     logger.info("Récupère les activités des établissements médico-sociaux")
-    données_ann_errd_ej_et = lis_le_fichier_csv(
+    données_men_pmsi_annuel = lis_le_fichier_csv(
         chemin_du_fichier_men_pmsi_annuel,
         colonnes_à_lire_men_pmsi_annuel,
         extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_men_pmsi_annuel_helios),
