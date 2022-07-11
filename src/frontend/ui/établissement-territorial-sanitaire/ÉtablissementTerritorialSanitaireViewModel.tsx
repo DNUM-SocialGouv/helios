@@ -1,31 +1,26 @@
-import { ChartData } from 'chart.js'
-import { Context } from 'chartjs-plugin-datalabels'
+import {
+  ChartData,
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js'
 import { ReactElement } from 'react'
 import { Bar } from 'react-chartjs-2'
 
 import { ÉtablissementTerritorialSanitaire } from '../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire'
-import { ÉtablissementTerritorialSanitaireActivité } from '../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité'
 import { Wording } from '../../configuration/wording/Wording'
 
 export class ÉtablissementTerritorialSanitaireViewModel {
-  readonly seuilValeurAtypique = 120
-  readonly couleurDuFond = '#E8EDFF'
-  readonly couleurDuFondHistogrammePrimaire = '#000091'
-  readonly couleurDuFondHistogrammeSecondaire = '#4E68BB'
-  readonly couleurDuFondDeLaLigne = '#929292'
-  readonly couleurDuFondHistogrammeDeDépassement = '#C9191E'
-  readonly couleurDelAbscisse = '#161616'
-  readonly couleurDeLaValeur = '#3A3A3A'
-  readonly fondDeCouleurPourPremierHistogramme = [
-    this.couleurDuFondHistogrammeSecondaire,
-    this.couleurDuFondHistogrammeSecondaire,
-    this.couleurDuFondHistogrammePrimaire,
-  ]
-  readonly fondDeCouleurPourSecondHistogramme = [
-    this.couleurDuFond,
-    this.couleurDuFond,
-    this.couleurDuFond,
-  ]
+  readonly couleurDuFondHistogrammeBleuClair = '#DEE5FD'
+  readonly couleurDuFondHistogrammeBleuFoncé = '#2F4077'
+  readonly couleurDuFondHistogrammeVertClair = '#DFFDF7'
+  readonly couleurDuFondHistogrammeVertFoncé = '#006A6F'
+  readonly couleurDuFondHistogrammeRougeClair = '#FEE9E6'
+  readonly couleurDuFondHistogrammeRougeFoncé = '#A94645'
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, private readonly wording: Wording) {}
 
@@ -87,63 +82,74 @@ export class ÉtablissementTerritorialSanitaireViewModel {
   }
 
   public get nombreDeséjoursMCO(): JSX.Element {
-    const [valeurs, années] = this.construisLesAnnéessEtSesTaux('nombreSéjoursCompletsMédecine')
-    const chartColors = this.construisLeFondDeCouleurDesHistogrammes(valeurs)
-    const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs)
-    return this.afficheUnHistogrammeVertical(chartColors, valeurs, dataLabelsColor, années)
+    return this.afficheUnHistogrammeVertical()
   }
 
-  private construisLaCouleurDuLabel(valeurs: number[], estHorizontal: boolean = false): string[] {
-    const maxAvantDePerdreLeContraste = 20
-    const couleurDesAnnées = estHorizontal ? Array(3).fill(this.couleurDeLaValeur) : Array(3).fill(this.couleurDuFond)
-
-    valeurs.forEach((valeur: number, index: number) => {
-      if (valeur < maxAvantDePerdreLeContraste) {
-        couleurDesAnnées[index] = 'black'
-      }
-    })
-
-    return couleurDesAnnées
-  }
-
-  private construisLeFondDeCouleurDesHistogrammes(valeurs: number[]): string[] {
-    const fondDeCouleurDesHistogrammes = [...this.fondDeCouleurPourPremierHistogramme]
-
-    valeurs.forEach((valeur: number, index: number) => {
-      if (valeur > this.seuilValeurAtypique) {
-        fondDeCouleurDesHistogrammes[index] = this.couleurDuFondHistogrammeDeDépassement
-      }
-    })
-
-    return fondDeCouleurDesHistogrammes
-  }
-
-  private construisLesAnnéessEtSesTaux(indicateur: keyof ÉtablissementTerritorialSanitaireActivité): number[][] {
-    const valeurs: number[] = []
-    const années: number[] = []
-    this.établissementTerritorial.activités.forEach((activité: ÉtablissementTerritorialSanitaireActivité) => {
-      if (activité[indicateur] !== null) {
-        années.push(activité.année)
-      }
-
-      if (activité[indicateur] !== null) {
-        // @ts-ignore
-        valeurs.push(this.transformeEnTaux(activité[indicateur]))
-      }
-    })
-
-    return [valeurs, années]
-  }
-
-  private afficheUnHistogrammeVertical(
-    chartColors: string[],
-    valeurs: number[],
-    dataLabelsColor: string[],
-    années: number[]
-  ): JSX.Element {
+  private afficheUnHistogrammeVertical(): JSX.Element {
+    ChartJS.register(
+      CategoryScale,
+      LinearScale,
+      BarElement,
+      Title,
+      Tooltip,
+      Legend
+    )
     const data: ChartData = {
-      datasets: [],
-      labels: années,
+      datasets: [
+        {
+          backgroundColor: this.couleurDuFondHistogrammeBleuClair,
+          borderColor: this.couleurDuFondHistogrammeBleuFoncé,
+          data: [30, 30, 30, 30, 30],
+          label: 'Hospitalisation Partielle Médecine',
+          stack: 'Stack 1',
+        },
+        {
+          backgroundColor: this.couleurDuFondHistogrammeBleuFoncé,
+          borderColor: this.couleurDuFondHistogrammeBleuFoncé,
+          data: [10, 20, 30, 15, 9],
+          label: 'Hospitalisation Complète Médecine',
+          stack: 'Stack 1',
+        },
+        {
+          backgroundColor: this.couleurDuFondHistogrammeVertClair,
+          borderColor: this.couleurDuFondHistogrammeVertFoncé,
+          data: [60, 60, 60, null, 60],
+          label: 'Hospitalisation Partielle Chirurgie',
+          stack: 'Stack 2',
+        },
+        {
+          backgroundColor: this.couleurDuFondHistogrammeVertFoncé,
+          borderColor: this.couleurDuFondHistogrammeVertFoncé,
+          data: [60, 20, 60, 30, 60],
+          label: 'Hospitalisation Complète Chirurgie',
+          stack: 'Stack 2',
+        },
+        {
+          backgroundColor: this.couleurDuFondHistogrammeRougeClair,
+          borderColor: this.couleurDuFondHistogrammeRougeFoncé,
+          data: [100, 100, 100, 100, 100],
+          label: 'Hospitalisation Partielle Obstétrique',
+          stack: 'Stack 3',
+        },
+        {
+          backgroundColor: this.couleurDuFondHistogrammeRougeFoncé,
+          borderColor: this.couleurDuFondHistogrammeRougeFoncé,
+          data: [140, 140, 160, 180, 200],
+          label: 'Hospitalisation Complète Obstétrique',
+          stack: 'Stack 3',
+        },
+      ],
+      labels: [2018, 2019, 2020, 2021, 2022],
+    }
+
+    const options = {
+      elements: { bar: { borderWidth: 2 } },
+      plugins: { legend: { align: 'end', position: 'bottom' as const } },
+      responsive: true,
+      scales: {
+        x: { grid: { drawOnChartArea: false } },
+        y: { grid: { color: this.couleurDuFondHistogrammeRougeFoncé }, stacked: true },
+      },
     }
 
     return (
@@ -151,6 +157,8 @@ export class ÉtablissementTerritorialSanitaireViewModel {
         <Bar
           // @ts-ignore
           data={data}
+          // @ts-ignore
+          options={options}
         />
       </>
     )
