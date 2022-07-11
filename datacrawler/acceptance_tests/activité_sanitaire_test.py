@@ -25,7 +25,7 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
         # GIVEN
         chemin_du_fichier_men_pmsi_annuel = "data_set/diamant/MEN_PMSI_ANNUEL_2022_06_07.CSV"
         sauvegarde_une_entité_juridique_en_base("010008407", base_de_données_test)
-        sauvegarde_un_établissement_en_base("010003598", "010008407", base_de_données_test)
+        sauvegarde_un_établissement_en_base("010005239", "010008407", base_de_données_test)
         logger = MagicMock()
 
         # WHEN
@@ -34,20 +34,17 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
 
         # THEN
         activité_attendue = pd.DataFrame(
-            {
-                "annee": [2017],
-                "numero_finess_etablissement_territorial": ["010003598"],
-                "nombre_sejours_partiels_medecine": [1.0],
-                "nombre_sejours_partiels_obstetrique": [NaN],
-                "nombre_sejours_partiels_chirurgie": [NaN],
-                "nombre_sejours_complets_medecine": [255.0],
-                "nombre_sejours_complets_obstetrique": [NaN],
-                "nombre_sejours_complets_chirurgie": [6.0],
-                "nombre_journees_completes_ssr": [1074.0],
-                "nombre_journees_partiels_ssr": [NaN],
-                "nombre_journees_complete_psy": [NaN],
-                "nombre_journées_partielles_psy": [NaN],
-            }
+            {'annee': [2017, 2018, 2019],
+             'numero_finess_etablissement_territorial': ['010005239', '010005239', '010005239'],
+             'nombre_sejours_partiels_medecine': [1.0, 3.0, 4.0],
+             'nombre_sejours_partiels_obstetrique': [10.0, NaN, NaN],
+             'nombre_sejours_partiels_chirurgie': [20.0, NaN, NaN],
+             'nombre_sejours_complets_medecine': [255.0, 232.0, 231.0],
+             'nombre_sejours_complets_obstetrique': [10.0, NaN, NaN],
+             'nombre_sejours_complets_chirurgie': [6.0, 10.0, 9.0],
+             'nombre_journees_completes_ssr': [1074.0, 1103.0, 1087.0],
+             'nombre_journees_partiels_ssr': [100.0, NaN, NaN], 'nombre_journees_complete_psy': [200.0, NaN, NaN],
+             'nombre_journées_partielles_psy': [300.0, NaN, NaN]}
         )
 
         activité_enregistrée = pd.read_sql_table(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
@@ -59,11 +56,11 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
         # GIVEN
         chemin_du_fichier_men_pmsi_annuel = "data_set/diamant/MEN_PMSI_ANNUEL_2022_06_07.CSV"
         sauvegarde_une_entité_juridique_en_base("010008407", base_de_données_test)
-        sauvegarde_un_établissement_en_base("010003598", "010008407", base_de_données_test)
+        sauvegarde_un_établissement_en_base("010005239", "010008407", base_de_données_test)
         activité_existante = pd.DataFrame(
             {
                 "annee": [2017],
-                "numero_finess_etablissement_territorial": ["010003598"],
+                "numero_finess_etablissement_territorial": ["010005239"],
                 "nombre_sejours_partiels_medecine": [1.0],
                 "nombre_sejours_partiels_obstetrique": [NaN],
                 "nombre_sejours_partiels_chirurgie": [NaN],
@@ -87,24 +84,22 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
 
         # THEN
         activité_attendue = pd.DataFrame(
-            {
-                "annee": [2017],
-                "numero_finess_etablissement_territorial": ["010003598"],
-                "nombre_sejours_partiels_medecine": [1.0],
-                "nombre_sejours_partiels_obstetrique": [NaN],
-                "nombre_sejours_partiels_chirurgie": [NaN],
-                "nombre_sejours_complets_medecine": [255.0],
-                "nombre_sejours_complets_obstetrique": [NaN],
-                "nombre_sejours_complets_chirurgie": [6.0],
-                "nombre_journees_completes_ssr": [1074.0],
-                "nombre_journees_partiels_ssr": [NaN],
-                "nombre_journees_complete_psy": [NaN],
-                "nombre_journées_partielles_psy": [NaN],
-            }
+            {'annee': [2017, 2018, 2019],
+             'numero_finess_etablissement_territorial': ['010005239', '010005239', '010005239'],
+             'nombre_sejours_partiels_medecine': [1.0, 3.0, 4.0],
+             'nombre_sejours_partiels_obstetrique': [10.0, NaN, NaN],
+             'nombre_sejours_partiels_chirurgie': [20.0, NaN, NaN],
+             'nombre_sejours_complets_medecine': [255.0, 232.0, 231.0],
+             'nombre_sejours_complets_obstetrique': [10.0, NaN, NaN],
+             'nombre_sejours_complets_chirurgie': [6.0, 10.0, 9.0],
+             'nombre_journees_completes_ssr': [1074.0, 1103.0, 1087.0],
+             'nombre_journees_partiels_ssr': [100.0, NaN, NaN], 'nombre_journees_complete_psy': [200.0, NaN, NaN],
+             'nombre_journées_partielles_psy': [300.0, NaN, NaN]}
         )
 
         activité_enregistrée = pd.read_sql_table(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
                                                  base_de_données_test)
+        print(activité_enregistrée.to_dict())
 
         pd.testing.assert_frame_equal(activité_enregistrée, activité_attendue)
 

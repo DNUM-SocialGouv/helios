@@ -1,2 +1,7 @@
 Finess EJ;Finess;Année;Nombre de séjours HTP/AMBU Médecine;Nombre total de séjours MCO;Nombre de séjours HTP/AMBU Obstétrique;Nombre de séjours HTP/AMBU Chirurgie;Nombre de séjours HC Médecine;Nombre de séjours HC Chirurgie;Nombre de séjours HC Obstétrique;Nombre de journées hospit complète SSR;Nombre de journées HTP SSR;Nombre total de séjours HAD;Nb journées hospit complète PSY;Nb journées HTP PSY
-010008407;010003598;2017;1;262;;;255;6;;1074;;1074;;
+010008407;010005239;2017;1;302;10;20;255;6;10;1074;100;1674;200;300
+010008407;010005239;2018;3;245;;;232;10;;1103;;1103;;
+010008407;010005239;2019;4;244;;;231;9;;1087;;1087;;
+010008407;010005239;2019;4;244;;;231;9;;;;;;
+010008407;111111111;2017;14;24;;;2;8;;;;;;
+010008407;010786259;2017;;;;;;;;;;;;
