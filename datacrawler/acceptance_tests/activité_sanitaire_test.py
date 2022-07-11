@@ -5,8 +5,8 @@ import pytest
 from numpy import NaN
 
 import datacrawler
-from datacrawler.ajoute_les_activités_des_établissements_médico_sociaux import ajoute_les_activités_des_établissements_médico_sociaux
-from datacrawler.ajoute_les_activités_des_établissements_sanitaires import ajoute_les_activités_des_établissements_sanitaires
+from datacrawler.ajoute_les_activités_des_établissements_sanitaires import \
+    ajoute_les_activités_des_établissements_sanitaires
 from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES
 from datacrawler.test_helpers import (
     base_de_données_test,
@@ -29,7 +29,8 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
         logger = MagicMock()
 
         # WHEN
-        ajoute_les_activités_des_établissements_sanitaires(chemin_du_fichier_men_pmsi_annuel, base_de_données_test, logger)
+        ajoute_les_activités_des_établissements_sanitaires(chemin_du_fichier_men_pmsi_annuel, base_de_données_test,
+                                                           logger)
 
         # THEN
         activité_attendue = pd.DataFrame(
@@ -49,7 +50,8 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
             }
         )
 
-        activité_enregistrée = pd.read_sql_table(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, base_de_données_test)
+        activité_enregistrée = pd.read_sql_table(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
+                                                 base_de_données_test)
 
         pd.testing.assert_frame_equal(activité_enregistrée, activité_attendue)
 
@@ -74,12 +76,14 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
                 "nombre_journées_partielles_psy": [NaN],
             }
         )
-        sauvegarde_une_activité_en_base(activité_existante, base_de_données_test, "activité_sanitaire")
+        sauvegarde_une_activité_en_base(activité_existante, base_de_données_test,
+                                        TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES)
 
         logger = MagicMock()
 
         # WHEN
-        ajoute_les_activités_des_établissements_sanitaires(chemin_du_fichier_men_pmsi_annuel, base_de_données_test, logger)
+        ajoute_les_activités_des_établissements_sanitaires(chemin_du_fichier_men_pmsi_annuel, base_de_données_test,
+                                                           logger)
 
         # THEN
         activité_attendue = pd.DataFrame(
@@ -99,45 +103,49 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
             }
         )
 
-        activité_enregistrée = pd.read_sql_table(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, base_de_données_test)
+        activité_enregistrée = pd.read_sql_table(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
+                                                 base_de_données_test)
 
         pd.testing.assert_frame_equal(activité_enregistrée, activité_attendue)
 
-    @patch.object(datacrawler.ajoute_les_activités_des_établissements_médico_sociaux, "sauvegarde_les_activités_des_établissements_médico_sociaux")
-    def skip_test_revient_à_la_situation_initiale_si_l_écriture_des_activités_échoue(
-        self, mocked_sauvegarde_les_activités_des_établissements_médico_sociaux: Mock
+    @patch.object(datacrawler.ajoute_les_activités_des_établissements_sanitaires, "sauvegarde")
+    def test_revient_à_la_situation_initiale_si_l_écriture_des_activités_échoue(
+            self, mocked_sauvegarde: Mock
     ) -> None:
         # GIVEN
+        chemin_du_fichier_men_pmsi_annuel = "data_set/diamant/MEN_PMSI_ANNUEL_2022_06_07.CSV"
         sauvegarde_une_entité_juridique_en_base("010008407", base_de_données_test)
         sauvegarde_un_établissement_en_base("010003598", "010008407", base_de_données_test)
-        chemin_du_fichier_ann_errd_ej_et = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
-        chemin_du_fichier_ann_ms_tdp_et = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
-        table_activité_existante = pd.DataFrame(
+        activité_existante = pd.DataFrame(
             {
-                "annee": [2018, 2019],
+                "annee": [2017, 2018],
                 "numero_finess_etablissement_territorial": ["010003598", "010003598"],
-                "taux_occupation_accueil_de_jour": [0.48012820512820514, NaN],
-                "taux_occupation_en_hebergement_temporaire": [0.93698630136986305, NaN],
-                "taux_occupation_en_hebergement_permanent": [0.99779299847793002, NaN],
-                "taux_realisation_activite": [0.8993, 1.0182],
-                "file_active_personnes_accompagnees": [121.0, NaN],
-                "nombre_moyen_journees_absence_personnes_accompagnees": [17.86, 18.52],
-                "duree_moyenne_sejour_accompagnement_personnes_sorties": [2359.81, 2226.21],
+                "nombre_sejours_partiels_medecine": [1.0, NaN],
+                "nombre_sejours_partiels_obstetrique": [NaN, NaN],
+                "nombre_sejours_partiels_chirurgie": [NaN, NaN],
+                "nombre_sejours_complets_medecine": [255.0, NaN],
+                "nombre_sejours_complets_obstetrique": [NaN, NaN],
+                "nombre_sejours_complets_chirurgie": [6.0, NaN],
+                "nombre_journees_completes_ssr": [1074.0, NaN],
+                "nombre_journees_partiels_ssr": [NaN, NaN],
+                "nombre_journees_complete_psy": [NaN, NaN],
+                "nombre_journées_partielles_psy": [NaN, NaN],
             }
         )
-        sauvegarde_une_activité_en_base(table_activité_existante, base_de_données_test, "activité_sanitaire")
+        sauvegarde_une_activité_en_base(activité_existante, base_de_données_test,
+                                        TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES)
 
         logger = MagicMock()
 
-        mocked_sauvegarde_les_activités_des_établissements_médico_sociaux.side_effect = ValueError()
+        mocked_sauvegarde.side_effect = ValueError()
 
         # WHEN
         with pytest.raises(ValueError):
-            ajoute_les_activités_des_établissements_médico_sociaux(
-                chemin_du_fichier_ann_errd_ej_et, chemin_du_fichier_ann_ms_tdp_et, base_de_données_test, logger
+            ajoute_les_activités_des_établissements_sanitaires(
+                chemin_du_fichier_men_pmsi_annuel, base_de_données_test, logger
             )
 
         # THEN
         table_activité = pd.read_sql_table(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, base_de_données_test)
 
-        pd.testing.assert_frame_equal(table_activité, table_activité_existante)
+        pd.testing.assert_frame_equal(table_activité, activité_existante)
