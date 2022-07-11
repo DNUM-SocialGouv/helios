@@ -110,7 +110,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   public get leTauxOccupationHébergementPermanentEstIlRenseigné(): boolean {
-    return this.lindicateurEstIlRenseigné('tauxOccupationHébergementPermanent')
+    return this.lIndicateurEstIlRenseigné('tauxOccupationHébergementPermanent')
   }
 
   public get tauxOccupationHébergementPermanent(): JSX.Element {
@@ -122,7 +122,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   public get leTauxOccupationHébergementTemporaireEstIlRenseigné(): boolean {
-    return this.lindicateurEstIlRenseigné('tauxOccupationHébergementTemporaire')
+    return this.lIndicateurEstIlRenseigné('tauxOccupationHébergementTemporaire')
   }
 
   public get tauxOccupationHébergementTemporaire(): JSX.Element {
@@ -134,7 +134,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   public get leTauxOccupationAccueilDeJourEstIlRenseigné(): boolean {
-    return this.lindicateurEstIlRenseigné('tauxOccupationAccueilDeJour')
+    return this.lIndicateurEstIlRenseigné('tauxOccupationAccueilDeJour')
   }
 
   public get tauxOccupationAccueilDeJour(): JSX.Element {
@@ -146,7 +146,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   public get leTauxRéalisationActivitéEstIlRenseigné(): boolean {
-    return this.lindicateurEstIlRenseigné('tauxRéalisationActivité')
+    return this.lIndicateurEstIlRenseigné('tauxRéalisationActivité')
   }
 
   public get tauxRéalisationActivité(): JSX.Element {
@@ -158,7 +158,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   public get laFileActivePersonnesAccompagnéesEstElleRenseignée(): boolean {
-    return this.lindicateurEstIlRenseigné('fileActivePersonnesAccompagnées')
+    return this.lIndicateurEstIlRenseigné('fileActivePersonnesAccompagnées')
   }
 
   public get fileActivePersonnesAccompagnées(): JSX.Element {
@@ -170,7 +170,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   public get leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné(): boolean {
-    return this.lindicateurEstIlRenseigné('nombreMoyenJournéesAbsencePersonnesAccompagnées')
+    return this.lIndicateurEstIlRenseigné('nombreMoyenJournéesAbsencePersonnesAccompagnées')
   }
 
   public get nombreMoyenJournéesAbsencePersonnesAccompagnées(): JSX.Element {
@@ -183,7 +183,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   public get laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée(): boolean {
-    return this.lindicateurEstIlRenseigné('duréeMoyenneSéjourAccompagnementPersonnesSorties')
+    return this.lIndicateurEstIlRenseigné('duréeMoyenneSéjourAccompagnementPersonnesSorties')
   }
 
   public get duréeMoyenneSéjourAccompagnementPersonnesSorties(): JSX.Element {
@@ -358,7 +358,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
       scales: {
         x: {
           display: false,
-          max: valeurMaximale + 200,
+          max: 1.15 * valeurMaximale,
           min: 0,
         },
         y: {
@@ -443,15 +443,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     return Number((nombre * 100).toFixed(1))
   }
 
-  private lindicateurEstIlRenseigné(indicateur: keyof ÉtablissementTerritorialMédicoSocialActivité): boolean {
-    const annéesVides = this.établissementTerritorial.activités.filter((activité: ÉtablissementTerritorialMédicoSocialActivité) => {
-      return activité[indicateur] === null
-    })
-
-    if (annéesVides.length === 3) {
-      return false
-    }
-
-    return true
+  private lIndicateurEstIlRenseigné(indicateur: keyof ÉtablissementTerritorialMédicoSocialActivité): boolean {
+    return this.établissementTerritorial.activités.some((activité: ÉtablissementTerritorialMédicoSocialActivité) => activité[indicateur] !== null)
   }
 }
