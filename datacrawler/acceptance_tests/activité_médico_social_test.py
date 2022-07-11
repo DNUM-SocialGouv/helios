@@ -9,10 +9,10 @@ from datacrawler.ajoute_les_activités_des_établissements_médico_sociaux impor
 from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX
 from datacrawler.test_helpers import (
     base_de_données_test,
-    supprime_les_données_des_tables,
     sauvegarde_un_établissement_en_base,
     sauvegarde_une_activité_en_base,
     sauvegarde_une_entité_juridique_en_base,
+    supprime_les_données_des_tables,
 )
 
 
@@ -83,7 +83,7 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
                 "duree_moyenne_sejour_accompagnement_personnes_sorties": [2359.81, 2226.21],
             }
         )
-        sauvegarde_une_activité_en_base(table_activité_existante, base_de_données_test)
+        sauvegarde_une_activité_en_base(table_activité_existante, base_de_données_test, "activite_medico_social")
 
         logger = MagicMock()
 
@@ -139,7 +139,7 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
                 "duree_moyenne_sejour_accompagnement_personnes_sorties": [2359.81, 2226.21],
             }
         )
-        sauvegarde_une_activité_en_base(table_activité_existante, base_de_données_test)
+        sauvegarde_une_activité_en_base(table_activité_existante, base_de_données_test, "activite_medico_social")
 
         logger = MagicMock()
 

@@ -1,7 +1,7 @@
 import pandas as pd
 from numpy import NaN
 
-from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.équivalences_diamant_helios import index_des_activités
+from datacrawler.transform.équivalences_diamant_helios import index_des_activités
 from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.fusionne_les_données_ann_errd_ej_et_avec_ann_ms_tdp_et import (
     fusionne_les_données_ann_errd_ej_et_avec_les_données_ann_ms_tdp_et,
 )

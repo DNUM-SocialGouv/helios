@@ -3,7 +3,7 @@ from typing import Dict, cast
 
 import pandas as pd
 
-from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.équivalences_diamant_helios import (
+from datacrawler.transform.équivalences_diamant_helios import (
     extrais_l_equivalence_des_noms_des_colonnes,
     index_des_activités,
     équivalences_diamant_ann_ms_tdp_et_helios,

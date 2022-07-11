@@ -1,8 +1,8 @@
 module.exports = class AjoutActivitéSanitaire1657207341663 {
 
   async up(queryRunner) {
-      await queryRunner.query(
-          `CREATE TABLE activite_sanitaire (
+    await queryRunner.query(
+      `CREATE TABLE activite_sanitaire (
         annee INT NOT NULL,
         numero_finess_etablissement_territorial VARCHAR(9) NOT NULL,
         nombre_sejours_partiels_medecine FLOAT,
@@ -23,11 +23,10 @@ module.exports = class AjoutActivitéSanitaire1657207341663 {
             REFERENCES etablissement_territorial (numero_finess_etablissement_territorial)
             ON DELETE CASCADE
       );`
-      )
+    )
   }
 
   async down(queryRunner) {
-      await queryRunner.query('DROP TABLE activite_sanitaire')
+    await queryRunner.query('DROP TABLE activite_sanitaire')
   }
-
 }

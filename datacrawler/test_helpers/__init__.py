@@ -1,9 +1,11 @@
+from typing import Dict
+
 import pandas as pd
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 
 from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES
-from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.équivalences_diamant_helios import index_des_activités
+from datacrawler.transform.équivalences_diamant_helios import index_des_activités
 
 base_de_données_test = create_engine("postgresql://helios:h3li0s@localhost:5433/helios")
 
@@ -79,5 +81,57 @@ def supprime_les_données_des_tables(base_de_données: Engine) -> None:
     base_de_données.execute(f"DELETE FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES};")
 
 
-def sauvegarde_une_activité_en_base(activité: pd.DataFrame, base_de_données: Engine) -> None:
-    activité.set_index(index_des_activités).to_sql(name="activite_medico_social", con=base_de_données, index=True, if_exists="append")
+def sauvegarde_une_activité_en_base(activité: pd.DataFrame, base_de_données: Engine, table: str) -> None:
+    activité.set_index(index_des_activités).to_sql(name=table, con=base_de_données, index=True, if_exists="append")
+
+
+def csv_ann_ms_tdp_et_builder(champs_surchargés={}) -> Dict[str, str | float]:
+    men_pmsi_annuel = {
+        "Finess": "010001261",
+        "Année": 2018,
+        "Nombre moyen de journées d'absence des personnes accompagnées sur la période": 31.41,
+        "Durée moyenne de séjour/d'accompagnement": 904.17,
+        "Taux de réalisation de lactivité Tout ESMS (Hors services CAMSP et CMPP)": 0.9256,
+        "Taux de réalisation de lactivité CAMSP et CMPP": 0.6789,
+        "File active des personnes accompagnées sur la période": 94,
+    }
+
+    return {**men_pmsi_annuel, **champs_surchargés}
+
+
+def csv_men_pmsi_annuel_builder(champs_surchargés={}) -> Dict[str, str | float]:
+    men_pmsi_annuel = {
+        "Finess": "010001261",
+        "Année": 2018,
+        "Nombre de séjours HTP/AMBU Médecine": 1.0,
+        "Nombre de séjours HTP/AMBU Obstétrique": 1.0,
+        "Nombre de séjours HTP/AMBU Chirurgie": 1.0,
+        "Nombre de séjours HC Médecine": 255.0,
+        "Nombre de séjours HC Chirurgie": 6.0,
+        "Nombre de séjours HC Obstétrique": 1.0,
+        "Nombre de journées hospit complète SSR": 1074.0,
+        "Nombre de journées HTP SSR": 1.0,
+        "Nb journées hospit complète PSY": 1.0,
+        "Nb journées HTP PSY": 1.0,
+    }
+
+    return {**men_pmsi_annuel, **champs_surchargés}
+
+
+def sql_men_pmsi_annuel_builder(champs_surchargés={}) -> Dict[str, str | float]:
+    men_pmsi_annuel = {
+        "numero_finess_etablissement_territorial": "010001261",
+        "annee": 2018,
+        "nombre_sejours_partiels_medecine": 1.0,
+        "nombre_sejours_partiels_obstetrique": 1.0,
+        "nombre_sejours_partiels_chirurgie": 1.0,
+        "nombre_sejours_complets_medecine": 255.0,
+        "nombre_sejours_complets_chirurgie": 6.0,
+        "nombre_sejours_complets_obstetrique": 1.0,
+        "nombre_journees_completes_ssr": 1074.0,
+        "nombre_journees_partiels_ssr": 1.0,
+        "nombre_journees_complete_psy": 1.0,
+        "nombre_journées_partielles_psy": 1.0,
+    }
+
+    return {**men_pmsi_annuel, **champs_surchargés}

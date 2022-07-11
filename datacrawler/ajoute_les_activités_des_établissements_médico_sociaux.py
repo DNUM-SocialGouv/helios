@@ -9,9 +9,9 @@ from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX
-from datacrawler.load.sauvegarde_les_activités_des_établissements_médico_sociaux import sauvegarde_les_activités_des_établissements_médico_sociaux
+from datacrawler.load.sauvegarde import sauvegarde
 from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux import transforme_les_activités_des_établissements_médico_sociaux
-from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.équivalences_diamant_helios import (
+from datacrawler.transform.équivalences_diamant_helios import (
     colonnes_à_lire_ann_errd_ej_et,
     colonnes_à_lire_ann_ms_tdp_et,
     extrais_l_equivalence_des_types_des_colonnes,
@@ -46,7 +46,7 @@ def ajoute_les_activités_des_établissements_médico_sociaux(
     with base_de_données.begin() as connection:
         connection.execute(f"DELETE FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX};")
         logger.info("Anciennes activités supprimées")
-        sauvegarde_les_activités_des_établissements_médico_sociaux(connection, activités_des_établissements_médico_sociaux)
+        sauvegarde(connection, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, activités_des_établissements_médico_sociaux)
     logger.info(f"{activités_des_établissements_médico_sociaux.shape[0]} activités sauvegardées")
 
 

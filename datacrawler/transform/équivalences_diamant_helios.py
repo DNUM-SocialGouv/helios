@@ -62,3 +62,9 @@ def extrais_l_equivalence_des_noms_des_colonnes(équivalences: ÉquivalencesDiam
 }
 
 colonnes_à_lire_men_pmsi_annuel: List[str] = list(équivalences_diamant_men_pmsi_annuel_helios.keys())
+
+
+index_des_activités_men_pmsi_annuel: List[str] = [
+    équivalences_diamant_men_pmsi_annuel_helios["Année"]["nom"],
+    équivalences_diamant_men_pmsi_annuel_helios["Finess"]["nom"],
+]

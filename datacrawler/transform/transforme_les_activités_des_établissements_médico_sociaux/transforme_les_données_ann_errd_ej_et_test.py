@@ -2,11 +2,12 @@ from unittest.mock import MagicMock
 
 import pandas as pd
 from numpy import NaN
+from pandas import NA
 
-from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.équivalences_diamant_helios import index_des_activités
 from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.transforme_les_données_ann_errd_ej_et import (
     transforme_les_données_ann_errd_ej_et,
 )
+from datacrawler.transform.équivalences_diamant_helios import index_des_activités
 
 
 class TestTransformeLesDonnéesAnnErrdEjEt:
@@ -53,6 +54,7 @@ class TestTransformeLesDonnéesAnnErrdEjEt:
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self) -> None:
         # GIVEN
         logger = MagicMock()
+        numéro_finess_établissement = "010001261"
         données_ann_errd_ej_et = pd.DataFrame(
             [
                 {
@@ -61,13 +63,20 @@ class TestTransformeLesDonnéesAnnErrdEjEt:
                     "Taux d'occupation des lits autorisés en accueil de jour": 0.48012820512820514,
                     "Taux d'occupation des lits autorisés en hébergement temporaire": 0.93698630136986305,
                     "Taux d'occupation des places autorisées en hébergement permanent": 0.99779299847793002,
-                }
+                },
+                {
+                    "Finess": numéro_finess_établissement,
+                    "Année": 2018,
+                    "Taux d'occupation des lits autorisés en accueil de jour": 0.48012820512820514,
+                    "Taux d'occupation des lits autorisés en hébergement temporaire": 0.93698630136986305,
+                    "Taux d'occupation des places autorisées en hébergement permanent": 0.99779299847793002,
+                },
             ]
         )
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
-                    "numero_finess_etablissement_territorial": "123456789",
+                    "numero_finess_etablissement_territorial": numéro_finess_établissement,
                 }
             ]
         )
@@ -76,28 +85,18 @@ class TestTransformeLesDonnéesAnnErrdEjEt:
         données_transformées = transforme_les_données_ann_errd_ej_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, logger)
 
         # THEN
-        data_frame_attendu = (
-            pd.DataFrame(
-                columns=[
-                    "numero_finess_etablissement_territorial",
-                    "annee",
-                    "taux_occupation_accueil_de_jour",
-                    "taux_occupation_en_hebergement_temporaire",
-                    "taux_occupation_en_hebergement_permanent",
-                ],
-            )
-            .astype(
+        data_frame_attendu = pd.DataFrame(
+            [
                 {
-                    "numero_finess_etablissement_territorial": str,
-                    "annee": int,
-                    "taux_occupation_accueil_de_jour": float,
-                    "taux_occupation_en_hebergement_temporaire": float,
-                    "taux_occupation_en_hebergement_permanent": float,
+                    "numero_finess_etablissement_territorial": "010001261",
+                    "annee": 2018,
+                    "taux_occupation_accueil_de_jour": 0.48012820512820514,
+                    "taux_occupation_en_hebergement_temporaire": 0.93698630136986305,
+                    "taux_occupation_en_hebergement_permanent": 0.99779299847793002,
                 }
-            )
-            .set_index(index_des_activités)
-        )
-        pd.testing.assert_frame_equal(données_transformées, data_frame_attendu, check_index_type=False)
+            ],
+        ).set_index(index_des_activités)
+        pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
     def test_supprime_les_lignes_ne_mentionnant_pas_l_année(self) -> None:
         # GIVEN
@@ -107,7 +106,7 @@ class TestTransformeLesDonnéesAnnErrdEjEt:
             [
                 {
                     "Finess": numéro_finess_établissement,
-                    "Année": NaN,
+                    "Année": NA,
                     "Taux d'occupation des lits autorisés en accueil de jour": 0.48012820512820514,
                     "Taux d'occupation des lits autorisés en hébergement temporaire": 0.93698630136986305,
                     "Taux d'occupation des places autorisées en hébergement permanent": 0.99779299847793002,
