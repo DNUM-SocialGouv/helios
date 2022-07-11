@@ -144,7 +144,26 @@ export class ÉtablissementTerritorialSanitaireViewModel {
 
     const options = {
       elements: { bar: { borderWidth: 2 } },
-      plugins: { legend: { align: 'end', position: 'bottom' as const } },
+      plugins: {
+        legend: { align: 'end', position: 'bottom' as const },
+        tooltip: {
+          callbacks: {
+            label: function (context: any) {
+              const label = context.dataset.label + ' : ' + context.parsed.y
+
+              if (context.datasetIndex <= 1) {
+                return [label, 'Total Hospitalisation Médecine : ' + (context.parsed._stacks.y['0'] + context.parsed._stacks.y['1'])]
+              }
+              if (context.datasetIndex === 2 || context.datasetIndex === 3) {
+                return [label, 'Total Hospitalisation Chirurgie : ' + (context.parsed._stacks.y['2'] + context.parsed._stacks.y['3'])]
+              }
+              if (context.datasetIndex === 4 || context.datasetIndex === 5) {
+                return [label, 'Total Hospitalisation Obstétrique : ' + (context.parsed._stacks.y['4'] + context.parsed._stacks.y['5'])]
+              }
+            },
+          },
+        },
+      },
       responsive: true,
       scales: {
         x: { grid: { drawOnChartArea: false } },

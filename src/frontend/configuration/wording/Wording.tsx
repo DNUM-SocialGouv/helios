@@ -77,6 +77,9 @@ export interface Wording {
 
   // Bloc Activité Sanitaire
   readonly NOMBRE_DE_SÉJOUR_MCO: string
+  readonly TOTAL_HOSPITALISATION_MÉDECINE: string
+  readonly TOTAL_HOSPITALISATION_CHIRURGIE: string
+  readonly TOTAL_HOSPITALISATION_OBSTÉTRIQUE: string
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string
