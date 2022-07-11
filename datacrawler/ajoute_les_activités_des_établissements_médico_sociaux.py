@@ -54,15 +54,15 @@ if __name__ == "__main__":
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_données_helios = create_engine(variables_d_environnement["DATABASE_URL"])
     fichiers = os.listdir(variables_d_environnement["DNUM_SFTP_LOCAL_PATH"])
-    chemin_du_fichier_ann_errd_ej_et = os.path.join(
+    chemin_local_du_fichier_ann_errd_ej_et = os.path.join(
         variables_d_environnement["DNUM_SFTP_LOCAL_PATH"], trouve_le_nom_du_fichier(fichiers, "ANN_ERRD_EJ_ET", logger_helios)
     )
-    chemin_du_fichier_ann_ms_tdp_et = os.path.join(
+    chemin_local_du_fichier_ann_ms_tdp_et = os.path.join(
         variables_d_environnement["DNUM_SFTP_LOCAL_PATH"], trouve_le_nom_du_fichier(fichiers, "ANN_MS_TDP_ET", logger_helios)
     )
     logger_helios.info(
-        f"Cherche les activités pour les ET médico-sociaux dans les fichiers {chemin_du_fichier_ann_errd_ej_et}, {chemin_du_fichier_ann_ms_tdp_et}"
+        f"Cherche les activités pour les ET médico-sociaux dans les fichiers {chemin_local_du_fichier_ann_errd_ej_et}, {chemin_local_du_fichier_ann_ms_tdp_et}"
     )
     ajoute_les_activités_des_établissements_médico_sociaux(
-        chemin_du_fichier_ann_errd_ej_et, chemin_du_fichier_ann_ms_tdp_et, base_de_données_helios, logger_helios
+        chemin_local_du_fichier_ann_errd_ej_et, chemin_local_du_fichier_ann_ms_tdp_et, base_de_données_helios, logger_helios
     )

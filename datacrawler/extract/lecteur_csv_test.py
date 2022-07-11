@@ -29,8 +29,7 @@ class TestLisLeFichierCsv:
             données,
             pd.DataFrame(
                 {
-                    "Finess": ["010003598", "010003598", "010003598", "010786259", "010786259", "111111111",
-                               "010789717"],
+                    "Finess": ["010003598", "010003598", "010003598", "010786259", "010786259", "111111111", "010789717"],
                     "Année": [2018, 2019, 2020, 2018, 2018, 2020, 2019],
                     "Taux d'occupation des places autorisées en hébergement permanent": [
                         0.99779299847793,
@@ -80,11 +79,9 @@ class TestLisLeFichierCsv:
                     "Finess": ["010001261", "010001261", "010003598", "010003598", "111111111"],
                     "Année": [2019, 2018, 2019, 2018, 2019],
                     "Durée moyenne de séjour/d'accompagnement": [5729.5, 6008.33, 2226.21, 2359.81, 0.0],
-                    "Taux de réalisation de lactivité Tout ESMS (Hors services CAMSP et CMPP)": [1.052, 1.0458, 1.0182,
-                                                                                                  0.8993, 0.7772],
+                    "Taux de réalisation de lactivité Tout ESMS (Hors services CAMSP et CMPP)": [1.052, 1.0458, 1.0182, 0.8993, 0.7772],
                     "Taux de réalisation de lactivité CAMSP et CMPP": [NaN, NaN, NaN, NaN, NaN],
-                    "Nombre moyen de journées d'absence des personnes accompagnées sur la période": [31.41, 32.11,
-                                                                                                     18.52, 17.86, NaN],
+                    "Nombre moyen de journées d'absence des personnes accompagnées sur la période": [31.41, 32.11, 18.52, 17.86, NaN],
                     "File active des personnes accompagnées sur la période": [59.0, 55.0, 119.0, 121.0, 101.0],
                 }
             ),
@@ -101,18 +98,20 @@ class TestLisLeFichierCsv:
 
         # THEN
         men_pmsi_annuel_attendu = pd.DataFrame(
-            {'Finess': ['010005239', '010005239', '010005239', '010005239', '111111111', '010786259'],
-             'Année': [2017, 2018, 2019, 2019, 2017, 2017],
-             'Nombre de séjours HTP/AMBU Médecine': [1.0, 3.0, 4.0, 4.0, 14.0, NaN],
-             'Nombre de séjours HTP/AMBU Obstétrique': [10.0, NaN, NaN, NaN, NaN, NaN],
-             'Nombre de séjours HTP/AMBU Chirurgie': [20.0, NaN, NaN, NaN, NaN, NaN],
-             'Nombre de séjours HC Médecine': [255.0, 232.0, 231.0, 231.0, 2.0, NaN],
-             'Nombre de séjours HC Chirurgie': [6.0, 10.0, 9.0, 9.0, 8.0, NaN],
-             'Nombre de séjours HC Obstétrique': [10.0, NaN, NaN, NaN, NaN, NaN],
-             'Nombre de journées hospit complète SSR': [1074.0, 1103.0, 1087.0, NaN, NaN, NaN],
-             'Nombre de journées HTP SSR': [100.0, NaN, NaN, NaN, NaN, NaN],
-             'Nb journées hospit complète PSY': [200.0, NaN, NaN, NaN, NaN, NaN],
-             'Nb journées HTP PSY': [300.0, NaN, NaN, NaN, NaN, NaN]}
+            {
+                "Finess": ["010005239", "010005239", "010005239", "010005239", "111111111", "010786259"],
+                "Année": [2017, 2018, 2019, 2019, 2017, 2017],
+                "Nombre de séjours HTP/AMBU Médecine": [1.0, 3.0, 4.0, 4.0, 14.0, NaN],
+                "Nombre de séjours HTP/AMBU Obstétrique": [10.0, NaN, NaN, NaN, NaN, NaN],
+                "Nombre de séjours HTP/AMBU Chirurgie": [20.0, NaN, NaN, NaN, NaN, NaN],
+                "Nombre de séjours HC Médecine": [255.0, 232.0, 231.0, 231.0, 2.0, NaN],
+                "Nombre de séjours HC Chirurgie": [6.0, 10.0, 9.0, 9.0, 8.0, NaN],
+                "Nombre de séjours HC Obstétrique": [10.0, NaN, NaN, NaN, NaN, NaN],
+                "Nombre de journées hospit complète SSR": [1074.0, 1103.0, 1087.0, NaN, NaN, NaN],
+                "Nombre de journées HTP SSR": [100.0, NaN, NaN, NaN, NaN, NaN],
+                "Nb journées hospit complète PSY": [200.0, NaN, NaN, NaN, NaN, NaN],
+                "Nb journées HTP PSY": [300.0, NaN, NaN, NaN, NaN, NaN],
+            }
         )
         pd.testing.assert_frame_equal(
             men_pmsi_annuel_reçu,

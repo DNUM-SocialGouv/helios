@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Optional
 
 import pandas as pd
 from sqlalchemy import create_engine
@@ -85,8 +85,8 @@ def sauvegarde_une_activité_en_base(activité: pd.DataFrame, base_de_données: 
     activité.set_index(index_des_activités).to_sql(name=table, con=base_de_données, index=True, if_exists="append")
 
 
-def csv_ann_ms_tdp_et_builder(champs_surchargés={}) -> Dict[str, str | float]:
-    men_pmsi_annuel = {
+def csv_ann_ms_tdp_et_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
+    ann_ms_tdp_et = {
         "Finess": "010001261",
         "Année": 2018,
         "Nombre moyen de journées d'absence des personnes accompagnées sur la période": 31.41,
@@ -95,11 +95,12 @@ def csv_ann_ms_tdp_et_builder(champs_surchargés={}) -> Dict[str, str | float]:
         "Taux de réalisation de lactivité CAMSP et CMPP": 0.6789,
         "File active des personnes accompagnées sur la période": 94,
     }
+    if champs_surchargés:
+        return {**ann_ms_tdp_et, **champs_surchargés}
+    return ann_ms_tdp_et
 
-    return {**men_pmsi_annuel, **champs_surchargés}
 
-
-def csv_men_pmsi_annuel_builder(champs_surchargés={}) -> Dict[str, str | float]:
+def csv_men_pmsi_annuel_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
     men_pmsi_annuel = {
         "Finess": "010001261",
         "Année": 2018,
@@ -114,11 +115,12 @@ def csv_men_pmsi_annuel_builder(champs_surchargés={}) -> Dict[str, str | float]
         "Nb journées hospit complète PSY": 1.0,
         "Nb journées HTP PSY": 1.0,
     }
+    if champs_surchargés:
+        return {**men_pmsi_annuel, **champs_surchargés}
+    return men_pmsi_annuel
 
-    return {**men_pmsi_annuel, **champs_surchargés}
 
-
-def sql_men_pmsi_annuel_builder(champs_surchargés={}) -> Dict[str, str | float]:
+def sql_men_pmsi_annuel_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
     men_pmsi_annuel = {
         "numero_finess_etablissement_territorial": "010001261",
         "annee": 2018,
@@ -133,5 +135,6 @@ def sql_men_pmsi_annuel_builder(champs_surchargés={}) -> Dict[str, str | float]
         "nombre_journees_complete_psy": 1.0,
         "nombre_journées_partielles_psy": 1.0,
     }
-
-    return {**men_pmsi_annuel, **champs_surchargés}
+    if champs_surchargés:
+        return {**men_pmsi_annuel, **champs_surchargés}
+    return men_pmsi_annuel

@@ -42,8 +42,8 @@ if __name__ == "__main__":
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_données_helios = create_engine(variables_d_environnement["DATABASE_URL"])
     fichiers = os.listdir(variables_d_environnement["DNUM_SFTP_LOCAL_PATH"])
-    chemin_du_fichier_men_pmsi_annuel = os.path.join(
+    chemin_local_du_fichier_men_pmsi_annuel = os.path.join(
         variables_d_environnement["DNUM_SFTP_LOCAL_PATH"], trouve_le_nom_du_fichier(fichiers, "MEN_PMSI_ANNUEL", logger_helios)
     )
-    logger_helios.info(f"Cherche les activités pour les ET sanitaires dans les fichiers {chemin_du_fichier_men_pmsi_annuel}")
-    ajoute_les_activités_des_établissements_sanitaires(chemin_du_fichier_men_pmsi_annuel, base_de_données_helios, logger_helios)
+    logger_helios.info(f"Cherche les activités pour les ET sanitaires dans les fichiers {chemin_local_du_fichier_men_pmsi_annuel}")
+    ajoute_les_activités_des_établissements_sanitaires(chemin_local_du_fichier_men_pmsi_annuel, base_de_données_helios, logger_helios)
