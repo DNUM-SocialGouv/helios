@@ -18,7 +18,7 @@ class ColonneHelios(TypedDict):
 
 colonnes_à_lire_ann_errd_ej_et: List[str] = list(équivalences_diamant_ann_errd_ej_et_helios.keys())
 
-index_des_activités_médico_sociales: List[str] = [
+index_des_activités: List[str] = [
     équivalences_diamant_ann_errd_ej_et_helios["Année"]["nom"],
     équivalences_diamant_ann_errd_ej_et_helios["Finess"]["nom"],
 ]
@@ -44,3 +44,27 @@ def extrais_l_equivalence_des_types_des_colonnes(équivalences: ÉquivalencesDia
 
 def extrais_l_equivalence_des_noms_des_colonnes(équivalences: ÉquivalencesDiamantHelios) -> Dict[str, str]:
     return {nom_diamant: colonne_diamant["nom"] for nom_diamant, colonne_diamant in équivalences.items()}
+
+
+équivalences_diamant_men_pmsi_annuel_helios: ÉquivalencesDiamantHelios = {
+    "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+    "Année": ColonneHelios(nom="annee", type=int),
+    "Nombre de séjours HTP/AMBU Médecine": ColonneHelios(nom="nombre_sejours_partiels_medecine", type=float),
+    "Nombre de séjours HTP/AMBU Obstétrique": ColonneHelios(nom="nombre_sejours_partiels_obstetrique", type=float),
+    "Nombre de séjours HTP/AMBU Chirurgie": ColonneHelios(nom="nombre_sejours_partiels_chirurgie", type=float),
+    "Nombre de séjours HC Médecine": ColonneHelios(nom="nombre_sejours_complets_medecine", type=float),
+    "Nombre de séjours HC Chirurgie": ColonneHelios(nom="nombre_sejours_complets_chirurgie", type=float),
+    "Nombre de séjours HC Obstétrique": ColonneHelios(nom="nombre_sejours_complets_obstetrique", type=float),
+    "Nombre de journées hospit complète SSR": ColonneHelios(nom="nombre_journees_completes_ssr", type=float),
+    "Nombre de journées HTP SSR": ColonneHelios(nom="nombre_journees_partiels_ssr", type=float),
+    "Nb journées hospit complète PSY": ColonneHelios(nom="nombre_journees_complete_psy", type=float),
+    "Nb journées HTP PSY": ColonneHelios(nom="nombre_journées_partielles_psy", type=float),
+}
+
+colonnes_à_lire_men_pmsi_annuel: List[str] = list(équivalences_diamant_men_pmsi_annuel_helios.keys())
+
+
+index_des_activités_men_pmsi_annuel: List[str] = [
+    équivalences_diamant_men_pmsi_annuel_helios["Année"]["nom"],
+    équivalences_diamant_men_pmsi_annuel_helios["Finess"]["nom"],
+]

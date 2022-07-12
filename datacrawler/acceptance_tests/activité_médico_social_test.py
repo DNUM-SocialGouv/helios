@@ -1,4 +1,4 @@
-from unittest.mock import MagicMock, Mock, patch
+from unittest.mock import Mock, patch
 
 import pandas as pd
 import pytest
@@ -6,21 +6,22 @@ from numpy import NaN
 
 import datacrawler
 from datacrawler.ajoute_les_activités_des_établissements_médico_sociaux import ajoute_les_activités_des_établissements_médico_sociaux
-from datacrawler.load.activités_des_établissements_médico_sociaux import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX
-from datacrawler.test import (
+from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX
+from datacrawler.test_helpers import (
     base_de_données_test,
-    nettoie_la_base_de_données,
+    mocked_logger,
     sauvegarde_un_établissement_en_base,
     sauvegarde_une_activité_en_base,
     sauvegarde_une_entité_juridique_en_base,
+    supprime_les_données_des_tables,
 )
 
 
 class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
     def setup_method(self) -> None:
-        nettoie_la_base_de_données(base_de_données_test)
+        supprime_les_données_des_tables(base_de_données_test)
 
-    def test_sauvegarde_les_données_dans_une_base_de_données_vide(self) -> None:
+    def test_sauvegarde_les_données_dans_une_table_vide(self) -> None:
         # GIVEN
         chemin_du_fichier_ann_errd_ej_et = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
         chemin_du_fichier_ann_ms_tdp_et = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
@@ -29,10 +30,11 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
         sauvegarde_un_établissement_en_base("010786259", "010008407", base_de_données_test)
         sauvegarde_un_établissement_en_base("010789717", "010008407", base_de_données_test)
         sauvegarde_un_établissement_en_base("010001261", "010008407", base_de_données_test)
-        logger = MagicMock()
 
         # WHEN
-        ajoute_les_activités_des_établissements_médico_sociaux(chemin_du_fichier_ann_errd_ej_et, chemin_du_fichier_ann_ms_tdp_et, base_de_données_test, logger)
+        ajoute_les_activités_des_établissements_médico_sociaux(
+            chemin_du_fichier_ann_errd_ej_et, chemin_du_fichier_ann_ms_tdp_et, base_de_données_test, mocked_logger
+        )
 
         # THEN
         data_frame_attendu = pd.DataFrame(
@@ -83,12 +85,12 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
                 "duree_moyenne_sejour_accompagnement_personnes_sorties": [2359.81, 2226.21],
             }
         )
-        sauvegarde_une_activité_en_base(table_activité_existante, base_de_données_test)
-
-        logger = MagicMock()
+        sauvegarde_une_activité_en_base(table_activité_existante, base_de_données_test, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX)
 
         # WHEN
-        ajoute_les_activités_des_établissements_médico_sociaux(chemin_du_fichier_ann_errd_ej_et, chemin_du_fichier_ann_ms_tdp_et, base_de_données_test, logger)
+        ajoute_les_activités_des_établissements_médico_sociaux(
+            chemin_du_fichier_ann_errd_ej_et, chemin_du_fichier_ann_ms_tdp_et, base_de_données_test, mocked_logger
+        )
 
         # THEN
         data_frame_attendu = pd.DataFrame(
@@ -117,10 +119,8 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
 
         pd.testing.assert_frame_equal(data_frame, data_frame_attendu)
 
-    @patch.object(datacrawler.ajoute_les_activités_des_établissements_médico_sociaux, "sauvegarde_les_activités_des_établissements_médico_sociaux")
-    def test_revient_à_la_situation_initale_si_l_écriture_des_activités_échoue(
-        self, mocked_sauvegarde_les_activités_des_établissements_médico_sociaux: Mock
-    ) -> None:
+    @patch.object(datacrawler.ajoute_les_activités_des_établissements_médico_sociaux, "sauvegarde")
+    def test_revient_à_la_situation_initiale_si_l_écriture_des_activités_échoue(self, mocked_sauvegarde: Mock) -> None:
         # GIVEN
         sauvegarde_une_entité_juridique_en_base("010008407", base_de_données_test)
         sauvegarde_un_établissement_en_base("010003598", "010008407", base_de_données_test)
@@ -139,16 +139,14 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
                 "duree_moyenne_sejour_accompagnement_personnes_sorties": [2359.81, 2226.21],
             }
         )
-        sauvegarde_une_activité_en_base(table_activité_existante, base_de_données_test)
+        sauvegarde_une_activité_en_base(table_activité_existante, base_de_données_test, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX)
 
-        logger = MagicMock()
-
-        mocked_sauvegarde_les_activités_des_établissements_médico_sociaux.side_effect = ValueError()
+        mocked_sauvegarde.side_effect = ValueError
 
         # WHEN
         with pytest.raises(ValueError):
             ajoute_les_activités_des_établissements_médico_sociaux(
-                chemin_du_fichier_ann_errd_ej_et, chemin_du_fichier_ann_ms_tdp_et, base_de_données_test, logger
+                chemin_du_fichier_ann_errd_ej_et, chemin_du_fichier_ann_ms_tdp_et, base_de_données_test, mocked_logger
             )
 
         # THEN

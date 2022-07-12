@@ -83,27 +83,56 @@ yarn dev
 
 > Cette commande lance aussi la base de donnée locale et les migrations associées
 
-### Typescript
+### Avoir du feedback sur son code
 
 #### Lancer tous les tests
+
+Quel que soit le langage :
 
 ```sh
 yarn test
 ```
 
+Ou dans un langage seulement :
+
+```sh
+yarn test:typescript
+yarn test:python
+```
+
 #### Lancer le linter
+
+Quel que soit le langage :
 
 ```sh
 yarn lint
 ```
 
-#### Lancer la vérification des types
+Ou dans un langage seulement :
 
 ```sh
-yarn tsc
+yarn lint:typescript
+yarn lint:python
+```
+
+#### Lancer la vérification des types
+
+Quel que soit le langage :
+
+```sh
+yarn typecheck
+```
+
+Ou dans un langage seulement :
+
+```sh
+yarn typecheck:typescript
+yarn typecheck:python
 ```
 
 #### Vérifier qu’il n’y a pas de code mort
+
+Pour le moment, uniquement pour typescript :
 
 ```sh
 yarn deadcode
@@ -120,31 +149,6 @@ Prérequis :
 
 ```sh
 yarn test:accessibility
-```
-
-### Python
-
-#### Lancer tous les tests
-
-```sh
-pipenv run test
-```
-
-#### Lancer le linter
-
-```sh
-pipenv run lint
-```
-
-#### Lancer la vérification des types
-
-```sh
-pipenv run typecheck
-```
-
-#### Lancer le formattage des fichiers
-```sh
-pipenv run format
 ```
 
 ### Base de données

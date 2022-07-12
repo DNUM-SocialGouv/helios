@@ -49,6 +49,7 @@ services:
       - type: volume
         source: postgres_data_test
         target: /var/lib/postgresql/data
+    command: ["postgres", "-c", "log_statement=all"]
 
 volumes:
   postgres_data:

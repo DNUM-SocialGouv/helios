@@ -38,4 +38,4 @@ class TestVariablesDEnvironnement:
 
         # THEN
         log = caplog.records.pop()
-        assert log.message == '----- WARNING ----- La variable d’environnement "SCALINGO_POSTGRESQL_ALCHEMY_URL" est manquante.'
+        assert log.message == '----- WARNING ----- La variable d’environnement "SCALINGO_POSTGRESQL_URL_ALCHEMY" est manquante.'

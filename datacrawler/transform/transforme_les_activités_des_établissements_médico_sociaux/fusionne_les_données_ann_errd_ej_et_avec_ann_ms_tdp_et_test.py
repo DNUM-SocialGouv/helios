@@ -1,10 +1,11 @@
 import pandas as pd
 from numpy import NaN
 
-from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.équivalences_diamant_helios import index_des_activités_médico_sociales
+from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT
 from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.fusionne_les_données_ann_errd_ej_et_avec_ann_ms_tdp_et import (
     fusionne_les_données_ann_errd_ej_et_avec_les_données_ann_ms_tdp_et,
 )
+from datacrawler.transform.équivalences_diamant_helios import index_des_activités
 
 
 class TestFusionneLesDonnéesAnnErrdEjEtAvecLesDonnéesAnnMsTdpEt:
@@ -13,19 +14,19 @@ class TestFusionneLesDonnéesAnnErrdEjEtAvecLesDonnéesAnnMsTdpEt:
         données_ann_errd_ej_et_transformées = pd.DataFrame(
             [
                 {
-                    "numero_finess_etablissement_territorial": "010001261",
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                     "annee": 2018,
                     "taux_occupation_accueil_de_jour": 0.48012820512820514,
                     "taux_occupation_en_hebergement_temporaire": 0.93698630136986305,
                     "taux_occupation_en_hebergement_permanent": 0.99779299847793002,
                 }
             ],
-        ).set_index(index_des_activités_médico_sociales)
+        ).set_index(index_des_activités)
 
         données_ann_ms_tdp_et_transformées = pd.DataFrame(
             [
                 {
-                    "numero_finess_etablissement_territorial": "010001261",
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                     "annee": 2018,
                     "nombre_moyen_journees_absence_personnes_accompagnees": 58.61,
                     "duree_moyenne_sejour_accompagnement_personnes_sorties": 603.00,
@@ -33,7 +34,7 @@ class TestFusionneLesDonnéesAnnErrdEjEtAvecLesDonnéesAnnMsTdpEt:
                     "taux_realisation_activite": 1.0458,
                 }
             ],
-        ).set_index(index_des_activités_médico_sociales)
+        ).set_index(index_des_activités)
 
         # WHEN
         données_fusionnées = fusionne_les_données_ann_errd_ej_et_avec_les_données_ann_ms_tdp_et(
@@ -46,7 +47,7 @@ class TestFusionneLesDonnéesAnnErrdEjEtAvecLesDonnéesAnnMsTdpEt:
             pd.DataFrame(
                 [
                     {
-                        "numero_finess_etablissement_territorial": "010001261",
+                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                         "annee": 2018,
                         "taux_occupation_accueil_de_jour": 0.48012820512820514,
                         "taux_occupation_en_hebergement_temporaire": 0.93698630136986305,
@@ -57,7 +58,7 @@ class TestFusionneLesDonnéesAnnErrdEjEtAvecLesDonnéesAnnMsTdpEt:
                         "taux_realisation_activite": 1.0458,
                     }
                 ]
-            ).set_index(index_des_activités_médico_sociales),
+            ).set_index(index_des_activités),
         )
 
     def test_renvoie_une_ligne_avec_valeurs_manquantes_lorsque_l_activité_n_existe_que_dans_un_seul_fichier(self) -> None:
@@ -72,7 +73,7 @@ class TestFusionneLesDonnéesAnnErrdEjEtAvecLesDonnéesAnnMsTdpEt:
                     "taux_occupation_en_hebergement_permanent": 0.99779299847793002,
                 }
             ],
-        ).set_index(index_des_activités_médico_sociales)
+        ).set_index(index_des_activités)
 
         données_ann_ms_tdp_et_transformées = pd.DataFrame(
             [
@@ -85,7 +86,7 @@ class TestFusionneLesDonnéesAnnErrdEjEtAvecLesDonnéesAnnMsTdpEt:
                     "taux_realisation_activite": 1.0458,
                 }
             ],
-        ).set_index(index_des_activités_médico_sociales)
+        ).set_index(index_des_activités)
 
         # WHEN
         données_fusionnées = fusionne_les_données_ann_errd_ej_et_avec_les_données_ann_ms_tdp_et(
@@ -120,5 +121,5 @@ class TestFusionneLesDonnéesAnnErrdEjEtAvecLesDonnéesAnnMsTdpEt:
                         "taux_realisation_activite": 1.0458,
                     },
                 ]
-            ).set_index(index_des_activités_médico_sociales),
+            ).set_index(index_des_activités),
         )
