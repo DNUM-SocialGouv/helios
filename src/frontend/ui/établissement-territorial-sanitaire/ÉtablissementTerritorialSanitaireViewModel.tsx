@@ -1,14 +1,19 @@
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
   BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  Chart,
+  ChartData,
+  Legend,
+  LegendItem,
+  LinearScale,
+  LineController,
+  LineElement,
+  PointElement,
   Title,
   Tooltip,
-  Legend,
-  Chart,
-  LegendItem,
 } from 'chart.js'
+import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { ReactElement } from 'react'
 import { Bar } from 'react-chartjs-2'
 
@@ -36,17 +41,156 @@ export class ÉtablissementTerritorialSanitaireViewModel {
   readonly couleurDuFondHistogrammeRougeFoncé = '#A94645'
   readonly couleurDesAxesHorizontaux = '#161616'
   readonly identifiantDeLaLégende = 'légende-graphique-sanitaire'
+  readonly couleurDuFond = '#E8EDFF'
+  readonly couleurDuFondHistogrammePrimaire = '#000091'
+  readonly couleurDuFondHistogrammeSecondaire = '#4E68BB'
+  readonly couleurDuFondDeLaLigne = '#929292'
+  readonly couleurDuFondHistogrammeDeDépassement = '#C9191E'
+  readonly couleurDelAbscisse = '#161616'
+  readonly couleurDeLaValeur = '#3A3A3A'
+  readonly fondDeCouleurPourPremierHistogramme: string[]
+  readonly fondDeCouleurPourSecondHistogramme: string[]
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, private readonly wording: Wording) {
     ChartJS.register(
-      CategoryScale,
-      LinearScale,
       BarElement,
+      CategoryScale,
+      ChartDataLabels,
+      Legend,
+      LinearScale,
+      LineController,
+      LineElement,
+      PointElement,
       Title,
       Tooltip,
-      Legend,
       this.construisLePluginDeLégende()
     )
+
+    const nombreIndicateursActivité = établissementTerritorial.activités.length
+
+    this.fondDeCouleurPourPremierHistogramme = Array(nombreIndicateursActivité)
+      .fill(this.couleurDuFondHistogrammeSecondaire, 0, nombreIndicateursActivité - 1)
+      .fill(this.couleurDuFondHistogrammePrimaire, nombreIndicateursActivité - 1, nombreIndicateursActivité)
+    this.fondDeCouleurPourSecondHistogramme = Array(nombreIndicateursActivité).fill(this.couleurDuFond)
+
+  }
+
+  public get nombreDePassagesAuxUrgences(): JSX.Element {
+    const [valeurs, années] = this.construisLesAnnéessEtSesValeurs('nombreDePassagesAuxUrgences')
+    const chartColors = this.fondDeCouleurPourPremierHistogramme
+    const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs, true)
+
+    return this.afficheUnHistogrammeHorizontal(
+      chartColors,
+      valeurs,
+      dataLabelsColor,
+      années,
+      this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES
+    )
+  }
+
+  private construisLaCouleurDuLabel(valeurs: number[], estHorizontal: boolean = false): string[] {
+    const maxAvantDePerdreLeContraste = 20
+    const couleurDesAnnées = estHorizontal ? Array(valeurs.length).fill(this.couleurDeLaValeur) : Array(valeurs.length).fill(this.couleurDuFond)
+
+    valeurs.forEach((valeur: number, index: number) => {
+      if (valeur < maxAvantDePerdreLeContraste) {
+        couleurDesAnnées[index] = 'black'
+      }
+    })
+
+    return couleurDesAnnées
+  }
+
+  private construisLesAnnéessEtSesValeurs(indicateur: keyof ÉtablissementTerritorialSanitaireActivité): number[][] {
+    const valeurs: number[] = []
+    const années: number[] = []
+    this.établissementTerritorial.activités.forEach((activité: ÉtablissementTerritorialSanitaireActivité) => {
+      if (activité[indicateur] !== null) {
+        années.push(activité.année)
+      }
+
+      if (activité[indicateur] !== null) {
+        // @ts-ignore
+        valeurs.push(activité[indicateur])
+      }
+    })
+
+    return [valeurs, années]
+  }
+
+  private afficheUnHistogrammeHorizontal(
+    chartColors: string[],
+    valeurs: number[],
+    dataLabelsColor: string[],
+    années: number[],
+    identifiant: string
+  ): JSX.Element {
+    const data: ChartData = {
+      datasets: [
+        {
+          backgroundColor: chartColors,
+          data: valeurs,
+          datalabels: { labels: { title: { color: dataLabelsColor } } },
+          maxBarThickness: 60,
+          type: 'bar',
+          yAxisID: 'y',
+        },
+      ],
+      labels: années,
+    }
+
+    return (
+      <>
+        <Bar
+          // @ts-ignore
+          data={data}
+          // @ts-ignore
+          options={this.optionsHistogrammeHorizontal(Math.max(...valeurs))}
+        />
+        <TableIndicateur
+          identifiants={[identifiant]}
+          libellés={années}
+          valeurs={[valeurs]}
+        />
+      </>
+    )
+  }
+
+  private optionsHistogrammeHorizontal(valeurMaximale: number) {
+    return {
+      animation: false,
+      indexAxis: 'y',
+      plugins: {
+        datalabels: {
+          align: 'end',
+          anchor: 'end',
+          font: {
+            family: 'Marianne',
+            size: 14,
+          },
+        },
+      },
+      scales: {
+        x: {
+          display: false,
+          max: 1.15 * valeurMaximale,
+          min: 0,
+        },
+        y: {
+          grid: {
+            drawBorder: false,
+            drawOnChartArea: false,
+            drawTicks: false,
+          },
+          ticks: {
+            color: this.couleurDelAbscisse,
+            // TODO
+            font: { weight: ['normal', 'normal', 'normal', 'normal', 'bold'] },
+          },
+        },
+      },
+    }
   }
 
   public get titre(): string {

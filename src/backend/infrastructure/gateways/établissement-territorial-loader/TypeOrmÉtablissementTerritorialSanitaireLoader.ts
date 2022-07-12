@@ -77,6 +77,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       ({
         année: établissementTerritorialModel.année,
         dateMiseAJourSource: dateDeMiseAJourModel ? dateDeMiseAJourModel.dernièreMiseÀJour : '',
+        nombreDePassagesAuxUrgences: établissementTerritorialModel.nombreDePassagesAuxUrgences,
         nombreJournéesCompletePsy: établissementTerritorialModel.nombreJournéesCompletePsy,
         nombreJournéesCompletesSsr: établissementTerritorialModel.nombreJournéesCompletesSsr,
         nombreJournéesPartiellesPsy: établissementTerritorialModel.nombreJournéesPartiellesPsy,

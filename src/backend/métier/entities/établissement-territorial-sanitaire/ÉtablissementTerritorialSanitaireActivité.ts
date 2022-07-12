@@ -1,6 +1,7 @@
 export type ÉtablissementTerritorialSanitaireActivité = Readonly<{
   année: number
   dateMiseAJourSource: string
+  nombreDePassagesAuxUrgences: number | null
   nombreJournéesCompletePsy: number | null
   nombreJournéesCompletesSsr: number | null
   nombreJournéesPartiellesPsy: number | null

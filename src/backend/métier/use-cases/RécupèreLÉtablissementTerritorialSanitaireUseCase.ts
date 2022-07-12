@@ -9,6 +9,7 @@ export class RécupèreLÉtablissementTerritorialSanitaireUseCase {
   async exécute(numéroFinessÉtablissementTerritorialSanitaire: string): Promise<ÉtablissementTerritorialSanitaire> {
     const établissementTerritorialSanitaireOuErreur =
       await this.établissementTerritorialSanitaireLoader.chargeIdentité(numéroFinessÉtablissementTerritorialSanitaire)
+
     if (établissementTerritorialSanitaireOuErreur instanceof ÉtablissementTerritorialSanitaireNonTrouvée) {
       throw établissementTerritorialSanitaireOuErreur
     }

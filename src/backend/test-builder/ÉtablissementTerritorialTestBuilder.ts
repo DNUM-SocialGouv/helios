@@ -53,6 +53,7 @@ export class ÉtablissementTerritorialTestBuilder {
   private static activitéSanitaire: ÉtablissementTerritorialSanitaireActivité = {
     année: 2016,
     dateMiseAJourSource: '2022-05-14',
+    nombreDePassagesAuxUrgences: 60_000,
     nombreJournéesCompletePsy: 60,
     nombreJournéesCompletesSsr: 60,
     nombreJournéesPartiellesPsy: 60,

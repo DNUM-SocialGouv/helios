@@ -18,18 +18,17 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   readonly couleurDuFondHistogrammeDeDépassement = '#C9191E'
   readonly couleurDelAbscisse = '#161616'
   readonly couleurDeLaValeur = '#3A3A3A'
-  readonly fondDeCouleurPourPremierHistogramme = [
-    this.couleurDuFondHistogrammeSecondaire,
-    this.couleurDuFondHistogrammeSecondaire,
-    this.couleurDuFondHistogrammePrimaire,
-  ]
-  readonly fondDeCouleurPourSecondHistogramme = [
-    this.couleurDuFond,
-    this.couleurDuFond,
-    this.couleurDuFond,
-  ]
+  readonly fondDeCouleurPourPremierHistogramme: string[]
+  readonly fondDeCouleurPourSecondHistogramme: string[]
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialMédicoSocial, private readonly wording: Wording) {
+    const nombreIndicateursActivité = établissementTerritorial.activités.length
+
+    this.fondDeCouleurPourPremierHistogramme = Array(nombreIndicateursActivité)
+      .fill(this.couleurDuFondHistogrammeSecondaire, 0, nombreIndicateursActivité - 1)
+      .fill(this.couleurDuFondHistogrammePrimaire, nombreIndicateursActivité - 1, nombreIndicateursActivité)
+    this.fondDeCouleurPourSecondHistogramme = Array(nombreIndicateursActivité).fill(this.couleurDuFond)
+
     ChartJS.register(
       BarElement,
       CategoryScale,
@@ -424,7 +423,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
 
   private construisLaCouleurDuLabel(valeurs: number[], estHorizontal: boolean = false): string[] {
     const maxAvantDePerdreLeContraste = 20
-    const couleurDesAnnées = estHorizontal ? Array(3).fill(this.couleurDeLaValeur) : Array(3).fill(this.couleurDuFond)
+    const couleurDesAnnées = estHorizontal ? Array(valeurs.length).fill(this.couleurDeLaValeur) : Array(valeurs.length).fill(this.couleurDuFond)
 
     valeurs.forEach((valeur: number, index: number) => {
       if (valeur < maxAvantDePerdreLeContraste) {
