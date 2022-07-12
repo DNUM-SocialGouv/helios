@@ -68,3 +68,18 @@ index_des_activités_men_pmsi_annuel: List[str] = [
     équivalences_diamant_men_pmsi_annuel_helios["Année"]["nom"],
     équivalences_diamant_men_pmsi_annuel_helios["Finess"]["nom"],
 ]
+
+
+équivalences_diamant_ann_rpu_helios: ÉquivalencesDiamantHelios = {
+    "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+    "Année": ColonneHelios(nom="annee", type=int),
+    "Nombre de passages aux urgences": ColonneHelios(nom="nombre_passages_urgences", type=float),
+}
+
+colonnes_à_lire_ann_rpu: List[str] = list(équivalences_diamant_ann_rpu_helios.keys())
+
+
+index_des_activités_ann_rpu: List[str] = [
+    équivalences_diamant_ann_rpu_helios["Année"]["nom"],
+    équivalences_diamant_ann_rpu_helios["Finess"]["nom"],
+]

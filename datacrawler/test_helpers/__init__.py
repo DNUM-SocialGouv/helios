@@ -121,6 +121,17 @@ def csv_men_pmsi_annuel_builder(champs_surchargés: Optional[Dict] = None) -> Di
     return men_pmsi_annuel
 
 
+def csv_ann_rpu_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
+    ann_rpu = {
+        "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "Année": 2018,
+        "Nombre de passages aux urgences": 100.0,
+    }
+    if champs_surchargés:
+        return {**ann_rpu, **champs_surchargés}
+    return ann_rpu
+
+
 def sql_men_pmsi_annuel_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
     men_pmsi_annuel = {
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
@@ -139,3 +150,35 @@ def sql_men_pmsi_annuel_builder(champs_surchargés: Optional[Dict] = None) -> Di
     if champs_surchargés:
         return {**men_pmsi_annuel, **champs_surchargés}
     return men_pmsi_annuel
+
+
+def sql_ann_rpu_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    ann_rpu = {
+        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "annee": 2018,
+        "nombre_passages_urgences": 100.0,
+    }
+    if champs_surchargés:
+        return {**ann_rpu, **champs_surchargés}
+    return ann_rpu
+
+
+def sql_activité_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    activité = {
+        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "annee": 2018,
+        "nombre_sejours_partiels_medecine": 1.0,
+        "nombre_sejours_partiels_obstetrique": 1.0,
+        "nombre_sejours_partiels_chirurgie": 1.0,
+        "nombre_sejours_complets_medecine": 255.0,
+        "nombre_sejours_complets_chirurgie": 6.0,
+        "nombre_sejours_complets_obstetrique": 1.0,
+        "nombre_journees_completes_ssr": 1074.0,
+        "nombre_journees_partiels_ssr": 1.0,
+        "nombre_journees_complete_psy": 1.0,
+        "nombre_journées_partielles_psy": 1.0,
+        "nombre_passages_urgences": 100.0,
+    }
+    if champs_surchargés:
+        return {**activité, **champs_surchargés}
+    return activité
