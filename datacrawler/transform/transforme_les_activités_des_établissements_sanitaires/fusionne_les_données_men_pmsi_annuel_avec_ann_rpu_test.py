@@ -1,7 +1,7 @@
 import pandas as pd
 from numpy import NaN
 
-from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, sql_men_pmsi_annuel_builder, sql_ann_rpu_builder
+from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, helios_men_pmsi_annuel_builder, helios_ann_rpu_builder
 from datacrawler.transform.transforme_les_activités_des_établissements_sanitaires.fusionne_les_données_men_pmsi_annuel_avec_ann_rpu import (
     fusionne_les_données_men_pmsi_annuel_avec_les_données_ann_rpu,
 )
@@ -11,9 +11,9 @@ from datacrawler.transform.équivalences_diamant_helios import index_des_activit
 class TestFusionneLesDonnéesMenPmsiAnnuelAvecLesDonnéesAnnRpu:
     def test_fusionne_les_données_men_pmsi_annuel_avec_les_données_ann_rpu_pour_un_couple_année_numéro_finess(self) -> None:
         # GIVEN
-        données_men_pmsi_annuel_transformées = pd.DataFrame([sql_men_pmsi_annuel_builder()]).set_index(index_des_activités)
+        données_men_pmsi_annuel_transformées = pd.DataFrame([helios_men_pmsi_annuel_builder()]).set_index(index_des_activités)
 
-        données_ann_rpu_transformées = pd.DataFrame([sql_ann_rpu_builder()]).set_index(index_des_activités)
+        données_ann_rpu_transformées = pd.DataFrame([helios_ann_rpu_builder()]).set_index(index_des_activités)
 
         # WHEN
         données_fusionnées = fusionne_les_données_men_pmsi_annuel_avec_les_données_ann_rpu(données_men_pmsi_annuel_transformées, données_ann_rpu_transformées)
@@ -47,7 +47,7 @@ class TestFusionneLesDonnéesMenPmsiAnnuelAvecLesDonnéesAnnRpu:
         # GIVEN
         données_men_pmsi_annuel_transformées = pd.DataFrame(
             [
-                sql_men_pmsi_annuel_builder(
+                helios_men_pmsi_annuel_builder(
                     {
                         "numero_finess_etablissement_territorial": "111111111",
                         "annee": 2018,
@@ -58,7 +58,7 @@ class TestFusionneLesDonnéesMenPmsiAnnuelAvecLesDonnéesAnnRpu:
 
         données_ann_rpu_transformées = pd.DataFrame(
             [
-                sql_ann_rpu_builder(
+                helios_ann_rpu_builder(
                     {
                         "numero_finess_etablissement_territorial": "222222222",
                         "annee": 2018,

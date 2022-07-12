@@ -11,16 +11,19 @@ class ColonneHelios(TypedDict):
 équivalences_diamant_ann_errd_ej_et_helios: ÉquivalencesDiamantHelios = {
     "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
     "Année": ColonneHelios(nom="annee", type=int),
-    "Taux d'occupation des lits autorisés en accueil de jour": ColonneHelios(nom="taux_occupation_accueil_de_jour", type=float),
-    "Taux d'occupation des lits autorisés en hébergement temporaire": ColonneHelios(nom="taux_occupation_en_hebergement_temporaire", type=float),
-    "Taux d'occupation des places autorisées en hébergement permanent": ColonneHelios(nom="taux_occupation_en_hebergement_permanent", type=float),
+    "Taux d'occupation des lits autorisés en accueil de jour": ColonneHelios(nom="taux_occupation_accueil_de_jour",
+                                                                             type=float),
+    "Taux d'occupation des lits autorisés en hébergement temporaire": ColonneHelios(
+        nom="taux_occupation_en_hebergement_temporaire", type=float),
+    "Taux d'occupation des places autorisées en hébergement permanent": ColonneHelios(
+        nom="taux_occupation_en_hebergement_permanent", type=float),
 }
 
 colonnes_à_lire_ann_errd_ej_et: List[str] = list(équivalences_diamant_ann_errd_ej_et_helios.keys())
 
 index_des_activités: List[str] = [
-    équivalences_diamant_ann_errd_ej_et_helios["Année"]["nom"],
-    équivalences_diamant_ann_errd_ej_et_helios["Finess"]["nom"],
+    "numero_finess_etablissement_territorial",
+    "annee",
 ]
 
 équivalences_diamant_ann_ms_tdp_et_helios: ÉquivalencesDiamantHelios = {
@@ -29,10 +32,13 @@ index_des_activités: List[str] = [
     "Nombre moyen de journées d'absence des personnes accompagnées sur la période": ColonneHelios(
         nom="nombre_moyen_journees_absence_personnes_accompagnees", type=float
     ),
-    "Durée moyenne de séjour/d'accompagnement": ColonneHelios(nom="duree_moyenne_sejour_accompagnement_personnes_sorties", type=float),
-    "Taux de réalisation de lactivité Tout ESMS (Hors services CAMSP et CMPP)": ColonneHelios(nom="taux_realisation_activite", type=float),
+    "Durée moyenne de séjour/d'accompagnement": ColonneHelios(
+        nom="duree_moyenne_sejour_accompagnement_personnes_sorties", type=float),
+    "Taux de réalisation de lactivité Tout ESMS (Hors services CAMSP et CMPP)": ColonneHelios(
+        nom="taux_realisation_activite", type=float),
     "Taux de réalisation de lactivité CAMSP et CMPP": ColonneHelios(nom="taux_realisation_activite", type=float),
-    "File active des personnes accompagnées sur la période": ColonneHelios(nom="file_active_personnes_accompagnees", type=float),
+    "File active des personnes accompagnées sur la période": ColonneHelios(nom="file_active_personnes_accompagnees",
+                                                                           type=float),
 }
 
 colonnes_à_lire_ann_ms_tdp_et: List[str] = list(équivalences_diamant_ann_ms_tdp_et_helios.keys())
@@ -63,13 +69,6 @@ def extrais_l_equivalence_des_noms_des_colonnes(équivalences: ÉquivalencesDiam
 
 colonnes_à_lire_men_pmsi_annuel: List[str] = list(équivalences_diamant_men_pmsi_annuel_helios.keys())
 
-
-index_des_activités_men_pmsi_annuel: List[str] = [
-    équivalences_diamant_men_pmsi_annuel_helios["Année"]["nom"],
-    équivalences_diamant_men_pmsi_annuel_helios["Finess"]["nom"],
-]
-
-
 équivalences_diamant_ann_rpu_helios: ÉquivalencesDiamantHelios = {
     "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
     "Année": ColonneHelios(nom="annee", type=int),
@@ -77,9 +76,3 @@ index_des_activités_men_pmsi_annuel: List[str] = [
 }
 
 colonnes_à_lire_ann_rpu: List[str] = list(équivalences_diamant_ann_rpu_helios.keys())
-
-
-index_des_activités_ann_rpu: List[str] = [
-    équivalences_diamant_ann_rpu_helios["Année"]["nom"],
-    équivalences_diamant_ann_rpu_helios["Finess"]["nom"],
-]

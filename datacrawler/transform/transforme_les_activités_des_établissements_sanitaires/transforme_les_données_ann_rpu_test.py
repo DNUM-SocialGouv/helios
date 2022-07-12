@@ -2,7 +2,7 @@ import pandas as pd
 from numpy import NaN
 from pandas import NA
 
-from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, csv_ann_rpu_builder, mocked_logger, sql_ann_rpu_builder
+from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, csv_ann_rpu_builder, mocked_logger, helios_ann_rpu_builder
 from datacrawler.transform.transforme_les_activités_des_établissements_sanitaires.transforme_les_données_ann_rpu import (
     transforme_les_données_ann_rpu,
 )
@@ -25,7 +25,7 @@ class TestTransformeLesDonnéesAnnRpu:
         données_transformées = transforme_les_données_ann_rpu(données_ann_rpu, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
-        data_frame_attendu = pd.DataFrame([sql_ann_rpu_builder()]).set_index(index_des_activités).sort_index(axis=1)
+        data_frame_attendu = pd.DataFrame([helios_ann_rpu_builder()]).set_index(index_des_activités).sort_index(axis=1)
         pd.testing.assert_frame_equal(données_transformées.sort_index(axis=1), data_frame_attendu)
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self) -> None:
@@ -48,7 +48,7 @@ class TestTransformeLesDonnéesAnnRpu:
         données_transformées = transforme_les_données_ann_rpu(données_ann_rpu, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
-        data_frame_attendu = pd.DataFrame([sql_ann_rpu_builder()]).set_index(index_des_activités).sort_index(axis=1)
+        data_frame_attendu = pd.DataFrame([helios_ann_rpu_builder()]).set_index(index_des_activités).sort_index(axis=1)
         pd.testing.assert_frame_equal(données_transformées.sort_index(axis=1), data_frame_attendu)
 
     def test_supprime_les_lignes_ne_mentionnant_pas_l_année(self) -> None:
@@ -71,7 +71,7 @@ class TestTransformeLesDonnéesAnnRpu:
         données_transformées = transforme_les_données_ann_rpu(données_ann_rpu, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
-        data_frame_attendu = pd.DataFrame([sql_ann_rpu_builder()]).set_index(index_des_activités).sort_index(axis=1)
+        data_frame_attendu = pd.DataFrame([helios_ann_rpu_builder()]).set_index(index_des_activités).sort_index(axis=1)
         pd.testing.assert_frame_equal(données_transformées.sort_index(axis=1), data_frame_attendu)
 
     def test_renseigne_la_ligne_même_si_aucun_taux_n_est_renseigné(self) -> None:
@@ -100,7 +100,7 @@ class TestTransformeLesDonnéesAnnRpu:
         data_frame_attendu = (
             pd.DataFrame(
                 [
-                    sql_ann_rpu_builder(
+                    helios_ann_rpu_builder(
                         {
                             "nombre_passages_urgences": NaN,
                         }
@@ -147,7 +147,7 @@ class TestTransformeLesDonnéesAnnRpu:
         data_frame_attendu = (
             pd.DataFrame(
                 [
-                    sql_ann_rpu_builder(
+                    helios_ann_rpu_builder(
                         {
                             "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                             "annee": 2018,

@@ -132,7 +132,7 @@ def csv_ann_rpu_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, 
     return ann_rpu
 
 
-def sql_men_pmsi_annuel_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def helios_men_pmsi_annuel_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
     men_pmsi_annuel = {
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "annee": 2018,
@@ -152,7 +152,7 @@ def sql_men_pmsi_annuel_builder(champs_surchargés: Optional[Dict] = None) -> Di
     return men_pmsi_annuel
 
 
-def sql_ann_rpu_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def helios_ann_rpu_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
     ann_rpu = {
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "annee": 2018,
@@ -163,7 +163,7 @@ def sql_ann_rpu_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, 
     return ann_rpu
 
 
-def sql_activité_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def helios_activité_sanitaire_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
     activité = {
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "annee": 2018,
