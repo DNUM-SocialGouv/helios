@@ -10,7 +10,7 @@ from datacrawler.test_helpers import (
     supprime_les_données_des_tables,
     helios_activité_sanitaire_builder,
 )
-from datacrawler.transform.équivalences_diamant_helios import index_des_activités, index_des_activités
+from datacrawler.transform.équivalences_diamant_helios import index_des_activités
 
 
 class TestSauvegarde:

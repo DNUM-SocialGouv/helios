@@ -22,8 +22,8 @@ class ColonneHelios(TypedDict):
 colonnes_à_lire_ann_errd_ej_et: List[str] = list(équivalences_diamant_ann_errd_ej_et_helios.keys())
 
 index_des_activités: List[str] = [
-    "numero_finess_etablissement_territorial",
     "annee",
+    "numero_finess_etablissement_territorial",
 ]
 
 équivalences_diamant_ann_ms_tdp_et_helios: ÉquivalencesDiamantHelios = {
@@ -42,15 +42,6 @@ index_des_activités: List[str] = [
 }
 
 colonnes_à_lire_ann_ms_tdp_et: List[str] = list(équivalences_diamant_ann_ms_tdp_et_helios.keys())
-
-
-def extrais_l_equivalence_des_types_des_colonnes(équivalences: ÉquivalencesDiamantHelios) -> Dict[str, type]:
-    return {nom_diamant: colonne_diamant["type"] for nom_diamant, colonne_diamant in équivalences.items()}
-
-
-def extrais_l_equivalence_des_noms_des_colonnes(équivalences: ÉquivalencesDiamantHelios) -> Dict[str, str]:
-    return {nom_diamant: colonne_diamant["nom"] for nom_diamant, colonne_diamant in équivalences.items()}
-
 
 équivalences_diamant_men_pmsi_annuel_helios: ÉquivalencesDiamantHelios = {
     "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
@@ -76,3 +67,11 @@ colonnes_à_lire_men_pmsi_annuel: List[str] = list(équivalences_diamant_men_pms
 }
 
 colonnes_à_lire_ann_rpu: List[str] = list(équivalences_diamant_ann_rpu_helios.keys())
+
+
+def extrais_l_equivalence_des_types_des_colonnes(équivalences: ÉquivalencesDiamantHelios) -> Dict[str, type]:
+    return {nom_diamant: colonne_diamant["type"] for nom_diamant, colonne_diamant in équivalences.items()}
+
+
+def extrais_l_equivalence_des_noms_des_colonnes(équivalences: ÉquivalencesDiamantHelios) -> Dict[str, str]:
+    return {nom_diamant: colonne_diamant["nom"] for nom_diamant, colonne_diamant in équivalences.items()}
