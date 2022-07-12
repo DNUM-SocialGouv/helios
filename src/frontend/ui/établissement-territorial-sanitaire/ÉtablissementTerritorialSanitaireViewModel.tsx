@@ -15,6 +15,7 @@ import { Bar } from 'react-chartjs-2'
 import { ÉtablissementTerritorialSanitaire } from '../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire'
 import { ÉtablissementTerritorialSanitaireActivité } from '../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité'
 import { Wording } from '../../configuration/wording/Wording'
+import { TableIndicateur } from '../commun/TableIndicateur/TableIndicateur'
 import styles from './BlocActivitéSanitaire.module.css'
 
 type DonnéesDeDiagrammeDesSéjoursMCO = Readonly<{
@@ -172,6 +173,11 @@ export class ÉtablissementTerritorialSanitaireViewModel {
         <ul
           className={styles['graphique-sanitaire-légende']}
           id={this.identifiantDeLaLégende}
+        />
+        <TableIndicateur
+          identifiant={this.wording.NOMBRE_DE_SÉJOUR_MCO}
+          libellés={[2018, 2019, 2020, 2021, 2022]}
+          valeurs={[[20, 20, 30, 50, 60], [20, 20, 30, 50, 60]]}
         />
       </>
     )

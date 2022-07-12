@@ -248,7 +248,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
         <TableIndicateur
           identifiant={identifiant}
           libellés={années}
-          valeurs={this.ajouteLePourcentage(valeurs)}
+          valeurs={[this.ajouteLePourcentage(valeurs)]}
         />
       </>
     )
@@ -286,7 +286,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
         <TableIndicateur
           identifiant={identifiant}
           libellés={années}
-          valeurs={valeurs}
+          valeurs={[valeurs]}
         />
       </>
     )

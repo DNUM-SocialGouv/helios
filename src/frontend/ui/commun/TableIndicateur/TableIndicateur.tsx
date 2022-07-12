@@ -9,7 +9,7 @@ import styles from './TableIndicateur.module.css'
 type TableIndicateurProps = Readonly<{
   identifiant: string
   libellés: number[]
-  valeurs: (number | string)[]
+  valeurs: (number | string)[][]
 }>
 
 export const TableIndicateur = ({ identifiant, libellés, valeurs }: TableIndicateurProps) => {
@@ -54,9 +54,15 @@ export const TableIndicateur = ({ identifiant, libellés, valeurs }: TableIndica
                   <td>
                     {libellé}
                   </td>
-                  <td>
-                    {valeurs[index]}
-                  </td>
+                  {valeurs.length === 1 ? (
+                    <td>
+                      {valeurs[0][index]}
+                    </td>
+                  ): (valeurs.map((valeur) =>
+                    <td key={valeur[index]}>
+                      {valeur[index]}
+                    </td>) )
+                  }
                 </tr>)
               }
             </tbody>
