@@ -246,7 +246,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
           options={this.optionsHistogrammeVertical()}
         />
         <TableIndicateur
-          identifiant={identifiant}
+          identifiants={[identifiant]}
           libellés={années}
           valeurs={[this.ajouteLePourcentage(valeurs)]}
         />
@@ -284,7 +284,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
           options={this.optionsHistogrammeHorizontal(Math.max(...valeurs))}
         />
         <TableIndicateur
-          identifiant={identifiant}
+          identifiants={[identifiant]}
           libellés={années}
           valeurs={[valeurs]}
         />

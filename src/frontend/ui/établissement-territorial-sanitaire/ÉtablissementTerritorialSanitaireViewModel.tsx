@@ -175,9 +175,13 @@ export class ÉtablissementTerritorialSanitaireViewModel {
           id={this.identifiantDeLaLégende}
         />
         <TableIndicateur
-          identifiant={this.wording.NOMBRE_DE_SÉJOUR_MCO}
+          identifiants={[
+            this.wording.HOSPITALISATION_PARTIELLE_MÉDECINE,
+            this.wording.HOSPITALISATION_COMPLÈTE_MÉDECINE,
+            this.wording.HOSPITALISATION_PARTIELLE_OBSTÉTRIQUE,
+          ]}
           libellés={[2018, 2019, 2020, 2021, 2022]}
-          valeurs={[[20, 20, 30, 50, 60], [20, 20, 30, 50, 60]]}
+          valeurs={[[20, 20, 30, 50, 60], [20, 20, 30, 50, 60], [42, 4, 389, 29]]}
         />
       </>
     )

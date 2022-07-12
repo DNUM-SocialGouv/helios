@@ -62,11 +62,43 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
     fireEvent.click(détails)
     const infoBulle = screen.getByRole('dialog', { name: wording.NOMBRE_DE_SÉJOUR_MCO })
     const fermer = within(infoBulle).getByRole('button', { name: wording.FERMER })
-
     // WHEN
     fireEvent.click(fermer)
 
     // THEN
     expect(détails).toHaveAttribute('data-fr-opened', 'false')
   })
+
+  it('affiche un tableau descriptif avec les cinq années après un click sur "Afficher la transcription"', () => {
+    // GIVEN
+    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+    const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
+    const indicateurs = within(activité).getAllByRole('listitem')
+    const transcription = within(indicateurs[0]).getByRole('button', { name: wording.AFFICHER_LA_TRANSCRIPTION })
+    // WHEN
+    fireEvent.click(transcription)
+
+    // THEN
+    expect(transcription).toHaveAttribute('aria-expanded', 'true')
+    const tableau = within(indicateurs[0]).getByRole('table')
+
+    // thead
+    const LabelsLigneDEnTête = [
+      wording.ANNÉE,
+      wording.HOSPITALISATION_PARTIELLE_MÉDECINE,
+      wording.HOSPITALISATION_COMPLÈTE_MÉDECINE,
+      wording.HOSPITALISATION_PARTIELLE_OBSTÉTRIQUE,
+    ]
+    LabelsLigneDEnTête.map((label) => {
+      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: label })
+      expect(indicateurLigneDEnTête).toBeInTheDocument()
+    })
+
+    const lignes = within(tableau).getAllByRole('row')
+    const annéeDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '2018' })
+    expect(annéeDeLaPremièreLigne).toBeInTheDocument()
+    const valeurDeLaPremièreLigne = within(lignes[1]).getAllByRole('cell', { name: '20' })
+    expect(valeurDeLaPremièreLigne[0]).toBeInTheDocument()
+
+  } )
 })
