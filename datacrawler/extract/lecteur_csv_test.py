@@ -26,7 +26,6 @@ class TestLisLeFichierCsv:
         données = lis_le_fichier_csv(chemin_du_fichier, colonnes, types_des_colonnes)
 
         # THEN
-        print(données.columns)
         pd.testing.assert_frame_equal(
             données,
             pd.DataFrame(
