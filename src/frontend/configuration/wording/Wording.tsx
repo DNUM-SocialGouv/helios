@@ -80,6 +80,12 @@ export interface Wording {
   readonly TOTAL_HOSPITALISATION_MÉDECINE: string
   readonly TOTAL_HOSPITALISATION_CHIRURGIE: string
   readonly TOTAL_HOSPITALISATION_OBSTÉTRIQUE: string
+  readonly HOSPITALISATION_PARTIELLE_MÉDECINE: string
+  readonly HOSPITALISATION_COMPLÈTE_MÉDECINE: string
+  readonly HOSPITALISATION_PARTIELLE_CHIRURGIE: string
+  readonly HOSPITALISATION_COMPLÈTE_CHIRURGIE: string
+  readonly HOSPITALISATION_PARTIELLE_OBSTÉTRIQUE: string
+  readonly HOSPITALISATION_COMPLÈTE_OBSTÉTRIQUE: string
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string

@@ -13,8 +13,18 @@ import { ReactElement } from 'react'
 import { Bar } from 'react-chartjs-2'
 
 import { ÉtablissementTerritorialSanitaire } from '../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire'
+import { ÉtablissementTerritorialSanitaireActivité } from '../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité'
 import { Wording } from '../../configuration/wording/Wording'
 import styles from './BlocActivitéSanitaire.module.css'
+
+type DonnéesDeDiagrammeDesSéjoursMCO = Readonly<{
+  nombreSéjoursCompletsMédecine: {x: number, y: number | null}[]
+  nombreSéjoursCompletsChirurgie: {x: number, y: number | null}[]
+  nombreSéjoursCompletsObstétrique: {x: number, y: number | null}[]
+  nombreSéjoursPartielsMédecine: {x: number, y: number | null}[]
+  nombreSéjoursPartielsChirurgie: {x: number, y: number | null}[]
+  nombreSéjoursPartielsObstétrique: {x: number, y: number | null}[]
+}>
 
 export class ÉtablissementTerritorialSanitaireViewModel {
   readonly couleurDuFondHistogrammeBleuClair = '#DEE5FD'
@@ -24,8 +34,19 @@ export class ÉtablissementTerritorialSanitaireViewModel {
   readonly couleurDuFondHistogrammeRougeClair = '#FEE9E6'
   readonly couleurDuFondHistogrammeRougeFoncé = '#A94645'
   readonly couleurDesAxesHorizontaux = '#161616'
+  readonly identifiantDeLaLégende = 'légende-graphique-sanitaire'
 
-  constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, private readonly wording: Wording) {}
+  constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, private readonly wording: Wording) {
+    ChartJS.register(
+      CategoryScale,
+      LinearScale,
+      BarElement,
+      Title,
+      Tooltip,
+      Legend,
+      this.construisLePluginDeLégende()
+    )
+  }
 
   public get titre(): string {
     return `ET - ${this.numéroFinessÉtablissementTerritorial} - ${this.nomDeLÉtablissementTerritorial}`
@@ -84,128 +105,80 @@ export class ÉtablissementTerritorialSanitaireViewModel {
     return this.formateLaDate(this.établissementTerritorial.identité.dateMiseAJourSource)
   }
 
-  public get nombreDeSéjoursMCO(): JSX.Element {
-    return this.afficheUnHistogrammeVertical()
+  public get nombreDeSéjoursMédecineChirurgieObstétrique(): JSX.Element {
+    const [nombreDeSéjours, années] = this.construisLesSéjoursParAnnée()
+
+    return this.afficheUnDiagrammeÀBandes(nombreDeSéjours, années)
   }
 
-  private afficheUnHistogrammeVertical(): JSX.Element {
-    ChartJS.register(
-      CategoryScale,
-      LinearScale,
-      BarElement,
-      Title,
-      Tooltip,
-      Legend
-    )
-    const PluginLégende = {
-      afterUpdate(chart: Chart, _args: Object, options: any) {
-        const ul = document.getElementById(options.containerID)
-
-        while (ul.firstChild) {
-          ul.firstChild.remove()
-        }
-
-        const libellésDeLaLégende = chart.options.plugins.legend.labels.generateLabels(chart)
-
-        libellésDeLaLégende.forEach((libellé) => {
-          const li = créeLaLégendePourLeLibellé(chart, libellé)
-          ul.appendChild(li)
-        })
-      },
-      id: 'htmlLegend',
+  private afficheUnDiagrammeÀBandes(nombreDeSéjours: DonnéesDeDiagrammeDesSéjoursMCO, années: number[]): JSX.Element {
+    const data = {
+      datasets: [
+        {
+          backgroundColor: this.couleurDuFondHistogrammeBleuClair,
+          borderColor: this.couleurDuFondHistogrammeBleuFoncé,
+          data: nombreDeSéjours.nombreSéjoursPartielsMédecine,
+          label: this.wording.HOSPITALISATION_PARTIELLE_MÉDECINE,
+          stack: 'Stack 1',
+        },
+        {
+          backgroundColor: this.couleurDuFondHistogrammeBleuFoncé,
+          borderColor: this.couleurDuFondHistogrammeBleuFoncé,
+          data: nombreDeSéjours.nombreSéjoursCompletsMédecine,
+          label: this.wording.HOSPITALISATION_COMPLÈTE_MÉDECINE,
+          stack: 'Stack 1',
+        },
+        {
+          backgroundColor: this.couleurDuFondHistogrammeVertClair,
+          borderColor: this.couleurDuFondHistogrammeVertFoncé,
+          data: nombreDeSéjours.nombreSéjoursPartielsChirurgie,
+          label: this.wording.HOSPITALISATION_PARTIELLE_CHIRURGIE,
+          stack: 'Stack 2',
+        },
+        {
+          backgroundColor: this.couleurDuFondHistogrammeVertFoncé,
+          borderColor: this.couleurDuFondHistogrammeVertFoncé,
+          data: nombreDeSéjours.nombreSéjoursCompletsChirurgie,
+          label: this.wording.HOSPITALISATION_COMPLÈTE_CHIRURGIE,
+          stack: 'Stack 2',
+        },
+        {
+          backgroundColor: this.couleurDuFondHistogrammeRougeClair,
+          borderColor: this.couleurDuFondHistogrammeRougeFoncé,
+          data: nombreDeSéjours.nombreSéjoursPartielsObstétrique,
+          label: this.wording.HOSPITALISATION_PARTIELLE_OBSTÉTRIQUE,
+          stack: 'Stack 3',
+        },
+        {
+          backgroundColor: this.couleurDuFondHistogrammeRougeFoncé,
+          borderColor: this.couleurDuFondHistogrammeRougeFoncé,
+          data: nombreDeSéjours.nombreSéjoursCompletsObstétrique,
+          label: this.wording.HOSPITALISATION_COMPLÈTE_OBSTÉTRIQUE,
+          stack: 'Stack 3',
+        },
+      ],
+      labels: années,
     }
+
+    const options = this.optionsDiagrammeÀBandes(this.identifiantDeLaLégende)
 
     return (
       <>
         <Bar
-          data={{
-            datasets: [
-              {
-                backgroundColor: this.couleurDuFondHistogrammeBleuClair,
-                borderColor: this.couleurDuFondHistogrammeBleuFoncé,
-                data: [30, 30, 30, 30, 30],
-                label: 'Hospitalisation Partielle Médecine',
-                stack: 'Stack 1',
-              },
-              {
-                backgroundColor: this.couleurDuFondHistogrammeBleuFoncé,
-                borderColor: this.couleurDuFondHistogrammeBleuFoncé,
-                data: [10, 20, 30, 15, 9],
-                label: 'Hospitalisation Complète Médecine',
-                stack: 'Stack 1',
-              },
-              {
-                backgroundColor: this.couleurDuFondHistogrammeVertClair,
-                borderColor: this.couleurDuFondHistogrammeVertFoncé,
-                data: [60, 60, 60, null, 60],
-                label: 'Hospitalisation Partielle Chirurgie',
-                stack: 'Stack 2',
-              },
-              {
-                backgroundColor: this.couleurDuFondHistogrammeVertFoncé,
-                borderColor: this.couleurDuFondHistogrammeVertFoncé,
-                data: [60, 20, 60, 30, 60],
-                label: 'Hospitalisation Complète Chirurgie',
-                stack: 'Stack 2',
-              },
-              {
-                backgroundColor: this.couleurDuFondHistogrammeRougeClair,
-                borderColor: this.couleurDuFondHistogrammeRougeFoncé,
-                data: [100, 100, 100, 100, 100],
-                label: 'Hospitalisation Partielle Obstétrique',
-                stack: 'Stack 3',
-              },
-              {
-                backgroundColor: this.couleurDuFondHistogrammeRougeFoncé,
-                borderColor: this.couleurDuFondHistogrammeRougeFoncé,
-                data: [140, 140, 160, 180, 200],
-                label: 'Hospitalisation Complète Obstétrique',
-                stack: 'Stack 3',
-              },
-            ],
-            labels: [2018, 2019, 2020, 2021, 2022],
-          }}
-          options={{
-            animation: false,
-            elements: { bar: { borderWidth: 2 } },
-            plugins: {
-              // @ts-ignore
-              htmlLegend: { containerID: 'légende-graphique-sanitaire' },
-              legend: { display: false },
-              tooltip: {
-                callbacks: {
-                  label: function (context: any) {
-                    const label = context.dataset.label + ' : ' + context.parsed.y
-
-                    if (context.datasetIndex <= 1) {
-                      return [label, 'Total Hospitalisation Médecine : ' + (context.parsed._stacks.y['0'] + context.parsed._stacks.y['1'])]
-                    }
-                    if (context.datasetIndex === 2 || context.datasetIndex === 3) {
-                      return [label, 'Total Hospitalisation Chirurgie : ' + (context.parsed._stacks.y['2'] + context.parsed._stacks.y['3'])]
-                    }
-                    if (context.datasetIndex === 4 || context.datasetIndex === 5) {
-                      return [label, 'Total Hospitalisation Obstétrique : ' + (context.parsed._stacks.y['4'] + context.parsed._stacks.y['5'])]
-                    }
-                  },
-                },
-              },
-            },
-            responsive: true,
-            scales: {
-              x: { grid: { drawOnChartArea: false }, ticks: { color: 'var(--text-default-grey)' } },
-              y: { grid: { color: this.couleurDesAxesHorizontaux, drawBorder: false }, stacked: true, ticks: { color: 'var(--text-default-grey)' } },
-            },
-          }}
-          plugins={[PluginLégende]}
+          data={data}
+          // @ts-ignore
+          options={options}
         />
         <ul
           className={styles['graphique-sanitaire-légende']}
-          id="légende-graphique-sanitaire"
+          id={this.identifiantDeLaLégende}
         />
       </>
     )
+  }
 
-    function créeLaLégendePourLeLibellé(chart: ChartJS, libellé: LegendItem): HTMLLIElement {
+  private construisLePluginDeLégende() {
+    function créeLeLibelléPourLaLégende(chart: ChartJS, libellé: LegendItem): HTMLLIElement {
       const li = document.createElement('li')
 
       li.onclick = () => {
@@ -228,6 +201,68 @@ export class ÉtablissementTerritorialSanitaireViewModel {
       li.appendChild(textContainer)
       return li
     }
+
+    return {
+      afterUpdate(chart: Chart, _args: Object, options: any) {
+        const légende = document.getElementById(options.containerID)
+
+        if (!légende)
+          return
+
+        while (légende.firstChild) {
+          légende.firstChild.remove()
+        }
+
+        // @ts-ignore
+        const libellésDeLaLégende = chart.options.plugins?.legend?.labels.generateLabels(chart) || []
+
+        libellésDeLaLégende.forEach((libellé) => {
+          const libelléDeLégende = créeLeLibelléPourLaLégende(chart, libellé)
+          légende.appendChild(libelléDeLégende)
+        })
+      },
+      id: 'htmlLegend',
+    }
+  }
+
+  private optionsDiagrammeÀBandes(idDeLaLégende: string) {
+    return {
+      animation: false,
+      elements: { bar: { borderWidth: 2 } },
+      plugins: {
+        htmlLegend: { containerID: idDeLaLégende },
+        legend: { display: false },
+        tooltip: { callbacks: { label: this.tooltip(this.wording) } },
+      },
+      responsive: true,
+      scales: {
+        x: { grid: { drawOnChartArea: false }, ticks: { color: 'var(--text-default-grey)' } },
+        y: { grid: { color: this.couleurDesAxesHorizontaux, drawBorder: false }, stacked: true, ticks: { color: 'var(--text-default-grey)' } },
+      },
+    }
+  }
+
+  private tooltip(wording: Wording) {
+    return function (context: any) {
+      const label = `${context.dataset.label} : ${context.parsed.y}`
+
+      if (context.datasetIndex <= 1) {
+        const nombreSéjoursHospitalisationPartielleMédecine = context.parsed._stacks.y['0']
+        const nombreSéjoursHospitalisationComplèteMédecine = context.parsed._stacks.y['1']
+        return [label, `${wording.TOTAL_HOSPITALISATION_MÉDECINE} : ${(nombreSéjoursHospitalisationPartielleMédecine + nombreSéjoursHospitalisationComplèteMédecine)}`]
+      }
+      if (context.datasetIndex === 2 || context.datasetIndex === 3) {
+        const nombreSéjoursHospitalisationPartielleChirurgie = context.parsed._stacks.y['2']
+        const nombreSéjoursHospitalisationComplèteChirurgie = context.parsed._stacks.y['3']
+        return [label, `${wording.TOTAL_HOSPITALISATION_CHIRURGIE} : ${(nombreSéjoursHospitalisationPartielleChirurgie + nombreSéjoursHospitalisationComplèteChirurgie)}`]
+      }
+      if (context.datasetIndex === 4 || context.datasetIndex === 5) {
+        const nombreSéjoursHospitalisationPartielleObstétrique = context.parsed._stacks.y['4']
+        const nombreSéjoursHospitalisationComplèteObstétrique = context.parsed._stacks.y['5']
+        return [label, `${wording.TOTAL_HOSPITALISATION_OBSTÉTRIQUE} : ${(nombreSéjoursHospitalisationPartielleObstétrique + nombreSéjoursHospitalisationComplèteObstétrique)}`]
+      }
+      return label
+    }
   }
 
   private formateLeTitreDeLEntitéJuridiqueDeRattachement() {
@@ -249,5 +284,28 @@ export class ÉtablissementTerritorialSanitaireViewModel {
 
   private valeurOuNonRenseigné(valeur: string): string {
     return valeur === '' ? this.wording.NON_RENSEIGNÉ : valeur
+  }
+
+  private construisLesSéjoursParAnnée(): [DonnéesDeDiagrammeDesSéjoursMCO, number[]] {
+    const nombreDeSéjours: DonnéesDeDiagrammeDesSéjoursMCO = {
+      nombreSéjoursCompletsChirurgie: [],
+      nombreSéjoursCompletsMédecine: [],
+      nombreSéjoursCompletsObstétrique: [],
+      nombreSéjoursPartielsChirurgie: [],
+      nombreSéjoursPartielsMédecine: [],
+      nombreSéjoursPartielsObstétrique: [],
+    }
+    const années: number[] = []
+
+    this.établissementTerritorial.activités.forEach((activité: ÉtablissementTerritorialSanitaireActivité) => {
+      années.push(activité.année)
+      nombreDeSéjours.nombreSéjoursCompletsChirurgie.push({ x: activité.année, y: activité.nombreSéjoursCompletsChirurgie })
+      nombreDeSéjours.nombreSéjoursCompletsMédecine.push({ x: activité.année, y: activité.nombreSéjoursCompletsMédecine })
+      nombreDeSéjours.nombreSéjoursCompletsObstétrique.push({ x: activité.année, y: activité.nombreSéjoursCompletsObstétrique })
+      nombreDeSéjours.nombreSéjoursPartielsChirurgie.push({ x: activité.année, y: activité.nombreSéjoursPartielsChirurgie })
+      nombreDeSéjours.nombreSéjoursPartielsMédecine.push({ x: activité.année, y: activité.nombreSéjoursPartielsMédecine })
+      nombreDeSéjours.nombreSéjoursPartielsObstétrique.push({ x: activité.année, y: activité.nombreSéjoursPartielsObstétrique })
+    })
+    return [nombreDeSéjours, années]
   }
 }

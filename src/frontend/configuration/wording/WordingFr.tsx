@@ -93,6 +93,12 @@ export class WordingFr implements Wording {
   readonly TOTAL_HOSPITALISATION_MÉDECINE: string = 'Total Hospitalisation Médecine'
   readonly TOTAL_HOSPITALISATION_CHIRURGIE: string = 'Total Hospitalisation Chirurgie'
   readonly TOTAL_HOSPITALISATION_OBSTÉTRIQUE: string = 'Total Hospitalisation Obstétrique'
+  readonly HOSPITALISATION_PARTIELLE_MÉDECINE: string = 'Hospitalisation Partielle Médecine'
+  readonly HOSPITALISATION_COMPLÈTE_MÉDECINE: string = 'Hospitalisation Complète Médecine'
+  readonly HOSPITALISATION_PARTIELLE_CHIRURGIE: string = 'Hospitalisation Partielle Chirurgie'
+  readonly HOSPITALISATION_COMPLÈTE_CHIRURGIE: string = 'Hospitalisation Complète Chirurgie'
+  readonly HOSPITALISATION_PARTIELLE_OBSTÉTRIQUE: string = 'Hospitalisation Partielle Obstétrique'
+  readonly HOSPITALISATION_COMPLÈTE_OBSTÉTRIQUE: string = 'Hospitalisation Complète Obstétrique'
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string = 'Établissement territorial'

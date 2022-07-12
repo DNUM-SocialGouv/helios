@@ -114,7 +114,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   public get tauxOccupationHébergementPermanent(): JSX.Element {
-    const [valeurs, années] = this.construisLesAnnéessEtSesTaux('tauxOccupationHébergementPermanent')
+    const [valeurs, années] = this.construisLesAnnéesEtSesTaux('tauxOccupationHébergementPermanent')
     const chartColors = this.construisLeFondDeCouleurDesHistogrammes(valeurs)
     const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs)
 
@@ -126,7 +126,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   public get tauxOccupationHébergementTemporaire(): JSX.Element {
-    const [valeurs, années] = this.construisLesAnnéessEtSesTaux('tauxOccupationHébergementTemporaire')
+    const [valeurs, années] = this.construisLesAnnéesEtSesTaux('tauxOccupationHébergementTemporaire')
     const chartColors = this.construisLeFondDeCouleurDesHistogrammes(valeurs)
     const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs)
 
@@ -138,7 +138,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   public get tauxOccupationAccueilDeJour(): JSX.Element {
-    const [valeurs, années] = this.construisLesAnnéessEtSesTaux('tauxOccupationAccueilDeJour')
+    const [valeurs, années] = this.construisLesAnnéesEtSesTaux('tauxOccupationAccueilDeJour')
     const chartColors = this.construisLeFondDeCouleurDesHistogrammes(valeurs)
     const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs)
 
@@ -150,7 +150,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   public get tauxRéalisationActivité(): JSX.Element {
-    const [valeurs, années] = this.construisLesAnnéessEtSesTaux('tauxRéalisationActivité')
+    const [valeurs, années] = this.construisLesAnnéesEtSesTaux('tauxRéalisationActivité')
     const chartColors = this.construisLeFondDeCouleurDesHistogrammes(valeurs)
     const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs)
 
@@ -162,7 +162,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   public get fileActivePersonnesAccompagnées(): JSX.Element {
-    const [valeurs, années] = this.construisLesAnnéessEtSesValeurs('fileActivePersonnesAccompagnées')
+    const [valeurs, années] = this.construisLesAnnéesEtSesValeurs('fileActivePersonnesAccompagnées')
     const chartColors = this.fondDeCouleurPourPremierHistogramme
     const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs, true)
 
@@ -174,7 +174,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   public get nombreMoyenJournéesAbsencePersonnesAccompagnées(): JSX.Element {
-    const [valeurs, années] = this.construisLesAnnéessEtSesValeurs('nombreMoyenJournéesAbsencePersonnesAccompagnées')
+    const [valeurs, années] = this.construisLesAnnéesEtSesValeurs('nombreMoyenJournéesAbsencePersonnesAccompagnées')
     const chartColors = this.fondDeCouleurPourPremierHistogramme
     const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs, true)
 
@@ -187,7 +187,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   public get duréeMoyenneSéjourAccompagnementPersonnesSorties(): JSX.Element {
-    const [valeurs, années] = this.construisLesAnnéessEtSesValeurs('duréeMoyenneSéjourAccompagnementPersonnesSorties')
+    const [valeurs, années] = this.construisLesAnnéesEtSesValeurs('duréeMoyenneSéjourAccompagnementPersonnesSorties')
     const chartColors = this.fondDeCouleurPourPremierHistogramme
     const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs, true)
 
@@ -376,7 +376,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     }
   }
 
-  private construisLesAnnéessEtSesTaux(indicateur: keyof ÉtablissementTerritorialMédicoSocialActivité): number[][] {
+  private construisLesAnnéesEtSesTaux(indicateur: keyof ÉtablissementTerritorialMédicoSocialActivité): number[][] {
     const valeurs: number[] = []
     const années: number[] = []
     this.établissementTerritorial.activités.forEach((activité: ÉtablissementTerritorialMédicoSocialActivité) => {
@@ -393,7 +393,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     return [valeurs, années]
   }
 
-  private construisLesAnnéessEtSesValeurs(indicateur: keyof ÉtablissementTerritorialMédicoSocialActivité): number[][] {
+  private construisLesAnnéesEtSesValeurs(indicateur: keyof ÉtablissementTerritorialMédicoSocialActivité): number[][] {
     const valeurs: number[] = []
     const années: number[] = []
     this.établissementTerritorial.activités.forEach((activité: ÉtablissementTerritorialMédicoSocialActivité) => {

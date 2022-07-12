@@ -24,7 +24,7 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewM
           nomDeLIndicateur={wording.NOMBRE_DE_SÉJOUR_MCO}
           source={wording.DIAMANT}
         >
-          { établissementTerritorialSanitaireViewModel.nombreDeSéjoursMCO }
+          { établissementTerritorialSanitaireViewModel.nombreDeSéjoursMédecineChirurgieObstétrique }
         </IndicateurGraphique>
       </ul>
     </Bloc>
