@@ -1,4 +1,4 @@
-from unittest.mock import MagicMock, Mock, patch
+from unittest.mock import Mock, patch
 
 import pandas as pd
 import pytest
@@ -9,6 +9,7 @@ from datacrawler.ajoute_les_activités_des_établissements_médico_sociaux impor
 from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX
 from datacrawler.test_helpers import (
     base_de_données_test,
+    mocked_logger,
     sauvegarde_un_établissement_en_base,
     sauvegarde_une_activité_en_base,
     sauvegarde_une_entité_juridique_en_base,
@@ -29,10 +30,11 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
         sauvegarde_un_établissement_en_base("010786259", "010008407", base_de_données_test)
         sauvegarde_un_établissement_en_base("010789717", "010008407", base_de_données_test)
         sauvegarde_un_établissement_en_base("010001261", "010008407", base_de_données_test)
-        logger = MagicMock()
 
         # WHEN
-        ajoute_les_activités_des_établissements_médico_sociaux(chemin_du_fichier_ann_errd_ej_et, chemin_du_fichier_ann_ms_tdp_et, base_de_données_test, logger)
+        ajoute_les_activités_des_établissements_médico_sociaux(
+            chemin_du_fichier_ann_errd_ej_et, chemin_du_fichier_ann_ms_tdp_et, base_de_données_test, mocked_logger
+        )
 
         # THEN
         data_frame_attendu = pd.DataFrame(
@@ -85,10 +87,10 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
         )
         sauvegarde_une_activité_en_base(table_activité_existante, base_de_données_test, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX)
 
-        logger = MagicMock()
-
         # WHEN
-        ajoute_les_activités_des_établissements_médico_sociaux(chemin_du_fichier_ann_errd_ej_et, chemin_du_fichier_ann_ms_tdp_et, base_de_données_test, logger)
+        ajoute_les_activités_des_établissements_médico_sociaux(
+            chemin_du_fichier_ann_errd_ej_et, chemin_du_fichier_ann_ms_tdp_et, base_de_données_test, mocked_logger
+        )
 
         # THEN
         data_frame_attendu = pd.DataFrame(
@@ -139,14 +141,12 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
         )
         sauvegarde_une_activité_en_base(table_activité_existante, base_de_données_test, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX)
 
-        logger = MagicMock()
-
-        mocked_sauvegarde.side_effect = ValueError()
+        mocked_sauvegarde.side_effect = ValueError
 
         # WHEN
         with pytest.raises(ValueError):
             ajoute_les_activités_des_établissements_médico_sociaux(
-                chemin_du_fichier_ann_errd_ej_et, chemin_du_fichier_ann_ms_tdp_et, base_de_données_test, logger
+                chemin_du_fichier_ann_errd_ej_et, chemin_du_fichier_ann_ms_tdp_et, base_de_données_test, mocked_logger
             )
 
         # THEN

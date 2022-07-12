@@ -1,10 +1,8 @@
-from unittest.mock import MagicMock
-
 import pandas as pd
 from numpy import NaN
 from pandas import NA
 
-from datacrawler.test_helpers import csv_ann_ms_tdp_et_builder
+from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, csv_ann_ms_tdp_et_builder, mocked_logger
 from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.transforme_les_données_ann_ms_tdp_et import (
     récupère_le_taux_de_réalisation_des_établissements,
     transforme_les_données_ann_ms_tdp_et,
@@ -15,25 +13,23 @@ from datacrawler.transform.équivalences_diamant_helios import index_des_activit
 class TestTransformeLesDonnéesAnnMsTdpEt:
     def test_renomme_les_colonnes_et_crée_l_index(self) -> None:
         # GIVEN
-        logger = MagicMock()
-        numéro_finess_établissement = "010001261"
         données_ann_errd_ej_et = pd.DataFrame([csv_ann_ms_tdp_et_builder()])
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
-                    "numero_finess_etablissement_territorial": numéro_finess_établissement,
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                 }
             ]
         )
 
         # WHEN
-        données_transformées = transforme_les_données_ann_ms_tdp_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, logger)
+        données_transformées = transforme_les_données_ann_ms_tdp_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
         data_frame_attendu = pd.DataFrame(
             [
                 {
-                    "numero_finess_etablissement_territorial": "010001261",
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                     "annee": 2018,
                     "nombre_moyen_journees_absence_personnes_accompagnees": 31.41,
                     "duree_moyenne_sejour_accompagnement_personnes_sorties": 904.17,
@@ -46,30 +42,28 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
 
     def test_ne_renvoie_pas_les_établissements_non_présents_en_base(self) -> None:
         # GIVEN
-        logger = MagicMock()
         données_ann_ms_tdp_et = pd.DataFrame([csv_ann_ms_tdp_et_builder(), csv_ann_ms_tdp_et_builder({"Finess": "123456789"})])
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
-                    "numero_finess_etablissement_territorial": "010001261",
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                 }
             ]
         )
 
         # WHEN
-        données_transformées = transforme_les_données_ann_ms_tdp_et(données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, logger)
+        données_transformées = transforme_les_données_ann_ms_tdp_et(données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
         assert données_transformées.shape == (1, 4)
 
     def test_ne_considère_qu_une_seule_fois_un_même_couple_année_numéro_finess(self) -> None:
         # GIVEN
-        logger = MagicMock()
         données_ann_ms_tdp_et = pd.DataFrame(
             [
                 csv_ann_ms_tdp_et_builder(
                     {
-                        "Finess": "010001261",
+                        "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
                         "Année": 2018,
                         "Nombre moyen de journées d'absence des personnes accompagnées sur la période": 31.41,
                         "Durée moyenne de séjour/d'accompagnement": 904.17,
@@ -80,7 +74,7 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
                 ),
                 csv_ann_ms_tdp_et_builder(
                     {
-                        "Finess": "010001261",
+                        "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
                         "Année": 2018,
                         "Nombre moyen de journées d'absence des personnes accompagnées sur la période": 58.61,
                         "Durée moyenne de séjour/d'accompagnement": 603.00,
@@ -94,19 +88,19 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
-                    "numero_finess_etablissement_territorial": "010001261",
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                 }
             ]
         )
 
         # WHEN
-        données_transformées = transforme_les_données_ann_ms_tdp_et(données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, logger)
+        données_transformées = transforme_les_données_ann_ms_tdp_et(données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
         data_frame_attendu = pd.DataFrame(
             [
                 {
-                    "numero_finess_etablissement_territorial": "010001261",
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                     "annee": 2018,
                     "nombre_moyen_journees_absence_personnes_accompagnees": 31.41,
                     "duree_moyenne_sejour_accompagnement_personnes_sorties": 904.17,
@@ -119,14 +113,12 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self) -> None:
         # GIVEN
-        logger = MagicMock()
-        numéro_finess_établissement = "010001261"
         données_ann_ms_tdp_et = pd.DataFrame(
             [
                 csv_ann_ms_tdp_et_builder({"Finess": NaN}),
                 csv_ann_ms_tdp_et_builder(
                     {
-                        "Finess": numéro_finess_établissement,
+                        "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
                         "Année": 2018,
                         "Nombre moyen de journées d'absence des personnes accompagnées sur la période": 58.61,
                         "Durée moyenne de séjour/d'accompagnement": 603.00,
@@ -140,19 +132,19 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
-                    "numero_finess_etablissement_territorial": numéro_finess_établissement,
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                 }
             ]
         )
 
         # WHEN
-        données_transformées = transforme_les_données_ann_ms_tdp_et(données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, logger)
+        données_transformées = transforme_les_données_ann_ms_tdp_et(données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
         data_frame_attendu = pd.DataFrame(
             [
                 {
-                    "numero_finess_etablissement_territorial": numéro_finess_établissement,
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                     "annee": 2018,
                     "nombre_moyen_journees_absence_personnes_accompagnees": 58.61,
                     "duree_moyenne_sejour_accompagnement_personnes_sorties": 603.00,
@@ -165,25 +157,23 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_l_année(self) -> None:
         # GIVEN
-        logger = MagicMock()
-        numéro_finess_établissement = "010001261"
         données_ann_ms_tdp_et = pd.DataFrame([csv_ann_ms_tdp_et_builder({"Année": NA}), csv_ann_ms_tdp_et_builder()])
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
-                    "numero_finess_etablissement_territorial": numéro_finess_établissement,
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                 }
             ]
         )
 
         # WHEN
-        données_transformées = transforme_les_données_ann_ms_tdp_et(données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, logger)
+        données_transformées = transforme_les_données_ann_ms_tdp_et(données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
         data_frame_attendu = pd.DataFrame(
             [
                 {
-                    "numero_finess_etablissement_territorial": numéro_finess_établissement,
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                     "annee": 2018,
                     "nombre_moyen_journees_absence_personnes_accompagnees": 31.41,
                     "duree_moyenne_sejour_accompagnement_personnes_sorties": 904.17,

@@ -1,17 +1,16 @@
 import logging
-from unittest.mock import MagicMock
 
 import pytest
 from pytest import LogCaptureFixture
 
 from datacrawler.dependencies.logger.logger import crée_le_logger
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
+from datacrawler.test_helpers import mocked_logger
 
 
 class TestLocaliseLeFichier:
     def test_renvoie_le_nom_du_fichier_recherché(self) -> None:
         # GIVEN
-        logger = MagicMock()
         préfixe_du_fichier_recherché = "ANN_ERRD_EJ_ET"
         liste_des_fichiers = [
             "ANN_ERRD_EJ_ET_2022_07_03.CSV",
@@ -26,7 +25,7 @@ class TestLocaliseLeFichier:
         ]
 
         # WHEN
-        fichier_recherché = trouve_le_nom_du_fichier(liste_des_fichiers, préfixe_du_fichier_recherché, logger)
+        fichier_recherché = trouve_le_nom_du_fichier(liste_des_fichiers, préfixe_du_fichier_recherché, mocked_logger)
 
         # THEN
         assert fichier_recherché == f"{préfixe_du_fichier_recherché}_2022_07_03.CSV"

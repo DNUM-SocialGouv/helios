@@ -1,4 +1,5 @@
 from typing import Dict, Optional
+from unittest.mock import MagicMock
 
 import pandas as pd
 from sqlalchemy import create_engine
@@ -8,6 +9,8 @@ from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEM
 from datacrawler.transform.équivalences_diamant_helios import index_des_activités
 
 base_de_données_test = create_engine("postgresql://helios:h3li0s@localhost:5433/helios")
+mocked_logger = MagicMock()
+NUMÉRO_FINESS_ÉTABLISSEMENT = "010001261"
 
 
 def sauvegarde_une_entité_juridique_en_base(numéro_finess: str, base_de_données: Engine) -> None:
@@ -21,8 +24,7 @@ def sauvegarde_une_entité_juridique_en_base(numéro_finess: str, base_de_donné
     adresse_voie,
     libelle_statut_juridique,
     telephone
-  )
-VALUES (
+  ) VALUES (
     '{numéro_finess}',
     'rs',
     '00000 VILLE',
@@ -53,8 +55,7 @@ def sauvegarde_un_établissement_en_base(numéro_finess_établissement: str, num
     type_etablissement,
     libelle_categorie_etablissement,
     domaine
-  )
-VALUES (
+  ) VALUES (
     '00000 VILLE',
     '12',
     'R',
@@ -87,7 +88,7 @@ def sauvegarde_une_activité_en_base(activité: pd.DataFrame, base_de_données: 
 
 def csv_ann_ms_tdp_et_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
     ann_ms_tdp_et = {
-        "Finess": "010001261",
+        "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "Année": 2018,
         "Nombre moyen de journées d'absence des personnes accompagnées sur la période": 31.41,
         "Durée moyenne de séjour/d'accompagnement": 904.17,
@@ -102,7 +103,7 @@ def csv_ann_ms_tdp_et_builder(champs_surchargés: Optional[Dict] = None) -> Dict
 
 def csv_men_pmsi_annuel_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
     men_pmsi_annuel = {
-        "Finess": "010001261",
+        "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "Année": 2018,
         "Nombre de séjours HTP/AMBU Médecine": 1.0,
         "Nombre de séjours HTP/AMBU Obstétrique": 1.0,
@@ -122,7 +123,7 @@ def csv_men_pmsi_annuel_builder(champs_surchargés: Optional[Dict] = None) -> Di
 
 def sql_men_pmsi_annuel_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
     men_pmsi_annuel = {
-        "numero_finess_etablissement_territorial": "010001261",
+        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "annee": 2018,
         "nombre_sejours_partiels_medecine": 1.0,
         "nombre_sejours_partiels_obstetrique": 1.0,

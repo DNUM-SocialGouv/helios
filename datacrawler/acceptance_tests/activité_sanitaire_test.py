@@ -1,4 +1,4 @@
-from unittest.mock import MagicMock, Mock, patch
+from unittest.mock import Mock, patch
 
 import pandas as pd
 import pytest
@@ -9,6 +9,7 @@ from datacrawler.ajoute_les_activités_des_établissements_sanitaires import ajo
 from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES
 from datacrawler.test_helpers import (
     base_de_données_test,
+    mocked_logger,
     sauvegarde_un_établissement_en_base,
     sauvegarde_une_activité_en_base,
     sauvegarde_une_entité_juridique_en_base,
@@ -25,10 +26,9 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
         chemin_du_fichier_men_pmsi_annuel = "data_set/diamant/MEN_PMSI_ANNUEL_2022_06_07.CSV"
         sauvegarde_une_entité_juridique_en_base("010008407", base_de_données_test)
         sauvegarde_un_établissement_en_base("010005239", "010008407", base_de_données_test)
-        logger = MagicMock()
 
         # WHEN
-        ajoute_les_activités_des_établissements_sanitaires(chemin_du_fichier_men_pmsi_annuel, base_de_données_test, logger)
+        ajoute_les_activités_des_établissements_sanitaires(chemin_du_fichier_men_pmsi_annuel, base_de_données_test, mocked_logger)
 
         # THEN
         activité_attendue = pd.DataFrame(
@@ -75,10 +75,8 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
         )
         sauvegarde_une_activité_en_base(activité_existante, base_de_données_test, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES)
 
-        logger = MagicMock()
-
         # WHEN
-        ajoute_les_activités_des_établissements_sanitaires(chemin_du_fichier_men_pmsi_annuel, base_de_données_test, logger)
+        ajoute_les_activités_des_établissements_sanitaires(chemin_du_fichier_men_pmsi_annuel, base_de_données_test, mocked_logger)
 
         # THEN
         activité_attendue = pd.DataFrame(
@@ -127,13 +125,11 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
         )
         sauvegarde_une_activité_en_base(activité_existante, base_de_données_test, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES)
 
-        logger = MagicMock()
-
         mocked_sauvegarde.side_effect = ValueError()
 
         # WHEN
         with pytest.raises(ValueError):
-            ajoute_les_activités_des_établissements_sanitaires(chemin_du_fichier_men_pmsi_annuel, base_de_données_test, logger)
+            ajoute_les_activités_des_établissements_sanitaires(chemin_du_fichier_men_pmsi_annuel, base_de_données_test, mocked_logger)
 
         # THEN
         table_activité = pd.read_sql_table(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, base_de_données_test)
