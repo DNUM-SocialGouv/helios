@@ -10,6 +10,8 @@ from datacrawler.transform.équivalences_diamant_helios import (
     équivalences_diamant_ann_errd_ej_et_helios,
     équivalences_diamant_ann_ms_tdp_et_helios,
     équivalences_diamant_men_pmsi_annuel_helios,
+    colonnes_à_lire_ann_rpu,
+    équivalences_diamant_ann_rpu_helios,
 )
 
 
@@ -24,7 +26,6 @@ class TestLisLeFichierCsv:
         données = lis_le_fichier_csv(chemin_du_fichier, colonnes, types_des_colonnes)
 
         # THEN
-        print(données.columns)
         pd.testing.assert_frame_equal(
             données,
             pd.DataFrame(
@@ -116,4 +117,26 @@ class TestLisLeFichierCsv:
         pd.testing.assert_frame_equal(
             men_pmsi_annuel_reçu,
             men_pmsi_annuel_attendu,
+        )
+
+    def test_lis_les_colonnes_demandées_du_fichier_csv_ann_rpu(self) -> None:
+        # GIVEN
+        chemin_du_fichier = "data_set/diamant/ANN_RPU_2022_06_23.CSV"
+        colonnes = colonnes_à_lire_ann_rpu
+        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_rpu_helios)
+
+        # WHEN
+        ann_rpu_reçu = lis_le_fichier_csv(chemin_du_fichier, colonnes, types_des_colonnes)
+
+        # THEN
+        ann_rpu_attendu = pd.DataFrame(
+            {
+                "Finess": ["010005239", "010005239", "010005239", "2A0000154"],
+                "Année": [2019, 2018, 2018, 2016],
+                "Nombre de passages aux urgences": [23987.0, 24032.0, 42792.0, 10296.0],
+            }
+        )
+        pd.testing.assert_frame_equal(
+            ann_rpu_reçu,
+            ann_rpu_attendu,
         )

@@ -12,7 +12,7 @@
     "dev": "yarn start:db && next dev",
     "lint": "yarn lint:typescript && yarn lint:python",
     "lint:typescript": "npx eslint src database datacrawler",
-    "lint:typescript:fix": "yarn lint --fix",
+    "lint:typescript:fix": "yarn lint:typescript --fix",
     "lint:python": "pipenv run lint",
     "lint:python:fix": "pipenv run format",
     "migrations": "TS_NODE_TRANSPILE_ONLY=true node --loader ts-node/esm ./database/migrations.ts",

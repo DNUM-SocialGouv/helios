@@ -2,7 +2,7 @@ import pandas as pd
 from numpy import NaN
 from pandas import NA
 
-from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, csv_men_pmsi_annuel_builder, mocked_logger, sql_men_pmsi_annuel_builder
+from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, csv_men_pmsi_annuel_builder, mocked_logger, helios_men_pmsi_annuel_builder
 from datacrawler.transform.transforme_les_activités_des_établissements_sanitaires.transforme_les_données_men_pmsi_annuel import (
     transforme_les_données_men_pmsi_annuel,
 )
@@ -25,7 +25,7 @@ class TestTransformeLesDonnéesMenPmsiAnnuel:
         données_transformées = transforme_les_données_men_pmsi_annuel(données_men_pmsi_annuel, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
-        data_frame_attendu = pd.DataFrame([sql_men_pmsi_annuel_builder()]).set_index(index_des_activités).sort_index(axis=1)
+        data_frame_attendu = pd.DataFrame([helios_men_pmsi_annuel_builder()]).set_index(index_des_activités).sort_index(axis=1)
         pd.testing.assert_frame_equal(données_transformées.sort_index(axis=1), data_frame_attendu)
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self) -> None:
@@ -48,7 +48,7 @@ class TestTransformeLesDonnéesMenPmsiAnnuel:
         données_transformées = transforme_les_données_men_pmsi_annuel(données_men_pmsi_annuel, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
-        data_frame_attendu = pd.DataFrame([sql_men_pmsi_annuel_builder()]).set_index(index_des_activités).sort_index(axis=1)
+        data_frame_attendu = pd.DataFrame([helios_men_pmsi_annuel_builder()]).set_index(index_des_activités).sort_index(axis=1)
         pd.testing.assert_frame_equal(données_transformées.sort_index(axis=1), data_frame_attendu)
 
     def test_supprime_les_lignes_ne_mentionnant_pas_l_année(self) -> None:
@@ -71,7 +71,7 @@ class TestTransformeLesDonnéesMenPmsiAnnuel:
         données_transformées = transforme_les_données_men_pmsi_annuel(données_men_pmsi_annuel, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
-        data_frame_attendu = pd.DataFrame([sql_men_pmsi_annuel_builder()]).set_index(index_des_activités).sort_index(axis=1)
+        data_frame_attendu = pd.DataFrame([helios_men_pmsi_annuel_builder()]).set_index(index_des_activités).sort_index(axis=1)
         pd.testing.assert_frame_equal(données_transformées.sort_index(axis=1), data_frame_attendu)
 
     def test_renseigne_la_ligne_même_si_aucun_taux_n_est_renseigné(self) -> None:
@@ -109,7 +109,7 @@ class TestTransformeLesDonnéesMenPmsiAnnuel:
         data_frame_attendu = (
             pd.DataFrame(
                 [
-                    sql_men_pmsi_annuel_builder(
+                    helios_men_pmsi_annuel_builder(
                         {
                             "nombre_sejours_partiels_medecine": NaN,
                             "nombre_sejours_partiels_obstetrique": NaN,
@@ -167,7 +167,7 @@ class TestTransformeLesDonnéesMenPmsiAnnuel:
         data_frame_attendu = (
             pd.DataFrame(
                 [
-                    sql_men_pmsi_annuel_builder(
+                    helios_men_pmsi_annuel_builder(
                         {
                             "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                             "annee": 2018,

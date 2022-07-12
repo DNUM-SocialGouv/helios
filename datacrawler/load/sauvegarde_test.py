@@ -1,15 +1,16 @@
 import pandas as pd
 
-from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES
+from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, \
+    TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES
 from datacrawler.load.sauvegarde import sauvegarde
 from datacrawler.test_helpers import (
     base_de_données_test,
     sauvegarde_un_établissement_en_base,
     sauvegarde_une_entité_juridique_en_base,
-    sql_men_pmsi_annuel_builder,
     supprime_les_données_des_tables,
+    helios_activité_sanitaire_builder,
 )
-from datacrawler.transform.équivalences_diamant_helios import index_des_activités, index_des_activités_men_pmsi_annuel
+from datacrawler.transform.équivalences_diamant_helios import index_des_activités
 
 
 class TestSauvegarde:
@@ -68,8 +69,8 @@ class TestSauvegarde:
         sauvegarde_un_établissement_en_base(numéro_finess_établissement_territorial, numéro_finess_entité_juridique, base_de_données_test)
 
         activité_sanitaire = pd.DataFrame(
-            [sql_men_pmsi_annuel_builder({"numero_finess_etablissement_territorial": numéro_finess_établissement_territorial})],
-        ).set_index(index_des_activités_men_pmsi_annuel)
+            [helios_activité_sanitaire_builder({"numero_finess_etablissement_territorial": numéro_finess_établissement_territorial})],
+        ).set_index(index_des_activités)
 
         # WHEN
         with base_de_données_test.connect() as connection:
@@ -77,14 +78,13 @@ class TestSauvegarde:
 
         # THEN
         activité_en_base = pd.read_sql(
-            f"SELECT * FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES}", base_de_données_test, index_col=index_des_activités_men_pmsi_annuel
+            f"SELECT * FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES}", base_de_données_test, index_col=index_des_activités
         ).sort_index(axis=1)
         activité_attendue = (
             pd.DataFrame(
-                [sql_men_pmsi_annuel_builder({"numero_finess_etablissement_territorial": numéro_finess_établissement_territorial})],
+                [helios_activité_sanitaire_builder({"numero_finess_etablissement_territorial": numéro_finess_établissement_territorial})],
             )
-            .set_index(index_des_activités_men_pmsi_annuel)
+            .set_index(index_des_activités)
             .sort_index(axis=1)
         )
-
         pd.testing.assert_frame_equal(activité_attendue, activité_en_base)

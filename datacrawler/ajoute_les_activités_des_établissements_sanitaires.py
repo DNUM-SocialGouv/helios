@@ -15,20 +15,29 @@ from datacrawler.transform.équivalences_diamant_helios import (
     colonnes_à_lire_men_pmsi_annuel,
     extrais_l_equivalence_des_types_des_colonnes,
     équivalences_diamant_men_pmsi_annuel_helios,
+    colonnes_à_lire_ann_rpu,
+    équivalences_diamant_ann_rpu_helios,
 )
 
 
-def ajoute_les_activités_des_établissements_sanitaires(chemin_du_fichier_men_pmsi_annuel: str, base_de_données: Engine, logger: Logger) -> None:
+def ajoute_les_activités_des_établissements_sanitaires(
+    chemin_du_fichier_men_pmsi_annuel: str, chemin_du_fichier_ann_rpu: str, base_de_données: Engine, logger: Logger
+) -> None:
     logger.info("Récupère les activités des établissements sanitaires")
     données_men_pmsi_annuel = lis_le_fichier_csv(
         chemin_du_fichier_men_pmsi_annuel,
         colonnes_à_lire_men_pmsi_annuel,
         extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_men_pmsi_annuel_helios),
     )
+    données_ann_rpu = lis_le_fichier_csv(
+        chemin_du_fichier_ann_rpu,
+        colonnes_à_lire_ann_rpu,
+        extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_rpu_helios),
+    )
     numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)
 
     activités_des_établissements_sanitaires = transforme_les_activités_des_établissements_sanitaires(
-        données_men_pmsi_annuel, numéros_finess_des_établissements_connus, logger
+        données_men_pmsi_annuel, données_ann_rpu, numéros_finess_des_établissements_connus, logger
     )
 
     with base_de_données.begin() as connection:
@@ -45,5 +54,10 @@ if __name__ == "__main__":
     chemin_local_du_fichier_men_pmsi_annuel = os.path.join(
         variables_d_environnement["DNUM_SFTP_LOCAL_PATH"], trouve_le_nom_du_fichier(fichiers, "MEN_PMSI_ANNUEL", logger_helios)
     )
+    chemin_local_du_fichier_ann_rpu = os.path.join(
+        variables_d_environnement["DNUM_SFTP_LOCAL_PATH"], trouve_le_nom_du_fichier(fichiers, "ANN_RPU", logger_helios)
+    )
     logger_helios.info(f"Cherche les activités pour les ET sanitaires dans les fichiers {chemin_local_du_fichier_men_pmsi_annuel}")
-    ajoute_les_activités_des_établissements_sanitaires(chemin_local_du_fichier_men_pmsi_annuel, base_de_données_helios, logger_helios)
+    ajoute_les_activités_des_établissements_sanitaires(
+        chemin_local_du_fichier_men_pmsi_annuel, chemin_local_du_fichier_ann_rpu, base_de_données_helios, logger_helios
+    )
