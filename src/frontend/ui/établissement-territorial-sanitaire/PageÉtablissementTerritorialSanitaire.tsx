@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { useDependencies } from '../commun/contexts/useDependencies'
 import { useBreadcrumb } from '../commun/hooks/useBreadcrumb'
 import { Titre } from '../commun/Titre/Titre'
+import { BlocActivitéSanitaire } from './BlocActivitéSanitaire'
 import { BlocIdentitéSanitaire } from './BlocIdentitéSanitaire'
 import LogoÉtablissementTerritorial from './logo-établissement-territorial-sanitaire.svg'
 import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTerritorialSanitaireViewModel'
@@ -24,7 +25,6 @@ export const PageÉtablissementTerritorialSanitaire = ({ établissementTerritori
       path: '',
     },
   ])
-
   return (
     <>
       <Head>
@@ -36,6 +36,7 @@ export const PageÉtablissementTerritorialSanitaire = ({ établissementTerritori
         {établissementTerritorialViewModel.titre}
       </Titre>
       <BlocIdentitéSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialViewModel} />
+      <BlocActivitéSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialViewModel} />
     </>
   )
 }

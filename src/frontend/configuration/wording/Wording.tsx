@@ -65,7 +65,7 @@ export interface Wording {
   readonly SECONDAIRE: string
   readonly SITE_INTERNET: string
 
-  // Bloc Activité
+  // Bloc Activité Médico-social
   readonly TITRE_BLOC_ACTIVITÉ: string
   readonly TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT: string
   readonly TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE: string
@@ -74,6 +74,18 @@ export interface Wording {
   readonly FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES: string
   readonly NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES: string
   readonly DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES: string
+
+  // Bloc Activité Sanitaire
+  readonly NOMBRE_DE_SÉJOUR_MCO: string
+  readonly TOTAL_HOSPITALISATION_MÉDECINE: string
+  readonly TOTAL_HOSPITALISATION_CHIRURGIE: string
+  readonly TOTAL_HOSPITALISATION_OBSTÉTRIQUE: string
+  readonly HOSPITALISATION_PARTIELLE_MÉDECINE: string
+  readonly HOSPITALISATION_COMPLÈTE_MÉDECINE: string
+  readonly HOSPITALISATION_PARTIELLE_CHIRURGIE: string
+  readonly HOSPITALISATION_COMPLÈTE_CHIRURGIE: string
+  readonly HOSPITALISATION_PARTIELLE_OBSTÉTRIQUE: string
+  readonly HOSPITALISATION_COMPLÈTE_OBSTÉTRIQUE: string
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string

@@ -78,7 +78,7 @@ export class WordingFr implements Wording {
   readonly SECONDAIRE: string = 'Secondaire'
   readonly SITE_INTERNET: string = 'Site internet'
 
-  // Bloc Activité
+  // Bloc Activité Médico-Social
   readonly TITRE_BLOC_ACTIVITÉ: string = 'activité'
   readonly TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT: string = 'Taux d’occupation en hébergement permanent'
   readonly TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE: string = 'Taux d’occupation en hébergement temporaire'
@@ -87,6 +87,18 @@ export class WordingFr implements Wording {
   readonly FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES: string = 'File active des personnes accompagnées sur la période'
   readonly NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES: string = 'Nombre moyen de journées d’absence des personnes accompagnées sur la période'
   readonly DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES: string = 'Durée moyenne de séjour/d’accompagnement des personnes sorties définitivement au cours de l’année (en nombre de jours)'
+
+  // Bloc Activité Sanitaire
+  readonly NOMBRE_DE_SÉJOUR_MCO: string = 'Nombre de séjours Médecine, Chirurgie et Obstétrique en Hospitalisation Complète et Hospitalisation Partielle par année'
+  readonly TOTAL_HOSPITALISATION_MÉDECINE: string = 'Total Hospitalisation Médecine'
+  readonly TOTAL_HOSPITALISATION_CHIRURGIE: string = 'Total Hospitalisation Chirurgie'
+  readonly TOTAL_HOSPITALISATION_OBSTÉTRIQUE: string = 'Total Hospitalisation Obstétrique'
+  readonly HOSPITALISATION_PARTIELLE_MÉDECINE: string = 'Hospitalisation Partielle Médecine'
+  readonly HOSPITALISATION_COMPLÈTE_MÉDECINE: string = 'Hospitalisation Complète Médecine'
+  readonly HOSPITALISATION_PARTIELLE_CHIRURGIE: string = 'Hospitalisation Partielle Chirurgie'
+  readonly HOSPITALISATION_COMPLÈTE_CHIRURGIE: string = 'Hospitalisation Complète Chirurgie'
+  readonly HOSPITALISATION_PARTIELLE_OBSTÉTRIQUE: string = 'Hospitalisation Partielle Obstétrique'
+  readonly HOSPITALISATION_COMPLÈTE_OBSTÉTRIQUE: string = 'Hospitalisation Complète Obstétrique'
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string = 'Établissement territorial'
