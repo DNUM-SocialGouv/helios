@@ -80,6 +80,10 @@ export class ÉtablissementTerritorialSanitaireViewModel {
     return `${this.établissementTerritorial.identité.adresseNuméroVoie} ${this.établissementTerritorial.identité.adresseTypeVoie} ${this.établissementTerritorial.identité.adresseVoie} ${this.établissementTerritorial.identité.adresseAcheminement}`
   }
 
+  public get activitéEstElleRenseignée(): boolean {
+    return this.établissementTerritorial.activités.length === 0 ? false : true
+  }
+
   public get téléphoneEtEmail(): string {
     const téléphoneFormaté = this.valeurOuNonRenseigné(this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorial.identité.téléphone, 2))
     const email = this.valeurOuNonRenseigné(this.établissementTerritorial.identité.courriel)

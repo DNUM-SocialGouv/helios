@@ -12,6 +12,8 @@ type BlocActivitéSanitaireType = {
 export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewModel }: BlocActivitéSanitaireType) => {
   const { wording } = useDependencies()
 
+  if (!établissementTerritorialSanitaireViewModel.activitéEstElleRenseignée) return null
+
   return (
     <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
       <ul className={styles['liste-indicateurs']}>
