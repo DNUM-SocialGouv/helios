@@ -17,6 +17,7 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewM
   return (
     <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
       <ul className={styles['liste-indicateurs']}>
+        {établissementTerritorialSanitaireViewModel.lesIndicateurMCOSontIlsRenseignés &&
         <IndicateurGraphique
           contenuInfoBulle={<ContenuNombreDeSéjourMCO
             dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}
@@ -29,6 +30,8 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewM
         >
           { établissementTerritorialSanitaireViewModel.nombreDeSéjoursMédecineChirurgieObstétrique }
         </IndicateurGraphique>
+        }
+
       </ul>
     </Bloc>
   )

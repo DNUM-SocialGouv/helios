@@ -116,6 +116,16 @@ export class ÉtablissementTerritorialSanitaireViewModel {
     return this.afficheUnDiagrammeÀBandes(nombreDeSéjours, années)
   }
 
+  public get lesIndicateurMCOSontIlsRenseignés(): boolean {
+    return this.établissementTerritorial.activités.some((activité: ÉtablissementTerritorialSanitaireActivité) => (
+      (activité['nombreSéjoursPartielsMédecine'] !== null) ||
+      (activité['nombreSéjoursCompletsMédecine'] !== null) ||
+      (activité['nombreSéjoursPartielsChirurgie'] !== null) ||
+      (activité['nombreSéjoursCompletsChirurgie'] !== null) ||
+      (activité['nombreSéjoursPartielsObstétrique'] !== null) ||
+      (activité['nombreSéjoursCompletsObstétrique'] !== null)))
+  }
+
   private afficheUnDiagrammeÀBandes(nombreDeSéjours: DonnéesDeDiagrammeDesSéjoursMCO, années: number[]): JSX.Element {
     const data = {
       datasets: [
