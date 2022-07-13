@@ -178,10 +178,20 @@ export class ÉtablissementTerritorialSanitaireViewModel {
           identifiants={[
             this.wording.HOSPITALISATION_PARTIELLE_MÉDECINE,
             this.wording.HOSPITALISATION_COMPLÈTE_MÉDECINE,
+            this.wording.HOSPITALISATION_PARTIELLE_CHIRURGIE,
+            this.wording.HOSPITALISATION_COMPLÈTE_CHIRURGIE,
             this.wording.HOSPITALISATION_PARTIELLE_OBSTÉTRIQUE,
+            this.wording.HOSPITALISATION_COMPLÈTE_OBSTÉTRIQUE,
           ]}
-          libellés={[2018, 2019, 2020, 2021, 2022]}
-          valeurs={[[20, 20, 30, 50, 60], [20, 20, 30, 50, 60], [42, 4, 389, 29]]}
+          libellés={années}
+          valeurs={[
+            this.valeursDesNombresdeSéjours(nombreDeSéjours.nombreSéjoursPartielsMédecine),
+            this.valeursDesNombresdeSéjours(nombreDeSéjours.nombreSéjoursCompletsMédecine),
+            this.valeursDesNombresdeSéjours(nombreDeSéjours.nombreSéjoursPartielsChirurgie),
+            this.valeursDesNombresdeSéjours(nombreDeSéjours.nombreSéjoursCompletsChirurgie),
+            this.valeursDesNombresdeSéjours(nombreDeSéjours.nombreSéjoursPartielsObstétrique),
+            this.valeursDesNombresdeSéjours(nombreDeSéjours.nombreSéjoursCompletsObstétrique),
+          ]}
         />
       </>
     )
@@ -250,6 +260,14 @@ export class ÉtablissementTerritorialSanitaireViewModel {
         y: { grid: { color: this.couleurDesAxesHorizontaux, drawBorder: false }, stacked: true, ticks: { color: 'var(--text-default-grey)' } },
       },
     }
+  }
+
+  private valeursDesNombresdeSéjours(nombresSéjours: {x: number, y: number | null}[]): (number | null)[] {
+    const table: (number | null)[] = []
+    nombresSéjours.map((nombreSéjour) => {
+      return table.push(nombreSéjour.y)
+    })
+    return table
   }
 
   private tooltip(wording: Wording) {

@@ -82,23 +82,58 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
     expect(transcription).toHaveAttribute('aria-expanded', 'true')
     const tableau = within(indicateurs[0]).getByRole('table')
 
-    // thead
-    const LabelsLigneDEnTête = [
+    const labelsLigneDEnTête = [
       wording.ANNÉE,
       wording.HOSPITALISATION_PARTIELLE_MÉDECINE,
       wording.HOSPITALISATION_COMPLÈTE_MÉDECINE,
+      wording.HOSPITALISATION_PARTIELLE_CHIRURGIE,
+      wording.HOSPITALISATION_COMPLÈTE_CHIRURGIE,
       wording.HOSPITALISATION_PARTIELLE_OBSTÉTRIQUE,
+      wording.HOSPITALISATION_COMPLÈTE_OBSTÉTRIQUE,
     ]
-    LabelsLigneDEnTête.map((label) => {
+    labelsLigneDEnTête.map((label) => {
       const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: label })
       expect(indicateurLigneDEnTête).toBeInTheDocument()
     })
 
+    const labelsLignesValeurs = [
+      {
+        année: '2017',
+        index: 1,
+        valeur: '10',
+      },
+      {
+        année: '2018',
+        index: 2,
+        valeur: '20',
+      },
+      {
+        année: '2019',
+        index: 3,
+        valeur: '30',
+      },
+      {
+        année: '2020',
+        index: 4,
+        valeur: '40',
+      },
+      {
+        année: '2021',
+        index: 5,
+        valeur: '50',
+      },
+    ]
     const lignes = within(tableau).getAllByRole('row')
-    const annéeDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '2018' })
-    expect(annéeDeLaPremièreLigne).toBeInTheDocument()
-    const valeurDeLaPremièreLigne = within(lignes[1]).getAllByRole('cell', { name: '20' })
-    expect(valeurDeLaPremièreLigne[0]).toBeInTheDocument()
-
+    labelsLignesValeurs.map((ligne) => {
+      const année = within(lignes[ligne.index]).getByRole('cell', { name : ligne.année })
+      expect(année).toBeInTheDocument()
+      const valeur = within(lignes[ligne.index]).getAllByRole('cell', { name: ligne.valeur })
+      expect(valeur[0]).toBeInTheDocument()
+      expect(valeur[1]).toBeInTheDocument()
+      expect(valeur[2]).toBeInTheDocument()
+      expect(valeur[3]).toBeInTheDocument()
+      expect(valeur[4]).toBeInTheDocument()
+      expect(valeur[5]).toBeInTheDocument()
+    })
   } )
 })

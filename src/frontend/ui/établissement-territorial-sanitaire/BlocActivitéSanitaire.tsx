@@ -1,6 +1,7 @@
 import { Bloc } from '../commun/Bloc/Bloc'
 import { useDependencies } from '../commun/contexts/useDependencies'
 import { IndicateurGraphique } from '../commun/IndicateurGraphique/IndicateurGraphique'
+import styles from './BlocActivitéSanitaire.module.css'
 import { ContenuNombreDeSéjourMCO } from './InfoBulle/ContenuNombreDeSéjourMCO'
 import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTerritorialSanitaireViewModel'
 
@@ -13,7 +14,7 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewM
 
   return (
     <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
-      <ul>
+      <ul className={styles['liste-indicateurs']}>
         <IndicateurGraphique
           contenuInfoBulle={<ContenuNombreDeSéjourMCO
             dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}

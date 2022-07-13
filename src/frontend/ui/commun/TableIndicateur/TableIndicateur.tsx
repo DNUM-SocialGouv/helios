@@ -9,7 +9,7 @@ import styles from './TableIndicateur.module.css'
 type TableIndicateurProps = Readonly<{
   identifiants: string[]
   libellés: number[]
-  valeurs: (number | string)[][]
+  valeurs: (number | string | null)[][]
 }>
 
 export const TableIndicateur = ({ identifiants, libellés, valeurs }: TableIndicateurProps) => {
@@ -44,7 +44,10 @@ export const TableIndicateur = ({ identifiants, libellés, valeurs }: TableIndic
                   {wording.ANNÉE}
                 </th>
                 {identifiants.map((identifiant) =>
-                  <th key={identifiant} scope="col">
+                  <th
+                    key={identifiant}
+                    scope="col"
+                  >
                     {identifiant}
                   </th>)
                 }

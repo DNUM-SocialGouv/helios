@@ -23,3 +23,6 @@
   margin: 0;
   padding: 0;
 }
+.liste-indicateurs {
+  list-style-type: none;
+}
