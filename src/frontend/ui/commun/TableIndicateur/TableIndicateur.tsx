@@ -20,7 +20,7 @@ export const TableIndicateur = ({ identifiants, libellés, valeurs }: TableIndic
     <section className="fr-accordion">
       <h3 className="fr-accordion__title">
         <button
-          aria-controls={identifiants[0]}
+          aria-controls={identifiants[0].replaceAll(' ', '')}
           aria-expanded={expanded}
           className={'fr-accordion__btn ' + styles['accordion-label']}
           onClick={() => setExpanded(true)}
@@ -31,7 +31,7 @@ export const TableIndicateur = ({ identifiants, libellés, valeurs }: TableIndic
       </h3>
       <div
         className={'fr-collapse ' + styles['helios-collapse']}
-        id={identifiants[0]}
+        id={identifiants[0].replaceAll(' ', '')}
       >
         <div className={'fr-table fr-table--bordered ' + styles['helios-collapse']}>
           <table>

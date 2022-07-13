@@ -40,26 +40,29 @@ export const ContenuNombreDeSéjourMCO = ({ dateDeMiseÀJour, source }: ContenuD
           comptage des identifiants uniques des séjours.
           Les séjours pour séances et en erreurs sont retirés.
           <br />
+          <br />
           <b>Nombre de journées Soins de Suite et de Réadaptation (SSR) :</b>
           {' '}
-          nombre de jours des séjours. Somme (nombre de jours de semaine + nombre de jours de week-end)
+          nombre de jours des séjours. Somme (nombre de jours de semaine + nombre de jours de week-end).
+          <br />
           <br />
           <b>Nombre de journées Psychiatrie (PSY) :</b>
           {' '}
           le nombre de journées correspond à la somme du nombre de journées de présence et du nombre de demi journées de
           présence, ce dernier multiplié par 0,5. Le nombre de demi-journées n’est comptabilisé que pour les prises en
           charge à temps partiel (formes d’activité 20, 21, 23). Seules des journées entières sont recueillies pour les
-          prises en charge à temps complet (formes d’activité 01, 02, 03, 04, 05, 06, 07). A FAIRE VALIDER DIAMANT
+          prises en charge à temps complet (formes d’activité 01, 02, 03, 04, 05, 06, 07).
+          <br />
           <br />
           <b>Nombre de journées Hospitalisation A Domicile (HAD) :</b>
           {' '}
-          nombre de journées valorisées par le Groupe Homogène de Tarif (GHT)
+          nombre de journées valorisées par le Groupe Homogène de Tarif (GHT).
           <br />
           <br />
           <b>Type Hospitalisation :</b>
           <br />
+          MCO - information produite dans DIAMANT à partir de la durée du séjour :
         </p>
-        MCO - information produite dans DIAMANT à partir de la durée du séjour :
         <ul>
           <li>
             durée séjour =  0 hors CMD28 (Code Majeur de Diagnostic des Séances) =&gt; « Ambulatoire » ou HTP (Hospitalisation à Temps Partiel)
@@ -121,13 +124,15 @@ export const ContenuNombreDeSéjourMCO = ({ dateDeMiseÀJour, source }: ContenuD
       <section aria-label={wording.SOURCES}>
         <p>
           <span className="fr-text--bold">Source(s) : </span>
-          Programme de médicalisation des systèmes d’information (PMSI)  - Agence technique de l’information sur l’hospitalisation (ATIH)
-          Médecine Chirurgie Obstétrique (MCO) - fichiers RSA (Résumé de Sortie Anonymisé)
-          Soins de Suite et de Réadaptation (SSR) - fichiers RHA (Résumés Hebdomadaires de sortie Anonymes)
-          Psychiatrie - fichiers RPSA (Résumé Par Séquence Anonymisé) et R3A (Résumé d’Activité Ambulatoire Anonyme)
-          Hospitalisation A Domicile (HAD) - fichiers RAPSS (Résumés Anonyme Par Sous-Séquence)
-          Urgences - fichiers RPU (Résumé de passage aux urgences)
         </p>
+        <ul>
+          <li>Programme de médicalisation des systèmes d’information (PMSI)  - Agence technique de l’information sur l’hospitalisation (ATIH)</li>
+          <li>Médecine Chirurgie Obstétrique (MCO) - fichiers RSA (Résumé de Sortie Anonymisé)</li>
+          <li>Soins de Suite et de Réadaptation (SSR) - fichiers RHA (Résumés Hebdomadaires de sortie Anonymes)</li>
+          <li>Psychiatrie - fichiers RPSA (Résumé Par Séquence Anonymisé) et R3A (Résumé d’Activité Ambulatoire Anonyme)</li>
+          <li>Hospitalisation A Domicile (HAD) - fichiers RAPSS (Résumés Anonyme Par Sous-Séquence)</li>
+          <li>Urgences - fichiers RPU (Résumé de passage aux urgences)</li>
+        </ul>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
         <p>

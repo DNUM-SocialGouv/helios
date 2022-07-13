@@ -223,6 +223,7 @@ export class ÉtablissementTerritorialSanitaireViewModel {
       const boxSpan = document.createElement('span')
       boxSpan.style.background = libellé.fillStyle as string
       boxSpan.style.border = `solid ${libellé.strokeStyle} 1px`
+      boxSpan.innerHTML = '&nbsp;'
 
       const textContainer = document.createElement('p')
       textContainer.classList.add('fr-text--xs')
