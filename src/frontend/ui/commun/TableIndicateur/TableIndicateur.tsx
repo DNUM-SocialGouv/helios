@@ -59,10 +59,10 @@ export const TableIndicateur = ({ identifiants, libellés, valeurs }: TableIndic
                   <td>
                     {libellé}
                   </td>
-                  {(valeurs.map((valeur, index2) =>
-                    <td key={valeur[index]+index2.toString()}>
+                  {valeurs.map((valeur, index2) =>
+                    <td key={valeur[index] + index2.toString()}>
                       {valeur[index]}
-                    </td>) )
+                    </td>)
                   }
                 </tr>)
               }

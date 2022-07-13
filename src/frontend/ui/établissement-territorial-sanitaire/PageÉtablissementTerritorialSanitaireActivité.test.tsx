@@ -62,6 +62,7 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
     fireEvent.click(détails)
     const infoBulle = screen.getByRole('dialog', { name: wording.NOMBRE_DE_SÉJOUR_MCO })
     const fermer = within(infoBulle).getByRole('button', { name: wording.FERMER })
+
     // WHEN
     fireEvent.click(fermer)
 
@@ -75,6 +76,7 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
     const indicateurs = within(activité).getAllByRole('listitem')
     const transcription = within(indicateurs[0]).getByRole('button', { name: wording.AFFICHER_LA_TRANSCRIPTION })
+
     // WHEN
     fireEvent.click(transcription)
 
@@ -82,7 +84,7 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
     expect(transcription).toHaveAttribute('aria-expanded', 'true')
     const tableau = within(indicateurs[0]).getByRole('table')
 
-    const labelsLigneDEnTête = [
+    const libellésLigneDEnTête = [
       wording.ANNÉE,
       wording.HOSPITALISATION_PARTIELLE_MÉDECINE,
       wording.HOSPITALISATION_COMPLÈTE_MÉDECINE,
@@ -91,12 +93,12 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
       wording.HOSPITALISATION_PARTIELLE_OBSTÉTRIQUE,
       wording.HOSPITALISATION_COMPLÈTE_OBSTÉTRIQUE,
     ]
-    labelsLigneDEnTête.map((label) => {
-      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: label })
+    libellésLigneDEnTête.map((libellé) => {
+      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: libellé })
       expect(indicateurLigneDEnTête).toBeInTheDocument()
     })
 
-    const labelsLignesValeurs = [
+    const annéesEtValeurs = [
       {
         année: '2017',
         index: 1,
@@ -124,16 +126,16 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
       },
     ]
     const lignes = within(tableau).getAllByRole('row')
-    labelsLignesValeurs.map((ligne) => {
-      const année = within(lignes[ligne.index]).getByRole('cell', { name : ligne.année })
+    annéesEtValeurs.map((annéeEtValeur) => {
+      const année = within(lignes[annéeEtValeur.index]).getByRole('cell', { name : annéeEtValeur.année })
       expect(année).toBeInTheDocument()
-      const valeur = within(lignes[ligne.index]).getAllByRole('cell', { name: ligne.valeur })
-      expect(valeur[0]).toBeInTheDocument()
-      expect(valeur[1]).toBeInTheDocument()
-      expect(valeur[2]).toBeInTheDocument()
-      expect(valeur[3]).toBeInTheDocument()
-      expect(valeur[4]).toBeInTheDocument()
-      expect(valeur[5]).toBeInTheDocument()
+      const valeurs = within(lignes[annéeEtValeur.index]).getAllByRole('cell', { name: annéeEtValeur.valeur })
+      expect(valeurs[0]).toBeInTheDocument()
+      expect(valeurs[1]).toBeInTheDocument()
+      expect(valeurs[2]).toBeInTheDocument()
+      expect(valeurs[3]).toBeInTheDocument()
+      expect(valeurs[4]).toBeInTheDocument()
+      expect(valeurs[5]).toBeInTheDocument()
     })
   } )
 })

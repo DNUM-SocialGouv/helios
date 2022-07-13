@@ -80,10 +80,6 @@ export class ÉtablissementTerritorialSanitaireViewModel {
     return `${this.établissementTerritorial.identité.adresseNuméroVoie} ${this.établissementTerritorial.identité.adresseTypeVoie} ${this.établissementTerritorial.identité.adresseVoie} ${this.établissementTerritorial.identité.adresseAcheminement}`
   }
 
-  public get activitéEstElleRenseignée(): boolean {
-    return this.établissementTerritorial.activités.length === 0 ? false : true
-  }
-
   public get téléphoneEtEmail(): string {
     const téléphoneFormaté = this.valeurOuNonRenseigné(this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorial.identité.téléphone, 2))
     const email = this.valeurOuNonRenseigné(this.établissementTerritorial.identité.courriel)
@@ -113,10 +109,10 @@ export class ÉtablissementTerritorialSanitaireViewModel {
   public get nombreDeSéjoursMédecineChirurgieObstétrique(): JSX.Element {
     const [nombreDeSéjours, années] = this.construisLesSéjoursParAnnée()
 
-    return this.afficheUnDiagrammeÀBandes(nombreDeSéjours, années)
+    return this.afficheUnHistogrammeÀBandes(nombreDeSéjours, années)
   }
 
-  public get lesIndicateurMCOSontIlsRenseignés(): boolean {
+  public get lesIndicateursMCOSontIlsRenseignés(): boolean {
     return this.établissementTerritorial.activités.some((activité: ÉtablissementTerritorialSanitaireActivité) => (
       (activité['nombreSéjoursPartielsMédecine'] !== null) ||
       (activité['nombreSéjoursCompletsMédecine'] !== null) ||
@@ -126,7 +122,11 @@ export class ÉtablissementTerritorialSanitaireViewModel {
       (activité['nombreSéjoursCompletsObstétrique'] !== null)))
   }
 
-  private afficheUnDiagrammeÀBandes(nombreDeSéjours: DonnéesDeDiagrammeDesSéjoursMCO, années: number[]): JSX.Element {
+  public get activitéEstElleRenseignée(): boolean {
+    return this.établissementTerritorial.activités.length === 0 ? false : true
+  }
+
+  private afficheUnHistogrammeÀBandes(nombreDeSéjours: DonnéesDeDiagrammeDesSéjoursMCO, années: number[]): JSX.Element {
     const data = {
       datasets: [
         {
@@ -175,7 +175,7 @@ export class ÉtablissementTerritorialSanitaireViewModel {
       labels: années,
     }
 
-    const options = this.optionsDiagrammeÀBandes(this.identifiantDeLaLégende)
+    const options = this.optionsHistogrammeÀBandes(this.identifiantDeLaLégende)
 
     return (
       <>
@@ -199,12 +199,12 @@ export class ÉtablissementTerritorialSanitaireViewModel {
           ]}
           libellés={années}
           valeurs={[
-            this.valeursDesNombresdeSéjours(nombreDeSéjours.nombreSéjoursPartielsMédecine),
-            this.valeursDesNombresdeSéjours(nombreDeSéjours.nombreSéjoursCompletsMédecine),
-            this.valeursDesNombresdeSéjours(nombreDeSéjours.nombreSéjoursPartielsChirurgie),
-            this.valeursDesNombresdeSéjours(nombreDeSéjours.nombreSéjoursCompletsChirurgie),
-            this.valeursDesNombresdeSéjours(nombreDeSéjours.nombreSéjoursPartielsObstétrique),
-            this.valeursDesNombresdeSéjours(nombreDeSéjours.nombreSéjoursCompletsObstétrique),
+            this.valeursDesNombresDeSéjours(nombreDeSéjours.nombreSéjoursPartielsMédecine),
+            this.valeursDesNombresDeSéjours(nombreDeSéjours.nombreSéjoursCompletsMédecine),
+            this.valeursDesNombresDeSéjours(nombreDeSéjours.nombreSéjoursPartielsChirurgie),
+            this.valeursDesNombresDeSéjours(nombreDeSéjours.nombreSéjoursCompletsChirurgie),
+            this.valeursDesNombresDeSéjours(nombreDeSéjours.nombreSéjoursPartielsObstétrique),
+            this.valeursDesNombresDeSéjours(nombreDeSéjours.nombreSéjoursCompletsObstétrique),
           ]}
         />
       </>
@@ -259,7 +259,7 @@ export class ÉtablissementTerritorialSanitaireViewModel {
     }
   }
 
-  private optionsDiagrammeÀBandes(idDeLaLégende: string) {
+  private optionsHistogrammeÀBandes(idDeLaLégende: string) {
     return {
       animation: false,
       elements: { bar: { borderWidth: 2 } },
@@ -276,12 +276,10 @@ export class ÉtablissementTerritorialSanitaireViewModel {
     }
   }
 
-  private valeursDesNombresdeSéjours(nombresSéjours: {x: number, y: number | null}[]): (number | null)[] {
-    const table: (number | null)[] = []
-    nombresSéjours.map((nombreSéjour) => {
-      return table.push(nombreSéjour.y)
+  private valeursDesNombresDeSéjours(nombresSéjours: {x: number, y: number | null}[]): (number | null)[] {
+    return nombresSéjours.map((nombreSéjour) => {
+      return nombreSéjour.y
     })
-    return table
   }
 
   private tooltip(wording: Wording) {
