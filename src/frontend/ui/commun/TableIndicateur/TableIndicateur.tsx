@@ -59,11 +59,7 @@ export const TableIndicateur = ({ identifiants, libellés, valeurs }: TableIndic
                   <td>
                     {libellé}
                   </td>
-                  {valeurs.length === 1 ? (
-                    <td>
-                      {valeurs[0][index]}
-                    </td>
-                  ): (valeurs.map((valeur, index2) =>
+                  {(valeurs.map((valeur, index2) =>
                     <td key={valeur[index]+index2.toString()}>
                       {valeur[index]}
                     </td>) )
