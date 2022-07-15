@@ -16,13 +16,13 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     const activitésÉtablissementTerritorialModel = await (await this.orm)
       .getRepository(ActivitéSanitaireModel)
       .find({
-        order: { année: 'ASC' },
+        order: { année: 'DESC' },
+        take: 5,
         where: { numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial },
       })
 
     const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
-
-    return this.construisActivité(activitésÉtablissementTerritorialModel, dateDeMiseAJourModel)
+    return this.construisActivité(activitésÉtablissementTerritorialModel.reverse(), dateDeMiseAJourModel)
   }
 
   async chargeIdentité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialSanitaireNonTrouvée> {
