@@ -10,7 +10,7 @@ import { RécupèreLÉtablissementTerritorialSanitaireUseCase } from './Récupè
 describe('La récupération d’un établissement territorial sanitaire', () => {
   it('récupère la fiche identité de l’établissement territorial sanitaire', async () => {
     // GIVEN
-    const fakeFicheIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestBuilder.créeUneIdentitéMédicoSocial(
+    const fakeFicheIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestBuilder.créeUneIdentitéSanitaire(
       { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial }
     )
     const mockedChargeParNuméroFiness = jest.fn().mockResolvedValueOnce(fakeFicheIdentitéÉtablissementTerritorial)

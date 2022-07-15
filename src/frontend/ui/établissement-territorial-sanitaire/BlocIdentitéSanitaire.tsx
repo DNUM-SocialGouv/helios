@@ -1,8 +1,6 @@
 import { Bloc } from '../commun/Bloc/Bloc'
 import { useDependencies } from '../commun/contexts/useDependencies'
-import { IndicateurGraphique } from '../commun/IndicateurGraphique/IndicateurGraphique'
 import { IndicateurIdentité } from '../commun/IndicateurIdentité/IndicateurIdentité'
-import { ContenuNombreDePassagesAuxUrgences } from './InfoBulle/ContenuNombreDePassagesAuxUrgences'
 import styles from './BlocIdentitéSanitaire.module.css'
 import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTerritorialSanitaireViewModel'
 
@@ -65,18 +63,6 @@ export const BlocIdentitéSanitaire = ({ établissementTerritorialSanitaireViewM
           source={wording.FINESS}
           valeur={établissementTerritorialSanitaireViewModel.statutDeLÉtablissement}
         />
-        <IndicateurGraphique
-          contenuInfoBulle={<ContenuNombreDePassagesAuxUrgences
-            dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}
-            source={wording.DIAMANT}
-          />}
-          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}
-          identifiant="activite-3"
-          nomDeLIndicateur={wording.NOMBRE_DE_PASSAGES_AUX_URGENCES}
-          source={wording.DIAMANT}
-        >
-          {établissementTerritorialSanitaireViewModel.nombreDePassagesAuxUrgences}
-        </IndicateurGraphique>
       </ul>
     </Bloc>
   )

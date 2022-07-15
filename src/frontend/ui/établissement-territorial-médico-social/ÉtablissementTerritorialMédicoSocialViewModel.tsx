@@ -315,6 +315,8 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
           },
           formatter: (value: string, _context: Context): string => value + ' %',
         },
+        legend: { display: false },
+        tooltip: { enabled: false },
       },
       radius: false,
       scales: {
@@ -353,6 +355,8 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
             size: 14,
           },
         },
+        legend: { display: false },
+        tooltip: { enabled: false },
       },
       scales: {
         x: {
