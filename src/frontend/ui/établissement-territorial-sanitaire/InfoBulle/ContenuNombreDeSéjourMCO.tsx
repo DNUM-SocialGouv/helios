@@ -74,52 +74,6 @@ export const ContenuNombreDeSéjourMCO = ({ dateDeMiseÀJour, source }: ContenuD
             CMD 28 =&gt; « Séance »
           </li>
         </ul>
-        SSR - Le type d’hospitalisation est déduit dans DIAMANT sur la base du type d’hospitalisation de l’unité médicale, disponible dans
-        le RHA, qui prend les valeurs :
-        <ol>
-          <li>
-            Hospitalisation complète ou de semaine en soins de suite médicalisés =&gt; Hospitalisation complète ou de semaine (HC)
-          </li>
-          <li>
-            Hospitalisation de jour en soins de suite médicalisés =&gt; Hospitalisation de jour ou de nuit (HJ)
-          </li>
-          <li>
-            Hospitalisation de nuit en soins de suite médicalisés =&gt; Hospitalisation de jour ou de nuit (HJ)
-          </li>
-          <li>
-            Séances (traitements et cures ambulatoires) en soins de suite médicalisés =&gt; Venues ou séances (Séances)
-          </li>
-        </ol>
-        <p>
-          PSY : Le type d’hospitalisation est déduit dans DIAMANT sur la base des formes d’activité :
-          <br />
-          - Prises en charge à temps complet :
-          <br />
-          Code 01 Hospitalisation à temps plein
-          <br />
-          Code 02 Séjour thérapeutique
-          <br />
-          Code 03 Hospitalisation à domicile
-          <br />
-          Code 04 Placement familial thérapeutique29
-          <br />
-          Code 05 Appartement thérapeutique
-          <br />
-          Code 06 Centre de postcure psychiatrique
-          <br />
-          Code 07 Centre de crise (incluant centre d’accueil permanent et centre d’accueil et de crise)
-          <br />
-          - Prises en charge à temps partiel :
-          <br />
-          Code 20 Hospitalisation à temps partiel de jour
-          <br />
-          Code 21 Hospitalisation à temps partiel de nuit
-          <br />
-          Code 23 Prise en charge en atelier thérapeutique
-          <br />
-          <br />
-          Classification selon la nomenclature des activités de soins (ASO) utilisée dans le cadre de la délivrance des dites autorisations
-        </p>
       </section>
       <section aria-label={wording.SOURCES}>
         <p>

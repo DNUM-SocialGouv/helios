@@ -267,7 +267,7 @@ export class ÉtablissementTerritorialSanitaireViewModel {
       plugins: {
         htmlLegend: { containerID: idDeLaLégende },
         legend: { display: false },
-        tooltip: { callbacks: { label: this.tooltip(this.wording) } },
+        tooltip: { callbacks: { label: this.tooltip(this.wording, this.insèreUnEspaceTousLes3Chiffres) } },
       },
       responsive: true,
       scales: {
@@ -277,30 +277,30 @@ export class ÉtablissementTerritorialSanitaireViewModel {
     }
   }
 
-  private valeursDesNombresDeSéjours(nombresSéjours: {x: number, y: number | null}[]): (number | null)[] {
+  private valeursDesNombresDeSéjours(nombresSéjours: {x: number, y: number | null}[]): (string | null)[] {
     return nombresSéjours.map((nombreSéjour) => {
-      return nombreSéjour.y
+      return nombreSéjour.y ? this.insèreUnEspaceTousLes3Chiffres(nombreSéjour.y) : null
     })
   }
 
-  private tooltip(wording: Wording) {
+  private tooltip(wording: Wording, formateLesNombres: Function) {
     return function (context: any) {
-      const label = `${context.dataset.label} : ${context.parsed.y}`
+      const label = `${context.dataset.label} : ${formateLesNombres(context.parsed.y)}`
 
       if (context.datasetIndex <= 1) {
         const nombreSéjoursHospitalisationPartielleMédecine = context.parsed._stacks.y['0']
         const nombreSéjoursHospitalisationComplèteMédecine = context.parsed._stacks.y['1']
-        return [label, `${wording.TOTAL_HOSPITALISATION_MÉDECINE} : ${(nombreSéjoursHospitalisationPartielleMédecine + nombreSéjoursHospitalisationComplèteMédecine)}`]
+        return [label, `${wording.TOTAL_HOSPITALISATION_MÉDECINE} : ${formateLesNombres(nombreSéjoursHospitalisationPartielleMédecine + nombreSéjoursHospitalisationComplèteMédecine)}`]
       }
       if (context.datasetIndex === 2 || context.datasetIndex === 3) {
         const nombreSéjoursHospitalisationPartielleChirurgie = context.parsed._stacks.y['2']
         const nombreSéjoursHospitalisationComplèteChirurgie = context.parsed._stacks.y['3']
-        return [label, `${wording.TOTAL_HOSPITALISATION_CHIRURGIE} : ${(nombreSéjoursHospitalisationPartielleChirurgie + nombreSéjoursHospitalisationComplèteChirurgie)}`]
+        return [label, `${wording.TOTAL_HOSPITALISATION_CHIRURGIE} : ${formateLesNombres(nombreSéjoursHospitalisationPartielleChirurgie + nombreSéjoursHospitalisationComplèteChirurgie)}`]
       }
       if (context.datasetIndex === 4 || context.datasetIndex === 5) {
         const nombreSéjoursHospitalisationPartielleObstétrique = context.parsed._stacks.y['4']
         const nombreSéjoursHospitalisationComplèteObstétrique = context.parsed._stacks.y['5']
-        return [label, `${wording.TOTAL_HOSPITALISATION_OBSTÉTRIQUE} : ${(nombreSéjoursHospitalisationPartielleObstétrique + nombreSéjoursHospitalisationComplèteObstétrique)}`]
+        return [label, `${wording.TOTAL_HOSPITALISATION_OBSTÉTRIQUE} : ${formateLesNombres(nombreSéjoursHospitalisationPartielleObstétrique + nombreSéjoursHospitalisationComplèteObstétrique)}`]
       }
       return label
     }
@@ -317,6 +317,10 @@ export class ÉtablissementTerritorialSanitaireViewModel {
 
   private insèreUnEspaceTousLesNCaractères(str: string, nombreDeCaractères: number): string {
     return str.split('').map((letter, index) => index % nombreDeCaractères === 0 ? ' ' + letter : letter).join('').trim()
+  }
+
+  private insèreUnEspaceTousLes3Chiffres(num: number): string {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
   }
 
   private formateLaDate(date: string): string {
