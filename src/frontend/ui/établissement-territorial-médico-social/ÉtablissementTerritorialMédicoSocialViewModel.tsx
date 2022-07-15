@@ -1,47 +1,16 @@
-import { ChartData, Chart as ChartJS, CategoryScale, LinearScale, BarElement, PointElement, LineElement, LineController } from 'chart.js'
-import ChartDataLabels, { Context } from 'chartjs-plugin-datalabels'
 import { ReactElement } from 'react'
-import { Bar } from 'react-chartjs-2'
 
 import { ÉtablissementTerritorialMédicoSocial } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialActivité } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
 import { Wording } from '../../configuration/wording/Wording'
+import { GraphiqueViewModel } from '../commun/Graphique/GraphiqueViewModel'
 import { StringFormater } from '../commun/StringFormater'
-import { TableIndicateur } from '../commun/TableIndicateur/TableIndicateur'
 
-export class ÉtablissementTerritorialMédicoSocialViewModel {
+export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueViewModel {
   readonly seuilValeurAtypique = 120
-  readonly couleurDuFond = '#E8EDFF'
-  readonly couleurDuFondHistogrammePrimaire = '#000091'
-  readonly couleurDuFondHistogrammeSecondaire = '#4E68BB'
-  readonly couleurDuFondDeLaLigne = '#929292'
-  readonly couleurDuFondHistogrammeDeDépassement = '#C9191E'
-  readonly couleurDelAbscisse = '#161616'
-  readonly couleurDeLaValeur = '#3A3A3A'
-  readonly fondDeCouleurPourPremierHistogramme: string[]
-  readonly fondDeCouleurPourSecondHistogramme: string[]
-  readonly grosseursDePolicePourLesLibellés: string[]
 
-  constructor(private readonly établissementTerritorial: ÉtablissementTerritorialMédicoSocial, private readonly wording: Wording) {
-    const nombreIndicateursActivité = établissementTerritorial.activités.length
-
-    this.fondDeCouleurPourPremierHistogramme = Array(nombreIndicateursActivité)
-      .fill(this.couleurDuFondHistogrammeSecondaire, 0, nombreIndicateursActivité - 1)
-      .fill(this.couleurDuFondHistogrammePrimaire, nombreIndicateursActivité - 1, nombreIndicateursActivité)
-    this.fondDeCouleurPourSecondHistogramme = Array(nombreIndicateursActivité).fill(this.couleurDuFond)
-    this.grosseursDePolicePourLesLibellés = Array(nombreIndicateursActivité)
-      .fill('normal', 0, nombreIndicateursActivité - 1)
-      .fill('bold', nombreIndicateursActivité - 1, nombreIndicateursActivité)
-
-    ChartJS.register(
-      BarElement,
-      CategoryScale,
-      ChartDataLabels,
-      LinearScale,
-      LineController,
-      LineElement,
-      PointElement
-    )
+  constructor(private readonly établissementTerritorial: ÉtablissementTerritorialMédicoSocial, wording: Wording) {
+    super(wording, établissementTerritorial.activités.length)
   }
 
   public get titre(): string {
@@ -203,98 +172,6 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     )
   }
 
-  private afficheUnHistogrammeVertical(
-    chartColors: string[],
-    valeurs: number[],
-    dataLabelsColor: string[],
-    années: number[],
-    identifiant: string
-  ): JSX.Element {
-    const data: ChartData = {
-      datasets: [
-        {
-          borderColor: this.couleurDuFondDeLaLigne,
-          borderDash: [3, 3],
-          data: [{ x: -1, y: 100 }, { x: 2, y: 100 }],
-          datalabels: { display: false },
-          type: 'line',
-          xAxisID: 'xLine',
-        },
-        {
-          backgroundColor: chartColors,
-          data: valeurs,
-          datalabels: { labels: { title: { color: dataLabelsColor } } },
-          maxBarThickness: 60,
-          type: 'bar',
-          xAxisID: 'x',
-        },
-        {
-          backgroundColor: this.fondDeCouleurPourSecondHistogramme,
-          data: [100, 100, 100],
-          datalabels: { display: false },
-          maxBarThickness: 60,
-          type: 'bar',
-          xAxisID: 'x',
-        },
-      ],
-      labels: années,
-    }
-
-    return (
-      <>
-        <Bar
-          // @ts-ignore
-          data={data}
-          // @ts-ignore
-          options={this.optionsHistogrammeVertical()}
-        />
-        <TableIndicateur
-          identifiants={[identifiant]}
-          libellés={années}
-          valeurs={[this.ajouteLePourcentage(valeurs)]}
-        />
-      </>
-    )
-  }
-
-  private afficheUnHistogrammeHorizontal(
-    chartColors: string[],
-    valeurs: number[],
-    dataLabelsColor: string[],
-    années: number[],
-    identifiant: string
-  ): JSX.Element {
-    const data: ChartData = {
-      datasets: [
-        {
-          backgroundColor: chartColors,
-          data: valeurs,
-          datalabels: { labels: { title: { color: dataLabelsColor } } },
-          maxBarThickness: 60,
-          type: 'bar',
-          yAxisID: 'y',
-        },
-      ],
-      labels: années,
-    }
-
-    return (
-      <>
-        <Bar
-          // @ts-ignore
-          data={data}
-          // @ts-ignore
-          options={this.optionsHistogrammeHorizontal(Math.max(...valeurs))}
-        />
-        <TableIndicateur
-          identifiants={[identifiant]}
-          libellés={années}
-          valeurs={[valeurs]}
-        />
-      </>
-    )
-  }
-
   private formateLeTitreDeLEntitéJuridiqueDeRattachement(): string {
     const numéroFinessEntitéJuridiqueFormaté = StringFormater.formateLeNuméroFiness(this.établissementTerritorial.identité.numéroFinessEntitéJuridique)
     const nomDeLEntitéJuridique = this.établissementTerritorial.identité.raisonSocialeDeLEntitéDeRattachement
@@ -303,84 +180,6 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
 
   private valeurOuNonRenseigné(valeur: string): string {
     return valeur === '' ? this.wording.NON_RENSEIGNÉ : valeur
-  }
-
-  private optionsHistogrammeVertical() {
-    return {
-      animation: false,
-      plugins: {
-        datalabels: {
-          align: 'end',
-          anchor: 'start',
-          font: {
-            family: 'Marianne',
-            size: 16,
-            weight: 'bold',
-          },
-          formatter: (value: string, _context: Context): string => value + ' %',
-        },
-        legend: { display: false },
-        tooltip: { enabled: false },
-      },
-      radius: false,
-      scales: {
-        x: {
-          grid: {
-            drawBorder: false,
-            drawOnChartArea: false,
-            drawTicks: false,
-          },
-          stacked: true,
-          ticks: {
-            color: this.couleurDelAbscisse,
-            font: { weight: this.grosseursDePolicePourLesLibellés },
-          },
-        },
-        xLine: { display: false, max: 1, min: 0, type: 'linear' },
-        y: {
-          display: false,
-          max: this.seuilValeurAtypique,
-          min: 0,
-        },
-      },
-    }
-  }
-
-  private optionsHistogrammeHorizontal(valeurMaximale: number) {
-    return {
-      animation: false,
-      indexAxis: 'y',
-      plugins: {
-        datalabels: {
-          align: 'end',
-          anchor: 'end',
-          font: {
-            family: 'Marianne',
-            size: 14,
-          },
-        },
-        legend: { display: false },
-        tooltip: { enabled: false },
-      },
-      scales: {
-        x: {
-          display: false,
-          max: 1.15 * valeurMaximale,
-          min: 0,
-        },
-        y: {
-          grid: {
-            drawBorder: false,
-            drawOnChartArea: false,
-            drawTicks: false,
-          },
-          ticks: {
-            color: this.couleurDelAbscisse,
-            font: { weight: this.grosseursDePolicePourLesLibellés },
-          },
-        },
-      },
-    }
   }
 
   private construisLesAnnéesEtSesTaux(indicateur: keyof ÉtablissementTerritorialMédicoSocialActivité): number[][] {
@@ -440,10 +239,6 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     })
 
     return couleurDesAnnées
-  }
-
-  private ajouteLePourcentage(valeurs: number[]): string[] {
-    return valeurs.map((valeur) => valeur + ' %')
   }
 
   private transformeEnTaux(nombre: number): number {
