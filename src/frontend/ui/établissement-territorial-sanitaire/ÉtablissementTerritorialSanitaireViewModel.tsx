@@ -118,6 +118,12 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
       (activité['nombreSéjoursCompletsObstétrique'] !== null)))
   }
 
+  public get lIndicateurPassagesAuxUrgencesEstIlRenseigné(): boolean {
+    return this.établissementTerritorial.activités.some((activité: ÉtablissementTerritorialSanitaireActivité) => (
+      activité['nombreDePassagesAuxUrgences'] !== null
+    ))
+  }
+
   public get activitéEstElleRenseignée(): boolean {
     return this.établissementTerritorial.activités.length === 0 ? false : true
   }

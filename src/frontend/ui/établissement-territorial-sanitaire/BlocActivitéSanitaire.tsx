@@ -33,18 +33,20 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewM
         </IndicateurGraphique>
         }
 
+        {établissementTerritorialSanitaireViewModel.lIndicateurPassagesAuxUrgencesEstIlRenseigné &&
         <IndicateurGraphique
           contenuInfoBulle={<ContenuNombreDePassagesAuxUrgences
             dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}
             source={wording.DIAMANT}
           />}
           dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}
-          identifiant="activite-3"
+          identifiant="activite-1"
           nomDeLIndicateur={wording.NOMBRE_DE_PASSAGES_AUX_URGENCES}
           source={wording.DIAMANT}
         >
           {établissementTerritorialSanitaireViewModel.nombreDePassagesAuxUrgences}
         </IndicateurGraphique>
+        }
       </ul>
     </Bloc>
   )

@@ -25,6 +25,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     {
       année: 2017,
       dateMiseAJourSource: '2021-07-07',
+      nombreDePassagesAuxUrgences: 10,
       nombreJournéesCompletePsy: 10,
       nombreJournéesCompletesSsr: 10,
       nombreJournéesPartiellesPsy: 10,
@@ -40,6 +41,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     {
       année: 2018,
       dateMiseAJourSource: '2021-07-07',
+      nombreDePassagesAuxUrgences: 20,
       nombreJournéesCompletePsy: 20,
       nombreJournéesCompletesSsr: 20,
       nombreJournéesPartiellesPsy: 20,
@@ -55,6 +57,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     {
       année: 2019,
       dateMiseAJourSource: '2021-07-07',
+      nombreDePassagesAuxUrgences: 30,
       nombreJournéesCompletePsy: 30,
       nombreJournéesCompletesSsr: 30,
       nombreJournéesPartiellesPsy: 30,
@@ -70,6 +73,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     {
       année: 2020,
       dateMiseAJourSource: '2021-07-07',
+      nombreDePassagesAuxUrgences: 40,
       nombreJournéesCompletePsy: 40,
       nombreJournéesCompletesSsr: 40,
       nombreJournéesPartiellesPsy: 40,
@@ -85,6 +89,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     {
       année: 2021,
       dateMiseAJourSource: '2021-07-07',
+      nombreDePassagesAuxUrgences: 50,
       nombreJournéesCompletePsy: 50,
       nombreJournéesCompletesSsr: 50,
       nombreJournéesPartiellesPsy: 50,
