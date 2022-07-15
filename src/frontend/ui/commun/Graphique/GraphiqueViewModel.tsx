@@ -1,4 +1,4 @@
-import { BarElement, CategoryScale, Chart as ChartJS, ChartData, Legend, LegendItem, LinearScale, LineController, LineElement, PointElement, Title, Tooltip } from 'chart.js'
+import { BarElement, CategoryScale, Chart as ChartJS, ChartData, ChartOptions, Legend, LegendItem, LinearScale, LineController, LineElement, PointElement, Title, Tooltip } from 'chart.js'
 import ChartDataLabels, { Context } from 'chartjs-plugin-datalabels'
 import { Bar } from 'react-chartjs-2'
 
@@ -182,7 +182,7 @@ export class GraphiqueViewModel {
     }
   }
 
-  private optionsHistogrammeVertical(valeurMaximale: number) {
+  private optionsHistogrammeVertical(valeurMaximale: number): ChartOptions<'bar'> {
     return {
       animation: false,
       plugins: {
@@ -210,6 +210,7 @@ export class GraphiqueViewModel {
           stacked: true,
           ticks: {
             color: this.couleurDelAbscisse,
+            // @ts-ignore
             font: { weight: this.grosseursDePolicePourLesLibellés },
           },
         },
@@ -223,7 +224,7 @@ export class GraphiqueViewModel {
     }
   }
 
-  private optionsHistogrammeHorizontal(valeurMaximale: number) {
+  private optionsHistogrammeHorizontal(valeurMaximale: number): ChartOptions<'bar'> {
     return {
       animation: false,
       indexAxis: 'y',
@@ -253,6 +254,7 @@ export class GraphiqueViewModel {
           },
           ticks: {
             color: this.couleurDelAbscisse,
+            // @ts-ignore
             font: { weight: this.grosseursDePolicePourLesLibellés },
           },
         },
@@ -260,12 +262,13 @@ export class GraphiqueViewModel {
     }
   }
 
-  protected optionsHistogrammeÀBandes(idDeLaLégende: string) {
+  protected optionsHistogrammeÀBandes(idDeLaLégende: string): ChartOptions<'bar'> {
     return {
       animation: false,
       elements: { bar: { borderWidth: 2 } },
       plugins: {
         datalabels: { display: false },
+        // @ts-ignore
         htmlLegend: { containerID: idDeLaLégende },
         legend: { display: false },
         tooltip: { callbacks: { label: this.créeLeLibelléDuTooltip(this.wording, this.insèreUnEspaceTousLes3Chiffres) } },
