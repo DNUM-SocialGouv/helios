@@ -20,6 +20,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   readonly couleurDeLaValeur = '#3A3A3A'
   readonly fondDeCouleurPourPremierHistogramme: string[]
   readonly fondDeCouleurPourSecondHistogramme: string[]
+  readonly grosseursDePolicePourLesLibellés: string[]
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialMédicoSocial, private readonly wording: Wording) {
     const nombreIndicateursActivité = établissementTerritorial.activités.length
@@ -28,6 +29,9 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
       .fill(this.couleurDuFondHistogrammeSecondaire, 0, nombreIndicateursActivité - 1)
       .fill(this.couleurDuFondHistogrammePrimaire, nombreIndicateursActivité - 1, nombreIndicateursActivité)
     this.fondDeCouleurPourSecondHistogramme = Array(nombreIndicateursActivité).fill(this.couleurDuFond)
+    this.grosseursDePolicePourLesLibellés = Array(nombreIndicateursActivité)
+      .fill('normal', 0, nombreIndicateursActivité - 1)
+      .fill('bold', nombreIndicateursActivité - 1, nombreIndicateursActivité)
 
     ChartJS.register(
       BarElement,
@@ -329,7 +333,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
           stacked: true,
           ticks: {
             color: this.couleurDelAbscisse,
-            font: { weight: ['normal', 'normal', 'bold'] },
+            font: { weight: this.grosseursDePolicePourLesLibellés },
           },
         },
         xLine: { display: false, max: 1, min: 0, type: 'linear' },
@@ -372,7 +376,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
           },
           ticks: {
             color: this.couleurDelAbscisse,
-            font: { weight: ['normal', 'normal', 'bold'] },
+            font: { weight: this.grosseursDePolicePourLesLibellés },
           },
         },
       },

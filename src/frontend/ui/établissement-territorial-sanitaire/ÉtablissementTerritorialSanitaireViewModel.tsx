@@ -50,8 +50,19 @@ export class ÉtablissementTerritorialSanitaireViewModel {
   readonly couleurDeLaValeur = '#3A3A3A'
   readonly fondDeCouleurPourPremierHistogramme: string[]
   readonly fondDeCouleurPourSecondHistogramme: string[]
+  readonly grosseursDePolicePourLesLibellés: string[]
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, private readonly wording: Wording) {
+    const nombreIndicateursActivité = établissementTerritorial.activités.length
+
+    this.fondDeCouleurPourPremierHistogramme = Array(nombreIndicateursActivité)
+      .fill(this.couleurDuFondHistogrammeSecondaire, 0, nombreIndicateursActivité - 1)
+      .fill(this.couleurDuFondHistogrammePrimaire, nombreIndicateursActivité - 1, nombreIndicateursActivité)
+    this.fondDeCouleurPourSecondHistogramme = Array(nombreIndicateursActivité).fill(this.couleurDuFond)
+    this.grosseursDePolicePourLesLibellés = Array(nombreIndicateursActivité)
+      .fill('normal', 0, nombreIndicateursActivité - 1)
+      .fill('bold', nombreIndicateursActivité - 1, nombreIndicateursActivité)
+
     ChartJS.register(
       BarElement,
       CategoryScale,
@@ -65,13 +76,6 @@ export class ÉtablissementTerritorialSanitaireViewModel {
       Tooltip,
       this.construisLePluginDeLégende()
     )
-
-    const nombreIndicateursActivité = établissementTerritorial.activités.length
-
-    this.fondDeCouleurPourPremierHistogramme = Array(nombreIndicateursActivité)
-      .fill(this.couleurDuFondHistogrammeSecondaire, 0, nombreIndicateursActivité - 1)
-      .fill(this.couleurDuFondHistogrammePrimaire, nombreIndicateursActivité - 1, nombreIndicateursActivité)
-    this.fondDeCouleurPourSecondHistogramme = Array(nombreIndicateursActivité).fill(this.couleurDuFond)
   }
 
   public get titre(): string {
@@ -493,7 +497,7 @@ export class ÉtablissementTerritorialSanitaireViewModel {
           ticks: {
             color: this.couleurDelAbscisse,
             // TODO
-            font: { weight: ['normal', 'normal', 'normal', 'normal', 'bold'] },
+            font: { weight: this.grosseursDePolicePourLesLibellés },
           },
         },
       },
