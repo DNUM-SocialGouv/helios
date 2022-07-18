@@ -151,5 +151,59 @@ describe('Établissement territorial sanitaire loader', () => {
       ]
       expect(activitéChargée).toStrictEqual(activitéAttendue)
     })
+
+    it('charge les 5 dernières années de l’activité d’un établissement territorial sanitaire', async () => {
+      // GIVEN
+      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
+      await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
+      await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestBuilder.crée()])
+
+      const établissementTerritorialModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire(
+        { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial }
+      )
+      await établissementTerritorialRepository.insert(établissementTerritorialModel)
+      const activitéSanitaireModel2016 = ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire(
+        { année: 2016, numéroFinessÉtablissementTerritorial }
+      )
+      const activitéSanitaireModel2017 = ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire(
+        { année: 2017, numéroFinessÉtablissementTerritorial }
+      )
+      const activitéSanitaireModel2018 = ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire(
+        { année: 2018, numéroFinessÉtablissementTerritorial }
+      )
+      const activitéSanitaireModel2019 = ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire(
+        { année: 2019, numéroFinessÉtablissementTerritorial }
+      )
+      const activitéSanitaireModel2020 = ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire(
+        { année: 2020, numéroFinessÉtablissementTerritorial }
+      )
+      const activitéSanitaireModel2021 = ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire(
+        { année: 2021, numéroFinessÉtablissementTerritorial }
+      )
+      activitéSanitaireModelRepository.insert(
+        [
+          activitéSanitaireModel2016,
+          activitéSanitaireModel2017,
+          activitéSanitaireModel2018,
+          activitéSanitaireModel2019,
+          activitéSanitaireModel2020,
+          activitéSanitaireModel2021,
+        ]
+      )
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm)
+
+      // WHEN
+      const activitéChargée = await typeOrmÉtablissementTerritorialLoader.chargeActivité(numéroFinessÉtablissementTerritorial)
+
+      // THEN
+      const activitéAttendue: ÉtablissementTerritorialSanitaireActivité[] = [
+        ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({ année: 2017, numéroFinessÉtablissementTerritorial }),
+        ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({ année: 2018, numéroFinessÉtablissementTerritorial }),
+        ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({ année: 2019, numéroFinessÉtablissementTerritorial }),
+        ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({ année: 2020, numéroFinessÉtablissementTerritorial }),
+        ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({ année: 2021, numéroFinessÉtablissementTerritorial }),
+      ]
+      expect(activitéChargée).toStrictEqual(activitéAttendue)
+    })
   })
 })

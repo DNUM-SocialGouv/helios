@@ -20,7 +20,6 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
         take: 5,
         where: { numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial },
       })
-
     const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
     return this.construisActivité(activitésÉtablissementTerritorialModel.reverse(), dateDeMiseAJourModel)
   }
