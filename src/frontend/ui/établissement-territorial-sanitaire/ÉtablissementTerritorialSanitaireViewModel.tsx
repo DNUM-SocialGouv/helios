@@ -116,7 +116,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     )
   }
 
-  public get lesIndicateursMCOSontIlsRenseignés(): boolean {
+  public get nombreDeSéjoursMCOSontIlsRenseignés(): boolean {
     return this.établissementTerritorial.activités.some((activité: ÉtablissementTerritorialSanitaireActivité) => (
       (activité['nombreSéjoursPartielsMédecine'] !== null) ||
       (activité['nombreSéjoursCompletsMédecine'] !== null) ||
@@ -124,6 +124,14 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
       (activité['nombreSéjoursCompletsChirurgie'] !== null) ||
       (activité['nombreSéjoursPartielsObstétrique'] !== null) ||
       (activité['nombreSéjoursCompletsObstétrique'] !== null)))
+  }
+
+  public get nombreDeJournéesPsyEtSsrSontIlsRenseignés(): boolean {
+    return this.établissementTerritorial.activités.some((activité: ÉtablissementTerritorialSanitaireActivité) => (
+      (activité['nombreJournéesPartiellesPsy'] !== null) ||
+      (activité['nombreJournéesCompletesSsr'] !== null) ||
+      (activité['nombreJournéesPartiellesPsy'] !== null) ||
+      (activité['nombreJournéesCompletePsy'] !== null)))
   }
 
   public get nombreDePassagesAuxUrgencesEstIlRenseigné(): boolean {
@@ -191,7 +199,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
 
     const options = this.optionsHistogrammeÀBandes(
       this.identifiantDeLaLégendeDesSéjoursMCO,
-      this.tooltipSéjoursMCO(this.wording, this.insèreUnEspaceTousLes3Chiffres)
+      this.tooltipSéjoursMCO
     )
 
     return (
@@ -265,7 +273,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
 
     const options = this.optionsHistogrammeÀBandes(
       this.identifiantDeLaLégendeDesJournéesPsyEtSsr,
-      this.tooltipJournéesPsyEtSsr(this.wording, this.insèreUnEspaceTousLes3Chiffres)
+      this.tooltipJournéesPsyEtSsr
     )
 
     return (
@@ -304,42 +312,42 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     })
   }
 
-  private tooltipSéjoursMCO(wording: Wording, formateLesNombres: Function) {
+  private tooltipSéjoursMCO(wording: Wording) {
     return function (context: any) {
-      const label = `${context.dataset.label} : ${formateLesNombres(context.parsed.y)}`
+      const label = `${context.dataset.label} : ${(context.parsed.y).toLocaleString('fr')}`
 
       if (context.datasetIndex <= 1) {
         const nombreSéjoursHospitalisationPartielleMédecine = context.parsed._stacks.y['0']
         const nombreSéjoursHospitalisationComplèteMédecine = context.parsed._stacks.y['1']
-        return [label, `${wording.TOTAL_HOSPITALISATION_MÉDECINE} : ${formateLesNombres(nombreSéjoursHospitalisationPartielleMédecine + nombreSéjoursHospitalisationComplèteMédecine)}`]
+        return [label, `${wording.TOTAL_HOSPITALISATION_MÉDECINE} : ${(nombreSéjoursHospitalisationPartielleMédecine + nombreSéjoursHospitalisationComplèteMédecine).toLocaleString('fr')}`]
       }
       if (context.datasetIndex === 2 || context.datasetIndex === 3) {
         const nombreSéjoursHospitalisationPartielleChirurgie = context.parsed._stacks.y['2']
         const nombreSéjoursHospitalisationComplèteChirurgie = context.parsed._stacks.y['3']
-        return [label, `${wording.TOTAL_HOSPITALISATION_CHIRURGIE} : ${formateLesNombres(nombreSéjoursHospitalisationPartielleChirurgie + nombreSéjoursHospitalisationComplèteChirurgie)}`]
+        return [label, `${wording.TOTAL_HOSPITALISATION_CHIRURGIE} : ${(nombreSéjoursHospitalisationPartielleChirurgie + nombreSéjoursHospitalisationComplèteChirurgie).toLocaleString('fr')}`]
       }
       if (context.datasetIndex === 4 || context.datasetIndex === 5) {
         const nombreSéjoursHospitalisationPartielleObstétrique = context.parsed._stacks.y['4']
         const nombreSéjoursHospitalisationComplèteObstétrique = context.parsed._stacks.y['5']
-        return [label, `${wording.TOTAL_HOSPITALISATION_OBSTÉTRIQUE} : ${formateLesNombres(nombreSéjoursHospitalisationPartielleObstétrique + nombreSéjoursHospitalisationComplèteObstétrique)}`]
+        return [label, `${wording.TOTAL_HOSPITALISATION_OBSTÉTRIQUE} : ${(nombreSéjoursHospitalisationPartielleObstétrique + nombreSéjoursHospitalisationComplèteObstétrique).toLocaleString('fr')}`]
       }
       return label
     }
   }
 
-  private tooltipJournéesPsyEtSsr(wording: Wording, formateLesNombres: Function) {
+  private tooltipJournéesPsyEtSsr(wording: Wording) {
     return function (context: any) {
-      const label = `${context.dataset.label} : ${formateLesNombres(context.parsed.y)}`
+      const label = `${context.dataset.label} : ${(context.parsed.y).toLocaleString('fr')}`
 
       if (context.datasetIndex <= 1) {
         const nombreSéjoursHospitalisationPartielleSsr = context.parsed._stacks.y['0']
         const nombreSéjoursHospitalisationComplèteSsr = context.parsed._stacks.y['1']
-        return [label, `${wording.TOTAL_HOSPITALISATION_SSR} : ${formateLesNombres(nombreSéjoursHospitalisationPartielleSsr + nombreSéjoursHospitalisationComplèteSsr)}`]
+        return [label, `${wording.TOTAL_HOSPITALISATION_SSR} : ${(nombreSéjoursHospitalisationPartielleSsr + nombreSéjoursHospitalisationComplèteSsr).toLocaleString('fr')}`]
       }
       if (context.datasetIndex === 2 || context.datasetIndex === 3) {
         const nombreSéjoursHospitalisationPartiellePsy = context.parsed._stacks.y['2']
         const nombreSéjoursHospitalisationComplètePsy = context.parsed._stacks.y['3']
-        return [label, `${wording.TOTAL_HOSPITALISATION_PSY} : ${formateLesNombres(nombreSéjoursHospitalisationPartiellePsy + nombreSéjoursHospitalisationComplètePsy)}`]
+        return [label, `${wording.TOTAL_HOSPITALISATION_PSY} : ${(nombreSéjoursHospitalisationPartiellePsy + nombreSéjoursHospitalisationComplètePsy).toLocaleString('fr')}`]
       }
       return label
     }

@@ -16,10 +16,22 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewM
 
   if (!établissementTerritorialSanitaireViewModel.activitéEstElleRenseignée) return null
 
+  if (
+    !établissementTerritorialSanitaireViewModel.nombreDeSéjoursMCOSontIlsRenseignés &&
+    !établissementTerritorialSanitaireViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés &&
+    !établissementTerritorialSanitaireViewModel.nombreDePassagesAuxUrgencesEstIlRenseigné
+  ) {
+    return (
+      <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
+        {wording.INDICATEURS_VIDES}
+      </Bloc>
+    )
+  }
+
   return (
     <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
       <ul className={styles['liste-indicateurs']}>
-        {établissementTerritorialSanitaireViewModel.lesIndicateursMCOSontIlsRenseignés &&
+        {établissementTerritorialSanitaireViewModel.nombreDeSéjoursMCOSontIlsRenseignés &&
         <IndicateurGraphique
           contenuInfoBulle={<ContenuNombreDeSéjourMCO
             dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}
@@ -33,7 +45,7 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewM
           { établissementTerritorialSanitaireViewModel.nombreDeSéjoursMédecineChirurgieObstétrique }
         </IndicateurGraphique>
         }
-
+        {établissementTerritorialSanitaireViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés &&
         <IndicateurGraphique
           contenuInfoBulle={<ContenuNombreDeJournéesPSYetSSR
             dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}
@@ -46,7 +58,7 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewM
         >
           { établissementTerritorialSanitaireViewModel.nombreDeJournéesPsyEtSsr }
         </IndicateurGraphique>
-
+        }
         {établissementTerritorialSanitaireViewModel.nombreDePassagesAuxUrgencesEstIlRenseigné &&
         <IndicateurGraphique
           contenuInfoBulle={<ContenuNombreDePassagesAuxUrgences

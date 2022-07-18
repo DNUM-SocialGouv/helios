@@ -263,7 +263,7 @@ export class GraphiqueViewModel {
     }
   }
 
-  protected optionsHistogrammeÀBandes(idDeLaLégende: string): ChartOptions<'bar'> {
+  protected optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuTooltip: Function): ChartOptions<'bar'> {
     return {
       animation: false,
       elements: { bar: { borderWidth: 2 } },
@@ -272,36 +272,13 @@ export class GraphiqueViewModel {
         // @ts-ignore
         htmlLegend: { containerID: idDeLaLégende },
         legend: { display: false },
-        tooltip: { callbacks: { label: this.créeLeLibelléDuTooltip(this.wording) } },
+        tooltip: { callbacks: { label: créeLeLibelléDuTooltip(this.wording) } },
       },
       responsive: true,
       scales: {
         x: { grid: { drawOnChartArea: false }, ticks: { color: 'var(--text-default-grey)' } },
         y: { grid: { color: this.couleurDelAbscisse, drawBorder: false }, stacked: true, ticks: { color: 'var(--text-default-grey)' } },
       },
-    }
-  }
-
-  private créeLeLibelléDuTooltip(wording: Wording) {
-    return function (context: any) {
-      const label = `${context.dataset.label} : ${(context.parsed.y).toLocaleString('fr')}`
-
-      if (context.datasetIndex <= 1) {
-        const nombreSéjoursHospitalisationPartielleMédecine = context.parsed._stacks.y['0']
-        const nombreSéjoursHospitalisationComplèteMédecine = context.parsed._stacks.y['1']
-        return [label, `${wording.TOTAL_HOSPITALISATION_MÉDECINE} : ${(nombreSéjoursHospitalisationPartielleMédecine + nombreSéjoursHospitalisationComplèteMédecine).toLocaleString('fr')}`]
-      }
-      if (context.datasetIndex === 2 || context.datasetIndex === 3) {
-        const nombreSéjoursHospitalisationPartielleChirurgie = context.parsed._stacks.y['2']
-        const nombreSéjoursHospitalisationComplèteChirurgie = context.parsed._stacks.y['3']
-        return [label, `${wording.TOTAL_HOSPITALISATION_CHIRURGIE} : ${(nombreSéjoursHospitalisationPartielleChirurgie + nombreSéjoursHospitalisationComplèteChirurgie).toLocaleString('fr')}`]
-      }
-      if (context.datasetIndex === 4 || context.datasetIndex === 5) {
-        const nombreSéjoursHospitalisationPartielleObstétrique = context.parsed._stacks.y['4']
-        const nombreSéjoursHospitalisationComplèteObstétrique = context.parsed._stacks.y['5']
-        return [label, `${wording.TOTAL_HOSPITALISATION_OBSTÉTRIQUE} : ${(nombreSéjoursHospitalisationPartielleObstétrique + nombreSéjoursHospitalisationComplèteObstétrique).toLocaleString('fr')}`]
-      }
-      return label
     }
   }
 

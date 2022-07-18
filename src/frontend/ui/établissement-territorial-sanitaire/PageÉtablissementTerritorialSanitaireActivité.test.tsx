@@ -13,7 +13,8 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
   it.each(
     [
       [wording.NOMBRE_DE_SÉJOUR_MCO, 0],
-      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 1],
+      [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1],
+      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 2],
     ]
   )('affiche les informations d’un indicateurs', (titreSection, identifiant) => {
     // WHEN
@@ -35,7 +36,8 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
   it.each(
     [
       [wording.NOMBRE_DE_SÉJOUR_MCO, 0],
-      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 1],
+      [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1],
+      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 2],
     ]
   )('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails"', (titreSection, identifiant) => {
     // GIVEN
@@ -67,7 +69,8 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
   it.each(
     [
       [wording.NOMBRE_DE_SÉJOUR_MCO, 0],
-      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 1],
+      [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1],
+      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 2],
     ]
   )('ferme l’info bulle après avoir cliqué sur le bouton "Fermer"', (titreSection, identifiant) => {
     // GIVEN
@@ -102,8 +105,17 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
       [
         [
           wording.ANNÉE,
-          wording.NOMBRE_DE_PASSAGES_AUX_URGENCES,
+          wording.HOSPITALISATION_PARTIELLE_SSR,
+          wording.HOSPITALISATION_COMPLÈTE_SSR,
+          wording.HOSPITALISATION_PARTIELLE_PSY,
+          wording.HOSPITALISATION_COMPLÈTE_PSY,
         ], 1,
+      ],
+      [
+        [
+          wording.ANNÉE,
+          wording.NOMBRE_DE_PASSAGES_AUX_URGENCES,
+        ], 2,
       ],
     ]
   )('affiche un tableau descriptif avec les cinq années après un click sur "Afficher la transcription"', (titresSection, identifiant) => {
@@ -167,6 +179,7 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
   it.each(
     [
       [wording.NOMBRE_DE_SÉJOUR_MCO, 1, 1, 1, 1, 1, null, null, null, null, null, null],
+      [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1, null, null, null, null, 1, 1, 1, 1, 1, 1],
       [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, null, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     ]
   )('n’affiche pas l’indicateur quand sa valeur est vide', (
@@ -292,10 +305,124 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
     // THEN
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
     const indicateurs = within(activité).queryAllByRole('listitem')
-    expect(indicateurs).toHaveLength(1)
+    expect(indicateurs).toHaveLength(2)
     const listes = within(activité).getAllByRole('list')
     const titre = within(listes[0]).queryByText(titreSection, { selector: 'p' })
     expect(titre).not.toBeInTheDocument()
+  })
+
+  it('affiche une phrase à la place des indicateurs lorsque des activités sont renseignées mais les indicateurs sont vides', () => {
+    // GIVEN
+    const établissementTerritorialSansActivité = new ÉtablissementTerritorialSanitaireViewModel({
+      activités: [
+        {
+          année: 2017,
+          dateMiseAJourSource: '2021-07-07',
+          nombreDePassagesAuxUrgences: null,
+          nombreJournéesCompletePsy: null,
+          nombreJournéesCompletesSsr: null,
+          nombreJournéesPartiellesPsy: null,
+          nombreJournéesPartielsSsr: null,
+          nombreSéjoursCompletsChirurgie: null,
+          nombreSéjoursCompletsMédecine: null,
+          nombreSéjoursCompletsObstétrique: null,
+          nombreSéjoursPartielsChirurgie: null,
+          nombreSéjoursPartielsMédecine: null,
+          nombreSéjoursPartielsObstétrique: null,
+          numéroFinessÉtablissementTerritorial: '010000040',
+        },
+        {
+          année: 2018,
+          dateMiseAJourSource: '2021-07-07',
+          nombreDePassagesAuxUrgences: null,
+          nombreJournéesCompletePsy: null,
+          nombreJournéesCompletesSsr: null,
+          nombreJournéesPartiellesPsy: null,
+          nombreJournéesPartielsSsr: null,
+          nombreSéjoursCompletsChirurgie: null,
+          nombreSéjoursCompletsMédecine: null,
+          nombreSéjoursCompletsObstétrique: null,
+          nombreSéjoursPartielsChirurgie: null,
+          nombreSéjoursPartielsMédecine: null,
+          nombreSéjoursPartielsObstétrique: null,
+          numéroFinessÉtablissementTerritorial: '010000040',
+        },
+        {
+          année: 2019,
+          dateMiseAJourSource: '2021-07-07',
+          nombreDePassagesAuxUrgences: null,
+          nombreJournéesCompletePsy: null,
+          nombreJournéesCompletesSsr: null,
+          nombreJournéesPartiellesPsy: null,
+          nombreJournéesPartielsSsr: null,
+          nombreSéjoursCompletsChirurgie: null,
+          nombreSéjoursCompletsMédecine: null,
+          nombreSéjoursCompletsObstétrique: null,
+          nombreSéjoursPartielsChirurgie: null,
+          nombreSéjoursPartielsMédecine: null,
+          nombreSéjoursPartielsObstétrique: null,
+          numéroFinessÉtablissementTerritorial: '010000040',
+        },
+        {
+          année: 2020,
+          dateMiseAJourSource: '2021-07-07',
+          nombreDePassagesAuxUrgences: null,
+          nombreJournéesCompletePsy: null,
+          nombreJournéesCompletesSsr: null,
+          nombreJournéesPartiellesPsy: null,
+          nombreJournéesPartielsSsr: null,
+          nombreSéjoursCompletsChirurgie: null,
+          nombreSéjoursCompletsMédecine: null,
+          nombreSéjoursCompletsObstétrique: null,
+          nombreSéjoursPartielsChirurgie: null,
+          nombreSéjoursPartielsMédecine: null,
+          nombreSéjoursPartielsObstétrique: null,
+          numéroFinessÉtablissementTerritorial: '010000040',
+        },
+        {
+          année: 2021,
+          dateMiseAJourSource: '2021-07-07',
+          nombreDePassagesAuxUrgences: null,
+          nombreJournéesCompletePsy: null,
+          nombreJournéesCompletesSsr: null,
+          nombreJournéesPartiellesPsy: null,
+          nombreJournéesPartielsSsr: null,
+          nombreSéjoursCompletsChirurgie: null,
+          nombreSéjoursCompletsMédecine: null,
+          nombreSéjoursCompletsObstétrique: null,
+          nombreSéjoursPartielsChirurgie: null,
+          nombreSéjoursPartielsMédecine: null,
+          nombreSéjoursPartielsObstétrique: null,
+          numéroFinessÉtablissementTerritorial: '010000040',
+        },
+      ],
+      identité: {
+        adresseAcheminement: '01130 NANTUA',
+        adresseNuméroVoie : '50',
+        adresseTypeVoie : 'R',
+        adresseVoie : 'PAUL PAINLEVE',
+        catégorieÉtablissement : '355',
+        courriel : 'a@example.com',
+        dateMiseAJourSource : '2021-07-07',
+        libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
+        numéroFinessEntitéJuridique : '010008407',
+        numéroFinessÉtablissementPrincipal : '010045057',
+        numéroFinessÉtablissementTerritorial: '010000040',
+        raisonSociale : 'CH NANTUA',
+        raisonSocialeDeLEntitéDeRattachement : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+        statutJuridique : 'Société Anonyme (S.A.)',
+        typeÉtablissement : 'S',
+        téléphone : '0474754800',
+      },
+    }, wording)
+
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansActivité} />)
+
+    // THEN
+    const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
+    const phrase = within(activité).getByText(wording.INDICATEURS_VIDES)
+    expect(phrase).toBeInTheDocument()
   })
 
   it('n’affiche pas le bloc activité si aucune activité n’est renseignée', () => {
@@ -328,134 +455,5 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
     // THEN
     const activité = screen.queryByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
     expect(activité).not.toBeInTheDocument()
-  })
-
-  describe('Nombre de journées PSY et SSR', () => {
-    it('affiche les informations de nombre de journées PSY et SSR', () => {
-      // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
-
-      const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
-      const indicateurs = within(activité).getAllByRole('listitem')
-      const titre = within(indicateurs[1]).getByText(wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, { selector: 'p' })
-      expect(titre).toBeInTheDocument()
-      const dateMiseAJour = within(indicateurs[1]).getAllByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
-      expect(dateMiseAJour[0]).toBeInTheDocument()
-      const abréviation = within(indicateurs[1]).getAllByText('DIAMANT', { selector: 'abbr' })
-      expect(abréviation[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
-      const détails = within(indicateurs[1]).getByRole('button', { name: wording.DÉTAILS })
-      expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-activite-1')
-      expect(détails).toHaveAttribute('data-fr-opened', 'false')
-    })
-
-    it('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails"', () => {
-    // GIVEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
-      const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
-      const indicateurs = within(activité).getAllByRole('listitem')
-      const détails = within(indicateurs[1]).getByRole('button', { name: wording.DÉTAILS })
-
-      // WHEN
-      fireEvent.click(détails)
-
-      // THEN
-      expect(détails).toHaveAttribute('data-fr-opened', 'true')
-      const infoBulle = screen.getByRole('dialog', { name: wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR })
-      const fermer = within(infoBulle).getByRole('button', { name: wording.FERMER })
-      expect(fermer).toBeInTheDocument()
-      const élémentsDeCompréhension = within(infoBulle).getByRole('region', { name: wording.ÉLÉMENTS_DE_COMPRÉHENSION })
-      expect(élémentsDeCompréhension).toBeInTheDocument()
-      const fréquence = within(infoBulle).getByRole('region', { name: wording.FRÉQUENCE })
-      expect(fréquence).toBeInTheDocument()
-      const modeDeCalcul = within(infoBulle).getByRole('region', { name: wording.MODE_DE_CALCUL })
-      expect(modeDeCalcul).toBeInTheDocument()
-      const sources = within(infoBulle).getByRole('region', { name: wording.SOURCES })
-      expect(sources).toBeInTheDocument()
-      const informationsComplémentaires = within(infoBulle).getByRole('region', { name: wording.INFOS_COMPLÉMENTAIRES })
-      expect(informationsComplémentaires).toBeInTheDocument()
-    })
-
-    it('ferme l’info bulle après avoir cliqué sur le bouton "Fermer"', () => {
-
-      // GIVEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
-      const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
-      const indicateurs = within(activité).getAllByRole('listitem')
-      const détails = within(indicateurs[1]).getByRole('button', { name: wording.DÉTAILS })
-      fireEvent.click(détails)
-      const infoBulle = screen.getByRole('dialog', { name: wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR })
-      const fermer = within(infoBulle).getByRole('button', { name: wording.FERMER })
-
-      // WHEN
-      fireEvent.click(fermer)
-
-      // THEN
-      expect(détails).toHaveAttribute('data-fr-opened', 'false')
-    })
-
-    it('affiche un tableau descriptif avec les cinq années après un click sur "Afficher la transcription"', () => {
-      // GIVEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
-      const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
-      const indicateurs = within(activité).getAllByRole('listitem')
-      const transcription = within(indicateurs[1]).getByRole('button', { name: wording.AFFICHER_LA_TRANSCRIPTION })
-
-      // WHEN
-      fireEvent.click(transcription)
-
-      // THEN
-      expect(transcription).toHaveAttribute('aria-expanded', 'true')
-      const tableau = within(indicateurs[1]).getByRole('table')
-
-      const libellésLigneDEnTête = [
-        wording.ANNÉE,
-        wording.HOSPITALISATION_PARTIELLE_SSR,
-        wording.HOSPITALISATION_COMPLÈTE_SSR,
-        wording.HOSPITALISATION_PARTIELLE_PSY,
-        wording.HOSPITALISATION_COMPLÈTE_PSY,
-      ]
-      libellésLigneDEnTête.map((libellé) => {
-        const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: libellé })
-        expect(indicateurLigneDEnTête).toBeInTheDocument()
-      })
-
-      const annéesEtValeurs = [
-        {
-          année: '2017',
-          index: 1,
-          valeur: '10',
-        },
-        {
-          année: '2018',
-          index: 2,
-          valeur: '20',
-        },
-        {
-          année: '2019',
-          index: 3,
-          valeur: '30',
-        },
-        {
-          année: '2020',
-          index: 4,
-          valeur: '40',
-        },
-        {
-          année: '2021',
-          index: 5,
-          valeur: '50',
-        },
-      ]
-      const lignes = within(tableau).getAllByRole('row')
-      annéesEtValeurs.map((annéeEtValeur) => {
-        const année = within(lignes[annéeEtValeur.index]).getByRole('cell', { name : annéeEtValeur.année })
-        expect(année).toBeInTheDocument()
-        const valeurs = within(lignes[annéeEtValeur.index]).getAllByRole('cell', { name: annéeEtValeur.valeur })
-        expect(valeurs[0]).toBeInTheDocument()
-        expect(valeurs[1]).toBeInTheDocument()
-        expect(valeurs[2]).toBeInTheDocument()
-        expect(valeurs[3]).toBeInTheDocument()
-      })
-    })
   })
 })
