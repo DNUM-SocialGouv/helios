@@ -29,7 +29,7 @@ describe('Établissement territorial sanitaire loader', () => {
     dateMiseÀJourSourceRepository = (await orm).getRepository(DateMiseÀJourSourceModel)
   })
 
-  beforeEach(async () => {
+  afterEach(async () => {
     await clearAllTables(await orm)
   })
 
@@ -132,7 +132,7 @@ describe('Établissement territorial sanitaire loader', () => {
       const activitéSanitaireModel2020 = ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire(
         { année: 2020, numéroFinessÉtablissementTerritorial }
       )
-      activitéSanitaireModelRepository.insert(
+      await activitéSanitaireModelRepository.insert(
         [activitéSanitaireModel2016, activitéSanitaireModel2017, activitéSanitaireModel2018, activitéSanitaireModel2019, activitéSanitaireModel2020]
       )
 
@@ -162,6 +162,7 @@ describe('Établissement territorial sanitaire loader', () => {
         { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial }
       )
       await établissementTerritorialRepository.insert(établissementTerritorialModel)
+
       const activitéSanitaireModel2016 = ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire(
         { année: 2016, numéroFinessÉtablissementTerritorial }
       )
@@ -180,7 +181,7 @@ describe('Établissement territorial sanitaire loader', () => {
       const activitéSanitaireModel2021 = ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire(
         { année: 2021, numéroFinessÉtablissementTerritorial }
       )
-      activitéSanitaireModelRepository.insert(
+      await activitéSanitaireModelRepository.insert(
         [
           activitéSanitaireModel2016,
           activitéSanitaireModel2017,
@@ -190,6 +191,7 @@ describe('Établissement territorial sanitaire loader', () => {
           activitéSanitaireModel2021,
         ]
       )
+
       const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm)
 
       // WHEN

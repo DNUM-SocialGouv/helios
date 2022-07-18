@@ -19,7 +19,7 @@ describe('Établissement territorial rattaché loader', () => {
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel)
   })
 
-  beforeEach(async () => {
+  afterEach(async () => {
     await clearAllTables(await orm)
   })
 

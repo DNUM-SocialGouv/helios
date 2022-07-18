@@ -16,12 +16,11 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     const activitésÉtablissementTerritorialModel = await (await this.orm)
       .getRepository(ActivitéSanitaireModel)
       .find({
-        order: { année: 'DESC' },
-        take: 5,
-        where: { numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial },
+        order: { année: 'ASC' },
+        where: { numéroFinessÉtablissementTerritorial },
       })
     const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
-    return this.construisActivité(activitésÉtablissementTerritorialModel.reverse(), dateDeMiseAJourModel)
+    return this.construisActivité(activitésÉtablissementTerritorialModel.slice(-5), dateDeMiseAJourModel)
   }
 
   async chargeIdentité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialSanitaireNonTrouvée> {
@@ -29,7 +28,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       .getRepository(ÉtablissementTerritorialIdentitéModel)
       .findOneBy({
         domaine: DomaineÉtablissementTerritorial.SANITAIRE,
-        numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial,
+        numéroFinessÉtablissementTerritorial,
       })
     if (!établissementTerritorialModel) {
       return new ÉtablissementTerritorialSanitaireNonTrouvée(numéroFinessÉtablissementTerritorial)
