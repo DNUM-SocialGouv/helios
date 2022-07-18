@@ -48,7 +48,7 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
       [wording.TAUX_RÉALISATION_ACTIVITÉ, 3, '100.4 %', '94.5 %', '96.6 %'],
       [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 4, '340', '280', '300'],
       [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5, '87', '90', '22'],
-      [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6, '1013', '994', '990'],
+      [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6, (1013).toLocaleString('fr'), '994', '990'],
     ]
   )('affiche un tableau descriptif avec les trois années après un click sur "Afficher la transcription"', (titreSection, identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)

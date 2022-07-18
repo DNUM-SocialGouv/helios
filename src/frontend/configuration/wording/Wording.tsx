@@ -74,6 +74,7 @@ export interface Wording {
   readonly FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES: string
   readonly NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES: string
   readonly DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES: string
+  readonly NOMBRE_DE_PASSAGES_AUX_URGENCES: string
 
   // Bloc Activité Sanitaire
   readonly NOMBRE_DE_SÉJOUR_MCO: string

@@ -4,7 +4,6 @@ const createJestConfig = nextJest({ dir: './' })
 
 const customJestConfig = {
   clearMocks: true,
-  // TODO
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
     'datacrawler/**/*.ts',

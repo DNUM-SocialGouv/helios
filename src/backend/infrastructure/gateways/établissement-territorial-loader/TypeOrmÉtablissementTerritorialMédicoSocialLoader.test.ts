@@ -27,7 +27,7 @@ describe('Établissement territorial médico-social loader', () => {
     dateMiseÀJourSourceRepository = (await orm).getRepository(DateMiseÀJourSourceModel)
   })
 
-  beforeEach(async () => {
+  afterEach(async () => {
     await clearAllTables(await orm)
   })
 
