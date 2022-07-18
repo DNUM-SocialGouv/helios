@@ -33,7 +33,7 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewM
         </IndicateurGraphique>
         }
 
-        {établissementTerritorialSanitaireViewModel.lIndicateurPassagesAuxUrgencesEstIlRenseigné &&
+        {établissementTerritorialSanitaireViewModel.nombreDePassagesAuxUrgencesEstIlRenseigné &&
         <IndicateurGraphique
           contenuInfoBulle={<ContenuNombreDePassagesAuxUrgences
             dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}

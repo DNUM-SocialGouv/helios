@@ -118,10 +118,8 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
       (activité['nombreSéjoursCompletsObstétrique'] !== null)))
   }
 
-  public get lIndicateurPassagesAuxUrgencesEstIlRenseigné(): boolean {
-    return this.établissementTerritorial.activités.some((activité: ÉtablissementTerritorialSanitaireActivité) => (
-      activité['nombreDePassagesAuxUrgences'] !== null
-    ))
+  public get nombreDePassagesAuxUrgencesEstIlRenseigné(): boolean {
+    return this.lIndicateurEstIlRenseigné('nombreDePassagesAuxUrgences')
   }
 
   public get activitéEstElleRenseignée(): boolean {
@@ -215,7 +213,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
 
   private valeursDesNombresDeSéjours(nombresSéjours: {x: number, y: number | null}[]): (string | null)[] {
     return nombresSéjours.map((nombreSéjour) => {
-      return nombreSéjour.y ? this.insèreUnEspaceTousLes3Chiffres(nombreSéjour.y) : null
+      return nombreSéjour.y ? (nombreSéjour.y).toLocaleString('fr') : null
     })
   }
 
@@ -291,5 +289,9 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     })
 
     return [valeurs, années]
+  }
+
+  private lIndicateurEstIlRenseigné(indicateur: keyof ÉtablissementTerritorialSanitaireActivité): boolean {
+    return this.établissementTerritorial.activités.some((activité: ÉtablissementTerritorialSanitaireActivité) => activité[indicateur] !== null)
   }
 }

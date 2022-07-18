@@ -236,6 +236,7 @@ export class GraphiqueViewModel {
             family: 'Marianne',
             size: 14,
           },
+          formatter: (value: string, _context: Context): string => parseFloat(value).toLocaleString('fr'),
         },
         legend: { display: false },
         tooltip: { enabled: false },
@@ -271,7 +272,7 @@ export class GraphiqueViewModel {
         // @ts-ignore
         htmlLegend: { containerID: idDeLaLégende },
         legend: { display: false },
-        tooltip: { callbacks: { label: this.créeLeLibelléDuTooltip(this.wording, this.insèreUnEspaceTousLes3Chiffres) } },
+        tooltip: { callbacks: { label: this.créeLeLibelléDuTooltip(this.wording) } },
       },
       responsive: true,
       scales: {
@@ -281,24 +282,24 @@ export class GraphiqueViewModel {
     }
   }
 
-  private créeLeLibelléDuTooltip(wording: Wording, formateLesNombres: Function) {
+  private créeLeLibelléDuTooltip(wording: Wording) {
     return function (context: any) {
-      const label = `${context.dataset.label} : ${formateLesNombres(context.parsed.y)}`
+      const label = `${context.dataset.label} : ${(context.parsed.y).toLocaleString('fr')}`
 
       if (context.datasetIndex <= 1) {
         const nombreSéjoursHospitalisationPartielleMédecine = context.parsed._stacks.y['0']
         const nombreSéjoursHospitalisationComplèteMédecine = context.parsed._stacks.y['1']
-        return [label, `${wording.TOTAL_HOSPITALISATION_MÉDECINE} : ${formateLesNombres(nombreSéjoursHospitalisationPartielleMédecine + nombreSéjoursHospitalisationComplèteMédecine)}`]
+        return [label, `${wording.TOTAL_HOSPITALISATION_MÉDECINE} : ${(nombreSéjoursHospitalisationPartielleMédecine + nombreSéjoursHospitalisationComplèteMédecine).toLocaleString('fr')}`]
       }
       if (context.datasetIndex === 2 || context.datasetIndex === 3) {
         const nombreSéjoursHospitalisationPartielleChirurgie = context.parsed._stacks.y['2']
         const nombreSéjoursHospitalisationComplèteChirurgie = context.parsed._stacks.y['3']
-        return [label, `${wording.TOTAL_HOSPITALISATION_CHIRURGIE} : ${formateLesNombres(nombreSéjoursHospitalisationPartielleChirurgie + nombreSéjoursHospitalisationComplèteChirurgie)}`]
+        return [label, `${wording.TOTAL_HOSPITALISATION_CHIRURGIE} : ${(nombreSéjoursHospitalisationPartielleChirurgie + nombreSéjoursHospitalisationComplèteChirurgie).toLocaleString('fr')}`]
       }
       if (context.datasetIndex === 4 || context.datasetIndex === 5) {
         const nombreSéjoursHospitalisationPartielleObstétrique = context.parsed._stacks.y['4']
         const nombreSéjoursHospitalisationComplèteObstétrique = context.parsed._stacks.y['5']
-        return [label, `${wording.TOTAL_HOSPITALISATION_OBSTÉTRIQUE} : ${formateLesNombres(nombreSéjoursHospitalisationPartielleObstétrique + nombreSéjoursHospitalisationComplèteObstétrique)}`]
+        return [label, `${wording.TOTAL_HOSPITALISATION_OBSTÉTRIQUE} : ${(nombreSéjoursHospitalisationPartielleObstétrique + nombreSéjoursHospitalisationComplèteObstétrique).toLocaleString('fr')}`]
       }
       return label
     }
@@ -306,9 +307,5 @@ export class GraphiqueViewModel {
 
   private ajouteLePourcentage(valeurs: number[]): string[] {
     return valeurs.map((valeur) => valeur + ' %')
-  }
-
-  protected insèreUnEspaceTousLes3Chiffres(num: number): string {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
   }
 }
