@@ -17,6 +17,13 @@ type DonnéesDeDiagrammeDesSéjoursMCO = Readonly<{
   nombreSéjoursPartielsObstétrique: {x: number, y: number | null}[]
 }>
 
+type DonnéesDeDiagrammeDesJournéesPSYetSSR = Readonly<{
+  nombreJournéesComplètesPsy: {x: number, y: number | null}[]
+  nombreJournéesComplètesSsr: {x: number, y: number | null}[]
+  nombreJournéesPartiellesPsy: {x: number, y: number | null}[]
+  nombreJournéesPartiellesSsr: {x: number, y: number | null}[]
+}>
+
 export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewModel {
   readonly couleurDuFondHistogrammeBleuClair = '#DEE5FD'
   readonly couleurDuFondHistogrammeBleuFoncé = '#2F4077'
@@ -25,7 +32,8 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
   readonly couleurDuFondHistogrammeRougeClair = '#FEE9E6'
   readonly couleurDuFondHistogrammeRougeFoncé = '#A94645'
   readonly couleurDesAxesHorizontaux = '#161616'
-  readonly identifiantDeLaLégende = 'légende-graphique-sanitaire'
+  readonly identifiantDeLaLégendeDesSéjoursMCO = 'légende-graphique-sanitaire-journées-séjours-mco'
+  readonly identifiantDeLaLégendeDesJournéesPSYetSSR = 'légende-graphique-sanitaire-journées-psy-et-ssr'
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, wording: Wording) {
     super(wording, établissementTerritorial.activités.length)
@@ -89,9 +97,9 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
   }
 
   public get nombreDeSéjoursMédecineChirurgieObstétrique(): JSX.Element {
-    const [nombreDeSéjours, années] = this.construisLesSéjoursParAnnée()
+    const [nombreDeSéjours, années] = this.construisLesSéjoursMCOParAnnée()
 
-    return this.afficheUnHistogrammeÀBandes(nombreDeSéjours, années)
+    return this.afficheLHistogrammeDesSéjoursMCO(nombreDeSéjours, années)
   }
 
   public get nombreDePassagesAuxUrgences(): JSX.Element {
@@ -126,7 +134,13 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     return this.établissementTerritorial.activités.length === 0 ? false : true
   }
 
-  private afficheUnHistogrammeÀBandes(nombreDeSéjours: DonnéesDeDiagrammeDesSéjoursMCO, années: number[]): JSX.Element {
+  public get nombreDeJournéesPSYetSSR(): JSX.Element {
+    const [nombreDeJournées, années] = this.construisLesJournéesPSYetSSRParAnnée()
+
+    return this.afficheLHistogrammeDesJournéesPSYetSSR(nombreDeJournées, années)
+  }
+
+  private afficheLHistogrammeDesSéjoursMCO(nombreDeSéjours: DonnéesDeDiagrammeDesSéjoursMCO, années: number[]): JSX.Element {
     const data = {
       datasets: [
         {
@@ -175,7 +189,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
       labels: années,
     }
 
-    const options = this.optionsHistogrammeÀBandes(this.identifiantDeLaLégende)
+    const options = this.optionsHistogrammeÀBandes(this.identifiantDeLaLégendeDesSéjoursMCO)
 
     return (
       <>
@@ -186,7 +200,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
         />
         <ul
           className={styles['graphique-sanitaire-légende']}
-          id={this.identifiantDeLaLégende}
+          id={this.identifiantDeLaLégendeDesSéjoursMCO}
         />
         <TableIndicateur
           identifiants={[
@@ -205,6 +219,73 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
             this.valeursDesNombresDeSéjours(nombreDeSéjours.nombreSéjoursCompletsChirurgie),
             this.valeursDesNombresDeSéjours(nombreDeSéjours.nombreSéjoursPartielsObstétrique),
             this.valeursDesNombresDeSéjours(nombreDeSéjours.nombreSéjoursCompletsObstétrique),
+          ]}
+        />
+      </>
+    )
+  }
+
+  private afficheLHistogrammeDesJournéesPSYetSSR(nombreDeJournées: DonnéesDeDiagrammeDesJournéesPSYetSSR, années: number[]): JSX.Element {
+    const data = {
+      datasets: [
+        {
+          backgroundColor: this.couleurDuFondHistogrammeBleuClair,
+          borderColor: this.couleurDuFondHistogrammeBleuFoncé,
+          data: nombreDeJournées.nombreJournéesPartiellesSsr,
+          label: this.wording.HOSPITALISATION_PARTIELLE_SSR,
+          stack: 'Stack 1',
+        },
+        {
+          backgroundColor: this.couleurDuFondHistogrammeBleuFoncé,
+          borderColor: this.couleurDuFondHistogrammeBleuFoncé,
+          data: nombreDeJournées.nombreJournéesComplètesSsr,
+          label: this.wording.HOSPITALISATION_COMPLÈTE_SSR,
+          stack: 'Stack 1',
+        },
+        {
+          backgroundColor: this.couleurDuFondHistogrammeRougeClair,
+          borderColor: this.couleurDuFondHistogrammeRougeFoncé,
+          data: nombreDeJournées.nombreJournéesPartiellesPsy,
+          label: this.wording.HOSPITALISATION_PARTIELLE_PSY,
+          stack: 'Stack 2',
+        },
+        {
+          backgroundColor: this.couleurDuFondHistogrammeRougeFoncé,
+          borderColor: this.couleurDuFondHistogrammeRougeFoncé,
+          data: nombreDeJournées.nombreJournéesComplètesPsy,
+          label: this.wording.HOSPITALISATION_COMPLÈTE_PSY,
+          stack: 'Stack 2',
+        },
+      ],
+      labels: années,
+    }
+
+    const options = this.optionsHistogrammeÀBandes(this.identifiantDeLaLégendeDesJournéesPSYetSSR)
+
+    return (
+      <>
+        <Bar
+          data={data}
+          // @ts-ignore
+          options={options}
+        />
+        <ul
+          className={styles['graphique-sanitaire-légende']}
+          id={this.identifiantDeLaLégendeDesJournéesPSYetSSR}
+        />
+        <TableIndicateur
+          identifiants={[
+            this.wording.HOSPITALISATION_PARTIELLE_SSR,
+            this.wording.HOSPITALISATION_COMPLÈTE_SSR,
+            this.wording.HOSPITALISATION_PARTIELLE_PSY,
+            this.wording.HOSPITALISATION_COMPLÈTE_PSY,
+          ]}
+          libellés={années}
+          valeurs={[
+            this.valeursDesNombresDeSéjours(nombreDeJournées.nombreJournéesPartiellesPsy),
+            this.valeursDesNombresDeSéjours(nombreDeJournées.nombreJournéesComplètesPsy),
+            this.valeursDesNombresDeSéjours(nombreDeJournées.nombreJournéesPartiellesSsr),
+            this.valeursDesNombresDeSéjours(nombreDeJournées.nombreJournéesComplètesSsr),
           ]}
         />
       </>
@@ -238,7 +319,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     return valeur === '' ? this.wording.NON_RENSEIGNÉ : valeur
   }
 
-  private construisLesSéjoursParAnnée(): [DonnéesDeDiagrammeDesSéjoursMCO, number[]] {
+  private construisLesSéjoursMCOParAnnée(): [DonnéesDeDiagrammeDesSéjoursMCO, number[]] {
     const nombreDeSéjours: DonnéesDeDiagrammeDesSéjoursMCO = {
       nombreSéjoursCompletsChirurgie: [],
       nombreSéjoursCompletsMédecine: [],
@@ -259,6 +340,25 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
       nombreDeSéjours.nombreSéjoursPartielsObstétrique.push({ x: activité.année, y: activité.nombreSéjoursPartielsObstétrique })
     })
     return [nombreDeSéjours, années]
+  }
+
+  private construisLesJournéesPSYetSSRParAnnée(): [DonnéesDeDiagrammeDesJournéesPSYetSSR, number[]] {
+    const nombreDeJournées: DonnéesDeDiagrammeDesJournéesPSYetSSR = {
+      nombreJournéesComplètesPsy: [],
+      nombreJournéesComplètesSsr: [],
+      nombreJournéesPartiellesPsy: [],
+      nombreJournéesPartiellesSsr: [],
+    }
+    const années: number[] = []
+
+    this.établissementTerritorial.activités.forEach((activité: ÉtablissementTerritorialSanitaireActivité) => {
+      années.push(activité.année)
+      nombreDeJournées.nombreJournéesComplètesPsy.push({ x: activité.année, y: activité.nombreJournéesCompletePsy })
+      nombreDeJournées.nombreJournéesComplètesSsr.push({ x: activité.année, y: activité.nombreJournéesCompletesSsr })
+      nombreDeJournées.nombreJournéesPartiellesPsy.push({ x: activité.année, y: activité.nombreJournéesPartiellesPsy })
+      nombreDeJournées.nombreJournéesPartiellesSsr.push({ x: activité.année, y: activité.nombreJournéesPartielsSsr })
+    })
+    return [nombreDeJournées, années]
   }
 
   private construisLaCouleurDuLabel(valeurs: number[], estHorizontal: boolean = false): string[] {
