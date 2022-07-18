@@ -6,6 +6,14 @@
   justify-content: end;
 }
 
+@media (max-width: 58em) {
+  .graphique-sanitaire-légende {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+}
+
 .graphique-sanitaire-légende li {
   align-items: center;
   cursor: pointer;

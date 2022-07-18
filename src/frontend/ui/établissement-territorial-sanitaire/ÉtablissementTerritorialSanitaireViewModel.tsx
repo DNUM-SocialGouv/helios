@@ -201,7 +201,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
           // @ts-ignore
           options={options}
         />
-        <ul
+        <menu
           className={styles['graphique-sanitaire-légende']}
           id={this.identifiantDeLaLégendeDesSéjoursMCO}
         />
@@ -275,7 +275,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
           // @ts-ignore
           options={options}
         />
-        <ul
+        <menu
           className={styles['graphique-sanitaire-légende']}
           id={this.identifiantDeLaLégendeDesJournéesPsyEtSsr}
         />
@@ -288,10 +288,10 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
           ]}
           libellés={années}
           valeurs={[
-            this.valeursDesNombresDeSéjours(nombreDeJournées.nombreJournéesPartiellesPsy),
-            this.valeursDesNombresDeSéjours(nombreDeJournées.nombreJournéesComplètesPsy),
             this.valeursDesNombresDeSéjours(nombreDeJournées.nombreJournéesPartiellesSsr),
             this.valeursDesNombresDeSéjours(nombreDeJournées.nombreJournéesComplètesSsr),
+            this.valeursDesNombresDeSéjours(nombreDeJournées.nombreJournéesPartiellesPsy),
+            this.valeursDesNombresDeSéjours(nombreDeJournées.nombreJournéesComplètesPsy),
           ]}
         />
       </>

@@ -48,9 +48,9 @@ export const ContenuNombreDeJournéesPSYetSSR = ({ dateDeMiseÀJour, source }: C
           <br />
           <b>Type Hospitalisation :</b>
           <br />
-          <b>SSR</b>
+          <b>SSR :</b>
           {' '}
-          - Le type d’hospitalisation est déduit dans DIAMANT sur la base du type d’hospitalisation de l’unité médicale, disponible dans le RHA,
+          Le type d’hospitalisation est déduit dans DIAMANT sur la base du type d’hospitalisation de l’unité médicale, disponible dans le RHA,
           qui prend les valeurs :
         </p>
         <ol>
@@ -59,32 +59,32 @@ export const ContenuNombreDeJournéesPSYetSSR = ({ dateDeMiseÀJour, source }: C
           <li>Séances (traitements et cures ambulatoires) en soins de suite médicalisés =&gt; Venues ou séances (Séances)</li>
         </ol>
         <p>
-          <b>PSY</b>
+          <b>PSY :</b>
           {' '}
-          : Le type d’hospitalisation est déduit dans DIAMANT sur la base des formes d’activité :
-          <ul>
-            <li>
-              Prises en charge à temps complet :
-              <ul>
-                <li>Code 01 Hospitalisation à temps plein</li>
-                <li>Code 02 Séjour thérapeutique</li>
-                <li>Code 03 Hospitalisation à domicile</li>
-                <li>Code 04 Placement familial thérapeutique29</li>
-                <li>Code 05 Appartement thérapeutique</li>
-                <li>Code 06 Centre de postcure psychiatrique</li>
-                <li>Code 07 Centre de crise (incluant centre d’accueil permanent et centre d’accueil et de crise)</li>
-              </ul>
-            </li>
-            <li>
-              Prises en charge à temps partiel :
-              <ul>
-                <li>Code 20 Hospitalisation à temps partiel de jour</li>
-                <li>Code 21 Hospitalisation à temps partiel de nuit</li>
-                <li>Code 23 Prise en charge en atelier thérapeutique</li>
-              </ul>
-            </li>
-          </ul>
+          Le type d’hospitalisation est déduit dans DIAMANT sur la base des formes d’activité :
         </p>
+        <ul>
+          <li>
+            Prises en charge à temps complet :
+            <ul>
+              <li>Code 01 Hospitalisation à temps plein</li>
+              <li>Code 02 Séjour thérapeutique</li>
+              <li>Code 03 Hospitalisation à domicile</li>
+              <li>Code 04 Placement familial thérapeutique29</li>
+              <li>Code 05 Appartement thérapeutique</li>
+              <li>Code 06 Centre de postcure psychiatrique</li>
+              <li>Code 07 Centre de crise (incluant centre d’accueil permanent et centre d’accueil et de crise)</li>
+            </ul>
+          </li>
+          <li>
+            Prises en charge à temps partiel :
+            <ul>
+              <li>Code 20 Hospitalisation à temps partiel de jour</li>
+              <li>Code 21 Hospitalisation à temps partiel de nuit</li>
+              <li>Code 23 Prise en charge en atelier thérapeutique</li>
+            </ul>
+          </li>
+        </ul>
       </section>
       <section aria-label={wording.SOURCES}>
         <p>

@@ -331,7 +331,7 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
   })
 
   describe('Nombre de journées PSY et SSR', () => {
-    it('affiche les informations de nombre de séjours Médecine, Chirurgie et Obstétrique', () => {
+    it('affiche les informations de nombre de journées PSY et SSR', () => {
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
 
