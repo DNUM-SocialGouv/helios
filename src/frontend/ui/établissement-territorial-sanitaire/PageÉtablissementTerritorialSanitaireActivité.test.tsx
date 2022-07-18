@@ -13,7 +13,8 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
   it.each(
     [
       [wording.NOMBRE_DE_SÉJOUR_MCO, 0],
-      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 1],
+      [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1],
+      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 2],
     ]
   )('affiche les informations d’un indicateurs', (titreSection, identifiant) => {
     // WHEN
@@ -35,7 +36,8 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
   it.each(
     [
       [wording.NOMBRE_DE_SÉJOUR_MCO, 0],
-      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 1],
+      [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1],
+      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 2],
     ]
   )('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails"', (titreSection, identifiant) => {
     // GIVEN
@@ -67,7 +69,8 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
   it.each(
     [
       [wording.NOMBRE_DE_SÉJOUR_MCO, 0],
-      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 1],
+      [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1],
+      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 2],
     ]
   )('ferme l’info bulle après avoir cliqué sur le bouton "Fermer"', (titreSection, identifiant) => {
     // GIVEN
@@ -102,8 +105,17 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
       [
         [
           wording.ANNÉE,
-          wording.NOMBRE_DE_PASSAGES_AUX_URGENCES,
+          wording.HOSPITALISATION_PARTIELLE_SSR,
+          wording.HOSPITALISATION_COMPLÈTE_SSR,
+          wording.HOSPITALISATION_PARTIELLE_PSY,
+          wording.HOSPITALISATION_COMPLÈTE_PSY,
         ], 1,
+      ],
+      [
+        [
+          wording.ANNÉE,
+          wording.NOMBRE_DE_PASSAGES_AUX_URGENCES,
+        ], 2,
       ],
     ]
   )('affiche un tableau descriptif avec les cinq années après un click sur "Afficher la transcription"', (titresSection, identifiant) => {
@@ -167,6 +179,7 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
   it.each(
     [
       [wording.NOMBRE_DE_SÉJOUR_MCO, 1, 1, 1, 1, 1, null, null, null, null, null, null],
+      [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1, null, null, null, null, 1, 1, 1, 1, 1, 1],
       [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, null, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     ]
   )('n’affiche pas l’indicateur quand sa valeur est vide', (
@@ -292,10 +305,124 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
     // THEN
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
     const indicateurs = within(activité).queryAllByRole('listitem')
-    expect(indicateurs).toHaveLength(1)
+    expect(indicateurs).toHaveLength(2)
     const listes = within(activité).getAllByRole('list')
     const titre = within(listes[0]).queryByText(titreSection, { selector: 'p' })
     expect(titre).not.toBeInTheDocument()
+  })
+
+  it('affiche une phrase à la place des indicateurs lorsque des activités sont renseignées mais les indicateurs sont vides', () => {
+    // GIVEN
+    const établissementTerritorialSansActivité = new ÉtablissementTerritorialSanitaireViewModel({
+      activités: [
+        {
+          année: 2017,
+          dateMiseAJourSource: '2021-07-07',
+          nombreDePassagesAuxUrgences: null,
+          nombreJournéesCompletePsy: null,
+          nombreJournéesCompletesSsr: null,
+          nombreJournéesPartiellesPsy: null,
+          nombreJournéesPartielsSsr: null,
+          nombreSéjoursCompletsChirurgie: null,
+          nombreSéjoursCompletsMédecine: null,
+          nombreSéjoursCompletsObstétrique: null,
+          nombreSéjoursPartielsChirurgie: null,
+          nombreSéjoursPartielsMédecine: null,
+          nombreSéjoursPartielsObstétrique: null,
+          numéroFinessÉtablissementTerritorial: '010000040',
+        },
+        {
+          année: 2018,
+          dateMiseAJourSource: '2021-07-07',
+          nombreDePassagesAuxUrgences: null,
+          nombreJournéesCompletePsy: null,
+          nombreJournéesCompletesSsr: null,
+          nombreJournéesPartiellesPsy: null,
+          nombreJournéesPartielsSsr: null,
+          nombreSéjoursCompletsChirurgie: null,
+          nombreSéjoursCompletsMédecine: null,
+          nombreSéjoursCompletsObstétrique: null,
+          nombreSéjoursPartielsChirurgie: null,
+          nombreSéjoursPartielsMédecine: null,
+          nombreSéjoursPartielsObstétrique: null,
+          numéroFinessÉtablissementTerritorial: '010000040',
+        },
+        {
+          année: 2019,
+          dateMiseAJourSource: '2021-07-07',
+          nombreDePassagesAuxUrgences: null,
+          nombreJournéesCompletePsy: null,
+          nombreJournéesCompletesSsr: null,
+          nombreJournéesPartiellesPsy: null,
+          nombreJournéesPartielsSsr: null,
+          nombreSéjoursCompletsChirurgie: null,
+          nombreSéjoursCompletsMédecine: null,
+          nombreSéjoursCompletsObstétrique: null,
+          nombreSéjoursPartielsChirurgie: null,
+          nombreSéjoursPartielsMédecine: null,
+          nombreSéjoursPartielsObstétrique: null,
+          numéroFinessÉtablissementTerritorial: '010000040',
+        },
+        {
+          année: 2020,
+          dateMiseAJourSource: '2021-07-07',
+          nombreDePassagesAuxUrgences: null,
+          nombreJournéesCompletePsy: null,
+          nombreJournéesCompletesSsr: null,
+          nombreJournéesPartiellesPsy: null,
+          nombreJournéesPartielsSsr: null,
+          nombreSéjoursCompletsChirurgie: null,
+          nombreSéjoursCompletsMédecine: null,
+          nombreSéjoursCompletsObstétrique: null,
+          nombreSéjoursPartielsChirurgie: null,
+          nombreSéjoursPartielsMédecine: null,
+          nombreSéjoursPartielsObstétrique: null,
+          numéroFinessÉtablissementTerritorial: '010000040',
+        },
+        {
+          année: 2021,
+          dateMiseAJourSource: '2021-07-07',
+          nombreDePassagesAuxUrgences: null,
+          nombreJournéesCompletePsy: null,
+          nombreJournéesCompletesSsr: null,
+          nombreJournéesPartiellesPsy: null,
+          nombreJournéesPartielsSsr: null,
+          nombreSéjoursCompletsChirurgie: null,
+          nombreSéjoursCompletsMédecine: null,
+          nombreSéjoursCompletsObstétrique: null,
+          nombreSéjoursPartielsChirurgie: null,
+          nombreSéjoursPartielsMédecine: null,
+          nombreSéjoursPartielsObstétrique: null,
+          numéroFinessÉtablissementTerritorial: '010000040',
+        },
+      ],
+      identité: {
+        adresseAcheminement: '01130 NANTUA',
+        adresseNuméroVoie : '50',
+        adresseTypeVoie : 'R',
+        adresseVoie : 'PAUL PAINLEVE',
+        catégorieÉtablissement : '355',
+        courriel : 'a@example.com',
+        dateMiseAJourSource : '2021-07-07',
+        libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
+        numéroFinessEntitéJuridique : '010008407',
+        numéroFinessÉtablissementPrincipal : '010045057',
+        numéroFinessÉtablissementTerritorial: '010000040',
+        raisonSociale : 'CH NANTUA',
+        raisonSocialeDeLEntitéDeRattachement : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+        statutJuridique : 'Société Anonyme (S.A.)',
+        typeÉtablissement : 'S',
+        téléphone : '0474754800',
+      },
+    }, wording)
+
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansActivité} />)
+
+    // THEN
+    const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
+    const phrase = within(activité).getByText(wording.INDICATEURS_VIDES)
+    expect(phrase).toBeInTheDocument()
   })
 
   it('n’affiche pas le bloc activité si aucune activité n’est renseignée', () => {

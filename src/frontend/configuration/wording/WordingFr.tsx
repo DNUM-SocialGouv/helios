@@ -100,6 +100,13 @@ export class WordingFr implements Wording {
   readonly HOSPITALISATION_COMPLÈTE_CHIRURGIE: string = 'Hospitalisation Complète Chirurgie'
   readonly HOSPITALISATION_PARTIELLE_OBSTÉTRIQUE: string = 'Hospitalisation Partielle Obstétrique'
   readonly HOSPITALISATION_COMPLÈTE_OBSTÉTRIQUE: string = 'Hospitalisation Complète Obstétrique'
+  readonly TOTAL_HOSPITALISATION_SSR: string = 'Total Hospitalisation SSR'
+  readonly TOTAL_HOSPITALISATION_PSY: string = 'Total Hospitalisation PSY'
+  readonly NOMBRE_DE_JOURNÉES_PSY_ET_SSR: string = 'Nombre de journées PSY et SSR en Hospitalisation Complète et Hospitalisation Partielle par année'
+  readonly HOSPITALISATION_PARTIELLE_SSR: string = 'Hospitalisation Partielle SSR'
+  readonly HOSPITALISATION_COMPLÈTE_SSR: string = 'Hospitalisation Complète SSR'
+  readonly HOSPITALISATION_PARTIELLE_PSY: string = 'Hospitalisation Partielle PSY'
+  readonly HOSPITALISATION_COMPLÈTE_PSY: string = 'Hospitalisation Complète PSY'
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string = 'Établissement territorial'
