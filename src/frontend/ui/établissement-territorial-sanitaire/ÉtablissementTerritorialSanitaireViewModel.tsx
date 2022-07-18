@@ -17,7 +17,7 @@ type DonnéesDeDiagrammeDesSéjoursMCO = Readonly<{
   nombreSéjoursPartielsObstétrique: {x: number, y: number | null}[]
 }>
 
-type DonnéesDeDiagrammeDesJournéesPSYetSSR = Readonly<{
+type DonnéesDeDiagrammeDesJournéesPsyEtSsr = Readonly<{
   nombreJournéesComplètesPsy: {x: number, y: number | null}[]
   nombreJournéesComplètesSsr: {x: number, y: number | null}[]
   nombreJournéesPartiellesPsy: {x: number, y: number | null}[]
@@ -33,7 +33,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
   readonly couleurDuFondHistogrammeRougeFoncé = '#A94645'
   readonly couleurDesAxesHorizontaux = '#161616'
   readonly identifiantDeLaLégendeDesSéjoursMCO = 'légende-graphique-sanitaire-journées-séjours-mco'
-  readonly identifiantDeLaLégendeDesJournéesPSYetSSR = 'légende-graphique-sanitaire-journées-psy-et-ssr'
+  readonly identifiantDeLaLégendeDesJournéesPsyEtSsr = 'légende-graphique-sanitaire-journées-psy-et-ssr'
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, wording: Wording) {
     super(wording, établissementTerritorial.activités.length)
@@ -134,10 +134,10 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     return this.établissementTerritorial.activités.length === 0 ? false : true
   }
 
-  public get nombreDeJournéesPSYetSSR(): JSX.Element {
-    const [nombreDeJournées, années] = this.construisLesJournéesPSYetSSRParAnnée()
+  public get nombreDeJournéesPsyEtSsr(): JSX.Element {
+    const [nombreDeJournées, années] = this.construisLesJournéesPsyEtSsrParAnnée()
 
-    return this.afficheLHistogrammeDesJournéesPSYetSSR(nombreDeJournées, années)
+    return this.afficheLHistogrammeDesJournéesPsyEtSsr(nombreDeJournées, années)
   }
 
   private afficheLHistogrammeDesSéjoursMCO(nombreDeSéjours: DonnéesDeDiagrammeDesSéjoursMCO, années: number[]): JSX.Element {
@@ -189,7 +189,10 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
       labels: années,
     }
 
-    const options = this.optionsHistogrammeÀBandes(this.identifiantDeLaLégendeDesSéjoursMCO)
+    const options = this.optionsHistogrammeÀBandes(
+      this.identifiantDeLaLégendeDesSéjoursMCO,
+      this.tooltipSéjoursMCO(this.wording, this.insèreUnEspaceTousLes3Chiffres)
+    )
 
     return (
       <>
@@ -225,7 +228,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     )
   }
 
-  private afficheLHistogrammeDesJournéesPSYetSSR(nombreDeJournées: DonnéesDeDiagrammeDesJournéesPSYetSSR, années: number[]): JSX.Element {
+  private afficheLHistogrammeDesJournéesPsyEtSsr(nombreDeJournées: DonnéesDeDiagrammeDesJournéesPsyEtSsr, années: number[]): JSX.Element {
     const data = {
       datasets: [
         {
@@ -260,7 +263,10 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
       labels: années,
     }
 
-    const options = this.optionsHistogrammeÀBandes(this.identifiantDeLaLégendeDesJournéesPSYetSSR)
+    const options = this.optionsHistogrammeÀBandes(
+      this.identifiantDeLaLégendeDesJournéesPsyEtSsr,
+      this.tooltipJournéesPsyEtSsr(this.wording, this.insèreUnEspaceTousLes3Chiffres)
+    )
 
     return (
       <>
@@ -271,7 +277,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
         />
         <ul
           className={styles['graphique-sanitaire-légende']}
-          id={this.identifiantDeLaLégendeDesJournéesPSYetSSR}
+          id={this.identifiantDeLaLégendeDesJournéesPsyEtSsr}
         />
         <TableIndicateur
           identifiants={[
@@ -296,6 +302,47 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     return nombresSéjours.map((nombreSéjour) => {
       return nombreSéjour.y ? (nombreSéjour.y).toLocaleString('fr') : null
     })
+  }
+
+  private tooltipSéjoursMCO(wording: Wording, formateLesNombres: Function) {
+    return function (context: any) {
+      const label = `${context.dataset.label} : ${formateLesNombres(context.parsed.y)}`
+
+      if (context.datasetIndex <= 1) {
+        const nombreSéjoursHospitalisationPartielleMédecine = context.parsed._stacks.y['0']
+        const nombreSéjoursHospitalisationComplèteMédecine = context.parsed._stacks.y['1']
+        return [label, `${wording.TOTAL_HOSPITALISATION_MÉDECINE} : ${formateLesNombres(nombreSéjoursHospitalisationPartielleMédecine + nombreSéjoursHospitalisationComplèteMédecine)}`]
+      }
+      if (context.datasetIndex === 2 || context.datasetIndex === 3) {
+        const nombreSéjoursHospitalisationPartielleChirurgie = context.parsed._stacks.y['2']
+        const nombreSéjoursHospitalisationComplèteChirurgie = context.parsed._stacks.y['3']
+        return [label, `${wording.TOTAL_HOSPITALISATION_CHIRURGIE} : ${formateLesNombres(nombreSéjoursHospitalisationPartielleChirurgie + nombreSéjoursHospitalisationComplèteChirurgie)}`]
+      }
+      if (context.datasetIndex === 4 || context.datasetIndex === 5) {
+        const nombreSéjoursHospitalisationPartielleObstétrique = context.parsed._stacks.y['4']
+        const nombreSéjoursHospitalisationComplèteObstétrique = context.parsed._stacks.y['5']
+        return [label, `${wording.TOTAL_HOSPITALISATION_OBSTÉTRIQUE} : ${formateLesNombres(nombreSéjoursHospitalisationPartielleObstétrique + nombreSéjoursHospitalisationComplèteObstétrique)}`]
+      }
+      return label
+    }
+  }
+
+  private tooltipJournéesPsyEtSsr(wording: Wording, formateLesNombres: Function) {
+    return function (context: any) {
+      const label = `${context.dataset.label} : ${formateLesNombres(context.parsed.y)}`
+
+      if (context.datasetIndex <= 1) {
+        const nombreSéjoursHospitalisationPartielleSsr = context.parsed._stacks.y['0']
+        const nombreSéjoursHospitalisationComplèteSsr = context.parsed._stacks.y['1']
+        return [label, `${wording.TOTAL_HOSPITALISATION_SSR} : ${formateLesNombres(nombreSéjoursHospitalisationPartielleSsr + nombreSéjoursHospitalisationComplèteSsr)}`]
+      }
+      if (context.datasetIndex === 2 || context.datasetIndex === 3) {
+        const nombreSéjoursHospitalisationPartiellePsy = context.parsed._stacks.y['2']
+        const nombreSéjoursHospitalisationComplètePsy = context.parsed._stacks.y['3']
+        return [label, `${wording.TOTAL_HOSPITALISATION_PSY} : ${formateLesNombres(nombreSéjoursHospitalisationPartiellePsy + nombreSéjoursHospitalisationComplètePsy)}`]
+      }
+      return label
+    }
   }
 
   private formateLeTitreDeLEntitéJuridiqueDeRattachement() {
@@ -342,8 +389,8 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     return [nombreDeSéjours, années]
   }
 
-  private construisLesJournéesPSYetSSRParAnnée(): [DonnéesDeDiagrammeDesJournéesPSYetSSR, number[]] {
-    const nombreDeJournées: DonnéesDeDiagrammeDesJournéesPSYetSSR = {
+  private construisLesJournéesPsyEtSsrParAnnée(): [DonnéesDeDiagrammeDesJournéesPsyEtSsr, number[]] {
+    const nombreDeJournées: DonnéesDeDiagrammeDesJournéesPsyEtSsr = {
       nombreJournéesComplètesPsy: [],
       nombreJournéesComplètesSsr: [],
       nombreJournéesPartiellesPsy: [],

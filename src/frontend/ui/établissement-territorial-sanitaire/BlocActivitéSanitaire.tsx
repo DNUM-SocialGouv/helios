@@ -44,7 +44,7 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewM
           nomDeLIndicateur={wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR}
           source={wording.DIAMANT}
         >
-          { établissementTerritorialSanitaireViewModel.nombreDeJournéesPSYetSSR }
+          { établissementTerritorialSanitaireViewModel.nombreDeJournéesPsyEtSsr }
         </IndicateurGraphique>
 
         {établissementTerritorialSanitaireViewModel.nombreDePassagesAuxUrgencesEstIlRenseigné &&
