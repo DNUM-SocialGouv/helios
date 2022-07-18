@@ -114,6 +114,13 @@ export const Home = () => {
       </>,
       numéroFiness: '780150017',
     },
+    {
+      identifiant: <>
+        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
+        &nbsp;- 450 000 021 - HÔPITAL MADELEINE (sans données MCO)
+      </>,
+      numéroFiness: '450000021',
+    },
   ]
 
   return (
