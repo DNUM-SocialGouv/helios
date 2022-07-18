@@ -194,7 +194,7 @@ export class GraphiqueViewModel {
             size: 16,
             weight: 'bold',
           },
-          formatter: (value: string, _context: Context): string => value + ' %',
+          formatter: (value: number, _context: Context): string => value.toLocaleString('fr') + ' %',
         },
         legend: { display: false },
         tooltip: { enabled: false },
