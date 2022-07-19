@@ -4,6 +4,7 @@ import { ReactElement } from 'react'
 import { useDependencies } from '../commun/contexts/useDependencies'
 import { ListItem } from '../commun/ListItem/ListItem'
 import LogoÉtablissementTerritorialMédicoSocial from '../entité-juridique/liste-des-établissements/logo-établissement-territorial-médico-social-noir.svg'
+import LogoÉtablissementTerritorialSanitaire from '../entité-juridique/liste-des-établissements/logo-établissement-territorial-sanitaire-noir.svg'
 import styles from './Home.module.css'
 import LogoEntitéJuridiqueNoir from './logo-entité-juridique-noir.svg'
 
@@ -47,22 +48,13 @@ export const Home = () => {
       numéroFiness: '210012142',
     },
   ]
-  const établissementsTerritoriaux: {identifiant: ReactElement, numéroFiness: string, typeÉtablissement: string}[] = [
-    {
-      identifiant: <>
-        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        &nbsp;- 660 011 859 - SAAD DOMITYS SUD EST LES TOURS D’OR (avec aucune activité)
-      </>,
-      numéroFiness: '660011859',
-      typeÉtablissement: 'médico-social',
-    },
+  const établissementsTerritoriauxMédicoSociaux: {identifiant: ReactElement, numéroFiness: string}[] = [
     {
       identifiant: <>
         <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
         &nbsp;- 690 024 898 - EHPAD SAINT-FRANCOIS D’ASSISE (avec toutes les données d’activités)
       </>,
       numéroFiness: '690024898',
-      typeÉtablissement: 'médico-social',
     },
     {
       identifiant: <>
@@ -70,15 +62,6 @@ export const Home = () => {
         &nbsp;- 690 015 458 - ACCUEIL DE JOUR LES PETITS BONHEURS (certains indicateurs ne sont pas disponibles dans les données activité)
       </>,
       numéroFiness: '690015458',
-      typeÉtablissement: 'médico-social',
-    },
-    {
-      identifiant: <>
-        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        &nbsp;- 010 007 425 - SSIAD EHPAD SAINT-TRIVIER-DE-COURTES (avec toutes les données activités disponibles mais vides)
-      </>,
-      numéroFiness: '010007425',
-      typeÉtablissement: 'médico-social',
     },
     {
       identifiant: <>
@@ -86,7 +69,6 @@ export const Home = () => {
         &nbsp;- 370 103 137 - ESAT ANAIS DE METTRAY (avec une année manquante dans les données activité)
       </>,
       numéroFiness: '370103137',
-      typeÉtablissement: 'médico-social',
     },
     {
       identifiant: <>
@@ -94,7 +76,57 @@ export const Home = () => {
         &nbsp;- 130 008 329 - EHPAD RESIDENCE LES LAVANDINS (avec une année vide dans les données activité)
       </>,
       numéroFiness: '130008329',
-      typeÉtablissement: 'médico-social',
+    },
+    {
+      identifiant: <>
+        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
+        &nbsp;- 010 007 425 - SSIAD EHPAD SAINT-TRIVIER-DE-COURTES (avec toutes les données activités disponibles mais vides)
+      </>,
+      numéroFiness: '010007425',
+    },
+    {
+      identifiant: <>
+        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
+        &nbsp;- 660 011 859 - SAAD DOMITYS SUD EST LES TOURS D’OR (avec aucune activité)
+      </>,
+      numéroFiness: '660011859',
+    },
+  ]
+  const établissementsTerritoriauxSanitaires: {identifiant: ReactElement, numéroFiness: string}[] = [
+    {
+      identifiant: <>
+        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
+        &nbsp;- 120 004 668 - CH EMILE BOREL ST AFFRIQUE (avec toutes les données d’activités)
+      </>,
+      numéroFiness: '120004668',
+    },
+    {
+      identifiant: <>
+        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
+        &nbsp;- 780 150 017 - CTR DE SOINS ET READAPTATION CESSRIN (sans nombres de passages urgences)
+      </>,
+      numéroFiness: '780150017',
+    },
+    {
+      identifiant: <>
+        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
+        &nbsp;- 450 000 021 - HÔPITAL MADELEINE (sans données MCO)
+      </>,
+      numéroFiness: '450000021',
+    },
+    {
+      identifiant: <>
+        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
+        &nbsp;- 010 008 852 - CRF L’ORCET SITE DU CH DE FLEYRIAT (avec toutes les données activités disponibles mais vides)
+      </>,
+      numéroFiness: '010008852',
+    },
+    {
+      identifiant: <>
+        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
+        &nbsp;- 830 208 120 - CDS MEDICAL FILIERIS BRIGNOLES (avec aucune activité)
+      </>,
+      numéroFiness: '830208120',
     },
   ]
 
@@ -131,11 +163,11 @@ export const Home = () => {
         className="fr-mt-5w"
       >
         <h1 className="fr-h3">
-          {wording.ÉTABLISSEMENT_TERRITORIAUX}
+          {wording.ÉTABLISSEMENT_TERRITORIAUX + ' Médico-Sociaux'}
         </h1>
         <ul className={styles['liste-entités-juridiques'] + ' fr-raw-list fr-text--bold fr-raw-link'}>
           {
-            établissementsTerritoriaux.map((établissementTerritorial) =>
+            établissementsTerritoriauxMédicoSociaux.map((établissementTerritorial) =>
               <ListItem
                 key={établissementTerritorial.numéroFiness}
                 label={établissementTerritorial.identifiant}
@@ -145,6 +177,32 @@ export const Home = () => {
                     alt=""
                     height="22"
                     src={LogoÉtablissementTerritorialMédicoSocial}
+                    width="22"
+                  />
+                </>}
+              />)
+          }
+        </ul>
+      </section>
+      <section
+        aria-label={wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_TERRITORIAUX}
+        className="fr-mt-5w"
+      >
+        <h1 className="fr-h3">
+          {wording.ÉTABLISSEMENT_TERRITORIAUX + ' Sanitaires'}
+        </h1>
+        <ul className={styles['liste-entités-juridiques'] + ' fr-raw-list fr-text--bold fr-raw-link'}>
+          {
+            établissementsTerritoriauxSanitaires.map((établissementTerritorial) =>
+              <ListItem
+                key={établissementTerritorial.numéroFiness}
+                label={établissementTerritorial.identifiant}
+                lien= {`${paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE}/${établissementTerritorial.numéroFiness}`}
+                logo={<>
+                  <Image
+                    alt=""
+                    height="22"
+                    src={LogoÉtablissementTerritorialSanitaire}
                     width="22"
                   />
                 </>}
