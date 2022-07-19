@@ -52,13 +52,6 @@ export const Home = () => {
     {
       identifiant: <>
         <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        &nbsp;- 660 011 859 - SAAD DOMITYS SUD EST LES TOURS D’OR (avec aucune activité)
-      </>,
-      numéroFiness: '660011859',
-    },
-    {
-      identifiant: <>
-        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
         &nbsp;- 690 024 898 - EHPAD SAINT-FRANCOIS D’ASSISE (avec toutes les données d’activités)
       </>,
       numéroFiness: '690024898',
@@ -69,13 +62,6 @@ export const Home = () => {
         &nbsp;- 690 015 458 - ACCUEIL DE JOUR LES PETITS BONHEURS (certains indicateurs ne sont pas disponibles dans les données activité)
       </>,
       numéroFiness: '690015458',
-    },
-    {
-      identifiant: <>
-        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        &nbsp;- 010 007 425 - SSIAD EHPAD SAINT-TRIVIER-DE-COURTES (avec toutes les données activités disponibles mais vides)
-      </>,
-      numéroFiness: '010007425',
     },
     {
       identifiant: <>
@@ -91,21 +77,28 @@ export const Home = () => {
       </>,
       numéroFiness: '130008329',
     },
+    {
+      identifiant: <>
+        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
+        &nbsp;- 010 007 425 - SSIAD EHPAD SAINT-TRIVIER-DE-COURTES (avec toutes les données activités disponibles mais vides)
+      </>,
+      numéroFiness: '010007425',
+    },
+    {
+      identifiant: <>
+        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
+        &nbsp;- 660 011 859 - SAAD DOMITYS SUD EST LES TOURS D’OR (avec aucune activité)
+      </>,
+      numéroFiness: '660011859',
+    },
   ]
   const établissementsTerritoriauxSanitaires: {identifiant: ReactElement, numéroFiness: string}[] = [
     {
       identifiant: <>
         <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        &nbsp;- 830 208 120 - CDS MEDICAL FILIERIS BRIGNOLES (avec aucune activité)
+        &nbsp;- 120 004 668 - CH EMILE BOREL ST AFFRIQUE (avec toutes les données d’activités)
       </>,
-      numéroFiness: '830208120',
-    },
-    {
-      identifiant: <>
-        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        &nbsp;- 010 000 024 - CH DE FLEYRIAT (avec toutes les données d’activités)
-      </>,
-      numéroFiness: '010000024',
+      numéroFiness: '120004668',
     },
     {
       identifiant: <>
@@ -120,6 +113,20 @@ export const Home = () => {
         &nbsp;- 450 000 021 - HÔPITAL MADELEINE (sans données MCO)
       </>,
       numéroFiness: '450000021',
+    },
+    {
+      identifiant: <>
+        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
+        &nbsp;- 010 008 852 - CRF L’ORCET SITE DU CH DE FLEYRIAT (avec toutes les données activités disponibles mais vides)
+      </>,
+      numéroFiness: '010008852',
+    },
+    {
+      identifiant: <>
+        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
+        &nbsp;- 830 208 120 - CDS MEDICAL FILIERIS BRIGNOLES (avec aucune activité)
+      </>,
+      numéroFiness: '830208120',
     },
   ]
 
