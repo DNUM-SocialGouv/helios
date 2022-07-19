@@ -35,6 +35,12 @@ export class WordingFr implements Wording {
   readonly ENTITÉS_JURIDIQUES: string = 'Entité(s) Juridique(s)'
   readonly ÉTABLISSEMENT_TERRITORIAUX: string = 'Établissements Territoriaux'
 
+  // Recherche
+  readonly RECHERCHE_TITRE: string = 'Bienvenue sur Helios !'
+  readonly RECHERCHE_DESCRIPTION: string = 'Accédez rapidement et simplement à la fiche de synthèse d’un établissement ou d’une entité juridique.'
+  readonly RECHERCHE_PLACEHOLDER: string = 'Rechercher un numéro FINESS ou le nom d’un établissement'
+  readonly RECHERCHE_LABEL: string = 'Rechercher'
+
   // Fiches
   readonly MISE_À_JOUR: string = 'Mise à jour'
   readonly SOURCE: string = 'Source'
