@@ -7,11 +7,11 @@ import { ContenuNombreDePassagesAuxUrgences } from './InfoBulle/ContenuNombreDeP
 import { ContenuNombreDeSéjourMCO } from './InfoBulle/ContenuNombreDeSéjourMCO'
 import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTerritorialSanitaireViewModel'
 
-type BlocActivitéSanitaireType = {
+type BlocActivitéSanitaireProps = {
   établissementTerritorialSanitaireViewModel: ÉtablissementTerritorialSanitaireViewModel
 }
 
-export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewModel }: BlocActivitéSanitaireType) => {
+export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewModel }: BlocActivitéSanitaireProps) => {
   const { wording } = useDependencies()
 
   if (!établissementTerritorialSanitaireViewModel.activitéEstElleRenseignée) return null

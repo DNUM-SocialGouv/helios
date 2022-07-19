@@ -3,11 +3,13 @@ import { ListItem } from '../../commun/ListItem/ListItem'
 import styles from './ListeDesÉtablissementsTerritoriauxRattachés.module.css'
 import { ÉtablissementTerritorialRattachéViewModel } from './ÉtablissementTerritorialRattachéViewModel'
 
-type ÉtablissementsTerritoriauxRattachésType = Readonly<{
+type ÉtablissementsTerritoriauxRattachésTypeProps = Readonly<{
   établissementsTerritoriauxRattachésViewModels: ÉtablissementTerritorialRattachéViewModel[]
 }>
 
-export const ListeDesÉtablissementsTerritoriauxRattachés = ({ établissementsTerritoriauxRattachésViewModels }: ÉtablissementsTerritoriauxRattachésType) => {
+export const ListeDesÉtablissementsTerritoriauxRattachés = (
+  { établissementsTerritoriauxRattachésViewModels }: ÉtablissementsTerritoriauxRattachésTypeProps
+) => {
   const { paths, wording } = useDependencies()
 
   if (établissementsTerritoriauxRattachésViewModels.length === 0) return null

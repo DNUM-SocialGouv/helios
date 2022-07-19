@@ -3,13 +3,13 @@ import { ReactChild } from 'react'
 
 import styles from './ListItem.module.css'
 
-type ListItemType = Readonly<{
+type ListItemProps = Readonly<{
   label: ReactChild
   lien: string
   logo: ReactChild
 }>
 
-export const ListItem = ({ label, lien, logo }: ListItemType ) => {
+export const ListItem = ({ label, lien, logo }: ListItemProps ) => {
 
   return (
     <li

@@ -4,11 +4,11 @@ import { IndicateurIdentité } from '../../commun/IndicateurIdentité/Indicateur
 import { EntitéJuridiqueViewModel } from '../EntitéJuridiqueViewModel'
 import styles from './BlocIdentité.module.css'
 
-type BlocIdentitéType = {
+type BlocIdentitéProps = {
   entitéJuridiqueViewModel: EntitéJuridiqueViewModel
 }
 
-export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéType) => {
+export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéProps) => {
   const { wording } = useDependencies()
 
   return (

@@ -4,11 +4,11 @@ import { IndicateurIdentité } from '../commun/IndicateurIdentité/IndicateurIde
 import styles from './BlocIdentitéMédicoSocial.module.css'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from './ÉtablissementTerritorialMédicoSocialViewModel'
 
-type BlocIdentitéMédicoSocialType = {
+type BlocIdentitéMédicoSocialProps = {
   établissementTerritorialMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialViewModel
 }
 
-export const BlocIdentitéMédicoSocial = ({ établissementTerritorialMédicoSocialViewModel }: BlocIdentitéMédicoSocialType) => {
+export const BlocIdentitéMédicoSocial = ({ établissementTerritorialMédicoSocialViewModel }: BlocIdentitéMédicoSocialProps) => {
   const { wording } = useDependencies()
 
   return (
