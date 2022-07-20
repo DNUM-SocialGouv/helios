@@ -96,7 +96,7 @@ export class WordingFr implements Wording {
   readonly NOMBRE_DE_PASSAGES_AUX_URGENCES: string = 'Nombre de passages aux urgences'
 
   // Bloc Activité Sanitaire
-  readonly NOMBRE_DE_SÉJOUR_MCO: string = 'Nombre de séjours Médecine, Chirurgie et Obstétrique en Hospitalisation Complète et Hospitalisation Partielle par année'
+  readonly NOMBRE_DE_SÉJOUR_MCO: string = 'Nombre de séjours Médecine, Chirurgie et Obstétrique en Hospitalisation Complète et Hospitalisation Partielle par année (si applicable)'
   readonly TOTAL_HOSPITALISATION_MÉDECINE: string = 'Total Hospitalisation Médecine'
   readonly TOTAL_HOSPITALISATION_CHIRURGIE: string = 'Total Hospitalisation Chirurgie'
   readonly TOTAL_HOSPITALISATION_OBSTÉTRIQUE: string = 'Total Hospitalisation Obstétrique'
@@ -108,7 +108,7 @@ export class WordingFr implements Wording {
   readonly HOSPITALISATION_COMPLÈTE_OBSTÉTRIQUE: string = 'Hospitalisation Complète Obstétrique'
   readonly TOTAL_HOSPITALISATION_SSR: string = 'Total Hospitalisation SSR'
   readonly TOTAL_HOSPITALISATION_PSY: string = 'Total Hospitalisation PSY'
-  readonly NOMBRE_DE_JOURNÉES_PSY_ET_SSR: string = 'Nombre de journées PSY et SSR en Hospitalisation Complète et Hospitalisation Partielle par année'
+  readonly NOMBRE_DE_JOURNÉES_PSY_ET_SSR: string = 'Nombre de journées PSY et SSR en Hospitalisation Complète et Hospitalisation Partielle par année (si applicable)'
   readonly HOSPITALISATION_PARTIELLE_SSR: string = 'Hospitalisation Partielle SSR'
   readonly HOSPITALISATION_COMPLÈTE_SSR: string = 'Hospitalisation Complète SSR'
   readonly HOSPITALISATION_PARTIELLE_PSY: string = 'Hospitalisation Partielle PSY'
