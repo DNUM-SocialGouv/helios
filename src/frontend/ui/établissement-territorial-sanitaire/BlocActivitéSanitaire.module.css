@@ -1,3 +1,7 @@
+.liste-indicateurs > li {
+  margin-bottom: 1rem;
+}
+
 .graphique-sanitaire-légende {
   display: grid;
   grid-auto-flow: column;
