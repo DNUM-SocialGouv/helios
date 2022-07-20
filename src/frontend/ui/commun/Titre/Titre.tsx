@@ -3,12 +3,12 @@ import { ReactElement } from 'react'
 
 import styles from './Titre.module.css'
 
-type TypeTitre = Readonly<{
+type TitreProps = Readonly<{
   logo: StaticImageData
   children: ReactElement | string
 }>
 
-export const Titre = ({ logo, children }: TypeTitre) => {
+export const Titre = ({ logo, children }: TitreProps) => {
   return (
     <div className={styles['titre']}>
       <Image

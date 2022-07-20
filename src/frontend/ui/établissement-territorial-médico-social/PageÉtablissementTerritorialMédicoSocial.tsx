@@ -8,11 +8,11 @@ import { BlocIdentitéMédicoSocial } from './BlocIdentitéMédicoSocial'
 import LogoÉtablissementTerritorial from './logo-établissement-territorial-médico-social.svg'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from './ÉtablissementTerritorialMédicoSocialViewModel'
 
-type TypeÉtablissementTerritorial = Readonly<{
+type ÉtablissementTerritorialProps = Readonly<{
   établissementTerritorialViewModel: ÉtablissementTerritorialMédicoSocialViewModel
 }>
 
-export const PageÉtablissementTerritorialMédicoSocial = ({ établissementTerritorialViewModel }: TypeÉtablissementTerritorial) => {
+export const PageÉtablissementTerritorialMédicoSocial = ({ établissementTerritorialViewModel }: ÉtablissementTerritorialProps) => {
   const { paths } = useDependencies()
 
   useBreadcrumb([

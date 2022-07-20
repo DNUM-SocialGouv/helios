@@ -8,12 +8,12 @@ import { ListeDesÉtablissementsTerritoriauxRattachés } from './liste-des-étab
 import { ÉtablissementTerritorialRattachéViewModel } from './liste-des-établissements/ÉtablissementTerritorialRattachéViewModel'
 import LogoEntitéJuridique from './logo-entité-juridique.svg'
 
-type TypeEntitéJuridique = Readonly<{
+type EntitéJuridiqueProps = Readonly<{
   entitéJuridiqueViewModel: EntitéJuridiqueViewModel
   établissementsTerritoriauxRattachésViewModels: ÉtablissementTerritorialRattachéViewModel[]
 }>
 
-export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, établissementsTerritoriauxRattachésViewModels }: TypeEntitéJuridique) => {
+export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, établissementsTerritoriauxRattachésViewModels }: EntitéJuridiqueProps) => {
   useBreadcrumb([
     {
       label: entitéJuridiqueViewModel.titreAccessible,

@@ -11,11 +11,11 @@ import { ContenuTauxOccupationHébergementTemporaire } from './InfoBulle/Contenu
 import { ContenuTauxRéalisationActivité } from './InfoBulle/ContenuTauxRéalisationActivité'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from './ÉtablissementTerritorialMédicoSocialViewModel'
 
-type BlocActivitéMédicoSocialType = {
+type BlocActivitéMédicoSocialProps = {
   établissementTerritorialMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialViewModel
 }
 
-export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSocialViewModel }: BlocActivitéMédicoSocialType) => {
+export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSocialViewModel }: BlocActivitéMédicoSocialProps) => {
   const { wording } = useDependencies()
 
   if (!établissementTerritorialMédicoSocialViewModel.activitéEstElleRenseignée) return null

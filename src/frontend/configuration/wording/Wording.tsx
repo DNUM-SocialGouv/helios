@@ -27,6 +27,12 @@ export interface Wording {
   readonly ENTITÉS_JURIDIQUES: string
   readonly ÉTABLISSEMENT_TERRITORIAUX: string
 
+  // Recherche
+  readonly RECHERCHE_TITRE: string
+  readonly RECHERCHE_DESCRIPTION: string
+  readonly RECHERCHE_PLACEHOLDER: string
+  readonly RECHERCHE_LABEL: string
+
   // Fiches
   readonly MISE_À_JOUR: string
   readonly SOURCE: string
