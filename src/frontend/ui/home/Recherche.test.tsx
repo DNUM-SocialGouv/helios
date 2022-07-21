@@ -1,6 +1,6 @@
 import { screen, within } from '@testing-library/react'
 
-import { fakeFrontDependencies, renderFakeComponent } from '../../testHelper'
+import { fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent } from '../../testHelper'
 import { Recherche } from './Recherche'
 
 const { wording } = fakeFrontDependencies
@@ -13,7 +13,7 @@ describe('La page de recherche', () => {
     // THEN
     const titre = screen.getByRole('heading', { level: 1, name: wording.RECHERCHE_TITRE })
     expect(titre).toBeInTheDocument()
-    const description = screen.getByText(wording.RECHERCHE_DESCRIPTION, { selector: 'p' })
+    const description = screen.getByText(htmlNodeAndReactChildMatcher(wording.RECHERCHE_DESCRIPTION), { selector: 'p' })
     expect(description).toBeInTheDocument()
     const formulaire = screen.getByRole('search')
     const label = within(formulaire).getByLabelText(wording.RECHERCHE_LABEL)
