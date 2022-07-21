@@ -14,6 +14,12 @@ export class EntitéJuridiqueModel {
   @Column({ length: 255, name: 'adresse_voie' })
   public adresseVoie!: string
 
+  @Column({ length: 255, name: 'commune' })
+  public commune!: string
+
+  @Column({ length: 255, name: 'departement' })
+  public département!: string
+
   @Column({ length: 255, name: 'libelle_statut_juridique' })
   public libelléStatutJuridique!: string
 

@@ -5,6 +5,7 @@ import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database
 import { EntitéJuridiqueModelTestBuilder } from '../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder'
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from '../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder'
 import { RésultatDeRecherche } from '../../../métier/entities/RésultatDeRecherche'
+import { RésultatDeRechercheTestBuilder } from '../../../test-builder/RésultatDeRechercheTestBuilder'
 import { getOrm, clearAllTables, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from '../../../testHelper'
 import { TypeOrmRechercheLoader } from './TypeOrmRechercheLoader'
 
@@ -39,15 +40,7 @@ describe('La recherche d’entités et d’établissements', () => {
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
-      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
-        {
-          commune: 'LE PLESSIS ROBINSON',
-          département: 'HAUTS DE SEINE',
-          numéroFiness: numéroFinessEntitéJuridique,
-          raisonSociale: 'CH DU HAUT BUGEY',
-          type: 'Entité juridique',
-        },
-      ])
+      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({ numéroFiness: numéroFinessEntitéJuridique })])
     })
 
     it('retourne un résultat quand le numéro FINESS est un établissement territorial connu', async () => {
@@ -70,15 +63,7 @@ describe('La recherche d’entités et d’établissements', () => {
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
-      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
-        {
-          commune: 'LE PLESSIS ROBINSON',
-          département: 'HAUTS DE SEINE',
-          numéroFiness: numéroFinessÉtablissementTerritorial,
-          raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-          type: 'Sanitaire',
-        },
-      ])
+      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementSanitaire({ numéroFiness: numéroFinessÉtablissementTerritorial })])
     })
 
     it('ne retourne aucun résultat quand le numéro FINESS est inconnu', async () => {
@@ -107,22 +92,22 @@ describe('La recherche d’entités et d’établissements', () => {
   describe('Par nom', () => {
     it('retourne un résultat quand le nom est un nom connu d’entité juridique', async () => {
       // GIVEN
-      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ raisonSociale: 'CH DU HAUT BUGEY' })
+      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY' })
       await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
 
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('CH DU HAUT BUGEY')
+      const recherche = await typeOrmRechercheLoader.recherche('CENTRE HOSPITALIER DU HAUT BUGEY')
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
       expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
         {
-          commune: 'LE PLESSIS ROBINSON',
-          département: 'HAUTS DE SEINE',
+          commune: 'OYONNAX',
+          département: 'AIN',
           numéroFiness: numéroFinessEntitéJuridique,
-          raisonSociale: 'CH DU HAUT BUGEY',
+          raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY',
           type: 'Entité juridique',
         },
       ])
@@ -149,21 +134,12 @@ describe('La recherche d’entités et d’établissements', () => {
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
-      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
-        {
-          commune: 'LE PLESSIS ROBINSON',
-          département: 'HAUTS DE SEINE',
-          numéroFiness: numéroFinessÉtablissementTerritorial,
-          raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-          type: 'Sanitaire',
-        },
-      ])
-
+      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementSanitaire({ numéroFiness: numéroFinessÉtablissementTerritorial })])
     })
 
     it('retourne un résultat quand le nom est un nom connu sans prendre en compte la casse', async () => {
       // GIVEN
-      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ raisonSociale: 'CH DU HAUT BUGEY' })
+      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY' })
       await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
 
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
@@ -173,15 +149,7 @@ describe('La recherche d’entités et d’établissements', () => {
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
-      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
-        {
-          commune: 'LE PLESSIS ROBINSON',
-          département: 'HAUTS DE SEINE',
-          numéroFiness: numéroFinessEntitéJuridique,
-          raisonSociale: 'CH DU HAUT BUGEY',
-          type: 'Entité juridique',
-        },
-      ])
+      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({ numéroFiness: numéroFinessEntitéJuridique })])
     })
 
     it('retourne un résultat quand le nom est un nom connu sans prendre en compte les accents', async () => {
@@ -197,13 +165,10 @@ describe('La recherche d’entités et d’établissements', () => {
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
       expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
-        {
-          commune: 'LE PLESSIS ROBINSON',
-          département: 'HAUTS DE SEINE',
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: numéroFinessEntitéJuridique,
           raisonSociale: 'RÉSIDENCE LE PARC DU MANOIR',
-          type: 'Entité juridique',
-        },
+        }),
       ])
     })
 
@@ -220,13 +185,10 @@ describe('La recherche d’entités et d’établissements', () => {
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
       expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
-        {
-          commune: 'LE PLESSIS ROBINSON',
-          département: 'HAUTS DE SEINE',
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: numéroFinessEntitéJuridique,
           raisonSociale: 'EHPAD SAINT-TRIVIER-DE-COURTES',
-          type: 'Entité juridique',
-        },
+        }),
       ])
     })
 
@@ -243,13 +205,10 @@ describe('La recherche d’entités et d’établissements', () => {
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
       expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
-        {
-          commune: 'LE PLESSIS ROBINSON',
-          département: 'HAUTS DE SEINE',
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: numéroFinessEntitéJuridique,
           raisonSociale: "SAAD DOMITYS L'ARBRE D'OR",
-          type: 'Entité juridique',
-        },
+        }),
       ])
     })
   })
@@ -287,90 +246,55 @@ describe('La recherche d’entités et d’établissements', () => {
     // THEN
     expect(recherche.nombreDeRésultats).toBe(12)
     expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
-      {
-        commune: 'LE PLESSIS ROBINSON',
-        département: 'HAUTS DE SEINE',
+
+      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
         numéroFiness: '000000000',
         raisonSociale: 'hopital de 000000000',
-        type: 'Entité juridique',
-      },
-      {
-        commune: 'LE PLESSIS ROBINSON',
-        département: 'HAUTS DE SEINE',
+      }),
+      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
         numéroFiness: '111111111',
         raisonSociale: 'hopital de 111111111',
-        type: 'Entité juridique',
-      },
-      {
-        commune: 'LE PLESSIS ROBINSON',
-        département: 'HAUTS DE SEINE',
+      }),
+      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
         numéroFiness: '222222222',
         raisonSociale: 'hopital de 222222222',
-        type: 'Entité juridique',
-      },
-      {
-        commune: 'LE PLESSIS ROBINSON',
-        département: 'HAUTS DE SEINE',
+      }),
+      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
         numéroFiness: '333333333',
         raisonSociale: 'hopital de 333333333',
-        type: 'Entité juridique',
-      },
-      {
-        commune: 'LE PLESSIS ROBINSON',
-        département: 'HAUTS DE SEINE',
+      }),
+      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
         numéroFiness: '444444444',
         raisonSociale: 'hopital de 444444444',
-        type: 'Entité juridique',
-      },
-      {
-        commune: 'LE PLESSIS ROBINSON',
-        département: 'HAUTS DE SEINE',
+      }),
+      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
         numéroFiness: '555555555',
         raisonSociale: 'hopital de 555555555',
-        type: 'Entité juridique',
-      },
-      {
-        commune: 'LE PLESSIS ROBINSON',
-        département: 'HAUTS DE SEINE',
+      }),
+      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
         numéroFiness: '666666666',
         raisonSociale: 'hopital de 666666666',
-        type: 'Entité juridique',
-      },
-      {
-        commune: 'LE PLESSIS ROBINSON',
-        département: 'HAUTS DE SEINE',
+      }),
+      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
         numéroFiness: '777777777',
         raisonSociale: 'hopital de 777777777',
-        type: 'Entité juridique',
-      },
-      {
-        commune: 'LE PLESSIS ROBINSON',
-        département: 'HAUTS DE SEINE',
+      }),
+      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
         numéroFiness: '888888888',
         raisonSociale: 'hopital de 888888888',
-        type: 'Entité juridique',
-      },
-      {
-        commune: 'LE PLESSIS ROBINSON',
-        département: 'HAUTS DE SEINE',
+      }),
+      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
         numéroFiness: '999999999',
         raisonSociale: 'hopital de 999999999',
-        type: 'Entité juridique',
-      },
-      {
-        commune: 'LE PLESSIS ROBINSON',
-        département: 'HAUTS DE SEINE',
+      }),
+      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
         numéroFiness: '101010101',
         raisonSociale: 'hopital de 101010101',
-        type: 'Entité juridique',
-      },
-      {
-        commune: 'LE PLESSIS ROBINSON',
-        département: 'HAUTS DE SEINE',
+      }),
+      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
         numéroFiness: '110110110',
         raisonSociale: 'hopital de 110110110',
-        type: 'Entité juridique',
-      },
+      }),
     ])
   })
 })

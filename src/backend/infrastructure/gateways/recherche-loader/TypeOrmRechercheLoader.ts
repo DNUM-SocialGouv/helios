@@ -15,7 +15,9 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
         numero_finess,
         raison_sociale,
         type,
-        ts_rank_cd(termes, plainto_tsquery('unaccent_helios', '${terme}')) AS rank
+        ts_rank_cd(termes, plainto_tsquery('unaccent_helios', '${terme}')) AS rank,
+        commune,
+        departement
       FROM recherche
       WHERE termes @@ plainto_tsquery('unaccent_helios', '${terme}')
       ORDER BY rank DESC
@@ -30,8 +32,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       nombreDeRésultats: résultats.length,
       résultats: résultats.map((rechercheRésultat: any): Résultat => {
         return {
-          commune: 'LE PLESSIS ROBINSON',
-          département: 'HAUTS DE SEINE',
+          commune: rechercheRésultat.commune,
+          département: rechercheRésultat.departement,
           numéroFiness: rechercheRésultat.numero_finess,
           raisonSociale: rechercheRésultat.raison_sociale,
           type: rechercheRésultat.type,

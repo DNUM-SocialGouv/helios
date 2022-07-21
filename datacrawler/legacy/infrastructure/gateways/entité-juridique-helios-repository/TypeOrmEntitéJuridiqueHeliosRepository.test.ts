@@ -5,8 +5,7 @@ import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJur
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { EntitéJuridiqueModelTestBuilder } from '../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder'
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from '../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder'
-import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
-import { fakeLogger, getOrm } from '../../../testHelper'
+import { fakeLogger, getOrm, uneEntitéJuridique, uneSecondeEntitéJuridique } from '../../../testHelper'
 import { TypeOrmEntitéJuridiqueHeliosRepository } from './TypeOrmEntitéJuridiqueHeliosRepository'
 
 describe('Sauvegarde des entités juridiques', () => {
@@ -38,6 +37,8 @@ describe('Sauvegarde des entités juridiques', () => {
     entitéJuridique.adresseNuméroVoie = 'fake'
     entitéJuridique.adresseTypeVoie = 'fake'
     entitéJuridique.adresseVoie = 'fake'
+    entitéJuridique.commune = 'fake'
+    entitéJuridique.département = 'fake'
     entitéJuridique.libelléStatutJuridique = 'fake'
     entitéJuridique.numéroFinessEntitéJuridique = '010018407'
     entitéJuridique.raisonSociale = 'fake'
@@ -52,29 +53,7 @@ describe('Sauvegarde des entités juridiques', () => {
     ])
 
     const typeOrmEntitéJuridiqueRepository = new TypeOrmEntitéJuridiqueHeliosRepository(orm, fakeLogger)
-    const entitéJuridique1: EntitéJuridique = {
-      adresseAcheminement: '01117 OYONNAX CEDEX',
-      adresseNuméroVoie: '1',
-      adresseTypeVoie: 'RTE',
-      adresseVoie: 'DE VEYZIAT',
-      dateMiseAJourSource: '20220203',
-      libelléStatutJuridique: 'Etablissement Public Intercommunal dHospitalisation',
-      numéroFinessEntitéJuridique: '010018407',
-      raisonSociale: 'CH DU HAUT BUGEY',
-      téléphone: '0102030406',
-    }
-    const entitéJuridique2: EntitéJuridique = {
-      adresseAcheminement: '59650 VILLENEUVE D ASCQ',
-      adresseNuméroVoie: '20',
-      adresseTypeVoie: 'AV',
-      adresseVoie: 'DE LA RECONNAISSANCE',
-      dateMiseAJourSource: '20220203',
-      libelléStatutJuridique: 'Société Anonyme (S.A.)',
-      numéroFinessEntitéJuridique: '590001741',
-      raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-      téléphone: '0102030405',
-    }
-    const entitésJuridiques = [entitéJuridique1, entitéJuridique2]
+    const entitésJuridiques = [uneEntitéJuridique, uneSecondeEntitéJuridique]
 
     // WHEN
     await typeOrmEntitéJuridiqueRepository.sauvegarde(entitésJuridiques)
@@ -86,6 +65,8 @@ describe('Sauvegarde des entités juridiques', () => {
     entitéJuridiqueMisÀJourAttendu1.adresseNuméroVoie = '1'
     entitéJuridiqueMisÀJourAttendu1.adresseTypeVoie = 'RTE'
     entitéJuridiqueMisÀJourAttendu1.adresseVoie = 'DE VEYZIAT'
+    entitéJuridiqueMisÀJourAttendu1.commune = 'OYONNAX'
+    entitéJuridiqueMisÀJourAttendu1.département = 'AIN'
     entitéJuridiqueMisÀJourAttendu1.libelléStatutJuridique = 'Etablissement Public Intercommunal dHospitalisation'
     entitéJuridiqueMisÀJourAttendu1.numéroFinessEntitéJuridique = '010018407'
     entitéJuridiqueMisÀJourAttendu1.raisonSociale = 'CH DU HAUT BUGEY'
@@ -95,6 +76,8 @@ describe('Sauvegarde des entités juridiques', () => {
     entitéJuridiqueMisÀJourAttendu2.adresseNuméroVoie = '20'
     entitéJuridiqueMisÀJourAttendu2.adresseTypeVoie = 'AV'
     entitéJuridiqueMisÀJourAttendu2.adresseVoie = 'DE LA RECONNAISSANCE'
+    entitéJuridiqueMisÀJourAttendu2.commune = 'VILLENEUVE D ASCQ'
+    entitéJuridiqueMisÀJourAttendu2.département = 'NORD'
     entitéJuridiqueMisÀJourAttendu2.libelléStatutJuridique = 'Société Anonyme (S.A.)'
     entitéJuridiqueMisÀJourAttendu2.numéroFinessEntitéJuridique = '590001741'
     entitéJuridiqueMisÀJourAttendu2.raisonSociale = 'HOPITAL PRIVE DE VILLENEUVE DASCQ'
