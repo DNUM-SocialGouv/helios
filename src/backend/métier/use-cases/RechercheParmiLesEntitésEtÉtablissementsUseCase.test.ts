@@ -28,16 +28,22 @@ describe('La recherche des entités juridiques et des établissements territoria
         résultats:
         [
           {
+            commune: '',
+            département: '',
             numéroFiness: '010018407',
             raisonSociale: 'CH DU HAUT BUGEY',
             type: 'Entité juridique',
           },
           {
+            commune: '',
+            département: '',
             numéroFiness: '010000040',
             raisonSociale: 'CH NANTUA',
             type: 'Médico-social',
           },
           {
+            commune: '',
+            département: '',
             numéroFiness: '590782553',
             raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
             type: 'Sanitaire',

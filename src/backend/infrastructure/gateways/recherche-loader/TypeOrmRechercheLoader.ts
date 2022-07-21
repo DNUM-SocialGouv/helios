@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm'
 
 import { RechercheModel } from '../../../../../database/models/RechercheModel'
-import { RésultatDeRecherche } from '../../../métier/entities/RésultatDeRecherche'
+import { Résultat, RésultatDeRecherche } from '../../../métier/entities/RésultatDeRecherche'
 import { RechercheLoader } from '../../../métier/gateways/RechercheLoader'
 
 export class TypeOrmRechercheLoader implements RechercheLoader {
@@ -28,11 +28,13 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
   private construisLesRésultatsDeLaRecherche(résultats: any): RésultatDeRecherche {
     return {
       nombreDeRésultats: résultats.length,
-      résultats: résultats.map((rechercheRésultat: any) => {
+      résultats: résultats.map((rechercheRésultat: any): Résultat => {
         return {
+          commune: '',
+          département: '',
           numéroFiness: rechercheRésultat.numero_finess,
           raisonSociale: rechercheRésultat.raison_sociale,
-          typesdsqdza: rechercheRésultat.type,
+          type: rechercheRésultat.type,
         }
       }),
     }

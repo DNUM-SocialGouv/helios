@@ -41,6 +41,8 @@ describe('La recherche d’entités et d’établissements', () => {
       expect(recherche.nombreDeRésultats).toBe(1)
       expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
         {
+          commune: '',
+          département: '',
           numéroFiness: numéroFinessEntitéJuridique,
           raisonSociale: 'CH DU HAUT BUGEY',
           type: 'Entité juridique',
@@ -70,6 +72,8 @@ describe('La recherche d’entités et d’établissements', () => {
       expect(recherche.nombreDeRésultats).toBe(1)
       expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
         {
+          commune: '',
+          département: '',
           numéroFiness: numéroFinessÉtablissementTerritorial,
           raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
           type: 'Sanitaire',
@@ -115,6 +119,8 @@ describe('La recherche d’entités et d’établissements', () => {
       expect(recherche.nombreDeRésultats).toBe(1)
       expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
         {
+          commune: '',
+          département: '',
           numéroFiness: numéroFinessEntitéJuridique,
           raisonSociale: 'CH DU HAUT BUGEY',
           type: 'Entité juridique',
@@ -145,6 +151,8 @@ describe('La recherche d’entités et d’établissements', () => {
       expect(recherche.nombreDeRésultats).toBe(1)
       expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
         {
+          commune: '',
+          département: '',
           numéroFiness: numéroFinessÉtablissementTerritorial,
           raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
           type: 'Sanitaire',
@@ -167,6 +175,8 @@ describe('La recherche d’entités et d’établissements', () => {
       expect(recherche.nombreDeRésultats).toBe(1)
       expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
         {
+          commune: '',
+          département: '',
           numéroFiness: numéroFinessEntitéJuridique,
           raisonSociale: 'CH DU HAUT BUGEY',
           type: 'Entité juridique',
@@ -188,6 +198,8 @@ describe('La recherche d’entités et d’établissements', () => {
       expect(recherche.nombreDeRésultats).toBe(1)
       expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
         {
+          commune: '',
+          département: '',
           numéroFiness: numéroFinessEntitéJuridique,
           raisonSociale: 'RÉSIDENCE LE PARC DU MANOIR',
           type: 'Entité juridique',
@@ -209,6 +221,8 @@ describe('La recherche d’entités et d’établissements', () => {
       expect(recherche.nombreDeRésultats).toBe(1)
       expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
         {
+          commune: '',
+          département: '',
           numéroFiness: numéroFinessEntitéJuridique,
           raisonSociale: 'EHPAD SAINT-TRIVIER-DE-COURTES',
           type: 'Entité juridique',
@@ -230,6 +244,8 @@ describe('La recherche d’entités et d’établissements', () => {
       expect(recherche.nombreDeRésultats).toBe(1)
       expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
         {
+          commune: '',
+          département: '',
           numéroFiness: numéroFinessEntitéJuridique,
           raisonSociale: "SAAD DOMITYS L'ARBRE D'OR",
           type: 'Entité juridique',
@@ -272,61 +288,85 @@ describe('La recherche d’entités et d’établissements', () => {
     expect(recherche.nombreDeRésultats).toBe(12)
     expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
       {
+        commune: '',
+        département: '',
         numéroFiness: '000000000',
         raisonSociale: 'hopital de 000000000',
         type: 'Entité juridique',
       },
       {
+        commune: '',
+        département: '',
         numéroFiness: '111111111',
         raisonSociale: 'hopital de 111111111',
         type: 'Entité juridique',
       },
       {
+        commune: '',
+        département: '',
         numéroFiness: '222222222',
         raisonSociale: 'hopital de 222222222',
         type: 'Entité juridique',
       },
       {
+        commune: '',
+        département: '',
         numéroFiness: '333333333',
         raisonSociale: 'hopital de 333333333',
         type: 'Entité juridique',
       },
       {
+        commune: '',
+        département: '',
         numéroFiness: '444444444',
         raisonSociale: 'hopital de 444444444',
         type: 'Entité juridique',
       },
       {
+        commune: '',
+        département: '',
         numéroFiness: '555555555',
         raisonSociale: 'hopital de 555555555',
         type: 'Entité juridique',
       },
       {
+        commune: '',
+        département: '',
         numéroFiness: '666666666',
         raisonSociale: 'hopital de 666666666',
         type: 'Entité juridique',
       },
       {
+        commune: '',
+        département: '',
         numéroFiness: '777777777',
         raisonSociale: 'hopital de 777777777',
         type: 'Entité juridique',
       },
       {
+        commune: '',
+        département: '',
         numéroFiness: '888888888',
         raisonSociale: 'hopital de 888888888',
         type: 'Entité juridique',
       },
       {
+        commune: '',
+        département: '',
         numéroFiness: '999999999',
         raisonSociale: 'hopital de 999999999',
         type: 'Entité juridique',
       },
       {
+        commune: '',
+        département: '',
         numéroFiness: '101010101',
         raisonSociale: 'hopital de 101010101',
         type: 'Entité juridique',
       },
       {
+        commune: '',
+        département: '',
         numéroFiness: '110110110',
         raisonSociale: 'hopital de 110110110',
         type: 'Entité juridique',
