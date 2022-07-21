@@ -29,7 +29,7 @@ export interface Wording {
 
   // Recherche
   readonly RECHERCHE_TITRE: string
-  readonly RECHERCHE_DESCRIPTION: string
+  readonly RECHERCHE_DESCRIPTION: ReactElement
   readonly RECHERCHE_PLACEHOLDER: string
   readonly RECHERCHE_LABEL: string
 
