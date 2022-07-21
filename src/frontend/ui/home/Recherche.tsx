@@ -1,10 +1,10 @@
+import { useState } from 'react'
+
 import { useDependencies } from '../commun/contexts/useDependencies'
 import '@gouvfr/dsfr/dist/component/button/button.min.css'
 import '@gouvfr/dsfr/dist/component/input/input.min.css'
 import '@gouvfr/dsfr/dist/component/search/search.min.css'
 import styles from './Recherche.module.css'
-
-import { useState } from 'react'
 
 export const Recherche = () => {
   const { wording } = useDependencies()
@@ -28,7 +28,6 @@ export const Recherche = () => {
             id="search-2"
             role="search"
           >
-<<<<<<< HEAD
             <label
               className="fr-label"
               htmlFor="search-787-input"
@@ -45,7 +44,7 @@ export const Recherche = () => {
             <button
               className="fr-btn"
               onClick={(e) => {
-                e.stopPropagation();setResultatReçu(true)
+                e.preventDefault();setResultatReçu(true)
               }}
             >
               {wording.RECHERCHE_LABEL}
@@ -54,38 +53,11 @@ export const Recherche = () => {
         </section>
       </div>
       {resultatReçu &&
-          <section>
-              <p>
-                {wording.RECHERCHE_NOMBRE_RESULTAT(nombreResultat, recherche)}
-              </p>
-          </section>
-=======
-            {wording.RECHERCHE_LABEL}
-          </label>
-          <input
-            className="fr-input"
-            id="search-787-input"
-            name="search-787-input"
-            placeholder={wording.RECHERCHE_PLACEHOLDER}
-            type="search"
-          />
-          <button
-            className="fr-btn"
-            onClick={(e) => {
-              e.preventDefault();setResultatReçu(true)
-            }}
-          >
-            {wording.RECHERCHE_LABEL}
-          </button>
-        </form>
-      </section>
-      {resultatReçu &&
       <section aria-label={wording.RECHERCHE_RESULTAT}>
-        <p>
+        <p className="fr-h6">
           {wording.RECHERCHE_NOMBRE_RESULTAT(nombreResultat, recherche)}
         </p>
       </section>
->>>>>>> 994a89e ((hel-130) hello)
       }
     </>
   )

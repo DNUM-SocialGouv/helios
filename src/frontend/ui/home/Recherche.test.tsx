@@ -1,6 +1,6 @@
 import { fireEvent, screen, within } from '@testing-library/react'
 
-import {fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent} from '../../testHelper'
+import { fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent } from '../../testHelper'
 import { Recherche } from './Recherche'
 
 const { wording } = fakeFrontDependencies
