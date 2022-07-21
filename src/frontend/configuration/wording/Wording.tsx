@@ -32,6 +32,7 @@ export interface Wording {
   readonly RECHERCHE_DESCRIPTION: ReactElement
   readonly RECHERCHE_PLACEHOLDER: string
   readonly RECHERCHE_LABEL: string
+  readonly RECHERCHE_NOMBRE_RESULTAT: (nombre: number, recherche: string) => string
 
   // Fiches
   readonly MISE_À_JOUR: string

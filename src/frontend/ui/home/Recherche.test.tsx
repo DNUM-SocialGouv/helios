@@ -23,4 +23,11 @@ describe('La page de recherche', () => {
     const bouton = within(formulaire).getByRole('button', { name: wording.RECHERCHE_LABEL })
     expect(bouton).toBeInTheDocument()
   })
+  it('affiche les résultats', () => {
+    // WHEN
+    renderFakeComponent(<Recherche />)
+
+    // THEN
+    // const resultat = screen.getAllByRole('region')
+  })
 })

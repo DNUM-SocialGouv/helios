@@ -4,8 +4,13 @@ import '@gouvfr/dsfr/dist/component/input/input.min.css'
 import '@gouvfr/dsfr/dist/component/search/search.min.css'
 import styles from './Recherche.module.css'
 
+import { useState } from 'react'
+
 export const Recherche = () => {
   const { wording } = useDependencies()
+  const nombreResultat = 24
+  const recherche = 'Centre hospitalier de Saint Brieuc'
+  const [resultatReçu, setResultatReçu] = useState(false)
 
   return (
     <>
@@ -36,12 +41,24 @@ export const Recherche = () => {
               placeholder={wording.RECHERCHE_PLACEHOLDER}
               type="search"
             />
-            <button className="fr-btn">
+            <button
+              className="fr-btn"
+              onClick={(e) => {
+                e.stopPropagation();setResultatReçu(true)
+              }}
+            >
               {wording.RECHERCHE_LABEL}
             </button>
           </form>
         </section>
       </div>
+      {resultatReçu &&
+          <section>
+              <p>
+                {wording.RECHERCHE_NOMBRE_RESULTAT(nombreResultat, recherche)}
+              </p>
+          </section>
+      }
     </>
   )
 }
