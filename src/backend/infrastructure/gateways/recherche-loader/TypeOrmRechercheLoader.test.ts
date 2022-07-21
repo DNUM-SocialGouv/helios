@@ -182,6 +182,44 @@ describe('La recherche d’entités et d’établissements', () => {
         raisonSociale: 'RÉSIDENCE LE PARC DU MANOIR',
       })
     })
+
+    it('retourne un résultat quand le nom est un nom connu sans prendre en compte les tirets', async () => {
+      // GIVEN
+      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ raisonSociale: 'EHPAD SAINT-TRIVIER-DE-COURTES' })
+      await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
+
+      const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
+
+      // WHEN
+      const résultats = await typeOrmRechercheLoader.rechercheParTerme('saint trivier courtes')
+
+      // THEN
+      expect(résultats).toHaveLength(1)
+      expect(résultats[0]).toStrictEqual<RésultatDeRecherche>({
+        domaine: 'Entité juridique',
+        numéroFiness: numéroFinessEntitéJuridique,
+        raisonSociale: 'EHPAD SAINT-TRIVIER-DE-COURTES',
+      })
+    })
+
+    it('retourne un résultat quand le nom est un nom connu sans prendre en compte les apostrophes', async () => {
+      // GIVEN
+      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ raisonSociale: "SAAD DOMITYS L'ARBRE D'OR" })
+      await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
+
+      const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
+
+      // WHEN
+      const résultats = await typeOrmRechercheLoader.rechercheParTerme('l arbre d or')
+
+      // THEN
+      expect(résultats).toHaveLength(1)
+      expect(résultats[0]).toStrictEqual<RésultatDeRecherche>({
+        domaine: 'Entité juridique',
+        numéroFiness: numéroFinessEntitéJuridique,
+        raisonSociale: "SAAD DOMITYS L'ARBRE D'OR",
+      })
+    })
   })
 
   it('retourne un maximum de 12 résultats', async () => {
