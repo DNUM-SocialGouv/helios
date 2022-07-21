@@ -37,7 +37,7 @@ export class WordingFr implements Wording {
 
   // Recherche
   readonly RECHERCHE_TITRE: string = 'Bienvenue sur Helios !'
-  readonly RECHERCHE_DESCRIPTION: string = 'Accédez rapidement et simplement à la fiche de synthèse d’un établissement ou d’une entité juridique.'
+  readonly RECHERCHE_DESCRIPTION: string = 'Accédez rapidement et simplement à la fiche de synthèse d’un établissement géographique ou d’une entité juridique.'
   readonly RECHERCHE_PLACEHOLDER: string = 'Rechercher un numéro FINESS ou le nom d’un établissement'
   readonly RECHERCHE_LABEL: string = 'Rechercher'
 
