@@ -8,7 +8,7 @@ import { useState } from 'react'
 
 export const Recherche = () => {
   const { wording } = useDependencies()
-  const nombreResultat = 24
+  const nombreResultat = 12
   const recherche = 'Centre hospitalier de Saint Brieuc'
   const [resultatReçu, setResultatReçu] = useState(false)
 
@@ -28,6 +28,7 @@ export const Recherche = () => {
             id="search-2"
             role="search"
           >
+<<<<<<< HEAD
             <label
               className="fr-label"
               htmlFor="search-787-input"
@@ -58,6 +59,33 @@ export const Recherche = () => {
                 {wording.RECHERCHE_NOMBRE_RESULTAT(nombreResultat, recherche)}
               </p>
           </section>
+=======
+            {wording.RECHERCHE_LABEL}
+          </label>
+          <input
+            className="fr-input"
+            id="search-787-input"
+            name="search-787-input"
+            placeholder={wording.RECHERCHE_PLACEHOLDER}
+            type="search"
+          />
+          <button
+            className="fr-btn"
+            onClick={(e) => {
+              e.preventDefault();setResultatReçu(true)
+            }}
+          >
+            {wording.RECHERCHE_LABEL}
+          </button>
+        </form>
+      </section>
+      {resultatReçu &&
+      <section aria-label={wording.RECHERCHE_RESULTAT}>
+        <p>
+          {wording.RECHERCHE_NOMBRE_RESULTAT(nombreResultat, recherche)}
+        </p>
+      </section>
+>>>>>>> 994a89e ((hel-130) hello)
       }
     </>
   )

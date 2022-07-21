@@ -1,6 +1,6 @@
-import { screen, within } from '@testing-library/react'
+import { fireEvent, screen, within } from '@testing-library/react'
 
-import { fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent } from '../../testHelper'
+import {fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent} from '../../testHelper'
 import { Recherche } from './Recherche'
 
 const { wording } = fakeFrontDependencies
@@ -23,11 +23,23 @@ describe('La page de recherche', () => {
     const bouton = within(formulaire).getByRole('button', { name: wording.RECHERCHE_LABEL })
     expect(bouton).toBeInTheDocument()
   })
-  it('affiche les résultats', () => {
-    // WHEN
+
+  it('affiche les résultats après avoir cliqué sur le bouton "Rechercher"', () => {
+    // GIVEN
     renderFakeComponent(<Recherche />)
+    const nombreResultat = 12
+    const recherche = 'Centre hospitalier de Saint Brieuc'
+    const formulaire = screen.getByRole('search')
+    const bouton = within(formulaire).getByRole('button', { name: wording.RECHERCHE_LABEL })
+
+    // WHEN
+    fireEvent.click(bouton)
 
     // THEN
-    // const resultat = screen.getAllByRole('region')
+    const resultat = screen.getByLabelText(wording.RECHERCHE_RESULTAT)
+    expect(resultat).toBeInTheDocument()
+    const textDuRésultat = within(resultat).getByText(wording.RECHERCHE_NOMBRE_RESULTAT(nombreResultat, recherche), { selector: 'p' })
+    expect(textDuRésultat).toBeInTheDocument()
+
   })
 })
