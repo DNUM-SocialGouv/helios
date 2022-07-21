@@ -47,7 +47,7 @@ export class WordingFr implements Wording {
   readonly RECHERCHE_PLACEHOLDER: string = 'Rechercher un numéro FINESS ou le nom d’un établissement'
   readonly RECHERCHE_LABEL: string = 'Rechercher'
   readonly RECHERCHE_NOMBRE_RESULTAT: (nombre: number, recherche: string) => string = (nombre, recherche: string) =>
-    `${nombre} résultat(s) corresponde(nt) à votre recherche “${recherche}”`
+    `${nombre} résultat(s) corresponde(nt) à votre recherche “${recherche}”.`
   readonly RECHERCHE_RESULTAT: string = 'résultat'
 
   // Fiches

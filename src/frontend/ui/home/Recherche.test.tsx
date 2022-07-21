@@ -36,10 +36,15 @@ describe('La page de recherche', () => {
     fireEvent.click(bouton)
 
     // THEN
-    const resultat = screen.getByLabelText(wording.RECHERCHE_RESULTAT)
-    expect(resultat).toBeInTheDocument()
-    const textDuRésultat = within(resultat).getByText(wording.RECHERCHE_NOMBRE_RESULTAT(nombreResultat, recherche), { selector: 'p' })
+    const résultat = screen.getByLabelText(wording.RECHERCHE_RESULTAT)
+    expect(résultat).toBeInTheDocument()
+    const textDuRésultat = within(résultat).getByText(wording.RECHERCHE_NOMBRE_RESULTAT(nombreResultat, recherche), { selector: 'p' })
     expect(textDuRésultat).toBeInTheDocument()
-
+    const tuiles = screen.queryAllByRole('listitem')
+    expect(tuiles).toHaveLength(12)
+    const titreTuile = within(tuiles[0]).getByRole('heading', { level: 2, name: '220000020 - CENTRE HOSPITALIER DE SAINT BRIEUC' })
+    expect(titreTuile).toBeInTheDocument()
+    const départementCommuneTuile = within(tuiles[0]).getByText('Côtes d’Armor, Saint-Brieuc', { selector: 'p' })
+    expect(départementCommuneTuile).toBeInTheDocument()
   })
 })
