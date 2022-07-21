@@ -1,5 +1,10 @@
-export type RésultatDeRecherche = Readonly<{
+type Résultat = Readonly<{
   numéroFiness: string
   raisonSociale: string
-  domaine: string
+  type: string
+}>
+
+export type RésultatDeRecherche = Readonly<{
+  nombreDeRésultats: number
+  résultats: Résultat[]
 }>

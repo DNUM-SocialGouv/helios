@@ -35,15 +35,17 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const résultats = await typeOrmRechercheLoader.rechercheParTerme(numéroFinessEntitéJuridique)
+      const recherche = await typeOrmRechercheLoader.recherche(numéroFinessEntitéJuridique)
 
       // THEN
-      expect(résultats).toHaveLength(1)
-      expect(résultats[0]).toStrictEqual<RésultatDeRecherche>({
-        domaine: 'Entité juridique',
-        numéroFiness: numéroFinessEntitéJuridique,
-        raisonSociale: 'CH DU HAUT BUGEY',
-      })
+      expect(recherche.nombreDeRésultats).toBe(1)
+      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
+        {
+          numéroFiness: numéroFinessEntitéJuridique,
+          raisonSociale: 'CH DU HAUT BUGEY',
+          type: 'Entité juridique',
+        },
+      ])
     })
 
     it('retourne un résultat quand le numéro FINESS est un établissement territorial connu', async () => {
@@ -62,15 +64,17 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const résultats = await typeOrmRechercheLoader.rechercheParTerme(numéroFinessÉtablissementTerritorial)
+      const recherche = await typeOrmRechercheLoader.recherche(numéroFinessÉtablissementTerritorial)
 
       // THEN
-      expect(résultats).toHaveLength(1)
-      expect(résultats[0]).toStrictEqual<RésultatDeRecherche>({
-        domaine: 'Sanitaire',
-        numéroFiness: numéroFinessÉtablissementTerritorial,
-        raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-      })
+      expect(recherche.nombreDeRésultats).toBe(1)
+      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
+        {
+          numéroFiness: numéroFinessÉtablissementTerritorial,
+          raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+          type: 'Sanitaire',
+        },
+      ])
     })
 
     it('ne retourne aucun résultat quand le numéro FINESS est inconnu', async () => {
@@ -89,10 +93,10 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const résultats = await typeOrmRechercheLoader.rechercheParTerme('999999999')
+      const recherche = await typeOrmRechercheLoader.recherche('999999999')
 
       // THEN
-      expect(résultats).toHaveLength(0)
+      expect(recherche.nombreDeRésultats).toBe(0)
     })
   })
 
@@ -105,15 +109,17 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const résultats = await typeOrmRechercheLoader.rechercheParTerme('CH DU HAUT BUGEY')
+      const recherche = await typeOrmRechercheLoader.recherche('CH DU HAUT BUGEY')
 
       // THEN
-      expect(résultats).toHaveLength(1)
-      expect(résultats[0]).toStrictEqual<RésultatDeRecherche>({
-        domaine: 'Entité juridique',
-        numéroFiness: numéroFinessEntitéJuridique,
-        raisonSociale: 'CH DU HAUT BUGEY',
-      })
+      expect(recherche.nombreDeRésultats).toBe(1)
+      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
+        {
+          numéroFiness: numéroFinessEntitéJuridique,
+          raisonSociale: 'CH DU HAUT BUGEY',
+          type: 'Entité juridique',
+        },
+      ])
     })
 
     it('retourne un résultat quand le nom est un nom connu d’établissement territorial', async () => {
@@ -133,15 +139,17 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const résultats = await typeOrmRechercheLoader.rechercheParTerme('HOPITAL PRIVE DE VILLENEUVE DASCQ')
+      const recherche = await typeOrmRechercheLoader.recherche('HOPITAL PRIVE DE VILLENEUVE DASCQ')
 
       // THEN
-      expect(résultats).toHaveLength(1)
-      expect(résultats[0]).toStrictEqual<RésultatDeRecherche>({
-        domaine: 'Sanitaire',
-        numéroFiness: numéroFinessÉtablissementTerritorial,
-        raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-      })
+      expect(recherche.nombreDeRésultats).toBe(1)
+      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
+        {
+          numéroFiness: numéroFinessÉtablissementTerritorial,
+          raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+          type: 'Sanitaire',
+        },
+      ])
 
     })
 
@@ -153,15 +161,17 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const résultats = await typeOrmRechercheLoader.rechercheParTerme('bugey')
+      const recherche = await typeOrmRechercheLoader.recherche('bugey')
 
       // THEN
-      expect(résultats).toHaveLength(1)
-      expect(résultats[0]).toStrictEqual<RésultatDeRecherche>({
-        domaine: 'Entité juridique',
-        numéroFiness: numéroFinessEntitéJuridique,
-        raisonSociale: 'CH DU HAUT BUGEY',
-      })
+      expect(recherche.nombreDeRésultats).toBe(1)
+      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
+        {
+          numéroFiness: numéroFinessEntitéJuridique,
+          raisonSociale: 'CH DU HAUT BUGEY',
+          type: 'Entité juridique',
+        },
+      ])
     })
 
     it('retourne un résultat quand le nom est un nom connu sans prendre en compte les accents', async () => {
@@ -172,15 +182,17 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const résultats = await typeOrmRechercheLoader.rechercheParTerme('residence')
+      const recherche = await typeOrmRechercheLoader.recherche('residence')
 
       // THEN
-      expect(résultats).toHaveLength(1)
-      expect(résultats[0]).toStrictEqual<RésultatDeRecherche>({
-        domaine: 'Entité juridique',
-        numéroFiness: numéroFinessEntitéJuridique,
-        raisonSociale: 'RÉSIDENCE LE PARC DU MANOIR',
-      })
+      expect(recherche.nombreDeRésultats).toBe(1)
+      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
+        {
+          numéroFiness: numéroFinessEntitéJuridique,
+          raisonSociale: 'RÉSIDENCE LE PARC DU MANOIR',
+          type: 'Entité juridique',
+        },
+      ])
     })
 
     it('retourne un résultat quand le nom est un nom connu sans prendre en compte les tirets', async () => {
@@ -191,15 +203,17 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const résultats = await typeOrmRechercheLoader.rechercheParTerme('saint trivier courtes')
+      const recherche = await typeOrmRechercheLoader.recherche('saint trivier courtes')
 
       // THEN
-      expect(résultats).toHaveLength(1)
-      expect(résultats[0]).toStrictEqual<RésultatDeRecherche>({
-        domaine: 'Entité juridique',
-        numéroFiness: numéroFinessEntitéJuridique,
-        raisonSociale: 'EHPAD SAINT-TRIVIER-DE-COURTES',
-      })
+      expect(recherche.nombreDeRésultats).toBe(1)
+      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
+        {
+          numéroFiness: numéroFinessEntitéJuridique,
+          raisonSociale: 'EHPAD SAINT-TRIVIER-DE-COURTES',
+          type: 'Entité juridique',
+        },
+      ])
     })
 
     it('retourne un résultat quand le nom est un nom connu sans prendre en compte les apostrophes', async () => {
@@ -210,15 +224,17 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const résultats = await typeOrmRechercheLoader.rechercheParTerme('l arbre d or')
+      const recherche = await typeOrmRechercheLoader.recherche('l arbre d or')
 
       // THEN
-      expect(résultats).toHaveLength(1)
-      expect(résultats[0]).toStrictEqual<RésultatDeRecherche>({
-        domaine: 'Entité juridique',
-        numéroFiness: numéroFinessEntitéJuridique,
-        raisonSociale: "SAAD DOMITYS L'ARBRE D'OR",
-      })
+      expect(recherche.nombreDeRésultats).toBe(1)
+      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
+        {
+          numéroFiness: numéroFinessEntitéJuridique,
+          raisonSociale: "SAAD DOMITYS L'ARBRE D'OR",
+          type: 'Entité juridique',
+        },
+      ])
     })
   })
 
@@ -250,70 +266,70 @@ describe('La recherche d’entités et d’établissements', () => {
     const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
     // WHEN
-    const résultats = await typeOrmRechercheLoader.rechercheParTerme('hopital')
+    const recherche = await typeOrmRechercheLoader.recherche('hopital')
 
     // THEN
-    expect(résultats).toHaveLength(12)
-    expect(résultats).toStrictEqual<RésultatDeRecherche[]>([
+    expect(recherche.nombreDeRésultats).toBe(12)
+    expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
       {
-        domaine: 'Entité juridique',
         numéroFiness: '000000000',
         raisonSociale: 'hopital de 000000000',
+        type: 'Entité juridique',
       },
       {
-        domaine: 'Entité juridique',
         numéroFiness: '111111111',
         raisonSociale: 'hopital de 111111111',
+        type: 'Entité juridique',
       },
       {
-        domaine: 'Entité juridique',
         numéroFiness: '222222222',
         raisonSociale: 'hopital de 222222222',
+        type: 'Entité juridique',
       },
       {
-        domaine: 'Entité juridique',
         numéroFiness: '333333333',
         raisonSociale: 'hopital de 333333333',
+        type: 'Entité juridique',
       },
       {
-        domaine: 'Entité juridique',
         numéroFiness: '444444444',
         raisonSociale: 'hopital de 444444444',
+        type: 'Entité juridique',
       },
       {
-        domaine: 'Entité juridique',
         numéroFiness: '555555555',
         raisonSociale: 'hopital de 555555555',
+        type: 'Entité juridique',
       },
       {
-        domaine: 'Entité juridique',
         numéroFiness: '666666666',
         raisonSociale: 'hopital de 666666666',
+        type: 'Entité juridique',
       },
       {
-        domaine: 'Entité juridique',
         numéroFiness: '777777777',
         raisonSociale: 'hopital de 777777777',
+        type: 'Entité juridique',
       },
       {
-        domaine: 'Entité juridique',
         numéroFiness: '888888888',
         raisonSociale: 'hopital de 888888888',
+        type: 'Entité juridique',
       },
       {
-        domaine: 'Entité juridique',
         numéroFiness: '999999999',
         raisonSociale: 'hopital de 999999999',
+        type: 'Entité juridique',
       },
       {
-        domaine: 'Entité juridique',
         numéroFiness: '101010101',
         raisonSociale: 'hopital de 101010101',
+        type: 'Entité juridique',
       },
       {
-        domaine: 'Entité juridique',
         numéroFiness: '110110110',
         raisonSociale: 'hopital de 110110110',
+        type: 'Entité juridique',
       },
     ])
   })

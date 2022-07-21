@@ -1,4 +1,5 @@
 import { RésultatDeRechercheTestBuilder } from '../../test-builder/RésultatDeRechercheTestBuilder'
+import { RésultatDeRecherche } from '../entities/RésultatDeRecherche'
 import { RechercheLoader } from '../gateways/RechercheLoader'
 import { RechercheParmiLesEntitésEtÉtablissementsUseCase } from './RechercheParmiLesEntitésEtÉtablissementsUseCase'
 
@@ -10,7 +11,7 @@ describe('La recherche des entités juridiques et des établissements territoria
       RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementMédicoSocial(),
       RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementSanitaire(),
     ])
-    const rechercheLoader: RechercheLoader = { rechercheParTerme: mockedRechercheParTerme }
+    const rechercheLoader: RechercheLoader = { recherche: mockedRechercheParTerme }
     const termeDeLaRecherche = 'terme de la recherche'
 
     const rechercheParmiLesEntitésEtÉtablissementsUseCase = new RechercheParmiLesEntitésEtÉtablissementsUseCase(rechercheLoader)
@@ -21,22 +22,28 @@ describe('La recherche des entités juridiques et des établissements territoria
     // THEN
     expect(mockedRechercheParTerme).toHaveBeenCalledWith(termeDeLaRecherche)
     expect(mockedRechercheParTerme).toHaveBeenCalledTimes(1)
-    expect(résultatsDeLaRecherche).toStrictEqual([
+    expect(résultatsDeLaRecherche).toStrictEqual<RésultatDeRecherche>(
       {
-        domaine: 'Entité juridique',
-        numéroFiness: '010018407',
-        raisonSociale: 'CH DU HAUT BUGEY',
-      },
-      {
-        domaine: 'Médico-social',
-        numéroFiness: '010000040',
-        raisonSociale: 'CH NANTUA',
-      },
-      {
-        domaine: 'Sanitaire',
-        numéroFiness: '590782553',
-        raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-      },
-    ])
+        nombreDeRésultats: 3,
+        résultats:
+        [
+          {
+            numéroFiness: '010018407',
+            raisonSociale: 'CH DU HAUT BUGEY',
+            type: 'Entité juridique',
+          },
+          {
+            numéroFiness: '010000040',
+            raisonSociale: 'CH NANTUA',
+            type: 'Médico-social',
+          },
+          {
+            numéroFiness: '590782553',
+            raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+            type: 'Sanitaire',
+          },
+        ],
+      }
+    )
   })
 })

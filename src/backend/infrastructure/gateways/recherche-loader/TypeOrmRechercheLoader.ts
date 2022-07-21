@@ -9,12 +9,12 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
 
   constructor(private readonly orm: Promise<DataSource>) {}
 
-  async rechercheParTerme(terme: string): Promise<RésultatDeRecherche[]> {
+  async recherche(terme: string): Promise<RésultatDeRecherche> {
     const résultats = await (await this.orm).getRepository(RechercheModel).query(
       `SELECT
         numero_finess,
         raison_sociale,
-        domaine,
+        type,
         ts_rank_cd(termes, plainto_tsquery('unaccent_helios', '${terme}')) AS rank
       FROM recherche
       WHERE termes @@ plainto_tsquery('unaccent_helios', '${terme}')
@@ -25,13 +25,16 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     return this.construisLesRésultatsDeLaRecherche(résultats)
   }
 
-  private construisLesRésultatsDeLaRecherche(résultats: any): RésultatDeRecherche[] {
-    return résultats.map((rechercheRésultat: any): RésultatDeRecherche => {
-      return {
-        domaine: rechercheRésultat.domaine,
-        numéroFiness: rechercheRésultat.numero_finess,
-        raisonSociale: rechercheRésultat.raison_sociale,
-      }
-    })
+  private construisLesRésultatsDeLaRecherche(résultats: any): RésultatDeRecherche {
+    return {
+      nombreDeRésultats: résultats.length,
+      résultats: résultats.map((rechercheRésultat: any) => {
+        return {
+          numéroFiness: rechercheRésultat.numero_finess,
+          raisonSociale: rechercheRésultat.raison_sociale,
+          typesdsqdza: rechercheRésultat.type,
+        }
+      }),
+    }
   }
 }

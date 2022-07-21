@@ -2,7 +2,7 @@ import { RésultatDeRecherche } from '../../métier/entities/RésultatDeRecherch
 import { RechercheParmiLesEntitésEtÉtablissementsUseCase } from '../../métier/use-cases/RechercheParmiLesEntitésEtÉtablissementsUseCase'
 import { Dependencies } from '../dependencies'
 
-export async function rechercheEndpoint(dependencies: Dependencies, terme: string): Promise<RésultatDeRecherche[]> {
+export async function rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies: Dependencies, terme: string): Promise<RésultatDeRecherche> {
   try {
     const rechercheParmiLesEntitésEtÉtablissementsUseCase = new RechercheParmiLesEntitésEtÉtablissementsUseCase(
       dependencies.rechercheLoader

@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { rechercheEndpoint } from '../../backend/infrastructure/controllers/rechercheEndpoints'
+import { rechercheParmiLesEntitésEtÉtablissementsEndpoint } from '../../backend/infrastructure/controllers/rechercheEndpoints'
 import { dependencies } from '../../backend/infrastructure/dependencies'
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   const { terme } = request.body
-  const recherche = await rechercheEndpoint(dependencies, terme)
+  const recherche = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, terme)
   response.status(200).json(recherche)
 }
