@@ -3,6 +3,7 @@ import * as Sentry from '@sentry/nextjs'
 import { EntitéJuridiqueLoader } from '../métier/gateways/EntitéJuridiqueLoader'
 import { EnvironmentVariables } from '../métier/gateways/EnvironmentVariables'
 import { Logger } from '../métier/gateways/Logger'
+import { RechercheLoader } from '../métier/gateways/RechercheLoader'
 import { ÉtablissementTerritorialMédicoSocialLoader } from '../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader'
 import { ÉtablissementTerritorialRattachéLoader } from '../métier/gateways/ÉtablissementTerritorialRattachéLoader'
 import { ÉtablissementTerritorialSanitaireLoader } from '../métier/gateways/ÉtablissementTerritorialSanitaireLoader'
@@ -11,6 +12,7 @@ import { TypeOrmEntitéJuridiqueLoader } from './gateways/entité-juridique-load
 import { NodeEnvironmentVariables } from './gateways/environnement-variables/NodeEnvironmentVariables'
 import { ConsoleLogger } from './gateways/logger/ConsoleLogger'
 import { typeOrmOrm } from './gateways/orm/typeOrmOrm'
+import { TypeOrmRechercheLoader } from './gateways/recherche-loader/TypeOrmRechercheLoader'
 import { TypeOrmÉtablissementTerritorialMédicoSocialLoader } from './gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialMédicoSocialLoader'
 import { TypeOrmÉtablissementTerritorialRattachéLoader } from './gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialRattachéLoader'
 import { TypeOrmÉtablissementTerritorialSanitaireLoader } from './gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialSanitaireLoader'
@@ -19,6 +21,7 @@ export type Dependencies = Readonly<{
   environmentVariables: EnvironmentVariables
   entitéJuridiqueLoader: EntitéJuridiqueLoader
   logger: Logger
+  rechercheLoader: RechercheLoader
   établissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader
   établissementTerritorialRattachéLoader: ÉtablissementTerritorialRattachéLoader
   établissementTerritorialSanitaireLoader: ÉtablissementTerritorialSanitaireLoader
@@ -39,6 +42,7 @@ const createDependencies = (): Dependencies => {
     entitéJuridiqueLoader: new TypeOrmEntitéJuridiqueLoader(orm),
     environmentVariables,
     logger,
+    rechercheLoader: new TypeOrmRechercheLoader(orm),
     établissementTerritorialMédicoSocialLoader: new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm),
     établissementTerritorialRattachéLoader: new TypeOrmÉtablissementTerritorialRattachéLoader(orm),
     établissementTerritorialSanitaireLoader: new TypeOrmÉtablissementTerritorialSanitaireLoader(orm),
