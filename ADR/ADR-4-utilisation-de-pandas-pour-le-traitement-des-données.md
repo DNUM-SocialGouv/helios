@@ -1,6 +1,6 @@
 # ADR 4 : Utilisation de la librairie pandas de python pour le traitement des données
 `
-* Status: en cours de discussion
+* Status: accepté
 * Décideurs: Fabien Mercier, Thierry Gonard, Sofía Calcagno, Mehdi Akrim
 * Date: 2022-06-22
 

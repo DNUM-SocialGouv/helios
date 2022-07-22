@@ -4,13 +4,21 @@ import { ActivitéMédicoSocialModel } from '../../../../../database/models/Acti
 import { ActivitéSanitaireModel } from '../../../../../database/models/ActivitéSanitaireModel'
 import { DateMiseÀJourSourceModel } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
+import { RechercheModel } from '../../../../../database/models/RechercheModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { EnvironmentVariables } from '../../../métier/gateways/EnvironmentVariables'
 import { Orm } from '../../../métier/gateways/Orm'
 
 export const typeOrmOrm: Orm<DataSource> = (environmentVariables: EnvironmentVariables): Promise<DataSource> => {
   const dataSource = new DataSource({
-    entities: [ActivitéSanitaireModel, ActivitéMédicoSocialModel, DateMiseÀJourSourceModel, EntitéJuridiqueModel, ÉtablissementTerritorialIdentitéModel],
+    entities: [
+      RechercheModel,
+      ActivitéSanitaireModel,
+      ActivitéMédicoSocialModel,
+      DateMiseÀJourSourceModel,
+      EntitéJuridiqueModel,
+      ÉtablissementTerritorialIdentitéModel,
+    ],
     logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
     migrations: ['./../database/migrations/*.{js, ts}'],
     type: 'postgres',
