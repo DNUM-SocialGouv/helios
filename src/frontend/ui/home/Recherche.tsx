@@ -8,46 +8,46 @@ import '@gouvfr/dsfr/dist/component/search/search.min.css'
 import '@gouvfr/dsfr/dist/component/tile/tile.min.css'
 import styles from './Recherche.module.css'
 import { RechercheViewModel } from './RechercheViewModel'
+import { Résultat } from '../../../backend/métier/entities/RésultatDeRecherche'
 
 export const Recherche = () => {
   const { paths, wording } = useDependencies()
-  const nombreResultat = 12
-  const recherche = 'Centre hospitalier de Saint Brieuc'
+  const [nombreResultat, setNombreResultat] = useState(0)
+  const [recherche, setRecherche] = useState('')
+  const [rechercheLancé, setRechercheLancé] = useState('')
   const [rechercheDemandée, setRechercheDemandée] = useState(false)
+  const [résultatAffiché, setRésultatAffiché] = useState(false)
   const [résultats, setRésultats] = useState<RechercheViewModel[]>([])
+  const [enAttente, setEnAttente] = useState(true)
 
   const rechercher = (event: React.MouseEvent) => {
     event.preventDefault()
     setRechercheDemandée(true)
   }
 
+  const rechercheHandler = (event) => {
+    setRecherche(event.target.value)
+  }
+
   useEffect(() => {
-    // fetch
-
-    const résultats = Array(12)
-      .fill({
-        commune: 'Saint-Brieuc',
-        département: 'Côtes d’Armor',
-        numéroFiness: '010003598',
-        raisonSociale: 'CENTRE HOSPITALIER DE SAINT BRIEUC',
-        type: 'Médico-social',
-      }, 0, 4)
-      .fill({
-        commune: 'Saint-Brieuc',
-        département: 'Côtes d’Armor',
-        numéroFiness: '010005239',
-        raisonSociale: 'CENTRE HOSPITALIER DE SAINT BRIEUC',
-        type: 'Sanitaire',
-      }, 4, 8)
-      .fill({
-        commune: 'Saint-Brieuc',
-        département: 'Côtes d’Armor',
-        numéroFiness: '010008407',
-        raisonSociale: 'CENTRE HOSPITALIER DE SAINT BRIEUC',
-        type: 'Entité Juridique',
-      }, 8, 12)
-
-    setRésultats(résultats.map((résultat) => new RechercheViewModel(résultat, paths)))
+    if (rechercheDemandée) {
+      setRésultatAffiché(false)
+      setEnAttente(true)
+      fetch('http://localhost:3000/api/recherche', {
+        body: JSON.stringify({ terme: recherche }),
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setRésultats(data.résultats.map((résultat: Résultat) => new RechercheViewModel(résultat, paths)))
+          setNombreResultat(data.nombreDeRésultats)
+          setRechercheLancé(recherche)
+          setEnAttente(false)
+          setRechercheDemandée(false)
+          setRésultatAffiché(true)
+        })
+    }
   }, [rechercheDemandée])
 
   return (
@@ -76,8 +76,10 @@ export const Recherche = () => {
               className="fr-input"
               id="search-787-input"
               name="search-787-input"
+              onChange={rechercheHandler}
               placeholder={wording.RECHERCHE_PLACEHOLDER}
               type="search"
+              value={recherche}
             />
             <button
               className="fr-btn"
@@ -88,10 +90,13 @@ export const Recherche = () => {
           </form>
         </section>
       </div>
-      {rechercheDemandée &&
+      {(enAttente && rechercheDemandée) &&
+      <section> En Attende de résultat</section>
+      }
+      {résultatAffiché &&
         <section aria-label={wording.RECHERCHE_RESULTAT}>
           <p className="fr-h6 fr-mt-4w">
-            {wording.RECHERCHE_NOMBRE_RESULTAT(nombreResultat, recherche)}
+            {wording.RECHERCHE_NOMBRE_RESULTAT(nombreResultat, rechercheLancé)}
           </p>
           <ul className={'fr-grid-row fr-grid-row--gutters ' + styles['tuiles']}>
             {résultats.map((résultatViewModel, index) => (
