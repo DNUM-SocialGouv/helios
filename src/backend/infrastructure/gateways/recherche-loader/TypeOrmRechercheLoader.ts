@@ -30,8 +30,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       nombreDeRésultats: résultats.length,
       résultats: résultats.map((rechercheRésultat: any): Résultat => {
         return {
-          commune: '',
-          département: '',
+          commune: 'LE PLESSIS ROBINSON',
+          département: 'HAUTS DE SEINE',
           numéroFiness: rechercheRésultat.numero_finess,
           raisonSociale: rechercheRésultat.raison_sociale,
           type: rechercheRésultat.type,

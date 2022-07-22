@@ -6,11 +6,14 @@ import { RechercheParmiLesEntitésEtÉtablissementsUseCase } from './RecherchePa
 describe('La recherche des entités juridiques et des établissements territoriaux', () => {
   it('retourne les résultats de la recherche', async () => {
     // GIVEN
-    const mockedRechercheParTerme = jest.fn().mockResolvedValueOnce([
-      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité(),
-      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementMédicoSocial(),
-      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementSanitaire(),
-    ])
+    const mockedRechercheParTerme = jest.fn().mockResolvedValueOnce({
+      nombreDeRésultats: 3,
+      résultats: [
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité(),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementMédicoSocial(),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementSanitaire(),
+      ],
+    })
     const rechercheLoader: RechercheLoader = { recherche: mockedRechercheParTerme }
     const termeDeLaRecherche = 'terme de la recherche'
 
