@@ -16,7 +16,7 @@ export const Recherche = () => {
   const [rechercheDemandée, setRechercheDemandée] = useState(false)
   const [résultats, setRésultats] = useState<RechercheViewModel[]>([])
 
-  const rechercher = (event) => {
+  const rechercher = (event: React.MouseEvent) => {
     event.preventDefault()
     setRechercheDemandée(true)
   }
