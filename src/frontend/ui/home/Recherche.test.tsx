@@ -1,9 +1,10 @@
-import { fireEvent, screen, within } from '@testing-library/react'
+import { fireEvent, screen, waitForElementToBeRemoved, within } from '@testing-library/react'
 
+import { RésultatDeRecherche } from '../../../backend/métier/entities/RésultatDeRecherche'
 import { fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent } from '../../testHelper'
 import { Recherche } from './Recherche'
 
-const { wording } = fakeFrontDependencies
+const { paths, wording } = fakeFrontDependencies
 
 describe('La page de recherche', () => {
   it('affiche le formulaire', () => {
@@ -24,32 +25,65 @@ describe('La page de recherche', () => {
     expect(bouton).toBeInTheDocument()
   })
 
-  it('affiche les résultats après avoir cliqué sur le bouton "Rechercher"', () => {
+  it('affiche les résultats après avoir cliqué sur le bouton "Rechercher"', async () => {
     // GIVEN
+    const nombreDeRésultats = 3
+    const résultats = [
+      {
+        commune: 'Saint-Brieuc',
+        département: 'Côtes d’Armor',
+        numéroFiness: '010003598',
+        raisonSociale: 'CENTRE HOSPITALIER DE SAINT BRIEUC',
+        type: 'Médico-social',
+      },
+      {
+        commune: 'Saint-Brieuc',
+        département: 'Côtes d’Armor',
+        numéroFiness: '010005239',
+        raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY',
+        type: 'Sanitaire',
+      },
+      {
+        commune: 'Saint-Brieuc',
+        département: 'Côtes d’Armor',
+        numéroFiness: '010008407',
+        raisonSociale: 'CENTRE HOSPITALIER DE VILLENEUVE DASCQ',
+        type: 'Entité Juridique',
+      },
+    ]
+    // @ts-ignore
+    jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: () => Promise.resolve<RésultatDeRecherche>({
+        nombreDeRésultats,
+        résultats,
+      }),
+    })
     renderFakeComponent(<Recherche />)
-    const nombreResultat = 12
-    const recherche = 'Centre hospitalier de Saint Brieuc'
+    const terme = 'hospitalier'
     const formulaire = screen.getByRole('search')
-    const bouton = within(formulaire).getByRole('button', { name: wording.RECHERCHE_LABEL })
+    const rechercher = within(formulaire).getByRole('button', { name: wording.RECHERCHE_LABEL })
+    const input = within(formulaire).getByPlaceholderText(wording.RECHERCHE_PLACEHOLDER)
+    fireEvent.change(input, { target: { value: terme } })
 
     // WHEN
-    fireEvent.click(bouton)
+    fireEvent.click(rechercher)
 
     // THEN
-    const résultat = screen.getByLabelText(wording.RECHERCHE_RESULTAT)
-    expect(résultat).toBeInTheDocument()
-    const textDuRésultat = within(résultat).getByText(wording.RECHERCHE_NOMBRE_RESULTAT(nombreResultat, recherche), { selector: 'p' })
+    const enAttente = screen.getByText(wording.RECHERCHE_EN_ATTENTE, { selector: 'p' })
+    expect(enAttente).toBeInTheDocument()
+    await waitForElementToBeRemoved(enAttente)
+    const textDuRésultat = screen.getByText(wording.RECHERCHE_NOMBRE_RESULTAT(nombreDeRésultats, terme), { selector: 'p' })
     expect(textDuRésultat).toBeInTheDocument()
     const tuiles = screen.queryAllByRole('listitem')
-    expect(tuiles).toHaveLength(12)
+    expect(tuiles).toHaveLength(3)
     const titreTuile = within(tuiles[0]).getByRole('heading', { level: 2, name: '010003598 - CENTRE HOSPITALIER DE SAINT BRIEUC' })
     expect(titreTuile).toBeInTheDocument()
     const lienMédicoSocial = within(tuiles[0]).getByRole('link', { name: '010003598 - CENTRE HOSPITALIER DE SAINT BRIEUC' })
-    expect(lienMédicoSocial).toHaveAttribute('href', '/etablissement-territorial-medico-social/010003598')
-    const lienSanitaire = within(tuiles[4]).getByRole('link', { name: '010005239 - CENTRE HOSPITALIER DE SAINT BRIEUC' })
-    expect(lienSanitaire).toHaveAttribute('href', '/etablissement-territorial-sanitaire/010005239')
-    const lienEntitéJuridique = within(tuiles[8]).getByRole('link', { name: '010008407 - CENTRE HOSPITALIER DE SAINT BRIEUC' })
-    expect(lienEntitéJuridique).toHaveAttribute('href', '/entite-juridique/010008407')
+    expect(lienMédicoSocial).toHaveAttribute('href', paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL + '/' + résultats[0].numéroFiness)
+    const lienSanitaire = within(tuiles[1]).getByRole('link', { name: '010005239 - CENTRE HOSPITALIER DU HAUT BUGEY' })
+    expect(lienSanitaire).toHaveAttribute('href', paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE + '/' + résultats[1].numéroFiness)
+    const lienEntitéJuridique = within(tuiles[2]).getByRole('link', { name: '010008407 - CENTRE HOSPITALIER DE VILLENEUVE DASCQ' })
+    expect(lienEntitéJuridique).toHaveAttribute('href', paths.ENTITÉ_JURIDIQUE + '/' + résultats[2].numéroFiness)
     const départementCommuneTuile = within(tuiles[0]).getByText('Côtes d’Armor, Saint-Brieuc', { selector: 'p' })
     expect(départementCommuneTuile).toBeInTheDocument()
   })

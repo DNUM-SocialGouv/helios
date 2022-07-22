@@ -5,7 +5,6 @@ import { dependencies } from '../../backend/infrastructure/dependencies'
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   const { terme } = request.body
-  console.log(terme)
   const recherche = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, terme)
   response.status(200).json(recherche)
 }

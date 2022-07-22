@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
 
 import { useDependencies } from '../commun/contexts/useDependencies'
 import '@gouvfr/dsfr/dist/component/button/button.min.css'
@@ -7,48 +6,20 @@ import '@gouvfr/dsfr/dist/component/input/input.min.css'
 import '@gouvfr/dsfr/dist/component/search/search.min.css'
 import '@gouvfr/dsfr/dist/component/tile/tile.min.css'
 import styles from './Recherche.module.css'
-import { RechercheViewModel } from './RechercheViewModel'
-import { Résultat } from '../../../backend/métier/entities/RésultatDeRecherche'
+import { useRecherche } from './useRecherche'
 
 export const Recherche = () => {
-  const { paths, wording } = useDependencies()
-  const [nombreResultat, setNombreResultat] = useState(0)
-  const [recherche, setRecherche] = useState('')
-  const [rechercheLancé, setRechercheLancé] = useState('')
-  const [rechercheDemandée, setRechercheDemandée] = useState(false)
-  const [résultatAffiché, setRésultatAffiché] = useState(false)
-  const [résultats, setRésultats] = useState<RechercheViewModel[]>([])
-  const [enAttente, setEnAttente] = useState(true)
-
-  const rechercher = (event: React.MouseEvent) => {
-    event.preventDefault()
-    setRechercheDemandée(true)
-  }
-
-  const rechercheHandler = (event) => {
-    setRecherche(event.target.value)
-  }
-
-  useEffect(() => {
-    if (rechercheDemandée) {
-      setRésultatAffiché(false)
-      setEnAttente(true)
-      fetch('http://localhost:3000/api/recherche', {
-        body: JSON.stringify({ terme: recherche }),
-        headers: { 'Content-Type': 'application/json' },
-        method: 'POST',
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setRésultats(data.résultats.map((résultat: Résultat) => new RechercheViewModel(résultat, paths)))
-          setNombreResultat(data.nombreDeRésultats)
-          setRechercheLancé(recherche)
-          setEnAttente(false)
-          setRechercheDemandée(false)
-          setRésultatAffiché(true)
-        })
-    }
-  }, [rechercheDemandée])
+  const { wording } = useDependencies()
+  const {
+    estCeEnAttente,
+    estCeQueLesRésultatsSontReçus,
+    lancerLaRecherche,
+    nombreResultat,
+    rechercheOnChange,
+    résultats,
+    terme,
+    termeFixe,
+  } = useRecherche()
 
   return (
     <>
@@ -76,27 +47,32 @@ export const Recherche = () => {
               className="fr-input"
               id="search-787-input"
               name="search-787-input"
-              onChange={rechercheHandler}
+              onChange={rechercheOnChange}
               placeholder={wording.RECHERCHE_PLACEHOLDER}
               type="search"
-              value={recherche}
+              value={terme}
             />
             <button
               className="fr-btn"
-              onClick={rechercher}
+              onClick={lancerLaRecherche}
+              type="submit"
             >
               {wording.RECHERCHE_LABEL}
             </button>
           </form>
         </section>
       </div>
-      {(enAttente && rechercheDemandée) &&
-      <section> En Attende de résultat</section>
+      {estCeEnAttente &&
+        <section>
+          <p className="fr-mt-4w">
+            {wording.RECHERCHE_EN_ATTENTE}
+          </p>
+        </section>
       }
-      {résultatAffiché &&
-        <section aria-label={wording.RECHERCHE_RESULTAT}>
+      {estCeQueLesRésultatsSontReçus &&
+        <section>
           <p className="fr-h6 fr-mt-4w">
-            {wording.RECHERCHE_NOMBRE_RESULTAT(nombreResultat, rechercheLancé)}
+            {wording.RECHERCHE_NOMBRE_RESULTAT(nombreResultat, termeFixe)}
           </p>
           <ul className={'fr-grid-row fr-grid-row--gutters ' + styles['tuiles']}>
             {résultats.map((résultatViewModel, index) => (
