@@ -15,7 +15,7 @@ export class ÉtablissementTerritorialTestBuilder {
     numéroFinessEntitéJuridique: '010008407',
     numéroFinessÉtablissementPrincipal: '010018407',
     numéroFinessÉtablissementTerritorial: '010000040',
-    raisonSociale: 'CH NANTUA',
+    raisonSociale: 'CENTRE HOSPITALIER NANTUA',
     typeÉtablissement: 'S',
     téléphone: '0102030405',
   }

@@ -164,10 +164,14 @@ export class FinessXmlEntitéJuridiqueSourceExterneLoader implements EntitéJuri
       adresseNuméroVoie: valueOrEmpty(entitésJuridiquesFiness.numvoie._text),
       adresseTypeVoie: valueOrEmpty(entitésJuridiquesFiness.typvoie._text),
       adresseVoie: valueOrEmpty(entitésJuridiquesFiness.voie._text),
+      commune: valueOrEmpty(entitésJuridiquesFiness.libcommune._text),
       dateMiseAJourSource,
+      département: valueOrEmpty(entitésJuridiquesFiness.libdepartement._text),
       libelléStatutJuridique: valueOrEmpty(entitésJuridiquesFiness.libstatutjuridique._text),
       numéroFinessEntitéJuridique: valueOrEmpty(entitésJuridiquesFiness.nofiness._text),
-      raisonSociale: valueOrEmpty(entitésJuridiquesFiness.rs._text),
+      raisonSociale: valueOrEmpty(entitésJuridiquesFiness.rslongue._text) ?
+        valueOrEmpty(entitésJuridiquesFiness.rslongue._text) :
+        valueOrEmpty(entitésJuridiquesFiness.rs._text),
       téléphone: valueOrEmpty(entitésJuridiquesFiness.telephone._text),
     }
   }

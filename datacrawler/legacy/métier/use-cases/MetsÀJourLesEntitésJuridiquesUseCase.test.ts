@@ -1,4 +1,4 @@
-import { getFakeDataCrawlerDependencies } from '../../testHelper'
+import { getFakeDataCrawlerDependencies, uneEntitéJuridique, uneSecondeEntitéJuridique } from '../../testHelper'
 import { MetsÀJourLesEntitésJuridiquesUseCase } from './MetsÀJourLesEntitésJuridiquesUseCase'
 
 describe('Mise à jour des entités juridiques', () => {
@@ -31,28 +31,8 @@ describe('Mise à jour des entités juridiques', () => {
       fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader
     )
     const entitésJuridiques = [
-      {
-        adresseAcheminement: '01117 OYONNAX CEDEX',
-        adresseNuméroVoie: '1',
-        adresseTypeVoie: 'RTE',
-        adresseVoie: 'DE VEYZIAT',
-        dateMiseAJourSource: '20220203',
-        libelléStatutJuridique: 'Etablissement Public Intercommunal dHospitalisation',
-        numéroFinessEntitéJuridique: '010018407',
-        raisonSociale: 'CH DU HAUT BUGEY',
-        téléphone: '0102030406',
-      },
-      {
-        adresseAcheminement: '59650 VILLENEUVE D ASCQ',
-        adresseNuméroVoie: '20',
-        adresseTypeVoie: 'AV',
-        adresseVoie: 'DE LA RECONNAISSANCE',
-        dateMiseAJourSource: '20220203',
-        libelléStatutJuridique: 'Société Anonyme (S.A.)',
-        numéroFinessEntitéJuridique: '590001741',
-        raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-        téléphone: '0102030405',
-      },
+      uneEntitéJuridique,
+      uneSecondeEntitéJuridique,
     ]
     jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, 'récupèreLesEntitésJuridiquesOuvertes').mockReturnValue(entitésJuridiques)
     jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader, 'récupèreLeNuméroFinessDesEntitésJuridiques').mockResolvedValue([])
@@ -75,15 +55,8 @@ describe('Mise à jour des entités juridiques', () => {
     const numéroFinessEntitéJuridiqueToujoursOuverte = '010018407'
     const entitésJuridiquesOuvertes = [
       {
-        adresseAcheminement: '01117 OYONNAX CEDEX',
-        adresseNuméroVoie: '1',
-        adresseTypeVoie: 'RTE',
-        adresseVoie: 'DE VEYZIAT',
-        dateMiseAJourSource: '20220203',
-        libelléStatutJuridique: 'Etablissement Public Intercommunal dHospitalisation',
+        ...uneEntitéJuridique,
         numéroFinessEntitéJuridique: numéroFinessEntitéJuridiqueToujoursOuverte,
-        raisonSociale: 'CH DU HAUT BUGEY',
-        téléphone: '0102030406',
       },
     ]
     jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, 'récupèreLesEntitésJuridiquesOuvertes').mockReturnValue(entitésJuridiquesOuvertes)

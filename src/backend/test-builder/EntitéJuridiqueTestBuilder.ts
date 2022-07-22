@@ -9,7 +9,7 @@ export class EntitéJuridiqueTestBuilder {
     dateMiseAJourSource: '2022-05-14',
     libelléStatutJuridique: 'Etablissement Public Intercommunal dHospitalisation',
     numéroFinessEntitéJuridique: '010018407',
-    raisonSociale: 'CH DU HAUT BUGEY',
+    raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY',
     téléphone: '0102030406',
   }
 

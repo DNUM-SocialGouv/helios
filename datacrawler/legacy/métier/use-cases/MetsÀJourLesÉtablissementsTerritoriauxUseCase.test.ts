@@ -1,5 +1,4 @@
-import { getFakeDataCrawlerDependencies } from '../../testHelper'
-import { DomaineÉtablissementTerritorial } from '../entities/DomaineÉtablissementTerritorial'
+import { getFakeDataCrawlerDependencies, unÉtablissementMédicoSocial, unÉtablissementSanitaire } from '../../testHelper'
 import { ÉtablissementTerritorialIdentité } from '../entities/ÉtablissementTerritorialIdentité'
 import { MetsÀJourLesÉtablissementsTerritoriauxUseCase } from './MetsÀJourLesÉtablissementsTerritoriauxUseCase'
 
@@ -34,40 +33,8 @@ describe('Mise à jour des établissements territoriaux', () => {
       fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader
     )
     const établissementsTerritoriaux: ÉtablissementTerritorialIdentité[] = [
-      {
-        adresseAcheminement: '01130 NANTUA',
-        adresseNuméroVoie: '50',
-        adresseTypeVoie: 'R',
-        adresseVoie: 'PAUL PAINLEVE',
-        catégorieÉtablissement: '355',
-        courriel: 'a@example.com',
-        dateMiseAJourSource: '20220203',
-        domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
-        libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
-        numéroFinessEntitéJuridique: '010018407',
-        numéroFinessÉtablissementPrincipal: '010000057',
-        numéroFinessÉtablissementTerritorial: '010000040',
-        raisonSociale: 'CH NANTUA',
-        typeÉtablissement: 'S',
-        téléphone: '0102030405',
-      },
-      {
-        adresseAcheminement: '59650 VILLENEUVE D ASCQ',
-        adresseNuméroVoie: '20',
-        adresseTypeVoie: 'AV',
-        adresseVoie: 'DE LA RECONNAISSANCE',
-        catégorieÉtablissement: '365',
-        courriel: 'b@example.com',
-        dateMiseAJourSource: '20220203',
-        domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
-        libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
-        numéroFinessEntitéJuridique: '590000741',
-        numéroFinessÉtablissementPrincipal: '',
-        numéroFinessÉtablissementTerritorial: '590782553',
-        raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-        typeÉtablissement: 'P',
-        téléphone: '0102030406',
-      },
+      unÉtablissementMédicoSocial,
+      unÉtablissementSanitaire,
     ]
     jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts').mockReturnValue(établissementsTerritoriaux)
     jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader, 'récupèreLeNuméroFinessDesÉtablissementsTerritoriaux').mockResolvedValue([])
@@ -89,23 +56,10 @@ describe('Mise à jour des établissements territoriaux', () => {
     )
 
     const numéroFinessÉtablissementTerritorialToujoursOuvert = '010018407'
-    const établissementTerritorialOuvert = [
+    const établissementTerritorialOuvert: ÉtablissementTerritorialIdentité[] = [
       {
-        adresseAcheminement: '01130 NANTUA',
-        adresseNuméroVoie: '50',
-        adresseTypeVoie: 'R',
-        adresseVoie: 'PAUL PAINLEVE',
-        catégorieÉtablissement: '355',
-        courriel: 'a@example.com',
-        dateMiseAJourSource: '20220203',
-        domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
-        libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
-        numéroFinessEntitéJuridique: '010018407',
-        numéroFinessÉtablissementPrincipal: '010000057',
+        ...unÉtablissementMédicoSocial,
         numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorialToujoursOuvert,
-        raisonSociale: 'CH NANTUA',
-        typeÉtablissement: 'S',
-        téléphone: '0102030405',
       },
     ]
     jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts').mockReturnValue(établissementTerritorialOuvert)

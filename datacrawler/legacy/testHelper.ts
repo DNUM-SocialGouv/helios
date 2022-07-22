@@ -1,5 +1,8 @@
 import { Dependencies } from './infrastructure/dependencies'
 import { typeOrmOrm } from './infrastructure/gateways/orm/typeOrmOrm'
+import { DomaineÉtablissementTerritorial } from './métier/entities/DomaineÉtablissementTerritorial'
+import { EntitéJuridique } from './métier/entities/EntitéJuridique'
+import { ÉtablissementTerritorialIdentité } from './métier/entities/ÉtablissementTerritorialIdentité'
 import { EnvironmentVariables } from './métier/gateways/EnvironmentVariables'
 import { Logger } from './métier/gateways/Logger'
 
@@ -40,4 +43,72 @@ export const fakeLogger: Logger = {
   debug: jest.fn(),
   error: jest.fn(),
   info: jest.fn(),
+}
+
+export const uneEntitéJuridique: EntitéJuridique = {
+  adresseAcheminement: '01117 OYONNAX CEDEX',
+  adresseNuméroVoie: '1',
+  adresseTypeVoie: 'RTE',
+  adresseVoie: 'DE VEYZIAT',
+  commune: 'OYONNAX',
+  dateMiseAJourSource: '2022-05-14',
+  département: 'AIN',
+  libelléStatutJuridique: 'Etablissement Public Intercommunal dHospitalisation',
+  numéroFinessEntitéJuridique: '010018407',
+  raisonSociale: 'CH DU HAUT BUGEY',
+  téléphone: '0102030406',
+}
+
+export const uneSecondeEntitéJuridique: EntitéJuridique = {
+  adresseAcheminement: '59650 VILLENEUVE D ASCQ',
+  adresseNuméroVoie: '20',
+  adresseTypeVoie: 'AV',
+  adresseVoie: 'DE LA RECONNAISSANCE',
+  commune: 'VILLENEUVE D ASCQ',
+  dateMiseAJourSource: '20220203',
+  département: 'NORD',
+  libelléStatutJuridique: 'Société Anonyme (S.A.)',
+  numéroFinessEntitéJuridique: '590001741',
+  raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+  téléphone: '0102030405',
+}
+
+export const unÉtablissementMédicoSocial: ÉtablissementTerritorialIdentité = {
+  adresseAcheminement: '01130 NANTUA',
+  adresseNuméroVoie: '50',
+  adresseTypeVoie: 'R',
+  adresseVoie: 'PAUL PAINLEVE',
+  catégorieÉtablissement: '355',
+  commune: 'NANTUA',
+  courriel: 'a@example.com',
+  dateMiseAJourSource: '20220203',
+  domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
+  département: 'AIN',
+  libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
+  numéroFinessEntitéJuridique: '010018407',
+  numéroFinessÉtablissementPrincipal: '010000057',
+  numéroFinessÉtablissementTerritorial: '010000040',
+  raisonSociale: 'CH NANTUA',
+  typeÉtablissement: 'S',
+  téléphone: '0102030405',
+}
+
+export const unÉtablissementSanitaire: ÉtablissementTerritorialIdentité = {
+  adresseAcheminement: '59650 VILLENEUVE D ASCQ',
+  adresseNuméroVoie: '20',
+  adresseTypeVoie: 'AV',
+  adresseVoie: 'DE LA RECONNAISSANCE',
+  catégorieÉtablissement: '365',
+  commune: 'VILLENEUVE D ASCQ',
+  courriel: 'b@example.com',
+  dateMiseAJourSource: '20220203',
+  domaine: DomaineÉtablissementTerritorial.SANITAIRE,
+  département: 'NORD',
+  libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
+  numéroFinessEntitéJuridique: '590000741',
+  numéroFinessÉtablissementPrincipal: '',
+  numéroFinessÉtablissementTerritorial: '590782553',
+  raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+  typeÉtablissement: 'P',
+  téléphone: '0102030406',
 }
