@@ -15,11 +15,11 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
         numero_finess,
         raison_sociale,
         type,
-        ts_rank_cd(termes, plainto_tsquery('unaccent_helios', '${terme}')) AS rank,
+        ts_rank_cd(termes, plainto_tsquery('unaccent_helios', '${terme.replaceAll("'", "''")}')) AS rank,
         commune,
         departement
       FROM recherche
-      WHERE termes @@ plainto_tsquery('unaccent_helios', '${terme}')
+      WHERE termes @@ plainto_tsquery('unaccent_helios', '${terme.replaceAll("'", "''")}}')
       ORDER BY rank DESC
       LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX};`
     )

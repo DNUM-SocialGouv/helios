@@ -200,7 +200,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('l arbre d or')
+      const recherche = await typeOrmRechercheLoader.recherche("l'arbre d or")
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
