@@ -15,6 +15,7 @@ const environmentVariables: EnvironmentVariables = {
   SCALINGO_TOKEN: 'fake_token',
   SENTRY_AUTH_TOKEN: '1234567890',
   SENTRY_DSN: 'https://fake-sentry.io/11',
+  TIME_OF_SERVER_SHUTDOWN_AT_NIGHT: '32400',
 }
 
 export function getOrm(): Promise<DataSource> {

@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { ReactElement } from 'react'
 
 import { useDependencies } from '../commun/contexts/useDependencies'
@@ -209,6 +210,16 @@ export const PageDeRecette = () => {
               />)
           }
         </ul>
+      </section>
+      <section>
+        <Link
+          href="/time"
+          passHref
+        >
+          <a>
+            time
+          </a>
+        </Link>
       </section>
     </>
   )

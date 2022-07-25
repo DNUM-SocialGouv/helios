@@ -1,5 +1,3 @@
-import { GetServerSideProps, GetServerSidePropsContext } from 'next'
-
 import { récupèreLEntitéJuridiqueEndpoint } from '../../backend/infrastructure/controllers/récupèreLEntitéJuridiqueEndpoint'
 import { dependencies } from '../../backend/infrastructure/dependencies'
 import { EntitéJuridique } from '../../backend/métier/entities/entité-juridique/EntitéJuridique'
@@ -23,9 +21,17 @@ export default function Router(
   />
 }
 
-export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+export function getStaticPaths() {
+  return {
+    fallback: 'blocking',
+    paths: [],
+  }
+}
+
+export async function getStaticProps({ params }: { params: { numéroFINESS: string }}) {
   try {
-    const entitéJuridiqueEndpoint = await récupèreLEntitéJuridiqueEndpoint(dependencies, context.query['numéroFINESS'] as string)
+    const { environmentVariables } = dependencies
+    const entitéJuridiqueEndpoint = await récupèreLEntitéJuridiqueEndpoint(dependencies, params.numéroFINESS)
 
     if (entitéJuridiqueEndpoint === undefined) {
       return { notFound: true }
@@ -36,6 +42,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         entitéJuridique: entitéJuridiqueEndpoint.entitéJuridique,
         établissementsTerritoriauxRattachés: entitéJuridiqueEndpoint.établissementsTerritoriauxRattachés,
       },
+      revalidate: Number(environmentVariables.TIME_OF_SERVER_SHUTDOWN_AT_NIGHT),
     }
   } catch (error) {
     return { notFound: true }
