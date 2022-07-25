@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, useEffect, useState } from 'react'
+import { ChangeEvent, MouseEvent, useState } from 'react'
 
 import { Résultat } from '../../../backend/métier/entities/RésultatDeRecherche'
 import { useDependencies } from '../commun/contexts/useDependencies'
@@ -32,6 +32,7 @@ export function useRecherche() {
       estCeEnAttente: true,
       estCeQueLesRésultatsSontReçus: false,
     })
+    rechercher()
   }
 
   const rechercheOnChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -59,12 +60,6 @@ export function useRecherche() {
         })
       })
   }
-
-  useEffect(() => {
-    if (state.estCeEnAttente) {
-      rechercher()
-    }
-  }, [state.estCeEnAttente])
 
   return {
     estCeEnAttente: state.estCeEnAttente,

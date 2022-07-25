@@ -2,7 +2,7 @@ import { fireEvent, screen, waitForElementToBeRemoved, within } from '@testing-l
 
 import { RésultatDeRecherche } from '../../../backend/métier/entities/RésultatDeRecherche'
 import { fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent } from '../../testHelper'
-import { Recherche } from './Recherche'
+import { Recherche } from './PageRecherche'
 
 const { paths, wording } = fakeFrontDependencies
 
