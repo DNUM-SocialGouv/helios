@@ -25,6 +25,7 @@ export const PageÉtablissementTerritorialSanitaire = ({ établissementTerritori
       path: '',
     },
   ])
+
   return (
     <>
       <Head>
