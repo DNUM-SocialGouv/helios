@@ -10,26 +10,21 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
   constructor(private readonly orm: Promise<DataSource>) {}
 
   async recherche(terme: string): Promise<RésultatDeRecherche> {
-    const termeSansCaractèresSpéciaux = this.enlèveLesCaractèresSpéciauxDesTermes(terme)
     const résultats = await (await this.orm).getRepository(RechercheModel).query(
       `SELECT
         numero_finess,
         raison_sociale,
         type,
-        ts_rank_cd(termes, plainto_tsquery('unaccent_helios', '${termeSansCaractèresSpéciaux}')) AS rank,
+        ts_rank_cd(termes, plainto_tsquery('unaccent_helios', $1)) AS rank,
         commune,
         departement
       FROM recherche
-      WHERE termes @@ plainto_tsquery('unaccent_helios', '${termeSansCaractèresSpéciaux}}')
+      WHERE termes @@ plainto_tsquery('unaccent_helios', $1)
       ORDER BY rank DESC
-      LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX};`
+      LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX};`, [terme]
     )
 
     return this.construisLesRésultatsDeLaRecherche(résultats)
-  }
-
-  private enlèveLesCaractèresSpéciauxDesTermes(terme: string) {
-    return terme.replace(/[^0-9a-z]/gi, ' ')
   }
 
   private construisLesRésultatsDeLaRecherche(résultats: any): RésultatDeRecherche {

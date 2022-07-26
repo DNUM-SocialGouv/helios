@@ -211,6 +211,20 @@ describe('La recherche d’entités et d’établissements', () => {
         }),
       ])
     })
+
+    it('résiste à des tentatives d’injection SQL', async () => {
+      // GIVEN
+      const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
+
+      // WHEN
+      const recherche = await typeOrmRechercheLoader.recherche("''));DROP ALL TABLE;--")
+
+      // THEN
+      expect(recherche).toStrictEqual<RésultatDeRecherche>({
+        nombreDeRésultats: 0,
+        résultats: [],
+      })
+    })
   })
 
   it('retourne un maximum de 12 résultats', async () => {
