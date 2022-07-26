@@ -72,7 +72,7 @@ describe('La page de recherche', () => {
     const enAttente = screen.getByText(wording.RECHERCHE_EN_ATTENTE, { selector: 'p' })
     expect(enAttente).toBeInTheDocument()
     await waitForElementToBeRemoved(enAttente)
-    const textDuRésultat = screen.getByText(wording.RECHERCHE_NOMBRE_RESULTAT(nombreDeRésultats, terme), { selector: 'p' })
+    const textDuRésultat = screen.getByText(wording.RECHERCHE_NOMBRE_RÉSULTAT(nombreDeRésultats, terme), { selector: 'p' })
     expect(textDuRésultat).toBeInTheDocument()
     const tuiles = screen.queryAllByRole('listitem')
     expect(tuiles).toHaveLength(3)
@@ -86,5 +86,32 @@ describe('La page de recherche', () => {
     expect(lienEntitéJuridique).toHaveAttribute('href', paths.ENTITÉ_JURIDIQUE + '/' + résultats[2].numéroFiness)
     const départementCommuneTuile = within(tuiles[0]).getByText('Côtes d’Armor, Saint-Brieuc', { selector: 'p' })
     expect(départementCommuneTuile).toBeInTheDocument()
+  })
+
+  it('affiche une phrase explicite si la recherche aboutit à aucun résultat', async () => {
+    // GIVEN
+    // @ts-ignore
+    jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: () => Promise.resolve<RésultatDeRecherche>({
+        nombreDeRésultats: 0,
+        résultats: [],
+      }),
+    })
+    renderFakeComponent(<Recherche />)
+    const terme = 'hospitalier'
+    const formulaire = screen.getByRole('search')
+    const rechercher = within(formulaire).getByRole('button', { name: wording.RECHERCHE_LABEL })
+    const input = within(formulaire).getByPlaceholderText(wording.RECHERCHE_PLACEHOLDER)
+    fireEvent.change(input, { target: { value: terme } })
+
+    // WHEN
+    fireEvent.click(rechercher)
+
+    // THEN
+    const enAttente = screen.getByText(wording.RECHERCHE_EN_ATTENTE, { selector: 'p' })
+    expect(enAttente).toBeInTheDocument()
+    await waitForElementToBeRemoved(enAttente)
+    const textDuRésultat = screen.getByText(wording.AUCUN_RÉSULTAT(terme), { selector: 'p' })
+    expect(textDuRésultat).toBeInTheDocument()
   })
 })
