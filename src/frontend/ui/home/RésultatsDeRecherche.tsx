@@ -6,13 +6,13 @@ import styles from './Recherche.module.css'
 import { RechercheViewModel } from './RechercheViewModel'
 
 type RésultatsDeRechercheProps = Readonly<{
-  nombreResultat: number
+  nombreRésultats: number
   résultats: RechercheViewModel[]
   termeFixe: string
 }>
 
 export const RésultatsDeRecherche = ({
-  nombreResultat,
+  nombreRésultats,
   résultats,
   termeFixe,
 }: RésultatsDeRechercheProps) => {
@@ -21,7 +21,11 @@ export const RésultatsDeRecherche = ({
   return (
     <section>
       <p className="fr-h6 fr-mt-4w">
-        {wording.RECHERCHE_NOMBRE_RESULTAT(nombreResultat, termeFixe)}
+        {
+          nombreRésultats === 0 &&
+            wording.aucunRésultat(termeFixe) ||
+            wording.rechercheNombreRésultats(nombreRésultats, termeFixe)
+        }
       </p>
       <ul className={'fr-grid-row fr-grid-row--gutters ' + styles['tuiles']}>
         {résultats.map((résultatViewModel, index) => (

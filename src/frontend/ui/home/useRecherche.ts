@@ -7,7 +7,7 @@ import { RechercheViewModel } from './RechercheViewModel'
 type RechercheState = Readonly<{
   estCeEnAttente: boolean
   estCeQueLesRésultatsSontReçus: boolean
-  nombreResultat: number
+  nombreRésultats: number
   résultats: RechercheViewModel[]
   terme: string
   termeFixe: string
@@ -19,7 +19,7 @@ export function useRecherche() {
   const [state, setState] = useState<RechercheState>({
     estCeEnAttente: false,
     estCeQueLesRésultatsSontReçus: false,
-    nombreResultat: 0,
+    nombreRésultats: 0,
     résultats: [],
     terme: '',
     termeFixe: '',
@@ -54,7 +54,7 @@ export function useRecherche() {
           ...state,
           estCeEnAttente: false,
           estCeQueLesRésultatsSontReçus: true,
-          nombreResultat: data.nombreDeRésultats,
+          nombreRésultats: data.nombreDeRésultats,
           résultats: data.résultats.map((résultat: Résultat) => new RechercheViewModel(résultat, paths)),
           termeFixe: state.terme,
         })
@@ -65,7 +65,7 @@ export function useRecherche() {
     estCeEnAttente: state.estCeEnAttente,
     estCeQueLesRésultatsSontReçus: state.estCeQueLesRésultatsSontReçus,
     lancerLaRecherche,
-    nombreResultat: state.nombreResultat,
+    nombreRésultats: state.nombreRésultats,
     rechercheOnChange,
     résultats: state.résultats,
     terme: state.terme,
