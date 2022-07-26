@@ -50,7 +50,7 @@ export class WordingFr implements Wording {
     `${nombre} résultat(s) corresponde(nt) à votre recherche “${terme}”.`
   readonly RECHERCHE_EN_ATTENTE: string = 'En cours de recherche...'
   readonly aucunRésultat: (terme: string) => string = (terme: string) =>
-    `Aucun résultat ne correspond à votre recherche «${terme}»`
+    `Aucun résultat ne correspond à votre recherche « ${terme} ».`
 
   // Fiches
   readonly MISE_À_JOUR: string = 'Mise à jour'
