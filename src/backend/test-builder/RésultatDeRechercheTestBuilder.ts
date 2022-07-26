@@ -2,22 +2,22 @@ import { Résultat } from '../métier/entities/RésultatDeRecherche'
 
 export class RésultatDeRechercheTestBuilder {
   private static résultatDeRechercheEntité: Résultat = {
-    commune: '',
-    département: '',
+    commune: 'OYONNAX',
+    département: 'AIN',
     numéroFiness: '010018407',
-    raisonSociale: 'CH DU HAUT BUGEY',
+    raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY',
     type: 'Entité juridique',
   }
   private static résultatDeRechercheÉtablissementMédicoSocial: Résultat = {
-    commune: '',
-    département: '',
+    commune: 'NANTUA',
+    département: 'AIN',
     numéroFiness: '010000040',
-    raisonSociale: 'CH NANTUA',
+    raisonSociale: 'CENTRE HOSPITALIER NANTUA',
     type: 'Médico-social',
   }
   private static résultatDeRechercheÉtablissementSanitaire: Résultat = {
-    commune: '',
-    département: '',
+    commune: 'VILLENEUVE D ASCQ',
+    département: 'NORD',
     numéroFiness: '590782553',
     raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
     type: 'Sanitaire',

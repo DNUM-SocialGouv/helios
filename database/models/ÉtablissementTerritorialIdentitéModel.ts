@@ -20,8 +20,14 @@ export class ÉtablissementTerritorialIdentitéModel {
   @Column({ length: 3, name: 'cat_etablissement' })
   public catégorieÉtablissement!: string
 
+  @Column({ length: 255, name: 'commune' })
+  public commune!: string
+
   @Column({ length: 255, name: 'courriel' })
   public courriel!: string
+
+  @Column({ length: 255, name: 'departement' })
+  public département!: string
 
   @Column({
     enum: DomaineÉtablissementTerritorial,

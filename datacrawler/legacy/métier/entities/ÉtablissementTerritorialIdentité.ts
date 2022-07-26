@@ -6,7 +6,9 @@ export type ÉtablissementTerritorialIdentité = Readonly<{
   adresseTypeVoie: string
   adresseVoie: string
   catégorieÉtablissement: string
+  commune: string
   courriel: string
+  département: string
   dateMiseAJourSource: string
   domaine: DomaineÉtablissementTerritorial
   libelléCatégorieÉtablissement: string

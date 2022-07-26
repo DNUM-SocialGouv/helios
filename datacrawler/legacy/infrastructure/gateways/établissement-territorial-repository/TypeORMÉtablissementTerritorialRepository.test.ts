@@ -6,8 +6,7 @@ import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database
 import { EntitéJuridiqueModelTestBuilder } from '../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder'
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from '../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder'
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
-import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
-import { fakeLogger, getOrm } from '../../../testHelper'
+import { fakeLogger, getOrm, unÉtablissementMédicoSocial, unÉtablissementSanitaire } from '../../../testHelper'
 import { TypeOrmÉtablissementTerritorialRepository } from './TypeOrmÉtablissementTerritorialRepository'
 
 describe('Sauvegarde de l’établissement territorial', () => {
@@ -39,6 +38,8 @@ describe('Sauvegarde de l’établissement territorial', () => {
     entitéJuridique1.adresseNuméroVoie = 'fake'
     entitéJuridique1.adresseTypeVoie = 'fake'
     entitéJuridique1.adresseVoie = 'fake'
+    entitéJuridique1.commune = 'fake'
+    entitéJuridique1.département = 'fake'
     entitéJuridique1.libelléStatutJuridique = 'fake'
     entitéJuridique1.numéroFinessEntitéJuridique = '010018407'
     entitéJuridique1.raisonSociale = 'fake'
@@ -49,6 +50,8 @@ describe('Sauvegarde de l’établissement territorial', () => {
     entitéJuridique2.adresseNuméroVoie = 'fake'
     entitéJuridique2.adresseTypeVoie = 'fake'
     entitéJuridique2.adresseVoie = 'fake'
+    entitéJuridique2.commune = 'fake'
+    entitéJuridique2.département = 'fake'
     entitéJuridique2.libelléStatutJuridique = 'fake'
     entitéJuridique2.numéroFinessEntitéJuridique = '590000741'
     entitéJuridique2.raisonSociale = 'fake'
@@ -61,7 +64,9 @@ describe('Sauvegarde de l’établissement territorial', () => {
     établissementTerritorialIdentité1.adresseTypeVoie = 'fake',
     établissementTerritorialIdentité1.adresseVoie = 'fake',
     établissementTerritorialIdentité1.catégorieÉtablissement = 'fak',
+    établissementTerritorialIdentité1.commune = 'fake',
     établissementTerritorialIdentité1.courriel = 'fake',
+    établissementTerritorialIdentité1.département = 'fake',
     établissementTerritorialIdentité1.libelléCatégorieÉtablissement = 'fake',
     établissementTerritorialIdentité1.numéroFinessEntitéJuridique = entitéJuridique1.numéroFinessEntitéJuridique,
     établissementTerritorialIdentité1.numéroFinessÉtablissementPrincipal = 'fake',
@@ -78,41 +83,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
       },
     ])
     const typeOrmÉtablissementTerritorialRepository = new TypeOrmÉtablissementTerritorialRepository(orm, fakeLogger)
-    const établissementTerritorial1: ÉtablissementTerritorialIdentité = {
-      adresseAcheminement: '01130 NANTUA',
-      adresseNuméroVoie: '50',
-      adresseTypeVoie: 'R',
-      adresseVoie: 'PAUL PAINLEVE',
-      catégorieÉtablissement: '355',
-      courriel: 'a@example.com',
-      dateMiseAJourSource: '20220203',
-      domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
-      libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
-      numéroFinessEntitéJuridique: '010018407',
-      numéroFinessÉtablissementPrincipal: '010000057',
-      numéroFinessÉtablissementTerritorial: '010000040',
-      raisonSociale: 'CH NANTUA',
-      typeÉtablissement: 'S',
-      téléphone: '0102030405',
-    }
-    const établissementTerritorial2: ÉtablissementTerritorialIdentité = {
-      adresseAcheminement: '59650 VILLENEUVE D ASCQ',
-      adresseNuméroVoie: '20',
-      adresseTypeVoie: 'AV',
-      adresseVoie: 'DE LA RECONNAISSANCE',
-      catégorieÉtablissement: '365',
-      courriel: 'b@example.com',
-      dateMiseAJourSource: '20220203',
-      domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
-      libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
-      numéroFinessEntitéJuridique: '590000741',
-      numéroFinessÉtablissementPrincipal: '',
-      numéroFinessÉtablissementTerritorial: '590782553',
-      raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-      typeÉtablissement: 'P',
-      téléphone: '0102030406',
-    }
-    const établissementsTerritoriaux = [établissementTerritorial1, établissementTerritorial2]
+    const établissementsTerritoriaux = [unÉtablissementMédicoSocial, unÉtablissementSanitaire]
 
     // WHEN
     await typeOrmÉtablissementTerritorialRepository.sauvegarde(établissementsTerritoriaux)
@@ -127,8 +98,10 @@ describe('Sauvegarde de l’établissement territorial', () => {
     établissementTerritorial1MisAJourAttendu.adresseTypeVoie = 'R'
     établissementTerritorial1MisAJourAttendu.adresseVoie = 'PAUL PAINLEVE'
     établissementTerritorial1MisAJourAttendu.catégorieÉtablissement = '355'
+    établissementTerritorial1MisAJourAttendu.commune = 'NANTUA'
     établissementTerritorial1MisAJourAttendu.courriel = 'a@example.com'
     établissementTerritorial1MisAJourAttendu.domaine = DomaineÉtablissementTerritorial.MÉDICO_SOCIAL
+    établissementTerritorial1MisAJourAttendu.département = 'AIN'
     établissementTerritorial1MisAJourAttendu.libelléCatégorieÉtablissement = 'Centre Hospitalier (C.H.)'
     établissementTerritorial1MisAJourAttendu.numéroFinessEntitéJuridique = '010018407'
     établissementTerritorial1MisAJourAttendu.numéroFinessÉtablissementPrincipal = '010000057'
@@ -142,8 +115,10 @@ describe('Sauvegarde de l’établissement territorial', () => {
     établissementTerritorial2MisAJourAttendu.adresseTypeVoie = 'AV'
     établissementTerritorial2MisAJourAttendu.adresseVoie = 'DE LA RECONNAISSANCE'
     établissementTerritorial2MisAJourAttendu.catégorieÉtablissement = '365'
+    établissementTerritorial2MisAJourAttendu.commune = 'VILLENEUVE D ASCQ'
     établissementTerritorial2MisAJourAttendu.courriel = 'b@example.com'
-    établissementTerritorial2MisAJourAttendu.domaine = DomaineÉtablissementTerritorial.MÉDICO_SOCIAL
+    établissementTerritorial2MisAJourAttendu.domaine = DomaineÉtablissementTerritorial.SANITAIRE
+    établissementTerritorial2MisAJourAttendu.département = 'NORD'
     établissementTerritorial2MisAJourAttendu.libelléCatégorieÉtablissement = 'Centre Hospitalier (C.H.)'
     établissementTerritorial2MisAJourAttendu.numéroFinessEntitéJuridique = '590000741'
     établissementTerritorial2MisAJourAttendu.numéroFinessÉtablissementPrincipal = ''

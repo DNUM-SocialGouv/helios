@@ -303,14 +303,18 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
       adresseTypeVoie: valueOrEmpty(établissementTerritorialIdentitéFiness.typvoie._text),
       adresseVoie: valueOrEmpty(établissementTerritorialIdentitéFiness.voie._text),
       catégorieÉtablissement: valueOrEmpty(établissementTerritorialIdentitéFiness.categetab._text),
+      commune: valueOrEmpty(établissementTerritorialIdentitéFiness.libcommune._text),
       courriel: valueOrEmpty(établissementTerritorialIdentitéFiness.courriel._text),
       dateMiseAJourSource,
       domaine: this.construisLeDomaine(établissementTerritorialIdentitéFiness, catégories),
+      département: valueOrEmpty(établissementTerritorialIdentitéFiness.libdepartement._text),
       libelléCatégorieÉtablissement: valueOrEmpty(établissementTerritorialIdentitéFiness.libcategetab._text),
       numéroFinessEntitéJuridique: valueOrEmpty(établissementTerritorialIdentitéFiness.nofinessej._text),
       numéroFinessÉtablissementPrincipal: valueOrEmpty(établissementTerritorialIdentitéFiness.nofinessppal._text),
       numéroFinessÉtablissementTerritorial: valueOrEmpty(établissementTerritorialIdentitéFiness.nofinesset._text),
-      raisonSociale: valueOrEmpty(établissementTerritorialIdentitéFiness.rs._text),
+      raisonSociale: valueOrEmpty(établissementTerritorialIdentitéFiness.rslongue._text) ?
+        valueOrEmpty(établissementTerritorialIdentitéFiness.rslongue._text) :
+        valueOrEmpty(établissementTerritorialIdentitéFiness.rs._text),
       typeÉtablissement: valueOrEmpty(établissementTerritorialIdentitéFiness.typeet._text),
       téléphone: valueOrEmpty(établissementTerritorialIdentitéFiness.telephone._text),
     }
