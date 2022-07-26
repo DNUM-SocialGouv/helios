@@ -1,5 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { ChangeEvent, useState } from 'react'
 import '@gouvfr/dsfr/dist/component/header/header.min.css'
 import '@gouvfr/dsfr/dist/component/logo/logo.min.css'
 import '@gouvfr/dsfr/dist/component/link/link.min.css'
@@ -10,6 +12,12 @@ import { useDependencies } from '../contexts/useDependencies'
 
 export const Header = () => {
   const { wording } = useDependencies()
+  const router = useRouter()
+  const [terme, setTerme] = useState<string>('')
+
+  const rechercheOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setTerme(event.target.value)
+  }
 
   return (
     <>
@@ -25,6 +33,17 @@ export const Header = () => {
                     </p>
                   </div>
                   <div className="fr-header__navbar">
+                    {router.pathname !== '/recherche' &&
+                      <button
+                        aria-controls="modal-541"
+                        className="fr-btn--search fr-btn"
+                        data-fr-opened="false"
+                        id="button-542"
+                        title={wording.RECHERCHE_LABEL}
+                      >
+                        {wording.RECHERCHE_LABEL}
+                      </button>
+                    }
                     <button
                       aria-controls="modal-833"
                       aria-haspopup="menu"
@@ -68,6 +87,55 @@ export const Header = () => {
                     </li>
                   </ul>
                 </div>
+                {router.pathname !== '/recherche' &&
+                  <div
+                    className="fr-header__search fr-modal"
+                    id="modal-541"
+                  >
+                    <div className="fr-container fr-container-lg--fluid">
+                      <button
+                        aria-controls="modal-541"
+                        className="fr-btn--close fr-btn"
+                        title="Fermer"
+                      >
+                        {wording.FERMER}
+                      </button>
+                      <form
+                        action="/recherche"
+                        className="fr-search-bar"
+                        id="search-540"
+                        role="search"
+                      >
+                        <label
+                          className="fr-label"
+                          htmlFor="search-540-input"
+                        >
+                          {wording.RECHERCHE_LABEL}
+                        </label>
+                        <input
+                          className="fr-input"
+                          id="search-540-input"
+                          name="terme"
+                          onChange={rechercheOnChange}
+                          placeholder={wording.RECHERCHE_LABEL}
+                          type="search"
+                          value={terme}
+                        />
+                        <button
+                          className="fr-btn"
+                          onClick={(event) => {
+                            event.preventDefault()
+                            router.push('/recherche?terme=' + terme, '/recherche')
+                          }}
+                          title="Rechercher"
+                          type="submit"
+                        >
+                          {wording.RECHERCHE_LABEL}
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                }
               </div>
             </div>
           </div>

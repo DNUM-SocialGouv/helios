@@ -1,9 +1,6 @@
 import { ChangeEventHandler, MouseEventHandler } from 'react'
 
 import { useDependencies } from '../commun/contexts/useDependencies'
-import '@gouvfr/dsfr/dist/component/button/button.min.css'
-import '@gouvfr/dsfr/dist/component/input/input.min.css'
-import '@gouvfr/dsfr/dist/component/search/search.min.css'
 import styles from './Recherche.module.css'
 
 type FormulaireDeRechercheProps = Readonly<{

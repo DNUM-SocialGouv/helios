@@ -1,8 +1,10 @@
-import { screen } from '@testing-library/react'
+import { fireEvent, screen, within } from '@testing-library/react'
+import mockRouter from 'next-router-mock'
 
 import { fakeFrontDependencies, renderFakeComponent } from '../../../testHelper'
 import { Header } from './Header'
 
+jest.mock('next/router', () => require('next-router-mock'))
 const { paths, wording } = fakeFrontDependencies
 
 describe('En-tête de page', () => {
@@ -15,15 +17,18 @@ describe('En-tête de page', () => {
     expect(accueil).toHaveAttribute('href', paths.ACCUEIL)
   })
 
-  it('affiche un menu en mobile pour afficher la déconnexion', () => {
+  it('affiche un menu pour afficher la déconnexion et un pour le moteur de recherche en mobile', () => {
     // WHEN
     renderFakeComponent(<Header />)
 
     // THEN
-    const menu = screen.getByRole('button', { name: wording.MENU })
-    expect(menu).toHaveAttribute('title', wording.MENU)
-    const fermer = screen.getByRole('button', { name: wording.FERMER })
-    expect(fermer).toBeInTheDocument()
+    const menuDeDéconnexion = screen.getByRole('button', { name: wording.MENU })
+    expect(menuDeDéconnexion).toHaveAttribute('title', wording.MENU)
+    const menuDeRecherche = screen.getAllByRole('button', { name: wording.RECHERCHE_LABEL })
+    expect(menuDeRecherche[0]).toHaveAttribute('title', wording.RECHERCHE_LABEL)
+    const fermer = screen.getAllByRole('button', { name: wording.FERMER })
+    expect(fermer[1]).toBeInTheDocument()
+    expect(fermer[1]).toBeInTheDocument()
   })
 
   it('affiche un lien pour se déconnecter', () => {
@@ -33,5 +38,52 @@ describe('En-tête de page', () => {
     // THEN
     const déconnexion = screen.getByRole('link', { name: wording.DÉCONNEXION })
     expect(déconnexion).toBeInTheDocument()
+  })
+
+  it('affiche le formulaire de recherche', () => {
+    // WHEN
+    renderFakeComponent(<Header />)
+
+    // THEN
+    const formulaire = screen.getByRole('search')
+    const label = within(formulaire).getByLabelText(wording.RECHERCHE_LABEL)
+    expect(label).toBeInTheDocument()
+    const input = within(formulaire).getByPlaceholderText(wording.RECHERCHE_LABEL)
+    expect(input).toBeInTheDocument()
+    const rechercher = within(formulaire).getByRole('button', { name: wording.RECHERCHE_LABEL })
+    expect(rechercher).toBeInTheDocument()
+  })
+
+  it('redirection vers la recherche quand on fait une recherche', () => {
+    // GIVEN
+    const router = mockRouter
+    const terme = 'hospitalier'
+    renderFakeComponent(<Header />)
+    const formulaire = screen.getByRole('search')
+    const rechercher = within(formulaire).getByRole('button', { name: wording.RECHERCHE_LABEL })
+    const input = within(formulaire).getByPlaceholderText(wording.RECHERCHE_LABEL)
+    fireEvent.change(input, { target: { value: terme } })
+
+    // WHEN
+    fireEvent.click(rechercher)
+
+    // THEN
+    expect(router.pathname).toBe('/recherche')
+    expect(router.asPath).toBe('/recherche?terme=' + terme)
+  })
+
+  it('n’affiche pas le formulaire de recherche quand on est sur l’accueil', () => {
+    // GIVEN
+    const router = mockRouter
+    router.push('/recherche')
+
+    // WHEN
+    renderFakeComponent(<Header />)
+
+    // THEN
+    const formulaire = screen.queryByRole('search')
+    expect(formulaire).not.toBeInTheDocument()
+    const menuDeRecherche = screen.queryByRole('button', { name: wording.RECHERCHE_LABEL })
+    expect(menuDeRecherche).not.toBeInTheDocument()
   })
 })
