@@ -46,10 +46,10 @@ export class WordingFr implements Wording {
   )
   readonly RECHERCHE_PLACEHOLDER: string = 'Rechercher un numéro FINESS ou le nom d’un établissement'
   readonly RECHERCHE_LABEL: string = 'Rechercher'
-  readonly RECHERCHE_NOMBRE_RÉSULTAT: (nombre: number, terme: string) => string = (nombre, terme: string) =>
+  readonly rechercheNombreRésultats: (nombre: number, terme: string) => string = (nombre, terme: string) =>
     `${nombre} résultat(s) corresponde(nt) à votre recherche “${terme}”.`
   readonly RECHERCHE_EN_ATTENTE: string = 'En cours de recherche...'
-  readonly AUCUN_RÉSULTAT: (terme: string) => string = (terme: string) =>
+  readonly aucunRésultat: (terme: string) => string = (terme: string) =>
     `Aucun résultat ne correspond à votre recherche «${terme}»`
 
   // Fiches

@@ -12,7 +12,7 @@ export const Recherche = () => {
     estCeEnAttente,
     estCeQueLesRésultatsSontReçus,
     lancerLaRecherche,
-    nombreRésultat,
+    nombreRésultats,
     rechercheOnChange,
     résultats,
     terme,
@@ -31,7 +31,7 @@ export const Recherche = () => {
       }
       {estCeQueLesRésultatsSontReçus &&
         <RésultatsDeRecherche
-          nombreRésultat={nombreRésultat}
+          nombreRésultats={nombreRésultats}
           résultats={résultats}
           termeFixe={termeFixe}
         />
