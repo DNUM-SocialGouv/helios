@@ -88,7 +88,7 @@ describe('La page de recherche', () => {
     expect(départementCommuneTuile).toBeInTheDocument()
   })
 
-  it('affiche une phrase explicite si la recherche n'aboutit à aucun résultat', async () => {
+  it('affiche une phrase explicite si la recherche n’aboutit à aucun résultat', async () => {
     // GIVEN
     // @ts-ignore
     jest.spyOn(global, 'fetch').mockResolvedValue({
