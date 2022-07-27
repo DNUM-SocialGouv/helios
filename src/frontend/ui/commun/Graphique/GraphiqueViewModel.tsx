@@ -138,11 +138,6 @@ export class GraphiqueViewModel {
     function créeLeLibelléPourLaLégende(chart: ChartJS, libellé: LegendItem): HTMLLIElement {
       const conteneur = document.createElement('li')
 
-      conteneur.onclick = () => {
-        chart.setDatasetVisibility(libellé.datasetIndex, !chart.isDatasetVisible(libellé.datasetIndex))
-        chart.update()
-      }
-
       const caseÀCocher = document.createElement('input')
       caseÀCocher.type = 'checkbox'
       caseÀCocher.id = libellé.text
@@ -152,6 +147,11 @@ export class GraphiqueViewModel {
       const libelléCaseÀCocher = document.createElement('label')
       libelléCaseÀCocher.classList.add('fr-text--xs')
       libelléCaseÀCocher.htmlFor = libellé.text
+
+      libelléCaseÀCocher.onclick = () => {
+        chart.setDatasetVisibility(libellé.datasetIndex, !chart.isDatasetVisible(libellé.datasetIndex))
+        chart.update()
+      }
 
       const cercleDeCouleur = document.createElement('span')
       cercleDeCouleur.style.background = libellé.fillStyle as string
