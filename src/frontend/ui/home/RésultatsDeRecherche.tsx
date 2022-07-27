@@ -43,7 +43,7 @@ export const RésultatsDeRecherche = ({
                     {résultatViewModel.titre}
                   </a>
                 </h2>
-                <p className="fr-tile__desc">
+                <p className={'fr-tile__desc ' + styles['description']}>
                   {résultatViewModel.départementEtCommune}
                 </p>
               </div>

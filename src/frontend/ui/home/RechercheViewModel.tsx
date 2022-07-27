@@ -26,9 +26,9 @@ export class RechercheViewModel {
   public get départementEtCommune(): ReactElement {
     return (
       <>
-        {this.recherche.département}
+        {this.recherche.département.toLocaleLowerCase()}
         {', '}
-        {this.recherche.commune}
+        {this.recherche.commune.toLocaleLowerCase()}
       </>
     )
   }

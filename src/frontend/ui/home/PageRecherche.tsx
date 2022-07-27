@@ -7,7 +7,7 @@ import { RechercheEnAttente } from './RechercheEnAttente'
 import { RésultatsDeRecherche } from './RésultatsDeRecherche'
 import { useRecherche } from './useRecherche'
 
-export const Recherche = () => {
+export const PageRecherche = () => {
   const {
     estCeEnAttente,
     estCeQueLesRésultatsSontReçus,
