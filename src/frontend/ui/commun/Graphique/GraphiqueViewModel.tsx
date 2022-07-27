@@ -1,6 +1,7 @@
 import { BarElement, CategoryScale, Chart as ChartJS, ChartData, ChartOptions, Legend, LegendItem, LinearScale, LineController, LineElement, PointElement, Title, Tooltip } from 'chart.js'
 import ChartDataLabels, { Context } from 'chartjs-plugin-datalabels'
 import { Bar } from 'react-chartjs-2'
+import '@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css'
 
 import { Wording } from '../../../configuration/wording/Wording'
 import { TableIndicateur } from '../TableIndicateur/TableIndicateur'
@@ -135,28 +136,35 @@ export class GraphiqueViewModel {
 
   private construisLePluginDeLégende() {
     function créeLeLibelléPourLaLégende(chart: ChartJS, libellé: LegendItem): HTMLLIElement {
-      const li = document.createElement('li')
+      const conteneur = document.createElement('li')
 
-      li.onclick = () => {
+      conteneur.onclick = () => {
         chart.setDatasetVisibility(libellé.datasetIndex, !chart.isDatasetVisible(libellé.datasetIndex))
         chart.update()
       }
 
-      const boxSpan = document.createElement('span')
-      boxSpan.style.background = libellé.fillStyle as string
-      boxSpan.style.border = `solid ${libellé.strokeStyle} 1px`
-      boxSpan.innerHTML = '&nbsp;'
+      const caseÀCocher = document.createElement('input')
+      caseÀCocher.type = 'checkbox'
+      caseÀCocher.id = libellé.text
+      caseÀCocher.name = libellé.text
+      caseÀCocher.checked = chart.isDatasetVisible(libellé.datasetIndex)
 
-      const textContainer = document.createElement('p')
-      textContainer.classList.add('fr-text--xs')
-      textContainer.style.textDecoration = libellé.hidden ? 'line-through' : ''
+      const libelléCaseÀCocher = document.createElement('label')
+      libelléCaseÀCocher.classList.add('fr-text--xs')
+      libelléCaseÀCocher.htmlFor = libellé.text
 
-      const text = document.createTextNode(libellé.text)
-      textContainer.appendChild(text)
+      const cercleDeCouleur = document.createElement('span')
+      cercleDeCouleur.style.background = libellé.fillStyle as string
+      cercleDeCouleur.style.border = `solid ${libellé.strokeStyle} 1px`
+      cercleDeCouleur.innerHTML = '&nbsp;'
+      libelléCaseÀCocher.appendChild(cercleDeCouleur)
 
-      li.appendChild(boxSpan)
-      li.appendChild(textContainer)
-      return li
+      const texteDuLibellé = document.createTextNode(libellé.text)
+      libelléCaseÀCocher.appendChild(texteDuLibellé)
+
+      conteneur.appendChild(caseÀCocher)
+      conteneur.appendChild(libelléCaseÀCocher)
+      return conteneur
     }
 
     return {

@@ -210,7 +210,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
           options={options}
         />
         <menu
-          className={styles['graphique-sanitaire-légende']}
+          className={'fr-checkbox-group ' + styles['graphique-sanitaire-légende']}
           id={this.identifiantDeLaLégendeDesSéjoursMCO}
         />
         <TableIndicateur
@@ -284,7 +284,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
           options={options}
         />
         <menu
-          className={styles['graphique-sanitaire-légende']}
+          className={'fr-checkbox-group ' + styles['graphique-sanitaire-légende']}
           id={this.identifiantDeLaLégendeDesJournéesPsyEtSsr}
         />
         <TableIndicateur

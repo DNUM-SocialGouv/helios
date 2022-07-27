@@ -8,9 +8,10 @@
   grid-template-rows: repeat(2, 1fr);
   grid-auto-columns: max-content;
   justify-content: end;
+  margin: 0
 }
 
-@media (max-width: 58em) {
+@media (max-width: 64em) {
   .graphique-sanitaire-légende {
     display: flex;
     flex-direction: column;
@@ -22,18 +23,18 @@
   align-items: center;
   cursor: pointer;
   display: flex;
+  padding: 0 0.5rem 0 0;
 }
 
 .graphique-sanitaire-légende li span {
-  height: 0.5rem;
-  margin: 0 0.25rem 0 1rem;
-  width: 0.5rem;
+  height: 0.8rem;
+  margin: 0 0.25rem 0 0;
+  width: 0.8rem;
   border-radius: 50%;
 }
 
-.graphique-sanitaire-légende li p {
+.graphique-sanitaire-légende li label {
   margin: 0;
-  padding: 0;
 }
 
 .liste-indicateurs {
