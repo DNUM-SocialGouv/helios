@@ -2,7 +2,7 @@ import Head from 'next/head'
 
 import { useDependencies } from '../frontend/ui/commun/contexts/useDependencies'
 import { useBreadcrumb } from '../frontend/ui/commun/hooks/useBreadcrumb'
-import { Home } from '../frontend/ui/home/Home'
+import { PageRecherche } from '../frontend/ui/home/PageRecherche'
 
 export default function PageDAccueil() {
   const { wording } = useDependencies()
@@ -15,7 +15,7 @@ export default function PageDAccueil() {
           {wording.TITRE_PAGE_ACCUEIL}
         </title>
       </Head>
-      <Home />
+      <PageRecherche />
     </>
   )
 }

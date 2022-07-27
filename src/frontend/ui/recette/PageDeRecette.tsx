@@ -5,10 +5,10 @@ import { useDependencies } from '../commun/contexts/useDependencies'
 import { ListItem } from '../commun/ListItem/ListItem'
 import LogoÉtablissementTerritorialMédicoSocial from '../entité-juridique/liste-des-établissements/logo-établissement-territorial-médico-social-noir.svg'
 import LogoÉtablissementTerritorialSanitaire from '../entité-juridique/liste-des-établissements/logo-établissement-territorial-sanitaire-noir.svg'
-import styles from './Home.module.css'
-import LogoEntitéJuridiqueNoir from './logo-entité-juridique-noir.svg'
+import LogoEntitéJuridiqueNoir from '../home/logo-entité-juridique-noir.svg'
+import styles from './PageDeRecette.module.css'
 
-export const Home = () => {
+export const PageDeRecette = () => {
   const { paths, wording } = useDependencies()
 
   const entitésJuridiques: {identifiant: ReactElement, numéroFiness: string}[] = [
