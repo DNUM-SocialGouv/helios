@@ -13,7 +13,7 @@ export class NodeEnvironmentVariables implements EnvironmentVariables {
   readonly SENTRY_AUTH_TOKEN: string = this.getOrElse('SENTRY_AUTH_TOKEN')
   readonly SENTRY_DSN: string = this.getOrElse('SENTRY_DSN')
 
-  readonly TIME_OF_SERVER_SHUTDOWN_AT_NIGHT: string = this.getOrElse('TIME_OF_SERVER_SHUTDOWN_AT_NIGHT')
+  readonly TIME_OF_CACHE_PAGE: string = this.getOrElse('TIME_OF_CACHE_PAGE')
 
   private getOrElse(key: string): string {
     if (process.env[key] === 'toBeSet') {

@@ -19,13 +19,14 @@ export function getStaticPaths() {
   }
 }
 
-export async function getStaticProps({ params }: { params: { numéroFINESS: string }}) {
+export async function getStaticProps({ params }: { params: { numéroFiness: string }}) {
   try {
     const { environmentVariables } = dependencies
-    const établissementTerritorial = await récupèreLÉtablissementTerritorialSanitaireEndpoint(dependencies, params.numéroFINESS)
+    const établissementTerritorial = await récupèreLÉtablissementTerritorialSanitaireEndpoint(dependencies, params.numéroFiness)
 
-    return { props: { établissementTerritorial }, revalidate: Number(environmentVariables.TIME_OF_SERVER_SHUTDOWN_AT_NIGHT) }
+    return { props: { établissementTerritorial }, revalidate: Number(environmentVariables.TIME_OF_CACHE_PAGE) }
   } catch (error) {
+    dependencies.logger.error(error)
     return { notFound: true }
   }
 }

@@ -8,5 +8,5 @@ export interface EnvironmentVariables {
   readonly SENTRY_AUTH_TOKEN: string
   readonly SENTRY_DSN: string
 
-  readonly TIME_OF_SERVER_SHUTDOWN_AT_NIGHT: string
+  readonly TIME_OF_CACHE_PAGE: string
 }

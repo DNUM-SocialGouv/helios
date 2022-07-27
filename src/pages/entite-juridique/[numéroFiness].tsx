@@ -28,10 +28,10 @@ export function getStaticPaths() {
   }
 }
 
-export async function getStaticProps({ params }: { params: { numéroFINESS: string }}) {
+export async function getStaticProps({ params }: { params: { numéroFiness: string }}) {
   try {
     const { environmentVariables } = dependencies
-    const entitéJuridiqueEndpoint = await récupèreLEntitéJuridiqueEndpoint(dependencies, params.numéroFINESS)
+    const entitéJuridiqueEndpoint = await récupèreLEntitéJuridiqueEndpoint(dependencies, params.numéroFiness)
 
     if (entitéJuridiqueEndpoint === undefined) {
       return { notFound: true }
@@ -42,9 +42,10 @@ export async function getStaticProps({ params }: { params: { numéroFINESS: stri
         entitéJuridique: entitéJuridiqueEndpoint.entitéJuridique,
         établissementsTerritoriauxRattachés: entitéJuridiqueEndpoint.établissementsTerritoriauxRattachés,
       },
-      revalidate: Number(environmentVariables.TIME_OF_SERVER_SHUTDOWN_AT_NIGHT),
+      revalidate: Number(environmentVariables.TIME_OF_CACHE_PAGE),
     }
   } catch (error) {
+    dependencies.logger.error(error)
     return { notFound: true }
   }
 }
