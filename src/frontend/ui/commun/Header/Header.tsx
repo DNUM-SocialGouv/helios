@@ -11,7 +11,7 @@ import { Breadcrumb } from '../Breadcrumb/Breadcrumb'
 import { useDependencies } from '../contexts/useDependencies'
 
 export const Header = () => {
-  const { wording } = useDependencies()
+  const { paths, wording } = useDependencies()
   const router = useRouter()
   const [terme, setTerme] = useState<string>('')
 
@@ -33,7 +33,7 @@ export const Header = () => {
                     </p>
                   </div>
                   <div className="fr-header__navbar">
-                    {router.pathname !== '/recherche' &&
+                    {router.pathname !== paths.ACCUEIL &&
                       <button
                         aria-controls="modal-541"
                         className="fr-btn--search fr-btn"
@@ -87,7 +87,7 @@ export const Header = () => {
                     </li>
                   </ul>
                 </div>
-                {router.pathname !== '/recherche' &&
+                {router.pathname !== paths.ACCUEIL &&
                   <div
                     className="fr-header__search fr-modal"
                     id="modal-541"
@@ -125,7 +125,7 @@ export const Header = () => {
                           className="fr-btn"
                           onClick={(event) => {
                             event.preventDefault()
-                            router.push('/recherche?terme=' + terme, '/recherche')
+                            router.push(paths.ACCUEIL + '?terme=' + terme, paths.ACCUEIL)
                           }}
                           title="Rechercher"
                           type="submit"

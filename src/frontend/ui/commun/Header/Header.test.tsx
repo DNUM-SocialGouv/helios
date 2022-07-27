@@ -28,7 +28,6 @@ describe('En-tête de page', () => {
     expect(menuDeRecherche[0]).toHaveAttribute('title', wording.RECHERCHE_LABEL)
     const fermer = screen.getAllByRole('button', { name: wording.FERMER })
     expect(fermer[1]).toBeInTheDocument()
-    expect(fermer[1]).toBeInTheDocument()
   })
 
   it('affiche un lien pour se déconnecter', () => {
@@ -68,14 +67,14 @@ describe('En-tête de page', () => {
     fireEvent.click(rechercher)
 
     // THEN
-    expect(router.pathname).toBe('/recherche')
-    expect(router.asPath).toBe('/recherche?terme=' + terme)
+    expect(router.pathname).toBe(paths.ACCUEIL)
+    expect(router.asPath).toBe(paths.ACCUEIL + '?terme=' + terme)
   })
 
   it('n’affiche pas le formulaire de recherche quand on est sur l’accueil', () => {
     // GIVEN
     const router = mockRouter
-    router.push('/recherche')
+    router.push(paths.ACCUEIL)
 
     // WHEN
     renderFakeComponent(<Header />)

@@ -125,22 +125,22 @@ describe('La page de recherche', () => {
     const nombreDeRésultats = 3
     const résultats = [
       {
-        commune: 'Saint-Brieuc',
-        département: 'Côtes d’Armor',
+        commune: 'SAINT-BRIEUC',
+        département: 'CÔTES D’ARMOR',
         numéroFiness: '010003598',
         raisonSociale: 'CENTRE HOSPITALIER DE SAINT BRIEUC',
         type: 'Médico-social',
       },
       {
-        commune: 'Saint-Brieuc',
-        département: 'Côtes d’Armor',
+        commune: 'SAINT-BRIEUC',
+        département: 'CÔTES D’ARMOR',
         numéroFiness: '010005239',
         raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY',
         type: 'Sanitaire',
       },
       {
-        commune: 'Saint-Brieuc',
-        département: 'Côtes d’Armor',
+        commune: 'SAINT-BRIEUC',
+        département: 'CÔTES D’ARMOR',
         numéroFiness: '010008407',
         raisonSociale: 'CENTRE HOSPITALIER DE VILLENEUVE DASCQ',
         type: 'Entité Juridique',
@@ -155,7 +155,7 @@ describe('La page de recherche', () => {
     })
 
     // WHEN
-    renderFakeComponent(<Recherche />)
+    renderFakeComponent(<PageRecherche />)
 
     // THEN
     const formulaire = screen.getByRole('search')
@@ -176,7 +176,7 @@ describe('La page de recherche', () => {
     expect(lienSanitaire).toHaveAttribute('href', paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE + '/' + résultats[1].numéroFiness)
     const lienEntitéJuridique = within(tuiles[2]).getByRole('link', { name: '010008407 - CENTRE HOSPITALIER DE VILLENEUVE DASCQ' })
     expect(lienEntitéJuridique).toHaveAttribute('href', paths.ENTITÉ_JURIDIQUE + '/' + résultats[2].numéroFiness)
-    const départementCommuneTuile = within(tuiles[0]).getByText('Côtes d’Armor, Saint-Brieuc', { selector: 'p' })
+    const départementCommuneTuile = within(tuiles[0]).getByText('côtes d’armor, saint-brieuc', { selector: 'p' })
     expect(départementCommuneTuile).toBeInTheDocument()
   })
 })
