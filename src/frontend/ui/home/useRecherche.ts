@@ -1,4 +1,5 @@
-import { ChangeEvent, MouseEvent, useState } from 'react'
+import { useRouter } from 'next/router'
+import { ChangeEvent, MouseEvent, useEffect, useState } from 'react'
 
 import { Résultat } from '../../../backend/métier/entities/RésultatDeRecherche'
 import { useDependencies } from '../commun/contexts/useDependencies'
@@ -15,6 +16,7 @@ type RechercheState = Readonly<{
 
 export function useRecherche() {
   const { paths } = useDependencies()
+  const router = useRouter()
 
   const [state, setState] = useState<RechercheState>({
     estCeEnAttente: false,
@@ -32,7 +34,7 @@ export function useRecherche() {
       estCeEnAttente: true,
       estCeQueLesRésultatsSontReçus: false,
     })
-    rechercher()
+    rechercher(state.terme)
   }
 
   const rechercheOnChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -42,9 +44,9 @@ export function useRecherche() {
     })
   }
 
-  const rechercher = () => {
+  const rechercher = (terme: string) => {
     fetch('/api/recherche', {
-      body: JSON.stringify({ terme: state.terme }),
+      body: JSON.stringify({ terme }),
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
     })
@@ -56,10 +58,23 @@ export function useRecherche() {
           estCeQueLesRésultatsSontReçus: true,
           nombreRésultats: data.nombreDeRésultats,
           résultats: data.résultats.map((résultat: Résultat) => new RechercheViewModel(résultat, paths)),
-          termeFixe: state.terme,
+          terme,
+          termeFixe: terme,
         })
       })
   }
+
+  useEffect(() => {
+    if (router.query['terme']) {
+      setState({
+        ...state,
+        estCeEnAttente: true,
+        estCeQueLesRésultatsSontReçus: false,
+        terme: router.query['terme'] as string,
+      })
+      rechercher(router.query['terme'] as string)
+    }
+  }, [])
 
   return {
     estCeEnAttente: state.estCeEnAttente,

@@ -17,6 +17,7 @@ import { PageÉtablissementTerritorialMédicoSocial } from '../../établissement
 import { PageÉtablissementTerritorialSanitaire } from '../../établissement-territorial-sanitaire/PageÉtablissementTerritorialSanitaire'
 import { Breadcrumb } from './Breadcrumb'
 
+jest.mock('next/router', () => require('next-router-mock'))
 const { paths, wording } = fakeFrontDependencies
 
 describe('Le fil d’Ariane (breadcrumb)', () => {
