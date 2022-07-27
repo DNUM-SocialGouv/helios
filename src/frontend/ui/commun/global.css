@@ -15,3 +15,10 @@ main {
 .fr-accordion::before {
   box-shadow: inherit !important;
 }
+
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #000 !important;
+    background: #fff !important;
+  }
+}

@@ -1,5 +1,4 @@
 import fs from 'fs'
-import minifyStream from 'minify-stream'
 import { NextApiRequest, NextApiResponse } from 'next'
 import path from 'path'
 
@@ -13,6 +12,5 @@ export default function handler(_req: NextApiRequest, res: NextApiResponse) {
   })
 
   fs.createReadStream(filePath)
-    .pipe(minifyStream({ sourceMap: false }))
     .pipe(res)
 }
