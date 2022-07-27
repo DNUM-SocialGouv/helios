@@ -71,7 +71,6 @@ const nextConfig = {
       ]
       : []
   },
-  ignoreDuringBuilds: true,
   poweredByHeader: false,
   reactStrictMode: true,
   swcMinify: true,
