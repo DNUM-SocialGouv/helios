@@ -244,7 +244,7 @@ export class GraphiqueViewModel {
       scales: {
         x: {
           display: false,
-          max: 1.15 * valeurMaximale,
+          max: 1.45 * valeurMaximale,
           min: 0,
         },
         y: {
