@@ -145,7 +145,7 @@ export class GraphiqueViewModel {
       caseÀCocher.checked = chart.isDatasetVisible(libellé.datasetIndex)
 
       const libelléCaseÀCocher = document.createElement('label')
-      libelléCaseÀCocher.classList.add('fr-text--xs')
+      libelléCaseÀCocher.classList.add('fr-label')
       libelléCaseÀCocher.htmlFor = libellé.text
 
       libelléCaseÀCocher.onclick = () => {

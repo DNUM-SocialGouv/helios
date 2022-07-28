@@ -19,9 +19,9 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
         commune,
         departement
       FROM recherche
-      WHERE termes @@ plainto_tsquery('unaccent_helios', $1)
+      WHERE termes @@ plainto_tsquery('unaccent_helios', $1) OR termes @@ plainto_tsquery('unaccent_helios', $2)
       ORDER BY rank DESC
-      LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX};`, [terme]
+      LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX};`, [terme, terme.replaceAll(/\s/g, '')]
     )
 
     return this.construisLesRésultatsDeLaRecherche(résultats)
