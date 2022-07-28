@@ -3,7 +3,7 @@ class AjoutDatesMisesÀJourParFichier1658996326544 {
   async up(queryRunner) {
     await queryRunner.query(
       `CREATE TYPE fichier_source AS ENUM
-        ('finess_cs1400101', 'finess_cs1400102', 'diamant_ann_errd_ej_et', 'diamant_ann_ms_tdp_et', 'diamant_men_pmsi_annuel', 'diamant_ann_rpu');
+        ('finess_cs1400101', 'finess_cs1400102', 'ann_errd_ej_et', 'ann_ms_tdp_et', 'men_pmsi_annuel', 'ann_rpu');
 
       CREATE TABLE date_mise_a_jour_fichier_source (
         derniere_mise_a_jour DATE NOT NULL,
