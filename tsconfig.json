@@ -45,5 +45,8 @@
     ".next",
     "node_modules",
     "spikes"
-  ]
+  ],
+  "ts-node": {
+    "swc": true
+  }
 }
