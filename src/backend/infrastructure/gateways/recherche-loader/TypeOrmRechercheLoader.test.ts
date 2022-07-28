@@ -311,4 +311,27 @@ describe('La recherche d’entités et d’établissements', () => {
       }),
     ])
   })
+
+  it('retourne des résultats même s’il y a des espaces dans la recherche demandée', async () => {
+    // GIVEN
+    const numéroFinessEntitéJuridique = '010 018 407'
+    const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée()
+    await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
+
+    const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
+
+    // WHEN
+    const recherche = await typeOrmRechercheLoader.recherche(numéroFinessEntitéJuridique)
+
+    // THEN
+    expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
+      {
+        commune: 'OYONNAX',
+        département: 'AIN',
+        numéroFiness: numéroFinessEntitéJuridique.replaceAll(' ', ''),
+        raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY',
+        type: 'Entité juridique',
+      },
+    ])
+  })
 })
