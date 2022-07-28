@@ -1,5 +1,6 @@
-import { DataSource } from 'typeorm'
+import { DataSource, EntityManager } from 'typeorm'
 
+import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { EntitéJuridiqueHeliosRepository } from '../../../métier/gateways/EntitéJuridiqueHeliosRepository'
@@ -10,17 +11,39 @@ export class TypeOrmEntitéJuridiqueHeliosRepository implements EntitéJuridique
 
   constructor(private readonly orm: Promise<DataSource>, private logger: Logger) {}
 
-  async sauvegarde(entitésJuridiques: EntitéJuridique[]): Promise<void> {
-    await (await this.orm)
-      .getRepository(EntitéJuridiqueModel)
-      .save(entitésJuridiques, { chunk: this.TAILLE_DE_FRAGMENT })
-    this.logger.info(`Sauvegarde ${entitésJuridiques.length} entités juridiques.`)
+  async sauvegarde(entitésJuridiques: EntitéJuridique[], dateDeMiseAJourDuFichierSource: string): Promise<void> {
+    await (await this.orm).transaction(async (transactionalEntityManager: EntityManager) => {
+      try {
+        await this.sauvegardeLesEntitésJuridiques(transactionalEntityManager, entitésJuridiques)
+        this.logger.info(`Sauvegarde ${entitésJuridiques.length} entités juridiques.`)
+        await this.metsÀJourLaDateDeMiseÀJourDuFichierSource(transactionalEntityManager, dateDeMiseAJourDuFichierSource)
+      } catch (error) {
+        this.logger.error(error)
+      }
+    })
   }
 
   async supprime(numérosFinessDEntitésJuridiques: string[]): Promise<void> {
     const entitésJuridiquesÀSupprimer = this.construisLesEntitésJuridiquesModels(numérosFinessDEntitésJuridiques)
     await this.supprimeLesEntitésJuridiques(entitésJuridiquesÀSupprimer)
     this.logger.info(`Supprime ${entitésJuridiquesÀSupprimer.length} entités juridiques.`)
+  }
+
+  private async sauvegardeLesEntitésJuridiques(entityManager: EntityManager, entitésJuridiques: EntitéJuridique[]) {
+    await entityManager
+      .getRepository(EntitéJuridiqueModel)
+      .save(entitésJuridiques, { chunk: this.TAILLE_DE_FRAGMENT })
+  }
+
+  private async metsÀJourLaDateDeMiseÀJourDuFichierSource(entityManager: EntityManager, dateDeMiseAJourDuFichierSource: string): Promise<void> {
+    await entityManager
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .upsert([
+        {
+          dernièreMiseÀJour: dateDeMiseAJourDuFichierSource,
+          fichier: FichierSource.FINESS_CS1400101,
+        },
+      ], ['fichier'])
   }
 
   private async supprimeLesEntitésJuridiques(entitésJuridiquesÀSupprimer: EntitéJuridiqueModel[]) {

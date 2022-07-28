@@ -1,8 +1,10 @@
 import { Repository } from 'typeorm'
 
+import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
 import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
+import { DateMiseÀJourFichierSourceModelTestBuilder } from '../../../../../database/test-builder/DateMiseÀJourFichierSourceModelTestBuilder'
 import { EntitéJuridiqueModelTestBuilder } from '../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder'
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from '../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder'
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
@@ -14,17 +16,20 @@ describe('Sauvegarde de l’établissement territorial', () => {
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>
   let établissementTerritorialIdentitéRepository: Repository<ÉtablissementTerritorialIdentitéModel>
   let dateMiseÀJourSourceRepository: Repository<DateMiseÀJourSourceModel>
+  let dateMiseÀJourFichierSourceRepository: Repository<DateMiseÀJourFichierSourceModel>
 
   beforeAll(async () => {
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel)
     établissementTerritorialIdentitéRepository = (await orm).getRepository(ÉtablissementTerritorialIdentitéModel)
     dateMiseÀJourSourceRepository = (await orm).getRepository(DateMiseÀJourSourceModel)
+    dateMiseÀJourFichierSourceRepository = (await orm).getRepository(DateMiseÀJourFichierSourceModel)
   })
 
   beforeEach(async () => {
     await établissementTerritorialIdentitéRepository.query('DELETE FROM etablissement_territorial;')
     await entitéJuridiqueRepository.query('DELETE FROM entite_juridique;')
     await dateMiseÀJourSourceRepository.query('DELETE FROM date_mise_a_jour_source;')
+    await dateMiseÀJourFichierSourceRepository.query('DELETE FROM date_mise_a_jour_fichier_source;')
   })
 
   afterAll(async () => {
@@ -75,7 +80,13 @@ describe('Sauvegarde de l’établissement territorial', () => {
     établissementTerritorialIdentité1.typeÉtablissement = 'F',
     établissementTerritorialIdentité1.téléphone = 'fake',
     await établissementTerritorialIdentitéRepository.insert([établissementTerritorialIdentité1])
-
+    await dateMiseÀJourFichierSourceRepository.insert([
+      {
+        dernièreMiseÀJour: '20200102',
+        fichier: FichierSource.FINESS_CS1400102,
+      },
+    ])
+    // TODO : A enlever avec HEL-178
     await dateMiseÀJourSourceRepository.insert([
       {
         dernièreMiseÀJour: '20200102',
@@ -84,9 +95,10 @@ describe('Sauvegarde de l’établissement territorial', () => {
     ])
     const typeOrmÉtablissementTerritorialRepository = new TypeOrmÉtablissementTerritorialRepository(orm, fakeLogger)
     const établissementsTerritoriaux = [unÉtablissementMédicoSocial, unÉtablissementSanitaire]
+    const nouvelleDateDeMiseÀJour = '20220728'
 
     // WHEN
-    await typeOrmÉtablissementTerritorialRepository.sauvegarde(établissementsTerritoriaux)
+    await typeOrmÉtablissementTerritorialRepository.sauvegarde(établissementsTerritoriaux, nouvelleDateDeMiseÀJour)
 
     // THEN
     const établissementsTerritoriauxSauvés = await établissementTerritorialIdentitéRepository
@@ -130,11 +142,95 @@ describe('Sauvegarde de l’établissement territorial', () => {
     expect(établissementsTerritoriauxSauvés).toStrictEqual(
       [établissementTerritorial1MisAJourAttendu, établissementTerritorial2MisAJourAttendu]
     )
+    const dateMiseÀJourFichierSourceSauvée = await dateMiseÀJourFichierSourceRepository
+      .find({ where: { fichier: FichierSource.FINESS_CS1400102 } })
+    const dateMiseÀJourFichierSourceAttendue = new DateMiseÀJourFichierSourceModel()
+    dateMiseÀJourFichierSourceAttendue.fichier = FichierSource.FINESS_CS1400102
+    dateMiseÀJourFichierSourceAttendue.dernièreMiseÀJour = '2022-07-28'
+    expect(dateMiseÀJourFichierSourceSauvée).toStrictEqual([dateMiseÀJourFichierSourceAttendue])
+
+    // TODO : A enlever avec HEL-178
     const dateMiseÀJourSourceSauvée = await dateMiseÀJourSourceRepository
       .find({ where: { source: SourceDeDonnées.FINESS } })
     const dateMiseÀJourSourceAttendue = new DateMiseÀJourSourceModel()
     dateMiseÀJourSourceAttendue.source = SourceDeDonnées.FINESS
-    dateMiseÀJourSourceAttendue.dernièreMiseÀJour = '2022-02-03'
+    dateMiseÀJourSourceAttendue.dernièreMiseÀJour = '2022-07-28'
+    expect(dateMiseÀJourSourceSauvée).toStrictEqual([dateMiseÀJourSourceAttendue])
+  })
+
+  it('revient à la situation initiale si la sauvegarde des établissements échoue', async () => {
+    // GIVEN
+    const numéroFinessEntitéJuridique = '010018407'
+    const entitéJuridique = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
+    await entitéJuridiqueRepository.insert([entitéJuridique])
+    const numéroFinessÉtablissementTerritorial = '999777444'
+    await établissementTerritorialIdentitéRepository.insert(
+      ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial(
+        { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial }
+      )
+    )
+    await dateMiseÀJourFichierSourceRepository.insert(
+      DateMiseÀJourFichierSourceModelTestBuilder.crée({
+        dernièreMiseÀJour: '20200101',
+        fichier: FichierSource.FINESS_CS1400102,
+      })
+    )
+    // TODO : A enlever avec HEL-178
+    await dateMiseÀJourSourceRepository.insert([
+      {
+        dernièreMiseÀJour: '20200101',
+        source: SourceDeDonnées.FINESS,
+      },
+    ])
+
+    const établissementTerritorialMalFormé = {
+      ...unÉtablissementMédicoSocial,
+      numéroFinessÉtablissementTerritorial: 'il y a plus de 9 caractères dans ce numéro FINESS',
+    }
+    const nouvelleDateDeMiseÀJourDuFichierSource = '20220728'
+
+    const typeOrmÉtablissementTerritorialRepository = new TypeOrmÉtablissementTerritorialRepository(orm, fakeLogger)
+
+    // WHEN
+    await typeOrmÉtablissementTerritorialRepository.sauvegarde([établissementTerritorialMalFormé], nouvelleDateDeMiseÀJourDuFichierSource)
+
+    // THEN
+    const établissementsTerritoriauxSauvés = await établissementTerritorialIdentitéRepository
+      .find({ order: { numéroFinessÉtablissementTerritorial: 'ASC' } })
+
+    const établissementTerritorialAttendu = new ÉtablissementTerritorialIdentitéModel()
+    établissementTerritorialAttendu.adresseAcheminement = '01130 NANTUA'
+    établissementTerritorialAttendu.adresseNuméroVoie = '50'
+    établissementTerritorialAttendu.adresseTypeVoie = 'R'
+    établissementTerritorialAttendu.adresseVoie = 'PAUL PAINLEVE'
+    établissementTerritorialAttendu.catégorieÉtablissement = '159'
+    établissementTerritorialAttendu.commune = 'NANTUA'
+    établissementTerritorialAttendu.courriel = 'a@example.com'
+    établissementTerritorialAttendu.domaine = DomaineÉtablissementTerritorial.MÉDICO_SOCIAL
+    établissementTerritorialAttendu.département = 'AIN'
+    établissementTerritorialAttendu.libelléCatégorieÉtablissement = 'Centre hospitalier (C.H.)'
+    établissementTerritorialAttendu.numéroFinessEntitéJuridique = numéroFinessEntitéJuridique
+    établissementTerritorialAttendu.numéroFinessÉtablissementPrincipal = '010018407'
+    établissementTerritorialAttendu.numéroFinessÉtablissementTerritorial = numéroFinessÉtablissementTerritorial
+    établissementTerritorialAttendu.raisonSociale = 'CENTRE HOSPITALIER NANTUA'
+    établissementTerritorialAttendu.typeÉtablissement = 'S'
+    établissementTerritorialAttendu.téléphone = '0102030405'
+
+    expect(établissementsTerritoriauxSauvés).toStrictEqual([établissementTerritorialAttendu])
+
+    const dateMiseÀJourFichierSourceSauvée = await dateMiseÀJourFichierSourceRepository
+      .find({ where: { fichier: FichierSource.FINESS_CS1400102 } })
+    const dateMiseÀJourFichierSourceAttendue = new DateMiseÀJourFichierSourceModel()
+    dateMiseÀJourFichierSourceAttendue.fichier = FichierSource.FINESS_CS1400102
+    dateMiseÀJourFichierSourceAttendue.dernièreMiseÀJour = '2020-01-01'
+    expect(dateMiseÀJourFichierSourceSauvée).toStrictEqual([dateMiseÀJourFichierSourceAttendue])
+
+    // TODO : A enlever avec HEL-178
+    const dateMiseÀJourSourceSauvée = await dateMiseÀJourSourceRepository
+      .find({ where: { source: SourceDeDonnées.FINESS } })
+    const dateMiseÀJourSourceAttendue = new DateMiseÀJourSourceModel()
+    dateMiseÀJourSourceAttendue.source = SourceDeDonnées.FINESS
+    dateMiseÀJourSourceAttendue.dernièreMiseÀJour = '2020-01-01'
     expect(dateMiseÀJourSourceSauvée).toStrictEqual([dateMiseÀJourSourceAttendue])
   })
 

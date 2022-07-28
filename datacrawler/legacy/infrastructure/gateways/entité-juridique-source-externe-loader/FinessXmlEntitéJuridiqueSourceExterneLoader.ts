@@ -127,9 +127,6 @@ export class FinessXmlEntitéJuridiqueSourceExterneLoader implements EntitéJuri
   récupèreLesEntitésJuridiquesOuvertes(): EntitéJuridique[] {
     const cheminDuFichierEntitéJuridique = this.récupèreLeCheminDuFichierEntitéJuridique(this.localPath)
 
-    const dateDeMiseAJourDeLaSource = this.récupèreLaDateDeMiseAJourDeLaSource(cheminDuFichierEntitéJuridique)
-    this.logger.info(`[FINESS] Date de mise à jour des fichiers FINESS des entités juridiques : ${dateDeMiseAJourDeLaSource}`)
-
     const entitésJuridiquesFluxFiness = this.convertXmlToJs.exécute<EntitéJuridiqueFluxFiness>(cheminDuFichierEntitéJuridique)
     const entitésJuridiquesFiness = entitésJuridiquesFluxFiness.fluxfiness.structureej
     this.logger.info(`[FINESS] ${entitésJuridiquesFiness.length} entités juridiques récupérées depuis FINESS.`)
@@ -138,8 +135,17 @@ export class FinessXmlEntitéJuridiqueSourceExterneLoader implements EntitéJuri
     this.logger.info(`[FINESS] ${entitésJuridiquesFinessOuvertes.length} entités juridiques sont ouvertes.`)
 
     return entitésJuridiquesFinessOuvertes.map(
-      (entitéJuridiqueFinessOuverte: EntitéJuridiqueFiness) => this.construisLEntitéJuridique(entitéJuridiqueFinessOuverte, dateDeMiseAJourDeLaSource)
+      (entitéJuridiqueFinessOuverte: EntitéJuridiqueFiness) => this.construisLEntitéJuridique(entitéJuridiqueFinessOuverte)
     )
+  }
+
+  récupèreLaDateDeMiseÀJourDuFichierSource(): string {
+    const cheminDuFichierEntitéJuridique = this.récupèreLeCheminDuFichierEntitéJuridique(this.localPath)
+
+    const dateDeMiseAJourDuFichierSource = cheminDuFichierEntitéJuridique.split(this.préfixeDuFichierEntitéJuridique)[1].slice(0, 8)
+    this.logger.info(`[FINESS] Date de mise à jour des fichiers FINESS des entités juridiques : ${dateDeMiseAJourDuFichierSource}`)
+
+    return dateDeMiseAJourDuFichierSource
   }
 
   private conserveLesEntitésJuridiquesOuvertes(entitésJuridiquesFiness: EntitéJuridiqueFiness[]) {
@@ -152,11 +158,7 @@ export class FinessXmlEntitéJuridiqueSourceExterneLoader implements EntitéJuri
     return localPath + '/finess/simple/' + fichiersDuRépertoireSimple.filter((fichier) => fichier.includes(this.préfixeDuFichierEntitéJuridique))
   }
 
-  private récupèreLaDateDeMiseAJourDeLaSource(cheminDuFichierEntitéJuridique: string): string {
-    return cheminDuFichierEntitéJuridique.split(this.préfixeDuFichierEntitéJuridique)[1].slice(0, 8)
-  }
-
-  private construisLEntitéJuridique(entitésJuridiquesFiness: EntitéJuridiqueFiness, dateMiseAJourSource: string): EntitéJuridique {
+  private construisLEntitéJuridique(entitésJuridiquesFiness: EntitéJuridiqueFiness): EntitéJuridique {
     const valueOrEmpty = (value?: string): string => value || ''
 
     return {
@@ -165,7 +167,6 @@ export class FinessXmlEntitéJuridiqueSourceExterneLoader implements EntitéJuri
       adresseTypeVoie: valueOrEmpty(entitésJuridiquesFiness.typvoie._text),
       adresseVoie: valueOrEmpty(entitésJuridiquesFiness.voie._text),
       commune: valueOrEmpty(entitésJuridiquesFiness.libcommune._text),
-      dateMiseAJourSource,
       département: valueOrEmpty(entitésJuridiquesFiness.libdepartement._text),
       libelléStatutJuridique: valueOrEmpty(entitésJuridiquesFiness.libstatutjuridique._text),
       numéroFinessEntitéJuridique: valueOrEmpty(entitésJuridiquesFiness.nofiness._text),

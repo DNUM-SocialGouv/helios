@@ -17,8 +17,9 @@ export class MetsÀJourLesÉtablissementsTerritoriauxUseCase {
   async exécute(): Promise<void> {
     try {
       const numéroFinessDesEntitésJuridiques = await this.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques()
+      const dateDeMiseAJourDuFichierSource = this.établissementTerritorialSourceExterneLoader.récupèreLaDateDeMiseÀJourDuFichierSource()
       const établissementsTerritoriauxOuverts =
-        await this.établissementTerritorialSourceExterneLoader.récupèreLesÉtablissementsTerritoriauxOuverts(numéroFinessDesEntitésJuridiques)
+        this.établissementTerritorialSourceExterneLoader.récupèreLesÉtablissementsTerritoriauxOuverts(numéroFinessDesEntitésJuridiques)
 
       const établissementsTerritoriauxSauvegardés = await this.établissementTerritorialHeliosLoader.récupèreLeNuméroFinessDesÉtablissementsTerritoriaux()
 
@@ -29,7 +30,7 @@ export class MetsÀJourLesÉtablissementsTerritoriauxUseCase {
 
       await this.établissementTerritorialHeliosRepository.supprime(établissementsTerritoriauxÀSupprimer)
 
-      await this.établissementTerritorialHeliosRepository.sauvegarde(établissementsTerritoriauxOuverts)
+      await this.établissementTerritorialHeliosRepository.sauvegarde(établissementsTerritoriauxOuverts, dateDeMiseAJourDuFichierSource)
     } catch (error) {
       throw new HeliosError(error.message)
     }

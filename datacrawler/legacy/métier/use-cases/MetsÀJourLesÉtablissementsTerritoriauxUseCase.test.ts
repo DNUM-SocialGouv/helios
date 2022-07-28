@@ -5,7 +5,7 @@ import { MetsÀJourLesÉtablissementsTerritoriauxUseCase } from './MetsÀJourLes
 describe('Mise à jour des établissements territoriaux', () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
 
-  it('récupère les établissements territoriaux des sources de données externes', async () => {
+  it('récupère les établissements territoriaux des sources de données externes avec la date de mise à jour de leur fichier source', async () => {
     // GIVEN
     const sauvegardeLesÉtablissementsTerritoriaux = new MetsÀJourLesÉtablissementsTerritoriauxUseCase(
       fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader,
@@ -13,6 +13,7 @@ describe('Mise à jour des établissements territoriaux', () => {
       fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader,
       fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader
     )
+    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, 'récupèreLaDateDeMiseÀJourDuFichierSource').mockReturnValue('')
     jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts').mockReturnValue([])
     jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader, 'récupèreLeNuméroFinessDesEntitésJuridiques').mockResolvedValue(['123456789'])
     jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader, 'récupèreLeNuméroFinessDesÉtablissementsTerritoriaux').mockResolvedValue([])
@@ -21,10 +22,11 @@ describe('Mise à jour des établissements territoriaux', () => {
     await sauvegardeLesÉtablissementsTerritoriaux.exécute()
 
     // THEN
+    expect(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader.récupèreLaDateDeMiseÀJourDuFichierSource).toHaveBeenCalledWith()
     expect(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader.récupèreLesÉtablissementsTerritoriauxOuverts).toHaveBeenCalledWith(['123456789'])
   })
 
-  it('sauvegarde les établissements territoriaux des sources de données externes', async () => {
+  it('sauvegarde les établissements territoriaux des sources de données externes avec la date de mise à jour de leur fichier source', async () => {
     // GIVEN
     const sauvegardeLesÉtablissementsTerritoriaux = new MetsÀJourLesÉtablissementsTerritoriauxUseCase(
       fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader,
@@ -36,6 +38,7 @@ describe('Mise à jour des établissements territoriaux', () => {
       unÉtablissementMédicoSocial,
       unÉtablissementSanitaire,
     ]
+    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, 'récupèreLaDateDeMiseÀJourDuFichierSource').mockReturnValue('20220728')
     jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts').mockReturnValue(établissementsTerritoriaux)
     jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader, 'récupèreLeNuméroFinessDesÉtablissementsTerritoriaux').mockResolvedValue([])
 
@@ -43,7 +46,7 @@ describe('Mise à jour des établissements territoriaux', () => {
     await sauvegardeLesÉtablissementsTerritoriaux.exécute()
 
     // THEN
-    expect(fakeDataCrawlerDependencies.établissementTerritorialHeliosRepository.sauvegarde).toHaveBeenCalledWith(établissementsTerritoriaux)
+    expect(fakeDataCrawlerDependencies.établissementTerritorialHeliosRepository.sauvegarde).toHaveBeenCalledWith(établissementsTerritoriaux, '20220728')
   })
 
   it('extrais les établissements territoriaux fermés pour les supprimer', async () => {

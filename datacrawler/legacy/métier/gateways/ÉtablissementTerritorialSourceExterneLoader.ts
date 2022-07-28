@@ -2,4 +2,5 @@ import { ÉtablissementTerritorialIdentité } from '../entities/ÉtablissementTe
 
 export interface ÉtablissementTerritorialSourceExterneLoader {
   récupèreLesÉtablissementsTerritoriauxOuverts(numéroFinessDesEntitésJuridiques: string[]): ÉtablissementTerritorialIdentité[]
+  récupèreLaDateDeMiseÀJourDuFichierSource(): string
 }

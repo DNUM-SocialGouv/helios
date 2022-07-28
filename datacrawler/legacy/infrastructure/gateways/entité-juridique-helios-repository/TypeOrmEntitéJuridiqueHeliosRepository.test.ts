@@ -1,8 +1,10 @@
 import { Repository } from 'typeorm'
 
-import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../../database/models/DateMiseÀJourSourceModel'
+import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
+import { DateMiseÀJourSourceModel } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
+import { DateMiseÀJourFichierSourceModelTestBuilder } from '../../../../../database/test-builder/DateMiseÀJourFichierSourceModelTestBuilder'
 import { EntitéJuridiqueModelTestBuilder } from '../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder'
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from '../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder'
 import { fakeLogger, getOrm, uneEntitéJuridique, uneSecondeEntitéJuridique } from '../../../testHelper'
@@ -13,17 +15,20 @@ describe('Sauvegarde des entités juridiques', () => {
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>
   let établissementTerritorialIdentitéRepository: Repository<ÉtablissementTerritorialIdentitéModel>
   let dateMiseÀJourSourceRepository: Repository<DateMiseÀJourSourceModel>
+  let dateMiseÀJourFichierSourceRepository: Repository<DateMiseÀJourFichierSourceModel>
 
   beforeAll(async () => {
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel)
     établissementTerritorialIdentitéRepository = (await orm).getRepository(ÉtablissementTerritorialIdentitéModel)
     dateMiseÀJourSourceRepository = (await orm).getRepository(DateMiseÀJourSourceModel)
+    dateMiseÀJourFichierSourceRepository = (await orm).getRepository(DateMiseÀJourFichierSourceModel)
   })
 
   beforeEach(async () => {
     await entitéJuridiqueRepository.query('DELETE FROM entite_juridique;')
     await établissementTerritorialIdentitéRepository.query('DELETE FROM etablissement_territorial;')
     await dateMiseÀJourSourceRepository.query('DELETE FROM date_mise_a_jour_source;')
+    await dateMiseÀJourFichierSourceRepository.query('DELETE FROM date_mise_a_jour_fichier_source;')
   })
 
   afterAll(async () => {
@@ -44,19 +49,19 @@ describe('Sauvegarde des entités juridiques', () => {
     entitéJuridique.raisonSociale = 'fake'
     entitéJuridique.téléphone = 'fake'
     await entitéJuridiqueRepository.insert(entitéJuridique)
-
-    await dateMiseÀJourSourceRepository.insert([
+    await dateMiseÀJourFichierSourceRepository.insert([
       {
         dernièreMiseÀJour: '20200102',
-        source: SourceDeDonnées.FINESS,
+        fichier: FichierSource.FINESS_CS1400101,
       },
     ])
 
     const typeOrmEntitéJuridiqueRepository = new TypeOrmEntitéJuridiqueHeliosRepository(orm, fakeLogger)
     const entitésJuridiques = [uneEntitéJuridique, uneSecondeEntitéJuridique]
+    const nouvelleDateDeMiseÀJour = '20220728'
 
     // WHEN
-    await typeOrmEntitéJuridiqueRepository.sauvegarde(entitésJuridiques)
+    await typeOrmEntitéJuridiqueRepository.sauvegarde(entitésJuridiques, nouvelleDateDeMiseÀJour)
 
     // THEN
     const entitésJuridiquesQuery = await entitéJuridiqueRepository.find({ order: { numéroFinessEntitéJuridique: 'ASC' } })
@@ -86,6 +91,56 @@ describe('Sauvegarde des entités juridiques', () => {
       entitéJuridiqueMisÀJourAttendu1,
       entitéJuridiqueMisÀJourAttendu2,
     ])
+    const dateMiseÀJourFichierSourceSauvée = await dateMiseÀJourFichierSourceRepository
+      .find({ where: { fichier: FichierSource.FINESS_CS1400101 } })
+    const dateMiseÀJourFichierSourceAttendue = new DateMiseÀJourFichierSourceModel()
+    dateMiseÀJourFichierSourceAttendue.fichier = FichierSource.FINESS_CS1400101
+    dateMiseÀJourFichierSourceAttendue.dernièreMiseÀJour = '2022-07-28'
+    expect(dateMiseÀJourFichierSourceSauvée).toStrictEqual([dateMiseÀJourFichierSourceAttendue])
+  })
+
+  it('revient à la situation initiale si la sauvegarde des entités échoue', async () => {
+    // GIVEN
+    const numéroFinessEntitéJuridique = '010018407'
+    const entitéJuridique = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
+    await entitéJuridiqueRepository.insert([entitéJuridique])
+    await dateMiseÀJourFichierSourceRepository.insert(
+      DateMiseÀJourFichierSourceModelTestBuilder.crée({
+        dernièreMiseÀJour: '20200101',
+        fichier: FichierSource.FINESS_CS1400101,
+      })
+    )
+    const entitéJuridiqueMalFormée = {
+      ...uneEntitéJuridique,
+      numéroFinessEntitéJuridique: 'il y a plus de 9 caractères dans ce numéro FINESS',
+    }
+    const nouvelleDateDeMiseÀJour = '20220728'
+    const typeOrmEntitéJuridiqueRepository = new TypeOrmEntitéJuridiqueHeliosRepository(orm, fakeLogger)
+
+    // WHEN
+    await typeOrmEntitéJuridiqueRepository.sauvegarde([entitéJuridiqueMalFormée], nouvelleDateDeMiseÀJour)
+
+    // THEN
+    const entitésJuridiquesSauvées = await entitéJuridiqueRepository.find({ order: { numéroFinessEntitéJuridique: 'ASC' } })
+    const entitéJuridiqueAttendu = new EntitéJuridiqueModel()
+    entitéJuridiqueAttendu.adresseAcheminement = '01117 OYONNAX CEDEX'
+    entitéJuridiqueAttendu.adresseNuméroVoie = '1'
+    entitéJuridiqueAttendu.adresseTypeVoie = 'RTE'
+    entitéJuridiqueAttendu.adresseVoie = 'DE VEYZIAT'
+    entitéJuridiqueAttendu.commune = 'OYONNAX'
+    entitéJuridiqueAttendu.département = 'AIN'
+    entitéJuridiqueAttendu.libelléStatutJuridique = 'Etablissement Public Intercommunal dHospitalisation'
+    entitéJuridiqueAttendu.numéroFinessEntitéJuridique = numéroFinessEntitéJuridique
+    entitéJuridiqueAttendu.raisonSociale = 'CENTRE HOSPITALIER DU HAUT BUGEY'
+    entitéJuridiqueAttendu.téléphone = '0102030406'
+    expect(entitésJuridiquesSauvées).toStrictEqual([entitéJuridiqueAttendu])
+
+    const dateMiseÀJourFichierSourceSauvée = await dateMiseÀJourFichierSourceRepository
+      .find({ where: { fichier: FichierSource.FINESS_CS1400101 } })
+    const dateMiseÀJourFichierSourceAttendue = new DateMiseÀJourFichierSourceModel()
+    dateMiseÀJourFichierSourceAttendue.fichier = FichierSource.FINESS_CS1400101
+    dateMiseÀJourFichierSourceAttendue.dernièreMiseÀJour = '2020-01-01'
+    expect(dateMiseÀJourFichierSourceSauvée).toStrictEqual([dateMiseÀJourFichierSourceAttendue])
   })
 
   it('supprime une entité juridique quand celle-ci est en base', async () => {

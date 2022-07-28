@@ -82,7 +82,6 @@ describe('Récupération des entités juridiques de la source de données FINESS
           adresseTypeVoie: 'RTE',
           adresseVoie: 'DE VEYZIAT',
           commune: 'OYONNAX',
-          dateMiseAJourSource: '20211214',
           département: 'AIN',
           libelléStatutJuridique: "Etablissement Public Intercommunal d'Hospitalisation",
           numéroFinessEntitéJuridique: '010008407',
@@ -95,7 +94,6 @@ describe('Récupération des entités juridiques de la source de données FINESS
           adresseTypeVoie: 'AV',
           adresseVoie: 'DE LA RECONNAISSANCE',
           commune: 'VILLENEUVE D ASCQ',
-          dateMiseAJourSource: '20211214',
           département: 'NORD',
           libelléStatutJuridique: 'Société Anonyme (S.A.)',
           numéroFinessEntitéJuridique: '590000741',
@@ -200,7 +198,6 @@ describe('Récupération des entités juridiques de la source de données FINESS
           adresseTypeVoie: 'RTE',
           adresseVoie: 'DE VEYZIAT',
           commune: 'OYONNAX',
-          dateMiseAJourSource: '20211214',
           département: 'AIN',
           libelléStatutJuridique: "Etablissement Public Intercommunal d'Hospitalisation",
           numéroFinessEntitéJuridique: '010008407',
@@ -213,7 +210,6 @@ describe('Récupération des entités juridiques de la source de données FINESS
           adresseTypeVoie: 'AV',
           adresseVoie: 'DE LA RECONNAISSANCE',
           commune: 'VILLENEUVE D ASCQ',
-          dateMiseAJourSource: '20211214',
           département: 'NORD',
           libelléStatutJuridique: 'Société Anonyme (S.A.)',
           numéroFinessEntitéJuridique: '590000741',
@@ -276,7 +272,6 @@ describe('Récupération des entités juridiques de la source de données FINESS
           adresseTypeVoie: 'RTE',
           adresseVoie: 'DE VEYZIAT',
           commune: 'OYONNAX',
-          dateMiseAJourSource: '20211214',
           département: 'AIN',
           libelléStatutJuridique: "Etablissement Public Intercommunal d'Hospitalisation",
           numéroFinessEntitéJuridique: '010008407',
@@ -289,7 +284,6 @@ describe('Récupération des entités juridiques de la source de données FINESS
           adresseTypeVoie: 'AV',
           adresseVoie: 'DE LA RECONNAISSANCE',
           commune: 'VILLENEUVE D ASCQ',
-          dateMiseAJourSource: '20211214',
           département: 'NORD',
           libelléStatutJuridique: 'Société Anonyme (S.A.)',
           numéroFinessEntitéJuridique: '590000741',
@@ -298,5 +292,19 @@ describe('Récupération des entités juridiques de la source de données FINESS
         },
       ]
     )
+  })
+
+  it('récupère la date de mise à jour du fichier source', () => {
+    // GIVEN
+    mkdirSync(finessLocalPath, { recursive: true })
+    writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, 'empty file')
+
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger)
+
+    // WHEN
+    const dateDeMiseÀJourDuFichierSource = entitéJuridiqueFinessLoader.récupèreLaDateDeMiseÀJourDuFichierSource()
+
+    // THEN
+    expect(dateDeMiseÀJourDuFichierSource).toBe('20211214')
   })
 })
