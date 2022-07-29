@@ -121,7 +121,7 @@ describe('Sauvegarde des entités juridiques', () => {
     await typeOrmEntitéJuridiqueRepository.sauvegarde([entitéJuridiqueMalFormée], nouvelleDateDeMiseÀJour)
 
     // THEN
-    const entitésJuridiquesSauvées = await entitéJuridiqueRepository.find({ order: { numéroFinessEntitéJuridique: 'ASC' } })
+    const entitésJuridiquesSauvées = await entitéJuridiqueRepository.find()
     const entitéJuridiqueAttendu = new EntitéJuridiqueModel()
     entitéJuridiqueAttendu.adresseAcheminement = '01117 OYONNAX CEDEX'
     entitéJuridiqueAttendu.adresseNuméroVoie = '1'

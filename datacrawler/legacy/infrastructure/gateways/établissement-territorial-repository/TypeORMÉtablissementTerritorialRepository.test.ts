@@ -195,8 +195,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
     await typeOrmÉtablissementTerritorialRepository.sauvegarde([établissementTerritorialMalFormé], nouvelleDateDeMiseÀJourDuFichierSource)
 
     // THEN
-    const établissementsTerritoriauxSauvés = await établissementTerritorialIdentitéRepository
-      .find({ order: { numéroFinessÉtablissementTerritorial: 'ASC' } })
+    const établissementsTerritoriauxSauvés = await établissementTerritorialIdentitéRepository.find()
 
     const établissementTerritorialAttendu = new ÉtablissementTerritorialIdentitéModel()
     établissementTerritorialAttendu.adresseAcheminement = '01130 NANTUA'

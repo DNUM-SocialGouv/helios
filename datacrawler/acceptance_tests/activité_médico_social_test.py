@@ -68,12 +68,12 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
         date_du_fichier_ann_errd_ej_et = base_de_données_test.execute(
             f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'"""
         )
-        assert date_du_fichier_ann_errd_ej_et.fetchall() == [(date(2022, 6, 7), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)]
+        assert date_du_fichier_ann_errd_ej_et.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)
 
         date_du_fichier_ann_ms_tdp_et = base_de_données_test.execute(
             f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_MS_TDP_ET.value}'"""
         )
-        assert date_du_fichier_ann_ms_tdp_et.fetchall() == [(date(2022, 6, 7), FichierSource.DIAMANT_ANN_MS_TDP_ET.value)]
+        assert date_du_fichier_ann_ms_tdp_et.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_ANN_MS_TDP_ET.value)
 
     def test_supprime_les_données_existantes_avant_de_sauvegarder_les_données_en_base(self) -> None:
         # GIVEN
@@ -136,12 +136,12 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
         date_du_fichier_ann_errd_ej_et = base_de_données_test.execute(
             f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'"""
         )
-        assert date_du_fichier_ann_errd_ej_et.fetchall() == [(date(2022, 6, 7), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)]
+        assert date_du_fichier_ann_errd_ej_et.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)
 
         date_du_fichier_ann_ms_tdp_et = base_de_données_test.execute(
             f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_MS_TDP_ET.value}'"""
         )
-        assert date_du_fichier_ann_ms_tdp_et.fetchall() == [(date(2022, 6, 7), FichierSource.DIAMANT_ANN_MS_TDP_ET.value)]
+        assert date_du_fichier_ann_ms_tdp_et.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_ANN_MS_TDP_ET.value)
 
     @patch.object(datacrawler.ajoute_les_activités_des_établissements_médico_sociaux, "sauvegarde")
     def test_revient_à_la_situation_initiale_si_l_écriture_des_activités_échoue(self, mocked_sauvegarde: Mock) -> None:
@@ -183,9 +183,9 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
         date_du_fichier_ann_errd_ej_et = base_de_données_test.execute(
             f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'"""
         )
-        assert date_du_fichier_ann_errd_ej_et.fetchall() == [(date(2020, 1, 1), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)]
+        assert date_du_fichier_ann_errd_ej_et.fetchone() == (date(2020, 1, 1), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)
 
         date_du_fichier_ann_ms_tdp_et = base_de_données_test.execute(
             f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_MS_TDP_ET.value}'"""
         )
-        assert date_du_fichier_ann_ms_tdp_et.fetchall() == [(date(2020, 1, 1), FichierSource.DIAMANT_ANN_MS_TDP_ET.value)]
+        assert date_du_fichier_ann_ms_tdp_et.fetchone() == (date(2020, 1, 1), FichierSource.DIAMANT_ANN_MS_TDP_ET.value)
