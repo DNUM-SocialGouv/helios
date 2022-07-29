@@ -31,7 +31,7 @@ Notre infrastructure existante (sftp, scalingo), nos droits et nos variables d'e
 
 ### Déchiffrer un csv à l'aide de notre clef privée
 
-1. Ajouter la clef sur Scalingo
+1. Ajouter la clef pour la variable d'environnement `DIAMANT_KEY` sur Scalingo
 2. Déchiffrer les données :
    ```bash
    echo "$DIAMANT_KEY" | base64 --decode > ./diamant-crypto-key
