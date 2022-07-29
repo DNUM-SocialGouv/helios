@@ -1,3 +1,4 @@
+from datetime import date
 from unittest.mock import Mock, patch
 
 import pandas as pd
@@ -6,13 +7,13 @@ from numpy import NaN
 
 import datacrawler
 from datacrawler.ajoute_les_activités_des_établissements_sanitaires import ajoute_les_activités_des_établissements_sanitaires
-
-from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES
+from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES, FichierSource
 from datacrawler.test_helpers import (
     base_de_données_test,
     mocked_logger,
     sauvegarde_un_établissement_en_base,
     sauvegarde_une_activité_en_base,
+    sauvegarde_une_date_de_mise_à_jour_de_fichier_source,
     sauvegarde_une_entité_juridique_en_base,
     supprime_les_données_des_tables,
 )
@@ -57,6 +58,16 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
 
         pd.testing.assert_frame_equal(activité_enregistrée, activité_attendue)
 
+        date_du_fichier_men_pmsi_annuel = base_de_données_test.execute(
+            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value}'"""
+        )
+        assert date_du_fichier_men_pmsi_annuel.fetchall() == [(date(2022, 6, 7), FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value)]
+
+        date_du_fichier_ann_rpu = base_de_données_test.execute(
+            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_RPU.value}'"""
+        )
+        assert date_du_fichier_ann_rpu.fetchall() == [(date(2022, 6, 7), FichierSource.DIAMANT_ANN_RPU.value)]
+
     def test_supprime_les_données_existantes_avant_de_sauvegarder_les_données_en_base(self) -> None:
         # GIVEN
         chemin_du_fichier_men_pmsi_annuel = "data_set/diamant/MEN_PMSI_ANNUEL_2022_06_07.CSV"
@@ -65,6 +76,8 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
         sauvegarde_une_entité_juridique_en_base("2A0000204", base_de_données_test)
         sauvegarde_un_établissement_en_base("010005239", "010008407", base_de_données_test)
         sauvegarde_un_établissement_en_base("2A0000154", "2A0000204", base_de_données_test)
+        sauvegarde_une_date_de_mise_à_jour_de_fichier_source("20200101", FichierSource.DIAMANT_MEN_PMSI_ANNUEL, base_de_données_test)
+        sauvegarde_une_date_de_mise_à_jour_de_fichier_source("20200101", FichierSource.DIAMANT_ANN_RPU, base_de_données_test)
         activité_existante = pd.DataFrame(
             {
                 "annee": [2017],
@@ -110,6 +123,16 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
 
         pd.testing.assert_frame_equal(activité_enregistrée, activité_attendue)
 
+        date_du_fichier_men_pmsi_annuel = base_de_données_test.execute(
+            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value}'"""
+        )
+        assert date_du_fichier_men_pmsi_annuel.fetchall() == [(date(2022, 6, 7), FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value)]
+
+        date_du_fichier_ann_rpu = base_de_données_test.execute(
+            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_RPU.value}'"""
+        )
+        assert date_du_fichier_ann_rpu.fetchall() == [(date(2022, 6, 7), FichierSource.DIAMANT_ANN_RPU.value)]
+
     @patch.object(datacrawler.ajoute_les_activités_des_établissements_sanitaires, "sauvegarde")
     def test_revient_à_la_situation_initiale_si_l_écriture_des_activités_échoue(self, mocked_sauvegarde: Mock) -> None:
         # GIVEN
@@ -117,6 +140,8 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
         chemin_du_fichier_ann_rpu = "data_set/diamant/ANN_RPU_2022_06_23.CSV"
         sauvegarde_une_entité_juridique_en_base("010008407", base_de_données_test)
         sauvegarde_un_établissement_en_base("010003598", "010008407", base_de_données_test)
+        sauvegarde_une_date_de_mise_à_jour_de_fichier_source("20200101", FichierSource.DIAMANT_MEN_PMSI_ANNUEL, base_de_données_test)
+        sauvegarde_une_date_de_mise_à_jour_de_fichier_source("20200101", FichierSource.DIAMANT_ANN_RPU, base_de_données_test)
         activité_existante = pd.DataFrame(
             {
                 "annee": [2017, 2018],
@@ -148,3 +173,13 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
         table_activité = pd.read_sql_table(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, base_de_données_test)
 
         pd.testing.assert_frame_equal(table_activité, activité_existante)
+
+        date_du_fichier_men_pmsi_annuel = base_de_données_test.execute(
+            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value}'"""
+        )
+        assert date_du_fichier_men_pmsi_annuel.fetchall() == [(date(2020, 1, 1), FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value)]
+
+        date_du_fichier_ann_rpu = base_de_données_test.execute(
+            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_RPU.value}'"""
+        )
+        assert date_du_fichier_ann_rpu.fetchall() == [(date(2020, 1, 1), FichierSource.DIAMANT_ANN_RPU.value)]
