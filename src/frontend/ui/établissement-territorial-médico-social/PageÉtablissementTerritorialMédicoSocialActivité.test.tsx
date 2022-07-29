@@ -5,10 +5,10 @@ import { fakeFrontDependencies, renderFakeComponent } from '../../testHelper'
 import { PageÉtablissementTerritorialMédicoSocial } from './PageÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from './ÉtablissementTerritorialMédicoSocialViewModel'
 
-const { wording } = fakeFrontDependencies
+const { paths, wording } = fakeFrontDependencies
 
 describe('La page Établissement territorial Médico-social - Bloc activité', () => {
-  const établissementTerritorialMédicoSocial = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording)
+  const établissementTerritorialMédicoSocial = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths)
 
   it.each(
     [
@@ -154,7 +154,7 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
         typeÉtablissement : 'S',
         téléphone : '0123456789',
       },
-    }, wording)
+    }, wording, paths)
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
     const indicateurs = within(activité).getAllByRole('listitem')
@@ -239,7 +239,7 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
         typeÉtablissement : 'S',
         téléphone : '0123456789',
       },
-    }, wording)
+    }, wording, paths)
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
     const indicateurs = within(activité).getAllByRole('listitem')
@@ -397,7 +397,7 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
         typeÉtablissement : 'S',
         téléphone : '0123456789',
       },
-    }, wording)
+    }, wording, paths)
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansActivité} />)
@@ -471,7 +471,7 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
         typeÉtablissement : 'S',
         téléphone : '0123456789',
       },
-    }, wording)
+    }, wording, paths)
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansActivité} />)
@@ -505,7 +505,7 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
         typeÉtablissement : 'S',
         téléphone : '0123456789',
       },
-    }, wording)
+    }, wording, paths)
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansActivité} />)

@@ -98,7 +98,7 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
   it('affiche le chemin jusqu’à la page établissement territorial médico-social', () => {
     // GIVEN
     const établissementTerritorialMédicoSocialViewModel =
-        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording)
+        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths)
 
     // WHEN
     renderFakeComponent(
@@ -126,7 +126,7 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
 
   it('affiche le chemin jusqu’à la page établissement territorial sanitaire', () => {
     // GIVEN
-    const établissementTerritorialSanitaireViewModel = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording)
+    const établissementTerritorialSanitaireViewModel = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths)
 
     // WHEN
     renderFakeComponent(
