@@ -30,11 +30,11 @@ Nous pensons que :
     - nom de la clef (pour cet exemple, "helios")
     - adresse e-mail (l'adresse e-mail technique)
     - pas besoin de passphrase
-3. Exporter la clef publique (à envoyer à DIAMANT) :
+2. Exporter la clef publique (à envoyer à DIAMANT) :
     ```bash
     gpg --output helios-chiffrement-publique --export --armor helios
     ```
-4. Exporter la clef privée (à mettre sur SCALINGO) :
+3. Exporter la clef privée (à mettre sur SCALINGO) :
     ```bash
     gpg --output helios-chiffrement-privée --export-secret-key --armor helios
     ```
