@@ -5,18 +5,19 @@ from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
+from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
-from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES
-from datacrawler.load.sauvegarde import sauvegarde
+from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, FichierSource
+from datacrawler.load.sauvegarde import mets_à_jour_la_date_de_mise_à_jour_du_fichier_source, sauvegarde
 from datacrawler.transform.transforme_les_activités_des_établissements_sanitaires import transforme_les_activités_des_établissements_sanitaires
 from datacrawler.transform.équivalences_diamant_helios import (
+    colonnes_à_lire_ann_rpu,
     colonnes_à_lire_men_pmsi_annuel,
     extrais_l_equivalence_des_types_des_colonnes,
-    équivalences_diamant_men_pmsi_annuel_helios,
-    colonnes_à_lire_ann_rpu,
     équivalences_diamant_ann_rpu_helios,
+    équivalences_diamant_men_pmsi_annuel_helios,
 )
 
 
@@ -29,11 +30,13 @@ def ajoute_les_activités_des_établissements_sanitaires(
         colonnes_à_lire_men_pmsi_annuel,
         extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_men_pmsi_annuel_helios),
     )
+    date_du_fichier_men_pmsi_annuel = extrais_la_date_du_nom_de_fichier(chemin_du_fichier_men_pmsi_annuel)
     données_ann_rpu = lis_le_fichier_csv(
         chemin_du_fichier_ann_rpu,
         colonnes_à_lire_ann_rpu,
         extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_rpu_helios),
     )
+    date_du_fichier_ann_rpu = extrais_la_date_du_nom_de_fichier(chemin_du_fichier_ann_rpu)
     numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)
 
     activités_des_établissements_sanitaires = transforme_les_activités_des_établissements_sanitaires(
@@ -44,6 +47,8 @@ def ajoute_les_activités_des_établissements_sanitaires(
         connection.execute(f"DELETE FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES};")
         logger.info("Anciennes activités supprimées")
         sauvegarde(connection, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, activités_des_établissements_sanitaires)
+        mets_à_jour_la_date_de_mise_à_jour_du_fichier_source(connection, date_du_fichier_men_pmsi_annuel, FichierSource.DIAMANT_MEN_PMSI_ANNUEL)
+        mets_à_jour_la_date_de_mise_à_jour_du_fichier_source(connection, date_du_fichier_ann_rpu, FichierSource.DIAMANT_ANN_RPU)
     logger.info(f"{activités_des_établissements_sanitaires.shape[0]} activités sauvegardées")
 
 

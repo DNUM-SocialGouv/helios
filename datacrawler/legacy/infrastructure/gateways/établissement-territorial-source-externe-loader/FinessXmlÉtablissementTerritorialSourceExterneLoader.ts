@@ -231,9 +231,6 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
 
     const cheminDuFichierCatégorie = this.récupèreLeCheminDuFichierCatégorie(this.localPath)
 
-    const dateDeMiseAJourDeLaSource = this.récupèreLaDateDeMiseAJourDeLaSource(cheminDuFichierÉtablissementTerritorialIdentité)
-    this.logger.info(`[FINESS] Date de mise à jour des fichiers FINESS des établissements territoriaux : ${dateDeMiseAJourDeLaSource}`)
-
     const catégories = this.convertXmlToJs.exécute<CatégorieFluxFiness>(cheminDuFichierCatégorie)
 
     const établissementTerritorialFluxFinessIdentité = this.convertXmlToJs.exécute
@@ -246,7 +243,17 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
 
     return établissementsTerritoriauxFinessOuverts
       .map((établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) =>
-        this.construisÉtablissementTerritorialIdentité(établissementTerritorialIdentitéFiness, dateDeMiseAJourDeLaSource, catégories))
+        this.construisÉtablissementTerritorialIdentité(établissementTerritorialIdentitéFiness, catégories))
+  }
+
+  récupèreLaDateDeMiseÀJourDuFichierSource(): string {
+    const cheminDuFichierÉtablissementTerritorialIdentité = this.récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(this.localPath)
+
+    const dateDeMiseAJourDeLaFichierSource =
+      cheminDuFichierÉtablissementTerritorialIdentité.split(this.préfixeDuFichierÉtablissementTerritorialIdentité)[1].slice(0, 8)
+    this.logger.info(`[FINESS] Date de mise à jour des fichiers FINESS des établissements territoriaux : ${dateDeMiseAJourDeLaFichierSource}`)
+
+    return dateDeMiseAJourDeLaFichierSource
   }
 
   private conserveLesÉtablissementsOuverts(
@@ -286,13 +293,8 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
     return localPath + '/finess/nomenclature/' + fichiersDuRépertoireCatégorie.filter((fichier) => fichier.includes(this.préfixeDuFichierCatégorie))
   }
 
-  private récupèreLaDateDeMiseAJourDeLaSource(cheminDuFichierÉtablissementTerritorial: string): string {
-    return cheminDuFichierÉtablissementTerritorial.split(this.préfixeDuFichierÉtablissementTerritorialIdentité)[1].slice(0, 8)
-  }
-
   private construisÉtablissementTerritorialIdentité(
     établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness,
-    dateMiseAJourSource: string,
     catégories: CatégorieFluxFiness
   ): ÉtablissementTerritorialIdentité {
     const valueOrEmpty = (value?: string): string => value || ''
@@ -305,7 +307,6 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
       catégorieÉtablissement: valueOrEmpty(établissementTerritorialIdentitéFiness.categetab._text),
       commune: valueOrEmpty(établissementTerritorialIdentitéFiness.libcommune._text),
       courriel: valueOrEmpty(établissementTerritorialIdentitéFiness.courriel._text),
-      dateMiseAJourSource,
       domaine: this.construisLeDomaine(établissementTerritorialIdentitéFiness, catégories),
       département: valueOrEmpty(établissementTerritorialIdentitéFiness.libdepartement._text),
       libelléCatégorieÉtablissement: valueOrEmpty(établissementTerritorialIdentitéFiness.libcategetab._text),

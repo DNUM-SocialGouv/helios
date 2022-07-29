@@ -9,7 +9,6 @@ export type ÉtablissementTerritorialIdentité = Readonly<{
   commune: string
   courriel: string
   département: string
-  dateMiseAJourSource: string
   domaine: DomaineÉtablissementTerritorial
   libelléCatégorieÉtablissement: string
   numéroFinessEntitéJuridique: string

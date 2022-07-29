@@ -14,6 +14,7 @@ export class MetsÀJourLesEntitésJuridiquesUseCase {
 
   async exécute(): Promise<void> {
     try {
+      const dateDeMiseAJourDuFichierSource = this.entitéJuridiqueSourceExterneLoader.récupèreLaDateDeMiseÀJourDuFichierSource()
       const entitésJuridiquesOuvertes = this.entitéJuridiqueSourceExterneLoader.récupèreLesEntitésJuridiquesOuvertes()
       const entitéJuridiquesSauvegardées = await this.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques()
 
@@ -21,7 +22,7 @@ export class MetsÀJourLesEntitésJuridiquesUseCase {
 
       await this.entitéJuridiqueHeliosRepository.supprime(entitésJuridiquesÀSupprimer)
 
-      await this.entitéJuridiqueHeliosRepository.sauvegarde(entitésJuridiquesOuvertes)
+      await this.entitéJuridiqueHeliosRepository.sauvegarde(entitésJuridiquesOuvertes, dateDeMiseAJourDuFichierSource)
     } catch (error) {
       throw new HeliosError(error.message)
     }

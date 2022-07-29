@@ -1,5 +1,6 @@
-import { DataSource } from 'typeorm'
+import { DataSource, EntityManager } from 'typeorm'
 
+import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
 import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
@@ -11,10 +12,16 @@ export class TypeOrmÉtablissementTerritorialRepository implements Établissemen
 
   constructor(private readonly orm: Promise<DataSource>, private logger: Logger) {}
 
-  async sauvegarde(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[]): Promise<void> {
-    await this.sauvegardeLesÉtablissementsTerritoriaux(établissementsTerritoriauxIdentité)
-    this.logger.info(`Sauvegarde ${établissementsTerritoriauxIdentité.length} fiches d’identité d’établissements territoriaux.`)
-    await this.metsÀJourLaDateDeMiseÀJour(établissementsTerritoriauxIdentité)
+  async sauvegarde(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[], dateDeMiseÀJourDuFichierSource: string): Promise<void> {
+    await (await this.orm).transaction(async (transactionalEntityManager: EntityManager) => {
+      try {
+        await this.sauvegardeLesÉtablissementsTerritoriaux(transactionalEntityManager, établissementsTerritoriauxIdentité)
+        this.logger.info(`Sauvegarde ${établissementsTerritoriauxIdentité.length} fiches d’identité d’établissements territoriaux.`)
+        await this.metsÀJourLaDateDeMiseÀJourDuFichierSource(transactionalEntityManager, dateDeMiseÀJourDuFichierSource)
+      } catch (error) {
+        this.logger.error(error)
+      }
+    })
   }
 
   async supprime(numérosFinessDesÉtablissementsTerritoriaux: string[]): Promise<void> {
@@ -23,6 +30,27 @@ export class TypeOrmÉtablissementTerritorialRepository implements Établissemen
     await this.supprimeLesÉtablissementsTerritoriaux(établissementsTerritoriauxÀSupprimer)
 
     this.logger.info(`Supprime ${établissementsTerritoriauxÀSupprimer.length} fiches d’identité d’établissements territoriaux.`)
+  }
+
+  private async metsÀJourLaDateDeMiseÀJourDuFichierSource(entityManager: EntityManager, dateDeMiseAJourDuFichierSource: string): Promise<void> {
+    await entityManager
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .upsert([
+        {
+          dernièreMiseÀJour: dateDeMiseAJourDuFichierSource,
+          fichier: FichierSource.FINESS_CS1400102,
+        },
+      ], ['fichier'])
+
+    // TODO : à enlever avec HEL-178
+    await entityManager
+      .getRepository(DateMiseÀJourSourceModel)
+      .upsert([
+        {
+          dernièreMiseÀJour: dateDeMiseAJourDuFichierSource,
+          source: SourceDeDonnées.FINESS,
+        },
+      ], ['source'])
   }
 
   private async supprimeLesÉtablissementsTerritoriaux(établissementsTerritoriauxÀSupprimer: ÉtablissementTerritorialIdentitéModel[]) {
@@ -35,25 +63,13 @@ export class TypeOrmÉtablissementTerritorialRepository implements Établissemen
     )) as ÉtablissementTerritorialIdentitéModel[]
   }
 
-  private async metsÀJourLaDateDeMiseÀJour(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[]) {
-    await (await this.dateMiseÀJourRepository())
-      .upsert([
-        {
-          dernièreMiseÀJour: établissementsTerritoriauxIdentité[0].dateMiseAJourSource,
-          source: SourceDeDonnées.FINESS,
-        },
-      ], ['source'])
-  }
-
-  private async sauvegardeLesÉtablissementsTerritoriaux(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[]) {
-    await (await this.repository()).save(établissementsTerritoriauxIdentité, { chunk: this.TAILLE_DE_FRAGMENT })
+  private async sauvegardeLesÉtablissementsTerritoriaux(entityManager: EntityManager, établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[]) {
+    await entityManager
+      .getRepository(ÉtablissementTerritorialIdentitéModel)
+      .save(établissementsTerritoriauxIdentité, { chunk: this.TAILLE_DE_FRAGMENT })
   }
 
   private async repository() {
     return (await this.orm).getRepository(ÉtablissementTerritorialIdentitéModel)
-  }
-
-  private async dateMiseÀJourRepository() {
-    return (await this.orm).getRepository(DateMiseÀJourSourceModel)
   }
 }

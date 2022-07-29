@@ -1,14 +1,21 @@
+from datetime import date
+
 import pandas as pd
 
-from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, \
-    TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES
-from datacrawler.load.sauvegarde import sauvegarde
+from datacrawler.load.nom_des_tables import (
+    TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
+    TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
+    TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES,
+    FichierSource,
+)
+from datacrawler.load.sauvegarde import mets_à_jour_la_date_de_mise_à_jour_du_fichier_source, sauvegarde
 from datacrawler.test_helpers import (
     base_de_données_test,
+    helios_activité_sanitaire_builder,
     sauvegarde_un_établissement_en_base,
+    sauvegarde_une_date_de_mise_à_jour_de_fichier_source,
     sauvegarde_une_entité_juridique_en_base,
     supprime_les_données_des_tables,
-    helios_activité_sanitaire_builder,
 )
 from datacrawler.transform.équivalences_diamant_helios import index_des_activités
 
@@ -88,3 +95,17 @@ class TestSauvegarde:
             .sort_index(axis=1)
         )
         pd.testing.assert_frame_equal(activité_attendue, activité_en_base)
+
+    def test_mets_à_jour_la_date_de_mise_à_jour_d_un_fichier_source_même_si_elle_existe_déjà(self) -> None:
+        # GIVEN
+        fichier_source = FichierSource.DIAMANT_ANN_ERRD_EJ_ET
+        sauvegarde_une_date_de_mise_à_jour_de_fichier_source("20200101", fichier_source, base_de_données_test)
+        nouvelle_date_de_mise_à_jour = "20220728"
+
+        # WHEN
+        with base_de_données_test.connect() as connection:
+            mets_à_jour_la_date_de_mise_à_jour_du_fichier_source(connection, nouvelle_date_de_mise_à_jour, fichier_source)
+
+        # THEN
+        date_sauvée = base_de_données_test.execute(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{fichier_source.value}'""")
+        assert date_sauvée.fetchall() == [(date(2022, 7, 28), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)]

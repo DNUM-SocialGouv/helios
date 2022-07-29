@@ -5,7 +5,12 @@ import pandas as pd
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 
-from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES
+from datacrawler.load.nom_des_tables import (
+    TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
+    TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
+    TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES,
+    FichierSource,
+)
 from datacrawler.transform.équivalences_diamant_helios import index_des_activités
 
 base_de_données_test = create_engine("postgresql://helios:h3li0s@localhost:5433/helios")
@@ -80,10 +85,18 @@ def supprime_les_données_des_tables(base_de_données: Engine) -> None:
     base_de_données.execute("DELETE FROM etablissement_territorial;")
     base_de_données.execute(f"DELETE FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX};")
     base_de_données.execute(f"DELETE FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES};")
+    base_de_données.execute(f"DELETE FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES};")
 
 
 def sauvegarde_une_activité_en_base(activité: pd.DataFrame, base_de_données: Engine, table: str) -> None:
     activité.set_index(index_des_activités).to_sql(name=table, con=base_de_données, index=True, if_exists="append")
+
+
+def sauvegarde_une_date_de_mise_à_jour_de_fichier_source(date_de_mise_à_jour: str, fichier_source: FichierSource, base_de_données: Engine) -> None:
+    base_de_données.execute(
+        f"""INSERT INTO {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} (derniere_mise_a_jour, fichier)
+            VALUES ('{date_de_mise_à_jour}', '{fichier_source.value}');"""
+    )
 
 
 def csv_ann_ms_tdp_et_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:

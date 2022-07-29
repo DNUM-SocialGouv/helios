@@ -1,3 +1,4 @@
+from datetime import date
 from unittest.mock import Mock, patch
 
 import pandas as pd
@@ -6,12 +7,13 @@ from numpy import NaN
 
 import datacrawler
 from datacrawler.ajoute_les_activités_des_établissements_médico_sociaux import ajoute_les_activités_des_établissements_médico_sociaux
-from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX
+from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES, FichierSource
 from datacrawler.test_helpers import (
     base_de_données_test,
     mocked_logger,
     sauvegarde_un_établissement_en_base,
     sauvegarde_une_activité_en_base,
+    sauvegarde_une_date_de_mise_à_jour_de_fichier_source,
     sauvegarde_une_entité_juridique_en_base,
     supprime_les_données_des_tables,
 )
@@ -63,6 +65,16 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
 
         pd.testing.assert_frame_equal(data_frame, data_frame_attendu)
 
+        date_du_fichier_ann_errd_ej_et = base_de_données_test.execute(
+            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'"""
+        )
+        assert date_du_fichier_ann_errd_ej_et.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)
+
+        date_du_fichier_ann_ms_tdp_et = base_de_données_test.execute(
+            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_MS_TDP_ET.value}'"""
+        )
+        assert date_du_fichier_ann_ms_tdp_et.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_ANN_MS_TDP_ET.value)
+
     def test_supprime_les_données_existantes_avant_de_sauvegarder_les_données_en_base(self) -> None:
         # GIVEN
         chemin_du_fichier_ann_errd_ej_et = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
@@ -72,6 +84,8 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
         sauvegarde_un_établissement_en_base("010786259", "010008407", base_de_données_test)
         sauvegarde_un_établissement_en_base("010789717", "010008407", base_de_données_test)
         sauvegarde_un_établissement_en_base("010001261", "010008407", base_de_données_test)
+        sauvegarde_une_date_de_mise_à_jour_de_fichier_source("20200101", FichierSource.DIAMANT_ANN_ERRD_EJ_ET, base_de_données_test)
+        sauvegarde_une_date_de_mise_à_jour_de_fichier_source("20200101", FichierSource.DIAMANT_ANN_MS_TDP_ET, base_de_données_test)
         table_activité_existante = pd.DataFrame(
             {
                 "annee": [2018, 2019],
@@ -119,6 +133,16 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
 
         pd.testing.assert_frame_equal(data_frame, data_frame_attendu)
 
+        date_du_fichier_ann_errd_ej_et = base_de_données_test.execute(
+            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'"""
+        )
+        assert date_du_fichier_ann_errd_ej_et.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)
+
+        date_du_fichier_ann_ms_tdp_et = base_de_données_test.execute(
+            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_MS_TDP_ET.value}'"""
+        )
+        assert date_du_fichier_ann_ms_tdp_et.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_ANN_MS_TDP_ET.value)
+
     @patch.object(datacrawler.ajoute_les_activités_des_établissements_médico_sociaux, "sauvegarde")
     def test_revient_à_la_situation_initiale_si_l_écriture_des_activités_échoue(self, mocked_sauvegarde: Mock) -> None:
         # GIVEN
@@ -126,6 +150,8 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
         sauvegarde_un_établissement_en_base("010003598", "010008407", base_de_données_test)
         chemin_du_fichier_ann_errd_ej_et = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
         chemin_du_fichier_ann_ms_tdp_et = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
+        sauvegarde_une_date_de_mise_à_jour_de_fichier_source("20200101", FichierSource.DIAMANT_ANN_ERRD_EJ_ET, base_de_données_test)
+        sauvegarde_une_date_de_mise_à_jour_de_fichier_source("20200101", FichierSource.DIAMANT_ANN_MS_TDP_ET, base_de_données_test)
         table_activité_existante = pd.DataFrame(
             {
                 "annee": [2018, 2019],
@@ -153,3 +179,13 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
         table_activité = pd.read_sql_table(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, base_de_données_test)
 
         pd.testing.assert_frame_equal(table_activité, table_activité_existante)
+
+        date_du_fichier_ann_errd_ej_et = base_de_données_test.execute(
+            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'"""
+        )
+        assert date_du_fichier_ann_errd_ej_et.fetchone() == (date(2020, 1, 1), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)
+
+        date_du_fichier_ann_ms_tdp_et = base_de_données_test.execute(
+            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_MS_TDP_ET.value}'"""
+        )
+        assert date_du_fichier_ann_ms_tdp_et.fetchone() == (date(2020, 1, 1), FichierSource.DIAMANT_ANN_MS_TDP_ET.value)

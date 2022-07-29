@@ -4,7 +4,7 @@ import { MetsÀJourLesEntitésJuridiquesUseCase } from './MetsÀJourLesEntitésJ
 describe('Mise à jour des entités juridiques', () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
 
-  it('récupère les entités juridiques des sources de données externes', async () => {
+  it('récupère les entités juridiques des sources de données externes avec la date de mise à jour de leur fichier source', async () => {
     // GIVEN
     const sauvegarderLesEntitésJuridiques = new MetsÀJourLesEntitésJuridiquesUseCase(
       fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader,
@@ -12,6 +12,7 @@ describe('Mise à jour des entités juridiques', () => {
       fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader
     )
 
+    jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, 'récupèreLaDateDeMiseÀJourDuFichierSource').mockReturnValue('')
     jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, 'récupèreLesEntitésJuridiquesOuvertes').mockReturnValue([])
     jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader, 'récupèreLeNuméroFinessDesEntitésJuridiques').mockResolvedValue([])
 
@@ -19,11 +20,12 @@ describe('Mise à jour des entités juridiques', () => {
     await sauvegarderLesEntitésJuridiques.exécute()
 
     // THEN
+    expect(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader.récupèreLaDateDeMiseÀJourDuFichierSource).toHaveBeenCalledWith()
     expect(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader.récupèreLesEntitésJuridiquesOuvertes).toHaveBeenCalledWith()
     expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques).toHaveBeenCalledWith()
   })
 
-  it('sauvegarde les entités juridiques des sources de données externes', async () => {
+  it('sauvegarde les entités juridiques des sources de données externes avec la date de mise à jour de leur fichier source', async () => {
     // GIVEN
     const sauvegarderLesEntitésJuridiques = new MetsÀJourLesEntitésJuridiquesUseCase(
       fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader,
@@ -34,6 +36,7 @@ describe('Mise à jour des entités juridiques', () => {
       uneEntitéJuridique,
       uneSecondeEntitéJuridique,
     ]
+    jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, 'récupèreLaDateDeMiseÀJourDuFichierSource').mockReturnValue('20200101')
     jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, 'récupèreLesEntitésJuridiquesOuvertes').mockReturnValue(entitésJuridiques)
     jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader, 'récupèreLeNuméroFinessDesEntitésJuridiques').mockResolvedValue([])
 
@@ -41,7 +44,7 @@ describe('Mise à jour des entités juridiques', () => {
     await sauvegarderLesEntitésJuridiques.exécute()
 
     // THEN
-    expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository.sauvegarde).toHaveBeenCalledWith(entitésJuridiques)
+    expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository.sauvegarde).toHaveBeenCalledWith(entitésJuridiques, '20200101')
   })
 
   it('extrais les entités juridiques qui ont fermé pour les supprimer', async () => {

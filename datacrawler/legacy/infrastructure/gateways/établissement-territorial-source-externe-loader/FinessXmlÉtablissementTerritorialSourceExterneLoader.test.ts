@@ -128,7 +128,6 @@ describe('Récupération des établissements territoriaux de la source de donné
           catégorieÉtablissement: '355',
           commune: 'NANTUA',
           courriel: '',
-          dateMiseAJourSource: '20211214',
           domaine: DomaineÉtablissementTerritorial.SANITAIRE,
           département: 'AIN',
           libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
@@ -147,7 +146,6 @@ describe('Récupération des établissements territoriaux de la source de donné
           catégorieÉtablissement: '001',
           commune: 'OYONNAX',
           courriel: '',
-          dateMiseAJourSource: '20211214',
           domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
           département: 'AIN',
           libelléCatégorieÉtablissement: 'Autres lits de m.R.',
@@ -256,7 +254,6 @@ describe('Récupération des établissements territoriaux de la source de donné
           catégorieÉtablissement: '355',
           commune: 'NANTUA',
           courriel: '',
-          dateMiseAJourSource: '20211214',
           domaine: DomaineÉtablissementTerritorial.SANITAIRE,
           département: 'AIN',
           libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
@@ -275,7 +272,6 @@ describe('Récupération des établissements territoriaux de la source de donné
           catégorieÉtablissement: '001',
           commune: 'OYONNAX',
           courriel: '',
-          dateMiseAJourSource: '20211214',
           domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
           département: 'AIN',
           libelléCatégorieÉtablissement: 'Autres lits de m.R.',
@@ -364,7 +360,6 @@ describe('Récupération des établissements territoriaux de la source de donné
           catégorieÉtablissement: '355',
           commune: 'NANTUA',
           courriel: '',
-          dateMiseAJourSource: '20211214',
           domaine: DomaineÉtablissementTerritorial.SANITAIRE,
           département: 'AIN',
           libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
@@ -450,7 +445,6 @@ describe('Récupération des établissements territoriaux de la source de donné
           catégorieÉtablissement: '355',
           commune: 'NANTUA',
           courriel: '',
-          dateMiseAJourSource: '20211214',
           domaine: DomaineÉtablissementTerritorial.SANITAIRE,
           département: 'AIN',
           libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
@@ -469,7 +463,6 @@ describe('Récupération des établissements territoriaux de la source de donné
           catégorieÉtablissement: '001',
           commune: 'OYONNAX',
           courriel: '',
-          dateMiseAJourSource: '20211214',
           domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
           département: 'AIN',
           libelléCatégorieÉtablissement: 'Autres lits de m.R.',
@@ -482,5 +475,21 @@ describe('Récupération des établissements territoriaux de la source de donné
         },
       ]
     )
+  })
+
+  it('récupère la date de mise à jour du fichier source', () => {
+    // GIVEN
+    mkdirSync(finessLocalPath, { recursive: true })
+    writeFileSync(`${finessLocalPath}/finess_cs1400102_stock_20211214-0336.xml`, 'empty file')
+
+    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(
+      new NodeXmlToJs(), localPath, fakeLogger
+    )
+
+    // WHEN
+    const dateDeMiseÀJourDuFichierSource = établissementTerritorialFinessLoader.récupèreLaDateDeMiseÀJourDuFichierSource()
+
+    // THEN
+    expect(dateDeMiseÀJourDuFichierSource).toBe('20211214')
   })
 })
