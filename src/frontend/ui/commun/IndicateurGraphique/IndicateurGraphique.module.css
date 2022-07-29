@@ -4,8 +4,11 @@
 
 .titraille {
   margin-bottom: .5rem;
+  margin-right: .5rem;
 }
 
-.titraille abbr {
-  margin-right: .5rem;
+.mise-à-jour-source {
+  align-items: end;
+  display: flex;
+  flex-wrap: wrap;
 }

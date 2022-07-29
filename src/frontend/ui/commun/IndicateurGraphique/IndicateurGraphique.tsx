@@ -15,7 +15,9 @@ type IndicateurProps = Readonly<{
   children: ReactChild
 }>
 
-export const IndicateurGraphique = ({ contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source, children }: IndicateurProps) => {
+export const IndicateurGraphique = (
+  { contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source, children }: IndicateurProps
+) => {
   const { wording } = useDependencies()
   const [estCeOuvert, setEstCeOuvert] = useState(false)
 
@@ -33,10 +35,12 @@ export const IndicateurGraphique = ({ contenuInfoBulle, dateDeMiseÀJour, identi
         <p className="fr-m-0">
           {nomDeLIndicateur}
         </p>
-        <p className={`fr-text--xs ${styles['titraille']}`}>
-          {miseÀJour}
-          {wordingSource}
-          {source}
+        <div className={styles['mise-à-jour-source']}>
+          <p className={`fr-text--xs ${styles['titraille']}`}>
+            {miseÀJour}
+            {wordingSource}
+            {source}
+          </p>
           <button
             aria-controls={`nom-info-bulle-${identifiant}`}
             className="fr-btn fr-fi-information-line fr-btn--icon-left fr-btn--tertiary fr-btn--sm"
@@ -46,7 +50,7 @@ export const IndicateurGraphique = ({ contenuInfoBulle, dateDeMiseÀJour, identi
           >
             {wording.DÉTAILS}
           </button>
-        </p>
+        </div>
       </div>
       <div className={styles['graphe']}>
         {children}

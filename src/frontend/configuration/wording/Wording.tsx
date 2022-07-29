@@ -112,6 +112,9 @@ export interface Wording {
   // Source
   readonly FINESS: ReactElement
   readonly DIAMANT: ReactElement
+  readonly CNSA: ReactElement
+  readonly TDB_PERF: ReactElement
+  readonly PMSI: ReactElement
 
   // Footer
   readonly PRESENTATION: string

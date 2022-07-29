@@ -133,6 +133,9 @@ export class WordingFr implements Wording {
   // Source
   readonly FINESS: ReactElement = (<abbr title="Fichier National des Établissements Sanitaires et Sociaux">FINESS</abbr>)
   readonly DIAMANT: ReactElement = (<abbr title="Décisionnel Inter ARS pour la Maîtrise et ANTicipation">DIAMANT</abbr>)
+  readonly CNSA: ReactElement = (<abbr title="Caisse nationale de solidarité pour l‘autonomie">CNSA</abbr>)
+  readonly TDB_PERF: ReactElement = (<abbr title="Tableau de bord de la performance dans le secteur médico-social">TdB Perf</abbr>)
+  readonly PMSI: ReactElement = (<abbr title="Programme de médicalisation des systèmes d‘information">PMSI</abbr>)
 
   // Footer
   readonly PRESENTATION: string = 'Texte sur 3 lignes à demander à Daisy'
