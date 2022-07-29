@@ -22,22 +22,21 @@ Nous pensons que :
 
 ### Créer la paire de clefs
 
-1. Installer gpg (à voir selon l'OS, j'avais déjà la commande sur ma machine)
-2. Générer les clefs :
+1. Générer les clefs :
     ```bash
     gpg --generate-key
     ```
     Il faut alors renseigner quelques informations : 
-    - nom de la clef
-    - adresse e-mail
+    - nom de la clef (pour cet exemple, "helios")
+    - adresse e-mail (l'adresse e-mail technique)
     - pas besoin de passphrase
 3. Exporter la clef publique (à envoyer à DIAMANT) :
     ```bash
-    gpg --export --armor helios
+    gpg --output helios-chiffrement-publique --export --armor helios
     ```
 4. Exporter la clef privée (à mettre sur SCALINGO) :
     ```bash
-    gpg --export-secret-key --armor helios
+    gpg --output helios-chiffrement-privée --export-secret-key --armor helios
     ```
 
 ### Chiffrer un document
