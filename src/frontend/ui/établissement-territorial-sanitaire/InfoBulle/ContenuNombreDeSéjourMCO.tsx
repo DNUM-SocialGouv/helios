@@ -9,7 +9,6 @@ type ContenuDuNombreDeSéjourMCOProps = Readonly<{
 
 export const ContenuNombreDeSéjourMCO = ({ dateDeMiseÀJour, source }: ContenuDuNombreDeSéjourMCOProps) => {
   const { wording } = useDependencies()
-
   return (
     <>
       <p>

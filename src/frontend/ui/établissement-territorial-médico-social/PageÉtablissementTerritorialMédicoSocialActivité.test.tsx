@@ -20,7 +20,7 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
       [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5, 'TdB Perf', 'Tableau de bord de la performance dans le secteur médico-social'],
       [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6, 'TdB Perf', 'Tableau de bord de la performance dans le secteur médico-social'],
     ]
-  )('affiche les informations d’un indicateurs', (titreSection, identifiant, sourceOrigineAttendue, abbreviationSourceOrigineAttendue) => {
+  )('affiche les informations d’un indicateurs', (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
 
@@ -35,8 +35,8 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
     expect(transcription).toHaveAttribute('aria-expanded', 'false')
     const abréviationSourceFournisseur = within(indicateurs[identifiant]).getAllByText('DIAMANT', { selector: 'abbr' })
     expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
-    const abbreviationSourceOrigine = within(indicateurs[identifiant]).getAllByText(sourceOrigineAttendue, { selector: 'abbr' })
-    expect(abbreviationSourceOrigine[0]).toHaveAttribute('title', abbreviationSourceOrigineAttendue)
+    const abréviationSourceOrigine = within(indicateurs[identifiant]).getAllByText(sourceOrigineAttendue, { selector: 'abbr' })
+    expect(abréviationSourceOrigine[0]).toHaveAttribute('title', abréviationSourceOrigineAttendue)
     const détails = within(indicateurs[identifiant]).getByRole('button', { name: wording.DÉTAILS })
     expect(détails).toHaveAttribute('aria-controls', `nom-info-bulle-activite-${identifiant}`)
     expect(détails).toHaveAttribute('data-fr-opened', 'false')
@@ -267,7 +267,7 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
       [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5, 'TdB Perf', 'Tableau de bord de la performance dans le secteur médico-social'],
       [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6, 'TdB Perf', 'Tableau de bord de la performance dans le secteur médico-social'],
     ]
-  )('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails"', (titreSection, identifiant, sourceOrigineAttendue, abbreviationSourceOrigineAttendue) => {
+  )('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails"', (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
     // GIVEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
@@ -284,8 +284,8 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
     expect(fermer).toBeInTheDocument()
     const abréviationSourceFournisseur = within(infoBulle).getAllByText('DIAMANT', { selector: 'abbr' })
     expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
-    const abbreviationSourceOrigine = within(infoBulle).getAllByText(sourceOrigineAttendue, { selector: 'abbr' })
-    expect(abbreviationSourceOrigine[0]).toHaveAttribute('title', abbreviationSourceOrigineAttendue)
+    const abréviationSourceOrigine = within(infoBulle).getAllByText(sourceOrigineAttendue, { selector: 'abbr' })
+    expect(abréviationSourceOrigine[0]).toHaveAttribute('title', abréviationSourceOrigineAttendue)
     const élémentsDeCompréhension = within(infoBulle).getByRole('region', { name: wording.ÉLÉMENTS_DE_COMPRÉHENSION })
     expect(élémentsDeCompréhension).toBeInTheDocument()
     const fréquence = within(infoBulle).getByRole('region', { name: wording.FRÉQUENCE })

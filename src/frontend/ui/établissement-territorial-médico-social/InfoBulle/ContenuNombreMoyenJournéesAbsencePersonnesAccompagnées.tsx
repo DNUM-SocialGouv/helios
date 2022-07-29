@@ -4,7 +4,7 @@ import { useDependencies } from '../../commun/contexts/useDependencies'
 
 type ContenuNombreMoyenJournéesAbsencePersonnesAccompagnéesProps = Readonly<{
   dateDeMiseÀJour: string
-  source: ReactChild | undefined
+  source: ReactChild
 }>
 
 export const ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées =
