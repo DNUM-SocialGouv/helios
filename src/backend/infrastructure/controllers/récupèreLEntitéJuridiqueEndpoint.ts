@@ -13,17 +13,12 @@ export async function récupèreLEntitéJuridiqueEndpoint(
   dependencies: Dependencies,
   numéroFiness: string
 ): Promise<EntitéJuridiqueEndpoint | void> {
-  try {
-    const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(dependencies.entitéJuridiqueLoader)
-    const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFiness)
+  const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(dependencies.entitéJuridiqueLoader)
+  const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFiness)
 
-    const récupèreLesÉtablissementsTerritoriauxRattachésUseCase =
-      new RécupèreLesÉtablissementsTerritoriauxRattachésUseCase(dependencies.établissementTerritorialRattachéLoader)
-    const établissementsTerritoriauxRattachés = await récupèreLesÉtablissementsTerritoriauxRattachésUseCase.exécute(numéroFiness)
+  const récupèreLesÉtablissementsTerritoriauxRattachésUseCase =
+    new RécupèreLesÉtablissementsTerritoriauxRattachésUseCase(dependencies.établissementTerritorialRattachéLoader)
+  const établissementsTerritoriauxRattachés = await récupèreLesÉtablissementsTerritoriauxRattachésUseCase.exécute(numéroFiness)
 
-    return { entitéJuridique, établissementsTerritoriauxRattachés }
-  } catch (error) {
-    dependencies.logger.error(error)
-    throw error
-  }
+  return { entitéJuridique, établissementsTerritoriauxRattachés }
 }

@@ -19,6 +19,7 @@ export const ListItem = ({ label, lien, logo }: ListItemProps ) => {
       <Link
         href={lien}
         passHref
+        prefetch={false}
       >
         <a>
           {label}

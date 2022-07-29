@@ -16,6 +16,11 @@ main {
   box-shadow: inherit !important;
 }
 
+.page404 {
+  margin-top: 10rem;
+  text-align: center;
+}
+
 @media (prefers-color-scheme: dark) {
   body {
     color: #000 !important;

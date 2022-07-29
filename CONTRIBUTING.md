@@ -25,7 +25,7 @@ yarn
 
 ##### Pré-requis
 
-Les traitements de données sont effectués en python (version 3.10) et notamment grâce à [pandas](https://pandas.pydata.org/docs/user_guide/index.html). 
+Les traitements de données sont effectués en python (version 3.10) et notamment grâce à [pandas](https://pandas.pydata.org/docs/user_guide/index.html).
 Avant d'installer python 3.10, assurez-vous d'avoir les librairies suivantes :
 
 ```bash
@@ -47,8 +47,6 @@ sudo make install
 
 - (optionnel) ajouter alias python=”python3.10” à .bashrc
 </details>
-  
-
 
 Il est recommandé d'utiliser [pipenv](https://pipenv.pypa.io/en/latest/) pour créer l'environnement virtuel dédié
 
@@ -70,7 +68,6 @@ pipenv install --dev
 
 > Pipenv installe l'environnement virtuel sous `$HOME/.local` par défaut, mais il est possible de le stocker au même niveau que le dépôt grâce à la commande `PIPENV_VENV_IN_PROJECT=1 pipenv install`
 
-
 ## Développement
 
 ### Lancer l'application en mode développement (avec hot-reload)
@@ -82,6 +79,15 @@ yarn dev
 > Visiter : http://localhost:3000
 
 > Cette commande lance aussi la base de donnée locale et les migrations associées
+
+### Lancer l'application en mode production
+
+```sh
+yarn build
+yarn start
+```
+
+> Commenter la partie `headers()` dans `next.config.js` pour que les CSS soient pris en compte.
 
 ### Avoir du feedback sur son code
 
@@ -152,6 +158,7 @@ yarn test:accessibility
 ```
 
 ### Base de données
+
 #### Connexion à la base de données locale
 
 ```sh

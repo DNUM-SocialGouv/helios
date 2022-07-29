@@ -1,5 +1,3 @@
-import { GetServerSideProps, GetServerSidePropsContext } from 'next'
-
 import { récupèreLÉtablissementTerritorialMédicoSocialEndpoint } from '../../backend/infrastructure/controllers/récupèreLÉtablissementTerritorialMédicoSocialEndpoint'
 import { dependencies } from '../../backend/infrastructure/dependencies'
 import { ÉtablissementTerritorialMédicoSocial } from '../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
@@ -14,11 +12,21 @@ export default function Router({ établissementTerritorial }:
   return <PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialViewModel} />
 }
 
-export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+export function getStaticPaths() {
+  return {
+    fallback: 'blocking',
+    paths: [],
+  }
+}
+
+export async function getStaticProps({ params }: { params: { numéroFiness: string }}) {
   try {
-    const établissementTerritorial = await récupèreLÉtablissementTerritorialMédicoSocialEndpoint(dependencies, context.query['numéroFINESS'] as string)
-    return { props: { établissementTerritorial } }
+    const { environmentVariables } = dependencies
+    const établissementTerritorial = await récupèreLÉtablissementTerritorialMédicoSocialEndpoint(dependencies, params.numéroFiness)
+
+    return { props: { établissementTerritorial }, revalidate: Number(environmentVariables.TIME_OF_CACHE_PAGE) }
   } catch (error) {
+    dependencies.logger.error(error)
     return { notFound: true }
   }
 }

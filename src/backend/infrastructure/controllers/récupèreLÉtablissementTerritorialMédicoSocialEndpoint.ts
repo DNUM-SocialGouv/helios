@@ -6,18 +6,13 @@ export async function récupèreLÉtablissementTerritorialMédicoSocialEndpoint(
   dependencies: Dependencies,
   numéroFinessÉtablissementTerritorialMédicoSocial: string
 ): Promise<ÉtablissementTerritorialMédicoSocial | void> {
-  try {
-    const récupèreLÉtablissementTerritorialMédicoSocialUseCase = new RécupèreLÉtablissementTerritorialMédicoSocialUseCase(
-      dependencies.établissementTerritorialMédicoSocialLoader,
-      dependencies.entitéJuridiqueLoader
-    )
+  const récupèreLÉtablissementTerritorialMédicoSocialUseCase = new RécupèreLÉtablissementTerritorialMédicoSocialUseCase(
+    dependencies.établissementTerritorialMédicoSocialLoader,
+    dependencies.entitéJuridiqueLoader
+  )
 
-    const établissementTerritorialMédicoSocial =
-      await récupèreLÉtablissementTerritorialMédicoSocialUseCase.exécute(numéroFinessÉtablissementTerritorialMédicoSocial)
+  const établissementTerritorialMédicoSocial =
+    await récupèreLÉtablissementTerritorialMédicoSocialUseCase.exécute(numéroFinessÉtablissementTerritorialMédicoSocial)
 
-    return établissementTerritorialMédicoSocial
-  } catch (error) {
-    dependencies.logger.error(error)
-    throw error
-  }
+  return établissementTerritorialMédicoSocial
 }
