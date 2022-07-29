@@ -60,7 +60,7 @@ Nous pensons que :
 ### Déchiffrer un document
 ```bash
 gpg --import helios_crypto_private
-gpg --decrypt chiffre.gpg
+gpg --decrypt chiffre.gpg > a_chiffrer.txt
 ```
 
 ## Conclusion
