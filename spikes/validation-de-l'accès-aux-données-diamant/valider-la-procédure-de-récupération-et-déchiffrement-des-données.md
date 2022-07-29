@@ -8,8 +8,8 @@ Notre infrastructure existante (sftp, scalingo), nos droits et nos variables d'e
 
 ## Configuration de l'expérimentation
 
-- [ ] Copier les données déposées par DIAMANT sur le SFTP
-- [ ] Déchiffrer un csv à l'aide de notre clef privée
+- [x] Copier les données déposées par DIAMANT sur le SFTP
+- [x] Déchiffrer un csv à l'aide de notre clef privée
 
 ## Résultats
 
