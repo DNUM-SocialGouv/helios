@@ -22,14 +22,13 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
 
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
     const indicateurs = within(activité).getAllByRole('listitem')
-    const indicateur = indicateurs[identifiant];
-    const titre = within(indicateur).getByText(titreSection, { selector: 'p' })
+    const titre = within(indicateurs[identifiant]).getByText(titreSection, { selector: 'p' })
     expect(titre).toBeInTheDocument()
-    const dateMiseAJour = within(indicateur).getAllByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
+    const dateMiseAJour = within(indicateurs[identifiant]).getAllByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
     expect(dateMiseAJour[0]).toBeInTheDocument()
-    const abréviation = within(indicateur).getAllByText('DIAMANT', { selector: 'abbr' })
+    const abréviation = within(indicateurs[identifiant]).getAllByText('DIAMANT', { selector: 'abbr' })
     expect(abréviation[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
-    const détails = within(indicateur).getByRole('button', { name: wording.DÉTAILS })
+    const détails = within(indicateurs[identifiant]).getByRole('button', { name: wording.DÉTAILS })
     expect(détails).toHaveAttribute('aria-controls', `nom-info-bulle-activite-${identifiant}`)
     expect(détails).toHaveAttribute('data-fr-opened', 'false')
   })
