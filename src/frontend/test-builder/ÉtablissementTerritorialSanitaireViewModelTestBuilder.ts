@@ -1,4 +1,5 @@
 import { ÉtablissementTerritorialSanitaire } from '../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire'
+import { Paths } from '../configuration/Paths'
 import { Wording } from '../configuration/wording/Wording'
 import { ÉtablissementTerritorialSanitaireViewModel } from '../ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel'
 
@@ -105,7 +106,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
   ]
 
   public static crée(
-    wording: Wording, champsSurchargés?: Partial<ÉtablissementTerritorialSanitaire['identité']>
+    wording: Wording, paths: Paths, champsSurchargés?: Partial<ÉtablissementTerritorialSanitaire['identité']>
   ): ÉtablissementTerritorialSanitaireViewModel {
     return new ÉtablissementTerritorialSanitaireViewModel({
       activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
@@ -113,6 +114,6 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
         ...ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
         ...champsSurchargés,
       },
-    }, wording)
+    }, wording, paths)
   }
 }
