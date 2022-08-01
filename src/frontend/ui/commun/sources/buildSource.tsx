@@ -6,7 +6,7 @@ export function buildSource(sourceFournisseur: ReactChild, sourceOrigine: ReactC
   if (sourceOrigine) {
     source = <>
       {sourceOrigine}
-      ,&nbsp;
+      {', '}
       {sourceFournisseur}
     </>
   } else {
