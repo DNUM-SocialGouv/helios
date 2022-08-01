@@ -12,13 +12,13 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
 
   it.each(
     [
-      [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0, 'CNSA', 'Caisse nationale de solidarité pour l‘autonomie'],
-      [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1, 'CNSA', 'Caisse nationale de solidarité pour l‘autonomie'],
-      [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 2, 'CNSA', 'Caisse nationale de solidarité pour l‘autonomie'],
-      [wording.TAUX_RÉALISATION_ACTIVITÉ, 3, 'TdB Perf', 'Tableau de bord de la performance dans le secteur médico-social'],
-      [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 4, 'TdB Perf', 'Tableau de bord de la performance dans le secteur médico-social'],
-      [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5, 'TdB Perf', 'Tableau de bord de la performance dans le secteur médico-social'],
-      [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6, 'TdB Perf', 'Tableau de bord de la performance dans le secteur médico-social'],
+      [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0, 'CNSA', 'Caisse Nationale de Solidarité pour l‘Autonomie'],
+      [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1, 'CNSA', 'Caisse Nationale de Solidarité pour l‘Autonomie'],
+      [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 2, 'CNSA', 'Caisse Nationale de Solidarité pour l‘Autonomie'],
+      [wording.TAUX_RÉALISATION_ACTIVITÉ, 3, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
+      [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 4, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
+      [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
+      [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
     ]
   )('affiche les informations d’un indicateurs', (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
     // WHEN
@@ -260,13 +260,13 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
 
   it.each(
     [
-      [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0, 'CNSA', 'Caisse nationale de solidarité pour l‘autonomie'],
-      [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1, 'CNSA', 'Caisse nationale de solidarité pour l‘autonomie'],
-      [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 2, 'CNSA', 'Caisse nationale de solidarité pour l‘autonomie'],
-      [wording.TAUX_RÉALISATION_ACTIVITÉ, 3, 'TdB Perf', 'Tableau de bord de la performance dans le secteur médico-social'],
-      [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 4, 'TdB Perf', 'Tableau de bord de la performance dans le secteur médico-social'],
-      [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5, 'TdB Perf', 'Tableau de bord de la performance dans le secteur médico-social'],
-      [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6, 'TdB Perf', 'Tableau de bord de la performance dans le secteur médico-social'],
+      [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0, 'CNSA', 'Caisse Nationale de Solidarité pour l‘Autonomie'],
+      [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1, 'CNSA', 'Caisse Nationale de Solidarité pour l‘Autonomie'],
+      [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 2, 'CNSA', 'Caisse Nationale de Solidarité pour l‘Autonomie'],
+      [wording.TAUX_RÉALISATION_ACTIVITÉ, 3, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
+      [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 4, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
+      [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
+      [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
     ]
   )('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails"', (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
     // GIVEN

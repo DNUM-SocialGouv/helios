@@ -35,7 +35,7 @@ export const IndicateurGraphique = (
         <p className="fr-m-0">
           {nomDeLIndicateur}
         </p>
-        <div className={styles['mise-à-jour-source']}>
+        <div className={styles['mise-a-jour-source']}>
           <p className={`fr-text--xs ${styles['titraille']}`}>
             {miseÀJour}
             {wordingSource}

@@ -12,9 +12,9 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
 
   it.each(
     [
-      [wording.NOMBRE_DE_SÉJOUR_MCO, 0, 'PMSI', 'Programme de médicalisation des systèmes d‘information'],
-      [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1, 'PMSI', 'Programme de médicalisation des systèmes d‘information'],
-      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 2, 'PMSI', 'Programme de médicalisation des systèmes d‘information'],
+      [wording.NOMBRE_DE_SÉJOUR_MCO, 0, 'PMSI', 'Programme de Médicalisation des Systèmes d‘Information'],
+      [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1, 'PMSI', 'Programme de Médicalisation des Systèmes d‘Information'],
+      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 2, 'PMSI', 'Programme de Médicalisation des Systèmes d‘Information'],
     ]
   )('affiche les informations d’un indicateurs', (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
     // WHEN
@@ -37,9 +37,9 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
 
   it.each(
     [
-      [wording.NOMBRE_DE_SÉJOUR_MCO, 0, 'PMSI', 'Programme de médicalisation des systèmes d‘information'],
-      [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1, 'PMSI', 'Programme de médicalisation des systèmes d‘information'],
-      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 2, 'PMSI', 'Programme de médicalisation des systèmes d‘information'],
+      [wording.NOMBRE_DE_SÉJOUR_MCO, 0, 'PMSI', 'Programme de Médicalisation des Systèmes d‘Information'],
+      [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1, 'PMSI', 'Programme de Médicalisation des Systèmes d‘Information'],
+      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 2, 'PMSI', 'Programme de Médicalisation des Systèmes d‘Information'],
     ]
   )('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails"', (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
     // GIVEN

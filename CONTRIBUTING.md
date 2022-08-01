@@ -368,7 +368,7 @@ Dans chaque répertoire (enrichi, nomenclature et simple), il faut mettre un fic
 
 ### Code
 
-- le code métier est en **français** [plus de détails dans l'ADR 1](./ADR/ADR-1-les-langues-dans-le-code.md)- on utilise les accents à l'exception des noms de fichier dans le dossier `src/pages`
+- le code métier est en **français** [plus de détails dans l'ADR 1](./ADR/ADR-1-les-langues-dans-le-code.md)- on utilise les accents à l'exception des noms de fichier dans le dossier `src/pages` et des classes css
   > le métier et les développeurs sont français
 
 - On suffixe les fichiers par leur nomenclature technique (loader, repository, use case, end point, CRON), sauf pour les entities

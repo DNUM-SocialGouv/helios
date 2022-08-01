@@ -7,7 +7,12 @@
   margin-right: .5rem;
 }
 
-.mise-à-jour-source {
+.titraille {
+  margin-bottom: 0;
+  margin-right: .5rem;
+}
+
+.mise-a-jour-source {
   align-items: end;
   display: flex;
   flex-wrap: wrap;
