@@ -24,7 +24,7 @@ Notre infrastructure existante (sftp, scalingo), nos droits et nos variables d'e
    echo "$SFTP_DNUM_KEY" | base64 --decode > ./dnum-ssh-key
    chmod 400 ./dnum-ssh-key
    sftp -v -P <port> -i ./dnum-ssh-key <user>@<ip>
-   cd path/to/data
+   cd /DIAMANT/incoming
    get -r *
    bye
    ```
