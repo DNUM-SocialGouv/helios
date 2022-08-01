@@ -49,8 +49,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     return (
       <>
         <abbr title={this.wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
-        &nbsp;
-        {'- '}
+        {' - '}
         {this.formateLeTitreDeLEntitéJuridiqueDeRattachement()}
       </>
     )

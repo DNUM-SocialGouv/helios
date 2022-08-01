@@ -25,7 +25,7 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
     const titre = within(indicateurs[identifiant]).getByText(titreSection, { selector: 'p' })
     expect(titre).toBeInTheDocument()
     const dateMiseAJour = within(indicateurs[identifiant]).getAllByText('Mise à jour', { exact: false, selector: 'p' })
-    expect(dateMiseAJour[0].textContent).toBe('Mise à jour : 07/07/2021 - Source : PMSI, DIAMANT')
+    expect(dateMiseAJour[0].textContent).toBe(`Mise à jour : 07/07/2021 - Source : ${sourceOrigineAttendue}, DIAMANT`)
     const abréviation = within(indicateurs[identifiant]).getAllByText('DIAMANT', { selector: 'abbr' })
     expect(abréviation[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
     const abréviationSourceOrigine = within(indicateurs[identifiant]).getAllByText(sourceOrigineAttendue, { selector: 'abbr' })

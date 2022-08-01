@@ -15,35 +15,35 @@ export const PageDeRecette = () => {
     {
       identifiant: <>
         <abbr title={wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
-        &nbsp;- 750 050 759 - CANSSM FILIERIS (avec que des ET sanitaires)
+        {' - 750 050 759 - CANSSM FILIERIS (avec que des ET sanitaires)'}
       </>,
       numéroFiness: '750050759',
     },
     {
       identifiant: <>
         <abbr title={wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
-        &nbsp;- 750 060 758 - SARL DOMITYS NORD OUEST (avec que des ET médico-sociaux)
+        - 750 060 758 - SARL DOMITYS NORD OUEST (avec que des ET médico-sociaux)
       </>,
       numéroFiness: '750060758',
     },
     {
       identifiant: <>
         <abbr title={wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
-        &nbsp;- 500 020 839 - GCSMS &quot;PRESQU’ÎLE&quot; (sans ET)
+        {'- 500 020 839 - GCSMS &quot;PRESQU’ÎLE&quot; (sans ET)'}
       </>,
       numéroFiness: '500020839',
     },
     {
       identifiant: <>
         <abbr title={wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
-        &nbsp;- 750 721 334 - CROIX ROUGE FRANCAISE (avec beaucoup d’ET)
+        - 750 721 334 - CROIX ROUGE FRANCAISE (avec beaucoup d’ET)
       </>,
       numéroFiness: '750721334',
     },
     {
       identifiant: <>
         <abbr title={wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
-        &nbsp;- 210 012 142 - CTRE HOSPITALIER DE LA HAUTE COTE D’OR (avec un nom d’établissement très long)
+        - 210 012 142 - CTRE HOSPITALIER DE LA HAUTE COTE D’OR (avec un nom d’établissement très long)
       </>,
       numéroFiness: '210012142',
     },
@@ -52,42 +52,42 @@ export const PageDeRecette = () => {
     {
       identifiant: <>
         <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        &nbsp;- 690 024 898 - EHPAD SAINT-FRANCOIS D’ASSISE (avec toutes les données d’activités)
+        - 690 024 898 - EHPAD SAINT-FRANCOIS D’ASSISE (avec toutes les données d’activités)
       </>,
       numéroFiness: '690024898',
     },
     {
       identifiant: <>
         <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        &nbsp;- 690 015 458 - ACCUEIL DE JOUR LES PETITS BONHEURS (certains indicateurs ne sont pas disponibles dans les données activité)
+        - 690 015 458 - ACCUEIL DE JOUR LES PETITS BONHEURS (certains indicateurs ne sont pas disponibles dans les données activité)
       </>,
       numéroFiness: '690015458',
     },
     {
       identifiant: <>
         <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        &nbsp;- 370 103 137 - ESAT ANAIS DE METTRAY (avec une année manquante dans les données activité)
+        - 370 103 137 - ESAT ANAIS DE METTRAY (avec une année manquante dans les données activité)
       </>,
       numéroFiness: '370103137',
     },
     {
       identifiant: <>
         <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        &nbsp;- 130 008 329 - EHPAD RESIDENCE LES LAVANDINS (avec une année vide dans les données activité)
+        - 130 008 329 - EHPAD RESIDENCE LES LAVANDINS (avec une année vide dans les données activité)
       </>,
       numéroFiness: '130008329',
     },
     {
       identifiant: <>
         <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        &nbsp;- 010 007 425 - SSIAD EHPAD SAINT-TRIVIER-DE-COURTES (avec toutes les données activités disponibles mais vides)
+        - 010 007 425 - SSIAD EHPAD SAINT-TRIVIER-DE-COURTES (avec toutes les données activités disponibles mais vides)
       </>,
       numéroFiness: '010007425',
     },
     {
       identifiant: <>
         <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        &nbsp;- 660 011 859 - SAAD DOMITYS SUD EST LES TOURS D’OR (avec aucune activité)
+        - 660 011 859 - SAAD DOMITYS SUD EST LES TOURS D’OR (avec aucune activité)
       </>,
       numéroFiness: '660011859',
     },
@@ -96,35 +96,35 @@ export const PageDeRecette = () => {
     {
       identifiant: <>
         <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        &nbsp;- 120 004 668 - CH EMILE BOREL ST AFFRIQUE (avec toutes les données d’activités)
+        - 120 004 668 - CH EMILE BOREL ST AFFRIQUE (avec toutes les données d’activités)
       </>,
       numéroFiness: '120004668',
     },
     {
       identifiant: <>
         <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        &nbsp;- 780 150 017 - CTR DE SOINS ET READAPTATION CESSRIN (sans nombres de passages urgences)
+        - 780 150 017 - CTR DE SOINS ET READAPTATION CESSRIN (sans nombres de passages urgences)
       </>,
       numéroFiness: '780150017',
     },
     {
       identifiant: <>
         <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        &nbsp;- 450 000 021 - HÔPITAL MADELEINE (sans données MCO)
+        - 450 000 021 - HÔPITAL MADELEINE (sans données MCO)
       </>,
       numéroFiness: '450000021',
     },
     {
       identifiant: <>
         <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        &nbsp;- 010 008 852 - CRF L’ORCET SITE DU CH DE FLEYRIAT (avec toutes les données activités disponibles mais vides)
+        - 010 008 852 - CRF L’ORCET SITE DU CH DE FLEYRIAT (avec toutes les données activités disponibles mais vides)
       </>,
       numéroFiness: '010008852',
     },
     {
       identifiant: <>
         <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        &nbsp;- 830 208 120 - CDS MEDICAL FILIERIS BRIGNOLES (avec aucune activité)
+        - 830 208 120 - CDS MEDICAL FILIERIS BRIGNOLES (avec aucune activité)
       </>,
       numéroFiness: '830208120',
     },
