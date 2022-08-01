@@ -28,7 +28,7 @@ Nous pensons que :
     ```
     Il faut alors renseigner quelques informations : 
     - nom de la clef (pour cet exemple, "helios")
-    - adresse e-mail (l'adresse e-mail technique)
+    - adresse e-mail (l'adresse e-mail est un moyen d'identifier la personne derrière la clef mais n'a pas d'impact techniquement)
     - pas besoin de passphrase
 2. Exporter la clef publique (à envoyer à DIAMANT) :
     ```bash
