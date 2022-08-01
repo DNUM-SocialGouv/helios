@@ -58,7 +58,7 @@ Nous pensons que :
 
 ### Déchiffrer un document
 ```bash
-gpg --import helios_crypto_private
+gpg --import helios-chiffrement-privée
 gpg --decrypt chiffre.gpg > a_chiffrer.txt
 ```
 
