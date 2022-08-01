@@ -8,9 +8,9 @@ export function useBreadcrumb(initialBreadcrumb: Breadcrumb) {
   const [breadcrumb, setBreadcrumb] = useState<Breadcrumb>(initialBreadcrumb)
 
   useEffect(() => {
-    breadcrumbHandler.updateBreadCrum(breadcrumb)
-    breadcrumbHandler.AddSubscription(setBreadcrumb)
+    breadcrumbHandler.updateBreadcrum(breadcrumb)
+    breadcrumbHandler.addSubscription(setBreadcrumb)
   }, [])
 
-  return { breadcrumb: breadcrumb }
+  return { breadcrumb }
 }

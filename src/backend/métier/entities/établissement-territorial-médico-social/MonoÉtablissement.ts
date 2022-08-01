@@ -1,3 +1,6 @@
 export type MonoÉtablissement = Readonly<{
-  estMonoÉtablissement: boolean
+  estMonoÉtablissement: {
+    dateMiseAJourSource: string
+    value: boolean
+  }
 }>

@@ -186,7 +186,12 @@ describe('La page Entité Juridique', () => {
 
     it('affiche "non renseigné" quand une valeur est vide', () => {
       // GIVEN
-      const entitéJuridiqueViewModelAvecUneValeurVide = EntitéJuridiqueViewModelTestBuilder.crée(wording, { téléphone: '' })
+      const entitéJuridiqueViewModelAvecUneValeurVide = EntitéJuridiqueViewModelTestBuilder.crée(wording, {
+        téléphone: {
+          dateMiseAJourSource: '2021-07-07',
+          value: '',
+        },
+      })
 
       // WHEN
       renderFakeComponent(<PageEntitéJuridique
@@ -203,7 +208,12 @@ describe('La page Entité Juridique', () => {
 
     it('affiche l’adresse incomplète lorsqu’il manque des champs d’adresse', () => {
       // GIVEN
-      const entitéJuridiqueViewModelAvecUneValeurVide = EntitéJuridiqueViewModelTestBuilder.crée(wording, { adresseTypeVoie: '' })
+      const entitéJuridiqueViewModelAvecUneValeurVide = EntitéJuridiqueViewModelTestBuilder.crée(wording, {
+        adresseTypeVoie: {
+          dateMiseAJourSource: '2021-07-07',
+          value: '',
+        },
+      })
 
       // WHEN
       renderFakeComponent(<PageEntitéJuridique

@@ -1,6 +1,7 @@
 import { DataSource } from 'typeorm'
 
 import { ActivitéSanitaireModel } from '../../../../../database/models/ActivitéSanitaireModel'
+import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
 import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
@@ -13,79 +14,190 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   constructor(private readonly orm: Promise<DataSource>) { }
 
   async chargeActivité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialSanitaireActivité[]> {
-    const activitésÉtablissementTerritorialModel = await (await this.orm)
+    const activitésÉtablissementTerritorialActivitésModel = await this.chargeLesActivitésModel(numéroFinessÉtablissementTerritorial)
+    const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
+    const dateDeMiseAJourAnnRpuModel = await this.chargeLaDateDeMiseÀJourAnnRpuModel() as DateMiseÀJourFichierSourceModel
+    const dateDeMiseAJourMenPmsiAnnuelModel = await this.chargeLaDateDeMiseÀJourMenPmsiAnnuelModel() as DateMiseÀJourFichierSourceModel
+
+    return this.construisActivité(
+      activitésÉtablissementTerritorialActivitésModel.slice(-5),
+      dateDeMiseAJourModel,
+      dateDeMiseAJourAnnRpuModel,
+      dateDeMiseAJourMenPmsiAnnuelModel
+    )
+  }
+
+  async chargeIdentité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialSanitaireNonTrouvée> {
+    const établissementTerritorialIdentitéModel = await this.chargeLIdentitéModel(numéroFinessÉtablissementTerritorial)
+
+    if (!établissementTerritorialIdentitéModel) {
+      return new ÉtablissementTerritorialSanitaireNonTrouvée(numéroFinessÉtablissementTerritorial)
+    }
+
+    const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
+    const dateDeMiseÀJourIdentitéModel = await this.chargeLaDateDeMiseÀJourIdentitéModel() as DateMiseÀJourFichierSourceModel
+
+    return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseAJourModel, dateDeMiseÀJourIdentitéModel)
+  }
+
+  private async chargeLesActivitésModel(numéroFinessÉtablissementTerritorial: string) {
+    return await (await this.orm)
       .getRepository(ActivitéSanitaireModel)
       .find({
         order: { année: 'ASC' },
         where: { numéroFinessÉtablissementTerritorial },
       })
-    const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
-    return this.construisActivité(activitésÉtablissementTerritorialModel.slice(-5), dateDeMiseAJourModel)
   }
 
-  async chargeIdentité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialSanitaireNonTrouvée> {
-    const établissementTerritorialModel = await (await this.orm)
+  private async chargeLIdentitéModel(numéroFinessÉtablissementTerritorial: string) {
+    return await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
       .findOneBy({
         domaine: DomaineÉtablissementTerritorial.SANITAIRE,
         numéroFinessÉtablissementTerritorial,
       })
-    if (!établissementTerritorialModel) {
-      return new ÉtablissementTerritorialSanitaireNonTrouvée(numéroFinessÉtablissementTerritorial)
-    }
-
-    const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
-
-    return this.construisLÉtablissementTerritorialSanitaire(établissementTerritorialModel, dateDeMiseAJourModel)
   }
 
-  private async chargeLaDateDeMiseÀJourModel() {
+  private async chargeLaDateDeMiseÀJourModel(): Promise<DateMiseÀJourSourceModel | null> {
     return await (await this.orm)
       .getRepository(DateMiseÀJourSourceModel)
       .findOneBy({ source: SourceDeDonnées.FINESS })
   }
 
-  private construisLÉtablissementTerritorialSanitaire(
-    établissementTerritorialModel: ÉtablissementTerritorialIdentitéModel,
-    dateDeMiseAJourModel: DateMiseÀJourSourceModel | null
+  private async chargeLaDateDeMiseÀJourIdentitéModel(): Promise<DateMiseÀJourFichierSourceModel | null> {
+    return await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.FINESS_CS1400102 })
+  }
+
+  private async chargeLaDateDeMiseÀJourAnnRpuModel(): Promise<DateMiseÀJourFichierSourceModel | null> {
+    return await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.DIAMANT_ANN_RPU })
+  }
+
+  private async chargeLaDateDeMiseÀJourMenPmsiAnnuelModel(): Promise<DateMiseÀJourFichierSourceModel | null> {
+    return await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.DIAMANT_MEN_PMSI_ANNUEL })
+  }
+
+  private construisIdentité(
+    établissementTerritorialIdentitéModel: ÉtablissementTerritorialIdentitéModel,
+    dateDeMiseAJourModel: DateMiseÀJourSourceModel | null,
+    dateDeMiseÀJourIdentitéModel: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialIdentité {
     return {
-      adresseAcheminement: établissementTerritorialModel.adresseAcheminement,
-      adresseNuméroVoie: établissementTerritorialModel.adresseNuméroVoie,
-      adresseTypeVoie: établissementTerritorialModel.adresseTypeVoie,
-      adresseVoie: établissementTerritorialModel.adresseVoie,
-      catégorieÉtablissement: établissementTerritorialModel.catégorieÉtablissement,
-      courriel: établissementTerritorialModel.courriel,
+      adresseAcheminement: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.adresseAcheminement,
+      },
+      adresseNuméroVoie: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.adresseNuméroVoie,
+      },
+      adresseTypeVoie: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.adresseTypeVoie,
+      },
+      adresseVoie: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.adresseVoie,
+      },
+      catégorieÉtablissement: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.catégorieÉtablissement,
+      },
+      courriel: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.courriel,
+      },
       dateMiseAJourSource: dateDeMiseAJourModel ? dateDeMiseAJourModel.dernièreMiseÀJour : '',
-      libelléCatégorieÉtablissement: établissementTerritorialModel.libelléCatégorieÉtablissement,
-      numéroFinessEntitéJuridique: établissementTerritorialModel.numéroFinessEntitéJuridique,
-      numéroFinessÉtablissementPrincipal: établissementTerritorialModel.numéroFinessÉtablissementPrincipal,
-      numéroFinessÉtablissementTerritorial: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
-      raisonSociale: établissementTerritorialModel.raisonSociale,
-      typeÉtablissement: établissementTerritorialModel.typeÉtablissement,
-      téléphone: établissementTerritorialModel.téléphone,
+      libelléCatégorieÉtablissement: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.libelléCatégorieÉtablissement,
+      },
+      numéroFinessEntitéJuridique: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.numéroFinessEntitéJuridique,
+      },
+      numéroFinessÉtablissementPrincipal: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.numéroFinessÉtablissementPrincipal,
+      },
+      numéroFinessÉtablissementTerritorial: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.numéroFinessÉtablissementTerritorial,
+      },
+      raisonSociale: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.raisonSociale,
+      },
+      typeÉtablissement: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.typeÉtablissement,
+      },
+      téléphone: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.téléphone,
+      },
     }
   }
 
   private construisActivité(
-    activitésÉtablissementTerritorialModel: ActivitéSanitaireModel[],
-    dateDeMiseAJourModel: DateMiseÀJourSourceModel | null
+    établissementTerritorialActivitésModel: ActivitéSanitaireModel[],
+    dateDeMiseAJourModel: DateMiseÀJourSourceModel | null,
+    dateDeMiseAJourAnnRpuModel: DateMiseÀJourFichierSourceModel,
+    dateDeMiseAJourMenPmsiAnnuelModel: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialSanitaireActivité[] {
-    return activitésÉtablissementTerritorialModel.map((établissementTerritorialModel) =>
+    return établissementTerritorialActivitésModel.map((établissementTerritorialModel) =>
       ({
         année: établissementTerritorialModel.année,
         dateMiseAJourSource: dateDeMiseAJourModel ? dateDeMiseAJourModel.dernièreMiseÀJour : '',
-        nombreDePassagesAuxUrgences: établissementTerritorialModel.nombreDePassagesAuxUrgences,
-        nombreJournéesCompletePsy: établissementTerritorialModel.nombreJournéesCompletePsy,
-        nombreJournéesCompletesSsr: établissementTerritorialModel.nombreJournéesCompletesSsr,
-        nombreJournéesPartiellesPsy: établissementTerritorialModel.nombreJournéesPartiellesPsy,
-        nombreJournéesPartielsSsr: établissementTerritorialModel.nombreJournéesPartielsSsr,
-        nombreSéjoursCompletsChirurgie: établissementTerritorialModel.nombreSéjoursCompletsChirurgie,
-        nombreSéjoursCompletsMédecine: établissementTerritorialModel.nombreSéjoursCompletsMédecine,
-        nombreSéjoursCompletsObstétrique: établissementTerritorialModel.nombreSéjoursCompletsObstétrique,
-        nombreSéjoursPartielsChirurgie: établissementTerritorialModel.nombreSéjoursPartielsChirurgie,
-        nombreSéjoursPartielsMédecine: établissementTerritorialModel.nombreSéjoursPartielsMédecine,
-        nombreSéjoursPartielsObstétrique: établissementTerritorialModel.nombreSéjoursPartielsObstétrique,
+        nombreDePassagesAuxUrgences: {
+          dateMiseAJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
+          value: établissementTerritorialModel.nombreDePassagesAuxUrgences,
+        },
+        nombreJournéesCompletePsy: {
+          dateMiseAJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
+          value: établissementTerritorialModel.nombreJournéesCompletePsy,
+        },
+        nombreJournéesCompletesSsr: {
+          dateMiseAJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
+          value: établissementTerritorialModel.nombreJournéesCompletesSsr,
+        },
+        nombreJournéesPartiellesPsy: {
+          dateMiseAJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
+          value: établissementTerritorialModel.nombreJournéesPartiellesPsy,
+        },
+        nombreJournéesPartielsSsr: {
+          dateMiseAJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
+          value: établissementTerritorialModel.nombreJournéesPartielsSsr,
+        },
+        nombreSéjoursCompletsChirurgie: {
+          dateMiseAJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
+          value: établissementTerritorialModel.nombreSéjoursCompletsChirurgie,
+        },
+        nombreSéjoursCompletsMédecine: {
+          dateMiseAJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
+          value: établissementTerritorialModel.nombreSéjoursCompletsMédecine,
+        },
+        nombreSéjoursCompletsObstétrique: {
+          dateMiseAJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
+          value: établissementTerritorialModel.nombreSéjoursCompletsObstétrique,
+        },
+        nombreSéjoursPartielsChirurgie: {
+          dateMiseAJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
+          value: établissementTerritorialModel.nombreSéjoursPartielsChirurgie,
+        },
+        nombreSéjoursPartielsMédecine: {
+          dateMiseAJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
+          value: établissementTerritorialModel.nombreSéjoursPartielsMédecine,
+        },
+        nombreSéjoursPartielsObstétrique: {
+          dateMiseAJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
+          value: établissementTerritorialModel.nombreSéjoursPartielsObstétrique,
+        },
         numéroFinessÉtablissementTerritorial: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
       }))
   }

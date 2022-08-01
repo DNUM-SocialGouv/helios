@@ -14,8 +14,8 @@ export class RécupèreLÉtablissementTerritorialSanitaireUseCase {
       throw établissementTerritorialSanitaireOuErreur
     }
 
-    const entitéJuridiqueDeRattachement = await this.entitéJuridiqueLoader.chargeLEntitéJuridiqueDeRattachement(
-      établissementTerritorialSanitaireOuErreur.numéroFinessEntitéJuridique
+    const entitéJuridiqueDeRattachement = await this.entitéJuridiqueLoader.chargeRattachement(
+      établissementTerritorialSanitaireOuErreur.numéroFinessEntitéJuridique.value
     )
 
     const établissementTerritorialSanitaireActivités =

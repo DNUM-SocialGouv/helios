@@ -1,6 +1,7 @@
 import { DataSource } from 'typeorm'
 
 import { ActivitéMédicoSocialModel } from '../../../../../database/models/ActivitéMédicoSocialModel'
+import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
 import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
@@ -16,43 +17,64 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
   async chargeActivité(
     numéroFinessÉtablissementTerritorial: string
   ): Promise<ÉtablissementTerritorialMédicoSocialActivité[]> {
-    const activitésÉtablissementTerritorialModel = await (await this.orm)
-      .getRepository(ActivitéMédicoSocialModel)
-      .find({
-        order: { année: 'ASC' },
-        where: { numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial },
-      })
-
+    const activitésÉtablissementTerritorialActivitésModel = await this.chargeLesActivitésModel(numéroFinessÉtablissementTerritorial)
     const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
+    const dateDeMiseAJourAnnMsTdpEtModel = await this.chargeLaDateDeMiseÀJourAnnMsTdpEtModel() as DateMiseÀJourFichierSourceModel
+    const dateDeMiseAJourAnnErrdEjEtModel = await this.chargeLaDateDeMiseÀJourAnnErrdEjEtModel() as DateMiseÀJourFichierSourceModel
 
-    return this.construisActivité(activitésÉtablissementTerritorialModel, dateDeMiseAJourModel)
+    return this.construisActivité(
+      activitésÉtablissementTerritorialActivitésModel,
+      dateDeMiseAJourModel,
+      dateDeMiseAJourAnnMsTdpEtModel,
+      dateDeMiseAJourAnnErrdEjEtModel
+    )
   }
 
   async chargeIdentité(
     numéroFinessÉtablissementTerritorial: string
   ): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialMédicoSocialNonTrouvée> {
-    const établissementTerritorialModel = await (await this.orm)
-      .getRepository(ÉtablissementTerritorialIdentitéModel)
-      .findOneBy({
-        domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
-        numéroFinessÉtablissementTerritorial,
-      })
+    const établissementTerritorialIdentitéModel = await this.chargeLIdentitéModel(numéroFinessÉtablissementTerritorial)
 
-    if (!établissementTerritorialModel) {
+    if (!établissementTerritorialIdentitéModel) {
       return new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial)
     }
 
     const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
+    const dateDeMiseÀJourIdentitéModel = await this.chargeLaDateDeMiseÀJourIdentitéModel() as DateMiseÀJourFichierSourceModel
 
-    return this.construisIdentité(établissementTerritorialModel, dateDeMiseAJourModel)
+    return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseAJourModel, dateDeMiseÀJourIdentitéModel)
   }
 
   async estUnMonoÉtablissement(numéroFinessEntitéJuridique: string): Promise<MonoÉtablissement> {
     const nombreDÉtablissementTerritoriauxDansLEntitéJuridique = await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
-      .countBy({ numéroFinessEntitéJuridique: numéroFinessEntitéJuridique })
+      .countBy({ numéroFinessEntitéJuridique })
+    const dateDeMiseÀJourIdentitéModel = await this.chargeLaDateDeMiseÀJourIdentitéModel() as DateMiseÀJourFichierSourceModel
 
-    return { estMonoÉtablissement: nombreDÉtablissementTerritoriauxDansLEntitéJuridique === 1 }
+    return {
+      estMonoÉtablissement: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: nombreDÉtablissementTerritoriauxDansLEntitéJuridique === 1,
+      },
+    }
+  }
+
+  private async chargeLesActivitésModel(numéroFinessÉtablissementTerritorial: string) {
+    return await (await this.orm)
+      .getRepository(ActivitéMédicoSocialModel)
+      .find({
+        order: { année: 'ASC' },
+        where: { numéroFinessÉtablissementTerritorial },
+      })
+  }
+
+  private async chargeLIdentitéModel(numéroFinessÉtablissementTerritorial: string) {
+    return await (await this.orm)
+      .getRepository(ÉtablissementTerritorialIdentitéModel)
+      .findOneBy({
+        domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
+        numéroFinessÉtablissementTerritorial,
+      })
   }
 
   private async chargeLaDateDeMiseÀJourModel(): Promise<DateMiseÀJourSourceModel | null> {
@@ -61,44 +83,125 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       .findOneBy({ source: SourceDeDonnées.FINESS })
   }
 
+  private async chargeLaDateDeMiseÀJourIdentitéModel(): Promise<DateMiseÀJourFichierSourceModel | null> {
+    return await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.FINESS_CS1400102 })
+  }
+
+  private async chargeLaDateDeMiseÀJourAnnMsTdpEtModel(): Promise<DateMiseÀJourFichierSourceModel | null> {
+    return await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.DIAMANT_ANN_MS_TDP_ET })
+  }
+
+  private async chargeLaDateDeMiseÀJourAnnErrdEjEtModel(): Promise<DateMiseÀJourFichierSourceModel | null> {
+    return await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.DIAMANT_ANN_ERRD_EJ_ET })
+  }
+
   private construisIdentité(
-    établissementTerritorialModel: ÉtablissementTerritorialIdentitéModel,
-    dateDeMiseAJourModel: DateMiseÀJourSourceModel | null
+    établissementTerritorialIdentitéModel: ÉtablissementTerritorialIdentitéModel,
+    dateDeMiseAJourModel: DateMiseÀJourSourceModel | null,
+    dateDeMiseÀJourIdentitéModel: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialIdentité {
     return {
-      adresseAcheminement: établissementTerritorialModel.adresseAcheminement,
-      adresseNuméroVoie: établissementTerritorialModel.adresseNuméroVoie,
-      adresseTypeVoie: établissementTerritorialModel.adresseTypeVoie,
-      adresseVoie: établissementTerritorialModel.adresseVoie,
-      catégorieÉtablissement: établissementTerritorialModel.catégorieÉtablissement,
-      courriel: établissementTerritorialModel.courriel,
+      adresseAcheminement: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.adresseAcheminement,
+      },
+      adresseNuméroVoie: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.adresseNuméroVoie,
+      },
+      adresseTypeVoie: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.adresseTypeVoie,
+      },
+      adresseVoie: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.adresseVoie,
+      },
+      catégorieÉtablissement: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.catégorieÉtablissement,
+      },
+      courriel: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.courriel,
+      },
       dateMiseAJourSource: dateDeMiseAJourModel ? dateDeMiseAJourModel.dernièreMiseÀJour : '',
-      libelléCatégorieÉtablissement: établissementTerritorialModel.libelléCatégorieÉtablissement,
-      numéroFinessEntitéJuridique: établissementTerritorialModel.numéroFinessEntitéJuridique,
-      numéroFinessÉtablissementPrincipal: établissementTerritorialModel.numéroFinessÉtablissementPrincipal,
-      numéroFinessÉtablissementTerritorial: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
-      raisonSociale: établissementTerritorialModel.raisonSociale,
-      typeÉtablissement: établissementTerritorialModel.typeÉtablissement,
-      téléphone: établissementTerritorialModel.téléphone,
+      libelléCatégorieÉtablissement: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.libelléCatégorieÉtablissement,
+      },
+      numéroFinessEntitéJuridique: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.numéroFinessEntitéJuridique,
+      },
+      numéroFinessÉtablissementPrincipal: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.numéroFinessÉtablissementPrincipal,
+      },
+      numéroFinessÉtablissementTerritorial: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.numéroFinessÉtablissementTerritorial,
+      },
+      raisonSociale: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.raisonSociale,
+      },
+      typeÉtablissement: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.typeÉtablissement,
+      },
+      téléphone: {
+        dateMiseAJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.téléphone,
+      },
     }
   }
 
   private construisActivité(
-    activitésÉtablissementTerritorialModel: ActivitéMédicoSocialModel[],
-    dateDeMiseAJourModel: DateMiseÀJourSourceModel | null
+    établissementTerritorialActivitésModel: ActivitéMédicoSocialModel[],
+    dateDeMiseAJourModel: DateMiseÀJourSourceModel | null,
+    dateDeMiseAJourAnnMsTdpEtModel: DateMiseÀJourFichierSourceModel,
+    dateDeMiseAJourAnnErrdEjEtModel: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialMédicoSocialActivité[] {
-    return activitésÉtablissementTerritorialModel.map((établissementTerritorialModel) =>
+    return établissementTerritorialActivitésModel.map((établissementTerritorialModel) =>
       ({
         année: établissementTerritorialModel.année,
         dateMiseAJourSource: dateDeMiseAJourModel ? dateDeMiseAJourModel.dernièreMiseÀJour : '',
-        duréeMoyenneSéjourAccompagnementPersonnesSorties: établissementTerritorialModel.duréeMoyenneSéjourAccompagnementPersonnesSorties,
-        fileActivePersonnesAccompagnées: établissementTerritorialModel.fileActivePersonnesAccompagnées,
-        nombreMoyenJournéesAbsencePersonnesAccompagnées: établissementTerritorialModel.nombreMoyenJournéesAbsencePersonnesAccompagnées,
+        duréeMoyenneSéjourAccompagnementPersonnesSorties: {
+          dateMiseAJourSource: dateDeMiseAJourAnnMsTdpEtModel.dernièreMiseÀJour,
+          value: établissementTerritorialModel.duréeMoyenneSéjourAccompagnementPersonnesSorties,
+        },
+        fileActivePersonnesAccompagnées: {
+          dateMiseAJourSource: dateDeMiseAJourAnnMsTdpEtModel.dernièreMiseÀJour,
+          value: établissementTerritorialModel.fileActivePersonnesAccompagnées,
+        },
+        nombreMoyenJournéesAbsencePersonnesAccompagnées: {
+          dateMiseAJourSource: dateDeMiseAJourAnnMsTdpEtModel.dernièreMiseÀJour,
+          value: établissementTerritorialModel.nombreMoyenJournéesAbsencePersonnesAccompagnées,
+        },
         numéroFinessÉtablissementTerritorial: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
-        tauxOccupationAccueilDeJour: établissementTerritorialModel.tauxOccupationAccueilDeJour,
-        tauxOccupationHébergementPermanent: établissementTerritorialModel.tauxOccupationHébergementPermanent,
-        tauxOccupationHébergementTemporaire: établissementTerritorialModel.tauxOccupationHébergementTemporaire,
-        tauxRéalisationActivité: établissementTerritorialModel.tauxRéalisationActivité,
+        tauxOccupationAccueilDeJour: {
+          dateMiseAJourSource: dateDeMiseAJourAnnErrdEjEtModel.dernièreMiseÀJour,
+          value: établissementTerritorialModel.tauxOccupationAccueilDeJour,
+        },
+        tauxOccupationHébergementPermanent: {
+          dateMiseAJourSource: dateDeMiseAJourAnnErrdEjEtModel.dernièreMiseÀJour,
+          value: établissementTerritorialModel.tauxOccupationHébergementPermanent,
+        },
+        tauxOccupationHébergementTemporaire: {
+          dateMiseAJourSource: dateDeMiseAJourAnnErrdEjEtModel.dernièreMiseÀJour,
+          value: établissementTerritorialModel.tauxOccupationHébergementTemporaire,
+        },
+        tauxRéalisationActivité: {
+          dateMiseAJourSource: dateDeMiseAJourAnnMsTdpEtModel.dernièreMiseÀJour,
+          value: établissementTerritorialModel.tauxRéalisationActivité,
+        },
       }))
   }
 }

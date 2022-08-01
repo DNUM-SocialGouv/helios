@@ -59,8 +59,8 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     const accueil = within(levels[0]).getByText(wording.ACCUEIL)
     expect(accueil).toHaveAttribute('href', '/')
     expect(within(levels[1]).queryByRole('link')).not.toBeInTheDocument()
-    const breadCrumbText = within(levels[1]).getByText(expected)
-    expect(breadCrumbText).toBeInTheDocument()
+    const breadcrumbText = within(levels[1]).getByText(expected)
+    expect(breadcrumbText).toBeInTheDocument()
   })
 
   it('affiche le chemin jusqu’à la page entité juridique', () => {
@@ -98,7 +98,7 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
   it('affiche le chemin jusqu’à la page établissement territorial médico-social', () => {
     // GIVEN
     const établissementTerritorialMédicoSocialViewModel =
-        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths)
+      ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths)
 
     // WHEN
     renderFakeComponent(

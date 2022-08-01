@@ -1,4 +1,5 @@
 import { getFakeDataCrawlerDependencies, uneEntitéJuridique, uneSecondeEntitéJuridique } from '../../testHelper'
+import { EntitéJuridique } from '../entities/EntitéJuridique'
 import { MetsÀJourLesEntitésJuridiquesUseCase } from './MetsÀJourLesEntitésJuridiquesUseCase'
 
 describe('Mise à jour des entités juridiques', () => {
@@ -32,7 +33,7 @@ describe('Mise à jour des entités juridiques', () => {
       fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository,
       fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader
     )
-    const entitésJuridiques = [
+    const entitésJuridiques: EntitéJuridique[] = [
       uneEntitéJuridique,
       uneSecondeEntitéJuridique,
     ]
@@ -56,7 +57,7 @@ describe('Mise à jour des entités juridiques', () => {
     )
 
     const numéroFinessEntitéJuridiqueToujoursOuverte = '010018407'
-    const entitésJuridiquesOuvertes = [
+    const entitésJuridiquesOuvertes: EntitéJuridique[] = [
       {
         ...uneEntitéJuridique,
         numéroFinessEntitéJuridique: numéroFinessEntitéJuridiqueToujoursOuverte,

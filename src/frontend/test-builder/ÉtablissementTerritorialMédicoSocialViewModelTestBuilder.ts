@@ -5,61 +5,172 @@ import { ÉtablissementTerritorialMédicoSocialViewModel } from '../ui/établiss
 
 export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
   private static identité: ÉtablissementTerritorialMédicoSocial['identité'] = {
-    adresseAcheminement: '01117 OYONNAX CEDEX',
-    adresseNuméroVoie : '1',
-    adresseTypeVoie : 'RTE',
-    adresseVoie : 'DE VEYZIAT',
-    catégorieÉtablissement : '300',
-    courriel : 'a@example.com',
-    dateMiseAJourSource : '2021-07-07',
-    estMonoÉtablissement: false,
-    libelléCatégorieÉtablissement : 'Ecoles Formant aux Professions Sanitaires',
-    numéroFinessEntitéJuridique : '010008407',
-    numéroFinessÉtablissementPrincipal : '010005239',
-    numéroFinessÉtablissementTerritorial: '010003598',
-    raisonSociale : 'IFAS CH DU HAUT BUGEY',
-    raisonSocialeDeLEntitéDeRattachement : 'CH DU HAUT BUGEY',
-    statutJuridique : 'Etablissement Public Intercommunal d’Hospitalisation',
-    typeÉtablissement : 'S',
-    téléphone : '0123456789',
+    adresseAcheminement: {
+      dateMiseAJourSource: '2021-07-07',
+      value: '01117 OYONNAX CEDEX',
+    },
+    adresseNuméroVoie: {
+      dateMiseAJourSource: '2021-07-07',
+      value: '1',
+    },
+    adresseTypeVoie: {
+      dateMiseAJourSource: '2021-07-07',
+      value: 'RTE',
+    },
+    adresseVoie: {
+      dateMiseAJourSource: '2021-07-07',
+      value: 'DE VEYZIAT',
+    },
+    catégorieÉtablissement: {
+      dateMiseAJourSource: '2021-07-07',
+      value: '300',
+    },
+    courriel: {
+      dateMiseAJourSource: '2021-07-07',
+      value: 'a@example.com',
+    },
+    dateMiseAJourSource: '2021-07-07',
+    estMonoÉtablissement: {
+      dateMiseAJourSource: '2021-07-07',
+      value: false,
+    },
+    libelléCatégorieÉtablissement: {
+      dateMiseAJourSource: '2021-07-07',
+      value: 'Ecoles Formant aux Professions Sanitaires',
+    },
+    numéroFinessEntitéJuridique: {
+      dateMiseAJourSource: '2021-07-07',
+      value: '010008407',
+    },
+    numéroFinessÉtablissementPrincipal: {
+      dateMiseAJourSource: '2021-07-07',
+      value: '010005239',
+    },
+    numéroFinessÉtablissementTerritorial: {
+      dateMiseAJourSource: '2021-07-07',
+      value: '010003598',
+    },
+    raisonSociale: {
+      dateMiseAJourSource: '2021-07-07',
+      value: 'IFAS CH DU HAUT BUGEY',
+    },
+    raisonSocialeDeLEntitéDeRattachement: {
+      dateMiseAJourSource: '2021-07-07',
+      value: 'CH DU HAUT BUGEY',
+    },
+    statutJuridique: {
+      dateMiseAJourSource: '2021-07-07',
+      value: 'Etablissement Public Intercommunal d’Hospitalisation',
+    },
+    typeÉtablissement: {
+      dateMiseAJourSource: '2021-07-07',
+      value: 'S',
+    },
+    téléphone: {
+      dateMiseAJourSource: '2021-07-07',
+      value: '0123456789',
+    },
   }
 
   private static activités: ÉtablissementTerritorialMédicoSocial['activités'] = [
     {
       année: 2019,
       dateMiseAJourSource: '2021-07-07',
-      duréeMoyenneSéjourAccompagnementPersonnesSorties: 1013,
-      fileActivePersonnesAccompagnées: 340,
-      nombreMoyenJournéesAbsencePersonnesAccompagnées: 87,
+      duréeMoyenneSéjourAccompagnementPersonnesSorties: {
+        dateMiseAJourSource: '2021-07-07',
+        value: 1013,
+      },
+      fileActivePersonnesAccompagnées: {
+        dateMiseAJourSource: '2021-07-07',
+        value: 340,
+      },
+      nombreMoyenJournéesAbsencePersonnesAccompagnées: {
+        dateMiseAJourSource: '2021-07-07',
+        value: 87,
+      },
       numéroFinessÉtablissementTerritorial: '010003598',
-      tauxOccupationAccueilDeJour: 0.004,
-      tauxOccupationHébergementPermanent: 0.944,
-      tauxOccupationHébergementTemporaire: 0.704,
-      tauxRéalisationActivité: 1.004,
+      tauxOccupationAccueilDeJour: {
+        dateMiseAJourSource: '2021-07-07',
+        value: 0.004,
+      },
+      tauxOccupationHébergementPermanent: {
+        dateMiseAJourSource: '2021-07-07',
+        value: 0.944,
+      },
+      tauxOccupationHébergementTemporaire: {
+        dateMiseAJourSource: '2021-07-07',
+        value: 0.704,
+      },
+      tauxRéalisationActivité: {
+        dateMiseAJourSource: '2021-07-07',
+        value: 1.004,
+      },
     },
     {
       année: 2020,
       dateMiseAJourSource: '2021-07-07',
-      duréeMoyenneSéjourAccompagnementPersonnesSorties: 994,
-      fileActivePersonnesAccompagnées: 280,
-      nombreMoyenJournéesAbsencePersonnesAccompagnées: 90,
+      duréeMoyenneSéjourAccompagnementPersonnesSorties: {
+        dateMiseAJourSource: '2021-07-07',
+        value: 994,
+      },
+      fileActivePersonnesAccompagnées: {
+        dateMiseAJourSource: '2021-07-07',
+        value: 280,
+      },
+      nombreMoyenJournéesAbsencePersonnesAccompagnées: {
+        dateMiseAJourSource: '2021-07-07',
+        value: 90,
+      },
       numéroFinessÉtablissementTerritorial: '010003598',
-      tauxOccupationAccueilDeJour: 0.155,
-      tauxOccupationHébergementPermanent: 0.975,
-      tauxOccupationHébergementTemporaire: 1.215,
-      tauxRéalisationActivité: 0.945,
+      tauxOccupationAccueilDeJour: {
+        dateMiseAJourSource: '2021-07-07',
+        value: 0.155,
+      },
+      tauxOccupationHébergementPermanent: {
+        dateMiseAJourSource: '2021-07-07',
+        value: 0.975,
+      },
+      tauxOccupationHébergementTemporaire: {
+        dateMiseAJourSource: '2021-07-07',
+        value: 1.215,
+      },
+      tauxRéalisationActivité: {
+        dateMiseAJourSource: '2021-07-07',
+        value: 0.945,
+      },
     },
     {
       année: 2021,
       dateMiseAJourSource: '2021-07-07',
-      duréeMoyenneSéjourAccompagnementPersonnesSorties: 990,
-      fileActivePersonnesAccompagnées: 300,
-      nombreMoyenJournéesAbsencePersonnesAccompagnées: 22,
+      duréeMoyenneSéjourAccompagnementPersonnesSorties: {
+        dateMiseAJourSource: '2021-07-07',
+        value: 990,
+      },
+      fileActivePersonnesAccompagnées: {
+        dateMiseAJourSource: '2021-07-07',
+        value: 300,
+      },
+      nombreMoyenJournéesAbsencePersonnesAccompagnées: {
+        dateMiseAJourSource: '2021-07-07',
+        value: 22,
+      },
       numéroFinessÉtablissementTerritorial: '010003598',
-      tauxOccupationAccueilDeJour: 0.206,
-      tauxOccupationHébergementPermanent: 1.016,
-      tauxOccupationHébergementTemporaire: 0.676,
-      tauxRéalisationActivité: 0.966,
+      tauxOccupationAccueilDeJour: {
+        dateMiseAJourSource: '2021-07-07',
+        value: 0.206,
+      },
+      tauxOccupationHébergementPermanent: {
+        dateMiseAJourSource: '2021-07-07',
+        value: 1.016,
+      },
+      tauxOccupationHébergementTemporaire: {
+        dateMiseAJourSource: '2021-07-07',
+        value: 0.676,
+      },
+      tauxRéalisationActivité: {
+        dateMiseAJourSource: '2021-07-07',
+        value: 0.966,
+      },
     },
   ]
 

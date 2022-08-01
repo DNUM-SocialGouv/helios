@@ -1,7 +1,9 @@
 import { Repository } from 'typeorm'
 
+import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
 import { DateMiseÀJourSourceModel } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
+import { DateMiseÀJourFichierSourceModelTestBuilder } from '../../../../../database/test-builder/DateMiseÀJourFichierSourceModelTestBuilder'
 import { DateMiseÀJourSourceModelTestBuilder } from '../../../../../database/test-builder/DateMiseÀJourSourceModelTestBuilder'
 import { EntitéJuridiqueModelTestBuilder } from '../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder'
 import { EntitéJuridiqueNonTrouvée } from '../../../métier/entities/EntitéJuridiqueNonTrouvée'
@@ -14,10 +16,12 @@ describe('Entité juridique loader', () => {
   const orm = getOrm()
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>
   let dateMiseÀJourSourceRepository: Repository<DateMiseÀJourSourceModel>
+  let dateMiseÀJourFichierSourceRepository: Repository<DateMiseÀJourFichierSourceModel>
 
   beforeAll(async () => {
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel)
     dateMiseÀJourSourceRepository = (await orm).getRepository(DateMiseÀJourSourceModel)
+    dateMiseÀJourFichierSourceRepository = (await orm).getRepository(DateMiseÀJourFichierSourceModel)
   })
 
   afterEach(async () => {
@@ -28,53 +32,72 @@ describe('Entité juridique loader', () => {
     await (await orm).destroy()
   })
 
-  describe('charge une fiche identité d’une entité juridique', () => {
-    it('charge par numéro FINESS lorsque l’entité juridique est en base', async () => {
+  describe('Charge l’identité d’une entité juridique', () => {
+    it('charge par numéro FINESS', async () => {
       // GIVEN
-      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
-      await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
+      await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
       await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestBuilder.crée()])
-
+      await dateMiseÀJourFichierSourceRepository.insert([
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '20220514',
+          fichier: FichierSource.FINESS_CS1400101,
+        }),
+      ])
       const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm)
 
       // WHEN
-      const entitéJuridiqueChargée = await typeOrmEntitéJuridiqueLoader.chargeParNuméroFiness(numéroFinessEntitéJuridique)
+      const entitéJuridique = await typeOrmEntitéJuridiqueLoader.chargeIdentité(numéroFinessEntitéJuridique)
 
       // THEN
-      const entitéJuridiqueAttendue = EntitéJuridiqueTestBuilder.créeEntitéJuridique()
-      expect(entitéJuridiqueChargée).toStrictEqual(entitéJuridiqueAttendue)
+      expect(entitéJuridique).toStrictEqual(EntitéJuridiqueTestBuilder.créeEntitéJuridique({
+        numéroFinessEntitéJuridique: {
+          dateMiseAJourSource: '2022-05-14',
+          value: numéroFinessEntitéJuridique,
+        },
+      }))
     })
 
-    it('signale que l’entité juridique n’a pas été trouvée lorsque l’entité juridique n’existe pas', async () => {
+    it('signale que l’entité juridique n’a pas été trouvée quand celle-ci n’existe pas', async () => {
       // GIVEN
-      await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestBuilder.crée()])
-
+      const fakeNuméroFiness = '123456789'
+      await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: fakeNuméroFiness }))
       const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm)
 
       // WHEN
-      const exceptionReçue = await typeOrmEntitéJuridiqueLoader.chargeParNuméroFiness(numéroFinessEntitéJuridique)
+      const exception = await typeOrmEntitéJuridiqueLoader.chargeIdentité(numéroFinessEntitéJuridique)
 
       // THEN
-      const exceptionAttendue = new EntitéJuridiqueNonTrouvée(numéroFinessEntitéJuridique)
-      expect(exceptionReçue).toStrictEqual(exceptionAttendue)
+      expect(exception).toStrictEqual(new EntitéJuridiqueNonTrouvée(numéroFinessEntitéJuridique))
     })
   })
 
-  it('charge l’entité juridique de rattachement par numéro FINESS lorsque l’entité juridique est en base', async () => {
+  it('charge l’entité juridique de rattachement par numéro FINESS', async () => {
     // GIVEN
-    const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
-    await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
-
+    await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({
+      libelléStatutJuridique: 'fake libellé statut juridique',
+      raisonSociale: 'fake raison sociale',
+    }))
+    await dateMiseÀJourFichierSourceRepository.insert([
+      DateMiseÀJourFichierSourceModelTestBuilder.crée({
+        dernièreMiseÀJour: '20220514',
+        fichier: FichierSource.FINESS_CS1400101,
+      }),
+    ])
     const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm)
 
     // WHEN
-    const entitéJuridiqueChargée = await typeOrmEntitéJuridiqueLoader.chargeLEntitéJuridiqueDeRattachement(numéroFinessEntitéJuridique)
+    const entitéJuridique = await typeOrmEntitéJuridiqueLoader.chargeRattachement(numéroFinessEntitéJuridique)
 
     // THEN
-    const entitéJuridiqueDeRattachementAttendue: EntitéJuridiqueDeRattachement = {
-      raisonSocialeDeLEntitéDeRattachement: 'CENTRE HOSPITALIER DU HAUT BUGEY',
-      statutJuridique: 'Etablissement Public Intercommunal dHospitalisation',
-    }
-    expect(entitéJuridiqueChargée).toStrictEqual(entitéJuridiqueDeRattachementAttendue)
+    expect(entitéJuridique).toStrictEqual<EntitéJuridiqueDeRattachement>({
+      raisonSocialeDeLEntitéDeRattachement: {
+        dateMiseAJourSource: '2022-05-14',
+        value: 'fake raison sociale',
+      },
+      statutJuridique: {
+        dateMiseAJourSource: '2022-05-14',
+        value: 'fake libellé statut juridique',
+      },
+    })
   })
 })

@@ -147,7 +147,12 @@ describe('La page Établissement territorial sanitaire', () => {
   describe('affiche "non renseigné" quand une valeur est vide', () => {
     it('pour le téléphone', () => {
       // GIVEN
-      const établissementTerritorialSansTéléphone = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths, { téléphone: '' })
+      const établissementTerritorialSansTéléphone = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths, {
+        téléphone: {
+          dateMiseAJourSource: '2022-05-14',
+          value: '',
+        },
+      })
 
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansTéléphone} />)
@@ -161,7 +166,12 @@ describe('La page Établissement territorial sanitaire', () => {
 
     it('pour l’e-mail', () => {
       // GIVEN
-      const établissementTerritorialSansEMail = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths, { courriel: '' })
+      const établissementTerritorialSansEMail = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths, {
+        courriel: {
+          dateMiseAJourSource: '2022-05-14',
+          value: '',
+        },
+      })
 
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansEMail} />)
@@ -176,7 +186,12 @@ describe('La page Établissement territorial sanitaire', () => {
 
   it('affiche l’adresse incomplète lorsqu’il manque des champs d’adresse', () => {
     // GIVEN
-    const établissementTerritorialSansAdresseVoie = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths, { adresseVoie: '' })
+    const établissementTerritorialSansAdresseVoie = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths, {
+      adresseVoie: {
+        dateMiseAJourSource: '2022-05-14',
+        value: '',
+      },
+    })
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansAdresseVoie} />)
