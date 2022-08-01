@@ -36,7 +36,7 @@ Notre infrastructure existante (sftp, scalingo), nos droits et nos variables d'e
    ```bash
    echo "$DIAMANT_KEY" | base64 --decode > ./diamant-crypto-key
    gpg --import diamant-crypto-key
-   gpg --decrypt <fichier>.gpg
+   gpg --output fichier.csv --decrypt <fichier>.gpg
    ```
 
 ## Conclusion
