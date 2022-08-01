@@ -1,4 +1,5 @@
 import { ÉtablissementTerritorialMédicoSocial } from '../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
+import { Paths } from '../configuration/Paths'
 import { Wording } from '../configuration/wording/Wording'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from '../ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel'
 
@@ -64,6 +65,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
 
   public static crée(
     wording: Wording,
+    paths: Paths,
     champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocial['identité']>
   ): ÉtablissementTerritorialMédicoSocialViewModel {
     return new ÉtablissementTerritorialMédicoSocialViewModel({
@@ -72,6 +74,6 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
         ...ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
         ...champsSurchargés,
       },
-    }, wording)
+    }, wording, paths)
   }
 }

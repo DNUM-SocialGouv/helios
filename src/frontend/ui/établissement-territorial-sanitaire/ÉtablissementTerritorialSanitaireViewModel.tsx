@@ -1,8 +1,10 @@
+import Link from 'next/link'
 import { ReactElement } from 'react'
 import { Bar } from 'react-chartjs-2'
 
 import { ÉtablissementTerritorialSanitaire } from '../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire'
 import { ÉtablissementTerritorialSanitaireActivité } from '../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité'
+import { Paths } from '../../configuration/Paths'
 import { Wording } from '../../configuration/wording/Wording'
 import { GraphiqueViewModel } from '../commun/Graphique/GraphiqueViewModel'
 import { TableIndicateur } from '../commun/TableIndicateur/TableIndicateur'
@@ -35,7 +37,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
   readonly identifiantDeLaLégendeDesSéjoursMCO = 'légende-graphique-sanitaire-journées-séjours-mco'
   readonly identifiantDeLaLégendeDesJournéesPsyEtSsr = 'légende-graphique-sanitaire-journées-psy-et-ssr'
 
-  constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, wording: Wording) {
+  constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, wording: Wording, private readonly paths: Paths) {
     super(wording, établissementTerritorial.activités.length)
   }
 
@@ -76,12 +78,21 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     return `${téléphoneFormaté} | ${email}`
   }
 
-  public get entitéJuridiqueDeRattachement(): string {
+  public get entitéJuridiqueDeRattachement(): JSX.Element {
+    const lienVersLEntitéJuridique = `${this.paths.ENTITÉ_JURIDIQUE}/${this.établissementTerritorial.identité.numéroFinessEntitéJuridique}`
     const numéroFinessEntitéJuridiqueFormaté = this.insèreUnEspaceTousLesNCaractères(
       this.établissementTerritorial.identité.numéroFinessEntitéJuridique, 3
     )
     const nomDeLEntitéJuridique = this.établissementTerritorial.identité.raisonSocialeDeLEntitéDeRattachement
-    return `EJ - ${numéroFinessEntitéJuridiqueFormaté} - ${nomDeLEntitéJuridique}`
+    const libellé = `EJ - ${numéroFinessEntitéJuridiqueFormaté} - ${nomDeLEntitéJuridique}`
+
+    return (<Link
+      href={lienVersLEntitéJuridique}
+      passHref
+      prefetch={false}
+    >
+      {libellé}
+    </Link>)
   }
 
   public get catégorieDeLÉtablissement(): string {

@@ -4,10 +4,10 @@ import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from '../../te
 import { fakeFrontDependencies, renderFakeComponent } from '../../testHelper'
 import { PageÉtablissementTerritorialSanitaire } from './PageÉtablissementTerritorialSanitaire'
 
-const { wording } = fakeFrontDependencies
+const { paths, wording } = fakeFrontDependencies
 
 describe('La page Établissement territorial sanitaire', () => {
-  const établissementTerritorialSanitaire = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording)
+  const établissementTerritorialSanitaire = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths)
 
   it('affiche le titre : "ET - numéro de FINESS - nom de l’établissement"', () => {
     // WHEN
@@ -72,7 +72,7 @@ describe('La page Établissement territorial sanitaire', () => {
     expect(téléphoneEtEmail).toBeInTheDocument()
   })
 
-  it('affiche l’entité juridique de rattachement dans le bloc identité', () => {
+  it('affiche un lien pour naviguer vers l’entité juridique de rattachement dans le bloc identité', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
 
@@ -81,7 +81,7 @@ describe('La page Établissement territorial sanitaire', () => {
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const labelEntitéJuridiqueDeRattachement = within(indicateurs[4]).getByText(`${wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT} -`, { selector: 'p' })
     expect(labelEntitéJuridiqueDeRattachement.textContent).toBe(`${wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
-    const entitéJuridiqueDeRattachement = within(indicateurs[4]).getByText('EJ - 010 008 407 - HOPITAL PRIVE DE VILLENEUVE DASCQ', { selector: 'p' })
+    const entitéJuridiqueDeRattachement = within(indicateurs[4]).getByRole('link', { name: 'EJ - 010 008 407 - HOPITAL PRIVE DE VILLENEUVE DASCQ' })
     expect(entitéJuridiqueDeRattachement).toBeInTheDocument()
   })
 
@@ -147,7 +147,7 @@ describe('La page Établissement territorial sanitaire', () => {
   describe('affiche "non renseigné" quand une valeur est vide', () => {
     it('pour le téléphone', () => {
       // GIVEN
-      const établissementTerritorialSansTéléphone = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, { téléphone: '' })
+      const établissementTerritorialSansTéléphone = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths, { téléphone: '' })
 
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansTéléphone} />)
@@ -161,7 +161,7 @@ describe('La page Établissement territorial sanitaire', () => {
 
     it('pour l’e-mail', () => {
       // GIVEN
-      const établissementTerritorialSansEMail = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, { courriel: '' })
+      const établissementTerritorialSansEMail = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths, { courriel: '' })
 
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansEMail} />)
@@ -176,7 +176,7 @@ describe('La page Établissement territorial sanitaire', () => {
 
   it('affiche l’adresse incomplète lorsqu’il manque des champs d’adresse', () => {
     // GIVEN
-    const établissementTerritorialSansAdresseVoie = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, { adresseVoie: '' })
+    const établissementTerritorialSansAdresseVoie = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths, { adresseVoie: '' })
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansAdresseVoie} />)

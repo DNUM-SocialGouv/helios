@@ -7,8 +7,8 @@ import { ÉtablissementTerritorialMédicoSocialViewModel } from '../../frontend/
 
 export default function Router({ établissementTerritorial }:
   { établissementTerritorial: ÉtablissementTerritorialMédicoSocial }) {
-  const { wording } = useDependencies()
-  const établissementTerritorialViewModel = new ÉtablissementTerritorialMédicoSocialViewModel(établissementTerritorial, wording)
+  const { paths, wording } = useDependencies()
+  const établissementTerritorialViewModel = new ÉtablissementTerritorialMédicoSocialViewModel(établissementTerritorial, wording, paths)
   return <PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialViewModel} />
 }
 

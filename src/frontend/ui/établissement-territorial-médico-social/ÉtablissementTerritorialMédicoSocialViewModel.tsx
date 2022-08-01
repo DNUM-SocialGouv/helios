@@ -1,7 +1,9 @@
+import Link from 'next/link'
 import { ReactElement } from 'react'
 
 import { ÉtablissementTerritorialMédicoSocial } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialActivité } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
+import { Paths } from '../../configuration/Paths'
 import { Wording } from '../../configuration/wording/Wording'
 import { GraphiqueViewModel } from '../commun/Graphique/GraphiqueViewModel'
 import { StringFormater } from '../commun/StringFormater'
@@ -9,7 +11,7 @@ import { StringFormater } from '../commun/StringFormater'
 export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueViewModel {
   readonly seuilValeurAtypique = 120
 
-  constructor(private readonly établissementTerritorial: ÉtablissementTerritorialMédicoSocial, wording: Wording) {
+  constructor(private readonly établissementTerritorial: ÉtablissementTerritorialMédicoSocial, wording: Wording, private readonly paths: Paths) {
     super(wording, établissementTerritorial.activités.length)
   }
 
@@ -50,9 +52,18 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     return `${téléphoneFormaté} | ${email}`
   }
 
-  public get entitéJuridiqueDeRattachement(): string {
+  public get entitéJuridiqueDeRattachement(): JSX.Element {
+    const lienVersLEntitéJuridique = `${this.paths.ENTITÉ_JURIDIQUE}/${this.établissementTerritorial.identité.numéroFinessEntitéJuridique}`
     const titreDeLEntitéJuridiqueDeRattachement = this.formateLeTitreDeLEntitéJuridiqueDeRattachement()
-    return `EJ - ${titreDeLEntitéJuridiqueDeRattachement}`
+    const libellé = `EJ - ${titreDeLEntitéJuridiqueDeRattachement}`
+
+    return (<Link
+      href={lienVersLEntitéJuridique}
+      passHref
+      prefetch={false}
+    >
+      {libellé}
+    </Link>)
   }
 
   public get catégorieDeLÉtablissement(): string {

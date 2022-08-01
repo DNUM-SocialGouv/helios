@@ -5,10 +5,10 @@ import { fakeFrontDependencies, renderFakeComponent } from '../../testHelper'
 import { PageÉtablissementTerritorialSanitaire } from './PageÉtablissementTerritorialSanitaire'
 import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTerritorialSanitaireViewModel'
 
-const { wording } = fakeFrontDependencies
+const { paths, wording } = fakeFrontDependencies
 
 describe('La page Établissement territorial Sanitaire - Bloc activité', () => {
-  const établissementTerritorialSanitaire = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording)
+  const établissementTerritorialSanitaire = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths)
 
   it.each(
     [
@@ -297,7 +297,7 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
         typeÉtablissement : 'S',
         téléphone : '0474754800',
       },
-    }, wording)
+    }, wording, paths)
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansActivité} />)
@@ -414,7 +414,7 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
         typeÉtablissement : 'S',
         téléphone : '0474754800',
       },
-    }, wording)
+    }, wording, paths)
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansActivité} />)
@@ -447,7 +447,7 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
         typeÉtablissement : 'S',
         téléphone : '0474754800',
       },
-    }, wording)
+    }, wording, paths)
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansActivité} />)
