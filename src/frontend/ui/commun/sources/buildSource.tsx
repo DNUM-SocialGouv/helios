@@ -1,16 +1,12 @@
 import { ReactChild } from 'react'
 
-export function buildSource(sourceFournisseur: ReactChild, sourceOrigine: ReactChild) {
-  let source
-
+export function buildSource(sourceFournisseur: ReactChild, sourceOrigine: ReactChild): ReactChild {
   if (sourceOrigine) {
-    source = <>
+    return <>
       {sourceOrigine}
       {', '}
       {sourceFournisseur}
     </>
-  } else {
-    source = sourceFournisseur
   }
-  return source
+  return sourceFournisseur
 }
