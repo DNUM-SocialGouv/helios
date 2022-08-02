@@ -12,15 +12,15 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
 
   it.each(
     [
-      [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0],
-      [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1],
-      [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 2],
-      [wording.TAUX_RÉALISATION_ACTIVITÉ, 3],
-      [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 4],
-      [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5],
-      [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6],
+      [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0, 'CNSA', 'Caisse Nationale de Solidarité pour l‘Autonomie'],
+      [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1, 'CNSA', 'Caisse Nationale de Solidarité pour l‘Autonomie'],
+      [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 2, 'CNSA', 'Caisse Nationale de Solidarité pour l‘Autonomie'],
+      [wording.TAUX_RÉALISATION_ACTIVITÉ, 3, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
+      [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 4, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
+      [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
+      [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
     ]
-  )('affiche les informations d’un indicateurs', (titreSection, identifiant) => {
+  )('affiche les informations d’un indicateurs', (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
 
@@ -29,12 +29,15 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
     const indicateurs = within(activité).getAllByRole('listitem')
     const titre = within(indicateurs[identifiant]).getByText(titreSection, { selector: 'p' })
     expect(titre).toBeInTheDocument()
-    const dateMiseAJour = within(indicateurs[identifiant]).getAllByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
+    const dateMiseAJour = within(indicateurs[identifiant]).getAllByText('Mise à jour', { exact: false, selector: 'p' })
+    expect(dateMiseAJour[0].textContent).toBe(`Mise à jour : 07/07/2021 - Source : ${sourceOrigineAttendue}, DIAMANT`)
     expect(dateMiseAJour[0]).toBeInTheDocument()
     const transcription = within(indicateurs[identifiant]).getByText(wording.AFFICHER_LA_TRANSCRIPTION)
     expect(transcription).toHaveAttribute('aria-expanded', 'false')
-    const abréviation = within(indicateurs[identifiant]).getAllByText('DIAMANT', { selector: 'abbr' })
-    expect(abréviation[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
+    const abréviationSourceFournisseur = within(indicateurs[identifiant]).getAllByText('DIAMANT', { selector: 'abbr' })
+    expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
+    const abréviationSourceOrigine = within(indicateurs[identifiant]).getAllByText(sourceOrigineAttendue, { selector: 'abbr' })
+    expect(abréviationSourceOrigine[0]).toHaveAttribute('title', abréviationSourceOrigineAttendue)
     const détails = within(indicateurs[identifiant]).getByRole('button', { name: wording.DÉTAILS })
     expect(détails).toHaveAttribute('aria-controls', `nom-info-bulle-activite-${identifiant}`)
     expect(détails).toHaveAttribute('data-fr-opened', 'false')
@@ -257,15 +260,15 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
 
   it.each(
     [
-      [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0],
-      [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1],
-      [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 2],
-      [wording.TAUX_RÉALISATION_ACTIVITÉ, 3],
-      [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 4],
-      [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5],
-      [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6],
+      [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0, 'CNSA', 'Caisse Nationale de Solidarité pour l‘Autonomie'],
+      [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1, 'CNSA', 'Caisse Nationale de Solidarité pour l‘Autonomie'],
+      [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 2, 'CNSA', 'Caisse Nationale de Solidarité pour l‘Autonomie'],
+      [wording.TAUX_RÉALISATION_ACTIVITÉ, 3, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
+      [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 4, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
+      [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
+      [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
     ]
-  )('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails"', (titreSection, identifiant) => {
+  )('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails"', (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
     // GIVEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
@@ -280,6 +283,10 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
     const infoBulle = screen.getByRole('dialog', { name: titreSection })
     const fermer = within(infoBulle).getByRole('button', { name: wording.FERMER })
     expect(fermer).toBeInTheDocument()
+    const abréviationSourceFournisseur = within(infoBulle).getAllByText('DIAMANT', { selector: 'abbr' })
+    expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
+    const abréviationSourceOrigine = within(infoBulle).getAllByText(sourceOrigineAttendue, { selector: 'abbr' })
+    expect(abréviationSourceOrigine[0]).toHaveAttribute('title', abréviationSourceOrigineAttendue)
     const élémentsDeCompréhension = within(infoBulle).getByRole('region', { name: wording.ÉLÉMENTS_DE_COMPRÉHENSION })
     expect(élémentsDeCompréhension).toBeInTheDocument()
     const fréquence = within(infoBulle).getByRole('region', { name: wording.FRÉQUENCE })

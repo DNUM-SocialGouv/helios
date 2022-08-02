@@ -21,8 +21,7 @@ export class ÉtablissementTerritorialRattachéViewModel {
     return (
       <>
         <abbr title={this.wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        &nbsp;
-        {'- '}
+        {' - '}
         {numéroFinessFormaté}
         {' - '}
         {this.établissementTerritorialRattaché.raisonSociale}

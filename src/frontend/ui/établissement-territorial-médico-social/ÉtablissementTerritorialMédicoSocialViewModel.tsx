@@ -23,8 +23,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     return (
       <>
         <abbr title={this.wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
-          &nbsp;
-        {'- '}
+        {' - '}
         {this.formateLeTitreDeLEntitéJuridiqueDeRattachement()}
       </>
     )

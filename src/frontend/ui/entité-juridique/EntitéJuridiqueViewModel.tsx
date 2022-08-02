@@ -11,8 +11,7 @@ export class EntitéJuridiqueViewModel {
     return (
       <>
         <abbr title={this.wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
-        &nbsp;
-        {'- '}
+        {' - '}
         {this.numéroFiness}
         {' - '}
         {this.nomDeLEntitéJuridique}

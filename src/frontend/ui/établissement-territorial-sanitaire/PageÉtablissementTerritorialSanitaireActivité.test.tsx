@@ -12,11 +12,11 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
 
   it.each(
     [
-      [wording.NOMBRE_DE_SÉJOUR_MCO, 0],
-      [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1],
-      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 2],
+      [wording.NOMBRE_DE_SÉJOUR_MCO, 0, 'PMSI', 'Programme de Médicalisation des Systèmes d‘Information'],
+      [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1, 'PMSI', 'Programme de Médicalisation des Systèmes d‘Information'],
+      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 2, 'PMSI', 'Programme de Médicalisation des Systèmes d‘Information'],
     ]
-  )('affiche les informations d’un indicateurs', (titreSection, identifiant) => {
+  )('affiche les informations d’un indicateurs', (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
 
@@ -24,10 +24,12 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
     const indicateurs = within(activité).getAllByRole('listitem')
     const titre = within(indicateurs[identifiant]).getByText(titreSection, { selector: 'p' })
     expect(titre).toBeInTheDocument()
-    const dateMiseAJour = within(indicateurs[identifiant]).getAllByText('Mise à jour : 07/07/2021 - Source :', { selector: 'p' })
-    expect(dateMiseAJour[0]).toBeInTheDocument()
+    const dateMiseAJour = within(indicateurs[identifiant]).getAllByText('Mise à jour', { exact: false, selector: 'p' })
+    expect(dateMiseAJour[0].textContent).toBe(`Mise à jour : 07/07/2021 - Source : ${sourceOrigineAttendue}, DIAMANT`)
     const abréviation = within(indicateurs[identifiant]).getAllByText('DIAMANT', { selector: 'abbr' })
     expect(abréviation[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
+    const abréviationSourceOrigine = within(indicateurs[identifiant]).getAllByText(sourceOrigineAttendue, { selector: 'abbr' })
+    expect(abréviationSourceOrigine[0]).toHaveAttribute('title', abréviationSourceOrigineAttendue)
     const détails = within(indicateurs[identifiant]).getByRole('button', { name: wording.DÉTAILS })
     expect(détails).toHaveAttribute('aria-controls', `nom-info-bulle-activite-${identifiant}`)
     expect(détails).toHaveAttribute('data-fr-opened', 'false')
@@ -35,11 +37,11 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
 
   it.each(
     [
-      [wording.NOMBRE_DE_SÉJOUR_MCO, 0],
-      [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1],
-      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 2],
+      [wording.NOMBRE_DE_SÉJOUR_MCO, 0, 'PMSI', 'Programme de Médicalisation des Systèmes d‘Information'],
+      [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1, 'PMSI', 'Programme de Médicalisation des Systèmes d‘Information'],
+      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 2, 'PMSI', 'Programme de Médicalisation des Systèmes d‘Information'],
     ]
-  )('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails"', (titreSection, identifiant) => {
+  )('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails"', (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
     // GIVEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
@@ -54,6 +56,10 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
     const infoBulle = screen.getByRole('dialog', { name: titreSection })
     const fermer = within(infoBulle).getByRole('button', { name: wording.FERMER })
     expect(fermer).toBeInTheDocument()
+    const abréviationSourceFournisseur = within(infoBulle).getAllByText('DIAMANT', { selector: 'abbr' })
+    expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
+    const abréviationSourceOrigine = within(infoBulle).getAllByText(sourceOrigineAttendue, { selector: 'abbr' })
+    expect(abréviationSourceOrigine[0]).toHaveAttribute('title', abréviationSourceOrigineAttendue)
     const élémentsDeCompréhension = within(infoBulle).getByRole('region', { name: wording.ÉLÉMENTS_DE_COMPRÉHENSION })
     expect(élémentsDeCompréhension).toBeInTheDocument()
     const fréquence = within(infoBulle).getByRole('region', { name: wording.FRÉQUENCE })
