@@ -82,7 +82,7 @@ describe('La page Établissement territorial sanitaire', () => {
     const labelEntitéJuridiqueDeRattachement = within(indicateurs[4]).getByText(`${wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT} -`, { selector: 'p' })
     expect(labelEntitéJuridiqueDeRattachement.textContent).toBe(`${wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
     const entitéJuridiqueDeRattachement = within(indicateurs[4]).getByRole('link', { name: 'EJ - 010 008 407 - HOPITAL PRIVE DE VILLENEUVE DASCQ' })
-    expect(entitéJuridiqueDeRattachement).toBeInTheDocument()
+    expect(entitéJuridiqueDeRattachement).toHaveAttribute('href', '/entite-juridique/010008407')
   })
 
   it('affiche la catégorie de l’établissement dans le bloc identité avec son libellé', () => {

@@ -78,7 +78,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
   }
 
   public get entitéJuridiqueDeRattachement(): JSX.Element {
-    const lienVersLEntitéJuridique = `${this.paths.ENTITÉ_JURIDIQUE}/${this.établissementTerritorial.identité.numéroFinessEntitéJuridique}`
+    const lienVersLEntitéJuridique = `${this.paths.ENTITÉ_JURIDIQUE}/${this.établissementTerritorial.identité.numéroFinessEntitéJuridique.value}`
     const numéroFinessEntitéJuridiqueFormaté = this.insèreUnEspaceTousLesNCaractères(
       this.établissementTerritorial.identité.numéroFinessEntitéJuridique.value, 3
     )
