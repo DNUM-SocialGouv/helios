@@ -52,7 +52,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
   }
 
   public get entitéJuridiqueDeRattachement(): JSX.Element {
-    const lienVersLEntitéJuridique = `${this.paths.ENTITÉ_JURIDIQUE}/${this.établissementTerritorial.identité.numéroFinessEntitéJuridique}`
+    const lienVersLEntitéJuridique = `${this.paths.ENTITÉ_JURIDIQUE}/${this.établissementTerritorial.identité.numéroFinessEntitéJuridique.value}`
     const titreDeLEntitéJuridiqueDeRattachement = this.formateLeTitreDeLEntitéJuridiqueDeRattachement()
     const libellé = `EJ - ${titreDeLEntitéJuridiqueDeRattachement}`
 
