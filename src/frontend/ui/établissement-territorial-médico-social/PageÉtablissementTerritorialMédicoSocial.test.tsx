@@ -127,7 +127,12 @@ describe('La page Établissement territorial', () => {
   it('affiche l’indicateur de mono-établissement dans le bloc identité', () => {
     // GIVEN
     const établissementTerritorialMonoÉtablissement =
-      ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, { estMonoÉtablissement: true })
+      ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, {
+        estMonoÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: true,
+        },
+      })
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMonoÉtablissement} />)
@@ -144,7 +149,12 @@ describe('La page Établissement territorial', () => {
   describe('l’indicateur d’établissement principal ou secondaire dans le bloc identité', () => {
     it('affiche "Principal" si l’établissement est un établissement principal', () => {
       // GIVEN
-      const établissementTerritorialPrincipal = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, { typeÉtablissement: 'P' })
+      const établissementTerritorialPrincipal = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, {
+        typeÉtablissement: {
+          dateMiseÀJourSource: '2022-05-14',
+          value: 'P',
+        },
+      })
 
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialPrincipal} />)
@@ -210,7 +220,13 @@ describe('La page Établissement territorial', () => {
 
   describe('affiche "non renseigné" quand une valeur est vide', () => {
     it('pour le téléphone', () => {
-      const établissementTerritorialSansTéléphone = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, { téléphone: '' })
+      // GIVEN
+      const établissementTerritorialSansTéléphone = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, {
+        téléphone: {
+          dateMiseÀJourSource: '2022-05-14',
+          value: '',
+        },
+      })
 
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansTéléphone} />)
@@ -223,7 +239,13 @@ describe('La page Établissement territorial', () => {
     })
 
     it('pour l’e-mail', () => {
-      const établissementTerritorialSansCourriel = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, { courriel: '' })
+      // GIVEN
+      const établissementTerritorialSansCourriel = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, {
+        courriel: {
+          dateMiseÀJourSource: '2022-05-14',
+          value: '',
+        },
+      })
 
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansCourriel} />)
@@ -237,7 +259,13 @@ describe('La page Établissement territorial', () => {
   })
 
   it('affiche l’adresse incomplète lorsqu’il manque des champs d’adresse', () => {
-    const établissementTerritorialSansAdresseVoie = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, { adresseVoie: '' })
+    // GIVEN
+    const établissementTerritorialSansAdresseVoie = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, {
+      adresseVoie: {
+        dateMiseÀJourSource: '2022-05-14',
+        value: '',
+      },
+    })
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansAdresseVoie} />)

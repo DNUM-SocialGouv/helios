@@ -5,102 +5,312 @@ import { ÉtablissementTerritorialSanitaireViewModel } from '../ui/établissemen
 
 export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
   private static identité: ÉtablissementTerritorialSanitaire['identité'] = {
-    adresseAcheminement: '01130 NANTUA',
-    adresseNuméroVoie : '50',
-    adresseTypeVoie : 'R',
-    adresseVoie : 'PAUL PAINLEVE',
-    catégorieÉtablissement : '355',
-    courriel : 'a@example.com',
-    dateMiseAJourSource : '2021-07-07',
-    libelléCatégorieÉtablissement : 'Centre Hospitalier (C.H.)',
-    numéroFinessEntitéJuridique : '010008407',
-    numéroFinessÉtablissementPrincipal : '010045057',
-    numéroFinessÉtablissementTerritorial: '010000040',
-    raisonSociale : 'CH NANTUA',
-    raisonSocialeDeLEntitéDeRattachement : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-    statutJuridique : 'Société Anonyme (S.A.)',
-    typeÉtablissement : 'S',
-    téléphone : '0474754800',
+    adresseAcheminement: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: '01130 NANTUA',
+    },
+    adresseNuméroVoie: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: '50',
+    },
+    adresseTypeVoie: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: 'R',
+    },
+    adresseVoie: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: 'PAUL PAINLEVE',
+    },
+    catégorieÉtablissement: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: '355',
+    },
+    courriel: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: 'a@example.com',
+    },
+    dateMiseÀJourSource: '2021-07-07',
+    libelléCatégorieÉtablissement: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: 'Centre Hospitalier (C.H.)',
+    },
+    numéroFinessEntitéJuridique: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: '010008407',
+    },
+    numéroFinessÉtablissementPrincipal: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: '010045057',
+    },
+    numéroFinessÉtablissementTerritorial: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: '010000040',
+    },
+    raisonSociale: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: 'CH NANTUA',
+    },
+    raisonSocialeDeLEntitéDeRattachement: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+    },
+    statutJuridique: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: 'Société Anonyme (S.A.)',
+    },
+    typeÉtablissement: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: 'S',
+    },
+    téléphone: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: '0474754800',
+    },
   }
   private static activités: ÉtablissementTerritorialSanitaire['activités'] = [
     {
       année: 2017,
-      dateMiseAJourSource: '2021-07-07',
-      nombreDePassagesAuxUrgences: 10,
-      nombreJournéesCompletePsy: 10,
-      nombreJournéesCompletesSsr: 10,
-      nombreJournéesPartiellesPsy: 10,
-      nombreJournéesPartielsSsr: 10,
-      nombreSéjoursCompletsChirurgie: 10,
-      nombreSéjoursCompletsMédecine: 10,
-      nombreSéjoursCompletsObstétrique: 10,
-      nombreSéjoursPartielsChirurgie: 10,
-      nombreSéjoursPartielsMédecine: 10,
-      nombreSéjoursPartielsObstétrique: 10,
+      dateMiseÀJourSource: '2021-07-07',
+      nombreDePassagesAuxUrgences: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 10,
+      },
+      nombreJournéesCompletePsy: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 10,
+      },
+      nombreJournéesCompletesSsr: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 10,
+      },
+      nombreJournéesPartiellesPsy: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 10,
+      },
+      nombreJournéesPartielsSsr: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 10,
+      },
+      nombreSéjoursCompletsChirurgie: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 10,
+      },
+      nombreSéjoursCompletsMédecine: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 10,
+      },
+      nombreSéjoursCompletsObstétrique: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 10,
+      },
+      nombreSéjoursPartielsChirurgie: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 10,
+      },
+      nombreSéjoursPartielsMédecine: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 10,
+      },
+      nombreSéjoursPartielsObstétrique: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 10,
+      },
       numéroFinessÉtablissementTerritorial: '010000040',
     },
     {
       année: 2018,
-      dateMiseAJourSource: '2021-07-07',
-      nombreDePassagesAuxUrgences: 20,
-      nombreJournéesCompletePsy: 20,
-      nombreJournéesCompletesSsr: 20,
-      nombreJournéesPartiellesPsy: 20,
-      nombreJournéesPartielsSsr: 20,
-      nombreSéjoursCompletsChirurgie: 20,
-      nombreSéjoursCompletsMédecine: 20,
-      nombreSéjoursCompletsObstétrique: 20,
-      nombreSéjoursPartielsChirurgie: 20,
-      nombreSéjoursPartielsMédecine: 20,
-      nombreSéjoursPartielsObstétrique: 20,
+      dateMiseÀJourSource: '2021-07-07',
+      nombreDePassagesAuxUrgences: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 20,
+      },
+      nombreJournéesCompletePsy: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 20,
+      },
+      nombreJournéesCompletesSsr: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 20,
+      },
+      nombreJournéesPartiellesPsy: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 20,
+      },
+      nombreJournéesPartielsSsr: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 20,
+      },
+      nombreSéjoursCompletsChirurgie: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 20,
+      },
+      nombreSéjoursCompletsMédecine: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 20,
+      },
+      nombreSéjoursCompletsObstétrique: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 20,
+      },
+      nombreSéjoursPartielsChirurgie: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 20,
+      },
+      nombreSéjoursPartielsMédecine: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 20,
+      },
+      nombreSéjoursPartielsObstétrique: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 20,
+      },
       numéroFinessÉtablissementTerritorial: '010000040',
     },
     {
       année: 2019,
-      dateMiseAJourSource: '2021-07-07',
-      nombreDePassagesAuxUrgences: 30,
-      nombreJournéesCompletePsy: 30,
-      nombreJournéesCompletesSsr: 30,
-      nombreJournéesPartiellesPsy: 30,
-      nombreJournéesPartielsSsr: 30,
-      nombreSéjoursCompletsChirurgie: 30,
-      nombreSéjoursCompletsMédecine: 30,
-      nombreSéjoursCompletsObstétrique: 30,
-      nombreSéjoursPartielsChirurgie: 30,
-      nombreSéjoursPartielsMédecine: 30,
-      nombreSéjoursPartielsObstétrique: 30,
+      dateMiseÀJourSource: '2021-07-07',
+      nombreDePassagesAuxUrgences: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 30,
+      },
+      nombreJournéesCompletePsy: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 30,
+      },
+      nombreJournéesCompletesSsr: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 30,
+      },
+      nombreJournéesPartiellesPsy: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 30,
+      },
+      nombreJournéesPartielsSsr: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 30,
+      },
+      nombreSéjoursCompletsChirurgie: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 30,
+      },
+      nombreSéjoursCompletsMédecine: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 30,
+      },
+      nombreSéjoursCompletsObstétrique: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 30,
+      },
+      nombreSéjoursPartielsChirurgie: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 30,
+      },
+      nombreSéjoursPartielsMédecine: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 30,
+      },
+      nombreSéjoursPartielsObstétrique: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 30,
+      },
       numéroFinessÉtablissementTerritorial: '010000040',
     },
     {
       année: 2020,
-      dateMiseAJourSource: '2021-07-07',
-      nombreDePassagesAuxUrgences: 40,
-      nombreJournéesCompletePsy: 40,
-      nombreJournéesCompletesSsr: 40,
-      nombreJournéesPartiellesPsy: 40,
-      nombreJournéesPartielsSsr: 40,
-      nombreSéjoursCompletsChirurgie: 40,
-      nombreSéjoursCompletsMédecine: 40,
-      nombreSéjoursCompletsObstétrique: 40,
-      nombreSéjoursPartielsChirurgie: 40,
-      nombreSéjoursPartielsMédecine: 40,
-      nombreSéjoursPartielsObstétrique: 40,
+      dateMiseÀJourSource: '2021-07-07',
+      nombreDePassagesAuxUrgences: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 40,
+      },
+      nombreJournéesCompletePsy: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 40,
+      },
+      nombreJournéesCompletesSsr: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 40,
+      },
+      nombreJournéesPartiellesPsy: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 40,
+      },
+      nombreJournéesPartielsSsr: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 40,
+      },
+      nombreSéjoursCompletsChirurgie: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 40,
+      },
+      nombreSéjoursCompletsMédecine: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 40,
+      },
+      nombreSéjoursCompletsObstétrique: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 40,
+      },
+      nombreSéjoursPartielsChirurgie: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 40,
+      },
+      nombreSéjoursPartielsMédecine: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 40,
+      },
+      nombreSéjoursPartielsObstétrique: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 40,
+      },
       numéroFinessÉtablissementTerritorial: '010000040',
     },
     {
       année: 2021,
-      dateMiseAJourSource: '2021-07-07',
-      nombreDePassagesAuxUrgences: 5000,
-      nombreJournéesCompletePsy: 5000,
-      nombreJournéesCompletesSsr: 5000,
-      nombreJournéesPartiellesPsy: 5000,
-      nombreJournéesPartielsSsr: 5000,
-      nombreSéjoursCompletsChirurgie: 5000,
-      nombreSéjoursCompletsMédecine: 5000,
-      nombreSéjoursCompletsObstétrique: 5000,
-      nombreSéjoursPartielsChirurgie: 5000,
-      nombreSéjoursPartielsMédecine: 5000,
-      nombreSéjoursPartielsObstétrique: 5000,
+      dateMiseÀJourSource: '2021-07-07',
+      nombreDePassagesAuxUrgences: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 5000,
+      },
+      nombreJournéesCompletePsy: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 5000,
+      },
+      nombreJournéesCompletesSsr: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 5000,
+      },
+      nombreJournéesPartiellesPsy: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 5000,
+      },
+      nombreJournéesPartielsSsr: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 5000,
+      },
+      nombreSéjoursCompletsChirurgie: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 5000,
+      },
+      nombreSéjoursCompletsMédecine: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 5000,
+      },
+      nombreSéjoursCompletsObstétrique: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 5000,
+      },
+      nombreSéjoursPartielsChirurgie: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 5000,
+      },
+      nombreSéjoursPartielsMédecine: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 5000,
+      },
+      nombreSéjoursPartielsObstétrique: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 5000,
+      },
       numéroFinessÉtablissementTerritorial: '010000040',
     },
   ]

@@ -3,6 +3,6 @@ import { EntitéJuridiqueNonTrouvée } from '../entities/EntitéJuridiqueNonTrou
 import { EntitéJuridiqueDeRattachement } from '../entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement'
 
 export interface EntitéJuridiqueLoader {
-  chargeParNuméroFiness(numéroFiness: string): Promise<EntitéJuridique | EntitéJuridiqueNonTrouvée>
-  chargeLEntitéJuridiqueDeRattachement(numéroFiness: string): Promise<EntitéJuridiqueDeRattachement>
+  chargeIdentité(numéroFiness: string): Promise<EntitéJuridique | EntitéJuridiqueNonTrouvée>
+  chargeRattachement(numéroFiness: string): Promise<EntitéJuridiqueDeRattachement>
 }

@@ -19,8 +19,8 @@ export class RécupèreLÉtablissementTerritorialMédicoSocialUseCase {
 
     const { estMonoÉtablissement } = await this.établissementTerritorialMédicoSocialLoader.estUnMonoÉtablissement(numéroFinessÉtablissementTerritorial)
 
-    const entitéJuridiqueDeRattachement = await this.entitéJuridiqueLoader.chargeLEntitéJuridiqueDeRattachement(
-      établissementTerritorialMédicoSocialOuErreur.numéroFinessEntitéJuridique
+    const entitéJuridiqueDeRattachement = await this.entitéJuridiqueLoader.chargeRattachement(
+      établissementTerritorialMédicoSocialOuErreur.numéroFinessEntitéJuridique.value
     )
 
     const établissementTerritorialMédicoSocialActivitéOuErreur =

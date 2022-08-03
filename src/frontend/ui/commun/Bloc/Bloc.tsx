@@ -9,7 +9,7 @@ type BlocProps = Readonly<{
 }>
 
 export const Bloc = ({ children, estCeIdentité = false, titre }: BlocProps) => {
-  const classeDuTitre = estCeIdentité ? styles['titre-bloc-identité'] : styles['titre-bloc-détail']
+  const classeDuTitre = estCeIdentité ? styles['titre-bloc-identite'] : styles['titre-bloc-détail']
 
   return (
     <section aria-label={titre}>

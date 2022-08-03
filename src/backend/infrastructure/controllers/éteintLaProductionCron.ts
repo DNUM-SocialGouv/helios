@@ -3,7 +3,7 @@ import fetch from 'node-fetch'
 import { Dependencies, dependencies } from '../dependencies'
 
 async function éteintLaProductionCron(dependencies: Dependencies): Promise<void> {
-  // TODO: refacto dans l'infro
+  // TODO: refacto dans l'infra
   const app = 'helios'
   const apiUrl = 'api.osc-fr1.scalingo.com'
   const token = dependencies.environmentVariables['SCALINGO_TOKEN']

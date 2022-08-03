@@ -1,12 +1,33 @@
 export type ÉtablissementTerritorialMédicoSocialActivité = Readonly<{
   année: number
-  dateMiseAJourSource: string
-  duréeMoyenneSéjourAccompagnementPersonnesSorties: number | null
-  fileActivePersonnesAccompagnées: number | null
-  nombreMoyenJournéesAbsencePersonnesAccompagnées: number | null
+  dateMiseÀJourSource: string
+  duréeMoyenneSéjourAccompagnementPersonnesSorties: Readonly<{
+    dateMiseÀJourSource: string
+    value: number | null
+  }>
+  fileActivePersonnesAccompagnées: Readonly<{
+    dateMiseÀJourSource: string
+    value: number | null
+  }>
+  nombreMoyenJournéesAbsencePersonnesAccompagnées: Readonly<{
+    dateMiseÀJourSource: string
+    value: number | null
+  }>
   numéroFinessÉtablissementTerritorial: string
-  tauxOccupationAccueilDeJour: number | null
-  tauxOccupationHébergementPermanent: number | null
-  tauxOccupationHébergementTemporaire: number | null
-  tauxRéalisationActivité: number | null
+  tauxOccupationAccueilDeJour: Readonly<{
+    dateMiseÀJourSource: string
+    value: number | null
+  }>
+  tauxOccupationHébergementPermanent: Readonly<{
+    dateMiseÀJourSource: string
+    value: number | null
+  }>
+  tauxOccupationHébergementTemporaire: Readonly<{
+    dateMiseÀJourSource: string
+    value: number | null
+  }>
+  tauxRéalisationActivité: Readonly<{
+    dateMiseÀJourSource: string
+    value: number | null
+  }>
 }>

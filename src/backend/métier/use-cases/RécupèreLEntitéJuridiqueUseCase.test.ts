@@ -7,9 +7,14 @@ import { RécupèreLEntitéJuridiqueUseCase } from './RécupèreLEntitéJuridiqu
 describe('La récupération d’une entité juridique', () => {
   it('récupère la fiche identité de l’entité juridique', async () => {
     // GIVEN
-    const entitéJuridique = EntitéJuridiqueTestBuilder.créeEntitéJuridique({ numéroFinessEntitéJuridique })
+    const entitéJuridique = EntitéJuridiqueTestBuilder.créeEntitéJuridique({
+      numéroFinessEntitéJuridique: {
+        dateMiseÀJourSource: '2022-05-14',
+        value: numéroFinessEntitéJuridique,
+      },
+    })
     const mockedChargeParNuméroFiness = jest.fn().mockResolvedValueOnce(entitéJuridique)
-    const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeLEntitéJuridiqueDeRattachement: jest.fn(), chargeParNuméroFiness: mockedChargeParNuméroFiness }
+    const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeIdentité: mockedChargeParNuméroFiness, chargeRattachement: jest.fn() }
     const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader)
 
     // WHEN
@@ -24,7 +29,7 @@ describe('La récupération d’une entité juridique', () => {
   it('signale une alerte si l’entité juridique liée au numéro FINESS n’est pas trouvée', async () => {
     // GIVEN
     const mockedChargeParNuméroFiness = jest.fn().mockResolvedValueOnce(new EntitéJuridiqueNonTrouvée(numéroFinessEntitéJuridique))
-    const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeLEntitéJuridiqueDeRattachement: jest.fn(), chargeParNuméroFiness: mockedChargeParNuméroFiness }
+    const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeIdentité: mockedChargeParNuméroFiness, chargeRattachement: jest.fn() }
     const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader)
 
     // WHEN

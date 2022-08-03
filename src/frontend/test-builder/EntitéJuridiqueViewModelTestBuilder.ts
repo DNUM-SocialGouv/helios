@@ -4,15 +4,39 @@ import { EntitéJuridiqueViewModel } from '../ui/entité-juridique/EntitéJuridi
 
 export class EntitéJuridiqueViewModelTestBuilder {
   private static entitéJurique: EntitéJuridique = {
-    adresseAcheminement: '22023 ST BRIEUC CEDEX 1',
-    adresseNuméroVoie: '10',
-    adresseTypeVoie: 'Rue',
-    adresseVoie: 'Marcel Proust',
-    dateMiseAJourSource: '2021-07-07',
-    libelléStatutJuridique: 'Public',
-    numéroFinessEntitéJuridique: '220000020',
-    raisonSociale: 'CENTRE HOSPITALIER DE SAINT BRIEUC',
-    téléphone: '0296017123',
+    adresseAcheminement: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: '22023 ST BRIEUC CEDEX 1',
+    },
+    adresseNuméroVoie: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: '10',
+    },
+    adresseTypeVoie: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: 'Rue',
+    },
+    adresseVoie: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: 'Marcel Proust',
+    },
+    dateMiseÀJourSource: '2021-07-07',
+    libelléStatutJuridique: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: 'Public',
+    },
+    numéroFinessEntitéJuridique: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: '220000020',
+    },
+    raisonSociale: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: 'CENTRE HOSPITALIER DE SAINT BRIEUC',
+    },
+    téléphone: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: '0296017123',
+    },
   }
 
   public static crée(wording: Wording, champsSurchargés?: Partial<EntitéJuridique>): EntitéJuridiqueViewModel {

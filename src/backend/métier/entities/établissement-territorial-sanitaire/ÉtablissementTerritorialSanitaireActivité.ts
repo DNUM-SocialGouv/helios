@@ -1,16 +1,49 @@
 export type ÉtablissementTerritorialSanitaireActivité = Readonly<{
   année: number
-  dateMiseAJourSource: string
-  nombreDePassagesAuxUrgences: number | null
-  nombreJournéesCompletePsy: number | null
-  nombreJournéesCompletesSsr: number | null
-  nombreJournéesPartiellesPsy: number | null
-  nombreJournéesPartielsSsr: number | null
-  nombreSéjoursCompletsChirurgie: number | null
-  nombreSéjoursCompletsMédecine: number | null
-  nombreSéjoursCompletsObstétrique: number | null
-  nombreSéjoursPartielsChirurgie: number | null
-  nombreSéjoursPartielsMédecine: number | null
-  nombreSéjoursPartielsObstétrique: number | null
+  dateMiseÀJourSource: string
+  nombreDePassagesAuxUrgences: {
+    dateMiseÀJourSource: string
+    value: number | null
+  }
+  nombreJournéesCompletePsy: {
+    dateMiseÀJourSource: string
+    value: number | null
+  }
+  nombreJournéesCompletesSsr: {
+    dateMiseÀJourSource: string
+    value: number | null
+  }
+  nombreJournéesPartiellesPsy: {
+    dateMiseÀJourSource: string
+    value: number | null
+  }
+  nombreJournéesPartielsSsr: {
+    dateMiseÀJourSource: string
+    value: number | null
+  }
+  nombreSéjoursCompletsChirurgie: {
+    dateMiseÀJourSource: string
+    value: number | null
+  }
+  nombreSéjoursCompletsMédecine: {
+    dateMiseÀJourSource: string
+    value: number | null
+  }
+  nombreSéjoursCompletsObstétrique: {
+    dateMiseÀJourSource: string
+    value: number | null
+  }
+  nombreSéjoursPartielsChirurgie: {
+    dateMiseÀJourSource: string
+    value: number | null
+  }
+  nombreSéjoursPartielsMédecine: {
+    dateMiseÀJourSource: string
+    value: number | null
+  }
+  nombreSéjoursPartielsObstétrique: {
+    dateMiseÀJourSource: string
+    value: number | null
+  }
   numéroFinessÉtablissementTerritorial: string
 }>

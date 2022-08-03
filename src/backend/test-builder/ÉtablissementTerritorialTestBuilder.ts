@@ -4,66 +4,198 @@ import { ÉtablissementTerritorialIdentité } from '../métier/entities/Établis
 
 export class ÉtablissementTerritorialTestBuilder {
   private static médicoSocial: ÉtablissementTerritorialIdentité = {
-    adresseAcheminement: '01130 NANTUA',
-    adresseNuméroVoie: '50',
-    adresseTypeVoie: 'R',
-    adresseVoie: 'PAUL PAINLEVE',
-    catégorieÉtablissement: '355',
-    courriel: 'a@example.com',
-    dateMiseAJourSource: '2022-05-14',
-    libelléCatégorieÉtablissement: 'Centre hospitalier (C.H.)',
-    numéroFinessEntitéJuridique: '010008407',
-    numéroFinessÉtablissementPrincipal: '010018407',
-    numéroFinessÉtablissementTerritorial: '010000040',
-    raisonSociale: 'CENTRE HOSPITALIER NANTUA',
-    typeÉtablissement: 'S',
-    téléphone: '0102030405',
+    adresseAcheminement: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: '01130 NANTUA',
+    },
+    adresseNuméroVoie: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: '50',
+    },
+    adresseTypeVoie: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 'R',
+    },
+    adresseVoie: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 'PAUL PAINLEVE',
+    },
+    catégorieÉtablissement: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: '159',
+    },
+    courriel: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 'a@example.com',
+    },
+    dateMiseÀJourSource: '2022-05-14',
+    libelléCatégorieÉtablissement: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 'Centre Hospitalier (C.H.)',
+    },
+    numéroFinessEntitéJuridique: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: '010008407',
+    },
+    numéroFinessÉtablissementPrincipal: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: '010018407',
+    },
+    numéroFinessÉtablissementTerritorial: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: '010000040',
+    },
+    raisonSociale: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 'CENTRE HOSPITALIER NANTUA',
+    },
+    typeÉtablissement: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 'S',
+    },
+    téléphone: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: '0102030405',
+    },
   }
 
   private static sanitaire: ÉtablissementTerritorialIdentité = {
-    adresseAcheminement: '59650 VILLENEUVE D ASCQ',
-    adresseNuméroVoie: '20',
-    adresseTypeVoie: 'AV',
-    adresseVoie: 'DE LA RECONNAISSANCE',
-    catégorieÉtablissement: '365',
-    courriel: 'b@example.com',
-    dateMiseAJourSource: '2022-05-14',
-    libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
-    numéroFinessEntitéJuridique: '590000741',
-    numéroFinessÉtablissementPrincipal: '',
-    numéroFinessÉtablissementTerritorial: '590782553',
-    raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-    typeÉtablissement: 'P',
-    téléphone: '0102030406',
+    adresseAcheminement: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: '59650 VILLENEUVE D ASCQ',
+    },
+    adresseNuméroVoie: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: '20',
+    },
+    adresseTypeVoie: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 'AV',
+    },
+    adresseVoie: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 'DE LA RECONNAISSANCE',
+    },
+    catégorieÉtablissement: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: '365',
+    },
+    courriel: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 'b@example.com',
+    },
+    dateMiseÀJourSource: '2022-05-14',
+    libelléCatégorieÉtablissement: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 'Centre Hospitalier (C.H.)',
+    },
+    numéroFinessEntitéJuridique: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: '590000741',
+    },
+    numéroFinessÉtablissementPrincipal: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: '',
+    },
+    numéroFinessÉtablissementTerritorial: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: '590782553',
+    },
+    raisonSociale: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+    },
+    typeÉtablissement: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 'P',
+    },
+    téléphone: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: '0102030406',
+    },
   }
 
   private static activitéMédicoSocial: ÉtablissementTerritorialMédicoSocialActivité = {
     année: 2019,
-    dateMiseAJourSource: '2022-05-14',
-    duréeMoyenneSéjourAccompagnementPersonnesSorties: 80,
-    fileActivePersonnesAccompagnées: 80,
-    nombreMoyenJournéesAbsencePersonnesAccompagnées: 80,
+    dateMiseÀJourSource: '2022-05-14',
+    duréeMoyenneSéjourAccompagnementPersonnesSorties: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 80,
+    },
+    fileActivePersonnesAccompagnées: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 80,
+    },
+    nombreMoyenJournéesAbsencePersonnesAccompagnées: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 80,
+    },
     numéroFinessÉtablissementTerritorial: '123456789',
-    tauxOccupationAccueilDeJour: 80,
-    tauxOccupationHébergementPermanent: 80,
-    tauxOccupationHébergementTemporaire: 80,
-    tauxRéalisationActivité: 80,
+    tauxOccupationAccueilDeJour: {
+      dateMiseÀJourSource: '2022-05-15',
+      value: 80,
+    },
+    tauxOccupationHébergementPermanent: {
+      dateMiseÀJourSource: '2022-05-15',
+      value: 80,
+    },
+    tauxOccupationHébergementTemporaire: {
+      dateMiseÀJourSource: '2022-05-15',
+      value: 80,
+    },
+    tauxRéalisationActivité: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 80,
+    },
   }
 
   private static activitéSanitaire: ÉtablissementTerritorialSanitaireActivité = {
     année: 2016,
-    dateMiseAJourSource: '2022-05-14',
-    nombreDePassagesAuxUrgences: 60_000,
-    nombreJournéesCompletePsy: 60,
-    nombreJournéesCompletesSsr: 60,
-    nombreJournéesPartiellesPsy: 60,
-    nombreJournéesPartielsSsr: 60,
-    nombreSéjoursCompletsChirurgie: 60,
-    nombreSéjoursCompletsMédecine: 60,
-    nombreSéjoursCompletsObstétrique: 60,
-    nombreSéjoursPartielsChirurgie: 60,
-    nombreSéjoursPartielsMédecine: 60,
-    nombreSéjoursPartielsObstétrique: 60,
+    dateMiseÀJourSource: '2022-05-14',
+    nombreDePassagesAuxUrgences: {
+      dateMiseÀJourSource: '2022-05-15',
+      value: 60_000,
+    },
+    nombreJournéesCompletePsy: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 60,
+    },
+    nombreJournéesCompletesSsr: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 60,
+    },
+    nombreJournéesPartiellesPsy: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 60,
+    },
+    nombreJournéesPartielsSsr: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 60,
+    },
+    nombreSéjoursCompletsChirurgie: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 60,
+    },
+    nombreSéjoursCompletsMédecine: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 60,
+    },
+    nombreSéjoursCompletsObstétrique: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 60,
+    },
+    nombreSéjoursPartielsChirurgie: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 60,
+    },
+    nombreSéjoursPartielsMédecine: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 60,
+    },
+    nombreSéjoursPartielsObstétrique: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 60,
+    },
     numéroFinessÉtablissementTerritorial: '123456789',
   }
 

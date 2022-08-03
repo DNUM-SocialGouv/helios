@@ -5,23 +5,20 @@ export type Breadcrumb = Readonly<{
   path: string
 }>[]
 
-type DispatchBreadcrumbUpdate = (breadCrumb: Breadcrumb) => void
-type UnsubscribeFromBreadcrumbUpdate = () => void
+type UpdateBreadcrumb = (breadcrumb: Breadcrumb) => void
 
 export class BreadcrumbHandler {
-  private breadcrumb: Breadcrumb = []
-  private subscriptions: DispatchBreadcrumbUpdate[] = []
+  private subscriptions: UpdateBreadcrumb[] = []
 
-  updateBreadCrum(breadcrumb: Breadcrumb) {
-    this.breadcrumb = breadcrumb
-
-    this.subscriptions.forEach((dispatchBreadCrumbUpdate) => dispatchBreadCrumbUpdate(this.breadcrumb))
+  updateBreadcrum(breadcrumb: Breadcrumb) {
+    this.subscriptions.forEach((updateBreadcrumb) => updateBreadcrumb(breadcrumb))
   }
 
-  AddSubscription(newSubscription: (breadCrumb: Breadcrumb) => void): UnsubscribeFromBreadcrumbUpdate {
+  addSubscription(newSubscription: UpdateBreadcrumb) {
     this.subscriptions.push(newSubscription)
 
-    return () =>
-      (this.subscriptions = this.subscriptions.filter((existingSubscription) => existingSubscription !== newSubscription))
+    return () => {
+      this.subscriptions = this.subscriptions.filter((existingSubscription) => existingSubscription !== newSubscription)
+    }
   }
 }

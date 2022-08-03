@@ -24,27 +24,27 @@ export class EntitéJuridiqueViewModel {
   }
 
   public get nomDeLEntitéJuridique(): string {
-    return this.entitéJuridique.raisonSociale
+    return this.entitéJuridique.raisonSociale.value
   }
 
   public get numéroFiness(): string {
-    return StringFormater.formateLeNuméroFiness(this.entitéJuridique.numéroFinessEntitéJuridique)
+    return StringFormater.formateLeNuméroFiness(this.entitéJuridique.numéroFinessEntitéJuridique.value)
   }
 
   public get adresse(): string {
-    return `${this.entitéJuridique.adresseNuméroVoie} ${this.entitéJuridique.adresseTypeVoie} ${this.entitéJuridique.adresseVoie} ${this.entitéJuridique.adresseAcheminement}`
+    return `${this.entitéJuridique.adresseNuméroVoie.value} ${this.entitéJuridique.adresseTypeVoie.value} ${this.entitéJuridique.adresseVoie.value} ${this.entitéJuridique.adresseAcheminement.value}`
   }
 
   public get statutDeLEntitéJuridique(): string {
-    return this.entitéJuridique.libelléStatutJuridique
+    return this.entitéJuridique.libelléStatutJuridique.value
   }
 
   public get téléphone(): string {
-    return this.valeurOuNonRenseigné(StringFormater.formateLeNuméroDeTéléphone(this.entitéJuridique.téléphone))
+    return this.valeurOuNonRenseigné(StringFormater.formateLeNuméroDeTéléphone(this.entitéJuridique.téléphone.value))
   }
 
   public get dateDeMiseÀJour(): string {
-    return StringFormater.formateLaDate(this.entitéJuridique.dateMiseAJourSource)
+    return StringFormater.formateLaDate(this.entitéJuridique.dateMiseÀJourSource)
   }
 
   private valeurOuNonRenseigné(valeur: string): string {

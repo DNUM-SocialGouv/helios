@@ -30,24 +30,24 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
   }
 
   public get numéroFinessEntitéJuridiqueBrut(): string {
-    return this.établissementTerritorial.identité.numéroFinessEntitéJuridique
+    return this.établissementTerritorial.identité.numéroFinessEntitéJuridique.value
   }
 
   public get nomDeLÉtablissementTerritorial(): string {
-    return this.établissementTerritorial.identité.raisonSociale
+    return this.établissementTerritorial.identité.raisonSociale.value
   }
 
   public get numéroFinessÉtablissementTerritorial(): string {
-    return StringFormater.formateLeNuméroFiness(this.établissementTerritorial.identité.numéroFinessÉtablissementTerritorial)
+    return StringFormater.formateLeNuméroFiness(this.établissementTerritorial.identité.numéroFinessÉtablissementTerritorial.value)
   }
 
   public get adresse(): string {
-    return `${this.établissementTerritorial.identité.adresseNuméroVoie} ${this.établissementTerritorial.identité.adresseTypeVoie} ${this.établissementTerritorial.identité.adresseVoie} ${this.établissementTerritorial.identité.adresseAcheminement}`
+    return `${this.établissementTerritorial.identité.adresseNuméroVoie.value} ${this.établissementTerritorial.identité.adresseTypeVoie.value} ${this.établissementTerritorial.identité.adresseVoie.value} ${this.établissementTerritorial.identité.adresseAcheminement.value}`
   }
 
   public get téléphoneEtEmail(): string {
-    const téléphoneFormaté = this.valeurOuNonRenseigné(StringFormater.formateLeNuméroDeTéléphone(this.établissementTerritorial.identité.téléphone))
-    const email = this.valeurOuNonRenseigné(this.établissementTerritorial.identité.courriel)
+    const téléphoneFormaté = this.valeurOuNonRenseigné(StringFormater.formateLeNuméroDeTéléphone(this.établissementTerritorial.identité.téléphone.value))
+    const email = this.valeurOuNonRenseigné(this.établissementTerritorial.identité.courriel.value)
     return `${téléphoneFormaté} | ${email}`
   }
 
@@ -66,11 +66,11 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
   }
 
   public get catégorieDeLÉtablissement(): string {
-    return `${this.établissementTerritorial.identité.catégorieÉtablissement} - ${this.établissementTerritorial.identité.libelléCatégorieÉtablissement}`
+    return `${this.établissementTerritorial.identité.catégorieÉtablissement.value} - ${this.établissementTerritorial.identité.libelléCatégorieÉtablissement.value}`
   }
 
   public get statutDeLÉtablissement(): string {
-    return this.établissementTerritorial.identité.statutJuridique
+    return this.établissementTerritorial.identité.statutJuridique.value
   }
 
   public get monoÉtablissement(): string {
@@ -78,13 +78,13 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
   }
 
   public get principalOuSecondaire(): string {
-    return this.établissementTerritorial.identité.typeÉtablissement === 'P' ?
+    return this.établissementTerritorial.identité.typeÉtablissement.value === 'P' ?
       this.wording.PRINCIPAL :
-      `${this.wording.SECONDAIRE} (${this.wording.PRINCIPAL} : ${StringFormater.formateLeNuméroFiness(this.établissementTerritorial.identité.numéroFinessÉtablissementPrincipal)})`
+      `${this.wording.SECONDAIRE} (${this.wording.PRINCIPAL} : ${StringFormater.formateLeNuméroFiness(this.établissementTerritorial.identité.numéroFinessÉtablissementPrincipal.value)})`
   }
 
   public get dateDeMiseÀJour(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorial.identité.dateMiseAJourSource)
+    return StringFormater.formateLaDate(this.établissementTerritorial.identité.dateMiseÀJourSource)
   }
 
   public get activitéEstElleRenseignée(): boolean {
@@ -183,8 +183,8 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
   }
 
   private formateLeTitreDeLEntitéJuridiqueDeRattachement(): string {
-    const numéroFinessEntitéJuridiqueFormaté = StringFormater.formateLeNuméroFiness(this.établissementTerritorial.identité.numéroFinessEntitéJuridique)
-    const nomDeLEntitéJuridique = this.établissementTerritorial.identité.raisonSocialeDeLEntitéDeRattachement
+    const numéroFinessEntitéJuridiqueFormaté = StringFormater.formateLeNuméroFiness(this.établissementTerritorial.identité.numéroFinessEntitéJuridique.value)
+    const nomDeLEntitéJuridique = this.établissementTerritorial.identité.raisonSocialeDeLEntitéDeRattachement.value
     return `${numéroFinessEntitéJuridiqueFormaté} - ${nomDeLEntitéJuridique}`
   }
 
@@ -192,34 +192,34 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     return valeur === '' ? this.wording.NON_RENSEIGNÉ : valeur
   }
 
-  private construisLesAnnéesEtSesTaux(indicateur: keyof ÉtablissementTerritorialMédicoSocialActivité): number[][] {
+  private construisLesAnnéesEtSesTaux(indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>): number[][] {
     const valeurs: number[] = []
     const années: number[] = []
     this.établissementTerritorial.activités.forEach((activité: ÉtablissementTerritorialMédicoSocialActivité) => {
-      if (activité[indicateur] !== null) {
+      if (activité[indicateur].value !== null) {
         années.push(activité.année)
       }
 
-      if (activité[indicateur] !== null) {
+      if (activité[indicateur].value !== null) {
         // @ts-ignore
-        valeurs.push(this.transformeEnTaux(activité[indicateur]))
+        valeurs.push(this.transformeEnTaux(activité[indicateur].value))
       }
     })
 
     return [valeurs, années]
   }
 
-  private construisLesAnnéesEtSesValeurs(indicateur: keyof ÉtablissementTerritorialMédicoSocialActivité): number[][] {
+  private construisLesAnnéesEtSesValeurs(indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>): number[][] {
     const valeurs: number[] = []
     const années: number[] = []
     this.établissementTerritorial.activités.forEach((activité: ÉtablissementTerritorialMédicoSocialActivité) => {
-      if (activité[indicateur] !== null) {
+      if (activité[indicateur].value !== null) {
         années.push(activité.année)
       }
 
-      if (activité[indicateur] !== null) {
+      if (activité[indicateur].value !== null) {
         // @ts-ignore
-        valeurs.push(activité[indicateur])
+        valeurs.push(activité[indicateur].value)
       }
     })
 
@@ -255,7 +255,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     return Number((nombre * 100).toFixed(1))
   }
 
-  private lIndicateurEstIlRenseigné(indicateur: keyof ÉtablissementTerritorialMédicoSocialActivité): boolean {
-    return this.établissementTerritorial.activités.some((activité: ÉtablissementTerritorialMédicoSocialActivité) => activité[indicateur] !== null)
+  private lIndicateurEstIlRenseigné(indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>): boolean {
+    return this.établissementTerritorial.activités.some((activité: ÉtablissementTerritorialMédicoSocialActivité) => activité[indicateur].value !== null)
   }
 }

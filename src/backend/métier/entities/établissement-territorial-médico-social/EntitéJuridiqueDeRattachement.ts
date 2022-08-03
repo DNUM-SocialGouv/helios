@@ -1,4 +1,10 @@
 export type EntitéJuridiqueDeRattachement = Readonly<{
-  statutJuridique: string
-  raisonSocialeDeLEntitéDeRattachement: string
+  statutJuridique: Readonly<{
+    dateMiseÀJourSource: string
+    value: string
+  }>
+  raisonSocialeDeLEntitéDeRattachement: Readonly<{
+    dateMiseÀJourSource: string
+    value: string
+  }>
 }>

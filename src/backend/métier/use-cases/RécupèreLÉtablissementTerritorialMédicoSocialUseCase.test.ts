@@ -1,6 +1,7 @@
 import { ÉtablissementTerritorialTestBuilder } from '../../test-builder/ÉtablissementTerritorialTestBuilder'
 import { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from '../../testHelper'
 import { EntitéJuridiqueDeRattachement } from '../entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement'
+import { MonoÉtablissement } from '../entities/établissement-territorial-médico-social/MonoÉtablissement'
 import { ÉtablissementTerritorialMédicoSocial } from '../entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
 import { EntitéJuridiqueLoader } from '../gateways/EntitéJuridiqueLoader'
@@ -11,14 +12,36 @@ describe('La récupération d’un établissement territorial médico-social', (
   it('récupère la fiche identité de l’établissement territorial médico-social', async () => {
     // GIVEN
     const fakeIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestBuilder.créeUneIdentitéMédicoSocial(
-      { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial }
+      {
+        numéroFinessEntitéJuridique: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: numéroFinessEntitéJuridique,
+        },
+        numéroFinessÉtablissementTerritorial: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: numéroFinessÉtablissementTerritorial,
+        },
+      }
     )
+    const entitéJuridiqueDeRattachement: EntitéJuridiqueDeRattachement = {
+      raisonSocialeDeLEntitéDeRattachement: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+      },
+      statutJuridique: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: 'Société Anonyme (S.A.)',
+      },
+    }
+    const fakeEstUnMonoÉtablissement: MonoÉtablissement = {
+      estMonoÉtablissement: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: false,
+      },
+    }
     const mockedChargeIdentité = jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial)
-    const mockedEstUnMonoÉtablissement = jest.fn().mockResolvedValueOnce({ estMonoÉtablissement: false })
-    const mockedChargeLEntitéJuridiqueDeRattachement = jest.fn().mockResolvedValueOnce({
-      raisonSocialeDeLEntitéDeRattachement: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-      statutJuridique: 'Société Anonyme (S.A.)',
-    })
+    const mockedEstUnMonoÉtablissement = jest.fn().mockResolvedValueOnce(fakeEstUnMonoÉtablissement)
+    const mockedChargeLEntitéJuridiqueDeRattachement = jest.fn().mockResolvedValueOnce(entitéJuridiqueDeRattachement)
 
     const mockedÉtablissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader = {
       chargeActivité: jest.fn(),
@@ -26,8 +49,7 @@ describe('La récupération d’un établissement territorial médico-social', (
       estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
     }
 
-    const mockedEntitéJuridiqueLoader: EntitéJuridiqueLoader =
-      { chargeLEntitéJuridiqueDeRattachement: mockedChargeLEntitéJuridiqueDeRattachement, chargeParNuméroFiness: jest.fn() }
+    const mockedEntitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeIdentité: jest.fn(), chargeRattachement: mockedChargeLEntitéJuridiqueDeRattachement }
 
     const récupèreLÉtablissementTerritorialUseCase =
       new RécupèreLÉtablissementTerritorialMédicoSocialUseCase(mockedÉtablissementTerritorialMédicoSocialLoader, mockedEntitéJuridiqueLoader)
@@ -36,14 +58,13 @@ describe('La récupération d’un établissement territorial médico-social', (
     const établissementTerritorialMédicoSocial = await récupèreLÉtablissementTerritorialUseCase.exécute(numéroFinessÉtablissementTerritorial)
 
     // THEN
-    const entitéJuridiqueDeRattachement: EntitéJuridiqueDeRattachement = {
-      raisonSocialeDeLEntitéDeRattachement : 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-      statutJuridique : 'Société Anonyme (S.A.)',
-    }
     const ficheIdentitéÉtablissementTerritorialMédicoSocial: ÉtablissementTerritorialMédicoSocial['identité'] = {
       ...fakeIdentitéÉtablissementTerritorial,
       ...entitéJuridiqueDeRattachement,
-      estMonoÉtablissement: false,
+      estMonoÉtablissement: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: false,
+      },
     }
 
     expect(établissementTerritorialMédicoSocial.identité).toStrictEqual(ficheIdentitéÉtablissementTerritorialMédicoSocial)
@@ -64,8 +85,7 @@ describe('La récupération d’un établissement territorial médico-social', (
       chargeIdentité: mockedChargeParNuméroFiness,
       estUnMonoÉtablissement: jest.fn(),
     }
-    const entitéJuridiqueLoader: EntitéJuridiqueLoader =
-      { chargeLEntitéJuridiqueDeRattachement: jest.fn(), chargeParNuméroFiness: jest.fn() }
+    const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeIdentité: jest.fn(), chargeRattachement: jest.fn() }
 
     const récupèreLÉtablissementTerritorialUseCase =
       new RécupèreLÉtablissementTerritorialMédicoSocialUseCase(mockedÉtablissementTerritorialMédicoSocialLoader, entitéJuridiqueLoader)
@@ -82,22 +102,31 @@ describe('La récupération d’un établissement territorial médico-social', (
 
   it('récupère les activités de l’établissement territorial médico-social', async () => {
     // GIVEN
-    const mockedEstUnMonoÉtablissement = jest.fn().mockResolvedValueOnce({ estMonoÉtablissement: false })
+    const fakeEstUnMonoÉtablissement: MonoÉtablissement = {
+      estMonoÉtablissement: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: false,
+      },
+    }
+    const mockedEstUnMonoÉtablissement = jest.fn().mockResolvedValueOnce(fakeEstUnMonoÉtablissement)
 
     const fakeIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestBuilder.créeUneIdentitéMédicoSocial(
-      { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial }
+      {
+        numéroFinessEntitéJuridique: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: numéroFinessEntitéJuridique,
+        },
+        numéroFinessÉtablissementTerritorial: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: numéroFinessÉtablissementTerritorial,
+        },
+      }
     )
 
-    const activités = [
-      ÉtablissementTerritorialTestBuilder.créeUneActivitéMédicoSocial(
-        { année: 2019, numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial }
-      ),
-      ÉtablissementTerritorialTestBuilder.créeUneActivitéMédicoSocial(
-        { année: 2020, numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial }
-      ),
-      ÉtablissementTerritorialTestBuilder.créeUneActivitéMédicoSocial(
-        { année: 2021, numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorial }
-      ),
+    const activités: ÉtablissementTerritorialMédicoSocial['activités'] = [
+      ÉtablissementTerritorialTestBuilder.créeUneActivitéMédicoSocial({ année: 2019, numéroFinessÉtablissementTerritorial }),
+      ÉtablissementTerritorialTestBuilder.créeUneActivitéMédicoSocial({ année: 2020, numéroFinessÉtablissementTerritorial }),
+      ÉtablissementTerritorialTestBuilder.créeUneActivitéMédicoSocial({ année: 2021, numéroFinessÉtablissementTerritorial }),
     ]
     const mockedChargeActivité = jest.fn().mockResolvedValueOnce(activités)
     const mockedÉtablissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader = {
@@ -106,8 +135,7 @@ describe('La récupération d’un établissement territorial médico-social', (
       estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
     }
 
-    const mockedEntitéJuridiqueLoader: EntitéJuridiqueLoader =
-      { chargeLEntitéJuridiqueDeRattachement: jest.fn(), chargeParNuméroFiness: jest.fn() }
+    const mockedEntitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeIdentité: jest.fn(), chargeRattachement: jest.fn() }
 
     const récupèreLÉtablissementTerritorialMédicoSocialUseCase =
       new RécupèreLÉtablissementTerritorialMédicoSocialUseCase(mockedÉtablissementTerritorialMédicoSocialLoader, mockedEntitéJuridiqueLoader)

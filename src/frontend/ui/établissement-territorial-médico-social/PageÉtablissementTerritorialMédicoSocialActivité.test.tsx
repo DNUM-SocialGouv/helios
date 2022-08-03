@@ -103,59 +103,170 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
       activités: [
         {
           année: 2019,
-          dateMiseAJourSource: '2021-07-07',
-          duréeMoyenneSéjourAccompagnementPersonnesSorties: valeurIndicateur1,
-          fileActivePersonnesAccompagnées: valeurIndicateur1,
-          nombreMoyenJournéesAbsencePersonnesAccompagnées: valeurIndicateur1,
+          dateMiseÀJourSource: '2021-07-07',
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur1,
+          },
+          fileActivePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur1,
+          },
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur1,
+          },
           numéroFinessÉtablissementTerritorial: '010003598',
-          tauxOccupationAccueilDeJour: valeurIndicateur1,
-          tauxOccupationHébergementPermanent: valeurIndicateur1,
-          tauxOccupationHébergementTemporaire: valeurIndicateur1,
-          tauxRéalisationActivité: valeurIndicateur1,
+          tauxOccupationAccueilDeJour: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur1,
+          },
+          tauxOccupationHébergementPermanent: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur1,
+          },
+          tauxOccupationHébergementTemporaire: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur1,
+          },
+          tauxRéalisationActivité: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur1,
+          },
         },
         {
           année: 2020,
-          dateMiseAJourSource: '2021-07-07',
-          duréeMoyenneSéjourAccompagnementPersonnesSorties: valeurIndicateur2,
-          fileActivePersonnesAccompagnées: valeurIndicateur2,
-          nombreMoyenJournéesAbsencePersonnesAccompagnées: valeurIndicateur2,
+          dateMiseÀJourSource: '2021-07-07',
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur2,
+          },
+          fileActivePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur2,
+          },
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur2,
+          },
           numéroFinessÉtablissementTerritorial: '010003598',
-          tauxOccupationAccueilDeJour: valeurIndicateur2,
-          tauxOccupationHébergementPermanent: valeurIndicateur2,
-          tauxOccupationHébergementTemporaire: valeurIndicateur2,
-          tauxRéalisationActivité: valeurIndicateur2,
+          tauxOccupationAccueilDeJour: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur2,
+          },
+          tauxOccupationHébergementPermanent: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur2,
+          },
+          tauxOccupationHébergementTemporaire: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur2,
+          },
+          tauxRéalisationActivité: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur2,
+          },
         },
         {
           année: 2021,
-          dateMiseAJourSource: '2021-07-07',
-          duréeMoyenneSéjourAccompagnementPersonnesSorties: valeurIndicateur3,
-          fileActivePersonnesAccompagnées: valeurIndicateur3,
-          nombreMoyenJournéesAbsencePersonnesAccompagnées: valeurIndicateur3,
+          dateMiseÀJourSource: '2021-07-07',
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur3,
+          },
+          fileActivePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur3,
+          },
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur3,
+          },
           numéroFinessÉtablissementTerritorial: '010003598',
-          tauxOccupationAccueilDeJour: valeurIndicateur3,
-          tauxOccupationHébergementPermanent: valeurIndicateur3,
-          tauxOccupationHébergementTemporaire: valeurIndicateur3,
-          tauxRéalisationActivité: valeurIndicateur3,
+          tauxOccupationAccueilDeJour: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur3,
+          },
+          tauxOccupationHébergementPermanent: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur3,
+          },
+          tauxOccupationHébergementTemporaire: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur3,
+          },
+          tauxRéalisationActivité: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur3,
+          },
         },
       ],
       identité: {
-        adresseAcheminement: '01117 OYONNAX CEDEX',
-        adresseNuméroVoie : '1',
-        adresseTypeVoie : 'RTE',
-        adresseVoie : 'DE VEYZIAT',
-        catégorieÉtablissement : '300',
-        courriel : 'a@example.com',
-        dateMiseAJourSource : '2021-07-07',
-        estMonoÉtablissement: false,
-        libelléCatégorieÉtablissement : 'Ecoles Formant aux Professions Sanitaires',
-        numéroFinessEntitéJuridique : '010008407',
-        numéroFinessÉtablissementPrincipal : '010005239',
-        numéroFinessÉtablissementTerritorial: '010003598',
-        raisonSociale : 'IFAS CH DU HAUT BUGEY',
-        raisonSocialeDeLEntitéDeRattachement : 'CH DU HAUT BUGEY',
-        statutJuridique : 'Etablissement Public Intercommunal d’Hospitalisation',
-        typeÉtablissement : 'S',
-        téléphone : '0123456789',
+        adresseAcheminement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '01130 NANTUA',
+        },
+        adresseNuméroVoie: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '50',
+        },
+        adresseTypeVoie: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'R',
+        },
+        adresseVoie: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'PAUL PAINLEVE',
+        },
+        catégorieÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '355',
+        },
+        courriel: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'a@example.com',
+        },
+        dateMiseÀJourSource: '2021-07-07',
+        estMonoÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: false,
+        },
+        libelléCatégorieÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'Centre Hospitalier (C.H.)',
+        },
+        numéroFinessEntitéJuridique: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '010008407',
+        },
+        numéroFinessÉtablissementPrincipal: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '010045057',
+        },
+        numéroFinessÉtablissementTerritorial: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '010000040',
+        },
+        raisonSociale: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'CH NANTUA',
+        },
+        raisonSocialeDeLEntitéDeRattachement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+        },
+        statutJuridique: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'Société Anonyme (S.A.)',
+        },
+        typeÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'S',
+        },
+        téléphone: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '0474754800',
+        },
       },
     }, wording, paths)
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
@@ -188,59 +299,170 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
       activités: [
         {
           année: 2019,
-          dateMiseAJourSource: '2021-07-07',
-          duréeMoyenneSéjourAccompagnementPersonnesSorties: valeurIndicateur1,
-          fileActivePersonnesAccompagnées: valeurIndicateur1,
-          nombreMoyenJournéesAbsencePersonnesAccompagnées: valeurIndicateur1,
+          dateMiseÀJourSource: '2021-07-07',
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur1,
+          },
+          fileActivePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur1,
+          },
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur1,
+          },
           numéroFinessÉtablissementTerritorial: '010003598',
-          tauxOccupationAccueilDeJour: valeurIndicateur1,
-          tauxOccupationHébergementPermanent: valeurIndicateur1,
-          tauxOccupationHébergementTemporaire: valeurIndicateur1,
-          tauxRéalisationActivité: valeurIndicateur1,
+          tauxOccupationAccueilDeJour: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur1,
+          },
+          tauxOccupationHébergementPermanent: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur1,
+          },
+          tauxOccupationHébergementTemporaire: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur1,
+          },
+          tauxRéalisationActivité: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur1,
+          },
         },
         {
           année: 2020,
-          dateMiseAJourSource: '2021-07-07',
-          duréeMoyenneSéjourAccompagnementPersonnesSorties: valeurIndicateur2,
-          fileActivePersonnesAccompagnées: valeurIndicateur2,
-          nombreMoyenJournéesAbsencePersonnesAccompagnées: valeurIndicateur2,
+          dateMiseÀJourSource: '2021-07-07',
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur2,
+          },
+          fileActivePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur2,
+          },
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur2,
+          },
           numéroFinessÉtablissementTerritorial: '010003598',
-          tauxOccupationAccueilDeJour: valeurIndicateur2,
-          tauxOccupationHébergementPermanent: valeurIndicateur2,
-          tauxOccupationHébergementTemporaire: valeurIndicateur2,
-          tauxRéalisationActivité: valeurIndicateur2,
+          tauxOccupationAccueilDeJour: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur2,
+          },
+          tauxOccupationHébergementPermanent: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur2,
+          },
+          tauxOccupationHébergementTemporaire: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur2,
+          },
+          tauxRéalisationActivité: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur2,
+          },
         },
         {
           année: 2021,
-          dateMiseAJourSource: '2021-07-07',
-          duréeMoyenneSéjourAccompagnementPersonnesSorties: valeurIndicateur3,
-          fileActivePersonnesAccompagnées: valeurIndicateur3,
-          nombreMoyenJournéesAbsencePersonnesAccompagnées: valeurIndicateur3,
+          dateMiseÀJourSource: '2021-07-07',
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur3,
+          },
+          fileActivePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur3,
+          },
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur3,
+          },
           numéroFinessÉtablissementTerritorial: '010003598',
-          tauxOccupationAccueilDeJour: valeurIndicateur3,
-          tauxOccupationHébergementPermanent: valeurIndicateur3,
-          tauxOccupationHébergementTemporaire: valeurIndicateur3,
-          tauxRéalisationActivité: valeurIndicateur3,
+          tauxOccupationAccueilDeJour: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur3,
+          },
+          tauxOccupationHébergementPermanent: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur3,
+          },
+          tauxOccupationHébergementTemporaire: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur3,
+          },
+          tauxRéalisationActivité: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: valeurIndicateur3,
+          },
         },
       ],
       identité: {
-        adresseAcheminement: '01117 OYONNAX CEDEX',
-        adresseNuméroVoie : '1',
-        adresseTypeVoie : 'RTE',
-        adresseVoie : 'DE VEYZIAT',
-        catégorieÉtablissement : '300',
-        courriel : 'a@example.com',
-        dateMiseAJourSource : '2021-07-07',
-        estMonoÉtablissement: false,
-        libelléCatégorieÉtablissement : 'Ecoles Formant aux Professions Sanitaires',
-        numéroFinessEntitéJuridique : '010008407',
-        numéroFinessÉtablissementPrincipal : '010005239',
-        numéroFinessÉtablissementTerritorial: '010003598',
-        raisonSociale : 'IFAS CH DU HAUT BUGEY',
-        raisonSocialeDeLEntitéDeRattachement : 'CH DU HAUT BUGEY',
-        statutJuridique : 'Etablissement Public Intercommunal d’Hospitalisation',
-        typeÉtablissement : 'S',
-        téléphone : '0123456789',
+        adresseAcheminement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '01130 NANTUA',
+        },
+        adresseNuméroVoie: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '50',
+        },
+        adresseTypeVoie: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'R',
+        },
+        adresseVoie: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'PAUL PAINLEVE',
+        },
+        catégorieÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '355',
+        },
+        courriel: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'a@example.com',
+        },
+        dateMiseÀJourSource: '2021-07-07',
+        estMonoÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: false,
+        },
+        libelléCatégorieÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'Centre Hospitalier (C.H.)',
+        },
+        numéroFinessEntitéJuridique: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '010008407',
+        },
+        numéroFinessÉtablissementPrincipal: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '010045057',
+        },
+        numéroFinessÉtablissementTerritorial: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '010000040',
+        },
+        raisonSociale: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'CH NANTUA',
+        },
+        raisonSocialeDeLEntitéDeRattachement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+        },
+        statutJuridique: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'Société Anonyme (S.A.)',
+        },
+        typeÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'S',
+        },
+        téléphone: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '0474754800',
+        },
       },
     }, wording, paths)
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
@@ -350,59 +572,170 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
       activités: [
         {
           année: 2019,
-          dateMiseAJourSource: '2021-07-07',
-          duréeMoyenneSéjourAccompagnementPersonnesSorties: indicateur7,
-          fileActivePersonnesAccompagnées: indicateur5,
-          nombreMoyenJournéesAbsencePersonnesAccompagnées: indicateur6,
+          dateMiseÀJourSource: '2021-07-07',
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: indicateur7,
+          },
+          fileActivePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: indicateur5,
+          },
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: indicateur6,
+          },
           numéroFinessÉtablissementTerritorial: '010003598',
-          tauxOccupationAccueilDeJour: indicateur3,
-          tauxOccupationHébergementPermanent: indicateur1,
-          tauxOccupationHébergementTemporaire: indicateur2,
-          tauxRéalisationActivité: indicateur4,
+          tauxOccupationAccueilDeJour: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: indicateur3,
+          },
+          tauxOccupationHébergementPermanent: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: indicateur1,
+          },
+          tauxOccupationHébergementTemporaire: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: indicateur2,
+          },
+          tauxRéalisationActivité: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: indicateur4,
+          },
         },
         {
           année: 2020,
-          dateMiseAJourSource: '2021-07-07',
-          duréeMoyenneSéjourAccompagnementPersonnesSorties: indicateur7,
-          fileActivePersonnesAccompagnées: indicateur5,
-          nombreMoyenJournéesAbsencePersonnesAccompagnées: indicateur6,
+          dateMiseÀJourSource: '2021-07-07',
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: indicateur7,
+          },
+          fileActivePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: indicateur5,
+          },
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: indicateur6,
+          },
           numéroFinessÉtablissementTerritorial: '010003598',
-          tauxOccupationAccueilDeJour: indicateur3,
-          tauxOccupationHébergementPermanent: indicateur1,
-          tauxOccupationHébergementTemporaire: indicateur2,
-          tauxRéalisationActivité: indicateur4,
+          tauxOccupationAccueilDeJour: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: indicateur3,
+          },
+          tauxOccupationHébergementPermanent: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: indicateur1,
+          },
+          tauxOccupationHébergementTemporaire: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: indicateur2,
+          },
+          tauxRéalisationActivité: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: indicateur4,
+          },
         },
         {
           année: 2021,
-          dateMiseAJourSource: '2021-07-07',
-          duréeMoyenneSéjourAccompagnementPersonnesSorties: indicateur7,
-          fileActivePersonnesAccompagnées: indicateur5,
-          nombreMoyenJournéesAbsencePersonnesAccompagnées: indicateur6,
+          dateMiseÀJourSource: '2021-07-07',
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: indicateur7,
+          },
+          fileActivePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: indicateur5,
+          },
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: indicateur6,
+          },
           numéroFinessÉtablissementTerritorial: '010003598',
-          tauxOccupationAccueilDeJour: indicateur3,
-          tauxOccupationHébergementPermanent: indicateur1,
-          tauxOccupationHébergementTemporaire: indicateur2,
-          tauxRéalisationActivité: indicateur4,
+          tauxOccupationAccueilDeJour: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: indicateur3,
+          },
+          tauxOccupationHébergementPermanent: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: indicateur1,
+          },
+          tauxOccupationHébergementTemporaire: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: indicateur2,
+          },
+          tauxRéalisationActivité: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: indicateur4,
+          },
         },
       ],
       identité: {
-        adresseAcheminement: '01117 OYONNAX CEDEX',
-        adresseNuméroVoie : '1',
-        adresseTypeVoie : 'RTE',
-        adresseVoie : 'DE VEYZIAT',
-        catégorieÉtablissement : '300',
-        courriel : 'a@example.com',
-        dateMiseAJourSource : '2021-07-07',
-        estMonoÉtablissement: false,
-        libelléCatégorieÉtablissement : 'Ecoles Formant aux Professions Sanitaires',
-        numéroFinessEntitéJuridique : '010008407',
-        numéroFinessÉtablissementPrincipal : '010005239',
-        numéroFinessÉtablissementTerritorial: '010003598',
-        raisonSociale : 'IFAS CH DU HAUT BUGEY',
-        raisonSocialeDeLEntitéDeRattachement : 'CH DU HAUT BUGEY',
-        statutJuridique : 'Etablissement Public Intercommunal d’Hospitalisation',
-        typeÉtablissement : 'S',
-        téléphone : '0123456789',
+        adresseAcheminement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '01130 NANTUA',
+        },
+        adresseNuméroVoie: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '50',
+        },
+        adresseTypeVoie: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'R',
+        },
+        adresseVoie: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'PAUL PAINLEVE',
+        },
+        catégorieÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '355',
+        },
+        courriel: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'a@example.com',
+        },
+        dateMiseÀJourSource: '2021-07-07',
+        estMonoÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: false,
+        },
+        libelléCatégorieÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'Centre Hospitalier (C.H.)',
+        },
+        numéroFinessEntitéJuridique: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '010008407',
+        },
+        numéroFinessÉtablissementPrincipal: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '010045057',
+        },
+        numéroFinessÉtablissementTerritorial: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '010000040',
+        },
+        raisonSociale: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'CH NANTUA',
+        },
+        raisonSocialeDeLEntitéDeRattachement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+        },
+        statutJuridique: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'Société Anonyme (S.A.)',
+        },
+        typeÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'S',
+        },
+        téléphone: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '0474754800',
+        },
       },
     }, wording, paths)
 
@@ -424,59 +757,170 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
       activités: [
         {
           année: 2019,
-          dateMiseAJourSource: '2021-07-07',
-          duréeMoyenneSéjourAccompagnementPersonnesSorties: null,
-          fileActivePersonnesAccompagnées: null,
-          nombreMoyenJournéesAbsencePersonnesAccompagnées: null,
+          dateMiseÀJourSource: '2021-07-07',
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: null,
+          },
+          fileActivePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: null,
+          },
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: null,
+          },
           numéroFinessÉtablissementTerritorial: '010003598',
-          tauxOccupationAccueilDeJour: null,
-          tauxOccupationHébergementPermanent: null,
-          tauxOccupationHébergementTemporaire: null,
-          tauxRéalisationActivité: null,
+          tauxOccupationAccueilDeJour: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: null,
+          },
+          tauxOccupationHébergementPermanent: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: null,
+          },
+          tauxOccupationHébergementTemporaire: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: null,
+          },
+          tauxRéalisationActivité: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: null,
+          },
         },
         {
           année: 2020,
-          dateMiseAJourSource: '2021-07-07',
-          duréeMoyenneSéjourAccompagnementPersonnesSorties: null,
-          fileActivePersonnesAccompagnées: null,
-          nombreMoyenJournéesAbsencePersonnesAccompagnées: null,
+          dateMiseÀJourSource: '2021-07-07',
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: null,
+          },
+          fileActivePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: null,
+          },
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: null,
+          },
           numéroFinessÉtablissementTerritorial: '010003598',
-          tauxOccupationAccueilDeJour: null,
-          tauxOccupationHébergementPermanent: null,
-          tauxOccupationHébergementTemporaire: null,
-          tauxRéalisationActivité: null,
+          tauxOccupationAccueilDeJour: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: null,
+          },
+          tauxOccupationHébergementPermanent: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: null,
+          },
+          tauxOccupationHébergementTemporaire: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: null,
+          },
+          tauxRéalisationActivité: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: null,
+          },
         },
         {
           année: 2021,
-          dateMiseAJourSource: '2021-07-07',
-          duréeMoyenneSéjourAccompagnementPersonnesSorties: null,
-          fileActivePersonnesAccompagnées: null,
-          nombreMoyenJournéesAbsencePersonnesAccompagnées: null,
+          dateMiseÀJourSource: '2021-07-07',
+          duréeMoyenneSéjourAccompagnementPersonnesSorties: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: null,
+          },
+          fileActivePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: null,
+          },
+          nombreMoyenJournéesAbsencePersonnesAccompagnées: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: null,
+          },
           numéroFinessÉtablissementTerritorial: '010003598',
-          tauxOccupationAccueilDeJour: null,
-          tauxOccupationHébergementPermanent: null,
-          tauxOccupationHébergementTemporaire: null,
-          tauxRéalisationActivité: null,
+          tauxOccupationAccueilDeJour: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: null,
+          },
+          tauxOccupationHébergementPermanent: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: null,
+          },
+          tauxOccupationHébergementTemporaire: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: null,
+          },
+          tauxRéalisationActivité: {
+            dateMiseÀJourSource: '2021-07-07',
+            value: null,
+          },
         },
       ],
       identité: {
-        adresseAcheminement: '01117 OYONNAX CEDEX',
-        adresseNuméroVoie : '1',
-        adresseTypeVoie : 'RTE',
-        adresseVoie : 'DE VEYZIAT',
-        catégorieÉtablissement : '300',
-        courriel : 'a@example.com',
-        dateMiseAJourSource : '2021-07-07',
-        estMonoÉtablissement: false,
-        libelléCatégorieÉtablissement : 'Ecoles Formant aux Professions Sanitaires',
-        numéroFinessEntitéJuridique : '010008407',
-        numéroFinessÉtablissementPrincipal : '010005239',
-        numéroFinessÉtablissementTerritorial: '010003598',
-        raisonSociale : 'IFAS CH DU HAUT BUGEY',
-        raisonSocialeDeLEntitéDeRattachement : 'CH DU HAUT BUGEY',
-        statutJuridique : 'Etablissement Public Intercommunal d’Hospitalisation',
-        typeÉtablissement : 'S',
-        téléphone : '0123456789',
+        adresseAcheminement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '01130 NANTUA',
+        },
+        adresseNuméroVoie: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '50',
+        },
+        adresseTypeVoie: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'R',
+        },
+        adresseVoie: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'PAUL PAINLEVE',
+        },
+        catégorieÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '355',
+        },
+        courriel: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'a@example.com',
+        },
+        dateMiseÀJourSource: '2021-07-07',
+        estMonoÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: false,
+        },
+        libelléCatégorieÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'Centre Hospitalier (C.H.)',
+        },
+        numéroFinessEntitéJuridique: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '010008407',
+        },
+        numéroFinessÉtablissementPrincipal: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '010045057',
+        },
+        numéroFinessÉtablissementTerritorial: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '010000040',
+        },
+        raisonSociale: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'CH NANTUA',
+        },
+        raisonSocialeDeLEntitéDeRattachement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+        },
+        statutJuridique: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'Société Anonyme (S.A.)',
+        },
+        typeÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'S',
+        },
+        téléphone: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '0474754800',
+        },
       },
     }, wording, paths)
 
@@ -494,23 +938,71 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
     const établissementTerritorialSansActivité = new ÉtablissementTerritorialMédicoSocialViewModel({
       activités: [],
       identité: {
-        adresseAcheminement: '01117 OYONNAX CEDEX',
-        adresseNuméroVoie : '1',
-        adresseTypeVoie : 'RTE',
-        adresseVoie : 'DE VEYZIAT',
-        catégorieÉtablissement : '300',
-        courriel : 'a@example.com',
-        dateMiseAJourSource : '2021-07-07',
-        estMonoÉtablissement: false,
-        libelléCatégorieÉtablissement : 'Ecoles Formant aux Professions Sanitaires',
-        numéroFinessEntitéJuridique : '010008407',
-        numéroFinessÉtablissementPrincipal : '010005239',
-        numéroFinessÉtablissementTerritorial: '010003598',
-        raisonSociale : 'IFAS CH DU HAUT BUGEY',
-        raisonSocialeDeLEntitéDeRattachement : 'CH DU HAUT BUGEY',
-        statutJuridique : 'Etablissement Public Intercommunal d’Hospitalisation',
-        typeÉtablissement : 'S',
-        téléphone : '0123456789',
+        adresseAcheminement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '01130 NANTUA',
+        },
+        adresseNuméroVoie: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '50',
+        },
+        adresseTypeVoie: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'R',
+        },
+        adresseVoie: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'PAUL PAINLEVE',
+        },
+        catégorieÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '355',
+        },
+        courriel: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'a@example.com',
+        },
+        dateMiseÀJourSource: '2021-07-07',
+        estMonoÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: false,
+        },
+        libelléCatégorieÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'Centre Hospitalier (C.H.)',
+        },
+        numéroFinessEntitéJuridique: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '010008407',
+        },
+        numéroFinessÉtablissementPrincipal: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '010045057',
+        },
+        numéroFinessÉtablissementTerritorial: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '010000040',
+        },
+        raisonSociale: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'CH NANTUA',
+        },
+        raisonSocialeDeLEntitéDeRattachement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+        },
+        statutJuridique: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'Société Anonyme (S.A.)',
+        },
+        typeÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'S',
+        },
+        téléphone: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '0474754800',
+        },
       },
     }, wording, paths)
 

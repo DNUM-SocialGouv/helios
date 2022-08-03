@@ -56,33 +56,33 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
   }
 
   public get numéroFinessEntitéJuridiqueBrut(): string {
-    return this.établissementTerritorial.identité.numéroFinessEntitéJuridique
+    return this.établissementTerritorial.identité.numéroFinessEntitéJuridique.value
   }
 
   public get nomDeLÉtablissementTerritorial(): string {
-    return this.établissementTerritorial.identité.raisonSociale
+    return this.établissementTerritorial.identité.raisonSociale.value
   }
 
   public get numéroFinessÉtablissementTerritorial(): string {
-    return this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorial.identité.numéroFinessÉtablissementTerritorial, 3)
+    return this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorial.identité.numéroFinessÉtablissementTerritorial.value, 3)
   }
 
   public get adresse(): string {
-    return `${this.établissementTerritorial.identité.adresseNuméroVoie} ${this.établissementTerritorial.identité.adresseTypeVoie} ${this.établissementTerritorial.identité.adresseVoie} ${this.établissementTerritorial.identité.adresseAcheminement}`
+    return `${this.établissementTerritorial.identité.adresseNuméroVoie.value} ${this.établissementTerritorial.identité.adresseTypeVoie.value} ${this.établissementTerritorial.identité.adresseVoie.value} ${this.établissementTerritorial.identité.adresseAcheminement.value}`
   }
 
   public get téléphoneEtEmail(): string {
-    const téléphoneFormaté = this.valeurOuNonRenseigné(this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorial.identité.téléphone, 2))
-    const email = this.valeurOuNonRenseigné(this.établissementTerritorial.identité.courriel)
+    const téléphoneFormaté = this.valeurOuNonRenseigné(this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorial.identité.téléphone.value, 2))
+    const email = this.valeurOuNonRenseigné(this.établissementTerritorial.identité.courriel.value)
     return `${téléphoneFormaté} | ${email}`
   }
 
   public get entitéJuridiqueDeRattachement(): JSX.Element {
     const lienVersLEntitéJuridique = `${this.paths.ENTITÉ_JURIDIQUE}/${this.établissementTerritorial.identité.numéroFinessEntitéJuridique}`
     const numéroFinessEntitéJuridiqueFormaté = this.insèreUnEspaceTousLesNCaractères(
-      this.établissementTerritorial.identité.numéroFinessEntitéJuridique, 3
+      this.établissementTerritorial.identité.numéroFinessEntitéJuridique.value, 3
     )
-    const nomDeLEntitéJuridique = this.établissementTerritorial.identité.raisonSocialeDeLEntitéDeRattachement
+    const nomDeLEntitéJuridique = this.établissementTerritorial.identité.raisonSocialeDeLEntitéDeRattachement.value
     const libellé = `EJ - ${numéroFinessEntitéJuridiqueFormaté} - ${nomDeLEntitéJuridique}`
 
     return (<Link
@@ -95,15 +95,15 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
   }
 
   public get catégorieDeLÉtablissement(): string {
-    return `${this.établissementTerritorial.identité.catégorieÉtablissement} - ${this.établissementTerritorial.identité.libelléCatégorieÉtablissement}`
+    return `${this.établissementTerritorial.identité.catégorieÉtablissement.value} - ${this.établissementTerritorial.identité.libelléCatégorieÉtablissement.value}`
   }
 
   public get statutDeLÉtablissement(): string {
-    return this.établissementTerritorial.identité.statutJuridique
+    return this.établissementTerritorial.identité.statutJuridique.value
   }
 
   public get dateDeMiseÀJour(): string {
-    return this.formateLaDate(this.établissementTerritorial.identité.dateMiseAJourSource)
+    return this.formateLaDate(this.établissementTerritorial.identité.dateMiseÀJourSource)
   }
 
   public get nombreDeSéjoursMédecineChirurgieObstétrique(): JSX.Element {
@@ -128,20 +128,20 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
 
   public get nombreDeSéjoursMCOSontIlsRenseignés(): boolean {
     return this.établissementTerritorial.activités.some((activité: ÉtablissementTerritorialSanitaireActivité) => (
-      (activité['nombreSéjoursPartielsMédecine'] !== null) ||
-      (activité['nombreSéjoursCompletsMédecine'] !== null) ||
-      (activité['nombreSéjoursPartielsChirurgie'] !== null) ||
-      (activité['nombreSéjoursCompletsChirurgie'] !== null) ||
-      (activité['nombreSéjoursPartielsObstétrique'] !== null) ||
-      (activité['nombreSéjoursCompletsObstétrique'] !== null)))
+      (activité['nombreSéjoursPartielsMédecine'].value !== null) ||
+      (activité['nombreSéjoursCompletsMédecine'].value !== null) ||
+      (activité['nombreSéjoursPartielsChirurgie'].value !== null) ||
+      (activité['nombreSéjoursCompletsChirurgie'].value !== null) ||
+      (activité['nombreSéjoursPartielsObstétrique'].value !== null) ||
+      (activité['nombreSéjoursCompletsObstétrique'].value !== null)))
   }
 
   public get nombreDeJournéesPsyEtSsrSontIlsRenseignés(): boolean {
     return this.établissementTerritorial.activités.some((activité: ÉtablissementTerritorialSanitaireActivité) => (
-      (activité['nombreJournéesPartiellesPsy'] !== null) ||
-      (activité['nombreJournéesCompletesSsr'] !== null) ||
-      (activité['nombreJournéesPartiellesPsy'] !== null) ||
-      (activité['nombreJournéesCompletePsy'] !== null)))
+      (activité['nombreJournéesPartiellesPsy'].value !== null) ||
+      (activité['nombreJournéesCompletesSsr'].value !== null) ||
+      (activité['nombreJournéesPartiellesPsy'].value !== null) ||
+      (activité['nombreJournéesCompletePsy'].value !== null)))
   }
 
   public get nombreDePassagesAuxUrgencesEstIlRenseigné(): boolean {
@@ -365,10 +365,10 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
 
   private formateLeTitreDeLEntitéJuridiqueDeRattachement() {
     const numéroFinessEntitéJuridiqueFormaté = this.insèreUnEspaceTousLesNCaractères(
-      this.établissementTerritorial.identité.numéroFinessEntitéJuridique,
+      this.établissementTerritorial.identité.numéroFinessEntitéJuridique.value,
       3
     )
-    const nomDeLEntitéJuridique = this.établissementTerritorial.identité.raisonSocialeDeLEntitéDeRattachement
+    const nomDeLEntitéJuridique = this.établissementTerritorial.identité.raisonSocialeDeLEntitéDeRattachement.value
     return `${numéroFinessEntitéJuridiqueFormaté} - ${nomDeLEntitéJuridique}`
   }
 
@@ -397,12 +397,12 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
 
     this.établissementTerritorial.activités.forEach((activité: ÉtablissementTerritorialSanitaireActivité) => {
       années.push(activité.année)
-      nombreDeSéjours.nombreSéjoursCompletsChirurgie.push({ x: activité.année, y: activité.nombreSéjoursCompletsChirurgie })
-      nombreDeSéjours.nombreSéjoursCompletsMédecine.push({ x: activité.année, y: activité.nombreSéjoursCompletsMédecine })
-      nombreDeSéjours.nombreSéjoursCompletsObstétrique.push({ x: activité.année, y: activité.nombreSéjoursCompletsObstétrique })
-      nombreDeSéjours.nombreSéjoursPartielsChirurgie.push({ x: activité.année, y: activité.nombreSéjoursPartielsChirurgie })
-      nombreDeSéjours.nombreSéjoursPartielsMédecine.push({ x: activité.année, y: activité.nombreSéjoursPartielsMédecine })
-      nombreDeSéjours.nombreSéjoursPartielsObstétrique.push({ x: activité.année, y: activité.nombreSéjoursPartielsObstétrique })
+      nombreDeSéjours.nombreSéjoursCompletsChirurgie.push({ x: activité.année, y: activité.nombreSéjoursCompletsChirurgie.value })
+      nombreDeSéjours.nombreSéjoursCompletsMédecine.push({ x: activité.année, y: activité.nombreSéjoursCompletsMédecine.value })
+      nombreDeSéjours.nombreSéjoursCompletsObstétrique.push({ x: activité.année, y: activité.nombreSéjoursCompletsObstétrique.value })
+      nombreDeSéjours.nombreSéjoursPartielsChirurgie.push({ x: activité.année, y: activité.nombreSéjoursPartielsChirurgie.value })
+      nombreDeSéjours.nombreSéjoursPartielsMédecine.push({ x: activité.année, y: activité.nombreSéjoursPartielsMédecine.value })
+      nombreDeSéjours.nombreSéjoursPartielsObstétrique.push({ x: activité.année, y: activité.nombreSéjoursPartielsObstétrique.value })
     })
     return [nombreDeSéjours, années]
   }
@@ -418,10 +418,10 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
 
     this.établissementTerritorial.activités.forEach((activité: ÉtablissementTerritorialSanitaireActivité) => {
       années.push(activité.année)
-      nombreDeJournées.nombreJournéesComplètesPsy.push({ x: activité.année, y: activité.nombreJournéesCompletePsy })
-      nombreDeJournées.nombreJournéesComplètesSsr.push({ x: activité.année, y: activité.nombreJournéesCompletesSsr })
-      nombreDeJournées.nombreJournéesPartiellesPsy.push({ x: activité.année, y: activité.nombreJournéesPartiellesPsy })
-      nombreDeJournées.nombreJournéesPartiellesSsr.push({ x: activité.année, y: activité.nombreJournéesPartielsSsr })
+      nombreDeJournées.nombreJournéesComplètesPsy.push({ x: activité.année, y: activité.nombreJournéesCompletePsy.value })
+      nombreDeJournées.nombreJournéesComplètesSsr.push({ x: activité.année, y: activité.nombreJournéesCompletesSsr.value })
+      nombreDeJournées.nombreJournéesPartiellesPsy.push({ x: activité.année, y: activité.nombreJournéesPartiellesPsy.value })
+      nombreDeJournées.nombreJournéesPartiellesSsr.push({ x: activité.année, y: activité.nombreJournéesPartielsSsr.value })
     })
     return [nombreDeJournées, années]
   }
@@ -439,24 +439,24 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     return couleurDesAnnées
   }
 
-  private construisLesAnnéesEtSesValeurs(indicateur: keyof ÉtablissementTerritorialSanitaireActivité): number[][] {
+  private construisLesAnnéesEtSesValeurs(indicateur: Exclude<keyof ÉtablissementTerritorialSanitaireActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>): number[][] {
     const valeurs: number[] = []
     const années: number[] = []
     this.établissementTerritorial.activités.forEach((activité: ÉtablissementTerritorialSanitaireActivité) => {
-      if (activité[indicateur] !== null) {
+      if (activité[indicateur].value !== null) {
         années.push(activité.année)
       }
 
-      if (activité[indicateur] !== null) {
+      if (activité[indicateur].value !== null) {
         // @ts-ignore
-        valeurs.push(activité[indicateur])
+        valeurs.push(activité[indicateur].value)
       }
     })
 
     return [valeurs, années]
   }
 
-  private lIndicateurEstIlRenseigné(indicateur: keyof ÉtablissementTerritorialSanitaireActivité): boolean {
-    return this.établissementTerritorial.activités.some((activité: ÉtablissementTerritorialSanitaireActivité) => activité[indicateur] !== null)
+  private lIndicateurEstIlRenseigné(indicateur: Exclude<keyof ÉtablissementTerritorialSanitaireActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>): boolean {
+    return this.établissementTerritorial.activités.some((activité: ÉtablissementTerritorialSanitaireActivité) => activité[indicateur].value !== null)
   }
 }
