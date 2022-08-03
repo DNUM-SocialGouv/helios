@@ -85,7 +85,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
   }
 
   public get dateDeMiseÀJour(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorial.identité.dateMiseAJourSource)
+    return StringFormater.formateLaDate(this.établissementTerritorial.identité.dateMiseÀJourSource)
   }
 
   public get activitéEstElleRenseignée(): boolean {
@@ -193,7 +193,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     return valeur === '' ? this.wording.NON_RENSEIGNÉ : valeur
   }
 
-  private construisLesAnnéesEtSesTaux(indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialActivité, 'année' | 'dateMiseAJourSource' | 'numéroFinessÉtablissementTerritorial'>): number[][] {
+  private construisLesAnnéesEtSesTaux(indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>): number[][] {
     const valeurs: number[] = []
     const années: number[] = []
     this.établissementTerritorial.activités.forEach((activité: ÉtablissementTerritorialMédicoSocialActivité) => {
@@ -210,7 +210,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     return [valeurs, années]
   }
 
-  private construisLesAnnéesEtSesValeurs(indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialActivité, 'année' | 'dateMiseAJourSource' | 'numéroFinessÉtablissementTerritorial'>): number[][] {
+  private construisLesAnnéesEtSesValeurs(indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>): number[][] {
     const valeurs: number[] = []
     const années: number[] = []
     this.établissementTerritorial.activités.forEach((activité: ÉtablissementTerritorialMédicoSocialActivité) => {
@@ -256,7 +256,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     return Number((nombre * 100).toFixed(1))
   }
 
-  private lIndicateurEstIlRenseigné(indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialActivité, 'année' | 'dateMiseAJourSource' | 'numéroFinessÉtablissementTerritorial'>): boolean {
+  private lIndicateurEstIlRenseigné(indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>): boolean {
     return this.établissementTerritorial.activités.some((activité: ÉtablissementTerritorialMédicoSocialActivité) => activité[indicateur].value !== null)
   }
 }

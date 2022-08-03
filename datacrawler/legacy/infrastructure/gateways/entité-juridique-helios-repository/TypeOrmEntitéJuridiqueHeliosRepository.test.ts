@@ -51,7 +51,7 @@ describe('Sauvegarde des entités juridiques', () => {
     await entitéJuridiqueRepository.insert(entitéJuridique)
     await dateMiseÀJourFichierSourceRepository.insert([
       {
-        dernièreMiseÀJour: '20200102',
+        dernièreMiseÀJour: '2020-01-02',
         fichier: FichierSource.FINESS_CS1400101,
       },
     ])
@@ -106,7 +106,7 @@ describe('Sauvegarde des entités juridiques', () => {
     await entitéJuridiqueRepository.insert([entitéJuridique])
     await dateMiseÀJourFichierSourceRepository.insert(
       DateMiseÀJourFichierSourceModelTestBuilder.crée({
-        dernièreMiseÀJour: '20200101',
+        dernièreMiseÀJour: '2020-01-01',
         fichier: FichierSource.FINESS_CS1400101,
       })
     )

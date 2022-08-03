@@ -47,7 +47,7 @@ describe('Établissement territorial sanitaire loader', () => {
       await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestBuilder.crée()])
       await dateMiseÀJourFichierSourceRepository.insert([
         DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '20220514',
+          dernièreMiseÀJour: '2022-05-14',
           fichier: FichierSource.FINESS_CS1400102,
         }),
       ])
@@ -63,11 +63,11 @@ describe('Établissement territorial sanitaire loader', () => {
       expect(établissementTerritorial).toStrictEqual(ÉtablissementTerritorialTestBuilder.créeUneIdentitéSanitaire(
         {
           numéroFinessEntitéJuridique: {
-            dateMiseAJourSource: '2022-05-14',
+            dateMiseÀJourSource: '2022-05-14',
             value: numéroFinessEntitéJuridique,
           },
           numéroFinessÉtablissementTerritorial: {
-            dateMiseAJourSource: '2022-05-14',
+            dateMiseÀJourSource: '2022-05-14',
             value: numéroFinessÉtablissementTerritorial,
           },
         }
@@ -108,11 +108,11 @@ describe('Établissement territorial sanitaire loader', () => {
       await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestBuilder.crée()])
       await dateMiseÀJourFichierSourceRepository.insert([
         DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '20220514',
+          dernièreMiseÀJour: '2022-05-14',
           fichier: FichierSource.DIAMANT_ANN_RPU,
         }),
         DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '20220515',
+          dernièreMiseÀJour: '2022-05-15',
           fichier: FichierSource.DIAMANT_MEN_PMSI_ANNUEL,
         }),
       ])
@@ -136,7 +136,7 @@ describe('Établissement territorial sanitaire loader', () => {
         ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
           année: 2016,
           nombreDePassagesAuxUrgences: {
-            dateMiseAJourSource: '2022-05-15',
+            dateMiseÀJourSource: '2022-05-15',
             value: 60_000,
           },
           numéroFinessÉtablissementTerritorial,
@@ -144,7 +144,7 @@ describe('Établissement territorial sanitaire loader', () => {
         ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
           année: 2017,
           nombreDePassagesAuxUrgences: {
-            dateMiseAJourSource: '2022-05-15',
+            dateMiseÀJourSource: '2022-05-15',
             value: 60_000,
           },
           numéroFinessÉtablissementTerritorial,
@@ -152,7 +152,7 @@ describe('Établissement territorial sanitaire loader', () => {
         ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
           année: 2018,
           nombreDePassagesAuxUrgences: {
-            dateMiseAJourSource: '2022-05-15',
+            dateMiseÀJourSource: '2022-05-15',
             value: 60_000,
           },
           numéroFinessÉtablissementTerritorial,
@@ -160,7 +160,7 @@ describe('Établissement territorial sanitaire loader', () => {
         ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
           année: 2019,
           nombreDePassagesAuxUrgences: {
-            dateMiseAJourSource: '2022-05-15',
+            dateMiseÀJourSource: '2022-05-15',
             value: 60_000,
           },
           numéroFinessÉtablissementTerritorial,
@@ -168,7 +168,7 @@ describe('Établissement territorial sanitaire loader', () => {
         ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
           année: 2020,
           nombreDePassagesAuxUrgences: {
-            dateMiseAJourSource: '2022-05-15',
+            dateMiseÀJourSource: '2022-05-15',
             value: 60_000,
           },
           numéroFinessÉtablissementTerritorial,
@@ -182,11 +182,11 @@ describe('Établissement territorial sanitaire loader', () => {
       await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestBuilder.crée()])
       await dateMiseÀJourFichierSourceRepository.insert([
         DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '20220514',
+          dernièreMiseÀJour: '2022-05-14',
           fichier: FichierSource.DIAMANT_ANN_RPU,
         }),
         DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '20220515',
+          dernièreMiseÀJour: '2022-05-15',
           fichier: FichierSource.DIAMANT_MEN_PMSI_ANNUEL,
         }),
       ])

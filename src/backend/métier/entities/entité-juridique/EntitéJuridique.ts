@@ -1,35 +1,35 @@
 export type EntitéJuridique = Readonly<{
   adresseAcheminement: Readonly<{
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: string
   }>
   adresseNuméroVoie: Readonly<{
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: string
   }>
   adresseTypeVoie: Readonly<{
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: string
   }>
   adresseVoie: Readonly<{
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: string
   }>
-  dateMiseAJourSource: string
+  dateMiseÀJourSource: string
   libelléStatutJuridique: Readonly<{
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: string
   }>
   numéroFinessEntitéJuridique: Readonly<{
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: string
   }>
   raisonSociale: Readonly<{
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: string
   }>
   téléphone: Readonly<{
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: string
   }>
 }>

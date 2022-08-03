@@ -188,7 +188,7 @@ describe('La page Entité Juridique', () => {
       // GIVEN
       const entitéJuridiqueViewModelAvecUneValeurVide = EntitéJuridiqueViewModelTestBuilder.crée(wording, {
         téléphone: {
-          dateMiseAJourSource: '2021-07-07',
+          dateMiseÀJourSource: '2021-07-07',
           value: '',
         },
       })
@@ -210,7 +210,7 @@ describe('La page Entité Juridique', () => {
       // GIVEN
       const entitéJuridiqueViewModelAvecUneValeurVide = EntitéJuridiqueViewModelTestBuilder.crée(wording, {
         adresseTypeVoie: {
-          dateMiseAJourSource: '2021-07-07',
+          dateMiseÀJourSource: '2021-07-07',
           value: '',
         },
       })

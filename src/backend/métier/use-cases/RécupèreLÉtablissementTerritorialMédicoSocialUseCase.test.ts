@@ -14,28 +14,28 @@ describe('La récupération d’un établissement territorial médico-social', (
     const fakeIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestBuilder.créeUneIdentitéMédicoSocial(
       {
         numéroFinessEntitéJuridique: {
-          dateMiseAJourSource: '2021-07-07',
+          dateMiseÀJourSource: '2021-07-07',
           value: numéroFinessEntitéJuridique,
         },
         numéroFinessÉtablissementTerritorial: {
-          dateMiseAJourSource: '2021-07-07',
+          dateMiseÀJourSource: '2021-07-07',
           value: numéroFinessÉtablissementTerritorial,
         },
       }
     )
     const entitéJuridiqueDeRattachement: EntitéJuridiqueDeRattachement = {
       raisonSocialeDeLEntitéDeRattachement: {
-        dateMiseAJourSource: '2021-07-07',
+        dateMiseÀJourSource: '2021-07-07',
         value: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
       },
       statutJuridique: {
-        dateMiseAJourSource: '2021-07-07',
+        dateMiseÀJourSource: '2021-07-07',
         value: 'Société Anonyme (S.A.)',
       },
     }
     const fakeEstUnMonoÉtablissement: MonoÉtablissement = {
       estMonoÉtablissement: {
-        dateMiseAJourSource: '2021-07-07',
+        dateMiseÀJourSource: '2021-07-07',
         value: false,
       },
     }
@@ -62,7 +62,7 @@ describe('La récupération d’un établissement territorial médico-social', (
       ...fakeIdentitéÉtablissementTerritorial,
       ...entitéJuridiqueDeRattachement,
       estMonoÉtablissement: {
-        dateMiseAJourSource: '2021-07-07',
+        dateMiseÀJourSource: '2021-07-07',
         value: false,
       },
     }
@@ -104,7 +104,7 @@ describe('La récupération d’un établissement territorial médico-social', (
     // GIVEN
     const fakeEstUnMonoÉtablissement: MonoÉtablissement = {
       estMonoÉtablissement: {
-        dateMiseAJourSource: '2021-07-07',
+        dateMiseÀJourSource: '2021-07-07',
         value: false,
       },
     }
@@ -113,11 +113,11 @@ describe('La récupération d’un établissement territorial médico-social', (
     const fakeIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestBuilder.créeUneIdentitéMédicoSocial(
       {
         numéroFinessEntitéJuridique: {
-          dateMiseAJourSource: '2021-07-07',
+          dateMiseÀJourSource: '2021-07-07',
           value: numéroFinessEntitéJuridique,
         },
         numéroFinessÉtablissementTerritorial: {
-          dateMiseAJourSource: '2021-07-07',
+          dateMiseÀJourSource: '2021-07-07',
           value: numéroFinessÉtablissementTerritorial,
         },
       }

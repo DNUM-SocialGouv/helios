@@ -10,6 +10,7 @@ import { DateMiseÀJourSourceModelTestBuilder } from '../../../../../database/te
 import { EntitéJuridiqueModelTestBuilder } from '../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder'
 import { ÉtablissementTerritorialActivitéModelTestBuilder } from '../../../../../database/test-builder/ÉtablissementTerritorialActivitéModelTestBuilder'
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from '../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder'
+import { MonoÉtablissement } from '../../../métier/entities/établissement-territorial-médico-social/MonoÉtablissement'
 import { ÉtablissementTerritorialMédicoSocial } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
 import { ÉtablissementTerritorialTestBuilder } from '../../../test-builder/ÉtablissementTerritorialTestBuilder'
@@ -47,7 +48,7 @@ describe('Établissement territorial médico-social loader', () => {
       await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestBuilder.crée()])
       await dateMiseÀJourFichierSourceRepository.insert([
         DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '20220514',
+          dernièreMiseÀJour: '2022-05-14',
           fichier: FichierSource.FINESS_CS1400102,
         }),
       ])
@@ -63,18 +64,18 @@ describe('Établissement territorial médico-social loader', () => {
       expect(établissementTerritorial).toStrictEqual(ÉtablissementTerritorialTestBuilder.créeUneIdentitéMédicoSocial(
         {
           numéroFinessEntitéJuridique: {
-            dateMiseAJourSource: '2022-05-14',
+            dateMiseÀJourSource: '2022-05-14',
             value: numéroFinessEntitéJuridique,
           },
           numéroFinessÉtablissementTerritorial: {
-            dateMiseAJourSource: '2022-05-14',
+            dateMiseÀJourSource: '2022-05-14',
             value: numéroFinessÉtablissementTerritorial,
           },
         }
       ))
     })
 
-    it('signale que l’établissement territorial n’a pas été trouvée quand celui-ci n’existe pas', async () => {
+    it('signale que l’établissement territorial n’a pas été trouvé quand celui-ci n’existe pas', async () => {
       // GIVEN
       const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
 
@@ -108,11 +109,11 @@ describe('Établissement territorial médico-social loader', () => {
       await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestBuilder.crée()])
       await dateMiseÀJourFichierSourceRepository.insert([
         DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '20220514',
+          dernièreMiseÀJour: '2022-05-14',
           fichier: FichierSource.DIAMANT_ANN_MS_TDP_ET,
         }),
         DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '20220515',
+          dernièreMiseÀJour: '2022-05-15',
           fichier: FichierSource.DIAMANT_ANN_ERRD_EJ_ET,
         }),
       ])
@@ -134,12 +135,12 @@ describe('Établissement territorial médico-social loader', () => {
         ÉtablissementTerritorialTestBuilder.créeUneActivitéMédicoSocial({
           année: 2019,
           nombreMoyenJournéesAbsencePersonnesAccompagnées: {
-            dateMiseAJourSource: '2022-05-14',
+            dateMiseÀJourSource: '2022-05-14',
             value: 80,
           },
           numéroFinessÉtablissementTerritorial,
           tauxOccupationAccueilDeJour: {
-            dateMiseAJourSource: '2022-05-15',
+            dateMiseÀJourSource: '2022-05-15',
             value: 80,
           },
         }),
@@ -162,7 +163,7 @@ describe('Établissement territorial médico-social loader', () => {
       const entitéJuridiqueAyantDesÉtablissementsModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
       await dateMiseÀJourFichierSourceRepository.insert([
         DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '20220514',
+          dernièreMiseÀJour: '2022-05-14',
           fichier: FichierSource.FINESS_CS1400102,
         }),
       ])
@@ -186,8 +187,8 @@ describe('Établissement territorial médico-social loader', () => {
       const établissementTerritorial = await typeOrmÉtablissementTerritorialLoader.estUnMonoÉtablissement(numéroFinessEntitéJuridique)
 
       // THEN
-      expect(établissementTerritorial.estMonoÉtablissement).toStrictEqual({
-        dateMiseAJourSource: '2022-05-14',
+      expect(établissementTerritorial.estMonoÉtablissement).toStrictEqual<MonoÉtablissement['estMonoÉtablissement']>({
+        dateMiseÀJourSource: '2022-05-14',
         value: false,
       })
     })
@@ -198,7 +199,7 @@ describe('Établissement territorial médico-social loader', () => {
       const entitéJuridiqueAyantDesÉtablissementsModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
       await dateMiseÀJourFichierSourceRepository.insert([
         DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '20220514',
+          dernièreMiseÀJour: '2022-05-14',
           fichier: FichierSource.FINESS_CS1400102,
         }),
       ])
@@ -216,8 +217,8 @@ describe('Établissement territorial médico-social loader', () => {
       const établissementTerritorial = await typeOrmÉtablissementTerritorialLoader.estUnMonoÉtablissement(numéroFinessEntitéJuridique)
 
       // THEN
-      expect(établissementTerritorial.estMonoÉtablissement).toStrictEqual({
-        dateMiseAJourSource: '2022-05-14',
+      expect(établissementTerritorial.estMonoÉtablissement).toStrictEqual<MonoÉtablissement['estMonoÉtablissement']>({
+        dateMiseÀJourSource: '2022-05-14',
         value: true,
       })
     })

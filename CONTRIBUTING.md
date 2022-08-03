@@ -78,7 +78,7 @@ yarn dev
 
 > Visiter : http://localhost:3000
 
-> Cette commande lance aussi la base de donnée locale et les migrations associées
+> Cette commande lance aussi la base de données locale et les migrations associées
 
 ### Lancer l'application en mode production
 
@@ -274,7 +274,7 @@ yarn updateEJ
 yarn updateET
 ```
 
-### Peupler la base de donnée à partir des fichiers du SFTP de test
+### Peupler la base de données à partir des fichiers du SFTP de test
 
 ```sh
 yarn populateDatabase
@@ -486,4 +486,6 @@ class NomDeMaClasse:
 
 - Les objets attendus sont déclarés dans la partie *THEN* des tests ;
 
-- Les graphiques (canvas) ne sont pas testés. On teste leur alternative textuel (tableau).
+- Les graphiques (canvas) ne sont pas testés. On teste leur alternative textuel (tableau) ;
+
+- Quand c'est nécessaire d'exprimer une constante qui apporte du contexte alors il faut le faire sinon, on peut mettre directement l'objet ou la fonction dans les méthodes de type `insert`, `mockResolvedValueOnce`, `toStrictEqual`, etc.

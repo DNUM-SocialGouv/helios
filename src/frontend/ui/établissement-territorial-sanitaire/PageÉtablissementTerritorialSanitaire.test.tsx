@@ -149,7 +149,7 @@ describe('La page Établissement territorial sanitaire', () => {
       // GIVEN
       const établissementTerritorialSansTéléphone = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths, {
         téléphone: {
-          dateMiseAJourSource: '2022-05-14',
+          dateMiseÀJourSource: '2022-05-14',
           value: '',
         },
       })
@@ -168,7 +168,7 @@ describe('La page Établissement territorial sanitaire', () => {
       // GIVEN
       const établissementTerritorialSansEMail = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths, {
         courriel: {
-          dateMiseAJourSource: '2022-05-14',
+          dateMiseÀJourSource: '2022-05-14',
           value: '',
         },
       })
@@ -188,7 +188,7 @@ describe('La page Établissement territorial sanitaire', () => {
     // GIVEN
     const établissementTerritorialSansAdresseVoie = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths, {
       adresseVoie: {
-        dateMiseAJourSource: '2022-05-14',
+        dateMiseÀJourSource: '2022-05-14',
         value: '',
       },
     })

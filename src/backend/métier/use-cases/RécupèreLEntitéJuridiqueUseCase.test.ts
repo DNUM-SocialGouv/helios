@@ -9,7 +9,7 @@ describe('La récupération d’une entité juridique', () => {
     // GIVEN
     const entitéJuridique = EntitéJuridiqueTestBuilder.créeEntitéJuridique({
       numéroFinessEntitéJuridique: {
-        dateMiseAJourSource: '2022-05-14',
+        dateMiseÀJourSource: '2022-05-14',
         value: numéroFinessEntitéJuridique,
       },
     })

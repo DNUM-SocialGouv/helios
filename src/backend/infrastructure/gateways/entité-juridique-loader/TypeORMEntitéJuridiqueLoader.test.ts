@@ -39,7 +39,7 @@ describe('Entité juridique loader', () => {
       await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestBuilder.crée()])
       await dateMiseÀJourFichierSourceRepository.insert([
         DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '20220514',
+          dernièreMiseÀJour: '2022-05-14',
           fichier: FichierSource.FINESS_CS1400101,
         }),
       ])
@@ -51,7 +51,7 @@ describe('Entité juridique loader', () => {
       // THEN
       expect(entitéJuridique).toStrictEqual(EntitéJuridiqueTestBuilder.créeEntitéJuridique({
         numéroFinessEntitéJuridique: {
-          dateMiseAJourSource: '2022-05-14',
+          dateMiseÀJourSource: '2022-05-14',
           value: numéroFinessEntitéJuridique,
         },
       }))
@@ -79,7 +79,7 @@ describe('Entité juridique loader', () => {
     }))
     await dateMiseÀJourFichierSourceRepository.insert([
       DateMiseÀJourFichierSourceModelTestBuilder.crée({
-        dernièreMiseÀJour: '20220514',
+        dernièreMiseÀJour: '2022-05-14',
         fichier: FichierSource.FINESS_CS1400101,
       }),
     ])
@@ -91,11 +91,11 @@ describe('Entité juridique loader', () => {
     // THEN
     expect(entitéJuridique).toStrictEqual<EntitéJuridiqueDeRattachement>({
       raisonSocialeDeLEntitéDeRattachement: {
-        dateMiseAJourSource: '2022-05-14',
+        dateMiseÀJourSource: '2022-05-14',
         value: 'fake raison sociale',
       },
       statutJuridique: {
-        dateMiseAJourSource: '2022-05-14',
+        dateMiseÀJourSource: '2022-05-14',
         value: 'fake libellé statut juridique',
       },
     })

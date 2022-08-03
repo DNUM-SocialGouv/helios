@@ -82,14 +82,14 @@ describe('Sauvegarde de l’établissement territorial', () => {
     await établissementTerritorialIdentitéRepository.insert([établissementTerritorialIdentité1])
     await dateMiseÀJourFichierSourceRepository.insert([
       {
-        dernièreMiseÀJour: '20200102',
+        dernièreMiseÀJour: '2020-01-02',
         fichier: FichierSource.FINESS_CS1400102,
       },
     ])
     // TODO : A enlever avec HEL-178
     await dateMiseÀJourSourceRepository.insert([
       {
-        dernièreMiseÀJour: '20200102',
+        dernièreMiseÀJour: '2020-01-02',
         source: SourceDeDonnées.FINESS,
       },
     ])
@@ -171,14 +171,14 @@ describe('Sauvegarde de l’établissement territorial', () => {
     )
     await dateMiseÀJourFichierSourceRepository.insert(
       DateMiseÀJourFichierSourceModelTestBuilder.crée({
-        dernièreMiseÀJour: '20200101',
+        dernièreMiseÀJour: '2020-01-01',
         fichier: FichierSource.FINESS_CS1400102,
       })
     )
     // TODO : A enlever avec HEL-178
     await dateMiseÀJourSourceRepository.insert([
       {
-        dernièreMiseÀJour: '20200101',
+        dernièreMiseÀJour: '2020-01-01',
         source: SourceDeDonnées.FINESS,
       },
     ])

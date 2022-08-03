@@ -1,55 +1,55 @@
 export type ÉtablissementTerritorialIdentité = Readonly<{
   adresseAcheminement: Readonly<{
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: string
   }>
   adresseNuméroVoie: Readonly<{
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: string
   }>
   adresseTypeVoie: Readonly<{
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: string
   }>
   adresseVoie: Readonly<{
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: string
   }>
   catégorieÉtablissement: Readonly<{
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: string
   }>
   courriel: Readonly<{
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: string
   }>
-  dateMiseAJourSource: string
+  dateMiseÀJourSource: string
   libelléCatégorieÉtablissement: Readonly<{
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: string
   }>
   numéroFinessEntitéJuridique: Readonly<{
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: string
   }>
   numéroFinessÉtablissementPrincipal: Readonly<{
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: string
   }>
   numéroFinessÉtablissementTerritorial: Readonly<{
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: string
   }>
   raisonSociale: Readonly<{
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: string
   }>
   téléphone: Readonly<{
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: string
   }>
   typeÉtablissement: Readonly<{
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: string
   }>
 }>

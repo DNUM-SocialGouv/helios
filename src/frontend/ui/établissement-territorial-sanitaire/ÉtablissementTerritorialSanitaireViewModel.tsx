@@ -104,7 +104,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
   }
 
   public get dateDeMiseÀJour(): string {
-    return this.formateLaDate(this.établissementTerritorial.identité.dateMiseAJourSource)
+    return this.formateLaDate(this.établissementTerritorial.identité.dateMiseÀJourSource)
   }
 
   public get nombreDeSéjoursMédecineChirurgieObstétrique(): JSX.Element {
@@ -440,7 +440,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     return couleurDesAnnées
   }
 
-  private construisLesAnnéesEtSesValeurs(indicateur: Exclude<keyof ÉtablissementTerritorialSanitaireActivité, 'année' | 'dateMiseAJourSource' | 'numéroFinessÉtablissementTerritorial'>): number[][] {
+  private construisLesAnnéesEtSesValeurs(indicateur: Exclude<keyof ÉtablissementTerritorialSanitaireActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>): number[][] {
     const valeurs: number[] = []
     const années: number[] = []
     this.établissementTerritorial.activités.forEach((activité: ÉtablissementTerritorialSanitaireActivité) => {
@@ -457,7 +457,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     return [valeurs, années]
   }
 
-  private lIndicateurEstIlRenseigné(indicateur: Exclude<keyof ÉtablissementTerritorialSanitaireActivité, 'année' | 'dateMiseAJourSource' | 'numéroFinessÉtablissementTerritorial'>): boolean {
+  private lIndicateurEstIlRenseigné(indicateur: Exclude<keyof ÉtablissementTerritorialSanitaireActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>): boolean {
     return this.établissementTerritorial.activités.some((activité: ÉtablissementTerritorialSanitaireActivité) => activité[indicateur].value !== null)
   }
 }

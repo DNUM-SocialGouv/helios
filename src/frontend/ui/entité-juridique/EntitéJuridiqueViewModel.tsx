@@ -45,7 +45,7 @@ export class EntitéJuridiqueViewModel {
   }
 
   public get dateDeMiseÀJour(): string {
-    return StringFormater.formateLaDate(this.entitéJuridique.dateMiseAJourSource)
+    return StringFormater.formateLaDate(this.entitéJuridique.dateMiseÀJourSource)
   }
 
   private valeurOuNonRenseigné(valeur: string): string {

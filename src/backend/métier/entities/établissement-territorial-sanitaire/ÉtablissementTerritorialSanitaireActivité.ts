@@ -1,48 +1,48 @@
 export type ÉtablissementTerritorialSanitaireActivité = Readonly<{
   année: number
-  dateMiseAJourSource: string
+  dateMiseÀJourSource: string
   nombreDePassagesAuxUrgences: {
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: number | null
   }
   nombreJournéesCompletePsy: {
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: number | null
   }
   nombreJournéesCompletesSsr: {
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: number | null
   }
   nombreJournéesPartiellesPsy: {
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: number | null
   }
   nombreJournéesPartielsSsr: {
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: number | null
   }
   nombreSéjoursCompletsChirurgie: {
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: number | null
   }
   nombreSéjoursCompletsMédecine: {
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: number | null
   }
   nombreSéjoursCompletsObstétrique: {
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: number | null
   }
   nombreSéjoursPartielsChirurgie: {
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: number | null
   }
   nombreSéjoursPartielsMédecine: {
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: number | null
   }
   nombreSéjoursPartielsObstétrique: {
-    dateMiseAJourSource: string
+    dateMiseÀJourSource: string
     value: number | null
   }
   numéroFinessÉtablissementTerritorial: string

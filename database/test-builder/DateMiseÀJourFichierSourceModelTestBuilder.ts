@@ -3,7 +3,7 @@ import { DateMiseÀJourFichierSourceModel, FichierSource } from '../models/DateM
 export class DateMiseÀJourFichierSourceModelTestBuilder {
   public static crée(champsSurchargés?: Partial<DateMiseÀJourFichierSourceModel>): DateMiseÀJourFichierSourceModel {
     const dateMiseÀJourSourceModel = new DateMiseÀJourFichierSourceModel()
-    dateMiseÀJourSourceModel.dernièreMiseÀJour = champsSurchargés?.dernièreMiseÀJour || '20220514'
+    dateMiseÀJourSourceModel.dernièreMiseÀJour = champsSurchargés?.dernièreMiseÀJour || '2022-05-14'
     dateMiseÀJourSourceModel.fichier = champsSurchargés?.fichier || FichierSource.FINESS_CS1400101
     return dateMiseÀJourSourceModel
   }

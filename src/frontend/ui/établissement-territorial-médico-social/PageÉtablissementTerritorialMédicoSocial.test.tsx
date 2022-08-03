@@ -129,7 +129,7 @@ describe('La page Établissement territorial', () => {
     const établissementTerritorialMonoÉtablissement =
       ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, {
         estMonoÉtablissement: {
-          dateMiseAJourSource: '2021-07-07',
+          dateMiseÀJourSource: '2021-07-07',
           value: true,
         },
       })
@@ -151,7 +151,7 @@ describe('La page Établissement territorial', () => {
       // GIVEN
       const établissementTerritorialPrincipal = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, {
         typeÉtablissement: {
-          dateMiseAJourSource: '2022-05-14',
+          dateMiseÀJourSource: '2022-05-14',
           value: 'P',
         },
       })
@@ -223,7 +223,7 @@ describe('La page Établissement territorial', () => {
       // GIVEN
       const établissementTerritorialSansTéléphone = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, {
         téléphone: {
-          dateMiseAJourSource: '2022-05-14',
+          dateMiseÀJourSource: '2022-05-14',
           value: '',
         },
       })
@@ -242,7 +242,7 @@ describe('La page Établissement territorial', () => {
       // GIVEN
       const établissementTerritorialSansCourriel = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, {
         courriel: {
-          dateMiseAJourSource: '2022-05-14',
+          dateMiseÀJourSource: '2022-05-14',
           value: '',
         },
       })
@@ -262,7 +262,7 @@ describe('La page Établissement territorial', () => {
     // GIVEN
     const établissementTerritorialSansAdresseVoie = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, {
       adresseVoie: {
-        dateMiseAJourSource: '2022-05-14',
+        dateMiseÀJourSource: '2022-05-14',
         value: '',
       },
     })

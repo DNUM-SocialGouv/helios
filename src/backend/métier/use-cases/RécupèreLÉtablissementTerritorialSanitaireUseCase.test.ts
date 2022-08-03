@@ -13,11 +13,11 @@ describe('La récupération d’un établissement territorial sanitaire', () => 
     const fakeFicheIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestBuilder.créeUneIdentitéSanitaire(
       {
         numéroFinessEntitéJuridique: {
-          dateMiseAJourSource: '2022-05-14',
+          dateMiseÀJourSource: '2022-05-14',
           value: numéroFinessEntitéJuridique,
         },
         numéroFinessÉtablissementTerritorial: {
-          dateMiseAJourSource: '2022-05-14',
+          dateMiseÀJourSource: '2022-05-14',
           value: numéroFinessÉtablissementTerritorial,
         },
       }
@@ -25,11 +25,11 @@ describe('La récupération d’un établissement territorial sanitaire', () => 
     const mockedChargeParNuméroFiness = jest.fn().mockResolvedValueOnce(fakeFicheIdentitéÉtablissementTerritorial)
     const entitéJuridiqueDeRattachement: EntitéJuridiqueDeRattachement = {
       raisonSocialeDeLEntitéDeRattachement: {
-        dateMiseAJourSource: '2022-05-14',
+        dateMiseÀJourSource: '2022-05-14',
         value: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
       },
       statutJuridique: {
-        dateMiseAJourSource: '2022-05-14',
+        dateMiseÀJourSource: '2022-05-14',
         value: 'Société Anonyme (S.A.)',
       },
     }
@@ -82,11 +82,11 @@ describe('La récupération d’un établissement territorial sanitaire', () => 
     const fakeIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestBuilder.créeUneIdentitéSanitaire(
       {
         numéroFinessEntitéJuridique: {
-          dateMiseAJourSource: '2022-05-14',
+          dateMiseÀJourSource: '2022-05-14',
           value: numéroFinessEntitéJuridique,
         },
         numéroFinessÉtablissementTerritorial: {
-          dateMiseAJourSource: '2022-05-14',
+          dateMiseÀJourSource: '2022-05-14',
           value: numéroFinessÉtablissementTerritorial,
         },
       }
