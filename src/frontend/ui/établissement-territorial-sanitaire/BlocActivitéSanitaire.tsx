@@ -35,10 +35,10 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewM
         {établissementTerritorialSanitaireViewModel.nombreDeSéjoursMCOSontIlsRenseignés &&
         <IndicateurGraphique
           contenuInfoBulle={<ContenuNombreDeSéjourMCO
-            dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}
+            dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNombreDeSéjoursMédecineChirurgieObstétrique}
             source={buildSource(wording.DIAMANT, wording.PMSI)}
           />}
-          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNombreDeSéjoursMédecineChirurgieObstétrique}
           identifiant="activite-0"
           nomDeLIndicateur={wording.NOMBRE_DE_SÉJOUR_MCO}
           source={buildSource(wording.DIAMANT, wording.PMSI)}
@@ -49,11 +49,11 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewM
         {établissementTerritorialSanitaireViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés &&
         <IndicateurGraphique
           contenuInfoBulle={<ContenuNombreDeJournéesPSYetSSR
-            dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}
+            dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr}
             source={buildSource(wording.DIAMANT, wording.PMSI)}
 
           />}
-          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr}
           identifiant="activite-1"
           nomDeLIndicateur={wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR}
           source={buildSource(wording.DIAMANT, wording.PMSI)}
@@ -64,10 +64,10 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewM
         {établissementTerritorialSanitaireViewModel.nombreDePassagesAuxUrgencesEstIlRenseigné &&
         <IndicateurGraphique
           contenuInfoBulle={<ContenuNombreDePassagesAuxUrgences
-            dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}
+            dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNombreDePassagesAuxUrgences}
             source={buildSource(wording.DIAMANT, wording.PMSI)}
           />}
-          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNombreDePassagesAuxUrgences}
           identifiant="activite-2"
           nomDeLIndicateur={wording.NOMBRE_DE_PASSAGES_AUX_URGENCES}
           source={buildSource(wording.DIAMANT, wording.PMSI)}

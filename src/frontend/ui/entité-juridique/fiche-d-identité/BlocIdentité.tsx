@@ -20,25 +20,25 @@ export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéProps)
         className={styles['liste-indicateurs']}
       >
         <IndicateurIdentité
-          dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJourDuNomDeLEntitéJuridique}
           nomDeLIndicateur={wording.NOM_DE_L_ÉTABLISSEMENT}
           source={wording.FINESS}
           valeur={entitéJuridiqueViewModel.nomDeLEntitéJuridique}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJourDuNuméroFiness}
           nomDeLIndicateur={wording.NUMÉRO_FINESS}
           source={wording.FINESS}
           valeur={entitéJuridiqueViewModel.numéroFiness}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJourDeLAdresse}
           nomDeLIndicateur={wording.ADRESSE}
           source={wording.FINESS}
           valeur={entitéJuridiqueViewModel.adresse}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJourDuTéléphone}
           nomDeLIndicateur={wording.TÉLÉPHONE}
           source={wording.FINESS}
           valeur={entitéJuridiqueViewModel.téléphone}
@@ -48,7 +48,7 @@ export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéProps)
           valeur="À venir"
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJourDuStatutDeLEntitéJuridique}
           nomDeLIndicateur={wording.STATUT_DE_L_ÉTABLISSEMENT}
           source={wording.FINESS}
           valeur={entitéJuridiqueViewModel.statutDeLEntitéJuridique}

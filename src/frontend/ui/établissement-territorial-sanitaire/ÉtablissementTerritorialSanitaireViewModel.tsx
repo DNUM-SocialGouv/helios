@@ -7,6 +7,7 @@ import { ÉtablissementTerritorialSanitaireActivité } from '../../../backend/m�
 import { Paths } from '../../configuration/Paths'
 import { Wording } from '../../configuration/wording/Wording'
 import { GraphiqueViewModel } from '../commun/Graphique/GraphiqueViewModel'
+import { StringFormater } from '../commun/StringFormater'
 import { TableIndicateur } from '../commun/TableIndicateur/TableIndicateur'
 import styles from './BlocActivitéSanitaire.module.css'
 
@@ -63,18 +64,34 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     return this.établissementTerritorial.identité.raisonSociale.value
   }
 
+  public get dateDeMiseÀJourDuNomDeLÉtablissementTerritorial(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.identité.raisonSociale.dateMiseÀJourSource)
+  }
+
   public get numéroFinessÉtablissementTerritorial(): string {
     return this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorial.identité.numéroFinessÉtablissementTerritorial.value, 3)
+  }
+
+  public get dateDeMiseÀJourDuNuméroFinessÉtablissementTerritorial(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.identité.numéroFinessÉtablissementTerritorial.dateMiseÀJourSource)
   }
 
   public get adresse(): string {
     return `${this.établissementTerritorial.identité.adresseNuméroVoie.value} ${this.établissementTerritorial.identité.adresseTypeVoie.value} ${this.établissementTerritorial.identité.adresseVoie.value} ${this.établissementTerritorial.identité.adresseAcheminement.value}`
   }
 
+  public get dateDeMiseÀJourDeLAdresse(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.identité.adresseNuméroVoie.dateMiseÀJourSource)
+  }
+
   public get téléphoneEtEmail(): string {
     const téléphoneFormaté = this.valeurOuNonRenseigné(this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorial.identité.téléphone.value, 2))
     const email = this.valeurOuNonRenseigné(this.établissementTerritorial.identité.courriel.value)
     return `${téléphoneFormaté} | ${email}`
+  }
+
+  public get dateDeMiseÀJourDutéléphoneEtDeLEmail(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.identité.téléphone.dateMiseÀJourSource)
   }
 
   public get entitéJuridiqueDeRattachement(): JSX.Element {
@@ -94,22 +111,70 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     </Link>)
   }
 
+  public get dateDeMiseÀJourDeLEntitéJuridiqueDeRattachement(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.identité.raisonSocialeDeLEntitéDeRattachement.dateMiseÀJourSource)
+  }
+
   public get catégorieDeLÉtablissement(): string {
     return `${this.établissementTerritorial.identité.catégorieÉtablissement.value} - ${this.établissementTerritorial.identité.libelléCatégorieÉtablissement.value}`
+  }
+
+  public get dateDeMiseÀJourDeLaCatégorieDeLÉtablissement(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.identité.catégorieÉtablissement.dateMiseÀJourSource)
   }
 
   public get statutDeLÉtablissement(): string {
     return this.établissementTerritorial.identité.statutJuridique.value
   }
 
-  public get dateDeMiseÀJour(): string {
-    return this.formateLaDate(this.établissementTerritorial.identité.dateMiseÀJourSource)
+  public get dateDeMiseÀJourDuStatutDeLÉtablissement(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.identité.statutJuridique.dateMiseÀJourSource)
+  }
+
+  public get activitéEstElleRenseignée(): boolean {
+    return this.établissementTerritorial.activités.length === 0 ? false : true
+  }
+
+  public get nombreDeSéjoursMCOSontIlsRenseignés(): boolean {
+    return this.établissementTerritorial.activités.some((activité: ÉtablissementTerritorialSanitaireActivité) => (
+      activité['nombreSéjoursPartielsMédecine'].value !== null ||
+      activité['nombreSéjoursCompletsMédecine'].value !== null ||
+      activité['nombreSéjoursPartielsChirurgie'].value !== null ||
+      activité['nombreSéjoursCompletsChirurgie'].value !== null ||
+      activité['nombreSéjoursPartielsObstétrique'].value !== null ||
+      activité['nombreSéjoursCompletsObstétrique'].value !== null))
   }
 
   public get nombreDeSéjoursMédecineChirurgieObstétrique(): JSX.Element {
     const [nombreDeSéjours, années] = this.construisLesSéjoursMCOParAnnée()
 
     return this.afficheLHistogrammeDesSéjoursMCO(nombreDeSéjours, années)
+  }
+
+  public get dateDeMiseÀJourDuNombreDeSéjoursMédecineChirurgieObstétrique(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.activités[0].nombreSéjoursCompletsMédecine.dateMiseÀJourSource)
+  }
+
+  public get nombreDeJournéesPsyEtSsrSontIlsRenseignés(): boolean {
+    return this.établissementTerritorial.activités.some((activité: ÉtablissementTerritorialSanitaireActivité) => (
+      activité['nombreJournéesPartiellesPsy'].value !== null ||
+      activité['nombreJournéesCompletesSsr'].value !== null ||
+      activité['nombreJournéesPartiellesPsy'].value !== null ||
+      activité['nombreJournéesCompletePsy'].value !== null))
+  }
+
+  public get nombreDeJournéesPsyEtSsr(): JSX.Element {
+    const [nombreDeJournées, années] = this.construisLesJournéesPsyEtSsrParAnnée()
+
+    return this.afficheLHistogrammeDesJournéesPsyEtSsr(nombreDeJournées, années)
+  }
+
+  public get dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.activités[0].nombreJournéesCompletePsy.dateMiseÀJourSource)
+  }
+
+  public get nombreDePassagesAuxUrgencesEstIlRenseigné(): boolean {
+    return this.lIndicateurEstIlRenseigné('nombreDePassagesAuxUrgences')
   }
 
   public get nombreDePassagesAuxUrgences(): JSX.Element {
@@ -126,36 +191,8 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     )
   }
 
-  public get nombreDeSéjoursMCOSontIlsRenseignés(): boolean {
-    return this.établissementTerritorial.activités.some((activité: ÉtablissementTerritorialSanitaireActivité) => (
-      (activité['nombreSéjoursPartielsMédecine'].value !== null) ||
-      (activité['nombreSéjoursCompletsMédecine'].value !== null) ||
-      (activité['nombreSéjoursPartielsChirurgie'].value !== null) ||
-      (activité['nombreSéjoursCompletsChirurgie'].value !== null) ||
-      (activité['nombreSéjoursPartielsObstétrique'].value !== null) ||
-      (activité['nombreSéjoursCompletsObstétrique'].value !== null)))
-  }
-
-  public get nombreDeJournéesPsyEtSsrSontIlsRenseignés(): boolean {
-    return this.établissementTerritorial.activités.some((activité: ÉtablissementTerritorialSanitaireActivité) => (
-      (activité['nombreJournéesPartiellesPsy'].value !== null) ||
-      (activité['nombreJournéesCompletesSsr'].value !== null) ||
-      (activité['nombreJournéesPartiellesPsy'].value !== null) ||
-      (activité['nombreJournéesCompletePsy'].value !== null)))
-  }
-
-  public get nombreDePassagesAuxUrgencesEstIlRenseigné(): boolean {
-    return this.lIndicateurEstIlRenseigné('nombreDePassagesAuxUrgences')
-  }
-
-  public get activitéEstElleRenseignée(): boolean {
-    return this.établissementTerritorial.activités.length === 0 ? false : true
-  }
-
-  public get nombreDeJournéesPsyEtSsr(): JSX.Element {
-    const [nombreDeJournées, années] = this.construisLesJournéesPsyEtSsrParAnnée()
-
-    return this.afficheLHistogrammeDesJournéesPsyEtSsr(nombreDeJournées, années)
+  public get dateDeMiseÀJourDuNombreDePassagesAuxUrgences(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.activités[0].nombreDePassagesAuxUrgences.dateMiseÀJourSource)
   }
 
   private afficheLHistogrammeDesSéjoursMCO(nombreDeSéjours: DonnéesDeDiagrammeDesSéjoursMCO, années: number[]): JSX.Element {
@@ -374,10 +411,6 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
 
   private insèreUnEspaceTousLesNCaractères(str: string, nombreDeCaractères: number): string {
     return str.split('').map((letter, index) => index % nombreDeCaractères === 0 ? ' ' + letter : letter).join('').trim()
-  }
-
-  private formateLaDate(date: string): string {
-    return new Date(date).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })
   }
 
   private valeurOuNonRenseigné(valeur: string): string {

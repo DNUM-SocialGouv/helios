@@ -37,18 +37,34 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     return this.établissementTerritorial.identité.raisonSociale.value
   }
 
+  public get dateDeMiseÀJourDuNomDeLÉtablissementTerritorial(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.identité.raisonSociale.dateMiseÀJourSource)
+  }
+
   public get numéroFinessÉtablissementTerritorial(): string {
     return StringFormater.formateLeNuméroFiness(this.établissementTerritorial.identité.numéroFinessÉtablissementTerritorial.value)
+  }
+
+  public get dateDeMiseÀJourDuNuméroFinessÉtablissementTerritorial(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.identité.numéroFinessÉtablissementTerritorial.dateMiseÀJourSource)
   }
 
   public get adresse(): string {
     return `${this.établissementTerritorial.identité.adresseNuméroVoie.value} ${this.établissementTerritorial.identité.adresseTypeVoie.value} ${this.établissementTerritorial.identité.adresseVoie.value} ${this.établissementTerritorial.identité.adresseAcheminement.value}`
   }
 
+  public get dateDeMiseÀJourDeLAdresse(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.identité.adresseNuméroVoie.dateMiseÀJourSource)
+  }
+
   public get téléphoneEtEmail(): string {
     const téléphoneFormaté = this.valeurOuNonRenseigné(StringFormater.formateLeNuméroDeTéléphone(this.établissementTerritorial.identité.téléphone.value))
     const email = this.valeurOuNonRenseigné(this.établissementTerritorial.identité.courriel.value)
     return `${téléphoneFormaté} | ${email}`
+  }
+
+  public get dateDeMiseÀJourDutéléphoneEtDeLEmail(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.identité.téléphone.dateMiseÀJourSource)
   }
 
   public get entitéJuridiqueDeRattachement(): JSX.Element {
@@ -65,16 +81,32 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     </Link>)
   }
 
+  public get dateDeMiseÀJourDeLEntitéJuridiqueDeRattachement(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.identité.raisonSocialeDeLEntitéDeRattachement.dateMiseÀJourSource)
+  }
+
   public get catégorieDeLÉtablissement(): string {
     return `${this.établissementTerritorial.identité.catégorieÉtablissement.value} - ${this.établissementTerritorial.identité.libelléCatégorieÉtablissement.value}`
+  }
+
+  public get dateDeMiseÀJourDeLaCatégorieDeLÉtablissement(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.identité.catégorieÉtablissement.dateMiseÀJourSource)
   }
 
   public get statutDeLÉtablissement(): string {
     return this.établissementTerritorial.identité.statutJuridique.value
   }
 
+  public get dateDeMiseÀJourDuStatutDeLÉtablissement(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.identité.statutJuridique.dateMiseÀJourSource)
+  }
+
   public get monoÉtablissement(): string {
     return this.établissementTerritorial.identité.estMonoÉtablissement ? this.wording.OUI : this.wording.NON
+  }
+
+  public get dateDeMiseÀJourDuMonoÉtablissement(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.identité.estMonoÉtablissement.dateMiseÀJourSource)
   }
 
   public get principalOuSecondaire(): string {
@@ -83,8 +115,8 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
       `${this.wording.SECONDAIRE} (${this.wording.PRINCIPAL} : ${StringFormater.formateLeNuméroFiness(this.établissementTerritorial.identité.numéroFinessÉtablissementPrincipal.value)})`
   }
 
-  public get dateDeMiseÀJour(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorial.identité.dateMiseÀJourSource)
+  public get dateDeMiseÀJourDuPrincipalOuDuSecondaire(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.identité.numéroFinessÉtablissementPrincipal.dateMiseÀJourSource)
   }
 
   public get activitéEstElleRenseignée(): boolean {
@@ -103,6 +135,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     return this.afficheUnHistogrammeVertical(chartColors, valeurs, dataLabelsColor, années, this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT)
   }
 
+  public get dateDeMiseÀJourDuTauxOccupationHébergementPermanent(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.activités[0].tauxOccupationHébergementPermanent.dateMiseÀJourSource)
+  }
+
   public get leTauxOccupationHébergementTemporaireEstIlRenseigné(): boolean {
     return this.lIndicateurEstIlRenseigné('tauxOccupationHébergementTemporaire')
   }
@@ -113,6 +149,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs)
 
     return this.afficheUnHistogrammeVertical(chartColors, valeurs, dataLabelsColor, années, this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE)
+  }
+
+  public get dateDeMiseÀJourDuTauxOccupationHébergementTemporaire(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.activités[0].tauxOccupationHébergementTemporaire.dateMiseÀJourSource)
   }
 
   public get leTauxOccupationAccueilDeJourEstIlRenseigné(): boolean {
@@ -127,6 +167,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     return this.afficheUnHistogrammeVertical(chartColors, valeurs, dataLabelsColor, années, this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR)
   }
 
+  public get dateDeMiseÀJourDuTauxOccupationAccueilDeJour(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.activités[0].tauxOccupationAccueilDeJour.dateMiseÀJourSource)
+  }
+
   public get leTauxRéalisationActivitéEstIlRenseigné(): boolean {
     return this.lIndicateurEstIlRenseigné('tauxRéalisationActivité')
   }
@@ -137,6 +181,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs)
 
     return this.afficheUnHistogrammeVertical(chartColors, valeurs, dataLabelsColor, années, this.wording.TAUX_RÉALISATION_ACTIVITÉ)
+  }
+
+  public get dateDeMiseÀJourDuTauxRéalisationActivité(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.activités[0].tauxRéalisationActivité.dateMiseÀJourSource)
   }
 
   public get laFileActivePersonnesAccompagnéesEstElleRenseignée(): boolean {
@@ -151,6 +199,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     return this.afficheUnHistogrammeHorizontal(chartColors, valeurs, dataLabelsColor, années, this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES)
   }
 
+  public get dateDeMiseÀJourDeLaFileActivePersonnesAccompagnées(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.activités[0].fileActivePersonnesAccompagnées.dateMiseÀJourSource)
+  }
+
   public get leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné(): boolean {
     return this.lIndicateurEstIlRenseigné('nombreMoyenJournéesAbsencePersonnesAccompagnées')
   }
@@ -162,6 +214,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
 
     return this.afficheUnHistogrammeHorizontal(chartColors, valeurs, dataLabelsColor, années,
       this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES)
+  }
+
+  public get dateDeMiseÀJourDuNombreMoyenJournéesAbsencePersonnesAccompagnées(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.activités[0].nombreMoyenJournéesAbsencePersonnesAccompagnées.dateMiseÀJourSource)
   }
 
   public get laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée(): boolean {
@@ -180,6 +236,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
       années,
       this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES
     )
+  }
+
+  public get dateDeMiseÀJourDeLaDuréeMoyenneSéjourAccompagnementPersonnesSorties(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.activités[0].duréeMoyenneSéjourAccompagnementPersonnesSorties.dateMiseÀJourSource)
   }
 
   private formateLeTitreDeLEntitéJuridiqueDeRattachement(): string {

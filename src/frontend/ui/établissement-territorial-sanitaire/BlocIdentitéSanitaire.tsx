@@ -18,37 +18,37 @@ export const BlocIdentitéSanitaire = ({ établissementTerritorialSanitaireViewM
     >
       <ul className={styles['liste-indicateurs']}>
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNomDeLÉtablissementTerritorial}
           nomDeLIndicateur={wording.NOM_DE_L_ÉTABLISSEMENT}
           source={wording.FINESS}
           valeur={établissementTerritorialSanitaireViewModel.nomDeLÉtablissementTerritorial}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNuméroFinessÉtablissementTerritorial}
           nomDeLIndicateur={wording.NUMÉRO_FINESS}
           source={wording.FINESS}
           valeur={établissementTerritorialSanitaireViewModel.numéroFinessÉtablissementTerritorial}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDeLAdresse}
           nomDeLIndicateur={wording.ADRESSE}
           source={wording.FINESS}
           valeur={établissementTerritorialSanitaireViewModel.adresse}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDutéléphoneEtDeLEmail}
           nomDeLIndicateur={wording.TÉLÉPHONE_ET_EMAIL}
           source={wording.FINESS}
           valeur={établissementTerritorialSanitaireViewModel.téléphoneEtEmail}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDeLEntitéJuridiqueDeRattachement}
           nomDeLIndicateur={wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT}
           source={wording.FINESS}
           valeur={établissementTerritorialSanitaireViewModel.entitéJuridiqueDeRattachement}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDeLaCatégorieDeLÉtablissement}
           nomDeLIndicateur={wording.CATÉGORIE_DE_L_ÉTABLISSEMENT}
           source={wording.FINESS}
           valeur={établissementTerritorialSanitaireViewModel.catégorieDeLÉtablissement}
@@ -58,7 +58,7 @@ export const BlocIdentitéSanitaire = ({ établissementTerritorialSanitaireViewM
           valeur="À venir"
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuStatutDeLÉtablissement}
           nomDeLIndicateur={wording.STATUT_DE_L_ÉTABLISSEMENT}
           source={wording.FINESS}
           valeur={établissementTerritorialSanitaireViewModel.statutDeLÉtablissement}
