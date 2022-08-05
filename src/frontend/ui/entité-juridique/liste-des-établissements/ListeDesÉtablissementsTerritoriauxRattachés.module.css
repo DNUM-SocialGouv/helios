@@ -3,5 +3,5 @@
 }
 
 .liste-établissements-territoriaux-rattachés li:not(:last-child) {
-  margin-bottom: 0.375rem;
+  margin-bottom: .375rem;
 }

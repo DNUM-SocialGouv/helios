@@ -1,21 +1,25 @@
+.liste-indicateurs {
+  list-style-type: none;
+}
+
 .liste-indicateurs > li {
   margin-bottom: 1rem;
 }
 
 .graphique-sanitaire-légende {
   display: grid;
+  grid-auto-columns: max-content;
   grid-auto-flow: column;
   grid-template-rows: repeat(2, 1fr);
-  grid-auto-columns: max-content;
   justify-content: end;
   margin: 0;
 }
 
 @media (max-width: 64em) {
   .graphique-sanitaire-légende {
+    align-items: flex-end;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
   }
 }
 
@@ -23,21 +27,17 @@
   align-items: center;
   cursor: pointer;
   display: flex;
-  padding: 0 0.5rem 0 0;
+  padding: 0 .5rem 0 0;
 }
 
 .graphique-sanitaire-légende li span {
-  height: 0.8rem;
-  margin: 0 0.25rem 0 0;
-  width: 0.8rem;
   border-radius: 50%;
+  height: .8rem;
+  margin: 0 .25rem 0 0;
+  width: .8rem;
 }
 
 .graphique-sanitaire-légende li label {
   font-size: .8rem;
   margin: 0;
-}
-
-.liste-indicateurs {
-  list-style-type: none;
 }

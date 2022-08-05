@@ -15,6 +15,8 @@
     "lint:typescript:fix": "yarn lint:typescript --fix",
     "lint:python": "pipenv run lint",
     "lint:python:fix": "pipenv run format",
+    "lint:scss": "stylelint '**/*.module.css'",
+    "lint:scss:fix": "yarn lint:scss --fix",
     "migrations": "ts-node -T ./database/migrations.ts",
     "psql:local": "docker-compose up -d postgres && docker exec -it helios_db psql -U helios helios",
     "psql:production": "scalingo -a helios pgsql-console",
@@ -86,6 +88,8 @@
     "jest-environment-jsdom": "^28.0.2",
     "jest-when": "^3.5.1",
     "next-router-mock": "^0.7.4",
+    "stylelint": "^14.9.1",
+    "stylelint-order": "^5.0.0",
     "ts-node": "^10.7.0",
     "ts-prune": "^0.10.3",
     "typescript": "4.6.3"

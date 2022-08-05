@@ -7,8 +7,8 @@
   "graph6 graph6 graph6 graph7 graph7 graph7";
   grid-template-columns: repeat(6, 1fr);
   list-style-type: none;
-  row-gap: 2rem;
   padding: 0;
+  row-gap: 2rem;
   width: 100%;
 }
 
