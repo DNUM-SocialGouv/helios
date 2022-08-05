@@ -206,7 +206,6 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
       activités: [
         {
           année: 2017,
-          dateMiseÀJourSource: '2021-07-07',
           nombreDePassagesAuxUrgences: {
             dateMiseÀJourSource: '2021-07-07',
             value: indicateur1,
@@ -255,7 +254,6 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
         },
         {
           année: 2018,
-          dateMiseÀJourSource: '2021-07-07',
           nombreDePassagesAuxUrgences: {
             dateMiseÀJourSource: '2021-07-07',
             value: indicateur1,
@@ -304,7 +302,6 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
         },
         {
           année: 2019,
-          dateMiseÀJourSource: '2021-07-07',
           nombreDePassagesAuxUrgences: {
             dateMiseÀJourSource: '2021-07-07',
             value: indicateur1,
@@ -353,7 +350,6 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
         },
         {
           année: 2020,
-          dateMiseÀJourSource: '2021-07-07',
           nombreDePassagesAuxUrgences: {
             dateMiseÀJourSource: '2021-07-07',
             value: indicateur1,
@@ -402,7 +398,6 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
         },
         {
           année: 2021,
-          dateMiseÀJourSource: '2021-07-07',
           nombreDePassagesAuxUrgences: {
             dateMiseÀJourSource: '2021-07-07',
             value: indicateur1,
@@ -475,7 +470,6 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
           dateMiseÀJourSource: '2021-07-07',
           value: 'a@example.com',
         },
-        dateMiseÀJourSource: '2021-07-07',
         libelléCatégorieÉtablissement: {
           dateMiseÀJourSource: '2021-07-07',
           value: 'Centre Hospitalier (C.H.)',
@@ -533,7 +527,6 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
       activités: [
         {
           année: 2017,
-          dateMiseÀJourSource: '2021-07-07',
           nombreDePassagesAuxUrgences: {
             dateMiseÀJourSource: '2021-07-07',
             value: null,
@@ -582,7 +575,6 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
         },
         {
           année: 2018,
-          dateMiseÀJourSource: '2021-07-07',
           nombreDePassagesAuxUrgences: {
             dateMiseÀJourSource: '2021-07-07',
             value: null,
@@ -631,7 +623,6 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
         },
         {
           année: 2019,
-          dateMiseÀJourSource: '2021-07-07',
           nombreDePassagesAuxUrgences: {
             dateMiseÀJourSource: '2021-07-07',
             value: null,
@@ -680,7 +671,6 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
         },
         {
           année: 2020,
-          dateMiseÀJourSource: '2021-07-07',
           nombreDePassagesAuxUrgences: {
             dateMiseÀJourSource: '2021-07-07',
             value: null,
@@ -729,7 +719,6 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
         },
         {
           année: 2021,
-          dateMiseÀJourSource: '2021-07-07',
           nombreDePassagesAuxUrgences: {
             dateMiseÀJourSource: '2021-07-07',
             value: null,
@@ -802,7 +791,6 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
           dateMiseÀJourSource: '2021-07-07',
           value: 'a@example.com',
         },
-        dateMiseÀJourSource: '2021-07-07',
         libelléCatégorieÉtablissement: {
           dateMiseÀJourSource: '2021-07-07',
           value: 'Centre Hospitalier (C.H.)',
@@ -880,7 +868,6 @@ describe('La page Établissement territorial Sanitaire - Bloc activité', () => 
           dateMiseÀJourSource: '2021-07-07',
           value: 'a@example.com',
         },
-        dateMiseÀJourSource: '2021-07-07',
         libelléCatégorieÉtablissement: {
           dateMiseÀJourSource: '2021-07-07',
           value: 'Centre Hospitalier (C.H.)',

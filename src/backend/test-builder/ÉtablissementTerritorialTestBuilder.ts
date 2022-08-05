@@ -28,7 +28,6 @@ export class ÉtablissementTerritorialTestBuilder {
       dateMiseÀJourSource: '2022-05-14',
       value: 'a@example.com',
     },
-    dateMiseÀJourSource: '2022-05-14',
     libelléCatégorieÉtablissement: {
       dateMiseÀJourSource: '2022-05-14',
       value: 'Centre Hospitalier (C.H.)',
@@ -84,7 +83,6 @@ export class ÉtablissementTerritorialTestBuilder {
       dateMiseÀJourSource: '2022-05-14',
       value: 'b@example.com',
     },
-    dateMiseÀJourSource: '2022-05-14',
     libelléCatégorieÉtablissement: {
       dateMiseÀJourSource: '2022-05-14',
       value: 'Centre Hospitalier (C.H.)',
@@ -117,7 +115,6 @@ export class ÉtablissementTerritorialTestBuilder {
 
   private static activitéMédicoSocial: ÉtablissementTerritorialMédicoSocialActivité = {
     année: 2019,
-    dateMiseÀJourSource: '2022-05-14',
     duréeMoyenneSéjourAccompagnementPersonnesSorties: {
       dateMiseÀJourSource: '2022-05-14',
       value: 80,
@@ -151,7 +148,6 @@ export class ÉtablissementTerritorialTestBuilder {
 
   private static activitéSanitaire: ÉtablissementTerritorialSanitaireActivité = {
     année: 2016,
-    dateMiseÀJourSource: '2022-05-14',
     nombreDePassagesAuxUrgences: {
       dateMiseÀJourSource: '2022-05-15',
       value: 60_000,

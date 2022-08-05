@@ -18,7 +18,6 @@ export class EntitéJuridiqueTestBuilder {
       dateMiseÀJourSource: '2022-05-14',
       value: 'DE VEYZIAT',
     },
-    dateMiseÀJourSource: '2022-05-14',
     libelléStatutJuridique: {
       dateMiseÀJourSource: '2022-05-14',
       value: 'Etablissement Public Intercommunal dHospitalisation',

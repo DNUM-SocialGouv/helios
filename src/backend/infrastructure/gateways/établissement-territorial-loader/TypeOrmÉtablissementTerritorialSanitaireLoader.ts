@@ -2,7 +2,6 @@ import { DataSource } from 'typeorm'
 
 import { ActivitéSanitaireModel } from '../../../../../database/models/ActivitéSanitaireModel'
 import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
-import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialSanitaireActivité } from '../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité'
@@ -16,13 +15,11 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   async chargeActivité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialSanitaireActivité[]> {
     const lesCinqDernièresAnnées = -5
     const activitésÉtablissementTerritorialActivitésModel = await this.chargeLesActivitésModel(numéroFinessÉtablissementTerritorial)
-    const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
     const dateDeMiseAJourAnnRpuModel = await this.chargeLaDateDeMiseÀJourAnnRpuModel() as DateMiseÀJourFichierSourceModel
     const dateDeMiseAJourMenPmsiAnnuelModel = await this.chargeLaDateDeMiseÀJourMenPmsiAnnuelModel() as DateMiseÀJourFichierSourceModel
 
     return this.construisActivité(
       activitésÉtablissementTerritorialActivitésModel.slice(lesCinqDernièresAnnées),
-      dateDeMiseAJourModel,
       dateDeMiseAJourAnnRpuModel,
       dateDeMiseAJourMenPmsiAnnuelModel
     )
@@ -35,10 +32,9 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       return new ÉtablissementTerritorialSanitaireNonTrouvée(numéroFinessÉtablissementTerritorial)
     }
 
-    const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
     const dateDeMiseÀJourIdentitéModel = await this.chargeLaDateDeMiseÀJourFinessCs1400102Model() as DateMiseÀJourFichierSourceModel
 
-    return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseAJourModel, dateDeMiseÀJourIdentitéModel)
+    return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseÀJourIdentitéModel)
   }
 
   private async chargeLesActivitésModel(numéroFinessÉtablissementTerritorial: string) {
@@ -57,12 +53,6 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
         domaine: DomaineÉtablissementTerritorial.SANITAIRE,
         numéroFinessÉtablissementTerritorial,
       })
-  }
-
-  private async chargeLaDateDeMiseÀJourModel(): Promise<DateMiseÀJourSourceModel | null> {
-    return await (await this.orm)
-      .getRepository(DateMiseÀJourSourceModel)
-      .findOneBy({ source: SourceDeDonnées.FINESS })
   }
 
   private async chargeLaDateDeMiseÀJourFinessCs1400102Model(): Promise<DateMiseÀJourFichierSourceModel | null> {
@@ -85,7 +75,6 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
 
   private construisIdentité(
     établissementTerritorialIdentitéModel: ÉtablissementTerritorialIdentitéModel,
-    dateDeMiseAJourSourceModel: DateMiseÀJourSourceModel | null,
     dateDeMiseÀJourIdentitéModel: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialIdentité {
     return {
@@ -113,7 +102,6 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.courriel,
       },
-      dateMiseÀJourSource: dateDeMiseAJourSourceModel ? dateDeMiseAJourSourceModel.dernièreMiseÀJour : '',
       libelléCatégorieÉtablissement: {
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.libelléCatégorieÉtablissement,
@@ -147,14 +135,12 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
 
   private construisActivité(
     établissementTerritorialActivitésModel: ActivitéSanitaireModel[],
-    dateDeMiseAJourSourceModel: DateMiseÀJourSourceModel | null,
     dateDeMiseAJourAnnRpuModel: DateMiseÀJourFichierSourceModel,
     dateDeMiseAJourMenPmsiAnnuelModel: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialSanitaireActivité[] {
     return établissementTerritorialActivitésModel.map<ÉtablissementTerritorialSanitaireActivité>((établissementTerritorialModel) =>
       ({
         année: établissementTerritorialModel.année,
-        dateMiseÀJourSource: dateDeMiseAJourSourceModel ? dateDeMiseAJourSourceModel.dernièreMiseÀJour : '',
         nombreDePassagesAuxUrgences: {
           dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
           value: établissementTerritorialModel.nombreDePassagesAuxUrgences,

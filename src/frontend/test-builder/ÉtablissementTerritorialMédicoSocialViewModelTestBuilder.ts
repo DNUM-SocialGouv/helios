@@ -29,7 +29,6 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       dateMiseÀJourSource: '2021-07-07',
       value: 'a@example.com',
     },
-    dateMiseÀJourSource: '2021-07-07',
     estMonoÉtablissement: {
       dateMiseÀJourSource: '2021-07-07',
       value: false,
@@ -75,7 +74,6 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
   private static activités: ÉtablissementTerritorialMédicoSocial['activités'] = [
     {
       année: 2019,
-      dateMiseÀJourSource: '2021-07-07',
       duréeMoyenneSéjourAccompagnementPersonnesSorties: {
         dateMiseÀJourSource: '2021-07-07',
         value: 1013,
@@ -108,7 +106,6 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     },
     {
       année: 2020,
-      dateMiseÀJourSource: '2021-07-07',
       duréeMoyenneSéjourAccompagnementPersonnesSorties: {
         dateMiseÀJourSource: '2021-07-07',
         value: 994,
@@ -141,7 +138,6 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     },
     {
       année: 2021,
-      dateMiseÀJourSource: '2021-07-07',
       duréeMoyenneSéjourAccompagnementPersonnesSorties: {
         dateMiseÀJourSource: '2021-07-07',
         value: 990,

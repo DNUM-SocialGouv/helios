@@ -2,7 +2,6 @@ import { DataSource } from 'typeorm'
 
 import { ActivitéMédicoSocialModel } from '../../../../../database/models/ActivitéMédicoSocialModel'
 import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
-import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { MonoÉtablissement } from '../../../métier/entities/établissement-territorial-médico-social/MonoÉtablissement'
@@ -18,13 +17,11 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     numéroFinessÉtablissementTerritorial: string
   ): Promise<ÉtablissementTerritorialMédicoSocialActivité[]> {
     const activitésÉtablissementTerritorialActivitésModel = await this.chargeLesActivitésModel(numéroFinessÉtablissementTerritorial)
-    const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
     const dateDeMiseAJourAnnMsTdpEtModel = await this.chargeLaDateDeMiseÀJourAnnMsTdpEtModel() as DateMiseÀJourFichierSourceModel
     const dateDeMiseAJourAnnErrdEjEtModel = await this.chargeLaDateDeMiseÀJourAnnErrdEjEtModel() as DateMiseÀJourFichierSourceModel
 
     return this.construisActivité(
       activitésÉtablissementTerritorialActivitésModel,
-      dateDeMiseAJourModel,
       dateDeMiseAJourAnnMsTdpEtModel,
       dateDeMiseAJourAnnErrdEjEtModel
     )
@@ -39,10 +36,9 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       return new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial)
     }
 
-    const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
     const dateDeMiseÀJourIdentitéModel = await this.chargeLaDateDeMiseÀJouFinessCs1400102Model() as DateMiseÀJourFichierSourceModel
 
-    return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseAJourModel, dateDeMiseÀJourIdentitéModel)
+    return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseÀJourIdentitéModel)
   }
 
   async estUnMonoÉtablissement(numéroFinessEntitéJuridique: string): Promise<MonoÉtablissement> {
@@ -77,12 +73,6 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       })
   }
 
-  private async chargeLaDateDeMiseÀJourModel(): Promise<DateMiseÀJourSourceModel | null> {
-    return await (await this.orm)
-      .getRepository(DateMiseÀJourSourceModel)
-      .findOneBy({ source: SourceDeDonnées.FINESS })
-  }
-
   private async chargeLaDateDeMiseÀJouFinessCs1400102Model(): Promise<DateMiseÀJourFichierSourceModel | null> {
     return await (await this.orm)
       .getRepository(DateMiseÀJourFichierSourceModel)
@@ -103,7 +93,6 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
 
   private construisIdentité(
     établissementTerritorialIdentitéModel: ÉtablissementTerritorialIdentitéModel,
-    dateDeMiseAJourSourceModel: DateMiseÀJourSourceModel | null,
     dateDeMiseÀJourIdentitéModel: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialIdentité {
     return {
@@ -131,7 +120,6 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.courriel,
       },
-      dateMiseÀJourSource: dateDeMiseAJourSourceModel ? dateDeMiseAJourSourceModel.dernièreMiseÀJour : '',
       libelléCatégorieÉtablissement: {
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.libelléCatégorieÉtablissement,
@@ -165,14 +153,12 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
 
   private construisActivité(
     établissementTerritorialActivitésModel: ActivitéMédicoSocialModel[],
-    dateDeMiseAJourSourceModel: DateMiseÀJourSourceModel | null,
     dateDeMiseAJourAnnMsTdpEtModel: DateMiseÀJourFichierSourceModel,
     dateDeMiseAJourAnnErrdEjEtModel: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialMédicoSocialActivité[] {
     return établissementTerritorialActivitésModel.map<ÉtablissementTerritorialMédicoSocialActivité>((établissementTerritorialModel) =>
       ({
         année: établissementTerritorialModel.année,
-        dateMiseÀJourSource: dateDeMiseAJourSourceModel ? dateDeMiseAJourSourceModel.dernièreMiseÀJour : '',
         duréeMoyenneSéjourAccompagnementPersonnesSorties: {
           dateMiseÀJourSource: dateDeMiseAJourAnnMsTdpEtModel.dernièreMiseÀJour,
           value: établissementTerritorialModel.duréeMoyenneSéjourAccompagnementPersonnesSorties,

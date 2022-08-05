@@ -23,7 +23,6 @@ export type ÉtablissementTerritorialIdentité = Readonly<{
     dateMiseÀJourSource: string
     value: string
   }>
-  dateMiseÀJourSource: string
   libelléCatégorieÉtablissement: Readonly<{
     dateMiseÀJourSource: string
     value: string

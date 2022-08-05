@@ -1,7 +1,6 @@
 import { Repository } from 'typeorm'
 
 import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
-import { DateMiseÀJourSourceModel } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { DateMiseÀJourFichierSourceModelTestBuilder } from '../../../../../database/test-builder/DateMiseÀJourFichierSourceModelTestBuilder'
@@ -14,20 +13,17 @@ describe('Sauvegarde des entités juridiques', () => {
   const orm = getOrm()
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>
   let établissementTerritorialIdentitéRepository: Repository<ÉtablissementTerritorialIdentitéModel>
-  let dateMiseÀJourSourceRepository: Repository<DateMiseÀJourSourceModel>
   let dateMiseÀJourFichierSourceRepository: Repository<DateMiseÀJourFichierSourceModel>
 
   beforeAll(async () => {
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel)
     établissementTerritorialIdentitéRepository = (await orm).getRepository(ÉtablissementTerritorialIdentitéModel)
-    dateMiseÀJourSourceRepository = (await orm).getRepository(DateMiseÀJourSourceModel)
     dateMiseÀJourFichierSourceRepository = (await orm).getRepository(DateMiseÀJourFichierSourceModel)
   })
 
   beforeEach(async () => {
     await entitéJuridiqueRepository.query('DELETE FROM entite_juridique;')
     await établissementTerritorialIdentitéRepository.query('DELETE FROM etablissement_territorial;')
-    await dateMiseÀJourSourceRepository.query('DELETE FROM date_mise_a_jour_source;')
     await dateMiseÀJourFichierSourceRepository.query('DELETE FROM date_mise_a_jour_fichier_source;')
   })
 
