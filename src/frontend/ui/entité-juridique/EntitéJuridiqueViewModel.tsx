@@ -27,24 +27,40 @@ export class EntitéJuridiqueViewModel {
     return this.entitéJuridique.raisonSociale.value
   }
 
+  public get dateDeMiseÀJourDuNomDeLEntitéJuridique(): string {
+    return StringFormater.formateLaDate(this.entitéJuridique.raisonSociale.dateMiseÀJourSource)
+  }
+
   public get numéroFiness(): string {
     return StringFormater.formateLeNuméroFiness(this.entitéJuridique.numéroFinessEntitéJuridique.value)
+  }
+
+  public get dateDeMiseÀJourDuNuméroFiness(): string {
+    return StringFormater.formateLaDate(this.entitéJuridique.numéroFinessEntitéJuridique.dateMiseÀJourSource)
   }
 
   public get adresse(): string {
     return `${this.entitéJuridique.adresseNuméroVoie.value} ${this.entitéJuridique.adresseTypeVoie.value} ${this.entitéJuridique.adresseVoie.value} ${this.entitéJuridique.adresseAcheminement.value}`
   }
 
-  public get statutDeLEntitéJuridique(): string {
-    return this.entitéJuridique.libelléStatutJuridique.value
+  public get dateDeMiseÀJourDeLAdresse(): string {
+    return StringFormater.formateLaDate(this.entitéJuridique.adresseNuméroVoie.dateMiseÀJourSource)
   }
 
   public get téléphone(): string {
     return this.valeurOuNonRenseigné(StringFormater.formateLeNuméroDeTéléphone(this.entitéJuridique.téléphone.value))
   }
 
-  public get dateDeMiseÀJour(): string {
-    return StringFormater.formateLaDate(this.entitéJuridique.dateMiseÀJourSource)
+  public get dateDeMiseÀJourDuTéléphone(): string {
+    return StringFormater.formateLaDate(this.entitéJuridique.téléphone.dateMiseÀJourSource)
+  }
+
+  public get statutDeLEntitéJuridique(): string {
+    return this.entitéJuridique.libelléStatutJuridique.value
+  }
+
+  public get dateDeMiseÀJourDuStatutDeLEntitéJuridique(): string {
+    return StringFormater.formateLaDate(this.entitéJuridique.libelléStatutJuridique.dateMiseÀJourSource)
   }
 
   private valeurOuNonRenseigné(valeur: string): string {

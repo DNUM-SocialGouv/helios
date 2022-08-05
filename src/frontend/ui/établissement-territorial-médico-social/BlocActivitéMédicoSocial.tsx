@@ -43,10 +43,10 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
         {établissementTerritorialMédicoSocialViewModel.leTauxOccupationHébergementPermanentEstIlRenseigné &&
           <IndicateurGraphique
             contenuInfoBulle={<ContenuTauxOccupationHébergementPermanent
-              dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+              dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementPermanent}
               source={buildSource(wording.DIAMANT, wording.CNSA)}
             />}
-            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementPermanent}
             identifiant="activite-0"
             nomDeLIndicateur={wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT}
             source={buildSource(wording.DIAMANT, wording.CNSA)}
@@ -57,10 +57,10 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
         {établissementTerritorialMédicoSocialViewModel.leTauxOccupationHébergementTemporaireEstIlRenseigné &&
           <IndicateurGraphique
             contenuInfoBulle={<ContenuTauxOccupationHébergementTemporaire
-              dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+              dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementTemporaire}
               source={buildSource(wording.DIAMANT, wording.CNSA)}
             />}
-            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementTemporaire}
             identifiant="activite-1"
             nomDeLIndicateur={wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE}
             source={buildSource(wording.DIAMANT, wording.CNSA)}
@@ -71,10 +71,10 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
         {établissementTerritorialMédicoSocialViewModel.leTauxOccupationAccueilDeJourEstIlRenseigné &&
           <IndicateurGraphique
             contenuInfoBulle={<ContenuTauxOccupationAccueilDeJour
-              dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+              dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationAccueilDeJour}
               source={buildSource(wording.DIAMANT, wording.CNSA)}
             />}
-            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationAccueilDeJour}
             identifiant="activite-2"
             nomDeLIndicateur={wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR}
             source={buildSource(wording.DIAMANT, wording.CNSA)}
@@ -85,10 +85,10 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
         {établissementTerritorialMédicoSocialViewModel.leTauxRéalisationActivitéEstIlRenseigné &&
           <IndicateurGraphique
             contenuInfoBulle={<ContenuTauxRéalisationActivité
-              dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+              dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxRéalisationActivité}
               source={buildSource(wording.DIAMANT, wording.TDB_PERF)}
             />}
-            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxRéalisationActivité}
             identifiant="activite-3"
             nomDeLIndicateur={wording.TAUX_RÉALISATION_ACTIVITÉ}
             source={buildSource(wording.DIAMANT, wording.TDB_PERF)}
@@ -99,10 +99,10 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
         {établissementTerritorialMédicoSocialViewModel.laFileActivePersonnesAccompagnéesEstElleRenseignée &&
           <IndicateurGraphique
             contenuInfoBulle={<ContenuFileActivePersonnesAccompagnées
-              dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+              dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLaFileActivePersonnesAccompagnées}
               source={buildSource(wording.DIAMANT, wording.TDB_PERF)}
             />}
-            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLaFileActivePersonnesAccompagnées}
             identifiant="activite-4"
             nomDeLIndicateur={wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES}
             source={buildSource(wording.DIAMANT, wording.TDB_PERF)}
@@ -113,10 +113,10 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
         {établissementTerritorialMédicoSocialViewModel.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné &&
           <IndicateurGraphique
             contenuInfoBulle={<ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées
-              dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+              dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuNombreMoyenJournéesAbsencePersonnesAccompagnées}
               source={buildSource(wording.DIAMANT, wording.TDB_PERF)}
             />}
-            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuNombreMoyenJournéesAbsencePersonnesAccompagnées}
             identifiant="activite-5"
             nomDeLIndicateur={wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES}
             source={buildSource(wording.DIAMANT, wording.TDB_PERF)}
@@ -127,10 +127,10 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
         {établissementTerritorialMédicoSocialViewModel.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée &&
           <IndicateurGraphique
             contenuInfoBulle={<ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties
-              dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+              dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLaDuréeMoyenneSéjourAccompagnementPersonnesSorties}
               source={buildSource(wording.DIAMANT, wording.TDB_PERF)}
             />}
-            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLaDuréeMoyenneSéjourAccompagnementPersonnesSorties}
             identifiant="activite-6"
             nomDeLIndicateur={wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES}
             source={buildSource(wording.DIAMANT, wording.TDB_PERF)}

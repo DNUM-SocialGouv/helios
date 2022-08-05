@@ -18,37 +18,37 @@ export const BlocIdentitéMédicoSocial = ({ établissementTerritorialMédicoSoc
     >
       <ul className={styles['liste-indicateurs']}>
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuNomDeLÉtablissementTerritorial}
           nomDeLIndicateur={wording.NOM_DE_L_ÉTABLISSEMENT}
           source={wording.FINESS}
           valeur={établissementTerritorialMédicoSocialViewModel.nomDeLÉtablissementTerritorial}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuNuméroFinessÉtablissementTerritorial}
           nomDeLIndicateur={wording.NUMÉRO_FINESS}
           source={wording.FINESS}
           valeur={établissementTerritorialMédicoSocialViewModel.numéroFinessÉtablissementTerritorial}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLAdresse}
           nomDeLIndicateur={wording.ADRESSE}
           source={wording.FINESS}
           valeur={établissementTerritorialMédicoSocialViewModel.adresse}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDutéléphoneEtDeLEmail}
           nomDeLIndicateur={wording.TÉLÉPHONE_ET_EMAIL}
           source={wording.FINESS}
           valeur={établissementTerritorialMédicoSocialViewModel.téléphoneEtEmail}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLEntitéJuridiqueDeRattachement}
           nomDeLIndicateur={wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT}
           source={wording.FINESS}
           valeur={établissementTerritorialMédicoSocialViewModel.entitéJuridiqueDeRattachement}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLaCatégorieDeLÉtablissement}
           nomDeLIndicateur={wording.CATÉGORIE_DE_L_ÉTABLISSEMENT}
           source={wording.FINESS}
           valeur={établissementTerritorialMédicoSocialViewModel.catégorieDeLÉtablissement}
@@ -58,19 +58,19 @@ export const BlocIdentitéMédicoSocial = ({ établissementTerritorialMédicoSoc
           valeur="À venir"
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuStatutDeLÉtablissement}
           nomDeLIndicateur={wording.STATUT_DE_L_ÉTABLISSEMENT}
           source={wording.FINESS}
           valeur={établissementTerritorialMédicoSocialViewModel.statutDeLÉtablissement}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuMonoÉtablissement}
           nomDeLIndicateur={wording.MONO_ÉTABLISSEMENT}
           source={wording.FINESS}
           valeur={établissementTerritorialMédicoSocialViewModel.monoÉtablissement}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJour}
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuPrincipalOuDuSecondaire}
           nomDeLIndicateur={wording.ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE}
           source={wording.FINESS}
           valeur={établissementTerritorialMédicoSocialViewModel.principalOuSecondaire}
