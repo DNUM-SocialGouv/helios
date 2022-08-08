@@ -153,6 +153,16 @@ export class GraphiqueViewModel {
         chart.update()
       }
 
+      caseÀCocher.onkeydown = (event) => {
+        if (event.code === 'Space') {
+          event.preventDefault()
+          chart.setDatasetVisibility(libellé.datasetIndex, !chart.isDatasetVisible(libellé.datasetIndex))
+          chart.update()
+          // @ts-ignore
+          document.getElementById(event.target.id).focus()
+        }
+      }
+
       const cercleDeCouleur = document.createElement('span')
       cercleDeCouleur.style.background = libellé.fillStyle as string
       cercleDeCouleur.style.border = `solid ${libellé.strokeStyle} 1px`
