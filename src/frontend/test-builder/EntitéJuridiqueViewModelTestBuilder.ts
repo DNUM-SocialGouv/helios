@@ -20,7 +20,6 @@ export class EntitéJuridiqueViewModelTestBuilder {
       dateMiseÀJourSource: '2021-07-07',
       value: 'Marcel Proust',
     },
-    dateMiseÀJourSource: '2021-07-07',
     libelléStatutJuridique: {
       dateMiseÀJourSource: '2021-07-07',
       value: 'Public',

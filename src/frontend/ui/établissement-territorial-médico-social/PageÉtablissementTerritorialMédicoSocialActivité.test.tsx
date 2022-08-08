@@ -103,7 +103,6 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
       activités: [
         {
           année: 2019,
-          dateMiseÀJourSource: '2021-07-07',
           duréeMoyenneSéjourAccompagnementPersonnesSorties: {
             dateMiseÀJourSource: '2021-07-07',
             value: valeurIndicateur1,
@@ -136,7 +135,6 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
         },
         {
           année: 2020,
-          dateMiseÀJourSource: '2021-07-07',
           duréeMoyenneSéjourAccompagnementPersonnesSorties: {
             dateMiseÀJourSource: '2021-07-07',
             value: valeurIndicateur2,
@@ -169,7 +167,6 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
         },
         {
           année: 2021,
-          dateMiseÀJourSource: '2021-07-07',
           duréeMoyenneSéjourAccompagnementPersonnesSorties: {
             dateMiseÀJourSource: '2021-07-07',
             value: valeurIndicateur3,
@@ -226,7 +223,6 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
           dateMiseÀJourSource: '2021-07-07',
           value: 'a@example.com',
         },
-        dateMiseÀJourSource: '2021-07-07',
         estMonoÉtablissement: {
           dateMiseÀJourSource: '2021-07-07',
           value: false,
@@ -299,7 +295,6 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
       activités: [
         {
           année: 2019,
-          dateMiseÀJourSource: '2021-07-07',
           duréeMoyenneSéjourAccompagnementPersonnesSorties: {
             dateMiseÀJourSource: '2021-07-07',
             value: valeurIndicateur1,
@@ -332,7 +327,6 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
         },
         {
           année: 2020,
-          dateMiseÀJourSource: '2021-07-07',
           duréeMoyenneSéjourAccompagnementPersonnesSorties: {
             dateMiseÀJourSource: '2021-07-07',
             value: valeurIndicateur2,
@@ -365,7 +359,6 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
         },
         {
           année: 2021,
-          dateMiseÀJourSource: '2021-07-07',
           duréeMoyenneSéjourAccompagnementPersonnesSorties: {
             dateMiseÀJourSource: '2021-07-07',
             value: valeurIndicateur3,
@@ -422,7 +415,6 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
           dateMiseÀJourSource: '2021-07-07',
           value: 'a@example.com',
         },
-        dateMiseÀJourSource: '2021-07-07',
         estMonoÉtablissement: {
           dateMiseÀJourSource: '2021-07-07',
           value: false,
@@ -572,7 +564,6 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
       activités: [
         {
           année: 2019,
-          dateMiseÀJourSource: '2021-07-07',
           duréeMoyenneSéjourAccompagnementPersonnesSorties: {
             dateMiseÀJourSource: '2021-07-07',
             value: indicateur7,
@@ -605,7 +596,6 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
         },
         {
           année: 2020,
-          dateMiseÀJourSource: '2021-07-07',
           duréeMoyenneSéjourAccompagnementPersonnesSorties: {
             dateMiseÀJourSource: '2021-07-07',
             value: indicateur7,
@@ -638,7 +628,6 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
         },
         {
           année: 2021,
-          dateMiseÀJourSource: '2021-07-07',
           duréeMoyenneSéjourAccompagnementPersonnesSorties: {
             dateMiseÀJourSource: '2021-07-07',
             value: indicateur7,
@@ -695,7 +684,6 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
           dateMiseÀJourSource: '2021-07-07',
           value: 'a@example.com',
         },
-        dateMiseÀJourSource: '2021-07-07',
         estMonoÉtablissement: {
           dateMiseÀJourSource: '2021-07-07',
           value: false,
@@ -757,7 +745,6 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
       activités: [
         {
           année: 2019,
-          dateMiseÀJourSource: '2021-07-07',
           duréeMoyenneSéjourAccompagnementPersonnesSorties: {
             dateMiseÀJourSource: '2021-07-07',
             value: null,
@@ -790,7 +777,6 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
         },
         {
           année: 2020,
-          dateMiseÀJourSource: '2021-07-07',
           duréeMoyenneSéjourAccompagnementPersonnesSorties: {
             dateMiseÀJourSource: '2021-07-07',
             value: null,
@@ -823,7 +809,6 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
         },
         {
           année: 2021,
-          dateMiseÀJourSource: '2021-07-07',
           duréeMoyenneSéjourAccompagnementPersonnesSorties: {
             dateMiseÀJourSource: '2021-07-07',
             value: null,
@@ -880,7 +865,6 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
           dateMiseÀJourSource: '2021-07-07',
           value: 'a@example.com',
         },
-        dateMiseÀJourSource: '2021-07-07',
         estMonoÉtablissement: {
           dateMiseÀJourSource: '2021-07-07',
           value: false,
@@ -962,7 +946,6 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
           dateMiseÀJourSource: '2021-07-07',
           value: 'a@example.com',
         },
-        dateMiseÀJourSource: '2021-07-07',
         estMonoÉtablissement: {
           dateMiseÀJourSource: '2021-07-07',
           value: false,

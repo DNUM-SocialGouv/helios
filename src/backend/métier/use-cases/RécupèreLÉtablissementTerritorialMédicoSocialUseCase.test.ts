@@ -96,7 +96,7 @@ describe('La récupération d’un établissement territorial médico-social', (
       throw new Error('Une alerte d’établissement territorial non trouvée aurait dû être levée')
     } catch (error) {
       // THEN
-      expect(error.message).toBe('[Helios] L’établissement territorial médico-social 123456789 n’a pas été trouvé')
+      expect(error.message).toBe(`[Helios] L’établissement territorial médico-social ${numéroFinessÉtablissementTerritorial} n’a pas été trouvé`)
     }
   })
 

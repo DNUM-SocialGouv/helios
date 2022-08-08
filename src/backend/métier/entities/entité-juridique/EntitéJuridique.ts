@@ -15,7 +15,6 @@ export type EntitéJuridique = Readonly<{
     dateMiseÀJourSource: string
     value: string
   }>
-  dateMiseÀJourSource: string
   libelléStatutJuridique: Readonly<{
     dateMiseÀJourSource: string
     value: string

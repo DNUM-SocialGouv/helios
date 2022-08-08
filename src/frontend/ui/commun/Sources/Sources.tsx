@@ -1,6 +1,6 @@
 import { ReactChild } from 'react'
 
-export function buildSource(sourceFournisseur: ReactChild, sourceOrigine: ReactChild): ReactChild {
+export function Sources(sourceFournisseur: ReactChild, sourceOrigine?: ReactChild): ReactChild {
   if (sourceOrigine) {
     return <>
       {sourceOrigine}
@@ -8,5 +8,6 @@ export function buildSource(sourceFournisseur: ReactChild, sourceOrigine: ReactC
       {sourceFournisseur}
     </>
   }
+
   return sourceFournisseur
 }

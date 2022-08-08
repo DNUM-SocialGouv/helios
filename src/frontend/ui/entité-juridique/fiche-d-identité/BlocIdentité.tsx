@@ -1,6 +1,7 @@
 import { Bloc } from '../../commun/Bloc/Bloc'
 import { useDependencies } from '../../commun/contexts/useDependencies'
 import { IndicateurIdentité } from '../../commun/IndicateurIdentité/IndicateurIdentité'
+import { Sources } from '../../commun/Sources/Sources'
 import { EntitéJuridiqueViewModel } from '../EntitéJuridiqueViewModel'
 import styles from './BlocIdentité.module.css'
 
@@ -22,25 +23,25 @@ export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéProps)
         <IndicateurIdentité
           dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJourDuNomDeLEntitéJuridique}
           nomDeLIndicateur={wording.NOM_DE_L_ÉTABLISSEMENT}
-          source={wording.FINESS}
+          source={Sources(wording.FINESS)}
           valeur={entitéJuridiqueViewModel.nomDeLEntitéJuridique}
         />
         <IndicateurIdentité
           dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJourDuNuméroFiness}
           nomDeLIndicateur={wording.NUMÉRO_FINESS}
-          source={wording.FINESS}
+          source={Sources(wording.FINESS)}
           valeur={entitéJuridiqueViewModel.numéroFiness}
         />
         <IndicateurIdentité
           dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJourDeLAdresse}
           nomDeLIndicateur={wording.ADRESSE}
-          source={wording.FINESS}
+          source={Sources(wording.FINESS)}
           valeur={entitéJuridiqueViewModel.adresse}
         />
         <IndicateurIdentité
           dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJourDuTéléphone}
           nomDeLIndicateur={wording.TÉLÉPHONE}
-          source={wording.FINESS}
+          source={Sources(wording.FINESS)}
           valeur={entitéJuridiqueViewModel.téléphone}
         />
         <IndicateurIdentité
@@ -50,7 +51,7 @@ export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéProps)
         <IndicateurIdentité
           dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJourDuStatutDeLEntitéJuridique}
           nomDeLIndicateur={wording.STATUT_DE_L_ÉTABLISSEMENT}
-          source={wording.FINESS}
+          source={Sources(wording.FINESS)}
           valeur={entitéJuridiqueViewModel.statutDeLEntitéJuridique}
         />
         <IndicateurIdentité

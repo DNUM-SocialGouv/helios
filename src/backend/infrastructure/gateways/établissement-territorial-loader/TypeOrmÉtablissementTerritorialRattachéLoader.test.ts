@@ -29,7 +29,7 @@ describe('Établissement territorial rattaché loader', () => {
 
   it('charge les établissements territoriaux rattachés à une entité juridique triés alphabétiquement par leur nom', async () => {
     // GIVEN
-    const autreNuméroFinessEntitéJuridique = '987654321'
+    const autreNuméroFinessEntitéJuridique = '987654322'
     const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
     const autreEntitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée(
       { numéroFinessEntitéJuridique: autreNuméroFinessEntitéJuridique }

@@ -29,7 +29,6 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       dateMiseÀJourSource: '2021-07-07',
       value: 'a@example.com',
     },
-    dateMiseÀJourSource: '2021-07-07',
     libelléCatégorieÉtablissement: {
       dateMiseÀJourSource: '2021-07-07',
       value: 'Centre Hospitalier (C.H.)',
@@ -70,7 +69,6 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
   private static activités: ÉtablissementTerritorialSanitaire['activités'] = [
     {
       année: 2017,
-      dateMiseÀJourSource: '2021-07-07',
       nombreDePassagesAuxUrgences: {
         dateMiseÀJourSource: '2021-07-07',
         value: 10,
@@ -119,7 +117,6 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     },
     {
       année: 2018,
-      dateMiseÀJourSource: '2021-07-07',
       nombreDePassagesAuxUrgences: {
         dateMiseÀJourSource: '2021-07-07',
         value: 20,
@@ -168,7 +165,6 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     },
     {
       année: 2019,
-      dateMiseÀJourSource: '2021-07-07',
       nombreDePassagesAuxUrgences: {
         dateMiseÀJourSource: '2021-07-07',
         value: 30,
@@ -217,7 +213,6 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     },
     {
       année: 2020,
-      dateMiseÀJourSource: '2021-07-07',
       nombreDePassagesAuxUrgences: {
         dateMiseÀJourSource: '2021-07-07',
         value: 40,
@@ -266,7 +261,6 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     },
     {
       année: 2021,
-      dateMiseÀJourSource: '2021-07-07',
       nombreDePassagesAuxUrgences: {
         dateMiseÀJourSource: '2021-07-07',
         value: 5000,

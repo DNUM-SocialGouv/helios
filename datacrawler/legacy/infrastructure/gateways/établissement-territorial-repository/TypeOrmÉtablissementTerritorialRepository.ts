@@ -1,7 +1,6 @@
 import { DataSource, EntityManager } from 'typeorm'
 
 import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
-import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { Logger } from '../../../métier/gateways/Logger'
@@ -41,16 +40,6 @@ export class TypeOrmÉtablissementTerritorialRepository implements Établissemen
           fichier: FichierSource.FINESS_CS1400102,
         },
       ], ['fichier'])
-
-    // TODO : à enlever avec HEL-178
-    await entityManager
-      .getRepository(DateMiseÀJourSourceModel)
-      .upsert([
-        {
-          dernièreMiseÀJour: dateDeMiseAJourDuFichierSource,
-          source: SourceDeDonnées.FINESS,
-        },
-      ], ['source'])
   }
 
   private async supprimeLesÉtablissementsTerritoriaux(établissementsTerritoriauxÀSupprimer: ÉtablissementTerritorialIdentitéModel[]) {

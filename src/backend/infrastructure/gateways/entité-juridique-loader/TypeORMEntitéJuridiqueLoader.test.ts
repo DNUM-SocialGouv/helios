@@ -1,10 +1,8 @@
 import { Repository } from 'typeorm'
 
 import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
-import { DateMiseÀJourSourceModel } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
 import { DateMiseÀJourFichierSourceModelTestBuilder } from '../../../../../database/test-builder/DateMiseÀJourFichierSourceModelTestBuilder'
-import { DateMiseÀJourSourceModelTestBuilder } from '../../../../../database/test-builder/DateMiseÀJourSourceModelTestBuilder'
 import { EntitéJuridiqueModelTestBuilder } from '../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder'
 import { EntitéJuridiqueNonTrouvée } from '../../../métier/entities/EntitéJuridiqueNonTrouvée'
 import { EntitéJuridiqueDeRattachement } from '../../../métier/entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement'
@@ -15,12 +13,10 @@ import { TypeOrmEntitéJuridiqueLoader } from './TypeOrmEntitéJuridiqueLoader'
 describe('Entité juridique loader', () => {
   const orm = getOrm()
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>
-  let dateMiseÀJourSourceRepository: Repository<DateMiseÀJourSourceModel>
   let dateMiseÀJourFichierSourceRepository: Repository<DateMiseÀJourFichierSourceModel>
 
   beforeAll(async () => {
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel)
-    dateMiseÀJourSourceRepository = (await orm).getRepository(DateMiseÀJourSourceModel)
     dateMiseÀJourFichierSourceRepository = (await orm).getRepository(DateMiseÀJourFichierSourceModel)
   })
 
@@ -36,7 +32,6 @@ describe('Entité juridique loader', () => {
     it('charge par numéro FINESS', async () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
-      await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestBuilder.crée()])
       await dateMiseÀJourFichierSourceRepository.insert([
         DateMiseÀJourFichierSourceModelTestBuilder.crée({
           dernièreMiseÀJour: '2022-05-14',

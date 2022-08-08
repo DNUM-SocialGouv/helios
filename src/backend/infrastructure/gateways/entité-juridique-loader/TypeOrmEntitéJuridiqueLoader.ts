@@ -1,7 +1,6 @@
 import { DataSource } from 'typeorm'
 
 import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
-import { DateMiseÀJourSourceModel, SourceDeDonnées } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
 import { EntitéJuridique } from '../../../métier/entities/entité-juridique/EntitéJuridique'
 import { EntitéJuridiqueNonTrouvée } from '../../../métier/entities/EntitéJuridiqueNonTrouvée'
@@ -18,10 +17,9 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
       return new EntitéJuridiqueNonTrouvée(numéroFiness)
     }
 
-    const dateDeMiseAJourModel = await this.chargeLaDateDeMiseÀJourModel()
     const dateDeMiseAJourFichierSourceModel = await this.chargeLaDateDeMiseÀJourFinessCs1400101Model() as DateMiseÀJourFichierSourceModel
 
-    return this.construisLEntitéJuridique(entitéJuridiqueIdentitéModel, dateDeMiseAJourModel, dateDeMiseAJourFichierSourceModel)
+    return this.construisLEntitéJuridique(entitéJuridiqueIdentitéModel, dateDeMiseAJourFichierSourceModel)
   }
 
   async chargeRattachement(numéroFiness: string): Promise<EntitéJuridiqueDeRattachement> {
@@ -29,12 +27,6 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
     const dateDeMiseAJourFichierSourceModel = await this.chargeLaDateDeMiseÀJourFinessCs1400101Model() as DateMiseÀJourFichierSourceModel
 
     return this.construisLEntitéJuridiqueDeRattachement(entitéJuridiqueModel, dateDeMiseAJourFichierSourceModel)
-  }
-
-  private async chargeLaDateDeMiseÀJourModel(): Promise<DateMiseÀJourSourceModel | null> {
-    return await (await this.orm)
-      .getRepository(DateMiseÀJourSourceModel)
-      .findOneBy({ source: SourceDeDonnées.FINESS })
   }
 
   private async chargeLaDateDeMiseÀJourFinessCs1400101Model(): Promise<DateMiseÀJourFichierSourceModel | null> {
@@ -51,7 +43,6 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
 
   private construisLEntitéJuridique(
     entitéJuridiqueModel: EntitéJuridiqueModel,
-    dateDeMiseAJourSourceModel: DateMiseÀJourSourceModel | null,
     dateDeMiseAJourFichierSourceModel: DateMiseÀJourFichierSourceModel
   ): EntitéJuridique {
     return {
@@ -71,7 +62,6 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
         dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
         value: entitéJuridiqueModel.adresseVoie,
       },
-      dateMiseÀJourSource: dateDeMiseAJourSourceModel ? dateDeMiseAJourSourceModel.dernièreMiseÀJour : '',
       libelléStatutJuridique: {
         dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
         value: entitéJuridiqueModel.libelléStatutJuridique,

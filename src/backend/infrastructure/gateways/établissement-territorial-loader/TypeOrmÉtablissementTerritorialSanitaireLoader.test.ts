@@ -2,11 +2,9 @@ import { Repository } from 'typeorm'
 
 import { ActivitéSanitaireModel } from '../../../../../database/models/ActivitéSanitaireModel'
 import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
-import { DateMiseÀJourSourceModel } from '../../../../../database/models/DateMiseÀJourSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { DateMiseÀJourFichierSourceModelTestBuilder } from '../../../../../database/test-builder/DateMiseÀJourFichierSourceModelTestBuilder'
-import { DateMiseÀJourSourceModelTestBuilder } from '../../../../../database/test-builder/DateMiseÀJourSourceModelTestBuilder'
 import { EntitéJuridiqueModelTestBuilder } from '../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder'
 import { ÉtablissementTerritorialActivitéModelTestBuilder } from '../../../../../database/test-builder/ÉtablissementTerritorialActivitéModelTestBuilder'
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from '../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder'
@@ -21,14 +19,12 @@ describe('Établissement territorial sanitaire loader', () => {
   let activitéSanitaireModelRepository: Repository<ActivitéSanitaireModel>
   let établissementTerritorialIdentitéRepository: Repository<ÉtablissementTerritorialIdentitéModel>
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>
-  let dateMiseÀJourSourceRepository: Repository<DateMiseÀJourSourceModel>
   let dateMiseÀJourFichierSourceRepository: Repository<DateMiseÀJourFichierSourceModel>
 
   beforeAll(async () => {
     activitéSanitaireModelRepository = (await orm).getRepository(ActivitéSanitaireModel)
     établissementTerritorialIdentitéRepository = (await orm).getRepository(ÉtablissementTerritorialIdentitéModel)
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel)
-    dateMiseÀJourSourceRepository = (await orm).getRepository(DateMiseÀJourSourceModel)
     dateMiseÀJourFichierSourceRepository = (await orm).getRepository(DateMiseÀJourFichierSourceModel)
   })
 
@@ -44,7 +40,6 @@ describe('Établissement territorial sanitaire loader', () => {
     it('charge par numéro FINESS et domaine sanitaire', async () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
-      await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestBuilder.crée()])
       await dateMiseÀJourFichierSourceRepository.insert([
         DateMiseÀJourFichierSourceModelTestBuilder.crée({
           dernièreMiseÀJour: '2022-05-14',
@@ -105,7 +100,6 @@ describe('Établissement territorial sanitaire loader', () => {
     it('charge par numéro FINESS rangé par année ascendante', async () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
-      await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestBuilder.crée()])
       await dateMiseÀJourFichierSourceRepository.insert([
         DateMiseÀJourFichierSourceModelTestBuilder.crée({
           dernièreMiseÀJour: '2022-05-14',
@@ -179,7 +173,6 @@ describe('Établissement territorial sanitaire loader', () => {
     it('charge les 5 dernières années', async () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
-      await dateMiseÀJourSourceRepository.insert([DateMiseÀJourSourceModelTestBuilder.crée()])
       await dateMiseÀJourFichierSourceRepository.insert([
         DateMiseÀJourFichierSourceModelTestBuilder.crée({
           dernièreMiseÀJour: '2022-05-14',

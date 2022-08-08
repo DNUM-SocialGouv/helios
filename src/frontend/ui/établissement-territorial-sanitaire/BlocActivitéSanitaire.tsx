@@ -1,7 +1,7 @@
 import { Bloc } from '../commun/Bloc/Bloc'
 import { useDependencies } from '../commun/contexts/useDependencies'
 import { IndicateurGraphique } from '../commun/IndicateurGraphique/IndicateurGraphique'
-import { buildSource } from '../commun/sources/buildSource'
+import { Sources } from '../commun/Sources/Sources'
 import styles from './BlocActivitéSanitaire.module.css'
 import { ContenuNombreDeJournéesPSYetSSR } from './InfoBulle/ContenuNombreDeJournéesPSYetSSR'
 import { ContenuNombreDePassagesAuxUrgences } from './InfoBulle/ContenuNombreDePassagesAuxUrgences'
@@ -36,12 +36,12 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewM
         <IndicateurGraphique
           contenuInfoBulle={<ContenuNombreDeSéjourMCO
             dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNombreDeSéjoursMédecineChirurgieObstétrique}
-            source={buildSource(wording.DIAMANT, wording.PMSI)}
+            source={Sources(wording.DIAMANT, wording.PMSI)}
           />}
           dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNombreDeSéjoursMédecineChirurgieObstétrique}
           identifiant="activite-0"
           nomDeLIndicateur={wording.NOMBRE_DE_SÉJOUR_MCO}
-          source={buildSource(wording.DIAMANT, wording.PMSI)}
+          source={Sources(wording.DIAMANT, wording.PMSI)}
         >
           { établissementTerritorialSanitaireViewModel.nombreDeSéjoursMédecineChirurgieObstétrique }
         </IndicateurGraphique>
@@ -50,13 +50,13 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewM
         <IndicateurGraphique
           contenuInfoBulle={<ContenuNombreDeJournéesPSYetSSR
             dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr}
-            source={buildSource(wording.DIAMANT, wording.PMSI)}
+            source={Sources(wording.DIAMANT, wording.PMSI)}
 
           />}
           dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr}
           identifiant="activite-1"
           nomDeLIndicateur={wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR}
-          source={buildSource(wording.DIAMANT, wording.PMSI)}
+          source={Sources(wording.DIAMANT, wording.PMSI)}
         >
           { établissementTerritorialSanitaireViewModel.nombreDeJournéesPsyEtSsr }
         </IndicateurGraphique>
@@ -65,12 +65,12 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewM
         <IndicateurGraphique
           contenuInfoBulle={<ContenuNombreDePassagesAuxUrgences
             dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNombreDePassagesAuxUrgences}
-            source={buildSource(wording.DIAMANT, wording.PMSI)}
+            source={Sources(wording.DIAMANT, wording.PMSI)}
           />}
           dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNombreDePassagesAuxUrgences}
           identifiant="activite-2"
           nomDeLIndicateur={wording.NOMBRE_DE_PASSAGES_AUX_URGENCES}
-          source={buildSource(wording.DIAMANT, wording.PMSI)}
+          source={Sources(wording.DIAMANT, wording.PMSI)}
         >
           {établissementTerritorialSanitaireViewModel.nombreDePassagesAuxUrgences}
         </IndicateurGraphique>
