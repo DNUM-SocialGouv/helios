@@ -1,7 +1,7 @@
 import { Bloc } from '../commun/Bloc/Bloc'
 import { useDependencies } from '../commun/contexts/useDependencies'
 import { IndicateurGraphique } from '../commun/IndicateurGraphique/IndicateurGraphique'
-import { buildSource } from '../commun/sources/buildSource'
+import { Sources } from '../commun/Sources/Sources'
 import styles from './BlocActivitéMédicoSocial.module.css'
 import { ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties } from './InfoBulle/ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties'
 import { ContenuFileActivePersonnesAccompagnées } from './InfoBulle/ContenuFileActivePersonnesAccompagnées'
@@ -44,12 +44,12 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
           <IndicateurGraphique
             contenuInfoBulle={<ContenuTauxOccupationHébergementPermanent
               dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementPermanent}
-              source={buildSource(wording.DIAMANT, wording.CNSA)}
+              source={Sources(wording.DIAMANT, wording.CNSA)}
             />}
             dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementPermanent}
             identifiant="activite-0"
             nomDeLIndicateur={wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT}
-            source={buildSource(wording.DIAMANT, wording.CNSA)}
+            source={Sources(wording.DIAMANT, wording.CNSA)}
           >
             {établissementTerritorialMédicoSocialViewModel.tauxOccupationHébergementPermanent}
           </IndicateurGraphique>
@@ -58,12 +58,12 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
           <IndicateurGraphique
             contenuInfoBulle={<ContenuTauxOccupationHébergementTemporaire
               dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementTemporaire}
-              source={buildSource(wording.DIAMANT, wording.CNSA)}
+              source={Sources(wording.DIAMANT, wording.CNSA)}
             />}
             dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementTemporaire}
             identifiant="activite-1"
             nomDeLIndicateur={wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE}
-            source={buildSource(wording.DIAMANT, wording.CNSA)}
+            source={Sources(wording.DIAMANT, wording.CNSA)}
           >
             {établissementTerritorialMédicoSocialViewModel.tauxOccupationHébergementTemporaire}
           </IndicateurGraphique>
@@ -72,12 +72,12 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
           <IndicateurGraphique
             contenuInfoBulle={<ContenuTauxOccupationAccueilDeJour
               dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationAccueilDeJour}
-              source={buildSource(wording.DIAMANT, wording.CNSA)}
+              source={Sources(wording.DIAMANT, wording.CNSA)}
             />}
             dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationAccueilDeJour}
             identifiant="activite-2"
             nomDeLIndicateur={wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR}
-            source={buildSource(wording.DIAMANT, wording.CNSA)}
+            source={Sources(wording.DIAMANT, wording.CNSA)}
           >
             {établissementTerritorialMédicoSocialViewModel.tauxOccupationAccueilDeJour}
           </IndicateurGraphique>
@@ -86,12 +86,12 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
           <IndicateurGraphique
             contenuInfoBulle={<ContenuTauxRéalisationActivité
               dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxRéalisationActivité}
-              source={buildSource(wording.DIAMANT, wording.TDB_PERF)}
+              source={Sources(wording.DIAMANT, wording.TDB_PERF)}
             />}
             dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxRéalisationActivité}
             identifiant="activite-3"
             nomDeLIndicateur={wording.TAUX_RÉALISATION_ACTIVITÉ}
-            source={buildSource(wording.DIAMANT, wording.TDB_PERF)}
+            source={Sources(wording.DIAMANT, wording.TDB_PERF)}
           >
             {établissementTerritorialMédicoSocialViewModel.tauxRéalisationActivité}
           </IndicateurGraphique>
@@ -100,12 +100,12 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
           <IndicateurGraphique
             contenuInfoBulle={<ContenuFileActivePersonnesAccompagnées
               dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLaFileActivePersonnesAccompagnées}
-              source={buildSource(wording.DIAMANT, wording.TDB_PERF)}
+              source={Sources(wording.DIAMANT, wording.TDB_PERF)}
             />}
             dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLaFileActivePersonnesAccompagnées}
             identifiant="activite-4"
             nomDeLIndicateur={wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES}
-            source={buildSource(wording.DIAMANT, wording.TDB_PERF)}
+            source={Sources(wording.DIAMANT, wording.TDB_PERF)}
           >
             {établissementTerritorialMédicoSocialViewModel.fileActivePersonnesAccompagnées}
           </IndicateurGraphique>
@@ -114,12 +114,12 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
           <IndicateurGraphique
             contenuInfoBulle={<ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées
               dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuNombreMoyenJournéesAbsencePersonnesAccompagnées}
-              source={buildSource(wording.DIAMANT, wording.TDB_PERF)}
+              source={Sources(wording.DIAMANT, wording.TDB_PERF)}
             />}
             dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuNombreMoyenJournéesAbsencePersonnesAccompagnées}
             identifiant="activite-5"
             nomDeLIndicateur={wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES}
-            source={buildSource(wording.DIAMANT, wording.TDB_PERF)}
+            source={Sources(wording.DIAMANT, wording.TDB_PERF)}
           >
             {établissementTerritorialMédicoSocialViewModel.nombreMoyenJournéesAbsencePersonnesAccompagnées}
           </IndicateurGraphique>
@@ -128,12 +128,12 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
           <IndicateurGraphique
             contenuInfoBulle={<ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties
               dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLaDuréeMoyenneSéjourAccompagnementPersonnesSorties}
-              source={buildSource(wording.DIAMANT, wording.TDB_PERF)}
+              source={Sources(wording.DIAMANT, wording.TDB_PERF)}
             />}
             dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLaDuréeMoyenneSéjourAccompagnementPersonnesSorties}
             identifiant="activite-6"
             nomDeLIndicateur={wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES}
-            source={buildSource(wording.DIAMANT, wording.TDB_PERF)}
+            source={Sources(wording.DIAMANT, wording.TDB_PERF)}
           >
             {établissementTerritorialMédicoSocialViewModel.duréeMoyenneSéjourAccompagnementPersonnesSorties}
           </IndicateurGraphique>

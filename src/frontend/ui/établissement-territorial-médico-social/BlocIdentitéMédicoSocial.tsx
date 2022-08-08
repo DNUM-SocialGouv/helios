@@ -1,6 +1,7 @@
 import { Bloc } from '../commun/Bloc/Bloc'
 import { useDependencies } from '../commun/contexts/useDependencies'
 import { IndicateurIdentité } from '../commun/IndicateurIdentité/IndicateurIdentité'
+import { Sources } from '../commun/Sources/Sources'
 import styles from './BlocIdentitéMédicoSocial.module.css'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from './ÉtablissementTerritorialMédicoSocialViewModel'
 
@@ -20,37 +21,37 @@ export const BlocIdentitéMédicoSocial = ({ établissementTerritorialMédicoSoc
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuNomDeLÉtablissementTerritorial}
           nomDeLIndicateur={wording.NOM_DE_L_ÉTABLISSEMENT}
-          source={wording.FINESS}
+          source={Sources(wording.FINESS)}
           valeur={établissementTerritorialMédicoSocialViewModel.nomDeLÉtablissementTerritorial}
         />
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuNuméroFinessÉtablissementTerritorial}
           nomDeLIndicateur={wording.NUMÉRO_FINESS}
-          source={wording.FINESS}
+          source={Sources(wording.FINESS)}
           valeur={établissementTerritorialMédicoSocialViewModel.numéroFinessÉtablissementTerritorial}
         />
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLAdresse}
           nomDeLIndicateur={wording.ADRESSE}
-          source={wording.FINESS}
+          source={Sources(wording.FINESS)}
           valeur={établissementTerritorialMédicoSocialViewModel.adresse}
         />
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDutéléphoneEtDeLEmail}
           nomDeLIndicateur={wording.TÉLÉPHONE_ET_EMAIL}
-          source={wording.FINESS}
+          source={Sources(wording.FINESS)}
           valeur={établissementTerritorialMédicoSocialViewModel.téléphoneEtEmail}
         />
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLEntitéJuridiqueDeRattachement}
           nomDeLIndicateur={wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT}
-          source={wording.FINESS}
+          source={Sources(wording.FINESS)}
           valeur={établissementTerritorialMédicoSocialViewModel.entitéJuridiqueDeRattachement}
         />
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLaCatégorieDeLÉtablissement}
           nomDeLIndicateur={wording.CATÉGORIE_DE_L_ÉTABLISSEMENT}
-          source={wording.FINESS}
+          source={Sources(wording.FINESS)}
           valeur={établissementTerritorialMédicoSocialViewModel.catégorieDeLÉtablissement}
         />
         <IndicateurIdentité
@@ -60,19 +61,19 @@ export const BlocIdentitéMédicoSocial = ({ établissementTerritorialMédicoSoc
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuStatutDeLÉtablissement}
           nomDeLIndicateur={wording.STATUT_DE_L_ÉTABLISSEMENT}
-          source={wording.FINESS}
+          source={Sources(wording.FINESS)}
           valeur={établissementTerritorialMédicoSocialViewModel.statutDeLÉtablissement}
         />
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuMonoÉtablissement}
           nomDeLIndicateur={wording.MONO_ÉTABLISSEMENT}
-          source={wording.FINESS}
+          source={Sources(wording.FINESS)}
           valeur={établissementTerritorialMédicoSocialViewModel.monoÉtablissement}
         />
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuPrincipalOuDuSecondaire}
           nomDeLIndicateur={wording.ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE}
-          source={wording.FINESS}
+          source={Sources(wording.FINESS)}
           valeur={établissementTerritorialMédicoSocialViewModel.principalOuSecondaire}
         />
         <IndicateurIdentité

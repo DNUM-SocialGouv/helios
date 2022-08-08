@@ -38,4 +38,4 @@ export const clearAllTables = async (orm: DataSource) => {
 
 export const numéroFinessEntitéJuridique = '010018407'
 
-export const numéroFinessÉtablissementTerritorial = '123456789'
+export const numéroFinessÉtablissementTerritorial = '010000040'
