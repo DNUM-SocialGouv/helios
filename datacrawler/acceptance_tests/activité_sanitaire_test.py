@@ -3,6 +3,7 @@ from unittest.mock import Mock, patch
 
 import pandas as pd
 import pytest
+from freezegun import freeze_time
 from numpy import NaN
 
 import datacrawler
@@ -23,14 +24,14 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
     def setup_method(self) -> None:
         supprime_les_données_des_tables(base_de_données_test)
 
-    def test_sauvegarde_les_données_dans_une_table_vide(self) -> None:
+    @freeze_time("2022-01-14")
+    def test_sauvegarde_les_cinq_dernières_années_dans_une_table_vide(self) -> None:
         # GIVEN
         chemin_du_fichier_men_pmsi_annuel = "data_set/diamant/MEN_PMSI_ANNUEL_2022_06_07.CSV"
         chemin_du_fichier_ann_rpu = "data_set/diamant/ANN_RPU_2022_06_23.CSV"
         sauvegarde_une_entité_juridique_en_base("010008407", base_de_données_test)
-        sauvegarde_une_entité_juridique_en_base("2A0000204", base_de_données_test)
         sauvegarde_un_établissement_en_base("010005239", "010008407", base_de_données_test)
-        sauvegarde_un_établissement_en_base("2A0000154", "2A0000204", base_de_données_test)
+        sauvegarde_un_établissement_en_base("2A0000155", "010008407", base_de_données_test)
 
         # WHEN
         ajoute_les_activités_des_établissements_sanitaires(chemin_du_fichier_men_pmsi_annuel, chemin_du_fichier_ann_rpu, base_de_données_test, mocked_logger)
@@ -38,19 +39,19 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
         # THEN
         activité_attendue = pd.DataFrame(
             {
-                "annee": [2016, 2017, 2018, 2019],
-                "numero_finess_etablissement_territorial": ["2A0000154", "010005239", "010005239", "010005239"],
-                "nombre_sejours_partiels_medecine": [NaN, 1.0, 3.0, 4.0],
-                "nombre_sejours_partiels_obstetrique": [NaN, 10.0, NaN, NaN],
-                "nombre_sejours_partiels_chirurgie": [NaN, 20.0, NaN, NaN],
-                "nombre_sejours_complets_medecine": [NaN, 255.0, 232.0, 231.0],
-                "nombre_sejours_complets_obstetrique": [NaN, 10.0, NaN, NaN],
-                "nombre_sejours_complets_chirurgie": [NaN, 6.0, 10.0, 9.0],
-                "nombre_journees_completes_ssr": [NaN, 1074.0, 1103.0, 1087.0],
-                "nombre_journees_partiels_ssr": [NaN, 100.0, NaN, NaN],
-                "nombre_journees_complete_psy": [NaN, 200.0, NaN, NaN],
-                "nombre_journées_partielles_psy": [NaN, 300.0, NaN, NaN],
-                "nombre_passages_urgences": [10296, NaN, 24032, 23987],
+                "annee": [2017, 2018, 2019, 2020, 2021],
+                "numero_finess_etablissement_territorial": ["010005239", "010005239", "010005239", "010005239", "010005239"],
+                "nombre_sejours_partiels_medecine": [1.0, 3.0, 4.0, 4.0, 4.0],
+                "nombre_sejours_partiels_obstetrique": [10.0, NaN, NaN, NaN, NaN],
+                "nombre_sejours_partiels_chirurgie": [20.0, NaN, NaN, NaN, NaN],
+                "nombre_sejours_complets_medecine": [255.0, 232.0, 231.0, 231.0, 231.0],
+                "nombre_sejours_complets_obstetrique": [10.0, NaN, NaN, NaN, NaN],
+                "nombre_sejours_complets_chirurgie": [6.0, 10.0, 9.0, 9.0, 9.0],
+                "nombre_journees_completes_ssr": [1074.0, 1103.0, 1087.0, NaN, NaN],
+                "nombre_journees_partiels_ssr": [100.0, NaN, NaN, NaN, NaN],
+                "nombre_journees_complete_psy": [200.0, NaN, NaN, NaN, NaN],
+                "nombre_journées_partielles_psy": [300.0, NaN, NaN, NaN, NaN],
+                "nombre_passages_urgences": [10296.0, 24032.0, 23987.0, 23087.0, 25987.0],
             }
         )
 
@@ -68,14 +69,14 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
         )
         assert date_du_fichier_ann_rpu.fetchone() == (date(2022, 6, 23), FichierSource.DIAMANT_ANN_RPU.value)
 
+    @freeze_time("2022-01-14")
     def test_supprime_les_données_existantes_avant_de_sauvegarder_les_données_en_base(self) -> None:
         # GIVEN
         chemin_du_fichier_men_pmsi_annuel = "data_set/diamant/MEN_PMSI_ANNUEL_2022_06_07.CSV"
         chemin_du_fichier_ann_rpu = "data_set/diamant/ANN_RPU_2022_06_23.CSV"
         sauvegarde_une_entité_juridique_en_base("010008407", base_de_données_test)
-        sauvegarde_une_entité_juridique_en_base("2A0000204", base_de_données_test)
         sauvegarde_un_établissement_en_base("010005239", "010008407", base_de_données_test)
-        sauvegarde_un_établissement_en_base("2A0000154", "2A0000204", base_de_données_test)
+        sauvegarde_un_établissement_en_base("2A0000155", "010008407", base_de_données_test)
         sauvegarde_une_date_de_mise_à_jour_de_fichier_source("20200101", FichierSource.DIAMANT_MEN_PMSI_ANNUEL, base_de_données_test)
         sauvegarde_une_date_de_mise_à_jour_de_fichier_source("20200101", FichierSource.DIAMANT_ANN_RPU, base_de_données_test)
         activité_existante = pd.DataFrame(
@@ -103,19 +104,19 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
         # THEN
         activité_attendue = pd.DataFrame(
             {
-                "annee": [2016, 2017, 2018, 2019],
-                "numero_finess_etablissement_territorial": ["2A0000154", "010005239", "010005239", "010005239"],
-                "nombre_sejours_partiels_medecine": [NaN, 1.0, 3.0, 4.0],
-                "nombre_sejours_partiels_obstetrique": [NaN, 10.0, NaN, NaN],
-                "nombre_sejours_partiels_chirurgie": [NaN, 20.0, NaN, NaN],
-                "nombre_sejours_complets_medecine": [NaN, 255.0, 232.0, 231.0],
-                "nombre_sejours_complets_obstetrique": [NaN, 10.0, NaN, NaN],
-                "nombre_sejours_complets_chirurgie": [NaN, 6.0, 10.0, 9.0],
-                "nombre_journees_completes_ssr": [NaN, 1074.0, 1103.0, 1087.0],
-                "nombre_journees_partiels_ssr": [NaN, 100.0, NaN, NaN],
-                "nombre_journees_complete_psy": [NaN, 200.0, NaN, NaN],
-                "nombre_journées_partielles_psy": [NaN, 300.0, NaN, NaN],
-                "nombre_passages_urgences": [10296, NaN, 24032, 23987],
+                "annee": [2017, 2018, 2019, 2020, 2021],
+                "numero_finess_etablissement_territorial": ["010005239", "010005239", "010005239", "010005239", "010005239"],
+                "nombre_sejours_partiels_medecine": [1.0, 3.0, 4.0, 4.0, 4.0],
+                "nombre_sejours_partiels_obstetrique": [10.0, NaN, NaN, NaN, NaN],
+                "nombre_sejours_partiels_chirurgie": [20.0, NaN, NaN, NaN, NaN],
+                "nombre_sejours_complets_medecine": [255.0, 232.0, 231.0, 231.0, 231.0],
+                "nombre_sejours_complets_obstetrique": [10.0, NaN, NaN, NaN, NaN],
+                "nombre_sejours_complets_chirurgie": [6.0, 10.0, 9.0, 9.0, 9.0],
+                "nombre_journees_completes_ssr": [1074.0, 1103.0, 1087.0, NaN, NaN],
+                "nombre_journees_partiels_ssr": [100.0, NaN, NaN, NaN, NaN],
+                "nombre_journees_complete_psy": [200.0, NaN, NaN, NaN, NaN],
+                "nombre_journées_partielles_psy": [300.0, NaN, NaN, NaN, NaN],
+                "nombre_passages_urgences": [10296.0, 24032.0, 23987.0, 23087.0, 25987.0],
             }
         )
 

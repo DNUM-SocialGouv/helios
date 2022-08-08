@@ -11,7 +11,7 @@ from datacrawler.transform.équivalences_diamant_helios import (
 
 def transforme_les_données_ann_rpu(données_ann_rpu: pd.DataFrame, numéros_finess_des_établissements_connus: pd.DataFrame, logger: Logger) -> pd.DataFrame:
     est_dans_finess = données_ann_rpu["Finess"].isin(numéros_finess_des_établissements_connus["numero_finess_etablissement_territorial"])
-    logger.info(f"{est_dans_finess.sum()} activités sont liées à un ET trouvé en base dans le fichier ann_rpu")
+    logger.info(f"[DIAMANT] {est_dans_finess.sum()} activités sont liées à un ET trouvé en base dans le fichier ann_rpu")
 
     return (
         données_ann_rpu[est_dans_finess]

@@ -31,7 +31,7 @@ def transforme_les_données_ann_ms_tdp_et(
     données_ann_ms_tdp_et: pd.DataFrame, numéros_finess_des_établissements_connus: pd.DataFrame, logger: Logger
 ) -> pd.DataFrame:
     est_dans_finess = données_ann_ms_tdp_et["Finess"].isin(numéros_finess_des_établissements_connus["numero_finess_etablissement_territorial"])
-    logger.info(f"{est_dans_finess.sum()} activités sont liées à un ET trouvé en base dans le fichier ann_ms_tdp_et")
+    logger.info(f"[DIAMANT] {est_dans_finess.sum()} activités sont liées à un ET trouvé en base dans le fichier ann_ms_tdp_et")
 
     return (
         récupère_le_taux_de_réalisation_des_établissements(données_ann_ms_tdp_et[est_dans_finess])
