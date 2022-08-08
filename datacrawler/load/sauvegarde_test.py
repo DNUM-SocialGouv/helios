@@ -108,4 +108,4 @@ class TestSauvegarde:
 
         # THEN
         date_sauvée = base_de_données_test.execute(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{fichier_source.value}'""")
-        assert date_sauvée.fetchall() == [(date(2022, 7, 28), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)]
+        assert date_sauvée.fetchone() == (date(2022, 7, 28), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)

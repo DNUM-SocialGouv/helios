@@ -21,6 +21,7 @@ pytest-mock = "3.7.0"
 black = "22.6.0"
 pandas-stubs = "~=1.4"
 sqlalchemy-stubs = "~=0.4"
+freezegun = "1.2.1"
 
 [requires]
 python_version = "3.10"
