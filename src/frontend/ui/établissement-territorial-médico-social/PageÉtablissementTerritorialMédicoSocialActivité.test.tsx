@@ -48,10 +48,10 @@ describe('La page établissement territorial médico-social - bloc activité', (
 
   it.each(
     [
-      [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0, '94.4 %', '97.5 %', '101.6 %'],
-      [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1, '70.4 %', '121.5 %', '67.6 %'],
-      [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 2, '0.4 %', '15.5 %', '20.6 %'],
-      [wording.TAUX_RÉALISATION_ACTIVITÉ, 3, '100.4 %', '94.5 %', '96.6 %'],
+      [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0, '94,4 %', '97,5 %', '101,6 %'],
+      [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1, '70,4 %', '121,5 %', '67,6 %'],
+      [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 2, '0,4 %', '15,5 %', '20,6 %'],
+      [wording.TAUX_RÉALISATION_ACTIVITÉ, 3, '100,4 %', '94,5 %', '96,6 %'],
       [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 4, '340', '280', '300'],
       [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5, '87', '90', '22'],
       [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6, (1013).toLocaleString('fr'), '994', '990'],

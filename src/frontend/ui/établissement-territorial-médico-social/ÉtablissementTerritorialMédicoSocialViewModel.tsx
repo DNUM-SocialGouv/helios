@@ -217,8 +217,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
       valeurs,
       dataLabelsColor,
       années,
-      this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES,
-      3
+      this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES
     )
   }
 

@@ -64,7 +64,7 @@ export const TableIndicateur = ({ disabled = false, identifiants, libellés, val
                   {valeurs.map((valeur, index2) =>
                     <td key={valeur[index] + index2.toString()}>
                       {/* @ts-ignore */}
-                      {valeur[index] === null ? 'N/A' : valeur[index].toLocaleString('fr')}
+                      {valeur[index] === null ? 'N/A' : valeur[index]}
                     </td>)
                   }
                 </tr>)
