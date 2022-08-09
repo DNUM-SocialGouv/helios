@@ -15,7 +15,7 @@ export const PageDeRecette = () => {
     {
       identifiant: <>
         <abbr title={wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
-        {' - 750 050 759 - CANSSM FILIERIS (avec que des ET sanitaires)'}
+        - 750 050 759 - CANSSM FILIERIS (avec que des ET sanitaires)
       </>,
       numéroFiness: '750050759',
     },
@@ -29,7 +29,7 @@ export const PageDeRecette = () => {
     {
       identifiant: <>
         <abbr title={wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
-        {'- 500 020 839 - GCSMS &quot;PRESQU’ÎLE&quot; (sans ET)'}
+        - 500 020 839 - GCSMS &quot;PRESQU’ÎLE&quot; (sans ET)
       </>,
       numéroFiness: '500020839',
     },

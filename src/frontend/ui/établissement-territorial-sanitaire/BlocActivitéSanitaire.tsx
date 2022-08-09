@@ -15,12 +15,13 @@ type BlocActivitéSanitaireProps = {
 export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewModel }: BlocActivitéSanitaireProps) => {
   const { wording } = useDependencies()
 
-  if (!établissementTerritorialSanitaireViewModel.activitéEstElleRenseignée) return null
-
   if (
-    !établissementTerritorialSanitaireViewModel.nombreDeSéjoursMCOSontIlsRenseignés &&
-    !établissementTerritorialSanitaireViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés &&
-    !établissementTerritorialSanitaireViewModel.nombreDePassagesAuxUrgencesEstIlRenseigné
+    !établissementTerritorialSanitaireViewModel.activitéEstElleRenseignée ||
+    (
+      !établissementTerritorialSanitaireViewModel.nombreDeSéjoursMCOSontIlsRenseignés &&
+      !établissementTerritorialSanitaireViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés &&
+      !établissementTerritorialSanitaireViewModel.nombreDePassagesAuxUrgencesEstIlRenseigné
+    )
   ) {
     return (
       <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
