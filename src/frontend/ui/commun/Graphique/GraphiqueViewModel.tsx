@@ -81,6 +81,7 @@ export class GraphiqueViewModel {
       labels: années,
     }
     const annéesManquantes = this.annéesManquantes(années, annéesTotales)
+    const valeursFrançaises = this.transformeEnFrançais(valeurs)
 
     return (
       <>
@@ -101,7 +102,7 @@ export class GraphiqueViewModel {
           disabled={annéesManquantes.length === annéesTotales}
           identifiants={[identifiant]}
           libellés={années}
-          valeurs={[this.ajouteLePourcentage(valeurs)]}
+          valeurs={[this.ajouteLePourcentage(valeursFrançaises)]}
         />
       </>
     )
@@ -129,6 +130,7 @@ export class GraphiqueViewModel {
       labels: années,
     }
     const annéesManquantes = this.annéesManquantes(années, annéesTotales)
+    const valeursFrançaises = this.transformeEnFrançais(valeurs)
 
     return (
       <>
@@ -149,7 +151,7 @@ export class GraphiqueViewModel {
           disabled={annéesManquantes.length === annéesTotales}
           identifiants={[identifiant]}
           libellés={années}
-          valeurs={[valeurs]}
+          valeurs={[valeursFrançaises]}
         />
       </>
     )
@@ -293,7 +295,7 @@ export class GraphiqueViewModel {
       scales: {
         x: {
           display: false,
-          max: 1.45 * valeurMaximale,
+          max: 1.45 * (valeurMaximale > 0 ? valeurMaximale : 1),
           min: 0,
         },
         y: {
@@ -331,7 +333,11 @@ export class GraphiqueViewModel {
     }
   }
 
-  private ajouteLePourcentage(valeurs: number[]): string[] {
+  private ajouteLePourcentage(valeurs: string[]): string[] {
     return valeurs.map((valeur) => valeur + ' %')
+  }
+
+  private transformeEnFrançais(valeurs: number[]): string[] {
+    return valeurs.map((valeur) => valeur.toLocaleString('fr'))
   }
 }
