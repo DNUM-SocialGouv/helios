@@ -55,6 +55,7 @@ export interface Wording {
   readonly AFFICHER_LA_TRANSCRIPTION: string
   readonly ANNÉE: string
   readonly INDICATEURS_VIDES: string
+  readonly AUCUNE_DONNÉE_RENSEIGNÉE: string
 
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string

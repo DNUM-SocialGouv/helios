@@ -53,3 +53,14 @@ export const htmlNodeAndReactChildMatcher = (wording: ReactElement) => (_: any, 
   const hasText = (node: Element | null) => node?.textContent === trimHtml(wording)
   return hasText(node)
 }
+
+export const mockedDate = (date: string) => {
+  class MockDate extends Date {
+    constructor() {
+      super(date)
+    }
+  }
+
+  // @ts-ignore
+  global.Date = MockDate
+}

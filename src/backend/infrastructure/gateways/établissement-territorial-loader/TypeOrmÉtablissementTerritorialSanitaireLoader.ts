@@ -13,13 +13,12 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   constructor(private readonly orm: Promise<DataSource>) {}
 
   async chargeActivité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialSanitaireActivité[]> {
-    const lesCinqDernièresAnnées = -5
     const activitésÉtablissementTerritorialActivitésModel = await this.chargeLesActivitésModel(numéroFinessÉtablissementTerritorial)
     const dateDeMiseAJourAnnRpuModel = await this.chargeLaDateDeMiseÀJourAnnRpuModel() as DateMiseÀJourFichierSourceModel
     const dateDeMiseAJourMenPmsiAnnuelModel = await this.chargeLaDateDeMiseÀJourMenPmsiAnnuelModel() as DateMiseÀJourFichierSourceModel
 
     return this.construisActivité(
-      activitésÉtablissementTerritorialActivitésModel.slice(lesCinqDernièresAnnées),
+      activitésÉtablissementTerritorialActivitésModel,
       dateDeMiseAJourAnnRpuModel,
       dateDeMiseAJourMenPmsiAnnuelModel
     )

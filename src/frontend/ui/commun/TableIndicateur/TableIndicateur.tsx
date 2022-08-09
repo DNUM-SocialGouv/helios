@@ -7,12 +7,13 @@ import { useDependencies } from '../contexts/useDependencies'
 import styles from './TableIndicateur.module.css'
 
 type TableIndicateurProps = Readonly<{
+  disabled?: boolean
   identifiants: string[]
   libellés: number[]
   valeurs: (number | string | null)[][]
 }>
 
-export const TableIndicateur = ({ identifiants, libellés, valeurs }: TableIndicateurProps) => {
+export const TableIndicateur = ({ disabled = false, identifiants, libellés, valeurs }: TableIndicateurProps) => {
   const { wording } = useDependencies()
   const [expanded, setExpanded] = useState(false)
 
@@ -23,6 +24,7 @@ export const TableIndicateur = ({ identifiants, libellés, valeurs }: TableIndic
           aria-controls={identifiants[0].replaceAll(' ', '')}
           aria-expanded={expanded}
           className={'fr-accordion__btn ' + styles['accordion-label']}
+          disabled={disabled}
           onClick={() => setExpanded(true)}
           type="button"
         >

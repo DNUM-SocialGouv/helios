@@ -1,39 +1,40 @@
 import { fireEvent, screen, within } from '@testing-library/react'
 
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from '../../test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder'
-import { fakeFrontDependencies, renderFakeComponent } from '../../testHelper'
+import { fakeFrontDependencies, mockedDate, renderFakeComponent } from '../../testHelper'
 import { PageÉtablissementTerritorialMédicoSocial } from './PageÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from './ÉtablissementTerritorialMédicoSocialViewModel'
 
 const { paths, wording } = fakeFrontDependencies
 
-describe('La page Établissement territorial Médico-social - Bloc activité', () => {
+describe('La page établissement territorial médico-social - bloc activité', () => {
   const établissementTerritorialMédicoSocial = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths)
 
   it.each(
     [
-      [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0, 'CNSA', 'Caisse Nationale de Solidarité pour l‘Autonomie'],
-      [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1, 'CNSA', 'Caisse Nationale de Solidarité pour l‘Autonomie'],
-      [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 2, 'CNSA', 'Caisse Nationale de Solidarité pour l‘Autonomie'],
+      [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0, 'CNSA', 'Caisse Nationale de Solidarité pour l’Autonomie'],
+      [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1, 'CNSA', 'Caisse Nationale de Solidarité pour l’Autonomie'],
+      [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 2, 'CNSA', 'Caisse Nationale de Solidarité pour l’Autonomie'],
       [wording.TAUX_RÉALISATION_ACTIVITÉ, 3, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
       [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 4, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
       [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
       [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
     ]
-  )('affiche les informations d’un indicateurs', (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
+  )('affiche les informations l’indicateur %s', (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
 
     // THEN
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
     const indicateurs = within(activité).getAllByRole('listitem')
+    expect(indicateurs).toHaveLength(7)
     const titre = within(indicateurs[identifiant]).getByText(titreSection, { selector: 'p' })
     expect(titre).toBeInTheDocument()
     const dateMiseAJour = within(indicateurs[identifiant]).getAllByText('Mise à jour', { exact: false, selector: 'p' })
     expect(dateMiseAJour[0].textContent).toBe(`Mise à jour : 07/07/2021 - Source : ${sourceOrigineAttendue}, DIAMANT`)
-    expect(dateMiseAJour[0]).toBeInTheDocument()
     const transcription = within(indicateurs[identifiant]).getByText(wording.AFFICHER_LA_TRANSCRIPTION)
     expect(transcription).toHaveAttribute('aria-expanded', 'false')
+    expect(transcription).not.toBeDisabled()
     const abréviationSourceFournisseur = within(indicateurs[identifiant]).getAllByText('DIAMANT', { selector: 'abbr' })
     expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
     const abréviationSourceOrigine = within(indicateurs[identifiant]).getAllByText(sourceOrigineAttendue, { selector: 'abbr' })
@@ -41,6 +42,8 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
     const détails = within(indicateurs[identifiant]).getByRole('button', { name: wording.DÉTAILS })
     expect(détails).toHaveAttribute('aria-controls', `nom-info-bulle-activite-${identifiant}`)
     expect(détails).toHaveAttribute('data-fr-opened', 'false')
+    const exergue = within(indicateurs[identifiant]).queryByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE}`, { selector: 'p' })
+    expect(exergue).not.toBeInTheDocument()
   })
 
   it.each(
@@ -53,7 +56,7 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
       [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5, '87', '90', '22'],
       [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6, (1013).toLocaleString('fr'), '994', '990'],
     ]
-  )('affiche un tableau descriptif avec les trois années après un click sur "Afficher la transcription"', (titreSection, identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
+  )('affiche un tableau descriptif avec les trois années après un clic sur "Afficher la transcription" (%s)', (titreSection, identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
     const indicateurs = within(activité).getAllByRole('listitem')
@@ -98,7 +101,7 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
       [5, 87, 90, null],
       [6, null, 994, 990],
     ]
-  )('affiche un tableau descriptif avec deux années après un click sur "Afficher la transcription"', (identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
+  )('affiche un tableau descriptif avec deux années après un clic sur "Afficher la transcription"', (identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
     const établissementTerritorialMédicoSocial = new ÉtablissementTerritorialMédicoSocialViewModel({
       activités: [
         {
@@ -290,7 +293,7 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
       [5, null, 90, null],
       [6, null, null, 990],
     ]
-  )('affiche un tableau descriptif avec une seule année après un click sur "Afficher la transcription"', (identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
+  )('affiche un tableau descriptif avec une seule année après un clic sur "Afficher la transcription"', (identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
     const établissementTerritorialMédicoSocial = new ÉtablissementTerritorialMédicoSocialViewModel({
       activités: [
         {
@@ -474,15 +477,15 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
 
   it.each(
     [
-      [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0, 'CNSA', 'Caisse Nationale de Solidarité pour l‘Autonomie'],
-      [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1, 'CNSA', 'Caisse Nationale de Solidarité pour l‘Autonomie'],
-      [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 2, 'CNSA', 'Caisse Nationale de Solidarité pour l‘Autonomie'],
+      [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0, 'CNSA', 'Caisse Nationale de Solidarité pour l’Autonomie'],
+      [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1, 'CNSA', 'Caisse Nationale de Solidarité pour l’Autonomie'],
+      [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 2, 'CNSA', 'Caisse Nationale de Solidarité pour l’Autonomie'],
       [wording.TAUX_RÉALISATION_ACTIVITÉ, 3, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
       [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 4, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
       [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
       [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6, 'TdB Perf', 'Tableau de Bord de la Performance dans le secteur médico-social'],
     ]
-  )('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails"', (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
+  )('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails" (%s)', (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
     // GIVEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
@@ -523,7 +526,7 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
       [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5],
       [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6],
     ]
-  )('ferme l’info bulle après avoir cliqué sur le bouton "Fermer"', (titreSection, identifiant) => {
+  )('ferme l’info bulle après avoir cliqué sur le bouton "Fermer" (%s)', (titreSection, identifiant) => {
     // GIVEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
@@ -542,16 +545,16 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
 
   it.each(
     [
-      [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, null, 1, 1, 1, 1, 1, 1],
-      [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1, null, 1, 1, 1, 1, 1],
-      [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 1, 1, null, 1, 1, 1, 1],
-      [wording.TAUX_RÉALISATION_ACTIVITÉ, 1, 1, 1, null, 1, 1, 1],
-      [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 1, 1, 1, 1, null, 1, 1],
-      [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 1, 1, 1, 1, 1, null, 1],
-      [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 1, 1, 1, 1, 1, 1, null],
+      [0, null, 1, 1, 1, 1, 1, 1],
+      [1, 1, null, 1, 1, 1, 1, 1],
+      [2, 1, 1, null, 1, 1, 1, 1],
+      [3, 1, 1, 1, null, 1, 1, 1],
+      [4, 1, 1, 1, 1, null, 1, 1],
+      [5, 1, 1, 1, 1, 1, null, 1],
+      [6, 1, 1, 1, 1, 1, 1, null],
     ]
-  )('n’affiche pas l’indicateur quand sa valeur est vide', (
-    titreSection,
+  )('n’affiche pas le graphique de l’indicateur mais une mise en exergue quand sa valeur de toutes les années sont vides', (
+    identifiant,
     indicateur1,
     indicateur2,
     indicateur3,
@@ -560,6 +563,7 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
     indicateur6,
     indicateur7
   ) => {
+    mockedDate('2022-01-01T23:00:00.135Z')
     const établissementTerritorialSansActivité = new ÉtablissementTerritorialMédicoSocialViewModel({
       activités: [
         {
@@ -733,10 +737,10 @@ describe('La page Établissement territorial Médico-social - Bloc activité', (
     // THEN
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
     const indicateurs = within(activité).queryAllByRole('listitem')
-    expect(indicateurs).toHaveLength(6)
-    const liste = within(activité).getByRole('list')
-    const titre = within(liste).queryByText(titreSection, { selector: 'p' })
-    expect(titre).not.toBeInTheDocument()
+    const exergue = within(indicateurs[identifiant]).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} 2019, 2020, 2021`, { selector: 'p' })
+    expect(exergue).toBeInTheDocument()
+    const transcription = within(indicateurs[identifiant]).getByText(wording.AFFICHER_LA_TRANSCRIPTION)
+    expect(transcription).toBeDisabled()
   })
 
   it('affiche une phrase à la place des indicateurs lorsque des activités sont renseignées mais les indicateurs sont vides', () => {
