@@ -921,7 +921,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
     expect(phrase).toBeInTheDocument()
   })
 
-  it('n’affiche pas le bloc activité si aucune activité n’est renseignée', () => {
+  it('affiche une phrase à la place des indicateurs lorsqu’aucune activité n’est renseignée', () => {
     // GIVEN
     const établissementTerritorialSansActivité = new ÉtablissementTerritorialMédicoSocialViewModel({
       activités: [],
@@ -997,7 +997,8 @@ describe('La page établissement territorial médico-social - bloc activité', (
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansActivité} />)
 
     // THEN
-    const activité = screen.queryByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
-    expect(activité).not.toBeInTheDocument()
+    const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
+    const phrase = within(activité).getByText(wording.INDICATEURS_VIDES)
+    expect(phrase).toBeInTheDocument()
   })
 })
