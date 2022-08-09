@@ -4,6 +4,7 @@ import { Bar } from 'react-chartjs-2'
 import '@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css'
 
 import { Wording } from '../../../configuration/wording/Wording'
+import { MiseEnExergue } from '../MiseEnExergue/MiseEnExergue'
 import { TableIndicateur } from '../TableIndicateur/TableIndicateur'
 
 export class GraphiqueViewModel {
@@ -47,7 +48,8 @@ export class GraphiqueViewModel {
     valeurs: number[],
     dataLabelsColor: string[],
     années: number[],
-    identifiant: string
+    identifiant: string,
+    annéesTotales: number = 3
   ): JSX.Element {
     const data: ChartData = {
       datasets: [
@@ -78,16 +80,25 @@ export class GraphiqueViewModel {
       ],
       labels: années,
     }
+    const annéesManquantes = this.annéesManquantes(années, annéesTotales)
 
     return (
       <>
-        <Bar
-          // @ts-ignore
-          data={data}
-          // @ts-ignore
-          options={this.optionsHistogrammeVertical()}
-        />
+        {annéesManquantes.length < annéesTotales &&
+          <Bar
+            // @ts-ignore
+            data={data}
+            // @ts-ignore
+            options={this.optionsHistogrammeVertical()}
+          />
+        }
+        {annéesManquantes.length > 0 &&
+          <MiseEnExergue>
+            {`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}
+          </MiseEnExergue>
+        }
         <TableIndicateur
+          disabled={annéesManquantes.length === annéesTotales}
           identifiants={[identifiant]}
           libellés={années}
           valeurs={[this.ajouteLePourcentage(valeurs)]}
@@ -101,7 +112,8 @@ export class GraphiqueViewModel {
     valeurs: number[],
     dataLabelsColor: string[],
     années: number[],
-    identifiant: string
+    identifiant: string,
+    annéesTotales: number = 3
   ): JSX.Element {
     const data: ChartData = {
       datasets: [
@@ -116,22 +128,41 @@ export class GraphiqueViewModel {
       ],
       labels: années,
     }
+    const annéesManquantes = this.annéesManquantes(années, annéesTotales)
 
     return (
       <>
-        <Bar
-          // @ts-ignore
-          data={data}
-          // @ts-ignore
-          options={this.optionsHistogrammeHorizontal(Math.max(...valeurs))}
-        />
+        {annéesManquantes.length < annéesTotales &&
+          <Bar
+            // @ts-ignore
+            data={data}
+            // @ts-ignore
+            options={this.optionsHistogrammeHorizontal(Math.max(...valeurs))}
+          />
+        }
+        {annéesManquantes.length > 0 &&
+          <MiseEnExergue>
+            {`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}
+          </MiseEnExergue>
+        }
         <TableIndicateur
+          disabled={annéesManquantes.length === annéesTotales}
           identifiants={[identifiant]}
           libellés={années}
           valeurs={[valeurs]}
         />
       </>
     )
+  }
+
+  protected annéesManquantes(années: number[], annéesTotales: number): number[] {
+    const annéeEnCours = new Date().getFullYear()
+
+    return Array(annéesTotales)
+      .fill(annéeEnCours)
+      .map((annéeÀAvoir, index) => annéeÀAvoir - index - 1)
+      .reverse()
+      .filter((année) => !années.includes(année))
   }
 
   private construisLePluginDeLégende() {

@@ -169,59 +169,5 @@ describe('Établissement territorial sanitaire loader', () => {
         }),
       ])
     })
-
-    it('charge les 5 dernières années', async () => {
-      // GIVEN
-      await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
-      await dateMiseÀJourFichierSourceRepository.insert([
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-05-14',
-          fichier: FichierSource.DIAMANT_ANN_RPU,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-05-15',
-          fichier: FichierSource.DIAMANT_MEN_PMSI_ANNUEL,
-        }),
-      ])
-      await établissementTerritorialIdentitéRepository.insert(
-        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
-      )
-      await activitéSanitaireModelRepository.insert([
-        ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({ année: 2021, numéroFinessÉtablissementTerritorial }),
-        ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({ année: 2020, numéroFinessÉtablissementTerritorial }),
-        ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({ année: 2019, numéroFinessÉtablissementTerritorial }),
-        ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({ année: 2018, numéroFinessÉtablissementTerritorial }),
-        ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({ année: 2017, numéroFinessÉtablissementTerritorial }),
-        ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({ année: 2016, numéroFinessÉtablissementTerritorial }),
-      ])
-      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm)
-
-      // WHEN
-      const activité = await typeOrmÉtablissementTerritorialLoader.chargeActivité(numéroFinessÉtablissementTerritorial)
-
-      // THEN
-      expect(activité).toStrictEqual<ÉtablissementTerritorialSanitaireActivité[]>([
-        ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
-          année: 2017,
-          numéroFinessÉtablissementTerritorial,
-        }),
-        ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
-          année: 2018,
-          numéroFinessÉtablissementTerritorial,
-        }),
-        ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
-          année: 2019,
-          numéroFinessÉtablissementTerritorial,
-        }),
-        ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
-          année: 2020,
-          numéroFinessÉtablissementTerritorial,
-        }),
-        ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
-          année: 2021,
-          numéroFinessÉtablissementTerritorial,
-        }),
-      ])
-    })
   })
 })

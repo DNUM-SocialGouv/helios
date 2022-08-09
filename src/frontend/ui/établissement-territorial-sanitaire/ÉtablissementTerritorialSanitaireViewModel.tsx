@@ -187,7 +187,8 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
       valeurs,
       dataLabelsColor,
       années,
-      this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES
+      this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES,
+      5
     )
   }
 

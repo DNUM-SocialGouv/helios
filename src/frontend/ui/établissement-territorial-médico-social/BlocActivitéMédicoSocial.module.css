@@ -18,8 +18,9 @@
   justify-content: flex-start;
 }
 
-.liste-indicateurs > li div:nth-child(1)  {
-  min-height: 7.5rem;
+.liste-indicateurs > li > div:nth-child(1)  {
+  margin-bottom: 1rem;
+  min-height: 6rem;
 }
 
 .liste-indicateurs > li:nth-child(1) {
@@ -48,6 +49,10 @@
 
 .liste-indicateurs > li:nth-child(7) {
   grid-area: graph7;
+}
+
+.liste-indicateurs canvas {
+  margin-bottom: 1rem;
 }
 
 @media (max-width: 36em) {

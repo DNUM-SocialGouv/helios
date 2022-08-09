@@ -71,6 +71,7 @@ export class WordingFr implements Wording {
   readonly AFFICHER_LA_TRANSCRIPTION: string = 'Afficher la transcription'
   readonly ANNÉE: string = 'Année'
   readonly INDICATEURS_VIDES: string = 'Aucune donnée pour cet établissement.'
+  readonly AUCUNE_DONNÉE_RENSEIGNÉE: string = 'Aucune donnée renseignée pour les années suivantes :'
 
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string = 'fiche d’identité'
@@ -133,9 +134,9 @@ export class WordingFr implements Wording {
   // Source
   readonly FINESS: ReactElement = (<abbr title="Fichier National des Établissements Sanitaires et Sociaux">FINESS</abbr>)
   readonly DIAMANT: ReactElement = (<abbr title="Décisionnel Inter ARS pour la Maîtrise et ANTicipation">DIAMANT</abbr>)
-  readonly CNSA: ReactElement = (<abbr title="Caisse Nationale de Solidarité pour l‘Autonomie">CNSA</abbr>)
+  readonly CNSA: ReactElement = (<abbr title="Caisse Nationale de Solidarité pour l’Autonomie">CNSA</abbr>)
   readonly TDB_PERF: ReactElement = (<abbr title="Tableau de Bord de la Performance dans le secteur médico-social">TdB Perf</abbr>)
-  readonly PMSI: ReactElement = (<abbr title="Programme de Médicalisation des Systèmes d‘Information">PMSI</abbr>)
+  readonly PMSI: ReactElement = (<abbr title="Programme de Médicalisation des Systèmes d’Information">PMSI</abbr>)
 
   // Footer
   readonly PRESENTATION: string = 'Texte sur 3 lignes à demander à Daisy'

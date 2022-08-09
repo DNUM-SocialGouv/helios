@@ -212,8 +212,14 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     const chartColors = this.fondDeCouleurPourPremierHistogramme
     const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs, true)
 
-    return this.afficheUnHistogrammeHorizontal(chartColors, valeurs, dataLabelsColor, années,
-      this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES)
+    return this.afficheUnHistogrammeHorizontal(
+      chartColors,
+      valeurs,
+      dataLabelsColor,
+      années,
+      this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES,
+      3
+    )
   }
 
   public get dateDeMiseÀJourDuNombreMoyenJournéesAbsencePersonnesAccompagnées(): string {
