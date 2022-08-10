@@ -38,6 +38,8 @@ export type Dependencies = Readonly<{
 
 const createDependencies = (): Dependencies => {
   dotEnvConfig()
+  const finessSftpPath = '../usr_finess/flux_finess'
+  const finessLocalPath = 'finess'
   const logger = new ConsoleLogger()
   const environmentVariables = new NodeEnvironmentVariables(logger)
   const xmlToJs = new NodeXmlToJs()
@@ -56,7 +58,7 @@ const createDependencies = (): Dependencies => {
     entitéJuridiqueHeliosRepository: new TypeOrmEntitéJuridiqueHeliosRepository(orm, logger),
     entitéJuridiqueSourceExterneLoader: new FinessXmlEntitéJuridiqueSourceExterneLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH, logger),
     environmentVariables,
-    finessDownloadRawData: new FinessSftpDownloadRawData(environmentVariables, logger),
+    finessDownloadRawData: new FinessSftpDownloadRawData(finessSftpPath, finessLocalPath, environmentVariables, logger),
     unzipRawData: new GunzipUnzipRawData(environmentVariables, logger),
     établissementTerritorialHeliosLoader: new TypeOrmÉtablissementTerritorialHeliosLoader(orm),
     établissementTerritorialHeliosRepository: new TypeOrmÉtablissementTerritorialRepository(orm, logger),

@@ -1,3 +1,3 @@
 export interface UnzipRawData {
-  exécute(rawData: string, localPath: string): void
+  exécute(dataSourceName: string, localPath: string): void
 }

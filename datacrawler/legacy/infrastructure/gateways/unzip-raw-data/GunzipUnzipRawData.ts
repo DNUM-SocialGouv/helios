@@ -8,12 +8,12 @@ import { HeliosError } from '../../HeliosError'
 export class GunzipUnzipRawData implements UnzipRawData {
   constructor(private readonly environmentVariables: EnvironmentVariables, private readonly logger: Logger) {}
 
-  exécute(rawData: string, localPath: string) {
+  exécute(dataSourceName: string, localPath: string) {
     try {
       execSync(`gunzip -rf ${this.environmentVariables.SFTP_LOCAL_PATH}/${localPath}`)
-      this.logger.info(`[${rawData}] Sources de données décompressées.`)
+      this.logger.info(`[${dataSourceName}] Sources de données décompressées.`)
     } catch (error) {
-      throw new HeliosError(`[${rawData}] Une erreur est survenue lors de la décompression du répertoire ${localPath} : ${error.message}`)
+      throw new HeliosError(`[${dataSourceName}] Une erreur est survenue lors de la décompression du répertoire ${localPath} : ${error.message}`)
     }
   }
 }
