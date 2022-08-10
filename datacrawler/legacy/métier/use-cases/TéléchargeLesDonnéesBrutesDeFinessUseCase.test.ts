@@ -6,8 +6,6 @@ describe('Récupération des sources de données FINESS en local', () => {
 
   it('récupère les sources de données FINESS en local', async () => {
     // GIVEN
-    const sourceDeDonnées = 'FINESS'
-    const cheminSftp = '../usr_finess/flux_finess'
     const téléchargerLesDonnéesBrutesDeFiness = new TéléchargeLesDonnéesBrutesDeFinessUseCase(
       fakeDataCrawlerDependencies.finessDownloadRawData,
       fakeDataCrawlerDependencies.unzipRawData
@@ -17,8 +15,8 @@ describe('Récupération des sources de données FINESS en local', () => {
     await téléchargerLesDonnéesBrutesDeFiness.exécute()
 
     // THEN
-    await expect(fakeDataCrawlerDependencies.finessDownloadRawData.exécute).toHaveBeenCalledWith(sourceDeDonnées, cheminSftp, 'finess')
-    await expect(fakeDataCrawlerDependencies.unzipRawData.exécute).toHaveBeenCalledWith(sourceDeDonnées, 'finess')
+    expect(fakeDataCrawlerDependencies.finessDownloadRawData.exécute).toHaveBeenCalledWith()
+    expect(fakeDataCrawlerDependencies.unzipRawData.exécute).toHaveBeenCalledWith('FINESS', 'finess')
   })
 
   it('signale quand une erreur est survenue lors du téléchargement des données', async () => {

@@ -4,23 +4,19 @@ import { UnzipRawData } from '../gateways/UnzipRawData'
 
 export class TéléchargeLesDonnéesBrutesDeFinessUseCase {
   constructor(
-    private readonly downloadDataSource: DownloadRawData,
+    private readonly finessDownloadRawData: DownloadRawData,
     private readonly unzipRawData: UnzipRawData
   ) {}
 
   async exécute() {
-    const rawData = 'FINESS'
-    const sftpPath = '../usr_finess/flux_finess'
-    const finessLocalPath = 'finess'
-
     try {
-      await this.downloadDataSource.exécute(rawData, sftpPath, finessLocalPath)
+      await this.finessDownloadRawData.exécute()
     } catch (error) {
       throw new HeliosError(error.message)
     }
 
     try {
-      await this.unzipRawData.exécute(rawData, finessLocalPath)
+      await this.unzipRawData.exécute('FINESS', 'finess')
     } catch (error) {
       throw new HeliosError(error.message)
     }
