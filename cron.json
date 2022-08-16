@@ -2,7 +2,7 @@
   "jobs": [
     {
       "command": "0 4 * * 1-5 /app/populateDatabase.sh",
-      "size": "XL"
+      "size": "2XL"
     },
     {
       "command": "0 20 * * * yarn stop:production",

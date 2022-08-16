@@ -118,7 +118,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
             dateMiseÀJourSource: '2021-07-07',
             value: valeurIndicateur1,
           },
-          numéroFinessÉtablissementTerritorial: '010003598',
+          numéroFinessÉtablissementTerritorial: '010000040',
           tauxOccupationAccueilDeJour: {
             dateMiseÀJourSource: '2021-07-07',
             value: valeurIndicateur1,
@@ -150,7 +150,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
             dateMiseÀJourSource: '2021-07-07',
             value: valeurIndicateur2,
           },
-          numéroFinessÉtablissementTerritorial: '010003598',
+          numéroFinessÉtablissementTerritorial: '010000040',
           tauxOccupationAccueilDeJour: {
             dateMiseÀJourSource: '2021-07-07',
             value: valeurIndicateur2,
@@ -182,7 +182,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
             dateMiseÀJourSource: '2021-07-07',
             value: valeurIndicateur3,
           },
-          numéroFinessÉtablissementTerritorial: '010003598',
+          numéroFinessÉtablissementTerritorial: '010000040',
           tauxOccupationAccueilDeJour: {
             dateMiseÀJourSource: '2021-07-07',
             value: valeurIndicateur3,
@@ -201,6 +201,36 @@ describe('La page établissement territorial médico-social - bloc activité', (
           },
         },
       ],
+      autorisationsEtCapacités: {
+        dateMiseÀJourSource: '2022-05-14',
+        disciplines: [
+          {
+            activités: [
+              {
+                clientèles: [
+                  {
+                    code: '010',
+                    datesEtCapacités: {
+                      capacitéAutoriséeTotale: 10,
+                      capacitéInstalléeTotale: 10,
+                      dateDAutorisation: '2020-01-01',
+                      dateDeDernièreInstallation: '2020-01-01',
+                      dateDeMiseÀJourDAutorisation: '2020-01-01',
+                      estInstallée: true,
+                    },
+                    libellé: 'Tous Types de Déficiences Pers.Handicap.(sans autre indic.)',
+                  },
+                ],
+                code: '21',
+                libellé: 'Accueil de Jour',
+              },
+            ],
+            code: '658',
+            libellé: 'Accueil temporaire pour adultes handicapés',
+          },
+        ],
+        numéroFinessÉtablissementTerritorial: '010000040',
+      },
       identité: {
         adresseAcheminement: {
           dateMiseÀJourSource: '2021-07-07',
@@ -310,7 +340,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
             dateMiseÀJourSource: '2021-07-07',
             value: valeurIndicateur1,
           },
-          numéroFinessÉtablissementTerritorial: '010003598',
+          numéroFinessÉtablissementTerritorial: '010000040',
           tauxOccupationAccueilDeJour: {
             dateMiseÀJourSource: '2021-07-07',
             value: valeurIndicateur1,
@@ -342,7 +372,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
             dateMiseÀJourSource: '2021-07-07',
             value: valeurIndicateur2,
           },
-          numéroFinessÉtablissementTerritorial: '010003598',
+          numéroFinessÉtablissementTerritorial: '010000040',
           tauxOccupationAccueilDeJour: {
             dateMiseÀJourSource: '2021-07-07',
             value: valeurIndicateur2,
@@ -374,7 +404,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
             dateMiseÀJourSource: '2021-07-07',
             value: valeurIndicateur3,
           },
-          numéroFinessÉtablissementTerritorial: '010003598',
+          numéroFinessÉtablissementTerritorial: '010000040',
           tauxOccupationAccueilDeJour: {
             dateMiseÀJourSource: '2021-07-07',
             value: valeurIndicateur3,
@@ -393,6 +423,36 @@ describe('La page établissement territorial médico-social - bloc activité', (
           },
         },
       ],
+      autorisationsEtCapacités: {
+        dateMiseÀJourSource: '2022-05-14',
+        disciplines: [
+          {
+            activités: [
+              {
+                clientèles: [
+                  {
+                    code: '010',
+                    datesEtCapacités: {
+                      capacitéAutoriséeTotale: 10,
+                      capacitéInstalléeTotale: 10,
+                      dateDAutorisation: '2020-01-01',
+                      dateDeDernièreInstallation: '2020-01-01',
+                      dateDeMiseÀJourDAutorisation: '2020-01-01',
+                      estInstallée: true,
+                    },
+                    libellé: 'Tous Types de Déficiences Pers.Handicap.(sans autre indic.)',
+                  },
+                ],
+                code: '21',
+                libellé: 'Accueil de Jour',
+              },
+            ],
+            code: '658',
+            libellé: 'Accueil temporaire pour adultes handicapés',
+          },
+        ],
+        numéroFinessÉtablissementTerritorial: '010000040',
+      },
       identité: {
         adresseAcheminement: {
           dateMiseÀJourSource: '2021-07-07',
@@ -580,7 +640,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
             dateMiseÀJourSource: '2021-07-07',
             value: indicateur6,
           },
-          numéroFinessÉtablissementTerritorial: '010003598',
+          numéroFinessÉtablissementTerritorial: '010000040',
           tauxOccupationAccueilDeJour: {
             dateMiseÀJourSource: '2021-07-07',
             value: indicateur3,
@@ -612,7 +672,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
             dateMiseÀJourSource: '2021-07-07',
             value: indicateur6,
           },
-          numéroFinessÉtablissementTerritorial: '010003598',
+          numéroFinessÉtablissementTerritorial: '010000040',
           tauxOccupationAccueilDeJour: {
             dateMiseÀJourSource: '2021-07-07',
             value: indicateur3,
@@ -644,7 +704,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
             dateMiseÀJourSource: '2021-07-07',
             value: indicateur6,
           },
-          numéroFinessÉtablissementTerritorial: '010003598',
+          numéroFinessÉtablissementTerritorial: '010000040',
           tauxOccupationAccueilDeJour: {
             dateMiseÀJourSource: '2021-07-07',
             value: indicateur3,
@@ -663,6 +723,36 @@ describe('La page établissement territorial médico-social - bloc activité', (
           },
         },
       ],
+      autorisationsEtCapacités: {
+        dateMiseÀJourSource: '2022-05-14',
+        disciplines: [
+          {
+            activités: [
+              {
+                clientèles: [
+                  {
+                    code: '010',
+                    datesEtCapacités: {
+                      capacitéAutoriséeTotale: 10,
+                      capacitéInstalléeTotale: 10,
+                      dateDAutorisation: '2020-01-01',
+                      dateDeDernièreInstallation: '2020-01-01',
+                      dateDeMiseÀJourDAutorisation: '2020-01-01',
+                      estInstallée: true,
+                    },
+                    libellé: 'Tous Types de Déficiences Pers.Handicap.(sans autre indic.)',
+                  },
+                ],
+                code: '21',
+                libellé: 'Accueil de Jour',
+              },
+            ],
+            code: '658',
+            libellé: 'Accueil temporaire pour adultes handicapés',
+          },
+        ],
+        numéroFinessÉtablissementTerritorial: '010000040',
+      },
       identité: {
         adresseAcheminement: {
           dateMiseÀJourSource: '2021-07-07',
@@ -761,7 +851,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
             dateMiseÀJourSource: '2021-07-07',
             value: null,
           },
-          numéroFinessÉtablissementTerritorial: '010003598',
+          numéroFinessÉtablissementTerritorial: '010000040',
           tauxOccupationAccueilDeJour: {
             dateMiseÀJourSource: '2021-07-07',
             value: null,
@@ -793,7 +883,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
             dateMiseÀJourSource: '2021-07-07',
             value: null,
           },
-          numéroFinessÉtablissementTerritorial: '010003598',
+          numéroFinessÉtablissementTerritorial: '010000040',
           tauxOccupationAccueilDeJour: {
             dateMiseÀJourSource: '2021-07-07',
             value: null,
@@ -825,7 +915,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
             dateMiseÀJourSource: '2021-07-07',
             value: null,
           },
-          numéroFinessÉtablissementTerritorial: '010003598',
+          numéroFinessÉtablissementTerritorial: '010000040',
           tauxOccupationAccueilDeJour: {
             dateMiseÀJourSource: '2021-07-07',
             value: null,
@@ -844,6 +934,36 @@ describe('La page établissement territorial médico-social - bloc activité', (
           },
         },
       ],
+      autorisationsEtCapacités: {
+        dateMiseÀJourSource: '2022-05-14',
+        disciplines: [
+          {
+            activités: [
+              {
+                clientèles: [
+                  {
+                    code: '010',
+                    datesEtCapacités: {
+                      capacitéAutoriséeTotale: 10,
+                      capacitéInstalléeTotale: 10,
+                      dateDAutorisation: '2020-01-01',
+                      dateDeDernièreInstallation: '2020-01-01',
+                      dateDeMiseÀJourDAutorisation: '2020-01-01',
+                      estInstallée: true,
+                    },
+                    libellé: 'Tous Types de Déficiences Pers.Handicap.(sans autre indic.)',
+                  },
+                ],
+                code: '21',
+                libellé: 'Accueil de Jour',
+              },
+            ],
+            code: '658',
+            libellé: 'Accueil temporaire pour adultes handicapés',
+          },
+        ],
+        numéroFinessÉtablissementTerritorial: '010000040',
+      },
       identité: {
         adresseAcheminement: {
           dateMiseÀJourSource: '2021-07-07',
@@ -925,6 +1045,36 @@ describe('La page établissement territorial médico-social - bloc activité', (
     // GIVEN
     const établissementTerritorialSansActivité = new ÉtablissementTerritorialMédicoSocialViewModel({
       activités: [],
+      autorisationsEtCapacités: {
+        dateMiseÀJourSource: '2022-05-14',
+        disciplines: [
+          {
+            activités: [
+              {
+                clientèles: [
+                  {
+                    code: '010',
+                    datesEtCapacités: {
+                      capacitéAutoriséeTotale: 10,
+                      capacitéInstalléeTotale: 10,
+                      dateDAutorisation: '2020-01-01',
+                      dateDeDernièreInstallation: '2020-01-01',
+                      dateDeMiseÀJourDAutorisation: '2020-01-01',
+                      estInstallée: true,
+                    },
+                    libellé: 'Tous Types de Déficiences Pers.Handicap.(sans autre indic.)',
+                  },
+                ],
+                code: '21',
+                libellé: 'Accueil de Jour',
+              },
+            ],
+            code: '658',
+            libellé: 'Accueil temporaire pour adultes handicapés',
+          },
+        ],
+        numéroFinessÉtablissementTerritorial: '010000040',
+      },
       identité: {
         adresseAcheminement: {
           dateMiseÀJourSource: '2021-07-07',

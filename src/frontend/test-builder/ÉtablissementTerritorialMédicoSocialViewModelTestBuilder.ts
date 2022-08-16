@@ -170,6 +170,91 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     },
   ]
 
+  private static autorisations: ÉtablissementTerritorialMédicoSocial['autorisationsEtCapacités'] = {
+    dateMiseÀJourSource: '2022-08-18',
+    disciplines: [
+      {
+        activités: [
+          {
+            clientèles: [
+              {
+                code: '702',
+                datesEtCapacités: {
+                  capacitéAutoriséeTotale: 10,
+                  capacitéInstalléeTotale: 10,
+                  dateDAutorisation: '2020-01-01',
+                  dateDeDernièreInstallation: '2020-01-01',
+                  dateDeMiseÀJourDAutorisation: '2020-01-01',
+                  estInstallée: true,
+                },
+                libellé: 'PH vieillissantes',
+              },
+              {
+                code: '711',
+                datesEtCapacités: {
+                  capacitéAutoriséeTotale: 10,
+                  capacitéInstalléeTotale: 10,
+                  dateDAutorisation: '2020-01-01',
+                  dateDeDernièreInstallation: '2020-01-01',
+                  dateDeMiseÀJourDAutorisation: '2020-01-01',
+                  estInstallée: true,
+                },
+                libellé: 'P.A. dépendantes',
+              },
+            ],
+            code: '11',
+            libellé: 'Hébergement Complet Internat',
+          },
+          {
+            clientèles: [
+              {
+                code: '010',
+                datesEtCapacités: {
+                  capacitéAutoriséeTotale: 10,
+                  capacitéInstalléeTotale: 10,
+                  dateDAutorisation: '2020-01-01',
+                  dateDeDernièreInstallation: '2020-01-01',
+                  dateDeMiseÀJourDAutorisation: '2020-01-01',
+                  estInstallée: true,
+                },
+                libellé: 'Tous Types de Déficiences Pers.Handicap.(sans autre indic.)',
+              },
+            ],
+            code: '16',
+            libellé: 'Prestation en milieu ordinaire',
+          },
+        ],
+        code: '657',
+        libellé: 'Accueil temporaire pour Personnes Âgées',
+      },
+      {
+        activités: [
+          {
+            clientèles: [
+              {
+                code: '010',
+                datesEtCapacités: {
+                  capacitéAutoriséeTotale: 10,
+                  capacitéInstalléeTotale: 10,
+                  dateDAutorisation: '2020-01-01',
+                  dateDeDernièreInstallation: '2020-01-01',
+                  dateDeMiseÀJourDAutorisation: '2020-01-01',
+                  estInstallée: true,
+                },
+                libellé: 'Tous Types de Déficiences Pers.Handicap.(sans autre indic.)',
+              },
+            ],
+            code: '21',
+            libellé: 'Accueil de Jour',
+          },
+        ],
+        code: '658',
+        libellé: 'Accueil temporaire pour adultes handicapés',
+      },
+    ],
+    numéroFinessÉtablissementTerritorial: '010003598',
+  }
+
   public static crée(
     wording: Wording,
     paths: Paths,
@@ -177,6 +262,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
   ): ÉtablissementTerritorialMédicoSocialViewModel {
     return new ÉtablissementTerritorialMédicoSocialViewModel({
       activités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.activités,
+      autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
       identité: {
         ...ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
         ...champsSurchargés,

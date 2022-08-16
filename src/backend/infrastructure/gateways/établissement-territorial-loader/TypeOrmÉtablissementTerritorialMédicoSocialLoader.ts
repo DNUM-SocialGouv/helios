@@ -1,11 +1,13 @@
 import { DataSource } from 'typeorm'
 
 import { ActivitéMédicoSocialModel } from '../../../../../database/models/ActivitéMédicoSocialModel'
+import { AutorisationMédicoSocialModel } from '../../../../../database/models/AutorisationMédicoSocialModel'
 import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { MonoÉtablissement } from '../../../métier/entities/établissement-territorial-médico-social/MonoÉtablissement'
 import { ÉtablissementTerritorialMédicoSocialActivité } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
+import { AutorisationMédicoSocialActivité, AutorisationMédicoSocialClientèle, AutorisationMédicoSocialDatesEtCapacités, AutorisationMédicoSocialDiscipline, ÉtablissementTerritorialMédicoSocialAutorisation } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
 import { ÉtablissementTerritorialMédicoSocialLoader } from '../../../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader'
@@ -17,13 +19,13 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     numéroFinessÉtablissementTerritorial: string
   ): Promise<ÉtablissementTerritorialMédicoSocialActivité[]> {
     const activitésÉtablissementTerritorialActivitésModel = await this.chargeLesActivitésModel(numéroFinessÉtablissementTerritorial)
-    const dateDeMiseAJourAnnMsTdpEtModel = await this.chargeLaDateDeMiseÀJourAnnMsTdpEtModel() as DateMiseÀJourFichierSourceModel
-    const dateDeMiseAJourAnnErrdEjEtModel = await this.chargeLaDateDeMiseÀJourAnnErrdEjEtModel() as DateMiseÀJourFichierSourceModel
+    const dateDeMiseÀJourAnnMsTdpEtModel = await this.chargeLaDateDeMiseÀJourAnnMsTdpEtModel() as DateMiseÀJourFichierSourceModel
+    const dateDeMiseÀJourAnnErrdEjEtModel = await this.chargeLaDateDeMiseÀJourAnnErrdEjEtModel() as DateMiseÀJourFichierSourceModel
 
     return this.construisActivité(
       activitésÉtablissementTerritorialActivitésModel,
-      dateDeMiseAJourAnnMsTdpEtModel,
-      dateDeMiseAJourAnnErrdEjEtModel
+      dateDeMiseÀJourAnnMsTdpEtModel,
+      dateDeMiseÀJourAnnErrdEjEtModel
     )
   }
 
@@ -36,16 +38,25 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       return new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial)
     }
 
-    const dateDeMiseÀJourIdentitéModel = await this.chargeLaDateDeMiseÀJouFinessCs1400102Model() as DateMiseÀJourFichierSourceModel
+    const dateDeMiseÀJourIdentitéModel = await this.chargeLaDateDeMiseÀJourFinessCs1400102Model() as DateMiseÀJourFichierSourceModel
 
     return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseÀJourIdentitéModel)
+  }
+
+  async chargeAutorisations(
+    numéroFinessÉtablissementTerritorial: string
+  ): Promise<ÉtablissementTerritorialMédicoSocialAutorisation> {
+    const autorisationsDeLÉtablissementModel = await this.chargeLesAutorisationsModel(numéroFinessÉtablissementTerritorial)
+    const dateDeMiseÀJourFinessCs1400105Model = await this.chargeLaDateDeMiseÀJourFinessCs1400105Model() as DateMiseÀJourFichierSourceModel
+
+    return this.construisLesAutorisations(autorisationsDeLÉtablissementModel, numéroFinessÉtablissementTerritorial, dateDeMiseÀJourFinessCs1400105Model)
   }
 
   async estUnMonoÉtablissement(numéroFinessEntitéJuridique: string): Promise<MonoÉtablissement> {
     const nombreDÉtablissementTerritoriauxDansLEntitéJuridique = await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
       .countBy({ numéroFinessEntitéJuridique })
-    const dateDeMiseÀJourIdentitéModel = await this.chargeLaDateDeMiseÀJouFinessCs1400102Model() as DateMiseÀJourFichierSourceModel
+    const dateDeMiseÀJourIdentitéModel = await this.chargeLaDateDeMiseÀJourFinessCs1400102Model() as DateMiseÀJourFichierSourceModel
 
     return {
       estMonoÉtablissement: {
@@ -73,10 +84,25 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       })
   }
 
-  private async chargeLaDateDeMiseÀJouFinessCs1400102Model(): Promise<DateMiseÀJourFichierSourceModel | null> {
+  private async chargeLesAutorisationsModel(numéroFinessÉtablissementTerritorial: string) {
+    return await (await this.orm)
+      .getRepository(AutorisationMédicoSocialModel)
+      .find({
+        order: { disciplineDÉquipement: 'ASC' },
+        where: { numéroFinessÉtablissementTerritorial },
+      })
+  }
+
+  private async chargeLaDateDeMiseÀJourFinessCs1400102Model(): Promise<DateMiseÀJourFichierSourceModel | null> {
     return await (await this.orm)
       .getRepository(DateMiseÀJourFichierSourceModel)
       .findOneBy({ fichier: FichierSource.FINESS_CS1400102 })
+  }
+
+  private async chargeLaDateDeMiseÀJourFinessCs1400105Model(): Promise<DateMiseÀJourFichierSourceModel | null> {
+    return await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.FINESS_CS1400105 })
   }
 
   private async chargeLaDateDeMiseÀJourAnnMsTdpEtModel(): Promise<DateMiseÀJourFichierSourceModel | null> {
@@ -189,5 +215,78 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
           value: établissementTerritorialModel.tauxRéalisationActivité,
         },
       }))
+  }
+
+  private construisLesAutorisations(
+    autorisationsModel: AutorisationMédicoSocialModel[],
+    numéroFinessÉtablissementTerritorial: string,
+    dateMiseÀJourSource: DateMiseÀJourFichierSourceModel
+  ): ÉtablissementTerritorialMédicoSocialAutorisation {
+    const disciplinesDeLÉtablissement: ÉtablissementTerritorialMédicoSocialAutorisation['disciplines'] = []
+
+    autorisationsModel.forEach((autorisationModel: AutorisationMédicoSocialModel) => {
+      const codeDiscipline = autorisationModel.disciplineDÉquipement
+      const codeActivité = autorisationModel.activité
+      const codeClientèle = autorisationModel.clientèle
+
+      const disciplineCréée = disciplinesDeLÉtablissement.find((discipline) => discipline.code === codeDiscipline)
+
+      if (!disciplineCréée) {
+        disciplinesDeLÉtablissement.push(this.construisLaDisciplineDUneAutorisation(autorisationModel))
+      } else {
+        const activitéCréée = disciplineCréée.activités.find((activité) => activité.code === codeActivité)
+
+        if (!activitéCréée) {
+          disciplineCréée.activités.push(this.construisLActivitéDUneAutorisation(autorisationModel))
+        } else {
+          const clientèleCréée = activitéCréée.clientèles.find((clientèle) => clientèle.code === codeClientèle)
+
+          if (!clientèleCréée) {
+            activitéCréée.clientèles.push(this.construisLaClientèleDUneAutorisation(autorisationModel))
+          }
+        }
+      }
+    })
+
+    return {
+      dateMiseÀJourSource: dateMiseÀJourSource.dernièreMiseÀJour,
+      disciplines: disciplinesDeLÉtablissement,
+      numéroFinessÉtablissementTerritorial,
+    }
+  }
+
+  private construisLaDisciplineDUneAutorisation(autorisationModel: AutorisationMédicoSocialModel): AutorisationMédicoSocialDiscipline {
+    return {
+      activités: [this.construisLActivitéDUneAutorisation(autorisationModel)],
+      code: autorisationModel.disciplineDÉquipement,
+      libellé: autorisationModel.libelléDisciplineDÉquipement,
+    }
+  }
+
+  private construisLActivitéDUneAutorisation(autorisationModel: AutorisationMédicoSocialModel): AutorisationMédicoSocialActivité {
+    return {
+      clientèles: [this.construisLaClientèleDUneAutorisation(autorisationModel)],
+      code: autorisationModel.activité,
+      libellé: autorisationModel.libelléActivité,
+    }
+  }
+
+  private construisLaClientèleDUneAutorisation(autorisationModel: AutorisationMédicoSocialModel): AutorisationMédicoSocialClientèle {
+    return {
+      code: autorisationModel.clientèle,
+      datesEtCapacités: this.construisLesDatesEtCapacitésDUneAutorisation(autorisationModel),
+      libellé: autorisationModel.libelléClientèle,
+    }
+  }
+
+  private construisLesDatesEtCapacitésDUneAutorisation(autorisationModel: AutorisationMédicoSocialModel): AutorisationMédicoSocialDatesEtCapacités {
+    return {
+      capacitéAutoriséeTotale: autorisationModel.capacitéAutoriséeTotale,
+      capacitéInstalléeTotale: autorisationModel.capacitéInstalléeTotale,
+      dateDAutorisation: autorisationModel.dateDAutorisation,
+      dateDeDernièreInstallation: autorisationModel.dateDeDernièreInstallation,
+      dateDeMiseÀJourDAutorisation: autorisationModel.dateDeMiseÀJourDAutorisation,
+      estInstallée: autorisationModel.estInstallée,
+    }
   }
 }

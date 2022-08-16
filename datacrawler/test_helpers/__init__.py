@@ -9,6 +9,7 @@ from datacrawler.load.nom_des_tables import (
     TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
     TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
     TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES,
+    TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
     FichierSource,
 )
 from datacrawler.transform.équivalences_diamant_helios import index_des_activités
@@ -86,6 +87,7 @@ def supprime_les_données_des_tables(base_de_données: Engine) -> None:
     base_de_données.execute(f"DELETE FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX};")
     base_de_données.execute(f"DELETE FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES};")
     base_de_données.execute(f"DELETE FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES};")
+    base_de_données.execute(f"DELETE FROM {TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX};")
 
 
 def sauvegarde_une_activité_en_base(activité: pd.DataFrame, base_de_données: Engine, table: str) -> None:
@@ -195,3 +197,13 @@ def helios_activité_sanitaire_builder(champs_surchargés: Optional[Dict] = None
     if champs_surchargés:
         return {**activité, **champs_surchargés}
     return activité
+
+
+def crée_le_fichier_xml(chemin_du_fichier: str, contenu: str) -> None:
+    with open(chemin_du_fichier, "w+", encoding="utf-8") as fichier:
+        fichier.write(
+            f"""<?xml version="1.0" encoding="UTF-8"?>
+<fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  {contenu}
+</fluxfiness>"""
+        )

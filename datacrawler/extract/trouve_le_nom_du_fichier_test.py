@@ -42,4 +42,4 @@ class TestLocaliseLeFichier:
         # THEN
         log = caplog.records.pop()
         assert log.levelno == logging.FATAL
-        assert log.message == "Le fichier ANN_ERRD_EJ_ET est introuvable parmi les fichiers DIAMANT téléchargés."
+        assert log.message == "Le fichier ANN_ERRD_EJ_ET est introuvable parmi les fichiers téléchargés."

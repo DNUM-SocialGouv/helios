@@ -3,6 +3,7 @@ import { Column, Entity, PrimaryColumn } from 'typeorm'
 export enum FichierSource {
   FINESS_CS1400101 = 'finess_cs1400101',
   FINESS_CS1400102 = 'finess_cs1400102',
+  FINESS_CS1400105 = 'finess_cs1400105',
   DIAMANT_ANN_ERRD_EJ_ET = 'ann_errd_ej_et',
   DIAMANT_ANN_MS_TDP_ET = 'ann_ms_tdp_et',
   DIAMANT_MEN_PMSI_ANNUEL = 'men_pmsi_annuel',
