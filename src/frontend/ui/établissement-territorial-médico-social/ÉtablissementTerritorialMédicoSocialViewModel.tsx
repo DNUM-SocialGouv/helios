@@ -5,8 +5,11 @@ import { ÉtablissementTerritorialMédicoSocial } from '../../../backend/métier
 import { ÉtablissementTerritorialMédicoSocialActivité } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
 import { Paths } from '../../configuration/Paths'
 import { Wording } from '../../configuration/wording/Wording'
+import { ActionneurDAccordéon } from '../commun/Accordéon/ActionneurDAccordéon'
 import { GraphiqueViewModel } from '../commun/Graphique/GraphiqueViewModel'
 import { StringFormater } from '../commun/StringFormater'
+import '@gouvfr/dsfr/dist/component/tag/tag.min.css'
+import styles from './BlocAutorisationEtCapacitéMédicoSocial.module.css'
 
 export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueViewModel {
   readonly seuilValeurAtypique = 120
@@ -245,6 +248,88 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
 
   public get dateDeMiseÀJourDeLaDuréeMoyenneSéjourAccompagnementPersonnesSorties(): string {
     return StringFormater.formateLaDate(this.établissementTerritorial.activités[0].duréeMoyenneSéjourAccompagnementPersonnesSorties.dateMiseÀJourSource)
+  }
+
+  public get autorisations(): JSX.Element {
+    const autorisationsDeLÉtablissement = this.établissementTerritorial.autorisationsEtCapacités
+
+    return (
+      <ul
+        aria-label="disciplines"
+        className={`fr-accordion ${styles['liste-autorisations']}`}
+      >
+        {autorisationsDeLÉtablissement.disciplines.map((discipline) => (
+          <li
+            className="fr-accordion__title"
+            key={`discipline-${discipline.code}`}
+          >
+            <ActionneurDAccordéon
+              for={`accordion-${discipline.code}`}
+              titre={`${discipline.libellé} [${discipline.code}]`}
+            />
+            <ul
+              className={`fr-accordion fr-collapse ${styles['liste-activités']}`}
+              id={`accordion-${discipline.code}`}
+            >
+              {
+                discipline.activités.map((activité) => (
+                  <li
+                    className="fr-accordion__title"
+                    key={`activité-${activité.code}`}
+                  >
+                    <ActionneurDAccordéon
+                      for={`accordion-${discipline.code}-${activité.code}`}
+                      titre={`${activité.libellé} [${activité.code}]`}
+                    />
+                    <ul
+                      className={`fr-collapse ${styles['liste-clientèles']}`}
+                      id={`accordion-${discipline.code}-${activité.code}`}
+                    >
+                      {
+                        activité.clientèles.map((clientèle) => {
+                          const datesEtCapacités = clientèle.datesEtCapacités
+                          return (
+                            <li key={`clientèle-${clientèle.code}`}>
+                              <ul
+                                aria-label="dates-et-capacités"
+                                className="fr-tags-group"
+                              >
+                                <li className="fr-tag fr-fi-arrow-right-line fr-tag--icon-left">
+                                  {`${clientèle.libellé} [${clientèle.code}]`}
+                                </li>
+                                <li className="fr-tag">
+                                  {`${this.wording.DATE_D_AUTORISATION} : ${datesEtCapacités.dateDAutorisation ? StringFormater.formateLaDate(datesEtCapacités.dateDAutorisation) : 'N/A'}`}
+                                </li>
+                                <li className="fr-tag">
+                                  {`${this.wording.MISE_À_JOUR_AUTORISATION} : ${datesEtCapacités.dateDeMiseÀJourDAutorisation ? StringFormater.formateLaDate(datesEtCapacités.dateDeMiseÀJourDAutorisation) : 'N/A'}`}
+                                </li>
+                                <li className="fr-tag">
+                                  {`${this.wording.DERNIÈRE_INSTALLATION} : ${datesEtCapacités.dateDeDernièreInstallation ? StringFormater.formateLaDate(datesEtCapacités.dateDeDernièreInstallation) : 'N/A'}`}
+                                </li>
+                                <li className="fr-tag">
+                                  {`${this.wording.CAPACITÉ_AUTORISÉE} : ${datesEtCapacités.capacitéAutoriséeTotale || 'N/A'}`}
+                                </li>
+                                <li className="fr-tag">
+                                  {`${this.wording.CAPACITÉ_INSTALLÉE} : ${datesEtCapacités.capacitéInstalléeTotale || 'N/A'}`}
+                                </li>
+                              </ul>
+                            </li>
+                          )
+                        })
+                      }
+                    </ul>
+                  </li>
+                ))
+              }
+            </ul>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  public get dateDeMiseÀJourDesAutorisations(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.autorisationsEtCapacités.dateMiseÀJourSource)
   }
 
   private formateLeTitreDeLEntitéJuridiqueDeRattachement(): string {

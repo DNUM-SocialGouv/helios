@@ -126,6 +126,15 @@ export class WordingFr implements Wording {
   readonly HOSPITALISATION_PARTIELLE_PSY: string = 'Hospitalisation Partielle PSY'
   readonly HOSPITALISATION_COMPLÈTE_PSY: string = 'Hospitalisation Complète PSY'
 
+  // Bloc Autorisation Médico-social
+  readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string = 'autorisation et capacité'
+  readonly AUTORISATIONS: string = 'Autorisations'
+  readonly DATE_D_AUTORISATION: string = 'Date d’autorisation'
+  readonly MISE_À_JOUR_AUTORISATION: string = 'Mise à jour d’autorisation'
+  readonly DERNIÈRE_INSTALLATION: string = 'Dernière installation'
+  readonly CAPACITÉ_AUTORISÉE: string = 'Capacité autorisée'
+  readonly CAPACITÉ_INSTALLÉE: string = 'Capacité installée'
+
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string = 'Établissement territorial'
   readonly TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS: string = 'Les établissements rattachés'
@@ -137,6 +146,7 @@ export class WordingFr implements Wording {
   readonly CNSA: ReactElement = (<abbr title="Caisse Nationale de Solidarité pour l’Autonomie">CNSA</abbr>)
   readonly TDB_PERF: ReactElement = (<abbr title="Tableau de Bord de la Performance dans le secteur médico-social">TdB Perf</abbr>)
   readonly PMSI: ReactElement = (<abbr title="Programme de Médicalisation des Systèmes d’Information">PMSI</abbr>)
+  readonly ARHGOS: ReactElement = (<abbr title="Agence Régionale Hospitalière Gestion des Objectifs Sanitaire ">ARHGOS</abbr>)
 
   // Footer
   readonly PRESENTATION: string = 'Texte sur 3 lignes à demander à Daisy'

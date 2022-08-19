@@ -1,10 +1,10 @@
 export type AutorisationMédicoSocialDatesEtCapacités = Readonly<{
-  capacitéAutoriséeTotale: number
-  capacitéInstalléeTotale: number
-  dateDAutorisation: string
-  dateDeDernièreInstallation: string
-  dateDeMiseÀJourDAutorisation: string
-  estInstallée: boolean
+  capacitéAutoriséeTotale: number | null
+  capacitéInstalléeTotale: number | null
+  dateDAutorisation: string | null
+  dateDeDernièreInstallation: string | null
+  dateDeMiseÀJourDAutorisation: string | null
+  estInstallée: boolean | null
 }>
 
 export type AutorisationMédicoSocialClientèle = Readonly<{
