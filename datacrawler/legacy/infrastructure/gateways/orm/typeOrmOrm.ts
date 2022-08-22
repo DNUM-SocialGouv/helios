@@ -2,6 +2,7 @@ import { DataSource, LoggerOptions } from 'typeorm'
 
 import { ActivitéMédicoSocialModel } from '../../../../../database/models/ActivitéMédicoSocialModel'
 import { ActivitéSanitaireModel } from '../../../../../database/models/ActivitéSanitaireModel'
+import { AutorisationMédicoSocialModel } from '../../../../../database/models/AutorisationMédicoSocialModel'
 import { DateMiseÀJourFichierSourceModel } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
@@ -13,6 +14,7 @@ export const typeOrmOrm: Orm<DataSource> = (environmentVariables: EnvironmentVar
     entities: [
       ActivitéSanitaireModel,
       ActivitéMédicoSocialModel,
+      AutorisationMédicoSocialModel,
       DateMiseÀJourFichierSourceModel,
       EntitéJuridiqueModel,
       ÉtablissementTerritorialIdentitéModel,

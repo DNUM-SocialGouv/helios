@@ -1,4 +1,5 @@
 import { ÉtablissementTerritorialMédicoSocialActivité } from '../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
+import { ÉtablissementTerritorialMédicoSocialAutorisation } from '../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation'
 import { ÉtablissementTerritorialSanitaireActivité } from '../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité'
 import { ÉtablissementTerritorialIdentité } from '../métier/entities/ÉtablissementTerritorialIdentité'
 
@@ -195,6 +196,37 @@ export class ÉtablissementTerritorialTestBuilder {
     numéroFinessÉtablissementTerritorial: '123456789',
   }
 
+  private static autorisationMédicoSocial: ÉtablissementTerritorialMédicoSocialAutorisation = {
+    dateMiseÀJourSource: '2022-05-14',
+    disciplines: [
+      {
+        activités: [
+          {
+            clientèles: [
+              {
+                code: '010',
+                datesEtCapacités: {
+                  capacitéAutoriséeTotale: 10,
+                  capacitéInstalléeTotale: 10,
+                  dateDAutorisation: '2020-01-01',
+                  dateDeDernièreInstallation: '2020-01-01',
+                  dateDeMiseÀJourDAutorisation: '2020-01-01',
+                  estInstallée: true,
+                },
+                libellé: 'Tous Types de Déficiences Pers.Handicap.(sans autre indic.)',
+              },
+            ],
+            code: '21',
+            libellé: 'Accueil de Jour',
+          },
+        ],
+        code: '658',
+        libellé: 'Accueil temporaire pour adultes handicapés',
+      },
+    ],
+    numéroFinessÉtablissementTerritorial: '123456789',
+  }
+
   public static créeUneIdentitéMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialIdentité>): ÉtablissementTerritorialIdentité {
     return {
       ...ÉtablissementTerritorialTestBuilder.médicoSocial,
@@ -223,6 +255,15 @@ export class ÉtablissementTerritorialTestBuilder {
   ): ÉtablissementTerritorialSanitaireActivité {
     return {
       ...ÉtablissementTerritorialTestBuilder.activitéSanitaire,
+      ...champsSurchargés,
+    }
+  }
+
+  public static créeUneAutorisationMédicoSocial(
+    champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialAutorisation>
+  ): ÉtablissementTerritorialMédicoSocialAutorisation {
+    return {
+      ...ÉtablissementTerritorialTestBuilder.autorisationMédicoSocial,
       ...champsSurchargés,
     }
   }

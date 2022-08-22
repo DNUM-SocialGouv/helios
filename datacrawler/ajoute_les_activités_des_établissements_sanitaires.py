@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
-from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier
+from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_diamant
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
@@ -38,7 +38,7 @@ def ajoute_les_activités_des_établissements_sanitaires(
     données_men_pmsi_annuel_filtré_sur_les_5_dernières_années = données_men_pmsi_annuel[
         données_men_pmsi_annuel["Année"].between(année_n_moins_5, année_n_moins_1)
     ]
-    date_du_fichier_men_pmsi_annuel = extrais_la_date_du_nom_de_fichier(chemin_du_fichier_men_pmsi_annuel)
+    date_du_fichier_men_pmsi_annuel = extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_men_pmsi_annuel)
 
     données_ann_rpu = lis_le_fichier_csv(
         chemin_du_fichier_ann_rpu,
@@ -47,7 +47,7 @@ def ajoute_les_activités_des_établissements_sanitaires(
     )
     logger.info(f"[DIAMANT] {données_ann_rpu.shape[0]} lignes trouvées dans le fichier ANN_RPU")
     données_ann_rpu_filtré_sur_les_5_dernières_années = données_ann_rpu[données_ann_rpu["Année"].between(année_n_moins_5, année_n_moins_1)]
-    date_du_fichier_ann_rpu = extrais_la_date_du_nom_de_fichier(chemin_du_fichier_ann_rpu)
+    date_du_fichier_ann_rpu = extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_ann_rpu)
 
     numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)
 

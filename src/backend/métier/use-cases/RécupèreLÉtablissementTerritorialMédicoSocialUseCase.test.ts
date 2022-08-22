@@ -45,6 +45,7 @@ describe('La récupération d’un établissement territorial médico-social', (
 
     const mockedÉtablissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader = {
       chargeActivité: jest.fn(),
+      chargeAutorisations: jest.fn(),
       chargeIdentité: mockedChargeIdentité,
       estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
     }
@@ -82,6 +83,7 @@ describe('La récupération d’un établissement territorial médico-social', (
       jest.fn().mockResolvedValueOnce(new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial))
     const mockedÉtablissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader = {
       chargeActivité: jest.fn(),
+      chargeAutorisations: jest.fn(),
       chargeIdentité: mockedChargeParNuméroFiness,
       estUnMonoÉtablissement: jest.fn(),
     }
@@ -131,6 +133,7 @@ describe('La récupération d’un établissement territorial médico-social', (
     const mockedChargeActivité = jest.fn().mockResolvedValueOnce(activités)
     const mockedÉtablissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader = {
       chargeActivité: mockedChargeActivité,
+      chargeAutorisations: jest.fn(),
       chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
       estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
     }
@@ -147,5 +150,52 @@ describe('La récupération d’un établissement territorial médico-social', (
     expect(mockedChargeActivité).toHaveBeenCalledWith(numéroFinessÉtablissementTerritorial)
     expect(mockedChargeActivité).toHaveBeenCalledTimes(1)
     expect(établissementTerritorialMédicoSocial.activités).toStrictEqual(activités)
+  })
+
+  it('récupère les autorisations de l’établissement territorial médico-social', async () => {
+    // GIVEN
+    const fakeEstUnMonoÉtablissement: MonoÉtablissement = {
+      estMonoÉtablissement: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: false,
+      },
+    }
+    const mockedEstUnMonoÉtablissement = jest.fn().mockResolvedValueOnce(fakeEstUnMonoÉtablissement)
+
+    const fakeIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestBuilder.créeUneIdentitéMédicoSocial(
+      {
+        numéroFinessEntitéJuridique: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: numéroFinessEntitéJuridique,
+        },
+        numéroFinessÉtablissementTerritorial: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: numéroFinessÉtablissementTerritorial,
+        },
+      }
+    )
+
+    const autorisations: ÉtablissementTerritorialMédicoSocial['autorisationsEtCapacités'] = ÉtablissementTerritorialTestBuilder.créeUneAutorisationMédicoSocial({ numéroFinessÉtablissementTerritorial })
+
+    const mockedChargeAutorisations = jest.fn().mockResolvedValueOnce(autorisations)
+    const mockedÉtablissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader = {
+      chargeActivité: jest.fn(),
+      chargeAutorisations: mockedChargeAutorisations,
+      chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
+      estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
+    }
+
+    const mockedEntitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeIdentité: jest.fn(), chargeRattachement: jest.fn() }
+
+    const récupèreLÉtablissementTerritorialMédicoSocialUseCase =
+      new RécupèreLÉtablissementTerritorialMédicoSocialUseCase(mockedÉtablissementTerritorialMédicoSocialLoader, mockedEntitéJuridiqueLoader)
+
+    // WHEN
+    const établissementTerritorialMédicoSocial = await récupèreLÉtablissementTerritorialMédicoSocialUseCase.exécute(numéroFinessÉtablissementTerritorial)
+
+    // THEN
+    expect(mockedChargeAutorisations).toHaveBeenCalledWith(numéroFinessÉtablissementTerritorial)
+    expect(mockedChargeAutorisations).toHaveBeenCalledTimes(1)
+    expect(établissementTerritorialMédicoSocial.autorisationsEtCapacités).toStrictEqual(autorisations)
   })
 })

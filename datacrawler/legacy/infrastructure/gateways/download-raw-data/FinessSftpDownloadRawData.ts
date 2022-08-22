@@ -88,14 +88,14 @@ export class FinessSftpDownloadRawData implements DownloadRawData {
   private async downloadAutorisationsEtCapacités() {
     const enrichiFiles = await this.sftp.list(this.enrichiSftpPath, '*.xml.gz')
     const autorisationsSanitairesFileName = 'finess_cs1400103_stock_'
-    const équipemensMatérielsLourdsSanitairesFileName = 'finess_cs1400104_stock_'
+    const équipementsMatérielsLourdsSanitairesFileName = 'finess_cs1400104_stock_'
     const autorisationsMédicoSociauxFileName = 'finess_cs1400105_stock_'
     const autresActivitésSanitairesFileName = 'finess_cs1600101_stock_'
     const reconnaissancesContractuellesSanitairesFileName = 'finess_cs1600102_stock_'
 
     await this.downloadFile(enrichiFiles, `${this.localPath}/enrichi`, this.enrichiSftpPath, autorisationsSanitairesFileName)
 
-    await this.downloadFile(enrichiFiles, `${this.localPath}/enrichi`, this.enrichiSftpPath, équipemensMatérielsLourdsSanitairesFileName)
+    await this.downloadFile(enrichiFiles, `${this.localPath}/enrichi`, this.enrichiSftpPath, équipementsMatérielsLourdsSanitairesFileName)
 
     await this.downloadFile(enrichiFiles, `${this.localPath}/enrichi`, this.enrichiSftpPath, autorisationsMédicoSociauxFileName)
 

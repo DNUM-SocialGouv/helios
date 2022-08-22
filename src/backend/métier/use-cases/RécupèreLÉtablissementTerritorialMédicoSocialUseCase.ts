@@ -23,11 +23,15 @@ export class RécupèreLÉtablissementTerritorialMédicoSocialUseCase {
       établissementTerritorialMédicoSocialOuErreur.numéroFinessEntitéJuridique.value
     )
 
-    const établissementTerritorialMédicoSocialActivitéOuErreur =
+    const établissementTerritorialMédicoSocialActivité =
       await this.établissementTerritorialMédicoSocialLoader.chargeActivité(numéroFinessÉtablissementTerritorial)
 
+    const établissementTerritorialMédicoSocialAutorisation =
+      await this.établissementTerritorialMédicoSocialLoader.chargeAutorisations(numéroFinessÉtablissementTerritorial)
+
     return {
-      activités: établissementTerritorialMédicoSocialActivitéOuErreur,
+      activités: établissementTerritorialMédicoSocialActivité,
+      autorisationsEtCapacités: établissementTerritorialMédicoSocialAutorisation,
       identité: {
         ...établissementTerritorialMédicoSocialOuErreur,
         ...entitéJuridiqueDeRattachement,

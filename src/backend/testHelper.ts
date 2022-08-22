@@ -2,6 +2,7 @@ import { DataSource } from 'typeorm'
 
 import { ActivitéMédicoSocialModel } from '../../database/models/ActivitéMédicoSocialModel'
 import { ActivitéSanitaireModel } from '../../database/models/ActivitéSanitaireModel'
+import { AutorisationMédicoSocialModel } from '../../database/models/AutorisationMédicoSocialModel'
 import { DateMiseÀJourFichierSourceModel } from '../../database/models/DateMiseÀJourFichierSourceModel'
 import { EntitéJuridiqueModel } from '../../database/models/EntitéJuridiqueModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../database/models/ÉtablissementTerritorialIdentitéModel'
@@ -34,6 +35,7 @@ export const clearAllTables = async (orm: DataSource) => {
   await orm.createQueryBuilder().delete().from(ÉtablissementTerritorialIdentitéModel).execute()
   await orm.createQueryBuilder().delete().from(EntitéJuridiqueModel).execute()
   await orm.createQueryBuilder().delete().from(DateMiseÀJourFichierSourceModel).execute()
+  await orm.createQueryBuilder().delete().from(AutorisationMédicoSocialModel).execute()
 }
 
 export const numéroFinessEntitéJuridique = '010018407'

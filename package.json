@@ -5,7 +5,7 @@
   "scripts": {
     "amibroken": "yarn deadcode && yarn lint && yarn typecheck && yarn test && yarn build",
     "bash:production": "scalingo -a helios run bash",
-    "bash:production:xl": "scalingo -a helios run --size XL bash",
+    "bash:production:2xl": "scalingo -a helios run --size 2XL bash",
     "build": "next build",
     "deadcode": "ts-prune --ignore 'src/pages'",
     "depcheck": "depcheck",
@@ -21,13 +21,15 @@
     "psql:local": "docker-compose up -d postgres && docker exec -it helios_db psql -U helios helios",
     "psql:production": "scalingo -a helios pgsql-console",
     "postinstall": "husky install",
-    "populateDatabase": "yarn retrieveFiness && yarn updateEJ && yarn updateET",
-    "populateDatabase:local": "yarn retrieveFiness && yarn updateEJ && yarn updateET && yarn updateMédicoSociauxSanitaire:local && yarn updateActivitesSanitaire:local",
+    "populateDatabase": "yarn retrieveFiness && yarn updateEJ && yarn updateET && yarn updateAutorisationsMédicoSocial",
+    "populateDatabase:local": "yarn retrieveFiness && yarn updateEJ && yarn updateET && yarn updateActivitésMédicoSociaux:local && yarn updateActivitésSanitaire:local && yarn updateAutorisationsMédicoSocial",
     "retrieveFiness": "ts-node -T datacrawler/legacy/infrastructure/controllers/téléchargeLesDonnéesBrutesDeFinessCron.ts",
     "updateEJ": "TS_NODE_TRANSPILE_ONLY=true node --loader ts-node/esm --max-old-space-size=8192 datacrawler/legacy/infrastructure/controllers/metsÀJourLesEntitésJuridiquesCron.ts",
     "updateET": "TS_NODE_TRANSPILE_ONLY=true node --loader ts-node/esm --max-old-space-size=8192 datacrawler/legacy/infrastructure/controllers/metsÀJourLesÉtablissementsTerritoriauxCron.ts",
-    "updateMédicoSociauxSanitaire:local": "pipenv run populate_activite_et_medico_social",
-    "updateActivitesSanitaire:local": "pipenv run populate_activite_et_sanitaire",
+    "updateActivitésMédicoSociaux:local": "pipenv run populate_activite_et_medico_social",
+    "updateActivitésSanitaire:local": "pipenv run populate_activite_et_sanitaire",
+    "updateAutorisationsMédicoSocial": "python -m datacrawler.ajoute_les_autorisations_des_établissements_médico_sociaux",
+    "updateAutorisationsMédicoSocial:local": "pipenv run populate_autorisation_et_capacite_medico_social",
     "start": "next start",
     "start:db": "docker-compose down && docker-compose up -d && while ! docker-compose logs | grep -q 'listening on IPv4 address'; do echo 'Waiting for database'; sleep 0.5; done; yarn migrations",
     "start:production": "ts-node -T src/backend/infrastructure/controllers/allumeLaProductionCron.ts",
@@ -98,6 +100,6 @@
     "got": "^11.8.5"
   },
   "engines": {
-    "node": "16"
+    "node": "16.16"
   }
 }
