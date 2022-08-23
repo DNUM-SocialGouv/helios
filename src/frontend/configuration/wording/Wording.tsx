@@ -105,6 +105,15 @@ export interface Wording {
   readonly HOSPITALISATION_PARTIELLE_PSY: string
   readonly HOSPITALISATION_COMPLÈTE_PSY: string
 
+  // Bloc Autorisation
+  readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string
+  readonly AUTORISATIONS: string
+  readonly DATE_D_AUTORISATION: string
+  readonly MISE_À_JOUR_AUTORISATION: string
+  readonly DERNIÈRE_INSTALLATION: string
+  readonly CAPACITÉ_AUTORISÉE: string
+  readonly CAPACITÉ_INSTALLÉE: string
+
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string
   readonly TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS: string
@@ -116,6 +125,7 @@ export interface Wording {
   readonly CNSA: ReactElement
   readonly TDB_PERF: ReactElement
   readonly PMSI: ReactElement
+  readonly ARHGOS: ReactElement
 
   // Footer
   readonly PRESENTATION: string

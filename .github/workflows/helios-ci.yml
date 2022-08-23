@@ -8,6 +8,9 @@ jobs:
     steps:
       - name: Checkout this branch
         uses: actions/checkout@master
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.16
       - name: Install node modules
         run: yarn --frozen-lockfile --check-files
       - uses: actions/cache@v3
@@ -25,6 +28,9 @@ jobs:
         with:
           path: ./*
           key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.16
       - name: Run the TS linter
         run: yarn lint:typescript
       - name: Run the typescript
@@ -39,6 +45,9 @@ jobs:
         with:
           path: ./*
           key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.16
       - name: Run the CSS linter
         run: yarn lint:scss
 
@@ -66,6 +75,9 @@ jobs:
         with:
           path: ./*
           key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.16
       - name: Run the tests
         run: yarn test:typescript
         env:
@@ -80,6 +92,9 @@ jobs:
         with:
           path: ./*
           key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.16
       - name: Build the app
         run: yarn build
         env:
@@ -113,6 +128,9 @@ jobs:
         with:
           python-version: '3.10'
           cache: 'pipenv'
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.16
       - name: Install dependencies
         run: pipenv install --dev --deploy
       - name: Lint
