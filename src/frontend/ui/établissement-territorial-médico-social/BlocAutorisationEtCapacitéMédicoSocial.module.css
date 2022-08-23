@@ -26,6 +26,7 @@
   flex-direction: column;
   gap: 0.6rem;
   padding-bottom: 0;
+  margin-block-start: 0;
 }
 
 .liste-autorisations > li > .liste-activités > li .liste-clientèles {
@@ -35,4 +36,5 @@
   padding-bottom: 0;
   padding-left: 0rem;
   margin-left: 0;
+  margin-block-start: 0;
 }

@@ -279,6 +279,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
                   >
                     <ActionneurDAccordéon
                       for={`accordion-${discipline.code}-${activité.code}`}
+                      texteGras={false}
                       titre={`${activité.libellé} [${activité.code}]`}
                     />
                     <ul

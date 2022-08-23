@@ -92,37 +92,6 @@ describe('La page établissement territorial médico-social - bloc autorisation 
     expect(discipline2).toHaveAttribute('aria-expanded', 'false')
   })
 
-  // it('développe les activités d’une discipline quand on clique dessus', async () => {
-  //   // GIVEN
-  //   renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
-  //   const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
-  //   const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
-  //   const autorisations = indicateurs[0]
-  //   const discipline = within(autorisations).getByRole('link', { name: 'Accueil temporaire pour Personnes Âgées [657]' })
-
-  //   // WHEN
-  //   fireEvent.click(discipline, {})
-
-  //   // THEN
-
-  // })
-
-  // it('remonte les activités d’une discipline quand on re-clique dessus', () => {
-  //   // GIVEN
-  //   renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
-  //   const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
-  //   const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
-  //   const autorisations = indicateurs[0]
-  //   const discipline = within(autorisations).getByRole('link', { name: 'Accueil temporaire pour Personnes Âgées [657]' })
-  //   fireEvent.click(discipline)
-
-  //   // WHEN
-  //   fireEvent.click(discipline)
-
-  //   // THEN
-
-  // })
-
   it('affiche un lien pour chaque activités d’une discipline', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
