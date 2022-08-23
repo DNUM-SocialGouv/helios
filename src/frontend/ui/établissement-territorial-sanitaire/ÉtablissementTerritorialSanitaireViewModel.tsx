@@ -191,7 +191,8 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
       this.ratioHistogrammeNombreDePassagesAuxUrgences,
       this.wording.ANNÉE,
       this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES,
-      annéesManquantes
+      annéesManquantes,
+      5
     )
   }
 
