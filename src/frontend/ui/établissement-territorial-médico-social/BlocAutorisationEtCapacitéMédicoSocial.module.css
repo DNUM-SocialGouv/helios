@@ -11,8 +11,8 @@
 
 .liste-indicateurs ul {
   list-style-type: none;
-  padding-inline-start: 0;
   margin-block-end: 0;
+  padding-inline-start: 0;
 }
 
 .liste-autorisations {
@@ -24,17 +24,17 @@
 .liste-autorisations > li > .liste-activités {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  padding-bottom: 0;
+  gap: .6rem;
   margin-block-start: 0;
+  padding-bottom: 0;
 }
 
 .liste-autorisations > li > .liste-activités > li .liste-clientèles {
   display: flex;
   flex-direction: column;
-  padding-top: 0.3rem;
-  padding-bottom: 0;
-  padding-left: 0rem;
-  margin-left: 0;
   margin-block-start: 0;
+  margin-left: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+  padding-top: .3rem;
 }
