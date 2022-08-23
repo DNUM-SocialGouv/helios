@@ -37,7 +37,7 @@ export const BlocIdentitéMédicoSocial = ({ établissementTerritorialMédicoSoc
           valeur={établissementTerritorialMédicoSocialViewModel.adresse}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDutéléphoneEtDeLEmail}
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTéléphoneEtDeLEmail}
           nomDeLIndicateur={wording.TÉLÉPHONE_ET_EMAIL}
           source={Sources(wording.FINESS)}
           valeur={établissementTerritorialMédicoSocialViewModel.téléphoneEtEmail}

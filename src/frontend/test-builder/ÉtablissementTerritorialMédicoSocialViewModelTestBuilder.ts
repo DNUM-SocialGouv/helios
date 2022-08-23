@@ -171,87 +171,106 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
   ]
 
   private static autorisations: ÉtablissementTerritorialMédicoSocial['autorisationsEtCapacités'] = {
-    dateMiseÀJourSource: '2022-08-18',
-    disciplines: [
-      {
-        activités: [
-          {
-            clientèles: [
-              {
-                code: '702',
-                datesEtCapacités: {
-                  capacitéAutoriséeTotale: 10,
-                  capacitéInstalléeTotale: null,
-                  dateDAutorisation: '2020-01-01',
-                  dateDeDernièreInstallation: null,
-                  dateDeMiseÀJourDAutorisation: '2020-01-01',
-                  estInstallée: true,
+    autorisations: {
+      dateMiseÀJourSource: '2022-08-18',
+      disciplines: [
+        {
+          activités: [
+            {
+              clientèles: [
+                {
+                  code: '702',
+                  datesEtCapacités: {
+                    capacitéAutoriséeTotale: 10,
+                    capacitéInstalléeTotale: null,
+                    dateDAutorisation: '2020-01-01',
+                    dateDeDernièreInstallation: null,
+                    dateDeMiseÀJourDAutorisation: '2020-01-01',
+                    estInstallée: true,
+                  },
+                  libellé: 'PH vieillissantes',
                 },
-                libellé: 'PH vieillissantes',
-              },
-              {
-                code: '711',
-                datesEtCapacités: {
-                  capacitéAutoriséeTotale: 10,
-                  capacitéInstalléeTotale: 10,
-                  dateDAutorisation: '2020-01-01',
-                  dateDeDernièreInstallation: '2020-01-01',
-                  dateDeMiseÀJourDAutorisation: '2020-01-01',
-                  estInstallée: true,
+                {
+                  code: '711',
+                  datesEtCapacités: {
+                    capacitéAutoriséeTotale: 10,
+                    capacitéInstalléeTotale: 10,
+                    dateDAutorisation: '2020-01-01',
+                    dateDeDernièreInstallation: '2020-01-01',
+                    dateDeMiseÀJourDAutorisation: '2020-01-01',
+                    estInstallée: true,
+                  },
+                  libellé: 'P.A. dépendantes',
                 },
-                libellé: 'P.A. dépendantes',
-              },
-            ],
-            code: '11',
-            libellé: 'Hébergement Complet Internat',
-          },
-          {
-            clientèles: [
-              {
-                code: '010',
-                datesEtCapacités: {
-                  capacitéAutoriséeTotale: 10,
-                  capacitéInstalléeTotale: 10,
-                  dateDAutorisation: '2020-01-01',
-                  dateDeDernièreInstallation: '2020-01-01',
-                  dateDeMiseÀJourDAutorisation: '2020-01-01',
-                  estInstallée: true,
+              ],
+              code: '11',
+              libellé: 'Hébergement Complet Internat',
+            },
+            {
+              clientèles: [
+                {
+                  code: '010',
+                  datesEtCapacités: {
+                    capacitéAutoriséeTotale: 10,
+                    capacitéInstalléeTotale: 10,
+                    dateDAutorisation: '2020-01-01',
+                    dateDeDernièreInstallation: '2020-01-01',
+                    dateDeMiseÀJourDAutorisation: '2020-01-01',
+                    estInstallée: true,
+                  },
+                  libellé: 'Tous Types de Déficiences Pers.Handicap.(sans autre indic.)',
                 },
-                libellé: 'Tous Types de Déficiences Pers.Handicap.(sans autre indic.)',
-              },
-            ],
-            code: '16',
-            libellé: 'Prestation en milieu ordinaire',
-          },
-        ],
-        code: '657',
-        libellé: 'Accueil temporaire pour Personnes Âgées',
-      },
-      {
-        activités: [
-          {
-            clientèles: [
-              {
-                code: '010',
-                datesEtCapacités: {
-                  capacitéAutoriséeTotale: 10,
-                  capacitéInstalléeTotale: 10,
-                  dateDAutorisation: '2020-01-01',
-                  dateDeDernièreInstallation: '2020-01-01',
-                  dateDeMiseÀJourDAutorisation: '2020-01-01',
-                  estInstallée: true,
+              ],
+              code: '16',
+              libellé: 'Prestation en milieu ordinaire',
+            },
+          ],
+          code: '657',
+          libellé: 'Accueil temporaire pour Personnes Âgées',
+        },
+        {
+          activités: [
+            {
+              clientèles: [
+                {
+                  code: '010',
+                  datesEtCapacités: {
+                    capacitéAutoriséeTotale: 10,
+                    capacitéInstalléeTotale: 10,
+                    dateDAutorisation: '2020-01-01',
+                    dateDeDernièreInstallation: '2020-01-01',
+                    dateDeMiseÀJourDAutorisation: '2020-01-01',
+                    estInstallée: true,
+                  },
+                  libellé: 'Tous Types de Déficiences Pers.Handicap.(sans autre indic.)',
                 },
-                libellé: 'Tous Types de Déficiences Pers.Handicap.(sans autre indic.)',
-              },
-            ],
-            code: '21',
-            libellé: 'Accueil de Jour',
-          },
-        ],
-        code: '658',
-        libellé: 'Accueil temporaire pour adultes handicapés',
-      },
-    ],
+              ],
+              code: '21',
+              libellé: 'Accueil de Jour',
+            },
+          ],
+          code: '658',
+          libellé: 'Accueil temporaire pour adultes handicapés',
+        },
+      ],
+    },
+    capacités: {
+      capacitéParActivité: [
+        {
+          capacité: 10,
+          libellé: 'Accueil de Jour',
+        },
+        {
+          capacité: 10,
+          libellé: 'Hébergement Complet Internat',
+        },
+        {
+          capacité: 10,
+          libellé: 'Prestation en milieu ordinaire',
+        },
+      ],
+      dateMiseÀJourSource: '2022-08-19',
+    },
     numéroFinessÉtablissementTerritorial: '010003598',
   }
 

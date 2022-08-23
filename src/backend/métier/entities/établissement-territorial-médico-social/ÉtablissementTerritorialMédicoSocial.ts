@@ -2,11 +2,11 @@ import { ÉtablissementTerritorialIdentité } from '../ÉtablissementTerritorial
 import { EntitéJuridiqueDeRattachement } from './EntitéJuridiqueDeRattachement'
 import { MonoÉtablissement } from './MonoÉtablissement'
 import { ÉtablissementTerritorialMédicoSocialActivité } from './ÉtablissementTerritorialMédicoSocialActivité'
-import { ÉtablissementTerritorialMédicoSocialAutorisation } from './ÉtablissementTerritorialMédicoSocialAutorisation'
+import { ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from './ÉtablissementTerritorialMédicoSocialAutorisation'
 
 export type ÉtablissementTerritorialMédicoSocial = Readonly<{
   activités: ÉtablissementTerritorialMédicoSocialActivité[]
-  autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialAutorisation
+  autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité
   identité: ÉtablissementTerritorialIdentité &
     MonoÉtablissement &
     EntitéJuridiqueDeRattachement

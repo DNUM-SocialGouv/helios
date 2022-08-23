@@ -27,7 +27,7 @@ export class RécupèreLÉtablissementTerritorialMédicoSocialUseCase {
       await this.établissementTerritorialMédicoSocialLoader.chargeActivité(numéroFinessÉtablissementTerritorial)
 
     const établissementTerritorialMédicoSocialAutorisation =
-      await this.établissementTerritorialMédicoSocialLoader.chargeAutorisations(numéroFinessÉtablissementTerritorial)
+      await this.établissementTerritorialMédicoSocialLoader.chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial)
 
     return {
       activités: établissementTerritorialMédicoSocialActivité,

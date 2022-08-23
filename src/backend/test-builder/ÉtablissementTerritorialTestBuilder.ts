@@ -1,5 +1,5 @@
 import { ÉtablissementTerritorialMédicoSocialActivité } from '../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
-import { ÉtablissementTerritorialMédicoSocialAutorisation } from '../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation'
+import { ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from '../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation'
 import { ÉtablissementTerritorialSanitaireActivité } from '../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité'
 import { ÉtablissementTerritorialIdentité } from '../métier/entities/ÉtablissementTerritorialIdentité'
 
@@ -196,34 +196,45 @@ export class ÉtablissementTerritorialTestBuilder {
     numéroFinessÉtablissementTerritorial: '123456789',
   }
 
-  private static autorisationMédicoSocial: ÉtablissementTerritorialMédicoSocialAutorisation = {
-    dateMiseÀJourSource: '2022-05-14',
-    disciplines: [
-      {
-        activités: [
-          {
-            clientèles: [
-              {
-                code: '010',
-                datesEtCapacités: {
-                  capacitéAutoriséeTotale: 10,
-                  capacitéInstalléeTotale: 10,
-                  dateDAutorisation: '2020-01-01',
-                  dateDeDernièreInstallation: '2020-01-01',
-                  dateDeMiseÀJourDAutorisation: '2020-01-01',
-                  estInstallée: true,
+  private static autorisationMédicoSocial: ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité = {
+    autorisations: {
+      dateMiseÀJourSource: '2022-05-14',
+      disciplines: [
+        {
+          activités: [
+            {
+              clientèles: [
+                {
+                  code: '010',
+                  datesEtCapacités: {
+                    capacitéAutoriséeTotale: 10,
+                    capacitéInstalléeTotale: 10,
+                    dateDAutorisation: '2020-01-01',
+                    dateDeDernièreInstallation: '2020-01-01',
+                    dateDeMiseÀJourDAutorisation: '2020-01-01',
+                    estInstallée: true,
+                  },
+                  libellé: 'Tous Types de Déficiences Pers.Handicap.(sans autre indic.)',
                 },
-                libellé: 'Tous Types de Déficiences Pers.Handicap.(sans autre indic.)',
-              },
-            ],
-            code: '21',
-            libellé: 'Accueil de Jour',
-          },
-        ],
-        code: '658',
-        libellé: 'Accueil temporaire pour adultes handicapés',
-      },
-    ],
+              ],
+              code: '21',
+              libellé: 'Accueil de Jour',
+            },
+          ],
+          code: '658',
+          libellé: 'Accueil temporaire pour adultes handicapés',
+        },
+      ],
+    },
+    capacités: {
+      capacitéParActivité: [
+        {
+          capacité: 10,
+          libellé: 'Accueil de Jour',
+        },
+      ],
+      dateMiseÀJourSource: '2022-08-18',
+    },
     numéroFinessÉtablissementTerritorial: '123456789',
   }
 
@@ -260,8 +271,8 @@ export class ÉtablissementTerritorialTestBuilder {
   }
 
   public static créeUneAutorisationMédicoSocial(
-    champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialAutorisation>
-  ): ÉtablissementTerritorialMédicoSocialAutorisation {
+    champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité>
+  ): ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité {
     return {
       ...ÉtablissementTerritorialTestBuilder.autorisationMédicoSocial,
       ...champsSurchargés,

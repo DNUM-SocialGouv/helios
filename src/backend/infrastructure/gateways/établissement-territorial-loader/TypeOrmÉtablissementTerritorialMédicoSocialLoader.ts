@@ -7,7 +7,7 @@ import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { MonoÉtablissement } from '../../../métier/entities/établissement-territorial-médico-social/MonoÉtablissement'
 import { ÉtablissementTerritorialMédicoSocialActivité } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
-import { AutorisationMédicoSocialActivité, AutorisationMédicoSocialClientèle, AutorisationMédicoSocialDatesEtCapacités, AutorisationMédicoSocialDiscipline, ÉtablissementTerritorialMédicoSocialAutorisation } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation'
+import { AutorisationMédicoSocialActivité, AutorisationMédicoSocialClientèle, AutorisationMédicoSocialDatesEtCapacités, AutorisationMédicoSocialDiscipline, ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
 import { ÉtablissementTerritorialMédicoSocialLoader } from '../../../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader'
@@ -43,13 +43,17 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseÀJourIdentitéModel)
   }
 
-  async chargeAutorisations(
+  async chargeAutorisationsEtCapacités(
     numéroFinessÉtablissementTerritorial: string
-  ): Promise<ÉtablissementTerritorialMédicoSocialAutorisation> {
+  ): Promise<ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité> {
     const autorisationsDeLÉtablissementModel = await this.chargeLesAutorisationsModel(numéroFinessÉtablissementTerritorial)
     const dateDeMiseÀJourFinessCs1400105Model = await this.chargeLaDateDeMiseÀJourFinessCs1400105Model() as DateMiseÀJourFichierSourceModel
 
-    return this.construisLesAutorisations(autorisationsDeLÉtablissementModel, numéroFinessÉtablissementTerritorial, dateDeMiseÀJourFinessCs1400105Model)
+    return {
+      autorisations: this.construisLesAutorisations(autorisationsDeLÉtablissementModel, dateDeMiseÀJourFinessCs1400105Model),
+      capacités: this.construisLesCapacités(autorisationsDeLÉtablissementModel, dateDeMiseÀJourFinessCs1400105Model),
+      numéroFinessÉtablissementTerritorial,
+    }
   }
 
   async estUnMonoÉtablissement(numéroFinessEntitéJuridique: string): Promise<MonoÉtablissement> {
@@ -219,10 +223,9 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
 
   private construisLesAutorisations(
     autorisationsModel: AutorisationMédicoSocialModel[],
-    numéroFinessÉtablissementTerritorial: string,
     dateMiseÀJourSource: DateMiseÀJourFichierSourceModel
-  ): ÉtablissementTerritorialMédicoSocialAutorisation {
-    const disciplinesDeLÉtablissement: ÉtablissementTerritorialMédicoSocialAutorisation['disciplines'] = []
+  ): ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité['autorisations'] {
+    const disciplinesDeLÉtablissement: AutorisationMédicoSocialDiscipline[] = []
 
     autorisationsModel.forEach((autorisationModel: AutorisationMédicoSocialModel) => {
       const codeDiscipline = autorisationModel.disciplineDÉquipement
@@ -251,7 +254,32 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     return {
       dateMiseÀJourSource: dateMiseÀJourSource.dernièreMiseÀJour,
       disciplines: disciplinesDeLÉtablissement,
-      numéroFinessÉtablissementTerritorial,
+    }
+  }
+
+  private construisLesCapacités(
+    autorisationsModel: AutorisationMédicoSocialModel[],
+    dateMiseÀJourSource: DateMiseÀJourFichierSourceModel
+  ): ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité['capacités'] {
+    const capacitéParActivité = autorisationsModel.reduce((activités: { capacité: number, libellé: string }[], autorisation: AutorisationMédicoSocialModel) => {
+      if (autorisation.estInstallée) {
+        const activité = activités.find((capacitéParActivité) => capacitéParActivité.libellé === autorisation.libelléActivité)
+
+        if (!activité) {
+          activités.push({
+            capacité: autorisation.capacitéInstalléeTotale,
+            libellé: autorisation.libelléActivité,
+          })
+        } else {
+          activité.capacité += autorisation.capacitéInstalléeTotale
+        }
+      }
+      return activités
+    }, []).sort((a, b) => a.libellé.localeCompare(b.libellé))
+
+    return {
+      capacitéParActivité,
+      dateMiseÀJourSource: dateMiseÀJourSource.dernièreMiseÀJour,
     }
   }
 

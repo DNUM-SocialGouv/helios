@@ -25,8 +25,19 @@ export type AutorisationMédicoSocialDiscipline = Readonly<{
   activités: AutorisationMédicoSocialActivité[]
 }>
 
-export type ÉtablissementTerritorialMédicoSocialAutorisation = Readonly<{
+export type CapacitéParActivité = Readonly<{
+  libellé: string
+  capacité: number
+}>
+
+export type ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité = Readonly<{
   numéroFinessÉtablissementTerritorial: string
-  disciplines: AutorisationMédicoSocialDiscipline[]
-  dateMiseÀJourSource: string
+  autorisations: {
+    disciplines: AutorisationMédicoSocialDiscipline[]
+    dateMiseÀJourSource: string
+  },
+  capacités: {
+    capacitéParActivité: CapacitéParActivité[],
+    dateMiseÀJourSource: string
+  }
 }>

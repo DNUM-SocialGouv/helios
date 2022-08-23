@@ -113,6 +113,9 @@ export interface Wording {
   readonly DERNIÈRE_INSTALLATION: string
   readonly CAPACITÉ_AUTORISÉE: string
   readonly CAPACITÉ_INSTALLÉE: string
+  readonly CAPACITÉ_PAR_ACTIVITÉS: string
+  readonly NOMBRE_TOTAL_DE_PLACE_PAR_ACTIVITÉ: string
+  readonly ACTIVITÉ: string
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string

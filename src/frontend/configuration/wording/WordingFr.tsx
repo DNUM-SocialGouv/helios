@@ -134,6 +134,9 @@ export class WordingFr implements Wording {
   readonly DERNIÈRE_INSTALLATION: string = 'Dernière installation'
   readonly CAPACITÉ_AUTORISÉE: string = 'Capacité autorisée'
   readonly CAPACITÉ_INSTALLÉE: string = 'Capacité installée'
+  readonly CAPACITÉ_PAR_ACTIVITÉS: string = 'Capacité par activités'
+  readonly NOMBRE_TOTAL_DE_PLACE_PAR_ACTIVITÉ: string = 'Nombre total de places par activité'
+  readonly ACTIVITÉ: string = 'Activité'
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string = 'Établissement territorial'

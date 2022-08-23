@@ -1,9 +1,11 @@
 import { Bloc } from '../commun/Bloc/Bloc'
 import { useDependencies } from '../commun/contexts/useDependencies'
 import { IndicateurAutorisationEtCapacité } from '../commun/IndicateurAutorisationEtCapacité/IndicateurAutorisationEtCapacité'
+import { IndicateurGraphique } from '../commun/IndicateurGraphique/IndicateurGraphique'
 import { Sources } from '../commun/Sources/Sources'
 import styles from './BlocAutorisationEtCapacitéMédicoSocial.module.css'
 import { ContenuAutorisations } from './InfoBulle/ContenuAutorisations'
+import { ContenuCapacitéParActivité } from './InfoBulle/ContenuCapacitéParActivité'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from './ÉtablissementTerritorialMédicoSocialViewModel'
 
 type BlocAutorisationEtCapacitéMédicoSocialProps = Readonly<{
@@ -21,6 +23,18 @@ export const BlocAutorisationEtCapacitéMédicoSocial = ({ établissementTerrito
       <ul
         className={styles['liste-indicateurs']}
       >
+        <IndicateurGraphique
+          contenuInfoBulle={<ContenuCapacitéParActivité
+            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDesCapacitésParActivités}
+            source={Sources(wording.FINESS)}
+          />}
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDesCapacitésParActivités}
+          identifiant="capacité-par-activités"
+          nomDeLIndicateur={wording.CAPACITÉ_PAR_ACTIVITÉS}
+          source={Sources(wording.FINESS)}
+        >
+          {établissementTerritorialMédicoSocialViewModel.capacitéParActivités}
+        </IndicateurGraphique>
         <IndicateurAutorisationEtCapacité
           contenuInfoBulle={<ContenuAutorisations
             dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDesAutorisations}
