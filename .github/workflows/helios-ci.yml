@@ -8,6 +8,9 @@ jobs:
     steps:
       - name: Checkout this branch
         uses: actions/checkout@master
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.16
       - name: Install node modules
         run: yarn --frozen-lockfile --check-files
       - uses: actions/cache@v3
