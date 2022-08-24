@@ -15,6 +15,17 @@ type BlocAutorisationEtCapacitéMédicoSocialProps = Readonly<{
 export const BlocAutorisationEtCapacitéMédicoSocial = ({ établissementTerritorialMédicoSocialViewModel }: BlocAutorisationEtCapacitéMédicoSocialProps) => {
   const { wording } = useDependencies()
 
+  if (
+    !établissementTerritorialMédicoSocialViewModel.lesAutorisationsSontEllesRenseignées &&
+    !établissementTerritorialMédicoSocialViewModel.lesCapacitésSontEllesRenseignées
+  ) {
+    return (
+      <Bloc titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>
+        {wording.INDICATEURS_VIDES}
+      </Bloc>
+    )
+  }
+
   return (
     <Bloc
       estCeIdentité={false}

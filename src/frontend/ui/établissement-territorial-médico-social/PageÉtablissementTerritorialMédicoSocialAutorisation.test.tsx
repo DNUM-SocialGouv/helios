@@ -3,6 +3,7 @@ import { fireEvent, screen, within } from '@testing-library/react'
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from '../../test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder'
 import { fakeFrontDependencies, renderFakeComponent } from '../../testHelper'
 import { PageÉtablissementTerritorialMédicoSocial } from './PageÉtablissementTerritorialMédicoSocial'
+import { ÉtablissementTerritorialMédicoSocialViewModel } from './ÉtablissementTerritorialMédicoSocialViewModel'
 
 const { paths, wording } = fakeFrontDependencies
 
@@ -232,5 +233,97 @@ describe('La page établissement territorial médico-social - bloc autorisation 
     expect(within(informationsDUneAutorisation).getByText(`${wording.DERNIÈRE_INSTALLATION} : N/A`, { selector: 'li' })).toBeInTheDocument()
     expect(within(informationsDUneAutorisation).getByText(`${wording.CAPACITÉ_AUTORISÉE} : 10`, { selector: 'li' })).toBeInTheDocument()
     expect(within(informationsDUneAutorisation).getByText(`${wording.CAPACITÉ_INSTALLÉE} : N/A`, { selector: 'li' })).toBeInTheDocument()
+  })
+
+  it('affiche une phrase à la place des indicateurs lorsqu’aucune autorisation n’est renseignée', () => {
+    // GIVEN
+    const établissementTerritorialSansAutorisation = new ÉtablissementTerritorialMédicoSocialViewModel({
+      activités: [],
+      autorisationsEtCapacités: {
+        autorisations: {
+          dateMiseÀJourSource: '2022-05-14',
+          disciplines: [],
+        },
+        capacités: {
+          capacitéParActivité: [],
+          dateMiseÀJourSource: '2022-08-18',
+        },
+        numéroFinessÉtablissementTerritorial: '010000040',
+      },
+      identité: {
+        adresseAcheminement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '01130 NANTUA',
+        },
+        adresseNuméroVoie: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '50',
+        },
+        adresseTypeVoie: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'R',
+        },
+        adresseVoie: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'PAUL PAINLEVE',
+        },
+        catégorieÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '355',
+        },
+        courriel: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'a@example.com',
+        },
+        estMonoÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: false,
+        },
+        libelléCatégorieÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'Centre Hospitalier (C.H.)',
+        },
+        numéroFinessEntitéJuridique: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '010008407',
+        },
+        numéroFinessÉtablissementPrincipal: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '010045057',
+        },
+        numéroFinessÉtablissementTerritorial: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '010000040',
+        },
+        raisonSociale: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'CH NANTUA',
+        },
+        raisonSocialeDeLEntitéDeRattachement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+        },
+        statutJuridique: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'Société Anonyme (S.A.)',
+        },
+        typeÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'S',
+        },
+        téléphone: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '0474754800',
+        },
+      },
+    }, wording, paths)
+
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansAutorisation} />)
+
+    // THEN
+    const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
+    const phrase = within(activité).getByText(wording.INDICATEURS_VIDES)
+    expect(phrase).toBeInTheDocument()
   })
 })

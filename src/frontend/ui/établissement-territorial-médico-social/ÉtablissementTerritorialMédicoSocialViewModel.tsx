@@ -375,6 +375,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     )
   }
 
+  public get lesAutorisationsSontEllesRenseignées(): boolean {
+    return this.établissementTerritorial.autorisationsEtCapacités.autorisations.disciplines.length !== 0
+  }
+
   public get dateDeMiseÀJourDesAutorisations(): string {
     return StringFormater.formateLaDate(this.établissementTerritorial.autorisationsEtCapacités.autorisations.dateMiseÀJourSource)
   }
@@ -396,6 +400,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
       [],
       capacités.length
     )
+  }
+
+  public get lesCapacitésSontEllesRenseignées(): boolean {
+    return this.établissementTerritorial.autorisationsEtCapacités.capacités.capacitéParActivité.length !== 0
   }
 
   public get dateDeMiseÀJourDesCapacitésParActivités(): string {
