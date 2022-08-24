@@ -14,7 +14,7 @@ import styles from './BlocAutorisationEtCapacitéMédicoSocial.module.css'
 
 export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueViewModel {
   readonly seuilValeurAtypique = 120
-  readonly ratioHistogrammeCapacitéParActivité = 7
+  readonly ratioHistogrammeCapacitéParActivité = 5
   readonly ratioHistogrammeBlocActivité = 2
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialMédicoSocial, wording: Wording, private readonly paths: Paths) {
@@ -302,11 +302,11 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     return (
       <ul
         aria-label="disciplines"
-        className={`fr-accordion ${styles['liste-autorisations']}`}
+        className={` ${styles['liste-autorisations']}`}
       >
         {autorisationsDeLÉtablissement.disciplines.map((discipline) => (
           <li
-            className="fr-accordion__title"
+            className=""
             key={`discipline-${discipline.code}`}
           >
             <ActionneurDAccordéon
@@ -314,13 +314,13 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
               titre={`${discipline.libellé} [${discipline.code}]`}
             />
             <ul
-              className={`fr-accordion fr-collapse ${styles['liste-activités']}`}
+              className={` fr-collapse ${styles['liste-activités']}`}
               id={`accordion-${discipline.code}`}
             >
               {
                 discipline.activités.map((activité) => (
                   <li
-                    className="fr-accordion__title"
+                    className=""
                     key={`activité-${activité.code}`}
                   >
                     <ActionneurDAccordéon
@@ -394,7 +394,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
       couleursDuGraphe,
       capacités,
       libellés,
-      this.ratioHistogrammeCapacitéParActivité,
+      this.calculeLeRatioDesHistogrammesHorizontaux(activités.length),
       this.wording.ACTIVITÉ,
       this.wording.CAPACITÉ_INSTALLÉE,
       [],

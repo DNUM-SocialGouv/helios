@@ -37,7 +37,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
   readonly couleurDesAxesHorizontaux = '#161616'
   readonly identifiantDeLaLégendeDesSéjoursMCO = 'légende-graphique-sanitaire-journées-séjours-mco'
   readonly identifiantDeLaLégendeDesJournéesPsyEtSsr = 'légende-graphique-sanitaire-journées-psy-et-ssr'
-  readonly ratioHistogrammeNombreDePassagesAuxUrgences = 5
+  readonly ratioHistogrammeNombreDePassagesAuxUrgences = 7
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, wording: Wording, private readonly paths: Paths) {
     super(wording, établissementTerritorial.activités.length)

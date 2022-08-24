@@ -14,6 +14,9 @@ export type LibelléDeGraphe = Readonly<{
 }>
 
 export class GraphiqueViewModel {
+  readonly ratioMinHistogrammeHorizontal = 2
+  readonly ratioMaxHistogrammeHorizontal = 15
+  readonly facteurDiminutionHistogrammeHorizontal = 1.5
   readonly couleurDuFond = '#E8EDFF'
   readonly couleurDuFondHistogrammePrimaire = '#000091'
   readonly couleurDuFondHistogrammeSecondaire = '#4E68BB'
@@ -202,6 +205,12 @@ export class GraphiqueViewModel {
       .filter((année) => !années.includes(année))
   }
 
+  protected calculeLeRatioDesHistogrammesHorizontaux(nombreDeLignes: number): number {
+    return this.ratioMaxHistogrammeHorizontal - (this.facteurDiminutionHistogrammeHorizontal * nombreDeLignes) > this.ratioMinHistogrammeHorizontal ?
+      this.ratioMaxHistogrammeHorizontal - (this.facteurDiminutionHistogrammeHorizontal * nombreDeLignes) :
+      this.ratioMinHistogrammeHorizontal
+  }
+
   private construisLePluginDeLégende() {
     function créeLeLibelléPourLaLégende(chart: ChartJS, libellé: LegendItem): HTMLLIElement {
       const conteneur = document.createElement('li')
@@ -344,6 +353,7 @@ export class GraphiqueViewModel {
             color: this.couleurDelAbscisse,
             // @ts-ignore
             font: { weight: grosseursDePoliceDesLibellés },
+            padding: 8,
           },
         },
       },
