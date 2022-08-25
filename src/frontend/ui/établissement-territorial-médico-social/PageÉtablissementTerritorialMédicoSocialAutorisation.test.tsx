@@ -232,7 +232,7 @@ describe('La page établissement territorial médico-social - bloc autorisation 
     expect(within(informationsDUneAutorisation).getByText(`${wording.MISE_À_JOUR_AUTORISATION} : 01/01/2020`, { selector: 'li' })).toBeInTheDocument()
     expect(within(informationsDUneAutorisation).getByText(`${wording.DERNIÈRE_INSTALLATION} : N/A`, { selector: 'li' })).toBeInTheDocument()
     expect(within(informationsDUneAutorisation).getByText(`${wording.CAPACITÉ_AUTORISÉE} : 10`, { selector: 'li' })).toBeInTheDocument()
-    expect(within(informationsDUneAutorisation).getByText(`${wording.CAPACITÉ_INSTALLÉE} : N/A`, { selector: 'li' })).toBeInTheDocument()
+    expect(within(informationsDUneAutorisation).getByText(`${wording.CAPACITÉ_INSTALLÉE} : 0`, { selector: 'li' })).toBeInTheDocument()
   })
 
   it('affiche une phrase à la place des indicateurs lorsqu’aucune autorisation n’est renseignée', () => {

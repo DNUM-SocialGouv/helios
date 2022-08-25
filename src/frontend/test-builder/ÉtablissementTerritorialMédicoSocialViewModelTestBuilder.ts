@@ -182,7 +182,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
                   code: '702',
                   datesEtCapacités: {
                     capacitéAutoriséeTotale: 10,
-                    capacitéInstalléeTotale: null,
+                    capacitéInstalléeTotale: 0,
                     dateDAutorisation: '2020-01-01',
                     dateDeDernièreInstallation: null,
                     dateDeMiseÀJourDAutorisation: '2020-01-01',

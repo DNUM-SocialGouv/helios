@@ -354,10 +354,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
                                   {`${this.wording.DERNIÈRE_INSTALLATION} : ${datesEtCapacités.dateDeDernièreInstallation ? StringFormater.formateLaDate(datesEtCapacités.dateDeDernièreInstallation) : 'N/A'}`}
                                 </li>
                                 <li className="fr-tag">
-                                  {`${this.wording.CAPACITÉ_AUTORISÉE} : ${datesEtCapacités.capacitéAutoriséeTotale || 'N/A'}`}
+                                  {`${this.wording.CAPACITÉ_AUTORISÉE} : ${datesEtCapacités.capacitéAutoriséeTotale ?? 'N/A'}`}
                                 </li>
                                 <li className="fr-tag">
-                                  {`${this.wording.CAPACITÉ_INSTALLÉE} : ${datesEtCapacités.capacitéInstalléeTotale || 'N/A'}`}
+                                  {`${this.wording.CAPACITÉ_INSTALLÉE} : ${datesEtCapacités.capacitéInstalléeTotale ?? 'N/A'}`}
                                 </li>
                               </ul>
                             </li>
