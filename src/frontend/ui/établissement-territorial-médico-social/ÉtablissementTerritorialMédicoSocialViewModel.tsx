@@ -3,6 +3,7 @@ import { ReactElement } from 'react'
 
 import { ÉtablissementTerritorialMédicoSocial } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialActivité } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
+import { CapacitéParActivité } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation'
 import { Paths } from '../../configuration/Paths'
 import { Wording } from '../../configuration/wording/Wording'
 import { ActionneurDAccordéon } from '../commun/Accordéon/ActionneurDAccordéon'
@@ -13,6 +14,8 @@ import styles from './BlocAutorisationEtCapacitéMédicoSocial.module.css'
 
 export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueViewModel {
   readonly seuilValeurAtypique = 120
+  readonly ratioHistogrammeCapacitéParActivité = 5
+  readonly ratioHistogrammeBlocActivité = 2
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialMédicoSocial, wording: Wording, private readonly paths: Paths) {
     super(wording, établissementTerritorial.activités.length)
@@ -66,7 +69,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     return `${téléphoneFormaté} | ${email}`
   }
 
-  public get dateDeMiseÀJourDutéléphoneEtDeLEmail(): string {
+  public get dateDeMiseÀJourDuTéléphoneEtDeLEmail(): string {
     return StringFormater.formateLaDate(this.établissementTerritorial.identité.téléphone.dateMiseÀJourSource)
   }
 
@@ -135,7 +138,14 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     const chartColors = this.construisLeFondDeCouleurDesHistogrammes(valeurs)
     const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs)
 
-    return this.afficheUnHistogrammeVertical(chartColors, valeurs, dataLabelsColor, années, this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT)
+    return this.afficheUnHistogrammeVertical(
+      chartColors,
+      valeurs,
+      dataLabelsColor,
+      années,
+      this.wording.ANNÉE,
+      this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT
+    )
   }
 
   public get dateDeMiseÀJourDuTauxOccupationHébergementPermanent(): string {
@@ -151,7 +161,14 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     const chartColors = this.construisLeFondDeCouleurDesHistogrammes(valeurs)
     const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs)
 
-    return this.afficheUnHistogrammeVertical(chartColors, valeurs, dataLabelsColor, années, this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE)
+    return this.afficheUnHistogrammeVertical(
+      chartColors,
+      valeurs,
+      dataLabelsColor,
+      années,
+      this.wording.ANNÉE,
+      this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE
+    )
   }
 
   public get dateDeMiseÀJourDuTauxOccupationHébergementTemporaire(): string {
@@ -167,7 +184,14 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     const chartColors = this.construisLeFondDeCouleurDesHistogrammes(valeurs)
     const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs)
 
-    return this.afficheUnHistogrammeVertical(chartColors, valeurs, dataLabelsColor, années, this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR)
+    return this.afficheUnHistogrammeVertical(
+      chartColors,
+      valeurs,
+      dataLabelsColor,
+      années,
+      this.wording.ANNÉE,
+      this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR
+    )
   }
 
   public get dateDeMiseÀJourDuTauxOccupationAccueilDeJour(): string {
@@ -183,7 +207,14 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     const chartColors = this.construisLeFondDeCouleurDesHistogrammes(valeurs)
     const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs)
 
-    return this.afficheUnHistogrammeVertical(chartColors, valeurs, dataLabelsColor, années, this.wording.TAUX_RÉALISATION_ACTIVITÉ)
+    return this.afficheUnHistogrammeVertical(
+      chartColors,
+      valeurs,
+      dataLabelsColor,
+      années,
+      this.wording.ANNÉE,
+      this.wording.TAUX_RÉALISATION_ACTIVITÉ
+    )
   }
 
   public get dateDeMiseÀJourDuTauxRéalisationActivité(): string {
@@ -197,9 +228,18 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
   public get fileActivePersonnesAccompagnées(): JSX.Element {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs('fileActivePersonnesAccompagnées')
     const chartColors = this.fondDeCouleurPourPremierHistogramme
-    const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs, true)
+    const annéesManquantes = this.annéesManquantes(années, 3)
+    const libellés = this.construisLesLibellés(années, valeurs, this.grosseursDePolicePourLesLibellés)
 
-    return this.afficheUnHistogrammeHorizontal(chartColors, valeurs, dataLabelsColor, années, this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES)
+    return this.afficheUnHistogrammeHorizontal(
+      chartColors,
+      valeurs,
+      libellés,
+      this.ratioHistogrammeBlocActivité,
+      this.wording.ANNÉE,
+      this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES,
+      annéesManquantes
+    )
   }
 
   public get dateDeMiseÀJourDeLaFileActivePersonnesAccompagnées(): string {
@@ -213,14 +253,17 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
   public get nombreMoyenJournéesAbsencePersonnesAccompagnées(): JSX.Element {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs('nombreMoyenJournéesAbsencePersonnesAccompagnées')
     const chartColors = this.fondDeCouleurPourPremierHistogramme
-    const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs, true)
+    const annéesManquantes = this.annéesManquantes(années, 3)
+    const libellés = this.construisLesLibellés(années, valeurs, this.grosseursDePolicePourLesLibellés)
 
     return this.afficheUnHistogrammeHorizontal(
       chartColors,
       valeurs,
-      dataLabelsColor,
-      années,
-      this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES
+      libellés,
+      this.ratioHistogrammeBlocActivité,
+      this.wording.ANNÉE,
+      this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES,
+      annéesManquantes
     )
   }
 
@@ -235,14 +278,17 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
   public get duréeMoyenneSéjourAccompagnementPersonnesSorties(): JSX.Element {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs('duréeMoyenneSéjourAccompagnementPersonnesSorties')
     const chartColors = this.fondDeCouleurPourPremierHistogramme
-    const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs, true)
+    const annéesManquantes = this.annéesManquantes(années, 3)
+    const libellés = this.construisLesLibellés(années, valeurs, this.grosseursDePolicePourLesLibellés)
 
     return this.afficheUnHistogrammeHorizontal(
       chartColors,
       valeurs,
-      dataLabelsColor,
-      années,
-      this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES
+      libellés,
+      this.ratioHistogrammeBlocActivité,
+      this.wording.ANNÉE,
+      this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES,
+      annéesManquantes
     )
   }
 
@@ -251,16 +297,16 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
   }
 
   public get autorisations(): JSX.Element {
-    const autorisationsDeLÉtablissement = this.établissementTerritorial.autorisationsEtCapacités
+    const autorisationsDeLÉtablissement = this.établissementTerritorial.autorisationsEtCapacités.autorisations
 
     return (
       <ul
         aria-label="disciplines"
-        className={`fr-accordion ${styles['liste-autorisations']}`}
+        className={` ${styles['liste-autorisations']}`}
       >
         {autorisationsDeLÉtablissement.disciplines.map((discipline) => (
           <li
-            className="fr-accordion__title"
+            className=""
             key={`discipline-${discipline.code}`}
           >
             <ActionneurDAccordéon
@@ -268,13 +314,13 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
               titre={`${discipline.libellé} [${discipline.code}]`}
             />
             <ul
-              className={`fr-accordion fr-collapse ${styles['liste-activités']}`}
+              className={` fr-collapse ${styles['liste-activités']}`}
               id={`accordion-${discipline.code}`}
             >
               {
                 discipline.activités.map((activité) => (
                   <li
-                    className="fr-accordion__title"
+                    className=""
                     key={`activité-${activité.code}`}
                   >
                     <ActionneurDAccordéon
@@ -308,10 +354,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
                                   {`${this.wording.DERNIÈRE_INSTALLATION} : ${datesEtCapacités.dateDeDernièreInstallation ? StringFormater.formateLaDate(datesEtCapacités.dateDeDernièreInstallation) : 'N/A'}`}
                                 </li>
                                 <li className="fr-tag">
-                                  {`${this.wording.CAPACITÉ_AUTORISÉE} : ${datesEtCapacités.capacitéAutoriséeTotale || 'N/A'}`}
+                                  {`${this.wording.CAPACITÉ_AUTORISÉE} : ${datesEtCapacités.capacitéAutoriséeTotale ?? 'N/A'}`}
                                 </li>
                                 <li className="fr-tag">
-                                  {`${this.wording.CAPACITÉ_INSTALLÉE} : ${datesEtCapacités.capacitéInstalléeTotale || 'N/A'}`}
+                                  {`${this.wording.CAPACITÉ_INSTALLÉE} : ${datesEtCapacités.capacitéInstalléeTotale ?? 'N/A'}`}
                                 </li>
                               </ul>
                             </li>
@@ -329,8 +375,39 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     )
   }
 
+  public get lesAutorisationsSontEllesRenseignées(): boolean {
+    return this.établissementTerritorial.autorisationsEtCapacités.autorisations.disciplines.length !== 0
+  }
+
   public get dateDeMiseÀJourDesAutorisations(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorial.autorisationsEtCapacités.dateMiseÀJourSource)
+    return StringFormater.formateLaDate(this.établissementTerritorial.autorisationsEtCapacités.autorisations.dateMiseÀJourSource)
+  }
+
+  public get capacitéParActivités(): JSX.Element {
+    const [activités, capacités] = this.construisLesCapacitésParActivités()
+    const couleursDuGraphe = Array(capacités.length).fill(this.couleurDuFondHistogrammeSecondaire).fill(this.couleurDuFondHistogrammePrimaire, 0, 1)
+    const couleursDesLibellés = Array(capacités.length).fill('black')
+    const taillesDePoliceDesLibellés = Array(capacités.length).fill('normal').fill('bold', 0, 1)
+    const libellés = this.construisLesLibellés(activités, couleursDesLibellés, taillesDePoliceDesLibellés)
+
+    return this.afficheUnHistogrammeHorizontal(
+      couleursDuGraphe,
+      capacités,
+      libellés,
+      this.calculeLeRatioDesHistogrammesHorizontaux(activités.length),
+      this.wording.ACTIVITÉ,
+      this.wording.CAPACITÉ_INSTALLÉE,
+      [],
+      capacités.length
+    )
+  }
+
+  public get lesCapacitésSontEllesRenseignées(): boolean {
+    return this.établissementTerritorial.autorisationsEtCapacités.capacités.capacitéParActivité.length !== 0
+  }
+
+  public get dateDeMiseÀJourDesCapacitésParActivités(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.autorisationsEtCapacités.capacités.dateMiseÀJourSource)
   }
 
   private formateLeTitreDeLEntitéJuridiqueDeRattachement(): string {
@@ -389,17 +466,20 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     return fondDeCouleurDesHistogrammes
   }
 
-  private construisLaCouleurDuLabel(valeurs: number[], estHorizontal: boolean = false): string[] {
-    const maxAvantDePerdreLeContraste = 20
-    const couleurDesAnnées = estHorizontal ? Array(valeurs.length).fill(this.couleurDeLaValeur) : Array(valeurs.length).fill(this.couleurDuFond)
+  private construisLesCapacitésParActivités(): [string[], number[]] {
+    const activités: string[] = []
+    const capacités: number[] = []
+    let capacitéTotale = 0
 
-    valeurs.forEach((valeur: number, index: number) => {
-      if (valeur < maxAvantDePerdreLeContraste) {
-        couleurDesAnnées[index] = 'black'
-      }
+    this.établissementTerritorial.autorisationsEtCapacités.capacités.capacitéParActivité.forEach((activité: CapacitéParActivité) => {
+      activités.push(activité.libellé)
+      capacités.push(activité.capacité)
+      capacitéTotale += activité.capacité
     })
 
-    return couleurDesAnnées
+    activités.splice(0, 0, this.wording.NOMBRE_TOTAL_DE_PLACE_PAR_ACTIVITÉ)
+    capacités.splice(0, 0, capacitéTotale)
+    return [activités, capacités]
   }
 
   private transformeEnTaux(nombre: number): number {

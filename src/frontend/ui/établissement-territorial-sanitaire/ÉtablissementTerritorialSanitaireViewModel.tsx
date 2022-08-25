@@ -37,6 +37,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
   readonly couleurDesAxesHorizontaux = '#161616'
   readonly identifiantDeLaLégendeDesSéjoursMCO = 'légende-graphique-sanitaire-journées-séjours-mco'
   readonly identifiantDeLaLégendeDesJournéesPsyEtSsr = 'légende-graphique-sanitaire-journées-psy-et-ssr'
+  readonly ratioHistogrammeNombreDePassagesAuxUrgences = 7
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, wording: Wording, private readonly paths: Paths) {
     super(wording, établissementTerritorial.activités.length)
@@ -180,14 +181,17 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
   public get nombreDePassagesAuxUrgences(): JSX.Element {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs('nombreDePassagesAuxUrgences')
     const chartColors = this.fondDeCouleurPourPremierHistogramme
-    const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs, true)
+    const annéesManquantes = this.annéesManquantes(années, 5)
+    const libellés = this.construisLesLibellés(années, valeurs, this.grosseursDePolicePourLesLibellés)
 
     return this.afficheUnHistogrammeHorizontal(
       chartColors,
       valeurs,
-      dataLabelsColor,
-      années,
+      libellés,
+      this.ratioHistogrammeNombreDePassagesAuxUrgences,
+      this.wording.ANNÉE,
       this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES,
+      annéesManquantes,
       5
     )
   }
@@ -262,6 +266,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
           id={this.identifiantDeLaLégendeDesSéjoursMCO}
         />
         <TableIndicateur
+          entêteLibellé={this.wording.ANNÉE}
           identifiants={[
             this.wording.HOSPITALISATION_PARTIELLE_MÉDECINE,
             this.wording.HOSPITALISATION_COMPLÈTE_MÉDECINE,
@@ -336,6 +341,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
           id={this.identifiantDeLaLégendeDesJournéesPsyEtSsr}
         />
         <TableIndicateur
+          entêteLibellé={this.wording.ANNÉE}
           identifiants={[
             this.wording.HOSPITALISATION_PARTIELLE_SSR,
             this.wording.HOSPITALISATION_COMPLÈTE_SSR,
@@ -458,19 +464,6 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
       nombreDeJournées.nombreJournéesPartiellesSsr.push({ x: activité.année, y: activité.nombreJournéesPartielsSsr.value })
     })
     return [nombreDeJournées, années]
-  }
-
-  private construisLaCouleurDuLabel(valeurs: number[], estHorizontal: boolean = false): string[] {
-    const maxAvantDePerdreLeContraste = 20
-    const couleurDesAnnées = estHorizontal ? Array(valeurs.length).fill(this.couleurDeLaValeur) : Array(valeurs.length).fill(this.couleurDuFond)
-
-    valeurs.forEach((valeur: number, index: number) => {
-      if (valeur < maxAvantDePerdreLeContraste) {
-        couleurDesAnnées[index] = 'black'
-      }
-    })
-
-    return couleurDesAnnées
   }
 
   private construisLesAnnéesEtSesValeurs(indicateur: Exclude<keyof ÉtablissementTerritorialSanitaireActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>): number[][] {

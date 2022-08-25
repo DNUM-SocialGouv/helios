@@ -7,7 +7,16 @@ import { Wording } from '../../../configuration/wording/Wording'
 import { MiseEnExergue } from '../MiseEnExergue/MiseEnExergue'
 import { TableIndicateur } from '../TableIndicateur/TableIndicateur'
 
+export type LibelléDeGraphe = Readonly<{
+  couleur: string
+  tailleDePolice: string
+  texte: number | string
+}>
+
 export class GraphiqueViewModel {
+  readonly ratioMinHistogrammeHorizontal = 2
+  readonly ratioMaxHistogrammeHorizontal = 15
+  readonly facteurDiminutionHistogrammeHorizontal = 1.5
   readonly couleurDuFond = '#E8EDFF'
   readonly couleurDuFondHistogrammePrimaire = '#000091'
   readonly couleurDuFondHistogrammeSecondaire = '#4E68BB'
@@ -48,6 +57,7 @@ export class GraphiqueViewModel {
     valeurs: number[],
     dataLabelsColor: string[],
     années: number[],
+    entêteLibellé: string,
     identifiant: string,
     annéesTotales: number = 3
   ): JSX.Element {
@@ -100,6 +110,7 @@ export class GraphiqueViewModel {
         }
         <TableIndicateur
           disabled={annéesManquantes.length === annéesTotales}
+          entêteLibellé={entêteLibellé}
           identifiants={[identifiant]}
           libellés={années}
           valeurs={[this.ajouteLePourcentage(valeursFrançaises)]}
@@ -111,50 +122,77 @@ export class GraphiqueViewModel {
   protected afficheUnHistogrammeHorizontal(
     chartColors: string[],
     valeurs: number[],
-    dataLabelsColor: string[],
-    années: number[],
+    libellés: LibelléDeGraphe[],
+    ratioLargeurSurHauteur: number,
+    entêteLibellé: string,
     identifiant: string,
-    annéesTotales: number = 3
+    libellésDeValeursManquantes: number [] | string[],
+    nombreDeLibelléTotal: number = 3
   ): JSX.Element {
     const data: ChartData = {
       datasets: [
         {
           backgroundColor: chartColors,
           data: valeurs,
-          datalabels: { labels: { title: { color: dataLabelsColor } } },
+          datalabels: { labels: { title: { color: libellés.map((libellé) => libellé.couleur) } } },
           maxBarThickness: 60,
           type: 'bar',
           yAxisID: 'y',
         },
       ],
-      labels: années,
+      labels: libellés.map((libellé) => libellé.texte),
     }
-    const annéesManquantes = this.annéesManquantes(années, annéesTotales)
     const valeursFrançaises = this.transformeEnFrançais(valeurs)
 
     return (
       <>
-        {annéesManquantes.length < annéesTotales &&
+        {libellésDeValeursManquantes.length < nombreDeLibelléTotal &&
           <Bar
             // @ts-ignore
             data={data}
             // @ts-ignore
-            options={this.optionsHistogrammeHorizontal(Math.max(...valeurs))}
+            options={this.optionsHistogrammeHorizontal(ratioLargeurSurHauteur, Math.max(...valeurs), libellés.map((libellé) => libellé.tailleDePolice))}
           />
         }
-        {annéesManquantes.length > 0 &&
+        {libellésDeValeursManquantes.length > 0 &&
           <MiseEnExergue>
-            {`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}
+            {`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${libellésDeValeursManquantes.join(', ')}`}
           </MiseEnExergue>
         }
         <TableIndicateur
-          disabled={annéesManquantes.length === annéesTotales}
+          disabled={libellésDeValeursManquantes.length === nombreDeLibelléTotal}
+          entêteLibellé={entêteLibellé}
           identifiants={[identifiant]}
-          libellés={années}
+          libellés={libellés.map((libellé) => libellé.texte)}
           valeurs={[valeursFrançaises]}
         />
       </>
     )
+  }
+
+  protected construisLesLibellés(textes: (number | string)[], valeurs: number[], taillesDePolice: string[]): LibelléDeGraphe[] {
+    const maxAvantDePerdreLeContraste = 20
+
+    return textes.map((texte, index) => {
+      return {
+        couleur: valeurs[index] < maxAvantDePerdreLeContraste ? 'black' : this.couleurDeLaValeur,
+        tailleDePolice: taillesDePolice[index],
+        texte,
+      }
+    })
+  }
+
+  protected construisLaCouleurDuLabel(valeurs: number[], estHorizontal: boolean = false): string[] {
+    const maxAvantDePerdreLeContraste = 20
+    const couleurDesAnnées = estHorizontal ? Array(valeurs.length).fill(this.couleurDeLaValeur) : Array(valeurs.length).fill(this.couleurDuFond)
+
+    valeurs.forEach((valeur: number, index: number) => {
+      if (valeur < maxAvantDePerdreLeContraste) {
+        couleurDesAnnées[index] = 'black'
+      }
+    })
+
+    return couleurDesAnnées
   }
 
   protected annéesManquantes(années: number[], annéesTotales: number): number[] {
@@ -165,6 +203,12 @@ export class GraphiqueViewModel {
       .map((annéeÀAvoir, index) => annéeÀAvoir - index - 1)
       .reverse()
       .filter((année) => !années.includes(année))
+  }
+
+  protected calculeLeRatioDesHistogrammesHorizontaux(nombreDeLignes: number): number {
+    return this.ratioMaxHistogrammeHorizontal - (this.facteurDiminutionHistogrammeHorizontal * nombreDeLignes) > this.ratioMinHistogrammeHorizontal ?
+      this.ratioMaxHistogrammeHorizontal - (this.facteurDiminutionHistogrammeHorizontal * nombreDeLignes) :
+      this.ratioMinHistogrammeHorizontal
   }
 
   private construisLePluginDeLégende() {
@@ -275,9 +319,10 @@ export class GraphiqueViewModel {
     }
   }
 
-  private optionsHistogrammeHorizontal(valeurMaximale: number): ChartOptions<'bar'> {
+  private optionsHistogrammeHorizontal(ratioLargeurSurHauteur: number, valeurMaximale: number, grosseursDePoliceDesLibellés: string[]): ChartOptions<'bar'> {
     return {
       animation: false,
+      aspectRatio: ratioLargeurSurHauteur,
       indexAxis: 'y',
       plugins: {
         datalabels: {
@@ -307,7 +352,8 @@ export class GraphiqueViewModel {
           ticks: {
             color: this.couleurDelAbscisse,
             // @ts-ignore
-            font: { weight: this.grosseursDePolicePourLesLibellés },
+            font: { weight: grosseursDePoliceDesLibellés },
+            padding: 8,
           },
         },
       },

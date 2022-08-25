@@ -13,7 +13,7 @@ export class ÉtablissementTerritorialAutorisationModelTestBuilder {
     autorisationMédicoSocialModel.dateDeDernièreInstallation = champsSurchargés?.dateDeDernièreInstallation || '2020-01-01'
     autorisationMédicoSocialModel.dateDeMiseÀJourDAutorisation = champsSurchargés?.dateDeMiseÀJourDAutorisation || '2020-01-01'
     autorisationMédicoSocialModel.disciplineDÉquipement = champsSurchargés?.disciplineDÉquipement || '657'
-    autorisationMédicoSocialModel.estInstallée = champsSurchargés?.estInstallée || true
+    autorisationMédicoSocialModel.estInstallée = champsSurchargés?.estInstallée ?? true
     autorisationMédicoSocialModel.libelléActivité = champsSurchargés?.libelléActivité || 'Hébergement Complet Internat'
     autorisationMédicoSocialModel.libelléClientèle = champsSurchargés?.libelléClientèle || 'PH vieillissantes'
     autorisationMédicoSocialModel.libelléDisciplineDÉquipement = champsSurchargés?.libelléDisciplineDÉquipement || 'Accueil temporaire pour Personnes Âgées'

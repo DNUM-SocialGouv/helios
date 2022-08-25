@@ -12,7 +12,7 @@ import { ÉtablissementTerritorialAutorisationModelTestBuilder } from '../../../
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from '../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder'
 import { MonoÉtablissement } from '../../../métier/entities/établissement-territorial-médico-social/MonoÉtablissement'
 import { ÉtablissementTerritorialMédicoSocial } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
-import { ÉtablissementTerritorialMédicoSocialAutorisation } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation'
+import { ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation'
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
 import { ÉtablissementTerritorialTestBuilder } from '../../../test-builder/ÉtablissementTerritorialTestBuilder'
 import { clearAllTables, getOrm, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from '../../../testHelper'
@@ -224,7 +224,7 @@ describe('Établissement territorial médico-social loader', () => {
   })
 
   describe('Charge les autorisations d’un établissement médico-social', () => {
-    it('charge les autorisations par numéro FINESS en les triant par discipline d’équipement, puis par activité et enfin par clientèle', async () => {
+    it('charge les autorisations par numéro FINESS en les triant autorisations par discipline d’équipement, puis par activité et enfin par clientèle', async () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
       await établissementTerritorialIdentitéRepository.insert(
@@ -250,6 +250,7 @@ describe('Établissement territorial médico-social loader', () => {
           activité: '11',
           clientèle: '711',
           disciplineDÉquipement: '657',
+          estInstallée: false,
           libelléActivité: 'Hébergement Complet Internat',
           libelléClientèle: 'P.A. dépendantes',
           libelléDisciplineDÉquipement: 'Accueil temporaire pour Personnes Âgées',
@@ -268,6 +269,7 @@ describe('Établissement territorial médico-social loader', () => {
           activité: '21',
           clientèle: '010',
           disciplineDÉquipement: '658',
+          estInstallée: false,
           libelléActivité: 'Accueil de Jour',
           libelléClientèle: 'Tous Types de Déficiences Pers.Handicap.(sans autre indic.)',
           libelléDisciplineDÉquipement: 'Accueil temporaire pour adultes handicapés',
@@ -278,10 +280,10 @@ describe('Établissement territorial médico-social loader', () => {
       const typeOrmÉtablissementTerritorialMédicoSocialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
 
       // WHEN
-      const autorisationsChargées = await typeOrmÉtablissementTerritorialMédicoSocialLoader.chargeAutorisations(numéroFinessÉtablissementTerritorial)
+      const { autorisations } = await typeOrmÉtablissementTerritorialMédicoSocialLoader.chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial)
 
       // THEN
-      expect(autorisationsChargées).toStrictEqual<ÉtablissementTerritorialMédicoSocialAutorisation>({
+      expect(autorisations).toStrictEqual<ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité['autorisations']>({
         dateMiseÀJourSource: '2022-08-18',
         disciplines: [
           {
@@ -308,7 +310,7 @@ describe('Établissement territorial médico-social loader', () => {
                       dateDAutorisation: '2020-01-01',
                       dateDeDernièreInstallation: '2020-01-01',
                       dateDeMiseÀJourDAutorisation: '2020-01-01',
-                      estInstallée: true,
+                      estInstallée: false,
                     },
                     libellé: 'P.A. dépendantes',
                   },
@@ -350,7 +352,7 @@ describe('Établissement territorial médico-social loader', () => {
                       dateDAutorisation: '2020-01-01',
                       dateDeDernièreInstallation: '2020-01-01',
                       dateDeMiseÀJourDAutorisation: '2020-01-01',
-                      estInstallée: true,
+                      estInstallée: false,
                     },
                     libellé: 'Tous Types de Déficiences Pers.Handicap.(sans autre indic.)',
                   },
@@ -363,7 +365,87 @@ describe('Établissement territorial médico-social loader', () => {
             libellé: 'Accueil temporaire pour adultes handicapés',
           },
         ],
-        numéroFinessÉtablissementTerritorial,
+      })
+    })
+
+    it('charge les capacités des autorisations installées par numéro FINESS en les triant par activités', async () => {
+      // GIVEN
+      await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
+      await établissementTerritorialIdentitéRepository.insert(
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
+      )
+      await dateMiseÀJourFichierSourceRepository.insert([
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-18',
+          fichier: FichierSource.FINESS_CS1400105,
+        }),
+      ])
+      await autorisationMédicoSocialModelRepository.insert([
+        ÉtablissementTerritorialAutorisationModelTestBuilder.créeMédicoSocial({
+          activité: '11',
+          capacitéAutoriséeTotale: 10,
+          capacitéInstalléeTotale: 10,
+          clientèle: '702',
+          disciplineDÉquipement: '657',
+          libelléActivité: 'Hébergement Complet Internat',
+          libelléClientèle: 'PH vieillissantes',
+          libelléDisciplineDÉquipement: 'Accueil temporaire pour Personnes Âgées',
+          numéroFinessÉtablissementTerritorial,
+        }),
+        ÉtablissementTerritorialAutorisationModelTestBuilder.créeMédicoSocial({
+          activité: '11',
+          capacitéAutoriséeTotale: 10,
+          capacitéInstalléeTotale: 10,
+          clientèle: '711',
+          disciplineDÉquipement: '657',
+          libelléActivité: 'Hébergement Complet Internat',
+          libelléClientèle: 'P.A. dépendantes',
+          libelléDisciplineDÉquipement: 'Accueil temporaire pour Personnes Âgées',
+          numéroFinessÉtablissementTerritorial,
+        }),
+        ÉtablissementTerritorialAutorisationModelTestBuilder.créeMédicoSocial({
+          activité: '16',
+          capacitéAutoriséeTotale: 100,
+          capacitéInstalléeTotale: 10,
+          clientèle: '010',
+          disciplineDÉquipement: '657',
+          libelléActivité: 'Prestation en milieu ordinaire',
+          libelléClientèle: 'Tous Types de Déficiences Pers.Handicap.(sans autre indic.)',
+          libelléDisciplineDÉquipement: 'Accueil temporaire pour Personnes Âgées',
+          numéroFinessÉtablissementTerritorial,
+        }),
+        ÉtablissementTerritorialAutorisationModelTestBuilder.créeMédicoSocial({
+          activité: '21',
+          capacitéAutoriséeTotale: 10,
+          capacitéInstalléeTotale: 10,
+          clientèle: '010',
+          disciplineDÉquipement: '658',
+          estInstallée: false,
+          libelléActivité: 'Accueil de Jour',
+          libelléClientèle: 'Tous Types de Déficiences Pers.Handicap.(sans autre indic.)',
+          libelléDisciplineDÉquipement: 'Accueil temporaire pour adultes handicapés',
+          numéroFinessÉtablissementTerritorial,
+        }),
+      ])
+
+      const typeOrmÉtablissementTerritorialMédicoSocialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
+
+      // WHEN
+      const { capacités } = await typeOrmÉtablissementTerritorialMédicoSocialLoader.chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial)
+
+      // THEN
+      expect(capacités).toStrictEqual<ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité['capacités']>({
+        capacitéParActivité: [
+          {
+            capacité: 20,
+            libellé: 'Hébergement Complet Internat',
+          },
+          {
+            capacité: 10,
+            libellé: 'Prestation en milieu ordinaire',
+          },
+        ],
+        dateMiseÀJourSource: '2022-08-18',
       })
     })
   })

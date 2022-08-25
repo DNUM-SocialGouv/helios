@@ -45,7 +45,7 @@ describe('La récupération d’un établissement territorial médico-social', (
 
     const mockedÉtablissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader = {
       chargeActivité: jest.fn(),
-      chargeAutorisations: jest.fn(),
+      chargeAutorisationsEtCapacités: jest.fn(),
       chargeIdentité: mockedChargeIdentité,
       estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
     }
@@ -83,7 +83,7 @@ describe('La récupération d’un établissement territorial médico-social', (
       jest.fn().mockResolvedValueOnce(new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial))
     const mockedÉtablissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader = {
       chargeActivité: jest.fn(),
-      chargeAutorisations: jest.fn(),
+      chargeAutorisationsEtCapacités: jest.fn(),
       chargeIdentité: mockedChargeParNuméroFiness,
       estUnMonoÉtablissement: jest.fn(),
     }
@@ -133,7 +133,7 @@ describe('La récupération d’un établissement territorial médico-social', (
     const mockedChargeActivité = jest.fn().mockResolvedValueOnce(activités)
     const mockedÉtablissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader = {
       chargeActivité: mockedChargeActivité,
-      chargeAutorisations: jest.fn(),
+      chargeAutorisationsEtCapacités: jest.fn(),
       chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
       estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
     }
@@ -180,7 +180,7 @@ describe('La récupération d’un établissement territorial médico-social', (
     const mockedChargeAutorisations = jest.fn().mockResolvedValueOnce(autorisations)
     const mockedÉtablissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader = {
       chargeActivité: jest.fn(),
-      chargeAutorisations: mockedChargeAutorisations,
+      chargeAutorisationsEtCapacités: mockedChargeAutorisations,
       chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
       estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
     }

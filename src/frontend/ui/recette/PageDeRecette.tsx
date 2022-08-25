@@ -91,6 +91,13 @@ export const PageDeRecette = () => {
       </>,
       numéroFiness: '660011859',
     },
+    {
+      identifiant: <>
+        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
+        - 590 006 961 - INSTITUT THERAPEUTIQUE EDUCATIF ET PEDAGOGIQUE DE TOURCOING (avec beaucoup d’autorisations)
+      </>,
+      numéroFiness: '590006961',
+    },
   ]
   const établissementsTerritoriauxSanitaires: {identifiant: ReactElement, numéroFiness: string}[] = [
     {

@@ -8,12 +8,13 @@ import styles from './TableIndicateur.module.css'
 
 type TableIndicateurProps = Readonly<{
   disabled?: boolean
+  entêteLibellé: string
   identifiants: string[]
-  libellés: number[]
+  libellés: (number | string)[]
   valeurs: (number | string | null)[][]
 }>
 
-export const TableIndicateur = ({ disabled = false, identifiants, libellés, valeurs }: TableIndicateurProps) => {
+export const TableIndicateur = ({ disabled = false, entêteLibellé, identifiants, libellés, valeurs }: TableIndicateurProps) => {
   const { wording } = useDependencies()
   const [expanded, setExpanded] = useState(false)
 
@@ -43,7 +44,7 @@ export const TableIndicateur = ({ disabled = false, identifiants, libellés, val
                   className={styles['table-header']}
                   scope="col"
                 >
-                  {wording.ANNÉE}
+                  {entêteLibellé}
                 </th>
                 {identifiants.map((identifiant) =>
                   <th
