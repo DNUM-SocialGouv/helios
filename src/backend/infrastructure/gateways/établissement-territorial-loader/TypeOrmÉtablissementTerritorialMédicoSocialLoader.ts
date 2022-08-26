@@ -262,6 +262,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     dateMiseÀJourSource: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité['capacités'] {
     const capacitéParActivité = autorisationsModel.reduce((activités: { capacité: number, libellé: string }[], autorisation: AutorisationMédicoSocialModel) => {
+      if (!autorisation.capacitéInstalléeTotale) return activités
       if (autorisation.estInstallée) {
         const activité = activités.find((capacitéParActivité) => capacitéParActivité.libellé === autorisation.libelléActivité)
 

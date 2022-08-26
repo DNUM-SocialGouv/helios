@@ -34,18 +34,20 @@ export const BlocAutorisationEtCapacitéMédicoSocial = ({ établissementTerrito
       <ul
         className={styles['liste-indicateurs']}
       >
-        <IndicateurGraphique
-          contenuInfoBulle={<ContenuCapacitéParActivité
+        {établissementTerritorialMédicoSocialViewModel.lesCapacitésSontEllesRenseignées &&
+          <IndicateurGraphique
+            contenuInfoBulle={<ContenuCapacitéParActivité
+              dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDesCapacitésParActivités}
+              source={Sources(wording.FINESS)}
+            />}
             dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDesCapacitésParActivités}
+            identifiant="capacité-par-activités"
+            nomDeLIndicateur={wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
             source={Sources(wording.FINESS)}
-          />}
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDesCapacitésParActivités}
-          identifiant="capacité-par-activités"
-          nomDeLIndicateur={wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
-          source={Sources(wording.FINESS)}
-        >
-          {établissementTerritorialMédicoSocialViewModel.capacitéParActivités}
-        </IndicateurGraphique>
+          >
+            {établissementTerritorialMédicoSocialViewModel.capacitéParActivités}
+          </IndicateurGraphique>
+        }
         <IndicateurAutorisationEtCapacité
           contenuInfoBulle={<ContenuAutorisations
             dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDesAutorisations}

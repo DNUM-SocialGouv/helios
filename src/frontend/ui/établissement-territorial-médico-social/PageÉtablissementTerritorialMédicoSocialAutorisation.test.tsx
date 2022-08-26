@@ -119,6 +119,123 @@ describe('La page établissement territorial médico-social - bloc autorisation 
     expect(détails).toHaveAttribute('data-fr-opened', 'false')
   })
 
+  it('n’affiche pas l’histogramme des capacités si elles ne sont pas renseignées', () => {
+    // GIVEN
+    const établissementTerritorialSansAutorisation = new ÉtablissementTerritorialMédicoSocialViewModel({
+      activités: [],
+      autorisationsEtCapacités: {
+        autorisations: {
+          dateMiseÀJourSource: '2022-05-14',
+          disciplines: [
+            {
+              activités: [
+                {
+                  clientèles: [
+                    {
+                      code: '010',
+                      datesEtCapacités: {
+                        capacitéAutoriséeTotale: 10,
+                        capacitéInstalléeTotale: 10,
+                        dateDAutorisation: '2020-01-01',
+                        dateDeDernièreInstallation: '2020-01-01',
+                        dateDeMiseÀJourDAutorisation: '2020-01-01',
+                        estInstallée: true,
+                      },
+                      libellé: 'Tous Types de Déficiences Pers.Handicap.(sans autre indic.)',
+                    },
+                  ],
+                  code: '21',
+                  libellé: 'Accueil de Jour',
+                },
+              ],
+              code: '658',
+              libellé: 'Accueil temporaire pour adultes handicapés',
+            },
+          ],
+        },
+        capacités: {
+          capacitéParActivité: [],
+          dateMiseÀJourSource: '2022-08-18',
+        },
+        numéroFinessÉtablissementTerritorial: '010000040',
+      },
+      identité: {
+        adresseAcheminement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '01130 NANTUA',
+        },
+        adresseNuméroVoie: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '50',
+        },
+        adresseTypeVoie: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'R',
+        },
+        adresseVoie: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'PAUL PAINLEVE',
+        },
+        catégorieÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '355',
+        },
+        courriel: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'a@example.com',
+        },
+        estMonoÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: false,
+        },
+        libelléCatégorieÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'Centre Hospitalier (C.H.)',
+        },
+        numéroFinessEntitéJuridique: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '010008407',
+        },
+        numéroFinessÉtablissementPrincipal: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '010045057',
+        },
+        numéroFinessÉtablissementTerritorial: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '010000040',
+        },
+        raisonSociale: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'CH NANTUA',
+        },
+        raisonSocialeDeLEntitéDeRattachement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+        },
+        statutJuridique: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'Société Anonyme (S.A.)',
+        },
+        typeÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: 'S',
+        },
+        téléphone: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: '0474754800',
+        },
+      },
+    }, wording, paths)
+
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansAutorisation} />)
+
+    // THEN
+    const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
+    const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
+    expect(within(indicateurs[0]).queryByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: 'p' })).not.toBeInTheDocument()
+  })
+
   it('affiche le titre de la partie autorisations, sa source et l’accès aux détails', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)

@@ -380,6 +380,12 @@ describe('Établissement territorial médico-social loader', () => {
           fichier: FichierSource.FINESS_CS1400105,
         }),
       ])
+      const autorisationSansCapacitéInstalléeRenseignée = ÉtablissementTerritorialAutorisationModelTestBuilder.créeMédicoSocial({
+        activité: '23',
+        libelléActivité: 'Anesthésie Chirurgie Ambulatoire',
+        numéroFinessÉtablissementTerritorial,
+      })
+      autorisationSansCapacitéInstalléeRenseignée.capacitéInstalléeTotale = null
       await autorisationMédicoSocialModelRepository.insert([
         ÉtablissementTerritorialAutorisationModelTestBuilder.créeMédicoSocial({
           activité: '11',
@@ -426,6 +432,7 @@ describe('Établissement territorial médico-social loader', () => {
           libelléDisciplineDÉquipement: 'Accueil temporaire pour adultes handicapés',
           numéroFinessÉtablissementTerritorial,
         }),
+        autorisationSansCapacitéInstalléeRenseignée,
       ])
 
       const typeOrmÉtablissementTerritorialMédicoSocialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
