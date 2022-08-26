@@ -11,22 +11,22 @@ export class AutorisationMédicoSocialModel {
   public activité!: string
 
   @Column({ name: 'capacite_autorisee_totale', nullable: true, type: 'integer' })
-  public capacitéAutoriséeTotale!: number
+  public capacitéAutoriséeTotale!: number | null
 
   @Column({ name: 'capacite_installee_totale', nullable: true, type: 'integer' })
-  public capacitéInstalléeTotale!: number
+  public capacitéInstalléeTotale!: number | null
 
   @Column({ length: 3, name: 'clientele', type: 'varchar' })
   public clientèle!: string
 
   @Column({ name: 'date_autorisation', nullable: true, type: 'date' })
-  public dateDAutorisation!: string
+  public dateDAutorisation!: string | null
 
   @Column({ name: 'date_derniere_installation', nullable: true, type: 'date' })
-  public dateDeDernièreInstallation!: string
+  public dateDeDernièreInstallation!: string | null
 
   @Column({ name: 'date_mise_a_jour_autorisation', nullable: true, type: 'date' })
-  public dateDeMiseÀJourDAutorisation!: string
+  public dateDeMiseÀJourDAutorisation!: string | null
 
   @Column({ length: 3, name: 'discipline_equipement', type: 'varchar' })
   public disciplineDÉquipement!: string
