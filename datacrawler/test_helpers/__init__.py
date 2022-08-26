@@ -2,6 +2,7 @@ from typing import Dict, Optional
 from unittest.mock import MagicMock
 
 import pandas as pd
+from numpy import NaN
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 
@@ -207,3 +208,134 @@ def crée_le_fichier_xml(chemin_du_fichier: str, contenu: str) -> None:
   {contenu}
 </fluxfiness>"""
         )
+
+
+def xml_contenu_finess_cs1400103_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    finess_cs1400103 = {
+        "nofinessej": 310781406,
+        "rsej": "CHU TOULOUSE",
+        "activite": "16",
+        "libactivite": "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
+        "modalite": "40",
+        "libmodalite": "Hémodialyse en centre pour adultes",
+        "forme": "00",
+        "libforme": "Pas de forme",
+        "noautor": 762201955,
+        "dateautor": "2004-11-02",
+        "indnatlien": "J",
+        "nofinesset": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "rset": "HOPITAL LARREY CHU TOULOUSE",
+        "noligautor": 1757,
+        "noligautoranc": NaN,
+        "noautorarhgos": "76-73-430",
+        "noimplarhgos": "76-73-430",
+        "noancautact": NaN,
+        "noancauteml": NaN,
+        "sectpsy": NaN,
+        "libsectpsy": NaN,
+        "datemeo": "2005-03-22",
+        "datefin": "2027-09-23",
+        "datelimite": NaN,
+        "indcaduc": "N",
+        "daterenouv": NaN,
+        "indrenouv": NaN,
+        "indsupact": "N",
+        "indsupsite": "N",
+        "datemajact": "2022-08-24",
+        "datemajsite": "2022-08-24",
+    }
+    if champs_surchargés:
+        return {**finess_cs1400103, **champs_surchargés}
+    return finess_cs1400103
+
+
+def xml_contenu_finess_cs1400104_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    finess_cs1400104 = {
+        "nofinessej": 310781406,
+        "rsej": "CHU TOULOUSE",
+        "eml": "05701",
+        "libeml": "Caméra à scintillation sans détecteur d'émission de positons",
+        "libcourteml": "Cam scin sans détect",
+        "noautor": 762218998,
+        "noautorarhgos": "76-73-1040",
+        "noimplarhgos": "76-73-1040",
+        "dateautor": "2004-11-02",
+        "nofinesset": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "numserie": NaN,
+        "marque": 0,
+        "rset": "HOPITAL DE RANGUEIL CHU TOULOUSE",
+        "datelimite": NaN,
+        "indcaduc": "N",
+        "indnatlien": "J",
+        "datemeo": "2006-11-08",
+        "datefin": "2028-05-29",
+        "indrempl": NaN,
+        "noautorremplacement": NaN,
+        "indsup": "N",
+        "datemaj": "2022-08-24",
+    }
+    if champs_surchargés:
+        return {**finess_cs1400104, **champs_surchargés}
+    return finess_cs1400104
+
+
+def xml_contenu_finess_cs1600101_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    finess_cs1600101 = {
+        "noautor": 242202733,
+        "nofinessej": 370000028,
+        "rsej": "SA. CLINIQUE JEANNE D'ARC",
+        "nofinesset": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "rset": "CLINIQUE JEANNE D'ARC - ST BENOIT",
+        "codeautorarhgos": "24-24-49863",
+        "activite": "A0",
+        "libactivite": "Installation de chirurgie esthétique",
+        "modalite": "00",
+        "libmodalite": "Pas de modalité",
+        "forme": "01",
+        "libforme": "Hospitalisation complète (24 heures consécutives ou plus)",
+        "datedecision": "2006-06-26",
+        "nodecision": "0000",
+        "etatautorisation": 6,
+        "libetatautorisation": "Renouvellement tacite",
+        "datevisite": "2006-06-26",
+        "resultatvisite": "C",
+        "datefin": "2026-06-26",
+        "datemeo": "2006-06-26",
+        "datelimitemeo": NaN,
+        "datelimitedepot": "2025-10-26",
+        "datelimvisite": NaN,
+        "datemaj": "2022-08-24",
+    }
+    if champs_surchargés:
+        return {**finess_cs1600101, **champs_surchargés}
+    return finess_cs1600101
+
+
+def xml_contenu_finess_cs1600102_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    finess_cs1600102 = {
+        "noautor": 112234367,
+        "idcpom": "11-11-C60420",
+        "nofinessej": 950110015,
+        "rsej": "CH  VICTOR  DUPOUY  ARGENTEUIL",
+        "nofinesset": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "rset": "CH VICTOR DUPOUY",
+        "dateeffetcpom": "2017-12-30",
+        "datefincpom": "2022-12-29",
+        "codeautorarhgos": "11-11-RC61198",
+        "indicateurregional": "N",
+        "activite": "R4",
+        "libactivite": "Soins palliatifs",
+        "modalite": "N2",
+        "libmodalite": "Lits identifiés  (Médecine) - adulte",
+        "forme": "01",
+        "libforme": "Hospitalisation complète (24 heures consécutives ou plus)",
+        "dateeffetasr": "2017-12-30",
+        "capaciteautorisee": 16,
+        "regionautorisation": 11,
+        "etatautorisation": 23,
+        "libetatautorisation": "Initiale",
+        "datemaj": "2022-08-24",
+    }
+    if champs_surchargés:
+        return {**finess_cs1600102, **champs_surchargés}
+    return finess_cs1600102
