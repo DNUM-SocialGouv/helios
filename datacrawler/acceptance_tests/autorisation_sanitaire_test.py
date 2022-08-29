@@ -16,6 +16,8 @@ from datacrawler.load.nom_des_tables import (
     FichierSource,
 )
 from datacrawler.test_helpers import (
+    NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
+    NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
     base_de_données_test,
     mocked_logger,
     sauvegarde_un_établissement_en_base,
@@ -61,10 +63,10 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
 
     def test_sauvegarde_les_autorisations_installées_des_établissements_sanitaires(self) -> None:
         # GIVEN
-        sauvegarde_une_entité_juridique_en_base("010008407", base_de_données_test)
-        sauvegarde_un_établissement_en_base("670799667", "010008407", base_de_données_test)
-        sauvegarde_un_établissement_en_base("050000371", "010008407", base_de_données_test)
-        sauvegarde_un_établissement_en_base("490019148", "010008407", base_de_données_test)
+        sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+        sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+        sauvegarde_un_établissement_en_base("010786259", NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+        sauvegarde_un_établissement_en_base("490019148", NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
 
         # WHEN
         ajoute_les_autorisations_des_établissements_sanitaires(
@@ -90,7 +92,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "libelle_modalite": "Hémodialyse en unité médicalisée",
                     "modalite": "42",
                     "numero_autorisation_arhgos": "01-00-000",
-                    "numero_finess_etablissement_territorial": "670799667",
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                 },
                 {
                     "activite": "16",
@@ -103,7 +105,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "libelle_modalite": "Hémodialyse en unité d'auto dialyse assistée",
                     "modalite": "44",
                     "numero_autorisation_arhgos": "01-00-111",
-                    "numero_finess_etablissement_territorial": "670799667",
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                 },
                 {
                     "activite": "16",
@@ -116,7 +118,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "libelle_modalite": "Dialyse péritonéale à domicile",
                     "modalite": "46",
                     "numero_autorisation_arhgos": "01-00-222",
-                    "numero_finess_etablissement_territorial": "670799667",
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                 },
                 {
                     "activite": "16",
@@ -129,7 +131,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "libelle_modalite": "Hémodialyse à domicile",
                     "modalite": "45",
                     "numero_autorisation_arhgos": "01-00-333",
-                    "numero_finess_etablissement_territorial": "670799667",
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                 },
                 {
                     "activite": "50",
@@ -142,7 +144,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "libelle_modalite": "Juvénile (âge >= 6 ans et < 18 ans)",
                     "modalite": "78",
                     "numero_autorisation_arhgos": "02-00-000",
-                    "numero_finess_etablissement_territorial": "050000371",
+                    "numero_finess_etablissement_territorial": "010786259",
                 },
             ]
         )
@@ -173,7 +175,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "equipement_materiel_lourd": "05602",
                     "libelle_equipement_materiel_lourd": "Scanographe à utilisation médicale",
                     "numero_autorisation_arhgos": "01-00-0000",
-                    "numero_finess_etablissement_territorial": "670799667",
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                 },
                 {
                     "date_autorisation": date(2006, 5, 2),
@@ -182,7 +184,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "equipement_materiel_lourd": "06201",
                     "libelle_equipement_materiel_lourd": "Appareil d'IRM à utilisation clinique",
                     "numero_autorisation_arhgos": "01-00-0001",
-                    "numero_finess_etablissement_territorial": "670799667",
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                 },
                 {
                     "date_autorisation": None,
@@ -191,7 +193,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "equipement_materiel_lourd": "05701",
                     "libelle_equipement_materiel_lourd": "Caméra à scintillation sans détecteur d'émission de positons",
                     "numero_autorisation_arhgos": "02-00-0000",
-                    "numero_finess_etablissement_territorial": "050000371",
+                    "numero_finess_etablissement_territorial": "010786259",
                 },
             ]
         )
@@ -225,7 +227,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "libelle_forme": "Pas de forme",
                     "libelle_modalite": "Dépôt d'urgence",
                     "modalite": "M0",
-                    "numero_finess_etablissement_territorial": "670799667",
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                 },
                 {
                     "activite": "A1",
@@ -237,7 +239,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "libelle_forme": "Pas de forme",
                     "libelle_modalite": "Dépôt relais",
                     "modalite": "M2",
-                    "numero_finess_etablissement_territorial": "670799667",
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                 },
                 {
                     "activite": "A0",
@@ -249,7 +251,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "libelle_forme": "Forme non précisée",
                     "libelle_modalite": "Pas de modalité",
                     "modalite": "00",
-                    "numero_finess_etablissement_territorial": "050000371",
+                    "numero_finess_etablissement_territorial": "010786259",
                 },
             ]
         )
@@ -286,7 +288,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "libelle_forme": "Hospitalisation complète (24 heures consécutives ou plus)",
                     "libelle_modalite": "USC polyvalente - adulte (non adossée à une unité de réanimation)",
                     "modalite": "N8",
-                    "numero_finess_etablissement_territorial": "670799667",
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                 },
                 {
                     "activite": "R4",
@@ -301,7 +303,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "libelle_forme": "Pas de forme",
                     "libelle_modalite": "Equipe mobile",
                     "modalite": "N4",
-                    "numero_finess_etablissement_territorial": "670799667",
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                 },
                 {
                     "activite": "S6",
@@ -316,7 +318,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "libelle_forme": "Pas de forme",
                     "libelle_modalite": "Clinique ouverte",
                     "modalite": "B3",
-                    "numero_finess_etablissement_territorial": "670799667",
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                 },
                 {
                     "activite": "R7",
@@ -331,7 +333,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "libelle_forme": "Hospitalisation complète (24 heures consécutives ou plus)",
                     "libelle_modalite": "Adulte (âge >=18 ans)",
                     "modalite": "09",
-                    "numero_finess_etablissement_territorial": "050000371",
+                    "numero_finess_etablissement_territorial": "010786259",
                 },
             ]
         )

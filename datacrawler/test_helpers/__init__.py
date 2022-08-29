@@ -6,18 +6,17 @@ from numpy import NaN
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 
-from datacrawler.load.nom_des_tables import (
-    TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
-    TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
-    TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES,
-    TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
-    FichierSource,
-)
+from datacrawler.load.nom_des_tables import (TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
+                                             TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES, TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
+                                             FichierSource)
 from datacrawler.transform.équivalences_diamant_helios import index_des_activités
 
 base_de_données_test = create_engine("postgresql://helios:h3li0s@localhost:5433/helios")
 mocked_logger = MagicMock()
+NUMÉRO_FINESS_ENTITÉ_JURIDIQUE = "010008407"
 NUMÉRO_FINESS_ÉTABLISSEMENT = "010001261"
+NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL = "010003598"
+NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE = "010005239"
 
 
 def sauvegarde_une_entité_juridique_en_base(numéro_finess: str, base_de_données: Engine) -> None:
