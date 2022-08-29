@@ -1,4 +1,5 @@
 import { AutorisationMédicoSocialModel } from '../models/AutorisationMédicoSocialModel'
+import { AutorisationSanitaireModel } from '../models/AutorisationSanitaireModel'
 
 export class ÉtablissementTerritorialAutorisationModelTestBuilder {
   public static créeMédicoSocial(
@@ -19,5 +20,23 @@ export class ÉtablissementTerritorialAutorisationModelTestBuilder {
     autorisationMédicoSocialModel.libelléDisciplineDÉquipement = champsSurchargés?.libelléDisciplineDÉquipement || 'Accueil temporaire pour Personnes Âgées'
     autorisationMédicoSocialModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '590782553'
     return autorisationMédicoSocialModel
+  }
+
+  public static créeAutorisationSanitaire(
+    champsSurchargés?: Partial<AutorisationSanitaireModel>
+  ): AutorisationSanitaireModel {
+    const autorisationSanitaireModel = new AutorisationSanitaireModel()
+    autorisationSanitaireModel.activité = champsSurchargés?.activité || '16'
+    autorisationSanitaireModel.dateAutorisation = champsSurchargés?.dateAutorisation || '2005-10-11'
+    autorisationSanitaireModel.dateFin = champsSurchargés?.dateFin || '2026-05-03'
+    autorisationSanitaireModel.dateMiseEnOeuvre = champsSurchargés?.dateMiseEnOeuvre || '2008-12-04'
+    autorisationSanitaireModel.forme = champsSurchargés?.forme || '00'
+    autorisationSanitaireModel.libelléActivité = champsSurchargés?.libelléActivité || "Traitement de l'insuffisance rénale chronique par épuration extrarénale"
+    autorisationSanitaireModel.libelléForme = champsSurchargés?.libelléForme || 'Pas de forme'
+    autorisationSanitaireModel.libelléModalité = champsSurchargés?.libelléModalité || 'Hémodialyse en unité médicalisée'
+    autorisationSanitaireModel.modalité = champsSurchargés?.modalité || '42'
+    autorisationSanitaireModel.numéroAutorisationArhgos = champsSurchargés?.numéroAutorisationArhgos || '01-00-000'
+    autorisationSanitaireModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '670799667'
+    return autorisationSanitaireModel
   }
 }

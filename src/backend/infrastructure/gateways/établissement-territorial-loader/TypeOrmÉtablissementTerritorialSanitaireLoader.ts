@@ -1,10 +1,12 @@
 import { DataSource } from 'typeorm'
 
 import { ActivitéSanitaireModel } from '../../../../../database/models/ActivitéSanitaireModel'
+import { AutorisationSanitaireModel } from '../../../../../database/models/AutorisationSanitaireModel'
 import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialSanitaireActivité } from '../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité'
+import { AutorisationSanitaire, AutorisationSanitaireActivité, AutorisationSanitaireAvecDatesEtNuméroArhgos, AutorisationSanitaireForme, AutorisationSanitaireModalité, ÉtablissementTerritorialSanitaireAutorisationEtCapacité } from '../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { ÉtablissementTerritorialSanitaireNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialSanitaireNonTrouvée'
 import { ÉtablissementTerritorialSanitaireLoader } from '../../../métier/gateways/ÉtablissementTerritorialSanitaireLoader'
@@ -36,6 +38,38 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseÀJourIdentitéModel)
   }
 
+  async chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialSanitaireAutorisationEtCapacité> {
+    const autorisationsDeLÉtablissementModel = await this.chargeLesAutorisationsModel(numéroFinessÉtablissementTerritorial)
+    const dateDeMiseÀJourFinessCs1400103Model = await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400103) as DateMiseÀJourFichierSourceModel
+
+    return {
+      autorisations: this.construisLesAutorisations(autorisationsDeLÉtablissementModel, dateDeMiseÀJourFinessCs1400103Model),
+      autresActivités: {
+        activités: [],
+        dateMiseÀJourSource: '',
+      },
+      numéroFinessÉtablissementTerritorial,
+      reconnaissancesContractuelles: {
+        activités: [],
+        dateMiseÀJourSource: '',
+      },
+      équipementsMatérielsLourds: {
+        dateMiseÀJourSource: '',
+        équipements: [],
+      },
+    }
+  }
+
+  private async chargeLesAutorisationsModel(numéroFinessÉtablissementTerritorial: string): Promise<AutorisationSanitaireModel[]> {
+    return await (await this.orm)
+      .getRepository(AutorisationSanitaireModel)
+      .find({
+        order: { activité: 'ASC', forme: 'ASC', modalité: 'ASC' },
+        where: { numéroFinessÉtablissementTerritorial },
+      })
+
+  }
+
   private async chargeLesActivitésModel(numéroFinessÉtablissementTerritorial: string) {
     return await (await this.orm)
       .getRepository(ActivitéSanitaireModel)
@@ -52,6 +86,12 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
         domaine: DomaineÉtablissementTerritorial.SANITAIRE,
         numéroFinessÉtablissementTerritorial,
       })
+  }
+
+  private async chargeLaDateDeMiseÀJourModel(fichierSource: FichierSource): Promise<DateMiseÀJourFichierSourceModel | null> {
+    return await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: fichierSource })
   }
 
   private async chargeLaDateDeMiseÀJourFinessCs1400102Model(): Promise<DateMiseÀJourFichierSourceModel | null> {
@@ -186,5 +226,76 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
         },
         numéroFinessÉtablissementTerritorial: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
       }))
+  }
+
+  private construisLesAutorisations(
+    autorisationsModel: AutorisationSanitaireModel[],
+    dateMiseÀJourSource: DateMiseÀJourFichierSourceModel
+  ): ÉtablissementTerritorialSanitaireAutorisationEtCapacité['autorisations'] {
+    const activitésDeLÉtablissement: AutorisationSanitaire[] = []
+
+    autorisationsModel.forEach((autorisationModel: AutorisationSanitaireModel) => {
+      const codeActivité = autorisationModel.activité
+      const codeModalité = autorisationModel.modalité
+      const codeForme = autorisationModel.forme
+
+      const activitéCréée = activitésDeLÉtablissement.find((activité) => activité.code === codeActivité)
+
+      if (!activitéCréée) {
+        activitésDeLÉtablissement.push(this.construisLActivitéDUneAutorisation(autorisationModel))
+      } else {
+        const modalitéCréée = activitéCréée.modalités.find((modalité) => modalité.code === codeModalité)
+
+        if (!modalitéCréée) {
+          activitéCréée.modalités.push(this.construisLaModalitéDUneAutorisation(autorisationModel))
+        } else {
+          const formeCréée = modalitéCréée.formes.find((forme) => forme.code === codeForme)
+
+          if (!formeCréée) {
+            modalitéCréée.formes.push(this.construisLaFormeDUneAutorisation(autorisationModel))
+          }
+        }
+      }
+    })
+
+    return {
+      activités: activitésDeLÉtablissement,
+      dateMiseÀJourSource: dateMiseÀJourSource.dernièreMiseÀJour,
+    }
+  }
+
+  private construisLActivitéDUneAutorisation(autorisationModel: AutorisationSanitaireModel): AutorisationSanitaire {
+    return {
+      code: autorisationModel.activité,
+      libellé: autorisationModel.libelléActivité,
+      modalités: [this.construisLaModalitéDUneAutorisation(autorisationModel)],
+    }
+  }
+
+  private construisLaModalitéDUneAutorisation(autorisationModel: AutorisationSanitaireModel):
+  AutorisationSanitaireModalité<AutorisationSanitaireAvecDatesEtNuméroArhgos> {
+    return {
+      code: autorisationModel.modalité,
+      formes: [this.construisLaFormeDUneAutorisation(autorisationModel)],
+      libellé: autorisationModel.libelléModalité,
+    }
+  }
+
+  private construisLaFormeDUneAutorisation(autorisationModel: AutorisationSanitaireModel):
+  AutorisationSanitaireForme<AutorisationSanitaireAvecDatesEtNuméroArhgos> {
+    return {
+      code: autorisationModel.forme,
+      dates: this.construisLesDatesDUneAutorisation(autorisationModel),
+      libellé: autorisationModel.libelléForme,
+    }
+  }
+
+  private construisLesDatesDUneAutorisation(autorisationModel: AutorisationSanitaireModel): AutorisationSanitaireAvecDatesEtNuméroArhgos {
+    return {
+      dateDAutorisation: autorisationModel.dateAutorisation,
+      dateDeFin: autorisationModel.dateFin,
+      dateDeMiseEnOeuvre: autorisationModel.dateMiseEnOeuvre,
+      numéroArhgos: autorisationModel.numéroAutorisationArhgos,
+    }
   }
 }
