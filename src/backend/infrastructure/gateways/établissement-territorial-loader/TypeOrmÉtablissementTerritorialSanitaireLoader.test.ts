@@ -32,6 +32,7 @@ describe('Établissement territorial sanitaire loader', () => {
   let reconnaissanceContractuelleSanitaireRepository: Repository<ReconnaissanceContractuelleSanitaireModel>
 
   beforeAll(async () => {
+    await clearAllTables(await orm)
     activitéSanitaireModelRepository = (await orm).getRepository(ActivitéSanitaireModel)
     établissementTerritorialIdentitéRepository = (await orm).getRepository(ÉtablissementTerritorialIdentitéModel)
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel)
@@ -186,13 +187,25 @@ describe('Établissement territorial sanitaire loader', () => {
   })
 
   describe('Charge les autorisations et capacités d’un établissement sanitaire', () => {
-    it.only('charge les autorisations triés par activité, modalité puis forme', async () => {
+    it('charge les autorisations triées par activité, modalité puis forme dans l’ordre croissant', async () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
       await dateMiseÀJourFichierSourceRepository.insert([
         DateMiseÀJourFichierSourceModelTestBuilder.crée({
           dernièreMiseÀJour: '2022-08-29',
           fichier: FichierSource.FINESS_CS1400103,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1400104,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1600101,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1600102,
         }),
       ])
       await établissementTerritorialIdentitéRepository.insert(
@@ -316,6 +329,387 @@ describe('Établissement territorial sanitaire loader', () => {
           },
         ],
         dateMiseÀJourSource: '2022-08-29',
+      })
+    })
+
+    it('charge les autres activités triées par activité, modalité puis forme dans l’ordre croissant', async () => {
+      // GIVEN
+      await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
+      await dateMiseÀJourFichierSourceRepository.insert([
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1400103,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1400104,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1600101,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1600102,
+        }),
+      ])
+      await établissementTerritorialIdentitéRepository.insert(
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
+      )
+      await autreActivitéSanitaireRepository.insert([
+        ÉtablissementTerritorialAutorisationModelTestBuilder.créeAutreActivitéSanitaire({
+          activité: 'A1',
+          forme: '00',
+          libelléActivité: 'Dépôt de sang',
+          libelléForme: 'Pas de forme',
+          libelléModalité: "Dépôt d'urgence",
+          modalité: 'M0',
+          numéroFinessÉtablissementTerritorial,
+        }),
+        ÉtablissementTerritorialAutorisationModelTestBuilder.créeAutreActivitéSanitaire({
+          activité: 'A1',
+          forme: '15',
+          libelléActivité: 'Dépôt de sang',
+          libelléForme: 'Forme non précisée',
+          libelléModalité: "Dépôt d'urgence",
+          modalité: 'M0',
+          numéroFinessÉtablissementTerritorial,
+        }),
+        ÉtablissementTerritorialAutorisationModelTestBuilder.créeAutreActivitéSanitaire({
+          activité: 'A1',
+          forme: '15',
+          libelléActivité: 'Dépôt de sang',
+          libelléForme: 'Forme non précisée',
+          libelléModalité: 'Dépôt relais',
+          modalité: 'M2',
+          numéroFinessÉtablissementTerritorial,
+        }),
+        ÉtablissementTerritorialAutorisationModelTestBuilder.créeAutreActivitéSanitaire({
+          activité: 'A0',
+          forme: '00',
+          libelléActivité: 'Installation de chirurgie esthétique',
+          libelléForme: 'Pas de forme',
+          libelléModalité: "Dépôt d'urgence",
+          modalité: 'M0',
+          numéroFinessÉtablissementTerritorial,
+        }),
+      ])
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm)
+
+      // WHEN
+      const { autresActivités } = await typeOrmÉtablissementTerritorialLoader.chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial)
+
+      // THEN
+      expect(autresActivités).toStrictEqual<ÉtablissementTerritorialSanitaireAutorisationEtCapacité['autresActivités']>({
+        activités: [
+          {
+            code: 'A0',
+            libellé: 'Installation de chirurgie esthétique',
+            modalités: [
+              {
+                code: 'M0',
+                formes: [
+                  {
+                    code: '00',
+                    dates: {
+                      dateDAutorisation: '2019-06-03',
+                      dateDeFin: '2024-08-31',
+                      dateDeMiseEnOeuvre: '2019-06-03',
+                    },
+                    libellé: 'Pas de forme',
+                  },
+                ],
+                libellé: "Dépôt d'urgence",
+              },
+            ],
+          },
+          {
+            code: 'A1',
+            libellé: 'Dépôt de sang',
+            modalités: [
+              {
+                code: 'M0',
+                formes: [
+                  {
+                    code: '00',
+                    dates: {
+                      dateDAutorisation: '2019-06-03',
+                      dateDeFin: '2024-08-31',
+                      dateDeMiseEnOeuvre: '2019-06-03',
+                    },
+                    libellé: 'Pas de forme',
+                  },
+                  {
+                    code: '15',
+                    dates: {
+                      dateDAutorisation: '2019-06-03',
+                      dateDeFin: '2024-08-31',
+                      dateDeMiseEnOeuvre: '2019-06-03',
+                    },
+                    libellé: 'Forme non précisée',
+                  },
+                ],
+                libellé: "Dépôt d'urgence",
+              },
+              {
+                code: 'M2',
+                formes: [
+                  {
+                    code: '15',
+                    dates: {
+                      dateDAutorisation: '2019-06-03',
+                      dateDeFin: '2024-08-31',
+                      dateDeMiseEnOeuvre: '2019-06-03',
+                    },
+                    libellé: 'Forme non précisée',
+                  },
+                ],
+                libellé: 'Dépôt relais',
+              },
+            ],
+          },
+        ],
+        dateMiseÀJourSource: '2022-08-29',
+      })
+    })
+
+    it('charge les reconnaissances contractuelles triées par activité, modalité puis forme dans l’ordre croissant', async () => {
+      // GIVEN
+      await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
+      await dateMiseÀJourFichierSourceRepository.insert([
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1400103,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1400104,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1600101,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1600102,
+        }),
+      ])
+      await établissementTerritorialIdentitéRepository.insert(
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
+      )
+      await reconnaissanceContractuelleSanitaireRepository.insert([
+        ÉtablissementTerritorialAutorisationModelTestBuilder.créeReconnaissanceContractuelleSanitaire({
+          activité: 'R7',
+          forme: '01',
+          libelléActivité: 'Surveillance continue',
+          libelléForme: 'Hospitalisation complète (24 heures consécutives ou plus)',
+          libelléModalité: 'USC polyvalente - adulte (non adossée à une unité de réanimation)',
+          modalité: 'N8',
+          numéroFinessÉtablissementTerritorial,
+        }),
+        ÉtablissementTerritorialAutorisationModelTestBuilder.créeReconnaissanceContractuelleSanitaire({
+          activité: 'R7',
+          forme: '01',
+          libelléActivité: 'Surveillance continue',
+          libelléForme: 'Hospitalisation complète (24 heures consécutives ou plus)',
+          libelléModalité: 'Equipe mobile',
+          modalité: 'N4',
+          numéroFinessÉtablissementTerritorial,
+        }),
+        ÉtablissementTerritorialAutorisationModelTestBuilder.créeReconnaissanceContractuelleSanitaire({
+          activité: 'R7',
+          forme: '00',
+          libelléActivité: 'Surveillance continue',
+          libelléForme: 'Pas de forme',
+          libelléModalité: 'USC polyvalente - adulte (non adossée à une unité de réanimation)',
+          modalité: 'N8',
+          numéroFinessÉtablissementTerritorial,
+        }),
+        ÉtablissementTerritorialAutorisationModelTestBuilder.créeReconnaissanceContractuelleSanitaire({
+          activité: 'S6',
+          forme: '00',
+          libelléActivité: "Structure spécifique d'hospitalisation",
+          libelléForme: 'Pas de forme',
+          libelléModalité: 'Clinique ouverte',
+          modalité: 'B3',
+          numéroFinessÉtablissementTerritorial,
+        }),
+      ])
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm)
+
+      // WHEN
+      const { reconnaissancesContractuelles } = await typeOrmÉtablissementTerritorialLoader.chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial)
+
+      // THEN
+      expect(reconnaissancesContractuelles).toStrictEqual<ÉtablissementTerritorialSanitaireAutorisationEtCapacité['reconnaissancesContractuelles']>({
+        activités: [
+          {
+            code: 'R7',
+            libellé: 'Surveillance continue',
+            modalités: [
+              {
+                code: 'N8',
+                formes: [
+                  {
+                    code: '00',
+                    dates: {
+                      capacitéAutorisée: 4,
+                      dateDEffetAsr: '2013-11-30',
+                      dateDEffetCpom: '2012-12-01',
+                      dateDeFinCpom: '2018-11-30',
+                      numéroArhgos: '01-00-RC00000',
+                      numéroCpom: '01-00-C00000',
+                    },
+                    libellé: 'Pas de forme',
+                  },
+                  {
+                    code: '01',
+                    dates: {
+                      capacitéAutorisée: 4,
+                      dateDEffetAsr: '2013-11-30',
+                      dateDEffetCpom: '2012-12-01',
+                      dateDeFinCpom: '2018-11-30',
+                      numéroArhgos: '01-00-RC00000',
+                      numéroCpom: '01-00-C00000',
+                    },
+                    libellé: 'Hospitalisation complète (24 heures consécutives ou plus)',
+                  },
+                ],
+                libellé: 'USC polyvalente - adulte (non adossée à une unité de réanimation)',
+              },
+              {
+                code: 'N4',
+                formes: [
+                  {
+                    code: '01',
+                    dates: {
+                      capacitéAutorisée: 4,
+                      dateDEffetAsr: '2013-11-30',
+                      dateDEffetCpom: '2012-12-01',
+                      dateDeFinCpom: '2018-11-30',
+                      numéroArhgos: '01-00-RC00000',
+                      numéroCpom: '01-00-C00000',
+                    },
+                    libellé: 'Hospitalisation complète (24 heures consécutives ou plus)',
+                  },
+                ],
+                libellé: 'Equipe mobile',
+              },
+            ],
+          },
+          {
+            code: 'S6',
+            libellé: "Structure spécifique d'hospitalisation",
+            modalités: [
+              {
+                code: 'B3',
+                formes: [
+                  {
+                    code: '00',
+                    dates: {
+                      capacitéAutorisée: 4,
+                      dateDEffetAsr: '2013-11-30',
+                      dateDEffetCpom: '2012-12-01',
+                      dateDeFinCpom: '2018-11-30',
+                      numéroArhgos: '01-00-RC00000',
+                      numéroCpom: '01-00-C00000',
+                    },
+                    libellé: 'Pas de forme',
+                  },
+                ],
+                libellé: 'Clinique ouverte',
+              },
+            ],
+          },
+        ],
+        dateMiseÀJourSource: '2022-08-29',
+      })
+    })
+
+    it.only('charge les équipements matériels lourds triés par code', async () => {
+      // GIVEN
+      await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
+      await dateMiseÀJourFichierSourceRepository.insert([
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1400103,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1400104,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1600101,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1600102,
+        }),
+      ])
+      await établissementTerritorialIdentitéRepository.insert(
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
+      )
+      await équipementMatérielLourdRepository.insert([
+        ÉtablissementTerritorialAutorisationModelTestBuilder.créeÉquipementMatérielLourdSanitaire({
+          libelléÉquipementMatérielLourd: 'Scanographe à utilisation médicale',
+          numéroAutorisationArhgos: '01-00-0000',
+          numéroFinessÉtablissementTerritorial,
+          équipementMatérielLourd: '05602',
+        }),
+        ÉtablissementTerritorialAutorisationModelTestBuilder.créeÉquipementMatérielLourdSanitaire({
+          libelléÉquipementMatérielLourd: 'Scanographe à utilisation médicale',
+          numéroAutorisationArhgos: '02-00-0000',
+          numéroFinessÉtablissementTerritorial,
+          équipementMatérielLourd: '05602',
+        }),
+        ÉtablissementTerritorialAutorisationModelTestBuilder.créeÉquipementMatérielLourdSanitaire({
+          libelléÉquipementMatérielLourd: "Appareil d'IRM à utilisation clinique",
+          numéroAutorisationArhgos: '11-11-1111',
+          numéroFinessÉtablissementTerritorial,
+          équipementMatérielLourd: '06201',
+        }),
+      ])
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm)
+
+      // WHEN
+      const { équipementsMatérielsLourds } = await typeOrmÉtablissementTerritorialLoader.chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial)
+
+      // THEN
+      expect(équipementsMatérielsLourds).toStrictEqual<ÉtablissementTerritorialSanitaireAutorisationEtCapacité['équipementsMatérielsLourds']>({
+        dateMiseÀJourSource: '2022-08-29',
+        équipements: [
+          {
+            autorisations: [
+              {
+                dateDAutorisation: '2007-11-06',
+                dateDeFin: '2029-01-01',
+                dateDeMiseEnOeuvre: '2011-10-19',
+                numéroArhgos: '01-00-0000',
+              },
+              {
+                dateDAutorisation: '2007-11-06',
+                dateDeFin: '2029-01-01',
+                dateDeMiseEnOeuvre: '2011-10-19',
+                numéroArhgos: '02-00-0000',
+              },
+            ],
+            code: '05602',
+            libellé: 'Scanographe à utilisation médicale',
+          },
+          {
+            autorisations: [
+              {
+                dateDAutorisation: '2007-11-06',
+                dateDeFin: '2029-01-01',
+                dateDeMiseEnOeuvre: '2011-10-19',
+                numéroArhgos: '11-11-1111',
+              },
+            ],
+            code: '06201',
+            libellé: "Appareil d'IRM à utilisation clinique",
+          },
+        ],
       })
     })
   })

@@ -1,5 +1,8 @@
 import { AutorisationMédicoSocialModel } from '../models/AutorisationMédicoSocialModel'
 import { AutorisationSanitaireModel } from '../models/AutorisationSanitaireModel'
+import { AutreActivitéSanitaireModel } from '../models/AutreActivitéSanitaireModel'
+import { ReconnaissanceContractuelleSanitaireModel } from '../models/ReconnaissanceContractuelleSanitaireModel'
+import { ÉquipementMatérielLourdModel } from '../models/ÉquipementMatérielLourdModel'
 
 export class ÉtablissementTerritorialAutorisationModelTestBuilder {
   public static créeMédicoSocial(
@@ -38,5 +41,56 @@ export class ÉtablissementTerritorialAutorisationModelTestBuilder {
     autorisationSanitaireModel.numéroAutorisationArhgos = champsSurchargés?.numéroAutorisationArhgos || '01-00-000'
     autorisationSanitaireModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '670799667'
     return autorisationSanitaireModel
+  }
+
+  public static créeAutreActivitéSanitaire(
+    champsSurchargés?: Partial<AutreActivitéSanitaireModel>
+  ): AutreActivitéSanitaireModel {
+    const autreActivitéSanitaireModel = new AutreActivitéSanitaireModel()
+    autreActivitéSanitaireModel.activité = champsSurchargés?.activité || 'A1'
+    autreActivitéSanitaireModel.dateAutorisation = champsSurchargés?.dateAutorisation || '2019-06-03'
+    autreActivitéSanitaireModel.dateFin = champsSurchargés?.dateFin || '2024-08-31'
+    autreActivitéSanitaireModel.dateMiseEnOeuvre = champsSurchargés?.dateMiseEnOeuvre || '2019-06-03'
+    autreActivitéSanitaireModel.forme = champsSurchargés?.forme || '00'
+    autreActivitéSanitaireModel.libelléActivité = champsSurchargés?.libelléActivité || 'Dépôt de sang'
+    autreActivitéSanitaireModel.libelléForme = champsSurchargés?.libelléForme || 'Pas de forme'
+    autreActivitéSanitaireModel.libelléModalité = champsSurchargés?.libelléModalité || 'Dépôt relais'
+    autreActivitéSanitaireModel.modalité = champsSurchargés?.modalité || 'M2'
+    autreActivitéSanitaireModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '670799667'
+    return autreActivitéSanitaireModel
+  }
+
+  public static créeReconnaissanceContractuelleSanitaire(
+    champsSurchargés?: Partial<ReconnaissanceContractuelleSanitaireModel>
+  ): ReconnaissanceContractuelleSanitaireModel {
+    const reconnaissanceContractuelleSanitaireModel = new ReconnaissanceContractuelleSanitaireModel()
+    reconnaissanceContractuelleSanitaireModel.activité = champsSurchargés?.activité || 'A1'
+    reconnaissanceContractuelleSanitaireModel.capacitéAutorisée = champsSurchargés?.capacitéAutorisée || 4
+    reconnaissanceContractuelleSanitaireModel.dateEffetAsr = champsSurchargés?.dateEffetAsr || '2013-11-30'
+    reconnaissanceContractuelleSanitaireModel.dateEffetCpom = champsSurchargés?.dateEffetCpom || '2012-12-01'
+    reconnaissanceContractuelleSanitaireModel.dateFinCpom = champsSurchargés?.dateFinCpom || '2018-11-30'
+    reconnaissanceContractuelleSanitaireModel.forme = champsSurchargés?.forme || '00'
+    reconnaissanceContractuelleSanitaireModel.numéroCpom = champsSurchargés?.numéroCpom || '01-00-C00000'
+    reconnaissanceContractuelleSanitaireModel.libelléActivité = champsSurchargés?.libelléActivité || 'Dépôt de sang'
+    reconnaissanceContractuelleSanitaireModel.libelléForme = champsSurchargés?.libelléForme || 'Pas de forme'
+    reconnaissanceContractuelleSanitaireModel.libelléModalité = champsSurchargés?.libelléModalité || 'Dépôt relais'
+    reconnaissanceContractuelleSanitaireModel.modalité = champsSurchargés?.modalité || 'M2'
+    reconnaissanceContractuelleSanitaireModel.numéroAutorisationArhgos = champsSurchargés?.numéroAutorisationArhgos || '01-00-RC00000'
+    reconnaissanceContractuelleSanitaireModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '670799667'
+    return reconnaissanceContractuelleSanitaireModel
+  }
+
+  public static créeÉquipementMatérielLourdSanitaire(
+    champsSurchargés?: Partial<ÉquipementMatérielLourdModel>
+  ): ÉquipementMatérielLourdModel {
+    const équipementMatérielLourdModel = new ÉquipementMatérielLourdModel()
+    équipementMatérielLourdModel.dateAutorisation = champsSurchargés?.dateAutorisation || '2007-11-06'
+    équipementMatérielLourdModel.dateFin = champsSurchargés?.dateFin || '2029-01-01'
+    équipementMatérielLourdModel.dateMiseEnOeuvre = champsSurchargés?.dateMiseEnOeuvre || '2011-10-19'
+    équipementMatérielLourdModel.équipementMatérielLourd = champsSurchargés?.équipementMatérielLourd || '05602'
+    équipementMatérielLourdModel.libelléÉquipementMatérielLourd = champsSurchargés?.libelléÉquipementMatérielLourd || 'Scanographe à utilisation médicale'
+    équipementMatérielLourdModel.numéroAutorisationArhgos = champsSurchargés?.numéroAutorisationArhgos || '01-00-0000'
+    équipementMatérielLourdModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '670799667'
+    return équipementMatérielLourdModel
   }
 }
