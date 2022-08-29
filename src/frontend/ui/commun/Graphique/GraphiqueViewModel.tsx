@@ -7,7 +7,7 @@ import { Wording } from '../../../configuration/wording/Wording'
 import { MiseEnExergue } from '../MiseEnExergue/MiseEnExergue'
 import { TableIndicateur } from '../TableIndicateur/TableIndicateur'
 
-export type LibelléDeGraphe = Readonly<{
+type LibelléDeGraphe = Readonly<{
   couleur: string
   tailleDePolice: string
   texte: number | string
