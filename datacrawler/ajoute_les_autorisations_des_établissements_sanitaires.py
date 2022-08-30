@@ -87,38 +87,38 @@ def ajoute_les_autorisations_des_établissements_sanitaires(
     with base_de_données.begin() as connection:
         écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
             "autorisations sanitaires",
+            "FINESS",
             connection,
             TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_SANITAIRES,
             autorisations_des_établissements_sanitaires,
-            données_des_autorisations.dateDeMiseÀJour,
-            FichierSource.FINESS_CS1400103,
+            [(FichierSource.FINESS_CS1400103, données_des_autorisations.dateDeMiseÀJour)],
             logger,
         )
         écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
             "équipements matériels lourds",
+            "FINESS",
             connection,
             TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS,
             équipements_matériels_lourds_des_établissements_sanitaires,
-            données_des_équipements_matériels_lourds.dateDeMiseÀJour,
-            FichierSource.FINESS_CS1400104,
+            [(FichierSource.FINESS_CS1400104, données_des_équipements_matériels_lourds.dateDeMiseÀJour)],
             logger,
         )
         écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
             "autres activités sanitaires",
+            "FINESS",
             connection,
             TABLES_DES_AUTRES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
             autres_activités_des_établissements_sanitaires,
-            données_des_autres_activités.dateDeMiseÀJour,
-            FichierSource.FINESS_CS1600101,
+            [(FichierSource.FINESS_CS1600101, données_des_autres_activités.dateDeMiseÀJour)],
             logger,
         )
         écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
             "reconnaissances contractuelles",
+            "FINESS",
             connection,
             TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES,
             reconnaissances_contractuelles_des_établissements_sanitaires,
-            données_des_reconnaissances_contractuelles.dateDeMiseÀJour,
-            FichierSource.FINESS_CS1600102,
+            [(FichierSource.FINESS_CS1600102, données_des_reconnaissances_contractuelles.dateDeMiseÀJour)],
             logger,
         )
 
@@ -147,7 +147,7 @@ if __name__ == "__main__":
         répertoire_des_fichiers, trouve_le_nom_du_fichier(fichiers, "finess_cs1600102", logger_helios)
     )
     logger_helios.info(
-        "[FINESS]  les autorisations pour les ET sanitaires dans les fichiers : %s, %s, %s, %s",
+        "[FINESS] Cherche les autorisations pour les ET sanitaires dans les fichiers : %s, %s, %s, %s",
         chemin_local_du_fichier_des_autorisations,
         chemin_local_du_fichier_des_équipements_matériels_lourds,
         chemin_local_du_fichier_des_autres_activités,

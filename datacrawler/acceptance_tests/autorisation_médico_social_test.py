@@ -38,10 +38,12 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
 
     def test_sauvegarde_les_autorisations_installées_des_établissements_médico_sociaux(self) -> None:
         # GIVEN
+        numéro_finess_avec_valeurs_manquantes = "010786259"
+        numéro_finess_inconnu_de_la_base = "140004698"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
-        sauvegarde_un_établissement_en_base("010786259", NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+        sauvegarde_un_établissement_en_base(numéro_finess_avec_valeurs_manquantes, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
-        sauvegarde_un_établissement_en_base("140004698", NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+        sauvegarde_un_établissement_en_base(numéro_finess_inconnu_de_la_base, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         chemin_du_fichier_finess_cs1400105 = self.fichier_de_données
 
         # WHEN
@@ -63,7 +65,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "libelle_activite": "Hébergement Complet Internat",
                     "libelle_clientele": "Personnes Agées (Sans Autre Indication)",
                     "libelle_discipline_equipement": "Hébergement résidence autonomie personnes âgées seules F1",
-                    "numero_finess_etablissement_territorial": "010786259",
+                    "numero_finess_etablissement_territorial": numéro_finess_avec_valeurs_manquantes,
                 },
                 {
                     "activite": "11",

@@ -36,38 +36,38 @@ class TestLisLeFichierXml:
         crée_le_fichier_xml(
             chemin_du_fichier,
             """<equipementsocial>
-      <nofinesset>070020804</nofinesset>
-      <de>023</de>
-      <libde>Stérilisation</libde>
-      <libcourtde>Stérilisation</libcourtde>
-      <ta>03</ta>
-      <libta>Hospitalisation Complète</libta>
-      <libcourtta>Hospit. Complète</libcourtta>
-      <client>020</client>
-      <libclient>Toutes Déficiences Physiques (Sans autre indication)</libclient>
-      <libcourtclient>Toutes Déf.Physiques</libcourtclient>
-      <sourceinfo>S</sourceinfo>
-      <libsourceinfo>Inspection</libsourceinfo>
-      <capinstot>3</capinstot>
-      <capinstm xsi:nil="true"/>
-      <capinstf xsi:nil="true"/>
-      <capinsthab xsi:nil="true"/>
-      <ageminiinst xsi:nil="true"/>
-      <agemaxiinst xsi:nil="true"/>
-      <indsupinst>O</indsupinst>
-      <datederinst>2009-01-01</datederinst>
-      <datepremautor>2006-03-29</datepremautor>
-      <capautot>3</capautot>
-      <capautm xsi:nil="true"/>
-      <capautf xsi:nil="true"/>
-      <capauthab>3</capauthab>
-      <ageminiaut xsi:nil="true"/>
-      <agemaxiaut xsi:nil="true"/>
-      <indsupaut>O</indsupaut>
-      <dateautor>2006-03-29</dateautor>
-      <datemajaut>2012-05-03</datemajaut>
-      <datemajinst>2009-06-29</datemajinst>
-      </equipementsocial>""",
+                <nofinesset>070020804</nofinesset>
+                <de>023</de>
+                <libde>Stérilisation</libde>
+                <libcourtde>Stérilisation</libcourtde>
+                <ta>03</ta>
+                <libta>Hospitalisation Complète</libta>
+                <libcourtta>Hospit. Complète</libcourtta>
+                <client>020</client>
+                <libclient>Toutes Déficiences Physiques (Sans autre indication)</libclient>
+                <libcourtclient>Toutes Déf.Physiques</libcourtclient>
+                <sourceinfo>S</sourceinfo>
+                <libsourceinfo>Inspection</libsourceinfo>
+                <capinstot>3</capinstot>
+                <capinstm xsi:nil="true"/>
+                <capinstf xsi:nil="true"/>
+                <capinsthab xsi:nil="true"/>
+                <ageminiinst xsi:nil="true"/>
+                <agemaxiinst xsi:nil="true"/>
+                <indsupinst>O</indsupinst>
+                <datederinst>2009-01-01</datederinst>
+                <datepremautor>2006-03-29</datepremautor>
+                <capautot>3</capautot>
+                <capautm xsi:nil="true"/>
+                <capautf xsi:nil="true"/>
+                <capauthab>3</capauthab>
+                <ageminiaut xsi:nil="true"/>
+                <agemaxiaut xsi:nil="true"/>
+                <indsupaut>O</indsupaut>
+                <dateautor>2006-03-29</dateautor>
+                <datemajaut>2012-05-03</datemajaut>
+                <datemajinst>2009-06-29</datemajinst>
+            </equipementsocial>""",
         )
         xpath = XPATH_FINESS_CS1400105
 
@@ -114,17 +114,17 @@ class TestLisLeFichierXml:
             ),
         )
 
-    def test_remplace_une_donnée_manquante_par_na_même_si_échappée(self) -> None:
+    def test_traite_les_valeurs_manquantes(self) -> None:
         # GIVEN
         chemin_du_fichier = f"{self.répertoire_des_fichiers}/enrichi/finess_cs1400105_stock_20211214-0346.xml"
         crée_le_fichier_xml(
             chemin_du_fichier,
             """<parent>
-    <echappe>670014604</echappe>
-  </parent>
-  <parent>
-    <echappe xsi:nil="true" />
-  </parent>""",
+            <echappe>670014604</echappe>
+            </parent>
+            <parent>
+                <echappe xsi:nil="true" />
+            </parent>""",
         )
         xpath = "./parent"
         balises_à_échapper = ["echappe"]
@@ -148,38 +148,38 @@ class TestLisLeFichierXml:
         crée_le_fichier_xml(
             chemin_du_fichier,
             """<equipementsocial>
-  <nofinesset>070020804</nofinesset>
-  <de>924</de>
-  <libde>Accueil pour Personnes Âgées</libde>
-  <libcourtde>Acc. Personnes Âgées</libcourtde>
-  <ta>21</ta>
-  <libta>Accueil de Jour</libta>
-  <libcourtta>Accueil de Jour</libcourtta>
-  <client>436</client>
-  <libclient>Personnes Alzheimer ou maladies apparentées</libclient>
-  <libcourtclient>Alzheimer, mal appar</libcourtclient>
-  <sourceinfo>S</sourceinfo>
-  <libsourceinfo>Inspection</libsourceinfo>
-  <capinstot>3</capinstot>
-  <capinstm xsi:nil="true"/>
-  <capinstf xsi:nil="true"/>
-  <capinsthab xsi:nil="true"/>
-  <ageminiinst xsi:nil="true"/>
-  <agemaxiinst xsi:nil="true"/>
-  <indsupinst>O</indsupinst>
-  <datederinst>2009-01-01</datederinst>
-  <datepremautor>2006-03-29</datepremautor>
-  <capautot>3</capautot>
-  <capautm xsi:nil="true"/>
-  <capautf xsi:nil="true"/>
-  <capauthab>3</capauthab>
-  <ageminiaut xsi:nil="true"/>
-  <agemaxiaut xsi:nil="true"/>
-  <indsupaut>O</indsupaut>
-  <dateautor>2006-03-29</dateautor>
-  <datemajaut>2012-05-03</datemajaut>
-  <datemajinst>2009-06-29</datemajinst>
-  </equipementsocial>""",
+                <nofinesset>070020804</nofinesset>
+                <de>924</de>
+                <libde>Accueil pour Personnes Âgées</libde>
+                <libcourtde>Acc. Personnes Âgées</libcourtde>
+                <ta>21</ta>
+                <libta>Accueil de Jour</libta>
+                <libcourtta>Accueil de Jour</libcourtta>
+                <client>436</client>
+                <libclient>Personnes Alzheimer ou maladies apparentées</libclient>
+                <libcourtclient>Alzheimer, mal appar</libcourtclient>
+                <sourceinfo>S</sourceinfo>
+                <libsourceinfo>Inspection</libsourceinfo>
+                <capinstot>3</capinstot>
+                <capinstm xsi:nil="true"/>
+                <capinstf xsi:nil="true"/>
+                <capinsthab xsi:nil="true"/>
+                <ageminiinst xsi:nil="true"/>
+                <agemaxiinst xsi:nil="true"/>
+                <indsupinst>O</indsupinst>
+                <datederinst>2009-01-01</datederinst>
+                <datepremautor>2006-03-29</datepremautor>
+                <capautot>3</capautot>
+                <capautm xsi:nil="true"/>
+                <capautf xsi:nil="true"/>
+                <capauthab>3</capauthab>
+                <ageminiaut xsi:nil="true"/>
+                <agemaxiaut xsi:nil="true"/>
+                <indsupaut>O</indsupaut>
+                <dateautor>2006-03-29</dateautor>
+                <datemajaut>2012-05-03</datemajaut>
+                <datemajinst>2009-06-29</datemajinst>
+            </equipementsocial>""",
         )
         xpath = XPATH_FINESS_CS1400105
 
@@ -232,71 +232,71 @@ class TestLisLeFichierXml:
         crée_le_fichier_xml(
             chemin_du_fichier,
             """<activiteoffresoin>
-        <nofinessej>310781406</nofinessej>
-        <rsej>CHU TOULOUSE</rsej>
-        <activite>16</activite>
-        <libactivite>Traitement de l'insuffisance rénale chronique par épuration extrarénale</libactivite>
-        <modalite>40</modalite>
-        <libmodalite>Hémodialyse en centre pour adultes</libmodalite>
-        <forme>00</forme>
-        <libforme>Pas de forme</libforme>
-        <noautor>762201955</noautor>
-        <dateautor>2004-11-02</dateautor>
-        <indnatlien>J</indnatlien>
-        <nofinesset>310019351</nofinesset>
-        <rset>HOPITAL LARREY CHU TOULOUSE</rset>
-        <noligautor>1757</noligautor>
-        <noligautoranc xsi:nil="true"/>
-        <noautorarhgos>76-73-430</noautorarhgos>
-        <noimplarhgos>76-73-430</noimplarhgos>
-        <noancautact xsi:nil="true"/>
-        <noancauteml xsi:nil="true"/>
-        <sectpsy xsi:nil="true"/>
-        <libsectpsy xsi:nil="true"/>
-        <datemeo>2005-03-22</datemeo>
-        <datefin>2027-09-23</datefin>
-        <datelimite xsi:nil="true"/>
-        <indcaduc>N</indcaduc>
-        <daterenouv xsi:nil="true"/>
-        <indrenouv xsi:nil="true"/>
-        <indsupact>N</indsupact>
-        <indsupsite>N</indsupsite>
-        <datemajact>2022-08-24</datemajact>
-        <datemajsite>2022-08-24</datemajsite>
-    </activiteoffresoin>
-    <activiteoffresoin>
-        <nofinessej>310026075</nofinessej>
-        <rsej>SARL ST CYPRIEN RIVE GAUCHE</rsej>
-        <activite>02</activite>
-        <libactivite>Chirurgie</libactivite>
-        <modalite>00</modalite>
-        <libmodalite>Pas de modalité</libmodalite>
-        <forme>01</forme>
-        <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
-        <noautor>762201956</noautor>
-        <dateautor>1998-07-07</dateautor>
-        <indnatlien>J</indnatlien>
-        <nofinesset>310026083</nofinesset>
-        <rset>CL RIVE GAUCHE TOULOUSE</rset>
-        <noligautor>1758</noligautor>
-        <noligautoranc xsi:nil="true"/>
-        <noautorarhgos>76-73-434</noautorarhgos>
-        <noimplarhgos>76-73-434</noimplarhgos>
-        <noancautact xsi:nil="true"/>
-        <noancauteml xsi:nil="true"/>
-        <sectpsy xsi:nil="true"/>
-        <libsectpsy xsi:nil="true"/>
-        <datemeo>1999-11-02</datemeo>
-        <datefin>2027-04-30</datefin>
-        <datelimite xsi:nil="true"/>
-        <indcaduc>N</indcaduc>
-        <daterenouv xsi:nil="true"/>
-        <indrenouv xsi:nil="true"/>
-        <indsupact>N</indsupact>
-        <indsupsite>N</indsupsite>
-        <datemajact>2022-08-24</datemajact>
-        <datemajsite>2022-08-24</datemajsite>
-    </activiteoffresoin>
+                <nofinessej>310781406</nofinessej>
+                <rsej>CHU TOULOUSE</rsej>
+                <activite>16</activite>
+                <libactivite>Traitement de l'insuffisance rénale chronique par épuration extrarénale</libactivite>
+                <modalite>40</modalite>
+                <libmodalite>Hémodialyse en centre pour adultes</libmodalite>
+                <forme>00</forme>
+                <libforme>Pas de forme</libforme>
+                <noautor>762201955</noautor>
+                <dateautor>2004-11-02</dateautor>
+                <indnatlien>J</indnatlien>
+                <nofinesset>310019351</nofinesset>
+                <rset>HOPITAL LARREY CHU TOULOUSE</rset>
+                <noligautor>1757</noligautor>
+                <noligautoranc xsi:nil="true"/>
+                <noautorarhgos>00-00-000</noautorarhgos>
+                <noimplarhgos>00-00-000</noimplarhgos>
+                <noancautact xsi:nil="true"/>
+                <noancauteml xsi:nil="true"/>
+                <sectpsy xsi:nil="true"/>
+                <libsectpsy xsi:nil="true"/>
+                <datemeo>2005-03-22</datemeo>
+                <datefin>2027-09-23</datefin>
+                <datelimite xsi:nil="true"/>
+                <indcaduc>N</indcaduc>
+                <daterenouv xsi:nil="true"/>
+                <indrenouv xsi:nil="true"/>
+                <indsupact>N</indsupact>
+                <indsupsite>N</indsupsite>
+                <datemajact>2022-08-24</datemajact>
+                <datemajsite>2022-08-24</datemajsite>
+            </activiteoffresoin>
+            <activiteoffresoin>
+                <nofinessej>310026075</nofinessej>
+                <rsej>SARL ST CYPRIEN RIVE GAUCHE</rsej>
+                <activite>02</activite>
+                <libactivite>Chirurgie</libactivite>
+                <modalite>00</modalite>
+                <libmodalite>Pas de modalité</libmodalite>
+                <forme>01</forme>
+                <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
+                <noautor>762201956</noautor>
+                <dateautor>1998-07-07</dateautor>
+                <indnatlien>J</indnatlien>
+                <nofinesset>310026083</nofinesset>
+                <rset>CL RIVE GAUCHE TOULOUSE</rset>
+                <noligautor>1758</noligautor>
+                <noligautoranc xsi:nil="true"/>
+                <noautorarhgos>01-00-000</noautorarhgos>
+                <noimplarhgos>01-00-000</noimplarhgos>
+                <noancautact xsi:nil="true"/>
+                <noancauteml xsi:nil="true"/>
+                <sectpsy xsi:nil="true"/>
+                <libsectpsy xsi:nil="true"/>
+                <datemeo>1999-11-02</datemeo>
+                <datefin>2027-04-30</datefin>
+                <datelimite xsi:nil="true"/>
+                <indcaduc>N</indcaduc>
+                <daterenouv xsi:nil="true"/>
+                <indrenouv xsi:nil="true"/>
+                <indsupact>N</indsupact>
+                <indsupsite>N</indsupsite>
+                <datemajact>2022-08-24</datemajact>
+                <datemajsite>2022-08-24</datemajsite>
+            </activiteoffresoin>
             """,
         )
         xpath = XPATH_FINESS_CS1400103
@@ -325,8 +325,8 @@ class TestLisLeFichierXml:
                         "rset": "HOPITAL LARREY CHU TOULOUSE",
                         "noligautor": 1757,
                         "noligautoranc": NaN,
-                        "noautorarhgos": "76-73-430",
-                        "noimplarhgos": "76-73-430",
+                        "noautorarhgos": "00-00-000",
+                        "noimplarhgos": "00-00-000",
                         "noancautact": NaN,
                         "noancauteml": NaN,
                         "sectpsy": NaN,
@@ -358,8 +358,8 @@ class TestLisLeFichierXml:
                         "rset": "CL RIVE GAUCHE TOULOUSE",
                         "noligautor": 1758,
                         "noligautoranc": NaN,
-                        "noautorarhgos": "76-73-434",
-                        "noimplarhgos": "76-73-434",
+                        "noautorarhgos": "01-00-000",
+                        "noimplarhgos": "01-00-000",
                         "noancautact": NaN,
                         "noancauteml": NaN,
                         "sectpsy": NaN,
@@ -385,53 +385,53 @@ class TestLisLeFichierXml:
         crée_le_fichier_xml(
             chemin_du_fichier,
             """<equipmateriellourd>
-        <nofinessej>310781406</nofinessej>
-        <rsej>CHU TOULOUSE</rsej>
-        <eml>05701</eml>
-        <libeml>Caméra à scintillation sans détecteur d'émission de positons</libeml>
-        <libcourteml>Cam scin sans détect</libcourteml>
-        <noautor>762218998</noautor>
-        <noautorarhgos>76-73-1040</noautorarhgos>
-        <noimplarhgos>76-73-1040</noimplarhgos>
-        <dateautor>2004-11-02</dateautor>
-        <nofinesset>310783055</nofinesset>
-        <numserie xsi:nil="true"/>
-        <marque>0000</marque>
-        <rset>HOPITAL DE RANGUEIL CHU TOULOUSE</rset>
-        <datelimite xsi:nil="true"/>
-        <indcaduc>N</indcaduc>
-        <indnatlien>J</indnatlien>
-        <datemeo>2006-11-08</datemeo>
-        <datefin>2028-05-29</datefin>
-        <indrempl xsi:nil="true"/>
-        <noautorremplacement xsi:nil="true"/>
-        <indsup>N</indsup>
-        <datemaj>2022-08-24</datemaj>
-    </equipmateriellourd>
-    <equipmateriellourd>
-        <nofinessej>310781406</nofinessej>
-        <rsej>CHU TOULOUSE</rsej>
-        <eml>05602</eml>
-        <libeml>Scanographe à utilisation médicale</libeml>
-        <libcourteml>Scanographe méd.</libcourteml>
-        <noautor>762227966</noautor>
-        <noautorarhgos>76-73-1041</noautorarhgos>
-        <noimplarhgos>76-73-1041</noimplarhgos>
-        <dateautor>2004-11-02</dateautor>
-        <nofinesset>310019351</nofinesset>
-        <numserie xsi:nil="true"/>
-        <marque>0000</marque>
-        <rset>HOPITAL LARREY CHU TOULOUSE</rset>
-        <datelimite xsi:nil="true"/>
-        <indcaduc>N</indcaduc>
-        <indnatlien>J</indnatlien>
-        <datemeo>2006-09-15</datemeo>
-        <datefin>2023-03-13</datefin>
-        <indrempl xsi:nil="true"/>
-        <noautorremplacement xsi:nil="true"/>
-        <indsup>N</indsup>
-        <datemaj>2022-08-24</datemaj>
-    </equipmateriellourd>""",
+                <nofinessej>310781406</nofinessej>
+                <rsej>CHU TOULOUSE</rsej>
+                <eml>05701</eml>
+                <libeml>Caméra à scintillation sans détecteur d'émission de positons</libeml>
+                <libcourteml>Cam scin sans détect</libcourteml>
+                <noautor>762218998</noautor>
+                <noautorarhgos>02-00-000</noautorarhgos>
+                <noimplarhgos>02-00-000</noimplarhgos>
+                <dateautor>2004-11-02</dateautor>
+                <nofinesset>310783055</nofinesset>
+                <numserie xsi:nil="true"/>
+                <marque>0000</marque>
+                <rset>HOPITAL DE RANGUEIL CHU TOULOUSE</rset>
+                <datelimite xsi:nil="true"/>
+                <indcaduc>N</indcaduc>
+                <indnatlien>J</indnatlien>
+                <datemeo>2006-11-08</datemeo>
+                <datefin>2028-05-29</datefin>
+                <indrempl xsi:nil="true"/>
+                <noautorremplacement xsi:nil="true"/>
+                <indsup>N</indsup>
+                <datemaj>2022-08-24</datemaj>
+            </equipmateriellourd>
+            <equipmateriellourd>
+                <nofinessej>310781406</nofinessej>
+                <rsej>CHU TOULOUSE</rsej>
+                <eml>05602</eml>
+                <libeml>Scanographe à utilisation médicale</libeml>
+                <libcourteml>Scanographe méd.</libcourteml>
+                <noautor>762227966</noautor>
+                <noautorarhgos>03-00-000</noautorarhgos>
+                <noimplarhgos>03-00-000</noimplarhgos>
+                <dateautor>2004-11-02</dateautor>
+                <nofinesset>310019351</nofinesset>
+                <numserie xsi:nil="true"/>
+                <marque>0000</marque>
+                <rset>HOPITAL LARREY CHU TOULOUSE</rset>
+                <datelimite xsi:nil="true"/>
+                <indcaduc>N</indcaduc>
+                <indnatlien>J</indnatlien>
+                <datemeo>2006-09-15</datemeo>
+                <datefin>2023-03-13</datefin>
+                <indrempl xsi:nil="true"/>
+                <noautorremplacement xsi:nil="true"/>
+                <indsup>N</indsup>
+                <datemaj>2022-08-24</datemaj>
+            </equipmateriellourd>""",
         )
         xpath = XPATH_FINESS_CS1400104
 
@@ -450,8 +450,8 @@ class TestLisLeFichierXml:
                         "libeml": "Caméra à scintillation sans détecteur d'émission de positons",
                         "libcourteml": "Cam scin sans détect",
                         "noautor": 762218998,
-                        "noautorarhgos": "76-73-1040",
-                        "noimplarhgos": "76-73-1040",
+                        "noautorarhgos": "02-00-000",
+                        "noimplarhgos": "02-00-000",
                         "dateautor": "2004-11-02",
                         "nofinesset": "310783055",
                         "numserie": NaN,
@@ -474,8 +474,8 @@ class TestLisLeFichierXml:
                         "libeml": "Scanographe à utilisation médicale",
                         "libcourteml": "Scanographe méd.",
                         "noautor": 762227966,
-                        "noautorarhgos": "76-73-1041",
-                        "noimplarhgos": "76-73-1041",
+                        "noautorarhgos": "03-00-000",
+                        "noimplarhgos": "03-00-000",
                         "dateautor": "2004-11-02",
                         "nofinesset": "310019351",
                         "numserie": NaN,
@@ -501,58 +501,58 @@ class TestLisLeFichierXml:
         crée_le_fichier_xml(
             chemin_du_fichier,
             """
-    <autreactivite>
-        <noautor>242202733</noautor>
-        <nofinessej>370000028</nofinessej>
-        <rsej>SA. CLINIQUE JEANNE D'ARC</rsej>
-        <nofinesset>370000051</nofinesset>
-        <rset>CLINIQUE JEANNE D'ARC - ST BENOIT</rset>
-        <codeautorarhgos>24-24-49863</codeautorarhgos>
-        <activite>A0</activite>
-        <libactivite>Installation de chirurgie esthétique</libactivite>
-        <modalite>00</modalite>
-        <libmodalite>Pas de modalité</libmodalite>
-        <forme>01</forme>
-        <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
-        <datedecision>2006-06-26</datedecision>
-        <nodecision>0000</nodecision>
-        <etatautorisation>6</etatautorisation>
-        <libetatautorisation>Renouvellement tacite</libetatautorisation>
-        <datevisite>2006-06-26</datevisite>
-        <resultatvisite>C</resultatvisite>
-        <datefin>2026-06-26</datefin>
-        <datemeo>2006-06-26</datemeo>
-        <datelimitemeo xsi:nil="true"/>
-        <datelimitedepot>2025-10-26</datelimitedepot>
-        <datelimvisite xsi:nil="true"/>
-        <datemaj>2022-08-24</datemaj>
-    </autreactivite>
-    <autreactivite>
-        <noautor>242202799</noautor>
-        <nofinessej>410000087</nofinessej>
-        <rsej>CH BLOIS  SIMONE VEIL</rsej>
-        <nofinesset>410000020</nofinesset>
-        <rset>CH BLOIS SIMONE VEIL</rset>
-        <codeautorarhgos>24-24-58642</codeautorarhgos>
-        <activite>A5</activite>
-        <libactivite>Prélèvement d'organes</libactivite>
-        <modalite>31</modalite>
-        <libmodalite>Multi-organes</libmodalite>
-        <forme>21</forme>
-        <libforme>Personne décédée assistée par ventilation mécanique et conservant une fonction hémodynamique (mort encéphalique)</libforme>
-        <datedecision>2012-02-02</datedecision>
-        <nodecision>2012-OSMS-006</nodecision>
-        <etatautorisation>7</etatautorisation>
-        <libetatautorisation>Renouvellement sur décision DGARS</libetatautorisation>
-        <datevisite xsi:nil="true"/>
-        <resultatvisite xsi:nil="true"/>
-        <datefin>2022-02-01</datefin>
-        <datemeo>2012-02-02</datemeo>
-        <datelimitemeo xsi:nil="true"/>
-        <datelimitedepot>2021-07-01</datelimitedepot>
-        <datelimvisite xsi:nil="true"/>
-        <datemaj>2022-08-24</datemaj>
-    </autreactivite>""",
+            <autreactivite>
+                <noautor>242202733</noautor>
+                <nofinessej>370000028</nofinessej>
+                <rsej>SA. CLINIQUE JEANNE D'ARC</rsej>
+                <nofinesset>370000051</nofinesset>
+                <rset>CLINIQUE JEANNE D'ARC - ST BENOIT</rset>
+                <codeautorarhgos>04-00-000</codeautorarhgos>
+                <activite>A0</activite>
+                <libactivite>Installation de chirurgie esthétique</libactivite>
+                <modalite>00</modalite>
+                <libmodalite>Pas de modalité</libmodalite>
+                <forme>01</forme>
+                <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
+                <datedecision>2006-06-26</datedecision>
+                <nodecision>0000</nodecision>
+                <etatautorisation>6</etatautorisation>
+                <libetatautorisation>Renouvellement tacite</libetatautorisation>
+                <datevisite>2006-06-26</datevisite>
+                <resultatvisite>C</resultatvisite>
+                <datefin>2026-06-26</datefin>
+                <datemeo>2006-06-26</datemeo>
+                <datelimitemeo xsi:nil="true"/>
+                <datelimitedepot>2025-10-26</datelimitedepot>
+                <datelimvisite xsi:nil="true"/>
+                <datemaj>2022-08-24</datemaj>
+            </autreactivite>
+            <autreactivite>
+                <noautor>242202799</noautor>
+                <nofinessej>410000087</nofinessej>
+                <rsej>CH BLOIS  SIMONE VEIL</rsej>
+                <nofinesset>410000020</nofinesset>
+                <rset>CH BLOIS SIMONE VEIL</rset>
+                <codeautorarhgos>05-00-000</codeautorarhgos>
+                <activite>A5</activite>
+                <libactivite>Prélèvement d'organes</libactivite>
+                <modalite>31</modalite>
+                <libmodalite>Multi-organes</libmodalite>
+                <forme>21</forme>
+                <libforme>Personne décédée assistée par ventilation mécanique et conservant une fonction hémodynamique (mort encéphalique)</libforme>
+                <datedecision>2012-02-02</datedecision>
+                <nodecision>2012-OSMS-006</nodecision>
+                <etatautorisation>7</etatautorisation>
+                <libetatautorisation>Renouvellement sur décision DGARS</libetatautorisation>
+                <datevisite xsi:nil="true"/>
+                <resultatvisite xsi:nil="true"/>
+                <datefin>2022-02-01</datefin>
+                <datemeo>2012-02-02</datemeo>
+                <datelimitemeo xsi:nil="true"/>
+                <datelimitedepot>2021-07-01</datelimitedepot>
+                <datelimvisite xsi:nil="true"/>
+                <datemaj>2022-08-24</datemaj>
+            </autreactivite>""",
         )
         xpath = XPATH_FINESS_CS1600101
 
@@ -570,7 +570,7 @@ class TestLisLeFichierXml:
                         "rsej": "SA. CLINIQUE JEANNE D'ARC",
                         "nofinesset": "370000051",
                         "rset": "CLINIQUE JEANNE D'ARC - ST BENOIT",
-                        "codeautorarhgos": "24-24-49863",
+                        "codeautorarhgos": "04-00-000",
                         "activite": "A0",
                         "libactivite": "Installation de chirurgie esthétique",
                         "modalite": "00",
@@ -596,7 +596,7 @@ class TestLisLeFichierXml:
                         "rsej": "CH BLOIS  SIMONE VEIL",
                         "nofinesset": "410000020",
                         "rset": "CH BLOIS SIMONE VEIL",
-                        "codeautorarhgos": "24-24-58642",
+                        "codeautorarhgos": "05-00-000",
                         "activite": "A5",
                         "libactivite": "Prélèvement d'organes",
                         "modalite": "31",
@@ -626,53 +626,53 @@ class TestLisLeFichierXml:
         crée_le_fichier_xml(
             chemin_du_fichier,
             """<activitesoumiseareco>
-        <noautor>112234367</noautor>
-        <idcpom>11-11-C60420</idcpom>
-        <nofinessej>950110015</nofinessej>
-        <rsej>CH  VICTOR  DUPOUY  ARGENTEUIL</rsej>
-        <nofinesset>950000307</nofinesset>
-        <rset>CH VICTOR DUPOUY</rset>
-        <dateeffetcpom>2017-12-30</dateeffetcpom>
-        <datefincpom>2022-12-29</datefincpom>
-        <codeautorarhgos>11-11-RC61198</codeautorarhgos>
-        <indicateurregional>N</indicateurregional>
-        <activite>R4</activite>
-        <libactivite>Soins palliatifs</libactivite>
-        <modalite>N2</modalite>
-        <libmodalite>Lits identifiés  (Médecine) - adulte</libmodalite>
-        <forme>01</forme>
-        <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
-        <dateeffetasr>2017-12-30</dateeffetasr>
-        <capaciteautorisee>16</capaciteautorisee>
-        <regionautorisation>11</regionautorisation>
-        <etatautorisation>23</etatautorisation>
-        <libetatautorisation>Initiale</libetatautorisation>
-        <datemaj>2022-08-24</datemaj>
-    </activitesoumiseareco>
-    <activitesoumiseareco>
-        <noautor>112234368</noautor>
-        <idcpom>11-11-C60420</idcpom>
-        <nofinessej>950110015</nofinessej>
-        <rsej>CH  VICTOR  DUPOUY  ARGENTEUIL</rsej>
-        <nofinesset>950000307</nofinesset>
-        <rset>CH VICTOR DUPOUY</rset>
-        <dateeffetcpom>2017-12-30</dateeffetcpom>
-        <datefincpom>2022-12-29</datefincpom>
-        <codeautorarhgos>11-11-RC61199</codeautorarhgos>
-        <indicateurregional>N</indicateurregional>
-        <activite>03</activite>
-        <libactivite>Gynécologie, obstétrique, néonatologie, réanimation néonatale</libactivite>
-        <modalite>02</modalite>
-        <libmodalite>Néonatologie sans soins intensifs</libmodalite>
-        <forme>01</forme>
-        <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
-        <dateeffetasr>2017-12-30</dateeffetasr>
-        <capaciteautorisee>12</capaciteautorisee>
-        <regionautorisation>11</regionautorisation>
-        <etatautorisation>23</etatautorisation>
-        <libetatautorisation>Initiale</libetatautorisation>
-        <datemaj>2022-08-24</datemaj>
-    </activitesoumiseareco>""",
+                <noautor>112234367</noautor>
+                <idcpom>06-00-C0000</idcpom>
+                <nofinessej>950110015</nofinessej>
+                <rsej>CH  VICTOR  DUPOUY  ARGENTEUIL</rsej>
+                <nofinesset>950000307</nofinesset>
+                <rset>CH VICTOR DUPOUY</rset>
+                <dateeffetcpom>2017-12-30</dateeffetcpom>
+                <datefincpom>2022-12-29</datefincpom>
+                <codeautorarhgos>06-00-RC0000</codeautorarhgos>
+                <indicateurregional>N</indicateurregional>
+                <activite>R4</activite>
+                <libactivite>Soins palliatifs</libactivite>
+                <modalite>N2</modalite>
+                <libmodalite>Lits identifiés  (Médecine) - adulte</libmodalite>
+                <forme>01</forme>
+                <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
+                <dateeffetasr>2017-12-30</dateeffetasr>
+                <capaciteautorisee>16</capaciteautorisee>
+                <regionautorisation>11</regionautorisation>
+                <etatautorisation>23</etatautorisation>
+                <libetatautorisation>Initiale</libetatautorisation>
+                <datemaj>2022-08-24</datemaj>
+            </activitesoumiseareco>
+            <activitesoumiseareco>
+                <noautor>112234368</noautor>
+                <idcpom>06-00-C0000</idcpom>
+                <nofinessej>950110015</nofinessej>
+                <rsej>CH  VICTOR  DUPOUY  ARGENTEUIL</rsej>
+                <nofinesset>950000307</nofinesset>
+                <rset>CH VICTOR DUPOUY</rset>
+                <dateeffetcpom>2017-12-30</dateeffetcpom>
+                <datefincpom>2022-12-29</datefincpom>
+                <codeautorarhgos>11-11-RC61199</codeautorarhgos>
+                <indicateurregional>N</indicateurregional>
+                <activite>03</activite>
+                <libactivite>Gynécologie, obstétrique, néonatologie, réanimation néonatale</libactivite>
+                <modalite>02</modalite>
+                <libmodalite>Néonatologie sans soins intensifs</libmodalite>
+                <forme>01</forme>
+                <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
+                <dateeffetasr>2017-12-30</dateeffetasr>
+                <capaciteautorisee>12</capaciteautorisee>
+                <regionautorisation>11</regionautorisation>
+                <etatautorisation>23</etatautorisation>
+                <libetatautorisation>Initiale</libetatautorisation>
+                <datemaj>2022-08-24</datemaj>
+            </activitesoumiseareco>""",
         )
         xpath = XPATH_FINESS_CS1600102
 
@@ -686,14 +686,14 @@ class TestLisLeFichierXml:
                 [
                     {
                         "noautor": 112234367,
-                        "idcpom": "11-11-C60420",
+                        "idcpom": "06-00-C0000",
                         "nofinessej": 950110015,
                         "rsej": "CH  VICTOR  DUPOUY  ARGENTEUIL",
                         "nofinesset": "950000307",
                         "rset": "CH VICTOR DUPOUY",
                         "dateeffetcpom": "2017-12-30",
                         "datefincpom": "2022-12-29",
-                        "codeautorarhgos": "11-11-RC61198",
+                        "codeautorarhgos": "06-00-RC0000",
                         "indicateurregional": "N",
                         "activite": "R4",
                         "libactivite": "Soins palliatifs",
@@ -710,7 +710,7 @@ class TestLisLeFichierXml:
                     },
                     {
                         "noautor": 112234368,
-                        "idcpom": "11-11-C60420",
+                        "idcpom": "06-00-C0000",
                         "nofinessej": 950110015,
                         "rsej": "CH  VICTOR  DUPOUY  ARGENTEUIL",
                         "nofinesset": "950000307",

@@ -28,15 +28,15 @@ index_des_autorisations_médico_sociaux: List[str] = [
 ]
 
 équivalences_finess_cs1400103_helios = {
-    "activite": "activite",
+    "activite": "code_activite",
     "dateautor": "date_autorisation",
     "datefin": "date_fin",
     "datemeo": "date_mise_en_oeuvre",
-    "forme": "forme",
+    "forme": "code_forme",
     "libactivite": "libelle_activite",
     "libforme": "libelle_forme",
     "libmodalite": "libelle_modalite",
-    "modalite": "modalite",
+    "modalite": "code_modalite",
     "noautorarhgos": "numero_autorisation_arhgos",
     "nofinesset": "numero_finess_etablissement_territorial",
 }
@@ -46,16 +46,16 @@ balises_à_échapper_finess_cs1400103 = ["nofinesset", "activite", "modalite", "
 
 index_des_autorisations_sanitaires: List[str] = [
     "numero_finess_etablissement_territorial",
-    "activite",
-    "modalite",
-    "forme",
+    "code_activite",
+    "code_modalite",
+    "code_forme",
 ]
 
 équivalences_finess_cs1400104_helios = {
     "dateautor": "date_autorisation",
     "datefin": "date_fin",
     "datemeo": "date_mise_en_oeuvre",
-    "eml": "equipement_materiel_lourd",
+    "eml": "code_equipement_materiel_lourd",
     "libeml": "libelle_equipement_materiel_lourd",
     "noautorarhgos": "numero_autorisation_arhgos",
     "nofinesset": "numero_finess_etablissement_territorial",
@@ -66,20 +66,20 @@ balises_à_échapper_finess_cs1400104 = ["eml", "nofinesset"]
 
 index_des_équipements_matériels_lourds: List[str] = [
     "numero_finess_etablissement_territorial",
-    "equipement_materiel_lourd",
+    "code_equipement_materiel_lourd",
     "numero_autorisation_arhgos",
 ]
 
 équivalences_finess_cs1600101_helios = {
-    "activite": "activite",
+    "activite": "code_activite",
     "datedecision": "date_autorisation",
     "datefin": "date_fin",
     "datemeo": "date_mise_en_oeuvre",
-    "forme": "forme",
+    "forme": "code_forme",
     "libactivite": "libelle_activite",
     "libforme": "libelle_forme",
     "libmodalite": "libelle_modalite",
-    "modalite": "modalite",
+    "modalite": "code_modalite",
     "nofinesset": "numero_finess_etablissement_territorial",
 }
 colonnes_à_garder_finess_cs1600101 = list(équivalences_finess_cs1600101_helios.keys())
@@ -88,24 +88,24 @@ balises_à_échapper_finess_cs1600101 = ["nofinesset", "activite", "modalite", "
 
 index_des_autres_activités_sanitaires: List[str] = [
     "numero_finess_etablissement_territorial",
-    "activite",
-    "modalite",
-    "forme",
+    "code_activite",
+    "code_modalite",
+    "code_forme",
 ]
 
 équivalences_finess_cs1600102_helios = {
-    "activite": "activite",
+    "activite": "code_activite",
     "capaciteautorisee": "capacite_autorisee",
     "codeautorarhgos": "numero_autorisation_arhgos",
     "dateeffetasr": "date_effet_asr",
     "dateeffetcpom": "date_effet_cpom",
     "datefincpom": "date_fin_cpom",
-    "forme": "forme",
+    "forme": "code_forme",
     "idcpom": "id_cpom",
     "libactivite": "libelle_activite",
     "libforme": "libelle_forme",
     "libmodalite": "libelle_modalite",
-    "modalite": "modalite",
+    "modalite": "code_modalite",
     "nofinesset": "numero_finess_etablissement_territorial",
 }
 colonnes_à_garder_finess_cs1600102 = list(équivalences_finess_cs1600102_helios.keys())
@@ -114,7 +114,7 @@ balises_à_échapper_finess_cs1600102 = ["nofinesset", "activite", "modalite", "
 
 index_des_reconnaissances_contractuelles: List[str] = [
     "numero_finess_etablissement_territorial",
-    "activite",
-    "modalite",
-    "forme",
+    "code_activite",
+    "code_modalite",
+    "code_forme",
 ]

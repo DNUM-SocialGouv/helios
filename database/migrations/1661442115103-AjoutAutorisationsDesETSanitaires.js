@@ -2,19 +2,17 @@ class AjoutAutorisationsDesETSanitaires1661442115103 {
   async up(queryRunner) {
     await queryRunner.query(
       `CREATE TABLE autorisation_sanitaire (
-        activite VARCHAR(2) NOT NULL,
+        code_activite VARCHAR(2) NOT NULL,
+        code_forme VARCHAR(2) NOT NULL,
+        code_modalite VARCHAR(2) NOT NULL,
         date_autorisation DATE,
         date_fin DATE,
         date_mise_en_oeuvre DATE,
-        forme VARCHAR(2) NOT NULL,
         libelle_activite VARCHAR(255) NOT NULL,
         libelle_forme VARCHAR(255) NOT NULL,
         libelle_modalite VARCHAR(255) NOT NULL,
-        modalite VARCHAR(2) NOT NULL,
-        numero_autorisation_arhgos VARCHAR(31) NOT NULL,
+        numero_autorisation_arhgos VARCHAR(31) PRIMARY KEY,
         numero_finess_etablissement_territorial VARCHAR(9) NOT NULL,
-
-        PRIMARY KEY (numero_finess_etablissement_territorial, activite, forme, modalite),
 
         CONSTRAINT autorisation_sanitaire_etablissement_territorial_finess_foreign_key
           FOREIGN KEY (numero_finess_etablissement_territorial)
@@ -23,15 +21,13 @@ class AjoutAutorisationsDesETSanitaires1661442115103 {
       );
 
       CREATE TABLE equipement_materiel_lourd (
+        code_equipement_materiel_lourd VARCHAR(5) NOT NULL,
         date_autorisation DATE,
         date_fin DATE,
         date_mise_en_oeuvre DATE,
-        equipement_materiel_lourd VARCHAR(5) NOT NULL,
         libelle_equipement_materiel_lourd VARCHAR(255) NOT NULL,
-        numero_autorisation_arhgos VARCHAR(31) NOT NULL,
+        numero_autorisation_arhgos VARCHAR(31) PRIMARY KEY,
         numero_finess_etablissement_territorial VARCHAR(9) NOT NULL,
-
-        PRIMARY KEY (numero_finess_etablissement_territorial, equipement_materiel_lourd, numero_autorisation_arhgos),
 
         CONSTRAINT equipement_materiel_lourd_etablissement_territorial_finess_foreign_key
           FOREIGN KEY (numero_finess_etablissement_territorial)
@@ -40,18 +36,18 @@ class AjoutAutorisationsDesETSanitaires1661442115103 {
       );
 
       CREATE TABLE autre_activite_sanitaire (
-        activite VARCHAR(2) NOT NULL,
+        code_activite VARCHAR(2) NOT NULL,
+        code_forme VARCHAR(2) NOT NULL,
+        code_modalite VARCHAR(2) NOT NULL,
         date_autorisation DATE,
         date_fin DATE,
         date_mise_en_oeuvre DATE,
-        forme VARCHAR(2) NOT NULL,
         libelle_activite VARCHAR(255) NOT NULL,
         libelle_forme VARCHAR(255) NOT NULL,
         libelle_modalite VARCHAR(255) NOT NULL,
-        modalite VARCHAR(2) NOT NULL,
         numero_finess_etablissement_territorial VARCHAR(9) NOT NULL,
 
-        PRIMARY KEY (numero_finess_etablissement_territorial, activite, forme, modalite),
+        PRIMARY KEY (numero_finess_etablissement_territorial, code_activite, code_forme, code_modalite),
 
         CONSTRAINT autre_activite_etablissement_territorial_finess_foreign_key
           FOREIGN KEY (numero_finess_etablissement_territorial)
@@ -60,21 +56,19 @@ class AjoutAutorisationsDesETSanitaires1661442115103 {
       );
 
       CREATE TABLE reconnaissance_contractuelle_sanitaire (
-        activite VARCHAR(2) NOT NULL,
         capacite_autorisee INTEGER,
-        numero_autorisation_arhgos VARCHAR(31) NOT NULL,
+        code_activite VARCHAR(2) NOT NULL,
+        code_forme VARCHAR(2) NOT NULL,
+        code_modalite VARCHAR(2) NOT NULL,
         date_effet_asr DATE,
         date_effet_cpom DATE,
         date_fin_cpom DATE,
-        forme VARCHAR(2) NOT NULL,
         id_cpom VARCHAR(12) NOT NULL,
         libelle_activite VARCHAR(255) NOT NULL,
         libelle_forme VARCHAR(255) NOT NULL,
         libelle_modalite VARCHAR(255) NOT NULL,
-        modalite VARCHAR(2) NOT NULL,
+        numero_autorisation_arhgos VARCHAR(31) PRIMARY KEY,
         numero_finess_etablissement_territorial VARCHAR(9) NOT NULL,
-
-        PRIMARY KEY (numero_finess_etablissement_territorial, activite, forme, modalite),
 
         CONSTRAINT reconnaissance_contractuelle_sanitaire_etablissement_territorial_finess_foreign_key
           FOREIGN KEY (numero_finess_etablissement_territorial)

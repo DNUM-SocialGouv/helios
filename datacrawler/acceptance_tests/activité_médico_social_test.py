@@ -182,7 +182,7 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
         )
         assert date_du_fichier_ann_ms_tdp_et.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_ANN_MS_TDP_ET.value)
 
-    @patch.object(datacrawler.ajoute_les_activités_des_établissements_médico_sociaux, "sauvegarde")
+    @patch.object(datacrawler, "sauvegarde")
     def test_revient_à_la_situation_initiale_si_l_écriture_des_activités_échoue(self, mocked_sauvegarde: Mock) -> None:
         # GIVEN
         sauvegarde_une_entité_juridique_en_base("010008407", base_de_données_test)

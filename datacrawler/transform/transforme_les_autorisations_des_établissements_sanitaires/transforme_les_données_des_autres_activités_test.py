@@ -2,8 +2,8 @@ import pandas as pd
 from numpy import NaN
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger, xml_contenu_finess_cs1600101_builder
-from datacrawler.transform.transforme_les_autorisations_des_établissements_sanitaires.transforme_les_données_finess_cs1600101 import (
-    transforme_les_données_finess_cs1600101,
+from datacrawler.transform.transforme_les_autorisations_des_établissements_sanitaires.transforme_les_données_des_autres_activités import (
+    transforme_les_données_des_autres_activités,
 )
 from datacrawler.transform.équivalences_finess_helios import index_des_autres_activités_sanitaires
 
@@ -21,21 +21,21 @@ class TestTransformeLesDonnéesFinessCs1400104:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_finess_cs1600101(données_finess_cs1600101, numéros_finess_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_autres_activités(données_finess_cs1600101, numéros_finess_connus, mocked_logger)
 
         # THEN
         data_frame_attendu = pd.DataFrame(
             [
                 {
-                    "activite": "A0",
+                    "code_activite": "A0",
+                    "code_forme": "01",
+                    "code_modalite": "00",
                     "date_autorisation": "2006-06-26",
                     "date_fin": "2026-06-26",
                     "date_mise_en_oeuvre": "2006-06-26",
-                    "forme": "01",
                     "libelle_activite": "Installation de chirurgie esthétique",
                     "libelle_forme": "Hospitalisation complète (24 heures consécutives ou plus)",
                     "libelle_modalite": "Pas de modalité",
-                    "modalite": "00",
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                 }
             ],
@@ -54,7 +54,7 @@ class TestTransformeLesDonnéesFinessCs1400104:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_finess_cs1600101(données_finess_cs1600101, numéros_finess_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_autres_activités(données_finess_cs1600101, numéros_finess_connus, mocked_logger)
 
         # THEN
         assert données_transformées.shape == (0, 6)
@@ -71,7 +71,7 @@ class TestTransformeLesDonnéesFinessCs1400104:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_finess_cs1600101(données_finess_cs1600101, numéros_finess_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_autres_activités(données_finess_cs1600101, numéros_finess_connus, mocked_logger)
 
         # THEN
         assert données_transformées.shape == (0, 6)
@@ -88,7 +88,7 @@ class TestTransformeLesDonnéesFinessCs1400104:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_finess_cs1600101(données_finess_cs1600101, numéros_finess_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_autres_activités(données_finess_cs1600101, numéros_finess_connus, mocked_logger)
 
         # THEN
         assert données_transformées.shape == (0, 6)
@@ -105,7 +105,7 @@ class TestTransformeLesDonnéesFinessCs1400104:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_finess_cs1600101(données_finess_cs1600101, numéros_finess_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_autres_activités(données_finess_cs1600101, numéros_finess_connus, mocked_logger)
 
         # THEN
         assert données_transformées.shape == (0, 6)
@@ -122,21 +122,21 @@ class TestTransformeLesDonnéesFinessCs1400104:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_finess_cs1600101(données_finess_cs1600101, numéros_finess_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_autres_activités(données_finess_cs1600101, numéros_finess_connus, mocked_logger)
 
         # THEN
         data_frame_attendu = pd.DataFrame(
             [
                 {
-                    "activite": "A0",
+                    "code_activite": "A0",
+                    "code_forme": "01",
+                    "code_modalite": "00",
                     "date_autorisation": "2006-06-26",
                     "date_fin": "2026-06-26",
                     "date_mise_en_oeuvre": "2006-06-26",
-                    "forme": "01",
                     "libelle_activite": "Installation de chirurgie esthétique",
                     "libelle_forme": "Hospitalisation complète (24 heures consécutives ou plus)",
                     "libelle_modalite": "Pas de modalité",
-                    "modalite": "00",
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                 }
             ],
@@ -155,7 +155,7 @@ class TestTransformeLesDonnéesFinessCs1400104:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_finess_cs1600101(données_finess_cs1600101, numéros_finess_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_autres_activités(données_finess_cs1600101, numéros_finess_connus, mocked_logger)
 
         # THEN
         assert données_transformées.shape == (0, 6)

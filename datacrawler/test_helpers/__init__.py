@@ -6,9 +6,13 @@ from numpy import NaN
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 
-from datacrawler.load.nom_des_tables import (TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
-                                             TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES, TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
-                                             FichierSource)
+from datacrawler.load.nom_des_tables import (
+    TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
+    TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
+    TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES,
+    TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
+    FichierSource,
+)
 from datacrawler.transform.équivalences_diamant_helios import index_des_activités
 
 base_de_données_test = create_engine("postgresql://helios:h3li0s@localhost:5433/helios")
@@ -226,8 +230,8 @@ def xml_contenu_finess_cs1400103_builder(champs_surchargés: Optional[Dict] = No
         "rset": "HOPITAL LARREY CHU TOULOUSE",
         "noligautor": 1757,
         "noligautoranc": NaN,
-        "noautorarhgos": "76-73-430",
-        "noimplarhgos": "76-73-430",
+        "noautorarhgos": "03-00-000",
+        "noimplarhgos": "03-00-000",
         "noancautact": NaN,
         "noancauteml": NaN,
         "sectpsy": NaN,
@@ -256,8 +260,8 @@ def xml_contenu_finess_cs1400104_builder(champs_surchargés: Optional[Dict] = No
         "libeml": "Caméra à scintillation sans détecteur d'émission de positons",
         "libcourteml": "Cam scin sans détect",
         "noautor": 762218998,
-        "noautorarhgos": "76-73-1040",
-        "noimplarhgos": "76-73-1040",
+        "noautorarhgos": "02-00-0000",
+        "noimplarhgos": "02-00-0000",
         "dateautor": "2004-11-02",
         "nofinesset": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "numserie": NaN,
@@ -285,7 +289,7 @@ def xml_contenu_finess_cs1600101_builder(champs_surchargés: Optional[Dict] = No
         "rsej": "SA. CLINIQUE JEANNE D'ARC",
         "nofinesset": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "rset": "CLINIQUE JEANNE D'ARC - ST BENOIT",
-        "codeautorarhgos": "24-24-49863",
+        "codeautorarhgos": "05-00-0000",
         "activite": "A0",
         "libactivite": "Installation de chirurgie esthétique",
         "modalite": "00",
@@ -313,14 +317,14 @@ def xml_contenu_finess_cs1600101_builder(champs_surchargés: Optional[Dict] = No
 def xml_contenu_finess_cs1600102_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
     finess_cs1600102 = {
         "noautor": 112234367,
-        "idcpom": "11-11-C60420",
+        "idcpom": "07-00-C00000",
         "nofinessej": 950110015,
         "rsej": "CH  VICTOR  DUPOUY  ARGENTEUIL",
         "nofinesset": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "rset": "CH VICTOR DUPOUY",
         "dateeffetcpom": "2017-12-30",
         "datefincpom": "2022-12-29",
-        "codeautorarhgos": "11-11-RC61198",
+        "codeautorarhgos": "07-00-RC00000",
         "indicateurregional": "N",
         "activite": "R4",
         "libactivite": "Soins palliatifs",

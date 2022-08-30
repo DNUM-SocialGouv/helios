@@ -3,31 +3,31 @@ from typing import Tuple
 
 import pandas as pd
 
-from datacrawler.transform.transforme_les_autorisations_des_établissements_sanitaires.transforme_les_données_finess_cs1400103 import (
-    transforme_les_données_finess_cs1400103,
+from datacrawler.transform.transforme_les_autorisations_des_établissements_sanitaires.transforme_les_données_des_autorisations import (
+    transforme_les_données_des_autorisations,
 )
-from datacrawler.transform.transforme_les_autorisations_des_établissements_sanitaires.transforme_les_données_finess_cs1400104 import (
-    transforme_les_données_finess_cs1400104,
+from datacrawler.transform.transforme_les_autorisations_des_établissements_sanitaires.transforme_les_données_des_équipements_matériels_lourds import (
+    transforme_les_données_des_équipements_matériels_lourds,
 )
-from datacrawler.transform.transforme_les_autorisations_des_établissements_sanitaires.transforme_les_données_finess_cs1600101 import (
-    transforme_les_données_finess_cs1600101,
+from datacrawler.transform.transforme_les_autorisations_des_établissements_sanitaires.transforme_les_données_des_autres_activités import (
+    transforme_les_données_des_autres_activités,
 )
-from datacrawler.transform.transforme_les_autorisations_des_établissements_sanitaires.transforme_les_données_finess_cs1600102 import (
-    transforme_les_données_finess_cs1600102,
+from datacrawler.transform.transforme_les_autorisations_des_établissements_sanitaires.transforme_les_données_des_reconnaissances_contractuelles import (
+    transforme_les_données_des_reconnaissances_contractuelles,
 )
 
 
 def transforme_les_autorisations_des_établissements_sanitaires(
-    données_finess_cs1400103: pd.DataFrame,
-    données_finess_cs1400104: pd.DataFrame,
-    données_finess_cs1600101: pd.DataFrame,
-    données_finess_cs1600102: pd.DataFrame,
+    données_des_autorisations: pd.DataFrame,
+    données_des_équipements_matériels_lourds: pd.DataFrame,
+    données_des_autres_activités: pd.DataFrame,
+    données_des_reconnaissances_contractuelles: pd.DataFrame,
     numéros_finess_des_établissements_connus: pd.DataFrame,
     logger: Logger,
 ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     return (
-        transforme_les_données_finess_cs1400103(données_finess_cs1400103, numéros_finess_des_établissements_connus, logger),
-        transforme_les_données_finess_cs1400104(données_finess_cs1400104, numéros_finess_des_établissements_connus, logger),
-        transforme_les_données_finess_cs1600101(données_finess_cs1600101, numéros_finess_des_établissements_connus, logger),
-        transforme_les_données_finess_cs1600102(données_finess_cs1600102, numéros_finess_des_établissements_connus, logger),
+        transforme_les_données_des_autorisations(données_des_autorisations, numéros_finess_des_établissements_connus, logger),
+        transforme_les_données_des_équipements_matériels_lourds(données_des_équipements_matériels_lourds, numéros_finess_des_établissements_connus, logger),
+        transforme_les_données_des_autres_activités(données_des_autres_activités, numéros_finess_des_établissements_connus, logger),
+        transforme_les_données_des_reconnaissances_contractuelles(données_des_reconnaissances_contractuelles, numéros_finess_des_établissements_connus, logger),
     )

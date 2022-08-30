@@ -25,7 +25,7 @@ class AjoutAutorisationsDesETMédicoSociaux1660654708747 {
       );
 
       ALTER TYPE fichier_source
-        ADD VALUE 'finess_cs1400105';`
+        ADD VALUE IF NOT EXISTS 'finess_cs1400105';`
     )
   }
 

@@ -2,8 +2,8 @@ import pandas as pd
 from numpy import NaN
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger, xml_contenu_finess_cs1600102_builder
-from datacrawler.transform.transforme_les_autorisations_des_établissements_sanitaires.transforme_les_données_finess_cs1600102 import (
-    transforme_les_données_finess_cs1600102,
+from datacrawler.transform.transforme_les_autorisations_des_établissements_sanitaires.transforme_les_données_des_reconnaissances_contractuelles import (
+    transforme_les_données_des_reconnaissances_contractuelles,
 )
 from datacrawler.transform.équivalences_finess_helios import index_des_autres_activités_sanitaires
 
@@ -21,24 +21,24 @@ class TestTransformeLesDonnéesFinessCs1600102:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_finess_cs1600102(données_finess_cs1600102, numéros_finess_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_reconnaissances_contractuelles(données_finess_cs1600102, numéros_finess_connus, mocked_logger)
 
         # THEN
         data_frame_attendu = pd.DataFrame(
             [
                 {
-                    "activite": "R4",
                     "capacite_autorisee": 16,
-                    "numero_autorisation_arhgos": "11-11-RC61198",
+                    "code_activite": "R4",
+                    "code_forme": "01",
+                    "code_modalite": "N2",
+                    "numero_autorisation_arhgos": "07-00-RC00000",
                     "date_effet_asr": "2017-12-30",
                     "date_effet_cpom": "2017-12-30",
                     "date_fin_cpom": "2022-12-29",
-                    "forme": "01",
-                    "id_cpom": "11-11-C60420",
+                    "id_cpom": "07-00-C00000",
                     "libelle_activite": "Soins palliatifs",
                     "libelle_forme": "Hospitalisation complète (24 heures consécutives ou plus)",
                     "libelle_modalite": "Lits identifiés  (Médecine) - adulte",
-                    "modalite": "N2",
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                 }
             ],
@@ -57,7 +57,7 @@ class TestTransformeLesDonnéesFinessCs1600102:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_finess_cs1600102(données_finess_cs1600102, numéros_finess_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_reconnaissances_contractuelles(données_finess_cs1600102, numéros_finess_connus, mocked_logger)
 
         # THEN
         assert données_transformées.shape == (0, 9)
@@ -74,7 +74,7 @@ class TestTransformeLesDonnéesFinessCs1600102:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_finess_cs1600102(données_finess_cs1600102, numéros_finess_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_reconnaissances_contractuelles(données_finess_cs1600102, numéros_finess_connus, mocked_logger)
 
         # THEN
         assert données_transformées.shape == (0, 9)
@@ -91,7 +91,7 @@ class TestTransformeLesDonnéesFinessCs1600102:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_finess_cs1600102(données_finess_cs1600102, numéros_finess_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_reconnaissances_contractuelles(données_finess_cs1600102, numéros_finess_connus, mocked_logger)
 
         # THEN
         assert données_transformées.shape == (0, 9)
@@ -108,7 +108,7 @@ class TestTransformeLesDonnéesFinessCs1600102:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_finess_cs1600102(données_finess_cs1600102, numéros_finess_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_reconnaissances_contractuelles(données_finess_cs1600102, numéros_finess_connus, mocked_logger)
 
         # THEN
         assert données_transformées.shape == (0, 9)
@@ -125,24 +125,24 @@ class TestTransformeLesDonnéesFinessCs1600102:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_finess_cs1600102(données_finess_cs1600102, numéros_finess_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_reconnaissances_contractuelles(données_finess_cs1600102, numéros_finess_connus, mocked_logger)
 
         # THEN
         data_frame_attendu = pd.DataFrame(
             [
                 {
-                    "activite": "R4",
                     "capacite_autorisee": 16,
-                    "numero_autorisation_arhgos": "11-11-RC61198",
+                    "code_activite": "R4",
+                    "code_forme": "01",
+                    "code_modalite": "N2",
+                    "numero_autorisation_arhgos": "07-00-RC00000",
                     "date_effet_asr": "2017-12-30",
                     "date_effet_cpom": "2017-12-30",
                     "date_fin_cpom": "2022-12-29",
-                    "forme": "01",
-                    "id_cpom": "11-11-C60420",
+                    "id_cpom": "07-00-C00000",
                     "libelle_activite": "Soins palliatifs",
                     "libelle_forme": "Hospitalisation complète (24 heures consécutives ou plus)",
                     "libelle_modalite": "Lits identifiés  (Médecine) - adulte",
-                    "modalite": "N2",
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                 }
             ],
@@ -161,7 +161,7 @@ class TestTransformeLesDonnéesFinessCs1600102:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_finess_cs1600102(données_finess_cs1600102, numéros_finess_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_reconnaissances_contractuelles(données_finess_cs1600102, numéros_finess_connus, mocked_logger)
 
         # THEN
         assert données_transformées.shape == (0, 9)

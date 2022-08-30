@@ -5,13 +5,13 @@ from logging import Logger
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 
+from datacrawler import écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_diamant
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, FichierSource
-from datacrawler.load.sauvegarde import mets_à_jour_la_date_de_mise_à_jour_du_fichier_source, sauvegarde
 from datacrawler.transform.transforme_les_activités_des_établissements_sanitaires import transforme_les_activités_des_établissements_sanitaires
 from datacrawler.transform.équivalences_diamant_helios import (
     colonnes_à_lire_ann_rpu,
@@ -59,12 +59,15 @@ def ajoute_les_activités_des_établissements_sanitaires(
     )
 
     with base_de_données.begin() as connection:
-        connection.execute(f"DELETE FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES};")
-        logger.info("[DIAMANT] Anciennes activités sanitaires supprimées")
-        sauvegarde(connection, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, activités_des_établissements_sanitaires)
-        mets_à_jour_la_date_de_mise_à_jour_du_fichier_source(connection, date_du_fichier_men_pmsi_annuel, FichierSource.DIAMANT_MEN_PMSI_ANNUEL)
-        mets_à_jour_la_date_de_mise_à_jour_du_fichier_source(connection, date_du_fichier_ann_rpu, FichierSource.DIAMANT_ANN_RPU)
-    logger.info(f"[DIAMANT] {activités_des_établissements_sanitaires.shape[0]} activités sanitaires sauvegardées")
+        écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
+            "activités sanitaires",
+            "DIAMANT",
+            connection,
+            TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
+            activités_des_établissements_sanitaires,
+            [(FichierSource.DIAMANT_MEN_PMSI_ANNUEL, date_du_fichier_men_pmsi_annuel), (FichierSource.DIAMANT_ANN_RPU, date_du_fichier_ann_rpu)],
+            logger,
+        )
 
 
 if __name__ == "__main__":

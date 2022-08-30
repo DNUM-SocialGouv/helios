@@ -2,8 +2,8 @@ import pandas as pd
 from numpy import NaN
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger, xml_contenu_finess_cs1400104_builder
-from datacrawler.transform.transforme_les_autorisations_des_établissements_sanitaires.transforme_les_données_finess_cs1400104 import (
-    transforme_les_données_finess_cs1400104,
+from datacrawler.transform.transforme_les_autorisations_des_établissements_sanitaires.transforme_les_données_des_équipements_matériels_lourds import (
+    transforme_les_données_des_équipements_matériels_lourds,
 )
 from datacrawler.transform.équivalences_finess_helios import index_des_équipements_matériels_lourds
 
@@ -21,7 +21,7 @@ class TestTransformeLesDonnéesFinessCs1400104:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_finess_cs1400104(données_finess_cs1400104, numéros_finess_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_équipements_matériels_lourds(données_finess_cs1400104, numéros_finess_connus, mocked_logger)
 
         # THEN
         data_frame_attendu = pd.DataFrame(
@@ -30,9 +30,9 @@ class TestTransformeLesDonnéesFinessCs1400104:
                     "date_autorisation": "2004-11-02",
                     "date_fin": "2028-05-29",
                     "date_mise_en_oeuvre": "2006-11-08",
-                    "equipement_materiel_lourd": "05701",
+                    "code_equipement_materiel_lourd": "05701",
                     "libelle_equipement_materiel_lourd": "Caméra à scintillation sans détecteur d'émission de positons",
-                    "numero_autorisation_arhgos": "76-73-1040",
+                    "numero_autorisation_arhgos": "02-00-0000",
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                 }
             ],
@@ -51,10 +51,10 @@ class TestTransformeLesDonnéesFinessCs1400104:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_finess_cs1400104(données_finess_cs1400104, numéros_finess_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_équipements_matériels_lourds(données_finess_cs1400104, numéros_finess_connus, mocked_logger)
 
         # THEN
-        assert données_transformées.shape == (0, 4)
+        assert données_transformées.empty
 
     def test_supprime_les_lignes_ne_mentionnant_pas_l_équipement_matériel_lourd(self) -> None:
         # GIVEN
@@ -68,10 +68,10 @@ class TestTransformeLesDonnéesFinessCs1400104:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_finess_cs1400104(données_finess_cs1400104, numéros_finess_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_équipements_matériels_lourds(données_finess_cs1400104, numéros_finess_connus, mocked_logger)
 
         # THEN
-        assert données_transformées.shape == (0, 4)
+        assert données_transformées.empty
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_d_autorisation_arhgos(self) -> None:
         # GIVEN
@@ -85,10 +85,10 @@ class TestTransformeLesDonnéesFinessCs1400104:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_finess_cs1400104(données_finess_cs1400104, numéros_finess_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_équipements_matériels_lourds(données_finess_cs1400104, numéros_finess_connus, mocked_logger)
 
         # THEN
-        assert données_transformées.shape == (0, 4)
+        assert données_transformées.empty
 
     def test_ne_considère_pas_qu_une_seule_fois_un_ensemble_no_finess_eml_et_no_autorisation_arhgos(self) -> None:
         # GIVEN
@@ -102,7 +102,7 @@ class TestTransformeLesDonnéesFinessCs1400104:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_finess_cs1400104(données_finess_cs1400104, numéros_finess_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_équipements_matériels_lourds(données_finess_cs1400104, numéros_finess_connus, mocked_logger)
 
         # THEN
         data_frame_attendu = pd.DataFrame(
@@ -111,9 +111,9 @@ class TestTransformeLesDonnéesFinessCs1400104:
                     "date_autorisation": "2004-11-02",
                     "date_fin": "2028-05-29",
                     "date_mise_en_oeuvre": "2006-11-08",
-                    "equipement_materiel_lourd": "05701",
+                    "code_equipement_materiel_lourd": "05701",
                     "libelle_equipement_materiel_lourd": "Caméra à scintillation sans détecteur d'émission de positons",
-                    "numero_autorisation_arhgos": "76-73-1040",
+                    "numero_autorisation_arhgos": "02-00-0000",
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                 }
             ],
@@ -132,7 +132,7 @@ class TestTransformeLesDonnéesFinessCs1400104:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_finess_cs1400104(données_finess_cs1400104, numéros_finess_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_équipements_matériels_lourds(données_finess_cs1400104, numéros_finess_connus, mocked_logger)
 
         # THEN
-        assert données_transformées.shape == (0, 4)
+        assert données_transformées.empty
