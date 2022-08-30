@@ -1,3 +1,4 @@
+from datetime import date
 from typing import Dict, Optional
 from unittest.mock import MagicMock
 
@@ -239,6 +240,83 @@ def helios_activité_sanitaire_builder(champs_surchargés: Optional[Dict] = None
     if champs_surchargés:
         return {**activité, **champs_surchargés}
     return activité
+
+
+def helios_autorisation_sanitaire_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    autorisation = {
+        "code_activite": "50",
+        "code_forme": "02",
+        "code_modalite": "78",
+        "date_autorisation": date(2022, 1, 1),
+        "date_fin": date(2022, 1, 1),
+        "date_mise_en_oeuvre": date(2022, 1, 1),
+        "libelle_activite": "Soins de suite et de réadaptation non spécialisés",
+        "libelle_forme": "Hospitalisation à temps partiel de jour ou de nuit",
+        "libelle_modalite": "Juvénile (âge >= 6 ans et < 18 ans)",
+        "numero_autorisation_arhgos": "02-00-000",
+        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+    }
+
+    if champs_surchargés:
+        return {**autorisation, **champs_surchargés}
+    return autorisation
+
+
+def helios_équipement_matériel_lourd_sanitaire_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    équipement_matériel_lourd = {
+        "code_equipement_materiel_lourd": "05701",
+        "date_autorisation": date(2022, 1, 1),
+        "date_fin": date(2022, 1, 1),
+        "date_mise_en_oeuvre": date(2022, 1, 1),
+        "libelle_equipement_materiel_lourd": "Caméra à scintillation sans détecteur d'émission de positons",
+        "numero_autorisation_arhgos": "02-00-0000",
+        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+    }
+
+    if champs_surchargés:
+        return {**équipement_matériel_lourd, **champs_surchargés}
+    return équipement_matériel_lourd
+
+
+def helios_autre_activité_sanitaire_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    autre_activité = {
+        "code_activite": "A0",
+        "code_forme": "15",
+        "code_modalite": "00",
+        "date_autorisation": date(2022, 1, 1),
+        "date_fin": date(2022, 1, 1),
+        "date_mise_en_oeuvre": date(2022, 1, 1),
+        "libelle_activite": "Installation de chirurgie esthétique",
+        "libelle_forme": "Forme non précisée",
+        "libelle_modalite": "Pas de modalité",
+        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+    }
+
+    if champs_surchargés:
+        return {**autre_activité, **champs_surchargés}
+    return autre_activité
+
+
+def helios_reconnaissance_contractuelle_sanitaire_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    reconnaissance_contractuelle = {
+        "capacite_autorisee": 5,
+        "code_activite": "R7",
+        "code_forme": "01",
+        "code_modalite": "09",
+        "date_effet_asr": date(2022, 1, 1),
+        "date_effet_cpom": date(2022, 1, 1),
+        "date_fin_cpom": date(2022, 1, 1),
+        "id_cpom": "02-00-C00000",
+        "libelle_activite": "Surveillance continue",
+        "libelle_forme": "Hospitalisation complète (24 heures consécutives ou plus)",
+        "libelle_modalite": "Adulte (âge >=18 ans)",
+        "numero_autorisation_arhgos": "02-00-RC00000",
+        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+    }
+
+    if champs_surchargés:
+        return {**reconnaissance_contractuelle, **champs_surchargés}
+    return reconnaissance_contractuelle
 
 
 def crée_le_fichier_xml(chemin_du_fichier: str, contenu: str) -> None:
