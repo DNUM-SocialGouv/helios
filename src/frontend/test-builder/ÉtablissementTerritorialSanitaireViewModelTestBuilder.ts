@@ -309,11 +309,115 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     },
   ]
 
+  private static autorisationsEtCapacités: ÉtablissementTerritorialSanitaire['autorisationsEtCapacités'] = {
+    autorisations: {
+      activités: [
+        {
+          code:'16',
+          libellé: "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
+          modalités : [
+            {
+              code: '42',
+              formes: [
+                {
+                  code: '00',
+                  dates: {
+                    dateDAutorisation: '2005-10-11',
+                    dateDeFin: '2026-05-03',
+                    dateDeMiseEnOeuvre: '2008-01-04',
+                    numéroArhgos: '01-00-000',
+                  },
+                  libellé: 'Pas de forme',
+                },
+              ],
+              libellé: 'Hémodialyse en unité médicalisée',
+            },
+          ],
+        },
+      ],
+      dateMiseÀJourSource: '2022-08-29',
+    },
+    autresActivités: {
+      activités: [
+        {
+          code:'A1',
+          libellé: 'Dépôt de sang',
+          modalités : [
+            {
+              code: 'M0',
+              formes: [
+                {
+                  code: '00',
+                  dates: {
+                    dateDAutorisation: '2019-06-03',
+                    dateDeFin: '2024-08-31',
+                    dateDeMiseEnOeuvre: '2019-06-03',
+                  },
+                  libellé: 'Pas de forme',
+                },
+              ],
+              libellé: "Dépôt d'urgence",
+            },
+          ],
+        },
+      ],
+      dateMiseÀJourSource: '2022-08-29',
+    },
+    numéroFinessÉtablissementTerritorial: '123456789',
+    reconnaissancesContractuelles: {
+      activités: [
+        {
+          code:'R7',
+          libellé: 'Surveillance continue',
+          modalités : [
+            {
+              code: 'N8',
+              formes: [
+                {
+                  code: '01',
+                  dates: {
+                    capacitéAutorisée: 4,
+                    dateDEffetAsr: '2013-11-30',
+                    dateDEffetCpom: '2013-11-01',
+                    dateDeFinCpom: '2018-11-30',
+                    numéroArhgos: '18-00-RC00000',
+                    numéroCpom: '18-00-C00000',
+                  },
+                  libellé: 'Hospitalisation complète (24 heures consécutives ou plus)',
+                },
+              ],
+              libellé: 'USC polyvalente - adulte (non adossée à une unité de réanimation)',
+            },
+          ],
+        },
+      ],
+      dateMiseÀJourSource: '2022-08-29',
+    },
+    équipementsMatérielsLourds: {
+      dateMiseÀJourSource: '2022-08-29',
+      équipements: [
+        {
+          autorisations : [
+            {
+              dateDAutorisation: '2006-05-02',
+              dateDeFin: '2027-02-16',
+              dateDeMiseEnOeuvre: '2009-01-20',
+              numéroArhgos: '01-00-0000',
+            },
+          ],
+          code:'06201',
+          libellé: "Appareil d'IRM à utilisation clinique",
+        },
+      ],
+    },
+  }
+
   public static crée(
     wording: Wording, paths: Paths, champsSurchargés?: Partial<ÉtablissementTerritorialSanitaire['identité']>
   ): ÉtablissementTerritorialSanitaireViewModel {
     return new ÉtablissementTerritorialSanitaireViewModel({
       activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
+      autorisationsEtCapacités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
       identité: {
         ...ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
         ...champsSurchargés,

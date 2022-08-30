@@ -21,8 +21,12 @@ export class RécupèreLÉtablissementTerritorialSanitaireUseCase {
     const établissementTerritorialSanitaireActivités =
       await this.établissementTerritorialSanitaireLoader.chargeActivité(numéroFinessÉtablissementTerritorialSanitaire)
 
+    const établissementTerritorialSanitaireAutorisations =
+      await this.établissementTerritorialSanitaireLoader.chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorialSanitaire)
+
     return {
       activités: établissementTerritorialSanitaireActivités,
+      autorisationsEtCapacités: établissementTerritorialSanitaireAutorisations,
       identité: {
         ...établissementTerritorialSanitaireOuErreur,
         ...entitéJuridiqueDeRattachement,
