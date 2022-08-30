@@ -4,8 +4,8 @@ import { ÉtablissementTerritorialIdentitéModel } from './ÉtablissementTerrito
 
 @Entity({ name: 'autre_activite_sanitaire' })
 export class AutreActivitéSanitaireModel {
-  @PrimaryColumn({ length: 2, name: 'activite' })
-  public activité!: string
+  @PrimaryColumn({ length: 2, name: 'code_activite' })
+  public codeActivité!: string
 
   @Column({ name: 'date_autorisation', type: 'date' })
   public dateAutorisation!: string
@@ -20,8 +20,8 @@ export class AutreActivitéSanitaireModel {
   @JoinColumn({ name: 'numero_finess_etablissement_territorial', referencedColumnName: 'numéroFinessÉtablissementTerritorial' })
   public établissementTerritorial!: ÉtablissementTerritorialIdentitéModel
 
-  @PrimaryColumn({ length: 2, name: 'forme' })
-  public forme!: string
+  @PrimaryColumn({ length: 2, name: 'code_forme' })
+  public codeForme!: string
 
   @Column({ length: 255, name: 'libelle_activite' })
   public libelléActivité!: string
@@ -32,8 +32,8 @@ export class AutreActivitéSanitaireModel {
   @Column({ length: 255, name: 'libelle_modalite' })
   public libelléModalité!: string
 
-  @PrimaryColumn({ length: 2, name: 'modalite' })
-  public modalité!: string
+  @PrimaryColumn({ length: 2, name: 'code_modalite' })
+  public codeModalité!: string
 
   @PrimaryColumn({ length: 9, name: 'numero_finess_etablissement_territorial' })
   public numéroFinessÉtablissementTerritorial!: string

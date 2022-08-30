@@ -73,7 +73,6 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1600101) as Promise<DateMiseÀJourFichierSourceModel>,
       this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1600102) as Promise<DateMiseÀJourFichierSourceModel>,
     ])
-    console.log(équipementsDeLÉtablissementModel)
 
     return {
       autorisations: this.construisLesAutorisations(autorisationsDeLÉtablissementModel, dateDeMiseÀJourFinessCs1400103Model),
@@ -93,7 +92,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       .getRepository(ÉquipementMatérielLourdModel)
       .find({
         // eslint-disable-next-line sort-keys
-        order: { équipementMatérielLourd: 'ASC', numéroAutorisationArhgos: 'ASC' },
+        order: { codeÉquipementMatérielLourd: 'ASC', numéroAutorisationArhgos: 'ASC' },
         where: { numéroFinessÉtablissementTerritorial },
       })
   }
@@ -104,7 +103,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       .getRepository(ReconnaissanceContractuelleSanitaireModel)
       .find({
         // eslint-disable-next-line sort-keys
-        order: { activité: 'ASC', modalité: 'ASC', forme: 'ASC' },
+        order: { codeActivité: 'ASC', codeModalité: 'ASC', codeForme: 'ASC' },
         where: { numéroFinessÉtablissementTerritorial },
       })
   }
@@ -114,7 +113,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       .getRepository(AutreActivitéSanitaireModel)
       .find({
         // eslint-disable-next-line sort-keys
-        order: { activité: 'ASC', modalité: 'ASC', forme: 'ASC' },
+        order: { codeActivité: 'ASC', codeModalité: 'ASC', codeForme: 'ASC' },
         where: { numéroFinessÉtablissementTerritorial },
       })
   }
@@ -124,7 +123,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       .getRepository(AutorisationSanitaireModel)
       .find({
         // eslint-disable-next-line sort-keys
-        order: { activité: 'ASC', modalité: 'ASC', forme: 'ASC' },
+        order: { codeActivité: 'ASC', codeModalité: 'ASC', codeForme: 'ASC' },
         where: { numéroFinessÉtablissementTerritorial },
       })
   }
@@ -294,9 +293,9 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     const activitésDeLÉtablissement: AutorisationSanitaire[] = []
 
     autorisationsModel.forEach((autorisationModel: AutorisationSanitaireModel) => {
-      const codeActivité = autorisationModel.activité
-      const codeModalité = autorisationModel.modalité
-      const codeForme = autorisationModel.forme
+      const codeActivité = autorisationModel.codeActivité
+      const codeModalité = autorisationModel.codeModalité
+      const codeForme = autorisationModel.codeForme
 
       const activitéCréée = activitésDeLÉtablissement.find((activité) => activité.code === codeActivité)
 
@@ -325,7 +324,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
 
   private construisLActivitéDUneAutorisation(autorisationModel: AutorisationSanitaireModel): AutorisationSanitaire {
     return {
-      code: autorisationModel.activité,
+      code: autorisationModel.codeActivité,
       libellé: autorisationModel.libelléActivité,
       modalités: [this.construisLaModalitéDUneAutorisation(autorisationModel)],
     }
@@ -334,7 +333,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   private construisLaModalitéDUneAutorisation(autorisationModel: AutorisationSanitaireModel):
   AutorisationSanitaireModalité<AutorisationSanitaireAvecDatesEtNuméroArhgos> {
     return {
-      code: autorisationModel.modalité,
+      code: autorisationModel.codeModalité,
       formes: [this.construisLaFormeDUneAutorisation(autorisationModel)],
       libellé: autorisationModel.libelléModalité,
     }
@@ -343,7 +342,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   private construisLaFormeDUneAutorisation(autorisationModel: AutorisationSanitaireModel):
   AutorisationSanitaireForme<AutorisationSanitaireAvecDatesEtNuméroArhgos> {
     return {
-      code: autorisationModel.forme,
+      code: autorisationModel.codeForme,
       dates: this.construisLesDatesDUneAutorisation(autorisationModel),
       libellé: autorisationModel.libelléForme,
     }
@@ -365,9 +364,9 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     const activitésDeLÉtablissement: AutreActivitéSanitaire[] = []
 
     autresActivitésModel.forEach((autreActivitéModel: AutreActivitéSanitaireModel) => {
-      const codeActivité = autreActivitéModel.activité
-      const codeModalité = autreActivitéModel.modalité
-      const codeForme = autreActivitéModel.forme
+      const codeActivité = autreActivitéModel.codeActivité
+      const codeModalité = autreActivitéModel.codeModalité
+      const codeForme = autreActivitéModel.codeForme
 
       const activitéCréée = activitésDeLÉtablissement.find((activité) => activité.code === codeActivité)
 
@@ -396,7 +395,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
 
   private construisLActivitéDUneAutreActivité(autreActivitéModel: AutreActivitéSanitaireModel): AutreActivitéSanitaire {
     return {
-      code: autreActivitéModel.activité,
+      code: autreActivitéModel.codeActivité,
       libellé: autreActivitéModel.libelléActivité,
       modalités: [this.construisLaModalitéDUneAutreActivité(autreActivitéModel)],
     }
@@ -405,7 +404,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   private construisLaModalitéDUneAutreActivité(autreActivitéModel: AutreActivitéSanitaireModel):
   AutorisationSanitaireModalité<AutorisationSanitaireAvecDates> {
     return {
-      code: autreActivitéModel.modalité,
+      code: autreActivitéModel.codeModalité,
       formes: [this.construisLaFormeDUneAutreActivité(autreActivitéModel)],
       libellé: autreActivitéModel.libelléModalité,
     }
@@ -414,7 +413,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   private construisLaFormeDUneAutreActivité(autreActivitéModel: AutreActivitéSanitaireModel):
   AutorisationSanitaireForme<AutorisationSanitaireAvecDates> {
     return {
-      code: autreActivitéModel.forme,
+      code: autreActivitéModel.codeForme,
       dates: this.construisLesDatesDUneAutreActivité(autreActivitéModel),
       libellé: autreActivitéModel.libelléForme,
     }
@@ -435,9 +434,9 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     const activitésDeLÉtablissement: AutreActivitéSanitaire[] = []
 
     reconnaissancesContractuellesModel.forEach((reconnaissanceContractuelle: ReconnaissanceContractuelleSanitaireModel) => {
-      const codeActivité = reconnaissanceContractuelle.activité
-      const codeModalité = reconnaissanceContractuelle.modalité
-      const codeForme = reconnaissanceContractuelle.forme
+      const codeActivité = reconnaissanceContractuelle.codeActivité
+      const codeModalité = reconnaissanceContractuelle.codeModalité
+      const codeForme = reconnaissanceContractuelle.codeForme
 
       const activitéCréée = activitésDeLÉtablissement.find((activité) => activité.code === codeActivité)
 
@@ -467,7 +466,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   private construisLActivitéDUneReconnaissanceContractuelle(reconnaissanceContractuelle: ReconnaissanceContractuelleSanitaireModel):
   ReconnaissanceContractuelleSanitaire {
     return {
-      code: reconnaissanceContractuelle.activité,
+      code: reconnaissanceContractuelle.codeActivité,
       libellé: reconnaissanceContractuelle.libelléActivité,
       modalités: [this.construisLaModalitéDUneReconnaissanceContractuelle(reconnaissanceContractuelle)],
     }
@@ -476,7 +475,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   private construisLaModalitéDUneReconnaissanceContractuelle(reconnaissanceContractuelle: ReconnaissanceContractuelleSanitaireModel):
   AutorisationSanitaireModalité<AutorisationSanitaireAvecDatesNuméroArhgosEtCapacité> {
     return {
-      code: reconnaissanceContractuelle.modalité,
+      code: reconnaissanceContractuelle.codeModalité,
       formes: [this.construisLaFormeDUneReconnaissanceContractuelle(reconnaissanceContractuelle)],
       libellé: reconnaissanceContractuelle.libelléModalité,
     }
@@ -485,7 +484,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   private construisLaFormeDUneReconnaissanceContractuelle(reconnaissanceContractuelle: ReconnaissanceContractuelleSanitaireModel):
   AutorisationSanitaireForme<AutorisationSanitaireAvecDatesNuméroArhgosEtCapacité> {
     return {
-      code: reconnaissanceContractuelle.forme,
+      code: reconnaissanceContractuelle.codeForme,
       dates: this.construisLesDatesDUneReconnaissanceContractuelle(reconnaissanceContractuelle),
       libellé: reconnaissanceContractuelle.libelléForme,
     }
@@ -510,7 +509,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     const équipementsDeLÉtablissement: ÉquipementMatérielLourd[] = []
 
     équipementsMatérielsLourdsModel.forEach((équipementMatérielLourd: ÉquipementMatérielLourdModel) => {
-      const codeÉquipement = équipementMatérielLourd.équipementMatérielLourd
+      const codeÉquipement = équipementMatérielLourd.codeÉquipementMatérielLourd
 
       const équipementCréé = équipementsDeLÉtablissement.find((équipement) => équipement.code === codeÉquipement)
 
@@ -530,7 +529,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   private construisLÉquipementMatérielLourd(équipementMatérielLourd: ÉquipementMatérielLourdModel): ÉquipementMatérielLourd {
     return {
       autorisations: [this.construisLAutorisationDUnÉquipementMatérielLourd(équipementMatérielLourd)],
-      code: équipementMatérielLourd.équipementMatérielLourd,
+      code: équipementMatérielLourd.codeÉquipementMatérielLourd,
       libellé: équipementMatérielLourd.libelléÉquipementMatérielLourd,
     }
   }

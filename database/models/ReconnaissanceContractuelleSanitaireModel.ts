@@ -4,8 +4,8 @@ import { ÉtablissementTerritorialIdentitéModel } from './ÉtablissementTerrito
 
 @Entity({ name: 'reconnaissance_contractuelle_sanitaire' })
 export class ReconnaissanceContractuelleSanitaireModel {
-  @PrimaryColumn({ length: 2, name: 'activite' })
-  public activité!: string
+  @Column({ length: 2, name: 'code_activite' })
+  public codeActivité!: string
 
   @Column({ name: 'capacite_autorisee', type: 'integer' })
   public capacitéAutorisée!: number
@@ -23,8 +23,8 @@ export class ReconnaissanceContractuelleSanitaireModel {
   @JoinColumn({ name: 'numero_finess_etablissement_territorial', referencedColumnName: 'numéroFinessÉtablissementTerritorial' })
   public établissementTerritorial!: ÉtablissementTerritorialIdentitéModel
 
-  @PrimaryColumn({ length: 2, name: 'forme' })
-  public forme!: string
+  @Column({ length: 2, name: 'code_forme' })
+  public codeForme!: string
 
   @Column({ length: 12, name: 'id_cpom' })
   public numéroCpom!: string
@@ -38,10 +38,10 @@ export class ReconnaissanceContractuelleSanitaireModel {
   @Column({ length: 255, name: 'libelle_modalite' })
   public libelléModalité!: string
 
-  @PrimaryColumn({ length: 2, name: 'modalite' })
-  public modalité!: string
+  @Column({ length: 2, name: 'code_modalite' })
+  public codeModalité!: string
 
-  @Column({ length: 31, name: 'numero_autorisation_arhgos' })
+  @PrimaryColumn({ length: 31, name: 'numero_autorisation_arhgos' })
   public numéroAutorisationArhgos!: string
 
   @PrimaryColumn({ length: 9, name: 'numero_finess_etablissement_territorial' })

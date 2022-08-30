@@ -13,8 +13,8 @@ export class ÉquipementMatérielLourdModel {
   @Column({ name: 'date_mise_en_oeuvre', nullable: true, type: 'date' })
   public dateMiseEnOeuvre!: string
 
-  @PrimaryColumn({ length: 5, name: 'equipement_materiel_lourd' })
-  public équipementMatérielLourd!: string
+  @Column({ length: 5, name: 'code_equipement_materiel_lourd' })
+  public codeÉquipementMatérielLourd!: string
 
   @ManyToOne(() => ÉtablissementTerritorialIdentitéModel, { nullable: false, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'numero_finess_etablissement_territorial', referencedColumnName: 'numéroFinessÉtablissementTerritorial' })
@@ -26,6 +26,6 @@ export class ÉquipementMatérielLourdModel {
   @PrimaryColumn({ length: 31, name: 'numero_autorisation_arhgos' })
   public numéroAutorisationArhgos!: string
 
-  @PrimaryColumn({ length: 9, name: 'numero_finess_etablissement_territorial' })
+  @Column({ length: 9, name: 'numero_finess_etablissement_territorial' })
   public numéroFinessÉtablissementTerritorial!: string
 }

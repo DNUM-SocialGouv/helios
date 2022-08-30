@@ -29,15 +29,15 @@ export class ÉtablissementTerritorialAutorisationModelTestBuilder {
     champsSurchargés?: Partial<AutorisationSanitaireModel>
   ): AutorisationSanitaireModel {
     const autorisationSanitaireModel = new AutorisationSanitaireModel()
-    autorisationSanitaireModel.activité = champsSurchargés?.activité || '16'
+    autorisationSanitaireModel.codeActivité = champsSurchargés?.codeActivité || '16'
     autorisationSanitaireModel.dateAutorisation = champsSurchargés?.dateAutorisation || '2005-10-11'
     autorisationSanitaireModel.dateFin = champsSurchargés?.dateFin || '2026-05-03'
     autorisationSanitaireModel.dateMiseEnOeuvre = champsSurchargés?.dateMiseEnOeuvre || '2008-12-04'
-    autorisationSanitaireModel.forme = champsSurchargés?.forme || '00'
+    autorisationSanitaireModel.codeForme = champsSurchargés?.codeForme || '00'
     autorisationSanitaireModel.libelléActivité = champsSurchargés?.libelléActivité || "Traitement de l'insuffisance rénale chronique par épuration extrarénale"
     autorisationSanitaireModel.libelléForme = champsSurchargés?.libelléForme || 'Pas de forme'
     autorisationSanitaireModel.libelléModalité = champsSurchargés?.libelléModalité || 'Hémodialyse en unité médicalisée'
-    autorisationSanitaireModel.modalité = champsSurchargés?.modalité || '42'
+    autorisationSanitaireModel.codeModalité = champsSurchargés?.codeModalité || '42'
     autorisationSanitaireModel.numéroAutorisationArhgos = champsSurchargés?.numéroAutorisationArhgos || '01-00-000'
     autorisationSanitaireModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '670799667'
     return autorisationSanitaireModel
@@ -47,15 +47,15 @@ export class ÉtablissementTerritorialAutorisationModelTestBuilder {
     champsSurchargés?: Partial<AutreActivitéSanitaireModel>
   ): AutreActivitéSanitaireModel {
     const autreActivitéSanitaireModel = new AutreActivitéSanitaireModel()
-    autreActivitéSanitaireModel.activité = champsSurchargés?.activité || 'A1'
+    autreActivitéSanitaireModel.codeActivité = champsSurchargés?.codeActivité || 'A1'
     autreActivitéSanitaireModel.dateAutorisation = champsSurchargés?.dateAutorisation || '2019-06-03'
     autreActivitéSanitaireModel.dateFin = champsSurchargés?.dateFin || '2024-08-31'
     autreActivitéSanitaireModel.dateMiseEnOeuvre = champsSurchargés?.dateMiseEnOeuvre || '2019-06-03'
-    autreActivitéSanitaireModel.forme = champsSurchargés?.forme || '00'
+    autreActivitéSanitaireModel.codeForme = champsSurchargés?.codeForme || '00'
     autreActivitéSanitaireModel.libelléActivité = champsSurchargés?.libelléActivité || 'Dépôt de sang'
     autreActivitéSanitaireModel.libelléForme = champsSurchargés?.libelléForme || 'Pas de forme'
     autreActivitéSanitaireModel.libelléModalité = champsSurchargés?.libelléModalité || 'Dépôt relais'
-    autreActivitéSanitaireModel.modalité = champsSurchargés?.modalité || 'M2'
+    autreActivitéSanitaireModel.codeModalité = champsSurchargés?.codeModalité || 'M2'
     autreActivitéSanitaireModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '670799667'
     return autreActivitéSanitaireModel
   }
@@ -64,17 +64,17 @@ export class ÉtablissementTerritorialAutorisationModelTestBuilder {
     champsSurchargés?: Partial<ReconnaissanceContractuelleSanitaireModel>
   ): ReconnaissanceContractuelleSanitaireModel {
     const reconnaissanceContractuelleSanitaireModel = new ReconnaissanceContractuelleSanitaireModel()
-    reconnaissanceContractuelleSanitaireModel.activité = champsSurchargés?.activité || 'A1'
+    reconnaissanceContractuelleSanitaireModel.codeActivité = champsSurchargés?.codeActivité || 'A1'
     reconnaissanceContractuelleSanitaireModel.capacitéAutorisée = champsSurchargés?.capacitéAutorisée || 4
     reconnaissanceContractuelleSanitaireModel.dateEffetAsr = champsSurchargés?.dateEffetAsr || '2013-11-30'
     reconnaissanceContractuelleSanitaireModel.dateEffetCpom = champsSurchargés?.dateEffetCpom || '2012-12-01'
     reconnaissanceContractuelleSanitaireModel.dateFinCpom = champsSurchargés?.dateFinCpom || '2018-11-30'
-    reconnaissanceContractuelleSanitaireModel.forme = champsSurchargés?.forme || '00'
+    reconnaissanceContractuelleSanitaireModel.codeForme = champsSurchargés?.codeForme || '00'
     reconnaissanceContractuelleSanitaireModel.numéroCpom = champsSurchargés?.numéroCpom || '01-00-C00000'
     reconnaissanceContractuelleSanitaireModel.libelléActivité = champsSurchargés?.libelléActivité || 'Dépôt de sang'
     reconnaissanceContractuelleSanitaireModel.libelléForme = champsSurchargés?.libelléForme || 'Pas de forme'
     reconnaissanceContractuelleSanitaireModel.libelléModalité = champsSurchargés?.libelléModalité || 'Dépôt relais'
-    reconnaissanceContractuelleSanitaireModel.modalité = champsSurchargés?.modalité || 'M2'
+    reconnaissanceContractuelleSanitaireModel.codeModalité = champsSurchargés?.codeModalité || 'M2'
     reconnaissanceContractuelleSanitaireModel.numéroAutorisationArhgos = champsSurchargés?.numéroAutorisationArhgos || '01-00-RC00000'
     reconnaissanceContractuelleSanitaireModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '670799667'
     return reconnaissanceContractuelleSanitaireModel
@@ -87,7 +87,7 @@ export class ÉtablissementTerritorialAutorisationModelTestBuilder {
     équipementMatérielLourdModel.dateAutorisation = champsSurchargés?.dateAutorisation || '2007-11-06'
     équipementMatérielLourdModel.dateFin = champsSurchargés?.dateFin || '2029-01-01'
     équipementMatérielLourdModel.dateMiseEnOeuvre = champsSurchargés?.dateMiseEnOeuvre || '2011-10-19'
-    équipementMatérielLourdModel.équipementMatérielLourd = champsSurchargés?.équipementMatérielLourd || '05602'
+    équipementMatérielLourdModel.codeÉquipementMatérielLourd = champsSurchargés?.codeÉquipementMatérielLourd || '05602'
     équipementMatérielLourdModel.libelléÉquipementMatérielLourd = champsSurchargés?.libelléÉquipementMatérielLourd || 'Scanographe à utilisation médicale'
     équipementMatérielLourdModel.numéroAutorisationArhgos = champsSurchargés?.numéroAutorisationArhgos || '01-00-0000'
     équipementMatérielLourdModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '670799667'
