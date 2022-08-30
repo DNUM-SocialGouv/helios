@@ -2,9 +2,8 @@ import pandas as pd
 from numpy import NaN
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
-from datacrawler.transform.transforme_les_autorisations_des_établissements_médico_sociaux.transforme_les_données_finess_cs1400105 import (
-    transforme_les_données_finess_cs1400105,
-)
+from datacrawler.transform.transforme_les_autorisations_des_établissements_médico_sociaux.transforme_les_données_finess_cs1400105 import \
+    transforme_les_données_finess_cs1400105
 from datacrawler.transform.équivalences_finess_helios import index_des_autorisations_médico_sociaux
 
 
@@ -795,4 +794,4 @@ class TestTransformeLesDonnéesFinessCs1400105:
         données_transformées = transforme_les_données_finess_cs1400105(données_finess_cs1400105, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
-        assert données_transformées.shape == (0, 8)
+        assert données_transformées.empty

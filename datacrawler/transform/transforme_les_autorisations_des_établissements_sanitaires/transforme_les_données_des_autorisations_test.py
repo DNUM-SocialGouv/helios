@@ -8,7 +8,7 @@ from datacrawler.transform.transforme_les_autorisations_des_établissements_sani
 from datacrawler.transform.équivalences_finess_helios import index_des_autorisations_sanitaires
 
 
-class TestTransformeLesDonnéesFinessCs1400103:
+class TestTransformeLesDonnéesDesAutorisationSanitaires:
     def test_filtre_et_renomme_les_colonnes_et_place_l_index(self) -> None:
         # GIVEN
         données_finess_cs1400103 = pd.DataFrame([xml_contenu_finess_cs1400103_builder()])

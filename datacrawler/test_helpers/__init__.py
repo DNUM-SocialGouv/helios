@@ -11,9 +11,19 @@ from datacrawler.load.nom_des_tables import (
     TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
     TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES,
     TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
+    TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_SANITAIRES,
+    TABLES_DES_AUTRES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
+    TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES,
+    TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS,
     FichierSource,
 )
 from datacrawler.transform.équivalences_diamant_helios import index_des_activités
+from datacrawler.transform.équivalences_finess_helios import (
+    index_des_autorisations_sanitaires,
+    index_des_autres_activités_sanitaires,
+    index_des_reconnaissances_contractuelles,
+    index_des_équipements_matériels_lourds,
+)
 
 base_de_données_test = create_engine("postgresql://helios:h3li0s@localhost:5433/helios")
 mocked_logger = MagicMock()
@@ -92,10 +102,38 @@ def supprime_les_données_des_tables(base_de_données: Engine) -> None:
     base_de_données.execute(f"DELETE FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES};")
     base_de_données.execute(f"DELETE FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX};")
+    base_de_données.execute(f"DELETE FROM {TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_SANITAIRES};")
+    base_de_données.execute(f"DELETE FROM {TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS};")
+    base_de_données.execute(f"DELETE FROM {TABLES_DES_AUTRES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES};")
+    base_de_données.execute(f"DELETE FROM {TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES};")
 
 
 def sauvegarde_une_activité_en_base(activité: pd.DataFrame, base_de_données: Engine, table: str) -> None:
     activité.set_index(index_des_activités).to_sql(name=table, con=base_de_données, index=True, if_exists="append")
+
+
+def sauvegarde_une_autorisation_sanitaire_en_base(autorisation: pd.DataFrame, base_de_données: Engine) -> None:
+    autorisation.set_index(index_des_autorisations_sanitaires).to_sql(
+        name=TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_SANITAIRES, con=base_de_données, index=True, if_exists="append"
+    )
+
+
+def sauvegarde_une_autre_activité_sanitaire_en_base(autorisation: pd.DataFrame, base_de_données: Engine) -> None:
+    autorisation.set_index(index_des_autres_activités_sanitaires).to_sql(
+        name=TABLES_DES_AUTRES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, con=base_de_données, index=True, if_exists="append"
+    )
+
+
+def sauvegarde_un_équipement_matériel_lourd_en_base(autorisation: pd.DataFrame, base_de_données: Engine) -> None:
+    autorisation.set_index(index_des_équipements_matériels_lourds).to_sql(
+        name=TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS, con=base_de_données, index=True, if_exists="append"
+    )
+
+
+def sauvegarde_une_reconnaissance_contractuelle_en_base(autorisation: pd.DataFrame, base_de_données: Engine) -> None:
+    autorisation.set_index(index_des_reconnaissances_contractuelles).to_sql(
+        name=TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES, con=base_de_données, index=True, if_exists="append"
+    )
 
 
 def sauvegarde_une_date_de_mise_à_jour_de_fichier_source(date_de_mise_à_jour: str, fichier_source: FichierSource, base_de_données: Engine) -> None:

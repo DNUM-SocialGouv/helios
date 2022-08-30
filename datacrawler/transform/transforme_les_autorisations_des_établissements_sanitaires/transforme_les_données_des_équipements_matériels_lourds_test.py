@@ -8,7 +8,7 @@ from datacrawler.transform.transforme_les_autorisations_des_établissements_sani
 from datacrawler.transform.équivalences_finess_helios import index_des_équipements_matériels_lourds
 
 
-class TestTransformeLesDonnéesFinessCs1400104:
+class TestTransformeLesDonnéesDesÉquipementsMatérielsLourds:
     def test_filtre_et_renomme_les_colonnes_et_place_l_index(self) -> None:
         # GIVEN
         données_finess_cs1400104 = pd.DataFrame([xml_contenu_finess_cs1400104_builder()])

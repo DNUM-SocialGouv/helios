@@ -8,7 +8,7 @@ from datacrawler.transform.transforme_les_autorisations_des_établissements_sani
 from datacrawler.transform.équivalences_finess_helios import index_des_autres_activités_sanitaires
 
 
-class TestTransformeLesDonnéesFinessCs1600102:
+class TestTransformeLesDonnéesDesReconnaissancesContractuelles:
     def test_filtre_et_renomme_les_colonnes_et_place_l_index(self) -> None:
         # GIVEN
         données_finess_cs1600102 = pd.DataFrame([xml_contenu_finess_cs1600102_builder()])
@@ -60,7 +60,7 @@ class TestTransformeLesDonnéesFinessCs1600102:
         données_transformées = transforme_les_données_des_reconnaissances_contractuelles(données_finess_cs1600102, numéros_finess_connus, mocked_logger)
 
         # THEN
-        assert données_transformées.shape == (0, 9)
+        assert données_transformées.empty
 
     def test_supprime_les_lignes_ne_mentionnant_pas_l_activité(self) -> None:
         # GIVEN
@@ -77,7 +77,7 @@ class TestTransformeLesDonnéesFinessCs1600102:
         données_transformées = transforme_les_données_des_reconnaissances_contractuelles(données_finess_cs1600102, numéros_finess_connus, mocked_logger)
 
         # THEN
-        assert données_transformées.shape == (0, 9)
+        assert données_transformées.empty
 
     def test_supprime_les_lignes_ne_mentionnant_pas_la_forme(self) -> None:
         # GIVEN
@@ -94,7 +94,7 @@ class TestTransformeLesDonnéesFinessCs1600102:
         données_transformées = transforme_les_données_des_reconnaissances_contractuelles(données_finess_cs1600102, numéros_finess_connus, mocked_logger)
 
         # THEN
-        assert données_transformées.shape == (0, 9)
+        assert données_transformées.empty
 
     def test_supprime_les_lignes_ne_mentionnant_pas_la_modalité(self) -> None:
         # GIVEN
@@ -111,7 +111,7 @@ class TestTransformeLesDonnéesFinessCs1600102:
         données_transformées = transforme_les_données_des_reconnaissances_contractuelles(données_finess_cs1600102, numéros_finess_connus, mocked_logger)
 
         # THEN
-        assert données_transformées.shape == (0, 9)
+        assert données_transformées.empty
 
     def test_ne_considère_pas_qu_une_seule_fois_un_ensemble_no_finess_activité_forme_et_modalité(self) -> None:
         # GIVEN
@@ -164,4 +164,4 @@ class TestTransformeLesDonnéesFinessCs1600102:
         données_transformées = transforme_les_données_des_reconnaissances_contractuelles(données_finess_cs1600102, numéros_finess_connus, mocked_logger)
 
         # THEN
-        assert données_transformées.shape == (0, 9)
+        assert données_transformées.empty

@@ -2,7 +2,7 @@ import pandas as pd
 from numpy import NaN
 from pandas import NA
 
-from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, csv_men_pmsi_annuel_builder, mocked_logger, helios_men_pmsi_annuel_builder
+from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, csv_men_pmsi_annuel_builder, helios_men_pmsi_annuel_builder, mocked_logger
 from datacrawler.transform.transforme_les_activités_des_établissements_sanitaires.transforme_les_données_men_pmsi_annuel import (
     transforme_les_données_men_pmsi_annuel,
 )
@@ -197,4 +197,4 @@ class TestTransformeLesDonnéesMenPmsiAnnuel:
         données_transformées = transforme_les_données_men_pmsi_annuel(données_men_pmsi_annuel, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
-        assert données_transformées.shape == (0, 10)
+        assert données_transformées.empty
