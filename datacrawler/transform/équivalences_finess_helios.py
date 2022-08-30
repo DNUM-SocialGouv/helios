@@ -56,7 +56,7 @@ index_des_autorisations_sanitaires: List[str] = [
     "datefin": "date_fin",
     "datemeo": "date_mise_en_oeuvre",
     "eml": "code_equipement_materiel_lourd",
-    "libeml": "libelle_equipement_materiel_lourd",
+    "libeml": "libelle_eml",
     "noautorarhgos": "numero_autorisation_arhgos",
     "nofinesset": "numero_finess_etablissement_territorial",
 }

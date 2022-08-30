@@ -20,7 +20,7 @@ export class ÉquipementMatérielLourdModel {
   @JoinColumn({ name: 'numero_finess_etablissement_territorial', referencedColumnName: 'numéroFinessÉtablissementTerritorial' })
   public établissementTerritorial!: ÉtablissementTerritorialIdentitéModel
 
-  @Column({ length: 255, name: 'libelle_equipement_materiel_lourd' })
+  @Column({ length: 255, name: 'libelle_eml' })
   public libelléÉquipementMatérielLourd!: string
 
   @PrimaryColumn({ length: 31, name: 'numero_autorisation_arhgos' })

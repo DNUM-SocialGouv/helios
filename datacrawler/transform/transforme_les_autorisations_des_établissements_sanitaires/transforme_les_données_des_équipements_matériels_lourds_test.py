@@ -31,7 +31,7 @@ class TestTransformeLesDonnéesDesÉquipementsMatérielsLourds:
                     "date_fin": "2028-05-29",
                     "date_mise_en_oeuvre": "2006-11-08",
                     "code_equipement_materiel_lourd": "05701",
-                    "libelle_equipement_materiel_lourd": "Caméra à scintillation sans détecteur d'émission de positons",
+                    "libelle_eml": "Caméra à scintillation sans détecteur d'émission de positons",
                     "numero_autorisation_arhgos": "02-00-0000",
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                 }
@@ -112,7 +112,7 @@ class TestTransformeLesDonnéesDesÉquipementsMatérielsLourds:
                     "date_fin": "2028-05-29",
                     "date_mise_en_oeuvre": "2006-11-08",
                     "code_equipement_materiel_lourd": "05701",
-                    "libelle_equipement_materiel_lourd": "Caméra à scintillation sans détecteur d'émission de positons",
+                    "libelle_eml": "Caméra à scintillation sans détecteur d'émission de positons",
                     "numero_autorisation_arhgos": "02-00-0000",
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                 }

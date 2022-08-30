@@ -268,7 +268,7 @@ def helios_équipement_matériel_lourd_sanitaire_builder(champs_surchargés: Opt
         "date_autorisation": date(2022, 1, 1),
         "date_fin": date(2022, 1, 1),
         "date_mise_en_oeuvre": date(2022, 1, 1),
-        "libelle_equipement_materiel_lourd": "Caméra à scintillation sans détecteur d'émission de positons",
+        "libelle_eml": "Caméra à scintillation sans détecteur d'émission de positons",
         "numero_autorisation_arhgos": "02-00-0000",
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
     }

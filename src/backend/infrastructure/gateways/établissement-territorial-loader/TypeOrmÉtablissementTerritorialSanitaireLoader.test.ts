@@ -43,10 +43,6 @@ describe('Établissement territorial sanitaire loader', () => {
     reconnaissanceContractuelleSanitaireRepository = (await orm).getRepository(ReconnaissanceContractuelleSanitaireModel)
   })
 
-  afterEach(async () => {
-    // await clearAllTables(await orm)
-  })
-
   afterAll(async () => {
     await (await orm).destroy()
   })
