@@ -13,6 +13,8 @@ from datacrawler.load.nom_des_tables import (
     FichierSource,
 )
 from datacrawler.test_helpers import (
+    NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
+    NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL,
     base_de_données_test,
     mocked_logger,
     sauvegarde_un_établissement_en_base,
@@ -36,10 +38,12 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
 
     def test_sauvegarde_les_autorisations_installées_des_établissements_médico_sociaux(self) -> None:
         # GIVEN
-        sauvegarde_une_entité_juridique_en_base("010008407", base_de_données_test)
-        sauvegarde_un_établissement_en_base("620109884", "010008407", base_de_données_test)
-        sauvegarde_un_établissement_en_base("920032430", "010008407", base_de_données_test)
-        sauvegarde_un_établissement_en_base("140004698", "010008407", base_de_données_test)
+        numéro_finess_avec_valeurs_manquantes = "010786259"
+        numéro_finess_inconnu_de_la_base = "140004698"
+        sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+        sauvegarde_un_établissement_en_base(numéro_finess_avec_valeurs_manquantes, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+        sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+        sauvegarde_un_établissement_en_base(numéro_finess_inconnu_de_la_base, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         chemin_du_fichier_finess_cs1400105 = self.fichier_de_données
 
         # WHEN
@@ -61,7 +65,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "libelle_activite": "Hébergement Complet Internat",
                     "libelle_clientele": "Personnes Agées (Sans Autre Indication)",
                     "libelle_discipline_equipement": "Hébergement résidence autonomie personnes âgées seules F1",
-                    "numero_finess_etablissement_territorial": "620109884",
+                    "numero_finess_etablissement_territorial": numéro_finess_avec_valeurs_manquantes,
                 },
                 {
                     "activite": "11",
@@ -76,7 +80,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "libelle_activite": "Hébergement Complet Internat",
                     "libelle_clientele": "Adultes en Difficulté d'Insertion Sociale (SAI)",
                     "libelle_discipline_equipement": "Hébergement d'insertion Adultes,Familles Difficulté",
-                    "numero_finess_etablissement_territorial": "920032430",
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL,
                 },
                 {
                     "activite": "11",
@@ -91,7 +95,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "libelle_activite": "Hébergement Complet Internat",
                     "libelle_clientele": "Adultes en Difficulté d'Insertion Sociale (SAI)",
                     "libelle_discipline_equipement": "Hébergement d'insertion Adultes,Familles Difficulté",
-                    "numero_finess_etablissement_territorial": "920032430",
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL,
                 },
                 {
                     "activite": "11",
@@ -106,7 +110,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "libelle_activite": "Hébergement Complet Internat",
                     "libelle_clientele": "Adultes en Difficulté d'Insertion Sociale (SAI)",
                     "libelle_discipline_equipement": "Hébergement d'insertion Adultes,Familles Difficulté",
-                    "numero_finess_etablissement_territorial": "920032430",
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL,
                 },
                 {
                     "activite": "11",

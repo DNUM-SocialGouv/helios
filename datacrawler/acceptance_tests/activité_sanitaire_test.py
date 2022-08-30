@@ -134,7 +134,7 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
         )
         assert date_du_fichier_ann_rpu.fetchone() == (date(2022, 6, 23), FichierSource.DIAMANT_ANN_RPU.value)
 
-    @patch.object(datacrawler.ajoute_les_activités_des_établissements_sanitaires, "sauvegarde")
+    @patch.object(datacrawler, "sauvegarde")
     def test_revient_à_la_situation_initiale_si_l_écriture_des_activités_échoue(self, mocked_sauvegarde: Mock) -> None:
         # GIVEN
         chemin_du_fichier_men_pmsi_annuel = "data_set/diamant/MEN_PMSI_ANNUEL_2022_06_07.CSV"

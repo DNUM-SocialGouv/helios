@@ -2,10 +2,9 @@ import pandas as pd
 from numpy import NaN
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
-from datacrawler.transform.transforme_les_autorisations_des_établissements_médico_sociaux.transforme_les_données_finess_cs1400105 import (
-    transforme_les_données_finess_cs1400105,
-)
-from datacrawler.transform.équivalences_finess_helios import index_des_autorisations
+from datacrawler.transform.transforme_les_autorisations_des_établissements_médico_sociaux.transforme_les_données_finess_cs1400105 import \
+    transforme_les_données_finess_cs1400105
+from datacrawler.transform.équivalences_finess_helios import index_des_autorisations_médico_sociaux
 
 
 class TestTransformeLesDonnéesFinessCs1400105:
@@ -78,7 +77,7 @@ class TestTransformeLesDonnéesFinessCs1400105:
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                 }
             ],
-        ).set_index(index_des_autorisations)
+        ).set_index(index_des_autorisations_médico_sociaux)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self) -> None:
@@ -183,7 +182,7 @@ class TestTransformeLesDonnéesFinessCs1400105:
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                 }
             ],
-        ).set_index(index_des_autorisations)
+        ).set_index(index_des_autorisations_médico_sociaux)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
     def test_supprime_les_lignes_ne_mentionnant_pas_la_discipline_d_équipement(self) -> None:
@@ -288,7 +287,7 @@ class TestTransformeLesDonnéesFinessCs1400105:
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                 }
             ],
-        ).set_index(index_des_autorisations)
+        ).set_index(index_des_autorisations_médico_sociaux)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
     def test_supprime_les_lignes_ne_mentionnant_pas_l_activité(self) -> None:
@@ -393,7 +392,7 @@ class TestTransformeLesDonnéesFinessCs1400105:
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                 }
             ],
-        ).set_index(index_des_autorisations)
+        ).set_index(index_des_autorisations_médico_sociaux)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
     def test_supprime_les_lignes_ne_mentionnant_pas_la_clientèle(self) -> None:
@@ -498,7 +497,7 @@ class TestTransformeLesDonnéesFinessCs1400105:
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                 }
             ],
-        ).set_index(index_des_autorisations)
+        ).set_index(index_des_autorisations_médico_sociaux)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
     def test_supprime_les_lignes_ne_mentionnant_pas_l_indicateur_d_installation(self) -> None:
@@ -603,7 +602,7 @@ class TestTransformeLesDonnéesFinessCs1400105:
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                 }
             ],
-        ).set_index(index_des_autorisations)
+        ).set_index(index_des_autorisations_médico_sociaux)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
     def test_ne_considère_pas_les_autorisations_qui_ne_sont_plus_autorisées(self) -> None:
@@ -741,7 +740,7 @@ class TestTransformeLesDonnéesFinessCs1400105:
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                 }
             ],
-        ).set_index(index_des_autorisations)
+        ).set_index(index_des_autorisations_médico_sociaux)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
     def test_ne_renvoie_pas_les_établissements_non_présents_en_base(self) -> None:
@@ -795,4 +794,4 @@ class TestTransformeLesDonnéesFinessCs1400105:
         données_transformées = transforme_les_données_finess_cs1400105(données_finess_cs1400105, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
-        assert données_transformées.shape == (0, 8)
+        assert données_transformées.empty

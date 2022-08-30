@@ -249,4 +249,4 @@ class TestTransformeLesDonnéesAnnErrdEjEt:
         données_transformées = transforme_les_données_ann_errd_ej_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
-        assert données_transformées.shape == (0, 3)
+        assert données_transformées.empty

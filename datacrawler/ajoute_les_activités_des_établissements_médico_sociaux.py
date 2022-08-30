@@ -5,13 +5,13 @@ from logging import Logger
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 
+from datacrawler import écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_diamant
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, FichierSource
-from datacrawler.load.sauvegarde import mets_à_jour_la_date_de_mise_à_jour_du_fichier_source, sauvegarde
 from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux import transforme_les_activités_des_établissements_médico_sociaux
 from datacrawler.transform.équivalences_diamant_helios import (
     colonnes_à_lire_ann_errd_ej_et,
@@ -57,12 +57,15 @@ def ajoute_les_activités_des_établissements_médico_sociaux(
     )
 
     with base_de_données.begin() as connection:
-        connection.execute(f"DELETE FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX};")
-        logger.info("[DIAMANT] Anciennes activités médico-sociales supprimées")
-        sauvegarde(connection, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, activités_des_établissements_médico_sociaux)
-        mets_à_jour_la_date_de_mise_à_jour_du_fichier_source(connection, date_du_fichier_ann_errd_ej_et, FichierSource.DIAMANT_ANN_ERRD_EJ_ET)
-        mets_à_jour_la_date_de_mise_à_jour_du_fichier_source(connection, date_du_fichier_ann_ms_tdp_et, FichierSource.DIAMANT_ANN_MS_TDP_ET)
-    logger.info(f"[DIAMANT] {activités_des_établissements_médico_sociaux.shape[0]} activités médico-sociales sauvegardées")
+        écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
+            "activités médico-sociales",
+            "DIAMANT",
+            connection,
+            TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
+            activités_des_établissements_médico_sociaux,
+            [(FichierSource.DIAMANT_ANN_ERRD_EJ_ET, date_du_fichier_ann_errd_ej_et), (FichierSource.DIAMANT_ANN_MS_TDP_ET, date_du_fichier_ann_ms_tdp_et)],
+            logger,
+        )
 
 
 if __name__ == "__main__":
