@@ -9,7 +9,7 @@ Normaliser la langue utilisée par les développeurs pour coder et documenter le
 
 ## Décision
 
-Nous utiliserons : 
+Nous utiliserons :
 - **Le français** pour le code métier, la documentation et l'intention des tests ;
 - **L'anglais** pour le code technique.
 
@@ -21,7 +21,7 @@ Nous utiliserons :
 
 ## Conséquences
 
-Notre code sera bilingue : 
+Notre code sera bilingue :
 - les parties associées au métier seront en français ;
 - les parties associées à la technique seront en anglais ;
 - sa documentation et la description des cas de test seront en français.

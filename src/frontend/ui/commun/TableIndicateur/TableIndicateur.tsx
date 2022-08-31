@@ -1,8 +1,6 @@
 import '@gouvfr/dsfr/dist/component/table/table.min.css'
 import '@gouvfr/dsfr/dist/component/accordion/accordion.min.css'
 
-import { useState } from 'react'
-
 import { useDependencies } from '../contexts/useDependencies'
 import styles from './TableIndicateur.module.css'
 
@@ -16,17 +14,15 @@ type TableIndicateurProps = Readonly<{
 
 export const TableIndicateur = ({ disabled = false, entêteLibellé, identifiants, libellés, valeurs }: TableIndicateurProps) => {
   const { wording } = useDependencies()
-  const [expanded, setExpanded] = useState(false)
 
   return (
     <section className="fr-accordion">
       <h3 className="fr-accordion__title">
         <button
           aria-controls={identifiants[0].replaceAll(' ', '')}
-          aria-expanded={expanded}
+          aria-expanded="false"
           className={'fr-accordion__btn ' + styles['accordion-label']}
           disabled={disabled}
-          onClick={() => setExpanded(true)}
           type="button"
         >
           {wording.AFFICHER_LA_TRANSCRIPTION}

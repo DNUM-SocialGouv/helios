@@ -131,18 +131,13 @@ describe('La page établissement territorial sanitaire - bloc activité', () => 
         ], 2,
       ],
     ]
-  )('affiche un tableau descriptif avec les cinq années après un clic sur "Afficher la transcription"', (libellésLigneDEnTête, identifiant) => {
-    // GIVEN
-    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
-    const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
-    const indicateurs = within(activité).getAllByRole('listitem')
-    const transcription = within(indicateurs[identifiant]).getByRole('button', { name: wording.AFFICHER_LA_TRANSCRIPTION })
-
+  )('affiche un tableau descriptif avec les cinq années', (libellésLigneDEnTête, identifiant) => {
     // WHEN
-    fireEvent.click(transcription)
+    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
 
     // THEN
-    expect(transcription).toHaveAttribute('aria-expanded', 'true')
+    const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
+    const indicateurs = within(activité).getAllByRole('listitem')
     const tableau = within(indicateurs[identifiant]).getByRole('table')
 
     libellésLigneDEnTête.map((libellé) => {
