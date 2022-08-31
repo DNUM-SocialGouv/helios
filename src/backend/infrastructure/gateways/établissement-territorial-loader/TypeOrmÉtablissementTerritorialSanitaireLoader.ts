@@ -10,17 +10,21 @@ import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialSanitaireActivité } from '../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité'
 import {
-  AutorisationSanitaire,
-  AutorisationSanitaireAvecDates,
-  AutorisationSanitaireAvecDatesEtNuméroArhgos,
-  AutorisationSanitaireAvecDatesNuméroArhgosEtCapacité,
   AutorisationSanitaireForme,
   AutorisationSanitaireModalité,
   AutorisationÉquipementMatérielLourd,
   AutreActivitéSanitaire,
-  ReconnaissanceContractuelleSanitaire,
   ÉquipementMatérielLourd,
   ÉtablissementTerritorialSanitaireAutorisationEtCapacité,
+  AutorisationSanitaireActivité,
+  AutreActivitéSanitaireActivité,
+  AutreActivitéSanitaireModalité,
+  AutreActivitéSanitaireForme,
+  ReconnaissanceContractuelleSanitaireActivité,
+  ReconnaissanceContractuelleSanitaireForme,
+  ReconnaissanceContractuelleSanitaireModalité,
+  ReconnaissanceContractuelleSanitaire,
+  AutorisationSanitaire,
 } from '../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { ÉtablissementTerritorialSanitaireNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialSanitaireNonTrouvée'
@@ -31,8 +35,8 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
 
   async chargeActivité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialSanitaireActivité[]> {
     const activitésÉtablissementTerritorialActivitésModel = await this.chargeLesActivitésModel(numéroFinessÉtablissementTerritorial)
-    const dateDeMiseAJourAnnRpuModel = await this.chargeLaDateDeMiseÀJourAnnRpuModel() as DateMiseÀJourFichierSourceModel
-    const dateDeMiseAJourMenPmsiAnnuelModel = await this.chargeLaDateDeMiseÀJourMenPmsiAnnuelModel() as DateMiseÀJourFichierSourceModel
+    const dateDeMiseAJourAnnRpuModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_RPU) as DateMiseÀJourFichierSourceModel
+    const dateDeMiseAJourMenPmsiAnnuelModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_MEN_PMSI_ANNUEL) as DateMiseÀJourFichierSourceModel
 
     return this.construisActivité(
       activitésÉtablissementTerritorialActivitésModel,
@@ -48,7 +52,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       return new ÉtablissementTerritorialSanitaireNonTrouvée(numéroFinessÉtablissementTerritorial)
     }
 
-    const dateDeMiseÀJourIdentitéModel = await this.chargeLaDateDeMiseÀJourFinessCs1400102Model() as DateMiseÀJourFichierSourceModel
+    const dateDeMiseÀJourIdentitéModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102) as DateMiseÀJourFichierSourceModel
 
     return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseÀJourIdentitéModel)
   }
@@ -150,24 +154,6 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     return await (await this.orm)
       .getRepository(DateMiseÀJourFichierSourceModel)
       .findOneBy({ fichier: fichierSource })
-  }
-
-  private async chargeLaDateDeMiseÀJourFinessCs1400102Model(): Promise<DateMiseÀJourFichierSourceModel | null> {
-    return await (await this.orm)
-      .getRepository(DateMiseÀJourFichierSourceModel)
-      .findOneBy({ fichier: FichierSource.FINESS_CS1400102 })
-  }
-
-  private async chargeLaDateDeMiseÀJourAnnRpuModel(): Promise<DateMiseÀJourFichierSourceModel | null> {
-    return await (await this.orm)
-      .getRepository(DateMiseÀJourFichierSourceModel)
-      .findOneBy({ fichier: FichierSource.DIAMANT_ANN_RPU })
-  }
-
-  private async chargeLaDateDeMiseÀJourMenPmsiAnnuelModel(): Promise<DateMiseÀJourFichierSourceModel | null> {
-    return await (await this.orm)
-      .getRepository(DateMiseÀJourFichierSourceModel)
-      .findOneBy({ fichier: FichierSource.DIAMANT_MEN_PMSI_ANNUEL })
   }
 
   private construisIdentité(
@@ -290,7 +276,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     autorisationsModel: AutorisationSanitaireModel[],
     dateMiseÀJourSource: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialSanitaireAutorisationEtCapacité['autorisations'] {
-    const activitésDeLÉtablissement: AutorisationSanitaire[] = []
+    const activitésDeLÉtablissement: AutorisationSanitaireActivité[] = []
 
     autorisationsModel.forEach((autorisationModel: AutorisationSanitaireModel) => {
       const codeActivité = autorisationModel.codeActivité
@@ -322,7 +308,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     }
   }
 
-  private construisLActivitéDUneAutorisation(autorisationModel: AutorisationSanitaireModel): AutorisationSanitaire {
+  private construisLActivitéDUneAutorisation(autorisationModel: AutorisationSanitaireModel): AutorisationSanitaireActivité {
     return {
       code: autorisationModel.codeActivité,
       libellé: autorisationModel.libelléActivité,
@@ -330,8 +316,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     }
   }
 
-  private construisLaModalitéDUneAutorisation(autorisationModel: AutorisationSanitaireModel):
-  AutorisationSanitaireModalité<AutorisationSanitaireAvecDatesEtNuméroArhgos> {
+  private construisLaModalitéDUneAutorisation(autorisationModel: AutorisationSanitaireModel): AutorisationSanitaireModalité {
     return {
       code: autorisationModel.codeModalité,
       formes: [this.construisLaFormeDUneAutorisation(autorisationModel)],
@@ -339,16 +324,15 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     }
   }
 
-  private construisLaFormeDUneAutorisation(autorisationModel: AutorisationSanitaireModel):
-  AutorisationSanitaireForme<AutorisationSanitaireAvecDatesEtNuméroArhgos> {
+  private construisLaFormeDUneAutorisation(autorisationModel: AutorisationSanitaireModel): AutorisationSanitaireForme {
     return {
+      autorisationSanitaire: this.construisLesDatesDUneAutorisation(autorisationModel),
       code: autorisationModel.codeForme,
-      dates: this.construisLesDatesDUneAutorisation(autorisationModel),
       libellé: autorisationModel.libelléForme,
     }
   }
 
-  private construisLesDatesDUneAutorisation(autorisationModel: AutorisationSanitaireModel): AutorisationSanitaireAvecDatesEtNuméroArhgos {
+  private construisLesDatesDUneAutorisation(autorisationModel: AutorisationSanitaireModel): AutorisationSanitaire {
     return {
       dateDAutorisation: autorisationModel.dateAutorisation,
       dateDeFin: autorisationModel.dateFin,
@@ -361,17 +345,17 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     autresActivitésModel: AutreActivitéSanitaireModel[],
     dateMiseÀJourSource: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialSanitaireAutorisationEtCapacité['autresActivités'] {
-    const activitésDeLÉtablissement: AutreActivitéSanitaire[] = []
+    const autresActivitésDeLÉtablissement: AutreActivitéSanitaireActivité[] = []
 
     autresActivitésModel.forEach((autreActivitéModel: AutreActivitéSanitaireModel) => {
       const codeActivité = autreActivitéModel.codeActivité
       const codeModalité = autreActivitéModel.codeModalité
       const codeForme = autreActivitéModel.codeForme
 
-      const activitéCréée = activitésDeLÉtablissement.find((activité) => activité.code === codeActivité)
+      const activitéCréée = autresActivitésDeLÉtablissement.find((activité) => activité.code === codeActivité)
 
       if (!activitéCréée) {
-        activitésDeLÉtablissement.push(this.construisLActivitéDUneAutreActivité(autreActivitéModel))
+        autresActivitésDeLÉtablissement.push(this.construisLActivitéDUneAutreActivité(autreActivitéModel))
       } else {
         const modalitéCréée = activitéCréée.modalités.find((modalité) => modalité.code === codeModalité)
 
@@ -388,12 +372,12 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     })
 
     return {
-      activités: activitésDeLÉtablissement,
+      activités: autresActivitésDeLÉtablissement,
       dateMiseÀJourSource: dateMiseÀJourSource.dernièreMiseÀJour,
     }
   }
 
-  private construisLActivitéDUneAutreActivité(autreActivitéModel: AutreActivitéSanitaireModel): AutreActivitéSanitaire {
+  private construisLActivitéDUneAutreActivité(autreActivitéModel: AutreActivitéSanitaireModel): AutreActivitéSanitaireActivité {
     return {
       code: autreActivitéModel.codeActivité,
       libellé: autreActivitéModel.libelléActivité,
@@ -401,8 +385,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     }
   }
 
-  private construisLaModalitéDUneAutreActivité(autreActivitéModel: AutreActivitéSanitaireModel):
-  AutorisationSanitaireModalité<AutorisationSanitaireAvecDates> {
+  private construisLaModalitéDUneAutreActivité(autreActivitéModel: AutreActivitéSanitaireModel): AutreActivitéSanitaireModalité {
     return {
       code: autreActivitéModel.codeModalité,
       formes: [this.construisLaFormeDUneAutreActivité(autreActivitéModel)],
@@ -410,16 +393,15 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     }
   }
 
-  private construisLaFormeDUneAutreActivité(autreActivitéModel: AutreActivitéSanitaireModel):
-  AutorisationSanitaireForme<AutorisationSanitaireAvecDates> {
+  private construisLaFormeDUneAutreActivité(autreActivitéModel: AutreActivitéSanitaireModel): AutreActivitéSanitaireForme {
     return {
+      autreActivitéSanitaire: this.construisLesDatesDUneAutreActivité(autreActivitéModel),
       code: autreActivitéModel.codeForme,
-      dates: this.construisLesDatesDUneAutreActivité(autreActivitéModel),
       libellé: autreActivitéModel.libelléForme,
     }
   }
 
-  private construisLesDatesDUneAutreActivité(autreActivitéModel: AutreActivitéSanitaireModel): AutorisationSanitaireAvecDates {
+  private construisLesDatesDUneAutreActivité(autreActivitéModel: AutreActivitéSanitaireModel): AutreActivitéSanitaire {
     return {
       dateDAutorisation: autreActivitéModel.dateAutorisation,
       dateDeFin: autreActivitéModel.dateFin,
@@ -431,17 +413,17 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     reconnaissancesContractuellesModel: ReconnaissanceContractuelleSanitaireModel[],
     dateMiseÀJourSource: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialSanitaireAutorisationEtCapacité['reconnaissancesContractuelles'] {
-    const activitésDeLÉtablissement: AutreActivitéSanitaire[] = []
+    const reconnaissancesDeLÉtablissement: ReconnaissanceContractuelleSanitaireActivité[] = []
 
     reconnaissancesContractuellesModel.forEach((reconnaissanceContractuelle: ReconnaissanceContractuelleSanitaireModel) => {
       const codeActivité = reconnaissanceContractuelle.codeActivité
       const codeModalité = reconnaissanceContractuelle.codeModalité
       const codeForme = reconnaissanceContractuelle.codeForme
 
-      const activitéCréée = activitésDeLÉtablissement.find((activité) => activité.code === codeActivité)
+      const activitéCréée = reconnaissancesDeLÉtablissement.find((activité) => activité.code === codeActivité)
 
       if (!activitéCréée) {
-        activitésDeLÉtablissement.push(this.construisLActivitéDUneReconnaissanceContractuelle(reconnaissanceContractuelle))
+        reconnaissancesDeLÉtablissement.push(this.construisLActivitéDUneReconnaissanceContractuelle(reconnaissanceContractuelle))
       } else {
         const modalitéCréée = activitéCréée.modalités.find((modalité) => modalité.code === codeModalité)
 
@@ -458,13 +440,13 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     })
 
     return {
-      activités: activitésDeLÉtablissement,
+      activités: reconnaissancesDeLÉtablissement,
       dateMiseÀJourSource: dateMiseÀJourSource.dernièreMiseÀJour,
     }
   }
 
   private construisLActivitéDUneReconnaissanceContractuelle(reconnaissanceContractuelle: ReconnaissanceContractuelleSanitaireModel):
-  ReconnaissanceContractuelleSanitaire {
+  ReconnaissanceContractuelleSanitaireActivité {
     return {
       code: reconnaissanceContractuelle.codeActivité,
       libellé: reconnaissanceContractuelle.libelléActivité,
@@ -473,7 +455,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   }
 
   private construisLaModalitéDUneReconnaissanceContractuelle(reconnaissanceContractuelle: ReconnaissanceContractuelleSanitaireModel):
-  AutorisationSanitaireModalité<AutorisationSanitaireAvecDatesNuméroArhgosEtCapacité> {
+  ReconnaissanceContractuelleSanitaireModalité {
     return {
       code: reconnaissanceContractuelle.codeModalité,
       formes: [this.construisLaFormeDUneReconnaissanceContractuelle(reconnaissanceContractuelle)],
@@ -482,16 +464,16 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   }
 
   private construisLaFormeDUneReconnaissanceContractuelle(reconnaissanceContractuelle: ReconnaissanceContractuelleSanitaireModel):
-  AutorisationSanitaireForme<AutorisationSanitaireAvecDatesNuméroArhgosEtCapacité> {
+  ReconnaissanceContractuelleSanitaireForme {
     return {
       code: reconnaissanceContractuelle.codeForme,
-      dates: this.construisLesDatesDUneReconnaissanceContractuelle(reconnaissanceContractuelle),
       libellé: reconnaissanceContractuelle.libelléForme,
+      reconnaissanceContractuelleSanitaire: this.construisLesDatesDUneReconnaissanceContractuelle(reconnaissanceContractuelle),
     }
   }
 
   private construisLesDatesDUneReconnaissanceContractuelle(reconnaissanceContractuelle: ReconnaissanceContractuelleSanitaireModel):
-  AutorisationSanitaireAvecDatesNuméroArhgosEtCapacité {
+  ReconnaissanceContractuelleSanitaire {
     return {
       capacitéAutorisée: reconnaissanceContractuelle.capacitéAutorisée,
       dateDEffetAsr: reconnaissanceContractuelle.dateEffetAsr,

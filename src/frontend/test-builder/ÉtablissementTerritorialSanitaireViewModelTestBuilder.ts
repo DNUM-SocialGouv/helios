@@ -320,13 +320,13 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
               code: '42',
               formes: [
                 {
-                  code: '00',
-                  dates: {
+                  autorisationSanitaire: {
                     dateDAutorisation: '2005-10-11',
                     dateDeFin: '2026-05-03',
                     dateDeMiseEnOeuvre: '2008-01-04',
                     numéroArhgos: '01-00-000',
                   },
+                  code: '00',
                   libellé: 'Pas de forme',
                 },
               ],
@@ -347,12 +347,12 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
               code: 'M0',
               formes: [
                 {
-                  code: '00',
-                  dates: {
+                  autreActivitéSanitaire: {
                     dateDAutorisation: '2019-06-03',
                     dateDeFin: '2024-08-31',
                     dateDeMiseEnOeuvre: '2019-06-03',
                   },
+                  code: '00',
                   libellé: 'Pas de forme',
                 },
               ],
@@ -375,7 +375,8 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
               formes: [
                 {
                   code: '01',
-                  dates: {
+                  libellé: 'Hospitalisation complète (24 heures consécutives ou plus)',
+                  reconnaissanceContractuelleSanitaire: {
                     capacitéAutorisée: 4,
                     dateDEffetAsr: '2013-11-30',
                     dateDEffetCpom: '2013-11-01',
@@ -383,7 +384,6 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
                     numéroArhgos: '18-00-RC00000',
                     numéroCpom: '18-00-C00000',
                   },
-                  libellé: 'Hospitalisation complète (24 heures consécutives ou plus)',
                 },
               ],
               libellé: 'USC polyvalente - adulte (non adossée à une unité de réanimation)',

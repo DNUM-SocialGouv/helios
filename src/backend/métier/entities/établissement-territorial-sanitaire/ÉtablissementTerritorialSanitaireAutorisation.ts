@@ -1,41 +1,77 @@
-export type AutorisationSanitaireAvecDatesEtNuméroArhgos = Readonly<{
+export type AutorisationSanitaire = Readonly<{
   dateDAutorisation: string | null
   dateDeFin: string | null
   dateDeMiseEnOeuvre: string | null
-  numéroArhgos: string | null
+  numéroArhgos: string
 }>
 
-export type AutorisationSanitaireAvecDates = Readonly<{
+export type AutorisationSanitaireForme = Readonly<{
+  libellé: string
+  code: string
+  autorisationSanitaire: AutorisationSanitaire
+}>
+
+export type AutorisationSanitaireModalité = Readonly<{
+  libellé: string
+  code: string
+  formes: AutorisationSanitaireForme[]
+}>
+
+export type AutorisationSanitaireActivité = Readonly<{
+  libellé: string
+  code: string
+  modalités: AutorisationSanitaireModalité[]
+}>
+
+export type AutreActivitéSanitaire = Readonly<{
   dateDAutorisation: string | null
   dateDeFin: string | null
   dateDeMiseEnOeuvre: string | null
 }>
 
-export type AutorisationSanitaireAvecDatesNuméroArhgosEtCapacité = Readonly<{
+export type AutreActivitéSanitaireForme = Readonly<{
+  libellé: string
+  code: string
+  autreActivitéSanitaire: AutreActivitéSanitaire
+}>
+
+export type AutreActivitéSanitaireModalité = Readonly<{
+  libellé: string
+  code: string
+  formes: AutreActivitéSanitaireForme[]
+}>
+
+export type AutreActivitéSanitaireActivité = Readonly<{
+  libellé: string
+  code: string
+  modalités: AutreActivitéSanitaireModalité[]
+}>
+
+export type ReconnaissanceContractuelleSanitaire = Readonly<{
   capacitéAutorisée: number | null
   dateDEffetAsr: string | null
   dateDEffetCpom: string | null
   dateDeFinCpom: string | null
-  numéroArhgos: string | null
+  numéroArhgos: string
   numéroCpom: string
 }>
 
-export type AutorisationSanitaireForme<T> = Readonly<{
+export type ReconnaissanceContractuelleSanitaireForme = Readonly<{
   libellé: string
   code: string
-  dates: T
+  reconnaissanceContractuelleSanitaire: ReconnaissanceContractuelleSanitaire
 }>
 
-export type AutorisationSanitaireModalité<T> = Readonly<{
+export type ReconnaissanceContractuelleSanitaireModalité = Readonly<{
   libellé: string
   code: string
-  formes: AutorisationSanitaireForme<T>[]
+  formes: ReconnaissanceContractuelleSanitaireForme[]
 }>
 
-export type AutorisationSanitaireActivité<T> = Readonly<{
+export type ReconnaissanceContractuelleSanitaireActivité = Readonly<{
   libellé: string
   code: string
-  modalités: AutorisationSanitaireModalité<T>[]
+  modalités: ReconnaissanceContractuelleSanitaireModalité[]
 }>
 
 export type AutorisationÉquipementMatérielLourd = Readonly<{
@@ -51,18 +87,14 @@ export type ÉquipementMatérielLourd = Readonly<{
   autorisations: AutorisationÉquipementMatérielLourd[]
 }>
 
-export type AutorisationSanitaire = AutorisationSanitaireActivité<AutorisationSanitaireAvecDatesEtNuméroArhgos>
-export type AutreActivitéSanitaire = AutorisationSanitaireActivité<AutorisationSanitaireAvecDates>
-export type ReconnaissanceContractuelleSanitaire = AutorisationSanitaireActivité<AutorisationSanitaireAvecDatesNuméroArhgosEtCapacité>
-
 export type ÉtablissementTerritorialSanitaireAutorisationEtCapacité = Readonly<{
   numéroFinessÉtablissementTerritorial: string
   autorisations: {
-    activités: AutorisationSanitaire[]
+    activités: AutorisationSanitaireActivité[]
     dateMiseÀJourSource: string
   },
   autresActivités: {
-    activités: AutreActivitéSanitaire[]
+    activités: AutreActivitéSanitaireActivité[]
     dateMiseÀJourSource: string
   },
   équipementsMatérielsLourds: {
@@ -70,7 +102,7 @@ export type ÉtablissementTerritorialSanitaireAutorisationEtCapacité = Readonly
     dateMiseÀJourSource: string
   },
   reconnaissancesContractuelles: {
-    activités: ReconnaissanceContractuelleSanitaire[]
+    activités: ReconnaissanceContractuelleSanitaireActivité[]
     dateMiseÀJourSource: string
   }
 }>

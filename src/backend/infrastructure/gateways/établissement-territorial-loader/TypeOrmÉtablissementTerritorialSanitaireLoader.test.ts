@@ -32,7 +32,6 @@ describe('Établissement territorial sanitaire loader', () => {
   let reconnaissanceContractuelleSanitaireRepository: Repository<ReconnaissanceContractuelleSanitaireModel>
 
   beforeAll(async () => {
-    await clearAllTables(await orm)
     activitéSanitaireModelRepository = (await orm).getRepository(ActivitéSanitaireModel)
     établissementTerritorialIdentitéRepository = (await orm).getRepository(ÉtablissementTerritorialIdentitéModel)
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel)
@@ -41,6 +40,10 @@ describe('Établissement territorial sanitaire loader', () => {
     équipementMatérielLourdRepository = (await orm).getRepository(ÉquipementMatérielLourdModel)
     autreActivitéSanitaireRepository = (await orm).getRepository(AutreActivitéSanitaireModel)
     reconnaissanceContractuelleSanitaireRepository = (await orm).getRepository(ReconnaissanceContractuelleSanitaireModel)
+  })
+
+  beforeEach(async () => {
+    await clearAllTables(await orm)
   })
 
   afterAll(async () => {
@@ -265,23 +268,23 @@ describe('Établissement territorial sanitaire loader', () => {
                 code: '42',
                 formes: [
                   {
-                    code: '00',
-                    dates: {
+                    autorisationSanitaire: {
                       dateDAutorisation: '2005-10-11',
                       dateDeFin: '2026-05-03',
                       dateDeMiseEnOeuvre: '2008-12-04',
                       numéroArhgos: '02-00-0000',
                     },
+                    code: '00',
                     libellé: 'Pas de forme',
                   },
                   {
-                    code: '14',
-                    dates: {
+                    autorisationSanitaire: {
                       dateDAutorisation: '2005-10-11',
                       dateDeFin: '2026-05-03',
                       dateDeMiseEnOeuvre: '2008-12-04',
                       numéroArhgos: '01-00-0000',
                     },
+                    code: '14',
                     libellé: 'Non saisonnier',
                   },
                 ],
@@ -291,13 +294,13 @@ describe('Établissement territorial sanitaire loader', () => {
                 code: '45',
                 formes: [
                   {
-                    code: '14',
-                    dates: {
+                    autorisationSanitaire: {
                       dateDAutorisation: '2005-10-11',
                       dateDeFin: '2026-05-03',
                       dateDeMiseEnOeuvre: '2008-12-04',
                       numéroArhgos: '04-00-0000',
                     },
+                    code: '14',
                     libellé: 'Non saisonnier',
                   },
                 ],
@@ -313,13 +316,13 @@ describe('Établissement territorial sanitaire loader', () => {
                 code: '46',
                 formes: [
                   {
-                    code: '00',
-                    dates: {
+                    autorisationSanitaire: {
                       dateDAutorisation: '2005-10-11',
                       dateDeFin: '2026-05-03',
                       dateDeMiseEnOeuvre: '2008-12-04',
                       numéroArhgos: '03-00-0000',
                     },
+                    code: '00',
                     libellé: 'Pas de forme',
                   },
                 ],
@@ -360,37 +363,37 @@ describe('Établissement territorial sanitaire loader', () => {
         ÉtablissementTerritorialAutorisationModelTestBuilder.créeAutreActivitéSanitaire({
           codeActivité: 'A1',
           codeForme: '00',
+          codeModalité: 'M0',
           libelléActivité: 'Dépôt de sang',
           libelléForme: 'Pas de forme',
           libelléModalité: "Dépôt d'urgence",
-          codeModalité: 'M0',
           numéroFinessÉtablissementTerritorial,
         }),
         ÉtablissementTerritorialAutorisationModelTestBuilder.créeAutreActivitéSanitaire({
           codeActivité: 'A1',
           codeForme: '15',
+          codeModalité: 'M0',
           libelléActivité: 'Dépôt de sang',
           libelléForme: 'Forme non précisée',
           libelléModalité: "Dépôt d'urgence",
-          codeModalité: 'M0',
           numéroFinessÉtablissementTerritorial,
         }),
         ÉtablissementTerritorialAutorisationModelTestBuilder.créeAutreActivitéSanitaire({
           codeActivité: 'A1',
           codeForme: '15',
+          codeModalité: 'M2',
           libelléActivité: 'Dépôt de sang',
           libelléForme: 'Forme non précisée',
           libelléModalité: 'Dépôt relais',
-          codeModalité: 'M2',
           numéroFinessÉtablissementTerritorial,
         }),
         ÉtablissementTerritorialAutorisationModelTestBuilder.créeAutreActivitéSanitaire({
           codeActivité: 'A0',
           codeForme: '00',
+          codeModalité: 'M0',
           libelléActivité: 'Installation de chirurgie esthétique',
           libelléForme: 'Pas de forme',
           libelléModalité: "Dépôt d'urgence",
-          codeModalité: 'M0',
           numéroFinessÉtablissementTerritorial,
         }),
       ])
@@ -410,12 +413,12 @@ describe('Établissement territorial sanitaire loader', () => {
                 code: 'M0',
                 formes: [
                   {
-                    code: '00',
-                    dates: {
+                    autreActivitéSanitaire: {
                       dateDAutorisation: '2019-06-03',
                       dateDeFin: '2024-08-31',
                       dateDeMiseEnOeuvre: '2019-06-03',
                     },
+                    code: '00',
                     libellé: 'Pas de forme',
                   },
                 ],
@@ -431,21 +434,21 @@ describe('Établissement territorial sanitaire loader', () => {
                 code: 'M0',
                 formes: [
                   {
-                    code: '00',
-                    dates: {
+                    autreActivitéSanitaire: {
                       dateDAutorisation: '2019-06-03',
                       dateDeFin: '2024-08-31',
                       dateDeMiseEnOeuvre: '2019-06-03',
                     },
+                    code: '00',
                     libellé: 'Pas de forme',
                   },
                   {
-                    code: '15',
-                    dates: {
+                    autreActivitéSanitaire: {
                       dateDAutorisation: '2019-06-03',
                       dateDeFin: '2024-08-31',
                       dateDeMiseEnOeuvre: '2019-06-03',
                     },
+                    code: '15',
                     libellé: 'Forme non précisée',
                   },
                 ],
@@ -455,12 +458,12 @@ describe('Établissement territorial sanitaire loader', () => {
                 code: 'M2',
                 formes: [
                   {
-                    code: '15',
-                    dates: {
+                    autreActivitéSanitaire: {
                       dateDAutorisation: '2019-06-03',
                       dateDeFin: '2024-08-31',
                       dateDeMiseEnOeuvre: '2019-06-03',
                     },
+                    code: '15',
                     libellé: 'Forme non précisée',
                   },
                 ],
@@ -556,7 +559,8 @@ describe('Établissement territorial sanitaire loader', () => {
                 formes: [
                   {
                     code: '01',
-                    dates: {
+                    libellé: 'Hospitalisation complète (24 heures consécutives ou plus)',
+                    reconnaissanceContractuelleSanitaire: {
                       capacitéAutorisée: 4,
                       dateDEffetAsr: '2013-11-30',
                       dateDEffetCpom: '2012-12-01',
@@ -564,7 +568,6 @@ describe('Établissement territorial sanitaire loader', () => {
                       numéroArhgos: '02-00-0000',
                       numéroCpom: '01-00-C00000',
                     },
-                    libellé: 'Hospitalisation complète (24 heures consécutives ou plus)',
                   },
                 ],
                 libellé: 'Equipe mobile',
@@ -574,7 +577,8 @@ describe('Établissement territorial sanitaire loader', () => {
                 formes: [
                   {
                     code: '00',
-                    dates: {
+                    libellé: 'Pas de forme',
+                    reconnaissanceContractuelleSanitaire: {
                       capacitéAutorisée: 4,
                       dateDEffetAsr: '2013-11-30',
                       dateDEffetCpom: '2012-12-01',
@@ -582,11 +586,11 @@ describe('Établissement territorial sanitaire loader', () => {
                       numéroArhgos: '03-00-0000',
                       numéroCpom: '01-00-C00000',
                     },
-                    libellé: 'Pas de forme',
                   },
                   {
                     code: '01',
-                    dates: {
+                    libellé: 'Hospitalisation complète (24 heures consécutives ou plus)',
+                    reconnaissanceContractuelleSanitaire: {
                       capacitéAutorisée: 4,
                       dateDEffetAsr: '2013-11-30',
                       dateDEffetCpom: '2012-12-01',
@@ -594,7 +598,6 @@ describe('Établissement territorial sanitaire loader', () => {
                       numéroArhgos: '01-00-0000',
                       numéroCpom: '01-00-C00000',
                     },
-                    libellé: 'Hospitalisation complète (24 heures consécutives ou plus)',
                   },
                 ],
                 libellé: 'USC polyvalente - adulte (non adossée à une unité de réanimation)',
@@ -610,7 +613,8 @@ describe('Établissement territorial sanitaire loader', () => {
                 formes: [
                   {
                     code: '00',
-                    dates: {
+                    libellé: 'Pas de forme',
+                    reconnaissanceContractuelleSanitaire: {
                       capacitéAutorisée: 4,
                       dateDEffetAsr: '2013-11-30',
                       dateDEffetCpom: '2012-12-01',
@@ -618,7 +622,6 @@ describe('Établissement territorial sanitaire loader', () => {
                       numéroArhgos: '04-00-0000',
                       numéroCpom: '01-00-C00000',
                     },
-                    libellé: 'Pas de forme',
                   },
                 ],
                 libellé: 'Clinique ouverte',
@@ -630,7 +633,7 @@ describe('Établissement territorial sanitaire loader', () => {
       })
     })
 
-    it.only('charge les équipements matériels lourds triés par code', async () => {
+    it('charge les équipements matériels lourds triés par code', async () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
       await dateMiseÀJourFichierSourceRepository.insert([
