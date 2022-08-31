@@ -141,6 +141,9 @@ export class WordingFr implements Wording {
   readonly NUMÉRO_ARHGOS: string = 'Numéro ARHGOS'
   readonly ACTIVITÉ: string = 'Activité'
 
+  // Bloc Autorisation sanitaire
+  readonly AUTRES_ACTIVITÉS: string = 'Autres activités'
+
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string = 'Établissement territorial'
   readonly TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS: string = 'Les établissements rattachés'

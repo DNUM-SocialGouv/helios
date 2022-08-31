@@ -339,6 +339,27 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     autresActivités: {
       activités: [
         {
+          code:'A0',
+          libellé: 'Installation de chirurgie esthétique',
+          modalités : [
+            {
+              code: 'M2',
+              formes: [
+                {
+                  autreActivitéSanitaire: {
+                    dateDAutorisation: '2019-06-03',
+                    dateDeFin: null,
+                    dateDeMiseEnOeuvre: '2019-06-03',
+                  },
+                  code: '00',
+                  libellé: 'Pas de forme',
+                },
+              ],
+              libellé: 'Dépôt relais',
+            },
+          ],
+        },
+        {
           code:'A1',
           libellé: 'Dépôt de sang',
           modalités : [
@@ -354,8 +375,32 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
                   code: '00',
                   libellé: 'Pas de forme',
                 },
+                {
+                  autreActivitéSanitaire: {
+                    dateDAutorisation: '2019-06-03',
+                    dateDeFin: '2024-08-31',
+                    dateDeMiseEnOeuvre: '2019-06-03',
+                  },
+                  code: '15',
+                  libellé: 'Forme non précisée',
+                },
               ],
               libellé: "Dépôt d'urgence",
+            },
+            {
+              code: '31',
+              formes: [
+                {
+                  autreActivitéSanitaire: {
+                    dateDAutorisation: '2019-06-03',
+                    dateDeFin: '2024-08-31',
+                    dateDeMiseEnOeuvre: '2019-06-03',
+                  },
+                  code: '00',
+                  libellé: 'Pas de forme',
+                },
+              ],
+              libellé: 'Multi-Organes',
             },
           ],
         },
