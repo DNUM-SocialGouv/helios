@@ -7,6 +7,7 @@ import { BlocActivitéSanitaire } from './BlocActivitéSanitaire'
 import { BlocIdentitéSanitaire } from './BlocIdentitéSanitaire'
 import LogoÉtablissementTerritorial from './logo-établissement-territorial-sanitaire.svg'
 import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTerritorialSanitaireViewModel'
+import {BlocAutorisationEtCapacitéSanitaire} from "./BlocAutorisationEtCapacitéSanitaire";
 
 type ÉtablissementTerritorialProps = Readonly<{
   établissementTerritorialViewModel: ÉtablissementTerritorialSanitaireViewModel
@@ -38,6 +39,7 @@ export const PageÉtablissementTerritorialSanitaire = ({ établissementTerritori
       </Titre>
       <BlocIdentitéSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialViewModel} />
       <BlocActivitéSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialViewModel} />
+      <BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialViewModel} />
     </>
   )
 }

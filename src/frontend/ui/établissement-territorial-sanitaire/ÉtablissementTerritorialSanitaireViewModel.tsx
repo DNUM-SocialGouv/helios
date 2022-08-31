@@ -10,6 +10,7 @@ import { GraphiqueViewModel } from '../commun/Graphique/GraphiqueViewModel'
 import { StringFormater } from '../commun/StringFormater'
 import { TableIndicateur } from '../commun/TableIndicateur/TableIndicateur'
 import styles from './BlocActivitéSanitaire.module.css'
+import {ActionneurDAccordéon} from "../commun/Accordéon/ActionneurDAccordéon";
 
 type DonnéesDeDiagrammeDesSéjoursMCO = Readonly<{
   nombreSéjoursCompletsMédecine: {x: number, y: number | null}[]
@@ -485,5 +486,90 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
 
   private lIndicateurEstIlRenseigné(indicateur: Exclude<keyof ÉtablissementTerritorialSanitaireActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>): boolean {
     return this.établissementTerritorial.activités.some((activité: ÉtablissementTerritorialSanitaireActivité) => activité[indicateur].value !== null)
+  }
+
+  public get autorisations(): JSX.Element {
+    const autorisationsDeLÉtablissement = this.établissementTerritorial.autorisationsEtCapacités.autorisations
+
+    return (
+        <ul
+            aria-label="activités"
+            className={` ${styles['liste-autorisations']}`}
+        >
+          {autorisationsDeLÉtablissement.activités.map((activité) => (
+              <li
+                  className=""
+                  key={`discipline-${activité.code}`}
+              >
+                <ActionneurDAccordéon
+                    for={`accordion-${activité.code}`}
+                    titre={`${activité.libellé} [${activité.code}]`}
+                />
+                <ul
+                    className={` fr-collapse ${styles['liste-activités']}`}
+                    id={`accordion-${activité.code}`}
+                >
+                  {
+                    activité.modalités.map((modalité) => (
+                        <li
+                            className=""
+                            key={`modalité-${modalité.code}`}
+                        >
+                          <ActionneurDAccordéon
+                              for={`accordion-${modalité.code}-${modalité.code}`}
+                              texteGras={false}
+                              titre={`${modalité.libellé} [${modalité.code}]`}
+                          />
+                          <ul
+                              className={`fr-collapse ${styles['liste-formes']}`}
+                              id={`accordion-${modalité.code}-${modalité.code}`}
+                          >
+                            {
+                              modalité.formes.map((forme) => {
+                                const autorisationSanitaire = forme.autorisationSanitaire
+                                return (
+                                    <li key={`forme-${forme.code}`}>
+                                      <ul
+                                          aria-label="dates-et-capacités"
+                                          className="fr-tags-group"
+                                      >
+                                        <li className="fr-tag fr-fi-arrow-right-line fr-tag--icon-left">
+                                          {`${forme.libellé} [${forme.code}]`}
+                                        </li>
+                                        <li className="fr-tag">
+                                          {`${this.wording.NUMÉRO_ARHGOS} : ${autorisationSanitaire.numéroArhgos ? StringFormater.formateLaDate(autorisationSanitaire.numéroArhgos) : 'N/A'}`}
+                                        </li>
+                                        <li className="fr-tag">
+                                          {`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${autorisationSanitaire.dateDeMiseEnOeuvre ? StringFormater.formateLaDate(autorisationSanitaire.dateDeMiseEnOeuvre) : 'N/A'}`}
+                                        </li>
+                                        <li className="fr-tag">
+                                          {`${this.wording.DATE_DE_FIN} : ${autorisationSanitaire.dateDeFin ? StringFormater.formateLaDate(autorisationSanitaire.dateDeFin) : 'N/A'}`}
+                                        </li>
+                                        <li className="fr-tag">
+                                          {`${this.wording.DATE_D_AUTORISATION} : ${autorisationSanitaire.dateDAutorisation ? StringFormater.formateLaDate(autorisationSanitaire.dateDAutorisation) : 'N/A'}`}
+                                        </li>
+                                      </ul>
+                                    </li>
+                                )
+                              })
+                            }
+                          </ul>
+                        </li>
+                    ))
+                  }
+                </ul>
+              </li>
+          ))}
+        </ul>
+    )
+  }
+
+
+  public get lesAutorisationsSontEllesRenseignées(): boolean {
+    return this.établissementTerritorial.autorisationsEtCapacités.autorisations.activités.length !== 0
+  }
+
+  public get dateDeMiseÀJourDesAutorisations(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.autorisationsEtCapacités.autorisations.dateMiseÀJourSource)
   }
 }

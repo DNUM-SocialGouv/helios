@@ -130,12 +130,15 @@ export class WordingFr implements Wording {
   readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string = 'autorisation et capacité'
   readonly AUTORISATIONS: string = 'Autorisations'
   readonly DATE_D_AUTORISATION: string = 'Date d’autorisation'
+  readonly DATE_DE_FIN: string = 'Date de fin'
+  readonly DATE_DE_MISE_EN_OEUVRE: string = 'Date de mise en oeuvre'
   readonly MISE_À_JOUR_AUTORISATION: string = 'Mise à jour d’autorisation'
   readonly DERNIÈRE_INSTALLATION: string = 'Dernière installation'
   readonly CAPACITÉ_AUTORISÉE: string = 'Capacité autorisée'
   readonly CAPACITÉ_INSTALLÉE: string = 'Capacité installée'
   readonly CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS: string = 'Capacité installée par activités'
   readonly NOMBRE_TOTAL_DE_PLACE_PAR_ACTIVITÉ: string = 'Nombre total de places par activité'
+  readonly NUMÉRO_ARHGOS: string = 'Numéro ARGHOS'
   readonly ACTIVITÉ: string = 'Activité'
 
   // Liste des établissements rattachés
