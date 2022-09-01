@@ -9,7 +9,6 @@ import { typeOrmOrm } from '../datacrawler/legacy/infrastructure/gateways/orm/ty
     dotEnvConfig()
     const environmentVariables = new NodeEnvironmentVariables(logger)
     const orm = await typeOrmOrm(environmentVariables)
-    await orm.undoLastMigration()
     await orm.runMigrations()
     await orm.destroy()
   } catch (error) {
