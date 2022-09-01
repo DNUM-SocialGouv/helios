@@ -8,7 +8,7 @@ import { AutreActivitéSanitaireModel } from '../../database/models/AutreActivit
 import { DateMiseÀJourFichierSourceModel } from '../../database/models/DateMiseÀJourFichierSourceModel'
 import { EntitéJuridiqueModel } from '../../database/models/EntitéJuridiqueModel'
 import { ReconnaissanceContractuelleSanitaireModel } from '../../database/models/ReconnaissanceContractuelleSanitaireModel'
-import { ÉquipementMatérielLourdModel } from '../../database/models/ÉquipementMatérielLourdModel'
+import { ÉquipementMatérielLourdSanitaireModel } from '../../database/models/ÉquipementMatérielLourdSanitaireModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { typeOrmOrm } from './infrastructure/gateways/orm/typeOrmOrm'
 import { EnvironmentVariables } from './métier/gateways/EnvironmentVariables'
@@ -41,7 +41,7 @@ export const clearAllTables = async (orm: DataSource) => {
   await orm.createQueryBuilder().delete().from(DateMiseÀJourFichierSourceModel).execute()
   await orm.createQueryBuilder().delete().from(AutorisationMédicoSocialModel).execute()
   await orm.createQueryBuilder().delete().from(AutorisationSanitaireModel).execute()
-  await orm.createQueryBuilder().delete().from(ÉquipementMatérielLourdModel).execute()
+  await orm.createQueryBuilder().delete().from(ÉquipementMatérielLourdSanitaireModel).execute()
   await orm.createQueryBuilder().delete().from(AutreActivitéSanitaireModel).execute()
   await orm.createQueryBuilder().delete().from(ReconnaissanceContractuelleSanitaireModel).execute()
 }

@@ -2,7 +2,7 @@ import { AutorisationMédicoSocialModel } from '../models/AutorisationMédicoSoc
 import { AutorisationSanitaireModel } from '../models/AutorisationSanitaireModel'
 import { AutreActivitéSanitaireModel } from '../models/AutreActivitéSanitaireModel'
 import { ReconnaissanceContractuelleSanitaireModel } from '../models/ReconnaissanceContractuelleSanitaireModel'
-import { ÉquipementMatérielLourdModel } from '../models/ÉquipementMatérielLourdModel'
+import { ÉquipementMatérielLourdSanitaireModel } from '../models/ÉquipementMatérielLourdSanitaireModel'
 
 export class ÉtablissementTerritorialAutorisationModelTestBuilder {
   public static créeMédicoSocial(
@@ -81,9 +81,9 @@ export class ÉtablissementTerritorialAutorisationModelTestBuilder {
   }
 
   public static créeÉquipementMatérielLourdSanitaire(
-    champsSurchargés?: Partial<ÉquipementMatérielLourdModel>
-  ): ÉquipementMatérielLourdModel {
-    const équipementMatérielLourdModel = new ÉquipementMatérielLourdModel()
+    champsSurchargés?: Partial<ÉquipementMatérielLourdSanitaireModel>
+  ): ÉquipementMatérielLourdSanitaireModel {
+    const équipementMatérielLourdModel = new ÉquipementMatérielLourdSanitaireModel()
     équipementMatérielLourdModel.dateAutorisation = champsSurchargés?.dateAutorisation || '2007-11-06'
     équipementMatérielLourdModel.dateFin = champsSurchargés?.dateFin || '2029-01-01'
     équipementMatérielLourdModel.dateMiseEnOeuvre = champsSurchargés?.dateMiseEnOeuvre || '2011-10-19'

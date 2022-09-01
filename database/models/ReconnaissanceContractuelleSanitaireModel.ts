@@ -26,7 +26,7 @@ export class ReconnaissanceContractuelleSanitaireModel {
   @Column({ length: 2, name: 'code_forme' })
   public codeForme!: string
 
-  @Column({ length: 12, name: 'id_cpom' })
+  @Column({ length: 12, name: 'numero_cpom' })
   public numéroCpom!: string
 
   @Column({ length: 255, name: 'libelle_activite' })

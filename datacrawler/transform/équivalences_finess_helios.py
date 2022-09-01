@@ -101,7 +101,7 @@ index_des_autres_activités_sanitaires: List[str] = [
     "dateeffetcpom": "date_effet_cpom",
     "datefincpom": "date_fin_cpom",
     "forme": "code_forme",
-    "idcpom": "id_cpom",
+    "idcpom": "numero_cpom",
     "libactivite": "libelle_activite",
     "libforme": "libelle_forme",
     "libmodalite": "libelle_modalite",

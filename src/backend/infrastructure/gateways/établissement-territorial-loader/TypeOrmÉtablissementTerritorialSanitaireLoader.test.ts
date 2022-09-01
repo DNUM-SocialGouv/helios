@@ -6,7 +6,7 @@ import { AutreActivitéSanitaireModel } from '../../../../../database/models/Aut
 import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
 import { ReconnaissanceContractuelleSanitaireModel } from '../../../../../database/models/ReconnaissanceContractuelleSanitaireModel'
-import { ÉquipementMatérielLourdModel } from '../../../../../database/models/ÉquipementMatérielLourdModel'
+import { ÉquipementMatérielLourdSanitaireModel } from '../../../../../database/models/ÉquipementMatérielLourdSanitaireModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { DateMiseÀJourFichierSourceModelTestBuilder } from '../../../../../database/test-builder/DateMiseÀJourFichierSourceModelTestBuilder'
 import { EntitéJuridiqueModelTestBuilder } from '../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder'
@@ -27,7 +27,7 @@ describe('Établissement territorial sanitaire loader', () => {
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>
   let dateMiseÀJourFichierSourceRepository: Repository<DateMiseÀJourFichierSourceModel>
   let autorisationSanitaireRepository: Repository<AutorisationSanitaireModel>
-  let équipementMatérielLourdRepository: Repository<ÉquipementMatérielLourdModel>
+  let équipementMatérielLourdSanitaireRepository: Repository<ÉquipementMatérielLourdSanitaireModel>
   let autreActivitéSanitaireRepository: Repository<AutreActivitéSanitaireModel>
   let reconnaissanceContractuelleSanitaireRepository: Repository<ReconnaissanceContractuelleSanitaireModel>
 
@@ -37,7 +37,7 @@ describe('Établissement territorial sanitaire loader', () => {
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel)
     dateMiseÀJourFichierSourceRepository = (await orm).getRepository(DateMiseÀJourFichierSourceModel)
     autorisationSanitaireRepository = (await orm).getRepository(AutorisationSanitaireModel)
-    équipementMatérielLourdRepository = (await orm).getRepository(ÉquipementMatérielLourdModel)
+    équipementMatérielLourdSanitaireRepository = (await orm).getRepository(ÉquipementMatérielLourdSanitaireModel)
     autreActivitéSanitaireRepository = (await orm).getRepository(AutreActivitéSanitaireModel)
     reconnaissanceContractuelleSanitaireRepository = (await orm).getRepository(ReconnaissanceContractuelleSanitaireModel)
   })
@@ -186,7 +186,7 @@ describe('Établissement territorial sanitaire loader', () => {
   })
 
   describe('Charge les autorisations et capacités d’un établissement sanitaire', () => {
-    it('charge les autorisations triées par activité, modalité puis forme dans l’ordre croissant', async () => {
+    it('charge les autorisations groupées par activité, modalité puis par forme. Chaque niveau de groupe est trié par ordre croissant de code.', async () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
       await dateMiseÀJourFichierSourceRepository.insert([
@@ -335,7 +335,7 @@ describe('Établissement territorial sanitaire loader', () => {
       })
     })
 
-    it('charge les autres activités triées par activité, modalité puis forme dans l’ordre croissant', async () => {
+    it('charge les autres activités groupées par activité, modalité puis par forme. Chaque niveau de groupe est trié par ordre croissant de code.', async () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
       await dateMiseÀJourFichierSourceRepository.insert([
@@ -476,7 +476,7 @@ describe('Établissement territorial sanitaire loader', () => {
       })
     })
 
-    it('charge les reconnaissances contractuelles triées par activité, modalité puis forme dans l’ordre croissant', async () => {
+    it('charge les reconnaissances contractuelles groupées par activité, modalité puis par forme. Chaque niveau de groupe est trié par ordre croissant de code.', async () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
       await dateMiseÀJourFichierSourceRepository.insert([
@@ -633,7 +633,7 @@ describe('Établissement territorial sanitaire loader', () => {
       })
     })
 
-    it('charge les équipements matériels lourds triés par code', async () => {
+    it('charge les équipements matériels lourds groupés par équipement. Chaque autorisation d’équipement est trié par ordre croissant.', async () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
       await dateMiseÀJourFichierSourceRepository.insert([
@@ -657,7 +657,7 @@ describe('Établissement territorial sanitaire loader', () => {
       await établissementTerritorialIdentitéRepository.insert(
         ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
       )
-      await équipementMatérielLourdRepository.insert([
+      await équipementMatérielLourdSanitaireRepository.insert([
         ÉtablissementTerritorialAutorisationModelTestBuilder.créeÉquipementMatérielLourdSanitaire({
           codeÉquipementMatérielLourd: '05602',
           libelléÉquipementMatérielLourd: 'Scanographe à utilisation médicale',

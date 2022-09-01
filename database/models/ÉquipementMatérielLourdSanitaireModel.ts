@@ -2,8 +2,8 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm'
 
 import { ÉtablissementTerritorialIdentitéModel } from './ÉtablissementTerritorialIdentitéModel'
 
-@Entity({ name: 'equipement_materiel_lourd' })
-export class ÉquipementMatérielLourdModel {
+@Entity({ name: 'equipement_materiel_lourd_sanitaire' })
+export class ÉquipementMatérielLourdSanitaireModel {
   @Column({ name: 'date_autorisation', nullable: true, type: 'date' })
   public dateAutorisation!: string
 

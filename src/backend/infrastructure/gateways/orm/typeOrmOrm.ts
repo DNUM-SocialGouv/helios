@@ -9,7 +9,7 @@ import { DateMiseÀJourFichierSourceModel } from '../../../../../database/models
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
 import { RechercheModel } from '../../../../../database/models/RechercheModel'
 import { ReconnaissanceContractuelleSanitaireModel } from '../../../../../database/models/ReconnaissanceContractuelleSanitaireModel'
-import { ÉquipementMatérielLourdModel } from '../../../../../database/models/ÉquipementMatérielLourdModel'
+import { ÉquipementMatérielLourdSanitaireModel } from '../../../../../database/models/ÉquipementMatérielLourdSanitaireModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { EnvironmentVariables } from '../../../métier/gateways/EnvironmentVariables'
 import { Orm } from '../../../métier/gateways/Orm'
@@ -24,7 +24,7 @@ export const typeOrmOrm: Orm<DataSource> = (environmentVariables: EnvironmentVar
       AutreActivitéSanitaireModel,
       DateMiseÀJourFichierSourceModel,
       EntitéJuridiqueModel,
-      ÉquipementMatérielLourdModel,
+      ÉquipementMatérielLourdSanitaireModel,
       ÉtablissementTerritorialIdentitéModel,
       RechercheModel,
       ReconnaissanceContractuelleSanitaireModel,

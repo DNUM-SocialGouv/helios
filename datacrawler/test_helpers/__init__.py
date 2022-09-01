@@ -306,7 +306,7 @@ def helios_reconnaissance_contractuelle_sanitaire_builder(champs_surchargés: Op
         "date_effet_asr": date(2022, 1, 1),
         "date_effet_cpom": date(2022, 1, 1),
         "date_fin_cpom": date(2022, 1, 1),
-        "id_cpom": "02-00-C00000",
+        "numero_cpom": "02-00-C00000",
         "libelle_activite": "Surveillance continue",
         "libelle_forme": "Hospitalisation complète (24 heures consécutives ou plus)",
         "libelle_modalite": "Adulte (âge >=18 ans)",
