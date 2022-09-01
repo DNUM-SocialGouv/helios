@@ -398,9 +398,9 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   }
 
   private ajouteLAutreActivitéÀUneNouvelleActivité(
-    autresActivitésGroupéesDeLÉtablissement: AutreActivitéSanitaireActivité[], autreActivitéModel: AutreActivitéSanitaireModel
+    autresActivitésSanitaires: AutreActivitéSanitaireActivité[], autreActivitéModel: AutreActivitéSanitaireModel
   ) {
-    autresActivitésGroupéesDeLÉtablissement.push(this.construisLActivitéDUneAutreActivité(autreActivitéModel))
+    autresActivitésSanitaires.push(this.construisLActivitéDUneAutreActivité(autreActivitéModel))
   }
 
   private ajouteLAutreActivitéÀUneNouvelleModalité(activitéSanitaire: AutreActivitéSanitaireActivité, autreActivitéModel: AutreActivitéSanitaireModel) {
@@ -490,9 +490,10 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   }
 
   private ajouteLaReconnaissanceContractuelleÀUneNouvelleActivité(
-    reconnaissancesContractuelles: ReconnaissanceContractuelleSanitaireActivité[], reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel
+    reconnaissancesContractuellesSanitaires: ReconnaissanceContractuelleSanitaireActivité[],
+    reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel
   ) {
-    reconnaissancesContractuelles.push(this.construisLActivitéDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel))
+    reconnaissancesContractuellesSanitaires.push(this.construisLActivitéDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel))
   }
 
   private ajouteLaReconnaissanceContractuelleÀUneNouvelleModalité(
