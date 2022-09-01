@@ -56,18 +56,13 @@ describe('La page établissement territorial médico-social - bloc activité', (
       [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5, '87', '90', '22'],
       [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6, (1013).toLocaleString('fr'), '994', '990'],
     ]
-  )('affiche un tableau descriptif avec les trois années après un clic sur "Afficher la transcription" (%s)', (titreSection, identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
-    const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
-    const indicateurs = within(activité).getAllByRole('listitem')
-    const transcription = within(indicateurs[identifiant]).getByRole('button', { name: wording.AFFICHER_LA_TRANSCRIPTION })
-
+  )('affiche un tableau descriptif avec les trois années (%s)', (titreSection, identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
     // WHEN
-    fireEvent.click(transcription)
+    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
 
     // THEN
-    expect(transcription).toHaveAttribute('aria-expanded', 'true')
-
+    const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
+    const indicateurs = within(activité).getAllByRole('listitem')
     const tableau = within(indicateurs[identifiant]).getByRole('table')
     const annéeLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.ANNÉE })
     const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: titreSection })

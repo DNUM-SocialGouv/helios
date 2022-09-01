@@ -29,20 +29,14 @@ describe('La page établissement territorial médico-social - bloc autorisation 
     expect(détails).toHaveAttribute('data-fr-opened', 'false')
   })
 
-  it('affiche un tableau descriptif des capacités après un clic sur "Afficher la transcription"', () => {
-    // GIVEN
+  it('affiche un tableau descriptif des capacités', () => {
+    // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+
+    // THEN
     const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
     const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
     const capacités = indicateurs[0]
-    const transcription = within(capacités).getByRole('button', { name: wording.AFFICHER_LA_TRANSCRIPTION })
-
-    // WHEN
-    fireEvent.click(transcription)
-
-    // THEN
-    expect(transcription).toHaveAttribute('aria-expanded', 'true')
-
     const tableau = within(capacités).getByRole('table')
     const annéeLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.ACTIVITÉ })
     const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.CAPACITÉ_INSTALLÉE })

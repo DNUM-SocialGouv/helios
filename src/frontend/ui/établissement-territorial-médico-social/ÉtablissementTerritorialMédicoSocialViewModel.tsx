@@ -302,7 +302,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     return (
       <ul
         aria-label="disciplines"
-        className={` ${styles['liste-autorisations']}`}
+        className={`${styles['liste-autorisations']}`}
       >
         {autorisationsDeLÉtablissement.disciplines.map((discipline) => (
           <li
@@ -314,7 +314,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
               titre={`${discipline.libellé} [${discipline.code}]`}
             />
             <ul
-              className={` fr-collapse ${styles['liste-activités']}`}
+              className={`fr-collapse ${styles['liste-activités']}`}
               id={`accordion-${discipline.code}`}
             >
               {
