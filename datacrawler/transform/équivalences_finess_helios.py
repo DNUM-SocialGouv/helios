@@ -56,7 +56,7 @@ index_des_autorisations_sanitaires: List[str] = [
     "datefin": "date_fin",
     "datemeo": "date_mise_en_oeuvre",
     "eml": "code_equipement_materiel_lourd",
-    "libeml": "libelle_equipement_materiel_lourd",
+    "libeml": "libelle_eml",
     "noautorarhgos": "numero_autorisation_arhgos",
     "nofinesset": "numero_finess_etablissement_territorial",
 }
@@ -101,7 +101,7 @@ index_des_autres_activités_sanitaires: List[str] = [
     "dateeffetcpom": "date_effet_cpom",
     "datefincpom": "date_fin_cpom",
     "forme": "code_forme",
-    "idcpom": "id_cpom",
+    "idcpom": "numero_cpom",
     "libactivite": "libelle_activite",
     "libforme": "libelle_forme",
     "libmodalite": "libelle_modalite",

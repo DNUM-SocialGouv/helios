@@ -3,8 +3,12 @@ import { DataSource } from 'typeorm'
 import { ActivitéMédicoSocialModel } from '../../database/models/ActivitéMédicoSocialModel'
 import { ActivitéSanitaireModel } from '../../database/models/ActivitéSanitaireModel'
 import { AutorisationMédicoSocialModel } from '../../database/models/AutorisationMédicoSocialModel'
+import { AutorisationSanitaireModel } from '../../database/models/AutorisationSanitaireModel'
+import { AutreActivitéSanitaireModel } from '../../database/models/AutreActivitéSanitaireModel'
 import { DateMiseÀJourFichierSourceModel } from '../../database/models/DateMiseÀJourFichierSourceModel'
 import { EntitéJuridiqueModel } from '../../database/models/EntitéJuridiqueModel'
+import { ReconnaissanceContractuelleSanitaireModel } from '../../database/models/ReconnaissanceContractuelleSanitaireModel'
+import { ÉquipementMatérielLourdSanitaireModel } from '../../database/models/ÉquipementMatérielLourdSanitaireModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { typeOrmOrm } from './infrastructure/gateways/orm/typeOrmOrm'
 import { EnvironmentVariables } from './métier/gateways/EnvironmentVariables'
@@ -36,6 +40,10 @@ export const clearAllTables = async (orm: DataSource) => {
   await orm.createQueryBuilder().delete().from(EntitéJuridiqueModel).execute()
   await orm.createQueryBuilder().delete().from(DateMiseÀJourFichierSourceModel).execute()
   await orm.createQueryBuilder().delete().from(AutorisationMédicoSocialModel).execute()
+  await orm.createQueryBuilder().delete().from(AutorisationSanitaireModel).execute()
+  await orm.createQueryBuilder().delete().from(ÉquipementMatérielLourdSanitaireModel).execute()
+  await orm.createQueryBuilder().delete().from(AutreActivitéSanitaireModel).execute()
+  await orm.createQueryBuilder().delete().from(ReconnaissanceContractuelleSanitaireModel).execute()
 }
 
 export const numéroFinessEntitéJuridique = '010018407'

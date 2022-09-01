@@ -19,7 +19,7 @@ describe('La recherche d’entités et d’établissements', () => {
     établissementTerritorialRepository = (await orm).getRepository(ÉtablissementTerritorialIdentitéModel)
   })
 
-  afterEach(async () => {
+  beforeEach(async () => {
     await clearAllTables(await orm)
   })
 

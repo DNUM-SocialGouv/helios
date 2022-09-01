@@ -36,6 +36,7 @@ describe('La récupération d’un établissement territorial sanitaire', () => 
     const mockedChargeLEntitéJuridiqueDeRattachement = jest.fn().mockResolvedValueOnce(entitéJuridiqueDeRattachement)
     const mockedÉtablissementTerritorialLoader: ÉtablissementTerritorialSanitaireLoader = {
       chargeActivité: jest.fn(),
+      chargeAutorisationsEtCapacités: jest.fn(),
       chargeIdentité: mockedChargeParNuméroFiness,
     }
     const mockedEntitéJuridiqueLoader: EntitéJuridiqueLoader =
@@ -62,7 +63,11 @@ describe('La récupération d’un établissement territorial sanitaire', () => 
   it('signale une alerte si l’établissement territorial liée au numéro FINESS n’est pas trouvé', async () => {
     // GIVEN
     const mockedChargeParNuméroFiness = jest.fn().mockResolvedValueOnce(new ÉtablissementTerritorialSanitaireNonTrouvée(numéroFinessÉtablissementTerritorial))
-    const établissementTerritorialLoader: ÉtablissementTerritorialSanitaireLoader = { chargeActivité: jest.fn(), chargeIdentité: mockedChargeParNuméroFiness }
+    const établissementTerritorialLoader: ÉtablissementTerritorialSanitaireLoader = {
+      chargeActivité: jest.fn(),
+      chargeAutorisationsEtCapacités: jest.fn(),
+      chargeIdentité: mockedChargeParNuméroFiness,
+    }
     const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeIdentité: jest.fn(), chargeRattachement: jest.fn() }
     const récupèreLÉtablissementTerritorialUseCase =
       new RécupèreLÉtablissementTerritorialSanitaireUseCase(établissementTerritorialLoader, entitéJuridiqueLoader)
@@ -128,6 +133,7 @@ describe('La récupération d’un établissement territorial sanitaire', () => 
 
     const mockedÉtablissementTerritorialSanitaireLoader: ÉtablissementTerritorialSanitaireLoader = {
       chargeActivité: mockedChargeActivité,
+      chargeAutorisationsEtCapacités: jest.fn(),
       chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
     }
 
@@ -144,5 +150,42 @@ describe('La récupération d’un établissement territorial sanitaire', () => 
     expect(mockedChargeActivité).toHaveBeenCalledWith(numéroFinessÉtablissementTerritorial)
     expect(mockedChargeActivité).toHaveBeenCalledTimes(1)
     expect(établissementTerritorialSanitaire.activités).toStrictEqual(fakeActivitésSanitaires)
+  })
+
+  it('récupère les autorisations de l’établissement territorial sanitaire', async () => {
+    // GIVEN
+    const fakeIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestBuilder.créeUneIdentitéSanitaire(
+      {
+        numéroFinessEntitéJuridique: {
+          dateMiseÀJourSource: '2022-05-14',
+          value: numéroFinessEntitéJuridique,
+        },
+        numéroFinessÉtablissementTerritorial: {
+          dateMiseÀJourSource: '2022-05-14',
+          value: numéroFinessÉtablissementTerritorial,
+        },
+      }
+    )
+
+    const autorisations: ÉtablissementTerritorialSanitaire['autorisationsEtCapacités'] = ÉtablissementTerritorialTestBuilder.créeUneAutorisationSanitaire({ numéroFinessÉtablissementTerritorial })
+    const mockedChargeAutorisations = jest.fn().mockResolvedValueOnce(autorisations)
+    const mockedÉtablissementTerritorialSanitaireLoader: ÉtablissementTerritorialSanitaireLoader = {
+      chargeActivité: jest.fn(),
+      chargeAutorisationsEtCapacités: mockedChargeAutorisations,
+      chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
+    }
+
+    const mockedEntitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeIdentité: jest.fn(), chargeRattachement: jest.fn() }
+
+    const récupèreLÉtablissementTerritorialUseCase =
+      new RécupèreLÉtablissementTerritorialSanitaireUseCase(mockedÉtablissementTerritorialSanitaireLoader, mockedEntitéJuridiqueLoader)
+
+    // WHEN
+    const établissementTerritorialSanitaire = await récupèreLÉtablissementTerritorialUseCase.exécute(numéroFinessÉtablissementTerritorial)
+
+    // THEN
+    expect(mockedChargeAutorisations).toHaveBeenCalledWith(numéroFinessÉtablissementTerritorial)
+    expect(mockedChargeAutorisations).toHaveBeenCalledTimes(1)
+    expect(établissementTerritorialSanitaire.autorisationsEtCapacités).toStrictEqual(autorisations)
   })
 })

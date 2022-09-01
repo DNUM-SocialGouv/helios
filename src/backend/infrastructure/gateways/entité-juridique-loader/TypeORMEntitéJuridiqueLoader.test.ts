@@ -20,7 +20,7 @@ describe('Entité juridique loader', () => {
     dateMiseÀJourFichierSourceRepository = (await orm).getRepository(DateMiseÀJourFichierSourceModel)
   })
 
-  afterEach(async () => {
+  beforeEach(async () => {
     await clearAllTables(await orm)
   })
 

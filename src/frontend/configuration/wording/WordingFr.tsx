@@ -149,7 +149,7 @@ export class WordingFr implements Wording {
   readonly CNSA: ReactElement = (<abbr title="Caisse Nationale de Solidarité pour l’Autonomie">CNSA</abbr>)
   readonly TDB_PERF: ReactElement = (<abbr title="Tableau de Bord de la Performance dans le secteur médico-social">TdB Perf</abbr>)
   readonly PMSI: ReactElement = (<abbr title="Programme de Médicalisation des Systèmes d’Information">PMSI</abbr>)
-  readonly ARHGOS: ReactElement = (<abbr title="Agence Régionale Hospitalière Gestion des Objectifs Sanitaire ">ARHGOS</abbr>)
+  readonly ARHGOS: ReactElement = (<abbr title="Agence Régionale Hospitalière Gestion des Objectifs Sanitaires">ARHGOS</abbr>)
 
   // Footer
   readonly PRESENTATION: string = 'Texte sur 3 lignes à demander à Daisy'

@@ -34,7 +34,7 @@ describe('Établissement territorial médico-social loader', () => {
     autorisationMédicoSocialModelRepository = (await orm).getRepository(AutorisationMédicoSocialModel)
   })
 
-  afterEach(async () => {
+  beforeEach(async () => {
     await clearAllTables(await orm)
   })
 
