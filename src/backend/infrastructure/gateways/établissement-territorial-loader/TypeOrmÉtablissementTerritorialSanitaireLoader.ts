@@ -276,51 +276,51 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     autorisationSanitaireModels: AutorisationSanitaireModel[],
     dateMiseÀJourSourceModel: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialSanitaireAutorisationEtCapacité['autorisations'] {
-    const autorisationsDeLÉtablissement: AutorisationSanitaireActivité[] = []
+    const autorisationsGroupéesDeLÉtablissement: AutorisationSanitaireActivité[] = []
 
     autorisationSanitaireModels.forEach((autorisationModel: AutorisationSanitaireModel) => {
-      const activitéEstDéjàCréée = autorisationsDeLÉtablissement.find((activité) => activité.code === autorisationModel.codeActivité)
+      const activitéEstConnue = autorisationsGroupéesDeLÉtablissement.find((activité) => activité.code === autorisationModel.codeActivité)
 
-      if (!activitéEstDéjàCréée) {
-        this.construisEtAjouteLActivitéAuxAutorisations(autorisationsDeLÉtablissement, autorisationModel)
+      if (!activitéEstConnue) {
+        this.ajouteLAutorisationÀUneNouvelleActivité(autorisationsGroupéesDeLÉtablissement, autorisationModel)
       } else {
-        this.ajouteLActivitéAuxAutorisations(activitéEstDéjàCréée, autorisationModel)
+        this.ajouteLAutorisationÀLActivitéExistante(activitéEstConnue, autorisationModel)
       }
     })
 
     return {
-      activités: autorisationsDeLÉtablissement,
+      activités: autorisationsGroupéesDeLÉtablissement,
       dateMiseÀJourSource: dateMiseÀJourSourceModel.dernièreMiseÀJour,
     }
   }
 
-  private ajouteLActivitéAuxAutorisations(activitéSanitaire: AutorisationSanitaireActivité, autorisationModel: AutorisationSanitaireModel) {
+  private ajouteLAutorisationÀLActivitéExistante(activitéSanitaire: AutorisationSanitaireActivité, autorisationModel: AutorisationSanitaireModel) {
     const modalitéEstDéjàCréée = activitéSanitaire.modalités.find((modalité) => modalité.code === autorisationModel.codeModalité)
 
     if (!modalitéEstDéjàCréée) {
-      this.construisEtAjouteLaModalitéAuxAutorisations(activitéSanitaire, autorisationModel)
+      this.ajouteLAutorisationÀUneNouvelleModalité(activitéSanitaire, autorisationModel)
     } else {
-      this.ajouteLaModalitéAuxAutorisations(modalitéEstDéjàCréée, autorisationModel)
+      this.ajouteLAutorisationÀLaModalitéExistante(modalitéEstDéjàCréée, autorisationModel)
     }
   }
 
-  private ajouteLaModalitéAuxAutorisations(modalitéSanitaire: AutorisationSanitaireModalité, autorisationModel: AutorisationSanitaireModel) {
+  private ajouteLAutorisationÀLaModalitéExistante(modalitéSanitaire: AutorisationSanitaireModalité, autorisationModel: AutorisationSanitaireModel) {
     const formeEstDéjàCréée = modalitéSanitaire.formes.find((forme) => forme.code === autorisationModel.codeForme)
 
     if (!formeEstDéjàCréée) {
-      this.construisEtAjouteLaFormeAuxAutorisations(modalitéSanitaire, autorisationModel)
+      this.ajouteLAutorisationÀUneNouvelleForme(modalitéSanitaire, autorisationModel)
     }
   }
 
-  private construisEtAjouteLaFormeAuxAutorisations(modalitéSanitaire: AutorisationSanitaireModalité, autorisationModel: AutorisationSanitaireModel) {
+  private ajouteLAutorisationÀUneNouvelleForme(modalitéSanitaire: AutorisationSanitaireModalité, autorisationModel: AutorisationSanitaireModel) {
     modalitéSanitaire.formes.push(this.construisLaFormeDUneAutorisation(autorisationModel))
   }
 
-  private construisEtAjouteLaModalitéAuxAutorisations(activitéSanitaire: AutorisationSanitaireActivité, autorisationModel: AutorisationSanitaireModel) {
+  private ajouteLAutorisationÀUneNouvelleModalité(activitéSanitaire: AutorisationSanitaireActivité, autorisationModel: AutorisationSanitaireModel) {
     activitéSanitaire.modalités.push(this.construisLaModalitéDUneAutorisation(autorisationModel))
   }
 
-  private construisEtAjouteLActivitéAuxAutorisations(activitésSanitaires: AutorisationSanitaireActivité[], autorisationModel: AutorisationSanitaireModel) {
+  private ajouteLAutorisationÀUneNouvelleActivité(activitésSanitaires: AutorisationSanitaireActivité[], autorisationModel: AutorisationSanitaireModel) {
     activitésSanitaires.push(this.construisLActivitéDUneAutorisation(autorisationModel))
   }
 
@@ -361,36 +361,54 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     autreActivitéSanitaireModels: AutreActivitéSanitaireModel[],
     dateMiseÀJourSourceModel: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialSanitaireAutorisationEtCapacité['autresActivités'] {
-    const autresActivitésDeLÉtablissement: AutreActivitéSanitaireActivité[] = []
+    const autresActivitésGroupéesDeLÉtablissement: AutreActivitéSanitaireActivité[] = []
 
     autreActivitéSanitaireModels.forEach((autreActivitéModel: AutreActivitéSanitaireModel) => {
-      const codeActivité = autreActivitéModel.codeActivité
-      const codeModalité = autreActivitéModel.codeModalité
-      const codeForme = autreActivitéModel.codeForme
+      const activitéConnue = autresActivitésGroupéesDeLÉtablissement.find((activité) => activité.code === autreActivitéModel.codeActivité)
 
-      const activitéCréée = autresActivitésDeLÉtablissement.find((activité) => activité.code === codeActivité)
-
-      if (!activitéCréée) {
-        autresActivitésDeLÉtablissement.push(this.construisLActivitéDUneAutreActivité(autreActivitéModel))
+      if (!activitéConnue) {
+        this.ajouteLAutreActivitéÀUneNouvelleActivité(autresActivitésGroupéesDeLÉtablissement, autreActivitéModel)
       } else {
-        const modalitéCréée = activitéCréée.modalités.find((modalité) => modalité.code === codeModalité)
-
-        if (!modalitéCréée) {
-          activitéCréée.modalités.push(this.construisLaModalitéDUneAutreActivité(autreActivitéModel))
-        } else {
-          const formeCréée = modalitéCréée.formes.find((forme) => forme.code === codeForme)
-
-          if (!formeCréée) {
-            modalitéCréée.formes.push(this.construisLaFormeDUneAutreActivité(autreActivitéModel))
-          }
-        }
+        this.ajouteLAutreActivitéÀLActivitéExistante(activitéConnue, autreActivitéModel)
       }
     })
 
     return {
-      activités: autresActivitésDeLÉtablissement,
+      activités: autresActivitésGroupéesDeLÉtablissement,
       dateMiseÀJourSource: dateMiseÀJourSourceModel.dernièreMiseÀJour,
     }
+  }
+
+  private ajouteLAutreActivitéÀLActivitéExistante(activitéSanitaire: AutreActivitéSanitaireActivité, autreActivitéModel: AutreActivitéSanitaireModel) {
+    const modalitéConnue = activitéSanitaire.modalités.find((modalité) => modalité.code === autreActivitéModel.codeModalité)
+
+    if (!modalitéConnue) {
+      this.ajouteLAutreActivitéÀUneNouvelleModalité(activitéSanitaire, autreActivitéModel)
+    } else {
+      this.ajouteLAutreActivitéÀLaModalitéExistante(modalitéConnue, autreActivitéModel)
+    }
+  }
+
+  private ajouteLAutreActivitéÀLaModalitéExistante(modalitéSanitaire: AutreActivitéSanitaireModalité, autreActivitéModel: AutreActivitéSanitaireModel) {
+    const formeConnue = modalitéSanitaire.formes.find((forme) => forme.code === autreActivitéModel.codeForme)
+
+    if (!formeConnue) {
+      this.ajouteLAutreActivitéÀUneNouvelleForme(modalitéSanitaire, autreActivitéModel)
+    }
+  }
+
+  private ajouteLAutreActivitéÀUneNouvelleActivité(
+    autresActivitésGroupéesDeLÉtablissement: AutreActivitéSanitaireActivité[], autreActivitéModel: AutreActivitéSanitaireModel
+  ) {
+    autresActivitésGroupéesDeLÉtablissement.push(this.construisLActivitéDUneAutreActivité(autreActivitéModel))
+  }
+
+  private ajouteLAutreActivitéÀUneNouvelleModalité(activitéSanitaire: AutreActivitéSanitaireActivité, autreActivitéModel: AutreActivitéSanitaireModel) {
+    activitéSanitaire.modalités.push(this.construisLaModalitéDUneAutreActivité(autreActivitéModel))
+  }
+
+  private ajouteLAutreActivitéÀUneNouvelleForme(modalitéSanitaire: AutreActivitéSanitaireModalité, autreActivitéModel: AutreActivitéSanitaireModel) {
+    modalitéSanitaire.formes.push(this.construisLaFormeDUneAutreActivité(autreActivitéModel))
   }
 
   private construisLActivitéDUneAutreActivité(autreActivitéModel: AutreActivitéSanitaireModel): AutreActivitéSanitaireActivité {
@@ -429,74 +447,102 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     reconnaissanceContractuelleSanitaireModels: ReconnaissanceContractuelleSanitaireModel[],
     dateMiseÀJourSourceModel: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialSanitaireAutorisationEtCapacité['reconnaissancesContractuelles'] {
-    const reconnaissancesDeLÉtablissement: ReconnaissanceContractuelleSanitaireActivité[] = []
+    const reconnaissancesContractuellesGroupéesDeLÉtablissement: ReconnaissanceContractuelleSanitaireActivité[] = []
 
     reconnaissanceContractuelleSanitaireModels.forEach((reconnaissanceContractuelle: ReconnaissanceContractuelleSanitaireModel) => {
-      const codeActivité = reconnaissanceContractuelle.codeActivité
-      const codeModalité = reconnaissanceContractuelle.codeModalité
-      const codeForme = reconnaissanceContractuelle.codeForme
+      const activitéConnue = reconnaissancesContractuellesGroupéesDeLÉtablissement.find(
+        (activité) => activité.code === reconnaissanceContractuelle.codeActivité
+      )
 
-      const activitéCréée = reconnaissancesDeLÉtablissement.find((activité) => activité.code === codeActivité)
-
-      if (!activitéCréée) {
-        reconnaissancesDeLÉtablissement.push(this.construisLActivitéDUneReconnaissanceContractuelle(reconnaissanceContractuelle))
+      if (!activitéConnue) {
+        this.ajouteLaReconnaissanceContractuelleÀUneNouvelleActivité(reconnaissancesContractuellesGroupéesDeLÉtablissement, reconnaissanceContractuelle)
       } else {
-        const modalitéCréée = activitéCréée.modalités.find((modalité) => modalité.code === codeModalité)
-
-        if (!modalitéCréée) {
-          activitéCréée.modalités.push(this.construisLaModalitéDUneReconnaissanceContractuelle(reconnaissanceContractuelle))
-        } else {
-          const formeCréée = modalitéCréée.formes.find((forme) => forme.code === codeForme)
-
-          if (!formeCréée) {
-            modalitéCréée.formes.push(this.construisLaFormeDUneReconnaissanceContractuelle(reconnaissanceContractuelle))
-          }
-        }
+        this.ajouteLaReconnaissanceContractuelleÀLActivitéExistante(activitéConnue, reconnaissanceContractuelle)
       }
     })
 
     return {
-      activités: reconnaissancesDeLÉtablissement,
+      activités: reconnaissancesContractuellesGroupéesDeLÉtablissement,
       dateMiseÀJourSource: dateMiseÀJourSourceModel.dernièreMiseÀJour,
     }
   }
 
-  private construisLActivitéDUneReconnaissanceContractuelle(reconnaissanceContractuelle: ReconnaissanceContractuelleSanitaireModel):
+  private ajouteLaReconnaissanceContractuelleÀLActivitéExistante(
+    activitéSanitaire: ReconnaissanceContractuelleSanitaireActivité, reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel
+  ) {
+    const modalitéConnue = activitéSanitaire.modalités.find((modalité) => modalité.code === reconnaissanceContractuelleModel.codeModalité)
+
+    if (!modalitéConnue) {
+      this.ajouteLaReconnaissanceContractuelleÀUneNouvelleModalité(activitéSanitaire, reconnaissanceContractuelleModel)
+    } else {
+      this.ajouteLaReconnaissanceContractuelleÀUneModalitéExistante(modalitéConnue, reconnaissanceContractuelleModel)
+    }
+  }
+
+  private ajouteLaReconnaissanceContractuelleÀUneModalitéExistante(
+    modalitéSanitaire: ReconnaissanceContractuelleSanitaireModalité, reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel
+  ) {
+    const formeConnue = modalitéSanitaire.formes.find((forme) => forme.code === reconnaissanceContractuelleModel.codeForme)
+
+    if (!formeConnue) {
+      this.ajouteLaReconnaissanceContractuelleÀUneNouvelleForme(modalitéSanitaire, reconnaissanceContractuelleModel)
+    }
+  }
+
+  private ajouteLaReconnaissanceContractuelleÀUneNouvelleActivité(
+    reconnaissancesContractuelles: ReconnaissanceContractuelleSanitaireActivité[], reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel
+  ) {
+    reconnaissancesContractuelles.push(this.construisLActivitéDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel))
+  }
+
+  private ajouteLaReconnaissanceContractuelleÀUneNouvelleModalité(
+    activitéSanitaire: ReconnaissanceContractuelleSanitaireActivité, reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel
+  ) {
+    activitéSanitaire.modalités.push(this.construisLaModalitéDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel))
+  }
+
+  private ajouteLaReconnaissanceContractuelleÀUneNouvelleForme(
+    modalitéSanitaire: ReconnaissanceContractuelleSanitaireModalité, reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel
+  ) {
+    modalitéSanitaire.formes.push(this.construisLaFormeDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel))
+  }
+
+  private construisLActivitéDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel):
   ReconnaissanceContractuelleSanitaireActivité {
     return {
-      code: reconnaissanceContractuelle.codeActivité,
-      libellé: reconnaissanceContractuelle.libelléActivité,
-      modalités: [this.construisLaModalitéDUneReconnaissanceContractuelle(reconnaissanceContractuelle)],
+      code: reconnaissanceContractuelleModel.codeActivité,
+      libellé: reconnaissanceContractuelleModel.libelléActivité,
+      modalités: [this.construisLaModalitéDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel)],
     }
   }
 
-  private construisLaModalitéDUneReconnaissanceContractuelle(reconnaissanceContractuelle: ReconnaissanceContractuelleSanitaireModel):
+  private construisLaModalitéDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel):
   ReconnaissanceContractuelleSanitaireModalité {
     return {
-      code: reconnaissanceContractuelle.codeModalité,
-      formes: [this.construisLaFormeDUneReconnaissanceContractuelle(reconnaissanceContractuelle)],
-      libellé: reconnaissanceContractuelle.libelléModalité,
+      code: reconnaissanceContractuelleModel.codeModalité,
+      formes: [this.construisLaFormeDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel)],
+      libellé: reconnaissanceContractuelleModel.libelléModalité,
     }
   }
 
-  private construisLaFormeDUneReconnaissanceContractuelle(reconnaissanceContractuelle: ReconnaissanceContractuelleSanitaireModel):
+  private construisLaFormeDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel):
   ReconnaissanceContractuelleSanitaireForme {
     return {
-      code: reconnaissanceContractuelle.codeForme,
-      libellé: reconnaissanceContractuelle.libelléForme,
-      reconnaissanceContractuelleSanitaire: this.construisUneReconnaissanceContractuelle(reconnaissanceContractuelle),
+      code: reconnaissanceContractuelleModel.codeForme,
+      libellé: reconnaissanceContractuelleModel.libelléForme,
+      reconnaissanceContractuelleSanitaire: this.construisUneReconnaissanceContractuelle(reconnaissanceContractuelleModel),
     }
   }
 
-  private construisUneReconnaissanceContractuelle(reconnaissanceContractuelle: ReconnaissanceContractuelleSanitaireModel):
+  private construisUneReconnaissanceContractuelle(reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel):
   ReconnaissanceContractuelleSanitaire {
     return {
-      capacitéAutorisée: reconnaissanceContractuelle.capacitéAutorisée,
-      dateDEffetAsr: reconnaissanceContractuelle.dateEffetAsr,
-      dateDEffetCpom: reconnaissanceContractuelle.dateEffetCpom,
-      dateDeFinCpom: reconnaissanceContractuelle.dateFinCpom,
-      numéroArhgos: reconnaissanceContractuelle.numéroAutorisationArhgos,
-      numéroCpom: reconnaissanceContractuelle.numéroCpom,
+      capacitéAutorisée: reconnaissanceContractuelleModel.capacitéAutorisée,
+      dateDEffetAsr: reconnaissanceContractuelleModel.dateEffetAsr,
+      dateDEffetCpom: reconnaissanceContractuelleModel.dateEffetCpom,
+      dateDeFinCpom: reconnaissanceContractuelleModel.dateFinCpom,
+      numéroArhgos: reconnaissanceContractuelleModel.numéroAutorisationArhgos,
+      numéroCpom: reconnaissanceContractuelleModel.numéroCpom,
     }
   }
 
@@ -504,24 +550,34 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     équipementMatérielLourdSanitaireModels: ÉquipementMatérielLourdSanitaireModel[],
     dateMiseÀJourSourceModel: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialSanitaireAutorisationEtCapacité['équipementsMatérielsLourds'] {
-    const équipementsDeLÉtablissement: ÉquipementMatérielLourd[] = []
+    const équipementsGroupésDeLÉtablissement: ÉquipementMatérielLourd[] = []
 
     équipementMatérielLourdSanitaireModels.forEach((équipementMatérielLourd: ÉquipementMatérielLourdSanitaireModel) => {
-      const codeÉquipement = équipementMatérielLourd.codeÉquipementMatérielLourd
+      const équipementConnu = équipementsGroupésDeLÉtablissement.find((équipement) => équipement.code === équipementMatérielLourd.codeÉquipementMatérielLourd)
 
-      const équipementCréé = équipementsDeLÉtablissement.find((équipement) => équipement.code === codeÉquipement)
-
-      if (!équipementCréé) {
-        équipementsDeLÉtablissement.push(this.construisLÉquipementMatérielLourd(équipementMatérielLourd))
+      if (!équipementConnu) {
+        this.ajouteLAutorisationDÉquipementMatérielLourdÀUnNouvelÉquipement(équipementsGroupésDeLÉtablissement, équipementMatérielLourd)
       } else {
-        équipementCréé.autorisations.push(this.construisUnÉquipementMatérielLourd(équipementMatérielLourd))
+        this.ajouteLAutorisationDÉquipementMatérielLourdÀUnÉquipementExistant(équipementConnu, équipementMatérielLourd)
       }
     })
 
     return {
       dateMiseÀJourSource: dateMiseÀJourSourceModel.dernièreMiseÀJour,
-      équipements: équipementsDeLÉtablissement,
+      équipements: équipementsGroupésDeLÉtablissement,
     }
+  }
+
+  private ajouteLAutorisationDÉquipementMatérielLourdÀUnÉquipementExistant(
+    équipementMatérielLourdSanitaire: ÉquipementMatérielLourd, équipementMatérielLourd: ÉquipementMatérielLourdSanitaireModel
+  ) {
+    équipementMatérielLourdSanitaire.autorisations.push(this.construisUnÉquipementMatérielLourd(équipementMatérielLourd))
+  }
+
+  private ajouteLAutorisationDÉquipementMatérielLourdÀUnNouvelÉquipement(
+    équipementsGroupés: ÉquipementMatérielLourd[], équipementMatérielLourd: ÉquipementMatérielLourdSanitaireModel
+  ) {
+    équipementsGroupés.push(this.construisLÉquipementMatérielLourd(équipementMatérielLourd))
   }
 
   private construisLÉquipementMatérielLourd(équipementMatérielLourd: ÉquipementMatérielLourdSanitaireModel): ÉquipementMatérielLourd {
