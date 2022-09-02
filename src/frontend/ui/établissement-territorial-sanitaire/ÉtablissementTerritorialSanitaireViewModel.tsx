@@ -6,11 +6,13 @@ import { ÉtablissementTerritorialSanitaire } from '../../../backend/métier/ent
 import { ÉtablissementTerritorialSanitaireActivité } from '../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité'
 import { Paths } from '../../configuration/Paths'
 import { Wording } from '../../configuration/wording/Wording'
+import { ActionneurDAccordéon } from '../commun/Accordéon/ActionneurDAccordéon'
 import { GraphiqueViewModel } from '../commun/Graphique/GraphiqueViewModel'
 import { StringFormater } from '../commun/StringFormater'
 import { TableIndicateur } from '../commun/TableIndicateur/TableIndicateur'
-import styles from './BlocActivitéSanitaire.module.css'
-import {ActionneurDAccordéon} from "../commun/Accordéon/ActionneurDAccordéon";
+import stylesBlocActivité from './BlocActivitéSanitaire.module.css'
+import stylesBlocAutorisationsEtCapacités from './BlocAutorisationEtCapacitéSanitaire.module.css'
+import '@gouvfr/dsfr/dist/component/tag/tag.min.css'
 
 type DonnéesDeDiagrammeDesSéjoursMCO = Readonly<{
   nombreSéjoursCompletsMédecine: {x: number, y: number | null}[]
@@ -263,7 +265,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
           options={options}
         />
         <menu
-          className={'fr-checkbox-group ' + styles['graphique-sanitaire-légende']}
+          className={'fr-checkbox-group ' + stylesBlocActivité['graphique-sanitaire-légende']}
           id={this.identifiantDeLaLégendeDesSéjoursMCO}
         />
         <TableIndicateur
@@ -338,7 +340,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
           options={options}
         />
         <menu
-          className={'fr-checkbox-group ' + styles['graphique-sanitaire-légende']}
+          className={'fr-checkbox-group ' + stylesBlocActivité['graphique-sanitaire-légende']}
           id={this.identifiantDeLaLégendeDesJournéesPsyEtSsr}
         />
         <TableIndicateur
@@ -492,76 +494,75 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     const autorisationsDeLÉtablissement = this.établissementTerritorial.autorisationsEtCapacités.autorisations
 
     return (
-        <ul
-            aria-label="activités"
-            className={`${styles['liste-activités']}`}
-        >
-          {autorisationsDeLÉtablissement.activités.map((activité) => (
-              <li
-                  key={`activité-${activité.code}`}
-              >
-                <ActionneurDAccordéon
-                    for={`accordion-${activité.code}`}
-                    titre={`${activité.libellé} [${activité.code}]`}
-                />
-                <ul
-                    className={`fr-collapse ${styles['liste-modalités']}`}
-                    id={`accordion-${activité.code}`}
-                >
-                  {
-                    activité.modalités.map((modalité) => (
-                        <li
-                            key={`modalité-${modalité.code}`}
-                        >
-                          <ActionneurDAccordéon
-                              for={`accordion-${activité.code}-${modalité.code}`}
-                              texteGras={false}
-                              titre={`${modalité.libellé} [${modalité.code}]`}
-                          />
-                          <ul
-                              className={`fr-collapse ${styles['liste-formes']}`}
-                              id={`accordion-${activité.code}-${modalité.code}`}
-                          >
-                            {
-                              modalité.formes.map((forme) => {
-                                const autorisationSanitaire = forme.autorisationSanitaire
-                                return (
-                                    <li key={`forme-${forme.code}`}>
-                                      <ul
-                                          aria-label="autorisations"
-                                          className="fr-tags-group"
-                                      >
-                                        <li className="fr-tag fr-fi-arrow-right-line fr-tag--icon-left">
-                                          {`${forme.libellé} [${forme.code}]`}
-                                        </li>
-                                        <li className="fr-tag">
-                                          {`${this.wording.NUMÉRO_ARHGOS} : ${autorisationSanitaire.numéroArhgos ? StringFormater.formateLaDate(autorisationSanitaire.numéroArhgos) : 'N/A'}`}
-                                        </li>
-                                        <li className="fr-tag">
-                                          {`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${autorisationSanitaire.dateDeMiseEnOeuvre ? StringFormater.formateLaDate(autorisationSanitaire.dateDeMiseEnOeuvre) : 'N/A'}`}
-                                        </li>
-                                        <li className="fr-tag">
-                                          {`${this.wording.DATE_DE_FIN} : ${autorisationSanitaire.dateDeFin ? StringFormater.formateLaDate(autorisationSanitaire.dateDeFin) : 'N/A'}`}
-                                        </li>
-                                        <li className="fr-tag">
-                                          {`${this.wording.DATE_D_AUTORISATION} : ${autorisationSanitaire.dateDAutorisation ? StringFormater.formateLaDate(autorisationSanitaire.dateDAutorisation) : 'N/A'}`}
-                                        </li>
-                                      </ul>
-                                    </li>
-                                )
-                              })
-                            }
-                          </ul>
-                        </li>
-                    ))
-                  }
-                </ul>
-              </li>
-          ))}
-        </ul>
+      <ul
+        aria-label="activités"
+        className={`${stylesBlocAutorisationsEtCapacités['liste-activités']}`}
+      >
+        {autorisationsDeLÉtablissement.activités.map((activité) => (
+          <li
+            key={`activité-${activité.code}`}
+          >
+            <ActionneurDAccordéon
+              for={`accordion-${activité.code}`}
+              titre={`${activité.libellé} [${activité.code}]`}
+            />
+            <ul
+              className={`fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-modalités']}`}
+              id={`accordion-${activité.code}`}
+            >
+              {
+                activité.modalités.map((modalité) => (
+                  <li
+                    key={`modalité-${modalité.code}`}
+                  >
+                    <ActionneurDAccordéon
+                      for={`accordion-${activité.code}-${modalité.code}`}
+                      texteGras={false}
+                      titre={`${modalité.libellé} [${modalité.code}]`}
+                    />
+                    <ul
+                      className={`fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-formes']}`}
+                      id={`accordion-${activité.code}-${modalité.code}`}
+                    >
+                      {
+                        modalité.formes.map((forme) => {
+                          const autorisationSanitaire = forme.autorisationSanitaire
+                          return (
+                            <li key={`forme-${forme.code}`}>
+                              <ul
+                                aria-label="autorisations"
+                                className="fr-tags-group"
+                              >
+                                <li className="fr-tag fr-fi-arrow-right-line fr-tag--icon-left">
+                                  {`${forme.libellé} [${forme.code}]`}
+                                </li>
+                                <li className="fr-tag">
+                                  {`${this.wording.NUMÉRO_ARHGOS} : ${autorisationSanitaire.numéroArhgos ? autorisationSanitaire.numéroArhgos : 'N/A'}`}
+                                </li>
+                                <li className="fr-tag">
+                                  {`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${autorisationSanitaire.dateDeMiseEnOeuvre ? StringFormater.formateLaDate(autorisationSanitaire.dateDeMiseEnOeuvre) : 'N/A'}`}
+                                </li>
+                                <li className="fr-tag">
+                                  {`${this.wording.DATE_DE_FIN} : ${autorisationSanitaire.dateDeFin ? StringFormater.formateLaDate(autorisationSanitaire.dateDeFin) : 'N/A'}`}
+                                </li>
+                                <li className="fr-tag">
+                                  {`${this.wording.DATE_D_AUTORISATION} : ${autorisationSanitaire.dateDAutorisation ? StringFormater.formateLaDate(autorisationSanitaire.dateDAutorisation) : 'N/A'}`}
+                                </li>
+                              </ul>
+                            </li>
+                          )
+                        })
+                      }
+                    </ul>
+                  </li>
+                ))
+              }
+            </ul>
+          </li>
+        ))}
+      </ul>
     )
   }
-
 
   public get lesAutorisationsSontEllesRenseignées(): boolean {
     return this.établissementTerritorial.autorisationsEtCapacités.autorisations.activités.length !== 0

@@ -3,7 +3,6 @@ import { fireEvent, screen, within } from '@testing-library/react'
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from '../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder'
 import { fakeFrontDependencies, renderFakeComponent } from '../../testHelper'
 import { PageÉtablissementTerritorialSanitaire } from './PageÉtablissementTerritorialSanitaire'
-import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTerritorialSanitaireViewModel'
 
 const { paths, wording } = fakeFrontDependencies
 
@@ -21,13 +20,13 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     const titre = within(autorisations).getByText(wording.AUTORISATIONS, { selector: 'p' })
     expect(titre).toBeInTheDocument()
     const dateMiseAJour = within(autorisations).getAllByText('Mise à jour', { exact: false, selector: 'p' })
-    expect(dateMiseAJour[0].textContent).toBe('Mise à jour : 18/08/2022 - Source : ARHGOS, FINESS')
+    expect(dateMiseAJour[0].textContent).toBe('Mise à jour : 29/08/2022 - Source : ARHGOS, FINESS')
     const abréviationSourceFournisseur = within(autorisations).getAllByText('FINESS', { selector: 'abbr' })
     expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', 'Fichier National des Établissements Sanitaires et Sociaux')
     const abréviationSourceOrigine = within(autorisations).getAllByText('ARHGOS', { selector: 'abbr' })
-    expect(abréviationSourceOrigine[0]).toHaveAttribute('title', 'Agence Régionale Hospitalière Gestion des Objectifs Sanitaire ')
+    expect(abréviationSourceOrigine[0]).toHaveAttribute('title', 'Agence Régionale Hospitalière Gestion des Objectifs Sanitaires')
     const détails = within(autorisations).getByRole('button', { name: wording.DÉTAILS })
-    expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-autorisations-sanitiare')
+    expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-autorisations-sanitaire')
     expect(détails).toHaveAttribute('data-fr-opened', 'false')
   })
 
@@ -50,7 +49,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     const abréviationSourceFournisseur = within(infoBulle).getAllByText('FINESS', { selector: 'abbr' })
     expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', 'Fichier National des Établissements Sanitaires et Sociaux')
     const abréviationSourceOrigine = within(infoBulle).getAllByText('ARHGOS', { selector: 'abbr' })
-    expect(abréviationSourceOrigine[0]).toHaveAttribute('title', 'Agence Régionale Hospitalière Gestion des Objectifs Sanitaire ')
+    expect(abréviationSourceOrigine[0]).toHaveAttribute('title', 'Agence Régionale Hospitalière Gestion des Objectifs Sanitaires')
     const élémentsDeCompréhension = within(infoBulle).getByRole('region', { name: wording.ÉLÉMENTS_DE_COMPRÉHENSION })
     expect(élémentsDeCompréhension).toBeInTheDocument()
     const fréquence = within(infoBulle).getByRole('region', { name: wording.FRÉQUENCE })
@@ -80,7 +79,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
     const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
     const autorisations = indicateurs[0]
-    expect(within(autorisations).getByRole('link', { name: 'Hémodialyse en unité médicalisée [16]' })).toBeInTheDocument()
+    expect(within(autorisations).getByRole('link', { name: 'Hémodialyse en unité médicalisée [42]' })).toBeInTheDocument()
   })
 
   it('affiche le libellé et le code de la forme, les dates et le numéro arhgos pour chacune des formes quand ces informations sont renseignées', () => {
