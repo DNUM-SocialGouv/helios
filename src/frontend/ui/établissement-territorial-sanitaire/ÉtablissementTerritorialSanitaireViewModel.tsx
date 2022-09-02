@@ -494,35 +494,33 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     return (
         <ul
             aria-label="activités"
-            className={` ${styles['liste-autorisations']}`}
+            className={`${styles['liste-activités']}`}
         >
           {autorisationsDeLÉtablissement.activités.map((activité) => (
               <li
-                  className=""
-                  key={`discipline-${activité.code}`}
+                  key={`activité-${activité.code}`}
               >
                 <ActionneurDAccordéon
                     for={`accordion-${activité.code}`}
                     titre={`${activité.libellé} [${activité.code}]`}
                 />
                 <ul
-                    className={` fr-collapse ${styles['liste-activités']}`}
+                    className={`fr-collapse ${styles['liste-modalités']}`}
                     id={`accordion-${activité.code}`}
                 >
                   {
                     activité.modalités.map((modalité) => (
                         <li
-                            className=""
                             key={`modalité-${modalité.code}`}
                         >
                           <ActionneurDAccordéon
-                              for={`accordion-${modalité.code}-${modalité.code}`}
+                              for={`accordion-${activité.code}-${modalité.code}`}
                               texteGras={false}
                               titre={`${modalité.libellé} [${modalité.code}]`}
                           />
                           <ul
                               className={`fr-collapse ${styles['liste-formes']}`}
-                              id={`accordion-${modalité.code}-${modalité.code}`}
+                              id={`accordion-${activité.code}-${modalité.code}`}
                           >
                             {
                               modalité.formes.map((forme) => {
@@ -530,7 +528,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
                                 return (
                                     <li key={`forme-${forme.code}`}>
                                       <ul
-                                          aria-label="dates-et-capacités"
+                                          aria-label="autorisations"
                                           className="fr-tags-group"
                                       >
                                         <li className="fr-tag fr-fi-arrow-right-line fr-tag--icon-left">

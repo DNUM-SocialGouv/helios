@@ -31,7 +31,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     expect(détails).toHaveAttribute('data-fr-opened', 'false')
   })
 
-  it('affiche le contenu de l’info bulle des autorisations après avoir cliqué sur le bouton "détails"', () => {
+  it('a une infobulle avec le contenu relatif aux autorisations', () => {
     // GIVEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
 
@@ -61,160 +61,41 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     expect(informationsComplémentaires).toBeInTheDocument()
   })
 
-  it('ferme l’info bulle des autorisations après avoir cliqué sur le bouton "Fermer"', () => {
-    // GIVEN
-    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
-
-    const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
-    const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
-    const détails = within(indicateurs[1]).getByRole('button', { name: wording.DÉTAILS })
-    fireEvent.click(détails)
-    const infoBulle = screen.getByRole('dialog', { name: wording.AUTORISATIONS })
-    const fermer = within(infoBulle).getByRole('button', { name: wording.FERMER })
-
-    // WHEN
-    fireEvent.click(fermer)
-
-    // THEN
-    expect(détails).toHaveAttribute('data-fr-opened', 'false')
-  })
-
-  it('affiche un lien pour chaque disciplines de l’établissement', () => {
+  it('affiche un lien pour chaque activité de l’établissement', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
 
     // THEN
     const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
     const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
-    const autorisations = indicateurs[1]
-    const discipline1 = within(autorisations).getByRole('link', { name: 'Accueil temporaire pour Personnes Âgées [657]' })
-    expect(discipline1).toHaveAttribute('aria-expanded', 'false')
-    const discipline2 = within(autorisations).getByRole('link', { name: 'Accueil temporaire pour adultes handicapés [658]' })
-    expect(discipline2).toHaveAttribute('aria-expanded', 'false')
+    const autorisations = indicateurs[0]
+    expect(within(autorisations).getByRole('link', { name: 'Traitement de l\'insuffisance rénale chronique par épuration extrarénale [16]' })).toBeInTheDocument()
   })
 
-  it('affiche un lien pour chaque activités d’une discipline', () => {
+  it('affiche un lien pour chaque modalité d’une activité', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
 
     // THEN
     const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
     const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
-    const autorisations = indicateurs[1]
-    const activité1 = within(autorisations).getByRole('link', { name: 'Hébergement Complet Internat [11]' })
-    expect(activité1).toHaveAttribute('aria-expanded', 'false')
-    const activité2 = within(autorisations).getByRole('link', { name: 'Prestation en milieu ordinaire [16]' })
-    expect(activité2).toHaveAttribute('aria-expanded', 'false')
-    const activité3 = within(autorisations).getByRole('link', { name: 'Accueil de Jour [21]' })
-    expect(activité3).toHaveAttribute('aria-expanded', 'false')
+    const autorisations = indicateurs[0]
+    expect(within(autorisations).getByRole('link', { name: 'Hémodialyse en unité médicalisée [16]' })).toBeInTheDocument()
   })
 
-  it('affiche le titre, les dates et les capacités pour chaque clientèle quand ces informations sont renseignées', () => {
+  it('affiche le libellé et le code de la forme, les dates et le numéro arhgos pour chacune des formes quand ces informations sont renseignées', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
 
     // THEN
     const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
     const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
-    const autorisations = indicateurs[1]
-    const informationsDUneAutorisation = within(autorisations).getAllByRole('list', { name: 'dates-et-capacités' })[0]
-    expect(within(informationsDUneAutorisation).getByText('PH vieillissantes [702]', { selector: 'li' })).toBeInTheDocument()
-    expect(within(informationsDUneAutorisation).getByText(`${wording.DATE_D_AUTORISATION} : 01/01/2020`, { selector: 'li' })).toBeInTheDocument()
-    expect(within(informationsDUneAutorisation).getByText(`${wording.MISE_À_JOUR_AUTORISATION} : 01/01/2020`, { selector: 'li' })).toBeInTheDocument()
-    expect(within(informationsDUneAutorisation).getByText(`${wording.DERNIÈRE_INSTALLATION} : N/A`, { selector: 'li' })).toBeInTheDocument()
-    expect(within(informationsDUneAutorisation).getByText(`${wording.CAPACITÉ_AUTORISÉE} : 10`, { selector: 'li' })).toBeInTheDocument()
-    expect(within(informationsDUneAutorisation).getByText(`${wording.CAPACITÉ_INSTALLÉE} : 0`, { selector: 'li' })).toBeInTheDocument()
-  })
-
-  it('affiche une phrase à la place des indicateurs lorsqu’aucune autorisation n’est renseignée', () => {
-    // GIVEN
-    const établissementTerritorialSansAutorisation = new ÉtablissementTerritorialSanitaireViewModel({
-      activités: [],
-      autorisationsEtCapacités: {
-        autorisations: {
-          dateMiseÀJourSource: '2022-05-14',
-          disciplines: [],
-        },
-        capacités: {
-          capacitéParActivité: [],
-          dateMiseÀJourSource: '2022-08-18',
-        },
-        numéroFinessÉtablissementTerritorial: '010000040',
-      },
-      identité: {
-        adresseAcheminement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '01130 NANTUA',
-        },
-        adresseNuméroVoie: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '50',
-        },
-        adresseTypeVoie: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'R',
-        },
-        adresseVoie: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'PAUL PAINLEVE',
-        },
-        catégorieÉtablissement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '355',
-        },
-        courriel: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'a@example.com',
-        },
-        estMonoÉtablissement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: false,
-        },
-        libelléCatégorieÉtablissement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'Centre Hospitalier (C.H.)',
-        },
-        numéroFinessEntitéJuridique: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '010008407',
-        },
-        numéroFinessÉtablissementPrincipal: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '010045057',
-        },
-        numéroFinessÉtablissementTerritorial: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '010000040',
-        },
-        raisonSociale: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'CH NANTUA',
-        },
-        raisonSocialeDeLEntitéDeRattachement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-        },
-        statutJuridique: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'Société Anonyme (S.A.)',
-        },
-        typeÉtablissement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'S',
-        },
-        téléphone: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '0474754800',
-        },
-      },
-    }, wording, paths)
-
-    // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansAutorisation} />)
-
-    // THEN
-    const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
-    const phrase = within(activité).getByText(wording.INDICATEURS_VIDES)
-    expect(phrase).toBeInTheDocument()
+    const autorisations = indicateurs[0]
+    const informationsDUneAutorisation = within(autorisations).getAllByRole('list', { name: 'autorisations' })[0]
+    expect(within(informationsDUneAutorisation).getByText('Pas de forme [00]', { selector: 'li' })).toBeInTheDocument()
+    expect(within(informationsDUneAutorisation).getByText(`${wording.DATE_D_AUTORISATION} : 11/10/2005`, { selector: 'li' })).toBeInTheDocument()
+    expect(within(informationsDUneAutorisation).getByText(`${wording.DATE_DE_FIN} : 03/05/2026`, { selector: 'li' })).toBeInTheDocument()
+    expect(within(informationsDUneAutorisation).getByText(`${wording.DATE_DE_MISE_EN_OEUVRE} : N/A`, { selector: 'li' })).toBeInTheDocument()
+    expect(within(informationsDUneAutorisation).getByText(`${wording.NUMÉRO_ARHGOS} : 01-00-000`, { selector: 'li' })).toBeInTheDocument()
   })
 })

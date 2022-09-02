@@ -38,8 +38,8 @@ export const PageÉtablissementTerritorialSanitaire = ({ établissementTerritori
         {établissementTerritorialViewModel.titre}
       </Titre>
       <BlocIdentitéSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialViewModel} />
-      <BlocActivitéSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialViewModel} />
       <BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialViewModel} />
+      <BlocActivitéSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialViewModel} />
     </>
   )
 }

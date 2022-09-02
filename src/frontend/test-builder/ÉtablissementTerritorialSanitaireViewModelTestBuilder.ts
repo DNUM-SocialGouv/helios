@@ -323,7 +323,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
                   autorisationSanitaire: {
                     dateDAutorisation: '2005-10-11',
                     dateDeFin: '2026-05-03',
-                    dateDeMiseEnOeuvre: '2008-01-04',
+                    dateDeMiseEnOeuvre: null,
                     numéroArhgos: '01-00-000',
                   },
                   code: '00',

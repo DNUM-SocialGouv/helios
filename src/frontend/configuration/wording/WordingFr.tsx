@@ -138,7 +138,7 @@ export class WordingFr implements Wording {
   readonly CAPACITÉ_INSTALLÉE: string = 'Capacité installée'
   readonly CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS: string = 'Capacité installée par activités'
   readonly NOMBRE_TOTAL_DE_PLACE_PAR_ACTIVITÉ: string = 'Nombre total de places par activité'
-  readonly NUMÉRO_ARHGOS: string = 'Numéro ARGHOS'
+  readonly NUMÉRO_ARHGOS: string = 'Numéro ARHGOS'
   readonly ACTIVITÉ: string = 'Activité'
 
   // Liste des établissements rattachés
