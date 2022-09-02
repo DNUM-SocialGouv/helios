@@ -1,7 +1,7 @@
 import pandas as pd
 from numpy import NaN
 
-from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, mocked_logger
+from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, csv_ann_sae_builder, mocked_logger
 from datacrawler.transform.transforme_les_autorisations_des_établissements_sanitaires.transforme_les_capacités import transforme_les_données_des_capacités
 from datacrawler.transform.équivalences_diamant_helios import index_des_capacités_sanitaires
 
@@ -9,23 +9,10 @@ from datacrawler.transform.équivalences_diamant_helios import index_des_capacit
 class TestTransformeLesDonnéesDesCapacitésSanitaires:
     def test_filtre_et_renomme_les_colonnes_et_place_l_index(self) -> None:
         # GIVEN
-        données_diamant_ann_sae = pd.DataFrame(
-            {
-                "Finess": [NUMÉRO_FINESS_ÉTABLISSEMENT],
-                "Année": [2020],
-                "Nombre de places de chirurgie": [7.0],
-                "Nombre de places d'obstétrique": [1],
-                "Nombre de places de médecine": [7.0],
-                "Nombre de places de SSR": [NaN],
-                "Nombre de lits de chirurgie": [26.0],
-                "Nombre de lits d'obstétrique": [20.0],
-                "Nombre de lits de médecine": [62.0],
-                "Nombre de lits de SSR": [30],
-            }
-        )
+        données_diamant_ann_sae = pd.DataFrame([csv_ann_sae_builder()])
         numéros_finess_connus = pd.DataFrame(
             {
-                "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT, NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE],
+                "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT],
             }
         )
 
@@ -36,20 +23,19 @@ class TestTransformeLesDonnéesDesCapacitésSanitaires:
         data_frame_attendu = pd.DataFrame(
             {
                 "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT],
-                "annee": [2020],
                 "nombre_places_chirurgie": [7.0],
-                "nombre_places_obstétrique": [1],
+                "nombre_places_obstétrique": [1.0],
                 "nombre_places_médecine": [7.0],
                 "nombre_places_ssr": [NaN],
                 "nombre_lits_chirurgie": [26.0],
                 "nombre_lits_obstétrique": [20.0],
                 "nombre_lits_médecine": [62.0],
-                "nombre_lits_ssr": [30],
+                "nombre_lits_ssr": [30.0],
             }
         ).set_index(index_des_capacités_sanitaires)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
-    def test_conserve_uniquement_que_la_dernière_année_pour_chaque_établissement(self) -> None:
+    def test_conserve_uniquement_l_année_la_plus_récente_pour_chaque_établissement(self) -> None:
         # GIVEN
         données_diamant_ann_sae = pd.DataFrame(
             {
@@ -92,7 +78,6 @@ class TestTransformeLesDonnéesDesCapacitésSanitaires:
                     NUMÉRO_FINESS_ÉTABLISSEMENT,
                     NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                 ],
-                "annee": [2020, 2020],
                 "nombre_places_chirurgie": [7.0, 6],
                 "nombre_places_obstétrique": [1, NaN],
                 "nombre_places_médecine": [7.0, 2],
@@ -106,10 +91,31 @@ class TestTransformeLesDonnéesDesCapacitésSanitaires:
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self) -> None:
-        pass
+        # GIVEN
+        données_diamant_ann_sae = pd.DataFrame([csv_ann_sae_builder({"Finess": NaN})])
+        numéros_finess_connus = pd.DataFrame(
+            {
+                "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT],
+            }
+        )
 
-    def test_supprime_les_lignes_ne_mentionnant_pas_l_année(self) -> None:
-        pass
+        # WHEN
+        données_transformées = transforme_les_données_des_capacités(données_diamant_ann_sae, numéros_finess_connus, mocked_logger)
+
+        # THEN
+        assert données_transformées.empty
 
     def test_ne_renvoie_pas_les_établissements_non_présents_en_base(self) -> None:
-        pass
+        # GIVEN
+        données_diamant_ann_sae = pd.DataFrame([csv_ann_sae_builder({"Finess": "123456789"})])
+        numéros_finess_connus = pd.DataFrame(
+            {
+                "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT],
+            }
+        )
+
+        # WHEN
+        données_transformées = transforme_les_données_des_capacités(données_diamant_ann_sae, numéros_finess_connus, mocked_logger)
+
+        # THEN
+        assert données_transformées.empty

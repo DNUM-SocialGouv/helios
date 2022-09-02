@@ -8,6 +8,7 @@ TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_SANITAIRES = "autorisation_sanitair
 TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS = "equipement_materiel_lourd_sanitaire"
 TABLES_DES_AUTRES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES = "autre_activite_sanitaire"
 TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES = "reconnaissance_contractuelle_sanitaire"
+TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES = "capacite_autorisation_sanitaire"
 
 
 class FichierSource(Enum):
@@ -15,6 +16,7 @@ class FichierSource(Enum):
     DIAMANT_ANN_MS_TDP_ET = "ann_ms_tdp_et"
     DIAMANT_MEN_PMSI_ANNUEL = "men_pmsi_annuel"
     DIAMANT_ANN_RPU = "ann_rpu"
+    DIAMANT_ANN_SAE = "ann_sae"
     FINESS_CS1400103 = "finess_cs1400103"
     FINESS_CS1400104 = "finess_cs1400104"
     FINESS_CS1400105 = "finess_cs1400105"

@@ -14,11 +14,12 @@ from datacrawler.load.nom_des_tables import (
     TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
     TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_SANITAIRES,
     TABLES_DES_AUTRES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
+    TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
     TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES,
     TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS,
     FichierSource,
 )
-from datacrawler.transform.équivalences_diamant_helios import index_des_activités
+from datacrawler.transform.équivalences_diamant_helios import index_des_activités, index_des_capacités_sanitaires
 from datacrawler.transform.équivalences_finess_helios import (
     index_des_autorisations_sanitaires,
     index_des_autres_activités_sanitaires,
@@ -107,6 +108,7 @@ def supprime_les_données_des_tables(base_de_données: Engine) -> None:
     base_de_données.execute(f"DELETE FROM {TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_AUTRES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES};")
+    base_de_données.execute(f"DELETE FROM {TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES};")
 
 
 def sauvegarde_une_activité_en_base(activité: pd.DataFrame, base_de_données: Engine, table: str) -> None:
@@ -141,6 +143,12 @@ def sauvegarde_une_date_de_mise_à_jour_de_fichier_source(date_de_mise_à_jour: 
     base_de_données.execute(
         f"""INSERT INTO {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} (derniere_mise_a_jour, fichier)
             VALUES ('{date_de_mise_à_jour}', '{fichier_source.value}');"""
+    )
+
+
+def sauvegarde_les_capacités_sanitaires_en_base(capacités_sanitaire: pd.DataFrame, base_de_données: Engine) -> None:
+    capacités_sanitaire.set_index(index_des_capacités_sanitaires).to_sql(
+        name=TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, con=base_de_données, index=True, if_exists="append"
     )
 
 
@@ -188,6 +196,24 @@ def csv_ann_rpu_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, 
     if champs_surchargés:
         return {**ann_rpu, **champs_surchargés}
     return ann_rpu
+
+
+def csv_ann_sae_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    ann_sae = {
+        "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "Année": 2020,
+        "Nombre de places de chirurgie": 7.0,
+        "Nombre de places d'obstétrique": 1.0,
+        "Nombre de places de médecine": 7.0,
+        "Nombre de places de SSR": NaN,
+        "Nombre de lits de chirurgie": 26.0,
+        "Nombre de lits d'obstétrique": 20.0,
+        "Nombre de lits de médecine": 62.0,
+        "Nombre de lits de SSR": 30.0,
+    }
+    if champs_surchargés:
+        return {**ann_sae, **champs_surchargés}
+    return ann_sae
 
 
 def helios_men_pmsi_annuel_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
@@ -317,6 +343,23 @@ def helios_reconnaissance_contractuelle_sanitaire_builder(champs_surchargés: Op
     if champs_surchargés:
         return {**reconnaissance_contractuelle, **champs_surchargés}
     return reconnaissance_contractuelle
+
+
+def helios_ann_sae_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    ann_sae = {
+        "nombre_lits_chirurgie": 26.0,
+        "nombre_lits_médecine": 62.0,
+        "nombre_lits_obstétrique": 20.0,
+        "nombre_lits_ssr": 30.0,
+        "nombre_places_chirurgie": 7.0,
+        "nombre_places_médecine": 7.0,
+        "nombre_places_obstétrique": 1.0,
+        "nombre_places_ssr": NaN,
+        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+    }
+    if champs_surchargés:
+        return {**ann_sae, **champs_surchargés}
+    return ann_sae
 
 
 def crée_le_fichier_xml(chemin_du_fichier: str, contenu: str) -> None:
