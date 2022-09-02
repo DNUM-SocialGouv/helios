@@ -25,7 +25,7 @@ describe('La page établissement territorial médico-social - bloc autorisation 
     const abréviationSourceFournisseur = within(capacités).getAllByText('FINESS', { selector: 'abbr' })
     expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', 'Fichier National des Établissements Sanitaires et Sociaux')
     const détails = within(capacités).getByRole('button', { name: wording.DÉTAILS })
-    expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-capacité-par-activités')
+    expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-capacité-par-activités-médico-social')
     expect(détails).toHaveAttribute('data-fr-opened', 'false')
   })
 
@@ -247,7 +247,7 @@ describe('La page établissement territorial médico-social - bloc autorisation 
     const abréviationSourceOrigine = within(autorisations).getAllByText('ARHGOS', { selector: 'abbr' })
     expect(abréviationSourceOrigine[0]).toHaveAttribute('title', 'Agence Régionale Hospitalière Gestion des Objectifs Sanitaires')
     const détails = within(autorisations).getByRole('button', { name: wording.DÉTAILS })
-    expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-autorisations')
+    expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-autorisations-médico-social')
     expect(détails).toHaveAttribute('data-fr-opened', 'false')
   })
 

@@ -306,7 +306,6 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
       >
         {autorisationsDeLÉtablissement.disciplines.map((discipline) => (
           <li
-            className=""
             key={`discipline-${discipline.code}`}
           >
             <ActionneurDAccordéon
@@ -320,7 +319,6 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
               {
                 discipline.activités.map((activité) => (
                   <li
-                    className=""
                     key={`activité-${activité.code}`}
                   >
                     <ActionneurDAccordéon

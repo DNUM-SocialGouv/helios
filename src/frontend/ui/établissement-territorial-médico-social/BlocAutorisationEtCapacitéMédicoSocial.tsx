@@ -41,7 +41,7 @@ export const BlocAutorisationEtCapacitéMédicoSocial = ({ établissementTerrito
               source={Sources(wording.FINESS)}
             />}
             dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDesCapacitésParActivités}
-            identifiant="capacité-par-activités"
+            identifiant="capacité-par-activités-médico-social"
             nomDeLIndicateur={wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
             source={Sources(wording.FINESS)}
           >
@@ -54,7 +54,7 @@ export const BlocAutorisationEtCapacitéMédicoSocial = ({ établissementTerrito
             source={Sources(wording.FINESS, wording.ARHGOS)}
           />}
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDesAutorisations}
-          identifiant="autorisations"
+          identifiant="autorisations-médico-social"
           nomDeLIndicateur={wording.AUTORISATIONS}
           source={Sources(wording.FINESS, wording.ARHGOS)}
         >

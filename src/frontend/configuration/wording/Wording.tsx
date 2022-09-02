@@ -109,12 +109,15 @@ export interface Wording {
   readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string
   readonly AUTORISATIONS: string
   readonly DATE_D_AUTORISATION: string
+  readonly DATE_DE_FIN: string
+  readonly DATE_DE_MISE_EN_OEUVRE: string
   readonly MISE_À_JOUR_AUTORISATION: string
   readonly DERNIÈRE_INSTALLATION: string
   readonly CAPACITÉ_AUTORISÉE: string
   readonly CAPACITÉ_INSTALLÉE: string
   readonly CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS: string
   readonly NOMBRE_TOTAL_DE_PLACE_PAR_ACTIVITÉ: string
+  readonly NUMÉRO_ARHGOS: string
   readonly ACTIVITÉ: string
 
   // Liste des établissements rattachés

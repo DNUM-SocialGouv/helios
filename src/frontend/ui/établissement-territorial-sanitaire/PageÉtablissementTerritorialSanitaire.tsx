@@ -4,6 +4,7 @@ import { useDependencies } from '../commun/contexts/useDependencies'
 import { useBreadcrumb } from '../commun/hooks/useBreadcrumb'
 import { Titre } from '../commun/Titre/Titre'
 import { BlocActivitéSanitaire } from './BlocActivitéSanitaire'
+import { BlocAutorisationEtCapacitéSanitaire } from './BlocAutorisationEtCapacitéSanitaire'
 import { BlocIdentitéSanitaire } from './BlocIdentitéSanitaire'
 import LogoÉtablissementTerritorial from './logo-établissement-territorial-sanitaire.svg'
 import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTerritorialSanitaireViewModel'
@@ -37,6 +38,7 @@ export const PageÉtablissementTerritorialSanitaire = ({ établissementTerritori
         {établissementTerritorialViewModel.titre}
       </Titre>
       <BlocIdentitéSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialViewModel} />
+      <BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialViewModel} />
       <BlocActivitéSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialViewModel} />
     </>
   )
