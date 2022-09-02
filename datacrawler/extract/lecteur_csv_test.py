@@ -161,14 +161,14 @@ class TestLisLeFichierCsv:
                 "Finess": ["010005239", "010005239", "010005239", "010005239", "010005239", "2A0000154", "2A0000154", "2A0000154", "2A0000154", "2A0000154"],
                 "Année": [2020, 2019, 2018, 2017, 2016, 2020, 2019, 2018, 2017, 2016],
                 "Nombre de places de chirurgie": [7.0, 7, 7, 7, 7, 6, 6, 6, 6, 6],
-                "Nombre de places d'obstétrique": [1, 1, 1, 1, 1, NaN, NaN, NaN, NaN, NaN],
+                "Nombre de places d'obstétrique": [1.0, 1, 1, 1, 1, NaN, NaN, NaN, NaN, NaN],
                 "Nombre de places de médecine": [7.0, 7, 7, 7, 7, 2, 2, 2, 2, 2],
                 "Nombre de places de SSR": [
-                    NaN,
-                    NaN,
-                    NaN,
-                    NaN,
-                    NaN,
+                    3.0,
+                    3,
+                    3,
+                    3,
+                    3,
                     NaN,
                     NaN,
                     NaN,
@@ -178,7 +178,7 @@ class TestLisLeFichierCsv:
                 "Nombre de lits de chirurgie": [26.0, 21, 26, 26, 26, 12, 30, 30, 30, 30],
                 "Nombre de lits d'obstétrique": [20.0, 21, 21, 21, 21, 8, 8, 8, 8, 8],
                 "Nombre de lits de médecine": [62.0, 60, 60, 68, 76, 20, 20, 20, 20, 20],
-                "Nombre de lits de SSR": [30, 30, 30, 30, 30, NaN, NaN, NaN, NaN, NaN],
+                "Nombre de lits de SSR": [30.0, 30, 30, 30, 30, NaN, NaN, NaN, NaN, NaN],
             }
         )
         pd.testing.assert_frame_equal(
