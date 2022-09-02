@@ -2,14 +2,14 @@ class AjoutDesCapactiésDesAutorisationsSanitaires1662113899729 {
   async up(queryRunner) {
     await queryRunner.query(
       `CREATE TABLE capacite_autorisation_sanitaire (
-        nombre_lits_chirurgie FLOAT,
-        nombre_lits_médecine FLOAT,
-        nombre_lits_obstétrique FLOAT,
-        nombre_lits_ssr FLOAT,
-        nombre_places_chirurgie FLOAT,
-        nombre_places_médecine FLOAT,
-        nombre_places_obstétrique FLOAT,
-        nombre_places_ssr FLOAT,
+        nombre_lits_chirurgie INTEGER,
+        nombre_lits_médecine INTEGER,
+        nombre_lits_obstétrique INTEGER,
+        nombre_lits_ssr INTEGER,
+        nombre_places_chirurgie INTEGER,
+        nombre_places_médecine INTEGER,
+        nombre_places_obstétrique INTEGER,
+        nombre_places_ssr INTEGER,
         numero_finess_etablissement_territorial VARCHAR(9) PRIMARY KEY,
 
         CONSTRAINT capacite_autorisation_sanitaire_etablissement_territorial_finess_foreign_key

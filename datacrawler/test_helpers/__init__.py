@@ -347,14 +347,14 @@ def helios_reconnaissance_contractuelle_sanitaire_builder(champs_surchargés: Op
 
 def helios_ann_sae_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
     ann_sae = {
-        "nombre_lits_chirurgie": 26.0,
-        "nombre_lits_médecine": 62.0,
-        "nombre_lits_obstétrique": 20.0,
-        "nombre_lits_ssr": 30.0,
-        "nombre_places_chirurgie": 7.0,
-        "nombre_places_médecine": 7.0,
-        "nombre_places_obstétrique": 1.0,
-        "nombre_places_ssr": NaN,
+        "nombre_lits_chirurgie": 26,
+        "nombre_lits_médecine": 62,
+        "nombre_lits_obstétrique": 20,
+        "nombre_lits_ssr": 30,
+        "nombre_places_chirurgie": 7,
+        "nombre_places_médecine": 7,
+        "nombre_places_obstétrique": 1,
+        "nombre_places_ssr": 3,
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
     }
     if champs_surchargés:

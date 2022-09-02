@@ -830,14 +830,14 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             # THEN
             capacités_attendues = pd.DataFrame(
                 {
-                    "nombre_lits_chirurgie": [26.0, 12.0],
-                    "nombre_lits_médecine": [62.0, 20.0],
-                    "nombre_lits_obstétrique": [20.0, 8.0],
-                    "nombre_lits_ssr": [30.0, NaN],
-                    "nombre_places_chirurgie": [7.0, 6.0],
-                    "nombre_places_médecine": [7.0, 2.0],
-                    "nombre_places_obstétrique": [1.0, NaN],
-                    "nombre_places_ssr": [NaN, NaN],
+                    "nombre_lits_chirurgie": [26, 12],
+                    "nombre_lits_médecine": [62, 20],
+                    "nombre_lits_obstétrique": [20, 8],
+                    "nombre_lits_ssr": [30, NaN],
+                    "nombre_places_chirurgie": [7, 6],
+                    "nombre_places_médecine": [7, 2],
+                    "nombre_places_obstétrique": [1, NaN],
+                    "nombre_places_ssr": [3, NaN],
                     "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, autre_numéro_finess_sanitaire],
                 }
             )
@@ -896,14 +896,14 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             # THEN
             capacités_attendues = pd.DataFrame(
                 {
-                    "nombre_lits_chirurgie": [26.0, 12.0],
-                    "nombre_lits_médecine": [62.0, 20.0],
-                    "nombre_lits_obstétrique": [20.0, 8.0],
-                    "nombre_lits_ssr": [30.0, NaN],
-                    "nombre_places_chirurgie": [7.0, 6.0],
-                    "nombre_places_médecine": [7.0, 2.0],
-                    "nombre_places_obstétrique": [1.0, NaN],
-                    "nombre_places_ssr": [NaN, NaN],
+                    "nombre_lits_chirurgie": [26, 12],
+                    "nombre_lits_médecine": [62, 20],
+                    "nombre_lits_obstétrique": [20, 8],
+                    "nombre_lits_ssr": [30, NaN],
+                    "nombre_places_chirurgie": [7, 6],
+                    "nombre_places_médecine": [7, 2],
+                    "nombre_places_obstétrique": [1, NaN],
+                    "nombre_places_ssr": [3, NaN],
                     "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, autre_numéro_finess_sanitaire],
                 }
             )
