@@ -150,8 +150,8 @@ def csv_ann_ms_tdp_et_builder(champs_surchargés: Optional[Dict] = None) -> Dict
         "Année": 2018,
         "Nombre moyen de journées d'absence des personnes accompagnées sur la période": 31.41,
         "Durée moyenne de séjour/d'accompagnement": 904.17,
-        "Taux de réalisation de lactivité Tout ESMS (Hors services CAMSP et CMPP)": 0.9256,
-        "Taux de réalisation de lactivité CAMSP et CMPP": 0.6789,
+        "Taux de réalisation de l’activité Tout ESMS (Hors services CAMSP et CMPP)": 0.9256,
+        "Taux de réalisation de l’activité CAMSP et CMPP": 0.6789,
         "File active des personnes accompagnées sur la période": 94,
     }
     if champs_surchargés:

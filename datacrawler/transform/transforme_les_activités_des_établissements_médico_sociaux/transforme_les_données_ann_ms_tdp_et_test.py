@@ -67,8 +67,8 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
                         "Année": 2018,
                         "Nombre moyen de journées d'absence des personnes accompagnées sur la période": 31.41,
                         "Durée moyenne de séjour/d'accompagnement": 904.17,
-                        "Taux de réalisation de lactivité Tout ESMS (Hors services CAMSP et CMPP)": 0.9256,
-                        "Taux de réalisation de lactivité CAMSP et CMPP": NaN,
+                        "Taux de réalisation de l’activité Tout ESMS (Hors services CAMSP et CMPP)": 0.9256,
+                        "Taux de réalisation de l’activité CAMSP et CMPP": NaN,
                         "File active des personnes accompagnées sur la période": 94,
                     }
                 ),
@@ -78,8 +78,8 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
                         "Année": 2018,
                         "Nombre moyen de journées d'absence des personnes accompagnées sur la période": 58.61,
                         "Durée moyenne de séjour/d'accompagnement": 603.00,
-                        "Taux de réalisation de lactivité Tout ESMS (Hors services CAMSP et CMPP)": 1.0458,
-                        "Taux de réalisation de lactivité CAMSP et CMPP": NaN,
+                        "Taux de réalisation de l’activité Tout ESMS (Hors services CAMSP et CMPP)": 1.0458,
+                        "Taux de réalisation de l’activité CAMSP et CMPP": NaN,
                         "File active des personnes accompagnées sur la période": 116,
                     }
                 ),
@@ -122,8 +122,8 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
                         "Année": 2018,
                         "Nombre moyen de journées d'absence des personnes accompagnées sur la période": 58.61,
                         "Durée moyenne de séjour/d'accompagnement": 603.00,
-                        "Taux de réalisation de lactivité Tout ESMS (Hors services CAMSP et CMPP)": 1.0458,
-                        "Taux de réalisation de lactivité CAMSP et CMPP": NaN,
+                        "Taux de réalisation de l’activité Tout ESMS (Hors services CAMSP et CMPP)": 1.0458,
+                        "Taux de réalisation de l’activité CAMSP et CMPP": NaN,
                         "File active des personnes accompagnées sur la période": 116,
                     }
                 ),
@@ -191,20 +191,20 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
                 {
                     "Finess": "111111111",
                     "Année": 2018,
-                    "Taux de réalisation de lactivité Tout ESMS (Hors services CAMSP et CMPP)": 0.48012820512820514,
-                    "Taux de réalisation de lactivité CAMSP et CMPP": NaN,
+                    "Taux de réalisation de l’activité Tout ESMS (Hors services CAMSP et CMPP)": 0.48012820512820514,
+                    "Taux de réalisation de l’activité CAMSP et CMPP": NaN,
                 },
                 {
                     "Finess": "222222222",
                     "Année": 2018,
-                    "Taux de réalisation de lactivité Tout ESMS (Hors services CAMSP et CMPP)": NaN,
-                    "Taux de réalisation de lactivité CAMSP et CMPP": 0.93698630136986305,
+                    "Taux de réalisation de l’activité Tout ESMS (Hors services CAMSP et CMPP)": NaN,
+                    "Taux de réalisation de l’activité CAMSP et CMPP": 0.93698630136986305,
                 },
                 {
                     "Finess": "333333333",
                     "Année": 2018,
-                    "Taux de réalisation de lactivité Tout ESMS (Hors services CAMSP et CMPP)": NaN,
-                    "Taux de réalisation de lactivité CAMSP et CMPP": NaN,
+                    "Taux de réalisation de l’activité Tout ESMS (Hors services CAMSP et CMPP)": NaN,
+                    "Taux de réalisation de l’activité CAMSP et CMPP": NaN,
                 },
             ]
         )

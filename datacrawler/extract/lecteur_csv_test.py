@@ -6,11 +6,13 @@ from datacrawler.transform.équivalences_diamant_helios import (
     colonnes_à_lire_ann_errd_ej_et,
     colonnes_à_lire_ann_ms_tdp_et,
     colonnes_à_lire_ann_rpu,
+    colonnes_à_lire_ann_sae,
     colonnes_à_lire_men_pmsi_annuel,
     extrais_l_equivalence_des_types_des_colonnes,
     équivalences_diamant_ann_errd_ej_et_helios,
     équivalences_diamant_ann_ms_tdp_et_helios,
     équivalences_diamant_ann_rpu_helios,
+    équivalences_diamant_ann_sae_helios,
     équivalences_diamant_men_pmsi_annuel_helios,
 )
 
@@ -83,8 +85,8 @@ class TestLisLeFichierCsv:
                     "Finess": ["010001261", "010001261", "010003598", "010003598", "010003598", "010003598", "111111111"],
                     "Année": [2019, 2018, 2021, 2020, 2019, 2018, 2019],
                     "Durée moyenne de séjour/d'accompagnement": [5729.5, 6008.33, 2351.81, 2352.81, 2226.21, 2359.81, 0.0],
-                    "Taux de réalisation de lactivité Tout ESMS (Hors services CAMSP et CMPP)": [1.052, 1.0458, 0.8993, 0.8993, 1.0182, 0.8993, 0.7772],
-                    "Taux de réalisation de lactivité CAMSP et CMPP": [NaN, NaN, NaN, NaN, NaN, NaN, NaN],
+                    "Taux de réalisation de l’activité Tout ESMS (Hors services CAMSP et CMPP)": [1.052, 1.0458, 0.8993, 0.8993, 1.0182, 0.8993, 0.7772],
+                    "Taux de réalisation de l’activité CAMSP et CMPP": [NaN, NaN, NaN, NaN, NaN, NaN, NaN],
                     "Nombre moyen de journées d'absence des personnes accompagnées sur la période": [31.41, 32.11, 17.86, 17.86, 18.52, 17.86, NaN],
                     "File active des personnes accompagnées sur la période": [59.0, 55.0, 121.0, 121.0, 119.0, 121.0, 101.0],
                 }
@@ -142,4 +144,44 @@ class TestLisLeFichierCsv:
         pd.testing.assert_frame_equal(
             ann_rpu_reçu,
             ann_rpu_attendu,
+        )
+
+    def test_les_les_colonnes_demandées_du_fichier_ann_sae(self) -> None:
+        # GIVEN
+        chemin_du_fichier = "data_set/diamant/ANN_SAE_2022_08_03.CSV"
+        colonnes = colonnes_à_lire_ann_sae
+        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_sae_helios)
+
+        # WHEN
+        ann_sae_reçu = lis_le_fichier_csv(chemin_du_fichier, colonnes, types_des_colonnes)
+
+        # THEN
+        ann_sae_attendu = pd.DataFrame(
+            {
+                "Finess": ["010005239", "010005239", "010005239", "010005239", "010005239", "2A0000154", "2A0000154", "2A0000154", "2A0000154", "2A0000154"],
+                "Année": [2020, 2019, 2018, 2017, 2016, 2020, 2019, 2018, 2017, 2016],
+                "Nombre de places de chirurgie": [7.0, 7, 7, 7, 7, 6, 6, 6, 6, 6],
+                "Nombre de places d'obstétrique": [1, 1, 1, 1, 1, NaN, NaN, NaN, NaN, NaN],
+                "Nombre de places de médecine": [7.0, 7, 7, 7, 7, 2, 2, 2, 2, 2],
+                "Nombre de places de SSR": [
+                    NaN,
+                    NaN,
+                    NaN,
+                    NaN,
+                    NaN,
+                    NaN,
+                    NaN,
+                    NaN,
+                    NaN,
+                    NaN,
+                ],
+                "Nombre de lits de chirurgie": [26.0, 21, 26, 26, 26, 12, 30, 30, 30, 30],
+                "Nombre de lits d'obstétrique": [20.0, 21, 21, 21, 21, 8, 8, 8, 8, 8],
+                "Nombre de lits de médecine": [62.0, 60, 60, 68, 76, 20, 20, 20, 20, 20],
+                "Nombre de lits de SSR": [30, 30, 30, 30, 30, NaN, NaN, NaN, NaN, NaN],
+            }
+        )
+        pd.testing.assert_frame_equal(
+            ann_sae_reçu,
+            ann_sae_attendu,
         )
