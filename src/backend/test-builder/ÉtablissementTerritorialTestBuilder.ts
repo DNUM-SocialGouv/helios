@@ -293,6 +293,17 @@ export class ÉtablissementTerritorialTestBuilder {
       ],
       dateMiseÀJourSource: '2022-08-29',
     },
+    capacités: {
+      dateMiseÀJourSource: '2022-09-02',
+      nombreDeLitsEnChirurgie: 10,
+      nombreDeLitsEnMédecine: 20,
+      nombreDeLitsEnObstétrique: 5,
+      nombreDeLitsEnSsr: 2,
+      nombreDePlacesEnChirurgie: 20,
+      nombreDePlacesEnMédecine: 50,
+      nombreDePlacesEnObstétrique: 5,
+      nombreDePlacesEnSsr: 5,
+    },
     numéroFinessÉtablissementTerritorial: '123456789',
     reconnaissancesContractuelles: {
       activités: [

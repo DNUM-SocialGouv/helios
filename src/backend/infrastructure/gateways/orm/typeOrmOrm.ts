@@ -5,6 +5,7 @@ import { ActivitéSanitaireModel } from '../../../../../database/models/Activit�
 import { AutorisationMédicoSocialModel } from '../../../../../database/models/AutorisationMédicoSocialModel'
 import { AutorisationSanitaireModel } from '../../../../../database/models/AutorisationSanitaireModel'
 import { AutreActivitéSanitaireModel } from '../../../../../database/models/AutreActivitéSanitaireModel'
+import { CapacitéAutorisationSanitaireModel } from '../../../../../database/models/CapacitéAutorisationSanitaireModel'
 import { DateMiseÀJourFichierSourceModel } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
 import { RechercheModel } from '../../../../../database/models/RechercheModel'
@@ -22,6 +23,7 @@ export const typeOrmOrm: Orm<DataSource> = (environmentVariables: EnvironmentVar
       AutorisationMédicoSocialModel,
       AutorisationSanitaireModel,
       AutreActivitéSanitaireModel,
+      CapacitéAutorisationSanitaireModel,
       DateMiseÀJourFichierSourceModel,
       EntitéJuridiqueModel,
       ÉquipementMatérielLourdSanitaireModel,

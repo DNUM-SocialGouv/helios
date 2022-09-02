@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm'
 import { ActivitéSanitaireModel } from '../../../../../database/models/ActivitéSanitaireModel'
 import { AutorisationSanitaireModel } from '../../../../../database/models/AutorisationSanitaireModel'
 import { AutreActivitéSanitaireModel } from '../../../../../database/models/AutreActivitéSanitaireModel'
+import { CapacitéAutorisationSanitaireModel } from '../../../../../database/models/CapacitéAutorisationSanitaireModel'
 import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
 import { ReconnaissanceContractuelleSanitaireModel } from '../../../../../database/models/ReconnaissanceContractuelleSanitaireModel'
 import { ÉquipementMatérielLourdSanitaireModel } from '../../../../../database/models/ÉquipementMatérielLourdSanitaireModel'
@@ -25,6 +26,7 @@ import {
   ReconnaissanceContractuelleSanitaireModalité,
   ReconnaissanceContractuelleSanitaire,
   AutorisationSanitaire,
+  CapacitéSanitaire,
 } from '../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { ÉtablissementTerritorialSanitaireNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialSanitaireNonTrouvée'
@@ -63,24 +65,29 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       équipementsDeLÉtablissementModel,
       autresActivitésDeLÉtablissementModel,
       reconnaissancesContractuellesDeLÉtablissementModel,
+      capacitésDeLÉtablissementModel,
       dateDeMiseÀJourFinessCs1400103Model,
       dateDeMiseÀJourFinessCs1400104Model,
       dateDeMiseÀJourFinessCs1600101Mode1,
       dateDeMiseÀJourFinessCs1600102Mode1,
+      dateDeMiseÀJourDiamantAnnSaeModel,
     ] = await Promise.all([
       this.chargeLesAutorisationsModel(numéroFinessÉtablissementTerritorial),
       this.chargeLesÉquipementsMatérielsLourdsModel(numéroFinessÉtablissementTerritorial),
       this.chargeLesAutresActivitésModel(numéroFinessÉtablissementTerritorial),
       this.chargeLesReconnaissancesContractuellesModel(numéroFinessÉtablissementTerritorial),
+      this.chargeLesCapacitésModel(numéroFinessÉtablissementTerritorial),
       this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400103) as Promise<DateMiseÀJourFichierSourceModel>,
       this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400104) as Promise<DateMiseÀJourFichierSourceModel>,
       this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1600101) as Promise<DateMiseÀJourFichierSourceModel>,
       this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1600102) as Promise<DateMiseÀJourFichierSourceModel>,
+      this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_SAE) as Promise<DateMiseÀJourFichierSourceModel>,
     ])
 
     return {
       autorisations: this.construisLesAutorisations(autorisationsDeLÉtablissementModel, dateDeMiseÀJourFinessCs1400103Model),
       autresActivités: this.construisLesAutresActivités(autresActivitésDeLÉtablissementModel, dateDeMiseÀJourFinessCs1600101Mode1),
+      capacités: this.construisLesCapacités(capacitésDeLÉtablissementModel, dateDeMiseÀJourDiamantAnnSaeModel),
       numéroFinessÉtablissementTerritorial,
       reconnaissancesContractuelles: this.construisLesReconnaissancesContractuelles(
         reconnaissancesContractuellesDeLÉtablissementModel,
@@ -88,6 +95,12 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       ),
       équipementsMatérielsLourds: this.construisLesÉquipementsMatérielsLourds(équipementsDeLÉtablissementModel, dateDeMiseÀJourFinessCs1400104Model),
     }
+  }
+
+  private async chargeLesCapacitésModel(numéroFinessÉtablissementTerritorial: string): Promise<CapacitéAutorisationSanitaireModel | null> {
+    return await (await this.orm)
+      .getRepository(CapacitéAutorisationSanitaireModel)
+      .findOne({ where: { numéroFinessÉtablissementTerritorial } })
   }
 
   private async chargeLesÉquipementsMatérielsLourdsModel(numéroFinessÉtablissementTerritorial: string):
@@ -596,6 +609,27 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       dateDeFin: équipementMatérielLourd.dateFin,
       dateDeMiseEnOeuvre: équipementMatérielLourd.dateMiseEnOeuvre,
       numéroArhgos: équipementMatérielLourd.numéroAutorisationArhgos,
+    }
+  }
+
+  private construisLesCapacités(
+    capacitésDeLÉtablissementModel: CapacitéAutorisationSanitaireModel | null,
+    dateDeMiseÀJourDiamantAnnSaeModel: DateMiseÀJourFichierSourceModel
+  ): CapacitéSanitaire {
+    if (capacitésDeLÉtablissementModel) {
+      return {
+        dateMiseÀJourSource: dateDeMiseÀJourDiamantAnnSaeModel.dernièreMiseÀJour,
+        nombreDeLitsEnChirurgie: capacitésDeLÉtablissementModel.nombreDeLitsEnChirurgie,
+        nombreDeLitsEnMédecine: capacitésDeLÉtablissementModel.nombreDeLitsEnMédecine,
+        nombreDeLitsEnObstétrique: capacitésDeLÉtablissementModel.nombreDeLitsEnObstétrique,
+        nombreDeLitsEnSsr: capacitésDeLÉtablissementModel.nombreDeLitsEnSsr,
+        nombreDePlacesEnChirurgie: capacitésDeLÉtablissementModel.nombreDePlacesEnChirurgie,
+        nombreDePlacesEnMédecine: capacitésDeLÉtablissementModel.nombreDePlacesEnMédecine,
+        nombreDePlacesEnObstétrique: capacitésDeLÉtablissementModel.nombreDePlacesEnObstétrique,
+        nombreDePlacesEnSsr: capacitésDeLÉtablissementModel.nombreDePlacesEnSsr,
+      }
+    } else {
+      return null
     }
   }
 }
