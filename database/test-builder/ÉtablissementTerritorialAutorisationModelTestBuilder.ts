@@ -1,6 +1,7 @@
 import { AutorisationMédicoSocialModel } from '../models/AutorisationMédicoSocialModel'
 import { AutorisationSanitaireModel } from '../models/AutorisationSanitaireModel'
 import { AutreActivitéSanitaireModel } from '../models/AutreActivitéSanitaireModel'
+import { CapacitéAutorisationSanitaireModel } from '../models/CapacitéAutorisationSanitaireModel'
 import { ReconnaissanceContractuelleSanitaireModel } from '../models/ReconnaissanceContractuelleSanitaireModel'
 import { ÉquipementMatérielLourdSanitaireModel } from '../models/ÉquipementMatérielLourdSanitaireModel'
 
@@ -92,5 +93,21 @@ export class ÉtablissementTerritorialAutorisationModelTestBuilder {
     équipementMatérielLourdModel.numéroAutorisationArhgos = champsSurchargés?.numéroAutorisationArhgos || '01-00-0000'
     équipementMatérielLourdModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '670799667'
     return équipementMatérielLourdModel
+  }
+
+  public static créeCapacitéSanitaire(
+    champsSurchargés?: Partial<CapacitéAutorisationSanitaireModel>
+  ): CapacitéAutorisationSanitaireModel {
+    const capacitéAutorisationSanitaireModel = new CapacitéAutorisationSanitaireModel()
+    capacitéAutorisationSanitaireModel.nombreDeLitsEnChirurgie = champsSurchargés?.nombreDeLitsEnChirurgie || 20
+    capacitéAutorisationSanitaireModel.nombreDeLitsEnMédecine = champsSurchargés?.nombreDeLitsEnMédecine || 35
+    capacitéAutorisationSanitaireModel.nombreDeLitsEnObstétrique = champsSurchargés?.nombreDeLitsEnObstétrique || 12
+    capacitéAutorisationSanitaireModel.nombreDeLitsEnSsr = champsSurchargés?.nombreDeLitsEnSsr || 3
+    capacitéAutorisationSanitaireModel.nombreDePlacesEnChirurgie = champsSurchargés?.nombreDePlacesEnChirurgie || 25
+    capacitéAutorisationSanitaireModel.nombreDePlacesEnMédecine = champsSurchargés?.nombreDePlacesEnMédecine || 40
+    capacitéAutorisationSanitaireModel.nombreDePlacesEnObstétrique = champsSurchargés?.nombreDePlacesEnObstétrique || 12
+    capacitéAutorisationSanitaireModel.nombreDePlacesEnSsr = champsSurchargés?.nombreDePlacesEnSsr || 3
+    capacitéAutorisationSanitaireModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '670799667'
+    return capacitéAutorisationSanitaireModel
   }
 }

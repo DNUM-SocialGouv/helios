@@ -13,9 +13,9 @@ from datacrawler.transform.équivalences_diamant_helios import (
 def récupère_le_taux_de_réalisation_des_établissements(données_ann_ms_tdp_et: pd.DataFrame) -> pd.DataFrame:
     def choisis_le_taux_de_réalisation_de_l_activité(ligne: Dict) -> float:
         return (
-            ligne["Taux de réalisation de lactivité CAMSP et CMPP"]
-            if pd.isna(ligne["Taux de réalisation de lactivité Tout ESMS (Hors services CAMSP et CMPP)"])
-            else ligne["Taux de réalisation de lactivité Tout ESMS (Hors services CAMSP et CMPP)"]
+            ligne["Taux de réalisation de l’activité CAMSP et CMPP"]
+            if pd.isna(ligne["Taux de réalisation de l’activité Tout ESMS (Hors services CAMSP et CMPP)"])
+            else ligne["Taux de réalisation de l’activité Tout ESMS (Hors services CAMSP et CMPP)"]
         )
 
     taux_realisation_activite = cast(pd.Series, données_ann_ms_tdp_et.apply(choisis_le_taux_de_réalisation_de_l_activité, axis=1)).rename(
@@ -23,7 +23,7 @@ def récupère_le_taux_de_réalisation_des_établissements(données_ann_ms_tdp_e
     )
 
     return données_ann_ms_tdp_et.join(taux_realisation_activite).drop(
-        columns=["Taux de réalisation de lactivité Tout ESMS (Hors services CAMSP et CMPP)", "Taux de réalisation de lactivité CAMSP et CMPP"]
+        columns=["Taux de réalisation de l’activité Tout ESMS (Hors services CAMSP et CMPP)", "Taux de réalisation de l’activité CAMSP et CMPP"]
     )
 
 

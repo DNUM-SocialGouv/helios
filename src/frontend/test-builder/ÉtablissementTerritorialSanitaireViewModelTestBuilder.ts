@@ -4,7 +4,7 @@ import { Wording } from '../configuration/wording/Wording'
 import { ÉtablissementTerritorialSanitaireViewModel } from '../ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel'
 
 export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
-  private static identité: ÉtablissementTerritorialSanitaire['identité'] = {
+  public static identité: ÉtablissementTerritorialSanitaire['identité'] = {
     adresseAcheminement: {
       dateMiseÀJourSource: '2021-07-07',
       value: '01130 NANTUA',
@@ -66,7 +66,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       value: '0474754800',
     },
   }
-  private static activités: ÉtablissementTerritorialSanitaire['activités'] = [
+  public static activités: ÉtablissementTerritorialSanitaire['activités'] = [
     {
       année: 2017,
       nombreDePassagesAuxUrgences: {
@@ -308,8 +308,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       numéroFinessÉtablissementTerritorial: '010000040',
     },
   ]
-
-  private static autorisationsEtCapacités: ÉtablissementTerritorialSanitaire['autorisationsEtCapacités'] = {
+  public static autorisationsEtCapacités: ÉtablissementTerritorialSanitaire['autorisationsEtCapacités'] = {
     autorisations: {
       activités: [
         {
@@ -362,6 +361,17 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
         },
       ],
       dateMiseÀJourSource: '2022-08-29',
+    },
+    capacités: {
+      dateMiseÀJourSource: '2022-09-02',
+      nombreDeLitsEnChirurgie: 10,
+      nombreDeLitsEnMédecine: 20,
+      nombreDeLitsEnObstétrique: 5,
+      nombreDeLitsEnSsr: 2,
+      nombreDePlacesEnChirurgie: 20,
+      nombreDePlacesEnMédecine: 50,
+      nombreDePlacesEnObstétrique: 5,
+      nombreDePlacesEnSsr: 5,
     },
     numéroFinessÉtablissementTerritorial: '123456789',
     reconnaissancesContractuelles: {

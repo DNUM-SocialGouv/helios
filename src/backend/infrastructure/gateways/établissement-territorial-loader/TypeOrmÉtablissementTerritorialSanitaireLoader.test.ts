@@ -3,6 +3,7 @@ import { Repository } from 'typeorm'
 import { ActivitéSanitaireModel } from '../../../../../database/models/ActivitéSanitaireModel'
 import { AutorisationSanitaireModel } from '../../../../../database/models/AutorisationSanitaireModel'
 import { AutreActivitéSanitaireModel } from '../../../../../database/models/AutreActivitéSanitaireModel'
+import { CapacitéAutorisationSanitaireModel } from '../../../../../database/models/CapacitéAutorisationSanitaireModel'
 import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
 import { ReconnaissanceContractuelleSanitaireModel } from '../../../../../database/models/ReconnaissanceContractuelleSanitaireModel'
@@ -30,6 +31,7 @@ describe('Établissement territorial sanitaire loader', () => {
   let équipementMatérielLourdSanitaireRepository: Repository<ÉquipementMatérielLourdSanitaireModel>
   let autreActivitéSanitaireRepository: Repository<AutreActivitéSanitaireModel>
   let reconnaissanceContractuelleSanitaireRepository: Repository<ReconnaissanceContractuelleSanitaireModel>
+  let capacitéSanitaireRepository: Repository<CapacitéAutorisationSanitaireModel>
 
   beforeAll(async () => {
     activitéSanitaireModelRepository = (await orm).getRepository(ActivitéSanitaireModel)
@@ -40,6 +42,7 @@ describe('Établissement territorial sanitaire loader', () => {
     équipementMatérielLourdSanitaireRepository = (await orm).getRepository(ÉquipementMatérielLourdSanitaireModel)
     autreActivitéSanitaireRepository = (await orm).getRepository(AutreActivitéSanitaireModel)
     reconnaissanceContractuelleSanitaireRepository = (await orm).getRepository(ReconnaissanceContractuelleSanitaireModel)
+    capacitéSanitaireRepository = (await orm).getRepository(CapacitéAutorisationSanitaireModel)
   })
 
   beforeEach(async () => {
@@ -206,6 +209,10 @@ describe('Établissement territorial sanitaire loader', () => {
           dernièreMiseÀJour: '2022-08-29',
           fichier: FichierSource.FINESS_CS1600102,
         }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-09-02',
+          fichier: FichierSource.DIAMANT_ANN_SAE,
+        }),
       ])
       await établissementTerritorialIdentitéRepository.insert(
         ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
@@ -355,6 +362,10 @@ describe('Établissement territorial sanitaire loader', () => {
           dernièreMiseÀJour: '2022-08-29',
           fichier: FichierSource.FINESS_CS1600102,
         }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-09-02',
+          fichier: FichierSource.DIAMANT_ANN_SAE,
+        }),
       ])
       await établissementTerritorialIdentitéRepository.insert(
         ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
@@ -495,6 +506,10 @@ describe('Établissement territorial sanitaire loader', () => {
         DateMiseÀJourFichierSourceModelTestBuilder.crée({
           dernièreMiseÀJour: '2022-08-29',
           fichier: FichierSource.FINESS_CS1600102,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-09-02',
+          fichier: FichierSource.DIAMANT_ANN_SAE,
         }),
       ])
       await établissementTerritorialIdentitéRepository.insert(
@@ -653,6 +668,10 @@ describe('Établissement territorial sanitaire loader', () => {
           dernièreMiseÀJour: '2022-08-29',
           fichier: FichierSource.FINESS_CS1600102,
         }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-09-02',
+          fichier: FichierSource.DIAMANT_ANN_SAE,
+        }),
       ])
       await établissementTerritorialIdentitéRepository.insert(
         ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
@@ -718,6 +737,94 @@ describe('Établissement territorial sanitaire loader', () => {
           },
         ],
       })
+    })
+
+    it('charge les capacités', async () => {
+      // GIVEN
+      await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
+      await dateMiseÀJourFichierSourceRepository.insert([
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1400103,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1400104,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1600101,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1600102,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-09-02',
+          fichier: FichierSource.DIAMANT_ANN_SAE,
+        }),
+      ])
+      await établissementTerritorialIdentitéRepository.insert(
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
+      )
+      await capacitéSanitaireRepository.insert(
+        ÉtablissementTerritorialAutorisationModelTestBuilder.créeCapacitéSanitaire({ numéroFinessÉtablissementTerritorial })
+      )
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm)
+
+      // WHEN
+      const { capacités } = await typeOrmÉtablissementTerritorialLoader.chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial)
+
+      // THEN
+      expect(capacités).toStrictEqual<ÉtablissementTerritorialSanitaireAutorisationEtCapacité['capacités']>({
+        dateMiseÀJourSource: '2022-09-02',
+        nombreDeLitsEnChirurgie: 20,
+        nombreDeLitsEnMédecine: 35,
+        nombreDeLitsEnObstétrique: 12,
+        nombreDeLitsEnSsr: 3,
+        nombreDePlacesEnChirurgie: 25,
+        nombreDePlacesEnMédecine: 40,
+        nombreDePlacesEnObstétrique: 12,
+        nombreDePlacesEnSsr: 3,
+      })
+    })
+
+    it('ne renvoie rien si l’établissement n’a pas de capacités', async () => {
+      // GIVEN
+      await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
+      await dateMiseÀJourFichierSourceRepository.insert([
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1400103,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1400104,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1600101,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1600102,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-09-02',
+          fichier: FichierSource.DIAMANT_ANN_SAE,
+        }),
+      ])
+      await établissementTerritorialIdentitéRepository.insert(
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
+      )
+
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm)
+
+      // WHEN
+      const { capacités } = await typeOrmÉtablissementTerritorialLoader.chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial)
+
+      // THEN
+      expect(capacités).toBeNull()
     })
   })
 })

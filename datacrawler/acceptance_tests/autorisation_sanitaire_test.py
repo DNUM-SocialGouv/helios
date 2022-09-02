@@ -14,6 +14,7 @@ from datacrawler.load.nom_des_tables import (
     TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES,
     TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_SANITAIRES,
     TABLES_DES_AUTRES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
+    TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
     TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES,
     TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS,
     FichierSource,
@@ -22,11 +23,13 @@ from datacrawler.test_helpers import (
     NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
     NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
     base_de_données_test,
+    helios_ann_sae_builder,
     helios_autorisation_sanitaire_builder,
     helios_autre_activité_sanitaire_builder,
     helios_reconnaissance_contractuelle_sanitaire_builder,
     helios_équipement_matériel_lourd_sanitaire_builder,
     mocked_logger,
+    sauvegarde_les_capacités_sanitaires_en_base,
     sauvegarde_un_équipement_matériel_lourd_en_base,
     sauvegarde_un_établissement_en_base,
     sauvegarde_une_autorisation_sanitaire_en_base,
@@ -48,6 +51,8 @@ fichier_de_données_finess_cs1600101_de_test = os.path.join("data_set", "flux_fi
 
 archive_de_données_finess_cs1600102_de_test = os.path.join("data_set", "flux_finess", "enrichi", "finess_cs1600102_stock_20211214-0417.xml.gz")
 fichier_de_données_finess_cs1600102_de_test = os.path.join("data_set", "flux_finess", "enrichi", "finess_cs1600102_stock_20211214-0417.xml")
+
+fichier_de_données_diamant_ann_sae = os.path.join("data_set", "diamant", "ANN_SAE_2022_08_03.CSV")
 
 
 class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
@@ -72,7 +77,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
         ]:
             os.remove(fichier_de_données)
 
-    class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
+    class TestAjouteLesAutorisationsDesÉtablissementsSanitaires:
         def test_sauvegarde_les_autorisations_installées_des_établissements_sanitaires(self) -> None:
             # GIVEN
             numéro_finess_avec_valeurs_manquantes = "010786259"
@@ -88,79 +93,44 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                 fichier_de_données_finess_cs1400104_de_test,
                 fichier_de_données_finess_cs1600101_de_test,
                 fichier_de_données_finess_cs1600102_de_test,
+                fichier_de_données_diamant_ann_sae,
                 base_de_données_test,
                 mocked_logger,
             )
 
             # THEN
             autorisations_attendues = pd.DataFrame(
-                [
-                    {
-                        "code_activite": "16",
-                        "code_forme": "00",
-                        "code_modalite": "42",
-                        "date_autorisation": date(2005, 10, 11),
-                        "date_fin": date(2026, 5, 3),
-                        "date_mise_en_oeuvre": date(2008, 12, 4),
-                        "libelle_activite": "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
-                        "libelle_forme": "Pas de forme",
-                        "libelle_modalite": "Hémodialyse en unité médicalisée",
-                        "numero_autorisation_arhgos": "01-00-000",
-                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    },
-                    {
-                        "code_activite": "16",
-                        "code_forme": "14",
-                        "code_modalite": "44",
-                        "date_autorisation": date(2005, 10, 11),
-                        "date_fin": date(2026, 5, 3),
-                        "date_mise_en_oeuvre": date(2009, 11, 9),
-                        "libelle_activite": "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
-                        "libelle_forme": "Non saisonnier",
-                        "libelle_modalite": "Hémodialyse en unité d'auto dialyse assistée",
-                        "numero_autorisation_arhgos": "01-00-111",
-                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    },
-                    {
-                        "code_activite": "16",
-                        "code_forme": "00",
-                        "code_modalite": "46",
-                        "date_autorisation": date(2005, 10, 11),
-                        "date_fin": date(2026, 5, 3),
-                        "date_mise_en_oeuvre": date(2008, 12, 4),
-                        "libelle_activite": "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
-                        "libelle_forme": "Pas de forme",
-                        "libelle_modalite": "Dialyse péritonéale à domicile",
-                        "numero_autorisation_arhgos": "01-00-222",
-                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    },
-                    {
-                        "code_activite": "16",
-                        "code_forme": "00",
-                        "code_modalite": "45",
-                        "date_autorisation": date(2005, 10, 11),
-                        "date_fin": date(2026, 5, 3),
-                        "date_mise_en_oeuvre": date(2008, 12, 4),
-                        "libelle_activite": "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
-                        "libelle_forme": "Pas de forme",
-                        "libelle_modalite": "Hémodialyse à domicile",
-                        "numero_autorisation_arhgos": "01-00-333",
-                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    },
-                    {
-                        "code_activite": "50",
-                        "code_forme": "02",
-                        "code_modalite": "78",
-                        "date_autorisation": None,
-                        "date_fin": None,
-                        "date_mise_en_oeuvre": None,
-                        "libelle_activite": "Soins de suite et de réadaptation non spécialisés",
-                        "libelle_forme": "Hospitalisation à temps partiel de jour ou de nuit",
-                        "libelle_modalite": "Juvénile (âge >= 6 ans et < 18 ans)",
-                        "numero_autorisation_arhgos": "02-00-000",
-                        "numero_finess_etablissement_territorial": numéro_finess_avec_valeurs_manquantes,
-                    },
-                ]
+                {
+                    "code_activite": ["16", "16", "16", "16", "50"],
+                    "code_forme": ["00", "14", "00", "00", "02"],
+                    "code_modalite": ["42", "44", "46", "45", "78"],
+                    "date_autorisation": [date(2005, 10, 11), date(2005, 10, 11), date(2005, 10, 11), date(2005, 10, 11), None],
+                    "date_fin": [date(2026, 5, 3), date(2026, 5, 3), date(2026, 5, 3), date(2026, 5, 3), None],
+                    "date_mise_en_oeuvre": [date(2008, 12, 4), date(2009, 11, 9), date(2008, 12, 4), date(2008, 12, 4), None],
+                    "libelle_activite": [
+                        "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
+                        "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
+                        "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
+                        "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
+                        "Soins de suite et de réadaptation non spécialisés",
+                    ],
+                    "libelle_forme": ["Pas de forme", "Non saisonnier", "Pas de forme", "Pas de forme", "Hospitalisation à temps partiel de jour ou de nuit"],
+                    "libelle_modalite": [
+                        "Hémodialyse en unité médicalisée",
+                        "Hémodialyse en unité d'auto dialyse assistée",
+                        "Dialyse péritonéale à domicile",
+                        "Hémodialyse à domicile",
+                        "Juvénile (âge >= 6 ans et < 18 ans)",
+                    ],
+                    "numero_autorisation_arhgos": ["01-00-000", "01-00-111", "01-00-222", "01-00-333", "02-00-000"],
+                    "numero_finess_etablissement_territorial": [
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        numéro_finess_avec_valeurs_manquantes,
+                    ],
+                },
             )
 
             autorisations_enregistrées = pd.read_sql(
@@ -190,6 +160,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                 fichier_de_données_finess_cs1400104_de_test,
                 fichier_de_données_finess_cs1600101_de_test,
                 fichier_de_données_finess_cs1600102_de_test,
+                fichier_de_données_diamant_ann_sae,
                 base_de_données_test,
                 mocked_logger,
             )
@@ -214,66 +185,41 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                 fichier_de_données_finess_cs1400104_de_test,
                 fichier_de_données_finess_cs1600101_de_test,
                 fichier_de_données_finess_cs1600102_de_test,
+                fichier_de_données_diamant_ann_sae,
                 base_de_données_test,
                 mocked_logger,
             )
 
             # THEN
             autorisations_attendues = pd.DataFrame(
-                [
-                    {
-                        "code_activite": "16",
-                        "code_forme": "00",
-                        "code_modalite": "42",
-                        "date_autorisation": date(2005, 10, 11),
-                        "date_fin": date(2026, 5, 3),
-                        "date_mise_en_oeuvre": date(2008, 12, 4),
-                        "libelle_activite": "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
-                        "libelle_forme": "Pas de forme",
-                        "libelle_modalite": "Hémodialyse en unité médicalisée",
-                        "numero_autorisation_arhgos": "01-00-000",
-                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    },
-                    {
-                        "code_activite": "16",
-                        "code_forme": "14",
-                        "code_modalite": "44",
-                        "date_autorisation": date(2005, 10, 11),
-                        "date_fin": date(2026, 5, 3),
-                        "date_mise_en_oeuvre": date(2009, 11, 9),
-                        "libelle_activite": "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
-                        "libelle_forme": "Non saisonnier",
-                        "libelle_modalite": "Hémodialyse en unité d'auto dialyse assistée",
-                        "numero_autorisation_arhgos": "01-00-111",
-                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    },
-                    {
-                        "code_activite": "16",
-                        "code_forme": "00",
-                        "code_modalite": "46",
-                        "date_autorisation": date(2005, 10, 11),
-                        "date_fin": date(2026, 5, 3),
-                        "date_mise_en_oeuvre": date(2008, 12, 4),
-                        "libelle_activite": "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
-                        "libelle_forme": "Pas de forme",
-                        "libelle_modalite": "Dialyse péritonéale à domicile",
-                        "numero_autorisation_arhgos": "01-00-222",
-                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    },
-                    {
-                        "code_activite": "16",
-                        "code_forme": "00",
-                        "code_modalite": "45",
-                        "date_autorisation": date(2005, 10, 11),
-                        "date_fin": date(2026, 5, 3),
-                        "date_mise_en_oeuvre": date(2008, 12, 4),
-                        "libelle_activite": "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
-                        "libelle_forme": "Pas de forme",
-                        "libelle_modalite": "Hémodialyse à domicile",
-                        "numero_autorisation_arhgos": "01-00-333",
-                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    },
-                ]
+                {
+                    "code_activite": ["16", "16", "16", "16"],
+                    "code_forme": ["00", "14", "00", "00"],
+                    "code_modalite": ["42", "44", "46", "45"],
+                    "date_autorisation": [date(2005, 10, 11), date(2005, 10, 11), date(2005, 10, 11), date(2005, 10, 11)],
+                    "date_fin": [date(2026, 5, 3), date(2026, 5, 3), date(2026, 5, 3), date(2026, 5, 3)],
+                    "date_mise_en_oeuvre": [date(2008, 12, 4), date(2009, 11, 9), date(2008, 12, 4), date(2008, 12, 4)],
+                    "libelle_activite": [
+                        "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
+                        "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
+                        "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
+                        "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
+                    ],
+                    "libelle_forme": ["Pas de forme", "Non saisonnier", "Pas de forme", "Pas de forme"],
+                    "libelle_modalite": [
+                        "Hémodialyse en unité médicalisée",
+                        "Hémodialyse en unité d'auto dialyse assistée",
+                        "Dialyse péritonéale à domicile",
+                        "Hémodialyse à domicile",
+                    ],
+                    "numero_autorisation_arhgos": ["01-00-000", "01-00-111", "01-00-222", "01-00-333"],
+                    "numero_finess_etablissement_territorial": [
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                    ],
+                },
             )
 
             autorisations_enregistrées = pd.read_sql(
@@ -311,6 +257,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     fichier_de_données_finess_cs1400104_de_test,
                     fichier_de_données_finess_cs1600101_de_test,
                     fichier_de_données_finess_cs1600102_de_test,
+                    fichier_de_données_diamant_ann_sae,
                     base_de_données_test,
                     mocked_logger,
                 )
@@ -332,7 +279,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             )
             assert date_du_fichier_de_données.fetchone() == (date(2020, 1, 1), FichierSource.FINESS_CS1400103.value)
 
-    class TestAjouteLesÉquipementsMatérielsLourdsDesÉtablissementsMédicoSociaux:
+    class TestAjouteLesÉquipementsMatérielsLourdsDesÉtablissementsSanitaires:
         def test_sauvegarde_les_équipements_matériels_lourds_des_établissements_sanitaires(self) -> None:
             # GIVEN
             numéro_finess_avec_valeurs_manquantes = "010786259"
@@ -348,41 +295,30 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                 fichier_de_données_finess_cs1400104_de_test,
                 fichier_de_données_finess_cs1600101_de_test,
                 fichier_de_données_finess_cs1600102_de_test,
+                fichier_de_données_diamant_ann_sae,
                 base_de_données_test,
                 mocked_logger,
             )
 
             # THEN
             équipements_matériels_lourds_attendus = pd.DataFrame(
-                [
-                    {
-                        "code_equipement_materiel_lourd": "05602",
-                        "date_autorisation": date(2007, 11, 6),
-                        "date_fin": date(2029, 1, 1),
-                        "date_mise_en_oeuvre": date(2011, 10, 19),
-                        "libelle_eml": "Scanographe à utilisation médicale",
-                        "numero_autorisation_arhgos": "01-00-0000",
-                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    },
-                    {
-                        "code_equipement_materiel_lourd": "06201",
-                        "date_autorisation": date(2006, 5, 2),
-                        "date_fin": date(2027, 2, 16),
-                        "date_mise_en_oeuvre": date(2009, 1, 20),
-                        "libelle_eml": "Appareil d'IRM à utilisation clinique",
-                        "numero_autorisation_arhgos": "01-00-0001",
-                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    },
-                    {
-                        "code_equipement_materiel_lourd": "05701",
-                        "date_autorisation": None,
-                        "date_fin": None,
-                        "date_mise_en_oeuvre": None,
-                        "libelle_eml": "Caméra à scintillation sans détecteur d'émission de positons",
-                        "numero_autorisation_arhgos": "02-00-0000",
-                        "numero_finess_etablissement_territorial": numéro_finess_avec_valeurs_manquantes,
-                    },
-                ]
+                {
+                    "code_equipement_materiel_lourd": ["05602", "06201", "05701"],
+                    "date_autorisation": [date(2007, 11, 6), date(2006, 5, 2), None],
+                    "date_fin": [date(2029, 1, 1), date(2027, 2, 16), None],
+                    "date_mise_en_oeuvre": [date(2011, 10, 19), date(2009, 1, 20), None],
+                    "libelle_eml": [
+                        "Scanographe à utilisation médicale",
+                        "Appareil d'IRM à utilisation clinique",
+                        "Caméra à scintillation sans détecteur d'émission de positons",
+                    ],
+                    "numero_autorisation_arhgos": ["01-00-0000", "01-00-0001", "02-00-0000"],
+                    "numero_finess_etablissement_territorial": [
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        numéro_finess_avec_valeurs_manquantes,
+                    ],
+                },
             )
 
             équipements_matériels_lourds_enregistrés = pd.read_sql(
@@ -412,6 +348,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                 fichier_de_données_finess_cs1400104_de_test,
                 fichier_de_données_finess_cs1600101_de_test,
                 fichier_de_données_finess_cs1600102_de_test,
+                fichier_de_données_diamant_ann_sae,
                 base_de_données_test,
                 mocked_logger,
             )
@@ -435,32 +372,22 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                 fichier_de_données_finess_cs1400104_de_test,
                 fichier_de_données_finess_cs1600101_de_test,
                 fichier_de_données_finess_cs1600102_de_test,
+                fichier_de_données_diamant_ann_sae,
                 base_de_données_test,
                 mocked_logger,
             )
 
             # THEN
             équipements_matériels_lourds_attendus = pd.DataFrame(
-                [
-                    {
-                        "code_equipement_materiel_lourd": "05602",
-                        "date_autorisation": date(2007, 11, 6),
-                        "date_fin": date(2029, 1, 1),
-                        "date_mise_en_oeuvre": date(2011, 10, 19),
-                        "libelle_eml": "Scanographe à utilisation médicale",
-                        "numero_autorisation_arhgos": "01-00-0000",
-                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    },
-                    {
-                        "code_equipement_materiel_lourd": "06201",
-                        "date_autorisation": date(2006, 5, 2),
-                        "date_fin": date(2027, 2, 16),
-                        "date_mise_en_oeuvre": date(2009, 1, 20),
-                        "libelle_eml": "Appareil d'IRM à utilisation clinique",
-                        "numero_autorisation_arhgos": "01-00-0001",
-                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    },
-                ]
+                {
+                    "code_equipement_materiel_lourd": ["05602", "06201"],
+                    "date_autorisation": [date(2007, 11, 6), date(2006, 5, 2)],
+                    "date_fin": [date(2029, 1, 1), date(2027, 2, 16)],
+                    "date_mise_en_oeuvre": [date(2011, 10, 19), date(2009, 1, 20)],
+                    "libelle_eml": ["Scanographe à utilisation médicale", "Appareil d'IRM à utilisation clinique"],
+                    "numero_autorisation_arhgos": ["01-00-0000", "01-00-0001"],
+                    "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE],
+                },
             )
 
             équipements_matériels_lourds_enregistrés = pd.read_sql(
@@ -498,6 +425,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     fichier_de_données_finess_cs1400104_de_test,
                     fichier_de_données_finess_cs1600101_de_test,
                     fichier_de_données_finess_cs1600102_de_test,
+                    fichier_de_données_diamant_ann_sae,
                     base_de_données_test,
                     mocked_logger,
                 )
@@ -519,7 +447,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             )
             assert date_du_fichier_de_données.fetchone() == (date(2020, 1, 1), FichierSource.FINESS_CS1400104.value)
 
-    class TestAjouteLesAutresActivitésDesÉtablissementsMédicoSociaux:
+    class TestAjouteLesAutresActivitésDesÉtablissementsSanitaires:
         def test_sauvegarde_les_autres_activités_des_établissements_sanitaires(self) -> None:
             # GIVEN
             numéro_finess_avec_valeurs_manquantes = "010786259"
@@ -535,50 +463,29 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                 fichier_de_données_finess_cs1400104_de_test,
                 fichier_de_données_finess_cs1600101_de_test,
                 fichier_de_données_finess_cs1600102_de_test,
+                fichier_de_données_diamant_ann_sae,
                 base_de_données_test,
                 mocked_logger,
             )
 
             # THEN
             autres_activités_attendues = pd.DataFrame(
-                [
-                    {
-                        "code_activite": "A1",
-                        "code_forme": "00",
-                        "code_modalite": "M0",
-                        "date_autorisation": date(2019, 6, 3),
-                        "date_fin": date(2024, 8, 31),
-                        "date_mise_en_oeuvre": date(2019, 6, 3),
-                        "libelle_activite": "Dépôt de sang",
-                        "libelle_forme": "Pas de forme",
-                        "libelle_modalite": "Dépôt d'urgence",
-                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    },
-                    {
-                        "code_activite": "A1",
-                        "code_forme": "00",
-                        "code_modalite": "M2",
-                        "date_autorisation": date(2019, 6, 3),
-                        "date_fin": date(2024, 8, 31),
-                        "date_mise_en_oeuvre": date(2019, 6, 3),
-                        "libelle_activite": "Dépôt de sang",
-                        "libelle_forme": "Pas de forme",
-                        "libelle_modalite": "Dépôt relais",
-                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    },
-                    {
-                        "code_activite": "A0",
-                        "code_forme": "15",
-                        "code_modalite": "00",
-                        "date_autorisation": None,
-                        "date_fin": None,
-                        "date_mise_en_oeuvre": None,
-                        "libelle_activite": "Installation de chirurgie esthétique",
-                        "libelle_forme": "Forme non précisée",
-                        "libelle_modalite": "Pas de modalité",
-                        "numero_finess_etablissement_territorial": numéro_finess_avec_valeurs_manquantes,
-                    },
-                ]
+                {
+                    "code_activite": ["A1", "A1", "A0"],
+                    "code_forme": ["00", "00", "15"],
+                    "code_modalite": ["M0", "M2", "00"],
+                    "date_autorisation": [date(2019, 6, 3), date(2019, 6, 3), None],
+                    "date_fin": [date(2024, 8, 31), date(2024, 8, 31), None],
+                    "date_mise_en_oeuvre": [date(2019, 6, 3), date(2019, 6, 3), None],
+                    "libelle_activite": ["Dépôt de sang", "Dépôt de sang", "Installation de chirurgie esthétique"],
+                    "libelle_forme": ["Pas de forme", "Pas de forme", "Forme non précisée"],
+                    "libelle_modalite": ["Dépôt d'urgence", "Dépôt relais", "Pas de modalité"],
+                    "numero_finess_etablissement_territorial": [
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        numéro_finess_avec_valeurs_manquantes,
+                    ],
+                },
             )
 
             autres_activités_enregistrées = pd.read_sql(
@@ -608,6 +515,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                 fichier_de_données_finess_cs1400104_de_test,
                 fichier_de_données_finess_cs1600101_de_test,
                 fichier_de_données_finess_cs1600102_de_test,
+                fichier_de_données_diamant_ann_sae,
                 base_de_données_test,
                 mocked_logger,
             )
@@ -631,38 +539,25 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                 fichier_de_données_finess_cs1400104_de_test,
                 fichier_de_données_finess_cs1600101_de_test,
                 fichier_de_données_finess_cs1600102_de_test,
+                fichier_de_données_diamant_ann_sae,
                 base_de_données_test,
                 mocked_logger,
             )
 
             # THEN
             autres_activités_attendues = pd.DataFrame(
-                [
-                    {
-                        "code_activite": "A1",
-                        "code_forme": "00",
-                        "code_modalite": "M0",
-                        "date_autorisation": date(2019, 6, 3),
-                        "date_fin": date(2024, 8, 31),
-                        "date_mise_en_oeuvre": date(2019, 6, 3),
-                        "libelle_activite": "Dépôt de sang",
-                        "libelle_forme": "Pas de forme",
-                        "libelle_modalite": "Dépôt d'urgence",
-                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    },
-                    {
-                        "code_activite": "A1",
-                        "code_forme": "00",
-                        "code_modalite": "M2",
-                        "date_autorisation": date(2019, 6, 3),
-                        "date_fin": date(2024, 8, 31),
-                        "date_mise_en_oeuvre": date(2019, 6, 3),
-                        "libelle_activite": "Dépôt de sang",
-                        "libelle_forme": "Pas de forme",
-                        "libelle_modalite": "Dépôt relais",
-                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    },
-                ]
+                {
+                    "code_activite": ["A1", "A1"],
+                    "code_forme": ["00", "00"],
+                    "code_modalite": ["M0", "M2"],
+                    "date_autorisation": [date(2019, 6, 3), date(2019, 6, 3)],
+                    "date_fin": [date(2024, 8, 31), date(2024, 8, 31)],
+                    "date_mise_en_oeuvre": [date(2019, 6, 3), date(2019, 6, 3)],
+                    "libelle_activite": ["Dépôt de sang", "Dépôt de sang"],
+                    "libelle_forme": ["Pas de forme", "Pas de forme"],
+                    "libelle_modalite": ["Dépôt d'urgence", "Dépôt relais"],
+                    "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE],
+                },
             )
 
             autres_activités_enregistrées = pd.read_sql(
@@ -700,6 +595,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     fichier_de_données_finess_cs1400104_de_test,
                     fichier_de_données_finess_cs1600101_de_test,
                     fichier_de_données_finess_cs1600102_de_test,
+                    fichier_de_données_diamant_ann_sae,
                     base_de_données_test,
                     mocked_logger,
                 )
@@ -721,7 +617,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             )
             assert date_du_fichier_de_données.fetchone() == (date(2020, 1, 1), FichierSource.FINESS_CS1600101.value)
 
-    class TestAjouteLesReconnaissancesContractuellesDesÉtablissementsMédicoSociaux:
+    class TestAjouteLesReconnaissancesContractuellesDesÉtablissementsSanitaires:
         def test_sauvegarde_les_reconnaissances_contractuelles_des_établissements_sanitaires(self) -> None:
             # GIVEN
             numéro_finess_avec_valeurs_manquantes = "010786259"
@@ -737,74 +633,43 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                 fichier_de_données_finess_cs1400104_de_test,
                 fichier_de_données_finess_cs1600101_de_test,
                 fichier_de_données_finess_cs1600102_de_test,
+                fichier_de_données_diamant_ann_sae,
                 base_de_données_test,
                 mocked_logger,
             )
 
             # THEN
             reconnaissances_contractuelles_attendues = pd.DataFrame(
-                [
-                    {
-                        "capacite_autorisee": 4,
-                        "code_activite": "R7",
-                        "code_forme": "01",
-                        "code_modalite": "N8",
-                        "date_effet_asr": date(2013, 11, 30),
-                        "date_effet_cpom": date(2013, 12, 1),
-                        "date_fin_cpom": date(2018, 11, 30),
-                        "numero_cpom": "01-00-C00000",
-                        "libelle_activite": "Surveillance continue",
-                        "libelle_forme": "Hospitalisation complète (24 heures consécutives ou plus)",
-                        "libelle_modalite": "USC polyvalente - adulte (non adossée à une unité de réanimation)",
-                        "numero_autorisation_arhgos": "01-00-RC00000",
-                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    },
-                    {
-                        "capacite_autorisee": 1,
-                        "code_activite": "R4",
-                        "code_forme": "00",
-                        "code_modalite": "N4",
-                        "date_effet_asr": date(2013, 1, 1),
-                        "date_effet_cpom": date(2013, 12, 1),
-                        "date_fin_cpom": date(2018, 11, 30),
-                        "numero_cpom": "01-00-C00001",
-                        "libelle_activite": "Soins palliatifs",
-                        "libelle_forme": "Pas de forme",
-                        "libelle_modalite": "Equipe mobile",
-                        "numero_autorisation_arhgos": "01-00-RC00001",
-                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    },
-                    {
-                        "capacite_autorisee": 0,
-                        "code_activite": "S6",
-                        "code_forme": "00",
-                        "code_modalite": "B3",
-                        "date_effet_asr": None,
-                        "date_effet_cpom": date(2019, 4, 1),
-                        "date_fin_cpom": date(2023, 12, 31),
-                        "numero_cpom": "01-00-C00002",
-                        "libelle_activite": "Structure spécifique d'hospitalisation",
-                        "libelle_forme": "Pas de forme",
-                        "libelle_modalite": "Clinique ouverte",
-                        "numero_autorisation_arhgos": "01-00-RC00002",
-                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    },
-                    {
-                        "capacite_autorisee": NaN,
-                        "code_activite": "R7",
-                        "code_forme": "01",
-                        "code_modalite": "09",
-                        "date_effet_asr": None,
-                        "date_effet_cpom": None,
-                        "date_fin_cpom": None,
-                        "numero_cpom": "02-00-C00000",
-                        "libelle_activite": "Surveillance continue",
-                        "libelle_forme": "Hospitalisation complète (24 heures consécutives ou plus)",
-                        "libelle_modalite": "Adulte (âge >=18 ans)",
-                        "numero_autorisation_arhgos": "02-00-RC00000",
-                        "numero_finess_etablissement_territorial": numéro_finess_avec_valeurs_manquantes,
-                    },
-                ]
+                {
+                    "capacite_autorisee": [4, 1, 0, NaN],
+                    "code_activite": ["R7", "R4", "S6", "R7"],
+                    "code_forme": ["01", "00", "00", "01"],
+                    "code_modalite": ["N8", "N4", "B3", "09"],
+                    "date_effet_asr": [date(2013, 11, 30), date(2013, 1, 1), None, None],
+                    "date_effet_cpom": [date(2013, 12, 1), date(2013, 12, 1), date(2019, 4, 1), None],
+                    "date_fin_cpom": [date(2018, 11, 30), date(2018, 11, 30), date(2023, 12, 31), None],
+                    "numero_cpom": ["01-00-C00000", "01-00-C00001", "01-00-C00002", "02-00-C00000"],
+                    "libelle_activite": ["Surveillance continue", "Soins palliatifs", "Structure spécifique d'hospitalisation", "Surveillance continue"],
+                    "libelle_forme": [
+                        "Hospitalisation complète (24 heures consécutives ou plus)",
+                        "Pas de forme",
+                        "Pas de forme",
+                        "Hospitalisation complète (24 heures consécutives ou plus)",
+                    ],
+                    "libelle_modalite": [
+                        "USC polyvalente - adulte (non adossée à une unité de réanimation)",
+                        "Equipe mobile",
+                        "Clinique ouverte",
+                        "Adulte (âge >=18 ans)",
+                    ],
+                    "numero_autorisation_arhgos": ["01-00-RC00000", "01-00-RC00001", "01-00-RC00002", "02-00-RC00000"],
+                    "numero_finess_etablissement_territorial": [
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        numéro_finess_avec_valeurs_manquantes,
+                    ],
+                },
             )
 
             reconnaissances_contractuelles_enregistrées = pd.read_sql(
@@ -834,6 +699,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                 fichier_de_données_finess_cs1400104_de_test,
                 fichier_de_données_finess_cs1600101_de_test,
                 fichier_de_données_finess_cs1600102_de_test,
+                fichier_de_données_diamant_ann_sae,
                 base_de_données_test,
                 mocked_logger,
             )
@@ -857,59 +723,32 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                 fichier_de_données_finess_cs1400104_de_test,
                 fichier_de_données_finess_cs1600101_de_test,
                 fichier_de_données_finess_cs1600102_de_test,
+                fichier_de_données_diamant_ann_sae,
                 base_de_données_test,
                 mocked_logger,
             )
 
             # THEN
             reconnaissances_contractuelles_attendues = pd.DataFrame(
-                [
-                    {
-                        "capacite_autorisee": 4,
-                        "code_activite": "R7",
-                        "code_forme": "01",
-                        "code_modalite": "N8",
-                        "date_effet_asr": date(2013, 11, 30),
-                        "date_effet_cpom": date(2013, 12, 1),
-                        "date_fin_cpom": date(2018, 11, 30),
-                        "numero_cpom": "01-00-C00000",
-                        "libelle_activite": "Surveillance continue",
-                        "libelle_forme": "Hospitalisation complète (24 heures consécutives ou plus)",
-                        "libelle_modalite": "USC polyvalente - adulte (non adossée à une unité de réanimation)",
-                        "numero_autorisation_arhgos": "01-00-RC00000",
-                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    },
-                    {
-                        "capacite_autorisee": 1,
-                        "code_activite": "R4",
-                        "code_forme": "00",
-                        "code_modalite": "N4",
-                        "date_effet_asr": date(2013, 1, 1),
-                        "date_effet_cpom": date(2013, 12, 1),
-                        "date_fin_cpom": date(2018, 11, 30),
-                        "numero_cpom": "01-00-C00001",
-                        "libelle_activite": "Soins palliatifs",
-                        "libelle_forme": "Pas de forme",
-                        "libelle_modalite": "Equipe mobile",
-                        "numero_autorisation_arhgos": "01-00-RC00001",
-                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    },
-                    {
-                        "capacite_autorisee": 0,
-                        "code_activite": "S6",
-                        "code_forme": "00",
-                        "code_modalite": "B3",
-                        "date_effet_asr": None,
-                        "date_effet_cpom": date(2019, 4, 1),
-                        "date_fin_cpom": date(2023, 12, 31),
-                        "numero_cpom": "01-00-C00002",
-                        "libelle_activite": "Structure spécifique d'hospitalisation",
-                        "libelle_forme": "Pas de forme",
-                        "libelle_modalite": "Clinique ouverte",
-                        "numero_autorisation_arhgos": "01-00-RC00002",
-                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    },
-                ]
+                {
+                    "capacite_autorisee": [4, 1, 0],
+                    "code_activite": ["R7", "R4", "S6"],
+                    "code_forme": ["01", "00", "00"],
+                    "code_modalite": ["N8", "N4", "B3"],
+                    "date_effet_asr": [date(2013, 11, 30), date(2013, 1, 1), None],
+                    "date_effet_cpom": [date(2013, 12, 1), date(2013, 12, 1), date(2019, 4, 1)],
+                    "date_fin_cpom": [date(2018, 11, 30), date(2018, 11, 30), date(2023, 12, 31)],
+                    "numero_cpom": ["01-00-C00000", "01-00-C00001", "01-00-C00002"],
+                    "libelle_activite": ["Surveillance continue", "Soins palliatifs", "Structure spécifique d'hospitalisation"],
+                    "libelle_forme": ["Hospitalisation complète (24 heures consécutives ou plus)", "Pas de forme", "Pas de forme"],
+                    "libelle_modalite": ["USC polyvalente - adulte (non adossée à une unité de réanimation)", "Equipe mobile", "Clinique ouverte"],
+                    "numero_autorisation_arhgos": ["01-00-RC00000", "01-00-RC00001", "01-00-RC00002"],
+                    "numero_finess_etablissement_territorial": [
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                    ],
+                },
             )
 
             reconnaissances_contractuelles_enregistrées = pd.read_sql(
@@ -947,6 +786,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     fichier_de_données_finess_cs1400104_de_test,
                     fichier_de_données_finess_cs1600101_de_test,
                     fichier_de_données_finess_cs1600102_de_test,
+                    fichier_de_données_diamant_ann_sae,
                     base_de_données_test,
                     mocked_logger,
                 )
@@ -967,3 +807,150 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                 f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1600102.value}'"""
             )
             assert date_du_fichier_de_données.fetchone() == (date(2020, 1, 1), FichierSource.FINESS_CS1600102.value)
+
+    class TestAjouteLesCapacitésDesÉtablissementsSanitaires:
+        def test_sauvegarde_les_capacités_des_établissements_sanitaires(self) -> None:
+            # GIVEN
+            autre_numéro_finess_sanitaire = "2A0000154"
+            sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+            sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+            sauvegarde_un_établissement_en_base(autre_numéro_finess_sanitaire, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+
+            # WHEN
+            ajoute_les_autorisations_des_établissements_sanitaires(
+                fichier_de_données_finess_cs1400103_de_test,
+                fichier_de_données_finess_cs1400104_de_test,
+                fichier_de_données_finess_cs1600101_de_test,
+                fichier_de_données_finess_cs1600102_de_test,
+                fichier_de_données_diamant_ann_sae,
+                base_de_données_test,
+                mocked_logger,
+            )
+
+            # THEN
+            capacités_attendues = pd.DataFrame(
+                {
+                    "nombre_lits_chirurgie": [26, 12],
+                    "nombre_lits_médecine": [62, 20],
+                    "nombre_lits_obstétrique": [20, 8],
+                    "nombre_lits_ssr": [30, NaN],
+                    "nombre_places_chirurgie": [7, 6],
+                    "nombre_places_médecine": [7, 2],
+                    "nombre_places_obstétrique": [1, NaN],
+                    "nombre_places_ssr": [3, NaN],
+                    "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, autre_numéro_finess_sanitaire],
+                }
+            )
+
+            capacités_enregistrées = pd.read_sql(
+                TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
+                base_de_données_test,
+            )
+
+            pd.testing.assert_frame_equal(capacités_attendues, capacités_enregistrées)
+
+        def test_sauvegarde_la_date_de_mise_à_jour_des_capacités(self) -> None:
+            # GIVEN
+            autre_numéro_finess_sanitaire = "2A0000154"
+            sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+            sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+            sauvegarde_un_établissement_en_base(autre_numéro_finess_sanitaire, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+
+            # WHEN
+            ajoute_les_autorisations_des_établissements_sanitaires(
+                fichier_de_données_finess_cs1400103_de_test,
+                fichier_de_données_finess_cs1400104_de_test,
+                fichier_de_données_finess_cs1600101_de_test,
+                fichier_de_données_finess_cs1600102_de_test,
+                fichier_de_données_diamant_ann_sae,
+                base_de_données_test,
+                mocked_logger,
+            )
+
+            # THEN
+            date_du_fichier_ann_sae = base_de_données_test.execute(
+                f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_SAE.value}'"
+            )
+            assert date_du_fichier_ann_sae.fetchone() == (date(2022, 8, 3), FichierSource.DIAMANT_ANN_SAE.value)
+
+        def test_supprime_les_données_existantes_avant_de_sauvegarder_les_données_en_base(self) -> None:
+            # GIVEN
+            autre_numéro_finess_sanitaire = "2A0000154"
+            sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+            sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+            sauvegarde_un_établissement_en_base(autre_numéro_finess_sanitaire, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+            sauvegarde_les_capacités_sanitaires_en_base(pd.DataFrame([helios_ann_sae_builder()]), base_de_données_test)
+            sauvegarde_une_date_de_mise_à_jour_de_fichier_source("20200101", FichierSource.DIAMANT_ANN_SAE, base_de_données_test)
+
+            # WHEN
+            ajoute_les_autorisations_des_établissements_sanitaires(
+                fichier_de_données_finess_cs1400103_de_test,
+                fichier_de_données_finess_cs1400104_de_test,
+                fichier_de_données_finess_cs1600101_de_test,
+                fichier_de_données_finess_cs1600102_de_test,
+                fichier_de_données_diamant_ann_sae,
+                base_de_données_test,
+                mocked_logger,
+            )
+
+            # THEN
+            capacités_attendues = pd.DataFrame(
+                {
+                    "nombre_lits_chirurgie": [26, 12],
+                    "nombre_lits_médecine": [62, 20],
+                    "nombre_lits_obstétrique": [20, 8],
+                    "nombre_lits_ssr": [30, NaN],
+                    "nombre_places_chirurgie": [7, 6],
+                    "nombre_places_médecine": [7, 2],
+                    "nombre_places_obstétrique": [1, NaN],
+                    "nombre_places_ssr": [3, NaN],
+                    "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, autre_numéro_finess_sanitaire],
+                }
+            )
+
+            capacités_enregistrées = pd.read_sql(
+                TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
+                base_de_données_test,
+            )
+
+            pd.testing.assert_frame_equal(capacités_attendues, capacités_enregistrées)
+
+            date_du_fichier_de_données = base_de_données_test.execute(
+                f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_SAE.value}'"""
+            )
+            assert date_du_fichier_de_données.fetchone() == (date(2022, 8, 3), FichierSource.DIAMANT_ANN_SAE.value)
+
+        @patch.object(datacrawler, "sauvegarde")
+        def test_revient_à_la_situation_initiale_si_l_écriture_des_activités_échoue(self, mocked_sauvegarde: Mock) -> None:
+            # GIVEN
+            capacités_sanitaires_existantes = pd.DataFrame([helios_ann_sae_builder()])
+            sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+            sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+            sauvegarde_les_capacités_sanitaires_en_base(capacités_sanitaires_existantes, base_de_données_test)
+            sauvegarde_une_date_de_mise_à_jour_de_fichier_source("20200101", FichierSource.DIAMANT_ANN_SAE, base_de_données_test)
+
+            mocked_sauvegarde.side_effect = ValueError()
+
+            # WHEN
+            with pytest.raises(ValueError):
+                ajoute_les_autorisations_des_établissements_sanitaires(
+                    fichier_de_données_finess_cs1400103_de_test,
+                    fichier_de_données_finess_cs1400104_de_test,
+                    fichier_de_données_finess_cs1600101_de_test,
+                    fichier_de_données_finess_cs1600102_de_test,
+                    fichier_de_données_diamant_ann_sae,
+                    base_de_données_test,
+                    mocked_logger,
+                )
+
+            capacités_enregistrées = pd.read_sql(
+                TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
+                base_de_données_test,
+            )
+
+            pd.testing.assert_frame_equal(capacités_sanitaires_existantes, capacités_enregistrées)
+
+            date_du_fichier_de_données = base_de_données_test.execute(
+                f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_SAE.value}'"""
+            )
+            assert date_du_fichier_de_données.fetchone() == (date(2020, 1, 1), FichierSource.DIAMANT_ANN_SAE.value)
