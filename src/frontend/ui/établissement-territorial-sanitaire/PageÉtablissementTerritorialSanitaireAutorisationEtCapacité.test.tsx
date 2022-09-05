@@ -191,8 +191,8 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     const autresActivités = sélectionneLIndicateur(wording.AUTRES_ACTIVITÉS, indicateurs)
     const informationsDUneAutreActivité = within(autresActivités).getAllByRole('list', { name: 'autre-activité' })[0]
     expect(within(informationsDUneAutreActivité).getByText('Pas de forme [00]', { selector: 'li' })).toBeInTheDocument()
-    expect(within(informationsDUneAutreActivité).getByText('Date de mise en oeuvre : 03/06/2019', { selector: 'li' })).toBeInTheDocument()
-    expect(within(informationsDUneAutreActivité).getByText('Date de fin : N/A', { selector: 'li' })).toBeInTheDocument()
+    expect(within(informationsDUneAutreActivité).getByText(`${wording.DATE_DE_MISE_EN_OEUVRE} : 03/06/2019`, { selector: 'li' })).toBeInTheDocument()
+    expect(within(informationsDUneAutreActivité).getByText(`${wording.DATE_DE_FIN} : N/A`, { selector: 'li' })).toBeInTheDocument()
     expect(within(informationsDUneAutreActivité).getByText(`${wording.DATE_D_AUTORISATION} : 03/06/2019`, { selector: 'li' })).toBeInTheDocument()
   })
 })

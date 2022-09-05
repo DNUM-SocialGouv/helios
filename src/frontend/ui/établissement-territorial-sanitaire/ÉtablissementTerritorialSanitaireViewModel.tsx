@@ -621,10 +621,10 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
                                   {`${forme.libellé} [${forme.code}]`}
                                 </li>
                                 <li className="fr-tag">
-                                  {`Date de mise en oeuvre : ${autreActivitéSanitaire.dateDeMiseEnOeuvre ? StringFormater.formateLaDate(autreActivitéSanitaire.dateDeMiseEnOeuvre) : 'N/A'}`}
+                                  {`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${autreActivitéSanitaire.dateDeMiseEnOeuvre ? StringFormater.formateLaDate(autreActivitéSanitaire.dateDeMiseEnOeuvre) : 'N/A'}`}
                                 </li>
                                 <li className="fr-tag">
-                                  {`Date de fin : ${autreActivitéSanitaire.dateDeFin ? StringFormater.formateLaDate(autreActivitéSanitaire.dateDeFin) : 'N/A'}`}
+                                  {`${this.wording.DATE_DE_FIN} : ${autreActivitéSanitaire.dateDeFin ? StringFormater.formateLaDate(autreActivitéSanitaire.dateDeFin) : 'N/A'}`}
                                 </li>
                                 <li className="fr-tag">
                                   {`${this.wording.DATE_D_AUTORISATION} : ${autreActivitéSanitaire.dateDAutorisation ? StringFormater.formateLaDate(autreActivitéSanitaire.dateDAutorisation) : 'N/A'}`}
