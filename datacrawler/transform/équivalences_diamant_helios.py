@@ -73,6 +73,9 @@ colonnes_à_lire_ann_rpu: List[str] = list(équivalences_diamant_ann_rpu_helios.
     "Nombre de lits d'obstétrique": ColonneHelios(nom="nombre_lits_obstétrique", type=float),
     "Nombre de lits de médecine": ColonneHelios(nom="nombre_lits_médecine", type=float),
     "Nombre de lits de SSR": ColonneHelios(nom="nombre_lits_ssr", type=float),
+    "Nombre de lits USLD": ColonneHelios(nom="nombre_lits_usld", type=float),
+    "Nb de lits et places PSY PeC temps complet": ColonneHelios(nom="nombre_lits_ou_places_psy_complet", type=float),
+    "Nb de places PSY PeC temps partiel hors ambu": ColonneHelios(nom="nombre_places_psy_partiel", type=float),
 }
 
 colonnes_à_lire_ann_sae: List[str] = list(équivalences_diamant_ann_sae_helios.keys())

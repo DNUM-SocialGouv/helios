@@ -179,6 +179,9 @@ class TestLisLeFichierCsv:
                 "Nombre de lits d'obstétrique": [20.0, 21, 21, 21, 21, 8, 8, 8, 8, 8],
                 "Nombre de lits de médecine": [62.0, 60, 60, 68, 76, 20, 20, 20, 20, 20],
                 "Nombre de lits de SSR": [30.0, 30, 30, 30, 30, NaN, NaN, NaN, NaN, NaN],
+                "Nombre de lits USLD": [15.0, 15, 15, 15, 15, 10, 10, 10, 10, 10],
+                "Nb de lits et places PSY PeC temps complet": [NaN, NaN, NaN, NaN, NaN, 5, 5, 5, 5, 5],
+                "Nb de places PSY PeC temps partiel hors ambu": [NaN, NaN, NaN, NaN, NaN, 13, 13, 13, 13, 13],
             }
         )
         pd.testing.assert_frame_equal(

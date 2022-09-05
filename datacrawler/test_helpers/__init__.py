@@ -210,6 +210,9 @@ def csv_ann_sae_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, 
         "Nombre de lits d'obstétrique": 20.0,
         "Nombre de lits de médecine": 62.0,
         "Nombre de lits de SSR": 30.0,
+        "Nombre de lits USLD": 15.0,
+        "Nb de lits et places PSY PeC temps complet": 5.0,
+        "Nb de places PSY PeC temps partiel hors ambu": 13.0,
     }
     if champs_surchargés:
         return {**ann_sae, **champs_surchargés}
@@ -356,6 +359,9 @@ def helios_ann_sae_builder(champs_surchargés: Optional[Dict] = None) -> Dict[st
         "nombre_places_obstétrique": 1,
         "nombre_places_ssr": 3,
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+        "nombre_lits_usld": 15,
+        "nombre_lits_ou_places_psy_complet": 13,
+        "nombre_places_psy_partiel": 5,
     }
     if champs_surchargés:
         return {**ann_sae, **champs_surchargés}
