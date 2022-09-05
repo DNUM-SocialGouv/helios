@@ -28,13 +28,6 @@ export const ContenuAutorisations = ({ dateDeMiseÀJour, source }: ContenuAutori
           Dans le domaine sanitaire les autorisations sont données à une entité juridique puis mises en oeuvre dans un établissement.
           Pour indiquer les services offerts, FINESS identifie ceux-ci à l’aide d’un triplet composé des éléments suivants : Activité/Modalité/Forme.
           Les activités de soins sont les activités des établissements sanitaires autorisées par arrêté du Directeur Général de l’ARS.
-          Les autres activités de soins sont soumises à l’autorisation du Directeur Général (DG) de l’ARS selon des modalités et des durées différentes
-          particulières.
-          Une activité soumise à reconnaissance contractuelle est une activité non soumise à autorisation du DG ARS mais soumise
-          à reconnaissance contractuelle dans le cadre et la durée du CPOM (contrat pluriannuel d’objectif et de moyens).
-          Les équipements matériels lourds (EML) sont mis en œuvre au sein d’établissements.
-          Ce sont des équipements mobiliers destinés à pourvoir soit au diagnostic, soit à la thérapeutique, et dont les conditions d’installation et
-          de fonctionnement sont particulièrement onéreuses.
         </p>
       </section>
       <section aria-label={wording.FRÉQUENCE}>
