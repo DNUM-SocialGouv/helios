@@ -22,7 +22,7 @@ services:
     command: finess::1001
 
   postgres:
-    image: postgres:13.6-alpine
+    image: postgres:13.7-alpine
     container_name: helios_db
     ports:
       - target: 5432
@@ -35,10 +35,10 @@ services:
       - type: volume
         source: postgres_data
         target: /var/lib/postgresql/data
-    command: ["postgres", "-c", "log_statement=all"]
+    command: ["postgres", "-c", "log_statement=all", "-c", "max_connections=10"]
 
   postgres-test:
-    image: postgres:13.6-alpine
+    image: postgres:13.7-alpine
     container_name: helios_test_db
     ports:
       - target: 5432
@@ -51,7 +51,7 @@ services:
       - type: volume
         source: postgres_data_test
         target: /var/lib/postgresql/data
-    command: ["postgres", "-c", "log_statement=all"]
+    command: ["postgres", "-c", "log_statement=all", "-c", "max_connections=10"]
 
 volumes:
   postgres_data:
