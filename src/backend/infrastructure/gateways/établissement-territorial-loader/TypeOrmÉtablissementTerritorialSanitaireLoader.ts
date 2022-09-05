@@ -60,29 +60,16 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   }
 
   async chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialSanitaireAutorisationEtCapacité> {
-    const [
-      autorisationsDeLÉtablissementModel,
-      équipementsDeLÉtablissementModel,
-      autresActivitésDeLÉtablissementModel,
-      reconnaissancesContractuellesDeLÉtablissementModel,
-      capacitésDeLÉtablissementModel,
-      dateDeMiseÀJourFinessCs1400103Model,
-      dateDeMiseÀJourFinessCs1400104Model,
-      dateDeMiseÀJourFinessCs1600101Mode1,
-      dateDeMiseÀJourFinessCs1600102Mode1,
-      dateDeMiseÀJourDiamantAnnSaeModel,
-    ] = await Promise.all([
-      this.chargeLesAutorisationsModel(numéroFinessÉtablissementTerritorial),
-      this.chargeLesÉquipementsMatérielsLourdsModel(numéroFinessÉtablissementTerritorial),
-      this.chargeLesAutresActivitésModel(numéroFinessÉtablissementTerritorial),
-      this.chargeLesReconnaissancesContractuellesModel(numéroFinessÉtablissementTerritorial),
-      this.chargeLesCapacitésModel(numéroFinessÉtablissementTerritorial),
-      this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400103) as Promise<DateMiseÀJourFichierSourceModel>,
-      this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400104) as Promise<DateMiseÀJourFichierSourceModel>,
-      this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1600101) as Promise<DateMiseÀJourFichierSourceModel>,
-      this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1600102) as Promise<DateMiseÀJourFichierSourceModel>,
-      this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_SAE) as Promise<DateMiseÀJourFichierSourceModel>,
-    ])
+    const autorisationsDeLÉtablissementModel = await this.chargeLesAutorisationsModel(numéroFinessÉtablissementTerritorial)
+    const équipementsDeLÉtablissementModel = await this.chargeLesÉquipementsMatérielsLourdsModel(numéroFinessÉtablissementTerritorial)
+    const autresActivitésDeLÉtablissementModel = await this.chargeLesAutresActivitésModel(numéroFinessÉtablissementTerritorial)
+    const reconnaissancesContractuellesDeLÉtablissementModel = await this.chargeLesReconnaissancesContractuellesModel(numéroFinessÉtablissementTerritorial)
+    const capacitésDeLÉtablissementModel = await this.chargeLesCapacitésModel(numéroFinessÉtablissementTerritorial)
+    const dateDeMiseÀJourFinessCs1400103Model = await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400103) as DateMiseÀJourFichierSourceModel
+    const dateDeMiseÀJourFinessCs1400104Model = await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400104) as DateMiseÀJourFichierSourceModel
+    const dateDeMiseÀJourFinessCs1600101Mode1 = await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1600101) as DateMiseÀJourFichierSourceModel
+    const dateDeMiseÀJourFinessCs1600102Mode1 = await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1600102) as DateMiseÀJourFichierSourceModel
+    const dateDeMiseÀJourDiamantAnnSaeModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_SAE) as DateMiseÀJourFichierSourceModel
 
     return {
       autorisations: this.construisLesAutorisations(autorisationsDeLÉtablissementModel, dateDeMiseÀJourFinessCs1400103Model),
