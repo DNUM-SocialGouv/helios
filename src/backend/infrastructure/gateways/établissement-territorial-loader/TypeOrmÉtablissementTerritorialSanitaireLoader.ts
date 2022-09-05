@@ -623,9 +623,12 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
         nombreDeLitsEnMédecine: capacitésDeLÉtablissementModel.nombreDeLitsEnMédecine,
         nombreDeLitsEnObstétrique: capacitésDeLÉtablissementModel.nombreDeLitsEnObstétrique,
         nombreDeLitsEnSsr: capacitésDeLÉtablissementModel.nombreDeLitsEnSsr,
+        nombreDeLitsEnUsld: capacitésDeLÉtablissementModel.nombreDeLitsEnUsld,
+        nombreDeLitsOuPlacesEnPsyHospitalisationComplète: capacitésDeLÉtablissementModel.nombreDeLitsOuPlacesEnPsyHospitalisationComplète,
         nombreDePlacesEnChirurgie: capacitésDeLÉtablissementModel.nombreDePlacesEnChirurgie,
         nombreDePlacesEnMédecine: capacitésDeLÉtablissementModel.nombreDePlacesEnMédecine,
         nombreDePlacesEnObstétrique: capacitésDeLÉtablissementModel.nombreDePlacesEnObstétrique,
+        nombreDePlacesEnPsyHospitalisationPartielle: capacitésDeLÉtablissementModel.nombreDePlacesEnPsyHospitalisationPartielle,
         nombreDePlacesEnSsr: capacitésDeLÉtablissementModel.nombreDePlacesEnSsr,
       }
     } else {
