@@ -16,7 +16,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     // THEN
     const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
     const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
-    const autorisations = indicateurs[0]
+    const autorisations = sélectionneLIndicateur(wording.AUTORISATIONS, indicateurs)
     const titre = within(autorisations).getByText(wording.AUTORISATIONS, { selector: 'p' })
     expect(titre).toBeInTheDocument()
     const dateMiseAJour = within(autorisations).getAllByText('Mise à jour', { exact: false, selector: 'p' })
@@ -36,7 +36,8 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
 
     const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
     const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
-    const détails = within(indicateurs[0]).getByRole('button', { name: wording.DÉTAILS })
+    const autorisations = sélectionneLIndicateur(wording.AUTORISATIONS, indicateurs)
+    const détails = within(autorisations).getByRole('button', { name: wording.DÉTAILS })
 
     // WHEN
     fireEvent.click(détails)
@@ -67,7 +68,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     // THEN
     const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
     const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
-    const autorisations = indicateurs[0]
+    const autorisations = sélectionneLIndicateur(wording.AUTORISATIONS, indicateurs)
     expect(within(autorisations).getByRole('link', { name: 'Traitement de l\'insuffisance rénale chronique par épuration extrarénale [16]' })).toBeInTheDocument()
   })
 
@@ -78,7 +79,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     // THEN
     const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
     const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
-    const autorisations = indicateurs[0]
+    const autorisations = sélectionneLIndicateur(wording.AUTORISATIONS, indicateurs)
     expect(within(autorisations).getByRole('link', { name: 'Hémodialyse en unité médicalisée [42]' })).toBeInTheDocument()
   })
 
@@ -89,7 +90,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     // THEN
     const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
     const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
-    const autorisations = indicateurs[0]
+    const autorisations = sélectionneLIndicateur(wording.AUTORISATIONS, indicateurs)
     const informationsDUneAutorisation = within(autorisations).getAllByRole('list', { name: 'autorisations' })[0]
     expect(within(informationsDUneAutorisation).getByText('Pas de forme [00]', { selector: 'li' })).toBeInTheDocument()
     expect(within(informationsDUneAutorisation).getByText(`${wording.DATE_D_AUTORISATION} : 11/10/2005`, { selector: 'li' })).toBeInTheDocument()
@@ -98,14 +99,14 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     expect(within(informationsDUneAutorisation).getByText(`${wording.NUMÉRO_ARHGOS} : 01-00-000`, { selector: 'li' })).toBeInTheDocument()
   })
 
-  it.only('affiche le titre de la partie autres activités, sa source et l’accès aux détails', () => {
+  it('affiche le titre de la partie autres activités, sa source et l’accès aux détails', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
 
     // THEN
     const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
     const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
-    const autresActivités = indicateurs[9]
+    const autresActivités = sélectionneLIndicateur(wording.AUTRES_ACTIVITÉS, indicateurs)
     const titre = within(autresActivités).getByText(wording.AUTRES_ACTIVITÉS, { selector: 'p' })
     expect(titre).toBeInTheDocument()
     const dateMiseAJour = within(autresActivités).getAllByText('Mise à jour', { exact: false, selector: 'p' })
@@ -113,19 +114,20 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     const abréviationSourceFournisseur = within(autresActivités).getAllByText('FINESS', { selector: 'abbr' })
     expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', 'Fichier National des Établissements Sanitaires et Sociaux')
     const abréviationSourceOrigine = within(autresActivités).getAllByText('ARHGOS', { selector: 'abbr' })
-    expect(abréviationSourceOrigine[0]).toHaveAttribute('title', 'Agence Régionale Hospitalière Gestion des Objectifs Sanitaire ')
+    expect(abréviationSourceOrigine[0]).toHaveAttribute('title', 'Agence Régionale Hospitalière Gestion des Objectifs Sanitaires')
     const détails = within(autresActivités).getByRole('button', { name: wording.DÉTAILS })
     expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-autres-activités')
     expect(détails).toHaveAttribute('data-fr-opened', 'false')
   })
 
-  it('affiche le contenu de l’info bulle des autres activités après avoir cliqué sur le bouton "détails"', () => {
+  it('a une infobulle avec le contenu relatif aux autres activités', () => {
     // GIVEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
 
     const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
     const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
-    const détails = within(indicateurs[0]).getByRole('button', { name: wording.DÉTAILS })
+    const autresActivités = sélectionneLIndicateur(wording.AUTRES_ACTIVITÉS, indicateurs)
+    const détails = within(autresActivités).getByRole('button', { name: wording.DÉTAILS })
 
     // WHEN
     fireEvent.click(détails)
@@ -138,7 +140,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     const abréviationSourceFournisseur = within(infoBulle).getAllByText('FINESS', { selector: 'abbr' })
     expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', 'Fichier National des Établissements Sanitaires et Sociaux')
     const abréviationSourceOrigine = within(infoBulle).getAllByText('ARHGOS', { selector: 'abbr' })
-    expect(abréviationSourceOrigine[0]).toHaveAttribute('title', 'Agence Régionale Hospitalière Gestion des Objectifs Sanitaire ')
+    expect(abréviationSourceOrigine[0]).toHaveAttribute('title', 'Agence Régionale Hospitalière Gestion des Objectifs Sanitaires')
     const élémentsDeCompréhension = within(infoBulle).getByRole('region', { name: wording.ÉLÉMENTS_DE_COMPRÉHENSION })
     expect(élémentsDeCompréhension).toBeInTheDocument()
     const fréquence = within(infoBulle).getByRole('region', { name: wording.FRÉQUENCE })
@@ -149,28 +151,28 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     expect(informationsComplémentaires).toBeInTheDocument()
   })
 
-  it('affiche un lien pour chaque autre activité de l’établissement', () => {
+  it('affiche un lien pour chaque autre autre activité de l’établissement', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
 
     // THEN
     const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
     const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
-    const autresActivités = indicateurs[0]
+    const autresActivités = sélectionneLIndicateur(wording.AUTRES_ACTIVITÉS, indicateurs)
     const activité1 = within(autresActivités).getByRole('link', { name: 'Installation de chirurgie esthétique [A0]' })
     expect(activité1).toHaveAttribute('aria-expanded', 'false')
     const activité2 = within(autresActivités).getByRole('link', { name: 'Dépôt de sang [A1]' })
     expect(activité2).toHaveAttribute('aria-expanded', 'false')
   })
 
-  it('affiche un lien pour chaque modalité d’une activité', () => {
+  it('affiche un lien pour chaque modalité d’une autre activité', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
 
     // THEN
     const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
     const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
-    const autresActivités = indicateurs[0]
+    const autresActivités = sélectionneLIndicateur(wording.AUTRES_ACTIVITÉS, indicateurs)
     const modalité1 = within(autresActivités).getByRole('link', { name: 'Dépôt relais [M2]' })
     expect(modalité1).toHaveAttribute('aria-expanded', 'false')
     const modalité2 = within(autresActivités).getByRole('link', { name: "Dépôt d'urgence [M0]" })
@@ -186,11 +188,21 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     // THEN
     const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
     const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
-    const autorisations = indicateurs[0]
-    const informationsDUneAutreActivité = within(autorisations).getAllByRole('list', { name: 'autre-activité' })[0]
+    const autresActivités = sélectionneLIndicateur(wording.AUTRES_ACTIVITÉS, indicateurs)
+    const informationsDUneAutreActivité = within(autresActivités).getAllByRole('list', { name: 'autre-activité' })[0]
     expect(within(informationsDUneAutreActivité).getByText('Pas de forme [00]', { selector: 'li' })).toBeInTheDocument()
     expect(within(informationsDUneAutreActivité).getByText('Date de mise en oeuvre : 03/06/2019', { selector: 'li' })).toBeInTheDocument()
     expect(within(informationsDUneAutreActivité).getByText('Date de fin : N/A', { selector: 'li' })).toBeInTheDocument()
     expect(within(informationsDUneAutreActivité).getByText(`${wording.DATE_D_AUTORISATION} : 03/06/2019`, { selector: 'li' })).toBeInTheDocument()
   })
 })
+
+function sélectionneLIndicateur(indicateur: string, éléments: HTMLElement[]): HTMLElement {
+  switch (indicateur) {
+    case wording.AUTRES_ACTIVITÉS:
+      return éléments[9]
+    case wording.AUTORISATIONS:
+    default:
+      return éléments[0]
+  }
+}
