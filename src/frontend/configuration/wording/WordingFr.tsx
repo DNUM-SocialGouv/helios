@@ -141,8 +141,19 @@ export class WordingFr implements Wording {
   readonly NUMÉRO_ARHGOS: string = 'Numéro ARHGOS'
   readonly ACTIVITÉ: string = 'Activité'
 
-  // Bloc Autorisation sanitaire
+  // Bloc Autorisation Sanitaire
   readonly AUTRES_ACTIVITÉS: string = 'Autres activités'
+  readonly CAPACITÉ_PAR_ACTIVITÉS: string = 'Capacité par activités'
+  readonly ACTIVITÉS: string = 'Activités'
+  readonly CHIRURGIE: string = 'Chirurgie   '
+  readonly MÉDECINE: string = 'Médecine   '
+  readonly OBSTÉTRIQUE: string = 'Obstétrique   '
+  readonly SSR: string = 'SSR   '
+  readonly USLD: string = 'USLD   '
+  readonly EN_PSY_HOSPITALISATION_COMPLÈTE: string = 'En psy HC   '
+  readonly EN_PSY_HOSPITALISATION_PARTIELLE: string = 'En psy HP   '
+  readonly LITS: string = 'Lits'
+  readonly PLACES: string = 'Places'
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string = 'Établissement territorial'
@@ -156,6 +167,7 @@ export class WordingFr implements Wording {
   readonly TDB_PERF: ReactElement = (<abbr title="Tableau de Bord de la Performance dans le secteur médico-social">TdB Perf</abbr>)
   readonly PMSI: ReactElement = (<abbr title="Programme de Médicalisation des Systèmes d’Information">PMSI</abbr>)
   readonly ARHGOS: ReactElement = (<abbr title="Agence Régionale Hospitalière Gestion des Objectifs Sanitaires">ARHGOS</abbr>)
+  readonly SAE: ReactElement = (<abbr title="Statistique Annuelle des Établissements de santé">SAE</abbr>)
 
   // Footer
   readonly PRESENTATION: string = 'Texte sur 3 lignes à demander à Daisy'
