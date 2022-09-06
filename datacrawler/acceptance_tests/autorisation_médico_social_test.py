@@ -39,11 +39,11 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
     def test_sauvegarde_les_autorisations_installées_des_établissements_médico_sociaux(self) -> None:
         # GIVEN
         numéro_finess_avec_valeurs_manquantes = "010786259"
-        numéro_finess_inconnu_de_la_base = "140004698"
+        autre_numéro_finess = "140004698"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         sauvegarde_un_établissement_en_base(numéro_finess_avec_valeurs_manquantes, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
-        sauvegarde_un_établissement_en_base(numéro_finess_inconnu_de_la_base, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+        sauvegarde_un_établissement_en_base(autre_numéro_finess, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         chemin_du_fichier_finess_cs1400105 = self.fichier_de_données
 
         # WHEN
@@ -69,38 +69,8 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                 },
                 {
                     "activite": "11",
-                    "capacite_autorisee_totale": 15,
-                    "capacite_installee_totale": 15,
-                    "clientele": "810",
-                    "date_autorisation": date(2016, 10, 7),
-                    "date_derniere_installation": date(2018, 4, 16),
-                    "date_mise_a_jour_autorisation": date(2018, 12, 21),
-                    "discipline_equipement": "957",
-                    "est_installee": False,
-                    "libelle_activite": "Hébergement Complet Internat",
-                    "libelle_clientele": "Adultes en Difficulté d'Insertion Sociale (SAI)",
-                    "libelle_discipline_equipement": "Hébergement d'insertion Adultes,Familles Difficulté",
-                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL,
-                },
-                {
-                    "activite": "11",
                     "capacite_autorisee_totale": 75,
                     "capacite_installee_totale": 15,
-                    "clientele": "810",
-                    "date_autorisation": date(2016, 10, 7),
-                    "date_derniere_installation": date(2018, 4, 16),
-                    "date_mise_a_jour_autorisation": date(2019, 12, 28),
-                    "discipline_equipement": "957",
-                    "est_installee": True,
-                    "libelle_activite": "Hébergement Complet Internat",
-                    "libelle_clientele": "Adultes en Difficulté d'Insertion Sociale (SAI)",
-                    "libelle_discipline_equipement": "Hébergement d'insertion Adultes,Familles Difficulté",
-                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL,
-                },
-                {
-                    "activite": "11",
-                    "capacite_autorisee_totale": 75,
-                    "capacite_installee_totale": 75,
                     "clientele": "810",
                     "date_autorisation": date(2016, 10, 7),
                     "date_derniere_installation": date(2018, 4, 16),
@@ -125,7 +95,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "libelle_activite": "Hébergement Complet Internat",
                     "libelle_clientele": "Déficience Intellectuelle (sans autre indication)",
                     "libelle_discipline_equipement": "Éducation Générale et Soins Spécialisés Enfants Handicapés",
-                    "numero_finess_etablissement_territorial": "140004698",
+                    "numero_finess_etablissement_territorial": autre_numéro_finess,
                 },
                 {
                     "activite": "13",
@@ -140,7 +110,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "libelle_activite": "Semi-Internat",
                     "libelle_clientele": "Déficience Intellectuelle (sans autre indication)",
                     "libelle_discipline_equipement": "Éducation Générale et Soins Spécialisés Enfants Handicapés",
-                    "numero_finess_etablissement_territorial": "140004698",
+                    "numero_finess_etablissement_territorial": autre_numéro_finess,
                 },
                 {
                     "activite": "13",
@@ -155,7 +125,22 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "libelle_activite": "Semi-Internat",
                     "libelle_clientele": "Polyhandicap",
                     "libelle_discipline_equipement": "Éducation Générale et Soins Spécialisés Enfants Handicapés",
-                    "numero_finess_etablissement_territorial": "140004698",
+                    "numero_finess_etablissement_territorial": autre_numéro_finess,
+                },
+                {
+                    "activite": "11",
+                    "capacite_autorisee_totale": NaN,
+                    "capacite_installee_totale": 0,
+                    "clientele": "701",
+                    "date_autorisation": None,
+                    "date_derniere_installation": date(2011, 12, 31),
+                    "date_mise_a_jour_autorisation": None,
+                    "discipline_equipement": "926",
+                    "est_installee": False,
+                    "libelle_activite": "Hébergement Complet Internat",
+                    "libelle_clientele": "Personnes Agées Autonomes",
+                    "libelle_discipline_equipement": "Hébergement résidence autonomie personnes âgées couple F2",
+                    "numero_finess_etablissement_territorial": numéro_finess_avec_valeurs_manquantes,
                 },
             ]
         )

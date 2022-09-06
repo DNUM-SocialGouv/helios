@@ -24,7 +24,6 @@ index_des_autorisations_médico_sociaux: List[str] = [
     "discipline_equipement",
     "activite",
     "clientele",
-    "est_installee",
 ]
 
 équivalences_finess_cs1400103_helios = {
