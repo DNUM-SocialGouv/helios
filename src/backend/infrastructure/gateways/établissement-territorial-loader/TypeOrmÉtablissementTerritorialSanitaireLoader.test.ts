@@ -782,9 +782,12 @@ describe('Établissement territorial sanitaire loader', () => {
         nombreDeLitsEnMédecine: 35,
         nombreDeLitsEnObstétrique: 12,
         nombreDeLitsEnSsr: 3,
+        nombreDeLitsEnUsld: 15,
+        nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 5,
         nombreDePlacesEnChirurgie: 25,
         nombreDePlacesEnMédecine: 40,
         nombreDePlacesEnObstétrique: 12,
+        nombreDePlacesEnPsyHospitalisationPartielle: 13,
         nombreDePlacesEnSsr: 3,
       })
     })

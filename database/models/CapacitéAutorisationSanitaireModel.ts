@@ -20,6 +20,9 @@ export class CapacitéAutorisationSanitaireModel {
   @Column({ name: 'nombre_lits_ssr', nullable: true, type: 'integer' })
   public nombreDeLitsEnSsr!: number | null
 
+  @Column({ name: 'nombre_lits_usld', nullable: true, type: 'integer' })
+  public nombreDeLitsEnUsld!: number | null
+
   @Column({ name: 'nombre_places_chirurgie', nullable: true, type: 'integer' })
   public nombreDePlacesEnChirurgie!: number | null
 
@@ -31,6 +34,12 @@ export class CapacitéAutorisationSanitaireModel {
 
   @Column({ name: 'nombre_places_ssr', nullable: true, type: 'integer' })
   public nombreDePlacesEnSsr!: number | null
+
+  @Column({ name: 'nombre_lits_ou_places_psy_complet', nullable: true, type: 'integer' })
+  public nombreDeLitsOuPlacesEnPsyHospitalisationComplète!: number | null
+
+  @Column({ name: 'nombre_places_psy_partiel', nullable: true, type: 'integer' })
+  public nombreDePlacesEnPsyHospitalisationPartielle!: number | null
 
   @PrimaryColumn({ length: 9, name: 'numero_finess_etablissement_territorial' })
   public numéroFinessÉtablissementTerritorial!: string

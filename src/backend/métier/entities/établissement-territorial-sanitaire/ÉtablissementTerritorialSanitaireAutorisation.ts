@@ -88,15 +88,18 @@ export type ÉquipementMatérielLourd = Readonly<{
 }>
 
 export type CapacitéSanitaire = Readonly<{
+  dateMiseÀJourSource: string
   nombreDeLitsEnChirurgie: number | null
   nombreDeLitsEnMédecine: number | null
   nombreDeLitsEnObstétrique: number | null
   nombreDeLitsEnSsr: number | null
+  nombreDeLitsOuPlacesEnPsyHospitalisationComplète: number | null
+  nombreDeLitsEnUsld: number | null
   nombreDePlacesEnChirurgie: number | null
   nombreDePlacesEnMédecine: number | null
   nombreDePlacesEnObstétrique: number | null
   nombreDePlacesEnSsr: number | null
-  dateMiseÀJourSource: string
+  nombreDePlacesEnPsyHospitalisationPartielle: number | null
 }> | null
 
 export type ÉtablissementTerritorialSanitaireAutorisationEtCapacité = Readonly<{

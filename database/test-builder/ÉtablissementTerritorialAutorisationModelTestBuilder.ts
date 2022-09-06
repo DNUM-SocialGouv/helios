@@ -107,6 +107,10 @@ export class ÉtablissementTerritorialAutorisationModelTestBuilder {
     capacitéAutorisationSanitaireModel.nombreDePlacesEnMédecine = champsSurchargés?.nombreDePlacesEnMédecine || 40
     capacitéAutorisationSanitaireModel.nombreDePlacesEnObstétrique = champsSurchargés?.nombreDePlacesEnObstétrique || 12
     capacitéAutorisationSanitaireModel.nombreDePlacesEnSsr = champsSurchargés?.nombreDePlacesEnSsr || 3
+    capacitéAutorisationSanitaireModel.nombreDeLitsEnUsld = champsSurchargés?.nombreDeLitsEnUsld || 15
+    capacitéAutorisationSanitaireModel.nombreDeLitsOuPlacesEnPsyHospitalisationComplète =
+      champsSurchargés?.nombreDeLitsOuPlacesEnPsyHospitalisationComplète || 5
+    capacitéAutorisationSanitaireModel.nombreDePlacesEnPsyHospitalisationPartielle = champsSurchargés?.nombreDePlacesEnPsyHospitalisationPartielle || 13
     capacitéAutorisationSanitaireModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '670799667'
     return capacitéAutorisationSanitaireModel
   }

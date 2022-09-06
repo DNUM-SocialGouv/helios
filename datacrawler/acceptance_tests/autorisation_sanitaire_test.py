@@ -839,6 +839,9 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "nombre_places_obstétrique": [1, NaN],
                     "nombre_places_ssr": [3, NaN],
                     "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, autre_numéro_finess_sanitaire],
+                    "nombre_lits_usld": [15, 10],
+                    "nombre_lits_ou_places_psy_complet": [NaN, 5],
+                    "nombre_places_psy_partiel": [NaN, 13],
                 }
             )
 
@@ -905,6 +908,9 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "nombre_places_obstétrique": [1, NaN],
                     "nombre_places_ssr": [3, NaN],
                     "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, autre_numéro_finess_sanitaire],
+                    "nombre_lits_usld": [15, 10],
+                    "nombre_lits_ou_places_psy_complet": [NaN, 5],
+                    "nombre_places_psy_partiel": [NaN, 13],
                 }
             )
 

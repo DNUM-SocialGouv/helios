@@ -31,6 +31,9 @@ class TestTransformeLesDonnéesDesCapacitésSanitaires:
                 "nombre_lits_obstétrique": [20.0],
                 "nombre_lits_médecine": [62.0],
                 "nombre_lits_ssr": [30.0],
+                "nombre_lits_usld": [15.0],
+                "nombre_lits_ou_places_psy_complet": [5.0],
+                "nombre_places_psy_partiel": [13.0],
             }
         ).set_index(index_des_capacités_sanitaires)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
@@ -60,6 +63,9 @@ class TestTransformeLesDonnéesDesCapacitésSanitaires:
                 "Nombre de lits d'obstétrique": [20.0, 21, 21, 21, 21, 8, 8, 8, 8, 8],
                 "Nombre de lits de médecine": [62.0, 60, 60, 68, 76, 20, 20, 20, 20, 20],
                 "Nombre de lits de SSR": [30, 30, 30, 30, 30, NaN, NaN, NaN, NaN, NaN],
+                "nombre_lits_usld": [15, 15, 15, 15, 15, NaN, NaN, NaN, NaN, NaN],
+                "nombre_lits_ou_places_psy_complet": [NaN, NaN, NaN, NaN, NaN, 5, 5, 5, 5, 5],
+                "nombre_places_psy_partiel": [NaN, NaN, NaN, NaN, NaN, 13, 13, 13, 13, 13],
             }
         )
         numéros_finess_connus = pd.DataFrame(
@@ -86,6 +92,9 @@ class TestTransformeLesDonnéesDesCapacitésSanitaires:
                 "nombre_lits_obstétrique": [20.0, 8],
                 "nombre_lits_médecine": [62.0, 20],
                 "nombre_lits_ssr": [30, NaN],
+                "nombre_lits_usld": [15, NaN],
+                "nombre_lits_ou_places_psy_complet": [NaN, 5],
+                "nombre_places_psy_partiel": [NaN, 13],
             }
         ).set_index(index_des_capacités_sanitaires)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
