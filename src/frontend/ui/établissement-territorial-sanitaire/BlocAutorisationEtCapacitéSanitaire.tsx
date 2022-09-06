@@ -50,7 +50,7 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             source={Sources(wording.FINESS, wording.ARHGOS)}
           />}
           dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDesAutresActivités}
-          identifiant="autres-activités"
+          identifiant="autres-activités-sanitaire"
           nomDeLIndicateur={wording.AUTRES_ACTIVITÉS}
           source={Sources(wording.FINESS, wording.ARHGOS)}
         >
