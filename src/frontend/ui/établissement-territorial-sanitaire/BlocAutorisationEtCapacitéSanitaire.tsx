@@ -4,6 +4,7 @@ import { IndicateurAutorisationEtCapacité } from '../commun/IndicateurAutorisat
 import { Sources } from '../commun/Sources/Sources'
 import styles from './BlocAutorisationEtCapacitéSanitaire.module.css'
 import { ContenuAutorisations } from './InfoBulle/ContenuAutorisations'
+import { ContenuAutresActivités } from './InfoBulle/ContenuAutresActivités'
 import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTerritorialSanitaireViewModel'
 
 type BlocAutorisationEtCapacitéSanitaireProps = Readonly<{
@@ -42,6 +43,18 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
           source={Sources(wording.FINESS, wording.ARHGOS)}
         >
           {établissementTerritorialSanitaireViewModel.autorisations}
+        </IndicateurAutorisationEtCapacité>
+        <IndicateurAutorisationEtCapacité
+          contenuInfoBulle={<ContenuAutresActivités
+            dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDesAutresActivités}
+            source={Sources(wording.FINESS, wording.ARHGOS)}
+          />}
+          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDesAutresActivités}
+          identifiant="autres-activités-sanitaire"
+          nomDeLIndicateur={wording.AUTRES_ACTIVITÉS}
+          source={Sources(wording.FINESS, wording.ARHGOS)}
+        >
+          {établissementTerritorialSanitaireViewModel.autresActivités}
         </IndicateurAutorisationEtCapacité>
       </ul>
     </Bloc>

@@ -120,6 +120,9 @@ export interface Wording {
   readonly NUMÉRO_ARHGOS: string
   readonly ACTIVITÉ: string
 
+  // Bloc Autorisation sanitaire
+  readonly AUTRES_ACTIVITÉS: string
+
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string
   readonly TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS: string

@@ -571,4 +571,81 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
   public get dateDeMiseÀJourDesAutorisations(): string {
     return StringFormater.formateLaDate(this.établissementTerritorial.autorisationsEtCapacités.autorisations.dateMiseÀJourSource)
   }
+
+  public get autresActivités(): JSX.Element {
+    const autresActivitésDeLÉtablissement = this.établissementTerritorial.autorisationsEtCapacités.autresActivités
+
+    return (
+      <ul
+        aria-label="activités"
+        className={`${stylesBlocAutorisationsEtCapacités['liste-activités']}`}
+      >
+        {autresActivitésDeLÉtablissement.activités.map((activité) => (
+          <li
+            className=""
+            key={`activité-${activité.code}`}
+          >
+            <ActionneurDAccordéon
+              for={`accordion-${activité.code}`}
+              titre={`${activité.libellé} [${activité.code}]`}
+            />
+            <ul
+              className={` fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-modalités']}`}
+              id={`accordion-${activité.code}`}
+            >
+              {
+                activité.modalités.map((modalité) => (
+                  <li
+                    className=""
+                    key={`modalité-${modalité.code}`}
+                  >
+                    <ActionneurDAccordéon
+                      for={`accordion-${activité.code}-${modalité.code}`}
+                      texteGras={false}
+                      titre={`${modalité.libellé} [${modalité.code}]`}
+                    />
+                    <ul
+                      className={`fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-formes']}`}
+                      id={`accordion-${activité.code}-${modalité.code}`}
+                    >
+                      {
+                        modalité.formes.map((forme) => {
+                          const autreActivitéSanitaire = forme.autreActivitéSanitaire
+                          return (
+                            <li key={`clientèle-${forme.code}`}>
+                              <ul
+                                aria-label="autre-activité"
+                                className="fr-tags-group"
+                              >
+                                <li className="fr-tag fr-fi-arrow-right-line fr-tag--icon-left">
+                                  {`${forme.libellé} [${forme.code}]`}
+                                </li>
+                                <li className="fr-tag">
+                                  {`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${autreActivitéSanitaire.dateDeMiseEnOeuvre ? StringFormater.formateLaDate(autreActivitéSanitaire.dateDeMiseEnOeuvre) : 'N/A'}`}
+                                </li>
+                                <li className="fr-tag">
+                                  {`${this.wording.DATE_DE_FIN} : ${autreActivitéSanitaire.dateDeFin ? StringFormater.formateLaDate(autreActivitéSanitaire.dateDeFin) : 'N/A'}`}
+                                </li>
+                                <li className="fr-tag">
+                                  {`${this.wording.DATE_D_AUTORISATION} : ${autreActivitéSanitaire.dateDAutorisation ? StringFormater.formateLaDate(autreActivitéSanitaire.dateDAutorisation) : 'N/A'}`}
+                                </li>
+                              </ul>
+                            </li>
+                          )
+                        })
+                      }
+                    </ul>
+                  </li>
+                ))
+              }
+            </ul>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  public get dateDeMiseÀJourDesAutresActivités(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.autorisationsEtCapacités.autresActivités.dateMiseÀJourSource)
+  }
 }
