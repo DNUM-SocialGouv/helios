@@ -700,4 +700,8 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
   public get dateDeMiseÀJourDesAutresActivités(): string {
     return StringFormater.formateLaDate(this.établissementTerritorial.autorisationsEtCapacités.autresActivités.dateMiseÀJourSource)
   }
+
+  public get lesAutresActivitésSontEllesRenseignées(): boolean {
+    return this.établissementTerritorial.autorisationsEtCapacités.autresActivités.activités.length !== 0
+  }
 }
