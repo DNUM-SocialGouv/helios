@@ -12,6 +12,9 @@ export default function Router(
   { entitéJuridique: EntitéJuridique, établissementsTerritoriauxRattachés: ÉtablissementTerritorialRattaché[] }
 ) {
   const { wording } = useDependencies()
+
+  if (!établissementsTerritoriauxRattachés || !entitéJuridique) return null
+
   const entitéJuridiqueViewModel = new EntitéJuridiqueViewModel(entitéJuridique, wording)
   const établissementsTerritoriauxRattachésViewModels =
     établissementsTerritoriauxRattachés.map((établissementTerritorial) => new ÉtablissementTerritorialRattachéViewModel(établissementTerritorial, wording))
@@ -34,7 +37,7 @@ export async function getStaticProps({ params }: { params: { numéroFiness: stri
     const entitéJuridiqueEndpoint = await récupèreLEntitéJuridiqueEndpoint(dependencies, params.numéroFiness)
 
     if (entitéJuridiqueEndpoint === undefined) {
-      return { notFound: true }
+      return { notFound: true, revalidate: 1 }
     }
 
     return {
@@ -46,6 +49,6 @@ export async function getStaticProps({ params }: { params: { numéroFiness: stri
     }
   } catch (error) {
     dependencies.logger.error(error)
-    return { notFound: true }
+    return { notFound: true, revalidate: 1 }
   }
 }

@@ -8,6 +8,9 @@ import { ÉtablissementTerritorialMédicoSocialViewModel } from '../../frontend/
 export default function Router({ établissementTerritorial }:
   { établissementTerritorial: ÉtablissementTerritorialMédicoSocial }) {
   const { paths, wording } = useDependencies()
+
+  if (!établissementTerritorial) return null
+
   const établissementTerritorialViewModel = new ÉtablissementTerritorialMédicoSocialViewModel(établissementTerritorial, wording, paths)
   return <PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialViewModel} />
 }
@@ -27,6 +30,6 @@ export async function getStaticProps({ params }: { params: { numéroFiness: stri
     return { props: { établissementTerritorial }, revalidate: Number(environmentVariables.TIME_OF_CACHE_PAGE) }
   } catch (error) {
     dependencies.logger.error(error)
-    return { notFound: true }
+    return { notFound: true, revalidate: 1 }
   }
 }
