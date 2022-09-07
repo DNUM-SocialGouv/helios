@@ -271,6 +271,28 @@ def helios_activité_sanitaire_builder(champs_surchargés: Optional[Dict] = None
     return activité
 
 
+def helios_autorisation_médico_social_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    autorisation = {
+        "activite": "21",
+        "capacite_autorisee_totale": 3,
+        "capacite_installee_totale": 3,
+        "clientele": "436",
+        "date_autorisation": "2006-03-29",
+        "date_derniere_installation": "2009-01-01",
+        "date_mise_a_jour_autorisation": "2012-05-03",
+        "discipline_equipement": "924",
+        "est_installee": True,
+        "libelle_activite": "Accueil de Jour",
+        "libelle_clientele": "Personnes Alzheimer ou maladies apparentées",
+        "libelle_discipline_equipement": "Accueil pour Personnes Âgées",
+        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
+    }
+
+    if champs_surchargés:
+        return {**autorisation, **champs_surchargés}
+    return autorisation
+
+
 def helios_autorisation_sanitaire_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
     autorisation = {
         "code_activite": "50",
@@ -445,6 +467,45 @@ def xml_contenu_finess_cs1400104_builder(champs_surchargés: Optional[Dict] = No
     if champs_surchargés:
         return {**finess_cs1400104, **champs_surchargés}
     return finess_cs1400104
+
+
+def xml_contenu_finess_cs1400105_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    finess_cs1400105 = {
+        "nofinesset": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "de": "924",
+        "libde": "Accueil pour Personnes Âgées",
+        "libcourtde": "Acc. Personnes Âgées",
+        "ta": "21",
+        "libta": "Accueil de Jour",
+        "libcourtta": "Accueil de Jour",
+        "client": "436",
+        "libclient": "Personnes Alzheimer ou maladies apparentées",
+        "libcourtclient": "Alzheimer, mal appar",
+        "sourceinfo": "S",
+        "libsourceinfo": "Inspection",
+        "capinstot": 3,
+        "capinstm": NaN,
+        "capinstf": NaN,
+        "capinsthab": NaN,
+        "ageminiinst": NaN,
+        "agemaxiinst": NaN,
+        "indsupinst": "N",
+        "datederinst": "2009-01-01",
+        "datepremautor": "2006-03-29",
+        "capautot": 3,
+        "capautm": NaN,
+        "capautf": NaN,
+        "capauthab": 3,
+        "ageminiaut": NaN,
+        "agemaxiaut": NaN,
+        "indsupaut": "N",
+        "dateautor": "2006-03-29",
+        "datemajaut": "2012-05-03",
+        "datemajinst": "2009-06-29",
+    }
+    if champs_surchargés:
+        return {**finess_cs1400105, **champs_surchargés}
+    return finess_cs1400105
 
 
 def xml_contenu_finess_cs1600101_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
