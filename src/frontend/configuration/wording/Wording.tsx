@@ -107,7 +107,7 @@ export interface Wording {
   readonly HOSPITALISATION_PARTIELLE_PSY: string
   readonly HOSPITALISATION_COMPLÈTE_PSY: string
 
-  // Bloc Autorisation Médico-social
+  // Bloc Autorisation
   readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string
   readonly AUTORISATIONS: string
   readonly DATE_D_AUTORISATION: string
@@ -119,11 +119,17 @@ export interface Wording {
   readonly CAPACITÉ_INSTALLÉE: string
   readonly CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS: string
   readonly NOMBRE_TOTAL_DE_PLACE_PAR_ACTIVITÉ: string
-  readonly NUMÉRO_ARHGOS: string
   readonly ACTIVITÉ: string
 
   // Bloc Autorisation Sanitaire
   readonly AUTRES_ACTIVITÉS: string
+  readonly RECONNAISSANCES_CONTRACTUELLES: string
+  readonly ÉQUIPEMENTS_MATÉRIELS_LOURDS: string
+  readonly DATE_D_EFFET_ASR: string
+  readonly DATE_D_EFFET_CPOM: string
+  readonly DATE_DE_FIN_CPOM: string
+  readonly NUMÉRO_CPOM: string
+  readonly NUMÉRO_ARHGOS: string
   readonly CAPACITÉ_PAR_ACTIVITÉS: string
   readonly ACTIVITÉS: string
   readonly CHIRURGIE: string

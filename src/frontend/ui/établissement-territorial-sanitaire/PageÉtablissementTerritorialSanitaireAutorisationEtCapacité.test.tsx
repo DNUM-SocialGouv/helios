@@ -207,6 +207,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
   it.each([
     [wording.AUTORISATIONS, 'autorisations-sanitaire'],
     [wording.AUTRES_ACTIVITÉS, 'autres-activités-sanitaire'],
+    [wording.RECONNAISSANCES_CONTRACTUELLES, 'reconnaissances-contractuelles-sanitaire'],
   ])('affiche le titre de la partie %s, sa source et l’accès aux détails', (nomDeLIndicateur: string, suffixeDeLInfoBulle: string) => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
@@ -231,6 +232,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
   it.each([
     [wording.AUTORISATIONS],
     [wording.AUTRES_ACTIVITÉS],
+    [wording.RECONNAISSANCES_CONTRACTUELLES],
   ])('a une infobulle avec le contenu relatif aux %s', (nomDeLIndicateur: string) => {
     // GIVEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
@@ -265,7 +267,8 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
   it.each([
     [wording.AUTORISATIONS, 'autorisations'],
     [wording.AUTRES_ACTIVITÉS, 'autresActivités'],
-  ])('n’affiche pas l’indicateur si l’établissement n’a aucune %s', (nomDeLIndicateur: string, champDeLaDonnéeVide: string) => {
+    [wording.RECONNAISSANCES_CONTRACTUELLES, 'reconnaissancesContractuelles'],
+  ])('n’affiche pas l’indicateur si l’établissement n’a pas de %s', (nomDeLIndicateur: string, champDeLaDonnéeVide: string) => {
     // GIVEN
     const établissementTerritorialSansAutorisations = new ÉtablissementTerritorialSanitaireViewModel({
       activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
@@ -422,13 +425,73 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
     expect(within(activité).getByText(wording.INDICATEURS_VIDES)).toBeInTheDocument()
   })
+
+  describe('L’indicateur des reconnaissances contractuelles', () => {
+    it('affiche un lien pour chaque reconnaissance contractuelle de l’établissement', () => {
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+
+      // THEN
+      const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
+      const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
+      const reconnaissancesContractuelles = sélectionneLIndicateur(wording.RECONNAISSANCES_CONTRACTUELLES, indicateurs)
+      const activité1 = within(reconnaissancesContractuelles).getByRole('link', { name: 'Surveillance continue [R7]' })
+      expect(activité1).toHaveAttribute('aria-expanded', 'false')
+    })
+
+    it('affiche un lien pour chaque modalité d’une reconnaissance contractuelle', () => {
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+
+      // THEN
+      const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
+      const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
+      const reconnaissancesContractuelles = sélectionneLIndicateur(wording.RECONNAISSANCES_CONTRACTUELLES, indicateurs)
+      const modalité1 = within(reconnaissancesContractuelles).getByRole('link', { name: 'USC polyvalente - adulte (non adossée à une unité de réanimation) [N8]' })
+      expect(modalité1).toHaveAttribute('aria-expanded', 'false')
+    })
+
+    it('affiche le libellé et le code de la forme et les dates pour chacune des formes quand ces informations sont renseignées', () => {
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+
+      // THEN
+      const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
+      const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
+      const reconnaissancesContractuelles = sélectionneLIndicateur(wording.RECONNAISSANCES_CONTRACTUELLES, indicateurs)
+      const informationsDUneAutreActivité = within(reconnaissancesContractuelles).getAllByRole('list', { name: 'reconnaissance-contractuelle' })[0]
+      expect(within(informationsDUneAutreActivité).getByText('Hospitalisation complète (24 heures consécutives ou plus) [01]', { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUneAutreActivité).getByText(`${wording.CAPACITÉ_AUTORISÉE} : 4`, { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUneAutreActivité).getByText(`${wording.DATE_D_EFFET_ASR} : 30/11/2013`, { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUneAutreActivité).getByText(`${wording.DATE_D_EFFET_CPOM} : 01/11/2013`, { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUneAutreActivité).getByText(`${wording.DATE_DE_FIN_CPOM} : 30/11/2018`, { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUneAutreActivité).getByText(`${wording.NUMÉRO_ARHGOS} : 18-00-RC00000`, { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUneAutreActivité).getByText(`${wording.NUMÉRO_CPOM} : 18-00-C00000`, { selector: 'li' })).toBeInTheDocument()
+    })
+  })
+
+  it('affiche les autorisations et capacités dans le bon ordre', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+
+    // THEN
+
+    const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
+    const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
+    const partieAutorisations = sélectionneLIndicateur(wording.AUTORISATIONS, indicateurs)
+    const indexPartieAutorisations = indicateurs.indexOf(partieAutorisations)
+    const partieAutresActivités = sélectionneLIndicateur(wording.AUTRES_ACTIVITÉS, indicateurs)
+    const indexPartieAutresActivités = indicateurs.indexOf(partieAutresActivités)
+    const partieReconnaissancesContractuelles = sélectionneLIndicateur(wording.RECONNAISSANCES_CONTRACTUELLES, indicateurs)
+    const indexPartieReconnaissancesContractuelles = indicateurs.indexOf(partieReconnaissancesContractuelles)
+
+    expect(indexPartieAutorisations).toBeLessThan(indexPartieAutresActivités)
+    expect(indexPartieAutresActivités).toBeLessThan(indexPartieReconnaissancesContractuelles)
+  })
 })
 
 function sélectionneLIndicateur(indicateur: string, éléments: HTMLElement[]): HTMLElement {
-  switch (indicateur) {
-    case wording.AUTRES_ACTIVITÉS:
-      return éléments[10]
-    default:
-      return éléments[1]
-  }
+  const partieAutorisations = éléments.filter((élément) => élément.textContent?.includes(indicateur))
+  expect(partieAutorisations).toHaveLength(1)
+  return partieAutorisations[0]
 }

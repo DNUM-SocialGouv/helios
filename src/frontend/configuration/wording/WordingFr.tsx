@@ -140,11 +140,17 @@ export class WordingFr implements Wording {
   readonly CAPACITÉ_INSTALLÉE: string = 'Capacité installée'
   readonly CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS: string = 'Capacité installée par activités'
   readonly NOMBRE_TOTAL_DE_PLACE_PAR_ACTIVITÉ: string = 'Nombre total de places par activité'
-  readonly NUMÉRO_ARHGOS: string = 'Numéro ARHGOS'
   readonly ACTIVITÉ: string = 'Activité'
 
   // Bloc Autorisation Sanitaire
   readonly AUTRES_ACTIVITÉS: string = 'Autres activités'
+  readonly RECONNAISSANCES_CONTRACTUELLES: string = 'Reconnaissances contractuelles'
+  readonly ÉQUIPEMENTS_MATÉRIELS_LOURDS: string = 'Équipements matériels lourds'
+  readonly DATE_D_EFFET_ASR: string = 'Date d’effet de l’ASR'
+  readonly DATE_D_EFFET_CPOM: string = 'Date d’effet du CPOM'
+  readonly DATE_DE_FIN_CPOM: string = 'Date de fin du CPOM'
+  readonly NUMÉRO_CPOM: string = 'Numéro de CPOM'
+  readonly NUMÉRO_ARHGOS: string = 'Numéro ARHGOS'
   readonly CAPACITÉ_PAR_ACTIVITÉS: string = 'Capacité par activités'
   readonly ACTIVITÉS: string = 'Activités'
   readonly CHIRURGIE: string = 'Chirurgie   '

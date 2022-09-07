@@ -7,6 +7,7 @@ import styles from './BlocAutorisationEtCapacitéSanitaire.module.css'
 import { ContenuAutorisations } from './InfoBulle/ContenuAutorisations'
 import { ContenuAutresActivités } from './InfoBulle/ContenuAutresActivités'
 import { ContenuCapacitéParActivités } from './InfoBulle/ContenuCapacitéParActivités'
+import { ContenuReconnaissancesContractuelles } from './InfoBulle/ContenuReconnaissancesContractuelles'
 import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTerritorialSanitaireViewModel'
 
 type BlocAutorisationEtCapacitéSanitaireProps = Readonly<{
@@ -81,6 +82,22 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             {établissementTerritorialSanitaireViewModel.autresActivités}
           </IndicateurAutorisationEtCapacité>
         }
+        {
+          établissementTerritorialSanitaireViewModel.lesReconnaissancesContractuellesSontEllesRenseignées &&
+            <IndicateurAutorisationEtCapacité
+              contenuInfoBulle={<ContenuReconnaissancesContractuelles
+                dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDesReconnaissancesContractuelles}
+                source={Sources(wording.FINESS, wording.ARHGOS)}
+              />}
+              dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDesReconnaissancesContractuelles}
+              identifiant="reconnaissances-contractuelles-sanitaire"
+              nomDeLIndicateur={wording.RECONNAISSANCES_CONTRACTUELLES}
+              source={Sources(wording.FINESS, wording.ARHGOS)}
+            >
+              {établissementTerritorialSanitaireViewModel.reconnaissancesContractuelles}
+            </IndicateurAutorisationEtCapacité>
+        }
+
       </ul>
     </Bloc>
   )
