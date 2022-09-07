@@ -441,7 +441,7 @@ export class GraphiqueViewModel {
             align: 'start',
             color: this.couleurIdentifiant,
             display: true,
-            text: 'Places',
+            text: this.wording.PLACES,
           },
         },
         x2: {
@@ -455,7 +455,7 @@ export class GraphiqueViewModel {
             align: 'start',
             color: this.couleurIdentifiant,
             display: true,
-            text: 'Lits',
+            text: this.wording.LITS,
           },
         },
         y: {

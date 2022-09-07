@@ -150,8 +150,7 @@ export class WordingFr implements Wording {
   readonly OBSTÉTRIQUE: string = 'Obstétrique   '
   readonly SSR: string = 'SSR   '
   readonly USLD: string = 'USLD   '
-  readonly EN_PSY_HOSPITALISATION_COMPLÈTE: string = 'En psy HC   '
-  readonly EN_PSY_HOSPITALISATION_PARTIELLE: string = 'En psy HP   '
+  readonly PSYCHIATRIE: string = 'Psychiatrie   '
   readonly LITS: string = 'Lits'
   readonly PLACES: string = 'Places'
 

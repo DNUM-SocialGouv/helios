@@ -41,6 +41,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
   readonly identifiantDeLaLégendeDesSéjoursMCO = 'légende-graphique-sanitaire-journées-séjours-mco'
   readonly identifiantDeLaLégendeDesJournéesPsyEtSsr = 'légende-graphique-sanitaire-journées-psy-et-ssr'
   readonly ratioHistogrammeNombreDePassagesAuxUrgences = 7
+  readonly ratioHistogrammeCapacitéParActivités = 5
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, wording: Wording, private readonly paths: Paths) {
     super(wording, établissementTerritorial.activités.length)
@@ -211,8 +212,10 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
       this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnChirurgie !== null ||
       this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnMédecine !== null ||
       this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnObstétrique !== null ||
-    this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnSsr !== null
-
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnSsr !== null ||
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsEnUsld !== null ||
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsOuPlacesEnPsyHospitalisationComplète !== null ||
+    this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnPsyHospitalisationPartielle !== null
   }
 
   public get capacitéParActivités(): JSX.Element {
@@ -220,29 +223,26 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
       this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsEnChirurgie as number,
       this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsEnMédecine as number,
       this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsEnObstétrique as number,
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsOuPlacesEnPsyHospitalisationComplète as number,
       this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsEnSsr as number,
       this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsEnUsld as number,
-      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsOuPlacesEnPsyHospitalisationComplète as number,
-      0,
     ]
     const places = [
       this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnChirurgie as number,
       this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnMédecine as number,
       this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnObstétrique as number,
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnPsyHospitalisationPartielle as number,
       this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnSsr as number,
       0,
-      0,
-      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnPsyHospitalisationPartielle as number,
     ]
     const chartColors = [this.couleurDuFondHistogrammeSecondaire]
     const libellés = [
       this.wording.CHIRURGIE,
       this.wording.MÉDECINE,
       this.wording.OBSTÉTRIQUE,
+      this.wording.PSYCHIATRIE,
       this.wording.SSR,
       this.wording.USLD,
-      this.wording.EN_PSY_HOSPITALISATION_COMPLÈTE,
-      this.wording.EN_PSY_HOSPITALISATION_PARTIELLE,
     ]
     const identifiants = [this.wording.LITS, this.wording.PLACES]
 
@@ -251,7 +251,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
       lits,
       places,
       libellés,
-      5,
+      this.ratioHistogrammeCapacitéParActivités,
       this.wording.ACTIVITÉS,
       identifiants
     )

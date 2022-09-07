@@ -129,8 +129,7 @@ export interface Wording {
   readonly OBSTÉTRIQUE: string
   readonly SSR: string
   readonly USLD: string
-  readonly EN_PSY_HOSPITALISATION_COMPLÈTE: string
-  readonly EN_PSY_HOSPITALISATION_PARTIELLE: string
+  readonly PSYCHIATRIE: string
   readonly LITS: string
   readonly PLACES: string
 

@@ -96,8 +96,8 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     it('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails" (Capacité par activités)', () => {
       // GIVEN
       renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
-      const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
-      const indicateurs = within(activité).getAllByRole('listitem')
+      const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
+      const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
       const détails = within(indicateurs[0]).getByRole('button', { name: wording.DÉTAILS })
 
       // WHEN
@@ -127,8 +127,8 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     it('ferme l’info bulle après avoir cliqué sur le bouton "Fermer" (Capacité par activités)', () => {
       // GIVEN
       renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
-      const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
-      const indicateurs = within(activité).getAllByRole('listitem')
+      const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
+      const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
       const détails = within(indicateurs[0]).getByRole('button', { name: wording.DÉTAILS })
       fireEvent.click(détails)
       const infoBulle = screen.getByRole('dialog', { name: wording.CAPACITÉ_PAR_ACTIVITÉS })
@@ -146,8 +146,8 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
 
       // THEN
-      const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
-      const indicateurs = within(activité).getAllByRole('listitem')
+      const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
+      const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
       const tableau = within(indicateurs[0]).getByRole('table')
 
       const libellésLigneDEnTête = [wording.ACTIVITÉS, wording.LITS, wording.PLACES]
@@ -173,24 +173,19 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
           valeur: ['5', '6'],
         },
         {
-          capacité: wording.SSR,
+          capacité: wording.PSYCHIATRIE,
           index: 4,
+          valeur: ['5', '13'],
+        },
+        {
+          capacité: wording.SSR,
+          index: 5,
           valeur: ['2', '7'],
         },
         {
           capacité: wording.USLD,
-          index: 5,
-          valeur: ['15', '0'],
-        },
-        {
-          capacité: wording.EN_PSY_HOSPITALISATION_COMPLÈTE,
           index: 6,
-          valeur: ['5', '0'],
-        },
-        {
-          capacité: wording.EN_PSY_HOSPITALISATION_PARTIELLE,
-          index: 7,
-          valeur: ['0', '13'],
+          valeur: ['15', '0'],
         },
       ]
       const lignes = within(tableau).getAllByRole('row')
@@ -235,10 +230,8 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansActivité} />)
 
       // THEN
-      const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
-      const indicateurs = within(activité).queryAllByRole('listitem')
-      expect(indicateurs).toHaveLength(35)
-      const listes = within(activité).getAllByRole('list')
+      const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
+      const listes = within(autorisationEtCapacité).getAllByRole('list')
       const titre = within(listes[0]).queryByText(wording.CAPACITÉ_PAR_ACTIVITÉS, { selector: 'p' })
       expect(titre).not.toBeInTheDocument()
     })
