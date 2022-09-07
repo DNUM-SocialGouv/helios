@@ -10,8 +10,9 @@ from datacrawler.transform.équivalences_finess_helios import (
 
 
 def détermine_l_installation_de_l_autorisation(autorisations: pd.DataFrame) -> pd.DataFrame:
-    autorisations["est_installee"] = (autorisations["est_installee"] == "N") | autorisations["est_installee"].isna()
-    return autorisations
+    autorisations_avec_installation = autorisations.copy()
+    autorisations_avec_installation["est_installee"] = (autorisations["est_installee"] == "N") | autorisations["est_installee"].isna()
+    return autorisations_avec_installation
 
 
 def transforme_les_données_finess_cs1400105(
@@ -22,9 +23,9 @@ def transforme_les_données_finess_cs1400105(
 
     autorisations = (
         données_finess_cs1400105[est_dans_finess]
-        .sort_values(by=["indsupinst", "indsupaut"])
-        .drop_duplicates(subset=["nofinesset", "de", "ta", "client"], keep="first")[colonnes_à_garder_finess_cs1400105]
+        .sort_values(by=["indsupinst", "indsupaut"])[colonnes_à_garder_finess_cs1400105]
         .rename(columns=équivalences_finess_cs1400105_helios)
+        .drop_duplicates(subset=index_des_autorisations_médico_sociaux, keep="first")
         .dropna(subset=index_des_autorisations_médico_sociaux)
     )
 

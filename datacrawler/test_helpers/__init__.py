@@ -271,6 +271,28 @@ def helios_activité_sanitaire_builder(champs_surchargés: Optional[Dict] = None
     return activité
 
 
+def helios_autorisation_médico_social_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    autorisation = {
+        "activite": "21",
+        "capacite_autorisee_totale": 3,
+        "capacite_installee_totale": 3,
+        "clientele": "436",
+        "date_autorisation": "2006-03-29",
+        "date_derniere_installation": "2009-01-01",
+        "date_mise_a_jour_autorisation": "2012-05-03",
+        "discipline_equipement": "924",
+        "est_installee": True,
+        "libelle_activite": "Accueil de Jour",
+        "libelle_clientele": "Personnes Alzheimer ou maladies apparentées",
+        "libelle_discipline_equipement": "Accueil pour Personnes Âgées",
+        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
+    }
+
+    if champs_surchargés:
+        return {**autorisation, **champs_surchargés}
+    return autorisation
+
+
 def helios_autorisation_sanitaire_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
     autorisation = {
         "code_activite": "50",
