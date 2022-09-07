@@ -174,9 +174,9 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
 
       // THEN
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
-      const listes = within(autorisationEtCapacité).getAllByRole('list')
-      const titre = within(listes[0]).queryByText(wording.CAPACITÉ_PAR_ACTIVITÉS, { selector: 'p' })
-      expect(titre).not.toBeInTheDocument()
+      const indicateursAutorisationsEtCapacités = within(autorisationEtCapacité).getAllByRole('list')[0]
+      const titreCapacitéParActivité = within(indicateursAutorisationsEtCapacités).queryByText(wording.CAPACITÉ_PAR_ACTIVITÉS, { selector: 'p' })
+      expect(titreCapacitéParActivité).not.toBeInTheDocument()
     })
 
     it('n’affiche pas les capacités lorsque celles-ci ne sont pas renseignées', () => {
@@ -198,9 +198,9 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
 
       // THEN
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
-      const listes = within(autorisationEtCapacité).getAllByRole('list')
-      const titre = within(listes[0]).queryByText(wording.CAPACITÉ_PAR_ACTIVITÉS, { selector: 'p' })
-      expect(titre).not.toBeInTheDocument()
+      const indicateursAutorisationsEtCapacités = within(autorisationEtCapacité).getAllByRole('list')[0]
+      const titreCapacitéParActivité = within(indicateursAutorisationsEtCapacités).queryByText(wording.CAPACITÉ_PAR_ACTIVITÉS, { selector: 'p' })
+      expect(titreCapacitéParActivité).not.toBeInTheDocument()
     })
   })
 
