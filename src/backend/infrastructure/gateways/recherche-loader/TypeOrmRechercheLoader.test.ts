@@ -227,6 +227,144 @@ describe('La recherche d’entités et d’établissements', () => {
     })
   })
 
+  describe('Par commune', () => {
+    it('retourne un résultat quand la commune de l’entité juridique est connue', async () => {
+      // GIVEN
+      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY' })
+      await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
+
+      const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
+
+      // WHEN
+      const recherche = await typeOrmRechercheLoader.recherche('CENTRE HOSPITALIER DU HAUT BUGEY')
+
+      // THEN
+      expect(recherche.nombreDeRésultats).toBe(1)
+      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
+        {
+          commune: 'OYONNAX',
+          département: 'AIN',
+          numéroFiness: numéroFinessEntitéJuridique,
+          raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY',
+          type: 'Entité juridique',
+        },
+      ])
+    })
+
+    it('retourne un résultat quand le nom est un nom connu d’établissement territorial', async () => {
+      // GIVEN
+      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
+      await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
+
+      const établissementTerritorialModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire(
+        {
+          numéroFinessEntitéJuridique,
+          numéroFinessÉtablissementTerritorial,
+          raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+        }
+      )
+      await établissementTerritorialRepository.insert(établissementTerritorialModel)
+
+      const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
+
+      // WHEN
+      const recherche = await typeOrmRechercheLoader.recherche('HOPITAL PRIVE DE VILLENEUVE DASCQ')
+
+      // THEN
+      expect(recherche.nombreDeRésultats).toBe(1)
+      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementSanitaire({ numéroFiness: numéroFinessÉtablissementTerritorial })])
+    })
+
+    it('retourne un résultat quand le nom est un nom connu sans prendre en compte la casse', async () => {
+      // GIVEN
+      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY' })
+      await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
+
+      const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
+
+      // WHEN
+      const recherche = await typeOrmRechercheLoader.recherche('bugey')
+
+      // THEN
+      expect(recherche.nombreDeRésultats).toBe(1)
+      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({ numéroFiness: numéroFinessEntitéJuridique })])
+    })
+
+    it('retourne un résultat quand le nom est un nom connu sans prendre en compte les accents', async () => {
+      // GIVEN
+      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ raisonSociale: 'RÉSIDENCE LE PARC DU MANOIR' })
+      await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
+
+      const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
+
+      // WHEN
+      const recherche = await typeOrmRechercheLoader.recherche('residence')
+
+      // THEN
+      expect(recherche.nombreDeRésultats).toBe(1)
+      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          numéroFiness: numéroFinessEntitéJuridique,
+          raisonSociale: 'RÉSIDENCE LE PARC DU MANOIR',
+        }),
+      ])
+    })
+
+    it('retourne un résultat quand le nom est un nom connu sans prendre en compte les tirets', async () => {
+      // GIVEN
+      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ raisonSociale: 'EHPAD SAINT-TRIVIER-DE-COURTES' })
+      await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
+
+      const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
+
+      // WHEN
+      const recherche = await typeOrmRechercheLoader.recherche('saint trivier courtes')
+
+      // THEN
+      expect(recherche.nombreDeRésultats).toBe(1)
+      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          numéroFiness: numéroFinessEntitéJuridique,
+          raisonSociale: 'EHPAD SAINT-TRIVIER-DE-COURTES',
+        }),
+      ])
+    })
+
+    it('retourne un résultat quand le nom est un nom connu sans prendre en compte les apostrophes', async () => {
+      // GIVEN
+      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ raisonSociale: "SAAD DOMITYS L'ARBRE D'OR" })
+      await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
+
+      const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
+
+      // WHEN
+      const recherche = await typeOrmRechercheLoader.recherche("l'arbre d or")
+
+      // THEN
+      expect(recherche.nombreDeRésultats).toBe(1)
+      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          numéroFiness: numéroFinessEntitéJuridique,
+          raisonSociale: "SAAD DOMITYS L'ARBRE D'OR",
+        }),
+      ])
+    })
+
+    it('résiste à des tentatives d’injection SQL', async () => {
+      // GIVEN
+      const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
+
+      // WHEN
+      const recherche = await typeOrmRechercheLoader.recherche("''));DROP ALL TABLE;--")
+
+      // THEN
+      expect(recherche).toStrictEqual<RésultatDeRecherche>({
+        nombreDeRésultats: 0,
+        résultats: [],
+      })
+    })
+  })
+
   it('retourne un maximum de 12 résultats', async () => {
     // GIVEN
     await entitéJuridiqueRepository.insert([
