@@ -93,13 +93,13 @@ export type CapacitéSanitaire = Readonly<{
   nombreDeLitsEnMédecine: number | null
   nombreDeLitsEnObstétrique: number | null
   nombreDeLitsEnSsr: number | null
-  nombreDeLitsOuPlacesEnPsyHospitalisationComplète: number | null
   nombreDeLitsEnUsld: number | null
+  nombreDeLitsOuPlacesEnPsyHospitalisationComplète: number | null
   nombreDePlacesEnChirurgie: number | null
   nombreDePlacesEnMédecine: number | null
   nombreDePlacesEnObstétrique: number | null
-  nombreDePlacesEnSsr: number | null
   nombreDePlacesEnPsyHospitalisationPartielle: number | null
+  nombreDePlacesEnSsr: number | null
 }> | null
 
 export type ÉtablissementTerritorialSanitaireAutorisationEtCapacité = Readonly<{

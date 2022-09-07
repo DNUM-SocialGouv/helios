@@ -1,10 +1,12 @@
 import { Bloc } from '../commun/Bloc/Bloc'
 import { useDependencies } from '../commun/contexts/useDependencies'
 import { IndicateurAutorisationEtCapacité } from '../commun/IndicateurAutorisationEtCapacité/IndicateurAutorisationEtCapacité'
+import { IndicateurGraphique } from '../commun/IndicateurGraphique/IndicateurGraphique'
 import { Sources } from '../commun/Sources/Sources'
 import styles from './BlocAutorisationEtCapacitéSanitaire.module.css'
 import { ContenuAutorisations } from './InfoBulle/ContenuAutorisations'
 import { ContenuAutresActivités } from './InfoBulle/ContenuAutresActivités'
+import { ContenuCapacitéParActivités } from './InfoBulle/ContenuCapacitéParActivités'
 import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTerritorialSanitaireViewModel'
 
 type BlocAutorisationEtCapacitéSanitaireProps = Readonly<{
@@ -32,6 +34,20 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
       <ul
         className={styles['liste-indicateurs']}
       >
+        {établissementTerritorialSanitaireViewModel.capacitéParActivitésSontIlsRenseignés &&
+          <IndicateurGraphique
+            contenuInfoBulle={<ContenuCapacitéParActivités
+              dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDeLaCatégorieDeLÉtablissement}
+              source={Sources(wording.DIAMANT, wording.SAE)}
+            />}
+            dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDeLaCatégorieDeLÉtablissement}
+            identifiant="capacite-sanitaire"
+            nomDeLIndicateur={wording.CAPACITÉ_PAR_ACTIVITÉS}
+            source={Sources(wording.DIAMANT, wording.SAE)}
+          >
+            {établissementTerritorialSanitaireViewModel.capacitéParActivités}
+          </IndicateurGraphique>
+        }
         <IndicateurAutorisationEtCapacité
           contenuInfoBulle={<ContenuAutorisations
             dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDesAutorisations}

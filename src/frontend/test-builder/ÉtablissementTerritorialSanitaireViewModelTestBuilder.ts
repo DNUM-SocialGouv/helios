@@ -417,9 +417,9 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 5,
       nombreDePlacesEnChirurgie: 20,
       nombreDePlacesEnMédecine: 50,
-      nombreDePlacesEnObstétrique: 5,
+      nombreDePlacesEnObstétrique: 6,
       nombreDePlacesEnPsyHospitalisationPartielle: 13,
-      nombreDePlacesEnSsr: 5,
+      nombreDePlacesEnSsr: 7,
     },
     numéroFinessÉtablissementTerritorial: '123456789',
     reconnaissancesContractuelles: {

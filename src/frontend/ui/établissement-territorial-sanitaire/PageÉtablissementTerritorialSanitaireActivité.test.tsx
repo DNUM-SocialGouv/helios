@@ -140,7 +140,7 @@ describe('La page établissement territorial sanitaire - bloc activité', () => 
     const indicateurs = within(activité).getAllByRole('listitem')
     const tableau = within(indicateurs[identifiant]).getByRole('table')
 
-    libellésLigneDEnTête.map((libellé) => {
+    libellésLigneDEnTête.forEach((libellé) => {
       const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: libellé })
       expect(indicateurLigneDEnTête).toBeInTheDocument()
     })
@@ -173,7 +173,7 @@ describe('La page établissement territorial sanitaire - bloc activité', () => 
       },
     ]
     const lignes = within(tableau).getAllByRole('row')
-    annéesEtValeurs.map((annéeEtValeur) => {
+    annéesEtValeurs.forEach((annéeEtValeur) => {
       const année = within(lignes[annéeEtValeur.index]).getByRole('cell', { name : annéeEtValeur.année })
       expect(année).toBeInTheDocument()
       const valeurs = within(lignes[annéeEtValeur.index]).getAllByRole('cell', { name: annéeEtValeur.valeur })

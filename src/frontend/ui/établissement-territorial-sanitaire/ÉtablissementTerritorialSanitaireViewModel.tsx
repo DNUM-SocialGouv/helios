@@ -41,6 +41,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
   readonly identifiantDeLaLégendeDesSéjoursMCO = 'légende-graphique-sanitaire-journées-séjours-mco'
   readonly identifiantDeLaLégendeDesJournéesPsyEtSsr = 'légende-graphique-sanitaire-journées-psy-et-ssr'
   readonly ratioHistogrammeNombreDePassagesAuxUrgences = 7
+  readonly ratioHistogrammeCapacitéParActivités = 5
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, wording: Wording, private readonly paths: Paths) {
     super(wording, établissementTerritorial.activités.length)
@@ -203,6 +204,59 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     return StringFormater.formateLaDate(this.établissementTerritorial.activités[0].nombreDePassagesAuxUrgences.dateMiseÀJourSource)
   }
 
+  public get capacitéParActivitésSontIlsRenseignés(): boolean {
+    return this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsEnChirurgie !== null ||
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsEnMédecine !== null ||
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsEnObstétrique !== null ||
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsEnSsr !== null ||
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnChirurgie !== null ||
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnMédecine !== null ||
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnObstétrique !== null ||
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnSsr !== null ||
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsEnUsld !== null ||
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsOuPlacesEnPsyHospitalisationComplète !== null ||
+    this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnPsyHospitalisationPartielle !== null
+  }
+
+  public get capacitéParActivités(): JSX.Element {
+    const lits = [
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsEnChirurgie as number,
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsEnMédecine as number,
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsEnObstétrique as number,
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsOuPlacesEnPsyHospitalisationComplète as number,
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsEnSsr as number,
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsEnUsld as number,
+    ]
+    const places = [
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnChirurgie as number,
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnMédecine as number,
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnObstétrique as number,
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnPsyHospitalisationPartielle as number,
+      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnSsr as number,
+      0,
+    ]
+    const chartColors = [this.couleurDuFondHistogrammeSecondaire]
+    const libellés = [
+      this.wording.CHIRURGIE,
+      this.wording.MÉDECINE,
+      this.wording.OBSTÉTRIQUE,
+      this.wording.PSYCHIATRIE,
+      this.wording.SSR,
+      this.wording.USLD,
+    ]
+    const identifiants = [this.wording.LITS, this.wording.PLACES]
+
+    return this.afficheDeuxHistogrammesHorizontaux(
+      chartColors,
+      lits,
+      places,
+      libellés,
+      this.ratioHistogrammeCapacitéParActivités,
+      this.wording.ACTIVITÉS,
+      identifiants
+    )
+  }
+
   private afficheLHistogrammeDesSéjoursMCO(nombreDeSéjours: DonnéesDeDiagrammeDesSéjoursMCO, années: number[]): JSX.Element {
     const data = {
       datasets: [
@@ -261,7 +315,6 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
       <>
         <Bar
           data={data}
-          // @ts-ignore
           options={options}
         />
         <menu
@@ -336,7 +389,6 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
       <>
         <Bar
           data={data}
-          // @ts-ignore
           options={options}
         />
         <menu

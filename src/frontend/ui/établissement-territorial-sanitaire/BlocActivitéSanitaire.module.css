@@ -6,6 +6,10 @@
   margin-bottom: 1rem;
 }
 
+.liste-indicateurs > li > div:nth-child(1)  {
+  margin-bottom: 1rem;
+}
+
 .graphique-sanitaire-légende {
   display: grid;
   grid-auto-columns: max-content;

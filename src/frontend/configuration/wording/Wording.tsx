@@ -105,7 +105,7 @@ export interface Wording {
   readonly HOSPITALISATION_PARTIELLE_PSY: string
   readonly HOSPITALISATION_COMPLÈTE_PSY: string
 
-  // Bloc Autorisation
+  // Bloc Autorisation Médico-social
   readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string
   readonly AUTORISATIONS: string
   readonly DATE_D_AUTORISATION: string
@@ -120,8 +120,18 @@ export interface Wording {
   readonly NUMÉRO_ARHGOS: string
   readonly ACTIVITÉ: string
 
-  // Bloc Autorisation sanitaire
+  // Bloc Autorisation Sanitaire
   readonly AUTRES_ACTIVITÉS: string
+  readonly CAPACITÉ_PAR_ACTIVITÉS: string
+  readonly ACTIVITÉS: string
+  readonly CHIRURGIE: string
+  readonly MÉDECINE: string
+  readonly OBSTÉTRIQUE: string
+  readonly SSR: string
+  readonly USLD: string
+  readonly PSYCHIATRIE: string
+  readonly LITS: string
+  readonly PLACES: string
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string
@@ -135,6 +145,7 @@ export interface Wording {
   readonly TDB_PERF: ReactElement
   readonly PMSI: ReactElement
   readonly ARHGOS: ReactElement
+  readonly SAE: ReactElement
 
   // Footer
   readonly PRESENTATION: string

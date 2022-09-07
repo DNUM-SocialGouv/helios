@@ -24,6 +24,7 @@ export class GraphiqueViewModel {
   readonly couleurDuFondHistogrammeDeDépassement = '#C9191E'
   readonly couleurDelAbscisse = '#161616'
   readonly couleurDeLaValeur = '#3A3A3A'
+  readonly couleurIdentifiant = '#000'
   readonly fondDeCouleurPourPremierHistogramme: string[]
   readonly fondDeCouleurPourSecondHistogramme: string[]
   readonly grosseursDePolicePourLesLibellés: string[]
@@ -91,7 +92,7 @@ export class GraphiqueViewModel {
       labels: années,
     }
     const annéesManquantes = this.annéesManquantes(années, annéesTotales)
-    const valeursFrançaises = this.transformeEnFrançais(valeurs)
+    const valeursFrançaises = this.transformeEnFrançais(valeurs) as string[]
 
     return (
       <>
@@ -99,7 +100,6 @@ export class GraphiqueViewModel {
           <Bar
             // @ts-ignore
             data={data}
-            // @ts-ignore
             options={this.optionsHistogrammeVertical()}
           />
         }
@@ -150,7 +150,6 @@ export class GraphiqueViewModel {
           <Bar
             // @ts-ignore
             data={data}
-            // @ts-ignore
             options={this.optionsHistogrammeHorizontal(ratioLargeurSurHauteur, Math.max(...valeurs), libellés.map((libellé) => libellé.tailleDePolice))}
           />
         }
@@ -165,6 +164,55 @@ export class GraphiqueViewModel {
           identifiants={[identifiant]}
           libellés={libellés.map((libellé) => libellé.texte)}
           valeurs={[valeursFrançaises]}
+        />
+      </>
+    )
+  }
+
+  protected afficheDeuxHistogrammesHorizontaux(
+    chartColors: string[],
+    lits: (number | null)[],
+    places: (number | null)[],
+    libellés: string[],
+    ratioLargeurSurHauteur: number,
+    entêteLibellé: string,
+    identifiants: string[]
+  ): JSX.Element {
+    const data: ChartData = {
+      datasets: [
+        {
+          backgroundColor: chartColors,
+          data: lits,
+          datalabels: { labels: { title: { color: this.couleurDeLaValeur } } },
+          type: 'bar',
+          xAxisID: 'x2',
+        },
+        {
+          backgroundColor: chartColors,
+          data: places,
+          datalabels: { labels: { title: { color: this.couleurDeLaValeur } } },
+          type: 'bar',
+          xAxisID: 'x',
+        },
+      ],
+      labels: libellés,
+    }
+    const valeurs = [this.transformeEnFrançais(lits), this.transformeEnFrançais(places)]
+
+    return (
+      <>
+        <div>
+          <Bar
+            // @ts-ignore
+            data={data}
+            options={this.optionsDeuxHistogrammesHorizontaux(ratioLargeurSurHauteur, Math.max(...lits.map(Number), ...places.map(Number)))}
+          />
+        </div>
+        <TableIndicateur
+          entêteLibellé={entêteLibellé}
+          identifiants={identifiants}
+          libellés={libellés}
+          valeurs={valeurs}
         />
       </>
     )
@@ -277,7 +325,7 @@ export class GraphiqueViewModel {
     }
   }
 
-  private optionsHistogrammeVertical(valeurMaximale: number): ChartOptions<'bar'> {
+  private optionsHistogrammeVertical(): ChartOptions<'bar'> {
     return {
       animation: false,
       plugins: {
@@ -287,7 +335,7 @@ export class GraphiqueViewModel {
           font: {
             family: 'Marianne',
             size: 16,
-            weight: 'bold',
+            weight: 700,
           },
           formatter: (value: number, _context: Context): string => value.toLocaleString('fr') + ' %',
         },
@@ -310,11 +358,7 @@ export class GraphiqueViewModel {
           },
         },
         xLine: { display: false, max: 1, min: 0, type: 'linear' },
-        y: {
-          display: false,
-          max: valeurMaximale,
-          min: 0,
-        },
+        y: { display: false },
       },
     }
   }
@@ -360,6 +404,73 @@ export class GraphiqueViewModel {
     }
   }
 
+  private optionsDeuxHistogrammesHorizontaux(ratioLargeurSurHauteur: number, valeurMaximale: number): ChartOptions<'bar'> {
+    return {
+      animation: false,
+      aspectRatio: ratioLargeurSurHauteur,
+      indexAxis: 'y',
+      plugins: {
+        datalabels: {
+          align: 'end',
+          anchor: 'end',
+          font: {
+            family: 'Marianne',
+            size: 14,
+            weight: 700,
+          },
+          formatter: (value: string, _context: Context): string => {
+            if (value === null) {
+              return 'N/A'
+            }
+            return parseFloat(value).toLocaleString('fr')
+          },
+          offset: 0,
+        },
+        legend: { display: false },
+        tooltip: { enabled: false },
+      },
+      scales: {
+        x: {
+          grid: { display: false, drawBorder: false },
+          max: valeurMaximale,
+          position: 'top',
+          stack: 'capacite',
+          stackWeight: 1,
+          ticks: { display: false },
+          title: {
+            align: 'start',
+            color: this.couleurIdentifiant,
+            display: true,
+            text: this.wording.PLACES,
+          },
+        },
+        x2: {
+          grid: { display: false, drawBorder: false },
+          max: valeurMaximale + 5,
+          position: 'top',
+          stack: 'capacite',
+          stackWeight: 2,
+          ticks: { display: false },
+          title: {
+            align: 'start',
+            color: this.couleurIdentifiant,
+            display: true,
+            text: this.wording.LITS,
+          },
+        },
+        y: {
+          grid: {
+            drawBorder: false,
+            drawOnChartArea: false,
+            drawTicks: false,
+          },
+          stacked: true,
+          ticks: { color: this.couleurDelAbscisse },
+        },
+      },
+    }
+  }
+
   protected optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuTooltip: Function): ChartOptions<'bar'> {
     return {
       animation: false,
@@ -383,7 +494,11 @@ export class GraphiqueViewModel {
     return valeurs.map((valeur) => valeur + ' %')
   }
 
-  private transformeEnFrançais(valeurs: number[]): string[] {
-    return valeurs.map((valeur) => valeur.toLocaleString('fr'))
+  private transformeEnFrançais(valeurs: (number | null)[]): (string|null)[] {
+    return valeurs.map((valeur) => {
+      if (valeur === null) return valeur
+
+      return valeur.toLocaleString('fr')
+    })
   }
 }
