@@ -17,7 +17,9 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
   const { wording } = useDependencies()
 
   if (
-    !établissementTerritorialSanitaireViewModel.lesAutorisationsSontEllesRenseignées
+    !établissementTerritorialSanitaireViewModel.capacitéParActivitésSontIlsRenseignés &&
+    !établissementTerritorialSanitaireViewModel.lesAutorisationsSontEllesRenseignées &&
+    !établissementTerritorialSanitaireViewModel.lesAutresActivitésSontEllesRenseignées
   ) {
     return (
       <Bloc titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>
@@ -34,7 +36,8 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
       <ul
         className={styles['liste-indicateurs']}
       >
-        {établissementTerritorialSanitaireViewModel.capacitéParActivitésSontIlsRenseignés &&
+        {
+          établissementTerritorialSanitaireViewModel.capacitéParActivitésSontIlsRenseignés &&
           <IndicateurGraphique
             contenuInfoBulle={<ContenuCapacitéParActivités
               dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDeLaCatégorieDeLÉtablissement}
@@ -48,30 +51,36 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             {établissementTerritorialSanitaireViewModel.capacitéParActivités}
           </IndicateurGraphique>
         }
-        <IndicateurAutorisationEtCapacité
-          contenuInfoBulle={<ContenuAutorisations
+        {
+          établissementTerritorialSanitaireViewModel.lesAutorisationsSontEllesRenseignées &&
+          <IndicateurAutorisationEtCapacité
+            contenuInfoBulle={<ContenuAutorisations
+              dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDesAutorisations}
+              source={Sources(wording.FINESS, wording.ARHGOS)}
+            />}
             dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDesAutorisations}
+            identifiant="autorisations-sanitaire"
+            nomDeLIndicateur={wording.AUTORISATIONS}
             source={Sources(wording.FINESS, wording.ARHGOS)}
-          />}
-          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDesAutorisations}
-          identifiant="autorisations-sanitaire"
-          nomDeLIndicateur={wording.AUTORISATIONS}
-          source={Sources(wording.FINESS, wording.ARHGOS)}
-        >
-          {établissementTerritorialSanitaireViewModel.autorisations}
-        </IndicateurAutorisationEtCapacité>
-        <IndicateurAutorisationEtCapacité
-          contenuInfoBulle={<ContenuAutresActivités
+          >
+            {établissementTerritorialSanitaireViewModel.autorisations}
+          </IndicateurAutorisationEtCapacité>
+        }
+        {
+          établissementTerritorialSanitaireViewModel.lesAutresActivitésSontEllesRenseignées &&
+          <IndicateurAutorisationEtCapacité
+            contenuInfoBulle={<ContenuAutresActivités
+              dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDesAutresActivités}
+              source={Sources(wording.FINESS, wording.ARHGOS)}
+            />}
             dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDesAutresActivités}
+            identifiant="autres-activités-sanitaire"
+            nomDeLIndicateur={wording.AUTRES_ACTIVITÉS}
             source={Sources(wording.FINESS, wording.ARHGOS)}
-          />}
-          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDesAutresActivités}
-          identifiant="autres-activités-sanitaire"
-          nomDeLIndicateur={wording.AUTRES_ACTIVITÉS}
-          source={Sources(wording.FINESS, wording.ARHGOS)}
-        >
-          {établissementTerritorialSanitaireViewModel.autresActivités}
-        </IndicateurAutorisationEtCapacité>
+          >
+            {établissementTerritorialSanitaireViewModel.autresActivités}
+          </IndicateurAutorisationEtCapacité>
+        }
       </ul>
     </Bloc>
   )

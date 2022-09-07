@@ -23,7 +23,7 @@
 .liste-autorisations {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: .5rem;
   padding-left: 0;
 }
 
