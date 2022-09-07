@@ -178,6 +178,30 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       const titre = within(listes[0]).queryByText(wording.CAPACITÉ_PAR_ACTIVITÉS, { selector: 'p' })
       expect(titre).not.toBeInTheDocument()
     })
+
+    it('n’affiche pas l’indicateur quand il n’est pas renseigné (Capacité par activités)', () => {
+      const établissementTerritorialSansActivité = new ÉtablissementTerritorialSanitaireViewModel({
+        activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
+        autorisationsEtCapacités: {
+          autorisations: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.autorisations,
+          autresActivités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.autresActivités,
+          capacités: null,
+          numéroFinessÉtablissementTerritorial: '123456789',
+          reconnaissancesContractuelles: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.reconnaissancesContractuelles,
+          équipementsMatérielsLourds: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.équipementsMatérielsLourds,
+        },
+        identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
+      }, wording, paths)
+
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansActivité} />)
+
+      // THEN
+      const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
+      const listes = within(autorisationEtCapacité).getAllByRole('list')
+      const titre = within(listes[0]).queryByText(wording.CAPACITÉ_PAR_ACTIVITÉS, { selector: 'p' })
+      expect(titre).not.toBeInTheDocument()
+    })
   })
 
   it.each([

@@ -205,17 +205,19 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
   }
 
   public get capacitéParActivitésSontIlsRenseignés(): boolean {
-    return this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsEnChirurgie !== null ||
-      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsEnMédecine !== null ||
-      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsEnObstétrique !== null ||
-      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsEnSsr !== null ||
-      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnChirurgie !== null ||
-      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnMédecine !== null ||
-      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnObstétrique !== null ||
-      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnSsr !== null ||
-      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsEnUsld !== null ||
-      this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsOuPlacesEnPsyHospitalisationComplète !== null ||
-    this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDePlacesEnPsyHospitalisationPartielle !== null
+    const capacités = this.établissementTerritorial.autorisationsEtCapacités.capacités
+
+    return (capacités !== null) && (
+      capacités.nombreDeLitsEnMédecine !== null ||
+      capacités.nombreDeLitsEnObstétrique !== null ||
+      capacités.nombreDeLitsEnSsr !== null ||
+      capacités.nombreDePlacesEnChirurgie !== null ||
+      capacités.nombreDePlacesEnMédecine !== null ||
+      capacités.nombreDePlacesEnObstétrique !== null ||
+      capacités.nombreDePlacesEnSsr !== null ||
+      capacités.nombreDeLitsEnUsld !== null ||
+      capacités.nombreDeLitsOuPlacesEnPsyHospitalisationComplète !== null ||
+    capacités.nombreDePlacesEnPsyHospitalisationPartielle !== null)
   }
 
   public get capacitéParActivités(): JSX.Element {
