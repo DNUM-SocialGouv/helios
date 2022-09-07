@@ -1,5 +1,6 @@
 import { fireEvent, screen, within } from '@testing-library/react'
 
+import { numéroFinessÉtablissementTerritorial } from '../../../backend/testHelper'
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from '../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder'
 import { fakeFrontDependencies, renderFakeComponent } from '../../testHelper'
 import { PageÉtablissementTerritorialSanitaire } from './PageÉtablissementTerritorialSanitaire'
@@ -348,6 +349,54 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       expect(within(informationsDUneAutreActivité).getByText(`${wording.DATE_DE_FIN} : N/A`, { selector: 'li' })).toBeInTheDocument()
       expect(within(informationsDUneAutreActivité).getByText(`${wording.DATE_D_AUTORISATION} : 03/06/2019`, { selector: 'li' })).toBeInTheDocument()
     })
+  })
+
+  it('affiche une phrase à la place des indicateurs lorsqu’aucune autorisation n’est renseignée', () => {
+    // GIVEN
+    const établissementTerritorialSansAutorisationsNiCapacités = new ÉtablissementTerritorialSanitaireViewModel({
+      activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
+      autorisationsEtCapacités: {
+        autorisations: {
+          activités: [],
+          dateMiseÀJourSource: '2022-09-05',
+        },
+        autresActivités: {
+          activités: [],
+          dateMiseÀJourSource: '2022-09-05',
+        },
+        capacités: {
+          dateMiseÀJourSource: '2022-09-02',
+          nombreDeLitsEnChirurgie: null,
+          nombreDeLitsEnMédecine: null,
+          nombreDeLitsEnObstétrique: null,
+          nombreDeLitsEnSsr: null,
+          nombreDeLitsEnUsld: null,
+          nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
+          nombreDePlacesEnChirurgie: null,
+          nombreDePlacesEnMédecine: null,
+          nombreDePlacesEnObstétrique: null,
+          nombreDePlacesEnPsyHospitalisationPartielle: null,
+          nombreDePlacesEnSsr: null,
+        },
+        numéroFinessÉtablissementTerritorial,
+        reconnaissancesContractuelles: {
+          activités: [],
+          dateMiseÀJourSource: '2022-09-05',
+        },
+        équipementsMatérielsLourds: {
+          dateMiseÀJourSource: '2022-09-05',
+          équipements: [],
+        },
+      },
+      identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
+    }, wording, paths)
+
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansAutorisationsNiCapacités} />)
+
+    // THEN
+    const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
+    expect(within(activité).getByText(wording.INDICATEURS_VIDES)).toBeInTheDocument()
   })
 })
 
