@@ -135,13 +135,6 @@ export const PageDeRecette = () => {
       </>,
       numéroFiness: '830208120',
     },
-    {
-      identifiant: <>
-        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        - 220 000 012 - CENTRE HOSPITALIER YVES LE FOLL (avec des autorisations)
-      </>,
-      numéroFiness: '220000012',
-    },
   ]
 
   return (
