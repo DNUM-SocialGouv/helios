@@ -128,15 +128,15 @@ export class WordingFr implements Wording {
   readonly HOSPITALISATION_PARTIELLE_PSY: string = 'Hospitalisation Partielle PSY'
   readonly HOSPITALISATION_COMPLÈTE_PSY: string = 'Hospitalisation Complète PSY'
 
-  // Bloc Autorisation Médico-social
+  // Bloc Autorisation
   readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string = 'autorisation et capacité'
   readonly AUTORISATIONS: string = 'Autorisations'
   readonly DATE_D_AUTORISATION: string = 'Date d’autorisation'
-  readonly DATE_DE_FIN: string = 'Date de fin'
-  readonly DATE_DE_MISE_EN_OEUVRE: string = 'Date de mise en oeuvre'
+  readonly CAPACITÉ_AUTORISÉE: string = 'Capacité autorisée'
+
+  // Bloc Autorisation médico-social
   readonly MISE_À_JOUR_AUTORISATION: string = 'Mise à jour d’autorisation'
   readonly DERNIÈRE_INSTALLATION: string = 'Dernière installation'
-  readonly CAPACITÉ_AUTORISÉE: string = 'Capacité autorisée'
   readonly CAPACITÉ_INSTALLÉE: string = 'Capacité installée'
   readonly CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS: string = 'Capacité installée par activités'
   readonly NOMBRE_TOTAL_DE_PLACE_PAR_ACTIVITÉ: string = 'Nombre total de places par activité'
@@ -146,6 +146,8 @@ export class WordingFr implements Wording {
   readonly AUTRES_ACTIVITÉS: string = 'Autres activités'
   readonly RECONNAISSANCES_CONTRACTUELLES: string = 'Reconnaissances contractuelles'
   readonly ÉQUIPEMENTS_MATÉRIELS_LOURDS: string = 'Équipements matériels lourds'
+  readonly DATE_DE_FIN: string = 'Date de fin'
+  readonly DATE_DE_MISE_EN_OEUVRE: string = 'Date de mise en oeuvre'
   readonly DATE_D_EFFET_ASR: string = 'Date d’effet de l’ASR'
   readonly DATE_D_EFFET_CPOM: string = 'Date d’effet du CPOM'
   readonly DATE_DE_FIN_CPOM: string = 'Date de fin du CPOM'

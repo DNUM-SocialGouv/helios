@@ -8,6 +8,7 @@ import { ContenuAutorisations } from './InfoBulle/ContenuAutorisations'
 import { ContenuAutresActivités } from './InfoBulle/ContenuAutresActivités'
 import { ContenuCapacitéParActivités } from './InfoBulle/ContenuCapacitéParActivités'
 import { ContenuReconnaissancesContractuelles } from './InfoBulle/ContenuReconnaissancesContractuelles'
+import { ContenuÉquipementsMatérielsLourds } from './InfoBulle/ContenuÉquipementsMatérielsLourds'
 import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTerritorialSanitaireViewModel'
 
 type BlocAutorisationEtCapacitéSanitaireProps = Readonly<{
@@ -97,7 +98,21 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
               {établissementTerritorialSanitaireViewModel.reconnaissancesContractuelles}
             </IndicateurAutorisationEtCapacité>
         }
-
+        {
+          établissementTerritorialSanitaireViewModel.lesÉquipementsMatérielsLourdsSontIlsRenseignés &&
+            <IndicateurAutorisationEtCapacité
+              contenuInfoBulle={<ContenuÉquipementsMatérielsLourds
+                dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDesÉquipementsMatérielsLourds}
+                source={Sources(wording.FINESS, wording.ARHGOS)}
+              />}
+              dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDesÉquipementsMatérielsLourds}
+              identifiant="équipements-matériels-lourds-sanitaire"
+              nomDeLIndicateur={wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS}
+              source={Sources(wording.FINESS, wording.ARHGOS)}
+            >
+              {établissementTerritorialSanitaireViewModel.équipementsMatérielsLourds}
+            </IndicateurAutorisationEtCapacité>
+        }
       </ul>
     </Bloc>
   )

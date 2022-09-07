@@ -462,6 +462,12 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
               dateDeMiseEnOeuvre: '2009-01-20',
               numéroArhgos: '01-00-0000',
             },
+            {
+              dateDAutorisation: '2005-12-14',
+              dateDeFin: '2026-03-16',
+              dateDeMiseEnOeuvre: null,
+              numéroArhgos: '01-20-0000',
+            },
           ],
           code:'06201',
           libellé: "Appareil d'IRM à utilisation clinique",

@@ -208,6 +208,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     [wording.AUTORISATIONS, 'autorisations-sanitaire'],
     [wording.AUTRES_ACTIVITÉS, 'autres-activités-sanitaire'],
     [wording.RECONNAISSANCES_CONTRACTUELLES, 'reconnaissances-contractuelles-sanitaire'],
+    [wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, 'équipements-matériels-lourds-sanitaire'],
   ])('affiche le titre de la partie %s, sa source et l’accès aux détails', (nomDeLIndicateur: string, suffixeDeLInfoBulle: string) => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
@@ -233,6 +234,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     [wording.AUTORISATIONS],
     [wording.AUTRES_ACTIVITÉS],
     [wording.RECONNAISSANCES_CONTRACTUELLES],
+    [wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS],
   ])('a une infobulle avec le contenu relatif aux %s', (nomDeLIndicateur: string) => {
     // GIVEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
@@ -265,17 +267,18 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
   })
 
   it.each([
-    [wording.AUTORISATIONS, 'autorisations'],
-    [wording.AUTRES_ACTIVITÉS, 'autresActivités'],
-    [wording.RECONNAISSANCES_CONTRACTUELLES, 'reconnaissancesContractuelles'],
-  ])('n’affiche pas l’indicateur si l’établissement n’a pas de %s', (nomDeLIndicateur: string, champDeLaDonnéeVide: string) => {
+    [wording.AUTORISATIONS, 'autorisations', 'activités'],
+    [wording.AUTRES_ACTIVITÉS, 'autresActivités', 'activités'],
+    [wording.RECONNAISSANCES_CONTRACTUELLES, 'reconnaissancesContractuelles', 'activités'],
+    [wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, 'équipementsMatérielsLourds', 'équipements'],
+  ])('n’affiche pas l’indicateur si l’établissement n’a pas de %s', (nomDeLIndicateur: string, champDeLaDonnéeVide: string, activitésOuÉquipements) => {
     // GIVEN
     const établissementTerritorialSansAutorisations = new ÉtablissementTerritorialSanitaireViewModel({
       activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
       autorisationsEtCapacités: {
         ...ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
         [champDeLaDonnéeVide]: {
-          activités: [],
+          [activitésOuÉquipements]: [],
           dateMiseÀJourSource: '2022-09-05',
         },
       },
@@ -435,8 +438,8 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
       const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
       const reconnaissancesContractuelles = sélectionneLIndicateur(wording.RECONNAISSANCES_CONTRACTUELLES, indicateurs)
-      const activité1 = within(reconnaissancesContractuelles).getByRole('link', { name: 'Surveillance continue [R7]' })
-      expect(activité1).toHaveAttribute('aria-expanded', 'false')
+      const activité = within(reconnaissancesContractuelles).getByRole('link', { name: 'Surveillance continue [R7]' })
+      expect(activité).toHaveAttribute('aria-expanded', 'false')
     })
 
     it('affiche un lien pour chaque modalité d’une reconnaissance contractuelle', () => {
@@ -447,11 +450,11 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
       const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
       const reconnaissancesContractuelles = sélectionneLIndicateur(wording.RECONNAISSANCES_CONTRACTUELLES, indicateurs)
-      const modalité1 = within(reconnaissancesContractuelles).getByRole('link', { name: 'USC polyvalente - adulte (non adossée à une unité de réanimation) [N8]' })
-      expect(modalité1).toHaveAttribute('aria-expanded', 'false')
+      const modalité = within(reconnaissancesContractuelles).getByRole('link', { name: 'USC polyvalente - adulte (non adossée à une unité de réanimation) [N8]' })
+      expect(modalité).toHaveAttribute('aria-expanded', 'false')
     })
 
-    it('affiche le libellé et le code de la forme et les dates pour chacune des formes quand ces informations sont renseignées', () => {
+    it('affiche le libellé et le code de la forme, le numéro AHRGOS, CPOM et et les dates pour chacune des formes quand ces informations sont renseignées', () => {
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
 
@@ -459,14 +462,47 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
       const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
       const reconnaissancesContractuelles = sélectionneLIndicateur(wording.RECONNAISSANCES_CONTRACTUELLES, indicateurs)
-      const informationsDUneAutreActivité = within(reconnaissancesContractuelles).getAllByRole('list', { name: 'reconnaissance-contractuelle' })[0]
-      expect(within(informationsDUneAutreActivité).getByText('Hospitalisation complète (24 heures consécutives ou plus) [01]', { selector: 'li' })).toBeInTheDocument()
-      expect(within(informationsDUneAutreActivité).getByText(`${wording.CAPACITÉ_AUTORISÉE} : 4`, { selector: 'li' })).toBeInTheDocument()
-      expect(within(informationsDUneAutreActivité).getByText(`${wording.DATE_D_EFFET_ASR} : 30/11/2013`, { selector: 'li' })).toBeInTheDocument()
-      expect(within(informationsDUneAutreActivité).getByText(`${wording.DATE_D_EFFET_CPOM} : 01/11/2013`, { selector: 'li' })).toBeInTheDocument()
-      expect(within(informationsDUneAutreActivité).getByText(`${wording.DATE_DE_FIN_CPOM} : 30/11/2018`, { selector: 'li' })).toBeInTheDocument()
-      expect(within(informationsDUneAutreActivité).getByText(`${wording.NUMÉRO_ARHGOS} : 18-00-RC00000`, { selector: 'li' })).toBeInTheDocument()
-      expect(within(informationsDUneAutreActivité).getByText(`${wording.NUMÉRO_CPOM} : 18-00-C00000`, { selector: 'li' })).toBeInTheDocument()
+      const informationsDUneReconnaissanceContractuelle = within(reconnaissancesContractuelles).getAllByRole('list', { name: 'reconnaissance-contractuelle' })[0]
+      expect(within(informationsDUneReconnaissanceContractuelle).getByText('Hospitalisation complète (24 heures consécutives ou plus) [01]', { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUneReconnaissanceContractuelle).getByText(`${wording.CAPACITÉ_AUTORISÉE} : 4`, { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUneReconnaissanceContractuelle).getByText(`${wording.DATE_D_EFFET_ASR} : 30/11/2013`, { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUneReconnaissanceContractuelle).getByText(`${wording.DATE_D_EFFET_CPOM} : 01/11/2013`, { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUneReconnaissanceContractuelle).getByText(`${wording.DATE_DE_FIN_CPOM} : 30/11/2018`, { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUneReconnaissanceContractuelle).getByText(`${wording.NUMÉRO_ARHGOS} : 18-00-RC00000`, { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUneReconnaissanceContractuelle).getByText(`${wording.NUMÉRO_CPOM} : 18-00-C00000`, { selector: 'li' })).toBeInTheDocument()
+    })
+  })
+
+  describe('L’indicateur des équipements matériels lourds', () => {
+    it('affiche un lien pour chaque équipement matériel lourd de l’établissement', () => {
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+
+      // THEN
+      const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
+      const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
+      const équipementsMatérielsLourds = sélectionneLIndicateur(wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, indicateurs)
+      const équipement = within(équipementsMatérielsLourds).getByRole('link', { name: 'Appareil d\'IRM à utilisation clinique [06201]' })
+      expect(équipement).toHaveAttribute('aria-expanded', 'false')
+    })
+
+    it('affiche les autorisations et leurs dates quand ces informations sont renseignées', () => {
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+
+      // THEN
+      const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
+      const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
+      const équipementsMatérielsLourds = sélectionneLIndicateur(wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, indicateurs)
+      const informationsDUnEquipementMatérielLourd = within(équipementsMatérielsLourds).getAllByRole('list', { name: 'équipement-matériel-lourd' })
+      expect(within(informationsDUnEquipementMatérielLourd[0]).getByText(`${wording.NUMÉRO_ARHGOS} : 01-00-0000`, { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUnEquipementMatérielLourd[0]).getByText(`${wording.DATE_D_AUTORISATION} : 02/05/2006`, { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUnEquipementMatérielLourd[0]).getByText(`${wording.DATE_DE_MISE_EN_OEUVRE} : 20/01/2009`, { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUnEquipementMatérielLourd[0]).getByText(`${wording.DATE_DE_FIN} : 16/02/2027`, { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUnEquipementMatérielLourd[1]).getByText(`${wording.NUMÉRO_ARHGOS} : 01-20-0000`, { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUnEquipementMatérielLourd[1]).getByText(`${wording.DATE_D_AUTORISATION} : 14/12/2005`, { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUnEquipementMatérielLourd[1]).getByText(`${wording.DATE_DE_MISE_EN_OEUVRE} : N/A`, { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUnEquipementMatérielLourd[1]).getByText(`${wording.DATE_DE_FIN} : 16/03/2026`, { selector: 'li' })).toBeInTheDocument()
     })
   })
 
@@ -484,14 +520,17 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     const indexPartieAutresActivités = indicateurs.indexOf(partieAutresActivités)
     const partieReconnaissancesContractuelles = sélectionneLIndicateur(wording.RECONNAISSANCES_CONTRACTUELLES, indicateurs)
     const indexPartieReconnaissancesContractuelles = indicateurs.indexOf(partieReconnaissancesContractuelles)
+    const partieÉquipementsMatérielsLourds = sélectionneLIndicateur(wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, indicateurs)
+    const indexPartieÉquipementsMatérielsLourds = indicateurs.indexOf(partieÉquipementsMatérielsLourds)
 
     expect(indexPartieAutorisations).toBeLessThan(indexPartieAutresActivités)
     expect(indexPartieAutresActivités).toBeLessThan(indexPartieReconnaissancesContractuelles)
+    expect(indexPartieReconnaissancesContractuelles).toBeLessThan(indexPartieÉquipementsMatérielsLourds)
   })
 })
 
 function sélectionneLIndicateur(indicateur: string, éléments: HTMLElement[]): HTMLElement {
-  const partieAutorisations = éléments.filter((élément) => élément.textContent?.includes(indicateur))
+  const partieAutorisations = éléments.filter((element) => element.textContent?.includes(indicateur))
   expect(partieAutorisations).toHaveLength(1)
   return partieAutorisations[0]
 }

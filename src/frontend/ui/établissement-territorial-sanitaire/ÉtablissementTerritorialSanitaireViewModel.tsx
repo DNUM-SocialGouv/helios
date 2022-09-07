@@ -792,4 +792,65 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
   public get lesReconnaissancesContractuellesSontEllesRenseignées(): boolean {
     return this.établissementTerritorial.autorisationsEtCapacités.reconnaissancesContractuelles.activités.length !== 0
   }
+
+  public get équipementsMatérielsLourds(): JSX.Element {
+    const équipementsMatérielsLourdsDeLÉtablissement = this.établissementTerritorial.autorisationsEtCapacités.équipementsMatérielsLourds
+
+    return (
+      <ul
+        aria-label="équipements"
+        className={`${stylesBlocAutorisationsEtCapacités['liste-activités']}`}
+      >
+        {équipementsMatérielsLourdsDeLÉtablissement.équipements.map((équipements) => (
+          <li
+            key={`équipement-${équipements.code}`}
+          >
+            <ActionneurDAccordéon
+              for={`accordion-${équipements.code}`}
+              titre={`${équipements.libellé} [${équipements.code}]`}
+            />
+            <ul
+              className={` fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-modalités']}`}
+              id={`accordion-${équipements.code}`}
+            >
+              {
+                équipements.autorisations.map((autorisationÉquipementMatérielLourd) => {
+                  return (
+                    <li key={`forme-${autorisationÉquipementMatérielLourd.numéroArhgos}`}>
+                      <ul
+                        aria-label="équipement-matériel-lourd"
+                        className="fr-tags-group"
+                      >
+                        <li className="fr-tag fr-fi-arrow-right-line fr-tag--icon-left">
+                          {`${this.wording.NUMÉRO_ARHGOS} : ${autorisationÉquipementMatérielLourd.numéroArhgos ? autorisationÉquipementMatérielLourd.numéroArhgos : 'N/A'}`}
+                        </li>
+                        <li className="fr-tag">
+                          {`${this.wording.DATE_D_AUTORISATION} : ${autorisationÉquipementMatérielLourd.dateDAutorisation ? StringFormater.formateLaDate(autorisationÉquipementMatérielLourd.dateDAutorisation) : 'N/A'}`}
+                        </li>
+                        <li className="fr-tag">
+                          {`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${autorisationÉquipementMatérielLourd.dateDeMiseEnOeuvre ? StringFormater.formateLaDate(autorisationÉquipementMatérielLourd.dateDeMiseEnOeuvre) : 'N/A'}`}
+                        </li>
+                        <li className="fr-tag">
+                          {`${this.wording.DATE_DE_FIN} : ${autorisationÉquipementMatérielLourd.dateDeFin ? StringFormater.formateLaDate(autorisationÉquipementMatérielLourd.dateDeFin) : 'N/A'}`}
+                        </li>
+                      </ul>
+                    </li>
+                  )
+                })
+              }
+            </ul>
+          </li>
+        ))
+        }
+      </ul>
+    )
+  }
+
+  public get dateDeMiseÀJourDesÉquipementsMatérielsLourds(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.autorisationsEtCapacités.reconnaissancesContractuelles.dateMiseÀJourSource)
+  }
+
+  public get lesÉquipementsMatérielsLourdsSontIlsRenseignés(): boolean {
+    return this.établissementTerritorial.autorisationsEtCapacités.équipementsMatérielsLourds.équipements.length !== 0
+  }
 }
