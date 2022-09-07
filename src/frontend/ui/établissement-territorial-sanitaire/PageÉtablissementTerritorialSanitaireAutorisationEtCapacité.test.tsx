@@ -179,7 +179,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       expect(titre).not.toBeInTheDocument()
     })
 
-    it('n’affiche pas l’indicateur quand il n’est pas renseigné (Capacité par activités)', () => {
+    it('n’affiche pas les capacités lorsque celles-ci ne sont pas renseignées', () => {
       const établissementTerritorialSansActivité = new ÉtablissementTerritorialSanitaireViewModel({
         activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
         autorisationsEtCapacités: {
