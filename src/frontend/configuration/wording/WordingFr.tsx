@@ -34,6 +34,7 @@ export class WordingFr implements Wording {
   readonly TITRE_LISTE_DES_ÉTABLISSEMENTS_TERRITORIAUX: string = 'Les établissements territoriaux'
   readonly ENTITÉS_JURIDIQUES: string = 'Entité(s) Juridique(s)'
   readonly ÉTABLISSEMENT_TERRITORIAUX: string = 'Établissements Territoriaux'
+  readonly SITE_EN_CONSTRUCTION: string = 'Le site est dans sa phase pilote : il est toujours en construction et va évoluer régulièrement.'
 
   // Recherche
   readonly RECHERCHE_TITRE: string = 'Bienvenue sur Helios !'
