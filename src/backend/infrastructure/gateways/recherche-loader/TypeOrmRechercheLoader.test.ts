@@ -336,7 +336,7 @@ describe('La recherche d’entités et d’établissements', () => {
   })
 
   describe('Par département', () => {
-    it('retourne un résultat quand de département de l’entité juridique est connu, sans faire attention aux accenets, tirets, apostrophes ni casse', async () => {
+    it('retourne un résultat quand le département de l’entité juridique est connu, sans faire attention aux accenets, tirets, apostrophes ni casse', async () => {
       // GIVEN
       const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ département: 'PUY-DE-DOME' })
       await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
