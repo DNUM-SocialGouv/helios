@@ -204,7 +204,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     return StringFormater.formateLaDate(this.établissementTerritorial.activités[0].nombreDePassagesAuxUrgences.dateMiseÀJourSource)
   }
 
-  public get capacitéParActivitésSontIlsRenseignés(): boolean {
+  public get lesCapacitésParActivitésSontEllesRenseignées(): boolean {
     const capacités = this.établissementTerritorial.autorisationsEtCapacités.capacités
 
     return (capacités !== null) && (
@@ -636,7 +636,6 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
       >
         {autresActivitésDeLÉtablissement.activités.map((activité) => (
           <li
-            className=""
             key={`activité-${activité.code}`}
           >
             <ActionneurDAccordéon
@@ -650,7 +649,6 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
               {
                 activité.modalités.map((modalité) => (
                   <li
-                    className=""
                     key={`modalité-${modalité.code}`}
                   >
                     <ActionneurDAccordéon
@@ -666,7 +664,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
                         modalité.formes.map((forme) => {
                           const autreActivitéSanitaire = forme.autreActivitéSanitaire
                           return (
-                            <li key={`clientèle-${forme.code}`}>
+                            <li key={`forme-${forme.code}`}>
                               <ul
                                 aria-label="autre-activité"
                                 className="fr-tags-group"
@@ -705,5 +703,154 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
 
   public get lesAutresActivitésSontEllesRenseignées(): boolean {
     return this.établissementTerritorial.autorisationsEtCapacités.autresActivités.activités.length !== 0
+  }
+
+  public get reconnaissancesContractuelles(): JSX.Element {
+    const reconnaissancesContractuellesDeLÉtablissement = this.établissementTerritorial.autorisationsEtCapacités.reconnaissancesContractuelles
+
+    return (
+      <ul
+        aria-label="activités"
+        className={`${stylesBlocAutorisationsEtCapacités['liste-activités']}`}
+      >
+        {reconnaissancesContractuellesDeLÉtablissement.activités.map((activité) => (
+          <li
+            key={`activité-${activité.code}`}
+          >
+            <ActionneurDAccordéon
+              for={`accordion-${activité.code}`}
+              titre={`${activité.libellé} [${activité.code}]`}
+            />
+            <ul
+              className={` fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-modalités']}`}
+              id={`accordion-${activité.code}`}
+            >
+              {
+                activité.modalités.map((modalité) => (
+                  <li
+                    key={`modalité-${modalité.code}`}
+                  >
+                    <ActionneurDAccordéon
+                      for={`accordion-${activité.code}-${modalité.code}`}
+                      texteGras={false}
+                      titre={`${modalité.libellé} [${modalité.code}]`}
+                    />
+                    <ul
+                      className={`fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-formes']}`}
+                      id={`accordion-${activité.code}-${modalité.code}`}
+                    >
+                      {
+                        modalité.formes.map((forme) => {
+                          const reconnaissancesContractuellesSanitaire = forme.reconnaissanceContractuelleSanitaire
+                          return (
+                            <li key={`forme-${forme.code}`}>
+                              <ul
+                                aria-label="reconnaissance-contractuelle"
+                                className="fr-tags-group"
+                              >
+                                <li className="fr-tag fr-fi-arrow-right-line fr-tag--icon-left">
+                                  {`${forme.libellé} [${forme.code}]`}
+                                </li>
+                                <li className="fr-tag">
+                                  {`${this.wording.CAPACITÉ_AUTORISÉE} : ${reconnaissancesContractuellesSanitaire.capacitéAutorisée ? reconnaissancesContractuellesSanitaire.capacitéAutorisée : 'N/A'}`}
+                                </li>
+                                <li className="fr-tag">
+                                  {`${this.wording.DATE_D_EFFET_ASR} : ${reconnaissancesContractuellesSanitaire.dateDEffetAsr ? StringFormater.formateLaDate(reconnaissancesContractuellesSanitaire.dateDEffetAsr) : 'N/A'}`}
+                                </li>
+                                <li className="fr-tag">
+                                  {`${this.wording.NUMÉRO_ARHGOS} : ${reconnaissancesContractuellesSanitaire.numéroArhgos ? reconnaissancesContractuellesSanitaire.numéroArhgos : 'N/A'}`}
+                                </li>
+                                <li className="fr-tag">
+                                  {`${this.wording.DATE_D_EFFET_CPOM} : ${reconnaissancesContractuellesSanitaire.dateDEffetCpom ? StringFormater.formateLaDate(reconnaissancesContractuellesSanitaire.dateDEffetCpom) : 'N/A'}`}
+                                </li>
+                                <li className="fr-tag">
+                                  {`${this.wording.DATE_DE_FIN_CPOM} : ${reconnaissancesContractuellesSanitaire.dateDeFinCpom ? StringFormater.formateLaDate(reconnaissancesContractuellesSanitaire.dateDeFinCpom) : 'N/A'}`}
+                                </li>
+                                <li className="fr-tag">
+                                  {`${this.wording.NUMÉRO_CPOM} : ${reconnaissancesContractuellesSanitaire.numéroCpom ? reconnaissancesContractuellesSanitaire.numéroCpom : 'N/A'}`}
+                                </li>
+                              </ul>
+                            </li>
+                          )
+                        })
+                      }
+                    </ul>
+                  </li>
+                ))
+              }
+            </ul>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  public get dateDeMiseÀJourDesReconnaissancesContractuelles(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.autorisationsEtCapacités.reconnaissancesContractuelles.dateMiseÀJourSource)
+  }
+
+  public get lesReconnaissancesContractuellesSontEllesRenseignées(): boolean {
+    return this.établissementTerritorial.autorisationsEtCapacités.reconnaissancesContractuelles.activités.length !== 0
+  }
+
+  public get équipementsMatérielsLourds(): JSX.Element {
+    const équipementsMatérielsLourdsDeLÉtablissement = this.établissementTerritorial.autorisationsEtCapacités.équipementsMatérielsLourds
+
+    return (
+      <ul
+        aria-label="équipements"
+        className={`${stylesBlocAutorisationsEtCapacités['liste-activités']}`}
+      >
+        {équipementsMatérielsLourdsDeLÉtablissement.équipements.map((équipements) => (
+          <li
+            key={`équipement-${équipements.code}`}
+          >
+            <ActionneurDAccordéon
+              for={`accordion-${équipements.code}`}
+              titre={`${équipements.libellé} [${équipements.code}]`}
+            />
+            <ul
+              className={` fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-modalités']}`}
+              id={`accordion-${équipements.code}`}
+            >
+              {
+                équipements.autorisations.map((autorisationÉquipementMatérielLourd) => {
+                  return (
+                    <li key={`forme-${autorisationÉquipementMatérielLourd.numéroArhgos}`}>
+                      <ul
+                        aria-label="équipement-matériel-lourd"
+                        className="fr-tags-group"
+                      >
+                        <li className="fr-tag fr-fi-arrow-right-line fr-tag--icon-left">
+                          {`${this.wording.NUMÉRO_ARHGOS} : ${autorisationÉquipementMatérielLourd.numéroArhgos ? autorisationÉquipementMatérielLourd.numéroArhgos : 'N/A'}`}
+                        </li>
+                        <li className="fr-tag">
+                          {`${this.wording.DATE_D_AUTORISATION} : ${autorisationÉquipementMatérielLourd.dateDAutorisation ? StringFormater.formateLaDate(autorisationÉquipementMatérielLourd.dateDAutorisation) : 'N/A'}`}
+                        </li>
+                        <li className="fr-tag">
+                          {`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${autorisationÉquipementMatérielLourd.dateDeMiseEnOeuvre ? StringFormater.formateLaDate(autorisationÉquipementMatérielLourd.dateDeMiseEnOeuvre) : 'N/A'}`}
+                        </li>
+                        <li className="fr-tag">
+                          {`${this.wording.DATE_DE_FIN} : ${autorisationÉquipementMatérielLourd.dateDeFin ? StringFormater.formateLaDate(autorisationÉquipementMatérielLourd.dateDeFin) : 'N/A'}`}
+                        </li>
+                      </ul>
+                    </li>
+                  )
+                })
+              }
+            </ul>
+          </li>
+        ))
+        }
+      </ul>
+    )
+  }
+
+  public get dateDeMiseÀJourDesÉquipementsMatérielsLourds(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.autorisationsEtCapacités.équipementsMatérielsLourds.dateMiseÀJourSource)
+  }
+
+  public get lesÉquipementsMatérielsLourdsSontIlsRenseignés(): boolean {
+    return this.établissementTerritorial.autorisationsEtCapacités.équipementsMatérielsLourds.équipements.length !== 0
   }
 }
