@@ -2,7 +2,7 @@ import { fireEvent, screen, within } from '@testing-library/react'
 
 import { numéroFinessÉtablissementTerritorial } from '../../../backend/testHelper'
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from '../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder'
-import { fakeFrontDependencies, renderFakeComponent } from '../../testHelper'
+import { fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent, trimHtml } from '../../testHelper'
 import { PageÉtablissementTerritorialSanitaire } from './PageÉtablissementTerritorialSanitaire'
 import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTerritorialSanitaireViewModel'
 
@@ -632,7 +632,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       expect(modalité).toHaveAttribute('aria-expanded', 'false')
     })
 
-    it('affiche le libellé et le code de la forme, le numéro AHRGOS, CPOM et et les dates pour chacune des formes quand ces informations sont renseignées', () => {
+    it.only('affiche le libellé et le code de la forme, le numéro AHRGOS, CPOM et et les dates pour chacune des formes quand ces informations sont renseignées', () => {
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
 
@@ -643,11 +643,11 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       const informationsDUneReconnaissanceContractuelle = within(reconnaissancesContractuelles).getAllByRole('list', { name: 'reconnaissance-contractuelle' })[0]
       expect(within(informationsDUneReconnaissanceContractuelle).getByText('Hospitalisation complète (24 heures consécutives ou plus) [01]', { selector: 'li' })).toBeInTheDocument()
       expect(within(informationsDUneReconnaissanceContractuelle).getByText(`${wording.CAPACITÉ_AUTORISÉE} : 4`, { selector: 'li' })).toBeInTheDocument()
-      expect(within(informationsDUneReconnaissanceContractuelle).getByText(`${wording.DATE_D_EFFET_ASR} : 30/11/2013`, { selector: 'li' })).toBeInTheDocument()
-      expect(within(informationsDUneReconnaissanceContractuelle).getByText(`${wording.DATE_D_EFFET_CPOM} : 01/11/2013`, { selector: 'li' })).toBeInTheDocument()
-      expect(within(informationsDUneReconnaissanceContractuelle).getByText(`${wording.DATE_DE_FIN_CPOM} : 30/11/2018`, { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUneReconnaissanceContractuelle).getByText('Date d’effet de l’ : 30/11/2013', { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUneReconnaissanceContractuelle).getByText('Date d’effet du : 01/11/2013', { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUneReconnaissanceContractuelle).getByText('Date de fin du : 30/11/2018', { selector: 'li' })).toBeInTheDocument()
       expect(within(informationsDUneReconnaissanceContractuelle).getByText(`${wording.NUMÉRO_ARHGOS} : 18-00-RC00000`, { selector: 'li' })).toBeInTheDocument()
-      expect(within(informationsDUneReconnaissanceContractuelle).getByText(`${wording.NUMÉRO_CPOM} : 18-00-C00000`, { selector: 'li' })).toBeInTheDocument()
+      expect(within(informationsDUneReconnaissanceContractuelle).getByText('Numéro de : 18-00-C00000', { selector: 'li' })).toBeInTheDocument()
     })
   })
 
