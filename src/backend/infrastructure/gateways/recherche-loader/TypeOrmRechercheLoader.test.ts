@@ -230,13 +230,13 @@ describe('La recherche d’entités et d’établissements', () => {
   describe('Par commune', () => {
     it('retourne un résultat quand la commune de l’entité juridique est connue', async () => {
       // GIVEN
-      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY' })
+      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ commune: 'OYONNAX' })
       await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
 
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('CENTRE HOSPITALIER DU HAUT BUGEY')
+      const recherche = await typeOrmRechercheLoader.recherche('OYONNAX')
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
