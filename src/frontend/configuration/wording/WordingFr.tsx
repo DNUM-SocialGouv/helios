@@ -3,6 +3,8 @@ import { ReactChild, ReactElement } from 'react'
 import { Wording } from './Wording'
 
 export class WordingFr implements Wording {
+  readonly ABRÉVIATION_CPOM: ReactElement = (<abbr title="Contrat Pluriannuel d’Objectifs et de Moyens">CPOM</abbr>)
+
   // Header
   readonly INTITULÉ_RÉPUBLIQUE_FRANÇAISE: ReactChild = (
     <>
@@ -87,7 +89,7 @@ export class WordingFr implements Wording {
   readonly DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM: ReactElement = (
     <>
       {'Date d’entrée en vigueur du '}
-      <abbr title="Contrat Pluriannuel d’Objectifs et de Moyens">CPOM</abbr>
+      {this.ABRÉVIATION_CPOM}
     </>
   )
   readonly ENTITÉ_JURIDIQUE_DE_RATTACHEMENT: string = 'Entité juridique de rattachement'
@@ -148,10 +150,27 @@ export class WordingFr implements Wording {
   readonly ÉQUIPEMENTS_MATÉRIELS_LOURDS: string = 'Équipements matériels lourds'
   readonly DATE_DE_FIN: string = 'Date de fin'
   readonly DATE_DE_MISE_EN_OEUVRE: string = 'Date de mise en oeuvre'
-  readonly DATE_D_EFFET_ASR: string = 'Date d’effet de l’ASR'
-  readonly DATE_D_EFFET_CPOM: string = 'Date d’effet du CPOM'
-  readonly DATE_DE_FIN_CPOM: string = 'Date de fin du CPOM'
-  readonly NUMÉRO_CPOM: string = 'Numéro de CPOM'
+  readonly DATE_D_EFFET_ASR: ReactElement = (
+    <>
+      Date d’effet de l’
+      <abbr title="Activités Soumises à Reconnaissance contractuelle">ASR</abbr>
+      &nbsp;
+    </>)
+  readonly DATE_D_EFFET_CPOM: ReactElement = (<>
+    Date d’effet du&nbsp;
+    {this.ABRÉVIATION_CPOM}
+    &nbsp;
+  </>)
+  readonly DATE_DE_FIN_CPOM: ReactElement = (<>
+    Date de fin du&nbsp;
+    {this.ABRÉVIATION_CPOM}
+    &nbsp;
+  </>)
+  readonly NUMÉRO_CPOM: ReactElement = (<>
+    Numéro de&nbsp;
+    {this.ABRÉVIATION_CPOM}
+    &nbsp;
+  </>)
   readonly NUMÉRO_ARHGOS: string = 'Numéro ARHGOS'
   readonly CAPACITÉ_PAR_ACTIVITÉS: string = 'Capacité par activités'
   readonly ACTIVITÉS: string = 'Activités'

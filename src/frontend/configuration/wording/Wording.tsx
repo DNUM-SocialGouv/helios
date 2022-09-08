@@ -123,10 +123,10 @@ export interface Wording {
   readonly AUTRES_ACTIVITÉS: string
   readonly RECONNAISSANCES_CONTRACTUELLES: string
   readonly ÉQUIPEMENTS_MATÉRIELS_LOURDS: string
-  readonly DATE_D_EFFET_ASR: string
-  readonly DATE_D_EFFET_CPOM: string
-  readonly DATE_DE_FIN_CPOM: string
-  readonly NUMÉRO_CPOM: string
+  readonly DATE_D_EFFET_ASR: ReactElement
+  readonly DATE_D_EFFET_CPOM: ReactElement
+  readonly DATE_DE_FIN_CPOM: ReactElement
+  readonly NUMÉRO_CPOM: ReactElement
   readonly NUMÉRO_ARHGOS: string
   readonly CAPACITÉ_PAR_ACTIVITÉS: string
   readonly ACTIVITÉS: string

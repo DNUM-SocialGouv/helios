@@ -755,19 +755,23 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
                                   {`${this.wording.CAPACITÉ_AUTORISÉE} : ${reconnaissancesContractuellesSanitaire.capacitéAutorisée ? reconnaissancesContractuellesSanitaire.capacitéAutorisée : 'N/A'}`}
                                 </li>
                                 <li className="fr-tag">
-                                  {`${this.wording.DATE_D_EFFET_ASR} : ${reconnaissancesContractuellesSanitaire.dateDEffetAsr ? StringFormater.formateLaDate(reconnaissancesContractuellesSanitaire.dateDEffetAsr) : 'N/A'}`}
+                                  {this.wording.DATE_D_EFFET_ASR}
+                                  {`: ${reconnaissancesContractuellesSanitaire.dateDEffetAsr ? StringFormater.formateLaDate(reconnaissancesContractuellesSanitaire.dateDEffetAsr) : 'N/A'}`}
                                 </li>
                                 <li className="fr-tag">
                                   {`${this.wording.NUMÉRO_ARHGOS} : ${reconnaissancesContractuellesSanitaire.numéroArhgos ? reconnaissancesContractuellesSanitaire.numéroArhgos : 'N/A'}`}
                                 </li>
                                 <li className="fr-tag">
-                                  {`${this.wording.DATE_D_EFFET_CPOM} : ${reconnaissancesContractuellesSanitaire.dateDEffetCpom ? StringFormater.formateLaDate(reconnaissancesContractuellesSanitaire.dateDEffetCpom) : 'N/A'}`}
+                                  {this.wording.DATE_D_EFFET_CPOM}
+                                  {`: ${reconnaissancesContractuellesSanitaire.dateDEffetCpom ? StringFormater.formateLaDate(reconnaissancesContractuellesSanitaire.dateDEffetCpom) : 'N/A'}`}
                                 </li>
                                 <li className="fr-tag">
-                                  {`${this.wording.DATE_DE_FIN_CPOM} : ${reconnaissancesContractuellesSanitaire.dateDeFinCpom ? StringFormater.formateLaDate(reconnaissancesContractuellesSanitaire.dateDeFinCpom) : 'N/A'}`}
+                                  {this.wording.DATE_DE_FIN_CPOM}
+                                  {`: ${reconnaissancesContractuellesSanitaire.dateDeFinCpom ? StringFormater.formateLaDate(reconnaissancesContractuellesSanitaire.dateDeFinCpom) : 'N/A'}`}
                                 </li>
                                 <li className="fr-tag">
-                                  {`${this.wording.NUMÉRO_CPOM} : ${reconnaissancesContractuellesSanitaire.numéroCpom ? reconnaissancesContractuellesSanitaire.numéroCpom : 'N/A'}`}
+                                  {this.wording.NUMÉRO_CPOM}
+                                  {`: ${reconnaissancesContractuellesSanitaire.numéroCpom ? reconnaissancesContractuellesSanitaire.numéroCpom : 'N/A'}`}
                                 </li>
                               </ul>
                             </li>
