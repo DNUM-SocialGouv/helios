@@ -381,7 +381,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     })
   })
 
-  it('affiche une phrase à la place des indicateurs lorsqu’aucune autorisation n’est renseignée', () => {
+  it('affiche une phrase à la place des indicateurs lorsqu’aucune autorisation ni capacité n’est renseignée', () => {
     // GIVEN
     const établissementTerritorialSansAutorisationsNiCapacités = new ÉtablissementTerritorialSanitaireViewModel({
       activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
@@ -427,6 +427,184 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     // THEN
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
     expect(within(activité).getByText(wording.INDICATEURS_VIDES)).toBeInTheDocument()
+  })
+
+  it.each([
+    {
+      indicateurAffiché: wording.AUTORISATIONS,
+      viewModel: ÉtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(
+        wording,
+        paths,
+        {
+          autresActivités: {
+            activités: [],
+            dateMiseÀJourSource: '2022-08-29',
+          },
+          capacités: {
+            dateMiseÀJourSource: '2022-09-02',
+            nombreDeLitsEnChirurgie: null,
+            nombreDeLitsEnMédecine: null,
+            nombreDeLitsEnObstétrique: null,
+            nombreDeLitsEnSsr: null,
+            nombreDeLitsEnUsld: null,
+            nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
+            nombreDePlacesEnChirurgie: null,
+            nombreDePlacesEnMédecine: null,
+            nombreDePlacesEnObstétrique: null,
+            nombreDePlacesEnPsyHospitalisationPartielle: null,
+            nombreDePlacesEnSsr: null,
+          },
+          numéroFinessÉtablissementTerritorial: '123456789',
+          reconnaissancesContractuelles: {
+            activités: [],
+            dateMiseÀJourSource: '2022-08-29',
+          },
+          équipementsMatérielsLourds: {
+            dateMiseÀJourSource: '2022-08-29',
+            équipements: [],
+          },
+        }
+      ),
+    },
+    {
+      indicateurAffiché: wording.AUTRES_ACTIVITÉS,
+      viewModel: ÉtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(
+        wording,
+        paths,
+        {
+          autorisations: {
+            activités: [],
+            dateMiseÀJourSource: '2022-08-29',
+          },
+          capacités: {
+            dateMiseÀJourSource: '2022-09-02',
+            nombreDeLitsEnChirurgie: null,
+            nombreDeLitsEnMédecine: null,
+            nombreDeLitsEnObstétrique: null,
+            nombreDeLitsEnSsr: null,
+            nombreDeLitsEnUsld: null,
+            nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
+            nombreDePlacesEnChirurgie: null,
+            nombreDePlacesEnMédecine: null,
+            nombreDePlacesEnObstétrique: null,
+            nombreDePlacesEnPsyHospitalisationPartielle: null,
+            nombreDePlacesEnSsr: null,
+          },
+          reconnaissancesContractuelles: {
+            activités: [],
+            dateMiseÀJourSource: '2022-08-29',
+          },
+          équipementsMatérielsLourds: {
+            dateMiseÀJourSource: '2022-08-29',
+            équipements: [],
+          },
+        }
+      ),
+    },
+    {
+      indicateurAffiché: wording.CAPACITÉ_PAR_ACTIVITÉS,
+      viewModel: ÉtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(
+        wording,
+        paths,
+        {
+          autorisations: {
+            activités: [],
+            dateMiseÀJourSource: '2022-08-29',
+          },
+          autresActivités: {
+            activités: [],
+            dateMiseÀJourSource: '2022-08-29',
+          },
+          reconnaissancesContractuelles: {
+            activités: [],
+            dateMiseÀJourSource: '2022-08-29',
+          },
+          équipementsMatérielsLourds: {
+            dateMiseÀJourSource: '2022-08-29',
+            équipements: [],
+          },
+        }
+      ),
+    },
+    {
+      indicateurAffiché: wording.RECONNAISSANCES_CONTRACTUELLES,
+      viewModel: ÉtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(
+        wording,
+        paths,
+        {
+          autorisations: {
+            activités: [],
+            dateMiseÀJourSource: '2022-08-29',
+          },
+          autresActivités: {
+            activités: [],
+            dateMiseÀJourSource: '2022-08-29',
+          },
+          capacités: {
+            dateMiseÀJourSource: '2022-09-02',
+            nombreDeLitsEnChirurgie: null,
+            nombreDeLitsEnMédecine: null,
+            nombreDeLitsEnObstétrique: null,
+            nombreDeLitsEnSsr: null,
+            nombreDeLitsEnUsld: null,
+            nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
+            nombreDePlacesEnChirurgie: null,
+            nombreDePlacesEnMédecine: null,
+            nombreDePlacesEnObstétrique: null,
+            nombreDePlacesEnPsyHospitalisationPartielle: null,
+            nombreDePlacesEnSsr: null,
+          },
+          équipementsMatérielsLourds: {
+            dateMiseÀJourSource: '2022-08-29',
+            équipements: [],
+          },
+        }
+      ),
+    },
+    {
+      indicateurAffiché: wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS,
+      viewModel: ÉtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(
+        wording,
+        paths,
+        {
+          autorisations: {
+            activités: [],
+            dateMiseÀJourSource: '2022-08-29',
+          },
+          autresActivités: {
+            activités: [],
+            dateMiseÀJourSource: '2022-08-29',
+          },
+          capacités: {
+            dateMiseÀJourSource: '2022-09-02',
+            nombreDeLitsEnChirurgie: null,
+            nombreDeLitsEnMédecine: null,
+            nombreDeLitsEnObstétrique: null,
+            nombreDeLitsEnSsr: null,
+            nombreDeLitsEnUsld: null,
+            nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
+            nombreDePlacesEnChirurgie: null,
+            nombreDePlacesEnMédecine: null,
+            nombreDePlacesEnObstétrique: null,
+            nombreDePlacesEnPsyHospitalisationPartielle: null,
+            nombreDePlacesEnSsr: null,
+          },
+          reconnaissancesContractuelles: {
+            activités: [],
+            dateMiseÀJourSource: '2022-08-29',
+          },
+        }
+      ),
+    },
+  ])('affiche l‘indicateur $indicateurAffiché lorsqu‘il est le seul à être renseigné', ({ indicateurAffiché, viewModel }) => {
+    // GIVEN
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={viewModel} />)
+
+    // THEN
+    const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
+    expect(within(activité).getByText(indicateurAffiché, { selector: 'h1' })).toBeInTheDocument()
+    expect(within(activité).queryByText(wording.INDICATEURS_VIDES)).not.toBeInTheDocument()
   })
 
   describe('L’indicateur des reconnaissances contractuelles', () => {
@@ -514,15 +692,18 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
 
     const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
     const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
-    const partieAutorisations = sélectionneLIndicateur(wording.AUTORISATIONS, indicateurs)
-    const indexPartieAutorisations = indicateurs.indexOf(partieAutorisations)
-    const partieAutresActivités = sélectionneLIndicateur(wording.AUTRES_ACTIVITÉS, indicateurs)
-    const indexPartieAutresActivités = indicateurs.indexOf(partieAutresActivités)
-    const partieReconnaissancesContractuelles = sélectionneLIndicateur(wording.RECONNAISSANCES_CONTRACTUELLES, indicateurs)
-    const indexPartieReconnaissancesContractuelles = indicateurs.indexOf(partieReconnaissancesContractuelles)
-    const partieÉquipementsMatérielsLourds = sélectionneLIndicateur(wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, indicateurs)
-    const indexPartieÉquipementsMatérielsLourds = indicateurs.indexOf(partieÉquipementsMatérielsLourds)
+    const itemCapacitéParActivités = sélectionneLIndicateur(wording.CAPACITÉ_PAR_ACTIVITÉS, indicateurs)
+    const indexPartieCapacitéParActivités = indicateurs.indexOf(itemCapacitéParActivités)
+    const itemAutorisations = sélectionneLIndicateur(wording.AUTORISATIONS, indicateurs)
+    const indexPartieAutorisations = indicateurs.indexOf(itemAutorisations)
+    const itemAutresActivités = sélectionneLIndicateur(wording.AUTRES_ACTIVITÉS, indicateurs)
+    const indexPartieAutresActivités = indicateurs.indexOf(itemAutresActivités)
+    const itemReconnaissancesContractuelles = sélectionneLIndicateur(wording.RECONNAISSANCES_CONTRACTUELLES, indicateurs)
+    const indexPartieReconnaissancesContractuelles = indicateurs.indexOf(itemReconnaissancesContractuelles)
+    const itemÉquipementsMatérielsLourds = sélectionneLIndicateur(wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, indicateurs)
+    const indexPartieÉquipementsMatérielsLourds = indicateurs.indexOf(itemÉquipementsMatérielsLourds)
 
+    expect(indexPartieCapacitéParActivités).toBeLessThan(indexPartieAutorisations)
     expect(indexPartieAutorisations).toBeLessThan(indexPartieAutresActivités)
     expect(indexPartieAutresActivités).toBeLessThan(indexPartieReconnaissancesContractuelles)
     expect(indexPartieReconnaissancesContractuelles).toBeLessThan(indexPartieÉquipementsMatérielsLourds)
@@ -530,7 +711,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
 })
 
 function sélectionneLIndicateur(indicateur: string, éléments: HTMLElement[]): HTMLElement {
-  const partieAutorisations = éléments.filter((element) => element.textContent?.includes(indicateur))
-  expect(partieAutorisations).toHaveLength(1)
-  return partieAutorisations[0]
+  const itemAutorisations = éléments.filter((element) => element.textContent?.includes(indicateur))
+  expect(itemAutorisations).toHaveLength(1)
+  return itemAutorisations[0]
 }

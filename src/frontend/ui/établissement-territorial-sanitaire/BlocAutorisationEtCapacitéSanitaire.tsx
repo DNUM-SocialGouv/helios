@@ -19,9 +19,11 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
   const { wording } = useDependencies()
 
   if (
-    !établissementTerritorialSanitaireViewModel.capacitéParActivitésSontIlsRenseignés &&
+    !établissementTerritorialSanitaireViewModel.lesCapacitésParActivitésSontEllesRenseignées &&
     !établissementTerritorialSanitaireViewModel.lesAutorisationsSontEllesRenseignées &&
-    !établissementTerritorialSanitaireViewModel.lesAutresActivitésSontEllesRenseignées
+    !établissementTerritorialSanitaireViewModel.lesAutresActivitésSontEllesRenseignées &&
+    !établissementTerritorialSanitaireViewModel.lesReconnaissancesContractuellesSontEllesRenseignées &&
+    !établissementTerritorialSanitaireViewModel.lesÉquipementsMatérielsLourdsSontIlsRenseignés
   ) {
     return (
       <Bloc titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>
@@ -39,7 +41,7 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
         className={styles['liste-indicateurs']}
       >
         {
-          établissementTerritorialSanitaireViewModel.capacitéParActivitésSontIlsRenseignés &&
+          établissementTerritorialSanitaireViewModel.lesCapacitésParActivitésSontEllesRenseignées &&
           <IndicateurGraphique
             contenuInfoBulle={<ContenuCapacitéParActivités
               dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDeLaCatégorieDeLÉtablissement}

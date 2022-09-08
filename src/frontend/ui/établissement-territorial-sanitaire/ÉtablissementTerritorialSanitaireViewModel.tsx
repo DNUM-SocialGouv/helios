@@ -204,7 +204,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     return StringFormater.formateLaDate(this.établissementTerritorial.activités[0].nombreDePassagesAuxUrgences.dateMiseÀJourSource)
   }
 
-  public get capacitéParActivitésSontIlsRenseignés(): boolean {
+  public get lesCapacitésParActivitésSontEllesRenseignées(): boolean {
     const capacités = this.établissementTerritorial.autorisationsEtCapacités.capacités
 
     return (capacités !== null) && (

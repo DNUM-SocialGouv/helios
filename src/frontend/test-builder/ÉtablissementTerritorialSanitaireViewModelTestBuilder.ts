@@ -488,4 +488,17 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       },
     }, wording, paths)
   }
+
+  public static créeAvecAutorisationsEtCapacités(
+    wording: Wording, paths: Paths, champsSurchargés?: Partial<ÉtablissementTerritorialSanitaire['autorisationsEtCapacités']>
+  ): ÉtablissementTerritorialSanitaireViewModel {
+    return new ÉtablissementTerritorialSanitaireViewModel({
+      activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
+      autorisationsEtCapacités: {
+        ...ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
+        ...champsSurchargés,
+      },
+      identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
+    }, wording, paths)
+  }
 }
