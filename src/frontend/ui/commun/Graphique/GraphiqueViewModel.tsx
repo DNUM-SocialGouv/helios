@@ -432,7 +432,7 @@ export class GraphiqueViewModel {
       scales: {
         x: {
           grid: { display: false, drawBorder: false },
-          max: valeurMaximale,
+          max: valeurMaximale * 1.1,
           position: 'top',
           stack: 'capacite',
           stackWeight: 1,
@@ -446,7 +446,7 @@ export class GraphiqueViewModel {
         },
         x2: {
           grid: { display: false, drawBorder: false },
-          max: valeurMaximale + 5,
+          max: valeurMaximale * 1.1,
           position: 'top',
           stack: 'capacite',
           stackWeight: 2,
