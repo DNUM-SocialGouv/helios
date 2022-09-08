@@ -11,8 +11,8 @@ describe('La page des mentions légales', () => {
     renderFakeComponent(<PageDesMentionsLégales />)
 
     // THEN
-    expect(screen.getAllByRole('region', { name: wording.ÉDITEUR_DU_SITE })).toBeInTheDocument()
-    expect(screen.getAllByRole('region', { name: wording.PROPRIÉTÉ_INTELLECTUELLE })).toBeInTheDocument()
-    expect(screen.getAllByRole('region', { name: wording.LIMITES_DE_RESPONSABILITÉ })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: wording.ÉDITEUR_DU_SITE })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: wording.PROPRIÉTÉ_INTELLECTUELLE })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: wording.LIMITES_DE_RESPONSABILITÉ })).toBeInTheDocument()
   })
 })
