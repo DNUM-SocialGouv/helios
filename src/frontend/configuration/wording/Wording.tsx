@@ -15,6 +15,7 @@ export interface Wording {
   readonly TITRE_PAGE_MENTIONS_LÉGALES: string
   readonly TITRE_PAGE_DONNÉES_PERSONNELLES: string
   readonly TITRE_PAGE_GESTION_COOKIES: string
+  readonly TITRE_PAGE_INACCESSIBLE: string
 
   // Bread Crumb
   readonly VOUS_ÊTES_ICI: string
@@ -146,6 +147,9 @@ export interface Wording {
   readonly PMSI: ReactElement
   readonly ARHGOS: ReactElement
   readonly SAE: ReactElement
+
+  // Inaccessible
+  readonly ACCÈS_REFUSÉ: string
 
   // Footer
   readonly PRESENTATION: string

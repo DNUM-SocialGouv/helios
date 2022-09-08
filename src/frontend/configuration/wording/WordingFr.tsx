@@ -23,6 +23,7 @@ export class WordingFr implements Wording {
   readonly TITRE_PAGE_MENTIONS_LÉGALES: string = 'Mentions légales - Helios'
   readonly TITRE_PAGE_DONNÉES_PERSONNELLES: string = 'Données personnelles - Helios'
   readonly TITRE_PAGE_GESTION_COOKIES: string = 'Gestion des cookies - Helios'
+  readonly TITRE_PAGE_INACCESSIBLE: string = 'Accès refusé - Helios'
 
   // Breadcrumb
   readonly VOUS_ÊTES_ICI: string = 'Vous êtes ici :'
@@ -167,6 +168,9 @@ export class WordingFr implements Wording {
   readonly PMSI: ReactElement = (<abbr title="Programme de Médicalisation des Systèmes d’Information">PMSI</abbr>)
   readonly ARHGOS: ReactElement = (<abbr title="Agence Régionale Hospitalière Gestion des Objectifs Sanitaires">ARHGOS</abbr>)
   readonly SAE: ReactElement = (<abbr title="Statistique Annuelle des Établissements de santé">SAE</abbr>)
+
+  // Inaccessible
+  readonly ACCÈS_REFUSÉ: string = 'Accès refusé'
 
   // Footer
   readonly PRESENTATION: string = 'Texte sur 3 lignes à demander à Daisy'
