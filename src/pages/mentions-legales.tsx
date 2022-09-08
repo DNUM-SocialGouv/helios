@@ -2,6 +2,7 @@ import Head from 'next/head'
 
 import { useDependencies } from '../frontend/ui/commun/contexts/useDependencies'
 import { useBreadcrumb } from '../frontend/ui/commun/hooks/useBreadcrumb'
+import { PageDesMentionsLégales } from '../frontend/ui/mentions-légales/PageDesMentionsLégales'
 
 export default function MentionsLégales() {
   const { wording } = useDependencies()
@@ -19,12 +20,8 @@ export default function MentionsLégales() {
           {wording.TITRE_PAGE_MENTIONS_LÉGALES}
         </title>
       </Head>
-      <h1>
-        {wording.MENTIONS_LÉGALES}
-      </h1>
-      <p>
-        {wording.EN_CONSTRUCTION}
-      </p>
+
+      <PageDesMentionsLégales />
     </>
   )
 }

@@ -3,9 +3,7 @@ import { screen, within } from '@testing-library/react'
 import PageDAccueil from '../../../../pages'
 import Accessibilité from '../../../../pages/accessibilite'
 import DonnéesPersonnelles from '../../../../pages/donnees-personnelles'
-import GestionDesCookies from '../../../../pages/gestion-des-cookies'
 import MentionsLégales from '../../../../pages/mentions-legales'
-import PlanDuSite from '../../../../pages/plan-du-site'
 import { EntitéJuridiqueViewModelTestBuilder } from '../../../test-builder/EntitéJuridiqueViewModelTestBuilder'
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from '../../../test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder'
 import { ÉtablissementTerritorialRattachéViewModelTestBuilder } from '../../../test-builder/ÉtablissementTerritorialRattachéViewModelTestBuilder'
@@ -39,8 +37,6 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
       [Accessibilité, wording.ACCESSIBILITÉ],
       [MentionsLégales, wording.MENTIONS_LÉGALES],
       [DonnéesPersonnelles, wording.DONNÉES_PERSONNELLES],
-      [GestionDesCookies, wording.GESTION_COOKIES],
-      [PlanDuSite, wording.PLAN_DU_SITE],
     ]
   )('affiche le chemin jusqu’à la page courante', (Page, expected) => {
     // WHEN

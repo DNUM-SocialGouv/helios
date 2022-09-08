@@ -182,19 +182,30 @@ export class WordingFr implements Wording {
   readonly ACCÈS_REFUSÉ: string = 'Accès refusé'
 
   // Footer
-  readonly PRESENTATION: string = 'Texte sur 3 lignes à demander à Daisy'
   readonly LEGIFRANCE: string = 'legifrance.gouv.fr'
   readonly GOUVERNEMENT: string = 'gouvernement.fr'
   readonly SERVICE_PUBLIC: string = 'service-public.fr'
   readonly DATA_GOUV: string = 'data.gouv.fr'
-  readonly PLAN_DU_SITE: string = 'Plan du site'
-  readonly ACCESSIBILITÉ: string = 'Accessibilité : partiellement conforme'
+  readonly ACCESSIBILITÉ: string = 'Accessibilité'
+  readonly NON_CONFORME: string = 'non conforme'
   readonly MENTIONS_LÉGALES: string = 'Mentions légales'
   readonly DONNÉES_PERSONNELLES: string = 'Données personnelles'
-  readonly GESTION_COOKIES: string = 'Gestion des cookies'
   readonly MENTION_LICENCE: string = 'Sauf mention contraire, tous les contenus de ce site sont sous '
   readonly LICENCE_ETALAB: string = 'licence etalab-2.0'
   readonly NOUVELLE_FENÊTRE: string = 'nouvelle Fenêtre'
+
+  // Accessibilité
+  readonly AUDIT_EN_COURS: string = 'Audit en cours de réalisation.'
+
+  // Données personnelles
+  readonly FINALITÉ_ET_FONDEMENT_DU_TRAITEMENT: string = 'Finalité et fondement du traitement'
+  readonly PROTECTION_DES_DONNÉES_PERSONNELLES: string = 'Protection des données personnelles'
+  readonly DROITS_DES_PERSONNES_CONCERNÉES: string = 'Droits des personnes concernées'
+
+  // Mentions légales
+  readonly ÉDITEUR_DU_SITE: string = 'Éditeur du site'
+  readonly PROPRIÉTÉ_INTELLECTUELLE: string = 'Propriété intellectuelle'
+  readonly LIMITES_DE_RESPONSABILITÉ: string = 'Limites de responsabilité'
 
   readonly EN_CONSTRUCTION: string = 'Demander à Daisy ce que l’on doit écrire.'
 }

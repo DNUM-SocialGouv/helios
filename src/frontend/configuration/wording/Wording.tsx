@@ -10,11 +10,9 @@ export interface Wording {
 
   // Titre des pages
   readonly TITRE_PAGE_ACCUEIL: string
-  readonly TITRE_PAGE_PLAN_DU_SITE: string
   readonly TITRE_PAGE_ACCESSIBILITÉ: string
   readonly TITRE_PAGE_MENTIONS_LÉGALES: string
   readonly TITRE_PAGE_DONNÉES_PERSONNELLES: string
-  readonly TITRE_PAGE_GESTION_COOKIES: string
   readonly TITRE_PAGE_INACCESSIBLE: string
 
   // Bread Crumb
@@ -159,19 +157,30 @@ export interface Wording {
   readonly ACCÈS_REFUSÉ: string
 
   // Footer
-  readonly PRESENTATION: string
   readonly LEGIFRANCE: string
   readonly GOUVERNEMENT: string
   readonly SERVICE_PUBLIC: string
   readonly DATA_GOUV: string
-  readonly PLAN_DU_SITE: string
   readonly ACCESSIBILITÉ: string
+  readonly NON_CONFORME: string
   readonly MENTIONS_LÉGALES: string
   readonly DONNÉES_PERSONNELLES: string
-  readonly GESTION_COOKIES: string
   readonly MENTION_LICENCE: string
   readonly LICENCE_ETALAB: string
   readonly NOUVELLE_FENÊTRE: string
+
+  // Accessibilité
+  readonly AUDIT_EN_COURS: string
+
+  // Données personnelles
+  readonly FINALITÉ_ET_FONDEMENT_DU_TRAITEMENT: string
+  readonly PROTECTION_DES_DONNÉES_PERSONNELLES: string
+  readonly DROITS_DES_PERSONNES_CONCERNÉES: string
+
+  // Mentions légales
+  readonly ÉDITEUR_DU_SITE: string
+  readonly PROPRIÉTÉ_INTELLECTUELLE: string
+  readonly LIMITES_DE_RESPONSABILITÉ: string
 
   readonly EN_CONSTRUCTION: string
 }
