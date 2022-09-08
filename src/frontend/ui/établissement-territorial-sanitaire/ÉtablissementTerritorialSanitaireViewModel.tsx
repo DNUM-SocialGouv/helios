@@ -557,12 +557,12 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
             key={`activité-${activité.code}`}
           >
             <ActionneurDAccordéon
-              for={`accordion-${activité.code}`}
+              for={`autorisations-accordion-${activité.code}`}
               titre={`${activité.libellé} [${activité.code}]`}
             />
             <ul
               className={`fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-modalités']}`}
-              id={`accordion-${activité.code}`}
+              id={`autorisations-accordion-${activité.code}`}
             >
               {
                 activité.modalités.map((modalité) => (
@@ -570,13 +570,13 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
                     key={`modalité-${modalité.code}`}
                   >
                     <ActionneurDAccordéon
-                      for={`accordion-${activité.code}-${modalité.code}`}
+                      for={`autorisations-accordion-${activité.code}-${modalité.code}`}
                       texteGras={false}
                       titre={`${modalité.libellé} [${modalité.code}]`}
                     />
                     <ul
                       className={`fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-formes']}`}
-                      id={`accordion-${activité.code}-${modalité.code}`}
+                      id={`autorisations-accordion-${activité.code}-${modalité.code}`}
                     >
                       {
                         modalité.formes.map((forme) => {
@@ -639,12 +639,12 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
             key={`activité-${activité.code}`}
           >
             <ActionneurDAccordéon
-              for={`accordion-${activité.code}`}
+              for={`autresActivités-accordion-${activité.code}`}
               titre={`${activité.libellé} [${activité.code}]`}
             />
             <ul
               className={` fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-modalités']}`}
-              id={`accordion-${activité.code}`}
+              id={`autresActivités-accordion-${activité.code}`}
             >
               {
                 activité.modalités.map((modalité) => (
@@ -652,13 +652,13 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
                     key={`modalité-${modalité.code}`}
                   >
                     <ActionneurDAccordéon
-                      for={`accordion-${activité.code}-${modalité.code}`}
+                      for={`autresActivités-accordion-${activité.code}-${modalité.code}`}
                       texteGras={false}
                       titre={`${modalité.libellé} [${modalité.code}]`}
                     />
                     <ul
                       className={`fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-formes']}`}
-                      id={`accordion-${activité.code}-${modalité.code}`}
+                      id={`autresActivités-accordion-${activité.code}-${modalité.code}`}
                     >
                       {
                         modalité.formes.map((forme) => {
@@ -718,12 +718,12 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
             key={`activité-${activité.code}`}
           >
             <ActionneurDAccordéon
-              for={`accordion-${activité.code}`}
+              for={`reconnaissances-contractuelles-accordion-${activité.code}`}
               titre={`${activité.libellé} [${activité.code}]`}
             />
             <ul
-              className={` fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-modalités']}`}
-              id={`accordion-${activité.code}`}
+              className={`fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-modalités']}`}
+              id={`reconnaissances-contractuelles-accordion-${activité.code}`}
             >
               {
                 activité.modalités.map((modalité) => (
@@ -731,13 +731,13 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
                     key={`modalité-${modalité.code}`}
                   >
                     <ActionneurDAccordéon
-                      for={`accordion-${activité.code}-${modalité.code}`}
+                      for={`reconnaissances-contractuelles-accordion-${activité.code}-${modalité.code}`}
                       texteGras={false}
                       titre={`${modalité.libellé} [${modalité.code}]`}
                     />
                     <ul
                       className={`fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-formes']}`}
-                      id={`accordion-${activité.code}-${modalité.code}`}
+                      id={`reconnaissances-contractuelles-accordion-${activité.code}-${modalité.code}`}
                     >
                       {
                         modalité.formes.map((forme) => {
@@ -806,12 +806,12 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
             key={`équipement-${équipements.code}`}
           >
             <ActionneurDAccordéon
-              for={`accordion-${équipements.code}`}
+              for={`équipements-matériels-lourds-accordion-${équipements.code}`}
               titre={`${équipements.libellé} [${équipements.code}]`}
             />
             <ul
-              className={` fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-modalités']}`}
-              id={`accordion-${équipements.code}`}
+              className={`fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-modalités']}`}
+              id={`équipements-matériels-lourds-accordion-${équipements.code}`}
             >
               {
                 équipements.autorisations.map((autorisationÉquipementMatérielLourd) => {
