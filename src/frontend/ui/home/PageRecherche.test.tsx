@@ -10,6 +10,14 @@ jest.mock('next/router', () => require('next-router-mock'))
 const { paths, wording } = fakeFrontDependencies
 
 describe('La page de recherche', () => {
+  it('affiche un bandeau d’information mentionnant le développement du site', () => {
+    // WHEN
+    renderFakeComponent(<PageRecherche />)
+
+    // THEN
+    expect(screen.getByText(wording.SITE_EN_CONSTRUCTION, { selector: 'p' })).toBeInTheDocument()
+  })
+
   it('affiche le formulaire', () => {
     // WHEN
     renderFakeComponent(<PageRecherche />)

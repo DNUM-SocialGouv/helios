@@ -27,6 +27,7 @@ export interface Wording {
   readonly TITRE_LISTE_DES_ÉTABLISSEMENTS_TERRITORIAUX: string
   readonly ENTITÉS_JURIDIQUES: string
   readonly ÉTABLISSEMENT_TERRITORIAUX: string
+  readonly SITE_EN_CONSTRUCTION: string
 
   // Recherche
   readonly RECHERCHE_TITRE: string
