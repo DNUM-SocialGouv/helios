@@ -847,7 +847,7 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
   }
 
   public get dateDeMiseÀJourDesÉquipementsMatérielsLourds(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorial.autorisationsEtCapacités.reconnaissancesContractuelles.dateMiseÀJourSource)
+    return StringFormater.formateLaDate(this.établissementTerritorial.autorisationsEtCapacités.équipementsMatérielsLourds.dateMiseÀJourSource)
   }
 
   public get lesÉquipementsMatérielsLourdsSontIlsRenseignés(): boolean {
