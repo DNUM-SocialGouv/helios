@@ -359,7 +359,7 @@ describe('La recherche d’entités et d’établissements', () => {
       ])
     })
 
-    it('retourne un résultat quand de département de l’établissement territorial est connu, sans faire attention aux accenets, tirets, apostrophes ni casse', async () => {
+    it('retourne un résultat quand le département de l’établissement territorial est connu, sans faire attention aux accenets, tirets, apostrophes ni casse', async () => {
       // GIVEN
       const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
       await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
