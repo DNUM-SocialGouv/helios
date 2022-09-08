@@ -53,7 +53,10 @@ export const PageDesDonnéesPersonnelles = () => {
           <thead>
             <tr>
               <th>Agence Régionale de Santé</th>
-              <th>Adresse de contact du DPO</th>
+              <th>
+                Adresse de contact du
+                <abbr title="Data Protection Officer (Délégué à la Protection des Données)">DPO</abbr>
+              </th>
             </tr>
           </thead>
           <tbody>

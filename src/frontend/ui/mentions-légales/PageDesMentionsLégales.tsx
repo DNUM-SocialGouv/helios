@@ -11,7 +11,11 @@ export const PageDesMentionsLégales = () => {
         <b>Helios – Fiche de synthèse</b>
         {' '}
         est mis en œuvre par la direction du numérique des solidarités et de la Santé qui a la charge du pilotage et de la mise en œuvre d’un portefeuille
-        de projets SI mutualisés développés pour le compte de l’ensemble des Agences Régionales de Santé.
+        de projets
+        {' '}
+        <abbr title="Systèmes d’Informations">SI</abbr>
+        {' '}
+        mutualisés développés pour le compte de l’ensemble des Agences Régionales de Santé.
       </p>
       <section aria-label={wording.ÉDITEUR_DU_SITE}>
         <h2>Éditeur du site</h2>
@@ -83,7 +87,15 @@ export const PageDesMentionsLégales = () => {
           Ces contenus ne sauraient être reproduits librement sans demande préalable et sans l’indication de la source.
           <br />
           Les demandes d’autorisation de reproduction d’un contenu doivent être adressées au ministère des solidarités et de la santé
-          (Direction du numérique / SCN SIM ARS – Tour Mirabeau 39-43 Quai André Citroën 75015 PARIS).
+          (Direction du numérique /
+          {' '}
+          <abbr title="Service à Compétence National">SCN</abbr>
+          {' '}
+          <abbr title="Systèmes d’Information Mutualisés">SIM</abbr>
+          {' '}
+          <abbr title="Agence Régionale de Santé">ARS</abbr>
+          {' '}
+          – Tour Mirabeau 39-43 Quai André Citroën 75015 PARIS).
           <br />
           Les reproductions à but commercial ou publicitaire ne seront, sauf exceptions, pas autorisées.
         </p>
