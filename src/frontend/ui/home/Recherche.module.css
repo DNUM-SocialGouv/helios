@@ -10,9 +10,16 @@
 .tuile {
   align-self: flex-start;
   margin: 2.5rem 0 0 2rem;
-  width: 7rem;
+  min-width: 3rem;
 }
 
 .description {
   text-transform: capitalize;
+}
+
+@media (max-width: 48em) {
+  .tuile {
+    align-self: center;
+    margin-left: 0;
+  }
 }
