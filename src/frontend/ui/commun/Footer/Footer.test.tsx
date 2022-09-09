@@ -15,15 +15,6 @@ describe('Le pied de page', () => {
     expect(accueil).toHaveAttribute('href', paths.ACCUEIL)
   })
 
-  it('affiche une présentation de trois lignes', () => {
-    // WHEN
-    renderFakeComponent(<Footer />)
-
-    // THEN
-    const presentation = screen.getByText(wording.PRESENTATION)
-    expect(presentation).toBeInTheDocument()
-  })
-
   it('affiche des liens externes pour accéder à legigrance.gouv.fr, gouvernement.fr, service-public.fr et data.gouv.fr', () => {
     // WHEN
     renderFakeComponent(<Footer />)
@@ -54,21 +45,12 @@ describe('Le pied de page', () => {
     expect(dataGouv.textContent).toBe(wording.DATA_GOUV)
   })
 
-  it('affiche un lien pour accéder au plan du site', () => {
-    // WHEN
-    renderFakeComponent(<Footer />)
-
-    // THEN
-    const planeDuSite = screen.getByRole('link', { name: wording.PLAN_DU_SITE })
-    expect(planeDuSite).toHaveAttribute('href', paths.PLAN_DU_SITE)
-  })
-
   it('affiche un lien pour accéder à la page d’informations sur l’accessibilité', () => {
     // WHEN
     renderFakeComponent(<Footer />)
 
     // THEN
-    const accessibilité = screen.getByRole('link', { name: wording.ACCESSIBILITÉ })
+    const accessibilité = screen.getByRole('link', { name: `${wording.ACCESSIBILITÉ} : ${wording.NON_CONFORME}` })
     expect(accessibilité).toHaveAttribute('href', paths.ACCESSIBILITÉ)
   })
 
@@ -88,15 +70,6 @@ describe('Le pied de page', () => {
     // THEN
     const donnéesPersonnelles = screen.getByRole('link', { name: wording.DONNÉES_PERSONNELLES })
     expect(donnéesPersonnelles).toHaveAttribute('href', paths.DONNÉES_PERSONNELLES)
-  })
-
-  it('affiche un lien pour accéder à la page d’informations relatives à la gestion des cookies', () => {
-    // WHEN
-    renderFakeComponent(<Footer />)
-
-    // THEN
-    const gestionDesCookies = screen.getByRole('link', { name: wording.GESTION_COOKIES })
-    expect(gestionDesCookies).toHaveAttribute('href', paths.GESTION_COOKIES)
   })
 
   it('affiche la mention que tout le contenu est sous une licence', () => {

@@ -2,6 +2,7 @@ import Head from 'next/head'
 
 import { useDependencies } from '../frontend/ui/commun/contexts/useDependencies'
 import { useBreadcrumb } from '../frontend/ui/commun/hooks/useBreadcrumb'
+import { PageDesDonnéesPersonnelles } from '../frontend/ui/données-personnelles/PageDesDonnéesPersonnelles'
 
 export default function DonnéesPersonnelles() {
   const { wording } = useDependencies()
@@ -19,12 +20,8 @@ export default function DonnéesPersonnelles() {
           {wording.TITRE_PAGE_DONNÉES_PERSONNELLES}
         </title>
       </Head>
-      <h1>
-        {wording.DONNÉES_PERSONNELLES}
-      </h1>
-      <p>
-        {wording.EN_CONSTRUCTION}
-      </p>
+
+      <PageDesDonnéesPersonnelles />
     </>
   )
 }

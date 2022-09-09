@@ -20,10 +20,10 @@ export default function Accessibilité() {
         </title>
       </Head>
       <h1>
-        {wording.ACCESSIBILITÉ}
+        {`${wording.ACCESSIBILITÉ} : ${wording.NON_CONFORME}`}
       </h1>
       <p>
-        {wording.EN_CONSTRUCTION}
+        {wording.AUDIT_EN_COURS}
       </p>
     </>
   )

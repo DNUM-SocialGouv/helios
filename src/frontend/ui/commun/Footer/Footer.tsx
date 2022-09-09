@@ -34,9 +34,6 @@ export const Footer = () => {
             </Link>
           </div>
           <div className="fr-footer__content">
-            <p className="fr-footer__content-desc">
-              {wording.PRESENTATION}
-            </p>
             <ul className="fr-footer__content-list">
               <li className="fr-footer__content-item">
                 <a
@@ -89,21 +86,11 @@ export const Footer = () => {
           <ul className="fr-footer__bottom-list">
             <li className="fr-footer__bottom-item">
               <Link
-                href={paths.PLAN_DU_SITE}
-                passHref
-              >
-                <a className="fr-footer__bottom-link">
-                  {wording.PLAN_DU_SITE}
-                </a>
-              </Link>
-            </li>
-            <li className="fr-footer__bottom-item">
-              <Link
                 href={paths.ACCESSIBILITÉ}
                 passHref
               >
                 <a className="fr-footer__bottom-link">
-                  {wording.ACCESSIBILITÉ}
+                  {`${wording.ACCESSIBILITÉ} : ${wording.NON_CONFORME}`}
                 </a>
               </Link>
             </li>
@@ -124,16 +111,6 @@ export const Footer = () => {
               >
                 <a className="fr-footer__bottom-link">
                   {wording.DONNÉES_PERSONNELLES}
-                </a>
-              </Link>
-            </li>
-            <li className="fr-footer__bottom-item">
-              <Link
-                href={paths.GESTION_COOKIES}
-                passHref
-              >
-                <a className="fr-footer__bottom-link">
-                  {wording.GESTION_COOKIES}
                 </a>
               </Link>
             </li>
