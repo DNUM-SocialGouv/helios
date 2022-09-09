@@ -24,14 +24,13 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     '/',
+    '/region/:path*',
     '/entite-juridique/:path*',
     '/etablissement-territorial-sanitaire/:path*',
     '/etablissement-territorial-medico-social/:path*',
     '/accessibilite',
     '/donnees-personnelles',
-    '/gestion-des-cookies',
     '/mentions-legales',
-    '/plan-du-site',
     '/api/recherche',
     '/api/revalidate',
   ],

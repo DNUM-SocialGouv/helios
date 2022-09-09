@@ -14,14 +14,13 @@ export default function MentionsLégales() {
   ])
 
   return (
-    <>
+    <main className="fr-container">
       <Head>
         <title>
           {wording.TITRE_PAGE_MENTIONS_LÉGALES}
         </title>
       </Head>
-
       <PageDesMentionsLégales />
-    </>
+    </main>
   )
 }

@@ -22,9 +22,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         />
       </Head>
       <Header />
-      <main className="fr-container">
-        <Component {...pageProps} />
-      </main>
+      <Component {...pageProps} />
       <Footer />
       <Script
         src="/api/design-system-francais/dsfr"

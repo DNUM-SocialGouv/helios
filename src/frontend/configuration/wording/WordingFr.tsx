@@ -31,6 +31,7 @@ export class WordingFr implements Wording {
   readonly VOUS_ÊTES_ICI: string = 'Vous êtes ici :'
   readonly VOIR_LE_FIL_D_ARIANE: string = 'Voir le fil d’Ariane'
   readonly ENTITÉ_JURIDIQUE: string = 'Entité juridique'
+  readonly régionBreadcrumb: (placeholder: string) => string = (placeholder: string) => `Région ${placeholder}`
 
   // Home
   readonly TITRE_LISTE_DES_ENTITÉS_JURIDIQUES: string = 'Les entités juridiques'
@@ -50,11 +51,20 @@ export class WordingFr implements Wording {
   )
   readonly RECHERCHE_PLACEHOLDER: string = 'Rechercher un numéro FINESS ou le nom d’un établissement'
   readonly RECHERCHE_LABEL: string = 'Rechercher'
+  readonly RÉSULTAT_DE_RECHERCHE: string = 'Résultat de recherche'
   readonly rechercheNombreRésultats: (nombre: number, terme: string) => string = (nombre, terme: string) =>
     `${nombre} résultat(s) corresponde(nt) à votre recherche « ${terme} ».`
   readonly RECHERCHE_EN_ATTENTE: string = 'En cours de recherche...'
   readonly aucunRésultat: (terme: string) => string = (terme: string) =>
     `Aucun résultat ne correspond à votre recherche « ${terme} ».`
+
+  // Cartographie
+  readonly CARTOGRAPHIE: string = 'Cartographie'
+  readonly OFFRE_SANTÉ_PAR_REGION: string = 'Offre de santé par région'
+  readonly CARTOGRAPHIE_DESCRIPTION: string = 'Visualisez l’offre de santé d’une région en retrouvant tous les établissements de votre choix.'
+
+  // Région
+  readonly régionAtlasSanté: (placeholder: string) => string = (placeholder: string) => `Carte de ${placeholder}`
 
   // Fiches
   readonly MISE_À_JOUR: string = 'Mise à jour'

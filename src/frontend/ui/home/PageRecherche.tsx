@@ -1,5 +1,8 @@
+import Head from 'next/head'
+
 import { useDependencies } from '../commun/contexts/useDependencies'
 import { BandeauDInformation } from './BandeauDInformation'
+import { Cartographie } from './Cartographie'
 import { FormulaireDeRecherche } from './FormulaireDeRecherche'
 import { RechercheEnAttente } from './RechercheEnAttente'
 import { RésultatsDeRecherche } from './RésultatsDeRecherche'
@@ -20,9 +23,13 @@ export const PageRecherche = () => {
   } = useRecherche()
 
   return (
-    <>
+    <main className="fr-container">
+      <Head>
+        <title>
+          {wording.TITRE_PAGE_ACCUEIL}
+        </title>
+      </Head>
       <BandeauDInformation texte={wording.SITE_EN_CONSTRUCTION} />
-
       <FormulaireDeRecherche
         lancerLaRecherche={lancerLaRecherche}
         rechercheOnChange={rechercheOnChange}
@@ -38,6 +45,7 @@ export const PageRecherche = () => {
           termeFixe={termeFixe}
         />
       }
-    </>
+      <Cartographie />
+    </main>
   )
 }
