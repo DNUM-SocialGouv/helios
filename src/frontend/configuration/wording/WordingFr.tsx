@@ -17,6 +17,7 @@ export class WordingFr implements Wording {
   readonly MENU: string = 'Menu'
   readonly DÉCONNEXION: string = 'Déconnexion'
   readonly FERMER: string = 'Fermer'
+  readonly FICHE_DE_SYNTHÈSE: string = 'Fiche de synthès - Helios'
 
   // Titre des pages
   readonly TITRE_PAGE_ACCUEIL: string = 'Accueil - Helios'

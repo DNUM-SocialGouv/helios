@@ -32,6 +32,15 @@ export const Header = () => {
                       {wording.INTITULÉ_RÉPUBLIQUE_FRANÇAISE}
                     </p>
                   </div>
+                  <div className="fr-header__operator">
+                    <Image
+                      alt=""
+                      className="fr-responsive-img"
+                      height="80"
+                      src="/logo.svg"
+                      width="80"
+                    />
+                  </div>
                   <div className="fr-header__navbar">
                     {router.pathname !== paths.ACCUEIL &&
                       <button
@@ -63,13 +72,9 @@ export const Header = () => {
                     passHref
                   >
                     <a title={wording.ACCUEIL}>
-                      <Image
-                        alt=""
-                        className="fr-responsive-img"
-                        height="80"
-                        src="/logo.svg"
-                        width="80"
-                      />
+                      <p className="fr-header__service-title">
+                        {wording.FICHE_DE_SYNTHÈSE}
+                      </p>
                     </a>
                   </Link>
                 </div>
