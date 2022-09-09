@@ -22,7 +22,7 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, établissement
   ])
 
   return (
-    <>
+    <main className="fr-container">
       <Head>
         <title>
           {entitéJuridiqueViewModel.titre}
@@ -33,6 +33,6 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, établissement
       </Titre>
       <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
       <ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels} />
-    </>
+    </main>
   )
 }

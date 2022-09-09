@@ -19,7 +19,7 @@ export const RésultatsDeRecherche = ({
   const { wording } = useDependencies()
 
   return (
-    <section>
+    <section aria-label={wording.RÉSULTAT_DE_RECHERCHE}>
       <p className="fr-h6 fr-mt-4w">
         {
           nombreRésultats === 0 &&

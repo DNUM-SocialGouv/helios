@@ -13,7 +13,7 @@ export default function Accessibilité() {
   ])
 
   return (
-    <>
+    <main className="fr-container">
       <Head>
         <title>
           {wording.TITRE_PAGE_ACCESSIBILITÉ}
@@ -25,6 +25,6 @@ export default function Accessibilité() {
       <p>
         {wording.AUDIT_EN_COURS}
       </p>
-    </>
+    </main>
   )
 }

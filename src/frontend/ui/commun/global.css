@@ -12,6 +12,10 @@ main {
   flex-grow: 1;
 }
 
+iframe {
+  border: none;
+}
+
 .fr-accordion::before {
   box-shadow: inherit !important;
 }
@@ -23,7 +27,7 @@ main {
 
 @media (prefers-color-scheme: dark) {
   body {
-    color: #000 !important;
     background: #fff !important;
+    color: #000 !important;
   }
 }

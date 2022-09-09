@@ -11,6 +11,8 @@ import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from '../../..
 import { fakeFrontDependencies, renderFakeComponent } from '../../../testHelper'
 import { ÉtablissementTerritorialRattachéViewModel } from '../../entité-juridique/liste-des-établissements/ÉtablissementTerritorialRattachéViewModel'
 import { PageEntitéJuridique } from '../../entité-juridique/PageEntitéJuridique'
+import { PageRégion } from '../../région/PageRégion'
+import { régions } from '../../région/régions'
 import { PageÉtablissementTerritorialMédicoSocial } from '../../établissement-territorial-médico-social/PageÉtablissementTerritorialMédicoSocial'
 import { PageÉtablissementTerritorialSanitaire } from '../../établissement-territorial-sanitaire/PageÉtablissementTerritorialSanitaire'
 import { Breadcrumb } from './Breadcrumb'
@@ -146,5 +148,25 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     expect(within(levels[1]).getByText('- 010 008 407 - HOPITAL PRIVE DE VILLENEUVE DASCQ')).toBeInTheDocument()
     expect(within(levels[2]).queryByRole('link')).not.toBeInTheDocument()
     expect(within(levels[2]).getByText('CH NANTUA')).toBeInTheDocument()
+  })
+
+  it('affiche le chemin jusqu’à la page d’une région', () => {
+    // WHEN
+    renderFakeComponent(
+      <>
+        <Breadcrumb />
+        <PageRégion région="bretagne" />
+      </>
+    )
+
+    // THEN
+    const breadcrumb = screen.getByRole('navigation')
+    const levels = within(breadcrumb).getAllByRole('listitem')
+    expect(levels).toHaveLength(2)
+    expect(within(levels[0]).getByRole('link')).toBeInTheDocument()
+    const accueil = within(levels[0]).getByText(wording.ACCUEIL)
+    expect(accueil).toHaveAttribute('href', '/')
+    const région = within(levels[1]).getByText(wording.régionBreadcrumb(régions['bretagne'].label))
+    expect(région).toBeInTheDocument()
   })
 })

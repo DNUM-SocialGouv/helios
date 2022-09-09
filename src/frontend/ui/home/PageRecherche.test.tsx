@@ -3,6 +3,7 @@ import mockRouter from 'next-router-mock'
 
 import { RésultatDeRecherche } from '../../../backend/métier/entities/RésultatDeRecherche'
 import { fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent } from '../../testHelper'
+import { régions } from '../région/régions'
 import { PageRecherche } from './PageRecherche'
 
 jest.mock('next/router', () => require('next-router-mock'))
@@ -34,6 +35,29 @@ describe('La page de recherche', () => {
     expect(input).toBeInTheDocument()
     const rechercher = within(formulaire).getByRole('button', { name: wording.RECHERCHE_LABEL })
     expect(rechercher).toBeInTheDocument()
+  })
+
+  it('affiche la cartographie', () => {
+    // WHEN
+    renderFakeComponent(<PageRecherche />)
+
+    // THEN
+    const cartographie = screen.getByLabelText(wording.CARTOGRAPHIE)
+    const titre = within(cartographie).getByRole('heading', { level: 2, name: wording.CARTOGRAPHIE })
+    expect(titre).toBeInTheDocument()
+    const sousTitre = within(cartographie).getByRole('heading', { level: 3, name: wording.OFFRE_SANTÉ_PAR_REGION })
+    expect(sousTitre).toBeInTheDocument()
+    const description = within(cartographie).getByText(wording.CARTOGRAPHIE_DESCRIPTION, { selector: 'p' })
+    expect(description).toBeInTheDocument()
+    const listeRégions = within(cartographie).getAllByRole('listitem')
+    const auvergneRhôneAlpes = within(listeRégions[0]).getByRole('link', { name: régions['auvergne-rhone-alpes'].label })
+    expect(auvergneRhôneAlpes).toHaveAttribute('href', paths.RÉGION + '/auvergne-rhone-alpes')
+    const occitanie = within(listeRégions[1]).getByRole('link', { name: régions['occitanie'].label })
+    expect(occitanie).toHaveAttribute('href', paths.RÉGION + '/occitanie')
+    const bretagne = within(listeRégions[2]).getByRole('link', { name: régions['bretagne'].label })
+    expect(bretagne).toHaveAttribute('href', paths.RÉGION + '/bretagne')
+    const paysDeLaLoire = within(listeRégions[3]).getByRole('link', { name: régions['pays-de-la-loire'].label })
+    expect(paysDeLaLoire).toHaveAttribute('href', paths.RÉGION + '/pays-de-la-loire')
   })
 
   it('affiche les résultats après avoir cliqué sur le bouton "Rechercher"', async () => {
@@ -83,9 +107,10 @@ describe('La page de recherche', () => {
     const enAttente = screen.getByText(wording.RECHERCHE_EN_ATTENTE, { selector: 'p' })
     expect(enAttente).toBeInTheDocument()
     await waitForElementToBeRemoved(enAttente)
-    const textDuRésultat = screen.getByText(wording.rechercheNombreRésultats(nombreDeRésultats, terme), { selector: 'p' })
+    const résultatsDeRecherche = screen.getByLabelText(wording.RÉSULTAT_DE_RECHERCHE)
+    const textDuRésultat = within(résultatsDeRecherche).getByText(wording.rechercheNombreRésultats(nombreDeRésultats, terme), { selector: 'p' })
     expect(textDuRésultat).toBeInTheDocument()
-    const tuiles = screen.queryAllByRole('listitem')
+    const tuiles = within(résultatsDeRecherche).queryAllByRole('listitem')
     expect(tuiles).toHaveLength(3)
     const titreTuile = within(tuiles[0]).getByRole('heading', { level: 2, name: '010003598 - CENTRE HOSPITALIER DE SAINT BRIEUC' })
     expect(titreTuile).toBeInTheDocument()
@@ -172,9 +197,10 @@ describe('La page de recherche', () => {
     const enAttente = screen.getByText(wording.RECHERCHE_EN_ATTENTE, { selector: 'p' })
     expect(enAttente).toBeInTheDocument()
     await waitForElementToBeRemoved(enAttente)
-    const textDuRésultat = screen.getByText(wording.rechercheNombreRésultats(nombreDeRésultats, terme), { selector: 'p' })
+    const résultatsDeRecherche = screen.getByLabelText(wording.RÉSULTAT_DE_RECHERCHE)
+    const textDuRésultat = within(résultatsDeRecherche).getByText(wording.rechercheNombreRésultats(nombreDeRésultats, terme), { selector: 'p' })
     expect(textDuRésultat).toBeInTheDocument()
-    const tuiles = screen.queryAllByRole('listitem')
+    const tuiles = within(résultatsDeRecherche).queryAllByRole('listitem')
     expect(tuiles).toHaveLength(3)
     const titreTuile = within(tuiles[0]).getByRole('heading', { level: 2, name: '010003598 - CENTRE HOSPITALIER DE SAINT BRIEUC' })
     expect(titreTuile).toBeInTheDocument()

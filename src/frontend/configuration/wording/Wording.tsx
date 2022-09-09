@@ -15,10 +15,11 @@ export interface Wording {
   readonly TITRE_PAGE_DONNÉES_PERSONNELLES: string
   readonly TITRE_PAGE_INACCESSIBLE: string
 
-  // Bread Crumb
+  // Breadcrumb
   readonly VOUS_ÊTES_ICI: string
   readonly VOIR_LE_FIL_D_ARIANE: string
   readonly ENTITÉ_JURIDIQUE: string
+  readonly régionBreadcrumb: (placeholder: string) => string
 
   // Home
   readonly TITRE_LISTE_DES_ENTITÉS_JURIDIQUES: string
@@ -32,9 +33,18 @@ export interface Wording {
   readonly RECHERCHE_DESCRIPTION: ReactElement
   readonly RECHERCHE_PLACEHOLDER: string
   readonly RECHERCHE_LABEL: string
+  readonly RÉSULTAT_DE_RECHERCHE: string
   readonly rechercheNombreRésultats: (nombre: number, terme: string) => string
   readonly RECHERCHE_EN_ATTENTE: string
   readonly aucunRésultat: (terme: string) => string
+
+  // Cartographie
+  readonly CARTOGRAPHIE: string
+  readonly OFFRE_SANTÉ_PAR_REGION: string
+  readonly CARTOGRAPHIE_DESCRIPTION: string
+
+  // Région
+  readonly régionAtlasSanté: (placeholder: string) => string
 
   // Fiches
   readonly MISE_À_JOUR: string

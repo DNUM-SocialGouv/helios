@@ -28,7 +28,7 @@ export const PageÉtablissementTerritorialSanitaire = ({ établissementTerritori
   ])
 
   return (
-    <>
+    <main className="fr-container">
       <Head>
         <title>
           {établissementTerritorialViewModel.titre}
@@ -40,6 +40,6 @@ export const PageÉtablissementTerritorialSanitaire = ({ établissementTerritori
       <BlocIdentitéSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialViewModel} />
       <BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialViewModel} />
       <BlocActivitéSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialViewModel} />
-    </>
+    </main>
   )
 }
