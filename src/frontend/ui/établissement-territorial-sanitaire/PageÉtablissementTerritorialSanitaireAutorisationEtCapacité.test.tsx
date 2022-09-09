@@ -2,7 +2,7 @@ import { fireEvent, screen, within } from '@testing-library/react'
 
 import { numéroFinessÉtablissementTerritorial } from '../../../backend/testHelper'
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from '../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder'
-import { fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent, trimHtml } from '../../testHelper'
+import { fakeFrontDependencies, renderFakeComponent } from '../../testHelper'
 import { PageÉtablissementTerritorialSanitaire } from './PageÉtablissementTerritorialSanitaire'
 import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTerritorialSanitaireViewModel'
 
@@ -632,7 +632,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       expect(modalité).toHaveAttribute('aria-expanded', 'false')
     })
 
-    it.only('affiche le libellé et le code de la forme, le numéro AHRGOS, CPOM et et les dates pour chacune des formes quand ces informations sont renseignées', () => {
+    it('affiche le libellé et le code de la forme, le numéro AHRGOS, CPOM et et les dates pour chacune des formes quand ces informations sont renseignées', () => {
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
 
