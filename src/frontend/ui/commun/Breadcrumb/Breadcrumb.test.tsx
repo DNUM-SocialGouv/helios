@@ -53,12 +53,12 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     const breadcrumb = screen.getByRole('navigation')
     const levels = within(breadcrumb).getAllByRole('listitem')
     expect(levels).toHaveLength(2)
-    expect(within(levels[0]).getByRole('link')).toBeInTheDocument()
-    const accueil = within(levels[0]).getByText(wording.ACCUEIL)
-    expect(accueil).toHaveAttribute('href', '/')
-    expect(within(levels[1]).queryByRole('link')).not.toBeInTheDocument()
-    const breadcrumbText = within(levels[1]).getByText(expected)
-    expect(breadcrumbText).toBeInTheDocument()
+    const accueil = levels[0]
+    const titreDeLaPage = levels[1]
+    expect(within(accueil).getByRole('link')).toBeInTheDocument()
+    expect(within(accueil).getByText(wording.ACCUEIL)).toHaveAttribute('href', '/')
+    expect(within(titreDeLaPage).queryByRole('link')).not.toBeInTheDocument()
+    expect(within(titreDeLaPage).getByText(expected)).toBeInTheDocument()
   })
 
   it('affiche le chemin jusqu’à la page entité juridique', () => {
@@ -84,13 +84,13 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     const breadcrumb = screen.getByRole('navigation')
     const levels = within(breadcrumb).getAllByRole('listitem')
     expect(levels).toHaveLength(2)
-    expect(within(levels[0]).getByRole('link')).toBeInTheDocument()
-    const accueil = within(levels[0]).getByText(wording.ACCUEIL)
-    expect(accueil).toHaveAttribute('href', '/')
-    expect(within(levels[1]).queryByRole('link')).not.toBeInTheDocument()
-    const abréviationEj = within(levels[1]).getByText('EJ', { selector: 'abbr' })
-    expect(abréviationEj).toHaveAttribute('title', 'Entité juridique')
-    expect(within(levels[1]).getByText('- 220 000 020 - CENTRE HOSPITALIER DE SAINT BRIEUC')).toBeInTheDocument()
+    const accueil = levels[0]
+    const entitéJuridique = levels[1]
+    expect(within(accueil).getByRole('link')).toBeInTheDocument()
+    expect(within(accueil).getByText(wording.ACCUEIL)).toHaveAttribute('href', '/')
+    expect(within(entitéJuridique).queryByRole('link')).not.toBeInTheDocument()
+    expect(within(entitéJuridique).getByText('EJ', { selector: 'abbr' })).toHaveAttribute('title', 'Entité juridique')
+    expect(within(entitéJuridique).getByText('- 220 000 020 - CENTRE HOSPITALIER DE SAINT BRIEUC')).toBeInTheDocument()
   })
 
   it('affiche le chemin jusqu’à la page établissement territorial médico-social', () => {
@@ -110,16 +110,16 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     const breadcrumb = screen.getByRole('navigation')
     const levels = within(breadcrumb).getAllByRole('listitem')
     expect(levels).toHaveLength(3)
-    expect(within(levels[0]).getByRole('link')).toBeInTheDocument()
-    const accueil = within(levels[0]).getByText(wording.ACCUEIL)
-    expect(accueil).toHaveAttribute('href', '/')
-    const lienEntitéJuridique = within(levels[1]).getByRole('link')
-    expect(lienEntitéJuridique).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/010008407`)
-    const abréviationEj = within(levels[1]).getByText('EJ', { selector: 'abbr' })
-    expect(abréviationEj).toHaveAttribute('title', 'Entité juridique')
-    expect(within(levels[1]).getByText('- 010 008 407 - CH DU HAUT BUGEY')).toBeInTheDocument()
-    expect(within(levels[2]).queryByRole('link')).not.toBeInTheDocument()
-    expect(within(levels[2]).getByText('IFAS CH DU HAUT BUGEY')).toBeInTheDocument()
+    const accueil = levels[0]
+    const entitéJuridique = levels[1]
+    const établissementTerritorial = levels[2]
+    expect(within(accueil).getByRole('link')).toBeInTheDocument()
+    expect(within(accueil).getByText(wording.ACCUEIL)).toHaveAttribute('href', '/')
+    expect(within(entitéJuridique).getByRole('link')).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/010008407`)
+    expect(within(entitéJuridique).getByText('EJ', { selector: 'abbr' })).toHaveAttribute('title', 'Entité juridique')
+    expect(within(entitéJuridique).getByText('- 010 008 407 - CH DU HAUT BUGEY')).toBeInTheDocument()
+    expect(within(établissementTerritorial).queryByRole('link')).not.toBeInTheDocument()
+    expect(within(établissementTerritorial).getByText('IFAS CH DU HAUT BUGEY')).toBeInTheDocument()
   })
 
   it('affiche le chemin jusqu’à la page établissement territorial sanitaire', () => {
@@ -138,16 +138,16 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     const breadcrumb = screen.getByRole('navigation')
     const levels = within(breadcrumb).getAllByRole('listitem')
     expect(levels).toHaveLength(3)
-    expect(within(levels[0]).getByRole('link')).toBeInTheDocument()
-    const accueil = within(levels[0]).getByText(wording.ACCUEIL)
-    expect(accueil).toHaveAttribute('href', '/')
-    const lienEntitéJuridique = within(levels[1]).getByRole('link')
-    expect(lienEntitéJuridique).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/010008407`)
-    const abréviationEj = within(levels[1]).getByText('EJ', { selector: 'abbr' })
-    expect(abréviationEj).toHaveAttribute('title', 'Entité juridique')
-    expect(within(levels[1]).getByText('- 010 008 407 - HOPITAL PRIVE DE VILLENEUVE DASCQ')).toBeInTheDocument()
-    expect(within(levels[2]).queryByRole('link')).not.toBeInTheDocument()
-    expect(within(levels[2]).getByText('CH NANTUA')).toBeInTheDocument()
+    const accueil = levels[0]
+    const entitéJuridique = levels[1]
+    const établissementTerritorial = levels[2]
+    expect(within(accueil).getByRole('link')).toBeInTheDocument()
+    expect(within(accueil).getByText(wording.ACCUEIL)).toHaveAttribute('href', '/')
+    expect(within(entitéJuridique).getByRole('link')).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/010008407`)
+    expect(within(entitéJuridique).getByText('EJ', { selector: 'abbr' })).toHaveAttribute('title', 'Entité juridique')
+    expect(within(entitéJuridique).getByText('- 010 008 407 - HOPITAL PRIVE DE VILLENEUVE DASCQ')).toBeInTheDocument()
+    expect(within(établissementTerritorial).queryByRole('link')).not.toBeInTheDocument()
+    expect(within(établissementTerritorial).getByText('CH NANTUA')).toBeInTheDocument()
   })
 
   it('affiche le chemin jusqu’à la page d’une région', () => {
@@ -163,10 +163,10 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     const breadcrumb = screen.getByRole('navigation')
     const levels = within(breadcrumb).getAllByRole('listitem')
     expect(levels).toHaveLength(2)
-    expect(within(levels[0]).getByRole('link')).toBeInTheDocument()
-    const accueil = within(levels[0]).getByText(wording.ACCUEIL)
-    expect(accueil).toHaveAttribute('href', '/')
-    const région = within(levels[1]).getByText(wording.régionBreadcrumb(régions['bretagne'].label))
-    expect(région).toBeInTheDocument()
+    const accueil = levels[0]
+    const région = levels[1]
+    expect(within(accueil).getByRole('link')).toBeInTheDocument()
+    expect(within(accueil).getByText(wording.ACCUEIL)).toHaveAttribute('href', '/')
+    expect(within(région).getByText(wording.régionBreadcrumb(régions['bretagne'].label))).toBeInTheDocument()
   })
 })

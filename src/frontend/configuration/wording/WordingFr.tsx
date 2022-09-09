@@ -61,7 +61,7 @@ export class WordingFr implements Wording {
   // Cartographie
   readonly CARTOGRAPHIE: string = 'Cartographie'
   readonly OFFRE_SANTÉ_PAR_REGION: string = 'Offre de santé par région'
-  readonly CARTOGRAPHIE_DESCRIPTION: string = 'Visualisez l’offre de santé d’une région en retrouvant tous les établissement de votre choix.'
+  readonly CARTOGRAPHIE_DESCRIPTION: string = 'Visualisez l’offre de santé d’une région en retrouvant tous les établissements de votre choix.'
 
   // Région
   readonly régionAtlasSanté: (placeholder: string) => string = (placeholder: string) => `Carte de ${placeholder}`
