@@ -42,7 +42,7 @@ describe('La recherche d’entités et d’établissements', () => {
     })
   })
 
-  it.only('retourne les résultats triés par pertinence, par type puis par numéro finess', async () => {
+  it('retourne les résultats triés par pertinence, par type puis par numéro finess', async () => {
     // GIVEN
     await entitéJuridiqueRepository.insert([
       EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000000', raisonSociale: 'hôpital hôpital - entité juridique très pertinente' }),
