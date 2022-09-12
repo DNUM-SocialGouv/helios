@@ -9,6 +9,7 @@ type RechercheState = Readonly<{
   estCeEnAttente: boolean
   estCeQueLesRésultatsSontReçus: boolean
   nombreRésultats: number
+  page: number
   résultats: RechercheViewModel[]
   terme: string
   termeFixe: string
@@ -17,11 +18,13 @@ type RechercheState = Readonly<{
 export function useRecherche() {
   const { paths } = useDependencies()
   const router = useRouter()
+  const pageInitiale = 1
 
   const [state, setState] = useState<RechercheState>({
     estCeEnAttente: false,
     estCeQueLesRésultatsSontReçus: false,
     nombreRésultats: 0,
+    page: pageInitiale,
     résultats: [],
     terme: '',
     termeFixe: '',
@@ -34,7 +37,7 @@ export function useRecherche() {
       estCeEnAttente: true,
       estCeQueLesRésultatsSontReçus: false,
     })
-    rechercher(state.terme)
+    rechercher(state.terme, pageInitiale)
   }
 
   const rechercheOnChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -44,9 +47,9 @@ export function useRecherche() {
     })
   }
 
-  const rechercher = (terme: string) => {
+  const rechercher = (terme: string, page: number) => {
     fetch('/api/recherche', {
-      body: JSON.stringify({ terme }),
+      body: JSON.stringify({ page, terme }),
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
     })
@@ -57,7 +60,10 @@ export function useRecherche() {
           estCeEnAttente: false,
           estCeQueLesRésultatsSontReçus: true,
           nombreRésultats: data.nombreDeRésultats,
-          résultats: data.résultats.map((résultat: Résultat) => new RechercheViewModel(résultat, paths)),
+          page,
+          résultats: page === pageInitiale
+            ? construisLesRésultatsDeLaRecherche(data)
+            : state.résultats.concat(construisLesRésultatsDeLaRecherche(data)),
           terme,
           termeFixe: terme,
         })
@@ -72,18 +78,40 @@ export function useRecherche() {
         estCeQueLesRésultatsSontReçus: false,
         terme: router.query['terme'] as string,
       })
-      rechercher(router.query['terme'] as string)
+      rechercher(router.query['terme'] as string, pageInitiale)
     }
   }, [])
 
+  const estCeQueLesRésultatsSontTousAffichés = () => {
+    return state.nombreRésultats === state.résultats.length
+  }
+
+  const pageSuivante = () => {
+    return state.page + 1
+  }
+
+  const chargerLesRésultatsSuivants = () => {
+    setState({
+      ...state,
+      estCeEnAttente: true,
+    })
+    rechercher(state.terme, pageSuivante())
+  }
+
   return {
+    chargerLesRésultatsSuivants,
     estCeEnAttente: state.estCeEnAttente,
     estCeQueLesRésultatsSontReçus: state.estCeQueLesRésultatsSontReçus,
+    estCeQueLesRésultatsSontTousAffichés,
     lancerLaRecherche,
     nombreRésultats: state.nombreRésultats,
     rechercheOnChange,
     résultats: state.résultats,
     terme: state.terme,
     termeFixe: state.termeFixe,
+  }
+
+  function construisLesRésultatsDeLaRecherche(data: any): RechercheViewModel[] {
+    return data.résultats.map((résultat: Résultat) => new RechercheViewModel(résultat, paths))
   }
 }
