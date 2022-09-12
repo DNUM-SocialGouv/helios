@@ -55,10 +55,6 @@ export const BlocIdentitéSanitaire = ({ établissementTerritorialSanitaireViewM
           valeur={établissementTerritorialSanitaireViewModel.catégorieDeLÉtablissement}
         />
         <IndicateurIdentité
-          nomDeLIndicateur={wording.NOM_DU_DIRECTEUR}
-          valeur="À venir"
-        />
-        <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuStatutDeLÉtablissement}
           nomDeLIndicateur={wording.STATUT_DE_L_ÉTABLISSEMENT}
           source={Sources(wording.FINESS)}

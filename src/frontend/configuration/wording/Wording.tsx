@@ -75,7 +75,6 @@ export interface Wording {
   readonly ADRESSE: string
   readonly TÉLÉPHONE: string
   readonly TÉLÉPHONE_ET_EMAIL: string
-  readonly NOM_DU_DIRECTEUR: string
   readonly STATUT_DE_L_ÉTABLISSEMENT: string
   readonly DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM: ReactElement
   readonly ENTITÉ_JURIDIQUE_DE_RATTACHEMENT: string

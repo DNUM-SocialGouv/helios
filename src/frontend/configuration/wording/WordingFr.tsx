@@ -95,7 +95,6 @@ export class WordingFr implements Wording {
   readonly ADRESSE: string = 'Adresse'
   readonly TÉLÉPHONE: string = 'Téléphone'
   readonly TÉLÉPHONE_ET_EMAIL: string = 'Téléphone et e-mail'
-  readonly NOM_DU_DIRECTEUR: string = 'Nom du directeur'
   readonly STATUT_DE_L_ÉTABLISSEMENT: string = 'Statut de l’établissement'
   readonly DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM: ReactElement = (
     <>
