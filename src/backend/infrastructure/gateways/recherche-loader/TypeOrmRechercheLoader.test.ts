@@ -42,22 +42,34 @@ describe('La recherche d’entités et d’établissements', () => {
     })
   })
 
-  it('retourne les résultats triés par pertinence puis par numéro finess', async () => {
+  it.only('retourne les résultats triés par pertinence, par type puis par numéro finess', async () => {
     // GIVEN
     await entitéJuridiqueRepository.insert([
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000000', raisonSociale: 'hopital de 000000000' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '111111111', raisonSociale: 'hopital de 111111111' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '101010101', raisonSociale: 'hopital de 101010101' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '110110110', raisonSociale: 'hopital de 110110110' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '121212121', raisonSociale: 'hopital de 121212121' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '131313131', raisonSociale: 'hopital de 131313131' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '141414141', raisonSociale: 'hopital de 141414141' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '151515151', raisonSociale: 'hopital de 151515151' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '161616161', raisonSociale: 'hopital de 161616161' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '171717171', raisonSociale: 'hopital de 171717171' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '181818181', raisonSociale: 'hopital de 181818181' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '191919191', raisonSociale: 'hopital de 191919191' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '999999999', raisonSociale: 'non pertinent' }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000000', raisonSociale: 'hôpital hôpital - entité juridique très pertinente' }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000001', raisonSociale: 'hôpital - entité juridique pertinente' }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000002', raisonSociale: 'hôpital - entité juridique pertinente' }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '999999999', raisonSociale: 'entité juridique non pertinente' }),
+    ])
+
+    await établissementTerritorialRepository.insert([
+      ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire(
+        { numéroFinessEntitéJuridique: '000000000', numéroFinessÉtablissementTerritorial: '100000000', raisonSociale: 'hôpital - établissement territorial sanitaire pertinent' }
+      ),
+      ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire(
+        { numéroFinessEntitéJuridique: '000000001', numéroFinessÉtablissementTerritorial: '100000001', raisonSociale: 'hôpital - établissement territorial sanitaire pertinent' }
+      ),
+      ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire(
+        { numéroFinessEntitéJuridique: '999999999', numéroFinessÉtablissementTerritorial: '199999999', raisonSociale: 'établissement territorial sanitaire non pertinent' }
+      ),
+      ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial(
+        { numéroFinessEntitéJuridique: '000000000', numéroFinessÉtablissementTerritorial: '200000000', raisonSociale: 'hôpital - établissement territorial médico-social pertinent' }
+      ),
+      ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial(
+        { numéroFinessEntitéJuridique: '000000001', numéroFinessÉtablissementTerritorial: '200000001', raisonSociale: 'hôpital - établissement territorial médico-social pertinent' }
+      ),
+      ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial(
+        { numéroFinessEntitéJuridique: '999999999', numéroFinessÉtablissementTerritorial: '299999999', raisonSociale: 'établissement territorial médico-social non pertinent' }
+      ),
     ])
 
     const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
@@ -67,56 +79,46 @@ describe('La recherche d’entités et d’établissements', () => {
 
     // THEN
     expect(recherche).toStrictEqual<RésultatDeRecherche>({
-      nombreDeRésultats: 20,
+      nombreDeRésultats: 7,
       résultats:
       [
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: '000000000',
-          raisonSociale: 'hopital de 000000000',
+          raisonSociale: 'hôpital hôpital - entité juridique très pertinente',
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-          numéroFiness: '101010101',
-          raisonSociale: 'hopital de 101010101',
+          numéroFiness: '000000001',
+          raisonSociale: 'hôpital - entité juridique pertinente',
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-          numéroFiness: '110110110',
-          raisonSociale: 'hopital de 110110110',
+          numéroFiness: '000000002',
+          raisonSociale: 'hôpital - entité juridique pertinente',
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-          numéroFiness: '111111111',
-          raisonSociale: 'hopital de 111111111',
+          commune: 'NANTUA',
+          numéroFiness: '200000000',
+          raisonSociale: 'hôpital - établissement territorial médico-social pertinent',
+          type: 'Médico-social',
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-          numéroFiness: '121212121',
-          raisonSociale: 'hopital de 121212121',
+          commune: 'NANTUA',
+          numéroFiness: '200000001',
+          raisonSociale: 'hôpital - établissement territorial médico-social pertinent',
+          type: 'Médico-social',
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-          numéroFiness: '131313131',
-          raisonSociale: 'hopital de 131313131',
+          commune: 'VILLENEUVE D ASCQ',
+          département: 'NORD',
+          numéroFiness: '100000000',
+          raisonSociale: 'hôpital - établissement territorial sanitaire pertinent',
+          type: 'Sanitaire',
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-          numéroFiness: '141414141',
-          raisonSociale: 'hopital de 141414141',
-        }),
-        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-          numéroFiness: '151515151',
-          raisonSociale: 'hopital de 151515151',
-        }),
-        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-          numéroFiness: '161616161',
-          raisonSociale: 'hopital de 161616161',
-        }),
-        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-          numéroFiness: '171717171',
-          raisonSociale: 'hopital de 171717171',
-        }),
-        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-          numéroFiness: '181818181',
-          raisonSociale: 'hopital de 181818181',
-        }),
-        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-          numéroFiness: '191919191',
-          raisonSociale: 'hopital de 191919191',
+          commune: 'VILLENEUVE D ASCQ',
+          département: 'NORD',
+          numéroFiness: '100000001',
+          raisonSociale: 'hôpital - établissement territorial sanitaire pertinent',
+          type: 'Sanitaire',
         }),
       ],
     })
