@@ -73,7 +73,7 @@ export const Header = () => {
                   >
                     <a title={wording.ACCUEIL}>
                       <p className="fr-header__service-title">
-                        {wording.FICHE_DE_SYNTHÈSE}
+                        {wording.TITRE_DU_SITE}
                       </p>
                     </a>
                   </Link>

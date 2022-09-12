@@ -15,7 +15,7 @@ describe('En-tête de page', () => {
     // THEN
     const accueil = screen.getByRole('link', { name: wording.ACCUEIL })
     expect(accueil).toHaveAttribute('href', paths.ACCUEIL)
-    expect(accueil.textContent).toBe(wording.FICHE_DE_SYNTHÈSE)
+    expect(accueil.textContent).toBe(wording.TITRE_DU_SITE)
   })
 
   it('affiche un menu pour afficher la déconnexion et un pour le moteur de recherche en mobile', () => {

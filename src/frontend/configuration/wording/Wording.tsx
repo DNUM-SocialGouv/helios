@@ -7,7 +7,7 @@ export interface Wording {
   readonly MENU: string
   readonly DÉCONNEXION: string
   readonly FERMER: string
-  readonly FICHE_DE_SYNTHÈSE: string
+  readonly TITRE_DU_SITE: string
 
   // Titre des pages
   readonly TITRE_PAGE_ACCUEIL: string
