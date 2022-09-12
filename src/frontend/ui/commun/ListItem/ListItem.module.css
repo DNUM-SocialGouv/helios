@@ -3,3 +3,7 @@
   display: flex;
   gap: .5rem;
 }
+
+.élément-liste > span {
+  min-width: 2rem;
+}

@@ -31,3 +31,15 @@ iframe {
     color: #000 !important;
   }
 }
+
+@media (max-width: 64em) {
+  .fr-col-3 {
+    flex: 0 0 33%;
+    max-width: 33%;
+    width: 33%;
+  }
+}
+
+.fr-tile--horizontal-md .fr-tile__body {
+  align-self: flex-start;
+}
