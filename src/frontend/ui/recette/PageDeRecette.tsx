@@ -145,7 +145,7 @@ export const PageDeRecette = () => {
   ]
 
   return (
-    <>
+    <main className="fr-container">
       <section
         aria-label={wording.TITRE_LISTE_DES_ENTITÉS_JURIDIQUES}
         className="fr-mt-5w"
@@ -224,6 +224,6 @@ export const PageDeRecette = () => {
           }
         </ul>
       </section>
-    </>
+    </main>
   )
 }
