@@ -55,10 +55,6 @@ export const BlocIdentitéMédicoSocial = ({ établissementTerritorialMédicoSoc
           valeur={établissementTerritorialMédicoSocialViewModel.catégorieDeLÉtablissement}
         />
         <IndicateurIdentité
-          nomDeLIndicateur={wording.NOM_DU_DIRECTEUR}
-          valeur="À venir"
-        />
-        <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuStatutDeLÉtablissement}
           nomDeLIndicateur={wording.STATUT_DE_L_ÉTABLISSEMENT}
           source={Sources(wording.FINESS)}

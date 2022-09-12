@@ -98,19 +98,6 @@ describe('La page établissement territorial sanitaire - bloc identité', () => 
     expect(catégorieDeLÉtablissement).toBeInTheDocument()
   })
 
-  it('affiche le nom du directeur', () => {
-    // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
-
-    // THEN
-    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
-    const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelNomDuDirecteur = within(indicateurs[6]).getByText(wording.NOM_DU_DIRECTEUR, { selector: 'p' })
-    expect(labelNomDuDirecteur.textContent).toBe(wording.NOM_DU_DIRECTEUR)
-    const indicateurÀVenir = within(indicateurs[6]).getByText('À venir', { selector: 'p' })
-    expect(indicateurÀVenir).toBeInTheDocument()
-  })
-
   it('affiche le statut de l’établissement', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
@@ -118,9 +105,9 @@ describe('La page établissement territorial sanitaire - bloc identité', () => 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelStatutÉtablissement = within(indicateurs[7]).getByText(`${wording.STATUT_DE_L_ÉTABLISSEMENT} -`, { selector: 'p' })
+    const labelStatutÉtablissement = within(indicateurs[6]).getByText(`${wording.STATUT_DE_L_ÉTABLISSEMENT} -`, { selector: 'p' })
     expect(labelStatutÉtablissement.textContent).toBe(`${wording.STATUT_DE_L_ÉTABLISSEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
-    const statutÉtablissement = within(indicateurs[7]).getByText('Société Anonyme (S.A.)')
+    const statutÉtablissement = within(indicateurs[6]).getByText('Société Anonyme (S.A.)')
     expect(statutÉtablissement).toBeInTheDocument()
   })
 
@@ -134,14 +121,14 @@ describe('La page établissement territorial sanitaire - bloc identité', () => 
     expect(majEtSource).toHaveLength(7)
   })
 
-  it('affiche un indicateur à venir', () => {
+  it('affiche sept indicateurs en tout', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
-    const majEtSource = within(ficheDIdentité).getAllByText('À venir')
-    expect(majEtSource).toHaveLength(1)
+    const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
+    expect(indicateurs).toHaveLength(7)
   })
 
   describe('affiche "non renseigné" quand une valeur est vide', () => {
