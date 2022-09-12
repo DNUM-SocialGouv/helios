@@ -7,7 +7,7 @@ import { RechercheViewModel } from './RechercheViewModel'
 
 type RésultatsDeRechercheProps = Readonly<{
   estCeQueLesRésultatsSontTousAffichés: boolean
-  chargerLesRésultatsSuivants: () => void
+  chargeLesRésultatsSuivants: () => void
   nombreRésultats: number
   résultats: RechercheViewModel[]
   termeFixe: string
@@ -15,7 +15,7 @@ type RésultatsDeRechercheProps = Readonly<{
 
 export const RésultatsDeRecherche = ({
   estCeQueLesRésultatsSontTousAffichés,
-  chargerLesRésultatsSuivants,
+  chargeLesRésultatsSuivants,
   nombreRésultats,
   résultats,
   termeFixe,
@@ -69,7 +69,7 @@ export const RésultatsDeRecherche = ({
         <div className={styles['voir-plus-de-résultats']}>
           <button
             className="fr-btn fr-btn--secondary"
-            onClick={chargerLesRésultatsSuivants}
+            onClick={chargeLesRésultatsSuivants}
           >
             Voir plus de résultats
           </button>

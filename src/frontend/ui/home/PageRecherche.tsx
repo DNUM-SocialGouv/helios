@@ -15,7 +15,7 @@ export const PageRecherche = () => {
     estCeEnAttente,
     estCeQueLesRésultatsSontReçus,
     estCeQueLesRésultatsSontTousAffichés,
-    chargerLesRésultatsSuivants,
+    chargeLesRésultatsSuivants,
     lancerLaRecherche,
     nombreRésultats,
     rechercheOnChange,
@@ -42,7 +42,7 @@ export const PageRecherche = () => {
 
       {estCeQueLesRésultatsSontReçus &&
         <RésultatsDeRecherche
-          chargerLesRésultatsSuivants={chargerLesRésultatsSuivants}
+          chargeLesRésultatsSuivants={chargeLesRésultatsSuivants}
           estCeQueLesRésultatsSontTousAffichés={estCeQueLesRésultatsSontTousAffichés()}
           nombreRésultats={nombreRésultats}
           résultats={résultats}

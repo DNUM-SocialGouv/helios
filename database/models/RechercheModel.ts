@@ -6,7 +6,7 @@ import { ViewColumn, ViewEntity } from 'typeorm'
       numero_finess_entite_juridique AS numero_finess,
       raison_sociale,
       'Entité juridique' AS type,
-      to_tsvector('unaccent_helios', raison_sociale || ' ' || numero_finess_entite_juridique ' ' || commune || ' ' || departement) AS termes,
+      termes_de_recherche AS termes,
       commune,
       departement
     FROM entite_juridique
@@ -15,7 +15,7 @@ import { ViewColumn, ViewEntity } from 'typeorm'
       numero_finess_etablissement_territorial AS numero_finess,
       raison_sociale,
       domaine::text AS type,
-      to_tsvector('unaccent_helios', raison_sociale || ' ' || numero_finess_etablissement_territorial || ' '  || commune || ' ' || departement) AS termes,
+      termes_de_recherche AS termes,
       commune,
       departement
     FROM etablissement_territorial;`,

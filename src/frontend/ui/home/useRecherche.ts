@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { ChangeEvent, MouseEvent, useEffect, useState } from 'react'
 
-import { Résultat } from '../../../backend/métier/entities/RésultatDeRecherche'
+import { Résultat, RésultatDeRecherche } from '../../../backend/métier/entities/RésultatDeRecherche'
 import { useDependencies } from '../commun/contexts/useDependencies'
 import { RechercheViewModel } from './RechercheViewModel'
 
@@ -90,7 +90,7 @@ export function useRecherche() {
     return state.page + 1
   }
 
-  const chargerLesRésultatsSuivants = () => {
+  const chargeLesRésultatsSuivants = () => {
     setState({
       ...state,
       estCeEnAttente: true,
@@ -98,8 +98,12 @@ export function useRecherche() {
     rechercher(state.terme, pageSuivante())
   }
 
+  const construisLesRésultatsDeLaRecherche = (data: RésultatDeRecherche): RechercheViewModel[] => {
+    return data.résultats.map((résultat: Résultat) => new RechercheViewModel(résultat, paths))
+  }
+
   return {
-    chargerLesRésultatsSuivants,
+    chargeLesRésultatsSuivants,
     estCeEnAttente: state.estCeEnAttente,
     estCeQueLesRésultatsSontReçus: state.estCeQueLesRésultatsSontReçus,
     estCeQueLesRésultatsSontTousAffichés,
@@ -109,9 +113,5 @@ export function useRecherche() {
     résultats: state.résultats,
     terme: state.terme,
     termeFixe: state.termeFixe,
-  }
-
-  function construisLesRésultatsDeLaRecherche(data: any): RechercheViewModel[] {
-    return data.résultats.map((résultat: Résultat) => new RechercheViewModel(résultat, paths))
   }
 }
