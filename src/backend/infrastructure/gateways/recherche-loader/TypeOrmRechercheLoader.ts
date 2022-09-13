@@ -13,7 +13,7 @@ type RechercheTypeOrm = Readonly<{
 }>
 
 export class TypeOrmRechercheLoader implements RechercheLoader {
-  private readonly NOMBRE_DE_RÉSULTATS_PAR_PAGE = 12
+  private readonly NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE = 12
 
   constructor(private readonly orm: Promise<DataSource>) {}
 
@@ -33,16 +33,16 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .orderBy('rank', 'DESC')
       .addOrderBy('type', 'ASC')
       .addOrderBy('numero_finess', 'ASC')
-      .limit(this.NOMBRE_DE_RÉSULTATS_PAR_PAGE)
-      .offset(this.NOMBRE_DE_RÉSULTATS_PAR_PAGE * (page - 1))
+      .limit(this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE)
+      .offset(this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1))
 
     const rechercheModelRésultats = await requêteDeLaRecherche.getRawMany<RechercheTypeOrm>()
-    const nombreDeRésultats = await this.estimeLeNombreDeRésultats(requêteDeLaRecherche)
+    const nombreDeRésultats = await this.compteLeNombreDeRésultats(requêteDeLaRecherche)
 
     return this.construisLesRésultatsDeLaRecherche(rechercheModelRésultats, nombreDeRésultats)
   }
 
-  private async estimeLeNombreDeRésultats(requêteDeLaRecherche: SelectQueryBuilder<RechercheModel>): Promise<number> {
+  private async compteLeNombreDeRésultats(requêteDeLaRecherche: SelectQueryBuilder<RechercheModel>): Promise<number> {
     return await requêteDeLaRecherche.getCount()
   }
 

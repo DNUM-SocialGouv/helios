@@ -13,7 +13,7 @@ describe('La recherche d’entités et d’établissements', () => {
   const orm = getOrm()
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>
   let établissementTerritorialRepository: Repository<ÉtablissementTerritorialIdentitéModel>
-  const page = 1
+  const premièrePage = 1
 
   beforeAll(async () => {
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel)
@@ -33,7 +33,7 @@ describe('La recherche d’entités et d’établissements', () => {
     const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
     // WHEN
-    const recherche = await typeOrmRechercheLoader.recherche("''));DROP ALL TABLE;--", page)
+    const recherche = await typeOrmRechercheLoader.recherche("''));DROP ALL TABLE;--", premièrePage)
 
     // THEN
     expect(recherche).toStrictEqual<RésultatDeRecherche>({
@@ -75,7 +75,7 @@ describe('La recherche d’entités et d’établissements', () => {
     const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
     // WHEN
-    const recherche = await typeOrmRechercheLoader.recherche('hopital', page)
+    const recherche = await typeOrmRechercheLoader.recherche('hopital', premièrePage)
 
     // THEN
     expect(recherche).toStrictEqual<RésultatDeRecherche>({
@@ -153,7 +153,7 @@ describe('La recherche d’entités et d’établissements', () => {
     const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
     // WHEN
-    const recherche = await typeOrmRechercheLoader.recherche('hopital', page)
+    const recherche = await typeOrmRechercheLoader.recherche('hopital', premièrePage)
 
     // THEN
     expect(recherche).toStrictEqual<RésultatDeRecherche>({
@@ -222,7 +222,7 @@ describe('La recherche d’entités et d’établissements', () => {
     const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
     // WHEN
-    const recherche = await typeOrmRechercheLoader.recherche(numéroFinessEntitéJuridique, page)
+    const recherche = await typeOrmRechercheLoader.recherche(numéroFinessEntitéJuridique, premièrePage)
 
     // THEN
     expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
@@ -245,7 +245,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche(numéroFinessEntitéJuridique, page)
+      const recherche = await typeOrmRechercheLoader.recherche(numéroFinessEntitéJuridique, premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -268,7 +268,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche(numéroFinessÉtablissementTerritorial, page)
+      const recherche = await typeOrmRechercheLoader.recherche(numéroFinessÉtablissementTerritorial, premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -291,7 +291,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('999999999', page)
+      const recherche = await typeOrmRechercheLoader.recherche('999999999', premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(0)
@@ -307,7 +307,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('CENTRE HOSPITALIER DU HAUT BUGEY', page)
+      const recherche = await typeOrmRechercheLoader.recherche('CENTRE HOSPITALIER DU HAUT BUGEY', premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -339,7 +339,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('HOPITAL PRIVE DE VILLENEUVE DASCQ', page)
+      const recherche = await typeOrmRechercheLoader.recherche('HOPITAL PRIVE DE VILLENEUVE DASCQ', premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -354,7 +354,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('bugey', page)
+      const recherche = await typeOrmRechercheLoader.recherche('bugey', premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -369,7 +369,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('residence', page)
+      const recherche = await typeOrmRechercheLoader.recherche('residence', premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -389,7 +389,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('saint trivier courtes', page)
+      const recherche = await typeOrmRechercheLoader.recherche('saint trivier courtes', premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -409,7 +409,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche("l'arbre d or", page)
+      const recherche = await typeOrmRechercheLoader.recherche("l'arbre d or", premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -431,7 +431,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('Puy de Dôme', page)
+      const recherche = await typeOrmRechercheLoader.recherche('Puy de Dôme', premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -463,7 +463,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('Puy de Dôme', page)
+      const recherche = await typeOrmRechercheLoader.recherche('Puy de Dôme', premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -487,7 +487,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('Saint Étienne du Gué de l Isle', page)
+      const recherche = await typeOrmRechercheLoader.recherche('Saint Étienne du Gué de l Isle', premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -519,7 +519,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('Saint Jouan de l Isle', page)
+      const recherche = await typeOrmRechercheLoader.recherche('Saint Jouan de l Isle', premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -534,9 +534,9 @@ describe('La recherche d’entités et d’établissements', () => {
     })
   })
 
-  describe('pagine les résultats', () => {
-    it('retourne 12 éléments s’il y a au moins 12 résultats correspondant en base', async () => {
-    // GIVEN
+  describe('pagine les résultats lorsque la recherche renvoie plus de 12 résultats', () => {
+
+    beforeEach(async () => {
       await entitéJuridiqueRepository.insert([
         EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000000', raisonSociale: 'hopital 000000000' }),
         EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000001', raisonSociale: 'hopital 000000001' }),
@@ -550,16 +550,22 @@ describe('La recherche d’entités et d’établissements', () => {
         EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000009', raisonSociale: 'hopital 000000009' }),
         EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000010', raisonSociale: 'hopital 000000010' }),
         EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000011', raisonSociale: 'hopital 000000011' }),
+        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000012', raisonSociale: 'hopital 000000012' }),
+        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000013', raisonSociale: 'hopital 000000013' }),
+        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000014', raisonSociale: 'hopital 000000014' }),
       ])
+    })
 
+    it('la première page retourne les 12 premiers éléments quand 15 sont renvoyés par la recherche', async () => {
+      // GIVEN
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('hopital', page)
+      const recherche = await typeOrmRechercheLoader.recherche('hopital', premièrePage)
 
       // THEN
       expect(recherche).toStrictEqual<RésultatDeRecherche>({
-        nombreDeRésultats: 12,
+        nombreDeRésultats: 15,
         résultats:
       [
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
@@ -614,28 +620,10 @@ describe('La recherche d’entités et d’établissements', () => {
       })
     })
 
-    it('retourne les éléments restants s’il y a moins de 12 résultats correspondant pour la page demandée', async () => {
+    it('la deuxième page retourne les 3 éléments restants quand 15 sont renvoyés par la recherche', async () => {
       // GIVEN
-      await entitéJuridiqueRepository.insert([
-        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000000', raisonSociale: 'hopital 000000000' }),
-        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000001', raisonSociale: 'hopital 000000001' }),
-        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000002', raisonSociale: 'hopital 000000002' }),
-        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000003', raisonSociale: 'hopital 000000003' }),
-        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000004', raisonSociale: 'hopital 000000004' }),
-        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000005', raisonSociale: 'hopital 000000005' }),
-        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000006', raisonSociale: 'hopital 000000006' }),
-        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000007', raisonSociale: 'hopital 000000007' }),
-        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000008', raisonSociale: 'hopital 000000008' }),
-        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000009', raisonSociale: 'hopital 000000009' }),
-        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000010', raisonSociale: 'hopital 000000010' }),
-        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000011', raisonSociale: 'hopital 000000011' }),
-        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000012', raisonSociale: 'hopital 000000012' }),
-        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000013', raisonSociale: 'hopital 000000013' }),
-        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000014', raisonSociale: 'hopital 000000014' }),
-      ])
-
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
-      const pageSuivante = page + 1
+      const pageSuivante = premièrePage + 1
 
       // WHEN
       const recherche = await typeOrmRechercheLoader.recherche('hopital', pageSuivante)

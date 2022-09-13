@@ -303,10 +303,10 @@ describe('La page de recherche', () => {
     renderFakeComponent(<PageRecherche />)
     const termeDeLaPremièreRecherche = 'hospitalier'
     const formulaire = screen.getByRole('search')
-    const rechercher = within(formulaire).getByRole('button', { name: wording.RECHERCHE_LABEL })
+    const boutonRechercher = within(formulaire).getByRole('button', { name: wording.RECHERCHE_LABEL })
     const input = within(formulaire).getByPlaceholderText(wording.RECHERCHE_PLACEHOLDER)
     fireEvent.change(input, { target: { value: termeDeLaPremièreRecherche } })
-    fireEvent.click(rechercher)
+    fireEvent.click(boutonRechercher)
     const enAttentePremièreRecherche = screen.getByText(wording.RECHERCHE_EN_ATTENTE, { selector: 'p' })
     expect(enAttentePremièreRecherche).toBeInTheDocument()
     await waitForElementToBeRemoved(enAttentePremièreRecherche)
@@ -315,7 +315,7 @@ describe('La page de recherche', () => {
     fireEvent.change(input, { target: { value: termeDeLaSecondeRecherche } })
 
     // WHEN
-    fireEvent.click(rechercher)
+    fireEvent.click(boutonRechercher)
 
     // THEN
     const enAttenteSecondeRecherche = screen.getByText(wording.RECHERCHE_EN_ATTENTE, { selector: 'p' })
