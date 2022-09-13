@@ -14,6 +14,8 @@ export const PageRecherche = () => {
   const {
     estCeEnAttente,
     estCeQueLesRésultatsSontReçus,
+    estCeQueLesRésultatsSontTousAffichés,
+    chargeLesRésultatsSuivants,
     lancerLaRecherche,
     nombreRésultats,
     rechercheOnChange,
@@ -40,6 +42,8 @@ export const PageRecherche = () => {
 
       {estCeQueLesRésultatsSontReçus &&
         <RésultatsDeRecherche
+          chargeLesRésultatsSuivants={chargeLesRésultatsSuivants}
+          estCeQueLesRésultatsSontTousAffichés={estCeQueLesRésultatsSontTousAffichés()}
           nombreRésultats={nombreRésultats}
           résultats={résultats}
           termeFixe={termeFixe}

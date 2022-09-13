@@ -6,12 +6,16 @@ import styles from './Recherche.module.css'
 import { RechercheViewModel } from './RechercheViewModel'
 
 type RésultatsDeRechercheProps = Readonly<{
+  estCeQueLesRésultatsSontTousAffichés: boolean
+  chargeLesRésultatsSuivants: () => void
   nombreRésultats: number
   résultats: RechercheViewModel[]
   termeFixe: string
 }>
 
 export const RésultatsDeRecherche = ({
+  estCeQueLesRésultatsSontTousAffichés,
+  chargeLesRésultatsSuivants,
   nombreRésultats,
   résultats,
   termeFixe,
@@ -60,6 +64,17 @@ export const RésultatsDeRecherche = ({
           </li>
         ))}
       </ul>
+      {
+        !estCeQueLesRésultatsSontTousAffichés &&
+        <div className={styles['voir-plus-de-résultats']}>
+          <button
+            className="fr-btn fr-btn--secondary"
+            onClick={chargeLesRésultatsSuivants}
+          >
+            Voir plus de résultats
+          </button>
+        </div>
+      }
     </section>
   )
 }

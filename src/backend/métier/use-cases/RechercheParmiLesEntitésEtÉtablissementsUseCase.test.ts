@@ -17,14 +17,15 @@ describe('La recherche des entités juridiques et des établissements territoria
     const mockedRechercheParTerme = jest.fn().mockResolvedValueOnce(résultatDeRecherche)
     const rechercheLoader: RechercheLoader = { recherche: mockedRechercheParTerme }
     const termeDeLaRecherche = 'terme de la recherche'
+    const premièrePage = 1
 
     const rechercheParmiLesEntitésEtÉtablissementsUseCase = new RechercheParmiLesEntitésEtÉtablissementsUseCase(rechercheLoader)
 
     // WHEN
-    const résultatsDeLaRecherche = await rechercheParmiLesEntitésEtÉtablissementsUseCase.exécute(termeDeLaRecherche)
+    const résultatsDeLaRecherche = await rechercheParmiLesEntitésEtÉtablissementsUseCase.exécute(termeDeLaRecherche, premièrePage)
 
     // THEN
-    expect(mockedRechercheParTerme).toHaveBeenCalledWith(termeDeLaRecherche)
+    expect(mockedRechercheParTerme).toHaveBeenCalledWith(termeDeLaRecherche, premièrePage)
     expect(mockedRechercheParTerme).toHaveBeenCalledTimes(1)
     expect(résultatsDeLaRecherche).toStrictEqual<RésultatDeRecherche>(
       {

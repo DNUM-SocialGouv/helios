@@ -4,7 +4,7 @@ import { rechercheParmiLesEntitésEtÉtablissementsEndpoint } from '../../backen
 import { dependencies } from '../../backend/infrastructure/dependencies'
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
-  const { terme } = request.body
-  const recherche = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, terme)
+  const { terme, page } = request.body
+  const recherche = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, terme, page)
   response.status(200).json(recherche)
 }

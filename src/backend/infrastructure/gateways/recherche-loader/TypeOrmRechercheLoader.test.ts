@@ -13,6 +13,7 @@ describe('La recherche d’entités et d’établissements', () => {
   const orm = getOrm()
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>
   let établissementTerritorialRepository: Repository<ÉtablissementTerritorialIdentitéModel>
+  const premièrePage = 1
 
   beforeAll(async () => {
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel)
@@ -32,7 +33,7 @@ describe('La recherche d’entités et d’établissements', () => {
     const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
     // WHEN
-    const recherche = await typeOrmRechercheLoader.recherche("''));DROP ALL TABLE;--")
+    const recherche = await typeOrmRechercheLoader.recherche("''));DROP ALL TABLE;--", premièrePage)
 
     // THEN
     expect(recherche).toStrictEqual<RésultatDeRecherche>({
@@ -41,89 +42,175 @@ describe('La recherche d’entités et d’établissements', () => {
     })
   })
 
-  it('retourne un maximum de 12 résultats', async () => {
+  it('retourne les résultats triés par pertinence, par type puis par numéro finess', async () => {
     // GIVEN
     await entitéJuridiqueRepository.insert([
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000000', raisonSociale: 'hopital de 000000000' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '111111111', raisonSociale: 'hopital de 111111111' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '222222222', raisonSociale: 'hopital de 222222222' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '333333333', raisonSociale: 'hopital de 333333333' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '444444444', raisonSociale: 'hopital de 444444444' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '555555555', raisonSociale: 'hopital de 555555555' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '666666666', raisonSociale: 'hopital de 666666666' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '777777777', raisonSociale: 'hopital de 777777777' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '888888888', raisonSociale: 'hopital de 888888888' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '999999999', raisonSociale: 'hopital de 999999999' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '101010101', raisonSociale: 'hopital de 101010101' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '110110110', raisonSociale: 'hopital de 110110110' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '121212121', raisonSociale: 'hopital de 121212121' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '131313131', raisonSociale: 'hopital de 131313131' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '141414141', raisonSociale: 'hopital de 141414141' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '151515151', raisonSociale: 'hopital de 151515151' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '161616161', raisonSociale: 'hopital de 161616161' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '171717171', raisonSociale: 'hopital de 171717171' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '181818181', raisonSociale: 'hopital de 181818181' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '191919191', raisonSociale: 'hopital de 191919191' }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000000', raisonSociale: 'hôpital hôpital - entité juridique très pertinente' }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000001', raisonSociale: 'hôpital - entité juridique pertinente' }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000002', raisonSociale: 'hôpital - entité juridique pertinente' }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '999999999', raisonSociale: 'entité juridique non pertinente' }),
+    ])
+
+    await établissementTerritorialRepository.insert([
+      ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire(
+        { numéroFinessEntitéJuridique: '000000000', numéroFinessÉtablissementTerritorial: '100000000', raisonSociale: 'hôpital - établissement territorial sanitaire pertinent' }
+      ),
+      ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire(
+        { numéroFinessEntitéJuridique: '000000001', numéroFinessÉtablissementTerritorial: '100000001', raisonSociale: 'hôpital - établissement territorial sanitaire pertinent' }
+      ),
+      ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire(
+        { numéroFinessEntitéJuridique: '999999999', numéroFinessÉtablissementTerritorial: '199999999', raisonSociale: 'établissement territorial sanitaire non pertinent' }
+      ),
+      ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial(
+        { numéroFinessEntitéJuridique: '000000000', numéroFinessÉtablissementTerritorial: '200000000', raisonSociale: 'hôpital - établissement territorial médico-social pertinent' }
+      ),
+      ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial(
+        { numéroFinessEntitéJuridique: '000000001', numéroFinessÉtablissementTerritorial: '200000001', raisonSociale: 'hôpital - établissement territorial médico-social pertinent' }
+      ),
+      ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial(
+        { numéroFinessEntitéJuridique: '999999999', numéroFinessÉtablissementTerritorial: '299999999', raisonSociale: 'établissement territorial médico-social non pertinent' }
+      ),
     ])
 
     const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
     // WHEN
-    const recherche = await typeOrmRechercheLoader.recherche('hopital')
+    const recherche = await typeOrmRechercheLoader.recherche('hopital', premièrePage)
 
     // THEN
-    expect(recherche.nombreDeRésultats).toBe(12)
-    expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
+    expect(recherche).toStrictEqual<RésultatDeRecherche>({
+      nombreDeRésultats: 7,
+      résultats:
+      [
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          numéroFiness: '000000000',
+          raisonSociale: 'hôpital hôpital - entité juridique très pertinente',
+        }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          numéroFiness: '000000001',
+          raisonSociale: 'hôpital - entité juridique pertinente',
+        }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          numéroFiness: '000000002',
+          raisonSociale: 'hôpital - entité juridique pertinente',
+        }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          commune: 'NANTUA',
+          numéroFiness: '200000000',
+          raisonSociale: 'hôpital - établissement territorial médico-social pertinent',
+          type: 'Médico-social',
+        }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          commune: 'NANTUA',
+          numéroFiness: '200000001',
+          raisonSociale: 'hôpital - établissement territorial médico-social pertinent',
+          type: 'Médico-social',
+        }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          commune: 'VILLENEUVE D ASCQ',
+          département: 'NORD',
+          numéroFiness: '100000000',
+          raisonSociale: 'hôpital - établissement territorial sanitaire pertinent',
+          type: 'Sanitaire',
+        }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          commune: 'VILLENEUVE D ASCQ',
+          département: 'NORD',
+          numéroFiness: '100000001',
+          raisonSociale: 'hôpital - établissement territorial sanitaire pertinent',
+          type: 'Sanitaire',
+        }),
+      ],
+    })
+  })
 
-      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-        numéroFiness: '000000000',
-        raisonSociale: 'hopital de 000000000',
-      }),
-      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-        numéroFiness: '111111111',
-        raisonSociale: 'hopital de 111111111',
-      }),
-      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-        numéroFiness: '222222222',
-        raisonSociale: 'hopital de 222222222',
-      }),
-      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-        numéroFiness: '333333333',
-        raisonSociale: 'hopital de 333333333',
-      }),
-      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-        numéroFiness: '444444444',
-        raisonSociale: 'hopital de 444444444',
-      }),
-      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-        numéroFiness: '555555555',
-        raisonSociale: 'hopital de 555555555',
-      }),
-      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-        numéroFiness: '666666666',
-        raisonSociale: 'hopital de 666666666',
-      }),
-      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-        numéroFiness: '777777777',
-        raisonSociale: 'hopital de 777777777',
-      }),
-      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-        numéroFiness: '888888888',
-        raisonSociale: 'hopital de 888888888',
-      }),
-      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-        numéroFiness: '999999999',
-        raisonSociale: 'hopital de 999999999',
-      }),
-      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-        numéroFiness: '101010101',
-        raisonSociale: 'hopital de 101010101',
-      }),
-      RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-        numéroFiness: '110110110',
-        raisonSociale: 'hopital de 110110110',
-      }),
+  it('pour un même score de pertinence, privilégie les entités juridiques aux établissements territoriaux', async () => {
+    // GIVEN
+    await entitéJuridiqueRepository.insert([
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000000', raisonSociale: 'hopital entité juridique 000000000' }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '111111111', raisonSociale: 'hopital entité juridique 111111111' }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '222222222', raisonSociale: 'hopital entité juridique 222222222' }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '333333333', raisonSociale: 'hopital entité juridique 333333333' }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '444444444', raisonSociale: 'hopital entité juridique 444444444' }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '555555555', raisonSociale: 'hopital entité juridique 555555555' }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '666666666', raisonSociale: 'hopital entité juridique 666666666' }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '777777777', raisonSociale: 'hopital entité juridique 777777777' }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '888888888', raisonSociale: 'hopital entité juridique 888888888' }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '999999999', raisonSociale: 'hopital entité juridique 999999999' }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '101010101', raisonSociale: 'hopital entité juridique 101010101' }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '110110110', raisonSociale: 'hopital entité juridique 110110110' }),
     ])
+    await établissementTerritorialRepository.insert([
+      ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire(
+        {
+          numéroFinessEntitéJuridique: '000000000',
+          numéroFinessÉtablissementTerritorial,
+          raisonSociale: 'hopital établissement territorial 000000000',
+        }
+      ),
+    ])
+
+    const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
+
+    // WHEN
+    const recherche = await typeOrmRechercheLoader.recherche('hopital', premièrePage)
+
+    // THEN
+    expect(recherche).toStrictEqual<RésultatDeRecherche>({
+      nombreDeRésultats: 13,
+      résultats:
+          [
+            RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+              numéroFiness: '000000000',
+              raisonSociale: 'hopital entité juridique 000000000',
+            }),
+            RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+              numéroFiness: '101010101',
+              raisonSociale: 'hopital entité juridique 101010101',
+            }),
+            RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+              numéroFiness: '110110110',
+              raisonSociale: 'hopital entité juridique 110110110',
+            }),
+            RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+              numéroFiness: '111111111',
+              raisonSociale: 'hopital entité juridique 111111111',
+            }),
+            RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+              numéroFiness: '222222222',
+              raisonSociale: 'hopital entité juridique 222222222',
+            }),
+            RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+              numéroFiness: '333333333',
+              raisonSociale: 'hopital entité juridique 333333333',
+            }),
+            RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+              numéroFiness: '444444444',
+              raisonSociale: 'hopital entité juridique 444444444',
+            }),
+            RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+              numéroFiness: '555555555',
+              raisonSociale: 'hopital entité juridique 555555555',
+            }),
+            RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+              numéroFiness: '666666666',
+              raisonSociale: 'hopital entité juridique 666666666',
+            }),
+            RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+              numéroFiness: '777777777',
+              raisonSociale: 'hopital entité juridique 777777777',
+            }),
+            RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+              numéroFiness: '888888888',
+              raisonSociale: 'hopital entité juridique 888888888',
+            }),
+            RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+              numéroFiness: '999999999',
+              raisonSociale: 'hopital entité juridique 999999999',
+            }),
+          ],
+    })
+
   })
 
   it('retourne des résultats même s’il y a des espaces dans la recherche demandée', async () => {
@@ -135,7 +222,7 @@ describe('La recherche d’entités et d’établissements', () => {
     const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
     // WHEN
-    const recherche = await typeOrmRechercheLoader.recherche(numéroFinessEntitéJuridique)
+    const recherche = await typeOrmRechercheLoader.recherche(numéroFinessEntitéJuridique, premièrePage)
 
     // THEN
     expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
@@ -158,7 +245,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche(numéroFinessEntitéJuridique)
+      const recherche = await typeOrmRechercheLoader.recherche(numéroFinessEntitéJuridique, premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -181,7 +268,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche(numéroFinessÉtablissementTerritorial)
+      const recherche = await typeOrmRechercheLoader.recherche(numéroFinessÉtablissementTerritorial, premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -204,7 +291,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('999999999')
+      const recherche = await typeOrmRechercheLoader.recherche('999999999', premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(0)
@@ -220,7 +307,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('CENTRE HOSPITALIER DU HAUT BUGEY')
+      const recherche = await typeOrmRechercheLoader.recherche('CENTRE HOSPITALIER DU HAUT BUGEY', premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -252,7 +339,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('HOPITAL PRIVE DE VILLENEUVE DASCQ')
+      const recherche = await typeOrmRechercheLoader.recherche('HOPITAL PRIVE DE VILLENEUVE DASCQ', premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -267,7 +354,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('bugey')
+      const recherche = await typeOrmRechercheLoader.recherche('bugey', premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -282,7 +369,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('residence')
+      const recherche = await typeOrmRechercheLoader.recherche('residence', premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -302,7 +389,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('saint trivier courtes')
+      const recherche = await typeOrmRechercheLoader.recherche('saint trivier courtes', premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -322,7 +409,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche("l'arbre d or")
+      const recherche = await typeOrmRechercheLoader.recherche("l'arbre d or", premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -344,7 +431,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('Puy de Dôme')
+      const recherche = await typeOrmRechercheLoader.recherche('Puy de Dôme', premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -376,7 +463,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('Puy de Dôme')
+      const recherche = await typeOrmRechercheLoader.recherche('Puy de Dôme', premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -400,7 +487,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('Saint Étienne du Gué de l Isle')
+      const recherche = await typeOrmRechercheLoader.recherche('Saint Étienne du Gué de l Isle', premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -432,7 +519,7 @@ describe('La recherche d’entités et d’établissements', () => {
       const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
       // WHEN
-      const recherche = await typeOrmRechercheLoader.recherche('Saint Jouan de l Isle')
+      const recherche = await typeOrmRechercheLoader.recherche('Saint Jouan de l Isle', premièrePage)
 
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1)
@@ -444,6 +531,122 @@ describe('La recherche d’entités et d’établissements', () => {
           }
         ),
       ])
+    })
+  })
+
+  describe('pagine les résultats lorsque la recherche renvoie plus de 12 résultats', () => {
+
+    beforeEach(async () => {
+      await entitéJuridiqueRepository.insert([
+        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000000', raisonSociale: 'hopital 000000000' }),
+        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000001', raisonSociale: 'hopital 000000001' }),
+        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000002', raisonSociale: 'hopital 000000002' }),
+        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000003', raisonSociale: 'hopital 000000003' }),
+        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000004', raisonSociale: 'hopital 000000004' }),
+        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000005', raisonSociale: 'hopital 000000005' }),
+        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000006', raisonSociale: 'hopital 000000006' }),
+        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000007', raisonSociale: 'hopital 000000007' }),
+        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000008', raisonSociale: 'hopital 000000008' }),
+        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000009', raisonSociale: 'hopital 000000009' }),
+        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000010', raisonSociale: 'hopital 000000010' }),
+        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000011', raisonSociale: 'hopital 000000011' }),
+        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000012', raisonSociale: 'hopital 000000012' }),
+        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000013', raisonSociale: 'hopital 000000013' }),
+        EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000014', raisonSociale: 'hopital 000000014' }),
+      ])
+    })
+
+    it('la première page retourne les 12 premiers éléments quand 15 sont renvoyés par la recherche', async () => {
+      // GIVEN
+      const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
+
+      // WHEN
+      const recherche = await typeOrmRechercheLoader.recherche('hopital', premièrePage)
+
+      // THEN
+      expect(recherche).toStrictEqual<RésultatDeRecherche>({
+        nombreDeRésultats: 15,
+        résultats:
+      [
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          numéroFiness: '000000000',
+          raisonSociale: 'hopital 000000000',
+        }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          numéroFiness: '000000001',
+          raisonSociale: 'hopital 000000001',
+        }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          numéroFiness: '000000002',
+          raisonSociale: 'hopital 000000002',
+        }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          numéroFiness: '000000003',
+          raisonSociale: 'hopital 000000003',
+        }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          numéroFiness: '000000004',
+          raisonSociale: 'hopital 000000004',
+        }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          numéroFiness: '000000005',
+          raisonSociale: 'hopital 000000005',
+        }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          numéroFiness: '000000006',
+          raisonSociale: 'hopital 000000006',
+        }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          numéroFiness: '000000007',
+          raisonSociale: 'hopital 000000007',
+        }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          numéroFiness: '000000008',
+          raisonSociale: 'hopital 000000008',
+        }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          numéroFiness: '000000009',
+          raisonSociale: 'hopital 000000009',
+        }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          numéroFiness: '000000010',
+          raisonSociale: 'hopital 000000010',
+        }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          numéroFiness: '000000011',
+          raisonSociale: 'hopital 000000011',
+        }),
+      ],
+      })
+    })
+
+    it('la deuxième page retourne les 3 éléments restants quand 15 sont renvoyés par la recherche', async () => {
+      // GIVEN
+      const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
+      const pageSuivante = premièrePage + 1
+
+      // WHEN
+      const recherche = await typeOrmRechercheLoader.recherche('hopital', pageSuivante)
+
+      // THEN
+      expect(recherche).toStrictEqual<RésultatDeRecherche>({
+        nombreDeRésultats: 15,
+        résultats:
+        [
+          RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+            numéroFiness: '000000012',
+            raisonSociale: 'hopital 000000012',
+          }),
+          RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+            numéroFiness: '000000013',
+            raisonSociale: 'hopital 000000013',
+          }),
+          RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+            numéroFiness: '000000014',
+            raisonSociale: 'hopital 000000014',
+          }),
+        ],
+      })
     })
   })
 })
