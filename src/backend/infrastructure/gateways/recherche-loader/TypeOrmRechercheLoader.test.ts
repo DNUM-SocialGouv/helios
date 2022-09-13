@@ -44,28 +44,29 @@ describe('La recherche d’entités et d’établissements', () => {
 
   it('retourne les résultats triés par pertinence, par type puis par numéro finess', async () => {
     // GIVEN
+    const termeRecherché = 'helios'
     await entitéJuridiqueRepository.insert([
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000000', raisonSociale: 'hôpital hôpital - entité juridique très pertinente' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000001', raisonSociale: 'hôpital - entité juridique pertinente' }),
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000002', raisonSociale: 'hôpital - entité juridique pertinente' }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000000', raisonSociale: `${termeRecherché} ${termeRecherché} - entité juridique très pertinente` }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000001', raisonSociale: `${termeRecherché} - entité juridique pertinente` }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000002', raisonSociale: `${termeRecherché} - entité juridique pertinente` }),
       EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '999999999', raisonSociale: 'entité juridique non pertinente' }),
     ])
 
     await établissementTerritorialRepository.insert([
       ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire(
-        { numéroFinessEntitéJuridique: '000000000', numéroFinessÉtablissementTerritorial: '100000000', raisonSociale: 'hôpital - établissement territorial sanitaire pertinent' }
+        { numéroFinessEntitéJuridique: '000000000', numéroFinessÉtablissementTerritorial: '100000000', raisonSociale: `${termeRecherché} - établissement territorial sanitaire pertinent` }
       ),
       ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire(
-        { numéroFinessEntitéJuridique: '000000001', numéroFinessÉtablissementTerritorial: '100000001', raisonSociale: 'hôpital - établissement territorial sanitaire pertinent' }
+        { numéroFinessEntitéJuridique: '000000001', numéroFinessÉtablissementTerritorial: '100000001', raisonSociale: `${termeRecherché} - établissement territorial sanitaire pertinent` }
       ),
       ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire(
         { numéroFinessEntitéJuridique: '999999999', numéroFinessÉtablissementTerritorial: '199999999', raisonSociale: 'établissement territorial sanitaire non pertinent' }
       ),
       ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial(
-        { numéroFinessEntitéJuridique: '000000000', numéroFinessÉtablissementTerritorial: '200000000', raisonSociale: 'hôpital - établissement territorial médico-social pertinent' }
+        { numéroFinessEntitéJuridique: '000000000', numéroFinessÉtablissementTerritorial: '200000000', raisonSociale: `${termeRecherché} - établissement territorial médico-social pertinent` }
       ),
       ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial(
-        { numéroFinessEntitéJuridique: '000000001', numéroFinessÉtablissementTerritorial: '200000001', raisonSociale: 'hôpital - établissement territorial médico-social pertinent' }
+        { numéroFinessEntitéJuridique: '000000001', numéroFinessÉtablissementTerritorial: '200000001', raisonSociale: `${termeRecherché} - établissement territorial médico-social pertinent` }
       ),
       ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial(
         { numéroFinessEntitéJuridique: '999999999', numéroFinessÉtablissementTerritorial: '299999999', raisonSociale: 'établissement territorial médico-social non pertinent' }
@@ -75,7 +76,7 @@ describe('La recherche d’entités et d’établissements', () => {
     const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
 
     // WHEN
-    const recherche = await typeOrmRechercheLoader.recherche('hopital', premièrePage)
+    const recherche = await typeOrmRechercheLoader.recherche(termeRecherché, premièrePage)
 
     // THEN
     expect(recherche).toStrictEqual<RésultatDeRecherche>({
@@ -84,40 +85,40 @@ describe('La recherche d’entités et d’établissements', () => {
       [
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: '000000000',
-          raisonSociale: 'hôpital hôpital - entité juridique très pertinente',
+          raisonSociale: `${termeRecherché} ${termeRecherché} - entité juridique très pertinente`,
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: '000000001',
-          raisonSociale: 'hôpital - entité juridique pertinente',
+          raisonSociale: `${termeRecherché} - entité juridique pertinente`,
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: '000000002',
-          raisonSociale: 'hôpital - entité juridique pertinente',
+          raisonSociale: `${termeRecherché} - entité juridique pertinente`,
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           commune: 'NANTUA',
           numéroFiness: '200000000',
-          raisonSociale: 'hôpital - établissement territorial médico-social pertinent',
+          raisonSociale: `${termeRecherché} - établissement territorial médico-social pertinent`,
           type: 'Médico-social',
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           commune: 'NANTUA',
           numéroFiness: '200000001',
-          raisonSociale: 'hôpital - établissement territorial médico-social pertinent',
+          raisonSociale: `${termeRecherché} - établissement territorial médico-social pertinent`,
           type: 'Médico-social',
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           commune: 'VILLENEUVE D ASCQ',
           département: 'NORD',
           numéroFiness: '100000000',
-          raisonSociale: 'hôpital - établissement territorial sanitaire pertinent',
+          raisonSociale: `${termeRecherché} - établissement territorial sanitaire pertinent`,
           type: 'Sanitaire',
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           commune: 'VILLENEUVE D ASCQ',
           département: 'NORD',
           numéroFiness: '100000001',
-          raisonSociale: 'hôpital - établissement territorial sanitaire pertinent',
+          raisonSociale: `${termeRecherché} - établissement territorial sanitaire pertinent`,
           type: 'Sanitaire',
         }),
       ],
@@ -146,6 +147,7 @@ describe('La recherche d’entités et d’établissements', () => {
           numéroFinessEntitéJuridique: '000000000',
           numéroFinessÉtablissementTerritorial,
           raisonSociale: 'hopital établissement territorial 000000000',
+          raisonSocialeCourte: 'établissement territorial 000000000',
         }
       ),
     ])
@@ -420,10 +422,33 @@ describe('La recherche d’entités et d’établissements', () => {
         }),
       ])
     })
+
+    it('retourne un résultat quand le nom est un nom court connu', async () => {
+      // GIVEN
+      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({
+        raisonSociale: 'CENTRE HOSPITALIER SAINT JEAN',
+        raisonSocialeCourte: 'CH ST JEAN',
+      })
+      await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
+
+      const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
+
+      // WHEN
+      const recherche = await typeOrmRechercheLoader.recherche('ch', premièrePage)
+
+      // THEN
+      expect(recherche.nombreDeRésultats).toBe(1)
+      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          numéroFiness: numéroFinessEntitéJuridique,
+          raisonSociale: 'CENTRE HOSPITALIER SAINT JEAN',
+        }),
+      ])
+    })
   })
 
   describe('Par département', () => {
-    it('retourne un résultat quand le département de l’entité juridique est connu, sans faire attention aux accenets, tirets, apostrophes ni casse', async () => {
+    it('retourne un résultat quand le département de l’entité juridique est connu, sans faire attention aux accents, tirets, apostrophes ni casse', async () => {
       // GIVEN
       const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ département: 'PUY-DE-DOME' })
       await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
@@ -446,7 +471,7 @@ describe('La recherche d’entités et d’établissements', () => {
       ])
     })
 
-    it('retourne un résultat quand le département de l’établissement territorial est connu, sans faire attention aux accenets, tirets, apostrophes ni casse', async () => {
+    it('retourne un résultat quand le département de l’établissement territorial est connu, sans faire attention aux accents, tirets, apostrophes ni casse', async () => {
       // GIVEN
       const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
       await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
@@ -479,7 +504,7 @@ describe('La recherche d’entités et d’établissements', () => {
   })
 
   describe('Par commune', () => {
-    it('retourne un résultat quand la commune de l’entité juridique est connue, sans faire attention aux accenets, tirets, apostrophes ni casse', async () => {
+    it('retourne un résultat quand la commune de l’entité juridique est connue, sans faire attention aux accents, tirets, apostrophes ni casse', async () => {
       // GIVEN
       const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ commune: 'SAINT-ETIENNE-DU-GUE-DE-L\'ISLE' })
       await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
@@ -502,7 +527,7 @@ describe('La recherche d’entités et d’établissements', () => {
       ])
     })
 
-    it('retourne un résultat quand la commune de l’établissement territorial est connue, sans faire attention aux accenets, tirets, apostrophes ni casse', async () => {
+    it('retourne un résultat quand la commune de l’établissement territorial est connue, sans faire attention aux accents, tirets, apostrophes ni casse', async () => {
       // GIVEN
       const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
       await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
@@ -529,6 +554,64 @@ describe('La recherche d’entités et d’établissements', () => {
             commune: 'SAINT-JOUAN-DE-L\'ISLE',
             numéroFiness: numéroFinessÉtablissementTerritorial,
           }
+        ),
+      ])
+    })
+  })
+
+  describe('Par catégorie d’établissement', () => {
+    it('retourne un résultat quand le libellé de la catégorie de l’établissement territorial est connu', async () => {
+      // GIVEN
+      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
+      await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
+
+      const établissementTerritorialModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire(
+        {
+          libelléCatégorieÉtablissement: 'Etablissement de santé privé autorisé en SSR',
+          numéroFinessEntitéJuridique,
+          numéroFinessÉtablissementTerritorial,
+        }
+      )
+      await établissementTerritorialRepository.insert(établissementTerritorialModel)
+
+      const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
+
+      // WHEN
+      const recherche = await typeOrmRechercheLoader.recherche('etablissement privé ssr', premièrePage)
+
+      // THEN
+      expect(recherche.nombreDeRésultats).toBe(1)
+      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementSanitaire(
+          { numéroFiness: numéroFinessÉtablissementTerritorial }
+        ),
+      ])
+    })
+
+    it('retourne un résultat quand le libellé court de la catégorie de l’établissement territorial est connu', async () => {
+      // GIVEN
+      const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
+      await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
+
+      const établissementTerritorialModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire(
+        {
+          libelléCourtCatégorieÉtablissement: 'Soins suite réadap',
+          numéroFinessEntitéJuridique,
+          numéroFinessÉtablissementTerritorial,
+        }
+      )
+      await établissementTerritorialRepository.insert(établissementTerritorialModel)
+
+      const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
+
+      // WHEN
+      const recherche = await typeOrmRechercheLoader.recherche('soin suite readap', premièrePage)
+
+      // THEN
+      expect(recherche.nombreDeRésultats).toBe(1)
+      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementSanitaire(
+          { numéroFiness: numéroFinessÉtablissementTerritorial }
         ),
       ])
     })

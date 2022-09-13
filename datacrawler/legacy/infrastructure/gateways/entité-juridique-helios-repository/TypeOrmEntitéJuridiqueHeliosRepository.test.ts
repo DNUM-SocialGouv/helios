@@ -43,6 +43,7 @@ describe('Sauvegarde des entités juridiques', () => {
     entitéJuridique.libelléStatutJuridique = 'fake'
     entitéJuridique.numéroFinessEntitéJuridique = '010018407'
     entitéJuridique.raisonSociale = 'fake'
+    entitéJuridique.raisonSocialeCourte = 'fake'
     entitéJuridique.téléphone = 'fake'
     await entitéJuridiqueRepository.insert(entitéJuridique)
     await dateMiseÀJourFichierSourceRepository.insert([
@@ -70,7 +71,8 @@ describe('Sauvegarde des entités juridiques', () => {
     entitéJuridiqueMisÀJourAttendu1.département = 'AIN'
     entitéJuridiqueMisÀJourAttendu1.libelléStatutJuridique = 'Etablissement Public Intercommunal dHospitalisation'
     entitéJuridiqueMisÀJourAttendu1.numéroFinessEntitéJuridique = '010018407'
-    entitéJuridiqueMisÀJourAttendu1.raisonSociale = 'CH DU HAUT BUGEY'
+    entitéJuridiqueMisÀJourAttendu1.raisonSociale = 'CENTRE HOSPITALIER DU HAUT BUGEY'
+    entitéJuridiqueMisÀJourAttendu1.raisonSocialeCourte = 'CH DU HAUT BUGEY'
     entitéJuridiqueMisÀJourAttendu1.téléphone = '0102030406'
     const entitéJuridiqueMisÀJourAttendu2 = new EntitéJuridiqueModel()
     entitéJuridiqueMisÀJourAttendu2.adresseAcheminement = '59650 VILLENEUVE D ASCQ'
@@ -82,6 +84,7 @@ describe('Sauvegarde des entités juridiques', () => {
     entitéJuridiqueMisÀJourAttendu2.libelléStatutJuridique = 'Société Anonyme (S.A.)'
     entitéJuridiqueMisÀJourAttendu2.numéroFinessEntitéJuridique = '590001741'
     entitéJuridiqueMisÀJourAttendu2.raisonSociale = 'HOPITAL PRIVE DE VILLENEUVE DASCQ'
+    entitéJuridiqueMisÀJourAttendu2.raisonSocialeCourte = 'HOPITAL PRIVE DE VILLENEUVE DASCQ'
     entitéJuridiqueMisÀJourAttendu2.téléphone = '0102030405'
     expect(entitésJuridiquesQuery).toStrictEqual([
       entitéJuridiqueMisÀJourAttendu1,
@@ -128,6 +131,7 @@ describe('Sauvegarde des entités juridiques', () => {
     entitéJuridiqueAttendu.libelléStatutJuridique = 'Etablissement Public Intercommunal dHospitalisation'
     entitéJuridiqueAttendu.numéroFinessEntitéJuridique = numéroFinessEntitéJuridique
     entitéJuridiqueAttendu.raisonSociale = 'CENTRE HOSPITALIER DU HAUT BUGEY'
+    entitéJuridiqueAttendu.raisonSocialeCourte = 'CH DU HAUT BUGEY'
     entitéJuridiqueAttendu.téléphone = '0102030406'
     expect(entitésJuridiquesSauvées).toStrictEqual([entitéJuridiqueAttendu])
 

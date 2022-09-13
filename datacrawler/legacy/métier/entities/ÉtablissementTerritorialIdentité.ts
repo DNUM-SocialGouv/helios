@@ -11,10 +11,12 @@ export type ÉtablissementTerritorialIdentité = Readonly<{
   département: string
   domaine: DomaineÉtablissementTerritorial
   libelléCatégorieÉtablissement: string
+  libelléCourtCatégorieÉtablissement: string
   numéroFinessEntitéJuridique: string
   numéroFinessÉtablissementPrincipal: string
   numéroFinessÉtablissementTerritorial: string
   raisonSociale: string
+  raisonSocialeCourte: string
   téléphone: string
   typeÉtablissement: string
 }>

@@ -43,6 +43,9 @@ export class ÉtablissementTerritorialIdentitéModel {
   @Column({ length: 255, name: 'libelle_categorie_etablissement' })
   public libelléCatégorieÉtablissement!: string
 
+  @Column({ length: 255, name: 'libelle_court_categorie_etablissement' })
+  public libelléCourtCatégorieÉtablissement!: string
+
   @Column({ length: 9, name: 'numero_finess_entite_juridique' })
   public numéroFinessEntitéJuridique!: string
 
@@ -54,6 +57,9 @@ export class ÉtablissementTerritorialIdentitéModel {
 
   @Column({ length: 255, name: 'raison_sociale' })
   public raisonSociale!: string
+
+  @Column({ length: 255, name: 'raison_sociale_courte' })
+  public raisonSocialeCourte!: string
 
   @Column({ length: 10, name: 'telephone' })
   public téléphone!: string
