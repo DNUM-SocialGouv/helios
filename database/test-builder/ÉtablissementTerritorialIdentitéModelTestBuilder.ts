@@ -16,10 +16,12 @@ export class ÉtablissementTerritorialIdentitéModelTestBuilder {
     établissementTerritorialModel.domaine = champsSurchargés?.domaine || DomaineÉtablissementTerritorial.MÉDICO_SOCIAL
     établissementTerritorialModel.département = champsSurchargés?.département || 'AIN'
     établissementTerritorialModel.libelléCatégorieÉtablissement = champsSurchargés?.libelléCatégorieÉtablissement || 'Centre Hospitalier (C.H.)'
+    établissementTerritorialModel.libelléCourtCatégorieÉtablissement = champsSurchargés?.libelléCourtCatégorieÉtablissement || 'C.H.'
     établissementTerritorialModel.numéroFinessEntitéJuridique = champsSurchargés?.numéroFinessEntitéJuridique || '010008407'
     établissementTerritorialModel.numéroFinessÉtablissementPrincipal = champsSurchargés?.numéroFinessÉtablissementPrincipal || '010018407'
     établissementTerritorialModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '010000040'
     établissementTerritorialModel.raisonSociale = champsSurchargés?.raisonSociale || 'CENTRE HOSPITALIER NANTUA'
+    établissementTerritorialModel.raisonSocialeCourte = champsSurchargés?.raisonSocialeCourte || 'CH NANTUA'
     établissementTerritorialModel.téléphone = champsSurchargés?.téléphone || '0102030405'
     établissementTerritorialModel.typeÉtablissement = champsSurchargés?.typeÉtablissement || 'S'
     return établissementTerritorialModel
@@ -39,10 +41,12 @@ export class ÉtablissementTerritorialIdentitéModelTestBuilder {
     établissementTerritorialModel.domaine = champsSurchargés?.domaine || DomaineÉtablissementTerritorial.SANITAIRE
     établissementTerritorialModel.département = champsSurchargés?.département || 'NORD'
     établissementTerritorialModel.libelléCatégorieÉtablissement = champsSurchargés?.libelléCatégorieÉtablissement || 'Centre Hospitalier (C.H.)'
+    établissementTerritorialModel.libelléCourtCatégorieÉtablissement = champsSurchargés?.libelléCourtCatégorieÉtablissement || 'C.H.'
     établissementTerritorialModel.numéroFinessEntitéJuridique = champsSurchargés?.numéroFinessEntitéJuridique || '590000741'
     établissementTerritorialModel.numéroFinessÉtablissementPrincipal = champsSurchargés?.numéroFinessÉtablissementPrincipal || ''
     établissementTerritorialModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '590782553'
     établissementTerritorialModel.raisonSociale = champsSurchargés?.raisonSociale || 'HOPITAL PRIVE DE VILLENEUVE DASCQ'
+    établissementTerritorialModel.raisonSocialeCourte = champsSurchargés?.raisonSocialeCourte || 'HOPITAL PRIVE DE VILLENEUVE DASCQ'
     établissementTerritorialModel.téléphone = champsSurchargés?.téléphone || '0102030406'
     établissementTerritorialModel.typeÉtablissement = champsSurchargés?.typeÉtablissement || 'P'
     return établissementTerritorialModel

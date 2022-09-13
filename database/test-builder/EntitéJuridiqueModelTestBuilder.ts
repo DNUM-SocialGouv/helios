@@ -12,6 +12,7 @@ export class EntitéJuridiqueModelTestBuilder {
     entitéJuridique.libelléStatutJuridique = champsSurchargés?.libelléStatutJuridique || 'Etablissement Public Intercommunal dHospitalisation'
     entitéJuridique.numéroFinessEntitéJuridique = champsSurchargés?.numéroFinessEntitéJuridique || '010018407'
     entitéJuridique.raisonSociale = champsSurchargés?.raisonSociale || 'CENTRE HOSPITALIER DU HAUT BUGEY'
+    entitéJuridique.raisonSocialeCourte = champsSurchargés?.raisonSocialeCourte || 'CH DU HAUT BUGEY'
     entitéJuridique.téléphone = champsSurchargés?.téléphone || '0102030406'
     return entitéJuridique
   }

@@ -57,7 +57,8 @@ export const uneEntitéJuridique: EntitéJuridique = {
   département: 'AIN',
   libelléStatutJuridique: 'Etablissement Public Intercommunal dHospitalisation',
   numéroFinessEntitéJuridique: '010018407',
-  raisonSociale: 'CH DU HAUT BUGEY',
+  raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY',
+  raisonSocialeCourte: 'CH DU HAUT BUGEY',
   téléphone: '0102030406',
 }
 
@@ -71,6 +72,7 @@ export const uneSecondeEntitéJuridique: EntitéJuridique = {
   libelléStatutJuridique: 'Société Anonyme (S.A.)',
   numéroFinessEntitéJuridique: '590001741',
   raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+  raisonSocialeCourte: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
   téléphone: '0102030405',
 }
 
@@ -85,10 +87,12 @@ export const unÉtablissementMédicoSocial: ÉtablissementTerritorialIdentité =
   domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
   département: 'AIN',
   libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
+  libelléCourtCatégorieÉtablissement: 'C.H.',
   numéroFinessEntitéJuridique: '010018407',
   numéroFinessÉtablissementPrincipal: '010000057',
   numéroFinessÉtablissementTerritorial: '010000040',
-  raisonSociale: 'CH NANTUA',
+  raisonSociale: 'CENTRE HOSPITALIER NANTUA',
+  raisonSocialeCourte: 'CH NANTUA',
   typeÉtablissement: 'S',
   téléphone: '0102030405',
 }
@@ -104,10 +108,12 @@ export const unÉtablissementSanitaire: ÉtablissementTerritorialIdentité = {
   domaine: DomaineÉtablissementTerritorial.SANITAIRE,
   département: 'NORD',
   libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
+  libelléCourtCatégorieÉtablissement: 'C.H.',
   numéroFinessEntitéJuridique: '590000741',
   numéroFinessÉtablissementPrincipal: '',
   numéroFinessÉtablissementTerritorial: '590782553',
   raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+  raisonSocialeCourte: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
   typeÉtablissement: 'P',
   téléphone: '0102030406',
 }

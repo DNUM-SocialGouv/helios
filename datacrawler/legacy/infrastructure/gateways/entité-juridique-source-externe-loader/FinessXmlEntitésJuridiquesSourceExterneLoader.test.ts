@@ -86,6 +86,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
           libelléStatutJuridique: "Etablissement Public Intercommunal d'Hospitalisation",
           numéroFinessEntitéJuridique: '010008407',
           raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY',
+          raisonSocialeCourte: 'CH DU HAUT BUGEY',
           téléphone: '0474731001',
         },
         {
@@ -98,6 +99,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
           libelléStatutJuridique: 'Société Anonyme (S.A.)',
           numéroFinessEntitéJuridique: '590000741',
           raisonSociale: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
+          raisonSocialeCourte: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
           téléphone: '0826666900',
         },
       ]
@@ -202,6 +204,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
           libelléStatutJuridique: "Etablissement Public Intercommunal d'Hospitalisation",
           numéroFinessEntitéJuridique: '010008407',
           raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY',
+          raisonSocialeCourte: 'CH DU HAUT BUGEY',
           téléphone: '',
         },
         {
@@ -214,6 +217,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
           libelléStatutJuridique: 'Société Anonyme (S.A.)',
           numéroFinessEntitéJuridique: '590000741',
           raisonSociale: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
+          raisonSocialeCourte: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
           téléphone: '0826666900',
         },
       ]
@@ -276,6 +280,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
           libelléStatutJuridique: "Etablissement Public Intercommunal d'Hospitalisation",
           numéroFinessEntitéJuridique: '010008407',
           raisonSociale: 'CH DU HAUT BUGEY',
+          raisonSocialeCourte: 'CH DU HAUT BUGEY',
           téléphone: '0474731001',
         },
         {
@@ -288,6 +293,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
           libelléStatutJuridique: 'Société Anonyme (S.A.)',
           numéroFinessEntitéJuridique: '590000741',
           raisonSociale: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
+          raisonSocialeCourte: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
           téléphone: '0826666900',
         },
       ]

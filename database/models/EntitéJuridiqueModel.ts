@@ -29,6 +29,9 @@ export class EntitéJuridiqueModel {
   @Column({ length: 255, name: 'raison_sociale' })
   public raisonSociale!: string
 
+  @Column({ length: 255, name: 'raison_sociale_courte' })
+  public raisonSocialeCourte!: string
+
   @Column({ length: 10, name: 'telephone' })
   public téléphone!: string
 }

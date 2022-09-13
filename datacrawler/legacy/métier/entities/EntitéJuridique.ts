@@ -8,5 +8,6 @@ export type EntitéJuridique = Readonly<{
   libelléStatutJuridique: string
   numéroFinessEntitéJuridique: string
   raisonSociale: string
+  raisonSocialeCourte: string
   téléphone: string
 }>
