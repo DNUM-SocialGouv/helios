@@ -35,6 +35,13 @@ services:
       - type: volume
         source: postgres_data
         target: /var/lib/postgresql/data
+      - type: bind
+        source: $PWD/postgresql/thesaurus_helios.ths
+        target: /usr/local/share/postgresql/tsearch_data/thesaurus_helios.ths
+        read_only: true
+      - type: bind
+        source: $PWD/postgresql/french.stop
+        target: /usr/local/share/postgresql/tsearch_data/french.stop
     command: ["postgres", "-c", "log_statement=all", "-c", "max_connections=10"]
 
   postgres-test:
@@ -51,6 +58,12 @@ services:
       - type: volume
         source: postgres_data_test
         target: /var/lib/postgresql/data
+      - type: bind
+        source: $PWD/postgresql/thesaurus_helios.ths
+        target: /usr/local/share/postgresql/tsearch_data/thesaurus_helios.ths
+      - type: bind
+        source: $PWD/postgresql/french.stop
+        target: /usr/local/share/postgresql/tsearch_data/french.stop
     command: ["postgres", "-c", "log_statement=all", "-c", "max_connections=10"]
 
 volumes:
