@@ -7,6 +7,7 @@ import { RechercheViewModel } from './RechercheViewModel'
 
 type RechercheState = Readonly<{
   estCeEnAttente: boolean
+  estCeQueLeBackendNeRépondPas: boolean
   estCeQueLesRésultatsSontReçus: boolean
   nombreRésultats: number
   page: number
@@ -22,6 +23,7 @@ export function useRecherche() {
 
   const [state, setState] = useState<RechercheState>({
     estCeEnAttente: false,
+    estCeQueLeBackendNeRépondPas: false,
     estCeQueLesRésultatsSontReçus: false,
     nombreRésultats: 0,
     page: pageInitiale,
@@ -68,6 +70,13 @@ export function useRecherche() {
           termeFixe: terme,
         })
       })
+      .catch(() => {
+        setState({
+          ...state,
+          estCeEnAttente: false,
+          estCeQueLeBackendNeRépondPas: true,
+        })
+      })
   }
 
   useEffect(() => {
@@ -105,6 +114,7 @@ export function useRecherche() {
   return {
     chargeLesRésultatsSuivants,
     estCeEnAttente: state.estCeEnAttente,
+    estCeQueLeBackendNeRépondPas: state.estCeQueLeBackendNeRépondPas,
     estCeQueLesRésultatsSontReçus: state.estCeQueLesRésultatsSontReçus,
     estCeQueLesRésultatsSontTousAffichés,
     lancerLaRecherche,

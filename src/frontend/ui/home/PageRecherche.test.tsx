@@ -11,7 +11,7 @@ jest.mock('next/router', () => require('next-router-mock'))
 
 const { paths, wording } = fakeFrontDependencies
 
-describe('La page de recherche', () => {
+describe('La page de d’accueil', () => {
   it('affiche un bandeau d’information mentionnant le développement du site', () => {
     // WHEN
     renderFakeComponent(<PageRecherche />)
@@ -353,6 +353,27 @@ describe('La page de recherche', () => {
     await waitForElementToBeRemoved(enAttente)
     const textDuRésultat = screen.getByText(wording.aucunRésultat(terme), { selector: 'p' })
     expect(textDuRésultat).toBeInTheDocument()
+  })
+
+  it('affiche une phrase explicite si le backend ne répond plus', async () => {
+    // GIVEN
+    jest.spyOn(global, 'fetch').mockRejectedValue('API is down')
+    renderFakeComponent(<PageRecherche />)
+    const terme = 'hospitalier'
+    const formulaire = screen.getByRole('search')
+    const rechercher = within(formulaire).getByRole('button', { name: wording.RECHERCHE_LABEL })
+    const input = within(formulaire).getByPlaceholderText(wording.RECHERCHE_PLACEHOLDER)
+    fireEvent.change(input, { target: { value: terme } })
+
+    // WHEN
+    fireEvent.click(rechercher)
+
+    // THEN
+    const enAttente = screen.getByText(wording.RECHERCHE_EN_ATTENTE, { selector: 'p' })
+    expect(enAttente).toBeInTheDocument()
+    await waitForElementToBeRemoved(enAttente)
+    const erreurTechnique = screen.getByText(wording.ERREUR_TECHNIQUE, { selector: 'p' })
+    expect(erreurTechnique).toBeInTheDocument()
   })
 
   it('affiche les résultats quand on recherche à partir du header', async () => {

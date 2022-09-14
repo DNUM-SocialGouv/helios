@@ -1,12 +1,18 @@
+import { GetStaticPathsResult, GetStaticPropsResult } from 'next'
+
 import { récupèreLÉtablissementTerritorialSanitaireEndpoint } from '../../backend/infrastructure/controllers/récupèreLÉtablissementTerritorialSanitaireEndpoint'
 import { dependencies } from '../../backend/infrastructure/dependencies'
 import { ÉtablissementTerritorialSanitaire } from '../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire'
+import { ÉtablissementTerritorialSanitaireNonTrouvée } from '../../backend/métier/entities/ÉtablissementTerritorialSanitaireNonTrouvée'
 import { useDependencies } from '../../frontend/ui/commun/contexts/useDependencies'
 import { PageÉtablissementTerritorialSanitaire } from '../../frontend/ui/établissement-territorial-sanitaire/PageÉtablissementTerritorialSanitaire'
 import { ÉtablissementTerritorialSanitaireViewModel } from '../../frontend/ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel'
 
-export default function Router({ établissementTerritorial }:
-  { établissementTerritorial: ÉtablissementTerritorialSanitaire }) {
+type RouterProps = Readonly<{
+  établissementTerritorial: ÉtablissementTerritorialSanitaire
+}>
+
+export default function Router({ établissementTerritorial }: RouterProps) {
   const { paths, wording } = useDependencies()
 
   if (!établissementTerritorial) return null
@@ -15,21 +21,24 @@ export default function Router({ établissementTerritorial }:
   return <PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialViewModel} />
 }
 
-export function getStaticPaths() {
+export function getStaticPaths(): GetStaticPathsResult {
   return {
     fallback: 'blocking',
     paths: [],
   }
 }
 
-export async function getStaticProps({ params }: { params: { numéroFiness: string }}) {
+export async function getStaticProps({ params }: { params: { numéroFiness: string }}): Promise<GetStaticPropsResult<RouterProps> | void> {
   try {
     const { environmentVariables } = dependencies
-    const établissementTerritorial = await récupèreLÉtablissementTerritorialSanitaireEndpoint(dependencies, params.numéroFiness)
+    const établissementTerritorial =
+      await récupèreLÉtablissementTerritorialSanitaireEndpoint(dependencies, params.numéroFiness) as ÉtablissementTerritorialSanitaire
 
     return { props: { établissementTerritorial }, revalidate: Number(environmentVariables.TIME_OF_CACHE_PAGE) }
   } catch (error) {
-    dependencies.logger.error(error)
-    return { notFound: true, revalidate: 1 }
+    if (error instanceof ÉtablissementTerritorialSanitaireNonTrouvée) {
+      dependencies.logger.error(error.message)
+      return { notFound: true, revalidate: 1 }
+    }
   }
 }

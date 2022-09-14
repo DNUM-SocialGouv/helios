@@ -38,6 +38,7 @@ export interface Wording {
   readonly rechercheNombreRésultats: (nombre: number, terme: string) => string
   readonly RECHERCHE_EN_ATTENTE: string
   readonly aucunRésultat: (terme: string) => string
+  readonly ERREUR_TECHNIQUE: string
 
   // Cartographie
   readonly CARTOGRAPHIE: string
@@ -165,6 +166,16 @@ export interface Wording {
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string
+
+  // Erreurs
+  readonly PAGE_NON_TROUVÉE_404: string
+  readonly CODE_ERREUR_404: string
+  readonly SOUS_TITRE_ERREUR_404: string
+  readonly DESCRIPTION_ERREUR_404: ReactElement
+  readonly ERREUR_INATTENDUE_500: string
+  readonly CODE_ERREUR_500: string
+  readonly SOUS_TITRE_ERREUR_500: string
+  readonly DESCRIPTION_ERREUR_500: ReactElement
 
   // Footer
   readonly LEGIFRANCE: string
