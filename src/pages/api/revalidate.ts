@@ -25,6 +25,6 @@ export default async function handler(request: NextApiRequest, response: NextApi
       return response.json({ revalidated: true })
     }
   } catch (err) {
-    return response.status(400).send('[Helios] L’invalidation de la page ne s’est pas déroulée correctement.')
+    return response.status(500).send('[Helios] L’invalidation de la page ne s’est pas déroulée correctement.')
   }
 }

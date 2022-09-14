@@ -4,6 +4,7 @@ import { useDependencies } from '../commun/contexts/useDependencies'
 import { BandeauDInformation } from './BandeauDInformation'
 import { Cartographie } from './Cartographie'
 import { FormulaireDeRecherche } from './FormulaireDeRecherche'
+import { RechercheCassée } from './RechercheCassée'
 import { RechercheEnAttente } from './RechercheEnAttente'
 import { RésultatsDeRecherche } from './RésultatsDeRecherche'
 import { useRecherche } from './useRecherche'
@@ -13,6 +14,7 @@ export const PageRecherche = () => {
 
   const {
     estCeEnAttente,
+    estCeQueLeBackendNeRépondPas,
     estCeQueLesRésultatsSontReçus,
     estCeQueLesRésultatsSontTousAffichés,
     chargeLesRésultatsSuivants,
@@ -39,6 +41,8 @@ export const PageRecherche = () => {
       />
 
       {estCeEnAttente && <RechercheEnAttente />}
+
+      {estCeQueLeBackendNeRépondPas && <RechercheCassée />}
 
       {estCeQueLesRésultatsSontReçus &&
         <RésultatsDeRecherche

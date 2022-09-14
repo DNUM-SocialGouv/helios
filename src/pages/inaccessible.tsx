@@ -12,7 +12,7 @@ export default function Inaccessible() {
           {wording.TITRE_PAGE_INACCESSIBLE}
         </title>
       </Head>
-      <h1 className="page404">
+      <h1 className="inaccessible">
         {wording.ACCÈS_REFUSÉ}
       </h1>
     </main>

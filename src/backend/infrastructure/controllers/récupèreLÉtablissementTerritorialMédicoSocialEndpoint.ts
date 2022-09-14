@@ -5,7 +5,7 @@ import { Dependencies } from '../dependencies'
 export async function récupèreLÉtablissementTerritorialMédicoSocialEndpoint(
   dependencies: Dependencies,
   numéroFinessÉtablissementTerritorialMédicoSocial: string
-): Promise<ÉtablissementTerritorialMédicoSocial | void> {
+): Promise<ÉtablissementTerritorialMédicoSocial> {
   const récupèreLÉtablissementTerritorialMédicoSocialUseCase = new RécupèreLÉtablissementTerritorialMédicoSocialUseCase(
     dependencies.établissementTerritorialMédicoSocialLoader,
     dependencies.entitéJuridiqueLoader

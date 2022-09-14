@@ -58,6 +58,7 @@ export class WordingFr implements Wording {
   readonly RECHERCHE_EN_ATTENTE: string = 'En cours de recherche...'
   readonly aucunRésultat: (terme: string) => string = (terme: string) =>
     `Aucun résultat ne correspond à votre recherche « ${terme} ».`
+  readonly ERREUR_TECHNIQUE: string = 'Veuillez nous excuser, nous venons de rencontrer une erreur technique. Nous vous invitons à effectuer une nouvelle recherche plus tard.'
 
   // Cartographie
   readonly CARTOGRAPHIE: string = 'Cartographie'
@@ -209,6 +210,27 @@ export class WordingFr implements Wording {
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string = 'Accès refusé'
+
+  // Erreur
+  readonly PAGE_NON_TROUVÉE_404: string = 'Page non trouvée'
+  readonly CODE_ERREUR_404: string = 'Erreur 404'
+  readonly SOUS_TITRE_ERREUR_404: string = 'La page que vous cherchez est introuvable. Excusez-nous pour la gêne occasionnée.'
+  readonly DESCRIPTION_ERREUR_404: ReactElement = (<>
+    Si vous avez tapé l’adresse web dans le navigateur, vérifiez qu’elle est correcte. La page n’est peut-être plus disponible.
+    <br />
+    Dans ce cas, pour continuer votre visite vous pouvez consulter notre page d’accueil,
+    ou effectuer une recherche avec notre moteur de recherche en haut de page.
+    <br />
+    Si vous avez besoin d’une aide, merci de nous contacter.
+  </>)
+  readonly ERREUR_INATTENDUE_500: string = 'Erreur inattendue'
+  readonly CODE_ERREUR_500: string = 'Erreur 500'
+  readonly SOUS_TITRE_ERREUR_500: string = 'Désolé, le service rencontre un problème. Nous travaillons pour le résoudre le plus rapidement possible.'
+  readonly DESCRIPTION_ERREUR_500: ReactElement = (<>
+    Essayez de rafraîchir la page ou bien ressayez plus tard.
+    <br />
+    Si vous avez besoin d’une aide, merci de nous contacter.
+  </>)
 
   // Footer
   readonly LEGIFRANCE: string = 'legifrance.gouv.fr'

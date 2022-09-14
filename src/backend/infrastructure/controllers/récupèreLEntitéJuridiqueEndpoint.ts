@@ -12,7 +12,7 @@ type EntitéJuridiqueEndpoint = Readonly<{
 export async function récupèreLEntitéJuridiqueEndpoint(
   dependencies: Dependencies,
   numéroFiness: string
-): Promise<EntitéJuridiqueEndpoint | void> {
+): Promise<EntitéJuridiqueEndpoint> {
   const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(dependencies.entitéJuridiqueLoader)
   const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFiness)
 
