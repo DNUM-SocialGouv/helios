@@ -105,8 +105,8 @@ describe('La page établissement territorial - bloc identité', () => {
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelStatutÉtablissement = within(indicateurs[6]).getByText(`${wording.STATUT_DE_L_ÉTABLISSEMENT} -`, { selector: 'p' })
-    expect(labelStatutÉtablissement.textContent).toBe(`${wording.STATUT_DE_L_ÉTABLISSEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
+    const labelStatutÉtablissement = within(indicateurs[6]).getByText(`${wording.STATUT_JURIDIQUE_EJ} -`, { selector: 'p' })
+    expect(labelStatutÉtablissement.textContent).toBe(`${wording.STATUT_JURIDIQUE_EJ} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
     const statutÉtablissement = within(indicateurs[6]).getByText('Etablissement Public Intercommunal d’Hospitalisation')
     expect(statutÉtablissement).toBeInTheDocument()
   })

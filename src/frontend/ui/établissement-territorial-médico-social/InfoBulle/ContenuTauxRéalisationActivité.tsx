@@ -42,7 +42,7 @@ export const ContenuTauxRéalisationActivité = ({ dateDeMiseÀJour, source }: C
             le mode d’accompagnement (internat, semi-internat, etc.)
           </li>
           <li>
-            Dénominateur : Nombre de journées financées (y compris hébergement temporaire, accueil de jour et quel que soit le mode d’accompagnement.
+            Dénominateur : Nombre de journées financées (y compris hébergement temporaire, accueil de jour et quel que soit le mode d’accompagnement).
           </li>
         </ul>
       </section>

@@ -475,7 +475,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
       capacitéTotale += activité.capacité
     })
 
-    activités.splice(0, 0, this.wording.NOMBRE_TOTAL_DE_PLACE_PAR_ACTIVITÉ)
+    activités.splice(0, 0, this.wording.NOMBRE_TOTAL_DE_PLACE)
     capacités.splice(0, 0, capacitéTotale)
     return [activités, capacités]
   }

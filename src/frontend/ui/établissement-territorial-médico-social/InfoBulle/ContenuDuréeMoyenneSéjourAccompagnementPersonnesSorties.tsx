@@ -24,7 +24,7 @@ export const ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties =
         </p>
         <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
           <p>
-            Cet indicateur permet de compléter les indicateurs relatifs au taux d’occupation et à la rotation dans l’utilisation des lits et places.
+            Cet indicateur permet de compléter les indicateurs relatifs au taux d’occupation.
             L’appellation « personne accompagnée » est le terme actuellement retenu dans les politique sociales et médico-sociales. Cette terminologie
             présente l’avantage de ne pas être stigmatisante et spécialisée (le terme d’accompagnement peut convenir pour un enfant d’ITEP ou un adulte
             de SESSAD ou une personne âgée vivant en établissement ou à domicile).

@@ -48,13 +48,6 @@ export const ContenuAutorisations = ({ dateDeMiseÀJour, source }: ContenuAutori
 
           Les données de ce répertoire sont actualisées de façon continue par des agents en service dans les agences régionales de santé
           et dans les services déconcentrés de l’État.
-
-          Ces principales fonctions sont :
-          Outil de régulation, il constitue une base de données fiable et actualisée de l’offre en matière d’équipements du secteur santé-social.
-          Le répertoire finess est un outil d’information à destination des professionnels de santé permettant d’orienter les patients
-          au plus près de leurs besoins en fonction de leur implantation géographique.
-          Fonction statistique : Le FINESS sert également à réaliser des statistiques pour objectiver les manques en matière d’offre de soin
-          au niveau du territoire.
         </p>
       </section>
     </>

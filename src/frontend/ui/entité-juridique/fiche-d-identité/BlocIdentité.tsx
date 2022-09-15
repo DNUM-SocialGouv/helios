@@ -46,7 +46,7 @@ export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéProps)
         />
         <IndicateurIdentité
           dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJourDuStatutDeLEntitéJuridique}
-          nomDeLIndicateur={wording.STATUT_DE_L_ÉTABLISSEMENT}
+          nomDeLIndicateur={wording.STATUT_JURIDIQUE}
           source={Sources(wording.FINESS)}
           valeur={entitéJuridiqueViewModel.statutDeLEntitéJuridique}
         />

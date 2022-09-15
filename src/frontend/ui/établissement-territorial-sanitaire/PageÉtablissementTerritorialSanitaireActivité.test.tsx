@@ -14,7 +14,7 @@ describe('La page établissement territorial sanitaire - bloc activité', () => 
     [
       [wording.NOMBRE_DE_SÉJOUR_MCO, 0, 'PMSI', 'Programme de Médicalisation des Systèmes d’Information'],
       [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1, 'PMSI', 'Programme de Médicalisation des Systèmes d’Information'],
-      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 2, 'PMSI', 'Programme de Médicalisation des Systèmes d’Information'],
+      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 2, 'RPU', 'Résumé de Passage aux Urgences'],
     ]
   )('affiche les informations de l’indicateur %s', (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
     // WHEN
@@ -46,7 +46,7 @@ describe('La page établissement territorial sanitaire - bloc activité', () => 
     [
       [wording.NOMBRE_DE_SÉJOUR_MCO, 0, 'PMSI', 'Programme de Médicalisation des Systèmes d’Information'],
       [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1, 'PMSI', 'Programme de Médicalisation des Systèmes d’Information'],
-      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 2, 'PMSI', 'Programme de Médicalisation des Systèmes d’Information'],
+      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 2, 'RPU', 'Résumé de Passage aux Urgences'],
     ]
   )('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails" (%s)', (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
     // GIVEN

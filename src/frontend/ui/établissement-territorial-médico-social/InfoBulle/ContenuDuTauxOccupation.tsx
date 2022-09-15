@@ -48,13 +48,7 @@ export const ContenuDuTauxOccupation = ({ dateDeMiseÀJour, source }: ContenuDuT
         </p>
         <ul>
           <li>
-            ERRD annexe 9a-9d (feuilles « EHPAD-PUV-AJ-HT », « Activité autres ESSMS » et « Activité L.242-4 CASF ») ;
-          </li>
-          <li>
-            CA PH (feuilles « Activité » et « Creton ») ;
-          </li>
-          <li>
-            CA PA (feuille « Activité »).
+            ERRD annexe 9a-9d (feuilles « EHPAD-PUV-AJ-HT »)
           </li>
         </ul>
       </section>

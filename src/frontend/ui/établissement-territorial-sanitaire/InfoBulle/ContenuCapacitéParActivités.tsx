@@ -42,7 +42,7 @@ export const ContenuCapacitéParActivités = ({ dateDeMiseÀJour, source }: Cont
           Nombre de places MCO : Le nombre de places installées au 31 décembre de l’année est égal au nombre de patients pouvant être accueillis en même temps.
           <br />
           <br />
-          Nombre de lits SRR : Le nombre de lits installés au 31 décembre de l’année est égal à la somme du nombre de lits en état d’accueillir des malades.
+          Nombre de lits SSR : Le nombre de lits installés au 31 décembre de l’année est égal à la somme du nombre de lits en état d’accueillir des malades.
           <br />
           <br />
           Nombre de places SSR : Le nombre de places installées au 31 décembre de l’année en hospitalisation à temps partiel de jour ou de nuit est égal au
@@ -66,8 +66,8 @@ export const ContenuCapacitéParActivités = ({ dateDeMiseÀJour, source }: Cont
           Statistique annuelle des établissements de santé (SAE) - Direction de la Recherche, des Études, de l’Évaluation et des Statistiques (DREES).
           <br />
           <br />
-          Hélios collecte ces données depuis le SI mutualisé des ARS DIAMANT qui est un système décisionnel national permettant de stocker des informations
-          provenant de plusieurs sources. DIAMANT : Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation.
+          DIAMANT « Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation. » est un outil décisionnel de pilotage centré sur la régulation de
+          l’offre de soins, abordée sous les aspects des moyens humains, financiers, et productivité.
         </p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>

@@ -44,7 +44,7 @@ describe('La page établissement territorial médico-social - bloc autorisation 
     expect(indicateurLigneDEnTête).toBeInTheDocument()
 
     const lignes = within(tableau).getAllByRole('row')
-    const annéeDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: wording.NOMBRE_TOTAL_DE_PLACE_PAR_ACTIVITÉ })
+    const annéeDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: wording.NOMBRE_TOTAL_DE_PLACE })
     expect(annéeDeLaPremièreLigne).toBeInTheDocument()
     const valeurDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '30' })
     expect(valeurDeLaPremièreLigne).toBeInTheDocument()

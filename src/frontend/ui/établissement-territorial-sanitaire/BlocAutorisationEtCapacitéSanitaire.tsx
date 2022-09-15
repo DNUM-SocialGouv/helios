@@ -49,7 +49,7 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             />}
             dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDeLaCatégorieDeLÉtablissement}
             identifiant="capacite-sanitaire"
-            nomDeLIndicateur={wording.CAPACITÉ_PAR_ACTIVITÉS}
+            nomDeLIndicateur={wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
             source={Sources(wording.DIAMANT, wording.SAE)}
           >
             {établissementTerritorialSanitaireViewModel.capacitéParActivités}
