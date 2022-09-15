@@ -1,5 +1,4 @@
 import pandas as pd
-from numpy import NaN
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
 from datacrawler.transform.transforme_les_dates_d_entree_en_vigueur_des_cpom.transforme_les_dates_d_entree_en_vigueur_des_cpom import (
@@ -35,7 +34,7 @@ class TestTransformeLesDatesDEntreeEnVigueurDesCpom:
         data_frame_attendu = pd.DataFrame(
             [
                 {
-                    "date_d_entree_en_vigueur": "01/01/2021",
+                    "date_d_entree_en_vigueur": "2021-01-01",
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                 }
             ],
@@ -68,7 +67,7 @@ class TestTransformeLesDatesDEntreeEnVigueurDesCpom:
         data_frame_attendu = pd.DataFrame(
             [
                 {
-                    "date_d_entree_en_vigueur": "01/01/2021",
+                    "date_d_entree_en_vigueur": "2021-01-01",
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                 }
             ],
