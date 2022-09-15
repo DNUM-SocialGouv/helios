@@ -16,7 +16,7 @@ jobs:
       - uses: actions/cache@v3
         id: cache-build
         with:
-          path: **/node_modules
+          path: ./node_modules
           key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
 
   lint-and-typecheck-typescript:
@@ -26,7 +26,7 @@ jobs:
       - uses: actions/cache@v3
         id: restore-build
         with:
-          path: **/node_modules
+          path: ./node_modules
           key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
       - uses: actions/setup-node@v3
         with:
@@ -43,7 +43,7 @@ jobs:
       - uses: actions/cache@v3
         id: restore-build
         with:
-          path: **/node_modules
+          path: ./node_modules
           key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
       - uses: actions/setup-node@v3
         with:
@@ -75,7 +75,7 @@ jobs:
       - uses: actions/cache@v3
         id: restore-build
         with:
-          path: **/node_modules
+          path: ./node_modules
           key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
       - uses: actions/setup-node@v3
         with:
@@ -92,7 +92,7 @@ jobs:
       - uses: actions/cache@v3
         id: restore-build
         with:
-          path: **/node_modules
+          path: ./node_modules
           key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
       - uses: actions/setup-node@v3
         with:
@@ -144,7 +144,7 @@ jobs:
       - uses: actions/cache@v3
         id: restore-build
         with:
-          path: **/node_modules
+          path: ./node_modules
           key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
       - name: Run the migrations
         run: yarn migrations
