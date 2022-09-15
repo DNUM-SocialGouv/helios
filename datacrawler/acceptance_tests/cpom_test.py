@@ -1,15 +1,20 @@
-from unittest.mock import patch, Mock
+from unittest.mock import Mock, patch
 
 import pandas as pd
 from numpy import NaN
 
 import datacrawler
-from datacrawler.ajoute_le_cpom_des_établissements_médico_sociaux import \
-    ajoute_le_cpom_des_établissements_médico_sociaux
+from datacrawler.ajoute_le_cpom_des_établissements_médico_sociaux import ajoute_le_cpom_des_établissements_médico_sociaux
 from datacrawler.load.nom_des_tables import TABLES_DES_CPOM
-from datacrawler.test_helpers import sauvegarde_une_entité_juridique_en_base, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, \
-    base_de_données_test, sauvegarde_un_établissement_en_base, mocked_logger, \
-    NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL, supprime_les_données_des_tables
+from datacrawler.test_helpers import (
+    NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
+    NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL,
+    base_de_données_test,
+    mocked_logger,
+    sauvegarde_un_établissement_en_base,
+    sauvegarde_une_entité_juridique_en_base,
+    supprime_les_données_des_tables,
+)
 
 
 class TestAjouteLeCpomDesÉtablissementsMédicoSociaux:
@@ -34,10 +39,7 @@ class TestAjouteLeCpomDesÉtablissementsMédicoSociaux:
         # THEN
         cpom_attendus = pd.DataFrame(
             {
-                "numero_finess_etablissement_territorial": [
-                    "010001261",
-                    "010003598"
-                ],
+                "numero_finess_etablissement_territorial": ["010001261", "010003598"],
                 "date_d_entree_en_vigueur": [
                     NaN,
                     "21-03-2012",
@@ -59,6 +61,7 @@ class TestAjouteLeCpomDesÉtablissementsMédicoSociaux:
 
     def test_sauvegarde_la_date_de_mise_à_jour_des_autorisations(self) -> None:
         pass
+
     def test_supprime_les_données_existantes_avant_de_sauvegarder_les_données_en_base(self) -> None:
         pass
 

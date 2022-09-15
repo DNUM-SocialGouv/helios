@@ -81,6 +81,15 @@ colonnes_à_lire_ann_rpu: List[str] = list(équivalences_diamant_ann_rpu_helios.
 colonnes_à_lire_ann_sae: List[str] = list(équivalences_diamant_ann_sae_helios.keys())
 index_des_capacités_sanitaires: List[str] = ["numero_finess_etablissement_territorial"]
 
+équivalences_diamant_ann_ms_tdp_et_cpom_helios: ÉquivalencesDiamantHelios = {
+    "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+    "Année": ColonneHelios(nom="annee", type=int),
+    "Date d'entrée en vigueur du CPOM": ColonneHelios(nom="date_d_entree_en_vigueur", type=str),
+}
+
+colonnes_à_lire_ann_ms_tdp_et_cpom: List[str] = list(équivalences_diamant_ann_ms_tdp_et_cpom_helios.keys())
+index_des_dates_d_entree_en_vigueur_des_cpom = ["numero_finess_etablissement_territorial"]
+
 
 def extrais_l_equivalence_des_types_des_colonnes(équivalences: ÉquivalencesDiamantHelios) -> Dict[str, type]:
     return {nom_diamant: colonne_diamant["type"] for nom_diamant, colonne_diamant in équivalences.items()}
