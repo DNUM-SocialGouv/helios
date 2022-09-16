@@ -65,12 +65,12 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewM
         <IndicateurGraphique
           contenuInfoBulle={<ContenuNombreDePassagesAuxUrgences
             dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNombreDePassagesAuxUrgences}
-            source={Sources(wording.DIAMANT, wording.PMSI)}
+            source={Sources(wording.DIAMANT, wording.RPU)}
           />}
           dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNombreDePassagesAuxUrgences}
           identifiant="activite-2"
           nomDeLIndicateur={wording.NOMBRE_DE_PASSAGES_AUX_URGENCES}
-          source={Sources(wording.DIAMANT, wording.PMSI)}
+          source={Sources(wording.DIAMANT, wording.RPU)}
         >
           {établissementTerritorialSanitaireViewModel.nombreDePassagesAuxUrgences}
         </IndicateurGraphique>

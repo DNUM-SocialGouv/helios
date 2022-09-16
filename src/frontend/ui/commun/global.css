@@ -43,3 +43,7 @@ iframe {
 .fr-tile--horizontal-md .fr-tile__body {
   align-self: flex-start;
 }
+
+.fr-tile__link {
+  word-break: break-word;
+}

@@ -35,27 +35,15 @@ export const ContenuNombreDeSéjourMCO = ({ dateDeMiseÀJour, source }: ContenuD
         <p>
           <span className="fr-text--bold">Mode de calcul : </span>
           <br />
-          <b>Nombre de séjours Médecine Chirurgie Obstétrique (MCO) :</b>
-          {' '}
-          comptage des identifiants uniques des séjours.
-          Les séjours pour séances et en erreurs sont retirés.
+          Nombre de RSA (Résumé de Sortie Anonymisé) classés selon la nomenclature des activités de soins (ASO) utilisée dans le cadre
+          de la délivrance des autorisations. Les séjours pour séances et en erreurs sont retirés.
           <br />
           <br />
-          <b>Type Hospitalisation :</b>
+          Hospitalisation complète (HC) : durée de séjour est égale ou supérieure à 1 journée (date de sortie différente de la date d’entrée).
           <br />
-          MCO - information produite dans DIAMANT à partir de la durée du séjour :
+          <br />
+          Hospitalisation de jour (HdJ)/ambulatoire (HP) : durée de séjour est inférieure à 1 journée (date de sortie identique à la date d’entrée).
         </p>
-        <ul>
-          <li>
-            durée séjour =  0 hors CMD28 (Code Majeur de Diagnostic des Séances) =&gt; « Ambulatoire » ou HTP (Hospitalisation à Temps Partiel)
-          </li>
-          <li>
-            durée séjour &gt; 0 hors CMD28 =&gt; « HC » (Hospitalisation Complète)
-          </li>
-          <li>
-            CMD 28 =&gt; « Séance »
-          </li>
-        </ul>
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
@@ -64,7 +52,6 @@ export const ContenuNombreDeSéjourMCO = ({ dateDeMiseÀJour, source }: ContenuD
         <ul>
           <li>Programme de médicalisation des systèmes d’information (PMSI)  - Agence technique de l’information sur l’hospitalisation (ATIH)</li>
           <li>Médecine Chirurgie Obstétrique (MCO) - fichiers RSA (Résumé de Sortie Anonymisé)</li>
-          <li>Urgences - fichiers RPU (Résumé de passage aux urgences)</li>
         </ul>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>

@@ -27,8 +27,7 @@ export const ContenuCapacitéParActivité = ({ dateDeMiseÀJour, source }: Conte
           Ces informations sont la traduction d’une réglementation et de la possibilité de pluridisciplinarité des établissements.
           Dans le domaine social et médico-social, les autorisations sont enregistrées directement au niveau des établissements.
           Pour indiquer les services offerts, FINESS identifie ceux-ci à l’aide d’un triplet composé des éléments suivants :
-          Discipline/Fonctionnement/Clientèle Exemple : Accueil en maison de retraite/ Hébergement complet internat/Personnes âgées autonomes
-
+          Discipline/Fonctionnement/Clientèle. Exemple : Accueil en maison de retraite/ Hébergement complet internat/Personnes âgées autonomes.
           L’information disponible de la &quot;capacité&quot; des établissements concerne les places &quot;installées&quot;.
         </p>
       </section>
@@ -41,14 +40,13 @@ export const ContenuCapacitéParActivité = ({ dateDeMiseÀJour, source }: Conte
       <section aria-label={wording.MODE_DE_CALCUL}>
         <p>
           <span className="fr-text--bold">Mode de calcul : </span>
-          Nombre total de places installées
-          Nombre total de places par type d’activité installée
+          Nombre total de places installées et nombre total de places par type d’activité installée.
         </p>
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
           <span className="fr-text--bold">Source(s) : </span>
-          Fichier National des Établissements Sanitaires et Sociaux (FINESS) - Agence du Numérique en Santé (ANS)
+          Fichier National des Établissements Sanitaires et Sociaux (FINESS) - Agence du Numérique en Santé (ANS).
         </p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
@@ -58,13 +56,6 @@ export const ContenuCapacitéParActivité = ({ dateDeMiseÀJour, source }: Conte
 
           Les données de ce répertoire sont actualisées de façon continue par des agents en service dans les agences régionales de santé
           et dans les services déconcentrés de l’État.
-
-          Ces principales fonctions sont :
-          Outil de régulation, il constitue une base de données fiable et actualisée de l’offre en matière d’équipements du secteur santé-social.
-          Le répertoire finess est un outil d’information à destination des professionnels de santé permettant d’orienter les patients
-          au plus près de leurs besoins en fonction de leur implantation géographique.
-          Fonction statistique : Le FINESS sert également à réaliser des statistiques pour objectiver les manques en matière d’offre de soin
-          au niveau du territoire.
         </p>
       </section>
     </>

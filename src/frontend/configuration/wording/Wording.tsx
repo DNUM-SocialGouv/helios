@@ -76,7 +76,8 @@ export interface Wording {
   readonly ADRESSE: string
   readonly TÉLÉPHONE: string
   readonly TÉLÉPHONE_ET_EMAIL: string
-  readonly STATUT_DE_L_ÉTABLISSEMENT: string
+  readonly STATUT_JURIDIQUE: string
+  readonly STATUT_JURIDIQUE_EJ: string
   readonly DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM: ReactElement
   readonly ENTITÉ_JURIDIQUE_DE_RATTACHEMENT: string
   readonly CATÉGORIE_DE_L_ÉTABLISSEMENT: string
@@ -127,7 +128,7 @@ export interface Wording {
   readonly CAPACITÉ_AUTORISÉE: string
   readonly CAPACITÉ_INSTALLÉE: string
   readonly CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS: string
-  readonly NOMBRE_TOTAL_DE_PLACE_PAR_ACTIVITÉ: string
+  readonly NOMBRE_TOTAL_DE_PLACE: string
   readonly ACTIVITÉ: string
 
   // Bloc Autorisation Sanitaire
@@ -139,7 +140,6 @@ export interface Wording {
   readonly DATE_DE_FIN_CPOM: ReactElement
   readonly NUMÉRO_CPOM: ReactElement
   readonly NUMÉRO_ARHGOS: string
-  readonly CAPACITÉ_PAR_ACTIVITÉS: string
   readonly ACTIVITÉS: string
   readonly CHIRURGIE: string
   readonly MÉDECINE: string
@@ -163,6 +163,7 @@ export interface Wording {
   readonly PMSI: ReactElement
   readonly ARHGOS: ReactElement
   readonly SAE: ReactElement
+  readonly RPU: ReactElement
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string

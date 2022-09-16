@@ -54,7 +54,7 @@ export class WordingFr implements Wording {
   readonly RECHERCHE_LABEL: string = 'Rechercher'
   readonly RÉSULTAT_DE_RECHERCHE: string = 'Résultat de recherche'
   readonly rechercheNombreRésultats: (nombre: number, terme: string) => string = (nombre, terme: string) =>
-    `${nombre} résultat(s) corresponde(nt) à votre recherche « ${terme} ».`
+    `${nombre} résultat(s) correspond(ent) à votre recherche « ${terme} ».`
   readonly RECHERCHE_EN_ATTENTE: string = 'En cours de recherche...'
   readonly aucunRésultat: (terme: string) => string = (terme: string) =>
     `Aucun résultat ne correspond à votre recherche « ${terme} ».`
@@ -96,7 +96,8 @@ export class WordingFr implements Wording {
   readonly ADRESSE: string = 'Adresse'
   readonly TÉLÉPHONE: string = 'Téléphone'
   readonly TÉLÉPHONE_ET_EMAIL: string = 'Téléphone et e-mail'
-  readonly STATUT_DE_L_ÉTABLISSEMENT: string = 'Statut de l’établissement'
+  readonly STATUT_JURIDIQUE: string = 'Statut juridique'
+  readonly STATUT_JURIDIQUE_EJ: string = 'Statut juridique de l’EJ'
   readonly DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM: ReactElement = (
     <>
       {'Date d’entrée en vigueur du '}
@@ -152,7 +153,7 @@ export class WordingFr implements Wording {
   readonly DERNIÈRE_INSTALLATION: string = 'Dernière installation'
   readonly CAPACITÉ_INSTALLÉE: string = 'Capacité installée'
   readonly CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS: string = 'Capacité installée par activités'
-  readonly NOMBRE_TOTAL_DE_PLACE_PAR_ACTIVITÉ: string = 'Nombre total de places par activité'
+  readonly NOMBRE_TOTAL_DE_PLACE: string = 'Nombre total de places'
   readonly ACTIVITÉ: string = 'Activité'
 
   // Bloc Autorisation Sanitaire
@@ -183,7 +184,6 @@ export class WordingFr implements Wording {
     &nbsp;
   </>)
   readonly NUMÉRO_ARHGOS: string = 'Numéro ARHGOS'
-  readonly CAPACITÉ_PAR_ACTIVITÉS: string = 'Capacité par activités'
   readonly ACTIVITÉS: string = 'Activités'
   readonly CHIRURGIE: string = 'Chirurgie   '
   readonly MÉDECINE: string = 'Médecine   '
@@ -207,6 +207,7 @@ export class WordingFr implements Wording {
   readonly PMSI: ReactElement = (<abbr title="Programme de Médicalisation des Systèmes d’Information">PMSI</abbr>)
   readonly ARHGOS: ReactElement = (<abbr title="Agence Régionale Hospitalière Gestion des Objectifs Sanitaires">ARHGOS</abbr>)
   readonly SAE: ReactElement = (<abbr title="Statistique Annuelle des Établissements de santé">SAE</abbr>)
+  readonly RPU: ReactElement = (<abbr title="Résumé de Passage aux Urgences">RPU</abbr>)
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string = 'Accès refusé'

@@ -20,7 +20,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
       const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
       const capacitéParActivités = indicateurs[0]
-      const titre = within(capacitéParActivités).getByText(wording.CAPACITÉ_PAR_ACTIVITÉS, { selector: 'p' })
+      const titre = within(capacitéParActivités).getByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: 'p' })
       expect(titre).toBeInTheDocument()
       const dateMiseAJour = within(capacitéParActivités).getAllByText('Mise à jour', { exact: false, selector: 'p' })
       expect(dateMiseAJour[0].textContent).toBe('Mise à jour : 07/07/2021 - Source : SAE, DIAMANT')
@@ -48,7 +48,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
 
       // THEN
       expect(détails).toHaveAttribute('data-fr-opened', 'true')
-      const infoBulle = screen.getByRole('dialog', { name: wording.CAPACITÉ_PAR_ACTIVITÉS })
+      const infoBulle = screen.getByRole('dialog', { name: wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS })
       const fermer = within(infoBulle).getByRole('button', { name: wording.FERMER })
       expect(fermer).toBeInTheDocument()
       const abréviationSourceFournisseur = within(infoBulle).getAllByText('DIAMANT', { selector: 'abbr' })
@@ -74,7 +74,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
       const détails = within(indicateurs[0]).getByRole('button', { name: wording.DÉTAILS })
       fireEvent.click(détails)
-      const infoBulle = screen.getByRole('dialog', { name: wording.CAPACITÉ_PAR_ACTIVITÉS })
+      const infoBulle = screen.getByRole('dialog', { name: wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS })
       const fermer = within(infoBulle).getByRole('button', { name: wording.FERMER })
 
       // WHEN
@@ -175,7 +175,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       // THEN
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
       const indicateursAutorisationsEtCapacités = within(autorisationEtCapacité).getAllByRole('list')[0]
-      const titreCapacitéParActivité = within(indicateursAutorisationsEtCapacités).queryByText(wording.CAPACITÉ_PAR_ACTIVITÉS, { selector: 'p' })
+      const titreCapacitéParActivité = within(indicateursAutorisationsEtCapacités).queryByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: 'p' })
       expect(titreCapacitéParActivité).not.toBeInTheDocument()
     })
 
@@ -199,7 +199,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       // THEN
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
       const indicateursAutorisationsEtCapacités = within(autorisationEtCapacité).getAllByRole('list')[0]
-      const titreCapacitéParActivité = within(indicateursAutorisationsEtCapacités).queryByText(wording.CAPACITÉ_PAR_ACTIVITÉS, { selector: 'p' })
+      const titreCapacitéParActivité = within(indicateursAutorisationsEtCapacités).queryByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: 'p' })
       expect(titreCapacitéParActivité).not.toBeInTheDocument()
     })
   })
@@ -502,7 +502,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       ),
     },
     {
-      indicateurAffiché: wording.CAPACITÉ_PAR_ACTIVITÉS,
+      indicateurAffiché: wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS,
       viewModel: ÉtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(
         wording,
         paths,
@@ -692,7 +692,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
 
     const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
     const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
-    const itemCapacitéParActivités = sélectionneLIndicateur(wording.CAPACITÉ_PAR_ACTIVITÉS, indicateurs)
+    const itemCapacitéParActivités = sélectionneLIndicateur(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, indicateurs)
     const indexPartieCapacitéParActivités = indicateurs.indexOf(itemCapacitéParActivités)
     const itemAutorisations = sélectionneLIndicateur(wording.AUTORISATIONS, indicateurs)
     const indexPartieAutorisations = indicateurs.indexOf(itemAutorisations)
