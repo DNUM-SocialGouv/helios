@@ -15,11 +15,12 @@ from datacrawler.load.nom_des_tables import (
     TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_SANITAIRES,
     TABLES_DES_AUTRES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
     TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
+    TABLES_DES_CPOM,
     TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES,
     TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS,
     FichierSource,
 )
-from datacrawler.transform.équivalences_diamant_helios import index_des_activités, index_des_capacités_sanitaires
+from datacrawler.transform.équivalences_diamant_helios import index_des_activités, index_des_capacités_sanitaires, index_des_dates_d_entrée_en_vigueur_des_cpom
 from datacrawler.transform.équivalences_finess_helios import (
     index_des_autorisations_sanitaires,
     index_des_autres_activités_sanitaires,
@@ -109,6 +110,7 @@ def supprime_les_données_des_tables(base_de_données: Engine) -> None:
     base_de_données.execute(f"DELETE FROM {TABLES_DES_AUTRES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES};")
+    base_de_données.execute(f"DELETE FROM {TABLES_DES_CPOM};")
 
 
 def sauvegarde_une_activité_en_base(activité: pd.DataFrame, base_de_données: Engine, table: str) -> None:
@@ -149,6 +151,12 @@ def sauvegarde_une_date_de_mise_à_jour_de_fichier_source(date_de_mise_à_jour: 
 def sauvegarde_les_capacités_sanitaires_en_base(capacités_sanitaire: pd.DataFrame, base_de_données: Engine) -> None:
     capacités_sanitaire.set_index(index_des_capacités_sanitaires).to_sql(
         name=TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, con=base_de_données, index=True, if_exists="append"
+    )
+
+
+def sauvegarde_une_date_d_entrée_de_cpom_en_base(date_d_entree_en_vigueur_du_cpom: pd.DataFrame, base_de_données: Engine) -> None:
+    date_d_entree_en_vigueur_du_cpom.set_index(index_des_dates_d_entrée_en_vigueur_des_cpom).to_sql(
+        name=TABLES_DES_CPOM, con=base_de_données, index=True, if_exists="append"
     )
 
 
@@ -311,6 +319,17 @@ def helios_autorisation_sanitaire_builder(champs_surchargés: Optional[Dict] = N
     if champs_surchargés:
         return {**autorisation, **champs_surchargés}
     return autorisation
+
+
+def helios_date_d_entrée_en_vigueur_du_cpom_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    date_d_entrée_du_cpom = {
+        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+        "date_d_entree_en_vigueur": date(2022, 1, 1),
+    }
+
+    if champs_surchargés:
+        return {**date_d_entrée_du_cpom, **champs_surchargés}
+    return date_d_entrée_du_cpom
 
 
 def helios_équipement_matériel_lourd_sanitaire_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:

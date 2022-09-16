@@ -29,6 +29,10 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       dateMiseÀJourSource: '2021-07-07',
       value: 'a@example.com',
     },
+    dateDEntréeEnVigueurDuCpom: {
+      dateMiseÀJourSource: '',
+      value: '',
+    },
     libelléCatégorieÉtablissement: {
       dateMiseÀJourSource: '2021-07-07',
       value: 'Centre Hospitalier (C.H.)',

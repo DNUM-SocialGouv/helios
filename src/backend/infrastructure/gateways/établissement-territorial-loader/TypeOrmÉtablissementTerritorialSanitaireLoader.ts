@@ -95,7 +95,6 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     return await (await this.orm)
       .getRepository(ÉquipementMatérielLourdSanitaireModel)
       .find({
-        // eslint-disable-next-line sort-keys
         order: { codeÉquipementMatérielLourd: 'ASC', numéroAutorisationArhgos: 'ASC' },
         where: { numéroFinessÉtablissementTerritorial },
       })
@@ -116,6 +115,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     return await (await this.orm)
       .getRepository(AutreActivitéSanitaireModel)
       .find({
+        // TODO: si on range par ordre alpha alors les tests sont verts alors qu'ils ne devraient pas
         // eslint-disable-next-line sort-keys
         order: { codeActivité: 'ASC', codeModalité: 'ASC', codeForme: 'ASC' },
         where: { numéroFinessÉtablissementTerritorial },
@@ -126,6 +126,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     return await (await this.orm)
       .getRepository(AutorisationSanitaireModel)
       .find({
+        // TODO: si on range par ordre alpha alors les tests sont verts alors qu'ils ne devraient pas
         // eslint-disable-next-line sort-keys
         order: { codeActivité: 'ASC', codeModalité: 'ASC', codeForme: 'ASC' },
         where: { numéroFinessÉtablissementTerritorial },
@@ -185,6 +186,10 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.courriel,
       },
+      dateDEntréeEnVigueurDuCpom: {
+        dateMiseÀJourSource: '',
+        value: '',
+      },
       libelléCatégorieÉtablissement: {
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.libelléCatégorieÉtablissement,
@@ -225,47 +230,47 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       ({
         année: établissementTerritorialModel.année,
         nombreDePassagesAuxUrgences: {
-          dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
+          dateMiseÀJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
           value: établissementTerritorialModel.nombreDePassagesAuxUrgences,
         },
         nombreJournéesCompletePsy: {
-          dateMiseÀJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
+          dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
           value: établissementTerritorialModel.nombreJournéesCompletePsy,
         },
         nombreJournéesCompletesSsr: {
-          dateMiseÀJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
+          dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
           value: établissementTerritorialModel.nombreJournéesCompletesSsr,
         },
         nombreJournéesPartiellesPsy: {
-          dateMiseÀJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
+          dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
           value: établissementTerritorialModel.nombreJournéesPartiellesPsy,
         },
         nombreJournéesPartielsSsr: {
-          dateMiseÀJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
+          dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
           value: établissementTerritorialModel.nombreJournéesPartielsSsr,
         },
         nombreSéjoursCompletsChirurgie: {
-          dateMiseÀJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
+          dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
           value: établissementTerritorialModel.nombreSéjoursCompletsChirurgie,
         },
         nombreSéjoursCompletsMédecine: {
-          dateMiseÀJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
+          dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
           value: établissementTerritorialModel.nombreSéjoursCompletsMédecine,
         },
         nombreSéjoursCompletsObstétrique: {
-          dateMiseÀJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
+          dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
           value: établissementTerritorialModel.nombreSéjoursCompletsObstétrique,
         },
         nombreSéjoursPartielsChirurgie: {
-          dateMiseÀJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
+          dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
           value: établissementTerritorialModel.nombreSéjoursPartielsChirurgie,
         },
         nombreSéjoursPartielsMédecine: {
-          dateMiseÀJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
+          dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
           value: établissementTerritorialModel.nombreSéjoursPartielsMédecine,
         },
         nombreSéjoursPartielsObstétrique: {
-          dateMiseÀJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
+          dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
           value: établissementTerritorialModel.nombreSéjoursPartielsObstétrique,
         },
         numéroFinessÉtablissementTerritorial: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,

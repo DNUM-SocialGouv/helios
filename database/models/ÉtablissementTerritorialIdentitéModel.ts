@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm'
+import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn, OneToOne } from 'typeorm'
 
 import { DomaineÉtablissementTerritorial } from '../../datacrawler/legacy/métier/entities/DomaineÉtablissementTerritorial'
+import { CpomModel } from './CpomModel'
 import { EntitéJuridiqueModel } from './EntitéJuridiqueModel'
 
 @Entity({ name: 'etablissement_territorial' })
@@ -66,4 +67,8 @@ export class ÉtablissementTerritorialIdentitéModel {
 
   @Column({ length: 1, name: 'type_etablissement' })
   public typeÉtablissement!: string
+
+  @OneToOne(() => CpomModel, { nullable: true })
+  @JoinColumn({ name: 'numero_finess_etablissement_territorial', referencedColumnName: 'numéroFinessÉtablissementTerritorial' })
+  public cpom!: CpomModel
 }

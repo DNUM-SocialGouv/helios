@@ -3,7 +3,7 @@ import { screen, within } from '@testing-library/react'
 import { DomaineÉtablissementTerritorial } from '../../../backend/métier/entities/DomaineÉtablissementTerritorial'
 import { EntitéJuridiqueViewModelTestBuilder } from '../../test-builder/EntitéJuridiqueViewModelTestBuilder'
 import { ÉtablissementTerritorialRattachéViewModelTestBuilder } from '../../test-builder/ÉtablissementTerritorialRattachéViewModelTestBuilder'
-import { fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent, trimHtml } from '../../testHelper'
+import { fakeFrontDependencies, renderFakeComponent } from '../../testHelper'
 import { ÉtablissementTerritorialRattachéViewModel } from './liste-des-établissements/ÉtablissementTerritorialRattachéViewModel'
 import { PageEntitéJuridique } from './PageEntitéJuridique'
 
@@ -123,51 +123,6 @@ describe('La page Entité Juridique', () => {
       expect(statutÉtablissement).toBeInTheDocument()
     })
 
-    it('affiche la date d’entrée en vigueur du CPOM', () => {
-      // WHEN
-      renderFakeComponent(<PageEntitéJuridique
-        entitéJuridiqueViewModel={entitéJuridiqueViewModel}
-        établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
-      />)
-
-      // THEN
-      const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
-      const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-      const labelDateDEntréeEnVigueurDuCpom = within(indicateurs[5]).getByText(htmlNodeAndReactChildMatcher(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
-      expect(labelDateDEntréeEnVigueurDuCpom).toBeInTheDocument()
-      expect(labelDateDEntréeEnVigueurDuCpom.textContent).toBe(trimHtml(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
-      const abréviationCpom = within(indicateurs[5]).getByText('CPOM', { selector: 'abbr' })
-      expect(abréviationCpom).toHaveAttribute('title', 'Contrat Pluriannuel d’Objectifs et de Moyens')
-      const indicateurÀVenir = within(indicateurs[5]).getByText('À venir')
-      expect(indicateurÀVenir).toBeInTheDocument()
-    })
-
-    it('n’affiche que 5 mises à jour et sources de données', () => {
-      // WHEN
-      renderFakeComponent(<PageEntitéJuridique
-        entitéJuridiqueViewModel={entitéJuridiqueViewModel}
-        établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
-      />)
-
-      // THEN
-      const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
-      const majEtSource = within(ficheDIdentité).getAllByText(`${wording.MISE_À_JOUR} : 07/07/2021 - Source :`, { exact: false })
-      expect(majEtSource).toHaveLength(5)
-    })
-
-    it('affiche un indicateur à venir', () => {
-      // WHEN
-      renderFakeComponent(<PageEntitéJuridique
-        entitéJuridiqueViewModel={entitéJuridiqueViewModel}
-        établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
-      />)
-
-      // THEN
-      const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
-      const àVenir = within(ficheDIdentité).getAllByText('À venir')
-      expect(àVenir).toHaveLength(1)
-    })
-
     it('affiche "non renseigné" quand une valeur est vide', () => {
       // GIVEN
       const entitéJuridiqueViewModelAvecUneValeurVide = EntitéJuridiqueViewModelTestBuilder.crée(wording, {
@@ -212,7 +167,7 @@ describe('La page Entité Juridique', () => {
       expect(adresseIncomplète).toBeInTheDocument()
     })
 
-    it('affiche six indicateurs en tout', () => {
+    it('affiche 5 indicateurs en tout', () => {
       // WHEN
       renderFakeComponent(<PageEntitéJuridique
         entitéJuridiqueViewModel={entitéJuridiqueViewModel}
@@ -222,7 +177,7 @@ describe('La page Entité Juridique', () => {
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
       const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-      expect(indicateurs).toHaveLength(6)
+      expect(indicateurs).toHaveLength(5)
     })
   })
 

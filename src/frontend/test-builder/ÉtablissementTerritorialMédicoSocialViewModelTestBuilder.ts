@@ -4,7 +4,7 @@ import { Wording } from '../configuration/wording/Wording'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from '../ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel'
 
 export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
-  private static identité: ÉtablissementTerritorialMédicoSocial['identité'] = {
+  public static identité: ÉtablissementTerritorialMédicoSocial['identité'] = {
     adresseAcheminement: {
       dateMiseÀJourSource: '2021-07-07',
       value: '01117 OYONNAX CEDEX',
@@ -28,6 +28,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     courriel: {
       dateMiseÀJourSource: '2021-07-07',
       value: 'a@example.com',
+    },
+    dateDEntréeEnVigueurDuCpom: {
+      dateMiseÀJourSource: '2021-07-08',
+      value: '2021-01-01',
     },
     estMonoÉtablissement: {
       dateMiseÀJourSource: '2021-07-07',
@@ -71,7 +75,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     },
   }
 
-  private static activités: ÉtablissementTerritorialMédicoSocial['activités'] = [
+  public static activités: ÉtablissementTerritorialMédicoSocial['activités'] = [
     {
       année: 2019,
       duréeMoyenneSéjourAccompagnementPersonnesSorties: {
@@ -170,7 +174,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     },
   ]
 
-  private static autorisations: ÉtablissementTerritorialMédicoSocial['autorisationsEtCapacités'] = {
+  public static autorisations: ÉtablissementTerritorialMédicoSocial['autorisationsEtCapacités'] = {
     autorisations: {
       dateMiseÀJourSource: '2022-08-18',
       disciplines: [

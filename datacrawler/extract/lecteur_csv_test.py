@@ -5,11 +5,13 @@ from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.transform.équivalences_diamant_helios import (
     colonnes_à_lire_ann_errd_ej_et,
     colonnes_à_lire_ann_ms_tdp_et,
+    colonnes_à_lire_ann_ms_tdp_et_cpom,
     colonnes_à_lire_ann_rpu,
     colonnes_à_lire_ann_sae,
     colonnes_à_lire_men_pmsi_annuel,
     extrais_l_equivalence_des_types_des_colonnes,
     équivalences_diamant_ann_errd_ej_et_helios,
+    équivalences_diamant_ann_ms_tdp_et_cpom_helios,
     équivalences_diamant_ann_ms_tdp_et_helios,
     équivalences_diamant_ann_rpu_helios,
     équivalences_diamant_ann_sae_helios,
@@ -146,7 +148,7 @@ class TestLisLeFichierCsv:
             ann_rpu_attendu,
         )
 
-    def test_les_colonnes_demandées_du_fichier_ann_sae(self) -> None:
+    def test_lis_les_colonnes_demandées_du_fichier_ann_sae(self) -> None:
         # GIVEN
         chemin_du_fichier = "data_set/diamant/ANN_SAE_2022_08_03.CSV"
         colonnes = colonnes_à_lire_ann_sae
@@ -187,4 +189,25 @@ class TestLisLeFichierCsv:
         pd.testing.assert_frame_equal(
             ann_sae_reçu,
             ann_sae_attendu,
+        )
+
+    def test_lis_les_dates_d_entrée_en_vigueur_des_cpom_du_fichier_csv_ann_ms_tdp_et(self) -> None:
+        # GIVEN
+        chemin_du_fichier = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
+        colonnes = colonnes_à_lire_ann_ms_tdp_et_cpom
+        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ms_tdp_et_cpom_helios)
+
+        # WHEN
+        données = lis_le_fichier_csv(chemin_du_fichier, colonnes, types_des_colonnes)
+
+        # THEN
+        pd.testing.assert_frame_equal(
+            données,
+            pd.DataFrame(
+                {
+                    "Finess": ["010001261", "010001261", "010003598", "010003598", "010003598", "010003598", "111111111"],
+                    "Année": [2019, 2018, 2021, 2020, 2019, 2018, 2019],
+                    "Date d'entrée en vigueur du CPOM": [NaN, NaN, "21/03/2012", "21/03/2012", "21/03/2012", NaN, "01/01/2015"],
+                }
+            ),
         )

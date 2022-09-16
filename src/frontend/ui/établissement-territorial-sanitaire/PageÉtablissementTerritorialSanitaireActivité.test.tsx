@@ -446,68 +446,7 @@ describe('La page établissement territorial sanitaire - bloc activité', () => 
         },
       ],
       autorisationsEtCapacités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
-      identité: {
-        adresseAcheminement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '01130 NANTUA',
-        },
-        adresseNuméroVoie: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '50',
-        },
-        adresseTypeVoie: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'R',
-        },
-        adresseVoie: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'PAUL PAINLEVE',
-        },
-        catégorieÉtablissement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '355',
-        },
-        courriel: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'a@example.com',
-        },
-        libelléCatégorieÉtablissement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'Centre Hospitalier (C.H.)',
-        },
-        numéroFinessEntitéJuridique: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '010008407',
-        },
-        numéroFinessÉtablissementPrincipal: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '010045057',
-        },
-        numéroFinessÉtablissementTerritorial: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '010000040',
-        },
-        raisonSociale: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'CH NANTUA',
-        },
-        raisonSocialeDeLEntitéDeRattachement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-        },
-        statutJuridique: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'Société Anonyme (S.A.)',
-        },
-        typeÉtablissement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'S',
-        },
-        téléphone: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '0474754800',
-        },
-      },
+      identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
     }, wording, paths)
 
     // WHEN
@@ -768,68 +707,7 @@ describe('La page établissement territorial sanitaire - bloc activité', () => 
         },
       ],
       autorisationsEtCapacités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
-      identité: {
-        adresseAcheminement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '01130 NANTUA',
-        },
-        adresseNuméroVoie: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '50',
-        },
-        adresseTypeVoie: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'R',
-        },
-        adresseVoie: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'PAUL PAINLEVE',
-        },
-        catégorieÉtablissement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '355',
-        },
-        courriel: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'a@example.com',
-        },
-        libelléCatégorieÉtablissement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'Centre Hospitalier (C.H.)',
-        },
-        numéroFinessEntitéJuridique: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '010008407',
-        },
-        numéroFinessÉtablissementPrincipal: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '010045057',
-        },
-        numéroFinessÉtablissementTerritorial: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '010000040',
-        },
-        raisonSociale: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'CH NANTUA',
-        },
-        raisonSocialeDeLEntitéDeRattachement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-        },
-        statutJuridique: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'Société Anonyme (S.A.)',
-        },
-        typeÉtablissement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'S',
-        },
-        téléphone: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '0474754800',
-        },
-      },
+      identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
     }, wording, paths)
 
     // WHEN
@@ -1091,68 +969,7 @@ describe('La page établissement territorial sanitaire - bloc activité', () => 
         },
       ],
       autorisationsEtCapacités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
-      identité: {
-        adresseAcheminement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '01130 NANTUA',
-        },
-        adresseNuméroVoie: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '50',
-        },
-        adresseTypeVoie: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'R',
-        },
-        adresseVoie: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'PAUL PAINLEVE',
-        },
-        catégorieÉtablissement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '355',
-        },
-        courriel: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'a@example.com',
-        },
-        libelléCatégorieÉtablissement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'Centre Hospitalier (C.H.)',
-        },
-        numéroFinessEntitéJuridique: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '010008407',
-        },
-        numéroFinessÉtablissementPrincipal: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '010045057',
-        },
-        numéroFinessÉtablissementTerritorial: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '010000040',
-        },
-        raisonSociale: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'CH NANTUA',
-        },
-        raisonSocialeDeLEntitéDeRattachement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-        },
-        statutJuridique: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'Société Anonyme (S.A.)',
-        },
-        typeÉtablissement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'S',
-        },
-        téléphone: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '0474754800',
-        },
-      },
+      identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
     }, wording, paths)
 
     // WHEN
@@ -1169,68 +986,7 @@ describe('La page établissement territorial sanitaire - bloc activité', () => 
     const établissementTerritorialSansActivité = new ÉtablissementTerritorialSanitaireViewModel({
       activités: [],
       autorisationsEtCapacités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
-      identité: {
-        adresseAcheminement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '01130 NANTUA',
-        },
-        adresseNuméroVoie: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '50',
-        },
-        adresseTypeVoie: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'R',
-        },
-        adresseVoie: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'PAUL PAINLEVE',
-        },
-        catégorieÉtablissement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '355',
-        },
-        courriel: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'a@example.com',
-        },
-        libelléCatégorieÉtablissement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'Centre Hospitalier (C.H.)',
-        },
-        numéroFinessEntitéJuridique: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '010008407',
-        },
-        numéroFinessÉtablissementPrincipal: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '010045057',
-        },
-        numéroFinessÉtablissementTerritorial: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '010000040',
-        },
-        raisonSociale: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'CH NANTUA',
-        },
-        raisonSocialeDeLEntitéDeRattachement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
-        },
-        statutJuridique: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'Société Anonyme (S.A.)',
-        },
-        typeÉtablissement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: 'S',
-        },
-        téléphone: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: '0474754800',
-        },
-      },
+      identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
     }, wording, paths)
 
     // WHEN

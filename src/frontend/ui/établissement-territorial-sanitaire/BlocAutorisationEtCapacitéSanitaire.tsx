@@ -44,10 +44,10 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
           établissementTerritorialSanitaireViewModel.lesCapacitésParActivitésSontEllesRenseignées &&
           <IndicateurGraphique
             contenuInfoBulle={<ContenuCapacitéParActivités
-              dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDeLaCatégorieDeLÉtablissement}
+              dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDeLaCapacitéInstalléeParActivités}
               source={Sources(wording.DIAMANT, wording.SAE)}
             />}
-            dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDeLaCatégorieDeLÉtablissement}
+            dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDeLaCapacitéInstalléeParActivités}
             identifiant="capacite-sanitaire"
             nomDeLIndicateur={wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
             source={Sources(wording.DIAMANT, wording.SAE)}

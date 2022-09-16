@@ -23,6 +23,10 @@ export type ÉtablissementTerritorialIdentité = Readonly<{
     dateMiseÀJourSource: string
     value: string
   }>
+  dateDEntréeEnVigueurDuCpom: Readonly<{
+    dateMiseÀJourSource: string
+    value: string
+  }>
   libelléCatégorieÉtablissement: Readonly<{
     dateMiseÀJourSource: string
     value: string

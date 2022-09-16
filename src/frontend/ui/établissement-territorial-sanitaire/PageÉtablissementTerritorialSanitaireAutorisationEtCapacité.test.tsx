@@ -23,7 +23,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       const titre = within(capacitéParActivités).getByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: 'p' })
       expect(titre).toBeInTheDocument()
       const dateMiseAJour = within(capacitéParActivités).getAllByText('Mise à jour', { exact: false, selector: 'p' })
-      expect(dateMiseAJour[0].textContent).toBe('Mise à jour : 07/07/2021 - Source : SAE, DIAMANT')
+      expect(dateMiseAJour[0].textContent).toBe('Mise à jour : 02/09/2022 - Source : SAE, DIAMANT')
       const transcription = within(capacitéParActivités).getByText(wording.AFFICHER_LA_TRANSCRIPTION)
       expect(transcription).toHaveAttribute('aria-expanded', 'false')
       expect(transcription).not.toBeDisabled()

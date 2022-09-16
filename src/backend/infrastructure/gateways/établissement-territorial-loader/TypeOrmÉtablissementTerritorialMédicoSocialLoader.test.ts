@@ -2,6 +2,7 @@ import { Repository } from 'typeorm'
 
 import { ActivitéMédicoSocialModel } from '../../../../../database/models/ActivitéMédicoSocialModel'
 import { AutorisationMédicoSocialModel } from '../../../../../database/models/AutorisationMédicoSocialModel'
+import { CpomModel } from '../../../../../database/models/CpomModel'
 import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
@@ -25,6 +26,7 @@ describe('Établissement territorial médico-social loader', () => {
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>
   let dateMiseÀJourFichierSourceRepository: Repository<DateMiseÀJourFichierSourceModel>
   let autorisationMédicoSocialModelRepository: Repository<AutorisationMédicoSocialModel>
+  let cpomModelRepository: Repository<CpomModel>
 
   beforeAll(async () => {
     activitéMédicoSocialModelRepository = (await orm).getRepository(ActivitéMédicoSocialModel)
@@ -32,6 +34,7 @@ describe('Établissement territorial médico-social loader', () => {
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel)
     dateMiseÀJourFichierSourceRepository = (await orm).getRepository(DateMiseÀJourFichierSourceModel)
     autorisationMédicoSocialModelRepository = (await orm).getRepository(AutorisationMédicoSocialModel)
+    cpomModelRepository = (await orm).getRepository(CpomModel)
   })
 
   beforeEach(async () => {
@@ -51,9 +54,19 @@ describe('Établissement territorial médico-social loader', () => {
           dernièreMiseÀJour: '2022-05-14',
           fichier: FichierSource.FINESS_CS1400102,
         }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-05-13',
+          fichier: FichierSource.DIAMANT_ANN_MS_TDP_ET,
+        }),
       ])
       await établissementTerritorialIdentitéRepository.insert(
         ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
+      )
+      await cpomModelRepository.insert(
+        {
+          dateDEntréeEnVigueur: '2020-04-10',
+          numéroFinessÉtablissementTerritorial,
+        }
       )
       const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
 
@@ -63,6 +76,10 @@ describe('Établissement territorial médico-social loader', () => {
       // THEN
       expect(établissementTerritorial).toStrictEqual(ÉtablissementTerritorialTestBuilder.créeUneIdentitéMédicoSocial(
         {
+          dateDEntréeEnVigueurDuCpom: {
+            dateMiseÀJourSource: '2022-05-13',
+            value: '2020-04-10',
+          },
           numéroFinessEntitéJuridique: {
             dateMiseÀJourSource: '2022-05-14',
             value: numéroFinessEntitéJuridique,

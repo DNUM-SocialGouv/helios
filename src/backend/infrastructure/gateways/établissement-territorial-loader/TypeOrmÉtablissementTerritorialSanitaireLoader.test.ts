@@ -147,7 +147,7 @@ describe('Établissement territorial sanitaire loader', () => {
         ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
           année: 2016,
           nombreDePassagesAuxUrgences: {
-            dateMiseÀJourSource: '2022-05-15',
+            dateMiseÀJourSource: '2022-05-14',
             value: 60_000,
           },
           numéroFinessÉtablissementTerritorial,
@@ -155,7 +155,7 @@ describe('Établissement territorial sanitaire loader', () => {
         ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
           année: 2017,
           nombreDePassagesAuxUrgences: {
-            dateMiseÀJourSource: '2022-05-15',
+            dateMiseÀJourSource: '2022-05-14',
             value: 60_000,
           },
           numéroFinessÉtablissementTerritorial,
@@ -163,7 +163,7 @@ describe('Établissement territorial sanitaire loader', () => {
         ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
           année: 2018,
           nombreDePassagesAuxUrgences: {
-            dateMiseÀJourSource: '2022-05-15',
+            dateMiseÀJourSource: '2022-05-14',
             value: 60_000,
           },
           numéroFinessÉtablissementTerritorial,
@@ -171,7 +171,7 @@ describe('Établissement territorial sanitaire loader', () => {
         ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
           année: 2019,
           nombreDePassagesAuxUrgences: {
-            dateMiseÀJourSource: '2022-05-15',
+            dateMiseÀJourSource: '2022-05-14',
             value: 60_000,
           },
           numéroFinessÉtablissementTerritorial,
@@ -179,7 +179,7 @@ describe('Établissement territorial sanitaire loader', () => {
         ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
           année: 2020,
           nombreDePassagesAuxUrgences: {
-            dateMiseÀJourSource: '2022-05-15',
+            dateMiseÀJourSource: '2022-05-14',
             value: 60_000,
           },
           numéroFinessÉtablissementTerritorial,
@@ -189,6 +189,59 @@ describe('Établissement territorial sanitaire loader', () => {
   })
 
   describe('Charge les autorisations et capacités d’un établissement sanitaire', () => {
+    it('charge les capacités', async () => {
+      // GIVEN
+      await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
+      await dateMiseÀJourFichierSourceRepository.insert([
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1400103,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1400104,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1600101,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-08-29',
+          fichier: FichierSource.FINESS_CS1600102,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-09-02',
+          fichier: FichierSource.DIAMANT_ANN_SAE,
+        }),
+      ])
+      await établissementTerritorialIdentitéRepository.insert(
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
+      )
+      await capacitéSanitaireRepository.insert(
+        ÉtablissementTerritorialAutorisationModelTestBuilder.créeCapacitéSanitaire({ numéroFinessÉtablissementTerritorial })
+      )
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm)
+
+      // WHEN
+      const { capacités } = await typeOrmÉtablissementTerritorialLoader.chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial)
+
+      // THEN
+      expect(capacités).toStrictEqual<ÉtablissementTerritorialSanitaireAutorisationEtCapacité['capacités']>({
+        dateMiseÀJourSource: '2022-09-02',
+        nombreDeLitsEnChirurgie: 20,
+        nombreDeLitsEnMédecine: 35,
+        nombreDeLitsEnObstétrique: 12,
+        nombreDeLitsEnSsr: 3,
+        nombreDeLitsEnUsld: 15,
+        nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 5,
+        nombreDePlacesEnChirurgie: 25,
+        nombreDePlacesEnMédecine: 40,
+        nombreDePlacesEnObstétrique: 12,
+        nombreDePlacesEnPsyHospitalisationPartielle: 13,
+        nombreDePlacesEnSsr: 3,
+      })
+    })
+
     it('charge les autorisations groupées par activité, modalité puis par forme. Chaque niveau de groupe est trié par ordre croissant de code.', async () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
@@ -736,59 +789,6 @@ describe('Établissement territorial sanitaire loader', () => {
             libellé: "Appareil d'IRM à utilisation clinique",
           },
         ],
-      })
-    })
-
-    it('charge les capacités', async () => {
-      // GIVEN
-      await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
-      await dateMiseÀJourFichierSourceRepository.insert([
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1400103,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1400104,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1600101,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1600102,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-09-02',
-          fichier: FichierSource.DIAMANT_ANN_SAE,
-        }),
-      ])
-      await établissementTerritorialIdentitéRepository.insert(
-        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
-      )
-      await capacitéSanitaireRepository.insert(
-        ÉtablissementTerritorialAutorisationModelTestBuilder.créeCapacitéSanitaire({ numéroFinessÉtablissementTerritorial })
-      )
-      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm)
-
-      // WHEN
-      const { capacités } = await typeOrmÉtablissementTerritorialLoader.chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial)
-
-      // THEN
-      expect(capacités).toStrictEqual<ÉtablissementTerritorialSanitaireAutorisationEtCapacité['capacités']>({
-        dateMiseÀJourSource: '2022-09-02',
-        nombreDeLitsEnChirurgie: 20,
-        nombreDeLitsEnMédecine: 35,
-        nombreDeLitsEnObstétrique: 12,
-        nombreDeLitsEnSsr: 3,
-        nombreDeLitsEnUsld: 15,
-        nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 5,
-        nombreDePlacesEnChirurgie: 25,
-        nombreDePlacesEnMédecine: 40,
-        nombreDePlacesEnObstétrique: 12,
-        nombreDePlacesEnPsyHospitalisationPartielle: 13,
-        nombreDePlacesEnSsr: 3,
       })
     })
 

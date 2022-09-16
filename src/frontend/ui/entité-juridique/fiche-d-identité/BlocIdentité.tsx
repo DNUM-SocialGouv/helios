@@ -50,10 +50,6 @@ export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéProps)
           source={Sources(wording.FINESS)}
           valeur={entitéJuridiqueViewModel.statutDeLEntitéJuridique}
         />
-        <IndicateurIdentité
-          nomDeLIndicateur={wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM}
-          valeur="À venir"
-        />
       </ul>
     </Bloc>
   )

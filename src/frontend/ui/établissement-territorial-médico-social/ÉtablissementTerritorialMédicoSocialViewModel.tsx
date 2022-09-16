@@ -125,6 +125,15 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     return StringFormater.formateLaDate(this.établissementTerritorial.identité.numéroFinessÉtablissementPrincipal.dateMiseÀJourSource)
   }
 
+  public get dateDeLEntréeEnVigueurDuCpom(): string {
+    const dateDEntréeEnVigueurDuCpom = this.établissementTerritorial.identité.dateDEntréeEnVigueurDuCpom.value
+    return dateDEntréeEnVigueurDuCpom !== '' ? StringFormater.formateLaDate(dateDEntréeEnVigueurDuCpom) : this.wording.NON_RENSEIGNÉ
+  }
+
+  public get dateDeMiseÀJourDeLEntréeEnVigueurDuCpom(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.identité.dateDEntréeEnVigueurDuCpom.dateMiseÀJourSource)
+  }
+
   public get activitéEstElleRenseignée(): boolean {
     return this.établissementTerritorial.activités.length === 0 ? false : true
   }
