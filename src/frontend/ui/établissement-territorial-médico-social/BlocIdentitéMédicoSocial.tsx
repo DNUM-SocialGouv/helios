@@ -73,8 +73,10 @@ export const BlocIdentitéMédicoSocial = ({ établissementTerritorialMédicoSoc
           valeur={établissementTerritorialMédicoSocialViewModel.principalOuSecondaire}
         />
         <IndicateurIdentité
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLEntréeEnVigueurDuCpom}
           nomDeLIndicateur={wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM}
-          valeur="À venir"
+          source={Sources(wording.DIAMANT)}
+          valeur={établissementTerritorialMédicoSocialViewModel.dateDeLEntréeEnVigueurDuCpom}
         />
       </ul>
     </Bloc>

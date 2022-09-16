@@ -25,6 +25,7 @@ def transforme_les_dates_d_entree_en_vigueur_des_cpom(données_ann_ms_tdp_et: pd
     dates_d_entree_en_vigueur_des_cpom = (
         données_ann_ms_tdp_et[est_dans_finess]
         .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_diamant_ann_ms_tdp_et_cpom_helios))
+        .dropna(subset=["date_d_entree_en_vigueur"])
         .sort_values(by=["annee"], ascending=False)
         .drop(["annee"], axis=1)
         .drop_duplicates(subset=index_des_dates_d_entree_en_vigueur_des_cpom, keep="first")

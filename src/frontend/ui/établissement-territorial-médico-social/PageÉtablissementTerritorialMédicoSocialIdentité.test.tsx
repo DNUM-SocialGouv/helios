@@ -1,7 +1,7 @@
 import { screen, within } from '@testing-library/react'
 
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from '../../test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder'
-import { fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent, trimHtml } from '../../testHelper'
+import { fakeFrontDependencies, renderFakeComponent, trimHtml } from '../../testHelper'
 import { PageÉtablissementTerritorialMédicoSocial } from './PageÉtablissementTerritorialMédicoSocial'
 
 const { paths, wording } = fakeFrontDependencies
@@ -176,33 +176,13 @@ describe('La page établissement territorial - bloc identité', () => {
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelDateDEntréeEnVigueurDuCpom = within(indicateurs[9]).getByText(htmlNodeAndReactChildMatcher(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
+    const labelDateDEntréeEnVigueurDuCpom = within(indicateurs[9]).getByText('Date d’entrée en vigueur du -')
     expect(labelDateDEntréeEnVigueurDuCpom).toBeInTheDocument()
-    expect(labelDateDEntréeEnVigueurDuCpom.textContent).toBe(trimHtml(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM))
+    expect(labelDateDEntréeEnVigueurDuCpom.textContent).toBe(`${trimHtml(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM)} - ${wording.MISE_À_JOUR} : 08/07/2021 - Source : DIAMANT`)
     const abréviationCpom = within(indicateurs[9]).getByText('CPOM', { selector: 'abbr' })
     expect(abréviationCpom).toHaveAttribute('title', 'Contrat Pluriannuel d’Objectifs et de Moyens')
-    const indicateurÀVenir = within(indicateurs[9]).getByText('À venir')
+    const indicateurÀVenir = within(indicateurs[9]).getByText('01/01/2021')
     expect(indicateurÀVenir).toBeInTheDocument()
-  })
-
-  it('n’affiche que 9 mises à jour et sources de données', () => {
-    // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
-
-    // THEN
-    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
-    const majEtSource = within(ficheDIdentité).getAllByText(`${wording.MISE_À_JOUR} : 07/07/2021 - Source :`, { exact: false })
-    expect(majEtSource).toHaveLength(9)
-  })
-
-  it('affiche un indicateur à venir', () => {
-    // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
-
-    // THEN
-    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
-    const àVenir = within(ficheDIdentité).getAllByText('À venir')
-    expect(àVenir).toHaveLength(1)
   })
 
   it('affiche dix indicateurs en tout', () => {
@@ -252,6 +232,24 @@ describe('La page établissement territorial - bloc identité', () => {
       const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
       const téléphoneEtEmail = within(indicateurs[3]).getByText(`01 23 45 67 89 | ${wording.NON_RENSEIGNÉ}`, { selector: 'p' })
       expect(téléphoneEtEmail).toBeInTheDocument()
+    })
+
+    it('pour la date d’entrée en vigueur du cpom', () => {
+      // GIVEN
+      const établissementTerritorialSansCourriel = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, {
+        dateDEntréeEnVigueurDuCpom: {
+          dateMiseÀJourSource: '2022-05-14',
+          value: '',
+        },
+      })
+
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansCourriel} />)
+
+      // THEN
+      const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+      const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
+      expect(within(indicateurs[9]).getByText(wording.NON_RENSEIGNÉ)).toBeInTheDocument()
     })
   })
 
