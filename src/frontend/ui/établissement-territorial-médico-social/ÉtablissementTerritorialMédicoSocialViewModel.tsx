@@ -108,7 +108,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
   }
 
   public get monoÉtablissement(): string {
-    return this.établissementTerritorial.identité.estMonoÉtablissement ? this.wording.OUI : this.wording.NON
+    return this.établissementTerritorial.identité.estMonoÉtablissement.value ? this.wording.OUI : this.wording.NON
   }
 
   public get dateDeMiseÀJourDuMonoÉtablissement(): string {

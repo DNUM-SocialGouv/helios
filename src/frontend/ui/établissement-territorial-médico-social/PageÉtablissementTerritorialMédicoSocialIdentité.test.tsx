@@ -111,7 +111,7 @@ describe('La page établissement territorial - bloc identité', () => {
     expect(statutÉtablissement).toBeInTheDocument()
   })
 
-  it('affiche l’indicateur de mono-établissement', () => {
+  it('affiche l’indicateur de mono-établissement à oui quand il est tout seul dans l’EJ', () => {
     // GIVEN
     const établissementTerritorialMonoÉtablissement =
       ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, {
@@ -130,6 +130,28 @@ describe('La page établissement territorial - bloc identité', () => {
     const labelMonoÉtablissement = within(indicateurs[7]).getByText(`${wording.MONO_ÉTABLISSEMENT} -`, { selector: 'p' })
     expect(labelMonoÉtablissement.textContent).toBe(`${wording.MONO_ÉTABLISSEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
     const monoÉtablissement = within(indicateurs[7]).getByText(wording.OUI)
+    expect(monoÉtablissement).toBeInTheDocument()
+  })
+
+  it('affiche l’indicateur de mono-établissement à non quand il n’est pas tout seul dans l’EJ', () => {
+    // GIVEN
+    const établissementTerritorialMonoÉtablissement =
+      ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, {
+        estMonoÉtablissement: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: false,
+        },
+      })
+
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMonoÉtablissement} />)
+
+    // THEN
+    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+    const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
+    const labelMonoÉtablissement = within(indicateurs[7]).getByText(`${wording.MONO_ÉTABLISSEMENT} -`, { selector: 'p' })
+    expect(labelMonoÉtablissement.textContent).toBe(`${wording.MONO_ÉTABLISSEMENT} - ${wording.MISE_À_JOUR} : 07/07/2021 - Source : FINESS`)
+    const monoÉtablissement = within(indicateurs[7]).getByText(wording.NON)
     expect(monoÉtablissement).toBeInTheDocument()
   })
 
