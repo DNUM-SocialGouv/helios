@@ -88,7 +88,7 @@ index_des_capacités_sanitaires: List[str] = ["numero_finess_etablissement_terri
 }
 
 colonnes_à_lire_ann_ms_tdp_et_cpom: List[str] = list(équivalences_diamant_ann_ms_tdp_et_cpom_helios.keys())
-index_des_dates_d_entree_en_vigueur_des_cpom = ["numero_finess_etablissement_territorial"]
+index_des_dates_d_entrée_en_vigueur_des_cpom = ["numero_finess_etablissement_territorial"]
 
 
 def extrais_l_equivalence_des_types_des_colonnes(équivalences: ÉquivalencesDiamantHelios) -> Dict[str, type]:

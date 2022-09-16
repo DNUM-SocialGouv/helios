@@ -191,7 +191,7 @@ class TestLisLeFichierCsv:
             ann_sae_attendu,
         )
 
-    def test_lis_les_dates_d_entree_en_vigueur_des_cpom_du_fichier_csv_ann_ms_tdp_et(self) -> None:
+    def test_lis_les_dates_d_entrée_en_vigueur_des_cpom_du_fichier_csv_ann_ms_tdp_et(self) -> None:
         # GIVEN
         chemin_du_fichier = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
         colonnes = colonnes_à_lire_ann_ms_tdp_et_cpom

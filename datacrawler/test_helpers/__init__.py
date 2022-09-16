@@ -20,7 +20,7 @@ from datacrawler.load.nom_des_tables import (
     TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS,
     FichierSource,
 )
-from datacrawler.transform.équivalences_diamant_helios import index_des_activités, index_des_capacités_sanitaires, index_des_dates_d_entree_en_vigueur_des_cpom
+from datacrawler.transform.équivalences_diamant_helios import index_des_activités, index_des_capacités_sanitaires, index_des_dates_d_entrée_en_vigueur_des_cpom
 from datacrawler.transform.équivalences_finess_helios import (
     index_des_autorisations_sanitaires,
     index_des_autres_activités_sanitaires,
@@ -154,8 +154,8 @@ def sauvegarde_les_capacités_sanitaires_en_base(capacités_sanitaire: pd.DataFr
     )
 
 
-def sauvegarde_une_date_d_entree_de_cpom_en_base(date_d_entree_en_vigueur_du_cpom: pd.DataFrame, base_de_données: Engine) -> None:
-    date_d_entree_en_vigueur_du_cpom.set_index(index_des_dates_d_entree_en_vigueur_des_cpom).to_sql(
+def sauvegarde_une_date_d_entrée_de_cpom_en_base(date_d_entree_en_vigueur_du_cpom: pd.DataFrame, base_de_données: Engine) -> None:
+    date_d_entree_en_vigueur_du_cpom.set_index(index_des_dates_d_entrée_en_vigueur_des_cpom).to_sql(
         name=TABLES_DES_CPOM, con=base_de_données, index=True, if_exists="append"
     )
 
@@ -321,15 +321,15 @@ def helios_autorisation_sanitaire_builder(champs_surchargés: Optional[Dict] = N
     return autorisation
 
 
-def helios_date_d_entree_en_vigueur_du_cpom_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
-    date_d_entree_du_cpom = {
+def helios_date_d_entrée_en_vigueur_du_cpom_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    date_d_entrée_du_cpom = {
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
         "date_d_entree_en_vigueur": date(2022, 1, 1),
     }
 
     if champs_surchargés:
-        return {**date_d_entree_du_cpom, **champs_surchargés}
-    return date_d_entree_du_cpom
+        return {**date_d_entrée_du_cpom, **champs_surchargés}
+    return date_d_entrée_du_cpom
 
 
 def helios_équipement_matériel_lourd_sanitaire_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:

@@ -11,10 +11,10 @@ from datacrawler.test_helpers import (
     NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
     NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL,
     base_de_données_test,
-    helios_date_d_entree_en_vigueur_du_cpom_builder,
+    helios_date_d_entrée_en_vigueur_du_cpom_builder,
     mocked_logger,
     sauvegarde_un_établissement_en_base,
-    sauvegarde_une_date_d_entree_de_cpom_en_base,
+    sauvegarde_une_date_d_entrée_de_cpom_en_base,
     sauvegarde_une_date_de_mise_à_jour_de_fichier_source,
     sauvegarde_une_entité_juridique_en_base,
     supprime_les_données_des_tables,
@@ -84,9 +84,9 @@ class TestAjouteLeCpomDesÉtablissementsMédicoSociaux:
         chemin_du_fichier_ann_ms_tdp_et = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
-        sauvegarde_une_date_d_entree_de_cpom_en_base(
+        sauvegarde_une_date_d_entrée_de_cpom_en_base(
             pd.DataFrame(
-                [helios_date_d_entree_en_vigueur_du_cpom_builder({"numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL})]
+                [helios_date_d_entrée_en_vigueur_du_cpom_builder({"numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL})]
             ),
             base_de_données_test,
         )
@@ -127,11 +127,11 @@ class TestAjouteLeCpomDesÉtablissementsMédicoSociaux:
         sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         sauvegarde_un_établissement_en_base(numéro_finess_avec_valeurs_manquantes, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         sauvegarde_une_date_de_mise_à_jour_de_fichier_source("20200101", FichierSource.DIAMANT_ANN_MS_TDP_ET, base_de_données_test)
-        date_d_entree_du_cpom_existant = pd.DataFrame(
-            [helios_date_d_entree_en_vigueur_du_cpom_builder({"numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL})]
+        date_d_entrée_du_cpom_existant = pd.DataFrame(
+            [helios_date_d_entrée_en_vigueur_du_cpom_builder({"numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL})]
         )
-        sauvegarde_une_date_d_entree_de_cpom_en_base(
-            date_d_entree_du_cpom_existant,
+        sauvegarde_une_date_d_entrée_de_cpom_en_base(
+            date_d_entrée_du_cpom_existant,
             base_de_données_test,
         )
 
@@ -153,7 +153,7 @@ class TestAjouteLeCpomDesÉtablissementsMédicoSociaux:
             },
         )
 
-        pd.testing.assert_frame_equal(cpoms_enregistrés, date_d_entree_du_cpom_existant)
+        pd.testing.assert_frame_equal(cpoms_enregistrés, date_d_entrée_du_cpom_existant)
 
         date_du_fichier_de_données = base_de_données_test.execute(
             f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_MS_TDP_ET.value}'"""
