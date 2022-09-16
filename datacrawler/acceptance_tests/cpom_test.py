@@ -28,10 +28,8 @@ class TestAjouteLeCpomDesÉtablissementsMédicoSociaux:
     def test_sauvegarde_les_numéros_finess_et_dates_d_entrée_en_vigueur_du_cpom(self) -> None:
         # GIVEN
         chemin_du_fichier_ann_ms_tdp_et = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
-        numéro_finess_avec_valeurs_manquantes = "010001261"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
-        sauvegarde_un_établissement_en_base(numéro_finess_avec_valeurs_manquantes, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
 
         # WHEN
         ajoute_le_cpom_des_établissements_médico_sociaux(
@@ -43,10 +41,9 @@ class TestAjouteLeCpomDesÉtablissementsMédicoSociaux:
         # THEN
         cpom_attendus = pd.DataFrame(
             {
-                "numero_finess_etablissement_territorial": ["010003598", "010001261"],
+                "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL],
                 "date_d_entree_en_vigueur": [
                     date(2012, 3, 21),
-                    None,
                 ],
             },
         )
@@ -85,10 +82,8 @@ class TestAjouteLeCpomDesÉtablissementsMédicoSociaux:
     def test_supprime_les_données_existantes_avant_de_sauvegarder_les_données_en_base(self) -> None:
         # GIVEN
         chemin_du_fichier_ann_ms_tdp_et = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
-        numéro_finess_avec_valeurs_manquantes = "010001261"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
-        sauvegarde_un_établissement_en_base(numéro_finess_avec_valeurs_manquantes, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         sauvegarde_une_date_d_entree_de_cpom_en_base(
             pd.DataFrame(
                 [helios_date_d_entree_en_vigueur_du_cpom_builder({"numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL})]
@@ -106,10 +101,9 @@ class TestAjouteLeCpomDesÉtablissementsMédicoSociaux:
         # THEN
         cpom_attendus = pd.DataFrame(
             {
-                "numero_finess_etablissement_territorial": ["010003598", "010001261"],
+                "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL],
                 "date_d_entree_en_vigueur": [
                     date(2012, 3, 21),
-                    None,
                 ],
             },
         )
@@ -125,7 +119,7 @@ class TestAjouteLeCpomDesÉtablissementsMédicoSociaux:
         pd.testing.assert_frame_equal(cpoms_enregistrés, cpom_attendus)
 
     @patch.object(datacrawler, "sauvegarde")
-    def test_revient_à_la_situation_initiale_si_l_écriture_des_activités_échoue(self, mocked_sauvegarde: Mock) -> None:
+    def test_revient_à_la_situation_initiale_si_l_écriture_des_dates_d_entrée_en_vigueur_des_cpom_échoue(self, mocked_sauvegarde: Mock) -> None:
         # GIVEN
         chemin_du_fichier_ann_ms_tdp_et = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
         numéro_finess_avec_valeurs_manquantes = "010001261"

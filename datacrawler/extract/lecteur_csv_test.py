@@ -11,6 +11,7 @@ from datacrawler.transform.équivalences_diamant_helios import (
     colonnes_à_lire_men_pmsi_annuel,
     extrais_l_equivalence_des_types_des_colonnes,
     équivalences_diamant_ann_errd_ej_et_helios,
+    équivalences_diamant_ann_ms_tdp_et_cpom_helios,
     équivalences_diamant_ann_ms_tdp_et_helios,
     équivalences_diamant_ann_rpu_helios,
     équivalences_diamant_ann_sae_helios,
@@ -194,7 +195,7 @@ class TestLisLeFichierCsv:
         # GIVEN
         chemin_du_fichier = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
         colonnes = colonnes_à_lire_ann_ms_tdp_et_cpom
-        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ms_tdp_et_helios)
+        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ms_tdp_et_cpom_helios)
 
         # WHEN
         données = lis_le_fichier_csv(chemin_du_fichier, colonnes, types_des_colonnes)

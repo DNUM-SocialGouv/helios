@@ -3,7 +3,7 @@ from numpy import NaN
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
 from datacrawler.transform.transforme_les_dates_d_entree_en_vigueur_des_cpom.transforme_les_dates_d_entree_en_vigueur_des_cpom import (
-    transforme_les_dates_d_entree_en_vigueur_des_cpom,
+    transforme_les_dates_d_entrée_en_vigueur_des_cpom,
 )
 from datacrawler.transform.équivalences_diamant_helios import index_des_dates_d_entree_en_vigueur_des_cpom
 
@@ -27,7 +27,7 @@ class TestTransformeLesDatesDEntreeEnVigueurDesCpom:
         )
 
         # WHEN
-        dates_d_entree_en_vigueur_des_cpom = transforme_les_dates_d_entree_en_vigueur_des_cpom(
+        dates_d_entree_en_vigueur_des_cpom = transforme_les_dates_d_entrée_en_vigueur_des_cpom(
             données_diamant_ann_ms_tdp_et, numéros_finess_connus, mocked_logger
         )
 
@@ -60,7 +60,7 @@ class TestTransformeLesDatesDEntreeEnVigueurDesCpom:
         )
 
         # WHEN
-        dates_d_entree_en_vigueur_des_cpom = transforme_les_dates_d_entree_en_vigueur_des_cpom(
+        dates_d_entree_en_vigueur_des_cpom = transforme_les_dates_d_entrée_en_vigueur_des_cpom(
             données_diamant_ann_ms_tdp_et, numéros_finess_connus, mocked_logger
         )
 
@@ -93,7 +93,7 @@ class TestTransformeLesDatesDEntreeEnVigueurDesCpom:
         )
 
         # WHEN
-        dates_d_entree_en_vigueur_des_cpom = transforme_les_dates_d_entree_en_vigueur_des_cpom(
+        dates_d_entree_en_vigueur_des_cpom = transforme_les_dates_d_entrée_en_vigueur_des_cpom(
             données_diamant_ann_ms_tdp_et, numéros_finess_connus, mocked_logger
         )
 
@@ -118,7 +118,7 @@ class TestTransformeLesDatesDEntreeEnVigueurDesCpom:
         )
 
         # WHEN
-        dates_d_entree_en_vigueur_des_cpom = transforme_les_dates_d_entree_en_vigueur_des_cpom(
+        dates_d_entree_en_vigueur_des_cpom = transforme_les_dates_d_entrée_en_vigueur_des_cpom(
             données_diamant_ann_ms_tdp_et, numéros_finess_connus, mocked_logger
         )
 
