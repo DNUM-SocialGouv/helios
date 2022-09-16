@@ -89,6 +89,10 @@ export class ÉtablissementTerritorialTestBuilder {
       dateMiseÀJourSource: '2022-05-14',
       value: 'b@example.com',
     },
+    dateDEntréeEnVigueurDuCpom: {
+      dateMiseÀJourSource: '',
+      value: '',
+    },
     libelléCatégorieÉtablissement: {
       dateMiseÀJourSource: '2022-05-14',
       value: 'Centre Hospitalier (C.H.)',

@@ -157,7 +157,9 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       },
       dateDEntréeEnVigueurDuCpom: {
         dateMiseÀJourSource: dateDeMiseÀJourAnnMsTdpEtModel.dernièreMiseÀJour,
-        value: établissementTerritorialIdentitéModel.cpom.dateDEntréeEnVigueur,
+        value: établissementTerritorialIdentitéModel.cpom ?
+          établissementTerritorialIdentitéModel.cpom.dateDEntréeEnVigueur :
+          '',
       },
       libelléCatégorieÉtablissement: {
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,

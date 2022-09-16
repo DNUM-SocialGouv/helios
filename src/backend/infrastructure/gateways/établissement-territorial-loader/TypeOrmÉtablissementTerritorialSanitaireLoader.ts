@@ -185,6 +185,10 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.courriel,
       },
+      dateDEntréeEnVigueurDuCpom: {
+        dateMiseÀJourSource: '',
+        value: '',
+      },
       libelléCatégorieÉtablissement: {
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.libelléCatégorieÉtablissement,
