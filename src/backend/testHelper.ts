@@ -6,6 +6,7 @@ import { AutorisationMédicoSocialModel } from '../../database/models/Autorisati
 import { AutorisationSanitaireModel } from '../../database/models/AutorisationSanitaireModel'
 import { AutreActivitéSanitaireModel } from '../../database/models/AutreActivitéSanitaireModel'
 import { CapacitéAutorisationSanitaireModel } from '../../database/models/CapacitéAutorisationSanitaireModel'
+import { CpomModel } from '../../database/models/CpomModel'
 import { DateMiseÀJourFichierSourceModel } from '../../database/models/DateMiseÀJourFichierSourceModel'
 import { EntitéJuridiqueModel } from '../../database/models/EntitéJuridiqueModel'
 import { ReconnaissanceContractuelleSanitaireModel } from '../../database/models/ReconnaissanceContractuelleSanitaireModel'
@@ -46,6 +47,7 @@ export const clearAllTables = async (orm: DataSource) => {
   await orm.createQueryBuilder().delete().from(AutreActivitéSanitaireModel).execute()
   await orm.createQueryBuilder().delete().from(ReconnaissanceContractuelleSanitaireModel).execute()
   await orm.createQueryBuilder().delete().from(CapacitéAutorisationSanitaireModel).execute()
+  await orm.createQueryBuilder().delete().from(CpomModel).execute()
 }
 
 export const numéroFinessEntitéJuridique = '010018407'

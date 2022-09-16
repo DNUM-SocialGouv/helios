@@ -39,8 +39,9 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     }
 
     const dateDeMiseÀJourIdentitéModel = await this.chargeLaDateDeMiseÀJourFinessCs1400102Model() as DateMiseÀJourFichierSourceModel
+    const dateDeMiseÀJourAnnMsTdpEtModel = await this.chargeLaDateDeMiseÀJourAnnMsTdpEtModel() as DateMiseÀJourFichierSourceModel
 
-    return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseÀJourIdentitéModel)
+    return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseÀJourIdentitéModel, dateDeMiseÀJourAnnMsTdpEtModel)
   }
 
   async chargeAutorisationsEtCapacités(
@@ -82,9 +83,12 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
   private async chargeLIdentitéModel(numéroFinessÉtablissementTerritorial: string) {
     return await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
-      .findOneBy({
-        domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
-        numéroFinessÉtablissementTerritorial,
+      .findOne({
+        relations: { cpom: true },
+        where: {
+          domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
+          numéroFinessÉtablissementTerritorial,
+        },
       })
   }
 
@@ -123,7 +127,8 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
 
   private construisIdentité(
     établissementTerritorialIdentitéModel: ÉtablissementTerritorialIdentitéModel,
-    dateDeMiseÀJourIdentitéModel: DateMiseÀJourFichierSourceModel
+    dateDeMiseÀJourIdentitéModel: DateMiseÀJourFichierSourceModel,
+    dateDeMiseÀJourAnnMsTdpEtModel: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialIdentité {
     return {
       adresseAcheminement: {
@@ -149,6 +154,10 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       courriel: {
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.courriel,
+      },
+      dateDEntréeEnVigueurDuCpom: {
+        dateMiseÀJourSource: dateDeMiseÀJourAnnMsTdpEtModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.cpom.dateDEntréeEnVigueur,
       },
       libelléCatégorieÉtablissement: {
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,

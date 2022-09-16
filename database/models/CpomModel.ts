@@ -1,13 +1,10 @@
-import { Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm'
-
-import { ÉtablissementTerritorialIdentitéModel } from './ÉtablissementTerritorialIdentitéModel'
+import { Column, Entity, PrimaryColumn } from 'typeorm'
 
 @Entity({ name: 'cpom' })
 export class CpomModel {
-  @PrimaryColumn({ name: 'numero_finess_etablissement_territorial', type: 'string' })
-  public numero_finess_etablissement_territorial!: string
+  @Column({ name: 'date_d_entree_en_vigueur', nullable: true, type: 'date' })
+  public dateDEntréeEnVigueur!: string
 
-  @OneToOne(() => ÉtablissementTerritorialIdentitéModel)
-  @JoinColumn({ name: 'numero_finess_etablissement_territorial' })
-  public etablissement_territorial!: ÉtablissementTerritorialIdentitéModel
+  @PrimaryColumn({ length: 9, name: 'numero_finess_etablissement_territorial' })
+  public numéroFinessÉtablissementTerritorial!: string
 }
