@@ -220,6 +220,10 @@ export class ÉtablissementTerritorialSanitaireViewModel extends GraphiqueViewMo
     capacités.nombreDePlacesEnPsyHospitalisationPartielle !== null)
   }
 
+  public get dateDeMiseÀJourDeLaCapacitéInstalléeParActivités(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorial.autorisationsEtCapacités.capacités?.dateMiseÀJourSource as string)
+  }
+
   public get capacitéParActivités(): JSX.Element {
     const lits = [
       this.établissementTerritorial.autorisationsEtCapacités.capacités?.nombreDeLitsEnChirurgie as number,
