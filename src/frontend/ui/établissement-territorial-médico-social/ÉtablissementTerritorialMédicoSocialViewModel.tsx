@@ -322,7 +322,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
               titre={`${discipline.libellé} [${discipline.code}]`}
             />
             <ul
-              className={`fr-collapse ${styles['liste-activités']}`}
+              className={`fr-collapse ${styles['liste-activites']}`}
               id={`accordion-${discipline.code}`}
             >
               {
@@ -336,7 +336,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
                       titre={`${activité.libellé} [${activité.code}]`}
                     />
                     <ul
-                      className={`fr-collapse ${styles['liste-clientèles']}`}
+                      className={`fr-collapse ${styles['liste-clienteles']}`}
                       id={`accordion-${discipline.code}-${activité.code}`}
                     >
                       {

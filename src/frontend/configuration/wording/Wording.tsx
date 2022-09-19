@@ -39,6 +39,7 @@ export interface Wording {
   readonly RECHERCHE_EN_ATTENTE: string
   readonly aucunRésultat: (terme: string) => string
   readonly ERREUR_TECHNIQUE: string
+  readonly VOIR_PLUS_RÉSULTATS: string
 
   // Cartographie
   readonly CARTOGRAPHIE: string
@@ -55,6 +56,7 @@ export interface Wording {
   readonly OUI: string
   readonly NON: string
   readonly DÉTAILS: string
+  readonly TÉLÉCHARGER_EN_PDF: string
 
   // Info bulle
   readonly ÉLÉMENTS_DE_COMPRÉHENSION: string

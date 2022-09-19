@@ -1,4 +1,4 @@
-import { screen, within } from '@testing-library/react'
+import { fireEvent, screen, within } from '@testing-library/react'
 
 import { DomaineÉtablissementTerritorial } from '../../../backend/métier/entities/DomaineÉtablissementTerritorial'
 import { EntitéJuridiqueViewModelTestBuilder } from '../../test-builder/EntitéJuridiqueViewModelTestBuilder'
@@ -38,6 +38,34 @@ describe('La page Entité Juridique', () => {
     // THEN
     const titre = screen.getByRole('heading', { level: 1, name: 'EJ - 220 000 020 - CENTRE HOSPITALIER DE SAINT BRIEUC' })
     expect(titre).toBeInTheDocument()
+  })
+
+  it('affiche le bouton pour imprimer', () => {
+    // WHEN
+    renderFakeComponent(<PageEntitéJuridique
+      entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+      établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
+    />)
+
+    // THEN
+    const imprimer = screen.getByRole('button', { name: 'Télécharger en PDF' })
+    expect(imprimer).toHaveAttribute('type', 'button')
+  })
+
+  it('j’imprime quand je clique sur le bouton d’impression', () => {
+    // GIVEN
+    jest.spyOn(window, 'print').mockImplementation()
+    renderFakeComponent(<PageEntitéJuridique
+      entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+      établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
+    />)
+    const imprimer = screen.getByRole('button', { name: 'Télécharger en PDF' })
+
+    // WHEN
+    fireEvent.click(imprimer)
+
+    // THEN
+    expect(window.print).toHaveBeenCalledTimes(1)
   })
 
   describe('affiche le bloc identité de l’entité juridique', () => {

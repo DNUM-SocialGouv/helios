@@ -27,12 +27,12 @@
   padding-left: 0;
 }
 
-.liste-autorisations > li > .liste-activités {
+.liste-autorisations > li > .liste-activites {
   display: flex;
   flex-direction: column;
 }
 
-.liste-autorisations > li > .liste-activités > li .liste-clientèles {
+.liste-autorisations > li > .liste-activites > li .liste-clienteles {
   display: flex;
   flex-direction: column;
   padding-left: 0;

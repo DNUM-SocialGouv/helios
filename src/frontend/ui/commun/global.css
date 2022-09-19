@@ -47,3 +47,32 @@ iframe {
 .fr-tile__link {
   word-break: break-word;
 }
+
+@media print {
+  .fr-header__brand-top, .fr-header__tools, .fr-footer, .fr-btn, .fr-breadcrumb {
+    display: none !important;
+  }
+
+  .fr-header, .fr-header__service {
+    box-shadow: unset !important;
+  }
+
+  .fr-header__service {
+    margin-bottom: 20px;
+  }
+
+  .fr-collapse:not(.fr-collapse--expanded) {
+    visibility: visible;
+  }
+
+  .fr-collapse {
+    --collapse: unset;
+    display: block !important;
+    max-height: max-content;
+  }
+
+  #légende-graphique-sanitaire-journées-séjours-mco,
+  #légende-graphique-sanitaire-journées-psy-et-ssr {
+    display: grid;
+  }
+}

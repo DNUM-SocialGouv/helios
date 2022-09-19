@@ -1,4 +1,4 @@
-import { screen, within } from '@testing-library/react'
+import { fireEvent, screen, within } from '@testing-library/react'
 
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from '../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder'
 import { fakeFrontDependencies, renderFakeComponent } from '../../testHelper'
@@ -9,6 +9,14 @@ const { paths, wording } = fakeFrontDependencies
 describe('La page établissement territorial sanitaire - bloc identité', () => {
   const établissementTerritorialSanitaire = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths)
 
+  it('affiche le titre dans l’onglet', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+
+    // THEN
+    expect(document.title).toBe(établissementTerritorialSanitaire.titre)
+  })
+
   it('affiche le titre : "ET - numéro de FINESS - nom de l’établissement"', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
@@ -16,6 +24,28 @@ describe('La page établissement territorial sanitaire - bloc identité', () => 
     // THEN
     const titre = screen.getByRole('heading', { level: 1, name: 'ET - 010 000 040 - CH NANTUA' })
     expect(titre).toBeInTheDocument()
+  })
+
+  it('affiche le bouton pour imprimer', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+
+    // THEN
+    const imprimer = screen.getByRole('button', { name: 'Télécharger en PDF' })
+    expect(imprimer).toHaveAttribute('type', 'button')
+  })
+
+  it('j’imprime quand je clique sur le bouton d’impression', () => {
+    // GIVEN
+    jest.spyOn(window, 'print').mockImplementation()
+    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+    const imprimer = screen.getByRole('button', { name: 'Télécharger en PDF' })
+
+    // WHEN
+    fireEvent.click(imprimer)
+
+    // THEN
+    expect(window.print).toHaveBeenCalledTimes(1)
   })
 
   it('affiche le nom de l’établissement', () => {
@@ -188,13 +218,5 @@ describe('La page établissement territorial sanitaire - bloc identité', () => 
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const adresseIncomplète = within(indicateurs[2]).getByText('50 R 01130 NANTUA', { selector: 'p' })
     expect(adresseIncomplète).toBeInTheDocument()
-  })
-
-  it('affiche le titre dans l’onglet', () => {
-    // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
-
-    // THEN
-    expect(document.title).toBe(établissementTerritorialSanitaire.titre)
   })
 })

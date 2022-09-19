@@ -1,4 +1,4 @@
-import { screen, within } from '@testing-library/react'
+import { fireEvent, screen, within } from '@testing-library/react'
 
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from '../../test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder'
 import { fakeFrontDependencies, renderFakeComponent, trimHtml } from '../../testHelper'
@@ -9,6 +9,14 @@ const { paths, wording } = fakeFrontDependencies
 describe('La page établissement territorial - bloc identité', () => {
   const établissementTerritorialMédicoSocial = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths)
 
+  it('affiche le titre dans l’onglet', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+
+    // THEN
+    expect(document.title).toBe(établissementTerritorialMédicoSocial.titre)
+  })
+
   it('affiche le titre : "ET - numéro de FINESS - nom de l’établissement"', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
@@ -16,6 +24,28 @@ describe('La page établissement territorial - bloc identité', () => {
     // THEN
     const titre = screen.getByRole('heading', { level: 1, name: 'ET - 010 003 598 - IFAS CH DU HAUT BUGEY' })
     expect(titre).toBeInTheDocument()
+  })
+
+  it('affiche le bouton pour imprimer', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+
+    // THEN
+    const imprimer = screen.getByRole('button', { name: 'Télécharger en PDF' })
+    expect(imprimer).toHaveAttribute('type', 'button')
+  })
+
+  it('j’imprime quand je clique sur le bouton d’impression', () => {
+    // GIVEN
+    jest.spyOn(window, 'print').mockImplementation()
+    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+    const imprimer = screen.getByRole('button', { name: 'Télécharger en PDF' })
+
+    // WHEN
+    fireEvent.click(imprimer)
+
+    // THEN
+    expect(window.print).toHaveBeenCalledTimes(1)
   })
 
   it('affiche le nom de l’établissement', () => {
@@ -270,13 +300,5 @@ describe('La page établissement territorial - bloc identité', () => {
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const adresseIncomplète = within(indicateurs[2]).getByText('1 RTE 01117 OYONNAX CEDEX', { selector: 'p' })
     expect(adresseIncomplète).toBeInTheDocument()
-  })
-
-  it('affiche le titre dans l’onglet', () => {
-    // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
-
-    // THEN
-    expect(document.title).toBe(établissementTerritorialMédicoSocial.titre)
   })
 })
