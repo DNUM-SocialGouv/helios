@@ -274,16 +274,16 @@ describe('Établissement territorial sanitaire loader', () => {
         ÉtablissementTerritorialAutorisationModelTestBuilder.créeAutorisationSanitaire({
           codeActivité: '16',
           codeForme: '14',
-          codeModalité: '42',
+          codeModalité: '45',
           libelléActivité: "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
           libelléForme: 'Non saisonnier',
-          libelléModalité: 'Hémodialyse en unité médicalisée',
+          libelléModalité: 'Hémodialyse à domicile',
           numéroAutorisationArhgos: '01-00-0000',
           numéroFinessÉtablissementTerritorial,
         }),
         ÉtablissementTerritorialAutorisationModelTestBuilder.créeAutorisationSanitaire({
           codeActivité: '16',
-          codeForme: '00',
+          codeForme: '15',
           codeModalité: '42',
           libelléActivité: "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
           libelléForme: 'Pas de forme',
@@ -303,7 +303,7 @@ describe('Établissement territorial sanitaire loader', () => {
         }),
         ÉtablissementTerritorialAutorisationModelTestBuilder.créeAutorisationSanitaire({
           codeActivité: '16',
-          codeForme: '14',
+          codeForme: '15',
           codeModalité: '45',
           libelléActivité: "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
           libelléForme: 'Non saisonnier',
@@ -334,18 +334,8 @@ describe('Établissement territorial sanitaire loader', () => {
                       dateDeMiseEnOeuvre: '2008-12-04',
                       numéroArhgos: '02-00-0000',
                     },
-                    code: '00',
+                    code: '15',
                     libellé: 'Pas de forme',
-                  },
-                  {
-                    autorisationSanitaire: {
-                      dateDAutorisation: '2005-10-11',
-                      dateDeFin: '2026-05-03',
-                      dateDeMiseEnOeuvre: '2008-12-04',
-                      numéroArhgos: '01-00-0000',
-                    },
-                    code: '14',
-                    libellé: 'Non saisonnier',
                   },
                 ],
                 libellé: 'Hémodialyse en unité médicalisée',
@@ -358,9 +348,19 @@ describe('Établissement territorial sanitaire loader', () => {
                       dateDAutorisation: '2005-10-11',
                       dateDeFin: '2026-05-03',
                       dateDeMiseEnOeuvre: '2008-12-04',
-                      numéroArhgos: '04-00-0000',
+                      numéroArhgos: '01-00-0000',
                     },
                     code: '14',
+                    libellé: 'Non saisonnier',
+                  },
+                  {
+                    autorisationSanitaire: {
+                      dateDAutorisation: '2005-10-11',
+                      dateDeFin: '2026-05-03',
+                      dateDeMiseEnOeuvre: '2008-12-04',
+                      numéroArhgos: '04-00-0000',
+                    },
+                    code: '15',
                     libellé: 'Non saisonnier',
                   },
                 ],
@@ -426,8 +426,8 @@ describe('Établissement territorial sanitaire loader', () => {
       await autreActivitéSanitaireRepository.insert([
         ÉtablissementTerritorialAutorisationModelTestBuilder.créeAutreActivitéSanitaire({
           codeActivité: 'A1',
-          codeForme: '00',
-          codeModalité: 'M0',
+          codeForme: '15',
+          codeModalité: 'M1',
           libelléActivité: 'Dépôt de sang',
           libelléForme: 'Pas de forme',
           libelléModalité: "Dépôt d'urgence",
@@ -435,11 +435,11 @@ describe('Établissement territorial sanitaire loader', () => {
         }),
         ÉtablissementTerritorialAutorisationModelTestBuilder.créeAutreActivitéSanitaire({
           codeActivité: 'A1',
-          codeForme: '15',
-          codeModalité: 'M0',
+          codeForme: '14',
+          codeModalité: 'M2',
           libelléActivité: 'Dépôt de sang',
           libelléForme: 'Forme non précisée',
-          libelléModalité: "Dépôt d'urgence",
+          libelléModalité: 'Dépôt relais',
           numéroFinessÉtablissementTerritorial,
         }),
         ÉtablissementTerritorialAutorisationModelTestBuilder.créeAutreActivitéSanitaire({
@@ -495,17 +495,8 @@ describe('Établissement territorial sanitaire loader', () => {
             libellé: 'Dépôt de sang',
             modalités: [
               {
-                code: 'M0',
+                code: 'M1',
                 formes: [
-                  {
-                    autreActivitéSanitaire: {
-                      dateDAutorisation: '2019-06-03',
-                      dateDeFin: '2024-08-31',
-                      dateDeMiseEnOeuvre: '2019-06-03',
-                    },
-                    code: '00',
-                    libellé: 'Pas de forme',
-                  },
                   {
                     autreActivitéSanitaire: {
                       dateDAutorisation: '2019-06-03',
@@ -513,7 +504,7 @@ describe('Établissement territorial sanitaire loader', () => {
                       dateDeMiseEnOeuvre: '2019-06-03',
                     },
                     code: '15',
-                    libellé: 'Forme non précisée',
+                    libellé: 'Pas de forme',
                   },
                 ],
                 libellé: "Dépôt d'urgence",
@@ -521,6 +512,15 @@ describe('Établissement territorial sanitaire loader', () => {
               {
                 code: 'M2',
                 formes: [
+                  {
+                    autreActivitéSanitaire: {
+                      dateDAutorisation: '2019-06-03',
+                      dateDeFin: '2024-08-31',
+                      dateDeMiseEnOeuvre: '2019-06-03',
+                    },
+                    code: '14',
+                    libellé: 'Forme non précisée',
+                  },
                   {
                     autreActivitéSanitaire: {
                       dateDAutorisation: '2019-06-03',
