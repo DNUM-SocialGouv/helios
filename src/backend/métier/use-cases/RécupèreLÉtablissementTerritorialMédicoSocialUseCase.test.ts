@@ -71,7 +71,7 @@ describe('La récupération d’un établissement territorial médico-social', (
     expect(établissementTerritorialMédicoSocial.identité).toStrictEqual(ficheIdentitéÉtablissementTerritorialMédicoSocial)
     expect(mockedChargeIdentité).toHaveBeenCalledWith(numéroFinessÉtablissementTerritorial)
     expect(mockedChargeIdentité).toHaveBeenCalledTimes(1)
-    expect(mockedEstUnMonoÉtablissement).toHaveBeenCalledWith(numéroFinessÉtablissementTerritorial)
+    expect(mockedEstUnMonoÉtablissement).toHaveBeenCalledWith(fakeIdentitéÉtablissementTerritorial.numéroFinessEntitéJuridique.value)
     expect(mockedEstUnMonoÉtablissement).toHaveBeenCalledTimes(1)
     expect(mockedChargeLEntitéJuridiqueDeRattachement).toHaveBeenCalledWith(numéroFinessEntitéJuridique)
     expect(mockedChargeLEntitéJuridiqueDeRattachement).toHaveBeenCalledTimes(1)
