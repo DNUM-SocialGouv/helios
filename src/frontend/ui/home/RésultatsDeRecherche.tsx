@@ -71,7 +71,7 @@ export const RésultatsDeRecherche = ({
             className="fr-btn fr-btn--secondary"
             onClick={chargeLesRésultatsSuivants}
           >
-            Voir plus de résultats
+            {wording.VOIR_PLUS_RÉSULTATS}
           </button>
         </div>
       }

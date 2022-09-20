@@ -59,6 +59,7 @@ export class WordingFr implements Wording {
   readonly aucunRésultat: (terme: string) => string = (terme: string) =>
     `Aucun résultat ne correspond à votre recherche « ${terme} ».`
   readonly ERREUR_TECHNIQUE: string = 'Veuillez nous excuser, nous venons de rencontrer une erreur technique. Nous vous invitons à effectuer une nouvelle recherche plus tard.'
+  readonly VOIR_PLUS_RÉSULTATS: string = 'Voir plus de résultats'
 
   // Cartographie
   readonly CARTOGRAPHIE: string = 'Cartographie'
@@ -75,6 +76,7 @@ export class WordingFr implements Wording {
   readonly OUI: string = 'Oui'
   readonly NON: string = 'Non'
   readonly DÉTAILS: string = 'Détails'
+  readonly TÉLÉCHARGER_EN_PDF: string = 'Télécharger en PDF'
 
   // Info bulle
   readonly ÉLÉMENTS_DE_COMPRÉHENSION: string = 'Éléments de compréhension'

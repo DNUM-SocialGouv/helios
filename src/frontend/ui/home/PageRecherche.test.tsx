@@ -156,7 +156,7 @@ describe('La page de d’accueil', () => {
     expect(enAttente).toBeInTheDocument()
     await waitForElementToBeRemoved(enAttente)
     const résultatsDeLaRecherche = screen.getByRole('region', { name: wording.RÉSULTAT_DE_RECHERCHE })
-    expect(within(résultatsDeLaRecherche).getByRole('button', { name: 'Voir plus de résultats' })).toBeInTheDocument()
+    expect(within(résultatsDeLaRecherche).getByRole('button', { name: wording.VOIR_PLUS_RÉSULTATS })).toBeInTheDocument()
   })
 
   it('n’affiche pas le bouton permettant de charger les résultats suivants quand tous les résultats sont affichés', async() => {
@@ -190,7 +190,7 @@ describe('La page de d’accueil', () => {
     expect(enAttente).toBeInTheDocument()
     await waitForElementToBeRemoved(enAttente)
     const résultatsDeLaRecherche = screen.getByRole('region', { name: wording.RÉSULTAT_DE_RECHERCHE })
-    expect(within(résultatsDeLaRecherche).queryByRole('button', { name: 'Voir plus de résultats' })).not.toBeInTheDocument()
+    expect(within(résultatsDeLaRecherche).queryByRole('button', { name: wording.VOIR_PLUS_RÉSULTATS })).not.toBeInTheDocument()
   })
 
   it('affiche les résultats à la suite de ceux déjà affichés quand on charge les résultats suivants', async () => {
@@ -244,7 +244,7 @@ describe('La page de d’accueil', () => {
     expect(enAttentePremièreRecherche).toBeInTheDocument()
     await waitForElementToBeRemoved(enAttentePremièreRecherche)
     const résultatsDeLaRecherche = screen.getByRole('region', { name: wording.RÉSULTAT_DE_RECHERCHE })
-    const voirPlusDeRésultats = within(résultatsDeLaRecherche).getByRole('button', { name: 'Voir plus de résultats' })
+    const voirPlusDeRésultats = within(résultatsDeLaRecherche).getByRole('button', { name: wording.VOIR_PLUS_RÉSULTATS })
 
     // WHEN
     fireEvent.click(voirPlusDeRésultats)
