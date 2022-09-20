@@ -8,7 +8,7 @@ class ColonneHelios(TypedDict):
 
 ÉquivalencesDiamantHelios = Dict[str, ColonneHelios]
 
-équivalences_diamant_ann_errd_ej_et_helios: ÉquivalencesDiamantHelios = {
+équivalences_diamant_ann_errd_ej_et_bloc_activités_helios: ÉquivalencesDiamantHelios = {
     "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
     "Année": ColonneHelios(nom="annee", type=int),
     "Taux d'occupation des lits autorisés en accueil de jour": ColonneHelios(nom="taux_occupation_accueil_de_jour", type=float),
@@ -16,7 +16,7 @@ class ColonneHelios(TypedDict):
     "Taux d'occupation des places autorisées en hébergement permanent": ColonneHelios(nom="taux_occupation_en_hebergement_permanent", type=float),
 }
 
-colonnes_à_lire_ann_errd_ej_et: List[str] = list(équivalences_diamant_ann_errd_ej_et_helios.keys())
+colonnes_à_lire_bloc_activités_ann_errd_ej_et: List[str] = list(équivalences_diamant_ann_errd_ej_et_bloc_activités_helios.keys())
 
 index_des_activités: List[str] = [
     "annee",
@@ -90,6 +90,24 @@ index_des_capacités_sanitaires: List[str] = ["numero_finess_etablissement_terri
 colonnes_à_lire_ann_ms_tdp_et_cpom: List[str] = list(équivalences_diamant_ann_ms_tdp_et_cpom_helios.keys())
 index_des_dates_d_entrée_en_vigueur_des_cpom = ["numero_finess_etablissement_territorial"]
 
+équivalences_diamant_ann_errd_ej_et_bloc_budget_et_finances_helios: ÉquivalencesDiamantHelios = {
+    "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+    "Année": ColonneHelios(nom="annee", type=int),
+    "655 Quotes-parts de résultat sur opérations faites en commun": ColonneHelios(nom="contribution_frais_de_siege_groupement", type=float),
+    "Dépenses Groupe I ERRD": ColonneHelios(nom="depenses_groupe_i", type=float),
+    "Dépenses Groupe II ERRD": ColonneHelios(nom="depenses_groupe_ii", type=float),
+    "Dépenses Groupe III ERRD": ColonneHelios(nom="depenses_groupe_iii", type=float),
+    "Recettes Groupe I ERRD": ColonneHelios(nom="recettes_groupe_i", type=float),
+    "Recettes Groupe II ERRD": ColonneHelios(nom="recettes_groupe_ii", type=float),
+    "Recettes Groupe III ERRD": ColonneHelios(nom="recettes_groupe_iii", type=float),
+    "MS Résultat net comptable ERRD": ColonneHelios(nom="resultat_net_comptable", type=float),
+}
+
+colonnes_à_lire_bloc_budget_et_finances_ann_errd_ej_et: List[str] = list(équivalences_diamant_ann_errd_ej_et_bloc_budget_et_finances_helios.keys())
+index_du_bloc_budget_et_finances: List[str] = [
+    "annee",
+    "numero_finess_etablissement_territorial",
+]
 
 def extrais_l_equivalence_des_types_des_colonnes(équivalences: ÉquivalencesDiamantHelios) -> Dict[str, type]:
     return {nom_diamant: colonne_diamant["type"] for nom_diamant, colonne_diamant in équivalences.items()}

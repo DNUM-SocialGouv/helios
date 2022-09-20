@@ -10,6 +10,7 @@ TABLES_DES_AUTRES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES = "autre_activite_sa
 TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES = "reconnaissance_contractuelle_sanitaire"
 TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES = "capacite_autorisation_sanitaire"
 TABLES_DES_CPOM = "cpom"
+TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL = "budget_et_finances_medico_social"
 
 
 class FichierSource(Enum):

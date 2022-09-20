@@ -38,22 +38,10 @@ export class BudgetEtFinancesMédicoSocialModel {
   @Column({ name: 'resultat_net_comptable', type: 'float' })
   public résultatNetComptable!: number
 
-  @Column({ name: 'produits', type: 'float' })
-  public produits!: number
-
-  @Column({ name: 'charges', type: 'float' })
-  public charges!: number
-
   @Column({
     enum: CadreBudgétaire,
     enumName: 'cadre_budgetaire',
     type: 'enum',
   })
   public cadreBudgétaire!: number
-
-  @Column({ name: 'taux_de_caf', type: 'float' })
-  public tauxDeCaf!: number
-
-  @Column({ name: 'taux_de_vetuste', type: 'float' })
-  public tauxDeVétusté!: number
 }

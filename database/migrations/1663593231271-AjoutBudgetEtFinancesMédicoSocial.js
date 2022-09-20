@@ -15,11 +15,7 @@ class AjoutBudgetEtFinancesMédicoSocial1663593231271 {
           recettes_groupe_ii FLOAT,
           recettes_groupe_iii FLOAT,
           resultat_net_comptable FLOAT,
-          produits FLOAT,
-          charges FLOAT,
           cadre_budgetaire cadre_budgetaire,
-          taux_de_caf FLOAT,
-          taux_de_vetuste FLOAT,
 
           PRIMARY KEY (annee, numero_finess_etablissement_territorial),
 

@@ -14,10 +14,10 @@ from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichie
 from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, FichierSource
 from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux import transforme_les_activités_des_établissements_médico_sociaux
 from datacrawler.transform.équivalences_diamant_helios import (
-    colonnes_à_lire_ann_errd_ej_et,
+    colonnes_à_lire_bloc_activités_ann_errd_ej_et,
     colonnes_à_lire_ann_ms_tdp_et,
     extrais_l_equivalence_des_types_des_colonnes,
-    équivalences_diamant_ann_errd_ej_et_helios,
+    équivalences_diamant_ann_errd_ej_et_bloc_activités_helios,
     équivalences_diamant_ann_ms_tdp_et_helios,
 )
 
@@ -31,8 +31,8 @@ def ajoute_les_activités_des_établissements_médico_sociaux(
     logger.info("[DIAMANT] Récupère les activités des établissements médico-sociaux")
     données_ann_errd_ej_et = lis_le_fichier_csv(
         chemin_du_fichier_ann_errd_ej_et,
-        colonnes_à_lire_ann_errd_ej_et,
-        extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_errd_ej_et_helios),
+        colonnes_à_lire_bloc_activités_ann_errd_ej_et,
+        extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_errd_ej_et_bloc_activités_helios),
     )
     logger.info(f"[DIAMANT] {données_ann_errd_ej_et.shape[0]} lignes trouvées dans le fichier ANN_ERRD_EJ_ET")
     données_ann_errd_ej_et_filtré_sur_les_3_dernières_années = données_ann_errd_ej_et[données_ann_errd_ej_et["Année"].between(année_n_moins_3, année_n_moins_1)]
