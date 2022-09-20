@@ -6,7 +6,7 @@ export enum CadreBudgétaire {
   CA_PH = 'CA_PH'
 }
 
-@Entity({ name: 'cpom' })
+@Entity({ name: 'budget_et_finances_medico_social' })
 export class BudgetEtFinancesMédicoSocialModel {
   @PrimaryColumn({ name: 'annee', type: 'int' })
   public année!: number
