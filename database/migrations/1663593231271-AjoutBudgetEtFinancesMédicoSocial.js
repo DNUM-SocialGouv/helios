@@ -2,28 +2,31 @@ class AjoutBudgetEtFinancesMédicoSocial1663593231271 {
   async up(queryRunner) {
     await queryRunner.query(
       `CREATE TYPE cadre_budgetaire AS ENUM
-        ('ERRD', 'CA_PA', 'CA_PF');
+        ('ERRD', 'CA_PA', 'CA_PH');
+
         CREATE TABLE budget_et_finances_medico_social (
-        annee INT NOT NULL,
-        numero_finess_etablissement_territorial VARCHAR(9) NOT NULL,
-        contribution_frais_de_siege_groupement FLOAT,
-        depenses_groupe_i FLOAT,
-        depenses_groupe_ii FLOAT,
-        depenses_groupe_iii FLOAT,
-        recettes_groupe_i FLOAT,
-        recettes_groupe_ii FLOAT,
-        recettes_groupe_iii FLOAT,
-        resultat_net_comptable FLOAT,
-        produits FLOAT,
-        charges FLOAT,
-        cadre_budgetaire cadre_budgetaire
+          annee INT NOT NULL,
+          numero_finess_etablissement_territorial VARCHAR(9) NOT NULL,
+          contribution_frais_de_siege_groupement FLOAT,
+          depenses_groupe_i FLOAT,
+          depenses_groupe_ii FLOAT,
+          depenses_groupe_iii FLOAT,
+          recettes_groupe_i FLOAT,
+          recettes_groupe_ii FLOAT,
+          recettes_groupe_iii FLOAT,
+          resultat_net_comptable FLOAT,
+          produits FLOAT,
+          charges FLOAT,
+          cadre_budgetaire cadre_budgetaire,
+          taux_de_caf FLOAT,
+          taux_de_vetuste FLOAT,
 
-        PRIMARY KEY (annee, numero_finess_etablissement_territorial),
+          PRIMARY KEY (annee, numero_finess_etablissement_territorial),
 
-        CONSTRAINT budget_et_finances_medico_social_etablissement_territorial_finess_foreign_key
-          FOREIGN KEY (numero_finess_etablissement_territorial)
-            REFERENCES etablissement_territorial (numero_finess_etablissement_territorial)
-            ON DELETE CASCADE
+          CONSTRAINT budget_et_finances_medico_social_etablissement_territorial_finess_foreign_key
+            FOREIGN KEY (numero_finess_etablissement_territorial)
+              REFERENCES etablissement_territorial (numero_finess_etablissement_territorial)
+              ON DELETE CASCADE
         );`
     )
   }
