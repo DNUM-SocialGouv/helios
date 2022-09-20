@@ -206,6 +206,24 @@ def csv_ann_rpu_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, 
     return ann_rpu
 
 
+def csv_ann_errd_ej_et_budget_et_finances_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
+    ann_errd_ej_et_budget_et_finances = {
+        "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "Année": 2018,
+        "655 Quotes-parts de résultat sur opérations faites en commun": -300,
+        "Dépenses Groupe I ERRD": -100,
+        "Dépenses Groupe II ERRD": -200,
+        "Dépenses Groupe III ERRD": -300,
+        "Recettes Groupe I ERRD": 150,
+        "Recettes Groupe II ERRD": 150,
+        "Recettes Groupe III ERRD": 350,
+        "MS Résultat net comptable ERRD": 50,
+    }
+    if champs_surchargés:
+        return {**ann_errd_ej_et_budget_et_finances, **champs_surchargés}
+    return ann_errd_ej_et_budget_et_finances
+
+
 def csv_ann_sae_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
     ann_sae = {
         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
@@ -252,6 +270,24 @@ def helios_ann_rpu_builder(champs_surchargés: Optional[Dict] = None) -> Dict[st
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "annee": 2018,
         "nombre_passages_urgences": 100.0,
+    }
+    if champs_surchargés:
+        return {**ann_rpu, **champs_surchargés}
+    return ann_rpu
+
+
+def helios_ann_errd_ej_et_budget_et_finances_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    ann_rpu = {
+        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "annee": 2018,
+        "contribution_frais_de_siege_groupement": 300,
+        "depenses_groupe_i": -100,
+        "depenses_groupe_ii": -200,
+        "depenses_groupe_iii": -300,
+        "recettes_groupe_i": 150,
+        "recettes_groupe_ii": 150,
+        "recettes_groupe_iii": 350,
+        "resultat_net_comptable": 50,
     }
     if champs_surchargés:
         return {**ann_rpu, **champs_surchargés}
