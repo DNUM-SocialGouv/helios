@@ -1,9 +1,14 @@
 import pandas as pd
 from pandas import NA
 
-from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger, \
-    csv_ann_errd_ej_et_budget_et_finances_builder, helios_ann_errd_ej_et_budget_et_finances_builder
-from datacrawler.transform.transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux.transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux import (
+from datacrawler.test_helpers import (
+    NUMÉRO_FINESS_ÉTABLISSEMENT,
+    csv_ann_errd_ej_et_budget_et_finances_builder,
+    helios_ann_errd_ej_et_budget_et_finances_builder,
+    mocked_logger,
+)
+from datacrawler.transform.transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux\
+    .transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux import (
     transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux,
 )
 from datacrawler.transform.équivalences_diamant_helios import index_du_bloc_budget_et_finances
@@ -17,14 +22,14 @@ class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                 {
                     "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
                     "Année": 2018,
-                    "655 Quotes-parts de résultat sur opérations faites en commun": -300,
-                    "Dépenses Groupe I ERRD": -100,
-                    "Dépenses Groupe II ERRD": -200,
-                    "Dépenses Groupe III ERRD": -300,
-                    "Recettes Groupe I ERRD": 150,
-                    "Recettes Groupe II ERRD": 150,
-                    "Recettes Groupe III ERRD": 350,
-                    "MS Résultat net comptable ERRD": 50,
+                    "655 Quotes-parts de résultat sur opérations faites en commun": -300.0,
+                    "Dépenses Groupe I ERRD": -100.0,
+                    "Dépenses Groupe II ERRD": -200.0,
+                    "Dépenses Groupe III ERRD": -300.0,
+                    "Recettes Groupe I ERRD": 150.0,
+                    "Recettes Groupe II ERRD": 150.0,
+                    "Recettes Groupe III ERRD": 350.0,
+                    "MS Résultat net comptable ERRD": 50.0,
                 }
             ]
         )
@@ -47,14 +52,15 @@ class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                 {
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                     "annee": 2018,
-                    "contribution_frais_de_siege_groupement": 300,
-                    "depenses_groupe_i": -100,
-                    "depenses_groupe_ii": -200,
-                    "depenses_groupe_iii": -300,
-                    "recettes_groupe_i": 150,
-                    "recettes_groupe_ii": 150,
-                    "recettes_groupe_iii": 350,
-                    "resultat_net_comptable": 50,
+                    "contribution_frais_de_siege_groupement": 300.0,
+                    "depenses_groupe_i": -100.0,
+                    "depenses_groupe_ii": -200.0,
+                    "depenses_groupe_iii": -300.0,
+                    "recettes_groupe_i": 150.0,
+                    "recettes_groupe_ii": 150.0,
+                    "recettes_groupe_iii": 350.0,
+                    "resultat_net_comptable": 50.0,
+                    "cadre_budgetaire": "ERRD",
                 }
             ],
         ).set_index(index_du_bloc_budget_et_finances)
@@ -64,9 +70,11 @@ class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         # GIVEN
         données_ann_errd_ej_et_budget_et_finances = pd.DataFrame(
             [
-                csv_ann_errd_ej_et_budget_et_finances_builder({
-                    "Finess": NA,
-                })
+                csv_ann_errd_ej_et_budget_et_finances_builder(
+                    {
+                        "Finess": NA,
+                    }
+                )
             ]
         )
         numéros_finess_des_établissements_connus = pd.DataFrame(
@@ -79,9 +87,7 @@ class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
 
         # WHEN
         données_transformées = transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
-            données_ann_errd_ej_et_budget_et_finances,
-            numéros_finess_des_établissements_connus,
-            mocked_logger
+            données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger
         )
 
         # THEN
@@ -104,9 +110,7 @@ class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
 
         # WHEN
         données_transformées = transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
-            données_ann_errd_ej_et_budget_et_finances,
-            numéros_finess_des_établissements_connus,
-            mocked_logger
+            données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger
         )
 
         # THEN
@@ -139,28 +143,27 @@ class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
-        données_transformées = transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux(données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger)
+        données_transformées = transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
+            données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger
+        )
 
         # THEN
-        data_frame_attendu = (
-            pd.DataFrame(
-                [
-                    helios_ann_errd_ej_et_budget_et_finances_builder(
-                        {
-                            "contribution_frais_de_siege_groupement": NA,
-                            "depenses_groupe_i": NA,
-                            "depenses_groupe_ii": NA,
-                            "depenses_groupe_iii": NA,
-                            "recettes_groupe_i": NA,
-                            "recettes_groupe_ii": NA,
-                            "recettes_groupe_iii": NA,
-                            "resultat_net_comptable":NA,
-                        }
-                    )
-                ],
-            )
-                .set_index(index_du_bloc_budget_et_finances)
-        )
+        data_frame_attendu = pd.DataFrame(
+            [
+                helios_ann_errd_ej_et_budget_et_finances_builder(
+                    {
+                        "contribution_frais_de_siege_groupement": NA,
+                        "depenses_groupe_i": NA,
+                        "depenses_groupe_ii": NA,
+                        "depenses_groupe_iii": NA,
+                        "recettes_groupe_i": NA,
+                        "recettes_groupe_ii": NA,
+                        "recettes_groupe_iii": NA,
+                        "resultat_net_comptable": NA,
+                    }
+                )
+            ],
+        ).set_index(index_du_bloc_budget_et_finances)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
     def test_ne_considère_qu_une_seule_fois_un_même_couple_année_numéro_finess(self) -> None:
@@ -178,7 +181,7 @@ class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     {
                         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
                         "Année": 2018,
-                        "655 Quotes-parts de résultat sur opérations faites en commun": 100,
+                        "655 Quotes-parts de résultat sur opérations faites en commun": 100.0,
                     }
                 ),
             ]
@@ -192,23 +195,22 @@ class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
-        données_transformées = transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux(données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger)
+        données_transformées = transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
+            données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger
+        )
 
         # THEN
-        data_frame_attendu = (
-            pd.DataFrame(
-                [
-                    helios_ann_errd_ej_et_budget_et_finances_builder(
-                        {
-                            "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
-                            "annee": 2018,
-                            "contribution_frais_de_siege_groupement": NA,
-                        }
-                    )
-                ],
-            )
-                .set_index(index_du_bloc_budget_et_finances)
-        )
+        data_frame_attendu = pd.DataFrame(
+            [
+                helios_ann_errd_ej_et_budget_et_finances_builder(
+                    {
+                        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
+                        "annee": 2018,
+                        "contribution_frais_de_siege_groupement": NA,
+                    }
+                )
+            ],
+        ).set_index(index_du_bloc_budget_et_finances)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
     def test_ne_renvoie_pas_les_établissements_non_présents_en_base(self) -> None:
@@ -223,7 +225,9 @@ class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
-        données_transformées = transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux(données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger)
+        données_transformées = transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
+            données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger
+        )
 
         # THEN
         assert données_transformées.shape[0] == 0

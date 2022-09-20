@@ -14,13 +14,19 @@ from datacrawler.load.nom_des_tables import (
     TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
     TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_SANITAIRES,
     TABLES_DES_AUTRES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
+    TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL,
     TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
     TABLES_DES_CPOM,
     TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES,
     TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS,
     FichierSource,
 )
-from datacrawler.transform.équivalences_diamant_helios import index_des_activités, index_des_capacités_sanitaires, index_des_dates_d_entrée_en_vigueur_des_cpom
+from datacrawler.transform.équivalences_diamant_helios import (
+    index_des_activités,
+    index_des_capacités_sanitaires,
+    index_des_dates_d_entrée_en_vigueur_des_cpom,
+    index_du_bloc_budget_et_finances,
+)
 from datacrawler.transform.équivalences_finess_helios import (
     index_des_autorisations_sanitaires,
     index_des_autres_activités_sanitaires,
@@ -160,6 +166,12 @@ def sauvegarde_une_date_d_entrée_de_cpom_en_base(date_d_entree_en_vigueur_du_cp
     )
 
 
+def sauvegarde_les_indicateurs_budget_et_finances_en_base(indicateurs_budget_et_finances: pd.DataFrame, base_de_données: Engine) -> None:
+    indicateurs_budget_et_finances.set_index(index_du_bloc_budget_et_finances).to_sql(
+        name=TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL, con=base_de_données, index=True, if_exists="append"
+    )
+
+
 def csv_ann_ms_tdp_et_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
     ann_ms_tdp_et = {
         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
@@ -210,14 +222,14 @@ def csv_ann_errd_ej_et_budget_et_finances_builder(champs_surchargés: Optional[D
     ann_errd_ej_et_budget_et_finances = {
         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "Année": 2018,
-        "655 Quotes-parts de résultat sur opérations faites en commun": -300,
-        "Dépenses Groupe I ERRD": -100,
-        "Dépenses Groupe II ERRD": -200,
-        "Dépenses Groupe III ERRD": -300,
-        "Recettes Groupe I ERRD": 150,
-        "Recettes Groupe II ERRD": 150,
-        "Recettes Groupe III ERRD": 350,
-        "MS Résultat net comptable ERRD": 50,
+        "655 Quotes-parts de résultat sur opérations faites en commun": -300.0,
+        "Dépenses Groupe I ERRD": -100.0,
+        "Dépenses Groupe II ERRD": -200.0,
+        "Dépenses Groupe III ERRD": -300.0,
+        "Recettes Groupe I ERRD": 150.0,
+        "Recettes Groupe II ERRD": 150.0,
+        "Recettes Groupe III ERRD": 350.0,
+        "MS Résultat net comptable ERRD": 50.0,
     }
     if champs_surchargés:
         return {**ann_errd_ej_et_budget_et_finances, **champs_surchargés}
@@ -280,14 +292,15 @@ def helios_ann_errd_ej_et_budget_et_finances_builder(champs_surchargés: Optiona
     ann_rpu = {
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "annee": 2018,
-        "contribution_frais_de_siege_groupement": 300,
-        "depenses_groupe_i": -100,
-        "depenses_groupe_ii": -200,
-        "depenses_groupe_iii": -300,
-        "recettes_groupe_i": 150,
-        "recettes_groupe_ii": 150,
-        "recettes_groupe_iii": 350,
-        "resultat_net_comptable": 50,
+        "contribution_frais_de_siege_groupement": 300.0,
+        "depenses_groupe_i": -100.0,
+        "depenses_groupe_ii": -200.0,
+        "depenses_groupe_iii": -300.0,
+        "recettes_groupe_i": 150.0,
+        "recettes_groupe_ii": 150.0,
+        "recettes_groupe_iii": 350.0,
+        "resultat_net_comptable": 50.0,
+        "cadre_budgetaire": "ERRD",
     }
     if champs_surchargés:
         return {**ann_rpu, **champs_surchargés}

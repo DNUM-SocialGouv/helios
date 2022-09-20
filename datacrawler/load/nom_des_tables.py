@@ -15,6 +15,7 @@ TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL = "budget_et_finances_medico_socia
 
 class FichierSource(Enum):
     DIAMANT_ANN_ERRD_EJ_ET = "ann_errd_ej_et"
+    DIAMANT_ANN_ERRD_EJ_ET_BUDGET_ET_FINANCES = "ann_errd_ej_et_budget_et_finances"
     DIAMANT_ANN_MS_TDP_ET = "ann_ms_tdp_et"
     DIAMANT_MEN_PMSI_ANNUEL = "men_pmsi_annuel"
     DIAMANT_ANN_RPU = "ann_rpu"

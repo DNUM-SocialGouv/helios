@@ -23,7 +23,10 @@ class AjoutBudgetEtFinancesMédicoSocial1663593231271 {
             FOREIGN KEY (numero_finess_etablissement_territorial)
               REFERENCES etablissement_territorial (numero_finess_etablissement_territorial)
               ON DELETE CASCADE
-        );`
+        );
+
+        ALTER TYPE fichier_source
+          ADD VALUE IF NOT EXISTS 'ann_errd_ej_et_budget_et_finances';`
     )
   }
 
