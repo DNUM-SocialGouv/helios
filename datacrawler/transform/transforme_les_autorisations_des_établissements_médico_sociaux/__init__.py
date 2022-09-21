@@ -2,7 +2,7 @@ from logging import Logger
 
 import pandas as pd
 
-from datacrawler.transform.transforme_les_autorisations_des_établissements_médico_sociaux.transforme_les_données_finess_cs1400105 import (
+from datacrawler.transform.transforme_les_autorisations_des_établissements_médico_sociaux.transforme_les_données_d_autorisation_et_capacité import (
     transforme_les_données_finess_cs1400105,
 )
 

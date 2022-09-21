@@ -21,12 +21,12 @@ def transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
         .dropna(subset=index_du_bloc_budget_et_finances)
         .drop_duplicates(subset=index_du_bloc_budget_et_finances)
         .set_index(index_du_bloc_budget_et_finances)
-        .apply(convertis_la_contribution_frais_de_siège_groupement_en_valuer_positive, axis=1)
+        .apply(convertis_la_contribution_frais_de_siège_groupement_en_valeur_positive, axis=1)
         .apply(ajoute_le_cadre_budgétaire, axis=1)
     )
 
 
-def convertis_la_contribution_frais_de_siège_groupement_en_valuer_positive(ligne: pd.Series) -> pd.Series:
+def convertis_la_contribution_frais_de_siège_groupement_en_valeur_positive(ligne: pd.Series) -> pd.Series:
     ligne_modifiée = ligne.copy()
     ligne_modifiée["contribution_frais_de_siege_groupement"] = -ligne_modifiée["contribution_frais_de_siege_groupement"]
     return ligne_modifiée
