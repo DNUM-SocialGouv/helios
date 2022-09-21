@@ -11,8 +11,7 @@ from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.load.nom_des_tables import TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL, FichierSource
-from datacrawler.transform.transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux.\
-    transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux import (
+from datacrawler.transform.transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux.transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux import (
     transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux,
 )
 from datacrawler.transform.équivalences_diamant_helios import (
@@ -47,7 +46,7 @@ def ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux(chemin
             connection,
             TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL,
             budget_et_finances_des_établissements_médico_sociaux,
-            [(FichierSource.DIAMANT_ANN_ERRD_EJ_ET_BUDGET_ET_FINANCES, date_du_fichier_ann_errd_ej_et)],
+            [(FichierSource.DIAMANT_ANN_ERRD_EJ_ET, date_du_fichier_ann_errd_ej_et)],
             logger,
         )
 

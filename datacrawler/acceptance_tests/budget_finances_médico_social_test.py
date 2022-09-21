@@ -82,9 +82,9 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
 
         # THEN
         date_du_fichier_ann_errd_ej_et = base_de_données_test.execute(
-            f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET_BUDGET_ET_FINANCES.value}'"
+            f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'"
         )
-        assert date_du_fichier_ann_errd_ej_et.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_ANN_ERRD_EJ_ET_BUDGET_ET_FINANCES.value)
+        assert date_du_fichier_ann_errd_ej_et.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)
 
     def test_supprime_les_données_existantes_avant_de_sauvegarder_les_données_en_base(self) -> None:
         # GIVEN
@@ -147,7 +147,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
             indicateurs_budget_et_finances_existants,
             base_de_données_test,
         )
-        sauvegarde_une_date_de_mise_à_jour_de_fichier_source("2020-01-01", FichierSource.DIAMANT_ANN_ERRD_EJ_ET_BUDGET_ET_FINANCES, base_de_données_test)
+        sauvegarde_une_date_de_mise_à_jour_de_fichier_source("2020-01-01", FichierSource.DIAMANT_ANN_ERRD_EJ_ET, base_de_données_test)
 
         mocked_sauvegarde.side_effect = ValueError()
 
@@ -167,6 +167,6 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         pd.testing.assert_frame_equal(budget_et_finances_enregistrés.sort_index(axis=1), indicateurs_budget_et_finances_existants.sort_index(axis=1))
 
         date_du_fichier_de_données = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET_BUDGET_ET_FINANCES.value}'"""
+            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'"""
         )
-        assert date_du_fichier_de_données.fetchone() == (date(2020, 1, 1), FichierSource.DIAMANT_ANN_ERRD_EJ_ET_BUDGET_ET_FINANCES.value)
+        assert date_du_fichier_de_données.fetchone() == (date(2020, 1, 1), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)
