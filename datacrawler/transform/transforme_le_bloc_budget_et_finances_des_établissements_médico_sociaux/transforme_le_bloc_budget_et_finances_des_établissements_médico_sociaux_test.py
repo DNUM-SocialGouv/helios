@@ -52,7 +52,7 @@ class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                 {
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                     "annee": 2018,
-                    "contribution_frais_de_siege_groupement": 300.0,
+                    "contribution_frais_de_siege_groupement": -300.0,
                     "depenses_groupe_i": -100.0,
                     "depenses_groupe_ii": -200.0,
                     "depenses_groupe_iii": -300.0,
@@ -92,7 +92,7 @@ class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         budget_et_finances_attendu = pd.DataFrame(
             [
                 helios_ann_errd_ej_et_budget_et_finances_builder(
-                    {"contribution_frais_de_siege_groupement": 300.0}
+                    {"contribution_frais_de_siege_groupement": -300.0}
                 )
             ],
         ).set_index(index_du_bloc_budget_et_finances)
