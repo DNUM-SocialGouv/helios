@@ -2,7 +2,7 @@ import pandas as pd
 from numpy import NaN
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, helios_autorisation_médico_social_builder, mocked_logger, xml_contenu_finess_cs1400105_builder
-from datacrawler.transform.transforme_les_autorisations_des_établissements_médico_sociaux.transforme_les_données_finess_cs1400105 import (
+from datacrawler.transform.transforme_les_autorisations_des_établissements_médico_sociaux.transforme_les_données_d_autorisation_et_capacité import (
     transforme_les_données_finess_cs1400105,
 )
 from datacrawler.transform.équivalences_finess_helios import index_des_autorisations_médico_sociaux

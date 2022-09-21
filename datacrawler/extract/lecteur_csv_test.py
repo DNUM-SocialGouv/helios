@@ -3,14 +3,14 @@ from numpy import NaN
 
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.transform.équivalences_diamant_helios import (
-    colonnes_à_lire_ann_errd_ej_et,
+    colonnes_à_lire_bloc_activités_ann_errd_ej_et,
     colonnes_à_lire_ann_ms_tdp_et,
     colonnes_à_lire_ann_ms_tdp_et_cpom,
     colonnes_à_lire_ann_rpu,
     colonnes_à_lire_ann_sae,
     colonnes_à_lire_men_pmsi_annuel,
     extrais_l_equivalence_des_types_des_colonnes,
-    équivalences_diamant_ann_errd_ej_et_helios,
+    équivalences_diamant_ann_errd_ej_et_bloc_activités_helios,
     équivalences_diamant_ann_ms_tdp_et_cpom_helios,
     équivalences_diamant_ann_ms_tdp_et_helios,
     équivalences_diamant_ann_rpu_helios,
@@ -23,8 +23,8 @@ class TestLisLeFichierCsv:
     def test_lis_les_colonnes_demandées_du_fichier_csv_ann_errd_ej_et(self) -> None:
         # GIVEN
         chemin_du_fichier = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
-        colonnes = colonnes_à_lire_ann_errd_ej_et
-        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_errd_ej_et_helios)
+        colonnes = colonnes_à_lire_bloc_activités_ann_errd_ej_et
+        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_errd_ej_et_bloc_activités_helios)
 
         # WHEN
         données = lis_le_fichier_csv(chemin_du_fichier, colonnes, types_des_colonnes)
