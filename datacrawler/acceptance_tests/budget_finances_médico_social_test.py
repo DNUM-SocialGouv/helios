@@ -3,6 +3,7 @@ from unittest.mock import Mock, patch
 
 import pandas as pd
 import pytest
+from pandas import NA
 
 import datacrawler
 from datacrawler.ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux import ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux
@@ -29,7 +30,12 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         # GIVEN
         chemin_du_fichier_ann_errd_ej_et = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
-        sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+        numéro_finess_établissement_errd = NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL
+        sauvegarde_un_établissement_en_base(numéro_finess_établissement_errd, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+        numéro_finess_établissement_ca_ph = "010002269"
+        sauvegarde_un_établissement_en_base(numéro_finess_établissement_ca_ph, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+        numéro_finess_établissement_ca_pa = "010009066"
+        sauvegarde_un_établissement_en_base(numéro_finess_établissement_ca_pa, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
 
         # WHEN
         ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
@@ -41,22 +47,91 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         # THEN
         budget_et_finances_attendus = pd.DataFrame(
             {
-                "annee": [2018, 2019, 2020, 2021],
+                "annee": [2018, 2019, 2020, 2021, 2020, 2019, 2018, 2020, 2019],
                 "numero_finess_etablissement_territorial": [
-                    NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL,
-                    NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL,
-                    NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL,
-                    NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL,
+                    numéro_finess_établissement_errd,
+                    numéro_finess_établissement_errd,
+                    numéro_finess_établissement_errd,
+                    numéro_finess_établissement_errd,
+                    numéro_finess_établissement_ca_ph,
+                    numéro_finess_établissement_ca_ph,
+                    numéro_finess_établissement_ca_ph,
+                    numéro_finess_établissement_ca_pa,
+                    numéro_finess_établissement_ca_pa,
                 ],
-                "contribution_frais_de_siege_groupement": [-22312.0, 0.0, 0.0, 0.0],
-                "depenses_groupe_i": [-105389.53, -161786, -85102.530010000002, -85102.530010000002],
-                "depenses_groupe_ii": [-506251.12999999995, -1222576.5799999998, -442475.08000000007, -442475.08000000007],
-                "depenses_groupe_iii": [-88214.989999999991, -8432.5499999999993, -9134.2200000000012, -9134.2200000000012],
-                "recettes_groupe_i": [628872.06999999995, 1376744.76, 543015.84999999998, 543015.84999999998],
-                "recettes_groupe_ii": [46843.479999999996, 23340.290000000001, 9410.4599999999991, 9410.4599999999991],
-                "recettes_groupe_iii": [27174.48, 0, 12830, 12830],
-                "resultat_net_comptable": [3034.3799999998928, 7289.9200000003912, 28544.479989999854, 28544.479989999854],
-                "cadre_budgetaire": ["ERRD", "ERRD", "ERRD", "ERRD"],
+                "contribution_frais_de_siege_groupement": [22312.0, 0.0, 0.0, 0.0, NA, NA, NA, NA, NA],
+                "depenses_groupe_i": [
+                    -105389.53,
+                    -161786,
+                    -85102.530010000002,
+                    -85102.530010000002,
+                    -16901.360000000001,
+                    -16062.690000000001,
+                    -16114.09,
+                    NA,
+                    NA,
+                ],
+                "depenses_groupe_ii": [
+                    -506251.12999999995,
+                    -1222576.5799999998,
+                    -442475.08000000007,
+                    -442475.08000000007,
+                    -464929.67000000004,
+                    -482402.46000000008,
+                    -522700.76999999996,
+                    NA,
+                    NA,
+                ],
+                "depenses_groupe_iii": [
+                    -88214.989999999991,
+                    -8432.5499999999993,
+                    -9134.2200000000012,
+                    -9134.2200000000012,
+                    -51421.190000000002,
+                    -44491.319999999992,
+                    -44619.190000000002,
+                    NA,
+                    NA,
+                ],
+                "recettes_groupe_i": [
+                    628872.06999999995,
+                    1376744.76,
+                    543015.84999999998,
+                    543015.84999999998,
+                    595042.94999999995,
+                    588568.68999999994,
+                    583376.64000000001,
+                    NA,
+                    NA,
+                ],
+                "recettes_groupe_ii": [
+                    46843.479999999996,
+                    23340.290000000001,
+                    9410.4599999999991,
+                    9410.4599999999991,
+                    17724.380000000001,
+                    782.12,
+                    511.08999999999997,
+                    NA,
+                    NA,
+                ],
+                "recettes_groupe_iii": [27174.48, 0, 12830, 12830, 16484.099999999999, 26733.739999999998, 24276.970000000001, NA, NA],
+                "resultat_net_comptable": [
+                    3034.3799999998928,
+                    7289.9200000003912,
+                    28544.479989999854,
+                    28544.479989999854,
+                    95999.209999999963,
+                    73128.079999999842,
+                    24730.649999999965,
+                    18887.12999999999,
+                    11986.649999999994,
+                ],
+                "cadre_budgetaire": ["ERRD", "ERRD", "ERRD", "ERRD", "CA_PH", "CA_PH", "CA_PH", "CA_PA", "CA_PA"],
+                "taux_de_caf": [NA, NA, NA, NA, 0.16460754444264256, 0.11776359918113584, 0.049315762194766362, NA, NA],
+                "taux_de_vétusté_construction": [NA, NA, NA, NA, 0.5319629026790017, 0.51376936316695354, NA, 0.31154835988672847, NA],
+                "charges": [NA, NA, NA, NA, NA, NA, NA, -177631.38999999998, -207285.97000000003],
+                "produits": [NA, NA, NA, NA, NA, NA, NA, 196518.51999999999, 219272.62],
             },
         )
 

@@ -236,6 +236,28 @@ def csv_ann_errd_ej_et_budget_et_finances_builder(champs_surchargés: Optional[D
     return ann_errd_ej_et_budget_et_finances
 
 
+def csv_ann_ca_ej_et_budget_et_finances_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
+    ann_ca_ej_et_budget_et_finances = {
+        "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "Année": 2020,
+        "MS Résultat net comptable CA PH": 50.0,
+        "Taux de CAF CA PH": 0.16,
+        "Taux vétusté Construction CA": 0.53,
+        "MS Résultat net comptable CA PA": NaN,
+        "Charges CA PA": NaN,
+        "Produits CA PA": NaN,
+        "Recettes Groupe I CA": 150.0,
+        "Recettes Groupe II CA": 150.0,
+        "Recettes Groupe III CA": 350.0,
+        "Dépenses Groupe I CA": -100.0,
+        "Dépenses Groupe II CA": -200.0,
+        "Dépenses Groupe III CA": -300.0,
+    }
+    if champs_surchargés:
+        return {**ann_ca_ej_et_budget_et_finances, **champs_surchargés}
+    return ann_ca_ej_et_budget_et_finances
+
+
 def csv_ann_sae_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
     ann_sae = {
         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
@@ -289,7 +311,7 @@ def helios_ann_rpu_builder(champs_surchargés: Optional[Dict] = None) -> Dict[st
 
 
 def helios_ann_errd_ej_et_budget_et_finances_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
-    ann_rpu = {
+    budget_et_finances = {
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "annee": 2018,
         "contribution_frais_de_siege_groupement": -300.0,
@@ -303,8 +325,30 @@ def helios_ann_errd_ej_et_budget_et_finances_builder(champs_surchargés: Optiona
         "cadre_budgetaire": "ERRD",
     }
     if champs_surchargés:
-        return {**ann_rpu, **champs_surchargés}
-    return ann_rpu
+        return {**budget_et_finances, **champs_surchargés}
+    return budget_et_finances
+
+
+def helios_ann_ca_ej_et_budget_et_finances_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    budget_et_finances = {
+        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "annee": 2020,
+        "depenses_groupe_i": -100.0,
+        "depenses_groupe_ii": -200.0,
+        "depenses_groupe_iii": -300.0,
+        "recettes_groupe_i": 150.0,
+        "recettes_groupe_ii": 150.0,
+        "recettes_groupe_iii": 350.0,
+        "resultat_net_comptable": 50.0,
+        "cadre_budgetaire": "CA_PH",
+        "taux_de_caf": 0.16,
+        "taux_de_vetuste_construction": 0.53,
+        "produits": NaN,
+        "charges": NaN,
+    }
+    if champs_surchargés:
+        return {**budget_et_finances, **champs_surchargés}
+    return budget_et_finances
 
 
 def helios_activité_sanitaire_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:

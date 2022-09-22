@@ -109,6 +109,26 @@ index_du_bloc_budget_et_finances: List[str] = [
     "numero_finess_etablissement_territorial",
 ]
 
+équivalences_diamant_ann_ca_ej_et_bloc_budget_et_finances_helios: ÉquivalencesDiamantHelios = {
+    "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+    "Année": ColonneHelios(nom="annee", type=int),
+    "MS Résultat net comptable CA PH": ColonneHelios(nom="resultat_net_comptable", type=float),
+    "Taux de CAF CA PH": ColonneHelios(nom="taux_de_caf", type=float),
+    "Taux vétusté Construction CA": ColonneHelios(nom="taux_de_vetuste_construction", type=float),
+    "MS Résultat net comptable CA PA": ColonneHelios(nom="resultat_net_comptable", type=float),
+    "Charges CA PA": ColonneHelios(nom="charges", type=float),
+    "Produits CA PA": ColonneHelios(nom="produits", type=float),
+    "Recettes Groupe I CA": ColonneHelios(nom="recettes_groupe_i", type=float),
+    "Recettes Groupe II CA": ColonneHelios(nom="recettes_groupe_ii", type=float),
+    "Recettes Groupe III CA": ColonneHelios(nom="recettes_groupe_iii", type=float),
+    "Dépenses Groupe I CA": ColonneHelios(nom="depenses_groupe_i", type=float),
+    "Dépenses Groupe II CA": ColonneHelios(nom="depenses_groupe_ii", type=float),
+    "Dépenses Groupe III CA": ColonneHelios(nom="depenses_groupe_iii", type=float),
+}
+
+colonnes_à_lire_bloc_budget_et_finances_ann_ca_ej_et: List[str] = list(équivalences_diamant_ann_ca_ej_et_bloc_budget_et_finances_helios.keys())
+
+
 def extrais_l_equivalence_des_types_des_colonnes(équivalences: ÉquivalencesDiamantHelios) -> Dict[str, type]:
     return {nom_diamant: colonne_diamant["type"] for nom_diamant, colonne_diamant in équivalences.items()}
 
