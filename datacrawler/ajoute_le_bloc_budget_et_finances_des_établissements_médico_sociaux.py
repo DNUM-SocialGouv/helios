@@ -72,8 +72,13 @@ if __name__ == "__main__":
     chemin_local_du_fichier_ann_errd_ej_et = os.path.join(
         variables_d_environnement["DNUM_SFTP_LOCAL_PATH"], trouve_le_nom_du_fichier(fichiers, "ANN_ERRD_EJ_ET", logger_helios)
     )
-    logger_helios.info(
-        f"""[DIAMANT] Cherche les indicateurs budget et finances pour les ET médico sociaux dans le fichier
-    {chemin_local_du_fichier_ann_errd_ej_et}"""
+    chemin_local_du_fichier_ann_ca_ej_et = os.path.join(
+        variables_d_environnement["DNUM_SFTP_LOCAL_PATH"], trouve_le_nom_du_fichier(fichiers, "ANN_CA_EJ_ET", logger_helios)
     )
-    ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux(chemin_local_du_fichier_ann_errd_ej_et, base_de_données_helios, logger_helios)
+    logger_helios.info(
+        f"""[DIAMANT] Cherche les indicateurs budget et finances pour les ET médico sociaux dans les fichiers
+    {chemin_local_du_fichier_ann_errd_ej_et}, {chemin_local_du_fichier_ann_ca_ej_et}"""
+    )
+    ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
+        chemin_local_du_fichier_ann_errd_ej_et, chemin_local_du_fichier_ann_ca_ej_et, base_de_données_helios, logger_helios
+    )
