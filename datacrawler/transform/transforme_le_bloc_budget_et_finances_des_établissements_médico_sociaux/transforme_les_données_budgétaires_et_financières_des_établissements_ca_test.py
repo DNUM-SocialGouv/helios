@@ -13,7 +13,7 @@ from datacrawler.transform.transforme_le_bloc_budget_et_finances_des_établissem
 
 
 class TestTransformeLesDonnéesBudgétairesEtFinancièresDesÉtablissementsCa:
-    def test_renomme_les_colonnes_et_crée_l_index(self) -> None:
+    def test_renomme_les_colonnes(self) -> None:
         # GIVEN
         données_ann_errd_ej_et_budget_et_finances = pd.DataFrame([csv_ann_ca_ej_et_budget_et_finances_builder()])
         numéros_finess_des_établissements_connus = pd.DataFrame(
@@ -83,6 +83,52 @@ class TestTransformeLesDonnéesBudgétairesEtFinancièresDesÉtablissementsCa:
                         "depenses_groupe_ii": NA,
                         "depenses_groupe_iii": NA,
                         "cadre_budgetaire": "CA_PA",
+                    }
+                ),
+            ],
+        )
+        pd.testing.assert_frame_equal(données_transformées.sort_index(axis=1), budget_et_finances_attendu.sort_index(axis=1))
+
+    def test_indique_un_cadre_ca_ph_même_si_les_données_ca_pa_sont_présentes(self) -> None:
+        # GIVEN
+        établissement_avec_des_données_ca_ph_et_ca_pa = csv_ann_ca_ej_et_budget_et_finances_builder(
+            {
+                "MS Résultat net comptable CA PH": 50.0,
+                "MS Résultat net comptable CA PA": 50.0,
+                "Charges CA PA": -600.0,
+                "Produits CA PA": 650.0,
+                "Recettes Groupe I CA": 150.0,
+                "Recettes Groupe II CA": 150.0,
+                "Recettes Groupe III CA": 350.0,
+                "Dépenses Groupe I CA": -100.0,
+                "Dépenses Groupe II CA": -200.0,
+                "Dépenses Groupe III CA": -300.0,
+            }
+        )
+        données_ann_errd_ej_et_budget_et_finances = pd.DataFrame([établissement_avec_des_données_ca_ph_et_ca_pa])
+
+        numéros_finess_des_établissements_connus = pd.DataFrame({"numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT]})
+
+        # WHEN
+        données_transformées = transforme_les_données_budgétaires_et_financières_des_établissements_ca(
+            données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger
+        )
+
+        # THEN
+        budget_et_finances_attendu = pd.DataFrame(
+            [
+                helios_ann_ca_ej_et_budget_et_finances_builder(
+                    {
+                        "resultat_net_comptable": 50.0,
+                        "charges": -600.0,
+                        "produits": 650.0,
+                        "recettes_groupe_i": 150.0,
+                        "recettes_groupe_ii": 150.0,
+                        "recettes_groupe_iii": 350.0,
+                        "depenses_groupe_i": -100.0,
+                        "depenses_groupe_ii": -200.0,
+                        "depenses_groupe_iii": -300.0,
+                        "cadre_budgetaire": "CA_PH",
                     }
                 ),
             ],

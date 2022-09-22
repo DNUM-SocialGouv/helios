@@ -13,7 +13,7 @@ from datacrawler.transform.transforme_le_bloc_budget_et_finances_des_établissem
 
 
 class TestTransformeLesDonnéesDépensesEtRecettesDesÉtablissementsErrd:
-    def test_renomme_les_colonnes_et_crée_l_index(self) -> None:
+    def test_renomme_les_colonnes(self) -> None:
         # GIVEN
         données_ann_errd_ej_et_budget_et_finances = pd.DataFrame(
             [
