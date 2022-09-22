@@ -7,13 +7,12 @@ from datacrawler.test_helpers import (
     helios_ann_ca_ej_et_budget_et_finances_builder,
     mocked_logger,
 )
-from datacrawler.transform.transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux.transforme_les_données_ann_ca_ej_et_budget_et_finances import (
-    transforme_les_données_ann_ca_ej_et_budget_finances,
+from datacrawler.transform.transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux.transforme_les_données_budgétaires_et_financières_des_établissements_ca import (
+    transforme_les_données_budgétaires_et_financières_des_établissements_ca,
 )
-from datacrawler.transform.équivalences_diamant_helios import index_du_bloc_budget_et_finances
 
 
-class TestTransformeLesDonnéesAnnCaEjEtBudgetEtFinances:
+class TestTransformeLesDonnéesBudgétairesEtFinancièresDesÉtablissementsCa:
     def test_renomme_les_colonnes_et_crée_l_index(self) -> None:
         # GIVEN
         données_ann_errd_ej_et_budget_et_finances = pd.DataFrame([csv_ann_ca_ej_et_budget_et_finances_builder()])
@@ -26,12 +25,12 @@ class TestTransformeLesDonnéesAnnCaEjEtBudgetEtFinances:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_ann_ca_ej_et_budget_finances(
+        données_transformées = transforme_les_données_budgétaires_et_financières_des_établissements_ca(
             données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger
         )
 
         # THEN
-        budget_et_finances_attendu = pd.DataFrame([helios_ann_ca_ej_et_budget_et_finances_builder()]).set_index(index_du_bloc_budget_et_finances)
+        budget_et_finances_attendu = pd.DataFrame([helios_ann_ca_ej_et_budget_et_finances_builder()])
         pd.testing.assert_frame_equal(données_transformées.sort_index(axis=1), budget_et_finances_attendu.sort_index(axis=1))
 
     def test_indique_le_cadre_budgétaire(self) -> None:
@@ -63,7 +62,7 @@ class TestTransformeLesDonnéesAnnCaEjEtBudgetEtFinances:
         numéros_finess_des_établissements_connus = pd.DataFrame({"numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT, numéro_finess_ca_pa]})
 
         # WHEN
-        données_transformées = transforme_les_données_ann_ca_ej_et_budget_finances(
+        données_transformées = transforme_les_données_budgétaires_et_financières_des_établissements_ca(
             données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger
         )
 
@@ -87,7 +86,7 @@ class TestTransformeLesDonnéesAnnCaEjEtBudgetEtFinances:
                     }
                 ),
             ],
-        ).set_index(index_du_bloc_budget_et_finances)
+        )
         pd.testing.assert_frame_equal(données_transformées.sort_index(axis=1), budget_et_finances_attendu.sort_index(axis=1))
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self) -> None:
@@ -102,7 +101,7 @@ class TestTransformeLesDonnéesAnnCaEjEtBudgetEtFinances:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_ann_ca_ej_et_budget_finances(
+        données_transformées = transforme_les_données_budgétaires_et_financières_des_établissements_ca(
             données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger
         )
 
@@ -121,7 +120,7 @@ class TestTransformeLesDonnéesAnnCaEjEtBudgetEtFinances:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_ann_ca_ej_et_budget_finances(
+        données_transformées = transforme_les_données_budgétaires_et_financières_des_établissements_ca(
             données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger
         )
 
@@ -140,12 +139,12 @@ class TestTransformeLesDonnéesAnnCaEjEtBudgetEtFinances:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_ann_ca_ej_et_budget_finances(
+        données_transformées = transforme_les_données_budgétaires_et_financières_des_établissements_ca(
             données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger
         )
 
         # THEN
-        budget_et_finances_attendu = pd.DataFrame([helios_ann_ca_ej_et_budget_et_finances_builder()]).set_index(index_du_bloc_budget_et_finances)
+        budget_et_finances_attendu = pd.DataFrame([helios_ann_ca_ej_et_budget_et_finances_builder()])
         pd.testing.assert_frame_equal(données_transformées.sort_index(axis=1), budget_et_finances_attendu.sort_index(axis=1))
 
     def test_ne_renvoie_pas_les_établissements_non_présents_en_base(self) -> None:
@@ -160,7 +159,7 @@ class TestTransformeLesDonnéesAnnCaEjEtBudgetEtFinances:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_ann_ca_ej_et_budget_finances(
+        données_transformées = transforme_les_données_budgétaires_et_financières_des_établissements_ca(
             données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger
         )
 

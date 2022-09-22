@@ -2,14 +2,11 @@ from logging import Logger
 
 import pandas as pd
 
-from datacrawler.transform.équivalences_diamant_helios import (
-    extrais_l_equivalence_des_noms_des_colonnes,
-    index_du_bloc_budget_et_finances,
-    équivalences_diamant_ann_errd_ej_et_bloc_budget_et_finances_helios,
-)
+from datacrawler.transform.équivalences_diamant_helios import (extrais_l_equivalence_des_noms_des_colonnes, index_du_bloc_budget_et_finances,
+                                                               équivalences_diamant_ann_errd_ej_et_bloc_budget_et_finances_helios)
 
 
-def transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
+def transforme_les_données_dépenses_et_recettes_des_établissements_errd(
     données_ann_errd_ej_et: pd.DataFrame, numéros_finess_des_établissements_connus: pd.DataFrame, logger: Logger
 ) -> pd.DataFrame:
     est_dans_finess = données_ann_errd_ej_et["Finess"].isin(numéros_finess_des_établissements_connus["numero_finess_etablissement_territorial"])

@@ -9,7 +9,7 @@ from datacrawler.transform.équivalences_diamant_helios import (
 )
 
 
-def transforme_les_données_ann_ca_ej_et_budget_finances(
+def transforme_les_données_budgétaires_et_financières_des_établissements_ca(
     données_du_fichier_ann_ca_ej_et: pd.DataFrame, numéros_finess_des_établissements_connus: pd.DataFrame, logger: Logger
 ) -> pd.DataFrame:
     est_dans_finess = données_du_fichier_ann_ca_ej_et["Finess"].isin(numéros_finess_des_établissements_connus["numero_finess_etablissement_territorial"])
