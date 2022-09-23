@@ -5,6 +5,7 @@ export interface EnvironmentVariables {
 
   readonly SENTRY_AUTH_TOKEN: string
   readonly SENTRY_DSN: string
+  readonly SENTRY_ENVIRONMENT: string
 
   readonly SFTP_HOST: string
   readonly SFTP_IS_DEBUG: string

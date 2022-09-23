@@ -48,7 +48,7 @@ const createDependencies = (): Dependencies => {
 
   Sentry.init({
     dsn: environmentVariables.SENTRY_DSN,
-    environment: process.env.NODE_ENV === undefined ? 'development' : process.env.NODE_ENV,
+    environment: environmentVariables.SENTRY_ENVIRONMENT,
     tracesSampleRate: 1.0,
   })
 

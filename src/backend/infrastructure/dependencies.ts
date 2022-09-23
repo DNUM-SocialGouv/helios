@@ -35,6 +35,7 @@ const createDependencies = (): Dependencies => {
 
   Sentry.init({
     dsn: environmentVariables.SENTRY_DSN,
+    environment: environmentVariables.SENTRY_ENVIRONMENT,
     tracesSampleRate: 1.0,
   })
 

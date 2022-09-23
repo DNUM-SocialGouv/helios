@@ -1,8 +1,10 @@
-const nextJest = require('next/jest')
+import nextJest from 'next/jest'
+
+import type { Config } from '@jest/types'
 
 const createJestConfig = nextJest({ dir: './' })
 
-const customJestConfig = {
+const customJestConfig: Config.InitialOptions = {
   clearMocks: true,
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
@@ -14,13 +16,13 @@ const customJestConfig = {
   ],
   coverageDirectory: '<rootDir>/coverage',
   moduleFileExtensions: [
-    'js',
     'ts',
     'tsx',
+    'js',
   ],
   resetMocks: true,
   restoreMocks: true,
-  setupFilesAfterEnv: ['./jest.setup.js'],
+  setupFilesAfterEnv: ['./jest.setup.ts'],
   testEnvironment: 'jest-environment-jsdom',
   testMatch: [
     '<rootDir>/src/**/*(*.)@(test).ts?(x)',

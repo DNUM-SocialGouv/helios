@@ -14,6 +14,5 @@ def transforme_les_activités_des_établissements_médico_sociaux(
     données_ann_errd_ej_et: pd.DataFrame, données_ann_ms_tdp_et: pd.DataFrame, numéros_finess_des_établissements_connus: pd.DataFrame, logger: Logger
 ) -> pd.DataFrame:
     return transforme_les_données_ann_errd_ej_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, logger).join(
-        transforme_les_données_ann_ms_tdp_et(données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, logger),
-        how="outer"
+        transforme_les_données_ann_ms_tdp_et(données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, logger), how="outer"
     )

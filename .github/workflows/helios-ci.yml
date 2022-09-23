@@ -56,7 +56,7 @@ jobs:
     needs: install
     services:
       postgres:
-        image: postgres:latest
+        image: postgres:13.7-alpine # Conserver la même version avec le fichier docker-compose.yaml
         env:
           POSTGRES_DB: helios
           POSTGRES_PASSWORD: h3li0s
@@ -105,7 +105,7 @@ jobs:
     needs: install
     services:
       postgres:
-        image: postgres:latest
+        image: postgres:13.7-alpine # Conserver la même version avec le fichier docker-compose.yaml
         env:
           POSTGRES_DB: helios
           POSTGRES_PASSWORD: h3li0s
@@ -119,8 +119,11 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
-      - name: Checkout this branch
-        uses: actions/checkout@master
+      - uses: actions/cache@v3
+        id: restore-build
+        with:
+          path: ./*
+          key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
       - name: Install pipenv
         run: pipx install pipenv
       - name: Setup pipenv
@@ -137,11 +140,6 @@ jobs:
         run: pipenv run lint
       - name: Type check
         run: pipenv run typecheck
-      - uses: actions/cache@v3
-        id: restore-build
-        with:
-          path: ./*
-          key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
       - name: Run the migrations
         run: yarn migrations
         env:

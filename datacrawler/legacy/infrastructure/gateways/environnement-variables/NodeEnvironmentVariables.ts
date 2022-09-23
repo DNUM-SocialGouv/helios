@@ -10,6 +10,7 @@ export class NodeEnvironmentVariables implements EnvironmentVariables {
 
   readonly SENTRY_AUTH_TOKEN: string = this.getOrElse('SENTRY_AUTH_TOKEN')
   readonly SENTRY_DSN: string = this.getOrElse('SENTRY_DSN')
+  readonly SENTRY_ENVIRONMENT: string = this.getOrElse('SENTRY_ENVIRONMENT')
 
   readonly SFTP_HOST: string = this.getOrElse('SFTP_HOST')
   readonly SFTP_IS_DEBUG: string = this.getOrElse('SFTP_IS_DEBUG')
