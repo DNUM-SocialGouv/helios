@@ -16,9 +16,9 @@ const customJestConfig: Config.InitialOptions = {
   ],
   coverageDirectory: '<rootDir>/coverage',
   moduleFileExtensions: [
-    'js',
     'ts',
     'tsx',
+    'js',
   ],
   resetMocks: true,
   restoreMocks: true,
