@@ -1,0 +1,9 @@
+[tool.black]
+line-length = 160
+target-version = ["py310"]
+
+[tool.mypy]
+strict_optional = true
+plugins = ["sqlmypy"]
+disallow_untyped_defs = true
+exclude = ["spikes"]
