@@ -11,8 +11,8 @@ from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.load.nom_des_tables import TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL, FichierSource
-from datacrawler.transform.transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux.fusionne_les_données_des_établissements_errd_et_ca import (
-    fusionne_les_données_des_établissements_errd_et_ca,
+from datacrawler.transform.transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux.transforme_les_données_budgétaires_et_financières import (
+    transforme_les_données_budgétaires_et_financières,
 )
 from datacrawler.transform.équivalences_diamant_helios import (
     colonnes_à_lire_bloc_budget_et_finances_ann_ca_ej_et,
@@ -46,7 +46,7 @@ def ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
 
     numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)
 
-    budget_et_finances_des_établissements_médico_sociaux = fusionne_les_données_des_établissements_errd_et_ca(
+    budget_et_finances_des_établissements_médico_sociaux = transforme_les_données_budgétaires_et_financières(
         données_ann_errd_ej_et,
         données_ann_ca_ej_et,
         numéros_finess_des_établissements_connus,

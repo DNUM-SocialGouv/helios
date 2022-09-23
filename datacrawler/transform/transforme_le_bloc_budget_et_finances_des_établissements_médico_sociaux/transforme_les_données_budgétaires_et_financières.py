@@ -11,7 +11,7 @@ from datacrawler.transform.transforme_le_bloc_budget_et_finances_des_établissem
 from datacrawler.transform.équivalences_diamant_helios import index_du_bloc_budget_et_finances
 
 
-def fusionne_les_données_des_établissements_errd_et_ca(
+def transforme_les_données_budgétaires_et_financières(
     données_ann_errd_ej_et: pd.DataFrame, données_ann_ca_ej_et: pd.DataFrame, numéros_finess_connus: pd.DataFrame, logger: Logger
 ) -> pd.DataFrame:
     indicateurs_budgétaires_des_établissements_errd = transforme_les_données_dépenses_et_recettes_des_établissements_errd(
