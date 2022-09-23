@@ -22,6 +22,7 @@ const environmentVariables: EnvironmentVariables = {
   SCALINGO_TOKEN: 'fake_token',
   SENTRY_AUTH_TOKEN: '1234567890',
   SENTRY_DSN: 'https://fake-sentry.io/11',
+  SENTRY_ENVIRONMENT: 'test',
   TIME_OF_CACHE_PAGE: '72000',
 }
 
