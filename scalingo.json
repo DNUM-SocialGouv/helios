@@ -1,4 +1,9 @@
 {
+  "env": {
+    "SENTRY_ENVIRONMENT": {
+      "value": "review-app"
+    }
+  },
   "formation": {
     "web": {
       "amount": 1,
