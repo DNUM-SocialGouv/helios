@@ -7,15 +7,13 @@ from datacrawler.test_helpers import (
     helios_ann_errd_ej_et_budget_et_finances_builder,
     mocked_logger,
 )
-from datacrawler.transform.transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux\
-    .transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux import (
-    transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux,
+from datacrawler.transform.transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux.transforme_les_données_dépenses_et_recettes_des_établissements_errd import (
+    transforme_les_données_dépenses_et_recettes_des_établissements_errd,
 )
-from datacrawler.transform.équivalences_diamant_helios import index_du_bloc_budget_et_finances
 
 
-class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
-    def test_renomme_les_colonnes_et_crée_l_index(self) -> None:
+class TestTransformeLesDonnéesDépensesEtRecettesDesÉtablissementsErrd:
+    def test_renomme_les_colonnes(self) -> None:
         # GIVEN
         données_ann_errd_ej_et_budget_et_finances = pd.DataFrame(
             [
@@ -42,7 +40,7 @@ class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
-        données_transformées = transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
+        données_transformées = transforme_les_données_dépenses_et_recettes_des_établissements_errd(
             données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger
         )
 
@@ -63,17 +61,13 @@ class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     "cadre_budgetaire": "ERRD",
                 }
             ],
-        ).set_index(index_du_bloc_budget_et_finances)
+        )
         pd.testing.assert_frame_equal(données_transformées, budget_et_finances_attendu)
 
     def test_transforme_l_indicateur_contributions_frais_de_siege_groupement_en_valeurs_positives(self) -> None:
         # GIVEN
         données_ann_errd_ej_et_budget_et_finances = pd.DataFrame(
-            [
-                csv_ann_errd_ej_et_budget_et_finances_builder(
-                    {"655 Quotes-parts de résultat sur opérations faites en commun": -300.0}
-                )
-            ]
+            [csv_ann_errd_ej_et_budget_et_finances_builder({"655 Quotes-parts de résultat sur opérations faites en commun": -300.0})]
         )
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
@@ -84,27 +78,19 @@ class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
-        données_transformées = transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
+        données_transformées = transforme_les_données_dépenses_et_recettes_des_établissements_errd(
             données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger
         )
 
         # THEN
         budget_et_finances_attendu = pd.DataFrame(
-            [
-                helios_ann_errd_ej_et_budget_et_finances_builder(
-                    {"contribution_frais_de_siege_groupement": -300.0}
-                )
-            ],
-        ).set_index(index_du_bloc_budget_et_finances)
+            [helios_ann_errd_ej_et_budget_et_finances_builder({"contribution_frais_de_siege_groupement": -300.0})],
+        )
         pd.testing.assert_frame_equal(données_transformées, budget_et_finances_attendu)
 
     def test_renseigne_errd_comme_cadre_budgétaire(self) -> None:
         # GIVEN
-        données_ann_errd_ej_et_budget_et_finances = pd.DataFrame(
-            [
-                csv_ann_errd_ej_et_budget_et_finances_builder()
-            ]
-        )
+        données_ann_errd_ej_et_budget_et_finances = pd.DataFrame([csv_ann_errd_ej_et_budget_et_finances_builder()])
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
@@ -114,18 +100,14 @@ class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
-        données_transformées = transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
+        données_transformées = transforme_les_données_dépenses_et_recettes_des_établissements_errd(
             données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger
         )
 
         # THEN
         budget_et_finances_attendu = pd.DataFrame(
-            [
-                helios_ann_errd_ej_et_budget_et_finances_builder(
-                    {"cadre_budgetaire": "ERRD"}
-                )
-            ],
-        ).set_index(index_du_bloc_budget_et_finances)
+            [helios_ann_errd_ej_et_budget_et_finances_builder({"cadre_budgetaire": "ERRD"})],
+        )
         pd.testing.assert_frame_equal(données_transformées, budget_et_finances_attendu)
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self) -> None:
@@ -148,7 +130,7 @@ class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
-        données_transformées = transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
+        données_transformées = transforme_les_données_dépenses_et_recettes_des_établissements_errd(
             données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger
         )
 
@@ -171,7 +153,7 @@ class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
-        données_transformées = transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
+        données_transformées = transforme_les_données_dépenses_et_recettes_des_établissements_errd(
             données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger
         )
 
@@ -205,7 +187,7 @@ class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
-        données_transformées = transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
+        données_transformées = transforme_les_données_dépenses_et_recettes_des_établissements_errd(
             données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger
         )
 
@@ -225,7 +207,7 @@ class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     }
                 )
             ],
-        ).set_index(index_du_bloc_budget_et_finances)
+        )
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
     def test_ne_considère_qu_une_seule_fois_un_même_couple_année_numéro_finess(self) -> None:
@@ -257,7 +239,7 @@ class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
-        données_transformées = transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
+        données_transformées = transforme_les_données_dépenses_et_recettes_des_établissements_errd(
             données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger
         )
 
@@ -272,7 +254,7 @@ class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     }
                 )
             ],
-        ).set_index(index_du_bloc_budget_et_finances)
+        )
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
     def test_ne_renvoie_pas_les_établissements_non_présents_en_base(self) -> None:
@@ -287,7 +269,7 @@ class TestTransformeLeBlocBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         )
 
         # WHEN
-        données_transformées = transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
+        données_transformées = transforme_les_données_dépenses_et_recettes_des_établissements_errd(
             données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger
         )
 

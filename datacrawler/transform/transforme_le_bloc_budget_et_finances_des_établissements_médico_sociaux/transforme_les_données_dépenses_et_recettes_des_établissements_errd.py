@@ -9,7 +9,7 @@ from datacrawler.transform.équivalences_diamant_helios import (
 )
 
 
-def transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
+def transforme_les_données_dépenses_et_recettes_des_établissements_errd(
     données_ann_errd_ej_et: pd.DataFrame, numéros_finess_des_établissements_connus: pd.DataFrame, logger: Logger
 ) -> pd.DataFrame:
     est_dans_finess = données_ann_errd_ej_et["Finess"].isin(numéros_finess_des_établissements_connus["numero_finess_etablissement_territorial"])
@@ -20,10 +20,8 @@ def transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
         .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_diamant_ann_errd_ej_et_bloc_budget_et_finances_helios))
         .dropna(subset=index_du_bloc_budget_et_finances)
         .drop_duplicates(subset=index_du_bloc_budget_et_finances)
-        .set_index(index_du_bloc_budget_et_finances)
         .apply(ajoute_le_cadre_budgétaire, axis=1)
     )
-
 
 
 def ajoute_le_cadre_budgétaire(ligne: pd.Series) -> pd.Series:
