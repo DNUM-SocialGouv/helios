@@ -22,7 +22,7 @@ services:
     command: finess::1001
 
   postgres:
-    image: postgres:13.7-alpine
+    image: postgres:13.7-alpine # Conserver la même version avec le fichier de la CI : helios-ci.yml
     container_name: helios_db
     ports:
       - target: 5432
@@ -38,7 +38,7 @@ services:
     command: ["postgres", "-c", "log_statement=all", "-c", "max_connections=10"]
 
   postgres-test:
-    image: postgres:13.7-alpine
+    image: postgres:13.7-alpine # Conserver la même version avec le fichier de la CI : helios-ci.yml
     container_name: helios_test_db
     ports:
       - target: 5432
