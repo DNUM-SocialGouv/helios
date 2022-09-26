@@ -2,6 +2,7 @@ import { Repository } from 'typeorm'
 
 import { ActivitéMédicoSocialModel } from '../../../../../database/models/ActivitéMédicoSocialModel'
 import { AutorisationMédicoSocialModel } from '../../../../../database/models/AutorisationMédicoSocialModel'
+import { BudgetEtFinancesMédicoSocialModel, CadreBudgétaire } from '../../../../../database/models/BudgetEtFinancesMédicoSocialModel'
 import { CpomModel } from '../../../../../database/models/CpomModel'
 import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
@@ -10,10 +11,12 @@ import { DateMiseÀJourFichierSourceModelTestBuilder } from '../../../../../data
 import { EntitéJuridiqueModelTestBuilder } from '../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder'
 import { ÉtablissementTerritorialActivitéModelTestBuilder } from '../../../../../database/test-builder/ÉtablissementTerritorialActivitéModelTestBuilder'
 import { ÉtablissementTerritorialAutorisationModelTestBuilder } from '../../../../../database/test-builder/ÉtablissementTerritorialAutorisationModelTestBuilder'
+import { ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder } from '../../../../../database/test-builder/ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder'
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from '../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder'
 import { MonoÉtablissement } from '../../../métier/entities/établissement-territorial-médico-social/MonoÉtablissement'
 import { ÉtablissementTerritorialMédicoSocial } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation'
+import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
 import { ÉtablissementTerritorialTestBuilder } from '../../../test-builder/ÉtablissementTerritorialTestBuilder'
 import { clearAllTables, getOrm, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from '../../../testHelper'
@@ -27,6 +30,7 @@ describe('Établissement territorial médico-social loader', () => {
   let dateMiseÀJourFichierSourceRepository: Repository<DateMiseÀJourFichierSourceModel>
   let autorisationMédicoSocialModelRepository: Repository<AutorisationMédicoSocialModel>
   let cpomModelRepository: Repository<CpomModel>
+  let budgetEtFinancesModelRepository: Repository<BudgetEtFinancesMédicoSocialModel>
 
   beforeAll(async () => {
     activitéMédicoSocialModelRepository = (await orm).getRepository(ActivitéMédicoSocialModel)
@@ -35,6 +39,7 @@ describe('Établissement territorial médico-social loader', () => {
     dateMiseÀJourFichierSourceRepository = (await orm).getRepository(DateMiseÀJourFichierSourceModel)
     autorisationMédicoSocialModelRepository = (await orm).getRepository(AutorisationMédicoSocialModel)
     cpomModelRepository = (await orm).getRepository(CpomModel)
+    budgetEtFinancesModelRepository = (await orm).getRepository(BudgetEtFinancesMédicoSocialModel)
   })
 
   beforeEach(async () => {
@@ -471,6 +476,84 @@ describe('Établissement territorial médico-social loader', () => {
         ],
         dateMiseÀJourSource: '2022-08-18',
       })
+    })
+  })
+
+  describe('Charge le bloc budget et finances d’un établissement médico-social', () => {
+    it.only('charge les indicateurs d’un établissement sous cadre ERRD sur les 3 dernières années', async () => {
+      // GIVEN
+      await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
+      await établissementTerritorialIdentitéRepository.insert(
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
+      )
+      await budgetEtFinancesModelRepository.insert([
+        ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder.créeMédicoSocial(CadreBudgétaire.ERRD, { année: 2021, numéroFinessÉtablissementTerritorial }),
+        ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder.créeMédicoSocial(CadreBudgétaire.ERRD, { année: 2020, numéroFinessÉtablissementTerritorial }),
+        ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder.créeMédicoSocial(CadreBudgétaire.ERRD, { année: 2019, numéroFinessÉtablissementTerritorial }),
+      ])
+
+      const typeOrmÉtablissementTerritorialMédicoSocialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
+
+      // WHEN
+      const toto = await typeOrmÉtablissementTerritorialMédicoSocialLoader.chargeBudgetEtFinances(numéroFinessEntitéJuridique)
+
+      // THEN
+      expect(toto).toStrictEqual<ÉtablissementTerritorialMédicoSocialBudgetEtFinances[]>(
+        [
+          {
+            année: 2019,
+            cadreBudgétaire: CadreBudgétaire.ERRD,
+            charges: {
+              dateMiseÀJourSource: 'string',
+              value: 3,
+            },
+            contributionAuxFraisDeSiège: {
+              dateMiseÀJourSource: 'string',
+              value: 3,
+            },
+            dépensesGroupe1: {
+              dateMiseÀJourSource: 'string',
+              value: 3,
+            },
+            dépensesGroupe2: {
+              dateMiseÀJourSource: 'string',
+              value: 3,
+            },
+            dépensesGroupe3: {
+              dateMiseÀJourSource: 'string',
+              value: 3,
+            },
+            produits: {
+              dateMiseÀJourSource: 'string',
+              value: 3,
+            },
+            recettesGroupe1: {
+              dateMiseÀJourSource: 'string',
+              value: 3,
+            },
+            recettesGroupe2: {
+              dateMiseÀJourSource: 'string',
+              value: 3,
+            },
+            recettesGroupe3: {
+              dateMiseÀJourSource: 'string',
+              value: 3,
+            },
+            résultatNetComptable: {
+              dateMiseÀJourSource: 'string',
+              value: 3,
+            },
+            tauxDeCafNette: {
+              dateMiseÀJourSource: 'string',
+              value: 3,
+            },
+            tauxDeVétustéConstruction: {
+              dateMiseÀJourSource: 'string',
+              value: 3,
+            },
+          },
+        ]
+      )
     })
   })
 })

@@ -11,37 +11,50 @@ export class BudgetEtFinancesMédicoSocialModel {
   @PrimaryColumn({ name: 'annee', type: 'int' })
   public année!: number
 
+  @Column({
+    enum: CadreBudgétaire,
+    enumName: 'cadre_budgetaire',
+    name: 'cadre_budgetaire',
+    type: 'enum',
+  })
+  public cadreBudgétaire!: CadreBudgétaire
+
+  @Column({ name: 'charges', nullable: true, type: 'float' })
+  public charges!: number | null
+
+  @Column({ name: 'contribution_frais_de_siege_groupement', nullable: true, type: 'float' })
+  public contributionFraisDeSiègeGroupement!: number | null
+
+  @Column({ name: 'depenses_groupe_i', nullable: true, type: 'float' })
+  public dépensesGroupe1!: number | null
+
+  @Column({ name: 'depenses_groupe_ii', nullable: true, type: 'float' })
+  public dépensesGroupe2!: number | null
+
+  @Column({ name: 'depenses_groupe_iii', nullable: true, type: 'float' })
+  public dépensesGroupe3!: number | null
+
   @PrimaryColumn({ length:9, name: 'numero_finess_etablissement_territorial' })
   public numéroFinessÉtablissementTerritorial!: string
 
-  @Column({ name: 'contribution_frais_de_siege_groupement', type: 'float' })
-  public contributionFraisDeSiègeGroupement!: number
+  @Column({ name: 'produits', nullable: true, type: 'float' })
+  public produits!: number | null
 
-  @Column({ name: 'depenses_groupe_i', type: 'float' })
-  public dépensesGroupe1!: number
+  @Column({ name: 'recettes_groupe_i', nullable: true, type: 'float' })
+  public recettesGroupe1!: number | null
 
-  @Column({ name: 'depenses_groupe_ii', type: 'float' })
-  public dépensesGroupe2!: number
+  @Column({ name: 'recettes_groupe_ii', nullable: true, type: 'float' })
+  public recettesGroupe2!: number | null
 
-  @Column({ name: 'depenses_groupe_iii', type: 'float' })
-  public dépensesGroupe3!: number
-
-  @Column({ name: 'recettes_groupe_i', type: 'float' })
-  public recettesGroupe1!: number
-
-  @Column({ name: 'recettes_groupe_ii', type: 'float' })
-  public recettesGroupe2!: number
-
-  @Column({ name: 'recettes_groupe_iii', type: 'float' })
-  public recettesGroupe3!: number
+  @Column({ name: 'recettes_groupe_iii', nullable: true, type: 'float' })
+  public recettesGroupe3!: number | null
 
   @Column({ name: 'resultat_net_comptable', type: 'float' })
   public résultatNetComptable!: number
 
-  @Column({
-    enum: CadreBudgétaire,
-    enumName: 'cadre_budgetaire',
-    type: 'enum',
-  })
-  public cadreBudgétaire!: number
+  @Column({ name: 'taux_de_caf', nullable: true, type: 'float' })
+  public tauxDeCaf!: number | null
+
+  @Column({ name: 'taux_de_vetuste_construction', nullable: true, type: 'float' })
+  public tauxDeVétustéConstruction!: number | null
 }

@@ -8,6 +8,7 @@ import { DomaineÉtablissementTerritorial } from '../../../métier/entities/Doma
 import { MonoÉtablissement } from '../../../métier/entities/établissement-territorial-médico-social/MonoÉtablissement'
 import { ÉtablissementTerritorialMédicoSocialActivité } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
 import { AutorisationMédicoSocialActivité, AutorisationMédicoSocialClientèle, AutorisationMédicoSocialDatesEtCapacités, AutorisationMédicoSocialDiscipline, ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation'
+import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
 import { ÉtablissementTerritorialMédicoSocialLoader } from '../../../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader'
@@ -69,6 +70,10 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
         value: nombreDÉtablissementTerritoriauxDansLEntitéJuridique === 1,
       },
     }
+  }
+
+  async chargeBudgetEtFinances(numéroFinessEntitéJuridique: string): Promise<ÉtablissementTerritorialMédicoSocialBudgetEtFinances[]> {
+    return []
   }
 
   private async chargeLesActivitésModel(numéroFinessÉtablissementTerritorial: string) {
