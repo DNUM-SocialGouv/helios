@@ -29,7 +29,7 @@ python_version = "3.10"
 
 [scripts]
 lint = 'pylint --rcfile .pylintrc datacrawler'
-typecheck = 'mypy --config pyproject.toml datacrawler'
+typecheck = 'mypy --config pyproject.toml'
 populate_activite_et_medico_social = 'python -m datacrawler.ajoute_les_activités_des_établissements_médico_sociaux'
 populate_activite_et_sanitaire = 'python -m datacrawler.ajoute_les_activités_des_établissements_sanitaires'
 populate_autorisation_et_capacite_medico_social = 'python -m datacrawler.ajoute_les_autorisations_des_établissements_médico_sociaux'

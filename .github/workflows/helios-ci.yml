@@ -131,13 +131,13 @@ jobs:
         with:
           python-version: '3.10'
           cache: 'pipenv'
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16.16
+      # - uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 16.16
       - name: Install dependencies
         run: pipenv install --dev --deploy
-      - name: Lint
-        run: pipenv run lint
+      # - name: Lint
+      #   run: pipenv run lint
       - name: Type check
         run: pipenv run typecheck
       - name: Run the migrations
