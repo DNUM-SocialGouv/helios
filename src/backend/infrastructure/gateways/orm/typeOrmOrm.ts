@@ -35,7 +35,7 @@ export const typeOrmOrm: Orm<DataSource> = (environmentVariables: EnvironmentVar
       RechercheModel,
       ReconnaissanceContractuelleSanitaireModel,
     ],
-    logging: true,
+    logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
     migrations: ['./../database/migrations/*.{js, ts}'],
     type: 'postgres',
     url: environmentVariables.DATABASE_URL,

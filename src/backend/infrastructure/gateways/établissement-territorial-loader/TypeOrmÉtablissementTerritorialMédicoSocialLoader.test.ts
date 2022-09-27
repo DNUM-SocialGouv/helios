@@ -480,78 +480,39 @@ describe('Établissement territorial médico-social loader', () => {
   })
 
   describe('Charge le bloc budget et finances d’un établissement médico-social', () => {
-    it.only('charge les indicateurs d’un établissement sous cadre ERRD sur les 3 dernières années', async () => {
+    it('charge les indicateurs d’un établissement sous des cadres budgétaires différents chaque année sur les 3 dernières années', async () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
       await établissementTerritorialIdentitéRepository.insert(
         ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
       )
+      await dateMiseÀJourFichierSourceRepository.insert([
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-01-01',
+          fichier: FichierSource.DIAMANT_ANN_ERRD_EJ_ET,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-02-02',
+          fichier: FichierSource.DIAMANT_ANN_CA_EJ_ET,
+        }),
+      ])
       await budgetEtFinancesModelRepository.insert([
         ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder.créeMédicoSocial(CadreBudgétaire.ERRD, { année: 2021, numéroFinessÉtablissementTerritorial }),
-        ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder.créeMédicoSocial(CadreBudgétaire.ERRD, { année: 2020, numéroFinessÉtablissementTerritorial }),
-        ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder.créeMédicoSocial(CadreBudgétaire.ERRD, { année: 2019, numéroFinessÉtablissementTerritorial }),
+        ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder.créeMédicoSocial(CadreBudgétaire.CA_PH, { année: 2020, numéroFinessÉtablissementTerritorial }),
+        ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder.créeMédicoSocial(CadreBudgétaire.CA_PA, { année: 2019, numéroFinessÉtablissementTerritorial }),
       ])
 
       const typeOrmÉtablissementTerritorialMédicoSocialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
 
       // WHEN
-      const toto = await typeOrmÉtablissementTerritorialMédicoSocialLoader.chargeBudgetEtFinances(numéroFinessEntitéJuridique)
+      const budgetEtFinances = await typeOrmÉtablissementTerritorialMédicoSocialLoader.chargeBudgetEtFinances(numéroFinessÉtablissementTerritorial)
 
       // THEN
-      expect(toto).toStrictEqual<ÉtablissementTerritorialMédicoSocialBudgetEtFinances[]>(
+      expect(budgetEtFinances).toStrictEqual<ÉtablissementTerritorialMédicoSocialBudgetEtFinances[]>(
         [
-          {
-            année: 2019,
-            cadreBudgétaire: CadreBudgétaire.ERRD,
-            charges: {
-              dateMiseÀJourSource: 'string',
-              value: 3,
-            },
-            contributionAuxFraisDeSiège: {
-              dateMiseÀJourSource: 'string',
-              value: 3,
-            },
-            dépensesGroupe1: {
-              dateMiseÀJourSource: 'string',
-              value: 3,
-            },
-            dépensesGroupe2: {
-              dateMiseÀJourSource: 'string',
-              value: 3,
-            },
-            dépensesGroupe3: {
-              dateMiseÀJourSource: 'string',
-              value: 3,
-            },
-            produits: {
-              dateMiseÀJourSource: 'string',
-              value: 3,
-            },
-            recettesGroupe1: {
-              dateMiseÀJourSource: 'string',
-              value: 3,
-            },
-            recettesGroupe2: {
-              dateMiseÀJourSource: 'string',
-              value: 3,
-            },
-            recettesGroupe3: {
-              dateMiseÀJourSource: 'string',
-              value: 3,
-            },
-            résultatNetComptable: {
-              dateMiseÀJourSource: 'string',
-              value: 3,
-            },
-            tauxDeCafNette: {
-              dateMiseÀJourSource: 'string',
-              value: 3,
-            },
-            tauxDeVétustéConstruction: {
-              dateMiseÀJourSource: 'string',
-              value: 3,
-            },
-          },
+          ÉtablissementTerritorialTestBuilder.créeUnBlocBudgetEtFinancesErrdMédicoSocial({ année: 2021 }),
+          ÉtablissementTerritorialTestBuilder.créeUnBlocBudgetEtFinancesCaPhMédicoSocial({ année: 2020 }),
+          ÉtablissementTerritorialTestBuilder.créeUnBlocBudgetEtFinancesCaPaMédicoSocial({ année: 2019 }),
         ]
       )
     })

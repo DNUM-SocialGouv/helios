@@ -13,6 +13,7 @@ export enum FichierSource {
   DIAMANT_MEN_PMSI_ANNUEL = 'men_pmsi_annuel',
   DIAMANT_ANN_RPU = 'ann_rpu',
   DIAMANT_ANN_SAE = 'ann_sae',
+  DIAMANT_ANN_CA_EJ_ET = 'ann_ca_ej_et',
 }
 
 @Entity({ name: 'date_mise_a_jour_fichier_source' })

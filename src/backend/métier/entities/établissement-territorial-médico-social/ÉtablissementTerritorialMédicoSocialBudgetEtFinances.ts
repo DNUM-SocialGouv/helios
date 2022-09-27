@@ -1,52 +1,34 @@
 export type ÉtablissementTerritorialMédicoSocialBudgetEtFinances = Readonly<{
   année: number
   cadreBudgétaire: string
-  charges: Readonly<{
+  chargesEtProduits: Readonly<{
     dateMiseÀJourSource: string
-    value: number | null
-  }>
+    charges: number
+    produits: number
+  } | null>
   contributionAuxFraisDeSiège: Readonly<{
     dateMiseÀJourSource: string
-    value: number | null
-  }>
-  dépensesGroupe1: Readonly<{
+    valeur: number
+  } | null>
+  recettesEtDépenses: Readonly<{
     dateMiseÀJourSource: string
-    value: number | null
-  }>
-  dépensesGroupe2: Readonly<{
-    dateMiseÀJourSource: string
-    value: number | null
-  }>
-  dépensesGroupe3: Readonly<{
-    dateMiseÀJourSource: string
-    value: number | null
-  }>
-  produits: Readonly<{
-    dateMiseÀJourSource: string
-    value: number | null
-  }>
-  recettesGroupe1: Readonly<{
-    dateMiseÀJourSource: string
-    value: number | null
-  }>
-  recettesGroupe2: Readonly<{
-    dateMiseÀJourSource: string
-    value: number | null
-  }>
-  recettesGroupe3: Readonly<{
-    dateMiseÀJourSource: string
-    value: number | null
-  }>
+    dépensesGroupe1: number
+    dépensesGroupe2: number
+    dépensesGroupe3: number
+    recettesGroupe1: number
+    recettesGroupe2: number
+    recettesGroupe3: number
+  } | null>
   résultatNetComptable: Readonly<{
     dateMiseÀJourSource: string
-    value: number | null
-  }>
+    valeur: number
+  } | null>
   tauxDeCafNette: Readonly<{
     dateMiseÀJourSource: string
-    value: number | null
-  }>
+    valeur: number
+  } | null>
   tauxDeVétustéConstruction: Readonly<{
     dateMiseÀJourSource: string
-    value: number | null
-  }>
+    valeur: number
+  } | null>
 }>

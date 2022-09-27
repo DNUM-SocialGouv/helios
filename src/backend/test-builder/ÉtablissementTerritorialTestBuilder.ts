@@ -1,5 +1,7 @@
+import { CadreBudgétaire } from '../../../database/models/BudgetEtFinancesMédicoSocialModel'
 import { ÉtablissementTerritorialMédicoSocialActivité } from '../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
 import { ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from '../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation'
+import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
 import { ÉtablissementTerritorialSanitaireActivité } from '../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité'
 import { ÉtablissementTerritorialSanitaireAutorisationEtCapacité } from '../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation'
 import { ÉtablissementTerritorialIdentité } from '../métier/entities/ÉtablissementTerritorialIdentité'
@@ -364,6 +366,80 @@ export class ÉtablissementTerritorialTestBuilder {
     },
   }
 
+  private static budgetEtFinancesErrdMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances = {
+    année: 2019,
+    cadreBudgétaire: CadreBudgétaire.ERRD,
+    chargesEtProduits: null,
+    contributionAuxFraisDeSiège: {
+      dateMiseÀJourSource: '2022-01-01',
+      valeur: -20000,
+    },
+    recettesEtDépenses: {
+      dateMiseÀJourSource: '2022-01-01',
+      dépensesGroupe1: -129491.19,
+      dépensesGroupe2: -2718457.1600000001,
+      dépensesGroupe3: -406469.14999999997,
+      recettesGroupe1: 3388394.2000000002,
+      recettesGroupe2: 22231.200000000001,
+      recettesGroupe3: 129491.19,
+    },
+    résultatNetComptable: {
+      dateMiseÀJourSource: '2022-01-01',
+      valeur: -38330.669999999503,
+    },
+    tauxDeCafNette: null,
+    tauxDeVétustéConstruction: null,
+  }
+
+  private static budgetEtFinancesCaPhMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances = {
+    année: 2019,
+    cadreBudgétaire: CadreBudgétaire.CA_PH,
+    chargesEtProduits: null,
+    contributionAuxFraisDeSiège: null,
+    recettesEtDépenses: {
+      dateMiseÀJourSource: '2022-02-02',
+      dépensesGroupe1: -16901.360000000001,
+      dépensesGroupe2: -464929.67000000004,
+      dépensesGroupe3: -51421.190000000002,
+      recettesGroupe1: 595042.94999999995,
+      recettesGroupe2: 17724.380000000001,
+      recettesGroupe3: 16484.099999999999,
+    },
+    résultatNetComptable: {
+      dateMiseÀJourSource: '2022-02-02',
+      valeur: 95999.209999999963,
+    },
+    tauxDeCafNette: {
+      dateMiseÀJourSource: '2022-02-02',
+      valeur: 0.16460754444264256,
+    },
+    tauxDeVétustéConstruction: {
+      dateMiseÀJourSource: '2022-02-02',
+      valeur: 0.5319629026790017,
+    },
+  }
+
+  private static budgetEtFinancesCaPaMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances = {
+    année: 2019,
+    cadreBudgétaire: CadreBudgétaire.CA_PA,
+    chargesEtProduits: {
+      charges: -177631.38999999998,
+      dateMiseÀJourSource: '2022-02-02',
+      produits: 196518.51999999999,
+    },
+    contributionAuxFraisDeSiège: null,
+    recettesEtDépenses: null,
+    résultatNetComptable: {
+      dateMiseÀJourSource: '2022-02-02',
+      valeur: 18887.12999999999,
+    },
+    tauxDeCafNette: null,
+    tauxDeVétustéConstruction: {
+      dateMiseÀJourSource: '2022-02-02',
+      valeur: 0.31154835988672847,
+    },
+  }
+
   public static créeUneIdentitéMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialIdentité>): ÉtablissementTerritorialIdentité {
     return {
       ...ÉtablissementTerritorialTestBuilder.médicoSocial,
@@ -410,6 +486,27 @@ export class ÉtablissementTerritorialTestBuilder {
   ): ÉtablissementTerritorialSanitaireAutorisationEtCapacité {
     return {
       ...ÉtablissementTerritorialTestBuilder.autorisationSanitaire,
+      ...champsSurchargés,
+    }
+  }
+
+  public static créeUnBlocBudgetEtFinancesErrdMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialBudgetEtFinances>) {
+    return {
+      ...ÉtablissementTerritorialTestBuilder.budgetEtFinancesErrdMédicoSocial,
+      ...champsSurchargés,
+    }
+  }
+
+  public static créeUnBlocBudgetEtFinancesCaPhMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialBudgetEtFinances>) {
+    return {
+      ...ÉtablissementTerritorialTestBuilder.budgetEtFinancesCaPhMédicoSocial,
+      ...champsSurchargés,
+    }
+  }
+
+  public static créeUnBlocBudgetEtFinancesCaPaMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialBudgetEtFinances>) {
+    return {
+      ...ÉtablissementTerritorialTestBuilder.budgetEtFinancesCaPaMédicoSocial,
       ...champsSurchargés,
     }
   }
