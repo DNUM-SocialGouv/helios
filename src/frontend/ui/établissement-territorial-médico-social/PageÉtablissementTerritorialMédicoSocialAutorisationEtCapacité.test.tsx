@@ -153,6 +153,7 @@ describe('La page établissement territorial médico-social - bloc autorisation 
         },
         numéroFinessÉtablissementTerritorial: '010000040',
       },
+      budgetEtFinances: [],
       identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
     }, wording, paths)
 
@@ -296,6 +297,7 @@ describe('La page établissement territorial médico-social - bloc autorisation 
         },
         numéroFinessÉtablissementTerritorial: '010000040',
       },
+      budgetEtFinances: [],
       identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
     }, wording, paths)
 

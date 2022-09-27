@@ -197,6 +197,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
         },
       ],
       autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
+      budgetEtFinances: [],
       identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
     }, wording, paths)
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
@@ -325,6 +326,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
         },
       ],
       autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
+      budgetEtFinances: [],
       identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
     }, wording, paths)
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
@@ -531,6 +533,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
         },
       ],
       autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
+      budgetEtFinances: [],
       identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
     }, wording, paths)
 
@@ -648,6 +651,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
         },
       ],
       autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
+      budgetEtFinances: [],
       identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
     }, wording, paths)
 
@@ -665,6 +669,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
     const établissementTerritorialSansActivité = new ÉtablissementTerritorialMédicoSocialViewModel({
       activités: [],
       autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
+      budgetEtFinances: [],
       identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
     }, wording, paths)
 
