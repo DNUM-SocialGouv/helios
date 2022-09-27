@@ -1,21 +1,31 @@
 import os
 
+import pandas as pd
+
+from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.déchiffre_diamant import déchiffre_diamant
 
 
-class DéchiffreDiamant:
-    def test_(self):
+class TestDéchiffreDiamant:
+    def test_crée_autant_de_fichiers_csv_qu_il_y_a_de_gpg(self):
         # Given
-        ENCRYPTED_DIAMANT_DATA_PATH = './data_set/diamant/'
-        number_of_encrypted = os.lis
-        DIAMANT_DATA_PATH = './data_test/diamant/'
-        for file in os.listdir(DIAMANT_DATA_PATH):
-            os.unlink(file)
-        assert not os.listdir(DIAMANT_DATA_PATH)
-
+        logger_helios, variables_d_environnement = initialise_les_dépendances()
+        encrypted_diamant_data_path = 'data_set/diamant_chiffré'
+        number_of_encrypted_files = len(os.listdir(encrypted_diamant_data_path))
+        diamant_data_path = 'data_test/diamant/'
+        for file in os.listdir(diamant_data_path):
+            os.unlink(os.path.join(diamant_data_path, file))
+        assert not os.listdir(diamant_data_path)
 
         # When
-        déchiffre_diamant(ENCRYPTED_DIAMANT_DATA_PATH, DIAMANT_DATA_PATH)
+        déchiffre_diamant(
+            encrypted_diamant_data_path,
+            diamant_data_path,
+            variables_d_environnement["DIAMANT_KEY"]
+        )
 
         # Then
-        created_files = os.listdir(DIAMANT_DATA_PATH)
+        created_files = os.listdir(diamant_data_path)
+        assert len(created_files) == number_of_encrypted_files
+        for file in created_files:
+            assert not pd.read_csv(file).empty
