@@ -8,97 +8,97 @@ jobs:
     steps:
       - name: Checkout this branch
         uses: actions/checkout@master
-      # - uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 16.16
-      # - name: Install node modules
-      #   run: yarn --frozen-lockfile --check-files
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.16
+      - name: Install node modules
+        run: yarn --frozen-lockfile --check-files
       - uses: actions/cache@v3
         id: cache-build
         with:
           path: ./*
           key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
 
-  # lint-and-typecheck-typescript:
-  #   runs-on: ubuntu-latest
-  #   needs: install
-  #   steps:
-  #     - uses: actions/cache@v3
-  #       id: restore-build
-  #       with:
-  #         path: ./*
-  #         key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 16.16
-  #     - name: Run the TS linter
-  #       run: yarn lint:typescript
-  #     - name: Run the typescript
-  #       run: yarn typecheck:typescript
+  lint-and-typecheck-typescript:
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - uses: actions/cache@v3
+        id: restore-build
+        with:
+          path: ./*
+          key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.16
+      - name: Run the TS linter
+        run: yarn lint:typescript
+      - name: Run the typescript
+        run: yarn typecheck:typescript
 
-  # lint-css:
-  #   runs-on: ubuntu-latest
-  #   needs: install
-  #   steps:
-  #     - uses: actions/cache@v3
-  #       id: restore-build
-  #       with:
-  #         path: ./*
-  #         key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 16.16
-  #     - name: Run the CSS linter
-  #       run: yarn lint:scss
+  lint-css:
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - uses: actions/cache@v3
+        id: restore-build
+        with:
+          path: ./*
+          key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.16
+      - name: Run the CSS linter
+        run: yarn lint:scss
 
-  # tests-typescript:
-  #   runs-on: ubuntu-latest
-  #   needs: install
-  #   services:
-  #     postgres:
-  #       image: postgres:13.7-alpine # Conserver la même version avec le fichier docker-compose.yaml
-  #       env:
-  #         POSTGRES_DB: helios
-  #         POSTGRES_PASSWORD: h3li0s
-  #         POSTGRES_PORT: 5432
-  #         POSTGRES_USER: helios
-  #       ports:
-  #         - 5433:5432
-  #       options: >-
-  #         --health-cmd pg_isready
-  #         --health-interval 10s
-  #         --health-timeout 5s
-  #         --health-retries 5
-  #   steps:
-  #     - uses: actions/cache@v3
-  #       id: restore-build
-  #       with:
-  #         path: ./*
-  #         key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 16.16
-  #     - name: Run the tests
-  #       run: yarn test:typescript
-  #       env:
-  #         DATABASE_URL: postgres://helios:h3li0s@localhost:5433/helios
+  tests-typescript:
+    runs-on: ubuntu-latest
+    needs: install
+    services:
+      postgres:
+        image: postgres:13.7-alpine # Conserver la même version avec le fichier docker-compose.yaml
+        env:
+          POSTGRES_DB: helios
+          POSTGRES_PASSWORD: h3li0s
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: helios
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/cache@v3
+        id: restore-build
+        with:
+          path: ./*
+          key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.16
+      - name: Run the tests
+        run: yarn test:typescript
+        env:
+          DATABASE_URL: postgres://helios:h3li0s@localhost:5433/helios
 
-  # build:
-  #   runs-on: ubuntu-latest
-  #   needs: install
-  #   steps:
-  #     - uses: actions/cache@v3
-  #       id: restore-build
-  #       with:
-  #         path: ./*
-  #         key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 16.16
-  #     - name: Build the app
-  #       run: yarn build
-  #       env:
-  #         SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+  build:
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - uses: actions/cache@v3
+        id: restore-build
+        with:
+          path: ./*
+          key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.16
+      - name: Build the app
+        run: yarn build
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
   python:
     runs-on: ubuntu-latest
@@ -129,15 +129,15 @@ jobs:
       - name: Setup pipenv
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.10.6'
           cache: 'pipenv'
-      # - uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 16.16
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.16
       - name: Install dependencies
         run: pipenv install --dev --deploy
-      # - name: Lint
-      #   run: pipenv run lint
+      - name: Lint
+        run: pipenv run lint
       - name: Type check
         run: pipenv run typecheck
       - name: Run the migrations
