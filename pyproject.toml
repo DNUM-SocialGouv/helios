@@ -2,7 +2,8 @@
 line-length = 160
 
 [tool.mypy]
+python_version = 3.10
 strict_optional = true
 plugins = ["sqlmypy"]
 disallow_untyped_defs = true
-exclude = ["spikes", "**/virtualenvs"]
+exclude = ["spikes"]
