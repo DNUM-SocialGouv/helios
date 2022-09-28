@@ -189,13 +189,13 @@ scalingo login
 yarn psql:production
 ```
 
-## Migrations
+### Migrations
 
 Les migrations centralisent les modifications faites aux bases de données pour pouvoir les (re)jouer sur tous les environnements. A chaque modification est attribuée une version de la base ce qui permet d'arriver à l'état finale quelque soit l'état initial.
 
 Elles sont nécessaires dès lors que l'on veut créer ou supprimer des tables, des colonnes, des index ou des contraintes.
 
-### Créer une migration pour les bases de données
+#### Créer une migration pour les bases de données
 
 ```sh
 yarn typeorm migration:create database/migrations/<NomDeMigration> --outputJs
@@ -203,7 +203,7 @@ yarn typeorm migration:create database/migrations/<NomDeMigration> --outputJs
 
 Un fichier *.js* est auto-généré sous `database/migrations`. Il faut modifier le fichier auto-généré. Enfin compléter les deux méthodes *up* et *down*.
 
-### Appliquer les migrations
+#### Appliquer les migrations
 
 Avec la commande `yarn dev`, les migrations sont appliquées en même temps que le lancement de la base de développement. Voici tout de même comment les appliquer indépendamment, une fois la base de données démarrée :
 
@@ -220,14 +220,16 @@ yarn typeorm migration:revert
 > Plus d’infos sur [typeorm.io](https://typeorm.io/migrations)
 
 > Les migrations sont jouées automatiquement lors de chaque déploiement sur Scalingo grâce à la commande du `Procfile`
+ 
+### Simulation des sources de données externes
 
-## SFTP local
+#### Finess
 
-Un SFTP (image Docker) est lancé avec l'application.
+Un SFTP (image Docker) simulant notre source de données FINESS est lancé avec l'application.
 
-Un échantillon des données FINESS sont dans `data_set`.
+Un échantillon des données FINESS se trouve dans `data_set`.
 
-### Configuration
+##### Configurer le SFTP local
 
 Une clé publique SSH `$HOME/.ssh/sftp_local.pub` sera demandée pour l'authentification au SFTP local.
 
@@ -261,20 +263,20 @@ ChrootDirectory %h
 KexAlgorithms <algorithme1>,<algorithme2>,demander à l'équipe
 ```
 
-### Simuler le téléchargement des données FINESS
+##### Simuler le téléchargement et le désarchivage des données FINESS
 
 ```sh
 yarn retrieveFiness
 ```
 
-### Simuler l'archivage de FINESS
+##### Simuler l'importation des données FINESS vers la base
 
 ```sh
 yarn updateEJ
 yarn updateET
 ```
 
-### Peupler la base de données à partir des fichiers du SFTP de test
+##### Peupler la base de données à partir des fichiers du SFTP de test
 
 ```sh
 yarn populateDatabase
@@ -282,15 +284,50 @@ yarn populateDatabase
 
 > Execute `retrieveFiness`, `updateEJ` et `updateET`
 
-### Mettre à jour le jeu de données test
-
-#### FINESS
+##### Mettre à jour le jeu de données test
 
 Dans chaque répertoire (enrichi, nomenclature et simple), il faut mettre un fichier XML zippé contenant les bonnes données, un autre fichier XML zippé avec une date différente et un fichier UNL zippé pour correspondre au SFTP de production.
 
 > ATTENTION ! Lors d'une mise à jour des ET, il faut anonymiser les balises `noautorarhgos` et `noimplarhgos` de la partie `activiteoffresoin` car ce sont des données qui ne doivent pas être partagées.
+ 
+#### DIAMANT
 
-## Arborescence
+*En cours* : un SFTP devra être mis en place pour simuler le SFTP Helios, où nos données DIAMANT sont déposées.
+
+Un échantillon des données DIAMANT, chiffrées et non-chiffrées, sont dans `data_set`.
+
+##### Configurer le SFTP local
+
+*À venir*
+
+##### Simuler le téléchargement des données DIAMANT
+
+*À venir*
+
+##### Simuler le déchiffrement des données DIAMANT
+
+Prérequis : renseigner la clef privée de test dans la variable DIAMANT_KEY.
+```sh
+
+```
+
+##### Simuler le chiffrement des données DIAMANT
+Prérequis : renseigner la clef publique de test dans la variable DIAMANT_PUBLC_KEY.
+
+```sh
+
+```
+
+##### Peupler la base de données à partir des fichiers du SFTP de test
+
+*À venir*
+
+##### Mettre à jour le jeu de données test
+
+1. Mettre à jour les fichiers csv présents dans `data_set/diamant`
+2. Lancer le script pour chiffrer les données
+
+### Arborescence
 
 ```text
 📦 helios
@@ -354,9 +391,9 @@ Dans chaque répertoire (enrichi, nomenclature et simple), il faut mettre un fic
  ┗ 📜 yarn.lock                   ->  Dépendances typescript
 ```
 
-## Conventions
+### Conventions
 
-### Git
+#### Git
 
 |              | format                               | exemple               |
 |:-------------|:------------------------------------:|:---------------------:|
@@ -366,7 +403,7 @@ Dans chaque répertoire (enrichi, nomenclature et simple), il faut mettre un fic
 
 > Pas besoin de spécifier manuellement le numéro du ticket dans le message de commit, un hook le fait automatiquement depuis le nom de la branche courante
 
-### Code
+#### Code
 
 - le code métier est en **français** [plus de détails dans l'ADR 1](./ADR/ADR-1-les-langues-dans-le-code.md)- on utilise les accents à l'exception des noms de fichier dans le dossier `src/pages` et des classes css
   > le métier et les développeurs sont français
@@ -380,7 +417,7 @@ Dans chaque répertoire (enrichi, nomenclature et simple), il faut mettre un fic
 
 - Les acronymes dans les noms de variables s'écrivent comme un mot standard. Exemple : `numéroFiness`
 
-#### TypeScript
+##### TypeScript
 
 - le **camelCase** est utilisé pour les variables et les fonctions
 
@@ -436,7 +473,7 @@ interface Repository<T> {
 
 - pas de typage de variables quand il y a une inférence naturelle
 
-#### Python
+##### Python
 
 - le **snake_case** est utilisé pour les variables, les fonctions et les noms des fichiers et des répertoires
 
@@ -454,20 +491,20 @@ class NomDeMaClasse:
   pass
 ```
 
-#### Frontend
+##### Frontend
 
 - pas de texte brut, utiliser l’interface *Wording*
 
 - déporter au maximum l’intelligence des composants graphiques (.tsx) dans des **hooks** pour épurer leur HTML
 
-#### SQL
+##### SQL
 
 - Tout en minuscule ;
 - Aucun accent ;
 - Mots séparés par un underscore ;
 - La longueur du champs ne doit pas faire 36/37 caractères sinon il retourne `undefined` quand on utilise `getRepository()`...
 
-### Système de design de l'État (DSFR)
+#### Système de design de l'État (DSFR)
 
 - utiliser le DSFR au maximum sinon, écrire le CSS dans un fichier à part (*\<Composant>.module.css*) et l'importer dans le composant
 
@@ -476,7 +513,7 @@ class NomDeMaClasse:
 
 - le javascript du DSFR est importé globalement
 
-### Tests
+#### Tests
 
 - Les fichiers de tests sont placés aux côtés du fichier testé ;
 
