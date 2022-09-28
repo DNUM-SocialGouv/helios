@@ -39,3 +39,4 @@ populate_budget_et_finances_medico_social = 'python -m datacrawler.ajoute_le_blo
 test = "pytest --tb=short"
 format = "black datacrawler --config pyproject.toml"
 decrypt_diamant = 'python -m datacrawler.déchiffre_diamant'
+encrypt_diamant = 'python -m datacrawler.test_helpers.chiffre_diamant'

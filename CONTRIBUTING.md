@@ -308,14 +308,14 @@ Un échantillon des données DIAMANT, chiffrées et non-chiffrées, sont dans `d
 
 Prérequis : renseigner la clef privée de test dans la variable DIAMANT_KEY.
 ```sh
-
+yarn decryptDiamant:local
 ```
 
 ##### Simuler le chiffrement des données DIAMANT
 Prérequis : renseigner la clef publique de test dans la variable DIAMANT_PUBLC_KEY.
 
 ```sh
-
+yarn encryptDiamant:local
 ```
 
 ##### Peupler la base de données à partir des fichiers du SFTP de test
