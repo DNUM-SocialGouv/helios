@@ -47,14 +47,16 @@ SVpMVHJaWU1Ja3NVSVJSd1N1WTBKTwpQa24rK3lUTXE3TC8yUWh2STVRVWcrU0hkNS9NZG9paEUvMDh1
 OWtPYW5OZ1NPbGJKOGd2ajkyUGVVbXdaL2R1QVFvYjVmbTNrRURGZz09Cj1OT1A5Ci0tLS0tRU5EIFBHUCBQVUJMSUMgS0VZIEJMT0NLLS0tLS0K
 '''
 
-def chiffre(dossier_source: str, dossier_cible: str, clef_publique: str, logger: Logger):
+
+def chiffre(dossier_source: str, dossier_cible: str, clef_publique: str, logger: Logger) -> None:
     logger_helios.info(
         f"Début du chiffrement des données DIAMANT à partir du répertoire {dossier_source}")
     process = subprocess.run(
         f'export DIAMANT_PUBLIC_KEY="{clef_publique}" && echo "$DIAMANT_PUBLIC_KEY" | base64 --decode | gpg --import',
         shell=True,
         stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT
+        stderr=subprocess.STDOUT,
+        check=True
     )
     log_process(logger, process)
     for basename_du_fichier_avec_les_données in os.listdir(dossier_source):
@@ -66,8 +68,12 @@ def chiffre(dossier_source: str, dossier_cible: str, clef_publique: str, logger:
             dossier_source,
             basename_du_fichier_avec_les_données
         )
-        process = subprocess.run(f'gpg --output {nom_cible_du_fichier_chiffré} --encrypt --recipient clef_dev_helios'
-                       f' {fichier_avec_les_données}', shell=True)
+        process = subprocess.run(
+            f'gpg --output {nom_cible_du_fichier_chiffré} --encrypt --recipient clef_dev_helios'
+            f' {fichier_avec_les_données}',
+            shell=True,
+            check=True
+        )
         log_process(logger, process)
         logger.info(f"Fichier {fichier_avec_les_données} chiffré")
     nombre_de_fichiers_chiffrés = len(os.listdir(dossier_cible))

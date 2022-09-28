@@ -6,7 +6,7 @@ from datacrawler.test_helpers.chiffre_diamant import chiffre, DIAMANT_PUBLIC_KEY
 
 
 class TestChiffreDiamant:
-    def test_enregistre_les_données_diamant_chiffrés_dans_un_dossier_donné(self):
+    def test_enregistre_les_données_diamant_chiffrés_dans_un_dossier_donné(self) -> None:
         # Given
         dossier_source = 'data_set/diamant_chiffré'
         dossier_cible = 'data_test/diamant/'

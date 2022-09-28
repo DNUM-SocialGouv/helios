@@ -16,7 +16,8 @@ def déchiffre_les_fichiers_du_dossier(dossier_avec_les_données_chiffrées: str
         f'export DIAMANT_KEY="{clef_privée}" && echo "$DIAMANT_KEY" | base64 --decode | gpg --import',
         shell=True,
         stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT
+        stderr=subprocess.STDOUT,
+        check=True
     )
     log_process(logger, process)
     for basename_du_fichier_avec_les_données_chiffrées in os.listdir(dossier_avec_les_données_chiffrées):
@@ -32,7 +33,8 @@ def déchiffre_les_fichiers_du_dossier(dossier_avec_les_données_chiffrées: str
             f'gpg --output {nom_cible_du_fichier_déchiffré} --decrypt {fichier_chiffré}',
             shell=True,
             stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT
+            stderr=subprocess.STDOUT,
+            check=True
         )
         log_process(logger, process)
         logger.info(f"Fichier {basename_du_fichier_avec_les_données_chiffrées} déchiffré")

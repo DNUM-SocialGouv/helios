@@ -8,7 +8,7 @@ from datacrawler.déchiffre_diamant import déchiffre_les_fichiers_du_dossier
 
 
 class TestDéchiffreDiamant:
-    def test_crée_autant_de_fichiers_csv_qu_il_y_a_de_fichiers_chiffrés(self):
+    def test_crée_autant_de_fichiers_csv_qu_il_y_a_de_fichiers_chiffrés(self) -> None:
         # Given
         _, variables_d_environnement = initialise_les_dépendances()
         chemin_vers_les_données_diamant_chiffrées = 'data_set/diamant_chiffré'
