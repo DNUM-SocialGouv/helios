@@ -2,12 +2,14 @@ import { DataSource } from 'typeorm'
 
 import { ActivitéMédicoSocialModel } from '../../../../../database/models/ActivitéMédicoSocialModel'
 import { AutorisationMédicoSocialModel } from '../../../../../database/models/AutorisationMédicoSocialModel'
+import { BudgetEtFinancesMédicoSocialModel, CadreBudgétaire } from '../../../../../database/models/BudgetEtFinancesMédicoSocialModel'
 import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { MonoÉtablissement } from '../../../métier/entities/établissement-territorial-médico-social/MonoÉtablissement'
 import { ÉtablissementTerritorialMédicoSocialActivité } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
 import { AutorisationMédicoSocialActivité, AutorisationMédicoSocialClientèle, AutorisationMédicoSocialDatesEtCapacités, AutorisationMédicoSocialDiscipline, ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation'
+import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
 import { ÉtablissementTerritorialMédicoSocialLoader } from '../../../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader'
@@ -19,8 +21,8 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     numéroFinessÉtablissementTerritorial: string
   ): Promise<ÉtablissementTerritorialMédicoSocialActivité[]> {
     const activitésÉtablissementTerritorialActivitésModel = await this.chargeLesActivitésModel(numéroFinessÉtablissementTerritorial)
-    const dateDeMiseÀJourAnnMsTdpEtModel = await this.chargeLaDateDeMiseÀJourAnnMsTdpEtModel() as DateMiseÀJourFichierSourceModel
-    const dateDeMiseÀJourAnnErrdEjEtModel = await this.chargeLaDateDeMiseÀJourAnnErrdEjEtModel() as DateMiseÀJourFichierSourceModel
+    const dateDeMiseÀJourAnnMsTdpEtModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET)
+    const dateDeMiseÀJourAnnErrdEjEtModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_ERRD_EJ_ET)
 
     return this.construisActivité(
       activitésÉtablissementTerritorialActivitésModel,
@@ -38,8 +40,8 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       return new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial)
     }
 
-    const dateDeMiseÀJourIdentitéModel = await this.chargeLaDateDeMiseÀJourFinessCs1400102Model() as DateMiseÀJourFichierSourceModel
-    const dateDeMiseÀJourAnnMsTdpEtModel = await this.chargeLaDateDeMiseÀJourAnnMsTdpEtModel() as DateMiseÀJourFichierSourceModel
+    const dateDeMiseÀJourIdentitéModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102) as DateMiseÀJourFichierSourceModel
+    const dateDeMiseÀJourAnnMsTdpEtModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET) as DateMiseÀJourFichierSourceModel
 
     return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseÀJourIdentitéModel, dateDeMiseÀJourAnnMsTdpEtModel)
   }
@@ -48,7 +50,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     numéroFinessÉtablissementTerritorial: string
   ): Promise<ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité> {
     const autorisationsDeLÉtablissementModel = await this.chargeLesAutorisationsModel(numéroFinessÉtablissementTerritorial)
-    const dateDeMiseÀJourFinessCs1400105Model = await this.chargeLaDateDeMiseÀJourFinessCs1400105Model() as DateMiseÀJourFichierSourceModel
+    const dateDeMiseÀJourFinessCs1400105Model = await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400105)
 
     return {
       autorisations: this.construisLesAutorisations(autorisationsDeLÉtablissementModel, dateDeMiseÀJourFinessCs1400105Model),
@@ -61,7 +63,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     const nombreDÉtablissementTerritoriauxDansLEntitéJuridique = await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
       .countBy({ numéroFinessEntitéJuridique })
-    const dateDeMiseÀJourIdentitéModel = await this.chargeLaDateDeMiseÀJourFinessCs1400102Model() as DateMiseÀJourFichierSourceModel
+    const dateDeMiseÀJourIdentitéModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102) as DateMiseÀJourFichierSourceModel
 
     return {
       estMonoÉtablissement: {
@@ -69,6 +71,14 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
         value: nombreDÉtablissementTerritoriauxDansLEntitéJuridique === 1,
       },
     }
+  }
+
+  async chargeBudgetEtFinances(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialMédicoSocialBudgetEtFinances[]> {
+    const budgetEtFinancesModelDeLÉtablissementTerritorial = await this.chargeLesBudgetEtFinancesModel(numéroFinessÉtablissementTerritorial)
+    const dateDeMiseÀJourAnnErrdEjEt = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_ERRD_EJ_ET)
+    const dateDeMiseÀJourAnnCaEjEt = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_CA_EJ_ET)
+
+    return this.construisLeBudgetEtFinances(budgetEtFinancesModelDeLÉtablissementTerritorial, dateDeMiseÀJourAnnErrdEjEt, dateDeMiseÀJourAnnCaEjEt)
   }
 
   private async chargeLesActivitésModel(numéroFinessÉtablissementTerritorial: string) {
@@ -101,28 +111,16 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       })
   }
 
-  private async chargeLaDateDeMiseÀJourFinessCs1400102Model(): Promise<DateMiseÀJourFichierSourceModel | null> {
+  private async chargeLesBudgetEtFinancesModel(numéroFinessÉtablissementTerritorial: string) {
     return await (await this.orm)
-      .getRepository(DateMiseÀJourFichierSourceModel)
-      .findOneBy({ fichier: FichierSource.FINESS_CS1400102 })
+      .getRepository(BudgetEtFinancesMédicoSocialModel)
+      .findBy({ numéroFinessÉtablissementTerritorial })
   }
 
-  private async chargeLaDateDeMiseÀJourFinessCs1400105Model(): Promise<DateMiseÀJourFichierSourceModel | null> {
+  private async chargeLaDateDeMiseÀJourModel(source: FichierSource): Promise<DateMiseÀJourFichierSourceModel> {
     return await (await this.orm)
       .getRepository(DateMiseÀJourFichierSourceModel)
-      .findOneBy({ fichier: FichierSource.FINESS_CS1400105 })
-  }
-
-  private async chargeLaDateDeMiseÀJourAnnMsTdpEtModel(): Promise<DateMiseÀJourFichierSourceModel | null> {
-    return await (await this.orm)
-      .getRepository(DateMiseÀJourFichierSourceModel)
-      .findOneBy({ fichier: FichierSource.DIAMANT_ANN_MS_TDP_ET })
-  }
-
-  private async chargeLaDateDeMiseÀJourAnnErrdEjEtModel(): Promise<DateMiseÀJourFichierSourceModel | null> {
-    return await (await this.orm)
-      .getRepository(DateMiseÀJourFichierSourceModel)
-      .findOneBy({ fichier: FichierSource.DIAMANT_ANN_ERRD_EJ_ET })
+      .findOneBy({ fichier: source }) as DateMiseÀJourFichierSourceModel
   }
 
   private construisIdentité(
@@ -328,5 +326,73 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       dateDeMiseÀJourDAutorisation: autorisationModel.dateDeMiseÀJourDAutorisation,
       estInstallée: autorisationModel.estInstallée,
     }
+  }
+
+  private construisLeBudgetEtFinances(
+    budgetEtFinancesModel: BudgetEtFinancesMédicoSocialModel[],
+    dateDeMiseÀJourAnnErrdEjEt: DateMiseÀJourFichierSourceModel,
+    dateDeMiseÀJourAnnCaEjEt: DateMiseÀJourFichierSourceModel
+  ): ÉtablissementTerritorialMédicoSocialBudgetEtFinances[] {
+    const remplisLaValeurDeLIndicateurAvecSaMiseÀJourSiPrésente = (valeurDeLIndicateur: number | null, dateMiseÀJourSource: string) => {
+      return valeurDeLIndicateur !== null ? {
+        dateMiseÀJourSource,
+        valeur: valeurDeLIndicateur,
+      } : null
+    }
+    return budgetEtFinancesModel.map((budgetEtFinancesModel) => {
+      const dateDeMiseÀJourSuivantLeCadreBudgétaire =
+        budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.ERRD
+          ? dateDeMiseÀJourAnnErrdEjEt.dernièreMiseÀJour
+          : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour
+
+      return {
+        année: budgetEtFinancesModel.année,
+        cadreBudgétaire: budgetEtFinancesModel.cadreBudgétaire,
+        chargesEtProduits: this.construisLesChargesEtProduits(budgetEtFinancesModel, dateDeMiseÀJourSuivantLeCadreBudgétaire),
+        contributionAuxFraisDeSiège: remplisLaValeurDeLIndicateurAvecSaMiseÀJourSiPrésente(
+          budgetEtFinancesModel.contributionFraisDeSiègeGroupement,
+          dateDeMiseÀJourSuivantLeCadreBudgétaire
+        ),
+        recettesEtDépenses: this.construisLesRecettesEtDépenses(budgetEtFinancesModel, dateDeMiseÀJourSuivantLeCadreBudgétaire),
+        résultatNetComptable: remplisLaValeurDeLIndicateurAvecSaMiseÀJourSiPrésente(
+          budgetEtFinancesModel.résultatNetComptable,
+          dateDeMiseÀJourSuivantLeCadreBudgétaire
+        ),
+        tauxDeCafNette: remplisLaValeurDeLIndicateurAvecSaMiseÀJourSiPrésente(
+          budgetEtFinancesModel.tauxDeCaf,
+          dateDeMiseÀJourSuivantLeCadreBudgétaire
+        ),
+        tauxDeVétustéConstruction: remplisLaValeurDeLIndicateurAvecSaMiseÀJourSiPrésente(
+          budgetEtFinancesModel.tauxDeVétustéConstruction,
+          dateDeMiseÀJourSuivantLeCadreBudgétaire
+        ),
+      }
+    })
+  }
+
+  private construisLesRecettesEtDépenses(
+    budgetEtFinancesModel: BudgetEtFinancesMédicoSocialModel,
+    dateDeMiseÀJourSuivantLeCadreBudgétaire: string
+  ): ÉtablissementTerritorialMédicoSocialBudgetEtFinances['recettesEtDépenses'] {
+    return budgetEtFinancesModel.cadreBudgétaire !== CadreBudgétaire.CA_PA ? {
+      dateMiseÀJourSource: dateDeMiseÀJourSuivantLeCadreBudgétaire,
+      dépensesGroupe1: budgetEtFinancesModel.dépensesGroupe1 || 0,
+      dépensesGroupe2: budgetEtFinancesModel.dépensesGroupe2 || 0,
+      dépensesGroupe3: budgetEtFinancesModel.dépensesGroupe3 || 0,
+      recettesGroupe1: budgetEtFinancesModel.recettesGroupe1 || 0,
+      recettesGroupe2: budgetEtFinancesModel.recettesGroupe2 || 0,
+      recettesGroupe3: budgetEtFinancesModel.recettesGroupe3 || 0,
+    } : null
+  }
+
+  private construisLesChargesEtProduits(
+    budgetEtFinancesModel: BudgetEtFinancesMédicoSocialModel,
+    dateDeMiseÀJourAnnCaEjEt: string
+  ): ÉtablissementTerritorialMédicoSocialBudgetEtFinances['chargesEtProduits'] {
+    return budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.CA_PA ? {
+      charges: budgetEtFinancesModel.charges || 0,
+      dateMiseÀJourSource: dateDeMiseÀJourAnnCaEjEt,
+      produits: budgetEtFinancesModel.produits || 0,
+    } : null
   }
 }
