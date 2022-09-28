@@ -128,6 +128,15 @@ index_du_bloc_budget_et_finances: List[str] = [
 
 colonnes_à_lire_bloc_budget_et_finances_ann_ca_ej_et: List[str] = list(équivalences_diamant_ann_ca_ej_et_bloc_budget_et_finances_helios.keys())
 
+équivalences_diamant_ann_errd_ej_bloc_budget_et_finances_helios: ÉquivalencesDiamantHelios = {
+    "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+    "Année_y": ColonneHelios(nom="annee", type=int),
+    "Taux de CAF ERRD": ColonneHelios(nom="taux_de_caf", type=float),
+    "Taux vétusté Construction ERRD": ColonneHelios(nom="taux_de_vetuste_construction", type=float),
+}
+
+colonnes_à_lire_bloc_budget_et_finances_ann_errd_ej: List[str] = list(équivalences_diamant_ann_ca_ej_et_bloc_budget_et_finances_helios.keys())
+
 
 def extrais_l_equivalence_des_types_des_colonnes(équivalences: ÉquivalencesDiamantHelios) -> Dict[str, type]:
     return {nom_diamant: colonne_diamant["type"] for nom_diamant, colonne_diamant in équivalences.items()}
