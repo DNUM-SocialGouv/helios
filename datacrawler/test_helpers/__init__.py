@@ -7,32 +7,16 @@ from numpy import NaN
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 
-from datacrawler.load.nom_des_tables import (
-    TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
-    TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
-    TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES,
-    TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
-    TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_SANITAIRES,
-    TABLES_DES_AUTRES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
-    TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL,
-    TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
-    TABLES_DES_CPOM,
-    TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES,
-    TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS,
-    FichierSource,
-)
-from datacrawler.transform.équivalences_diamant_helios import (
-    index_des_activités,
-    index_des_capacités_sanitaires,
-    index_des_dates_d_entrée_en_vigueur_des_cpom,
-    index_du_bloc_budget_et_finances,
-)
-from datacrawler.transform.équivalences_finess_helios import (
-    index_des_autorisations_sanitaires,
-    index_des_autres_activités_sanitaires,
-    index_des_reconnaissances_contractuelles,
-    index_des_équipements_matériels_lourds,
-)
+from datacrawler.load.nom_des_tables import (TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
+                                             TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES, TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
+                                             TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_SANITAIRES, TABLES_DES_AUTRES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
+                                             TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL, TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, TABLES_DES_CPOM,
+                                             TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES,
+                                             TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS, FichierSource)
+from datacrawler.transform.équivalences_diamant_helios import (index_des_activités, index_des_capacités_sanitaires,
+                                                               index_des_dates_d_entrée_en_vigueur_des_cpom, index_du_bloc_budget_et_finances)
+from datacrawler.transform.équivalences_finess_helios import (index_des_autorisations_sanitaires, index_des_autres_activités_sanitaires,
+                                                              index_des_reconnaissances_contractuelles, index_des_équipements_matériels_lourds)
 
 base_de_données_test = create_engine("postgresql://helios:h3li0s@localhost:5433/helios")
 mocked_logger = MagicMock()
@@ -236,6 +220,31 @@ def csv_ann_errd_ej_et_budget_et_finances_builder(champs_surchargés: Optional[D
     return ann_errd_ej_et_budget_et_finances
 
 
+def csv_ann_per_errd_eprd_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
+    ann_errd_ej_budget_et_finances = {
+        "Finess EJ": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
+        "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "Année": 2020,
+        "Id Dépôt": 111111,
+    }
+    if champs_surchargés:
+        return {**ann_errd_ej_budget_et_finances, **champs_surchargés}
+    return ann_errd_ej_budget_et_finances
+
+
+def csv_ann_errd_ej_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
+    ann_errd_ej_budget_et_finances = {
+        "Finess EJ": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
+        "Année": 2020,
+        "Id Dépôt": 111111,
+        "Taux de CAF ERRD": 0.071600138178413528,
+        "Taux vétusté Construction ERRD": 0.45555983373892417,
+    }
+    if champs_surchargés:
+        return {**ann_errd_ej_budget_et_finances, **champs_surchargés}
+    return ann_errd_ej_budget_et_finances
+
+
 def csv_ann_ca_ej_et_budget_et_finances_builder(
     cadre_budgétaire: str,
     champs_surchargés: Optional[Dict] = None,
@@ -367,6 +376,18 @@ def helios_ann_ca_ej_et_budget_et_finances_builder(champs_surchargés: Optional[
         "taux_de_vetuste_construction": 0.53,
         "produits": NaN,
         "charges": NaN,
+    }
+    if champs_surchargés:
+        return {**budget_et_finances, **champs_surchargés}
+    return budget_et_finances
+
+
+def helios_ann_errd_ej_budget_et_finances_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    budget_et_finances = {
+        "taux_de_caf": 0.071600138178413528,
+        "taux_de_vetuste_construction": 0.45555983373892417,
+        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "annee": 2020,
     }
     if champs_surchargés:
         return {**budget_et_finances, **champs_surchargés}
