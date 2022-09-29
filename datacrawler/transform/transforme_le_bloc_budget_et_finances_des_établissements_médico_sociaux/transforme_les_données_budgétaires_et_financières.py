@@ -12,10 +12,10 @@ from datacrawler.transform.équivalences_diamant_helios import index_du_bloc_bud
 
 
 def transforme_les_données_budgétaires_et_financières(
-    données_ann_errd_ej_et: pd.DataFrame,
     données_ann_ca_ej_et: pd.DataFrame,
-    données_des_dépôts_errd: pd.DataFrame,
+    données_ann_errd_ej_et: pd.DataFrame,
     données_ann_errd_ej: pd.DataFrame,
+    données_des_dépôts_errd: pd.DataFrame,
     numéros_finess_connus: pd.DataFrame,
     logger: Logger,
 ) -> pd.DataFrame:

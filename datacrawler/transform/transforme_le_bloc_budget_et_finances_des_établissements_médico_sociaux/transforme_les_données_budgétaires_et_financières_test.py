@@ -108,7 +108,7 @@ class TestTransformeLesDonnéesBudgétairesEtFinancières:
 
         # WHEN
         données_fusionnées = transforme_les_données_budgétaires_et_financières(
-            données_errd_ej_et, données_ca_ej_et, données_des_dépôts_errd, données_ann_errd_ej, numéros_finess_connus, mocked_logger
+            données_ca_ej_et, données_errd_ej_et, données_ann_errd_ej, données_des_dépôts_errd, numéros_finess_connus, mocked_logger
         )
         # THEN
         pd.testing.assert_frame_equal(

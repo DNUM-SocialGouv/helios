@@ -20,6 +20,7 @@ class FichierSource(Enum):
     DIAMANT_ANN_RPU = "ann_rpu"
     DIAMANT_ANN_SAE = "ann_sae"
     DIAMANT_ANN_CA_EJ_ET = "ann_ca_ej_et"
+    DIAMANT_ANN_ERRD_EJ = "ann_errd_ej"
     FINESS_CS1400103 = "finess_cs1400103"
     FINESS_CS1400104 = "finess_cs1400104"
     FINESS_CS1400105 = "finess_cs1400105"

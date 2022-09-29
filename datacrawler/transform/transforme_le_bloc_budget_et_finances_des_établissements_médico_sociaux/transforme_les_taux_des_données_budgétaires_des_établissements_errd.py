@@ -6,6 +6,7 @@ from datacrawler.transform.équivalences_diamant_helios import (
     extrais_l_equivalence_des_noms_des_colonnes,
     index_du_bloc_budget_et_finances,
     équivalences_diamant_ann_errd_ej_bloc_budget_et_finances_helios,
+    équivalences_diamant_per_errd_eprd_bloc_budget_et_finances_helios,
 )
 
 
@@ -13,9 +14,16 @@ def transforme_les_taux_des_données_budgétaires_des_établissements_errd(
     données_des_dépôts_errd: pd.DataFrame, données_ann_errd_ej: pd.DataFrame, numéros_finess_des_établissements_connus: pd.DataFrame, logger: Logger
 ) -> pd.DataFrame:
     données_budgétaires_par_établissement = (
-        données_des_dépôts_errd.merge(données_ann_errd_ej.dropna(subset=["Id Dépôt"]), on="Id Dépôt", how="right")
-        .drop(["Finess EJ_x", "Finess EJ_y", "Année_x", "Id Dépôt"], axis=1)
-        .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_diamant_ann_errd_ej_bloc_budget_et_finances_helios))
+        données_des_dépôts_errd.merge(données_ann_errd_ej.dropna(subset=["Id Dépôt"]), on="Id Dépôt", how="right", suffixes=("_x", ""))
+        .drop(["Année_x", "Id Dépôt"], axis=1)
+        .rename(
+            columns=extrais_l_equivalence_des_noms_des_colonnes(
+                {
+                    **équivalences_diamant_ann_errd_ej_bloc_budget_et_finances_helios,
+                    **équivalences_diamant_per_errd_eprd_bloc_budget_et_finances_helios,
+                }
+            )
+        )
     )
     est_dans_finess = données_budgétaires_par_établissement["numero_finess_etablissement_territorial"].isin(
         numéros_finess_des_établissements_connus["numero_finess_etablissement_territorial"]
