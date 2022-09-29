@@ -58,7 +58,6 @@ class TestTransformeLesDonnéesDépensesEtRecettesDesÉtablissementsErrd:
                     "recettes_groupe_ii": 150.0,
                     "recettes_groupe_iii": 350.0,
                     "resultat_net_comptable": 50.0,
-                    "cadre_budgetaire": "ERRD",
                 }
             ],
         )
@@ -85,28 +84,6 @@ class TestTransformeLesDonnéesDépensesEtRecettesDesÉtablissementsErrd:
         # THEN
         budget_et_finances_attendu = pd.DataFrame(
             [helios_ann_errd_ej_et_budget_et_finances_builder({"contribution_frais_de_siege_groupement": -300.0})],
-        )
-        pd.testing.assert_frame_equal(données_transformées, budget_et_finances_attendu)
-
-    def test_renseigne_errd_comme_cadre_budgétaire(self) -> None:
-        # GIVEN
-        données_ann_errd_ej_et_budget_et_finances = pd.DataFrame([csv_ann_errd_ej_et_budget_et_finances_builder()])
-        numéros_finess_des_établissements_connus = pd.DataFrame(
-            [
-                {
-                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
-                }
-            ]
-        )
-
-        # WHEN
-        données_transformées = transforme_les_données_dépenses_et_recettes_des_établissements_errd(
-            données_ann_errd_ej_et_budget_et_finances, numéros_finess_des_établissements_connus, mocked_logger
-        )
-
-        # THEN
-        budget_et_finances_attendu = pd.DataFrame(
-            [helios_ann_errd_ej_et_budget_et_finances_builder({"cadre_budgetaire": "ERRD"})],
         )
         pd.testing.assert_frame_equal(données_transformées, budget_et_finances_attendu)
 

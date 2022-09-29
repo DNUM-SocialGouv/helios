@@ -7,16 +7,32 @@ from numpy import NaN
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 
-from datacrawler.load.nom_des_tables import (TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
-                                             TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES, TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
-                                             TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_SANITAIRES, TABLES_DES_AUTRES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
-                                             TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL, TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, TABLES_DES_CPOM,
-                                             TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES,
-                                             TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS, FichierSource)
-from datacrawler.transform.équivalences_diamant_helios import (index_des_activités, index_des_capacités_sanitaires,
-                                                               index_des_dates_d_entrée_en_vigueur_des_cpom, index_du_bloc_budget_et_finances)
-from datacrawler.transform.équivalences_finess_helios import (index_des_autorisations_sanitaires, index_des_autres_activités_sanitaires,
-                                                              index_des_reconnaissances_contractuelles, index_des_équipements_matériels_lourds)
+from datacrawler.load.nom_des_tables import (
+    TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
+    TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
+    TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES,
+    TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
+    TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_SANITAIRES,
+    TABLES_DES_AUTRES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
+    TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL,
+    TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
+    TABLES_DES_CPOM,
+    TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES,
+    TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS,
+    FichierSource,
+)
+from datacrawler.transform.équivalences_diamant_helios import (
+    index_des_activités,
+    index_des_capacités_sanitaires,
+    index_des_dates_d_entrée_en_vigueur_des_cpom,
+    index_du_bloc_budget_et_finances,
+)
+from datacrawler.transform.équivalences_finess_helios import (
+    index_des_autorisations_sanitaires,
+    index_des_autres_activités_sanitaires,
+    index_des_reconnaissances_contractuelles,
+    index_des_équipements_matériels_lourds,
+)
 
 base_de_données_test = create_engine("postgresql://helios:h3li0s@localhost:5433/helios")
 mocked_logger = MagicMock()
@@ -353,7 +369,6 @@ def helios_ann_errd_ej_et_budget_et_finances_builder(champs_surchargés: Optiona
         "recettes_groupe_ii": 150.0,
         "recettes_groupe_iii": 350.0,
         "resultat_net_comptable": 50.0,
-        "cadre_budgetaire": "ERRD",
     }
     if champs_surchargés:
         return {**budget_et_finances, **champs_surchargés}
