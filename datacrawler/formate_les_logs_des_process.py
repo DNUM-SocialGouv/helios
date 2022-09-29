@@ -1,15 +1,17 @@
 import subprocess
 from logging import Logger
+from typing import List
 
 
 def log_process(logger: Logger, process: subprocess.CompletedProcess) -> None:
-    if process.stdout:
-        _formatte_et_log(process.stdout, logger)
-    if process.stderr:
-        _formatte_et_log(process.stderr, logger)
+
+    for sortie in _formatte(process.stdout):
+        if process.stdout:
+            logger.info(sortie)
+        if process.stderr:
+            logger.error(sortie)
 
 
-def _formatte_et_log(sortie_du_process: bytes, logger: Logger) -> None:
-    sorties_mises_en_forme = sortie_du_process.decode().split('\n')
-    for sortie in sorties_mises_en_forme:
-        logger.info(sortie)
+def _formatte(sortie_du_process: bytes) -> List[str]:
+    return sortie_du_process.decode().split('\n')
+

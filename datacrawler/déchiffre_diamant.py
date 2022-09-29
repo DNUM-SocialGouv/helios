@@ -25,10 +25,9 @@ def déchiffre_les_fichiers_du_dossier(dossier_avec_les_données_chiffrées: str
             basename_du_fichier_avec_les_données_chiffrées
         )
         process = subprocess.run(
-            f'{executable_gpg} --output {nom_cible_du_fichier_déchiffré} --decrypt {fichier_chiffré}',
+            f'{executable_gpg} --output {nom_cible_du_fichier_déchiffré} --decrypt {fichier_chiffré} -v',
             shell=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
+            capture_output=True,
             check=False
         )
         log_process(logger, process)
