@@ -10,6 +10,7 @@ class VariablesDEnvironnement(TypedDict):
     DIAMANT_DATA_PATH: str
     DIAMANT_ENCRYPTED_DATA_PATH: str
     DNUM_SFTP_LOCAL_PATH: str
+    EXECUTABLE_GPG: str
     FINESS_SFTP_LOCAL_PATH: str
 
 
@@ -36,5 +37,6 @@ def récupère_les_variables_d_environnement(
         DIAMANT_DATA_PATH=signale_si_la_variable_n_est_pas_présente("DIAMANT_DATA_PATH"),
         DIAMANT_ENCRYPTED_DATA_PATH=signale_si_la_variable_n_est_pas_présente("DIAMANT_ENCRYPTED_DATA_PATH"),
         DNUM_SFTP_LOCAL_PATH=signale_si_la_variable_n_est_pas_présente("DNUM_SFTP_LOCAL_PATH"),
+        EXECUTABLE_GPG=signale_si_la_variable_n_est_pas_présente("EXECUTABLE_GPG"),
         FINESS_SFTP_LOCAL_PATH=signale_si_la_variable_n_est_pas_présente("SFTP_LOCAL_PATH"),
     )
