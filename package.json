@@ -13,7 +13,7 @@
     "depcheck": "depcheck --ignore-patterns=spikes,.venv",
     "dev": "yarn start:db && next dev",
     "encryptDiamant:local": "pipenv run encrypt_diamant",
-    "importDiamantKey": "./import_diamant_key",
+    "importDiamantKey": "./import_diamant_key.sh",
     "lint": "yarn lint:typescript && yarn lint:python",
     "lint:typescript": "npx eslint src database datacrawler",
     "lint:typescript:fix": "yarn lint:typescript --fix",

@@ -15,7 +15,7 @@ class TestChiffreDiamant:
             os.unlink(os.path.join(dossier_cible, fichier))
 
         # When
-        chiffre(dossier_source, dossier_cible, DIAMANT_PUBLIC_KEY, logger=MagicMock())
+        chiffre(dossier_source, dossier_cible, logger=MagicMock())
 
         # Then
         fichiers_chiffrés = os.listdir(dossier_cible)

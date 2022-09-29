@@ -5,7 +5,6 @@ from unittest.mock import MagicMock
 import pandas as pd
 from pytest import LogCaptureFixture
 
-from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.dependencies.logger.logger import crée_le_logger
 from datacrawler.déchiffre_diamant import déchiffre_les_fichiers_du_dossier
 
@@ -13,7 +12,6 @@ from datacrawler.déchiffre_diamant import déchiffre_les_fichiers_du_dossier
 class TestDéchiffreDiamant:
     def test_crée_autant_de_fichiers_csv_qu_il_y_a_de_fichiers_chiffrés(self) -> None:
         # Given
-        _, variables_d_environnement = initialise_les_dépendances()
         chemin_vers_les_données_diamant_chiffrées = 'data_set/diamant_chiffré'
         chemin_vers_les_données_diamant = 'data_test/diamant/'
         for fichier in os.listdir(chemin_vers_les_données_diamant):
@@ -21,8 +19,9 @@ class TestDéchiffreDiamant:
         assert not os.listdir(chemin_vers_les_données_diamant)
 
         # When
-        déchiffre_les_fichiers_du_dossier(chemin_vers_les_données_diamant_chiffrées, chemin_vers_les_données_diamant,
-                                          variables_d_environnement["DIAMANT_KEY"], logger=MagicMock(),
+        déchiffre_les_fichiers_du_dossier(chemin_vers_les_données_diamant_chiffrées,
+                                          chemin_vers_les_données_diamant,
+                                          logger=MagicMock(),
                                           executable_gpg='/usr/local/bin/gpg')
 
         # Then
@@ -45,13 +44,12 @@ class TestDéchiffreDiamant:
         assert not os.listdir(chemin_vers_les_données_diamant)
 
         # When
-        déchiffre_les_fichiers_du_dossier(chemin_vers_les_données_diamant_chiffrées, chemin_vers_les_données_diamant,
-                                          'abc', logger=logger, executable_gpg='/usr/local/bin/gpg')
+        déchiffre_les_fichiers_du_dossier(chemin_vers_les_données_diamant_chiffrées,
+                                          chemin_vers_les_données_diamant,
+                                          logger=logger,
+                                          executable_gpg='/usr/local/bin/gpg')
 
         # Then
-        print("////////////////")
-        print(vars(caplog))
-        print("////////////////")
         fichiers_créés = os.listdir(chemin_vers_les_données_diamant)
         assert len(fichiers_créés) == 0
 
