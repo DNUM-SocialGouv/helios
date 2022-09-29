@@ -247,7 +247,7 @@ def csv_ann_per_errd_eprd_builder(champs_surchargés: Optional[Dict] = None) -> 
     return ann_per_errd_eprd_budget_et_finances
 
 
-def csv_ann_errd_ej_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
+def csv_ann_errd_ej_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, float]:
     ann_errd_ej_budget_et_finances = {
         "Année": 2020,
         "Id Dépôt": 111111,
