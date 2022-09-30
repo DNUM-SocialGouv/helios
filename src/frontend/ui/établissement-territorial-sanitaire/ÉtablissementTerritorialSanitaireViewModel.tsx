@@ -12,7 +12,7 @@ export class ÉtablissementTerritorialSanitaireViewModel {
   public établissementTerritorialSanitaireActivitésViewModel: ÉtablissementTerritorialSanitaireActivitéViewModel
   public établissementTerritorialSanitaireAutorisationsViewModel: ÉtablissementTerritorialSanitaireAutorisationsViewModel
 
-  constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, private readonly wording: Wording, private readonly paths: Paths) {
+  constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, private readonly wording: Wording, paths: Paths) {
     this.établissementTerritorialSanitaireIdentitéViewModel =
       new ÉtablissementTerritorialSanitaireIdentitéViewModel(établissementTerritorial.identité, wording, paths)
     this.établissementTerritorialSanitaireActivitésViewModel =
