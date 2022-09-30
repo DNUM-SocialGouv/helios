@@ -13,6 +13,7 @@ from datacrawler.test_helpers import (
     NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL,
     base_de_données_test,
     helios_ann_ca_ej_et_budget_et_finances_builder,
+    helios_ann_errd_ej_budget_et_finances_builder,
     helios_ann_errd_ej_et_budget_et_finances_builder,
     mocked_logger,
     sauvegarde_les_indicateurs_budget_et_finances_en_base,
@@ -155,6 +156,17 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     0.51376936316695354,
                     NaN,
                     0.31154835988672847,
+                    NaN,
+                ],
+                "fonds_de_roulement_net_global": [
+                    2206969.259999999800000000,
+                    1057217.929999999900000000,
+                    3988284.410000000100000000,
+                    3988284.410000000100000000,
+                    NaN,
+                    NaN,
+                    NaN,
+                    NaN,
                     NaN,
                 ],
                 "charges": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, -177631.38999999998, -207285.97000000003],
@@ -349,6 +361,17 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     0.31154835988672847,
                     NaN,
                 ],
+                "fonds_de_roulement_net_global": [
+                    2206969.259999999800000000,
+                    1057217.929999999900000000,
+                    3988284.410000000100000000,
+                    3988284.410000000100000000,
+                    NaN,
+                    NaN,
+                    NaN,
+                    NaN,
+                    NaN,
+                ],
                 "charges": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, -177631.38999999998, -207285.97000000003],
                 "produits": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, 196518.51999999999, 219272.62],
             },
@@ -373,9 +396,12 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         sauvegarde_un_établissement_en_base(numéro_finess_établissement_errd, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_ca_ph = "010002269"
         sauvegarde_un_établissement_en_base(numéro_finess_établissement_ca_ph, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
-        indicateurs_budget_et_finances_établissement_errd = helios_ann_errd_ej_et_budget_et_finances_builder(
-            {"numero_finess_etablissement_territorial": numéro_finess_établissement_errd, "cadre_budgetaire": "ERRD"}
-        )
+        indicateurs_budget_et_finances_établissement_errd = {
+            **helios_ann_errd_ej_et_budget_et_finances_builder(
+                {"numero_finess_etablissement_territorial": numéro_finess_établissement_errd, "cadre_budgetaire": "ERRD"}
+            ),
+            **helios_ann_errd_ej_budget_et_finances_builder({"numero_finess_etablissement_territorial": numéro_finess_établissement_errd}),
+        }
         indicateurs_budget_et_finances_établissement_ca = helios_ann_ca_ej_et_budget_et_finances_builder(
             {"numero_finess_etablissement_territorial": numéro_finess_établissement_ca_ph}
         )
@@ -404,6 +430,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                 mocked_logger,
             )
 
+        # THEN
         budget_et_finances_enregistrés = pd.read_sql(
             TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL,
             base_de_données_test,
@@ -414,7 +441,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
             pd.DataFrame(
                 {
                     "numero_finess_etablissement_territorial": [numéro_finess_établissement_errd, numéro_finess_établissement_ca_ph],
-                    "annee": [2018, 2020],
+                    "annee": [2020, 2020],
                     "contribution_frais_de_siege_groupement": [-300.0, NaN],
                     "depenses_groupe_i": [-100.0, -100.0],
                     "depenses_groupe_ii": [-200.0, -200.0],
@@ -424,8 +451,9 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     "recettes_groupe_iii": [350.0, 350.0],
                     "resultat_net_comptable": [50.0, 50.0],
                     "cadre_budgetaire": ["ERRD", "CA_PH"],
-                    "taux_de_caf": [NaN, 0.16],
-                    "taux_de_vetuste_construction": [NaN, 0.53],
+                    "taux_de_caf": [0.071600138178413528, 0.16],
+                    "taux_de_vetuste_construction": [0.45555983373892417, 0.53],
+                    "fonds_de_roulement_net_global": [2206969.259999999800000000, NaN],
                     "produits": [NaN, NaN],
                     "charges": [NaN, NaN],
                 }

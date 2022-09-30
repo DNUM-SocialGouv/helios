@@ -117,6 +117,7 @@ def supprime_les_données_des_tables(base_de_données: Engine) -> None:
     base_de_données.execute(f"DELETE FROM {TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_CPOM};")
+    base_de_données.execute(f"DELETE FROM {TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL};")
 
 
 def sauvegarde_une_activité_en_base(activité: pd.DataFrame, base_de_données: Engine, table: str) -> None:
@@ -253,6 +254,7 @@ def csv_ann_errd_ej_builder(champs_surchargés: Optional[Dict] = None) -> Dict[s
         "Id Dépôt": 111111,
         "Taux de CAF ERRD": 0.071600138178413528,
         "Taux vétusté Construction ERRD": 0.45555983373892417,
+        "Fonds de roulement net global ERRD": 2206969.259999999800000000,
     }
     if champs_surchargés:
         return {**ann_errd_ej_budget_et_finances, **champs_surchargés}
@@ -399,6 +401,7 @@ def helios_ann_errd_ej_budget_et_finances_builder(champs_surchargés: Optional[D
     budget_et_finances = {
         "taux_de_caf": 0.071600138178413528,
         "taux_de_vetuste_construction": 0.45555983373892417,
+        "fonds_de_roulement_net_global": 2206969.259999999800000000,
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "annee": 2020,
     }

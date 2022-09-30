@@ -30,13 +30,31 @@ class TestTransformeLesTauxDesDonnéesBudgétairesDesÉtablissementsErrd:
         données_ann_errd_ej = pd.DataFrame(
             [
                 csv_ann_errd_ej_builder(
-                    {"Id Dépôt": dépôt_2, "Année": 2019, "Taux de CAF ERRD": 0.071600138178413528, "Taux vétusté Construction ERRD": 0.45555983373892417}
+                    {
+                        "Id Dépôt": dépôt_2,
+                        "Année": 2019,
+                        "Taux de CAF ERRD": 0.071600138178413528,
+                        "Taux vétusté Construction ERRD": 0.45555983373892417,
+                        "Fonds de roulement net global ERRD": 2206969.259999999800000000,
+                    }
                 ),
                 csv_ann_errd_ej_builder(
-                    {"Id Dépôt": dépôt_3, "Année": 2020, "Taux de CAF ERRD": 0.07553939035106072, "Taux vétusté Construction ERRD": 0.44546727805048336}
+                    {
+                        "Id Dépôt": dépôt_3,
+                        "Année": 2020,
+                        "Taux de CAF ERRD": 0.07553939035106072,
+                        "Taux vétusté Construction ERRD": 0.44546727805048336,
+                        "Fonds de roulement net global ERRD": 1057217.929999999900000000,
+                    }
                 ),
                 csv_ann_errd_ej_builder(
-                    {"Id Dépôt": dépôt_1, "Année": 2020, "Taux de CAF ERRD": 0.082983883939739017, "Taux vétusté Construction ERRD": 0.3682801725853011}
+                    {
+                        "Id Dépôt": dépôt_1,
+                        "Année": 2020,
+                        "Taux de CAF ERRD": 0.082983883939739017,
+                        "Taux vétusté Construction ERRD": 0.3682801725853011,
+                        "Fonds de roulement net global ERRD": 3988284.410000000100000000,
+                    }
                 ),
             ]
         )
@@ -53,18 +71,29 @@ class TestTransformeLesTauxDesDonnéesBudgétairesDesÉtablissementsErrd:
         budget_et_finances_attendu = pd.DataFrame(
             [
                 helios_ann_errd_ej_budget_et_finances_builder(
-                    {"taux_de_caf": 0.071600138178413528, "taux_de_vetuste_construction": 0.45555983373892417, "annee": 2019}
+                    {
+                        "taux_de_caf": 0.071600138178413528,
+                        "taux_de_vetuste_construction": 0.45555983373892417,
+                        "fonds_de_roulement_net_global": 2206969.259999999800000000,
+                        "annee": 2019,
+                    }
                 ),
                 helios_ann_errd_ej_budget_et_finances_builder(
                     {
                         "taux_de_caf": 0.07553939035106072,
                         "taux_de_vetuste_construction": 0.44546727805048336,
+                        "fonds_de_roulement_net_global": 1057217.929999999900000000,
                         "annee": 2020,
                         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL,
                     }
                 ),
                 helios_ann_errd_ej_budget_et_finances_builder(
-                    {"taux_de_caf": 0.082983883939739017, "taux_de_vetuste_construction": 0.3682801725853011, "annee": 2020}
+                    {
+                        "taux_de_caf": 0.082983883939739017,
+                        "taux_de_vetuste_construction": 0.3682801725853011,
+                        "fonds_de_roulement_net_global": 3988284.410000000100000000,
+                        "annee": 2020,
+                    }
                 ),
             ]
         )
@@ -104,9 +133,25 @@ class TestTransformeLesTauxDesDonnéesBudgétairesDesÉtablissementsErrd:
         données_des_dépôts_errd = pd.DataFrame([csv_ann_per_errd_eprd_builder({"Id Dépôt": dépôt})])
         données_ann_errd_ej = pd.DataFrame(
             [
-                csv_ann_errd_ej_builder({"Id Dépôt": dépôt, "Taux de CAF ERRD": NaN, "Taux vétusté Construction ERRD": NaN}),
-                csv_ann_errd_ej_builder({"Id Dépôt": dépôt, "Taux de CAF ERRD": 0.071600138178413528, "Taux vétusté Construction ERRD": NaN}),
-                csv_ann_errd_ej_builder({"Id Dépôt": dépôt, "Taux de CAF ERRD": NaN, "Taux vétusté Construction ERRD": 0.45555983373892417}),
+                csv_ann_errd_ej_builder(
+                    {"Id Dépôt": dépôt, "Taux de CAF ERRD": NaN, "Taux vétusté Construction ERRD": NaN, "Fonds de roulement net global ERRD": NaN}
+                ),
+                csv_ann_errd_ej_builder(
+                    {
+                        "Id Dépôt": dépôt,
+                        "Taux de CAF ERRD": 0.071600138178413528,
+                        "Taux vétusté Construction ERRD": NaN,
+                        "Fonds de roulement net global ERRD": NaN,
+                    }
+                ),
+                csv_ann_errd_ej_builder(
+                    {
+                        "Id Dépôt": dépôt,
+                        "Taux de CAF ERRD": NaN,
+                        "Taux vétusté Construction ERRD": 0.45555983373892417,
+                        "Fonds de roulement net global ERRD": NaN,
+                    }
+                ),
             ]
         )
         numéros_finess_des_établissements_connus = pd.DataFrame(
@@ -120,7 +165,11 @@ class TestTransformeLesTauxDesDonnéesBudgétairesDesÉtablissementsErrd:
 
         # THEN
         budget_et_finances_attendu = pd.DataFrame(
-            [helios_ann_errd_ej_budget_et_finances_builder({"taux_de_caf": 0.071600138178413528, "taux_de_vetuste_construction": 0.45555983373892417})]
+            [
+                helios_ann_errd_ej_budget_et_finances_builder(
+                    {"taux_de_caf": 0.071600138178413528, "taux_de_vetuste_construction": 0.45555983373892417, "fonds_de_roulement_net_global": NaN}
+                )
+            ]
         )
         pd.testing.assert_frame_equal(
             données_des_taux_budgétaires_errd.set_index("numero_finess_etablissement_territorial"),
