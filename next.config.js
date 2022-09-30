@@ -61,6 +61,7 @@ const securityHeaders = [
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   devIndicators: { buildActivityPosition: 'bottom-right' },
+  experimental: { newNextLinkBehavior: true },
   async headers() {
     return process.env['NODE_ENV'] !== 'development'
       ? [
