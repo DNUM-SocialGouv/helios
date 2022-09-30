@@ -29,38 +29,42 @@ export const Cartographie = () => {
             <ul className="fr-btns-group fr-btns-group--inline-reverse fr-btns-group--inline-lg">
               <li>
                 <Link
-                  className="fr-btn"
                   href={paths.RÉGION + '/auvergne-rhone-alpes'}
                   passHref
                 >
-                  {régions['auvergne-rhone-alpes'].label}
+                  <a className="fr-btn">
+                    {régions['auvergne-rhone-alpes'].label}
+                  </a>
                 </Link>
               </li>
               <li>
                 <Link
-                  className="fr-btn"
                   href={paths.RÉGION + '/occitanie'}
                   passHref
                 >
-                  {régions['occitanie'].label}
+                  <a className="fr-btn">
+                    {régions['occitanie'].label}
+                  </a>
                 </Link>
               </li>
               <li>
                 <Link
-                  className="fr-btn"
                   href={paths.RÉGION + '/bretagne'}
                   passHref
                 >
-                  {régions['bretagne'].label}
+                  <a className="fr-btn">
+                    {régions['bretagne'].label}
+                  </a>
                 </Link>
               </li>
               <li>
                 <Link
-                  className="fr-btn"
                   href={paths.RÉGION + '/pays-de-la-loire'}
                   passHref
                 >
-                  {régions['pays-de-la-loire'].label}
+                  <a className="fr-btn">
+                    {régions['pays-de-la-loire'].label}
+                  </a>
                 </Link>
               </li>
             </ul>

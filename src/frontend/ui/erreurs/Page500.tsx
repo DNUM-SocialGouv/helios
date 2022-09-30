@@ -31,11 +31,12 @@ export const Page500 = () => {
             {wording.DESCRIPTION_ERREUR_500}
           </p>
           <Link
-            className="fr-btn"
             href={paths.ACCUEIL}
             passHref
           >
-            {wording.ACCUEIL}
+            <a className="fr-btn">
+              {wording.ACCUEIL}
+            </a>
           </Link>
         </div>
         <div className="fr-col-5 fr-pl-15w">

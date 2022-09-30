@@ -21,7 +21,9 @@ export const ListItem = ({ label, lien, logo }: ListItemProps ) => {
         passHref
         prefetch={false}
       >
-        {label}
+        <a>
+          {label}
+        </a>
       </Link>
     </li>
   )
