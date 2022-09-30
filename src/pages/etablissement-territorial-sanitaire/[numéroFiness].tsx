@@ -18,7 +18,7 @@ export default function Router({ établissementTerritorial }: RouterProps) {
   if (!établissementTerritorial) return null
 
   const établissementTerritorialViewModel = new ÉtablissementTerritorialSanitaireViewModel(établissementTerritorial, wording, paths)
-  return <PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialViewModel} />
+  return <PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialViewModel} />
 }
 
 export function getStaticPaths(): GetStaticPathsResult {

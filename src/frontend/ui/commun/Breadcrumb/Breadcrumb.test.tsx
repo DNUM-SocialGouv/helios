@@ -130,7 +130,7 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     renderFakeComponent(
       <>
         <Breadcrumb />
-        <PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaireViewModel} />
+        <PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />
       </>
     )
 

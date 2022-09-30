@@ -6,21 +6,21 @@ import styles from './BlocActivitéSanitaire.module.css'
 import { ContenuNombreDeJournéesPSYetSSR } from './InfoBulle/ContenuNombreDeJournéesPSYetSSR'
 import { ContenuNombreDePassagesAuxUrgences } from './InfoBulle/ContenuNombreDePassagesAuxUrgences'
 import { ContenuNombreDeSéjourMCO } from './InfoBulle/ContenuNombreDeSéjourMCO'
-import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTerritorialSanitaireViewModel'
+import { ÉtablissementTerritorialSanitaireActivitéViewModel } from './ÉtablissementTerritorialSanitaireActivitéViewModel'
 
 type BlocActivitéSanitaireProps = {
-  établissementTerritorialSanitaireViewModel: ÉtablissementTerritorialSanitaireViewModel
+  établissementTerritorialSanitaireActivitéViewModel: ÉtablissementTerritorialSanitaireActivitéViewModel
 }
 
-export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewModel }: BlocActivitéSanitaireProps) => {
+export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireActivitéViewModel }: BlocActivitéSanitaireProps) => {
   const { wording } = useDependencies()
 
   if (
-    !établissementTerritorialSanitaireViewModel.activitéEstElleRenseignée ||
+    !établissementTerritorialSanitaireActivitéViewModel.activitéEstElleRenseignée ||
     (
-      !établissementTerritorialSanitaireViewModel.nombreDeSéjoursMCOSontIlsRenseignés &&
-      !établissementTerritorialSanitaireViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés &&
-      !établissementTerritorialSanitaireViewModel.nombreDePassagesAuxUrgencesEstIlRenseigné
+      !établissementTerritorialSanitaireActivitéViewModel.nombreDeSéjoursMCOSontIlsRenseignés &&
+      !établissementTerritorialSanitaireActivitéViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés &&
+      !établissementTerritorialSanitaireActivitéViewModel.nombreDePassagesAuxUrgencesEstIlRenseigné
     )
   ) {
     return (
@@ -33,46 +33,46 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireViewM
   return (
     <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
       <ul className={styles['liste-indicateurs']}>
-        {établissementTerritorialSanitaireViewModel.nombreDeSéjoursMCOSontIlsRenseignés &&
+        {établissementTerritorialSanitaireActivitéViewModel.nombreDeSéjoursMCOSontIlsRenseignés &&
           <IndicateurGraphique
             contenuInfoBulle={<ContenuNombreDeSéjourMCO
-              dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNombreDeSéjoursMédecineChirurgieObstétrique}
+              dateDeMiseÀJour={établissementTerritorialSanitaireActivitéViewModel.dateDeMiseÀJourDuNombreDeSéjoursMédecineChirurgieObstétrique}
               source={Sources(wording.DIAMANT, wording.PMSI)}
             />}
-            dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNombreDeSéjoursMédecineChirurgieObstétrique}
+            dateDeMiseÀJour={établissementTerritorialSanitaireActivitéViewModel.dateDeMiseÀJourDuNombreDeSéjoursMédecineChirurgieObstétrique}
             identifiant="activite-0"
             nomDeLIndicateur={wording.NOMBRE_DE_SÉJOUR_MCO}
             source={Sources(wording.DIAMANT, wording.PMSI)}
           >
-            { établissementTerritorialSanitaireViewModel.nombreDeSéjoursMédecineChirurgieObstétrique }
+            { établissementTerritorialSanitaireActivitéViewModel.nombreDeSéjoursMédecineChirurgieObstétrique }
           </IndicateurGraphique>
         }
-        {établissementTerritorialSanitaireViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés &&
+        {établissementTerritorialSanitaireActivitéViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés &&
           <IndicateurGraphique
             contenuInfoBulle={<ContenuNombreDeJournéesPSYetSSR
-              dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr}
+              dateDeMiseÀJour={établissementTerritorialSanitaireActivitéViewModel.dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr}
               source={Sources(wording.DIAMANT, wording.PMSI)}
 
             />}
-            dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr}
+            dateDeMiseÀJour={établissementTerritorialSanitaireActivitéViewModel.dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr}
             identifiant="activite-1"
             nomDeLIndicateur={wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR}
             source={Sources(wording.DIAMANT, wording.PMSI)}
           >
-            { établissementTerritorialSanitaireViewModel.nombreDeJournéesPsyEtSsr }
+            { établissementTerritorialSanitaireActivitéViewModel.nombreDeJournéesPsyEtSsr }
           </IndicateurGraphique>
         }
         <IndicateurGraphique
           contenuInfoBulle={<ContenuNombreDePassagesAuxUrgences
-            dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNombreDePassagesAuxUrgences}
+            dateDeMiseÀJour={établissementTerritorialSanitaireActivitéViewModel.dateDeMiseÀJourDuNombreDePassagesAuxUrgences}
             source={Sources(wording.DIAMANT, wording.RPU)}
           />}
-          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNombreDePassagesAuxUrgences}
+          dateDeMiseÀJour={établissementTerritorialSanitaireActivitéViewModel.dateDeMiseÀJourDuNombreDePassagesAuxUrgences}
           identifiant="activite-2"
           nomDeLIndicateur={wording.NOMBRE_DE_PASSAGES_AUX_URGENCES}
           source={Sources(wording.DIAMANT, wording.RPU)}
         >
-          {établissementTerritorialSanitaireViewModel.nombreDePassagesAuxUrgences}
+          {établissementTerritorialSanitaireActivitéViewModel.nombreDePassagesAuxUrgences}
         </IndicateurGraphique>
       </ul>
     </Bloc>
