@@ -37,7 +37,8 @@ class TestDéchiffre:
         # Given
         with open(
                 os.path.join(TestDéchiffre.chemin_vers_les_données_diamant, 'fichier_préexistant.csv'),
-                'w'
+                'w',
+                encoding="utf-8"
         ) as fichier:
             fichier.write('données')
         assert len(os.listdir(TestDéchiffre.chemin_vers_les_données_diamant)) == 1
