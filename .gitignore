@@ -48,3 +48,8 @@ lighthouse-ci-reports
 .mypy_cache
 __pycache__/
 .ipynb_checkpoints/
+
+# stryker temp files
+.stryker-tmp
+jest-for-mutation-testing.json
+reports
