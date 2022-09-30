@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from unittest.mock import MagicMock
 
 import pandas as pd
@@ -13,6 +14,7 @@ class TestDéchiffre:
     chemin_vers_les_données_diamant = 'data_test/diamant/'
 
     def setup_method(self) -> None:
+        Path(TestDéchiffre.chemin_vers_les_données_diamant).mkdir(parents=True, exist_ok=True)
         for fichier in os.listdir(TestDéchiffre.chemin_vers_les_données_diamant):
             os.unlink(os.path.join(TestDéchiffre.chemin_vers_les_données_diamant, fichier))
         assert not os.listdir(TestDéchiffre.chemin_vers_les_données_diamant)
