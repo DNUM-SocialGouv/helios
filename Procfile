@@ -1,1 +1,1 @@
-postdeploy: yarn migrations && yarn importDiamantKey
+postdeploy: yarn migrations

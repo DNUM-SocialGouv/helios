@@ -38,7 +38,6 @@ yarn-error.log*
 # Helios
 data_test
 data_set/.ssh
-data_set/crypto_keys
 sshd_config
 
 # Lighthouse CI

@@ -10,98 +10,111 @@ from datacrawler.déchiffre_diamant import déchiffre, _vérifie_la_clef
 
 
 class TestDéchiffre:
-    def test_crée_autant_de_fichiers_csv_qu_il_y_a_de_fichiers_chiffrés(self) -> None:
-        # Given
-        chemin_vers_les_données_diamant_chiffrées = 'data_set/diamant_chiffré'
-        chemin_vers_les_données_diamant = 'data_test/diamant/'
-        for fichier in os.listdir(chemin_vers_les_données_diamant):
-            os.unlink(os.path.join(chemin_vers_les_données_diamant, fichier))
-        assert not os.listdir(chemin_vers_les_données_diamant)
+    chemin_vers_les_données_diamant_chiffrées = 'data_set/diamant_chiffré'
+    chemin_vers_les_données_diamant = 'data_test/diamant/'
 
+    def setup_method(self):
+        for fichier in os.listdir(TestDéchiffre.chemin_vers_les_données_diamant):
+            os.unlink(os.path.join(TestDéchiffre.chemin_vers_les_données_diamant, fichier))
+        assert not os.listdir(TestDéchiffre.chemin_vers_les_données_diamant)
+
+    def test_crée_autant_de_fichiers_csv_qu_il_y_a_de_fichiers_chiffrés(self) -> None:
         # When
-        déchiffre(chemin_vers_les_données_diamant_chiffrées,
-                  chemin_vers_les_données_diamant,
+        déchiffre(TestDéchiffre.chemin_vers_les_données_diamant_chiffrées,
+                  TestDéchiffre.chemin_vers_les_données_diamant,
                   logger=MagicMock(),
                   executable_gpg='/usr/local/bin/gpg')
 
         # Then
-        nombre_de_fichier_chiffrés = len(os.listdir(chemin_vers_les_données_diamant_chiffrées))
-        fichiers_créés = os.listdir(chemin_vers_les_données_diamant)
-        assert len(fichiers_créés) == nombre_de_fichier_chiffrés
-        for fichier in fichiers_créés:
-            chemin_vers_le_fichier = os.path.join(chemin_vers_les_données_diamant, fichier)
+        nombre_de_fichier_chiffrés = len(os.listdir(TestDéchiffre.chemin_vers_les_données_diamant_chiffrées))
+        fichiers_déchiffrés = os.listdir(TestDéchiffre.chemin_vers_les_données_diamant)
+        assert len(fichiers_déchiffrés) == nombre_de_fichier_chiffrés
+        for fichier in fichiers_déchiffrés:
+            chemin_vers_le_fichier = os.path.join(TestDéchiffre.chemin_vers_les_données_diamant, fichier)
             assert not pd.read_csv(chemin_vers_le_fichier).empty
 
-    def test_informe_l_utilisateur_quand_sa_clef_privée_ne_sert_pas_au_déchiffrement(self,
-                                                                                     caplog: LogCaptureFixture) -> None:
+    def test_efface_les_fichiers_existants_du_dossier_cible_puis_déchiffre_les_fichiers(self) -> None:
+        # Given
+        with open(
+                os.path.join(TestDéchiffre.chemin_vers_les_données_diamant, 'fichier_préexistant.csv'),
+                'w'
+        ) as fichier:
+            fichier.write('données')
+        assert len(os.listdir(TestDéchiffre.chemin_vers_les_données_diamant)) == 1
+
+        # When
+        déchiffre(TestDéchiffre.chemin_vers_les_données_diamant_chiffrées,
+                  TestDéchiffre.chemin_vers_les_données_diamant,
+                  logger=MagicMock(),
+                  executable_gpg='/usr/local/bin/gpg')
+
+        # Then
+        nombre_de_fichier_chiffrés = len(os.listdir(TestDéchiffre.chemin_vers_les_données_diamant_chiffrées))
+        fichiers_déchiffrés = os.listdir(TestDéchiffre.chemin_vers_les_données_diamant)
+        assert len(fichiers_déchiffrés) == nombre_de_fichier_chiffrés
+
+    def test_informe_l_utilisateur_quand_sa_clef_privée_ne_match_pas_celle_utilisée_pour_chiffrer(
+            self,
+            caplog: LogCaptureFixture
+    ) -> None:
         # Given
         logger = crée_le_logger()
-        chemin_vers_les_données_diamant_chiffrées = 'data_set/diamant_chiffré'
-        chemin_vers_les_données_diamant = 'data_test/diamant/'
-        Path(chemin_vers_les_données_diamant).mkdir(exist_ok=True)
-        for fichier in os.listdir(chemin_vers_les_données_diamant):
-            os.unlink(os.path.join(chemin_vers_les_données_diamant, fichier))
-        assert not os.listdir(chemin_vers_les_données_diamant)
+
         mock_vérifie_la_clef = MagicMock()
         mock_vérifie_la_clef.return_value = False
 
         # When
         déchiffre(
-            chemin_vers_les_données_diamant_chiffrées,
-            chemin_vers_les_données_diamant,
+            TestDéchiffre.chemin_vers_les_données_diamant_chiffrées,
+            TestDéchiffre.chemin_vers_les_données_diamant,
             logger=logger,
             executable_gpg="/usr/local/bin/gpg",
             vérifie_la_clef=mock_vérifie_la_clef
         )
 
         # Then
-        fichiers_créés = os.listdir(chemin_vers_les_données_diamant)
-        assert len(fichiers_créés) == 0
+        fichiers_déchiffrés = os.listdir(TestDéchiffre.chemin_vers_les_données_diamant)
+        assert len(fichiers_déchiffrés) == 0
 
-        logs = [log for log in caplog.records if
+        logs = [log for log in caplog.records
+                if log.levelname == 'ERROR' and
                 "La clef privée fournie ne peut pas déchiffrer le fichier" in log.message]
-        assert len(logs) == 6
-        for log in logs:
-            assert log.levelname == "ERROR"
+        assert len(logs) == len(os.listdir(TestDéchiffre.chemin_vers_les_données_diamant_chiffrées))
 
     def test_informe_l_utilisateur_quand_il_y_a_une_erreur_dans_l_exécution_de_la_commande(self,
                                                                                            caplog: LogCaptureFixture) -> None:
         # Given
         logger = crée_le_logger()
-        chemin_vers_les_données_diamant_chiffrées = 'data_set/diamant_chiffré'
-        chemin_vers_les_données_diamant = 'data_test/diamant/'
-        Path(chemin_vers_les_données_diamant).mkdir(exist_ok=True)
-        for fichier in os.listdir(chemin_vers_les_données_diamant):
-            os.unlink(os.path.join(chemin_vers_les_données_diamant, fichier))
-        assert not os.listdir(chemin_vers_les_données_diamant)
         mock_vérifie_la_clef = MagicMock()
         mock_vérifie_la_clef.return_value = True
         mock_exécute = MagicMock()
         mock_process = MagicMock()
         mock_exécute.return_value = mock_process
-        mock_process.returncode = 2
+        code_d_erreur_commande_gpg = 2
+        mock_process.returncode = code_d_erreur_commande_gpg
         mock_process.stderr = b'utilisation\xc2\xa0: gpg [options] --decrypt [filename]\n'
 
         # When
         déchiffre(
-            chemin_vers_les_données_diamant_chiffrées,
-            chemin_vers_les_données_diamant,
+            TestDéchiffre.chemin_vers_les_données_diamant_chiffrées,
+            TestDéchiffre.chemin_vers_les_données_diamant,
             logger=logger,
             executable_gpg="/usr/local/bin/gpg",
             vérifie_la_clef=mock_vérifie_la_clef,
-            exécute=mock_exécute,
+            exécute_une_commande=mock_exécute,
         )
 
         # Then
-        fichiers_créés = os.listdir(chemin_vers_les_données_diamant)
-        assert len(fichiers_créés) == 0
+        fichiers_déchiffrés = os.listdir(TestDéchiffre.chemin_vers_les_données_diamant)
+        assert len(fichiers_déchiffrés) == 0
 
-        log_d_erreur = [log for log in caplog.records if
-                        log.levelname == "ERROR"]
-        assert len(log_d_erreur) == 6
-        for log in log_d_erreur:
-            assert log.message == "utilisation\xa0: gpg [options] --decrypt [filename]"
-        for fichier in os.listdir(chemin_vers_les_données_diamant_chiffrées):
+        logs_d_erreur = [
+            log for log in caplog.records
+            if log.levelname == "ERROR"
+               and log.message == "utilisation\xa0: gpg [options] --decrypt [filename]"
+        ]
+        assert len(logs_d_erreur) == len(os.listdir(TestDéchiffre.chemin_vers_les_données_diamant_chiffrées))
+        for fichier in os.listdir(TestDéchiffre.chemin_vers_les_données_diamant_chiffrées):
             assert f"Fichier {fichier} déchiffré" not in [log.message for log in caplog.records]
 
 
@@ -110,13 +123,14 @@ class TestVérifieQuOnALaClefPourDechiffrer:
         # Given
         executable_gpg = "/usr/local/bin/gpg"
         fichier_chiffré = "chemin/vers/le/fichier.gpg"
-        exécute = MagicMock()
-        premier_process = MagicMock(stdout=b':pubkey enc packet: version 3, algo 1, keyid AF4238B8FD15301E\n')
-        deuxième_process = MagicMock(stdout=b'ssb   rsa2048/AF4238B8FD15301E 2022-09-28 [E]\n')
-        exécute.side_effect = [premier_process, deuxième_process]
+        exécute_une_commande = MagicMock()
+        id_de_la_clef_utilisée_pour_chiffrer_le_fichier = MagicMock(
+            stdout=b':pubkey enc packet: version 3, algo 1, keyid AF4238B8FD15301E\n')
+        clef_connue_par_gpg = MagicMock(stdout=b'ssb   rsa2048/AF4238B8FD15301E 2022-09-28 [E]\n')
+        exécute_une_commande.side_effect = [id_de_la_clef_utilisée_pour_chiffrer_le_fichier, clef_connue_par_gpg]
 
         # When
-        la_clef_est_connue = _vérifie_la_clef(executable_gpg, fichier_chiffré, exécute)
+        la_clef_est_connue = _vérifie_la_clef(executable_gpg, fichier_chiffré, exécute_une_commande)
 
         # Then
         assert la_clef_est_connue is True
@@ -125,13 +139,14 @@ class TestVérifieQuOnALaClefPourDechiffrer:
         # Given
         executable_gpg = "/usr/local/bin/gpg"
         fichier_chiffré = "chemin/vers/le/fichier.gpg"
-        exécute = MagicMock()
-        premier_process = MagicMock(stdout=b':pubkey enc packet: version 3, algo 1, keyid CD4235E8FD15301E\n')
-        deuxième_process = MagicMock(stdout=b'')
-        exécute.side_effect = [premier_process, deuxième_process]
+        exécute_une_commande = MagicMock()
+        id_de_la_clef_utilisée_pour_chiffrer_le_fichier = MagicMock(
+            stdout=b':pubkey enc packet: version 3, algo 1, keyid CD4235E8FD15301E\n')
+        clef_inconue_par_gpg = MagicMock(stdout=b'')
+        exécute_une_commande.side_effect = [id_de_la_clef_utilisée_pour_chiffrer_le_fichier, clef_inconue_par_gpg]
 
         # When
-        la_clef_est_connue = _vérifie_la_clef(executable_gpg, fichier_chiffré, exécute)
+        la_clef_est_connue = _vérifie_la_clef(executable_gpg, fichier_chiffré, exécute_une_commande)
 
         # Then
         assert la_clef_est_connue is False

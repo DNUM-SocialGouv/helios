@@ -10,8 +10,8 @@ from datacrawler.formate_les_logs_des_process import log_process
 def _vérifie_la_clef(
         executable_gpg: str,
         fichier_chiffré: str,
-        exécute: Callable = subprocess.run) -> bool:
-    retourne_l_id_de_la_clef_utilisée_pour_chiffrer_le_fichier = exécute(
+        exécute_une_commande: Callable = subprocess.run) -> bool:
+    retourne_l_id_de_la_clef_utilisée_pour_chiffrer_le_fichier = exécute_une_commande(
         f"{executable_gpg} --list-packets {fichier_chiffré} | grep keyid",
         shell=True,
         capture_output=True,
@@ -19,7 +19,7 @@ def _vérifie_la_clef(
     )
     ligne_où_apparaît_l_id_de_la_clef = retourne_l_id_de_la_clef_utilisée_pour_chiffrer_le_fichier.stdout.decode()
     id_de_la_clef = ligne_où_apparaît_l_id_de_la_clef.split(" ")[-1].replace("\n", "")
-    trouve_l_id_de_la_clef_parmi_celles_connues_par_gpg = exécute(
+    trouve_l_id_de_la_clef_parmi_celles_connues_par_gpg = exécute_une_commande(
         f"{executable_gpg} --list-secret-keys --keyid-format LONG | grep {id_de_la_clef}",
         shell=True,
         capture_output=True,
@@ -35,7 +35,7 @@ def déchiffre(
         logger: Logger,
         executable_gpg: str,
         vérifie_la_clef: Callable = _vérifie_la_clef,
-        exécute: Callable = subprocess.run
+        exécute_une_commande: Callable = subprocess.run
 ) -> None:
     for fichier in os.listdir(dossier_où_sauvegarder_les_csv):
         os.unlink(os.path.join(dossier_où_sauvegarder_les_csv, fichier))
@@ -51,14 +51,15 @@ def déchiffre(
             basename_du_fichier_avec_les_données_chiffrées
         )
         if vérifie_la_clef(executable_gpg, fichier_chiffré):
-            process = exécute(
+            process = exécute_une_commande(
                 f"{executable_gpg} --output {nom_cible_du_fichier_déchiffré} --decrypt {fichier_chiffré}",
                 shell=True,
                 capture_output=True,
                 check=False
             )
             log_process(logger, process)
-            if process.returncode == 0:
+            code_de_succès_commande_gpg = 0
+            if process.returncode == code_de_succès_commande_gpg:
                 logger.info(f"Fichier {basename_du_fichier_avec_les_données_chiffrées} déchiffré")
 
         else:
