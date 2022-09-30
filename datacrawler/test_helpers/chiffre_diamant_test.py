@@ -2,10 +2,10 @@ import os
 from pathlib import Path
 from unittest.mock import MagicMock
 
-from datacrawler.test_helpers.chiffre_diamant import chiffre, DIAMANT_PUBLIC_KEY
+from datacrawler.test_helpers.chiffre_diamant import chiffre
 
 
-class TestChiffreDiamant:
+class TestChiffre:
     def test_enregistre_les_données_diamant_chiffrés_dans_un_dossier_donné(self) -> None:
         # Given
         dossier_source = 'data_set/diamant_chiffré'
@@ -15,7 +15,12 @@ class TestChiffreDiamant:
             os.unlink(os.path.join(dossier_cible, fichier))
 
         # When
-        chiffre(dossier_source, dossier_cible, logger=MagicMock())
+        chiffre(
+            dossier_source,
+            dossier_cible,
+            logger=MagicMock(),
+            executable_gpg='/usr/local/bin/gpg'
+        )
 
         # Then
         fichiers_chiffrés = os.listdir(dossier_cible)

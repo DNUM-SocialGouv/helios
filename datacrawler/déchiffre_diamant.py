@@ -7,10 +7,10 @@ from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.formate_les_logs_des_process import log_process
 
 
-def vérifie_qu_on_a_la_clef_pour_déchiffrer(
+def _vérifie_la_clef(
         executable_gpg: str,
         fichier_chiffré: str,
-        exécute: Callable = subprocess.run):
+        exécute: Callable = subprocess.run) -> bool:
     retourne_l_id_de_la_clef_utilisée_pour_chiffrer_le_fichier = exécute(
         f"{executable_gpg} --list-packets {fichier_chiffré} | grep keyid",
         shell=True,
@@ -29,12 +29,12 @@ def vérifie_qu_on_a_la_clef_pour_déchiffrer(
     return la_clef_est_connue
 
 
-def déchiffre_les_fichiers_du_dossier(
+def déchiffre(
         dossier_avec_les_données_chiffrées: str,
         dossier_où_sauvegarder_les_csv: str,
         logger: Logger,
         executable_gpg: str,
-        vérifie_qu_on_a_la_clef_pour_déchiffrer: Callable = vérifie_qu_on_a_la_clef_pour_déchiffrer,
+        vérifie_la_clef: Callable = _vérifie_la_clef,
         exécute: Callable = subprocess.run
 ) -> None:
     for fichier in os.listdir(dossier_où_sauvegarder_les_csv):
@@ -50,7 +50,7 @@ def déchiffre_les_fichiers_du_dossier(
             dossier_avec_les_données_chiffrées,
             basename_du_fichier_avec_les_données_chiffrées
         )
-        if vérifie_qu_on_a_la_clef_pour_déchiffrer(executable_gpg, fichier_chiffré):
+        if vérifie_la_clef(executable_gpg, fichier_chiffré):
             process = exécute(
                 f"{executable_gpg} --output {nom_cible_du_fichier_déchiffré} --decrypt {fichier_chiffré}",
                 shell=True,
@@ -62,7 +62,9 @@ def déchiffre_les_fichiers_du_dossier(
                 logger.info(f"Fichier {basename_du_fichier_avec_les_données_chiffrées} déchiffré")
 
         else:
-            logger.error(f"La clef privée fournie ne peut pas déchiffrer le fichier {basename_du_fichier_avec_les_données_chiffrées}")
+            logger.error(
+                f"La clef privée fournie ne peut pas déchiffrer le fichier {basename_du_fichier_avec_les_données_chiffrées}"
+            )
     nombre_de_fichiers_déchiffrés = len(os.listdir(dossier_où_sauvegarder_les_csv))
     logger.info(
         f"Fin du déchiffrement des données DIAMANT. {nombre_de_fichiers_déchiffrés} fichiers csv"
@@ -74,7 +76,7 @@ if __name__ == "__main__":
     dossier_avec_les_données_diamant_chiffrées = variables_d_environnement["DIAMANT_ENCRYPTED_DATA_PATH"]
     dossier_où_sauveagarder_les_csv_diamant = variables_d_environnement["DIAMANT_DATA_PATH"]
     clef_privée_diamant = variables_d_environnement["DIAMANT_KEY"]
-    déchiffre_les_fichiers_du_dossier(dossier_avec_les_données_diamant_chiffrées,
-                                      dossier_où_sauveagarder_les_csv_diamant,
-                                      logger_helios,
-                                      variables_d_environnement["EXECUTABLE_GPG"])
+    déchiffre(dossier_avec_les_données_diamant_chiffrées,
+              dossier_où_sauveagarder_les_csv_diamant,
+              logger_helios,
+              variables_d_environnement["EXECUTABLE_GPG"])

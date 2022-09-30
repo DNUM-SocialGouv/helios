@@ -31,7 +31,15 @@ class TestVariablesDEnvironnement:
         mock_variables_d_environnement: dict = {}
 
         mock_lis_les_variables_d_environnement_du_fichier = MagicMock()
-        mock_lis_les_variables_d_environnement_du_fichier.return_value = {"SENTRY_DSN": "test", "DNUM_SFTP_LOCAL_PATH": "test", "SFTP_LOCAL_PATH": "test"}
+        mock_lis_les_variables_d_environnement_du_fichier.return_value = {
+            "DIAMANT_DATA_PATH": "test",
+            "DIAMANT_ENCRYPTED_DATA_PATH": "test",
+            "DIAMANT_KEY": "test",
+            "EXECUTABLE_GPG": "test",
+            "SENTRY_DSN": "test",
+            "DNUM_SFTP_LOCAL_PATH": "test",
+            "SFTP_LOCAL_PATH": "test"
+        }
 
         # WHEN
         récupère_les_variables_d_environnement(logger, mock_variables_d_environnement, mock_lis_les_variables_d_environnement_du_fichier)

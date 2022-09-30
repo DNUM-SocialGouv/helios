@@ -6,10 +6,10 @@ import pandas as pd
 from pytest import LogCaptureFixture
 
 from datacrawler.dependencies.logger.logger import crée_le_logger
-from datacrawler.déchiffre_diamant import déchiffre_les_fichiers_du_dossier, vérifie_qu_on_a_la_clef_pour_déchiffrer
+from datacrawler.déchiffre_diamant import déchiffre, _vérifie_la_clef
 
 
-class TestDéchiffreDiamant:
+class TestDéchiffre:
     def test_crée_autant_de_fichiers_csv_qu_il_y_a_de_fichiers_chiffrés(self) -> None:
         # Given
         chemin_vers_les_données_diamant_chiffrées = 'data_set/diamant_chiffré'
@@ -19,10 +19,10 @@ class TestDéchiffreDiamant:
         assert not os.listdir(chemin_vers_les_données_diamant)
 
         # When
-        déchiffre_les_fichiers_du_dossier(chemin_vers_les_données_diamant_chiffrées,
-                                          chemin_vers_les_données_diamant,
-                                          logger=MagicMock(),
-                                          executable_gpg='/usr/local/bin/gpg')
+        déchiffre(chemin_vers_les_données_diamant_chiffrées,
+                  chemin_vers_les_données_diamant,
+                  logger=MagicMock(),
+                  executable_gpg='/usr/local/bin/gpg')
 
         # Then
         nombre_de_fichier_chiffrés = len(os.listdir(chemin_vers_les_données_diamant_chiffrées))
@@ -42,16 +42,16 @@ class TestDéchiffreDiamant:
         for fichier in os.listdir(chemin_vers_les_données_diamant):
             os.unlink(os.path.join(chemin_vers_les_données_diamant, fichier))
         assert not os.listdir(chemin_vers_les_données_diamant)
-        vérifie_qu_on_a_la_clef_pour_déchiffrer = MagicMock()
-        vérifie_qu_on_a_la_clef_pour_déchiffrer.return_value = False
+        mock_vérifie_la_clef = MagicMock()
+        mock_vérifie_la_clef.return_value = False
 
         # When
-        déchiffre_les_fichiers_du_dossier(
+        déchiffre(
             chemin_vers_les_données_diamant_chiffrées,
             chemin_vers_les_données_diamant,
             logger=logger,
             executable_gpg="/usr/local/bin/gpg",
-            vérifie_qu_on_a_la_clef_pour_déchiffrer=vérifie_qu_on_a_la_clef_pour_déchiffrer
+            vérifie_la_clef=mock_vérifie_la_clef
         )
 
         # Then
@@ -74,22 +74,22 @@ class TestDéchiffreDiamant:
         for fichier in os.listdir(chemin_vers_les_données_diamant):
             os.unlink(os.path.join(chemin_vers_les_données_diamant, fichier))
         assert not os.listdir(chemin_vers_les_données_diamant)
-        vérifie_qu_on_a_la_clef_pour_déchiffrer = MagicMock()
-        vérifie_qu_on_a_la_clef_pour_déchiffrer.return_value = True
-        exécute = MagicMock()
-        process = MagicMock()
-        exécute.return_value = process
-        process.returncode = 2,
-        process.stderr = b'utilisation\xc2\xa0: gpg [options] --decrypt [filename]\n'
+        mock_vérifie_la_clef = MagicMock()
+        mock_vérifie_la_clef.return_value = True
+        mock_exécute = MagicMock()
+        mock_process = MagicMock()
+        mock_exécute.return_value = mock_process
+        mock_process.returncode = 2
+        mock_process.stderr = b'utilisation\xc2\xa0: gpg [options] --decrypt [filename]\n'
 
         # When
-        déchiffre_les_fichiers_du_dossier(
+        déchiffre(
             chemin_vers_les_données_diamant_chiffrées,
             chemin_vers_les_données_diamant,
             logger=logger,
             executable_gpg="/usr/local/bin/gpg",
-            vérifie_qu_on_a_la_clef_pour_déchiffrer=vérifie_qu_on_a_la_clef_pour_déchiffrer,
-            exécute=exécute,
+            vérifie_la_clef=mock_vérifie_la_clef,
+            exécute=mock_exécute,
         )
 
         # Then
@@ -106,7 +106,7 @@ class TestDéchiffreDiamant:
 
 
 class TestVérifieQuOnALaClefPourDechiffrer:
-    def test_retourne_true_lorsque_la_clef_est_connue(self):
+    def test_retourne_true_lorsque_la_clef_est_connue(self) -> None:
         # Given
         executable_gpg = "/usr/local/bin/gpg"
         fichier_chiffré = "chemin/vers/le/fichier.gpg"
@@ -116,12 +116,12 @@ class TestVérifieQuOnALaClefPourDechiffrer:
         exécute.side_effect = [premier_process, deuxième_process]
 
         # When
-        la_clef_est_connue = vérifie_qu_on_a_la_clef_pour_déchiffrer(executable_gpg, fichier_chiffré, exécute)
+        la_clef_est_connue = _vérifie_la_clef(executable_gpg, fichier_chiffré, exécute)
 
         # Then
         assert la_clef_est_connue is True
 
-    def test_retourne_false_lorsque_la_clef_n_est_pas_connue(self):
+    def test_retourne_false_lorsque_la_clef_n_est_pas_connue(self) -> None:
         # Given
         executable_gpg = "/usr/local/bin/gpg"
         fichier_chiffré = "chemin/vers/le/fichier.gpg"
@@ -131,7 +131,7 @@ class TestVérifieQuOnALaClefPourDechiffrer:
         exécute.side_effect = [premier_process, deuxième_process]
 
         # When
-        la_clef_est_connue = vérifie_qu_on_a_la_clef_pour_déchiffrer(executable_gpg, fichier_chiffré, exécute)
+        la_clef_est_connue = _vérifie_la_clef(executable_gpg, fichier_chiffré, exécute)
 
         # Then
         assert la_clef_est_connue is False
