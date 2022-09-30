@@ -133,7 +133,7 @@ colonnes_à_lire_bloc_budget_et_finances_ann_ca_ej_et: List[str] = list(équival
     "Année": ColonneHelios(nom="annee", type=int),
     "Taux de CAF ERRD": ColonneHelios(nom="taux_de_caf", type=float),
     "Taux vétusté Construction ERRD": ColonneHelios(nom="taux_de_vetuste_construction", type=float),
-    "Fonds de roulement net global ERRD": ColonneHelios(nom="fonds_de_roulement_net_global", type=float),
+    "Fonds de roulement net global ERRD": ColonneHelios(nom="fonds_de_roulement", type=float),
 }
 
 colonnes_à_lire_bloc_budget_et_finances_ann_errd_ej: List[str] = list(équivalences_diamant_ann_errd_ej_bloc_budget_et_finances_helios.keys())

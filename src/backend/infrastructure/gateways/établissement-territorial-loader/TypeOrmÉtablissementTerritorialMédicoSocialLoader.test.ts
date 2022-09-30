@@ -495,6 +495,10 @@ describe('Établissement territorial médico-social loader', () => {
           dernièreMiseÀJour: '2022-02-02',
           fichier: FichierSource.DIAMANT_ANN_CA_EJ_ET,
         }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-03-03',
+          fichier: FichierSource.DIAMANT_ANN_ERRD_EJ,
+        }),
       ])
       await budgetEtFinancesModelRepository.insert([
         ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder.créeMédicoSocial(CadreBudgétaire.ERRD, { année: 2021, numéroFinessÉtablissementTerritorial }),
@@ -510,9 +514,9 @@ describe('Établissement territorial médico-social loader', () => {
       // THEN
       expect(budgetEtFinances).toStrictEqual<ÉtablissementTerritorialMédicoSocialBudgetEtFinances[]>(
         [
-          ÉtablissementTerritorialTestBuilder.créeUnBlocBudgetEtFinancesErrdMédicoSocial({ année: 2021 }),
-          ÉtablissementTerritorialTestBuilder.créeUnBlocBudgetEtFinancesCaPhMédicoSocial({ année: 2020 }),
           ÉtablissementTerritorialTestBuilder.créeUnBlocBudgetEtFinancesCaPaMédicoSocial({ année: 2019 }),
+          ÉtablissementTerritorialTestBuilder.créeUnBlocBudgetEtFinancesCaPhMédicoSocial({ année: 2020 }),
+          ÉtablissementTerritorialTestBuilder.créeUnBlocBudgetEtFinancesErrdMédicoSocial({ année: 2021 }),
         ]
       )
     })

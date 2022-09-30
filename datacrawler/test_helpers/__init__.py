@@ -401,7 +401,7 @@ def helios_ann_errd_ej_budget_et_finances_builder(champs_surchargés: Optional[D
     budget_et_finances = {
         "taux_de_caf": 0.071600138178413528,
         "taux_de_vetuste_construction": 0.45555983373892417,
-        "fonds_de_roulement_net_global": 2206969.259999999800000000,
+        "fonds_de_roulement": 2206969.259999999800000000,
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "annee": 2020,
     }

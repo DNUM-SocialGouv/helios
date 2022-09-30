@@ -74,7 +74,7 @@ class TestTransformeLesTauxDesDonnéesBudgétairesDesÉtablissementsErrd:
                     {
                         "taux_de_caf": 0.071600138178413528,
                         "taux_de_vetuste_construction": 0.45555983373892417,
-                        "fonds_de_roulement_net_global": 2206969.259999999800000000,
+                        "fonds_de_roulement": 2206969.259999999800000000,
                         "annee": 2019,
                     }
                 ),
@@ -82,7 +82,7 @@ class TestTransformeLesTauxDesDonnéesBudgétairesDesÉtablissementsErrd:
                     {
                         "taux_de_caf": 0.07553939035106072,
                         "taux_de_vetuste_construction": 0.44546727805048336,
-                        "fonds_de_roulement_net_global": 1057217.929999999900000000,
+                        "fonds_de_roulement": 1057217.929999999900000000,
                         "annee": 2020,
                         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL,
                     }
@@ -91,7 +91,7 @@ class TestTransformeLesTauxDesDonnéesBudgétairesDesÉtablissementsErrd:
                     {
                         "taux_de_caf": 0.082983883939739017,
                         "taux_de_vetuste_construction": 0.3682801725853011,
-                        "fonds_de_roulement_net_global": 3988284.410000000100000000,
+                        "fonds_de_roulement": 3988284.410000000100000000,
                         "annee": 2020,
                     }
                 ),
@@ -167,7 +167,7 @@ class TestTransformeLesTauxDesDonnéesBudgétairesDesÉtablissementsErrd:
         budget_et_finances_attendu = pd.DataFrame(
             [
                 helios_ann_errd_ej_budget_et_finances_builder(
-                    {"taux_de_caf": 0.071600138178413528, "taux_de_vetuste_construction": 0.45555983373892417, "fonds_de_roulement_net_global": NaN}
+                    {"taux_de_caf": 0.071600138178413528, "taux_de_vetuste_construction": 0.45555983373892417, "fonds_de_roulement": NaN}
                 )
             ]
         )

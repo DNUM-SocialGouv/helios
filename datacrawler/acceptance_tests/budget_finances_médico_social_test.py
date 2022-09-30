@@ -158,7 +158,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     0.31154835988672847,
                     NaN,
                 ],
-                "fonds_de_roulement_net_global": [
+                "fonds_de_roulement": [
                     2206969.259999999800000000,
                     1057217.929999999900000000,
                     3988284.410000000100000000,
@@ -361,7 +361,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     0.31154835988672847,
                     NaN,
                 ],
-                "fonds_de_roulement_net_global": [
+                "fonds_de_roulement": [
                     2206969.259999999800000000,
                     1057217.929999999900000000,
                     3988284.410000000100000000,
@@ -453,7 +453,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     "cadre_budgetaire": ["ERRD", "CA_PH"],
                     "taux_de_caf": [0.071600138178413528, 0.16],
                     "taux_de_vetuste_construction": [0.45555983373892417, 0.53],
-                    "fonds_de_roulement_net_global": [2206969.259999999800000000, NaN],
+                    "fonds_de_roulement": [2206969.259999999800000000, NaN],
                     "produits": [NaN, NaN],
                     "charges": [NaN, NaN],
                 }

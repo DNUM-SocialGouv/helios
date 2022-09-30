@@ -67,7 +67,7 @@ class TestTransformeEtFusionneLesDonnéesBudgétairesAvecLesTauxDesÉtablissemen
                             {
                                 "taux_de_caf": NaN,
                                 "taux_de_vetuste_construction": NaN,
-                                "fonds_de_roulement_net_global": NaN,
+                                "fonds_de_roulement": NaN,
                             }
                         ),
                         **helios_ann_errd_ej_et_budget_et_finances_builder({"annee": 2019}),

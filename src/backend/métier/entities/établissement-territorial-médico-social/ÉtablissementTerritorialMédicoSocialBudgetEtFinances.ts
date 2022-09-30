@@ -10,6 +10,10 @@ export type ÉtablissementTerritorialMédicoSocialBudgetEtFinances = Readonly<{
     dateMiseÀJourSource: string
     valeur: number
   } | null>
+  fondsDeRoulement: Readonly<{
+    dateMiseÀJourSource: string
+    valeur: number
+  } | null>
   recettesEtDépenses: Readonly<{
     dateMiseÀJourSource: string
     dépensesGroupe1: number
