@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from 'next/future/image'
 import { ReactElement } from 'react'
 
 import { useDependencies } from '../commun/contexts/useDependencies'

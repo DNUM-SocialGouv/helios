@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from 'next/future/image'
 import Link from 'next/link'
 
 import { useDependencies } from '../commun/contexts/useDependencies'
@@ -73,7 +73,6 @@ export const Cartographie = () => {
         <div className="fr-card__header">
           <Image
             alt=""
-            className="fr-responsive-img"
             height="300"
             src={carteFrance}
             width="300"

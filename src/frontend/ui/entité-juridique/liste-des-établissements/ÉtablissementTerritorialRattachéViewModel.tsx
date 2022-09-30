@@ -44,6 +44,7 @@ export class ÉtablissementTerritorialRattachéViewModel {
       <Image
         alt=""
         height="22"
+        priority
         src={logo}
         width="22"
       />

@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from 'next/future/image'
 
 import { useDependencies } from '../commun/contexts/useDependencies'
 import '@gouvfr/dsfr/dist/component/tile/tile.min.css'
@@ -54,7 +54,6 @@ export const RésultatsDeRecherche = ({
               <div className={styles['tuile']}>
                 <Image
                   alt=""
-                  className="fr-responsive-img"
                   height="40"
                   src={résultatViewModel.afficheLeLogo()}
                   width="40"
