@@ -13,7 +13,7 @@ from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_dat
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
 from datacrawler.extract.lecteur_xml import lis_le_fichier_xml
-from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
+from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_diamant, trouve_le_nom_du_fichier
 from datacrawler.load.nom_des_tables import (
     TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_SANITAIRES,
     TABLES_DES_AUTRES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
@@ -235,7 +235,7 @@ if __name__ == "__main__":
     )
     fichiers_diamant = os.listdir(répertoire_des_fichiers_diamant)
     chemin_local_du_fichier_ann_sae = os.path.join(
-        variables_d_environnement["DNUM_SFTP_LOCAL_PATH"], trouve_le_nom_du_fichier(fichiers_diamant, "ANN_SAE", logger_helios)
+        variables_d_environnement["DNUM_SFTP_LOCAL_PATH"], trouve_le_nom_du_fichier_diamant(fichiers_diamant, "ANN_SAE", logger_helios)
     )
     logger_helios.info(
         "[FINESS] Cherche les autorisations pour les ET sanitaires dans les fichiers : %s, %s, %s, %s",

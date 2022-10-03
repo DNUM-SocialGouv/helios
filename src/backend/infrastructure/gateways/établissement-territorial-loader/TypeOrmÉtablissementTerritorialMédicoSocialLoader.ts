@@ -77,8 +77,14 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     const budgetEtFinancesModelDeLÉtablissementTerritorial = await this.chargeLesBudgetEtFinancesModel(numéroFinessÉtablissementTerritorial)
     const dateDeMiseÀJourAnnErrdEjEt = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_ERRD_EJ_ET)
     const dateDeMiseÀJourAnnCaEjEt = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_CA_EJ_ET)
+    const dateDeMiseÀJourAnnErrdEj = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_ERRD_EJ)
 
-    return this.construisLeBudgetEtFinances(budgetEtFinancesModelDeLÉtablissementTerritorial, dateDeMiseÀJourAnnErrdEjEt, dateDeMiseÀJourAnnCaEjEt)
+    return this.construisLeBudgetEtFinances(
+      budgetEtFinancesModelDeLÉtablissementTerritorial,
+      dateDeMiseÀJourAnnErrdEjEt,
+      dateDeMiseÀJourAnnErrdEj,
+      dateDeMiseÀJourAnnCaEjEt
+    )
   }
 
   private async chargeLesActivitésModel(numéroFinessÉtablissementTerritorial: string) {
@@ -114,7 +120,10 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
   private async chargeLesBudgetEtFinancesModel(numéroFinessÉtablissementTerritorial: string) {
     return await (await this.orm)
       .getRepository(BudgetEtFinancesMédicoSocialModel)
-      .findBy({ numéroFinessÉtablissementTerritorial })
+      .find({
+        order: { année: 'ASC' },
+        where: { numéroFinessÉtablissementTerritorial },
+      })
   }
 
   private async chargeLaDateDeMiseÀJourModel(source: FichierSource): Promise<DateMiseÀJourFichierSourceModel> {
@@ -331,6 +340,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
   private construisLeBudgetEtFinances(
     budgetEtFinancesModel: BudgetEtFinancesMédicoSocialModel[],
     dateDeMiseÀJourAnnErrdEjEt: DateMiseÀJourFichierSourceModel,
+    dateDeMiseÀJourAnnErrdEj: DateMiseÀJourFichierSourceModel,
     dateDeMiseÀJourAnnCaEjEt: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialMédicoSocialBudgetEtFinances[] {
     const remplisLaValeurDeLIndicateurAvecSaMiseÀJourSiPrésente = (valeurDeLIndicateur: number | null, dateMiseÀJourSource: string) => {
@@ -340,31 +350,41 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       } : null
     }
     return budgetEtFinancesModel.map((budgetEtFinancesModel) => {
-      const dateDeMiseÀJourSuivantLeCadreBudgétaire =
-        budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.ERRD
-          ? dateDeMiseÀJourAnnErrdEjEt.dernièreMiseÀJour
-          : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour
-
       return {
         année: budgetEtFinancesModel.année,
         cadreBudgétaire: budgetEtFinancesModel.cadreBudgétaire,
-        chargesEtProduits: this.construisLesChargesEtProduits(budgetEtFinancesModel, dateDeMiseÀJourSuivantLeCadreBudgétaire),
+        chargesEtProduits: this.construisLesChargesEtProduits(budgetEtFinancesModel, dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour),
         contributionAuxFraisDeSiège: remplisLaValeurDeLIndicateurAvecSaMiseÀJourSiPrésente(
           budgetEtFinancesModel.contributionFraisDeSiègeGroupement,
-          dateDeMiseÀJourSuivantLeCadreBudgétaire
+          dateDeMiseÀJourAnnErrdEjEt.dernièreMiseÀJour
         ),
-        recettesEtDépenses: this.construisLesRecettesEtDépenses(budgetEtFinancesModel, dateDeMiseÀJourSuivantLeCadreBudgétaire),
+        fondsDeRoulement: remplisLaValeurDeLIndicateurAvecSaMiseÀJourSiPrésente(
+          budgetEtFinancesModel.fondsDeRoulement,
+          dateDeMiseÀJourAnnErrdEj.dernièreMiseÀJour
+        ),
+        recettesEtDépenses: this.construisLesRecettesEtDépenses(
+          budgetEtFinancesModel,
+          budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.ERRD
+            ? dateDeMiseÀJourAnnErrdEjEt.dernièreMiseÀJour
+            : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour
+        ),
         résultatNetComptable: remplisLaValeurDeLIndicateurAvecSaMiseÀJourSiPrésente(
           budgetEtFinancesModel.résultatNetComptable,
-          dateDeMiseÀJourSuivantLeCadreBudgétaire
+          budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.ERRD
+            ? dateDeMiseÀJourAnnErrdEjEt.dernièreMiseÀJour
+            : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour
         ),
         tauxDeCafNette: remplisLaValeurDeLIndicateurAvecSaMiseÀJourSiPrésente(
           budgetEtFinancesModel.tauxDeCaf,
-          dateDeMiseÀJourSuivantLeCadreBudgétaire
+          budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.ERRD
+            ? dateDeMiseÀJourAnnErrdEj.dernièreMiseÀJour
+            : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour
         ),
         tauxDeVétustéConstruction: remplisLaValeurDeLIndicateurAvecSaMiseÀJourSiPrésente(
           budgetEtFinancesModel.tauxDeVétustéConstruction,
-          dateDeMiseÀJourSuivantLeCadreBudgétaire
+          budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.ERRD
+            ? dateDeMiseÀJourAnnErrdEj.dernièreMiseÀJour
+            : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour
         ),
       }
     })

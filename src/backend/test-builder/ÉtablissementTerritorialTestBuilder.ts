@@ -374,6 +374,10 @@ export class ÉtablissementTerritorialTestBuilder {
       dateMiseÀJourSource: '2022-01-01',
       valeur: -20000,
     },
+    fondsDeRoulement: {
+      dateMiseÀJourSource: '2022-03-03',
+      valeur: 2206969.259999999800000000,
+    },
     recettesEtDépenses: {
       dateMiseÀJourSource: '2022-01-01',
       dépensesGroupe1: -129491.19,
@@ -387,8 +391,14 @@ export class ÉtablissementTerritorialTestBuilder {
       dateMiseÀJourSource: '2022-01-01',
       valeur: -38330.669999999503,
     },
-    tauxDeCafNette: null,
-    tauxDeVétustéConstruction: null,
+    tauxDeCafNette: {
+      dateMiseÀJourSource: '2022-03-03',
+      valeur: 0.13548734436644624,
+    },
+    tauxDeVétustéConstruction: {
+      dateMiseÀJourSource: '2022-03-03',
+      valeur: 0.38845089702004892,
+    },
   }
 
   private static budgetEtFinancesCaPhMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances = {
@@ -396,6 +406,7 @@ export class ÉtablissementTerritorialTestBuilder {
     cadreBudgétaire: CadreBudgétaire.CA_PH,
     chargesEtProduits: null,
     contributionAuxFraisDeSiège: null,
+    fondsDeRoulement: null,
     recettesEtDépenses: {
       dateMiseÀJourSource: '2022-02-02',
       dépensesGroupe1: -16901.360000000001,
@@ -428,6 +439,7 @@ export class ÉtablissementTerritorialTestBuilder {
       produits: 196518.51999999999,
     },
     contributionAuxFraisDeSiège: null,
+    fondsDeRoulement: null,
     recettesEtDépenses: null,
     résultatNetComptable: {
       dateMiseÀJourSource: '2022-02-02',

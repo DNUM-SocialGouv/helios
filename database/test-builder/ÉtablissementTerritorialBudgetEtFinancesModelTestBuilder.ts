@@ -19,9 +19,10 @@ export class ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder {
       budgetEtFinancesMédicoSocialModel.recettesGroupe3 = champsSurchargés?.recettesGroupe3 || 129491.19
       budgetEtFinancesMédicoSocialModel.résultatNetComptable = champsSurchargés?.résultatNetComptable || -38330.669999999503
       budgetEtFinancesMédicoSocialModel.charges = champsSurchargés?.charges || null
-      budgetEtFinancesMédicoSocialModel.produits = champsSurchargés?.produits ||null
-      budgetEtFinancesMédicoSocialModel.tauxDeCaf = champsSurchargés?.tauxDeCaf || null
-      budgetEtFinancesMédicoSocialModel.tauxDeVétustéConstruction = champsSurchargés?.tauxDeVétustéConstruction || null
+      budgetEtFinancesMédicoSocialModel.produits = champsSurchargés?.produits || null
+      budgetEtFinancesMédicoSocialModel.tauxDeCaf = champsSurchargés?.tauxDeCaf || 0.13548734436644624
+      budgetEtFinancesMédicoSocialModel.tauxDeVétustéConstruction = champsSurchargés?.tauxDeVétustéConstruction || 0.38845089702004892
+      budgetEtFinancesMédicoSocialModel.fondsDeRoulement = champsSurchargés?.fondsDeRoulement || 2206969.259999999800000000
       budgetEtFinancesMédicoSocialModel.cadreBudgétaire = CadreBudgétaire.ERRD
     } else if (cadreBudgétaire === CadreBudgétaire.CA_PH) {
       budgetEtFinancesMédicoSocialModel.année = champsSurchargés?.année || 2020
@@ -38,6 +39,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder {
       budgetEtFinancesMédicoSocialModel.produits = champsSurchargés?.produits ||null
       budgetEtFinancesMédicoSocialModel.tauxDeCaf = champsSurchargés?.tauxDeCaf || 0.16460754444264256
       budgetEtFinancesMédicoSocialModel.tauxDeVétustéConstruction = champsSurchargés?.tauxDeVétustéConstruction || 0.5319629026790017
+      budgetEtFinancesMédicoSocialModel.fondsDeRoulement = champsSurchargés?.fondsDeRoulement || null
       budgetEtFinancesMédicoSocialModel.cadreBudgétaire = CadreBudgétaire.CA_PH
     } else {
       budgetEtFinancesMédicoSocialModel.année = champsSurchargés?.année || 2020
@@ -54,6 +56,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder {
       budgetEtFinancesMédicoSocialModel.produits = champsSurchargés?.produits || 196518.51999999999
       budgetEtFinancesMédicoSocialModel.tauxDeCaf = champsSurchargés?.tauxDeCaf || null
       budgetEtFinancesMédicoSocialModel.tauxDeVétustéConstruction = champsSurchargés?.tauxDeVétustéConstruction || 0.31154835988672847
+      budgetEtFinancesMédicoSocialModel.fondsDeRoulement = champsSurchargés?.fondsDeRoulement || null
       budgetEtFinancesMédicoSocialModel.cadreBudgétaire = CadreBudgétaire.CA_PA
     }
     return budgetEtFinancesMédicoSocialModel

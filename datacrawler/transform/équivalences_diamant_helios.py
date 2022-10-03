@@ -1,5 +1,7 @@
 from typing import Dict, List, TypedDict
 
+import pandas as pd
+
 
 class ColonneHelios(TypedDict):
     nom: str
@@ -127,6 +129,25 @@ index_du_bloc_budget_et_finances: List[str] = [
 }
 
 colonnes_à_lire_bloc_budget_et_finances_ann_ca_ej_et: List[str] = list(équivalences_diamant_ann_ca_ej_et_bloc_budget_et_finances_helios.keys())
+
+équivalences_diamant_ann_errd_ej_bloc_budget_et_finances_helios: ÉquivalencesDiamantHelios = {
+    # Des valeurs manquantes dans les colonnes Id dépôt et année empêchent d'utiliser le type simple 'int'
+    "Id Dépôt": ColonneHelios(nom="", type=pd.Int64Dtype()),  # type: ignore
+    "Année": ColonneHelios(nom="annee", type=pd.Int64Dtype()),  # type: ignore
+    "Taux de CAF ERRD": ColonneHelios(nom="taux_de_caf", type=float),
+    "Taux vétusté Construction ERRD": ColonneHelios(nom="taux_de_vetuste_construction", type=float),
+    "Fonds de roulement net global ERRD": ColonneHelios(nom="fonds_de_roulement", type=float),
+}
+
+colonnes_à_lire_bloc_budget_et_finances_ann_errd_ej: List[str] = list(équivalences_diamant_ann_errd_ej_bloc_budget_et_finances_helios.keys())
+
+équivalences_diamant_per_errd_eprd_bloc_budget_et_finances_helios: ÉquivalencesDiamantHelios = {
+    "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+    "Année": ColonneHelios(nom="annee", type=int),
+    "Id Dépôt": ColonneHelios(nom="", type=int),
+}
+
+colonnes_à_lire_bloc_budget_et_finances_per_errd_eprd: List[str] = list(équivalences_diamant_per_errd_eprd_bloc_budget_et_finances_helios.keys())
 
 
 def extrais_l_equivalence_des_types_des_colonnes(équivalences: ÉquivalencesDiamantHelios) -> Dict[str, type]:

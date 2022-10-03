@@ -117,6 +117,7 @@ def supprime_les_données_des_tables(base_de_données: Engine) -> None:
     base_de_données.execute(f"DELETE FROM {TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_CPOM};")
+    base_de_données.execute(f"DELETE FROM {TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL};")
 
 
 def sauvegarde_une_activité_en_base(activité: pd.DataFrame, base_de_données: Engine, table: str) -> None:
@@ -236,6 +237,30 @@ def csv_ann_errd_ej_et_budget_et_finances_builder(champs_surchargés: Optional[D
     return ann_errd_ej_et_budget_et_finances
 
 
+def csv_ann_per_errd_eprd_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
+    ann_per_errd_eprd_budget_et_finances = {
+        "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "Année": 2020,
+        "Id Dépôt": 111111,
+    }
+    if champs_surchargés:
+        return {**ann_per_errd_eprd_budget_et_finances, **champs_surchargés}
+    return ann_per_errd_eprd_budget_et_finances
+
+
+def csv_ann_errd_ej_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, float]:
+    ann_errd_ej_budget_et_finances = {
+        "Année": 2020,
+        "Id Dépôt": 111111,
+        "Taux de CAF ERRD": 0.071600138178413528,
+        "Taux vétusté Construction ERRD": 0.45555983373892417,
+        "Fonds de roulement net global ERRD": 2206969.259999999800000000,
+    }
+    if champs_surchargés:
+        return {**ann_errd_ej_budget_et_finances, **champs_surchargés}
+    return ann_errd_ej_budget_et_finances
+
+
 def csv_ann_ca_ej_et_budget_et_finances_builder(
     cadre_budgétaire: str,
     champs_surchargés: Optional[Dict] = None,
@@ -344,7 +369,6 @@ def helios_ann_errd_ej_et_budget_et_finances_builder(champs_surchargés: Optiona
         "recettes_groupe_ii": 150.0,
         "recettes_groupe_iii": 350.0,
         "resultat_net_comptable": 50.0,
-        "cadre_budgetaire": "ERRD",
     }
     if champs_surchargés:
         return {**budget_et_finances, **champs_surchargés}
@@ -367,6 +391,19 @@ def helios_ann_ca_ej_et_budget_et_finances_builder(champs_surchargés: Optional[
         "taux_de_vetuste_construction": 0.53,
         "produits": NaN,
         "charges": NaN,
+    }
+    if champs_surchargés:
+        return {**budget_et_finances, **champs_surchargés}
+    return budget_et_finances
+
+
+def helios_ann_errd_ej_budget_et_finances_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    budget_et_finances = {
+        "taux_de_caf": 0.071600138178413528,
+        "taux_de_vetuste_construction": 0.45555983373892417,
+        "fonds_de_roulement": 2206969.259999999800000000,
+        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "annee": 2020,
     }
     if champs_surchargés:
         return {**budget_et_finances, **champs_surchargés}

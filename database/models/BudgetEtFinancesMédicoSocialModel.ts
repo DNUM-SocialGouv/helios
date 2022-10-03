@@ -34,6 +34,9 @@ export class BudgetEtFinancesMédicoSocialModel {
   @Column({ name: 'depenses_groupe_iii', nullable: true, type: 'float' })
   public dépensesGroupe3!: number | null
 
+  @Column({ name: 'fonds_de_roulement', nullable: true, type: 'float' })
+  public fondsDeRoulement!: number | null
+
   @PrimaryColumn({ length:9, name: 'numero_finess_etablissement_territorial' })
   public numéroFinessÉtablissementTerritorial!: string
 

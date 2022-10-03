@@ -14,6 +14,7 @@ export enum FichierSource {
   DIAMANT_ANN_RPU = 'ann_rpu',
   DIAMANT_ANN_SAE = 'ann_sae',
   DIAMANT_ANN_CA_EJ_ET = 'ann_ca_ej_et',
+  DIAMANT_ANN_ERRD_EJ = 'ann_errd_ej',
 }
 
 @Entity({ name: 'date_mise_a_jour_fichier_source' })

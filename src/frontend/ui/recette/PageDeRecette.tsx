@@ -52,51 +52,58 @@ export const PageDeRecette = () => {
     {
       identifiant: <>
         <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        - 690 024 898 - EHPAD SAINT-FRANCOIS D’ASSISE (avec toutes les données d’activités)
+        - 690 024 898 - EHPAD SAINT-FRANCOIS D’ASSISE (avec toutes les données d’activités - cadre ERRD)
       </>,
       numéroFiness: '690024898',
     },
     {
       identifiant: <>
         <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        - 690 015 458 - ACCUEIL DE JOUR LES PETITS BONHEURS (certains indicateurs ne sont pas disponibles dans les données activité)
+        - 690 015 458 - ACCUEIL DE JOUR LES PETITS BONHEURS (certains indicateurs ne sont pas disponibles dans les données activité - cadre ERRD)
       </>,
       numéroFiness: '690015458',
     },
     {
       identifiant: <>
         <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        - 370 103 137 - ESAT ANAIS DE METTRAY (avec une année manquante dans les données activité)
+        - 370 103 137 - ESAT ANAIS DE METTRAY (avec une année manquante dans les données activité - cadre CA PH)
       </>,
       numéroFiness: '370103137',
     },
     {
       identifiant: <>
         <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        - 130 008 329 - EHPAD RESIDENCE LES LAVANDINS (avec une année vide dans les données activité)
+        - 130 008 329 - EHPAD RESIDENCE LES LAVANDINS (avec une année vide dans les données activité - cadre ERRD sans taux)
       </>,
       numéroFiness: '130008329',
     },
     {
       identifiant: <>
         <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        - 010 007 425 - SSIAD EHPAD SAINT-TRIVIER-DE-COURTES (avec toutes les données activités disponibles mais vides)
+        - 010 007 425 - SSIAD EHPAD SAINT-TRIVIER-DE-COURTES (avec toutes les données activités disponibles mais vides - cadre ERRD)
       </>,
       numéroFiness: '010007425',
     },
     {
       identifiant: <>
         <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        - 660 011 859 - SAAD DOMITYS SUD EST LES TOURS D’OR (avec aucune activité)
+        - 660 011 859 - SAAD DOMITYS SUD EST LES TOURS D’OR (avec aucune activité ni données budget et finances)
       </>,
       numéroFiness: '660011859',
     },
     {
       identifiant: <>
         <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        - 590 006 961 - INSTITUT THERAPEUTIQUE EDUCATIF ET PEDAGOGIQUE DE TOURCOING (avec beaucoup d’autorisations)
+        - 590 006 961 - INSTITUT THERAPEUTIQUE EDUCATIF ET PEDAGOGIQUE DE TOURCOING (avec beaucoup d’autorisations - cadre CA PH)
       </>,
       numéroFiness: '590006961',
+    },
+    {
+      identifiant: <>
+        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
+        - 660 009 945 - EEPA PHV BOUFFARD VERCELLI (cadre CA PA)
+      </>,
+      numéroFiness: '660009945',
     },
   ]
   const établissementsTerritoriauxSanitaires: {identifiant: ReactElement, numéroFiness: string}[] = [

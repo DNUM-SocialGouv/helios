@@ -20,11 +20,4 @@ def transforme_les_données_dépenses_et_recettes_des_établissements_errd(
         .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_diamant_ann_errd_ej_et_bloc_budget_et_finances_helios))
         .dropna(subset=index_du_bloc_budget_et_finances)
         .drop_duplicates(subset=index_du_bloc_budget_et_finances)
-        .apply(ajoute_le_cadre_budgétaire, axis=1)
     )
-
-
-def ajoute_le_cadre_budgétaire(ligne: pd.Series) -> pd.Series:
-    ligne_modifiée = ligne.copy()
-    ligne_modifiée["cadre_budgetaire"] = "ERRD"
-    return ligne_modifiée
