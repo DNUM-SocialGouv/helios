@@ -1,5 +1,7 @@
 from typing import Dict, List, TypedDict
 
+import pandas
+
 
 class ColonneHelios(TypedDict):
     nom: str
@@ -129,8 +131,8 @@ index_du_bloc_budget_et_finances: List[str] = [
 colonnes_à_lire_bloc_budget_et_finances_ann_ca_ej_et: List[str] = list(équivalences_diamant_ann_ca_ej_et_bloc_budget_et_finances_helios.keys())
 
 équivalences_diamant_ann_errd_ej_bloc_budget_et_finances_helios: ÉquivalencesDiamantHelios = {
-    "Id Dépôt": ColonneHelios(nom="", type=int),
-    "Année": ColonneHelios(nom="annee", type=int),
+    "Id Dépôt": ColonneHelios(nom="", type=pandas.Int64Dtype()),
+    "Année": ColonneHelios(nom="annee", type=pandas.Int64Dtype()),
     "Taux de CAF ERRD": ColonneHelios(nom="taux_de_caf", type=float),
     "Taux vétusté Construction ERRD": ColonneHelios(nom="taux_de_vetuste_construction", type=float),
     "Fonds de roulement net global ERRD": ColonneHelios(nom="fonds_de_roulement", type=float),

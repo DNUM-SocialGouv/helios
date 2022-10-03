@@ -9,7 +9,7 @@ from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_diamant
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
-from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
+from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_diamant
 from datacrawler.load.nom_des_tables import TABLES_DES_CPOM, FichierSource
 from datacrawler.transform.transforme_les_dates_d_entree_en_vigueur_des_cpom.transforme_les_dates_d_entree_en_vigueur_des_cpom import (
     transforme_les_dates_d_entrée_en_vigueur_des_cpom,
@@ -60,7 +60,7 @@ if __name__ == "__main__":
     base_de_données_helios = create_engine(variables_d_environnement["DATABASE_URL"])
     fichiers = os.listdir(variables_d_environnement["DNUM_SFTP_LOCAL_PATH"])
     chemin_local_du_fichier_ann_ms_tdp_et = os.path.join(
-        variables_d_environnement["DNUM_SFTP_LOCAL_PATH"], trouve_le_nom_du_fichier(fichiers, "ANN_MS_TDP_ET", logger_helios)
+        variables_d_environnement["DNUM_SFTP_LOCAL_PATH"], trouve_le_nom_du_fichier_diamant(fichiers, "ANN_MS_TDP_ET", logger_helios)
     )
     logger_helios.info(
         f"""[DIAMANT] Cherche les dates d'entrée en vigueur du CPOM pour les ET médico sociaux dans le fichier

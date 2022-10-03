@@ -22,7 +22,7 @@
     "psql:production": "scalingo -a helios pgsql-console",
     "postinstall": "husky install",
     "populateDatabase": "yarn retrieveFiness && yarn updateEJ && yarn updateET && yarn updateAutorisationsMédicoSocial",
-    "populateDatabase:local": "yarn retrieveFiness && yarn updateEJ && yarn updateET && yarn updateActivitésMédicoSociaux:local && yarn updateActivitésSanitaire:local && yarn updateAutorisationsMédicoSocial:local && yarn updateAutorisationsSanitaire:local && yarn updateCpomMedicoSocial:local && updateBudgetEtFinancesMedicoSocial:local",
+    "populateDatabase:local": "yarn retrieveFiness && yarn updateEJ && yarn updateET && yarn updateActivitésMédicoSociaux:local && yarn updateActivitésSanitaire:local && yarn updateAutorisationsMédicoSocial:local && yarn updateAutorisationsSanitaire:local && yarn updateCpomMedicoSocial:local && yarn updateBudgetEtFinancesMedicoSocial:local",
     "retrieveFiness": "ts-node -T datacrawler/legacy/infrastructure/controllers/téléchargeLesDonnéesBrutesDeFinessCron.ts",
     "updateEJ": "TS_NODE_TRANSPILE_ONLY=true node --loader ts-node/esm --max-old-space-size=8192 datacrawler/legacy/infrastructure/controllers/metsÀJourLesEntitésJuridiquesCron.ts",
     "updateET": "TS_NODE_TRANSPILE_ONLY=true node --loader ts-node/esm --max-old-space-size=8192 datacrawler/legacy/infrastructure/controllers/metsÀJourLesÉtablissementsTerritoriauxCron.ts",
