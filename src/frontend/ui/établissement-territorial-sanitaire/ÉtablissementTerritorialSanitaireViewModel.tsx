@@ -3,6 +3,7 @@ import { ReactElement } from 'react'
 import { ÉtablissementTerritorialSanitaire } from '../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire'
 import { Paths } from '../../configuration/Paths'
 import { Wording } from '../../configuration/wording/Wording'
+import { StringFormater } from '../commun/StringFormater'
 import { ÉtablissementTerritorialSanitaireActivitéViewModel } from './ÉtablissementTerritorialSanitaireActivitéViewModel'
 import { ÉtablissementTerritorialSanitaireAutorisationsViewModel } from './ÉtablissementTerritorialSanitaireAutorisationsViewModel'
 import { ÉtablissementTerritorialSanitaireIdentitéViewModel } from './ÉtablissementTerritorialSanitaireIdentitéViewModel'
@@ -52,19 +53,11 @@ export class ÉtablissementTerritorialSanitaireViewModel {
   }
 
   private formateLeTitreDeLEntitéJuridiqueDeRattachement() {
-    const numéroFinessEntitéJuridiqueFormaté = this.insèreUnEspaceTousLesNCaractères(
+    const numéroFinessEntitéJuridiqueFormaté = StringFormater.insèreUnEspaceTousLesNCaractères(
       this.établissementTerritorial.identité.numéroFinessEntitéJuridique.value,
       3
     )
     const nomDeLEntitéJuridique = this.établissementTerritorial.identité.raisonSocialeDeLEntitéDeRattachement.value
     return `${numéroFinessEntitéJuridiqueFormaté} - ${nomDeLEntitéJuridique}`
-  }
-
-  private insèreUnEspaceTousLesNCaractères(str: string, nombreDeCaractères: number): string {
-    return str
-      .split('')
-      .map((letter, index) => (index % nombreDeCaractères === 0 ? ' ' + letter : letter))
-      .join('')
-      .trim()
   }
 }

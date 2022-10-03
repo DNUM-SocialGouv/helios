@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from 'next/future/image'
 import { ReactElement } from 'react'
 
 import { DomaineÉtablissementTerritorial } from '../../../../backend/métier/entities/DomaineÉtablissementTerritorial'
@@ -43,10 +43,9 @@ export class ÉtablissementTerritorialRattachéViewModel {
     return (
       <Image
         alt=""
-        height="22"
-        priority
+        height="25"
         src={logo}
-        width="22"
+        width="25"
       />
     )
   }

@@ -21,7 +21,7 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
   }
 
   public get numéroFinessÉtablissementTerritorial(): string {
-    return this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorialSanitaireIdentité.numéroFinessÉtablissementTerritorial.value, 3)
+    return StringFormater.insèreUnEspaceTousLesNCaractères(this.établissementTerritorialSanitaireIdentité.numéroFinessÉtablissementTerritorial.value, 3)
   }
 
   public get dateDeMiseÀJourDuNuméroFinessÉtablissementTerritorial(): string {
@@ -37,7 +37,9 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
   }
 
   public get téléphoneEtEmail(): string {
-    const téléphoneFormaté = this.valeurOuNonRenseigné(this.insèreUnEspaceTousLesNCaractères(this.établissementTerritorialSanitaireIdentité.téléphone.value, 2))
+    const téléphoneFormaté = this.valeurOuNonRenseigné(
+      StringFormater.insèreUnEspaceTousLesNCaractères(this.établissementTerritorialSanitaireIdentité.téléphone.value, 2)
+    )
     const email = this.valeurOuNonRenseigné(this.établissementTerritorialSanitaireIdentité.courriel.value)
     return `${téléphoneFormaté} | ${email}`
   }
@@ -48,7 +50,7 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
 
   public get entitéJuridiqueDeRattachement(): JSX.Element {
     const lienVersLEntitéJuridique = `${this.paths.ENTITÉ_JURIDIQUE}/${this.établissementTerritorialSanitaireIdentité.numéroFinessEntitéJuridique.value}`
-    const numéroFinessEntitéJuridiqueFormaté = this.insèreUnEspaceTousLesNCaractères(
+    const numéroFinessEntitéJuridiqueFormaté = StringFormater.insèreUnEspaceTousLesNCaractères(
       this.établissementTerritorialSanitaireIdentité.numéroFinessEntitéJuridique.value,
       3
     )
@@ -84,14 +86,6 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
 
   public get dateDeMiseÀJourDuStatutDeLÉtablissement(): string {
     return StringFormater.formateLaDate(this.établissementTerritorialSanitaireIdentité.statutJuridique.dateMiseÀJourSource)
-  }
-
-  private insèreUnEspaceTousLesNCaractères(str: string, nombreDeCaractères: number): string {
-    return str
-      .split('')
-      .map((letter, index) => (index % nombreDeCaractères === 0 ? ' ' + letter : letter))
-      .join('')
-      .trim()
   }
 
   private valeurOuNonRenseigné(valeur: string): string {
