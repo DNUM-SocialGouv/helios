@@ -1,8 +1,12 @@
 import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn, OneToOne } from 'typeorm'
 
-import { DomaineÉtablissementTerritorial } from '../../datacrawler/legacy/métier/entities/DomaineÉtablissementTerritorial'
 import { CpomModel } from './CpomModel'
 import { EntitéJuridiqueModel } from './EntitéJuridiqueModel'
+
+export enum DomaineÉtablissementTerritorial {
+  MÉDICO_SOCIAL = 'Médico-social',
+  SANITAIRE = 'Sanitaire'
+}
 
 @Entity({ name: 'etablissement_territorial' })
 export class ÉtablissementTerritorialIdentitéModel {

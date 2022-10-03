@@ -339,7 +339,6 @@ yarn encryptDiamant:local
  ┣ 📂 node_modules                ->  Dépendances définies du package.json
  ┣ 📂 public                      ->  Assets statiques
  ┣ 📂 datacrawler
- ┃  ┣ 📂 legacy                   ->  Récupération des données FINESS
  ┃  ┣ 📂 extract
  ┃  ┣ 📂 transform
  ┃  ┗ 📂 load
@@ -347,6 +346,7 @@ yarn encryptDiamant:local
  ┃  ┣ 📂 migrations               ->  Les migrations
  ┃  ┣ 📂 models                   ->  Définition des modèles des tables
  ┃  ┗ 📜 migrations.ts            ->  Pont d'entrée de lancement des migrations
+ ┣ 📂 download                    ->  Récupération des données des sources externes
  ┣ 📂 src
  ┃  ┣ 📂 frontend
  ┃  ┃  ┣ 📂 configuration         ->  Ce qui n'est pas React

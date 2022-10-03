@@ -1,7 +1,7 @@
 import { DataSource, EntityManager } from 'typeorm'
 
-import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
-import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
+import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../database/models/DateMiseÀJourFichierSourceModel'
+import { ÉtablissementTerritorialIdentitéModel } from '../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { Logger } from '../../../métier/gateways/Logger'
 import { ÉtablissementTerritorialRepository } from '../../../métier/gateways/ÉtablissementTerritorialRepository'

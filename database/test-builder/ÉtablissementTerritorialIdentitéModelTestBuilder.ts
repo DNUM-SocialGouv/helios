@@ -1,4 +1,4 @@
-import { DomaineÉtablissementTerritorial } from '../../datacrawler/legacy/métier/entities/DomaineÉtablissementTerritorial'
+import { DomaineÉtablissementTerritorial } from '../../download/métier/entities/DomaineÉtablissementTerritorial'
 import { ÉtablissementTerritorialIdentitéModel } from '../models/ÉtablissementTerritorialIdentitéModel'
 
 export class ÉtablissementTerritorialIdentitéModelTestBuilder {

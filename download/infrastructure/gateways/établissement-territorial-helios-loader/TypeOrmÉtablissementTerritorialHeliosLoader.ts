@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm'
 
-import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
+import { ÉtablissementTerritorialIdentitéModel } from '../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { ÉtablissementTerritorialHeliosLoader } from '../../../métier/gateways/ÉtablissementTerritorialHeliosLoader'
 
 export class TypeOrmÉtablissementTerritorialHeliosLoader implements ÉtablissementTerritorialHeliosLoader {

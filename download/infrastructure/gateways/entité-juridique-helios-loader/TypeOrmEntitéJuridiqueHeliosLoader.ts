@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm'
 
-import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
+import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
 import { EntitéJuridiqueHeliosLoader } from '../../../métier/gateways/EntitéJuridiqueHeliosLoader'
 
 export class TypeOrmEntitéJuridiqueHeliosLoader implements EntitéJuridiqueHeliosLoader {
