@@ -10,19 +10,19 @@ import LogoÉtablissementTerritorial from './logo-établissement-territorial-san
 import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTerritorialSanitaireViewModel'
 
 type ÉtablissementTerritorialProps = Readonly<{
-  établissementTerritorialViewModel: ÉtablissementTerritorialSanitaireViewModel
+  établissementTerritorialSanitaireViewModel: ÉtablissementTerritorialSanitaireViewModel
 }>
 
-export const PageÉtablissementTerritorialSanitaire = ({ établissementTerritorialViewModel }: ÉtablissementTerritorialProps) => {
+export const PageÉtablissementTerritorialSanitaire = ({ établissementTerritorialSanitaireViewModel }: ÉtablissementTerritorialProps) => {
   const { paths } = useDependencies()
 
   useBreadcrumb([
     {
-      label: établissementTerritorialViewModel.titreAccessibleDeLEntitéJuridique,
-      path: `${paths.ENTITÉ_JURIDIQUE}/${établissementTerritorialViewModel.numéroFinessEntitéJuridiqueBrut}`,
+      label: établissementTerritorialSanitaireViewModel.titreAccessibleDeLEntitéJuridique,
+      path: `${paths.ENTITÉ_JURIDIQUE}/${établissementTerritorialSanitaireViewModel.numéroFinessEntitéJuridiqueBrut}`,
     },
     {
-      label: établissementTerritorialViewModel.nomDeLÉtablissementTerritorial,
+      label: établissementTerritorialSanitaireViewModel.identitéViewModel.nomDeLÉtablissementTerritorial,
       path: '',
     },
   ])
@@ -31,15 +31,17 @@ export const PageÉtablissementTerritorialSanitaire = ({ établissementTerritori
     <main className="fr-container">
       <Head>
         <title>
-          {établissementTerritorialViewModel.titre}
+          {établissementTerritorialSanitaireViewModel.titre}
         </title>
       </Head>
       <Titre logo={LogoÉtablissementTerritorial}>
-        {établissementTerritorialViewModel.titre}
+        {établissementTerritorialSanitaireViewModel.titre}
       </Titre>
-      <BlocIdentitéSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialViewModel} />
-      <BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialViewModel} />
-      <BlocActivitéSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialViewModel} />
+      <BlocIdentitéSanitaire établissementTerritorialSanitaireIdentitéViewModel={établissementTerritorialSanitaireViewModel.identitéViewModel} />
+      <BlocAutorisationEtCapacitéSanitaire
+        établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+      />
+      <BlocActivitéSanitaire établissementTerritorialSanitaireActivitéViewModel={établissementTerritorialSanitaireViewModel.activitésViewModel} />
     </main>
   )
 }

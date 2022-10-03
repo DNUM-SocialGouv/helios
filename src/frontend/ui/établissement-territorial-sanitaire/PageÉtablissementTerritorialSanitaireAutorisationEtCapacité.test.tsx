@@ -9,12 +9,12 @@ import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTer
 const { paths, wording } = fakeFrontDependencies
 
 describe('La page établissement territorial sanitaire - bloc autorisation et capacité', () => {
-  const établissementTerritorialSanitaire = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths)
+  const établissementTerritorialSanitaireViewModel = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths)
 
   describe('L’indicateur de la capacité par activités', () => {
     it('affiche les informations de l’indicateur "Capacité par activités"', () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
       // THEN
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
@@ -38,7 +38,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
 
     it('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails" (Capacité par activités)', () => {
       // GIVEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
       const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
       const détails = within(indicateurs[0]).getByRole('button', { name: wording.DÉTAILS })
@@ -69,7 +69,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
 
     it('ferme l’info bulle après avoir cliqué sur le bouton "Fermer" (Capacité par activités)', () => {
       // GIVEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
       const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
       const détails = within(indicateurs[0]).getByRole('button', { name: wording.DÉTAILS })
@@ -86,7 +86,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
 
     it('affiche un tableau descriptif avec les toutes les activités', () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
       // THEN
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
@@ -170,7 +170,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       }, wording, paths)
 
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansActivité} />)
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSansActivité} />)
 
       // THEN
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
@@ -194,7 +194,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       }, wording, paths)
 
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansActivité} />)
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSansActivité} />)
 
       // THEN
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
@@ -211,7 +211,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     [wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, 'équipements-matériels-lourds-sanitaire'],
   ])('affiche le titre de la partie %s, sa source et l’accès aux détails', (nomDeLIndicateur: string, suffixeDeLInfoBulle: string) => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
     // THEN
     const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
@@ -237,7 +237,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     [wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS],
   ])('a une infobulle avec le contenu relatif aux %s', (nomDeLIndicateur: string) => {
     // GIVEN
-    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
     const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
     const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
@@ -286,7 +286,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     }, wording, paths)
 
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansAutorisations} />)
+    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSansAutorisations} />)
 
     // THEN
     const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
@@ -297,7 +297,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
   describe('L’indicateur des autorisations', () => {
     it('affiche un lien pour chaque activité de l’établissement', () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
       // THEN
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
@@ -308,7 +308,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
 
     it('affiche un lien pour chaque modalité d’une activité', () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
       // THEN
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
@@ -319,7 +319,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
 
     it('affiche le libellé et le code de la forme, les dates et le numéro arhgos pour chacune des formes quand ces informations sont renseignées', () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
       // THEN
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
@@ -337,7 +337,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
   describe('L’indicateur des autres activités', () => {
     it('affiche un lien pour chaque autre activité de l’établissement', () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
       // THEN
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
@@ -351,7 +351,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
 
     it('affiche un lien pour chaque modalité d’une autre activité', () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
       // THEN
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
@@ -367,7 +367,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
 
     it('affiche le libellé et le code de la forme et les dates pour chacune des formes quand ces informations sont renseignées', () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
       // THEN
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
@@ -422,7 +422,9 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     }, wording, paths)
 
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSansAutorisationsNiCapacités} />)
+    renderFakeComponent(
+      <PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSansAutorisationsNiCapacités} />
+    )
 
     // THEN
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
@@ -599,7 +601,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
   ])('affiche l‘indicateur $indicateurAffiché lorsqu‘il est le seul à être renseigné', ({ indicateurAffiché, viewModel }) => {
     // GIVEN
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={viewModel} />)
+    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={viewModel} />)
 
     // THEN
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
@@ -610,7 +612,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
   describe('L’indicateur des reconnaissances contractuelles', () => {
     it('affiche un lien pour chaque reconnaissance contractuelle de l’établissement', () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
       // THEN
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
@@ -622,7 +624,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
 
     it('affiche un lien pour chaque modalité d’une reconnaissance contractuelle', () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
       // THEN
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
@@ -634,7 +636,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
 
     it('affiche le libellé et le code de la forme, le numéro AHRGOS, CPOM et et les dates pour chacune des formes quand ces informations sont renseignées', () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
       // THEN
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
@@ -654,7 +656,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
   describe('L’indicateur des équipements matériels lourds', () => {
     it('affiche un lien pour chaque équipement matériel lourd de l’établissement', () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
       // THEN
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
@@ -666,7 +668,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
 
     it('affiche les autorisations et leurs dates quand ces informations sont renseignées', () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
       // THEN
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
@@ -686,7 +688,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
 
   it('affiche les autorisations et capacités dans le bon ordre', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialViewModel={établissementTerritorialSanitaire} />)
+    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
     // THEN
 

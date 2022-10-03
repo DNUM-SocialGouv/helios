@@ -9,21 +9,21 @@ import { ContenuAutresActivités } from './InfoBulle/ContenuAutresActivités'
 import { ContenuCapacitéParActivités } from './InfoBulle/ContenuCapacitéParActivités'
 import { ContenuReconnaissancesContractuelles } from './InfoBulle/ContenuReconnaissancesContractuelles'
 import { ContenuÉquipementsMatérielsLourds } from './InfoBulle/ContenuÉquipementsMatérielsLourds'
-import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTerritorialSanitaireViewModel'
+import { ÉtablissementTerritorialSanitaireAutorisationsViewModel } from './ÉtablissementTerritorialSanitaireAutorisationsViewModel'
 
 type BlocAutorisationEtCapacitéSanitaireProps = Readonly<{
-  établissementTerritorialSanitaireViewModel: ÉtablissementTerritorialSanitaireViewModel
+  établissementTerritorialSanitaireAutorisationsViewModel: ÉtablissementTerritorialSanitaireAutorisationsViewModel
 }>
 
-export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorialSanitaireViewModel }: BlocAutorisationEtCapacitéSanitaireProps) => {
+export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorialSanitaireAutorisationsViewModel }: BlocAutorisationEtCapacitéSanitaireProps) => {
   const { wording } = useDependencies()
 
   if (
-    !établissementTerritorialSanitaireViewModel.lesCapacitésParActivitésSontEllesRenseignées &&
-    !établissementTerritorialSanitaireViewModel.lesAutorisationsSontEllesRenseignées &&
-    !établissementTerritorialSanitaireViewModel.lesAutresActivitésSontEllesRenseignées &&
-    !établissementTerritorialSanitaireViewModel.lesReconnaissancesContractuellesSontEllesRenseignées &&
-    !établissementTerritorialSanitaireViewModel.lesÉquipementsMatérielsLourdsSontIlsRenseignés
+    !établissementTerritorialSanitaireAutorisationsViewModel.lesCapacitésParActivitésSontEllesRenseignées &&
+    !établissementTerritorialSanitaireAutorisationsViewModel.lesAutorisationsSontEllesRenseignées &&
+    !établissementTerritorialSanitaireAutorisationsViewModel.lesAutresActivitésSontEllesRenseignées &&
+    !établissementTerritorialSanitaireAutorisationsViewModel.lesReconnaissancesContractuellesSontEllesRenseignées &&
+    !établissementTerritorialSanitaireAutorisationsViewModel.lesÉquipementsMatérielsLourdsSontIlsRenseignés
   ) {
     return (
       <Bloc titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>
@@ -41,78 +41,78 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
         className={styles['liste-indicateurs']}
       >
         {
-          établissementTerritorialSanitaireViewModel.lesCapacitésParActivitésSontEllesRenseignées &&
+          établissementTerritorialSanitaireAutorisationsViewModel.lesCapacitésParActivitésSontEllesRenseignées &&
           <IndicateurGraphique
             contenuInfoBulle={<ContenuCapacitéParActivités
-              dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDeLaCapacitéInstalléeParActivités}
+              dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDeLaCapacitéInstalléeParActivités}
               source={Sources(wording.DIAMANT, wording.SAE)}
             />}
-            dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDeLaCapacitéInstalléeParActivités}
+            dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDeLaCapacitéInstalléeParActivités}
             identifiant="capacite-sanitaire"
             nomDeLIndicateur={wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
             source={Sources(wording.DIAMANT, wording.SAE)}
           >
-            {établissementTerritorialSanitaireViewModel.capacitéParActivités}
+            {établissementTerritorialSanitaireAutorisationsViewModel.capacitéParActivités}
           </IndicateurGraphique>
         }
         {
-          établissementTerritorialSanitaireViewModel.lesAutorisationsSontEllesRenseignées &&
+          établissementTerritorialSanitaireAutorisationsViewModel.lesAutorisationsSontEllesRenseignées &&
           <IndicateurAutorisationEtCapacité
             contenuInfoBulle={<ContenuAutorisations
-              dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDesAutorisations}
+              dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesAutorisations}
               source={Sources(wording.FINESS, wording.ARHGOS)}
             />}
-            dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDesAutorisations}
+            dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesAutorisations}
             identifiant="autorisations-sanitaire"
             nomDeLIndicateur={wording.AUTORISATIONS}
             source={Sources(wording.FINESS, wording.ARHGOS)}
           >
-            {établissementTerritorialSanitaireViewModel.autorisations}
+            {établissementTerritorialSanitaireAutorisationsViewModel.autorisations}
           </IndicateurAutorisationEtCapacité>
         }
         {
-          établissementTerritorialSanitaireViewModel.lesAutresActivitésSontEllesRenseignées &&
+          établissementTerritorialSanitaireAutorisationsViewModel.lesAutresActivitésSontEllesRenseignées &&
           <IndicateurAutorisationEtCapacité
             contenuInfoBulle={<ContenuAutresActivités
-              dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDesAutresActivités}
+              dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesAutresActivités}
               source={Sources(wording.FINESS, wording.ARHGOS)}
             />}
-            dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDesAutresActivités}
+            dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesAutresActivités}
             identifiant="autres-activités-sanitaire"
             nomDeLIndicateur={wording.AUTRES_ACTIVITÉS}
             source={Sources(wording.FINESS, wording.ARHGOS)}
           >
-            {établissementTerritorialSanitaireViewModel.autresActivités}
+            {établissementTerritorialSanitaireAutorisationsViewModel.autresActivités}
           </IndicateurAutorisationEtCapacité>
         }
         {
-          établissementTerritorialSanitaireViewModel.lesReconnaissancesContractuellesSontEllesRenseignées &&
+          établissementTerritorialSanitaireAutorisationsViewModel.lesReconnaissancesContractuellesSontEllesRenseignées &&
             <IndicateurAutorisationEtCapacité
               contenuInfoBulle={<ContenuReconnaissancesContractuelles
-                dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDesReconnaissancesContractuelles}
+                dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesReconnaissancesContractuelles}
                 source={Sources(wording.FINESS, wording.ARHGOS)}
               />}
-              dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDesReconnaissancesContractuelles}
+              dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesReconnaissancesContractuelles}
               identifiant="reconnaissances-contractuelles-sanitaire"
               nomDeLIndicateur={wording.RECONNAISSANCES_CONTRACTUELLES}
               source={Sources(wording.FINESS, wording.ARHGOS)}
             >
-              {établissementTerritorialSanitaireViewModel.reconnaissancesContractuelles}
+              {établissementTerritorialSanitaireAutorisationsViewModel.reconnaissancesContractuelles}
             </IndicateurAutorisationEtCapacité>
         }
         {
-          établissementTerritorialSanitaireViewModel.lesÉquipementsMatérielsLourdsSontIlsRenseignés &&
+          établissementTerritorialSanitaireAutorisationsViewModel.lesÉquipementsMatérielsLourdsSontIlsRenseignés &&
             <IndicateurAutorisationEtCapacité
               contenuInfoBulle={<ContenuÉquipementsMatérielsLourds
-                dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDesÉquipementsMatérielsLourds}
+                dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesÉquipementsMatérielsLourds}
                 source={Sources(wording.FINESS, wording.ARHGOS)}
               />}
-              dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDesÉquipementsMatérielsLourds}
+              dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesÉquipementsMatérielsLourds}
               identifiant="équipements-matériels-lourds-sanitaire"
               nomDeLIndicateur={wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS}
               source={Sources(wording.FINESS, wording.ARHGOS)}
             >
-              {établissementTerritorialSanitaireViewModel.équipementsMatérielsLourds}
+              {établissementTerritorialSanitaireAutorisationsViewModel.équipementsMatérielsLourds}
             </IndicateurAutorisationEtCapacité>
         }
       </ul>

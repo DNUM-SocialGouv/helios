@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from 'next/future/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ChangeEvent, useState } from 'react'
@@ -35,7 +35,6 @@ export const Header = () => {
                   <div className="fr-header__operator">
                     <Image
                       alt=""
-                      className="fr-responsive-img"
                       height="80"
                       src="/logo.svg"
                       width="80"

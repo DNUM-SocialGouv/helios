@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from 'next/future/image'
 import Link from 'next/link'
 import '@gouvfr/dsfr/dist/component/footer/footer.min.css'
 
@@ -25,7 +25,6 @@ export const Footer = () => {
               >
                 <Image
                   alt=""
-                  className="fr-responsive-img"
                   height="100"
                   src="/logo.svg"
                   width="100"

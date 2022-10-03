@@ -12,7 +12,7 @@ export namespace StringFormater {
     return new Date(date).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })
   }
 
-  function insèreUnEspaceTousLesNCaractères(str: string, nombreDeCaractères: number): string {
+  export function insèreUnEspaceTousLesNCaractères(str: string, nombreDeCaractères: number): string {
     return str.split('').map((letter, index) => index % nombreDeCaractères === 0 ? ' ' + letter : letter).join('').trim()
   }
 }

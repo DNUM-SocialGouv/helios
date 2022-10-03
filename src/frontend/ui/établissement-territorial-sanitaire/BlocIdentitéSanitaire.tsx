@@ -3,13 +3,13 @@ import { useDependencies } from '../commun/contexts/useDependencies'
 import { IndicateurIdentité } from '../commun/IndicateurIdentité/IndicateurIdentité'
 import { Sources } from '../commun/Sources/Sources'
 import styles from './BlocIdentitéSanitaire.module.css'
-import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTerritorialSanitaireViewModel'
+import { ÉtablissementTerritorialSanitaireIdentitéViewModel } from './ÉtablissementTerritorialSanitaireIdentitéViewModel'
 
 type BlocIdentitéSanitaireProps = {
-  établissementTerritorialSanitaireViewModel: ÉtablissementTerritorialSanitaireViewModel
+  établissementTerritorialSanitaireIdentitéViewModel: ÉtablissementTerritorialSanitaireIdentitéViewModel
 }
 
-export const BlocIdentitéSanitaire = ({ établissementTerritorialSanitaireViewModel }: BlocIdentitéSanitaireProps) => {
+export const BlocIdentitéSanitaire = ({ établissementTerritorialSanitaireIdentitéViewModel }: BlocIdentitéSanitaireProps) => {
   const { wording } = useDependencies()
 
   return (
@@ -19,46 +19,46 @@ export const BlocIdentitéSanitaire = ({ établissementTerritorialSanitaireViewM
     >
       <ul className={styles['liste-indicateurs']}>
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNomDeLÉtablissementTerritorial}
+          dateDeMiseÀJour={établissementTerritorialSanitaireIdentitéViewModel.dateDeMiseÀJourDuNomDeLÉtablissementTerritorial}
           nomDeLIndicateur={wording.NOM_DE_L_ÉTABLISSEMENT}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialSanitaireViewModel.nomDeLÉtablissementTerritorial}
+          valeur={établissementTerritorialSanitaireIdentitéViewModel.nomDeLÉtablissementTerritorial}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuNuméroFinessÉtablissementTerritorial}
+          dateDeMiseÀJour={établissementTerritorialSanitaireIdentitéViewModel.dateDeMiseÀJourDuNuméroFinessÉtablissementTerritorial}
           nomDeLIndicateur={wording.NUMÉRO_FINESS}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialSanitaireViewModel.numéroFinessÉtablissementTerritorial}
+          valeur={établissementTerritorialSanitaireIdentitéViewModel.numéroFinessÉtablissementTerritorial}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDeLAdresse}
+          dateDeMiseÀJour={établissementTerritorialSanitaireIdentitéViewModel.dateDeMiseÀJourDeLAdresse}
           nomDeLIndicateur={wording.ADRESSE}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialSanitaireViewModel.adresse}
+          valeur={établissementTerritorialSanitaireIdentitéViewModel.adresse}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDutéléphoneEtDeLEmail}
+          dateDeMiseÀJour={établissementTerritorialSanitaireIdentitéViewModel.dateDeMiseÀJourDutéléphoneEtDeLEmail}
           nomDeLIndicateur={wording.TÉLÉPHONE_ET_EMAIL}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialSanitaireViewModel.téléphoneEtEmail}
+          valeur={établissementTerritorialSanitaireIdentitéViewModel.téléphoneEtEmail}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDeLEntitéJuridiqueDeRattachement}
+          dateDeMiseÀJour={établissementTerritorialSanitaireIdentitéViewModel.dateDeMiseÀJourDeLEntitéJuridiqueDeRattachement}
           nomDeLIndicateur={wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialSanitaireViewModel.entitéJuridiqueDeRattachement}
+          valeur={établissementTerritorialSanitaireIdentitéViewModel.entitéJuridiqueDeRattachement}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDeLaCatégorieDeLÉtablissement}
+          dateDeMiseÀJour={établissementTerritorialSanitaireIdentitéViewModel.dateDeMiseÀJourDeLaCatégorieDeLÉtablissement}
           nomDeLIndicateur={wording.CATÉGORIE_DE_L_ÉTABLISSEMENT}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialSanitaireViewModel.catégorieDeLÉtablissement}
+          valeur={établissementTerritorialSanitaireIdentitéViewModel.catégorieDeLÉtablissement}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialSanitaireViewModel.dateDeMiseÀJourDuStatutDeLÉtablissement}
+          dateDeMiseÀJour={établissementTerritorialSanitaireIdentitéViewModel.dateDeMiseÀJourDuStatutDeLÉtablissement}
           nomDeLIndicateur={wording.STATUT_JURIDIQUE_EJ}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialSanitaireViewModel.statutDeLÉtablissement}
+          valeur={établissementTerritorialSanitaireIdentitéViewModel.statutDeLÉtablissement}
         />
       </ul>
     </Bloc>
