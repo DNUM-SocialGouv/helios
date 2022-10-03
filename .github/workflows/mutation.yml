@@ -1,0 +1,25 @@
+name: Mutation testing
+
+on:
+  schedule:
+    - cron: '0 0 * * 5'
+
+jobs:
+  install-for-mutation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: package.json
+      - name: Install node modules
+        run: yarn --frozen-lockfile --check-files
+      - name: Run just one test
+        run: yarn test:typescript src/backend/infrastructure/gateways/logger/ConsoleLogger.test.ts
+      - name: Run the mutations
+        run: yarn test:mutation
+      - uses: actions/upload-artifact@v3
+        with:
+          name: mutation-report
+          path: reports/mutation/mutation.html
+          retention-days: 1
