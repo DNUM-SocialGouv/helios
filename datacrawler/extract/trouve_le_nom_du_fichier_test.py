@@ -4,7 +4,7 @@ import pytest
 from pytest import LogCaptureFixture
 
 from datacrawler.dependencies.logger.logger import crée_le_logger
-from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_diamant, trouve_le_nom_du_fichier_finess
+from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier, trouve_le_nom_du_fichier_diamant
 from datacrawler.test_helpers import mocked_logger
 
 
@@ -59,8 +59,8 @@ class TestLocaliseLeFichierDiamant:
         assert log.message == "Le fichier ANN_ERRD_EJ_ET est introuvable parmi les fichiers téléchargés."
 
 
-class TestLocaliseLeFichierFiness:
-    def test_renvoie_le_nom_du_fichier_finess_recherché(self) -> None:
+class TestLocaliseLeFichier:
+    def test_renvoie_le_nom_du_fichier_recherché(self) -> None:
         # GIVEN
         préfixe_du_fichier_recherché = "finess_cs1400105"
         liste_des_fichiers = [
@@ -72,19 +72,19 @@ class TestLocaliseLeFichierFiness:
         ]
 
         # WHEN
-        fichier_recherché = trouve_le_nom_du_fichier_finess(liste_des_fichiers, préfixe_du_fichier_recherché, mocked_logger)
+        fichier_recherché = trouve_le_nom_du_fichier(liste_des_fichiers, préfixe_du_fichier_recherché, mocked_logger)
 
         # THEN
         assert fichier_recherché == f"{préfixe_du_fichier_recherché}_stock_20221003-105.xml"
 
-    def test_signale_si_le_fichier_finess_recherché_n_est_pas_présent(self, caplog: LogCaptureFixture) -> None:
+    def test_signale_si_le_fichier_recherché_n_est_pas_présent(self, caplog: LogCaptureFixture) -> None:
         # GIVEN
         logger = crée_le_logger()
         préfixe_du_fichier_recherché = "finess_cs1400105"
 
         # WHEN
         with pytest.raises(FileNotFoundError):
-            trouve_le_nom_du_fichier_finess([], préfixe_du_fichier_recherché, logger)
+            trouve_le_nom_du_fichier([], préfixe_du_fichier_recherché, logger)
 
         # THEN
         log = caplog.records.pop()

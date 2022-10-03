@@ -216,10 +216,10 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         )
         assert date_du_fichier_ann_ca_ej_et.fetchone() == (date(2022, 9, 1), FichierSource.DIAMANT_ANN_CA_EJ_ET.value)
 
-        date_du_fichier_ann_ca_ej_et = base_de_données_test.execute(
+        date_du_fichier_ann_errd_ej = base_de_données_test.execute(
             f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ.value}'"
         )
-        assert date_du_fichier_ann_ca_ej_et.fetchone() == (date(2022, 9, 1), FichierSource.DIAMANT_ANN_ERRD_EJ.value)
+        assert date_du_fichier_ann_errd_ej.fetchone() == (date(2022, 9, 1), FichierSource.DIAMANT_ANN_ERRD_EJ.value)
 
     def test_supprime_les_données_existantes_avant_de_sauvegarder_les_données_en_base(self) -> None:
         # GIVEN

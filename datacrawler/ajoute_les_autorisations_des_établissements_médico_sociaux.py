@@ -9,7 +9,7 @@ from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_finess
 from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
 from datacrawler.extract.lecteur_xml import lis_le_fichier_xml
-from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_finess
+from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.load.nom_des_tables import TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, FichierSource
 from datacrawler.transform.transforme_les_autorisations_des_établissements_médico_sociaux import transforme_les_autorisations_des_établissements_médico_sociaux
 from datacrawler.transform.équivalences_finess_helios import XPATH_FINESS_CS1400105, balises_à_échapper_finess_cs1400105
@@ -50,8 +50,6 @@ if __name__ == "__main__":
     base_de_données_helios = create_engine(variables_d_environnement["DATABASE_URL"])
     répertoire_des_fichiers = os.path.join(variables_d_environnement["FINESS_SFTP_LOCAL_PATH"], "finess", "enrichi")
     fichiers = os.listdir(répertoire_des_fichiers)
-    chemin_local_du_fichier_des_autorisations = os.path.join(
-        répertoire_des_fichiers, trouve_le_nom_du_fichier_finess(fichiers, "finess_cs1400105", logger_helios)
-    )
+    chemin_local_du_fichier_des_autorisations = os.path.join(répertoire_des_fichiers, trouve_le_nom_du_fichier(fichiers, "finess_cs1400105", logger_helios))
     logger_helios.info(f"[FINESS] Cherche les autorisations pour les ET médico-sociaux dans le fichier {chemin_local_du_fichier_des_autorisations}")
     ajoute_les_autorisations_des_établissements_médico_sociaux(chemin_local_du_fichier_des_autorisations, base_de_données_helios, logger_helios)
