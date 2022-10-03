@@ -13,13 +13,9 @@ from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_�
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_diamant
 from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, FichierSource
 from datacrawler.transform.transforme_les_activités_des_établissements_sanitaires import transforme_les_activités_des_établissements_sanitaires
-from datacrawler.transform.équivalences_diamant_helios import (
-    colonnes_à_lire_ann_rpu,
-    colonnes_à_lire_men_pmsi_annuel,
-    extrais_l_equivalence_des_types_des_colonnes,
-    équivalences_diamant_ann_rpu_helios,
-    équivalences_diamant_men_pmsi_annuel_helios,
-)
+from datacrawler.transform.équivalences_diamant_helios import (colonnes_à_lire_ann_rpu, colonnes_à_lire_men_pmsi_annuel,
+                                                               extrais_l_equivalence_des_types_des_colonnes, équivalences_diamant_ann_rpu_helios,
+                                                               équivalences_diamant_men_pmsi_annuel_helios)
 
 
 def ajoute_les_activités_des_établissements_sanitaires(
@@ -73,12 +69,12 @@ def ajoute_les_activités_des_établissements_sanitaires(
 if __name__ == "__main__":
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_données_helios = create_engine(variables_d_environnement["DATABASE_URL"])
-    fichiers = os.listdir(variables_d_environnement["DNUM_SFTP_LOCAL_PATH"])
+    fichiers = os.listdir(variables_d_environnement["DIAMANT_DATA_PATH"])
     chemin_local_du_fichier_men_pmsi_annuel = os.path.join(
-        variables_d_environnement["DNUM_SFTP_LOCAL_PATH"], trouve_le_nom_du_fichier_diamant(fichiers, "MEN_PMSI_ANNUEL", logger_helios)
+        variables_d_environnement["DIAMANT_DATA_PATH"], trouve_le_nom_du_fichier_diamant(fichiers, "MEN_PMSI_ANNUEL", logger_helios)
     )
     chemin_local_du_fichier_ann_rpu = os.path.join(
-        variables_d_environnement["DNUM_SFTP_LOCAL_PATH"], trouve_le_nom_du_fichier_diamant(fichiers, "ANN_RPU", logger_helios)
+        variables_d_environnement["DIAMANT_DATA_PATH"], trouve_le_nom_du_fichier_diamant(fichiers, "ANN_RPU", logger_helios)
     )
     logger_helios.info(f"[DIAMANT] Cherche les activités pour les ET sanitaires dans les fichiers {chemin_local_du_fichier_men_pmsi_annuel}")
     ajoute_les_activités_des_établissements_sanitaires(

@@ -169,21 +169,21 @@ yarn psql:local
 
 ##### Prérequis
 
-1. Faire partie de l'équipe Helios sur Scalingo.
+1. Faire partie de l'équipe Helios sur Scalingo
 
-2. Installer la CLI Scalingo :
+2. Installer la CLI Scalingo
 
-```sh
-curl -O https://cli-dl.scalingo.io/install && bash install
-```
+    ```sh
+    curl -O https://cli-dl.scalingo.io/install && bash install
+    ```
 
 3. Si besoin, se connecter à son compte Scalingo via la CLI avec son e-mail et mot de passe
 
-```sh
-scalingo login
-```
+    ```sh
+    scalingo login
+    ```
 
-#### Commande
+##### Commande
 
 ```sh
 yarn psql:production
@@ -220,10 +220,10 @@ yarn typeorm migration:revert
 > Plus d’infos sur [typeorm.io](https://typeorm.io/migrations)
 
 > Les migrations sont jouées automatiquement lors de chaque déploiement sur Scalingo grâce à la commande du `Procfile`
- 
+
 ### Simulation des sources de données externes
 
-#### Finess
+#### FINESS
 
 Un SFTP (image Docker) simulant notre source de données FINESS est lancé avec l'application.
 
@@ -289,7 +289,7 @@ yarn populateDatabase
 Dans chaque répertoire (enrichi, nomenclature et simple), il faut mettre un fichier XML zippé contenant les bonnes données, un autre fichier XML zippé avec une date différente et un fichier UNL zippé pour correspondre au SFTP de production.
 
 > ATTENTION ! Lors d'une mise à jour des ET, il faut anonymiser les balises `noautorarhgos` et `noimplarhgos` de la partie `activiteoffresoin` car ce sont des données qui ne doivent pas être partagées.
- 
+
 #### DIAMANT
 
 *En cours* : un SFTP devra être mis en place pour simuler le SFTP Helios, où nos données DIAMANT sont déposées.
@@ -304,17 +304,21 @@ Un échantillon des données DIAMANT, chiffrées et non-chiffrées, sont dans `d
 
 *À venir*
 
-##### Simuler le déchiffrement des données DIAMANT
+##### Simuler le déchiffrement des données DIAMANT en local
 
-Prérequis : renseigner la clef privée de test dans la variable DIAMANT_KEY.
+Prérequis : renseigner la clef privée de test dans la variable d'environnement DIAMANT_PRIVATE_KEY dans .bashrc.
+
 ```sh
 yarn decryptDiamant:local
 ```
 
-##### Simuler le chiffrement des données DIAMANT
-Prérequis : renseigner la clef publique de test dans la variable DIAMANT_PUBLC_KEY.
+##### Simuler le chiffrement des données DIAMANT en local
+
+Prérequis : renseigner la clef privée de test dans la variable d'environnement DIAMANT_PRIVATE_KEY dans .bashrc.
 
 ```sh
+echo "$DIAMANT_PRIVATE_KEY" | base64 --decode | gpg --import
+
 yarn encryptDiamant:local
 ```
 
@@ -322,9 +326,9 @@ yarn encryptDiamant:local
 
 *À venir*
 
-##### Mettre à jour le jeu de données test
+##### Mettre à jour le jeu de données DIAMANT de test
 
-1. Mettre à jour les fichiers csv présents dans `data_set/diamant`
+1. Mettre à jour les fichiers CSV présents dans `data_set/diamant`
 2. Lancer le script pour chiffrer les données
 
 ### Arborescence

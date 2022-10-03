@@ -140,8 +140,12 @@ jobs:
       - name: Type check
         run: pipenv run typecheck
       - name: Run the migrations
-        run: yarn migrations
         env:
           NODE_ENV: test
+        run: yarn migrations
+      - name: Create the DIAMANT public key
+        env:
+          DIAMANT_PRIVATE_KEY: ${{ secrets.DIAMANT_PRIVATE_KEY }}
+        run: echo "$DIAMANT_PRIVATE_KEY" | gpg --import
       - name: Test
         run: pipenv run test

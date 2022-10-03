@@ -58,9 +58,9 @@ def ajoute_le_cpom_des_établissements_médico_sociaux(
 if __name__ == "__main__":
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_données_helios = create_engine(variables_d_environnement["DATABASE_URL"])
-    fichiers = os.listdir(variables_d_environnement["DNUM_SFTP_LOCAL_PATH"])
+    fichiers = os.listdir(variables_d_environnement["DIAMANT_DATA_PATH"])
     chemin_local_du_fichier_ann_ms_tdp_et = os.path.join(
-        variables_d_environnement["DNUM_SFTP_LOCAL_PATH"], trouve_le_nom_du_fichier_diamant(fichiers, "ANN_MS_TDP_ET", logger_helios)
+        variables_d_environnement["DIAMANT_DATA_PATH"], trouve_le_nom_du_fichier_diamant(fichiers, "ANN_MS_TDP_ET", logger_helios)
     )
     logger_helios.info(
         f"""[DIAMANT] Cherche les dates d'entrée en vigueur du CPOM pour les ET médico sociaux dans le fichier
