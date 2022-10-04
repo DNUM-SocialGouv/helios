@@ -20,6 +20,11 @@ export class NodeEnvironmentVariables implements EnvironmentVariables {
   readonly SFTP_PRIVATE_KEY: string = this.getOrElse('SFTP_PRIVATE_KEY')
   readonly SFTP_USERNAME: string = this.getOrElse('SFTP_USERNAME')
 
+  readonly DNUM_SFTP_HOST: string = this.getOrElse('DNUM_SFTP_HOST')
+  readonly DNUM_SFTP_PORT: string = this.getOrElse('DNUM_SFTP_PORT')
+  readonly DNUM_SFTP_PRIVATE_KEY: string = this.getOrElse('DNUM_SFTP_PRIVATE_KEY')
+  readonly DNUM_SFTP_USERNAME: string = this.getOrElse('DNUM_SFTP_USERNAME')
+
   private getOrElse(key: string): string {
     if (process.env[key] === 'toBeSet') {
       this.logger.error(`----- WARNING ----- La variable d’environnement "${key}" est manquante.`)

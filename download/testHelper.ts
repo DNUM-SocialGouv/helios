@@ -8,6 +8,10 @@ import { Logger } from './métier/gateways/Logger'
 
 const environmentVariables: EnvironmentVariables = {
   DATABASE_URL: 'postgres://helios:h3li0s@localhost:5433/helios',
+  DNUM_SFTP_HOST: 'localhost',
+  DNUM_SFTP_PORT: '22',
+  DNUM_SFTP_PRIVATE_KEY: 'privateDnumKey',
+  DNUM_SFTP_USERNAME: 'HELIOS',
   ORM_DEBUG: 'true',
   SENTRY_AUTH_TOKEN: '1234567890',
   SENTRY_DSN: 'https://fake-sentry.io/11',
@@ -28,6 +32,7 @@ export function getOrm() {
 export const getFakeDataCrawlerDependencies = (): Dependencies => {
   return {
     DÉLAI_D_ARRÊT_DES_TÂCHES_EN_MS: 1000,
+    dnumDownloadRawData: { exécute: jest.fn() },
     entitéJuridiqueHeliosLoader: { récupèreLeNuméroFinessDesEntitésJuridiques: jest.fn() },
     entitéJuridiqueHeliosRepository: { sauvegarde: jest.fn(), supprime: jest.fn() },
     entitéJuridiqueSourceExterneLoader: { récupèreLaDateDeMiseÀJourDuFichierSource: jest.fn(), récupèreLesEntitésJuridiquesOuvertes: jest.fn() },

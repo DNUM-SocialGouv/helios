@@ -27,6 +27,7 @@
     "populateDatabase": "yarn retrieveFiness && yarn updateEJ && yarn updateET && yarn updateAutorisationsMédicoSocial",
     "populateDatabase:local": "yarn retrieveFiness && yarn updateEJ && yarn updateET && yarn updateActivitésMédicoSociaux:local && yarn updateActivitésSanitaire:local && yarn updateAutorisationsMédicoSocial:local && yarn updateAutorisationsSanitaire:local && yarn updateCpomMedicoSocial:local && yarn updateBudgetEtFinancesMedicoSocial:local",
     "retrieveFiness": "ts-node -T download/infrastructure/controllers/téléchargeLesDonnéesBrutesDeFinessCron.ts",
+    "retrieveDiamant": "ts-node -T download/infrastructure/controllers/téléchargeLesDonnéesBrutesDiamantCron.ts",
     "updateEJ": "TS_NODE_TRANSPILE_ONLY=true node --loader ts-node/esm --max-old-space-size=8192 download/infrastructure/controllers/metsÀJourLesEntitésJuridiquesCron.ts",
     "updateET": "TS_NODE_TRANSPILE_ONLY=true node --loader ts-node/esm --max-old-space-size=8192 download/infrastructure/controllers/metsÀJourLesÉtablissementsTerritoriauxCron.ts",
     "updateActivitésMédicoSociaux:local": "pipenv run populate_activite_et_medico_social",
