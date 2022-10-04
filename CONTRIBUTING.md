@@ -169,15 +169,21 @@ yarn psql:local
 
 ##### Prérequis
 
-1. Faire partie de l'équipe Helios sur Scalingo
+Faire partie de l'équipe Helios sur Scalingo.
 
-2. Installer la CLI Scalingo
+A. Grâce à l'IHM :
+
+Suivre la documentation Scalingo pour utiliser [adminer](https://doc.scalingo.com/platform/databases/adminer#how-to-use-adminer)
+
+B. En ligne de commande :
+
+1. Installer la CLI Scalingo :
 
     ```sh
     curl -O https://cli-dl.scalingo.io/install && bash install
     ```
 
-3. Si besoin, se connecter à son compte Scalingo via la CLI avec son e-mail et mot de passe
+2. Si besoin, se connecter à son compte Scalingo via la CLI avec son e-mail et mot de passe
 
     ```sh
     scalingo login
@@ -221,17 +227,21 @@ yarn typeorm migration:revert
 
 > Les migrations sont jouées automatiquement lors de chaque déploiement sur Scalingo grâce à la commande du `Procfile`
 
-### Simulation des sources de données externes
+## SFTP locaux
 
-#### FINESS
+Deux SFTP (image Docker) peuvent être lancés avec l'application.
 
-Un SFTP (image Docker) simulant notre source de données FINESS est lancé avec l'application.
+Des échantillons des diverses sources de données (FINESS, DIAMANT) sont dans `data_set`.
 
-Un échantillon des données FINESS se trouve dans `data_set`.
+Une clé publique SSH unique `$HOME/.ssh/sftp_local.pub` sera demandée pour l'authentification aux SFTP locaux.
 
-##### Configurer le SFTP local
+### Simuler le téléchargement des données DIAMANT
 
-Une clé publique SSH `$HOME/.ssh/sftp_local.pub` sera demandée pour l'authentification au SFTP local.
+```sh
+yarn retrieveDiamant
+```
+
+### Configuration spéciale du SFTP FINESS
 
 Il est nécessaire de changer les *KEX algorithms* dans `sshd_config` pour coller à ceux utilisés par le SFTP cible.
 Pour cela, créer un fichier `sshd_config/sshd_config` et compléter ce *template* :
