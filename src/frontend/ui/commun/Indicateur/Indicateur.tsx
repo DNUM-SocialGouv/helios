@@ -2,7 +2,7 @@ import { ReactChild, useState } from 'react'
 
 import { useDependencies } from '../contexts/useDependencies'
 import { InfoBulle } from '../InfoBulle/InfoBulle'
-import styles from './IndicateurAutorisationEtCapacité.module.css'
+import styles from './Indicateur.module.css'
 
 import '@gouvfr/dsfr/dist/component/button/button.min.css'
 
@@ -15,7 +15,7 @@ type IndicateurProps = Readonly<{
   children: ReactChild
 }>
 
-export const IndicateurAutorisationEtCapacité = (
+export const Indicateur = (
   { contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source, children }: IndicateurProps
 ) => {
   const { wording } = useDependencies()

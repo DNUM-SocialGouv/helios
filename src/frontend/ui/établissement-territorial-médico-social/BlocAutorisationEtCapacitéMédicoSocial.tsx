@@ -1,6 +1,6 @@
 import { Bloc } from '../commun/Bloc/Bloc'
 import { useDependencies } from '../commun/contexts/useDependencies'
-import { IndicateurAutorisationEtCapacité } from '../commun/IndicateurAutorisationEtCapacité/IndicateurAutorisationEtCapacité'
+import { Indicateur } from '../commun/Indicateur/Indicateur'
 import { IndicateurGraphique } from '../commun/IndicateurGraphique/IndicateurGraphique'
 import { Sources } from '../commun/Sources/Sources'
 import styles from './BlocAutorisationEtCapacitéMédicoSocial.module.css'
@@ -48,7 +48,7 @@ export const BlocAutorisationEtCapacitéMédicoSocial = ({ établissementTerrito
             {établissementTerritorialMédicoSocialViewModel.capacitéParActivités}
           </IndicateurGraphique>
         }
-        <IndicateurAutorisationEtCapacité
+        <Indicateur
           contenuInfoBulle={<ContenuAutorisations
             dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDesAutorisations}
             source={Sources(wording.FINESS, wording.ARHGOS)}
@@ -59,7 +59,7 @@ export const BlocAutorisationEtCapacitéMédicoSocial = ({ établissementTerrito
           source={Sources(wording.FINESS, wording.ARHGOS)}
         >
           {établissementTerritorialMédicoSocialViewModel.autorisations}
-        </IndicateurAutorisationEtCapacité>
+        </Indicateur>
       </ul>
     </Bloc>
   )
