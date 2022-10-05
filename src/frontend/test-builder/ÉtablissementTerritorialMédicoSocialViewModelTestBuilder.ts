@@ -1,5 +1,6 @@
 import { CadreBudgétaire } from '../../../database/models/BudgetEtFinancesMédicoSocialModel'
 import { ÉtablissementTerritorialMédicoSocial } from '../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
+import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
 import { Paths } from '../configuration/Paths'
 import { Wording } from '../configuration/wording/Wording'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from '../ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel'
@@ -286,11 +287,11 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       chargesEtProduits: null,
       contributionAuxFraisDeSiège: {
         dateMiseÀJourSource: '2022-01-01',
-        valeur: -20000,
+        valeur: -10000,
       },
       fondsDeRoulement: {
         dateMiseÀJourSource: '2022-01-01',
-        valeur: 1057217.929999999900000000,
+        valeur: 1057217.9299999999,
       },
       recettesEtDépenses: {
         dateMiseÀJourSource: '2022-01-01',
@@ -318,7 +319,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       },
       fondsDeRoulement: {
         dateMiseÀJourSource: '2022-01-01',
-        valeur: 3988284.410000000100000000,
+        valeur: 3988284.4100000001,
       },
       recettesEtDépenses: {
         dateMiseÀJourSource: '2022-01-01',
@@ -342,11 +343,11 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       chargesEtProduits: null,
       contributionAuxFraisDeSiège: {
         dateMiseÀJourSource: '2022-01-01',
-        valeur: -20000,
+        valeur: -30000,
       },
       fondsDeRoulement: {
         dateMiseÀJourSource: '2022-01-01',
-        valeur: 2206969.259999999800000000,
+        valeur: 2206969.2599999998,
       },
       recettesEtDépenses: {
         dateMiseÀJourSource: '2022-01-01',
@@ -375,7 +376,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       {
         activités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.activités,
         autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
-        budgetEtFinances: [],
+        budgetEtFinances: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.budgetEtFinances,
         identité: {
           ...ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
           ...champsSurchargés,
@@ -384,5 +385,45 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       wording,
       paths
     )
+  }
+
+  public static créeUneAnnéeBudgetEtFinances(
+    champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialBudgetEtFinances>
+  ): ÉtablissementTerritorialMédicoSocialBudgetEtFinances {
+    return {
+      année: 2019,
+      cadreBudgétaire: CadreBudgétaire.ERRD,
+      chargesEtProduits: null,
+      contributionAuxFraisDeSiège: {
+        dateMiseÀJourSource: '2022-01-01',
+        valeur: -20000,
+      },
+      fondsDeRoulement: {
+        dateMiseÀJourSource: '2022-03-03',
+        valeur: 2206969.2599999998,
+      },
+      recettesEtDépenses: {
+        dateMiseÀJourSource: '2022-01-01',
+        dépensesGroupe1: -129491.19,
+        dépensesGroupe2: -2718457.1600000001,
+        dépensesGroupe3: -406469.14999999997,
+        recettesGroupe1: 3388394.2000000002,
+        recettesGroupe2: 22231.200000000001,
+        recettesGroupe3: 129491.19,
+      },
+      résultatNetComptable: {
+        dateMiseÀJourSource: '2022-01-01',
+        valeur: -38330.669999999503,
+      },
+      tauxDeCafNette: {
+        dateMiseÀJourSource: '2022-03-03',
+        valeur: 0.13548734436644624,
+      },
+      tauxDeVétustéConstruction: {
+        dateMiseÀJourSource: '2022-03-03',
+        valeur: 0.38845089702004892,
+      },
+      ...champsSurchargés,
+    }
   }
 }

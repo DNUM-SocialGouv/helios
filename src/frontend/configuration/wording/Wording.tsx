@@ -155,6 +155,7 @@ export interface Wording {
   // Bloc budget et finances
   readonly TITRE_BLOC_BUDGET_ET_FINANCES: string
   readonly MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE: string
+  readonly MONTANT: string
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string
