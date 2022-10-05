@@ -356,7 +356,7 @@ yarn encryptDiamant:local
  ┃  ┣ 📂 migrations               ->  Les migrations
  ┃  ┣ 📂 models                   ->  Définition des modèles des tables
  ┃  ┗ 📜 migrations.ts            ->  Pont d'entrée de lancement des migrations
- ┣ 📂 download                    ->  Récupération des données des sources externes
+ ┣ 📂 download_data_source        ->  Récupération des données des sources externes
  ┣ 📂 src
  ┃  ┣ 📂 frontend
  ┃  ┃  ┣ 📂 configuration         ->  Ce qui n'est pas React

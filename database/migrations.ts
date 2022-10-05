@@ -1,7 +1,7 @@
-import { dotEnvConfig } from '../download/infrastructure/gateways/dot-env/dotEnvConfig'
-import { NodeEnvironmentVariables } from '../download/infrastructure/gateways/environnement-variables/NodeEnvironmentVariables'
-import { ConsoleLogger } from '../download/infrastructure/gateways/logger/ConsoleLogger'
-import { typeOrmOrm } from '../download/infrastructure/gateways/orm/typeOrmOrm'
+import { dotEnvConfig } from '../download_data_source/infrastructure/gateways/dot-env/dotEnvConfig'
+import { NodeEnvironmentVariables } from '../download_data_source/infrastructure/gateways/environnement-variables/NodeEnvironmentVariables'
+import { ConsoleLogger } from '../download_data_source/infrastructure/gateways/logger/ConsoleLogger'
+import { typeOrmOrm } from '../download_data_source/infrastructure/gateways/orm/typeOrmOrm'
 
 (async () => {
   const logger = new ConsoleLogger()

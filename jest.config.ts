@@ -8,7 +8,7 @@ const customJestConfig: Config.InitialOptions = {
   clearMocks: true,
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
-    'download/**/*.ts',
+    'download_data_source/**/*.ts',
     '!**/node_modules/**',
     '!database/**',
     '!src/pages/**',
@@ -26,7 +26,7 @@ const customJestConfig: Config.InitialOptions = {
   testEnvironment: 'jest-environment-jsdom',
   testMatch: [
     '<rootDir>/src/**/*(*.)@(test).ts?(x)',
-    '<rootDir>/download/**/*(*.)@(test).ts',
+    '<rootDir>/download_data_source/**/*(*.)@(test).ts',
   ],
 }
 
