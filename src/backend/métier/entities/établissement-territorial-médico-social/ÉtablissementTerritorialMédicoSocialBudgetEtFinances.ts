@@ -3,36 +3,36 @@ export type ÉtablissementTerritorialMédicoSocialBudgetEtFinances = Readonly<{
   cadreBudgétaire: string
   chargesEtProduits: Readonly<{
     dateMiseÀJourSource: string
-    charges: number
-    produits: number
-  } | null>
+    charges: number | null
+    produits: number | null
+  }>
   contributionAuxFraisDeSiège: Readonly<{
     dateMiseÀJourSource: string
-    valeur: number
-  } | null>
+    valeur: number | null
+  }>
   fondsDeRoulement: Readonly<{
     dateMiseÀJourSource: string
-    valeur: number
-  } | null>
+    valeur: number | null
+  }>
   recettesEtDépenses: Readonly<{
     dateMiseÀJourSource: string
-    dépensesGroupe1: number
-    dépensesGroupe2: number
-    dépensesGroupe3: number
-    recettesGroupe1: number
-    recettesGroupe2: number
-    recettesGroupe3: number
-  } | null>
+    dépensesGroupe1: number | null
+    dépensesGroupe2: number | null
+    dépensesGroupe3: number | null
+    recettesGroupe1: number | null
+    recettesGroupe2: number | null
+    recettesGroupe3: number | null
+  }>
   résultatNetComptable: Readonly<{
     dateMiseÀJourSource: string
-    valeur: number
-  } | null>
+    valeur: number | null
+  }>
   tauxDeCafNette: Readonly<{
     dateMiseÀJourSource: string
-    valeur: number
-  } | null>
+    valeur: number | null
+  }>
   tauxDeVétustéConstruction: Readonly<{
     dateMiseÀJourSource: string
-    valeur: number
-  } | null>
+    valeur: number | null
+  }>
 }>
