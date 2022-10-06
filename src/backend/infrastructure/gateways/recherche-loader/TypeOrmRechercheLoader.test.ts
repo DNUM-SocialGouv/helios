@@ -238,6 +238,29 @@ describe('La recherche d’entités et d’établissements', () => {
     ])
   })
 
+  it('retourne des résultats même s’il y a des tirets dans la recherche demandée', async () => {
+    // GIVEN
+    const raisonSocialeAvecDesTirets = 'CENTRE-HOSPITALIER-DU-HAUT-BUGEY'
+    const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée()
+    await entitéJuridiqueRepository.insert(entitéJuridiqueModel)
+
+    const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm)
+
+    // WHEN
+    const recherche = await typeOrmRechercheLoader.recherche(raisonSocialeAvecDesTirets, premièrePage)
+
+    // THEN
+    expect(recherche.résultats).toStrictEqual<RésultatDeRecherche['résultats']>([
+      {
+        commune: 'OYONNAX',
+        département: 'AIN',
+        numéroFiness: '010018407',
+        raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY',
+        type: 'Entité juridique',
+      },
+    ])
+  })
+
   describe('Par numéro FINESS', () => {
     it('retourne un résultat quand le numéro FINESS est une entité juridique connue', async () => {
       // GIVEN
