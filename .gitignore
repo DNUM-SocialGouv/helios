@@ -48,6 +48,7 @@ lighthouse-ci-reports
 .mypy_cache
 __pycache__/
 .ipynb_checkpoints/
+.coverage
 
 # stryker temp files
 .stryker-tmp
