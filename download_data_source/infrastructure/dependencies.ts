@@ -45,7 +45,6 @@ const createDependencies = (): Dependencies => {
   const finessLocalPath = 'finess'
 
   const cheminDesFichiersSourcesDiamantSurLeSftpDnum = 'DIAMANT/incoming'
-  const répertoireDeDestination = 'diamant'
 
   const logger = new ConsoleLogger()
   const environmentVariables = new NodeEnvironmentVariables(logger)
@@ -65,7 +64,7 @@ const createDependencies = (): Dependencies => {
       new Ssh2SftpClient(),
       environmentVariables,
       cheminDesFichiersSourcesDiamantSurLeSftpDnum,
-      répertoireDeDestination,
+      environmentVariables.DIAMANT_ENCRYPTED_DATA_PATH,
       logger
     ),
     entitéJuridiqueHeliosLoader: typeOrmEntitéJuridiqueHeliosLoader,

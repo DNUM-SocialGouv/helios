@@ -15,6 +15,7 @@ export interface EnvironmentVariables {
   readonly SFTP_PRIVATE_KEY: string
   readonly SFTP_USERNAME: string
 
+  readonly DIAMANT_ENCRYPTED_DATA_PATH: string
   readonly DNUM_SFTP_HOST: string
   readonly DNUM_SFTP_PORT: string
   readonly DNUM_SFTP_PRIVATE_KEY: string
