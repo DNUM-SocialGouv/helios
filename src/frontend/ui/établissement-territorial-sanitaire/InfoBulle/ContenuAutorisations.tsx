@@ -23,8 +23,7 @@ export const ContenuAutorisations = ({ dateDeMiseÀJour, source }: ContenuAutori
       </p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
-          Seules les autorisations non caduques sont transmises à FINESS par ARHGOS et sont donc publiées.
-          Hormis les autorisations en attente de première mise en œuvre, toutes les autorisations publiées peuvent donc être considérées comme actives.
+          Seules les autorisations actives sont publiées. Les autorisations en attente de première mise en œuvre ne sont actuellement pas affichées.
           Dans le domaine sanitaire les autorisations sont données à une entité juridique puis mises en oeuvre dans un établissement.
           Pour indiquer les services offerts, FINESS identifie ceux-ci à l’aide d’un triplet composé des éléments suivants : Activité/Modalité/Forme.
           Les activités de soins sont les activités des établissements sanitaires autorisées par arrêté du Directeur Général de l’ARS.

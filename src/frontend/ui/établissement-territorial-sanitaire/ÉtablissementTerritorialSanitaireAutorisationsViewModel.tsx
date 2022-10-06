@@ -204,13 +204,13 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
                                   {`${forme.libellé} [${forme.code}]`}
                                 </li>
                                 <li className="fr-tag">
+                                  {`${this.wording.DATE_D_AUTORISATION} : ${autreActivitéSanitaire.dateDAutorisation ? StringFormater.formateLaDate(autreActivitéSanitaire.dateDAutorisation) : 'N/A'}`}
+                                </li>
+                                <li className="fr-tag">
                                   {`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${autreActivitéSanitaire.dateDeMiseEnOeuvre ? StringFormater.formateLaDate(autreActivitéSanitaire.dateDeMiseEnOeuvre) : 'N/A'}`}
                                 </li>
                                 <li className="fr-tag">
                                   {`${this.wording.DATE_DE_FIN} : ${autreActivitéSanitaire.dateDeFin ? StringFormater.formateLaDate(autreActivitéSanitaire.dateDeFin) : 'N/A'}`}
-                                </li>
-                                <li className="fr-tag">
-                                  {`${this.wording.DATE_D_AUTORISATION} : ${autreActivitéSanitaire.dateDAutorisation ? StringFormater.formateLaDate(autreActivitéSanitaire.dateDAutorisation) : 'N/A'}`}
                                 </li>
                               </ul>
                             </li>
@@ -283,14 +283,15 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
                                   {`${forme.libellé} [${forme.code}]`}
                                 </li>
                                 <li className="fr-tag">
-                                  {`${this.wording.CAPACITÉ_AUTORISÉE} : ${reconnaissancesContractuellesSanitaire.capacitéAutorisée ? reconnaissancesContractuellesSanitaire.capacitéAutorisée : 'N/A'}`}
+                                  {`${this.wording.NUMÉRO_ARHGOS} : ${reconnaissancesContractuellesSanitaire.numéroArhgos ? reconnaissancesContractuellesSanitaire.numéroArhgos : 'N/A'}`}
+                                </li>
+                                <li className="fr-tag">
+                                  {this.wording.NUMÉRO_CPOM}
+                                  {`: ${reconnaissancesContractuellesSanitaire.numéroCpom ? reconnaissancesContractuellesSanitaire.numéroCpom : 'N/A'}`}
                                 </li>
                                 <li className="fr-tag">
                                   {this.wording.DATE_D_EFFET_ASR}
                                   {`: ${reconnaissancesContractuellesSanitaire.dateDEffetAsr ? StringFormater.formateLaDate(reconnaissancesContractuellesSanitaire.dateDEffetAsr) : 'N/A'}`}
-                                </li>
-                                <li className="fr-tag">
-                                  {`${this.wording.NUMÉRO_ARHGOS} : ${reconnaissancesContractuellesSanitaire.numéroArhgos ? reconnaissancesContractuellesSanitaire.numéroArhgos : 'N/A'}`}
                                 </li>
                                 <li className="fr-tag">
                                   {this.wording.DATE_D_EFFET_CPOM}
@@ -301,8 +302,7 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
                                   {`: ${reconnaissancesContractuellesSanitaire.dateDeFinCpom ? StringFormater.formateLaDate(reconnaissancesContractuellesSanitaire.dateDeFinCpom) : 'N/A'}`}
                                 </li>
                                 <li className="fr-tag">
-                                  {this.wording.NUMÉRO_CPOM}
-                                  {`: ${reconnaissancesContractuellesSanitaire.numéroCpom ? reconnaissancesContractuellesSanitaire.numéroCpom : 'N/A'}`}
+                                  {`${this.wording.CAPACITÉ_AUTORISÉE} : ${reconnaissancesContractuellesSanitaire.capacitéAutorisée ? reconnaissancesContractuellesSanitaire.capacitéAutorisée : 'N/A'}`}
                                 </li>
                               </ul>
                             </li>
