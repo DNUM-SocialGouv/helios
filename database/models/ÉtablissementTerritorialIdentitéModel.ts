@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn, OneToOne } from 'typeorm'
 
-import { DomaineÉtablissementTerritorial } from '../../datacrawler/legacy/métier/entities/DomaineÉtablissementTerritorial'
+import { DomaineÉtablissementTerritorial } from '../../download_data_source/métier/entities/DomaineÉtablissementTerritorial'
 import { CpomModel } from './CpomModel'
 import { EntitéJuridiqueModel } from './EntitéJuridiqueModel'
 

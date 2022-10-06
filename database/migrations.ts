@@ -1,7 +1,7 @@
-import { dotEnvConfig } from '../datacrawler/legacy/infrastructure/gateways/dot-env/dotEnvConfig'
-import { NodeEnvironmentVariables } from '../datacrawler/legacy/infrastructure/gateways/environnement-variables/NodeEnvironmentVariables'
-import { ConsoleLogger } from '../datacrawler/legacy/infrastructure/gateways/logger/ConsoleLogger'
-import { typeOrmOrm } from '../datacrawler/legacy/infrastructure/gateways/orm/typeOrmOrm'
+import { dotEnvConfig } from '../download_data_source/infrastructure/gateways/dot-env/dotEnvConfig'
+import { NodeEnvironmentVariables } from '../download_data_source/infrastructure/gateways/environnement-variables/NodeEnvironmentVariables'
+import { ConsoleLogger } from '../download_data_source/infrastructure/gateways/logger/ConsoleLogger'
+import { typeOrmOrm } from '../download_data_source/infrastructure/gateways/orm/typeOrmOrm'
 
 (async () => {
   const logger = new ConsoleLogger()

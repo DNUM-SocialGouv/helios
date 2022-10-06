@@ -46,7 +46,6 @@ Avec le temps, nous avons identifié quelques limites à ce choix :
     - `pages`
   - nous regroupons le code historique et nouveau permettant la récupération des données dans un dossier `datacrawler` à la racine. Il est divisé en :
     - `extract` pour le code typescript se connectant aux sources de données extérieures ;
-    - `legacy` pour le code historique en typescript permettant le traitement des données des fiches d'identité ;
     - `load` pour le code python permettant d'écrire les données en base ;
     - `transform` pour le code python permettant de transformer les données pour notre cas d'usage ;
   - nous mettons le code lié à notre base de données dans un dossier `database` à la racine ;

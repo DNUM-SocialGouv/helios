@@ -1,7 +1,7 @@
 import { DataSource, EntityManager } from 'typeorm'
 
-import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
-import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
+import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../database/models/DateMiseÀJourFichierSourceModel'
+import { EntitéJuridiqueModel } from '../../../../database/models/EntitéJuridiqueModel'
 import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
 import { EntitéJuridiqueHeliosRepository } from '../../../métier/gateways/EntitéJuridiqueHeliosRepository'
 import { Logger } from '../../../métier/gateways/Logger'

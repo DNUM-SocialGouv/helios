@@ -1,9 +1,9 @@
 version: '3.9'
 
 services:
-  sftp:
+  sftp-finess:
     image: atmoz/sftp
-    container_name: helios_sftp
+    container_name: helios_sftp_finess
     ports:
       - target: 22
         published: 22
@@ -20,6 +20,22 @@ services:
         target: /etc/ssh/sshd_config
         read_only: true
     command: finess::1001
+
+  sftp-dnum:
+    image: atmoz/sftp
+    container_name: helios_sftp_dnum
+    ports:
+      - target: 22
+        published: 23
+    volumes:
+      - type: bind
+        source: $PWD/data_set/diamant
+        target: /home/HELIOS/DIAMANT/incoming
+      - type: bind
+        source: $HOME/.ssh/sftp_local.pub
+        target: /home/HELIOS/.ssh/keys/sftp_local.pub
+        read_only: true
+    command: HELIOS::1001
 
   postgres:
     image: postgres:13.7-alpine # Conserver la même version avec le fichier de la CI : helios-ci.yml

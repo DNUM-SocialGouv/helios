@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/nextjs'
+import Ssh2SftpClient from 'ssh2-sftp-client'
 
 import { DownloadRawData } from '../métier/gateways/DownloadRawData'
 import { EntitéJuridiqueHeliosLoader } from '../métier/gateways/EntitéJuridiqueHeliosLoader'
@@ -10,6 +11,7 @@ import { ÉtablissementTerritorialHeliosLoader } from '../métier/gateways/Étab
 import { ÉtablissementTerritorialRepository } from '../métier/gateways/ÉtablissementTerritorialRepository'
 import { ÉtablissementTerritorialSourceExterneLoader } from '../métier/gateways/ÉtablissementTerritorialSourceExterneLoader'
 import { dotEnvConfig } from './gateways/dot-env/dotEnvConfig'
+import { DnumSftpDownloadRawData } from './gateways/download-raw-data/DnumSftpDownloadRawData'
 import { FinessSftpDownloadRawData } from './gateways/download-raw-data/FinessSftpDownloadRawData'
 import { TypeOrmEntitéJuridiqueHeliosLoader } from './gateways/entité-juridique-helios-loader/TypeOrmEntitéJuridiqueHeliosLoader'
 import { TypeOrmEntitéJuridiqueHeliosRepository } from './gateways/entité-juridique-helios-repository/TypeOrmEntitéJuridiqueHeliosRepository'
@@ -24,6 +26,7 @@ import { TypeOrmÉtablissementTerritorialRepository } from './gateways/établiss
 import { FinessXmlÉtablissementTerritorialSourceExterneLoader } from './gateways/établissement-territorial-source-externe-loader/FinessXmlÉtablissementTerritorialSourceExterneLoader'
 
 export type Dependencies = Readonly<{
+  dnumDownloadRawData: DownloadRawData
   DÉLAI_D_ARRÊT_DES_TÂCHES_EN_MS: number
   environmentVariables: EnvironmentVariables
   entitéJuridiqueSourceExterneLoader: EntitéJuridiqueSourceExterneLoader
@@ -40,6 +43,9 @@ const createDependencies = (): Dependencies => {
   dotEnvConfig()
   const finessSftpPath = '../usr_finess/flux_finess'
   const finessLocalPath = 'finess'
+
+  const cheminDesFichiersSourcesDiamantSurLeSftpDnum = 'DIAMANT/incoming'
+
   const logger = new ConsoleLogger()
   const environmentVariables = new NodeEnvironmentVariables(logger)
   const xmlToJs = new NodeXmlToJs()
@@ -54,6 +60,13 @@ const createDependencies = (): Dependencies => {
 
   return {
     DÉLAI_D_ARRÊT_DES_TÂCHES_EN_MS: 1000,
+    dnumDownloadRawData: new DnumSftpDownloadRawData(
+      new Ssh2SftpClient(),
+      environmentVariables,
+      cheminDesFichiersSourcesDiamantSurLeSftpDnum,
+      environmentVariables.DIAMANT_ENCRYPTED_DATA_PATH,
+      logger
+    ),
     entitéJuridiqueHeliosLoader: typeOrmEntitéJuridiqueHeliosLoader,
     entitéJuridiqueHeliosRepository: new TypeOrmEntitéJuridiqueHeliosRepository(orm, logger),
     entitéJuridiqueSourceExterneLoader: new FinessXmlEntitéJuridiqueSourceExterneLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH, logger),
@@ -63,7 +76,9 @@ const createDependencies = (): Dependencies => {
     établissementTerritorialHeliosLoader: new TypeOrmÉtablissementTerritorialHeliosLoader(orm),
     établissementTerritorialHeliosRepository: new TypeOrmÉtablissementTerritorialRepository(orm, logger),
     établissementTerritorialSourceExterneLoader: new FinessXmlÉtablissementTerritorialSourceExterneLoader(
-      xmlToJs, environmentVariables.SFTP_LOCAL_PATH, logger
+      xmlToJs,
+      environmentVariables.SFTP_LOCAL_PATH,
+      logger
     ),
   }
 }
