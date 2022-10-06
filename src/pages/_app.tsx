@@ -25,7 +25,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <Component {...pageProps} />
       <Footer />
       <Script
-        src="/api/design-system-francais/dsfr"
+        src="/dsfr-1.4.1.module.min.js"
         strategy="lazyOnload"
       />
     </DependenciesProvider>
