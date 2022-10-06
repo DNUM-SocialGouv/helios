@@ -6,7 +6,8 @@ class VariablesDEnvironnement(TypedDict):
     SENTRY_DSN: str
     SENTRY_ENVIRONMENT: str
     DATABASE_URL: str
-    DNUM_SFTP_LOCAL_PATH: str
+    DIAMANT_DATA_PATH: str
+    DIAMANT_ENCRYPTED_DATA_PATH: str
     FINESS_SFTP_LOCAL_PATH: str
 
 
@@ -29,6 +30,7 @@ def récupère_les_variables_d_environnement(
         SENTRY_DSN=signale_si_la_variable_n_est_pas_présente("SENTRY_DSN"),
         SENTRY_ENVIRONMENT=signale_si_la_variable_n_est_pas_présente("SENTRY_ENVIRONMENT"),
         DATABASE_URL=signale_si_la_variable_n_est_pas_présente("SCALINGO_POSTGRESQL_ALCHEMY_URL"),
-        DNUM_SFTP_LOCAL_PATH=signale_si_la_variable_n_est_pas_présente("DNUM_SFTP_LOCAL_PATH"),
+        DIAMANT_DATA_PATH=signale_si_la_variable_n_est_pas_présente("DIAMANT_DATA_PATH"),
+        DIAMANT_ENCRYPTED_DATA_PATH=signale_si_la_variable_n_est_pas_présente("DIAMANT_ENCRYPTED_DATA_PATH"),
         FINESS_SFTP_LOCAL_PATH=signale_si_la_variable_n_est_pas_présente("SFTP_LOCAL_PATH"),
     )

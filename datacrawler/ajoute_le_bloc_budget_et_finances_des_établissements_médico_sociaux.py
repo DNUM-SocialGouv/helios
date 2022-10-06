@@ -96,18 +96,18 @@ def ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
 if __name__ == "__main__":
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_données_helios = create_engine(variables_d_environnement["DATABASE_URL"])
-    fichiers = os.listdir(variables_d_environnement["DNUM_SFTP_LOCAL_PATH"])
+    fichiers = os.listdir(variables_d_environnement["DIAMANT_DATA_PATH"])
     chemin_local_du_fichier_ann_ca_ej_et = os.path.join(
-        variables_d_environnement["DNUM_SFTP_LOCAL_PATH"], trouve_le_nom_du_fichier_diamant(fichiers, "ANN_CA_EJ_ET", logger_helios)
+        variables_d_environnement["DIAMANT_DATA_PATH"], trouve_le_nom_du_fichier_diamant(fichiers, "ANN_CA_EJ_ET", logger_helios)
     )
     chemin_local_du_fichier_ann_errd_ej_et = os.path.join(
-        variables_d_environnement["DNUM_SFTP_LOCAL_PATH"], trouve_le_nom_du_fichier_diamant(fichiers, "ANN_ERRD_EJ_ET", logger_helios)
+        variables_d_environnement["DIAMANT_DATA_PATH"], trouve_le_nom_du_fichier_diamant(fichiers, "ANN_ERRD_EJ_ET", logger_helios)
     )
     chemin_local_du_fichier_ann_errd_ej = os.path.join(
-        variables_d_environnement["DNUM_SFTP_LOCAL_PATH"], trouve_le_nom_du_fichier_diamant(fichiers, "ANN_ERRD_EJ", logger_helios)
+        variables_d_environnement["DIAMANT_DATA_PATH"], trouve_le_nom_du_fichier_diamant(fichiers, "ANN_ERRD_EJ", logger_helios)
     )
     chemin_local_du_fichier_ann_per_errd_eprd = os.path.join(
-        variables_d_environnement["DNUM_SFTP_LOCAL_PATH"], trouve_le_nom_du_fichier_diamant(fichiers, "ANN_PER_ERRD_EPRD", logger_helios)
+        variables_d_environnement["DIAMANT_DATA_PATH"], trouve_le_nom_du_fichier_diamant(fichiers, "ANN_PER_ERRD_EPRD", logger_helios)
     )
     logger_helios.info(
         f"""[DIAMANT] Cherche les indicateurs budget et finances pour les ET médico sociaux dans les fichiers
