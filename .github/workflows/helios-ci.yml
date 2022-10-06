@@ -79,9 +79,11 @@ jobs:
         with:
           node-version-file: package.json
       - name: Run the tests
-        run: yarn test:typescript
         env:
           DATABASE_URL: postgres://helios:h3li0s@localhost:5433/helios
+        run: yarn test:typescript:coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
 
   build:
     runs-on: ubuntu-latest
@@ -148,4 +150,6 @@ jobs:
           DIAMANT_PRIVATE_KEY: ${{ secrets.DIAMANT_PRIVATE_KEY }}
         run: echo "$DIAMANT_PRIVATE_KEY" | gpg --import
       - name: Test
-        run: pipenv run test
+        run: pipenv run test_coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3

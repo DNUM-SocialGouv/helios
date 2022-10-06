@@ -23,20 +23,22 @@ pandas-stubs = "~=1.4.3.220704"
 sqlalchemy-stubs = "~=0.4"
 freezegun = "1.2.1"
 matplotlib = "3.5.2"
+pytest-cov = "4.0.0"
 
 [requires]
 python_version = "3.10.6" # Conserver la même version que celle dans helios-ci.yml
 
 [scripts]
+encrypt_diamant = 'python -m datacrawler.test_helpers.chiffre_diamant'
+decrypt_diamant = 'python -m datacrawler.déchiffre_diamant'
+format = 'black datacrawler --config pyproject.toml'
 lint = 'pylint --rcfile .pylintrc datacrawler'
-typecheck = 'mypy --config pyproject.toml .'
 populate_activite_et_medico_social = 'python -m datacrawler.ajoute_les_activités_des_établissements_médico_sociaux'
 populate_activite_et_sanitaire = 'python -m datacrawler.ajoute_les_activités_des_établissements_sanitaires'
 populate_autorisation_et_capacite_medico_social = 'python -m datacrawler.ajoute_les_autorisations_des_établissements_médico_sociaux'
 populate_autorisation_et_capacite_sanitaire = 'python -m datacrawler.ajoute_les_autorisations_des_établissements_sanitaires'
 populate_cpom_medico_social = 'python -m datacrawler.ajoute_le_cpom_des_établissements_médico_sociaux'
 populate_budget_et_finances_medico_social = 'python -m datacrawler.ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux'
-test = "pytest --tb=short"
-format = "black datacrawler --config pyproject.toml"
-decrypt_diamant = 'python -m datacrawler.déchiffre_diamant'
-encrypt_diamant = 'python -m datacrawler.test_helpers.chiffre_diamant'
+test = 'pytest --tb=short'
+test_coverage = 'pytest --tb=short --cov'
+typecheck = 'mypy --config pyproject.toml .'

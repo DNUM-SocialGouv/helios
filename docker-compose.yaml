@@ -29,7 +29,7 @@ services:
         published: 23
     volumes:
       - type: bind
-        source: $PWD/data_set/diamant
+        source: $PWD/data_set/diamant_chiffré
         target: /home/HELIOS/DIAMANT/incoming
       - type: bind
         source: $HOME/.ssh/sftp_local.pub
