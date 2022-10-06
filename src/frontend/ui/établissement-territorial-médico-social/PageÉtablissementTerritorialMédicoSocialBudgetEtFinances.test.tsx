@@ -63,17 +63,17 @@ describe('La page établissement territorial - bloc budget et finances', () => {
     expect(lignes).toHaveLength(1 + 3)
     const premièreAnnée = within(lignes[1]).getByRole('cell', { name: '2019' })
     expect(premièreAnnée).toBeInTheDocument()
-    const valeurDeLaPremièreAnnée = within(lignes[1]).getByRole('cell', { name: '-10 000 €' })
+    const valeurDeLaPremièreAnnée = within(lignes[1]).getByRole('cell', { name: '−10 000 €' })
     expect(valeurDeLaPremièreAnnée).toBeInTheDocument()
 
     const deuxièmeAnnée = within(lignes[2]).getByRole('cell', { name: '2020' })
     expect(deuxièmeAnnée).toBeInTheDocument()
-    const valeurDeLaDeuxièmeAnnée = within(lignes[2]).getByRole('cell', { name: '-20 000 €' })
+    const valeurDeLaDeuxièmeAnnée = within(lignes[2]).getByRole('cell', { name: '−20 000 €' })
     expect(valeurDeLaDeuxièmeAnnée).toBeInTheDocument()
 
     const troisièmeAnnée = within(lignes[3]).getByRole('cell', { name: '2021' })
     expect(troisièmeAnnée).toBeInTheDocument()
-    const valeurDeLaTroisièmeAnnée = within(lignes[3]).getByRole('cell', { name: '-30 000 €' })
+    const valeurDeLaTroisièmeAnnée = within(lignes[3]).getByRole('cell', { name: '−30 000 €' })
     expect(valeurDeLaTroisièmeAnnée).toBeInTheDocument()
   })
 

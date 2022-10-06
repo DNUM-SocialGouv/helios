@@ -198,7 +198,7 @@ export class WordingFr implements Wording {
 
   // Bloc budget et finances
   readonly TITRE_BLOC_BUDGET_ET_FINANCES: string = 'budget & finances'
-  readonly MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE: string = 'Montant de la contribution aux frais de siège et/ou de groupement (en euros)'
+  readonly MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE: string = 'Montant de la contribution aux frais de siège et/ou de groupement'
   readonly MONTANT: string = 'Montant'
 
   // Liste des établissements rattachés
