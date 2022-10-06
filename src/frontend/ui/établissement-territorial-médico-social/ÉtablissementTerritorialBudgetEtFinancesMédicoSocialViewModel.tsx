@@ -12,10 +12,10 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
   public get montantDeLaContributionAuxFraisDeSiège(): JSX.Element {
     const montantDesContributionsAuxFraisDeSiègeParAnnée: { année: number; valeur: string }[] = this.budgetEtFinancesMédicoSocial.reduce(
       (montantParAnnée: { année: number; valeur: string }[], budgetEtFinancesMédicoSocial) => {
-        if (budgetEtFinancesMédicoSocial.contributionAuxFraisDeSiège?.valeur) {
+        if (budgetEtFinancesMédicoSocial.contributionAuxFraisDeSiège) {
           montantParAnnée.push({
             année: budgetEtFinancesMédicoSocial.année,
-            valeur: this.formateLeMontantEnEuros(budgetEtFinancesMédicoSocial.contributionAuxFraisDeSiège?.valeur),
+            valeur: StringFormater.formateLeMontantEnEuros(budgetEtFinancesMédicoSocial.contributionAuxFraisDeSiège.valeur),
           })
         }
         return montantParAnnée
@@ -69,10 +69,6 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
 
   public get leMontantDeLaContributionAuxFraisDeSiègeEstIlRenseigné(): boolean {
     return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.contributionAuxFraisDeSiège)
-  }
-
-  private formateLeMontantEnEuros(valeur: number): string {
-    return valeur ? `${Math.round(valeur).toLocaleString('fr')} €` : 'N/A'
   }
 
   private annéesManquantes(années: number[], annéesTotales: number): number[] {

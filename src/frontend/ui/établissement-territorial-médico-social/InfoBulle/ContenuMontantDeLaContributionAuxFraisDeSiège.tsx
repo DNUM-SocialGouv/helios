@@ -35,12 +35,12 @@ export const ContenuMontantDeLaContributionAuxFraisDeSiège = ({ dateDeMiseÀJou
       <section aria-label={wording.MODE_DE_CALCUL}>
         <p>
           <span className="fr-text--bold">Mode de calcul : </span>
+          Le compte 655
+          {' '}
+          <i>Quote-parts de résultat sur opérations faites en commun</i>
+          {' '}
+          enregistre à son débit :
         </p>
-        Le compte 655
-        {' '}
-        <i>Quote-parts de résultat sur opérations faites en commun</i>
-        {' '}
-        enregistre à son débit :
         <ul>
           <li>
             6556 - Frais de siège social du gestionnaire
@@ -54,10 +54,19 @@ export const ContenuMontantDeLaContributionAuxFraisDeSiège = ({ dateDeMiseÀJou
         <p>
           <span className="fr-text--bold">Source(s) : </span>
           Caisse nationale de solidarité pour l’autonomie (CNSA)
-          • ERRD annexe 8 (feuilles « CRP SOUMIS EQUILIBRE », « CRP NON SOUMIS EQUIL » et « CRA »)
-          • ERRD annexe 10 (feuilles « CRP NON SOUMIS EQUIL » et « CRA »)
-          • ERRD annexe 11 (feuille « CRA  »)
-
+        </p>
+        <ul>
+          <li>
+            ERRD annexe 8 (feuilles « CRP SOUMIS EQUILIBRE », « CRP NON SOUMIS EQUIL » et « CRA »)
+          </li>
+          <li>
+            ERRD annexe 10 (feuilles « CRP NON SOUMIS EQUIL » et « CRA »)
+          </li>
+          <li>
+            ERRD annexe 11 (feuille « CRA  »)
+          </li>
+        </ul>
+        <p>
           Hélios collecte ces données depuis le SI mutualisé des ARS DIAMANT
           qui est un système décisionnel national permettant de stocker des informations provenant de plusieurs sources.
           DIAMANT : Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation.

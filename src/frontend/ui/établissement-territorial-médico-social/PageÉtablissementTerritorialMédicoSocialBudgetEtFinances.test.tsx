@@ -150,7 +150,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
 
   it('n’affiche pas l’indicateur du montant de la contribution si aucune valeur n’est renseigné pour aucune année', () => {
     // GIVEN
-    const établissementTerritorialSansBudgetEtFinances = new ÉtablissementTerritorialMédicoSocialViewModel({
+    const établissementTerritorialSansMontantDeLaContribution = new ÉtablissementTerritorialMédicoSocialViewModel({
       activités: [],
       autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
       budgetEtFinances: [
@@ -162,10 +162,27 @@ describe('La page établissement territorial - bloc budget et finances', () => {
     }, wording, paths)
 
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansBudgetEtFinances} />)
+    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansMontantDeLaContribution} />)
 
     // THEN
     const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
     expect(within(budgetEtFinances).queryByText(wording.MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE, { selector: 'p' })).not.toBeInTheDocument()
+  })
+
+  it('affiche une phrase à la place des indicateurs lorsqu’aucune donnée n’est renseignée', () => {
+    // GIVEN
+    const établissementTerritorialSansBudgetEtFinances = new ÉtablissementTerritorialMédicoSocialViewModel({
+      activités: [],
+      autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
+      budgetEtFinances: [],
+      identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+    }, wording, paths)
+
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansBudgetEtFinances} />)
+
+    // THEN
+    const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
+    expect(within(budgetEtFinances).getByText(wording.INDICATEURS_VIDES)).toBeInTheDocument()
   })
 })

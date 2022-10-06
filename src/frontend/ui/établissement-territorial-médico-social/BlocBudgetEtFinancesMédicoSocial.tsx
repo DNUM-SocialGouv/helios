@@ -15,6 +15,16 @@ export const BlocBudgetEtFinancesMédicoSocial = (
 ) => {
   const { wording } = useDependencies()
 
+  if (
+    !budgetEtFinancesViewModel.leMontantDeLaContributionAuxFraisDeSiègeEstIlRenseigné
+  ) {
+    return (
+      <Bloc titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES}>
+        {wording.INDICATEURS_VIDES}
+      </Bloc>
+    )
+  }
+
   return (
     <Bloc
       estCeIdentité={false}
