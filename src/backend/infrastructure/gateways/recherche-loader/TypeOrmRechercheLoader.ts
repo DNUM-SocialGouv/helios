@@ -19,6 +19,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
 
   async recherche(terme: string, page: number): Promise<RésultatDeRecherche> {
     const termeSansEspaces = terme.replaceAll(/\s/g, '')
+    const termeSansTirets = terme.replaceAll(/-/g, ' ')
 
     const requêteDeLaRecherche = (await this.orm).createQueryBuilder()
       .select('recherche.numero_finess', 'numero_finess')
@@ -30,6 +31,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .from(RechercheModel, 'recherche')
       .where("recherche.termes @@ plainto_tsquery('unaccent_helios', :terme)", { terme })
       .orWhere("recherche.termes @@ plainto_tsquery('unaccent_helios', :termeSansEspaces)", { termeSansEspaces })
+      .orWhere("recherche.termes @@ plainto_tsquery('unaccent_helios', :termeSansTirets)", { termeSansTirets })
       .orderBy('rank', 'DESC')
       .addOrderBy('type', 'ASC')
       .addOrderBy('numero_finess', 'ASC')
