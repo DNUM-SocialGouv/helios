@@ -274,12 +274,13 @@ describe('La page établissement territorial médico-social - bloc autorisation 
     const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
     const autorisations = indicateurs[1]
     const informationsDUneAutorisation = within(autorisations).getAllByRole('list', { name: 'dates-et-capacités' })[0]
-    expect(within(informationsDUneAutorisation).getByText('PH vieillissantes [702]', { selector: 'li' })).toBeInTheDocument()
-    expect(within(informationsDUneAutorisation).getByText(`${wording.DATE_D_AUTORISATION} : 01/01/2020`, { selector: 'li' })).toBeInTheDocument()
-    expect(within(informationsDUneAutorisation).getByText(`${wording.MISE_À_JOUR_AUTORISATION} : 01/01/2020`, { selector: 'li' })).toBeInTheDocument()
-    expect(within(informationsDUneAutorisation).getByText(`${wording.DERNIÈRE_INSTALLATION} : N/A`, { selector: 'li' })).toBeInTheDocument()
-    expect(within(informationsDUneAutorisation).getByText(`${wording.CAPACITÉ_AUTORISÉE} : 10`, { selector: 'li' })).toBeInTheDocument()
-    expect(within(informationsDUneAutorisation).getByText(`${wording.CAPACITÉ_INSTALLÉE} : 0`, { selector: 'li' })).toBeInTheDocument()
+    const tags = within(informationsDUneAutorisation).getAllByRole('listitem')
+    expect(within(tags[0]).getByText('PH vieillissantes [702]', { selector: 'li' })).toBeInTheDocument()
+    expect(within(tags[1]).getByText(`${wording.DATE_D_AUTORISATION} : 01/01/2020`, { selector: 'li' })).toBeInTheDocument()
+    expect(within(tags[2]).getByText(`${wording.MISE_À_JOUR_AUTORISATION} : 01/01/2020`, { selector: 'li' })).toBeInTheDocument()
+    expect(within(tags[3]).getByText(`${wording.DERNIÈRE_INSTALLATION} : N/A`, { selector: 'li' })).toBeInTheDocument()
+    expect(within(tags[4]).getByText(`${wording.CAPACITÉ_AUTORISÉE} : 10`, { selector: 'li' })).toBeInTheDocument()
+    expect(within(tags[5]).getByText(`${wording.CAPACITÉ_INSTALLÉE} : 0`, { selector: 'li' })).toBeInTheDocument()
   })
 
   it('affiche une phrase à la place des indicateurs lorsqu’aucune autorisation n’est renseignée', () => {

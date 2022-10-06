@@ -1,7 +1,7 @@
 import { fireEvent, screen, within } from '@testing-library/react'
 
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from '../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder'
-import { fakeFrontDependencies, mockedDate, renderFakeComponent } from '../../testHelper'
+import { fakeFrontDependencies, renderFakeComponent } from '../../testHelper'
 import { PageÉtablissementTerritorialSanitaire } from './PageÉtablissementTerritorialSanitaire'
 import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTerritorialSanitaireViewModel'
 
@@ -462,7 +462,6 @@ describe('La page établissement territorial sanitaire - bloc activité', () => 
   })
 
   it('n’affiche pas le graphique de l’indicateur mais une mise en exergue quand sa valeur de toutes les années sont vides (Nombre de passages aux urgences)', () => {
-    mockedDate('2022-01-01T23:00:00.135Z')
     const établissementTerritorialSansActivité = new ÉtablissementTerritorialSanitaireViewModel({
       activités: [
         {
