@@ -1,5 +1,4 @@
 import { fireEvent, screen, within } from '@testing-library/react'
-import { notDeepEqual } from 'assert'
 
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from '../../test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder'
