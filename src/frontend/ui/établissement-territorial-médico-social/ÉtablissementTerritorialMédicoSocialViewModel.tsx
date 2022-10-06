@@ -11,14 +11,20 @@ import { GraphiqueViewModel } from '../commun/Graphique/GraphiqueViewModel'
 import { StringFormater } from '../commun/StringFormater'
 import '@gouvfr/dsfr/dist/component/tag/tag.min.css'
 import styles from './BlocAutorisationEtCapacitéMédicoSocial.module.css'
+import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from './ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel'
 
 export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueViewModel {
   readonly seuilValeurAtypique = 120
   readonly ratioHistogrammeCapacitéParActivité = 5
   readonly ratioHistogrammeBlocActivité = 2
+  public établissementTerritorialBudgetEtFinancesMédicoSocialViewModel: ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialMédicoSocial, wording: Wording, private readonly paths: Paths) {
     super(wording, établissementTerritorial.activités.length)
+    this.établissementTerritorialBudgetEtFinancesMédicoSocialViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
+      établissementTerritorial.budgetEtFinances,
+      wording
+    )
   }
 
   public get titre(): string {

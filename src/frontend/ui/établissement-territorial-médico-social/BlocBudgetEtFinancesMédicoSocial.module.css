@@ -1,0 +1,8 @@
+.liste-indicateurs {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
