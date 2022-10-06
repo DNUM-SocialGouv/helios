@@ -17,6 +17,6 @@ export namespace StringFormater {
   }
 
   export function formateLeMontantEnEuros(montant: number): string {
-    return `${Math.round(montant).toLocaleString('fr')} €`
+    return `${Math.round(montant).toLocaleString('fr')} €`.replace('-', '−')
   }
 }
