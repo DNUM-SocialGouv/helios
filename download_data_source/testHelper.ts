@@ -8,6 +8,7 @@ import { Logger } from './métier/gateways/Logger'
 
 const environmentVariables: EnvironmentVariables = {
   DATABASE_URL: 'postgres://helios:h3li0s@localhost:5433/helios',
+  DIAMANT_ENCRYPTED_DATA_PATH: 'data_test/diamant',
   DNUM_SFTP_HOST: 'localhost',
   DNUM_SFTP_PORT: '23',
   DNUM_SFTP_PRIVATE_KEY: 'privateDnumKey',
