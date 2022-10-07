@@ -1,9 +1,9 @@
-import { ÉtablissementTerritorialMédicoSocial } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
-import { CapacitéParActivité } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation'
-import { Wording } from '../../configuration/wording/Wording'
-import { ActionneurDAccordéon } from '../commun/Accordéon/ActionneurDAccordéon'
-import { GraphiqueViewModel } from '../commun/Graphique/GraphiqueViewModel'
-import { StringFormater } from '../commun/StringFormater'
+import { ÉtablissementTerritorialMédicoSocial } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
+import { CapacitéParActivité } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation'
+import { Wording } from '../../../configuration/wording/Wording'
+import { ActionneurDAccordéon } from '../../commun/Accordéon/ActionneurDAccordéon'
+import { GraphiqueViewModel } from '../../commun/Graphique/GraphiqueViewModel'
+import { StringFormater } from '../../commun/StringFormater'
 import styles from './BlocAutorisationEtCapacitéMédicoSocial.module.css'
 
 export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extends GraphiqueViewModel {

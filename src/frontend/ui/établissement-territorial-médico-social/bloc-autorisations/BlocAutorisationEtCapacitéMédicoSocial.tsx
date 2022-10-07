@@ -1,11 +1,11 @@
-import { Bloc } from '../commun/Bloc/Bloc'
-import { useDependencies } from '../commun/contexts/useDependencies'
-import { Indicateur } from '../commun/Indicateur/Indicateur'
-import { IndicateurGraphique } from '../commun/IndicateurGraphique/IndicateurGraphique'
-import { Sources } from '../commun/Sources/Sources'
+import { Bloc } from '../../commun/Bloc/Bloc'
+import { useDependencies } from '../../commun/contexts/useDependencies'
+import { Indicateur } from '../../commun/Indicateur/Indicateur'
+import { IndicateurGraphique } from '../../commun/IndicateurGraphique/IndicateurGraphique'
+import { Sources } from '../../commun/Sources/Sources'
+import { ContenuAutorisations } from '../InfoBulle/ContenuAutorisations'
+import { ContenuCapacitéParActivité } from '../InfoBulle/ContenuCapacitéParActivité'
 import styles from './BlocAutorisationEtCapacitéMédicoSocial.module.css'
-import { ContenuAutorisations } from './InfoBulle/ContenuAutorisations'
-import { ContenuCapacitéParActivité } from './InfoBulle/ContenuCapacitéParActivité'
 import { ÉtablissementTerritorialMédicoSocialAutorisationsViewModel } from './ÉtablissementTerritorialMédicoSocialAutorisationsViewModel'
 
 type BlocAutorisationEtCapacitéMédicoSocialProps = Readonly<{

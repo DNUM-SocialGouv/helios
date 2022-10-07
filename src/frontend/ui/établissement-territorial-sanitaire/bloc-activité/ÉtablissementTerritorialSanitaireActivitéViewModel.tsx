@@ -1,11 +1,11 @@
 import { Bar } from 'react-chartjs-2'
 
-import { ÉtablissementTerritorialSanitaire } from '../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire'
-import { ÉtablissementTerritorialSanitaireActivité } from '../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité'
-import { Wording } from '../../configuration/wording/Wording'
-import { GraphiqueViewModel } from '../commun/Graphique/GraphiqueViewModel'
-import { StringFormater } from '../commun/StringFormater'
-import { TableIndicateur } from '../commun/TableIndicateur/TableIndicateur'
+import { ÉtablissementTerritorialSanitaire } from '../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire'
+import { ÉtablissementTerritorialSanitaireActivité } from '../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité'
+import { Wording } from '../../../configuration/wording/Wording'
+import { GraphiqueViewModel } from '../../commun/Graphique/GraphiqueViewModel'
+import { StringFormater } from '../../commun/StringFormater'
+import { TableIndicateur } from '../../commun/TableIndicateur/TableIndicateur'
 import stylesBlocActivité from './BlocActivitéSanitaire.module.css'
 
 type DonnéesDeDiagrammeDesSéjoursMCO = Readonly<{

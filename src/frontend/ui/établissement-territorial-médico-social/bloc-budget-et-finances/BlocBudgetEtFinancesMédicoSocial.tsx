@@ -1,11 +1,11 @@
-import { Bloc } from '../commun/Bloc/Bloc'
-import { useDependencies } from '../commun/contexts/useDependencies'
-import { Indicateur } from '../commun/Indicateur/Indicateur'
-import { IndicateurGraphique } from '../commun/IndicateurGraphique/IndicateurGraphique'
-import { Sources } from '../commun/Sources/Sources'
+import { Bloc } from '../../commun/Bloc/Bloc'
+import { useDependencies } from '../../commun/contexts/useDependencies'
+import { Indicateur } from '../../commun/Indicateur/Indicateur'
+import { IndicateurGraphique } from '../../commun/IndicateurGraphique/IndicateurGraphique'
+import { Sources } from '../../commun/Sources/Sources'
+import { ContenuMontantDeLaContributionAuxFraisDeSiège } from '../InfoBulle/ContenuMontantDeLaContributionAuxFraisDeSiège'
+import { ContenuTauxDeVétustéConstruction } from '../InfoBulle/ContenuTauxDeVétustéConstruction'
 import style from './BlocBudgetEtFinancesMédicoSocial.module.css'
-import { ContenuMontantDeLaContributionAuxFraisDeSiège } from './InfoBulle/ContenuMontantDeLaContributionAuxFraisDeSiège'
-import { ContenuTauxDeVétustéConstruction } from './InfoBulle/ContenuTauxDeVétustéConstruction'
 import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from './ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel'
 
 type BlocBudgetEtFinancesMédicoSocialProps = Readonly<{

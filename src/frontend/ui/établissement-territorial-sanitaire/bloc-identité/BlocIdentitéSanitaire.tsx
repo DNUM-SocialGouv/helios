@@ -1,7 +1,7 @@
-import { Bloc } from '../commun/Bloc/Bloc'
-import { useDependencies } from '../commun/contexts/useDependencies'
-import { IndicateurIdentité } from '../commun/IndicateurIdentité/IndicateurIdentité'
-import { Sources } from '../commun/Sources/Sources'
+import { Bloc } from '../../commun/Bloc/Bloc'
+import { useDependencies } from '../../commun/contexts/useDependencies'
+import { IndicateurIdentité } from '../../commun/IndicateurIdentité/IndicateurIdentité'
+import { Sources } from '../../commun/Sources/Sources'
 import styles from './BlocIdentitéSanitaire.module.css'
 import { ÉtablissementTerritorialSanitaireIdentitéViewModel } from './ÉtablissementTerritorialSanitaireIdentitéViewModel'
 

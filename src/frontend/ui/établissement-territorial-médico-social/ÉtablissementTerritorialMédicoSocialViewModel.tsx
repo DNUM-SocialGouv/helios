@@ -4,10 +4,10 @@ import { ÉtablissementTerritorialMédicoSocial } from '../../../backend/métier
 import { Paths } from '../../configuration/Paths'
 import { Wording } from '../../configuration/wording/Wording'
 import { StringFormater } from '../commun/StringFormater'
-import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from './ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel'
-import { ÉtablissementTerritorialMédicoSocialActivitéViewModel } from './ÉtablissementTerritorialMédicoSocialActivitéViewModel'
-import { ÉtablissementTerritorialMédicoSocialAutorisationsViewModel } from './ÉtablissementTerritorialMédicoSocialAutorisationsViewModel'
-import { ÉtablissementTerritorialMédicoSocialIdentitéViewModel } from './ÉtablissementTerritorialMédicoSocialIdentitéViewModel'
+import { ÉtablissementTerritorialMédicoSocialActivitéViewModel } from './bloc-activité/ÉtablissementTerritorialMédicoSocialActivitéViewModel'
+import { ÉtablissementTerritorialMédicoSocialAutorisationsViewModel } from './bloc-autorisations/ÉtablissementTerritorialMédicoSocialAutorisationsViewModel'
+import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from './bloc-budget-et-finances/ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel'
+import { ÉtablissementTerritorialMédicoSocialIdentitéViewModel } from './bloc-identité/ÉtablissementTerritorialMédicoSocialIdentitéViewModel'
 import '@gouvfr/dsfr/dist/component/tag/tag.min.css'
 
 export class ÉtablissementTerritorialMédicoSocialViewModel {

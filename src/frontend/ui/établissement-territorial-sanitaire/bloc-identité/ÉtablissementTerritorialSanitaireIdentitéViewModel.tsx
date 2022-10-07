@@ -1,9 +1,9 @@
 import Link from 'next/link'
 
-import { ÉtablissementTerritorialSanitaire } from '../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire'
-import { Paths } from '../../configuration/Paths'
-import { Wording } from '../../configuration/wording/Wording'
-import { StringFormater } from '../commun/StringFormater'
+import { ÉtablissementTerritorialSanitaire } from '../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire'
+import { Paths } from '../../../configuration/Paths'
+import { Wording } from '../../../configuration/wording/Wording'
+import { StringFormater } from '../../commun/StringFormater'
 
 export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
   constructor(

@@ -1,8 +1,8 @@
-import { ÉtablissementTerritorialMédicoSocial } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
-import { ÉtablissementTerritorialMédicoSocialActivité } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
-import { Wording } from '../../configuration/wording/Wording'
-import { GraphiqueViewModel } from '../commun/Graphique/GraphiqueViewModel'
-import { StringFormater } from '../commun/StringFormater'
+import { ÉtablissementTerritorialMédicoSocial } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
+import { ÉtablissementTerritorialMédicoSocialActivité } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
+import { Wording } from '../../../configuration/wording/Wording'
+import { GraphiqueViewModel } from '../../commun/Graphique/GraphiqueViewModel'
+import { StringFormater } from '../../commun/StringFormater'
 
 export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends GraphiqueViewModel {
   readonly seuilValeurAtypique = 120

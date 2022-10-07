@@ -1,10 +1,10 @@
 import { fireEvent, screen, within } from '@testing-library/react'
 
-import { numéroFinessÉtablissementTerritorial } from '../../../backend/testHelper'
-import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from '../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder'
-import { fakeFrontDependencies, renderFakeComponent } from '../../testHelper'
-import { PageÉtablissementTerritorialSanitaire } from './PageÉtablissementTerritorialSanitaire'
-import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTerritorialSanitaireViewModel'
+import { numéroFinessÉtablissementTerritorial } from '../../../../backend/testHelper'
+import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from '../../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder'
+import { fakeFrontDependencies, renderFakeComponent } from '../../../testHelper'
+import { PageÉtablissementTerritorialSanitaire } from '../PageÉtablissementTerritorialSanitaire'
+import { ÉtablissementTerritorialSanitaireViewModel } from '../ÉtablissementTerritorialSanitaireViewModel'
 
 const { paths, wording } = fakeFrontDependencies
 
