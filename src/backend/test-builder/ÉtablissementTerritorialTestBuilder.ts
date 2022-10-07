@@ -369,7 +369,11 @@ export class ÉtablissementTerritorialTestBuilder {
   private static budgetEtFinancesErrdMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances = {
     année: 2019,
     cadreBudgétaire: CadreBudgétaire.ERRD,
-    chargesEtProduits: null,
+    chargesEtProduits: {
+      charges: null,
+      dateMiseÀJourSource: '2022-02-02',
+      produits: null,
+    },
     contributionAuxFraisDeSiège: {
       dateMiseÀJourSource: '2022-01-01',
       valeur: -20000,
@@ -404,9 +408,19 @@ export class ÉtablissementTerritorialTestBuilder {
   private static budgetEtFinancesCaPhMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances = {
     année: 2019,
     cadreBudgétaire: CadreBudgétaire.CA_PH,
-    chargesEtProduits: null,
-    contributionAuxFraisDeSiège: null,
-    fondsDeRoulement: null,
+    chargesEtProduits: {
+      charges: null,
+      dateMiseÀJourSource: '2022-02-02',
+      produits: null,
+    },
+    contributionAuxFraisDeSiège: {
+      dateMiseÀJourSource: '2022-01-01',
+      valeur: null,
+    },
+    fondsDeRoulement: {
+      dateMiseÀJourSource: '2022-03-03',
+      valeur: null,
+    },
     recettesEtDépenses: {
       dateMiseÀJourSource: '2022-02-02',
       dépensesGroupe1: -16901.360000000001,
@@ -438,14 +452,33 @@ export class ÉtablissementTerritorialTestBuilder {
       dateMiseÀJourSource: '2022-02-02',
       produits: 196518.51999999999,
     },
-    contributionAuxFraisDeSiège: null,
-    fondsDeRoulement: null,
-    recettesEtDépenses: null,
+    contributionAuxFraisDeSiège: {
+      dateMiseÀJourSource: '2022-01-01',
+      valeur: null,
+    },
+
+    fondsDeRoulement: {
+      dateMiseÀJourSource: '2022-03-03',
+      valeur: null,
+    },
+
+    recettesEtDépenses: {
+      dateMiseÀJourSource: '2022-02-02',
+      dépensesGroupe1: null,
+      dépensesGroupe2: null,
+      dépensesGroupe3: null,
+      recettesGroupe1: null,
+      recettesGroupe2: null,
+      recettesGroupe3: null,
+    },
     résultatNetComptable: {
       dateMiseÀJourSource: '2022-02-02',
       valeur: 18887.12999999999,
     },
-    tauxDeCafNette: null,
+    tauxDeCafNette: {
+      dateMiseÀJourSource: '2022-02-02',
+      valeur: null,
+    },
     tauxDeVétustéConstruction: {
       dateMiseÀJourSource: '2022-02-02',
       valeur: 0.31154835988672847,

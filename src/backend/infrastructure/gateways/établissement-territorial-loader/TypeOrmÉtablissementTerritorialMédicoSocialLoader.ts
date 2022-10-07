@@ -343,76 +343,53 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     dateDeMiseÀJourAnnErrdEj: DateMiseÀJourFichierSourceModel,
     dateDeMiseÀJourAnnCaEjEt: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialMédicoSocialBudgetEtFinances[] {
-    const remplisLaValeurDeLIndicateurAvecSaMiseÀJourSiPrésente = (valeurDeLIndicateur: number | null, dateMiseÀJourSource: string) => {
-      return valeurDeLIndicateur !== null ? {
-        dateMiseÀJourSource,
-        valeur: valeurDeLIndicateur,
-      } : null
-    }
     return budgetEtFinancesModel.map((budgetEtFinancesModel) => {
       return {
         année: budgetEtFinancesModel.année,
         cadreBudgétaire: budgetEtFinancesModel.cadreBudgétaire,
-        chargesEtProduits: this.construisLesChargesEtProduits(budgetEtFinancesModel, dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour),
-        contributionAuxFraisDeSiège: remplisLaValeurDeLIndicateurAvecSaMiseÀJourSiPrésente(
-          budgetEtFinancesModel.contributionFraisDeSiègeGroupement,
-          dateDeMiseÀJourAnnErrdEjEt.dernièreMiseÀJour
-        ),
-        fondsDeRoulement: remplisLaValeurDeLIndicateurAvecSaMiseÀJourSiPrésente(
-          budgetEtFinancesModel.fondsDeRoulement,
-          dateDeMiseÀJourAnnErrdEj.dernièreMiseÀJour
-        ),
-        recettesEtDépenses: this.construisLesRecettesEtDépenses(
-          budgetEtFinancesModel,
-          budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.ERRD
+        chargesEtProduits: {
+          charges: budgetEtFinancesModel.charges,
+          dateMiseÀJourSource: dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour,
+          produits: budgetEtFinancesModel.produits,
+        },
+        contributionAuxFraisDeSiège: {
+          dateMiseÀJourSource: dateDeMiseÀJourAnnErrdEjEt.dernièreMiseÀJour,
+          valeur: budgetEtFinancesModel.contributionFraisDeSiègeGroupement,
+        },
+        fondsDeRoulement: {
+          dateMiseÀJourSource: dateDeMiseÀJourAnnErrdEj.dernièreMiseÀJour,
+          valeur: budgetEtFinancesModel.fondsDeRoulement,
+        },
+        recettesEtDépenses: {
+          dateMiseÀJourSource: budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.ERRD
             ? dateDeMiseÀJourAnnErrdEjEt.dernièreMiseÀJour
-            : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour
-        ),
-        résultatNetComptable: remplisLaValeurDeLIndicateurAvecSaMiseÀJourSiPrésente(
-          budgetEtFinancesModel.résultatNetComptable,
-          budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.ERRD
+            : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour,
+          dépensesGroupe1: budgetEtFinancesModel.dépensesGroupe1,
+          dépensesGroupe2: budgetEtFinancesModel.dépensesGroupe2,
+          dépensesGroupe3: budgetEtFinancesModel.dépensesGroupe3,
+          recettesGroupe1: budgetEtFinancesModel.recettesGroupe1,
+          recettesGroupe2: budgetEtFinancesModel.recettesGroupe2,
+          recettesGroupe3: budgetEtFinancesModel.recettesGroupe3,
+        },
+        résultatNetComptable: {
+          dateMiseÀJourSource: budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.ERRD
             ? dateDeMiseÀJourAnnErrdEjEt.dernièreMiseÀJour
-            : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour
-        ),
-        tauxDeCafNette: remplisLaValeurDeLIndicateurAvecSaMiseÀJourSiPrésente(
-          budgetEtFinancesModel.tauxDeCaf,
-          budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.ERRD
+            : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour,
+          valeur: budgetEtFinancesModel.résultatNetComptable,
+        },
+        tauxDeCafNette: {
+          dateMiseÀJourSource: budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.ERRD
             ? dateDeMiseÀJourAnnErrdEj.dernièreMiseÀJour
-            : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour
-        ),
-        tauxDeVétustéConstruction: remplisLaValeurDeLIndicateurAvecSaMiseÀJourSiPrésente(
-          budgetEtFinancesModel.tauxDeVétustéConstruction,
-          budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.ERRD
+            : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour,
+          valeur: budgetEtFinancesModel.tauxDeCaf,
+        },
+        tauxDeVétustéConstruction: {
+          dateMiseÀJourSource: budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.ERRD
             ? dateDeMiseÀJourAnnErrdEj.dernièreMiseÀJour
-            : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour
-        ),
+            : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour,
+          valeur: budgetEtFinancesModel.tauxDeVétustéConstruction,
+        },
       }
     })
-  }
-
-  private construisLesRecettesEtDépenses(
-    budgetEtFinancesModel: BudgetEtFinancesMédicoSocialModel,
-    dateDeMiseÀJourSuivantLeCadreBudgétaire: string
-  ): ÉtablissementTerritorialMédicoSocialBudgetEtFinances['recettesEtDépenses'] {
-    return budgetEtFinancesModel.cadreBudgétaire !== CadreBudgétaire.CA_PA ? {
-      dateMiseÀJourSource: dateDeMiseÀJourSuivantLeCadreBudgétaire,
-      dépensesGroupe1: budgetEtFinancesModel.dépensesGroupe1 || 0,
-      dépensesGroupe2: budgetEtFinancesModel.dépensesGroupe2 || 0,
-      dépensesGroupe3: budgetEtFinancesModel.dépensesGroupe3 || 0,
-      recettesGroupe1: budgetEtFinancesModel.recettesGroupe1 || 0,
-      recettesGroupe2: budgetEtFinancesModel.recettesGroupe2 || 0,
-      recettesGroupe3: budgetEtFinancesModel.recettesGroupe3 || 0,
-    } : null
-  }
-
-  private construisLesChargesEtProduits(
-    budgetEtFinancesModel: BudgetEtFinancesMédicoSocialModel,
-    dateDeMiseÀJourAnnCaEjEt: string
-  ): ÉtablissementTerritorialMédicoSocialBudgetEtFinances['chargesEtProduits'] {
-    return budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.CA_PA ? {
-      charges: budgetEtFinancesModel.charges || 0,
-      dateMiseÀJourSource: dateDeMiseÀJourAnnCaEjEt,
-      produits: budgetEtFinancesModel.produits || 0,
-    } : null
   }
 }

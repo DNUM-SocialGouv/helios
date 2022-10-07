@@ -13,6 +13,11 @@ type LibelléDeGraphe = Readonly<{
   texte: number | string
 }>
 
+type CouleurHistogramme = Readonly<{
+  premierPlan: string
+  secondPlan: string
+}>
+
 export class GraphiqueViewModel {
   readonly ratioMinHistogrammeHorizontal = 2
   readonly ratioMaxHistogrammeHorizontal = 15
@@ -22,6 +27,7 @@ export class GraphiqueViewModel {
   readonly couleurDuFondHistogrammeSecondaire = '#4E68BB'
   readonly couleurDuFondDeLaLigne = '#929292'
   readonly couleurDuFondHistogrammeDeDépassement = '#C9191E'
+  readonly couleurSecondPlanHistogrammeDeDépassement = '#FFE9E9'
   readonly couleurDelAbscisse = '#161616'
   readonly couleurDeLaValeur = '#3A3A3A'
   readonly couleurIdentifiant = '#000'
@@ -54,35 +60,42 @@ export class GraphiqueViewModel {
   }
 
   protected afficheUnHistogrammeVertical(
-    chartColors: string[],
     valeurs: number[],
-    dataLabelsColor: string[],
     années: number[],
+    estDansLesBornesAcceptables: (valeur: number) => boolean,
     entêteLibellé: string,
     identifiant: string,
+    seuilMaximal: number = 100,
     annéesTotales: number = 3
   ): JSX.Element {
+
+    const couleursDeLHistogramme = this.construisLesCouleursDeLHistogramme(valeurs, années, estDansLesBornesAcceptables)
+    const couleurDesLibellés = this.construisLaCouleurDuLabel(valeurs, seuilMaximal)
+
     const data: ChartData = {
       datasets: [
         {
           borderColor: this.couleurDuFondDeLaLigne,
           borderDash: [3, 3],
-          data: [{ x: -1, y: 100 }, { x: 2, y: 100 }],
+          data: [
+            { x: -1, y: seuilMaximal },
+            { x: 2, y: seuilMaximal },
+          ],
           datalabels: { display: false },
           type: 'line',
           xAxisID: 'xLine',
         },
         {
-          backgroundColor: chartColors,
+          backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
           data: valeurs,
-          datalabels: { labels: { title: { color: dataLabelsColor } } },
+          datalabels: { labels: { title: { color: couleurDesLibellés } } },
           maxBarThickness: 60,
           type: 'bar',
           xAxisID: 'x',
         },
         {
-          backgroundColor: this.fondDeCouleurPourSecondHistogramme,
-          data: [100, 100, 100],
+          backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.secondPlan),
+          data: Array(valeurs.length).fill(seuilMaximal),
           datalabels: { display: false },
           maxBarThickness: 60,
           type: 'bar',
@@ -96,18 +109,16 @@ export class GraphiqueViewModel {
 
     return (
       <>
-        {annéesManquantes.length < annéesTotales &&
+        {annéesManquantes.length < annéesTotales && (
           <Bar
             // @ts-ignore
             data={data}
             options={this.optionsHistogrammeVertical()}
           />
-        }
-        {annéesManquantes.length > 0 &&
-          <MiseEnExergue>
-            {`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}
-          </MiseEnExergue>
-        }
+        )}
+        {annéesManquantes.length > 0 && <MiseEnExergue>
+          {`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}
+        </MiseEnExergue>}
         <TableIndicateur
           disabled={annéesManquantes.length === annéesTotales}
           entêteLibellé={entêteLibellé}
@@ -119,6 +130,32 @@ export class GraphiqueViewModel {
     )
   }
 
+  private construisLesCouleursDeLHistogramme(
+    valeurs: number[],
+    années: number[],
+    estDansLesBornesAcceptables: (valeur: number) => boolean
+  ): CouleurHistogramme[] {
+    return valeurs.map((valeur: number, index: number) => {
+      let premierPlan = this.couleurDuFondHistogrammeSecondaire
+      let secondPlan = this.couleurDuFond
+
+      if (this.estCeLAnnéePassée(années[index])) {
+        premierPlan = this.couleurDuFondHistogrammeSecondaire
+        secondPlan = this.couleurDuFond
+      }
+
+      if (!estDansLesBornesAcceptables(valeur)) {
+        premierPlan = this.couleurDuFondHistogrammeDeDépassement
+        secondPlan = this.couleurSecondPlanHistogrammeDeDépassement
+      }
+      return { premierPlan, secondPlan }
+    })
+  }
+
+  private estCeLAnnéePassée(année: number): boolean {
+    return new Date().getFullYear() - 1 === année
+  }
+
   protected afficheUnHistogrammeHorizontal(
     chartColors: string[],
     valeurs: number[],
@@ -126,7 +163,7 @@ export class GraphiqueViewModel {
     ratioLargeurSurHauteur: number,
     entêteLibellé: string,
     identifiant: string,
-    libellésDeValeursManquantes: number [] | string[],
+    libellésDeValeursManquantes: number[] | string[],
     nombreDeLibelléTotal: number = 3
   ): JSX.Element {
     const data: ChartData = {
@@ -146,18 +183,22 @@ export class GraphiqueViewModel {
 
     return (
       <>
-        {libellésDeValeursManquantes.length < nombreDeLibelléTotal &&
+        {libellésDeValeursManquantes.length < nombreDeLibelléTotal && (
           <Bar
             // @ts-ignore
             data={data}
-            options={this.optionsHistogrammeHorizontal(ratioLargeurSurHauteur, Math.max(...valeurs), libellés.map((libellé) => libellé.tailleDePolice))}
+            options={this.optionsHistogrammeHorizontal(
+              ratioLargeurSurHauteur,
+              Math.max(...valeurs),
+              libellés.map((libellé) => libellé.tailleDePolice)
+            )}
           />
-        }
-        {libellésDeValeursManquantes.length > 0 &&
+        )}
+        {libellésDeValeursManquantes.length > 0 && (
           <MiseEnExergue>
             {`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${libellésDeValeursManquantes.join(', ')}`}
           </MiseEnExergue>
-        }
+        )}
         <TableIndicateur
           disabled={libellésDeValeursManquantes.length === nombreDeLibelléTotal}
           entêteLibellé={entêteLibellé}
@@ -230,8 +271,8 @@ export class GraphiqueViewModel {
     })
   }
 
-  protected construisLaCouleurDuLabel(valeurs: number[], estHorizontal: boolean = false): string[] {
-    const maxAvantDePerdreLeContraste = 20
+  protected construisLaCouleurDuLabel(valeurs: number[], seuilMaximal: number, estHorizontal: boolean = false): string[] {
+    const maxAvantDePerdreLeContraste = 0.2 * seuilMaximal
     const couleurDesAnnées = estHorizontal ? Array(valeurs.length).fill(this.couleurDeLaValeur) : Array(valeurs.length).fill(this.couleurDuFond)
 
     valeurs.forEach((valeur: number, index: number) => {
@@ -254,9 +295,9 @@ export class GraphiqueViewModel {
   }
 
   protected calculeLeRatioDesHistogrammesHorizontaux(nombreDeLignes: number): number {
-    return this.ratioMaxHistogrammeHorizontal - (this.facteurDiminutionHistogrammeHorizontal * nombreDeLignes) > this.ratioMinHistogrammeHorizontal ?
-      this.ratioMaxHistogrammeHorizontal - (this.facteurDiminutionHistogrammeHorizontal * nombreDeLignes) :
-      this.ratioMinHistogrammeHorizontal
+    return this.ratioMaxHistogrammeHorizontal - this.facteurDiminutionHistogrammeHorizontal * nombreDeLignes > this.ratioMinHistogrammeHorizontal
+      ? this.ratioMaxHistogrammeHorizontal - this.facteurDiminutionHistogrammeHorizontal * nombreDeLignes
+      : this.ratioMinHistogrammeHorizontal
   }
 
   private construisLePluginDeLégende() {
@@ -306,8 +347,7 @@ export class GraphiqueViewModel {
       afterUpdate(chart: ChartJS, _args: Object, options: any) {
         const légende = document.getElementById(options.containerID)
 
-        if (!légende)
-          return
+        if (!légende) return
 
         while (légende.firstChild) {
           légende.firstChild.remove()
@@ -494,7 +534,7 @@ export class GraphiqueViewModel {
     return valeurs.map((valeur) => valeur + ' %')
   }
 
-  private transformeEnFrançais(valeurs: (number | null)[]): (string|null)[] {
+  private transformeEnFrançais(valeurs: (number | null)[]): (string | null)[] {
     return valeurs.map((valeur) => {
       if (valeur === null) return valeur
 

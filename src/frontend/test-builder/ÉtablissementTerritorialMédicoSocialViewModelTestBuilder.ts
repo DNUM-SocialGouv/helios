@@ -284,7 +284,11 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     {
       année: 2019,
       cadreBudgétaire: CadreBudgétaire.ERRD,
-      chargesEtProduits: null,
+      chargesEtProduits: {
+        charges: null,
+        dateMiseÀJourSource: '2022-01-01',
+        produits: null,
+      },
       contributionAuxFraisDeSiège: {
         dateMiseÀJourSource: '2022-01-01',
         valeur: -10000,
@@ -306,13 +310,23 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
         dateMiseÀJourSource: '2022-01-01',
         valeur: 7289.9200000003912,
       },
-      tauxDeCafNette: null,
-      tauxDeVétustéConstruction: null,
+      tauxDeCafNette: {
+        dateMiseÀJourSource: '2022-01-01',
+        valeur: 0.13548734436644624,
+      },
+      tauxDeVétustéConstruction: {
+        dateMiseÀJourSource: '2022-01-01',
+        valeur: 0.38845089702004892,
+      },
     },
     {
       année: 2020,
       cadreBudgétaire: CadreBudgétaire.ERRD,
-      chargesEtProduits: null,
+      chargesEtProduits: {
+        charges: null,
+        dateMiseÀJourSource: '2022-01-01',
+        produits: null,
+      },
       contributionAuxFraisDeSiège: {
         dateMiseÀJourSource: '2022-01-01',
         valeur: -20000,
@@ -334,13 +348,23 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
         dateMiseÀJourSource: '2022-01-01',
         valeur: 3034.3799999998928,
       },
-      tauxDeCafNette: null,
-      tauxDeVétustéConstruction: null,
+      tauxDeCafNette: {
+        dateMiseÀJourSource: '2022-01-01',
+        valeur: 0.16460754444264256,
+      },
+      tauxDeVétustéConstruction: {
+        dateMiseÀJourSource: '2022-01-01',
+        valeur: 0.5319629026790017,
+      },
     },
     {
       année: 2021,
       cadreBudgétaire: CadreBudgétaire.ERRD,
-      chargesEtProduits: null,
+      chargesEtProduits: {
+        charges: null,
+        dateMiseÀJourSource: '2022-01-01',
+        produits: null,
+      },
       contributionAuxFraisDeSiège: {
         dateMiseÀJourSource: '2022-01-01',
         valeur: -30000,
@@ -362,8 +386,14 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
         dateMiseÀJourSource: '2022-01-01',
         valeur: -38330.669999999503,
       },
-      tauxDeCafNette: null,
-      tauxDeVétustéConstruction: null,
+      tauxDeCafNette: {
+        dateMiseÀJourSource: '2022-01-01',
+        valeur: null,
+      },
+      tauxDeVétustéConstruction: {
+        dateMiseÀJourSource: '2022-01-01',
+        valeur: 0.31154835988672847,
+      },
     },
   ]
 
@@ -393,7 +423,11 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     return {
       année: 2019,
       cadreBudgétaire: CadreBudgétaire.ERRD,
-      chargesEtProduits: null,
+      chargesEtProduits: {
+        charges: null,
+        dateMiseÀJourSource: '2022-01-01',
+        produits: null,
+      },
       contributionAuxFraisDeSiège: {
         dateMiseÀJourSource: '2022-01-01',
         valeur: -20000,

@@ -150,14 +150,11 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
 
   public get tauxOccupationHébergementPermanent(): JSX.Element {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux('tauxOccupationHébergementPermanent')
-    const chartColors = this.construisLeFondDeCouleurDesHistogrammes(valeurs)
-    const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs)
 
     return this.afficheUnHistogrammeVertical(
-      chartColors,
       valeurs,
-      dataLabelsColor,
       années,
+      this.leTauxEstIlDansLesBornesAcceptables,
       this.wording.ANNÉE,
       this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT
     )
@@ -173,14 +170,11 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
 
   public get tauxOccupationHébergementTemporaire(): JSX.Element {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux('tauxOccupationHébergementTemporaire')
-    const chartColors = this.construisLeFondDeCouleurDesHistogrammes(valeurs)
-    const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs)
 
     return this.afficheUnHistogrammeVertical(
-      chartColors,
       valeurs,
-      dataLabelsColor,
       années,
+      this.leTauxEstIlDansLesBornesAcceptables,
       this.wording.ANNÉE,
       this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE
     )
@@ -196,14 +190,11 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
 
   public get tauxOccupationAccueilDeJour(): JSX.Element {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux('tauxOccupationAccueilDeJour')
-    const chartColors = this.construisLeFondDeCouleurDesHistogrammes(valeurs)
-    const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs)
 
     return this.afficheUnHistogrammeVertical(
-      chartColors,
       valeurs,
-      dataLabelsColor,
       années,
+      this.leTauxEstIlDansLesBornesAcceptables,
       this.wording.ANNÉE,
       this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR
     )
@@ -219,14 +210,11 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
 
   public get tauxRéalisationActivité(): JSX.Element {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux('tauxRéalisationActivité')
-    const chartColors = this.construisLeFondDeCouleurDesHistogrammes(valeurs)
-    const dataLabelsColor = this.construisLaCouleurDuLabel(valeurs)
 
     return this.afficheUnHistogrammeVertical(
-      chartColors,
       valeurs,
-      dataLabelsColor,
       années,
+      this.leTauxEstIlDansLesBornesAcceptables,
       this.wording.ANNÉE,
       this.wording.TAUX_RÉALISATION_ACTIVITÉ
     )
@@ -433,6 +421,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     return valeur === '' ? this.wording.NON_RENSEIGNÉ : valeur
   }
 
+  private leTauxEstIlDansLesBornesAcceptables = (valeur: number): boolean => {
+    return valeur <= this.seuilValeurAtypique
+  }
+
   private construisLesAnnéesEtSesTaux(indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>): number[][] {
     const valeurs: number[] = []
     const années: number[] = []
@@ -465,18 +457,6 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     })
 
     return [valeurs, années]
-  }
-
-  private construisLeFondDeCouleurDesHistogrammes(valeurs: number[]): string[] {
-    const fondDeCouleurDesHistogrammes = [...this.fondDeCouleurPourPremierHistogramme]
-
-    valeurs.forEach((valeur: number, index: number) => {
-      if (valeur > this.seuilValeurAtypique) {
-        fondDeCouleurDesHistogrammes[index] = this.couleurDuFondHistogrammeDeDépassement
-      }
-    })
-
-    return fondDeCouleurDesHistogrammes
   }
 
   private construisLesCapacitésParActivités(): [string[], number[]] {
