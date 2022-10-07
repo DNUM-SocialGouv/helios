@@ -23,7 +23,7 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ établissementTerri
       path: `${paths.ENTITÉ_JURIDIQUE}/${établissementTerritorialViewModel.numéroFinessEntitéJuridiqueBrut}`,
     },
     {
-      label: établissementTerritorialViewModel.nomDeLÉtablissementTerritorial,
+      label: établissementTerritorialViewModel.identitéViewModel.nomDeLÉtablissementTerritorial,
       path: '',
     },
   ])
@@ -38,13 +38,13 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ établissementTerri
       <Titre logo={LogoÉtablissementTerritorial}>
         {établissementTerritorialViewModel.titre}
       </Titre>
-      <BlocIdentitéMédicoSocial établissementTerritorialMédicoSocialViewModel={établissementTerritorialViewModel} />
-      <BlocAutorisationEtCapacitéMédicoSocial établissementTerritorialMédicoSocialViewModel={établissementTerritorialViewModel} />
-      <BlocActivitéMédicoSocial établissementTerritorialMédicoSocialViewModel={établissementTerritorialViewModel} />
+      <BlocIdentitéMédicoSocial établissementTerritorialIdentitéMédicoSocialViewModel={établissementTerritorialViewModel.identitéViewModel} />
+      <BlocAutorisationEtCapacitéMédicoSocial
+        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialViewModel.autorisationsViewModel}
+      />
+      <BlocActivitéMédicoSocial établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialViewModel.activitésViewModel} />
       <BlocBudgetEtFinancesMédicoSocial
-        établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={
-          établissementTerritorialViewModel.établissementTerritorialBudgetEtFinancesMédicoSocialViewModel
-        }
+        établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={établissementTerritorialViewModel.budgetEtFinancesViewModel}
       />
     </main>
   )

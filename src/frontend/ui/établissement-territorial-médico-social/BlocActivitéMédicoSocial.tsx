@@ -10,25 +10,25 @@ import { ContenuTauxOccupationAccueilDeJour } from './InfoBulle/ContenuTauxOccup
 import { ContenuTauxOccupationHébergementPermanent } from './InfoBulle/ContenuTauxOccupationHébergementPermanent'
 import { ContenuTauxOccupationHébergementTemporaire } from './InfoBulle/ContenuTauxOccupationHébergementTemporaire'
 import { ContenuTauxRéalisationActivité } from './InfoBulle/ContenuTauxRéalisationActivité'
-import { ÉtablissementTerritorialMédicoSocialViewModel } from './ÉtablissementTerritorialMédicoSocialViewModel'
+import { ÉtablissementTerritorialMédicoSocialActivitéViewModel } from './ÉtablissementTerritorialMédicoSocialActivitéViewModel'
 
 type BlocActivitéMédicoSocialProps = {
-  établissementTerritorialMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialViewModel
+  établissementTerritorialActivitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialActivitéViewModel
 }
 
-export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSocialViewModel }: BlocActivitéMédicoSocialProps) => {
+export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéMédicoSocialViewModel }: BlocActivitéMédicoSocialProps) => {
   const { wording } = useDependencies()
 
   if (
-    !établissementTerritorialMédicoSocialViewModel.activitéEstElleRenseignée ||
+    !établissementTerritorialActivitéMédicoSocialViewModel.activitéEstElleRenseignée ||
     (
-      !établissementTerritorialMédicoSocialViewModel.leTauxOccupationHébergementPermanentEstIlRenseigné &&
-      !établissementTerritorialMédicoSocialViewModel.leTauxOccupationHébergementTemporaireEstIlRenseigné &&
-      !établissementTerritorialMédicoSocialViewModel.leTauxOccupationAccueilDeJourEstIlRenseigné &&
-      !établissementTerritorialMédicoSocialViewModel.leTauxRéalisationActivitéEstIlRenseigné &&
-      !établissementTerritorialMédicoSocialViewModel.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné &&
-      !établissementTerritorialMédicoSocialViewModel.laFileActivePersonnesAccompagnéesEstElleRenseignée &&
-      !établissementTerritorialMédicoSocialViewModel.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée
+      !établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementPermanentEstIlRenseigné &&
+      !établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementTemporaireEstIlRenseigné &&
+      !établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationAccueilDeJourEstIlRenseigné &&
+      !établissementTerritorialActivitéMédicoSocialViewModel.leTauxRéalisationActivitéEstIlRenseigné &&
+      !établissementTerritorialActivitéMédicoSocialViewModel.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné &&
+      !établissementTerritorialActivitéMédicoSocialViewModel.laFileActivePersonnesAccompagnéesEstElleRenseignée &&
+      !établissementTerritorialActivitéMédicoSocialViewModel.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée
     )
   ) {
     return (
@@ -43,87 +43,87 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialMédicoSoc
       <ul className={styles['liste-indicateurs']}>
         <IndicateurGraphique
           contenuInfoBulle={<ContenuTauxOccupationHébergementPermanent
-            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementPermanent}
+            dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementPermanent}
             source={Sources(wording.DIAMANT, wording.CNSA)}
           />}
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementPermanent}
+          dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementPermanent}
           identifiant="activite-0"
           nomDeLIndicateur={wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT}
           source={Sources(wording.DIAMANT, wording.CNSA)}
         >
-          {établissementTerritorialMédicoSocialViewModel.tauxOccupationHébergementPermanent}
+          {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationHébergementPermanent}
         </IndicateurGraphique>
         <IndicateurGraphique
           contenuInfoBulle={<ContenuTauxOccupationHébergementTemporaire
-            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementTemporaire}
+            dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementTemporaire}
             source={Sources(wording.DIAMANT, wording.CNSA)}
           />}
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementTemporaire}
+          dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementTemporaire}
           identifiant="activite-1"
           nomDeLIndicateur={wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE}
           source={Sources(wording.DIAMANT, wording.CNSA)}
         >
-          {établissementTerritorialMédicoSocialViewModel.tauxOccupationHébergementTemporaire}
+          {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationHébergementTemporaire}
         </IndicateurGraphique>
         <IndicateurGraphique
           contenuInfoBulle={<ContenuTauxOccupationAccueilDeJour
-            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationAccueilDeJour}
+            dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationAccueilDeJour}
             source={Sources(wording.DIAMANT, wording.CNSA)}
           />}
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationAccueilDeJour}
+          dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationAccueilDeJour}
           identifiant="activite-2"
           nomDeLIndicateur={wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR}
           source={Sources(wording.DIAMANT, wording.CNSA)}
         >
-          {établissementTerritorialMédicoSocialViewModel.tauxOccupationAccueilDeJour}
+          {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationAccueilDeJour}
         </IndicateurGraphique>
         <IndicateurGraphique
           contenuInfoBulle={<ContenuTauxRéalisationActivité
-            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxRéalisationActivité}
+            dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxRéalisationActivité}
             source={Sources(wording.DIAMANT, wording.TDB_PERF)}
           />}
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTauxRéalisationActivité}
+          dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxRéalisationActivité}
           identifiant="activite-3"
           nomDeLIndicateur={wording.TAUX_RÉALISATION_ACTIVITÉ}
           source={Sources(wording.DIAMANT, wording.TDB_PERF)}
         >
-          {établissementTerritorialMédicoSocialViewModel.tauxRéalisationActivité}
+          {établissementTerritorialActivitéMédicoSocialViewModel.tauxRéalisationActivité}
         </IndicateurGraphique>
         <IndicateurGraphique
           contenuInfoBulle={<ContenuFileActivePersonnesAccompagnées
-            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLaFileActivePersonnesAccompagnées}
+            dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDeLaFileActivePersonnesAccompagnées}
             source={Sources(wording.DIAMANT, wording.TDB_PERF)}
           />}
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLaFileActivePersonnesAccompagnées}
+          dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDeLaFileActivePersonnesAccompagnées}
           identifiant="activite-4"
           nomDeLIndicateur={wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES}
           source={Sources(wording.DIAMANT, wording.TDB_PERF)}
         >
-          {établissementTerritorialMédicoSocialViewModel.fileActivePersonnesAccompagnées}
+          {établissementTerritorialActivitéMédicoSocialViewModel.fileActivePersonnesAccompagnées}
         </IndicateurGraphique>
         <IndicateurGraphique
           contenuInfoBulle={<ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées
-            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuNombreMoyenJournéesAbsencePersonnesAccompagnées}
+            dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuNombreMoyenJournéesAbsencePersonnesAccompagnées}
             source={Sources(wording.DIAMANT, wording.TDB_PERF)}
           />}
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuNombreMoyenJournéesAbsencePersonnesAccompagnées}
+          dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuNombreMoyenJournéesAbsencePersonnesAccompagnées}
           identifiant="activite-5"
           nomDeLIndicateur={wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES}
           source={Sources(wording.DIAMANT, wording.TDB_PERF)}
         >
-          {établissementTerritorialMédicoSocialViewModel.nombreMoyenJournéesAbsencePersonnesAccompagnées}
+          {établissementTerritorialActivitéMédicoSocialViewModel.nombreMoyenJournéesAbsencePersonnesAccompagnées}
         </IndicateurGraphique>
         <IndicateurGraphique
           contenuInfoBulle={<ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties
-            dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLaDuréeMoyenneSéjourAccompagnementPersonnesSorties}
+            dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDeLaDuréeMoyenneSéjourAccompagnementPersonnesSorties}
             source={Sources(wording.DIAMANT, wording.TDB_PERF)}
           />}
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLaDuréeMoyenneSéjourAccompagnementPersonnesSorties}
+          dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDeLaDuréeMoyenneSéjourAccompagnementPersonnesSorties}
           identifiant="activite-6"
           nomDeLIndicateur={wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES}
           source={Sources(wording.DIAMANT, wording.TDB_PERF)}
         >
-          {établissementTerritorialMédicoSocialViewModel.duréeMoyenneSéjourAccompagnementPersonnesSorties}
+          {établissementTerritorialActivitéMédicoSocialViewModel.duréeMoyenneSéjourAccompagnementPersonnesSorties}
         </IndicateurGraphique>
       </ul>
     </Bloc>

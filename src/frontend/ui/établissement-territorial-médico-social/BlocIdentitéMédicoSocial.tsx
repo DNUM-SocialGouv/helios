@@ -3,13 +3,13 @@ import { useDependencies } from '../commun/contexts/useDependencies'
 import { IndicateurIdentité } from '../commun/IndicateurIdentité/IndicateurIdentité'
 import { Sources } from '../commun/Sources/Sources'
 import styles from './BlocIdentitéMédicoSocial.module.css'
-import { ÉtablissementTerritorialMédicoSocialViewModel } from './ÉtablissementTerritorialMédicoSocialViewModel'
+import { ÉtablissementTerritorialMédicoSocialIdentitéViewModel } from './ÉtablissementTerritorialMédicoSocialIdentitéViewModel'
 
 type BlocIdentitéMédicoSocialProps = {
-  établissementTerritorialMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialViewModel
+  établissementTerritorialIdentitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialIdentitéViewModel
 }
 
-export const BlocIdentitéMédicoSocial = ({ établissementTerritorialMédicoSocialViewModel }: BlocIdentitéMédicoSocialProps) => {
+export const BlocIdentitéMédicoSocial = ({ établissementTerritorialIdentitéMédicoSocialViewModel }: BlocIdentitéMédicoSocialProps) => {
   const { wording } = useDependencies()
 
   return (
@@ -19,64 +19,64 @@ export const BlocIdentitéMédicoSocial = ({ établissementTerritorialMédicoSoc
     >
       <ul className={styles['liste-indicateurs']}>
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuNomDeLÉtablissementTerritorial}
+          dateDeMiseÀJour={établissementTerritorialIdentitéMédicoSocialViewModel.dateDeMiseÀJourDuNomDeLÉtablissementTerritorial}
           nomDeLIndicateur={wording.NOM_DE_L_ÉTABLISSEMENT}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialMédicoSocialViewModel.nomDeLÉtablissementTerritorial}
+          valeur={établissementTerritorialIdentitéMédicoSocialViewModel.nomDeLÉtablissementTerritorial}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuNuméroFinessÉtablissementTerritorial}
+          dateDeMiseÀJour={établissementTerritorialIdentitéMédicoSocialViewModel.dateDeMiseÀJourDuNuméroFinessÉtablissementTerritorial}
           nomDeLIndicateur={wording.NUMÉRO_FINESS}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialMédicoSocialViewModel.numéroFinessÉtablissementTerritorial}
+          valeur={établissementTerritorialIdentitéMédicoSocialViewModel.numéroFinessÉtablissementTerritorial}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLAdresse}
+          dateDeMiseÀJour={établissementTerritorialIdentitéMédicoSocialViewModel.dateDeMiseÀJourDeLAdresse}
           nomDeLIndicateur={wording.ADRESSE}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialMédicoSocialViewModel.adresse}
+          valeur={établissementTerritorialIdentitéMédicoSocialViewModel.adresse}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuTéléphoneEtDeLEmail}
+          dateDeMiseÀJour={établissementTerritorialIdentitéMédicoSocialViewModel.dateDeMiseÀJourDuTéléphoneEtDeLEmail}
           nomDeLIndicateur={wording.TÉLÉPHONE_ET_EMAIL}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialMédicoSocialViewModel.téléphoneEtEmail}
+          valeur={établissementTerritorialIdentitéMédicoSocialViewModel.téléphoneEtEmail}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLEntitéJuridiqueDeRattachement}
+          dateDeMiseÀJour={établissementTerritorialIdentitéMédicoSocialViewModel.dateDeMiseÀJourDeLEntitéJuridiqueDeRattachement}
           nomDeLIndicateur={wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialMédicoSocialViewModel.entitéJuridiqueDeRattachement}
+          valeur={établissementTerritorialIdentitéMédicoSocialViewModel.entitéJuridiqueDeRattachement}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLaCatégorieDeLÉtablissement}
+          dateDeMiseÀJour={établissementTerritorialIdentitéMédicoSocialViewModel.dateDeMiseÀJourDeLaCatégorieDeLÉtablissement}
           nomDeLIndicateur={wording.CATÉGORIE_DE_L_ÉTABLISSEMENT}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialMédicoSocialViewModel.catégorieDeLÉtablissement}
+          valeur={établissementTerritorialIdentitéMédicoSocialViewModel.catégorieDeLÉtablissement}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuStatutDeLÉtablissement}
+          dateDeMiseÀJour={établissementTerritorialIdentitéMédicoSocialViewModel.dateDeMiseÀJourDuStatutDeLÉtablissement}
           nomDeLIndicateur={wording.STATUT_JURIDIQUE_EJ}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialMédicoSocialViewModel.statutDeLÉtablissement}
+          valeur={établissementTerritorialIdentitéMédicoSocialViewModel.statutDeLÉtablissement}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuMonoÉtablissement}
+          dateDeMiseÀJour={établissementTerritorialIdentitéMédicoSocialViewModel.dateDeMiseÀJourDuMonoÉtablissement}
           nomDeLIndicateur={wording.MONO_ÉTABLISSEMENT}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialMédicoSocialViewModel.monoÉtablissement}
+          valeur={établissementTerritorialIdentitéMédicoSocialViewModel.monoÉtablissement}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDuPrincipalOuDuSecondaire}
+          dateDeMiseÀJour={établissementTerritorialIdentitéMédicoSocialViewModel.dateDeMiseÀJourDuPrincipalOuDuSecondaire}
           nomDeLIndicateur={wording.ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialMédicoSocialViewModel.principalOuSecondaire}
+          valeur={établissementTerritorialIdentitéMédicoSocialViewModel.principalOuSecondaire}
         />
         <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialViewModel.dateDeMiseÀJourDeLEntréeEnVigueurDuCpom}
+          dateDeMiseÀJour={établissementTerritorialIdentitéMédicoSocialViewModel.dateDeMiseÀJourDeLEntréeEnVigueurDuCpom}
           nomDeLIndicateur={wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM}
           source={Sources(wording.DIAMANT)}
-          valeur={établissementTerritorialMédicoSocialViewModel.dateDeLEntréeEnVigueurDuCpom}
+          valeur={établissementTerritorialIdentitéMédicoSocialViewModel.dateDeLEntréeEnVigueurDuCpom}
         />
       </ul>
     </Bloc>
