@@ -6,6 +6,7 @@ import { MiseEnExergue } from '../commun/MiseEnExergue/MiseEnExergue'
 import { StringFormater } from '../commun/StringFormater'
 
 export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel extends GraphiqueViewModel {
+  private readonly seuilMinimalDuTauxDeVétustéConstruction = 0
   private readonly seuilMaximalDuTauxDeVétustéConstruction = 80
 
   constructor(
@@ -98,8 +99,8 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].tauxDeVétustéConstruction?.dateMiseÀJourSource as string)
   }
 
-  private leTauxDeVétustéConstructionEstIlAcceptable(valeur: number): boolean {
-    return valeur >= 0 && valeur <= 80
+  private leTauxDeVétustéConstructionEstIlAcceptable = (valeur: number): boolean => {
+    return valeur >= this.seuilMinimalDuTauxDeVétustéConstruction && valeur <= this.seuilMaximalDuTauxDeVétustéConstruction
   }
 
   private construisLesAnnéesEtSesTaux(): number[][] {

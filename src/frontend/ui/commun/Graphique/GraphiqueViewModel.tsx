@@ -271,7 +271,7 @@ export class GraphiqueViewModel {
     })
   }
 
-  protected construisLaCouleurDuLabel(valeurs: number[], seuilMaximal: number = 100, estHorizontal: boolean = false): string[] {
+  protected construisLaCouleurDuLabel(valeurs: number[], seuilMaximal: number, estHorizontal: boolean = false): string[] {
     const maxAvantDePerdreLeContraste = 0.2 * seuilMaximal
     const couleurDesAnnées = estHorizontal ? Array(valeurs.length).fill(this.couleurDeLaValeur) : Array(valeurs.length).fill(this.couleurDuFond)
 

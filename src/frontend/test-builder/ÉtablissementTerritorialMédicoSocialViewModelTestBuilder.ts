@@ -284,7 +284,11 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     {
       année: 2019,
       cadreBudgétaire: CadreBudgétaire.ERRD,
-      chargesEtProduits: null,
+      chargesEtProduits: {
+        charges: null,
+        dateMiseÀJourSource: '2022-01-01',
+        produits: null,
+      },
       contributionAuxFraisDeSiège: {
         dateMiseÀJourSource: '2022-01-01',
         valeur: -10000,
@@ -318,7 +322,11 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     {
       année: 2020,
       cadreBudgétaire: CadreBudgétaire.ERRD,
-      chargesEtProduits: null,
+      chargesEtProduits: {
+        charges: null,
+        dateMiseÀJourSource: '2022-01-01',
+        produits: null,
+      },
       contributionAuxFraisDeSiège: {
         dateMiseÀJourSource: '2022-01-01',
         valeur: -20000,
@@ -352,7 +360,11 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     {
       année: 2021,
       cadreBudgétaire: CadreBudgétaire.ERRD,
-      chargesEtProduits: null,
+      chargesEtProduits: {
+        charges: null,
+        dateMiseÀJourSource: '2022-01-01',
+        produits: null,
+      },
       contributionAuxFraisDeSiège: {
         dateMiseÀJourSource: '2022-01-01',
         valeur: -30000,
@@ -374,7 +386,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
         dateMiseÀJourSource: '2022-01-01',
         valeur: -38330.669999999503,
       },
-      tauxDeCafNette: null,
+      tauxDeCafNette: {
+        dateMiseÀJourSource: '2022-01-01',
+        valeur: null,
+      },
       tauxDeVétustéConstruction: {
         dateMiseÀJourSource: '2022-01-01',
         valeur: 0.31154835988672847,
@@ -408,7 +423,11 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     return {
       année: 2019,
       cadreBudgétaire: CadreBudgétaire.ERRD,
-      chargesEtProduits: null,
+      chargesEtProduits: {
+        charges: null,
+        dateMiseÀJourSource: '2022-01-01',
+        produits: null,
+      },
       contributionAuxFraisDeSiège: {
         dateMiseÀJourSource: '2022-01-01',
         valeur: -20000,

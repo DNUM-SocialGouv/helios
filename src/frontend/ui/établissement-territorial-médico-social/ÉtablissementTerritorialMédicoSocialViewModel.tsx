@@ -154,7 +154,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     return this.afficheUnHistogrammeVertical(
       valeurs,
       années,
-      this.leTauxEstIlDansLesBornesAcceptables.bind(this),
+      this.leTauxEstIlDansLesBornesAcceptables,
       this.wording.ANNÉE,
       this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT
     )
@@ -174,7 +174,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     return this.afficheUnHistogrammeVertical(
       valeurs,
       années,
-      this.leTauxEstIlDansLesBornesAcceptables.bind(this),
+      this.leTauxEstIlDansLesBornesAcceptables,
       this.wording.ANNÉE,
       this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE
     )
@@ -194,7 +194,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     return this.afficheUnHistogrammeVertical(
       valeurs,
       années,
-      this.leTauxEstIlDansLesBornesAcceptables.bind(this),
+      this.leTauxEstIlDansLesBornesAcceptables,
       this.wording.ANNÉE,
       this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR
     )
@@ -214,7 +214,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     return this.afficheUnHistogrammeVertical(
       valeurs,
       années,
-      this.leTauxEstIlDansLesBornesAcceptables.bind(this),
+      this.leTauxEstIlDansLesBornesAcceptables,
       this.wording.ANNÉE,
       this.wording.TAUX_RÉALISATION_ACTIVITÉ
     )
@@ -421,7 +421,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel extends GraphiqueVi
     return valeur === '' ? this.wording.NON_RENSEIGNÉ : valeur
   }
 
-  private leTauxEstIlDansLesBornesAcceptables(valeur: number): boolean {
+  private leTauxEstIlDansLesBornesAcceptables = (valeur: number): boolean => {
     return valeur <= this.seuilValeurAtypique
   }
 
