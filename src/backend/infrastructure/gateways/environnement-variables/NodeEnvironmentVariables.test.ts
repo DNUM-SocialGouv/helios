@@ -39,7 +39,7 @@ describe('Gestion des variables d’environnement', () => {
     const nodeEnvironmentVariables = new NodeEnvironmentVariables(fakeLogger)
 
     // THEN
-    expect(nodeEnvironmentVariables.SENTRY_DSN).toBe('test_sentry_dsn')
+    expect(nodeEnvironmentVariables.SENTRY_DSN).toBe('https://test@sentry.test.fr/10')
   })
 
   it('retourne la valeur de SENTRY_ENVIRONMENT du .env', () => {

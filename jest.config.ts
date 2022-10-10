@@ -15,6 +15,7 @@ const customJestConfig: Config.InitialOptions = {
     '!src/**/test-factories/**',
   ],
   coverageDirectory: '<rootDir>/coverage',
+  coverageReporters: ['cobertura'],
   fakeTimers: { now: 1664703388050 }, // 2022-01-01T23:00:00.135Z
   moduleFileExtensions: [
     'ts',
