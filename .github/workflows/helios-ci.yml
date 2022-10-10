@@ -6,31 +6,30 @@ jobs:
   install:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout this branch
-        uses: actions/checkout@master
+      - uses: actions/checkout@master
       - uses: actions/setup-node@v3
         with:
+          cache: yarn
           node-version-file: package.json
-      - name: Install node modules
-        run: yarn --frozen-lockfile --check-files
-      - uses: actions/cache@v3
-        id: cache-build
-        with:
-          path: ./*
-          key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
+      - name: Check for duplicate dependencies (fix w/ "yarn dedupe")
+        run: yarn dedupe --check
+      - name: Install packages
+        env:
+          YARN_ENABLE_SCRIPTS: false
+          YARN_NODE_LINKER: pnp
+        run: yarn --immutable
 
   lint-and-typecheck-typescript:
     runs-on: ubuntu-latest
     needs: install
     steps:
-      - uses: actions/cache@v3
-        id: restore-build
-        with:
-          path: ./*
-          key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
+          cache: yarn
           node-version-file: package.json
+      - name: Install packages
+        run: yarn --immutable
       - name: Run the TS linter
         run: yarn lint:typescript
       - name: Run the typescript
@@ -40,14 +39,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: install
     steps:
-      - uses: actions/cache@v3
-        id: restore-build
-        with:
-          path: ./*
-          key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
+          cache: yarn
           node-version-file: package.json
+      - name: Install packages
+        run: yarn --immutable
       - name: Run the CSS linter
         run: yarn lint:scss
 
@@ -70,14 +68,13 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
-      - uses: actions/cache@v3
-        id: restore-build
-        with:
-          path: ./*
-          key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
+          cache: yarn
           node-version-file: package.json
+      - name: Install packages
+        run: yarn --immutable
       - name: Run the tests
         env:
           DATABASE_URL: postgres://helios:h3li0s@localhost:5433/helios
@@ -88,18 +85,20 @@ jobs:
     runs-on: ubuntu-latest
     needs: install
     steps:
-      - uses: actions/cache@v3
-        id: restore-build
-        with:
-          path: ./*
-          key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
+          cache: yarn
           node-version-file: package.json
+      - name: Install packages
+        env:
+          YARN_NODE_LINKER: pnp
+        run: yarn --immutable
       - name: Build the app
-        run: yarn build
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          YARN_NODE_LINKER: pnp
+        run: yarn build
 
   python:
     runs-on: ubuntu-latest
@@ -120,20 +119,26 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
-      - uses: actions/cache@v3
-        id: restore-build
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          path: ./*
-          key: ${{ github.sha }}-${{ github.run_number }}-${{ github.run_attempt }}
+          cache: yarn
+          node-version-file: package.json
+      - name: Install packages
+        env:
+          YARN_NODE_LINKER: pnp
+        run: yarn --immutable
+      - name: Run the migrations
+        env:
+          NODE_ENV: test
+          YARN_NODE_LINKER: pnp
+        run: yarn migrations
       - name: Install pipenv
         run: pipx install pipenv
       - uses: actions/setup-python@v4
         with:
           python-version: 3.10.6 # Conserver la même version que celle dans Pipfile
           cache: pipenv
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: package.json
       - name: Install dependencies
         run: pipenv install --dev --deploy
       - name: Lint
@@ -142,10 +147,6 @@ jobs:
         run: pipenv run typecheck
       - name: Check format
         run: pipenv run format_check
-      - name: Run the migrations
-        env:
-          NODE_ENV: test
-        run: yarn migrations
       - name: Create the DIAMANT public key
         env:
           DIAMANT_PRIVATE_KEY: ${{ secrets.DIAMANT_PRIVATE_KEY }}
