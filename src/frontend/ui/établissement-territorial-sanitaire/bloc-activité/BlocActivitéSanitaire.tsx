@@ -1,11 +1,11 @@
-import { Bloc } from '../commun/Bloc/Bloc'
-import { useDependencies } from '../commun/contexts/useDependencies'
-import { IndicateurGraphique } from '../commun/IndicateurGraphique/IndicateurGraphique'
-import { Sources } from '../commun/Sources/Sources'
+import { Bloc } from '../../commun/Bloc/Bloc'
+import { useDependencies } from '../../commun/contexts/useDependencies'
+import { IndicateurGraphique } from '../../commun/IndicateurGraphique/IndicateurGraphique'
+import { Sources } from '../../commun/Sources/Sources'
+import { ContenuNombreDeJournéesPSYetSSR } from '../InfoBulle/ContenuNombreDeJournéesPSYetSSR'
+import { ContenuNombreDePassagesAuxUrgences } from '../InfoBulle/ContenuNombreDePassagesAuxUrgences'
+import { ContenuNombreDeSéjourMCO } from '../InfoBulle/ContenuNombreDeSéjourMCO'
 import styles from './BlocActivitéSanitaire.module.css'
-import { ContenuNombreDeJournéesPSYetSSR } from './InfoBulle/ContenuNombreDeJournéesPSYetSSR'
-import { ContenuNombreDePassagesAuxUrgences } from './InfoBulle/ContenuNombreDePassagesAuxUrgences'
-import { ContenuNombreDeSéjourMCO } from './InfoBulle/ContenuNombreDeSéjourMCO'
 import { ÉtablissementTerritorialSanitaireActivitéViewModel } from './ÉtablissementTerritorialSanitaireActivitéViewModel'
 
 type BlocActivitéSanitaireProps = {

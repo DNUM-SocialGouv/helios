@@ -140,6 +140,8 @@ jobs:
         run: pipenv run lint
       - name: Type check
         run: pipenv run typecheck
+      - name: Check format
+        run: pipenv run format_check
       - name: Run the migrations
         env:
           NODE_ENV: test

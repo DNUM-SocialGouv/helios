@@ -1,8 +1,8 @@
-import { ÉtablissementTerritorialSanitaire } from '../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire'
-import { Wording } from '../../configuration/wording/Wording'
-import { ActionneurDAccordéon } from '../commun/Accordéon/ActionneurDAccordéon'
-import { GraphiqueViewModel } from '../commun/Graphique/GraphiqueViewModel'
-import { StringFormater } from '../commun/StringFormater'
+import { ÉtablissementTerritorialSanitaire } from '../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire'
+import { Wording } from '../../../configuration/wording/Wording'
+import { ActionneurDAccordéon } from '../../commun/Accordéon/ActionneurDAccordéon'
+import { GraphiqueViewModel } from '../../commun/Graphique/GraphiqueViewModel'
+import { StringFormater } from '../../commun/StringFormater'
 import stylesBlocAutorisationsEtCapacités from './BlocAutorisationEtCapacitéSanitaire.module.css'
 import '@gouvfr/dsfr/dist/component/tag/tag.min.css'
 

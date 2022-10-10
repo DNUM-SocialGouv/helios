@@ -18,8 +18,7 @@ export const PageDesDonnéesPersonnelles = () => {
           {' '}
           <abbr title="Agence Régionale de Santé">ARS</abbr>
           {' '}
-          une vision consolidée et unifiée des données associées aux acteurs et
-          établissements sanitaires ou médico-sociaux.
+          une vision consolidée et unifiée des données associées aux acteurs et établissements sanitaires ou médico-sociaux.
           Ce traitement entre dans le cadre des missions d’intérêt public confiées aux ARS en application de l’article L 1431-2 du code de santé publique.
           Il est mis en œuvre sur le fondement de l’article 6 e) Règlement (UE) 2016/679 du Parlement européen et du Conseil du 27 avril 2016
           (règlement général sur la protection des données ou
@@ -55,6 +54,7 @@ export const PageDesDonnéesPersonnelles = () => {
               <th>Agence Régionale de Santé</th>
               <th>
                 Adresse de contact du
+                {' '}
                 <abbr title="Data Protection Officer (Délégué à la Protection des Données)">DPO</abbr>
               </th>
             </tr>
@@ -175,7 +175,7 @@ export const PageDesDonnéesPersonnelles = () => {
           - 14, avenue Duquesne, 75007 PARIS.
           <br />
           Enfin, si vous estimez, après nous avoir contactés, que vos droits sur vos données ne sont pas respectés,
-          vous pouvez adresser une réclamation auprès de la Commission nationale de l’informatique et des libertés.
+          vous pouvez adresser une réclamation auprès de la Commission Nationale de l’Informatique et des Libertés.
         </p>
       </section>
     </>

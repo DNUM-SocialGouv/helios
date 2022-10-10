@@ -28,7 +28,7 @@ export type Dependencies = Readonly<{
 }>
 
 const createDependencies = (): Dependencies => {
-  dotEnvConfig()
+  dotEnvConfig(process.env.NODE_ENV)
   const logger = new ConsoleLogger()
   const environmentVariables = new NodeEnvironmentVariables(logger)
   const orm = typeOrmOrm(environmentVariables)

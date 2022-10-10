@@ -78,6 +78,19 @@ class TestDéchiffre:
         for fichier in os.listdir(TestDéchiffre.dossier_avec_les_données_chiffrées):
             assert f"Fichier {fichier} déchiffré" not in [log.message for log in caplog.records]
 
+    def skip_n_informe_pas_l_utilisateur_quand_tout_se_passe_bien_même_si_gpg_envoie_dans_stderr(self, caplog: LogCaptureFixture) -> None:
+        # When
+        déchiffre(
+            TestDéchiffre.dossier_avec_les_données_chiffrées,
+            TestDéchiffre.dossier_où_sauvegarder_les_csv,
+            logger=TestDéchiffre.logger,
+        )
+
+        # Then
+        messages_avant_et_après_les_autres_logs = 2
+        logs = list(caplog.records)
+        assert len(logs) == len(os.listdir(TestDéchiffre.dossier_avec_les_données_chiffrées)) + messages_avant_et_après_les_autres_logs
+
 
 class TestVérifieQuOnALaClefPourDechiffrer:
     def test_retourne_true_lorsque_la_clef_est_connue(self) -> None:

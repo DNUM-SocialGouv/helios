@@ -4,14 +4,14 @@ import { ÉtablissementTerritorialSanitaire } from '../../../backend/métier/ent
 import { Paths } from '../../configuration/Paths'
 import { Wording } from '../../configuration/wording/Wording'
 import { StringFormater } from '../commun/StringFormater'
-import { ÉtablissementTerritorialSanitaireActivitéViewModel } from './ÉtablissementTerritorialSanitaireActivitéViewModel'
-import { ÉtablissementTerritorialSanitaireAutorisationsViewModel } from './ÉtablissementTerritorialSanitaireAutorisationsViewModel'
-import { ÉtablissementTerritorialSanitaireIdentitéViewModel } from './ÉtablissementTerritorialSanitaireIdentitéViewModel'
+import { ÉtablissementTerritorialSanitaireActivitéViewModel } from './bloc-activité/ÉtablissementTerritorialSanitaireActivitéViewModel'
+import { ÉtablissementTerritorialSanitaireAutorisationsViewModel } from './bloc-autorisations/ÉtablissementTerritorialSanitaireAutorisationsViewModel'
+import { ÉtablissementTerritorialSanitaireIdentitéViewModel } from './bloc-identité/ÉtablissementTerritorialSanitaireIdentitéViewModel'
 
 export class ÉtablissementTerritorialSanitaireViewModel {
-  public établissementTerritorialSanitaireIdentitéViewModel: ÉtablissementTerritorialSanitaireIdentitéViewModel
-  public établissementTerritorialSanitaireActivitésViewModel: ÉtablissementTerritorialSanitaireActivitéViewModel
-  public établissementTerritorialSanitaireAutorisationsViewModel: ÉtablissementTerritorialSanitaireAutorisationsViewModel
+  private établissementTerritorialSanitaireIdentitéViewModel: ÉtablissementTerritorialSanitaireIdentitéViewModel
+  private établissementTerritorialSanitaireActivitésViewModel: ÉtablissementTerritorialSanitaireActivitéViewModel
+  private établissementTerritorialSanitaireAutorisationsViewModel: ÉtablissementTerritorialSanitaireAutorisationsViewModel
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, private readonly wording: Wording, paths: Paths) {
     this.établissementTerritorialSanitaireIdentitéViewModel =

@@ -3,10 +3,10 @@ import Head from 'next/head'
 import { useDependencies } from '../commun/contexts/useDependencies'
 import { useBreadcrumb } from '../commun/hooks/useBreadcrumb'
 import { Titre } from '../commun/Titre/Titre'
-import { BlocActivitéMédicoSocial } from './BlocActivitéMédicoSocial'
-import { BlocAutorisationEtCapacitéMédicoSocial } from './BlocAutorisationEtCapacitéMédicoSocial'
-import { BlocBudgetEtFinancesMédicoSocial } from './BlocBudgetEtFinancesMédicoSocial'
-import { BlocIdentitéMédicoSocial } from './BlocIdentitéMédicoSocial'
+import { BlocActivitéMédicoSocial } from './bloc-activité/BlocActivitéMédicoSocial'
+import { BlocAutorisationEtCapacitéMédicoSocial } from './bloc-autorisations/BlocAutorisationEtCapacitéMédicoSocial'
+import { BlocBudgetEtFinancesMédicoSocial } from './bloc-budget-et-finances/BlocBudgetEtFinancesMédicoSocial'
+import { BlocIdentitéMédicoSocial } from './bloc-identité/BlocIdentitéMédicoSocial'
 import LogoÉtablissementTerritorial from './logo-établissement-territorial-médico-social.svg'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from './ÉtablissementTerritorialMédicoSocialViewModel'
 
@@ -23,7 +23,7 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ établissementTerri
       path: `${paths.ENTITÉ_JURIDIQUE}/${établissementTerritorialViewModel.numéroFinessEntitéJuridiqueBrut}`,
     },
     {
-      label: établissementTerritorialViewModel.nomDeLÉtablissementTerritorial,
+      label: établissementTerritorialViewModel.identitéViewModel.nomDeLÉtablissementTerritorial,
       path: '',
     },
   ])
@@ -38,13 +38,13 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ établissementTerri
       <Titre logo={LogoÉtablissementTerritorial}>
         {établissementTerritorialViewModel.titre}
       </Titre>
-      <BlocIdentitéMédicoSocial établissementTerritorialMédicoSocialViewModel={établissementTerritorialViewModel} />
-      <BlocAutorisationEtCapacitéMédicoSocial établissementTerritorialMédicoSocialViewModel={établissementTerritorialViewModel} />
-      <BlocActivitéMédicoSocial établissementTerritorialMédicoSocialViewModel={établissementTerritorialViewModel} />
+      <BlocIdentitéMédicoSocial établissementTerritorialIdentitéMédicoSocialViewModel={établissementTerritorialViewModel.identitéViewModel} />
+      <BlocAutorisationEtCapacitéMédicoSocial
+        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialViewModel.autorisationsViewModel}
+      />
+      <BlocActivitéMédicoSocial établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialViewModel.activitésViewModel} />
       <BlocBudgetEtFinancesMédicoSocial
-        établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={
-          établissementTerritorialViewModel.établissementTerritorialBudgetEtFinancesMédicoSocialViewModel
-        }
+        établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={établissementTerritorialViewModel.budgetEtFinancesViewModel}
       />
     </main>
   )

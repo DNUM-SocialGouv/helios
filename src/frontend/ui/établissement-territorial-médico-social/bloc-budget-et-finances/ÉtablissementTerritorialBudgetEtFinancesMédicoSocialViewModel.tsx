@@ -1,9 +1,9 @@
-import { ÉtablissementTerritorialMédicoSocial } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
-import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
-import { Wording } from '../../configuration/wording/Wording'
-import { GraphiqueViewModel } from '../commun/Graphique/GraphiqueViewModel'
-import { MiseEnExergue } from '../commun/MiseEnExergue/MiseEnExergue'
-import { StringFormater } from '../commun/StringFormater'
+import { ÉtablissementTerritorialMédicoSocial } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
+import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
+import { Wording } from '../../../configuration/wording/Wording'
+import { GraphiqueViewModel } from '../../commun/Graphique/GraphiqueViewModel'
+import { MiseEnExergue } from '../../commun/MiseEnExergue/MiseEnExergue'
+import { StringFormater } from '../../commun/StringFormater'
 
 export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel extends GraphiqueViewModel {
   private readonly seuilMinimalDuTauxDeVétustéConstruction = 0

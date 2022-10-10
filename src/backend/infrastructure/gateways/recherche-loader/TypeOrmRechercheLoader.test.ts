@@ -45,8 +45,9 @@ describe('La recherche d’entités et d’établissements', () => {
   it('retourne les résultats triés par pertinence, par type puis par numéro finess', async () => {
     // GIVEN
     const termeRecherché = 'helios'
+    const raisonSocialeEJ = `${termeRecherché} plus un autre truc`
     await entitéJuridiqueRepository.insert([
-      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000000', raisonSociale: `${termeRecherché} ${termeRecherché} - entité juridique très pertinente` }),
+      EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000000', raisonSociale: `${raisonSocialeEJ} - entité juridique très pertinente` }),
       EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000001', raisonSociale: `${termeRecherché} - entité juridique pertinente` }),
       EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '000000002', raisonSociale: `${termeRecherché} - entité juridique pertinente` }),
       EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '999999999', raisonSociale: 'entité juridique non pertinente' }),
@@ -66,7 +67,7 @@ describe('La recherche d’entités et d’établissements', () => {
         { numéroFinessEntitéJuridique: '000000000', numéroFinessÉtablissementTerritorial: '200000000', raisonSociale: `${termeRecherché} - établissement territorial médico-social pertinent` }
       ),
       ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial(
-        { numéroFinessEntitéJuridique: '000000001', numéroFinessÉtablissementTerritorial: '200000001', raisonSociale: `${termeRecherché} - établissement territorial médico-social pertinent` }
+        { numéroFinessEntitéJuridique: '000000001', numéroFinessÉtablissementTerritorial: '200000001', raisonSociale: `${raisonSocialeEJ} ${termeRecherché} - entité juridique très pertinente` }
       ),
       ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial(
         { numéroFinessEntitéJuridique: '999999999', numéroFinessÉtablissementTerritorial: '299999999', raisonSociale: 'établissement territorial médico-social non pertinent' }
@@ -84,8 +85,14 @@ describe('La recherche d’entités et d’établissements', () => {
       résultats:
       [
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
+          commune: 'NANTUA',
+          numéroFiness: '200000001',
+          raisonSociale: `${raisonSocialeEJ} ${termeRecherché} - entité juridique très pertinente`,
+          type: 'Médico-social',
+        }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: '000000000',
-          raisonSociale: `${termeRecherché} ${termeRecherché} - entité juridique très pertinente`,
+          raisonSociale: `${raisonSocialeEJ} - entité juridique très pertinente`,
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: '000000001',
@@ -98,12 +105,6 @@ describe('La recherche d’entités et d’établissements', () => {
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           commune: 'NANTUA',
           numéroFiness: '200000000',
-          raisonSociale: `${termeRecherché} - établissement territorial médico-social pertinent`,
-          type: 'Médico-social',
-        }),
-        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
-          commune: 'NANTUA',
-          numéroFiness: '200000001',
           raisonSociale: `${termeRecherché} - établissement territorial médico-social pertinent`,
           type: 'Médico-social',
         }),

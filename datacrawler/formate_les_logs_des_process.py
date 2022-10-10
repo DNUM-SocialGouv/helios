@@ -10,9 +10,9 @@ def log_process(logger: Logger, process: subprocess.CompletedProcess) -> None:
                 logger.info(sortie)
     if process.stderr:
         for sortie in _formatte(process.stderr):
-            if sortie:
+            if sortie:  # and not "octo.com" in sortie and not "créée le" in sortie:
                 logger.error(sortie)
 
 
 def _formatte(sortie_du_process: bytes) -> List[str]:
-    return sortie_du_process.decode().split('\n')
+    return sortie_du_process.decode().split("\n")
