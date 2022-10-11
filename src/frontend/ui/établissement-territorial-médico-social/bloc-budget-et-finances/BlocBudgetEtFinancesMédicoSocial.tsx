@@ -4,6 +4,7 @@ import { Indicateur } from '../../commun/Indicateur/Indicateur'
 import { IndicateurGraphique } from '../../commun/IndicateurGraphique/IndicateurGraphique'
 import { Sources } from '../../commun/Sources/Sources'
 import { ContenuMontantDeLaContributionAuxFraisDeSiège } from '../InfoBulle/ContenuMontantDeLaContributionAuxFraisDeSiège'
+import { ContenuRésultatNetComptable } from '../InfoBulle/ContenuRésultatNetComptable'
 import { ContenuTauxDeVétustéConstruction } from '../InfoBulle/ContenuTauxDeVétustéConstruction'
 import style from './BlocBudgetEtFinancesMédicoSocial.module.css'
 import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from './ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel'
@@ -33,6 +34,21 @@ export const BlocBudgetEtFinancesMédicoSocial = (
       titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES}
     >
       <ul className={style['liste-indicateurs']}>
+        {
+          budgetEtFinancesViewModel.leRésultatNetComptableEstIlRenseigné &&
+          <Indicateur
+            contenuInfoBulle={<ContenuRésultatNetComptable
+              dateDeMiseÀJour={budgetEtFinancesViewModel.dateMiseÀJourRésultatNetComptable}
+              source={Sources(wording.DIAMANT, wording.CNSA)}
+            />}
+            dateDeMiseÀJour={budgetEtFinancesViewModel.dateMiseÀJourRésultatNetComptable}
+            identifiant="budget-et-finances-résultat-net-comptable"
+            nomDeLIndicateur={wording.RÉSULTAT_NET_COMPTABLE}
+            source={Sources(wording.DIAMANT, wording.CNSA)}
+          >
+            {budgetEtFinancesViewModel.résultatNetComptable}
+          </Indicateur>
+        }
         {
           budgetEtFinancesViewModel.leMontantDeLaContributionAuxFraisDeSiègeEstIlRenseigné &&
           <Indicateur

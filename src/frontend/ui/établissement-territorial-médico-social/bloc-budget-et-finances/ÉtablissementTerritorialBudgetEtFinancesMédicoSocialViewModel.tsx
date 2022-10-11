@@ -2,7 +2,7 @@ import { ÉtablissementTerritorialMédicoSocial } from '../../../../backend/mét
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
 import { Wording } from '../../../configuration/wording/Wording'
 import { CouleurHistogramme, GraphiqueViewModel } from '../../commun/Graphique/GraphiqueViewModel'
-import { MiseEnExergue } from '../../commun/MiseEnExergue/MiseEnExergue'
+import { IndicateurTabulaire } from '../../commun/IndicateurTabulaire/IndicateurTabulaire'
 import { StringFormater } from '../../commun/StringFormater'
 
 export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel extends GraphiqueViewModel {
@@ -41,37 +41,10 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     )
 
     return (
-      <>
-        <div className="fr-table">
-          <table>
-            <thead>
-              <tr>
-                <th>
-                  {this.wording.ANNÉE}
-                </th>
-                <th>
-                  {this.wording.MONTANT}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {montantDesContributionsAuxFraisDeSiègeParAnnée.map((contributionAuxFraisDeSiège) =>
-                <tr key={contributionAuxFraisDeSiège.année}>
-                  <td>
-                    {contributionAuxFraisDeSiège.année}
-                  </td>
-                  <td>
-                    {contributionAuxFraisDeSiège.valeur}
-                  </td>
-                </tr>)
-              }
-            </tbody>
-          </table>
-        </div>
-        <MiseEnExergue>
-          {`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}
-        </MiseEnExergue>
-      </>
+      <IndicateurTabulaire
+        annéesManquantes={annéesManquantes}
+        valeursParAnnée={montantDesContributionsAuxFraisDeSiègeParAnnée}
+      />
     )
   }
 
@@ -120,6 +93,41 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
 
   private leTauxDeVétustéConstructionEstIlAberrant = (valeur: number): boolean => {
     return valeur > this.seuilMaximalDuTauxDeVétustéConstruction || valeur < this.seuilMinimalDuTauxDeVétustéConstruction
+  }
+
+  public get résultatNetComptable(): JSX.Element {
+    const résultatNetComptableParAnnée: { année: number; valeur: string }[] = this.budgetEtFinancesMédicoSocial.reduce(
+      (résultatNetComptableParAnnée: { année: number; valeur: string }[], budgetEtFinancesMédicoSocial) => {
+        if (budgetEtFinancesMédicoSocial.résultatNetComptable.valeur) {
+          résultatNetComptableParAnnée.push({
+            année: budgetEtFinancesMédicoSocial.année,
+            valeur: StringFormater.formateLeMontantEnEuros(budgetEtFinancesMédicoSocial.résultatNetComptable.valeur),
+          })
+        }
+        return résultatNetComptableParAnnée
+      },
+      []
+    )
+
+    const annéesManquantes = this.annéesManquantes(
+      this.budgetEtFinancesMédicoSocial.map((résultatNetComptableParAnnée) => résultatNetComptableParAnnée.année),
+      3
+    )
+
+    return (
+      <IndicateurTabulaire
+        annéesManquantes={annéesManquantes}
+        valeursParAnnée={résultatNetComptableParAnnée}
+      />
+    )
+  }
+
+  public get dateMiseÀJourRésultatNetComptable(): string {
+    return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].résultatNetComptable?.dateMiseÀJourSource as string)
+  }
+
+  public get leRésultatNetComptableEstIlRenseigné(): boolean {
+    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.résultatNetComptable.valeur)
   }
 
   private construisLesAnnéesEtSesTaux(): number[][] {

@@ -157,6 +157,7 @@ export interface Wording {
   readonly MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE: string
   readonly MONTANT: string
   readonly TAUX_DE_VÉTUSTÉ_CONSTRUCTION: string
+  readonly RÉSULTAT_NET_COMPTABLE: string
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string
