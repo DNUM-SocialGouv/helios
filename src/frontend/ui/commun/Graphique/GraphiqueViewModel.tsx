@@ -7,13 +7,15 @@ import { Wording } from '../../../configuration/wording/Wording'
 import { MiseEnExergue } from '../MiseEnExergue/MiseEnExergue'
 import { TableIndicateur } from '../TableIndicateur/TableIndicateur'
 
-type LibelléDeGraphe = Readonly<{
+export type LibelléDeDonnéeGraphe = Readonly<{
   couleur: string
-  tailleDePolice: string
-  texte: number | string
 }>
 
-type CouleurHistogramme = Readonly<{
+export type LibelléDeTickGraphe = Readonly<{
+  tailleDePolice: string
+}>
+
+export type CouleurHistogramme = Readonly<{
   premierPlan: string
   secondPlan: string
 }>
@@ -31,19 +33,10 @@ export class GraphiqueViewModel {
   readonly couleurDelAbscisse = '#161616'
   readonly couleurDeLaValeur = '#3A3A3A'
   readonly couleurIdentifiant = '#000'
-  readonly fondDeCouleurPourPremierHistogramme: string[]
-  readonly fondDeCouleurPourSecondHistogramme: string[]
-  readonly grosseursDePolicePourLesLibellés: string[]
+  readonly policeGrasse = 'bold'
+  readonly policeNormale = 'normal'
 
-  constructor(protected readonly wording: Wording, nombreIndicateursActivité: number) {
-    this.fondDeCouleurPourPremierHistogramme = Array(nombreIndicateursActivité)
-      .fill(this.couleurDuFondHistogrammeSecondaire, 0, nombreIndicateursActivité - 1)
-      .fill(this.couleurDuFondHistogrammePrimaire, nombreIndicateursActivité - 1, nombreIndicateursActivité)
-    this.fondDeCouleurPourSecondHistogramme = Array(nombreIndicateursActivité).fill(this.couleurDuFond)
-    this.grosseursDePolicePourLesLibellés = Array(nombreIndicateursActivité)
-      .fill('normal', 0, nombreIndicateursActivité - 1)
-      .fill('bold', nombreIndicateursActivité - 1, nombreIndicateursActivité)
-
+  constructor(protected readonly wording: Wording) {
     ChartJS.register(
       BarElement,
       CategoryScale,
@@ -61,25 +54,22 @@ export class GraphiqueViewModel {
 
   protected afficheUnHistogrammeVertical(
     valeurs: number[],
-    années: number[],
-    estDansLesBornesAcceptables: (valeur: number) => boolean,
+    libellés: (number | string)[],
+    couleursDeLHistogramme: CouleurHistogramme[],
+    libellésDesValeurs: LibelléDeDonnéeGraphe[],
+    libellésDesTicks: LibelléDeTickGraphe[],
     entêteLibellé: string,
     identifiant: string,
-    seuilMaximal: number = 100,
     annéesTotales: number = 3
   ): JSX.Element {
-
-    const couleursDeLHistogramme = this.construisLesCouleursDeLHistogramme(valeurs, années, estDansLesBornesAcceptables)
-    const couleurDesLibellés = this.construisLaCouleurDuLabel(valeurs, seuilMaximal)
-
     const data: ChartData = {
       datasets: [
         {
           borderColor: this.couleurDuFondDeLaLigne,
           borderDash: [3, 3],
           data: [
-            { x: -1, y: seuilMaximal },
-            { x: 2, y: seuilMaximal },
+            { x: -1, y: 100 },
+            { x: 2, y: 100 },
           ],
           datalabels: { display: false },
           type: 'line',
@@ -88,23 +78,23 @@ export class GraphiqueViewModel {
         {
           backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
           data: valeurs,
-          datalabels: { labels: { title: { color: couleurDesLibellés } } },
+          datalabels: { labels: { title: { color: libellésDesValeurs.map((libellé) => libellé.couleur) } } },
           maxBarThickness: 60,
           type: 'bar',
           xAxisID: 'x',
         },
         {
           backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.secondPlan),
-          data: Array(valeurs.length).fill(seuilMaximal),
+          data: Array(valeurs.length).fill(100),
           datalabels: { display: false },
           maxBarThickness: 60,
           type: 'bar',
           xAxisID: 'x',
         },
       ],
-      labels: années,
+      labels: libellés,
     }
-    const annéesManquantes = this.annéesManquantes(années, annéesTotales)
+    const annéesManquantes = this.annéesManquantes(libellés, annéesTotales)
     const valeursFrançaises = this.transformeEnFrançais(valeurs) as string[]
 
     return (
@@ -113,7 +103,7 @@ export class GraphiqueViewModel {
           <Bar
             // @ts-ignore
             data={data}
-            options={this.optionsHistogrammeVertical()}
+            options={this.optionsHistogrammeVertical(libellésDesTicks.map((libelléDuTick) => libelléDuTick.tailleDePolice))}
           />
         )}
         {annéesManquantes.length > 0 && <MiseEnExergue>
@@ -123,43 +113,33 @@ export class GraphiqueViewModel {
           disabled={annéesManquantes.length === annéesTotales}
           entêteLibellé={entêteLibellé}
           identifiants={[identifiant]}
-          libellés={années}
+          libellés={libellés}
           valeurs={[this.ajouteLePourcentage(valeursFrançaises)]}
         />
       </>
     )
   }
 
-  private construisLesCouleursDeLHistogramme(
+  protected construisLesCouleursDeLHistogramme(
     valeurs: number[],
-    années: number[],
-    estDansLesBornesAcceptables: (valeur: number) => boolean
+    libellés: (number | string)[],
+    calculeLaCouleurDesBarresDeLHistogramme: (valeur: number, libellés: number | string) => CouleurHistogramme
   ): CouleurHistogramme[] {
     return valeurs.map((valeur: number, index: number) => {
-      let premierPlan = this.couleurDuFondHistogrammeSecondaire
-      let secondPlan = this.couleurDuFond
-
-      if (this.estCeLAnnéePassée(années[index])) {
-        premierPlan = this.couleurDuFondHistogrammeSecondaire
-        secondPlan = this.couleurDuFond
-      }
-
-      if (!estDansLesBornesAcceptables(valeur)) {
-        premierPlan = this.couleurDuFondHistogrammeDeDépassement
-        secondPlan = this.couleurSecondPlanHistogrammeDeDépassement
-      }
-      return { premierPlan, secondPlan }
+      return calculeLaCouleurDesBarresDeLHistogramme(valeur, libellés[index])
     })
   }
 
-  private estCeLAnnéePassée(année: number): boolean {
-    return new Date().getFullYear() - 1 === année
+  protected estCeLAnnéePassée(année: number | string): boolean {
+    return new Date().getFullYear() - 1 === Number(année)
   }
 
   protected afficheUnHistogrammeHorizontal(
-    chartColors: string[],
     valeurs: number[],
-    libellés: LibelléDeGraphe[],
+    libellés: (number | string)[],
+    couleursDeLHistogramme: CouleurHistogramme[],
+    libellésDesValeurs: LibelléDeDonnéeGraphe[],
+    libellésDesTicks: LibelléDeTickGraphe[],
     ratioLargeurSurHauteur: number,
     entêteLibellé: string,
     identifiant: string,
@@ -169,15 +149,15 @@ export class GraphiqueViewModel {
     const data: ChartData = {
       datasets: [
         {
-          backgroundColor: chartColors,
+          backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
           data: valeurs,
-          datalabels: { labels: { title: { color: libellés.map((libellé) => libellé.couleur) } } },
+          datalabels: { labels: { title: { color: libellésDesValeurs.map((libellé) => libellé.couleur) } } },
           maxBarThickness: 60,
           type: 'bar',
           yAxisID: 'y',
         },
       ],
-      labels: libellés.map((libellé) => libellé.texte),
+      labels: libellés,
     }
     const valeursFrançaises = this.transformeEnFrançais(valeurs)
 
@@ -190,7 +170,7 @@ export class GraphiqueViewModel {
             options={this.optionsHistogrammeHorizontal(
               ratioLargeurSurHauteur,
               Math.max(...valeurs),
-              libellés.map((libellé) => libellé.tailleDePolice)
+              libellésDesTicks.map((libellé) => libellé.tailleDePolice)
             )}
           />
         )}
@@ -203,7 +183,7 @@ export class GraphiqueViewModel {
           disabled={libellésDeValeursManquantes.length === nombreDeLibelléTotal}
           entêteLibellé={entêteLibellé}
           identifiants={[identifiant]}
-          libellés={libellés.map((libellé) => libellé.texte)}
+          libellés={libellés}
           valeurs={[valeursFrançaises]}
         />
       </>
@@ -259,7 +239,7 @@ export class GraphiqueViewModel {
     )
   }
 
-  protected construisLesLibellés(textes: (number | string)[], valeurs: number[], taillesDePolice: string[]): LibelléDeGraphe[] {
+  protected construisLesLibellés(textes: (number | string)[], valeurs: number[], taillesDePolice: string[]): LibelléDeTickGraphe[] {
     const maxAvantDePerdreLeContraste = 20
 
     return textes.map((texte, index) => {
@@ -284,7 +264,7 @@ export class GraphiqueViewModel {
     return couleurDesAnnées
   }
 
-  protected annéesManquantes(années: number[], annéesTotales: number): number[] {
+  protected annéesManquantes(années: (number | string)[], annéesTotales: number): number[] {
     const annéeEnCours = new Date().getFullYear()
 
     return Array(annéesTotales)
@@ -365,7 +345,7 @@ export class GraphiqueViewModel {
     }
   }
 
-  private optionsHistogrammeVertical(): ChartOptions<'bar'> {
+  private optionsHistogrammeVertical(grosseursDePoliceDesLibellés: string[]): ChartOptions<'bar'> {
     return {
       animation: false,
       plugins: {
@@ -394,7 +374,7 @@ export class GraphiqueViewModel {
           ticks: {
             color: this.couleurDelAbscisse,
             // @ts-ignore
-            font: { weight: this.grosseursDePolicePourLesLibellés },
+            font: { weight: grosseursDePoliceDesLibellés },
           },
         },
         xLine: { display: false, max: 1, min: 0, type: 'linear' },
