@@ -14,15 +14,16 @@ describe('La page établissement territorial - bloc budget et finances', () => {
     année: -1,
     cadreBudgétaire: -1,
     chargesEtProduits: -1,
-    contributionAuxFraisDeSiège: 0,
+    contributionAuxFraisDeSiège: 1,
     fondsDeRoulement: -1,
     recettesEtDépenses: -1,
-    résultatNetComptable: -1,
+    résultatNetComptable: 0,
     tauxDeCafNette: -1,
-    tauxDeVétustéConstruction: 1,
+    tauxDeVétustéConstruction: 2,
   }
 
   it.each([
+    [indiceDeLIndicateur.résultatNetComptable, wording.RÉSULTAT_NET_COMPTABLE, 'budget-et-finances-résultat-net-comptable'],
     [indiceDeLIndicateur.contributionAuxFraisDeSiège, wording.MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE, 'budget-et-finances-montant-de-la-contribution'],
     [indiceDeLIndicateur.tauxDeVétustéConstruction, wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION, 'budget-et-finances-taux-de-vétusté-construction'],
   ])('affiche l’intitulé de l’indicateur %s, avec sa date de mise à jour et un bouton pour accéder aux détails', (indiceDeLIndicateur, libelléDeLIndicateur, identifiantInfoBulle) => {
@@ -47,6 +48,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
   })
 
   it.each([
+    [indiceDeLIndicateur.résultatNetComptable, wording.RÉSULTAT_NET_COMPTABLE],
     [indiceDeLIndicateur.contributionAuxFraisDeSiège, wording.MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE],
     [indiceDeLIndicateur.tauxDeVétustéConstruction, wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION],
   ])('affiche le contenu de l’info bulle %s après avoir cliqué sur le bouton "détails"', (indiceDeLIndicateur, libelléDeLIndicateur) => {
@@ -80,6 +82,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
   })
 
   it.each([
+    [indiceDeLIndicateur.résultatNetComptable, wording.RÉSULTAT_NET_COMPTABLE],
     [indiceDeLIndicateur.contributionAuxFraisDeSiège, wording.MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE],
     [indiceDeLIndicateur.tauxDeVétustéConstruction, wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION],
   ])('ferme l’info bulle %s après avoir cliqué sur le bouton "Fermer"', (indiceDeLIndicateur, libelléDeLIndicateur) => {
@@ -101,6 +104,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
   })
 
   it.each([
+    [indiceDeLIndicateur.résultatNetComptable],
     [indiceDeLIndicateur.contributionAuxFraisDeSiège],
     [indiceDeLIndicateur.tauxDeVétustéConstruction],
   ])('affiche une mise en exergue si une ou plusieurs années sont manquantes', (indiceDeLIndicateur) => {
@@ -141,6 +145,63 @@ describe('La page établissement territorial - bloc budget et finances', () => {
     // THEN
     const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
     expect(within(budgetEtFinances).getByText(wording.INDICATEURS_VIDES)).toBeInTheDocument()
+  })
+
+  describe('L’indicateur du résultat net comptable', () => {
+    it('affiche un tableau affichant le résultat net comptable des 3 années passées', () => {
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+
+      // THEN
+      const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
+      const indicateurs = within(budgetEtFinances).getAllByRole('listitem')
+      const résultatNetComptable = indicateurs[indiceDeLIndicateur.résultatNetComptable]
+      const tableauDesRésultatNetComptable = within(résultatNetComptable).getByRole('table')
+      expect(tableauDesRésultatNetComptable).toBeInTheDocument()
+
+      const annéeLigneDEnTête = within(tableauDesRésultatNetComptable).getByRole('columnheader', { name: wording.ANNÉE })
+      const indicateurLigneDEnTête = within(tableauDesRésultatNetComptable).getByRole('columnheader', { name: wording.MONTANT })
+      expect(annéeLigneDEnTête).toBeInTheDocument()
+      expect(indicateurLigneDEnTête).toBeInTheDocument()
+
+      const lignes = within(tableauDesRésultatNetComptable).getAllByRole('row')
+      expect(lignes).toHaveLength(1 + 3)
+      const premièreAnnée = within(lignes[1]).getByRole('cell', { name: '2019' })
+      expect(premièreAnnée).toBeInTheDocument()
+      const valeurDeLaPremièreAnnée = within(lignes[1]).getByRole('cell', { name: '7 290 €' })
+      expect(valeurDeLaPremièreAnnée).toBeInTheDocument()
+
+      const deuxièmeAnnée = within(lignes[2]).getByRole('cell', { name: '2020' })
+      expect(deuxièmeAnnée).toBeInTheDocument()
+      const valeurDeLaDeuxièmeAnnée = within(lignes[2]).getByRole('cell', { name: '3 034 €' })
+      expect(valeurDeLaDeuxièmeAnnée).toBeInTheDocument()
+
+      const troisièmeAnnée = within(lignes[3]).getByRole('cell', { name: '2021' })
+      expect(troisièmeAnnée).toBeInTheDocument()
+      const valeurDeLaTroisièmeAnnée = within(lignes[3]).getByRole('cell', { name: '−38 331 €' })
+      expect(valeurDeLaTroisièmeAnnée).toBeInTheDocument()
+    })
+
+    it('n’affiche pas l’indicateur du résultat net comptable si aucune valeur n’est renseigné pour aucune année', () => {
+      // GIVEN
+      const établissementTerritorialSansMontantDeLaContribution = new ÉtablissementTerritorialMédicoSocialViewModel({
+        activités: [],
+        autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
+        budgetEtFinances: [
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinances({ année: 2019, résultatNetComptable: { dateMiseÀJourSource: '2020-01-01', valeur :null } }),
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinances({ année: 2020, résultatNetComptable: { dateMiseÀJourSource: '2020-01-01', valeur :null } }),
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinances({ année: 2021, résultatNetComptable: { dateMiseÀJourSource: '2020-01-01', valeur :null } }),
+        ],
+        identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+      }, wording, paths)
+
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansMontantDeLaContribution} />)
+
+      // THEN
+      const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
+      expect(within(budgetEtFinances).queryByText(wording.RÉSULTAT_NET_COMPTABLE, { selector: 'p' })).not.toBeInTheDocument()
+    })
   })
 
   describe('L’indicateur du montant de la contribution', () => {
