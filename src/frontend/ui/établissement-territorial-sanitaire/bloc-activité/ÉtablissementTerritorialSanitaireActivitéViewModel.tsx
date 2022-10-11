@@ -111,7 +111,7 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
       années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale })),
       this.ratioHistogrammeNombreDePassagesAuxUrgences,
       this.wording.ANNÉE,
-      this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES,
+      this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES,
       annéesManquantes,
       5
     )

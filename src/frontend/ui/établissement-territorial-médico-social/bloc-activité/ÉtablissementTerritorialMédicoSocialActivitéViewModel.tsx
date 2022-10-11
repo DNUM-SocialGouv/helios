@@ -1,18 +1,19 @@
 import { ÉtablissementTerritorialMédicoSocial } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialActivité } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
 import { Wording } from '../../../configuration/wording/Wording'
-import { GraphiqueViewModel } from '../../commun/Graphique/GraphiqueViewModel'
+import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from '../../commun/Graphique/GraphiqueViewModel'
 import { StringFormater } from '../../commun/StringFormater'
 
 export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends GraphiqueViewModel {
   readonly seuilValeurAtypique = 120
   readonly ratioHistogrammeBlocActivité = 2
+  readonly seuilDuContrasteDuLibellé = 20
 
   constructor(
     private readonly établissementTerritorialActivité: ÉtablissementTerritorialMédicoSocial['activités'],
     wording: Wording
   ) {
-    super(wording, établissementTerritorialActivité.length)
+    super(wording)
   }
 
   public get activitéEstElleRenseignée(): boolean {
@@ -29,7 +30,9 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
     return this.afficheUnHistogrammeVertical(
       valeurs,
       années,
-      this.leTauxEstIlDansLesBornesAcceptables,
+      this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreVerticale),
+      this.construisLesLibellésDesValeurs(valeurs),
+      this.construisLesLibellésDesTicks(années),
       this.wording.ANNÉE,
       this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT
     )
@@ -49,7 +52,9 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
     return this.afficheUnHistogrammeVertical(
       valeurs,
       années,
-      this.leTauxEstIlDansLesBornesAcceptables,
+      this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreVerticale),
+      this.construisLesLibellésDesValeurs(valeurs),
+      this.construisLesLibellésDesTicks(années),
       this.wording.ANNÉE,
       this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE
     )
@@ -69,7 +74,9 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
     return this.afficheUnHistogrammeVertical(
       valeurs,
       années,
-      this.leTauxEstIlDansLesBornesAcceptables,
+      this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreVerticale),
+      this.construisLesLibellésDesValeurs(valeurs),
+      this.construisLesLibellésDesTicks(années),
       this.wording.ANNÉE,
       this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR
     )
@@ -89,7 +96,9 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
     return this.afficheUnHistogrammeVertical(
       valeurs,
       années,
-      this.leTauxEstIlDansLesBornesAcceptables,
+      this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreVerticale),
+      this.construisLesLibellésDesValeurs(valeurs),
+      this.construisLesLibellésDesTicks(années),
       this.wording.ANNÉE,
       this.wording.TAUX_RÉALISATION_ACTIVITÉ
     )
@@ -105,14 +114,14 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
 
   public get fileActivePersonnesAccompagnées(): JSX.Element {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs('fileActivePersonnesAccompagnées')
-    const chartColors = this.fondDeCouleurPourPremierHistogramme
     const annéesManquantes = this.annéesManquantes(années, 3)
-    const libellés = this.construisLesLibellés(années, valeurs, this.grosseursDePolicePourLesLibellés)
 
     return this.afficheUnHistogrammeHorizontal(
-      chartColors,
       valeurs,
-      libellés,
+      années,
+      this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale),
+      Array(valeurs.length).fill({ couleur: this.couleurIdentifiant }),
+      this.construisLesLibellésDesTicks(années),
       this.ratioHistogrammeBlocActivité,
       this.wording.ANNÉE,
       this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES,
@@ -130,14 +139,14 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
 
   public get nombreMoyenJournéesAbsencePersonnesAccompagnées(): JSX.Element {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs('nombreMoyenJournéesAbsencePersonnesAccompagnées')
-    const chartColors = this.fondDeCouleurPourPremierHistogramme
     const annéesManquantes = this.annéesManquantes(années, 3)
-    const libellés = this.construisLesLibellés(années, valeurs, this.grosseursDePolicePourLesLibellés)
 
     return this.afficheUnHistogrammeHorizontal(
-      chartColors,
       valeurs,
-      libellés,
+      années,
+      this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale),
+      Array(valeurs.length).fill({ couleur: this.couleurIdentifiant }),
+      this.construisLesLibellésDesTicks(années),
       this.ratioHistogrammeBlocActivité,
       this.wording.ANNÉE,
       this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES,
@@ -155,14 +164,14 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
 
   public get duréeMoyenneSéjourAccompagnementPersonnesSorties(): JSX.Element {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs('duréeMoyenneSéjourAccompagnementPersonnesSorties')
-    const chartColors = this.fondDeCouleurPourPremierHistogramme
     const annéesManquantes = this.annéesManquantes(années, 3)
-    const libellés = this.construisLesLibellés(années, valeurs, this.grosseursDePolicePourLesLibellés)
 
     return this.afficheUnHistogrammeHorizontal(
-      chartColors,
       valeurs,
-      libellés,
+      années,
+      this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale),
+      Array(valeurs.length).fill({ couleur: this.couleurIdentifiant }),
+      this.construisLesLibellésDesTicks(années),
       this.ratioHistogrammeBlocActivité,
       this.wording.ANNÉE,
       this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES,
@@ -217,5 +226,41 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
 
   private transformeEnTaux(nombre: number): number {
     return Number((nombre * 100).toFixed(1))
+  }
+
+  private construisLaCouleurDeLaBarreVerticale = (valeur: number, année: number | string): CouleurHistogramme => {
+    let premierPlan = this.couleurDuFondHistogrammeSecondaire
+    let secondPlan = this.couleurDuFond
+
+    if (this.estCeLAnnéePassée(année)) {
+      premierPlan = this.couleurDuFondHistogrammePrimaire
+      secondPlan = this.couleurDuFond
+    }
+
+    if (!this.leTauxEstIlDansLesBornesAcceptables(valeur)) {
+      premierPlan = this.couleurDuFondHistogrammeDeDépassement
+      secondPlan = this.couleurSecondPlanHistogrammeDeDépassement
+    }
+    return { premierPlan, secondPlan }
+  }
+
+  private construisLaCouleurDeLaBarreHorizontale = (_valeur: number, année: number | string): CouleurHistogramme => {
+    return this.estCeLAnnéePassée(année)
+      ? {
+        premierPlan: this.couleurDuFondHistogrammePrimaire,
+        secondPlan: this.couleurDuFond,
+      }
+      : {
+        premierPlan: this.couleurDuFondHistogrammeSecondaire,
+        secondPlan: this.couleurDuFond,
+      }
+  }
+
+  private construisLesLibellésDesValeurs(valeurs: number[]): LibelléDeDonnéeGraphe[] {
+    return valeurs.map((valeur) => ({ couleur: valeur > this.seuilDuContrasteDuLibellé ? this.couleurDuFond : this.couleurIdentifiant }))
+  }
+
+  private construisLesLibellésDesTicks(libellés: (number | string)[]): LibelléDeTickGraphe[] {
+    return libellés.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }))
   }
 }
