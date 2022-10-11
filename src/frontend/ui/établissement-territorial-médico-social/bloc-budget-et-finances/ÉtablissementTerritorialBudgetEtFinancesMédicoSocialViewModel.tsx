@@ -1,19 +1,20 @@
 import { ÉtablissementTerritorialMédicoSocial } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
 import { Wording } from '../../../configuration/wording/Wording'
-import { GraphiqueViewModel } from '../../commun/Graphique/GraphiqueViewModel'
+import { CouleurHistogramme, GraphiqueViewModel } from '../../commun/Graphique/GraphiqueViewModel'
 import { MiseEnExergue } from '../../commun/MiseEnExergue/MiseEnExergue'
 import { StringFormater } from '../../commun/StringFormater'
 
 export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel extends GraphiqueViewModel {
   private readonly seuilMinimalDuTauxDeVétustéConstruction = 0
   private readonly seuilMaximalDuTauxDeVétustéConstruction = 80
+  private readonly seuilDuContrasteDuLibellé = 10
 
   constructor(
     private readonly budgetEtFinancesMédicoSocial: ÉtablissementTerritorialMédicoSocial['budgetEtFinances'],
     wording: Wording
   ) {
-    super(wording, 0)
+    super(wording)
   }
 
   public get desDonnéesBudgetEtFinancesSontRenseignées(): boolean {
@@ -84,14 +85,32 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
 
   public get tauxDeVétustéConstruction(): JSX.Element {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux()
+    const construisLaCouleurDeLaBarre = (valeur: number, année: number | string): CouleurHistogramme => {
+      let premierPlan = this.couleurDuFondHistogrammeSecondaire
+      let secondPlan = this.couleurDuFond
+
+      if (this.estCeLAnnéePassée(année)) {
+        premierPlan = this.couleurDuFondHistogrammePrimaire
+        secondPlan = this.couleurDuFond
+      }
+
+      if (this.leTauxDeVétustéConstructionEstIlAberrant(valeur)) {
+        premierPlan = this.couleurDuFondHistogrammeDeDépassement
+        secondPlan = this.couleurSecondPlanHistogrammeDeDépassement
+      }
+      return { premierPlan, secondPlan }
+    }
+    const libellésDesValeurs = valeurs.map((valeur) => ({ couleur:  valeur > this.seuilDuContrasteDuLibellé ? this.couleurDuFond : this.couleurIdentifiant }))
+    const libellésDesTicks = années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }))
 
     return this.afficheUnHistogrammeVertical(
       valeurs,
       années,
-      this.leTauxDeVétustéConstructionEstIlAcceptable,
+      this.construisLesCouleursDeLHistogramme(valeurs, années, construisLaCouleurDeLaBarre),
+      libellésDesValeurs,
+      libellésDesTicks,
       this.wording.ANNÉE,
-      this.wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION,
-      this.seuilMaximalDuTauxDeVétustéConstruction
+      this.wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION
     )
   }
 
@@ -99,8 +118,8 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].tauxDeVétustéConstruction?.dateMiseÀJourSource as string)
   }
 
-  private leTauxDeVétustéConstructionEstIlAcceptable = (valeur: number): boolean => {
-    return valeur >= this.seuilMinimalDuTauxDeVétustéConstruction && valeur <= this.seuilMaximalDuTauxDeVétustéConstruction
+  private leTauxDeVétustéConstructionEstIlAberrant = (valeur: number): boolean => {
+    return valeur > this.seuilMaximalDuTauxDeVétustéConstruction || valeur < this.seuilMinimalDuTauxDeVétustéConstruction
   }
 
   private construisLesAnnéesEtSesTaux(): number[][] {

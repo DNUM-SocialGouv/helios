@@ -13,7 +13,7 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
     private readonly établissementTerritorialSanitaireAutorisations: ÉtablissementTerritorialSanitaire['autorisationsEtCapacités'],
     wording: Wording
   ) {
-    super(wording, 0)
+    super(wording)
   }
 
   public get lesCapacitésParActivitésSontEllesRenseignées(): boolean {

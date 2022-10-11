@@ -2,7 +2,7 @@ import { ÉtablissementTerritorialMédicoSocial } from '../../../../backend/mét
 import { CapacitéParActivité } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation'
 import { Wording } from '../../../configuration/wording/Wording'
 import { ActionneurDAccordéon } from '../../commun/Accordéon/ActionneurDAccordéon'
-import { GraphiqueViewModel } from '../../commun/Graphique/GraphiqueViewModel'
+import { CouleurHistogramme, GraphiqueViewModel } from '../../commun/Graphique/GraphiqueViewModel'
 import { StringFormater } from '../../commun/StringFormater'
 import styles from './BlocAutorisationEtCapacitéMédicoSocial.module.css'
 
@@ -11,7 +11,7 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
     private readonly établissementTerritorialAutorisations: ÉtablissementTerritorialMédicoSocial['autorisationsEtCapacités'],
     wording: Wording
   ) {
-    super(wording, 0)
+    super(wording)
   }
 
   public get autorisations(): JSX.Element {
@@ -101,15 +101,25 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
 
   public get capacitéParActivités(): JSX.Element {
     const [activités, capacités] = this.construisLesCapacitésParActivités()
-    const couleursDuGraphe = Array(capacités.length).fill(this.couleurDuFondHistogrammeSecondaire).fill(this.couleurDuFondHistogrammePrimaire, 0, 1)
-    const couleursDesLibellés = Array(capacités.length).fill('black')
-    const taillesDePoliceDesLibellés = Array(capacités.length).fill('normal').fill('bold', 0, 1)
-    const libellés = this.construisLesLibellés(activités, couleursDesLibellés, taillesDePoliceDesLibellés)
+    const construisLaCouleurDeLaBarreHorizontale = (_valeur: number, libellé: number | string): CouleurHistogramme => {
+      return {
+        premierPlan: libellé === this.wording.NOMBRE_TOTAL_DE_PLACE ? this.couleurDuFondHistogrammePrimaire : this.couleurDuFondHistogrammeSecondaire,
+        secondPlan: this.couleurDuFondHistogrammePrimaire,
+      }
+    }
+    const libellésDesValeurs = Array(capacités.length).fill({ couleur: this.couleurIdentifiant })
+    const libellésDesTicks = activités.map((activité) => ({
+      tailleDePolice: activité === this.wording.NOMBRE_TOTAL_DE_PLACE
+        ? this.policeGrasse
+        : this.policeNormale,
+    }))
 
     return this.afficheUnHistogrammeHorizontal(
-      couleursDuGraphe,
       capacités,
-      libellés,
+      activités,
+      this.construisLesCouleursDeLHistogramme(capacités, activités, construisLaCouleurDeLaBarreHorizontale),
+      libellésDesValeurs,
+      libellésDesTicks,
       this.calculeLeRatioDesHistogrammesHorizontaux(activités.length),
       this.wording.ACTIVITÉ,
       this.wording.CAPACITÉ_INSTALLÉE,
@@ -141,5 +151,4 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
     capacités.splice(0, 0, capacitéTotale)
     return [activités, capacités]
   }
-
 }

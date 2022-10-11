@@ -36,7 +36,7 @@ export const ContenuTauxDeVétustéConstruction = ({ dateDeMiseÀJour, source }:
       <section aria-label={wording.MODE_DE_CALCUL}>
         <p>
           <span className="fr-text--bold">Mode de calcul : </span>
-          Amortissements des constructions / Immobilisations corporelles brutes construction
+          Amortissements des constructions / Immobilisations corporelles brutes construction.
         </p>
       </section>
       <section aria-label={wording.SOURCES}>
@@ -46,17 +46,15 @@ export const ContenuTauxDeVétustéConstruction = ({ dateDeMiseÀJour, source }:
         </p>
         <ul>
           <li>
-            ERRD annexe 8 (feuilles « CRP SOUMIS EQUILIBRE », « CRP NON SOUMIS EQUIL » et « CRA »)
+            ERRD annexe 8 (feuilles « Ratios financiers »)
           </li>
           <li>
             CA (feuille « ANNEXE 8 »)
           </li>
         </ul>
         <p>
-          Hélios collecte ces données depuis le SI mutualisé des ARS DIAMANT
-          qui est un système décisionnel national permettant de stocker des informations provenant de plusieurs sources.
-          DIAMANT : Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation.
-          {' '}
+          Hélios collecte ces données depuis le SI mutualisé des ARS DIAMANT « Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation »,
+          outil décisionnel de pilotage centré sur la régulation de l’offre de soins, abordée sous les aspects des moyens humains, financiers, et productivité.
         </p>
       </section>
     </>

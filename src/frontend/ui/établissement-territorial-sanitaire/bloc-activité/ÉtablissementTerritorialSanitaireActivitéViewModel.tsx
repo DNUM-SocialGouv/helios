@@ -3,7 +3,7 @@ import { Bar } from 'react-chartjs-2'
 import { ÉtablissementTerritorialSanitaire } from '../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire'
 import { ÉtablissementTerritorialSanitaireActivité } from '../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité'
 import { Wording } from '../../../configuration/wording/Wording'
-import { GraphiqueViewModel } from '../../commun/Graphique/GraphiqueViewModel'
+import { CouleurHistogramme, GraphiqueViewModel } from '../../commun/Graphique/GraphiqueViewModel'
 import { StringFormater } from '../../commun/StringFormater'
 import { TableIndicateur } from '../../commun/TableIndicateur/TableIndicateur'
 import stylesBlocActivité from './BlocActivitéSanitaire.module.css'
@@ -39,7 +39,7 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
     private readonly établissementTerritorialSanitaireActivités: ÉtablissementTerritorialSanitaire['activités'],
     wording: Wording
   ) {
-    super(wording, établissementTerritorialSanitaireActivités.length)
+    super(wording)
   }
 
   public get activitéEstElleRenseignée(): boolean {
@@ -90,14 +90,25 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
 
   public get nombreDePassagesAuxUrgences(): JSX.Element {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs('nombreDePassagesAuxUrgences')
-    const chartColors = this.fondDeCouleurPourPremierHistogramme
     const annéesManquantes = this.annéesManquantes(années, 5)
-    const libellés = this.construisLesLibellés(années, valeurs, this.grosseursDePolicePourLesLibellés)
+    const construisLaCouleurDeLaBarreHorizontale = (_valeur: number, année: number | string): CouleurHistogramme => {
+      return this.estCeLAnnéePassée(année)
+        ? {
+          premierPlan: this.couleurDuFondHistogrammePrimaire,
+          secondPlan: this.couleurDuFond,
+        }
+        : {
+          premierPlan: this.couleurDuFondHistogrammeSecondaire,
+          secondPlan: this.couleurDuFond,
+        }
+    }
 
     return this.afficheUnHistogrammeHorizontal(
-      chartColors,
       valeurs,
-      libellés,
+      années,
+      this.construisLesCouleursDeLHistogramme(valeurs, années, construisLaCouleurDeLaBarreHorizontale),
+      Array(valeurs.length).fill({ couleur: this.couleurIdentifiant }),
+      années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale })),
       this.ratioHistogrammeNombreDePassagesAuxUrgences,
       this.wording.ANNÉE,
       this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES,
