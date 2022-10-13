@@ -510,11 +510,11 @@ export class GraphiqueViewModel {
     }
   }
 
-  private ajouteLePourcentage(valeurs: string[]): string[] {
+  protected ajouteLePourcentage(valeurs: string[]): string[] {
     return valeurs.map((valeur) => valeur + ' %')
   }
 
-  private transformeEnFrançais(valeurs: (number | null)[]): (string | null)[] {
+  protected transformeEnFrançais(valeurs: (number | null)[]): (string | null)[] {
     return valeurs.map((valeur) => {
       if (valeur === null) return valeur
 

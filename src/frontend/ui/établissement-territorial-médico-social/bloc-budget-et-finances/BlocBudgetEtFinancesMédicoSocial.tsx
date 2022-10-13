@@ -5,6 +5,7 @@ import { IndicateurGraphique } from '../../commun/IndicateurGraphique/Indicateur
 import { Sources } from '../../commun/Sources/Sources'
 import { ContenuMontantDeLaContributionAuxFraisDeSiège } from '../InfoBulle/ContenuMontantDeLaContributionAuxFraisDeSiège'
 import { ContenuRésultatNetComptable } from '../InfoBulle/ContenuRésultatNetComptable'
+import { ContenuTauxDeCaf } from '../InfoBulle/ContenuTauxDeCaf'
 import { ContenuTauxDeVétustéConstruction } from '../InfoBulle/ContenuTauxDeVétustéConstruction'
 import style from './BlocBudgetEtFinancesMédicoSocial.module.css'
 import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from './ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel'
@@ -64,6 +65,18 @@ export const BlocBudgetEtFinancesMédicoSocial = (
             {budgetEtFinancesViewModel.montantDeLaContributionAuxFraisDeSiège}
           </Indicateur>
         }
+        <IndicateurGraphique
+          contenuInfoBulle={<ContenuTauxDeCaf
+            dateDeMiseÀJour={budgetEtFinancesViewModel.dateMiseÀJourTauxDeCaf}
+            source={Sources(wording.DIAMANT, wording.CNSA)}
+          />}
+          dateDeMiseÀJour={budgetEtFinancesViewModel.dateMiseÀJourTauxDeCaf}
+          identifiant="budget-et-finances-taux-de-caf"
+          nomDeLIndicateur={wording.TAUX_DE_CAF}
+          source={Sources(wording.DIAMANT, wording.CNSA)}
+        >
+          {budgetEtFinancesViewModel.tauxDeCaf}
+        </IndicateurGraphique>
         <IndicateurGraphique
           contenuInfoBulle={<ContenuTauxDeVétustéConstruction
             dateDeMiseÀJour={budgetEtFinancesViewModel.dateMiseÀJourTauxDeVétustéConstruction}

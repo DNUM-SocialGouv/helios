@@ -18,13 +18,14 @@ describe('La page établissement territorial - bloc budget et finances', () => {
     fondsDeRoulement: -1,
     recettesEtDépenses: -1,
     résultatNetComptable: 0,
-    tauxDeCafNette: -1,
-    tauxDeVétustéConstruction: 2,
+    tauxDeCafNette: 2,
+    tauxDeVétustéConstruction: 3,
   }
 
   it.each([
     [indiceDeLIndicateur.résultatNetComptable, wording.RÉSULTAT_NET_COMPTABLE, 'budget-et-finances-résultat-net-comptable'],
     [indiceDeLIndicateur.contributionAuxFraisDeSiège, wording.MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE, 'budget-et-finances-montant-de-la-contribution'],
+    [indiceDeLIndicateur.tauxDeCafNette, wording.TAUX_DE_CAF, 'budget-et-finances-taux-de-caf'],
     [indiceDeLIndicateur.tauxDeVétustéConstruction, wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION, 'budget-et-finances-taux-de-vétusté-construction'],
   ])('affiche l’intitulé de l’indicateur %s, avec sa date de mise à jour et un bouton pour accéder aux détails', (indiceDeLIndicateur, libelléDeLIndicateur, identifiantInfoBulle) => {
     // WHEN
@@ -49,6 +50,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
 
   it.each([
     [indiceDeLIndicateur.contributionAuxFraisDeSiège, wording.MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE],
+    [indiceDeLIndicateur.tauxDeCafNette, wording.TAUX_DE_CAF],
     [indiceDeLIndicateur.tauxDeVétustéConstruction, wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION],
   ])('affiche le contenu de l’info bulle %s après avoir cliqué sur le bouton "détails"', (indiceDeLIndicateur, libelléDeLIndicateur) => {
     // GIVEN
@@ -83,6 +85,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
   it.each([
     [indiceDeLIndicateur.résultatNetComptable, wording.RÉSULTAT_NET_COMPTABLE],
     [indiceDeLIndicateur.contributionAuxFraisDeSiège, wording.MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE],
+    [indiceDeLIndicateur.tauxDeCafNette, wording.TAUX_DE_CAF],
     [indiceDeLIndicateur.tauxDeVétustéConstruction, wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION],
   ])('ferme l’info bulle %s après avoir cliqué sur le bouton "Fermer"', (indiceDeLIndicateur, libelléDeLIndicateur) => {
     // GIVEN
@@ -105,6 +108,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
   it.each([
     [indiceDeLIndicateur.résultatNetComptable],
     [indiceDeLIndicateur.contributionAuxFraisDeSiège],
+    [indiceDeLIndicateur.tauxDeCafNette],
     [indiceDeLIndicateur.tauxDeVétustéConstruction],
   ])('affiche une mise en exergue si une ou plusieurs années sont manquantes', (indiceDeLIndicateur) => {
     // GIVEN
@@ -285,6 +289,105 @@ describe('La page établissement territorial - bloc budget et finances', () => {
       // THEN
       const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
       expect(within(budgetEtFinances).queryByText(wording.MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE, { selector: 'p' })).not.toBeInTheDocument()
+    })
+  })
+
+  describe('L’indicateur du taux de caf', () => {
+    it('affiche un tableau descriptif du taux de caf avec les trois années', () => {
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+
+      // THEN
+      const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
+      const indicateurs = within(budgetEtFinances).getAllByRole('listitem')
+      const tauxDeCaf = indicateurs[indiceDeLIndicateur.tauxDeCafNette]
+      const tableau = within(tauxDeCaf).getByRole('table')
+      const annéeLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.ANNÉE })
+      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.TAUX_DE_CAF })
+      expect(annéeLigneDEnTête).toBeInTheDocument()
+      expect(indicateurLigneDEnTête).toBeInTheDocument()
+
+      const lignes = within(tableau).getAllByRole('row')
+      const annéeDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '2019' })
+      expect(annéeDeLaPremièreLigne).toBeInTheDocument()
+      const valeurDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '13,5 %' })
+      expect(valeurDeLaPremièreLigne).toBeInTheDocument()
+
+      const annéeDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '2020' })
+      expect(annéeDeLaDeuxièmeLigne).toBeInTheDocument()
+      const valeurDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '16,5 %' })
+      expect(valeurDeLaDeuxièmeLigne).toBeInTheDocument()
+
+      const annéeDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: '2021' })
+      expect(annéeDeLaTroisièmeLigne).toBeInTheDocument()
+      const valeurDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: '38,3 %' })
+      expect(valeurDeLaTroisièmeLigne).toBeInTheDocument()
+    })
+
+    it('affiche un tableau descriptif du taux de caf avec deux années', () => {
+      // GIVEN
+      const établissementTerritorialAvecDeuxAnnées = new ÉtablissementTerritorialMédicoSocialViewModel({
+        activités: [],
+        autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
+        budgetEtFinances: [
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinances({ année: 2019 }),
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinances({ année: 2020 }),
+        ],
+        identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+      }, wording, paths)
+
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialAvecDeuxAnnées} />)
+
+      // THEN
+      const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
+      const indicateurs = within(budgetEtFinances).getAllByRole('listitem')
+      const tauxDeCaf = indicateurs[indiceDeLIndicateur.tauxDeCafNette]
+      const tableau = within(tauxDeCaf).getByRole('table')
+      const annéeLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.ANNÉE })
+      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.TAUX_DE_CAF })
+      expect(annéeLigneDEnTête).toBeInTheDocument()
+      expect(indicateurLigneDEnTête).toBeInTheDocument()
+
+      const lignes = within(tableau).getAllByRole('row')
+      const annéeDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '2019' })
+      expect(annéeDeLaPremièreLigne).toBeInTheDocument()
+      const valeurDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '13,5 %' })
+      expect(valeurDeLaPremièreLigne).toBeInTheDocument()
+
+      const annéeDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '2020' })
+      expect(annéeDeLaDeuxièmeLigne).toBeInTheDocument()
+      const valeurDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '13,5 %' })
+      expect(valeurDeLaDeuxièmeLigne).toBeInTheDocument()
+    })
+
+    it('affiche un tableau descriptif du taux de caf avec une seule année', () => {
+      // GIVEN
+      const établissementTerritorialAvecDeuxAnnées = new ÉtablissementTerritorialMédicoSocialViewModel({
+        activités: [],
+        autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
+        budgetEtFinances: [ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinances({ année: 2020 })],
+        identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+      }, wording, paths)
+
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialAvecDeuxAnnées} />)
+
+      // THEN
+      const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
+      const indicateurs = within(budgetEtFinances).getAllByRole('listitem')
+      const tauxDeCaf = indicateurs[indiceDeLIndicateur.tauxDeCafNette]
+      const tableau = within(tauxDeCaf).getByRole('table')
+      const annéeLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.ANNÉE })
+      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.TAUX_DE_CAF })
+      expect(annéeLigneDEnTête).toBeInTheDocument()
+      expect(indicateurLigneDEnTête).toBeInTheDocument()
+
+      const lignes = within(tableau).getAllByRole('row')
+      const annéeDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '2020' })
+      expect(annéeDeLaPremièreLigne).toBeInTheDocument()
+      const valeurDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '13,5 %' })
+      expect(valeurDeLaPremièreLigne).toBeInTheDocument()
     })
   })
 

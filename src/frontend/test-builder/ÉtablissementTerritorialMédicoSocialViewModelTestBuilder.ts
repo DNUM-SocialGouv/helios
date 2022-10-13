@@ -388,7 +388,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       },
       tauxDeCafNette: {
         dateMiseÀJourSource: '2022-01-01',
-        valeur: null,
+        valeur: 0.3833016699999,
       },
       tauxDeVétustéConstruction: {
         dateMiseÀJourSource: '2022-01-01',

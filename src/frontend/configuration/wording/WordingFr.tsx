@@ -202,6 +202,7 @@ export class WordingFr implements Wording {
   readonly MONTANT: string = 'Montant'
   readonly TAUX_DE_VÉTUSTÉ_CONSTRUCTION: string = 'Taux de vétusté Construction'
   readonly RÉSULTAT_NET_COMPTABLE: string = 'Résultat net comptable'
+  readonly TAUX_DE_CAF: string = 'Taux de CAF'
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string = 'Établissement territorial'
