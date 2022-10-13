@@ -158,6 +158,17 @@ export interface Wording {
   readonly MONTANT: string
   readonly TAUX_DE_VÉTUSTÉ_CONSTRUCTION: string
   readonly RÉSULTAT_NET_COMPTABLE: string
+  readonly COMPTE_DE_RÉSULTAT_ERRD: string
+  readonly COMPTE_DE_RÉSULTAT_CA: string
+  readonly TITRE_BUDGÉTAIRE: string
+  readonly RECETTES: string
+  readonly DÉPENSES: string
+  readonly CHARGES: string
+  readonly PRODUITS: string
+  readonly TOTAL: string
+  readonly GROUPE_I: string
+  readonly GROUPE_II: string
+  readonly GROUPE_III: string
   readonly TAUX_DE_CAF: string
 
   // Liste des établissements rattachés

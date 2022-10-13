@@ -417,7 +417,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     )
   }
 
-  public static créeUneAnnéeBudgetEtFinances(
+  public static créeUneAnnéeBudgetEtFinancesErrd(
     champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialBudgetEtFinances>
   ): ÉtablissementTerritorialMédicoSocialBudgetEtFinances {
     return {
@@ -444,6 +444,50 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
         recettesGroupe1: 3388394.2000000002,
         recettesGroupe2: 22231.200000000001,
         recettesGroupe3: 129491.19,
+      },
+      résultatNetComptable: {
+        dateMiseÀJourSource: '2022-01-01',
+        valeur: -38330.669999999503,
+      },
+      tauxDeCafNette: {
+        dateMiseÀJourSource: '2022-03-03',
+        valeur: 0.13548734436644624,
+      },
+      tauxDeVétustéConstruction: {
+        dateMiseÀJourSource: '2022-03-03',
+        valeur: 0.38845089702004892,
+      },
+      ...champsSurchargés,
+    }
+  }
+
+  public static créeUneAnnéeBudgetEtFinancesCaPa(
+    champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialBudgetEtFinances>
+  ): ÉtablissementTerritorialMédicoSocialBudgetEtFinances {
+    return {
+      année: 2019,
+      cadreBudgétaire: CadreBudgétaire.CA_PA,
+      chargesEtProduits: {
+        charges: -1613142.1299999997,
+        dateMiseÀJourSource: '2022-01-01',
+        produits: 1633422.2000000002,
+      },
+      contributionAuxFraisDeSiège: {
+        dateMiseÀJourSource: '2022-01-01',
+        valeur: -20000,
+      },
+      fondsDeRoulement: {
+        dateMiseÀJourSource: '2022-03-03',
+        valeur: 2206969.2599999998,
+      },
+      recettesEtDépenses: {
+        dateMiseÀJourSource: '2022-01-01',
+        dépensesGroupe1: null,
+        dépensesGroupe2: null,
+        dépensesGroupe3: null,
+        recettesGroupe1: null,
+        recettesGroupe2: null,
+        recettesGroupe3: null,
       },
       résultatNetComptable: {
         dateMiseÀJourSource: '2022-01-01',

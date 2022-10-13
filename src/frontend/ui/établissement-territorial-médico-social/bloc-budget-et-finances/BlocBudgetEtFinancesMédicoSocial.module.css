@@ -1,10 +1,34 @@
 .liste-indicateurs {
+  column-gap: 3.5rem;
   display: grid;
-  gap: 2rem;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas:
+  "graph1 graph1 graph1 graph1 graph2 graph2"
+  "graph3 graph3 graph4 graph4 graph5 graph5";
+  grid-template-columns: repeat(6, 1fr);
   list-style-type: none;
   padding: 0;
+  row-gap: 2rem;
   width: 100%;
+}
+
+.liste-indicateurs > li:nth-child(1) {
+  grid-area: graph1;
+}
+
+.liste-indicateurs > li:nth-child(2) {
+  grid-area: graph2;
+}
+
+.liste-indicateurs > li:nth-child(3) {
+  grid-area: graph3;
+}
+
+.liste-indicateurs > li:nth-child(4) {
+  grid-area: graph4;
+}
+
+.liste-indicateurs > li:nth-child(5) {
+  grid-area: graph5;
 }
 
 .liste-indicateurs > li {

@@ -5,6 +5,7 @@ import '@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css'
 
 import { Wording } from '../../../configuration/wording/Wording'
 import { MiseEnExergue } from '../MiseEnExergue/MiseEnExergue'
+import { StringFormater } from '../StringFormater'
 import { TableIndicateur } from '../TableIndicateur/TableIndicateur'
 
 export type LibelléDeDonnéeGraphe = Readonly<{
@@ -49,6 +50,131 @@ export class GraphiqueViewModel {
       Title,
       Tooltip,
       this.construisLePluginDeLégende()
+    )
+  }
+
+  protected afficheUnCarrousel(
+    chartColors: string[],
+    valeursDeGauche: number[],
+    valeursDeDroite: number[],
+    libellés: string[],
+    ratioLargeurSurHauteur: number,
+    entêtePremièreColonne: string,
+    entêtesDesAutresColonnes: string[],
+    annéesManquantes: number[] | string[],
+    nombreDAnnéeTotale: number = 3
+  ): JSX.Element {
+    ChartJS.unregister()
+    const chartColorsGauche = valeursDeGauche.map((valeurDeGauche, index) => {
+      return (valeurDeGauche <= 0) ? chartColors[index] : this.couleurDuFondHistogrammeDeDépassement
+    })
+    const chartColorsDroite = valeursDeDroite.map((valeurDeDroite, index) => {
+      return (valeurDeDroite >= 0) ? chartColors[index] : this.couleurDuFondHistogrammeDeDépassement
+    })
+    const datalabelsColorsGauche = valeursDeGauche.map((valeurDeGauche) => {
+      return (valeurDeGauche <= 0) ? this.couleurDeLaValeur : this.couleurDuFondHistogrammeDeDépassement
+    })
+    const datalabelsColorsDroite = valeursDeDroite.map((valeurDeDroite) => {
+      return (valeurDeDroite >= 0) ? this.couleurDeLaValeur : this.couleurDuFondHistogrammeDeDépassement
+    })
+    const dataGauche: ChartData = {
+      datasets: [
+        {
+          backgroundColor: chartColorsGauche,
+          data: valeursDeGauche.map((valeurDeGauche) => Math.abs(valeurDeGauche)),
+          datalabels: {
+            font: { weight: 'bold' },
+            formatter: (valeurDeGauche) => {
+              const valeurDeGaucheSignée = valeursDeGauche.includes(valeurDeGauche) ? valeurDeGauche : valeurDeGauche * -1
+              return StringFormater.formateLeMontantEnEuros(valeurDeGaucheSignée)
+            },
+            labels: { title: { color: datalabelsColorsGauche } },
+          },
+          maxBarThickness: 60,
+          type: 'bar',
+          yAxisID: 'y',
+        },
+      ],
+      labels: libellés,
+    }
+    const dataDroite: ChartData = {
+      datasets: [
+        {
+          backgroundColor: chartColorsDroite,
+          data: valeursDeDroite,
+          datalabels: {
+            font: { weight: 'bold' },
+            formatter: (valeurDeDroite) => StringFormater.formateLeMontantEnEuros(valeurDeDroite),
+            labels: { title: { color: datalabelsColorsDroite } },
+          },
+          maxBarThickness: 60,
+          type: 'bar',
+          yAxisID: 'y',
+        },
+      ],
+      labels: libellés,
+    }
+    const valeursTableau = [
+      [
+        StringFormater.formateLeMontantEnEuros(valeursDeGauche[0]),
+        StringFormater.formateLeMontantEnEuros(valeursDeGauche[1]),
+        StringFormater.formateLeMontantEnEuros(valeursDeGauche[2]),
+        StringFormater.formateLeMontantEnEuros(valeursDeGauche[3]),
+      ],
+      [
+        StringFormater.formateLeMontantEnEuros(valeursDeDroite[0]),
+        StringFormater.formateLeMontantEnEuros(valeursDeDroite[1]),
+        StringFormater.formateLeMontantEnEuros(valeursDeDroite[2]),
+        StringFormater.formateLeMontantEnEuros(valeursDeDroite[3]),
+      ],
+    ]
+
+    return (
+      <>
+        {annéesManquantes.length < nombreDAnnéeTotale &&
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 50%)' }}>
+            <div>
+              <Bar
+                // @ts-ignore
+                data={dataGauche}
+                options={this.optionsHistogrammeHorizontal(
+                  ratioLargeurSurHauteur,
+                  Math.max(...valeursDeGauche.map(Number), ...valeursDeDroite.map(Number)) * 1.1,
+                  ['400'],
+                  entêtesDesAutresColonnes[0]
+                )}
+                redraw={true}
+              />
+            </div>
+            <div>
+              <Bar
+                // @ts-ignore
+                data={dataDroite}
+                options={this.optionsHistogrammeHorizontal(
+                  ratioLargeurSurHauteur,
+                  Math.max(...valeursDeGauche.map(Number), ...valeursDeDroite.map(Number)),
+                  ['400'],
+                  entêtesDesAutresColonnes[1]
+                )}
+                redraw={true}
+              />
+            </div>
+          </div>
+        }
+        {annéesManquantes.length > 0 && (
+          <MiseEnExergue>
+            {`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}
+          </MiseEnExergue>
+        )}
+        <TableIndicateur
+          disabled={annéesManquantes.length === nombreDAnnéeTotale}
+          entêteLibellé={entêtePremièreColonne}
+          identifiantUnique="compte-de-resultat"
+          identifiants={entêtesDesAutresColonnes}
+          libellés={libellés}
+          valeurs={valeursTableau}
+        />
+      </>
     )
   }
 
@@ -227,7 +353,11 @@ export class GraphiqueViewModel {
           <Bar
             // @ts-ignore
             data={data}
-            options={this.optionsDeuxHistogrammesHorizontaux(ratioLargeurSurHauteur, Math.max(...lits.map(Number), ...places.map(Number)))}
+            options={this.optionsDeuxHistogrammesHorizontaux(
+              ratioLargeurSurHauteur,
+              Math.max(...lits.map(Number), ...places.map(Number)) * 1.1,
+              [this.wording.PLACES, this.wording.LITS]
+            )}
           />
         </div>
         <TableIndicateur
@@ -265,7 +395,7 @@ export class GraphiqueViewModel {
     return couleurDesAnnées
   }
 
-  protected annéesManquantes(années: (number | string)[], annéesTotales: number): number[] {
+  protected annéesManquantes(années: (number | string)[], annéesTotales: number = 3): number[] {
     const annéeEnCours = new Date().getFullYear()
 
     return Array(annéesTotales)
@@ -385,7 +515,7 @@ export class GraphiqueViewModel {
     }
   }
 
-  private optionsHistogrammeHorizontal(ratioLargeurSurHauteur: number, valeurMaximale: number, grosseursDePoliceDesLibellés: string[]): ChartOptions<'bar'> {
+  private optionsHistogrammeHorizontal(ratioLargeurSurHauteur: number, valeurMaximale: number, grosseursDePoliceDesLibellés: string[], title: string = ''): ChartOptions<'bar'> {
     return {
       animation: false,
       aspectRatio: ratioLargeurSurHauteur,
@@ -405,9 +535,18 @@ export class GraphiqueViewModel {
       },
       scales: {
         x: {
-          display: false,
+          grid: { display: false, drawBorder: false },
           max: 1.45 * (valeurMaximale > 0 ? valeurMaximale : 1),
           min: 0,
+          position: 'top',
+          ticks: { display: false },
+          title: {
+            align: 'start',
+            color: this.couleurIdentifiant,
+            display: title === '' ? false : true,
+            font: { weight: 'bold' },
+            text: title,
+          },
         },
         y: {
           grid: {
@@ -426,7 +565,7 @@ export class GraphiqueViewModel {
     }
   }
 
-  private optionsDeuxHistogrammesHorizontaux(ratioLargeurSurHauteur: number, valeurMaximale: number): ChartOptions<'bar'> {
+  private optionsDeuxHistogrammesHorizontaux(ratioLargeurSurHauteur: number, maxOfScale: number, labelsOfScales: string[]): ChartOptions<'bar'> {
     return {
       animation: false,
       aspectRatio: ratioLargeurSurHauteur,
@@ -454,7 +593,7 @@ export class GraphiqueViewModel {
       scales: {
         x: {
           grid: { display: false, drawBorder: false },
-          max: valeurMaximale * 1.1,
+          max: maxOfScale,
           position: 'top',
           stack: 'capacite',
           stackWeight: 1,
@@ -463,12 +602,12 @@ export class GraphiqueViewModel {
             align: 'start',
             color: this.couleurIdentifiant,
             display: true,
-            text: this.wording.PLACES,
+            text: labelsOfScales[0],
           },
         },
         x2: {
           grid: { display: false, drawBorder: false },
-          max: valeurMaximale * 1.1,
+          max: maxOfScale,
           position: 'top',
           stack: 'capacite',
           stackWeight: 2,
@@ -477,7 +616,7 @@ export class GraphiqueViewModel {
             align: 'start',
             color: this.couleurIdentifiant,
             display: true,
-            text: this.wording.LITS,
+            text: labelsOfScales[1],
           },
         },
         y: {

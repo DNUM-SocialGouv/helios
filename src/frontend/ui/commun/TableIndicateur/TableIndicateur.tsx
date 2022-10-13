@@ -8,18 +8,20 @@ type TableIndicateurProps = Readonly<{
   disabled?: boolean
   entêteLibellé: string
   identifiants: string[]
+  identifiantUnique?: string
   libellés: (number | string)[]
   valeurs: (number | string | null)[][]
 }>
 
-export const TableIndicateur = ({ disabled = false, entêteLibellé, identifiants, libellés, valeurs }: TableIndicateurProps) => {
+export const TableIndicateur = ({ disabled = false, entêteLibellé, identifiants, identifiantUnique = '', libellés, valeurs }: TableIndicateurProps) => {
   const { wording } = useDependencies()
+  const identifiant = identifiantUnique !== '' ? identifiantUnique : identifiants[0].replace(/\s/g, '')
 
   return (
     <section className="fr-accordion">
       <h3 className="fr-accordion__title">
         <button
-          aria-controls={identifiants[0].replace(/\s/g, '')}
+          aria-controls={identifiant}
           aria-expanded="false"
           className={'fr-accordion__btn ' + styles['accordion-label']}
           disabled={disabled}
@@ -30,7 +32,7 @@ export const TableIndicateur = ({ disabled = false, entêteLibellé, identifiant
       </h3>
       <div
         className={'fr-collapse ' + styles['helios-collapse']}
-        id={identifiants[0].replace(/\s/g, '')}
+        id={identifiant}
       >
         <div className={'fr-table fr-table--bordered ' + styles['helios-collapse']}>
           <table>
