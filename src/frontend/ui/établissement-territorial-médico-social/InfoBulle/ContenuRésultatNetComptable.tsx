@@ -33,12 +33,6 @@ export const ContenuRésultatNetComptable = ({ dateDeMiseÀJour, source }: Conte
           Annuelle
         </p>
       </section>
-      <section aria-label={wording.MODE_DE_CALCUL}>
-        <p>
-          <span className="fr-text--bold">Mode de calcul : </span>
-          Amortissements des constructions / Immobilisations corporelles brutes construction.
-        </p>
-      </section>
       <section aria-label={wording.SOURCES}>
         <p>
           <span className="fr-text--bold">Source(s) : </span>

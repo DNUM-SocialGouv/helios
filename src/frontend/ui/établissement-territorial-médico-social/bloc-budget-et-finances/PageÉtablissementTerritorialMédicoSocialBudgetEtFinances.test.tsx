@@ -48,7 +48,6 @@ describe('La page établissement territorial - bloc budget et finances', () => {
   })
 
   it.each([
-    [indiceDeLIndicateur.résultatNetComptable, wording.RÉSULTAT_NET_COMPTABLE],
     [indiceDeLIndicateur.contributionAuxFraisDeSiège, wording.MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE],
     [indiceDeLIndicateur.tauxDeVétustéConstruction, wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION],
   ])('affiche le contenu de l’info bulle %s après avoir cliqué sur le bouton "détails"', (indiceDeLIndicateur, libelléDeLIndicateur) => {
@@ -201,6 +200,34 @@ describe('La page établissement territorial - bloc budget et finances', () => {
       // THEN
       const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
       expect(within(budgetEtFinances).queryByText(wording.RÉSULTAT_NET_COMPTABLE, { selector: 'p' })).not.toBeInTheDocument()
+    })
+
+    it('affiche le contenu de l’info bulle %s après avoir cliqué sur le bouton "détails"', () => {
+      // GIVEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+      const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
+      const indicateurs = within(budgetEtFinances).getAllByRole('listitem')
+      const indicateur = indicateurs[indiceDeLIndicateur.résultatNetComptable]
+      const détails = within(indicateur).getByRole('button', { name: wording.DÉTAILS })
+
+      // WHEN
+      fireEvent.click(détails)
+
+      // THEN
+      expect(détails).toHaveAttribute('data-fr-opened', 'true')
+      const infoBulle = screen.getByRole('dialog', { name: wording.RÉSULTAT_NET_COMPTABLE })
+      const fermer = within(infoBulle).getByRole('button', { name: wording.FERMER })
+      expect(fermer).toBeInTheDocument()
+      const abréviationSourceFournisseur = within(infoBulle).getAllByText('DIAMANT', { selector: 'abbr' })
+      expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
+      const abréviationSourceOrigine = within(infoBulle).getAllByText('CNSA', { selector: 'abbr' })
+      expect(abréviationSourceOrigine[0]).toHaveAttribute('title', 'Caisse Nationale de Solidarité pour l’Autonomie')
+      const élémentsDeCompréhension = within(infoBulle).getByRole('region', { name: wording.ÉLÉMENTS_DE_COMPRÉHENSION })
+      expect(élémentsDeCompréhension).toBeInTheDocument()
+      const fréquence = within(infoBulle).getByRole('region', { name: wording.FRÉQUENCE })
+      expect(fréquence).toBeInTheDocument()
+      const sources = within(infoBulle).getByRole('region', { name: wording.SOURCES })
+      expect(sources).toBeInTheDocument()
     })
   })
 
