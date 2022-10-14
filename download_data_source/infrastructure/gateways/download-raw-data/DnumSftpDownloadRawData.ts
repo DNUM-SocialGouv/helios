@@ -1,18 +1,12 @@
 import { mkdirSync, readFileSync, rmSync } from 'fs'
 import path from 'path'
-import { ConnectOptions, FastGetTransferOptions, FileInfo } from 'ssh2-sftp-client'
+import { FileInfo } from 'ssh2-sftp-client'
 
 import { DownloadRawData } from '../../../métier/gateways/DownloadRawData'
 import { EnvironmentVariables } from '../../../métier/gateways/EnvironmentVariables'
 import { Logger } from '../../../métier/gateways/Logger'
 import { HeliosError } from '../../HeliosError'
-
-export interface ClientSftp {
-  connect(options: ConnectOptions): Promise<any>;
-  list(remoteFilePath: string, pattern?: string | RegExp): Promise<FileInfo[]>;
-  fastGet(remoteFilePath: string, localPath: string, options?: FastGetTransferOptions): Promise<string>;
-  end(): Promise<void>;
-}
+import { ClientSftp } from './ClientSftp'
 
 export class DnumSftpDownloadRawData implements DownloadRawData {
   private readonly extensionDeFichierChiffré = '*.gpg'

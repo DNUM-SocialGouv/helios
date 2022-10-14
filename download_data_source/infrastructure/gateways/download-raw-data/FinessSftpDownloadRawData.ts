@@ -1,19 +1,20 @@
 import { mkdirSync, readFileSync, rmSync } from 'fs'
 import { ConnectConfig } from 'ssh2'
-import Client, { FileInfo } from 'ssh2-sftp-client'
+import { FileInfo } from 'ssh2-sftp-client'
 
 import { DownloadRawData } from '../../../métier/gateways/DownloadRawData'
 import { EnvironmentVariables } from '../../../métier/gateways/EnvironmentVariables'
 import { Logger } from '../../../métier/gateways/Logger'
 import { HeliosError } from '../../HeliosError'
+import { ClientSftp } from './ClientSftp'
 
 export class FinessSftpDownloadRawData implements DownloadRawData {
-  sftp: Client
   simpleSftpPath: string
   nomenclatureSftpPath: string
   enrichiSftpPath: string
 
   constructor(
+    private readonly clientSftp: ClientSftp,
     private readonly sftpPath: string,
     private readonly localPath: string,
     private readonly environmentVariables: EnvironmentVariables,
@@ -22,7 +23,6 @@ export class FinessSftpDownloadRawData implements DownloadRawData {
     this.simpleSftpPath = `${this.sftpPath}/simple`
     this.nomenclatureSftpPath = `${this.sftpPath}/nomenclature`
     this.enrichiSftpPath = `${this.sftpPath}/enrichi`
-    this.sftp = new Client()
   }
 
   async exécute() {
@@ -60,12 +60,12 @@ export class FinessSftpDownloadRawData implements DownloadRawData {
       username: this.environmentVariables.SFTP_USERNAME,
     }
 
-    await this.sftp.connect(configuration)
+    await this.clientSftp.connect(configuration)
     this.logger.info('[FINESS] La connexion au SFTP est ouverte.')
   }
 
   private async downloadFichesIdentité() {
-    const fichesIdentitéFiles = await this.sftp.list(this.simpleSftpPath, '*.xml.gz')
+    const fichesIdentitéFiles = await this.clientSftp.list(this.simpleSftpPath, '*.xml.gz')
     const entitéJuridiqueFileName = 'finess_cs1400101_stock_'
     const établissementTerritorialFileName = 'finess_cs1400102_stock_'
 
@@ -77,7 +77,7 @@ export class FinessSftpDownloadRawData implements DownloadRawData {
   }
 
   private async downloadCatégories() {
-    const nomenclatureFiles = await this.sftp.list(this.nomenclatureSftpPath, '*.xml.gz')
+    const nomenclatureFiles = await this.clientSftp.list(this.nomenclatureSftpPath, '*.xml.gz')
     const catégoriesFileName = 'finess_cs1500106_stock_'
 
     await this.downloadFile(nomenclatureFiles, `${this.localPath}/nomenclature`, this.nomenclatureSftpPath, catégoriesFileName)
@@ -86,7 +86,7 @@ export class FinessSftpDownloadRawData implements DownloadRawData {
   }
 
   private async downloadAutorisationsEtCapacités() {
-    const enrichiFiles = await this.sftp.list(this.enrichiSftpPath, '*.xml.gz')
+    const enrichiFiles = await this.clientSftp.list(this.enrichiSftpPath, '*.xml.gz')
     const autorisationsSanitairesFileName = 'finess_cs1400103_stock_'
     const équipementsMatérielsLourdsSanitairesFileName = 'finess_cs1400104_stock_'
     const autorisationsMédicoSociauxFileName = 'finess_cs1400105_stock_'
@@ -109,7 +109,7 @@ export class FinessSftpDownloadRawData implements DownloadRawData {
   private async disconnect() {
     this.logger.info('[FINESS] Le connexion au SFTP est fermée.')
 
-    return await this.sftp.end()
+    return await this.clientSftp.end()
   }
 
   private async downloadFile(files: FileInfo[], localPath: string, remotePath: string, fileName: string) {
@@ -117,7 +117,9 @@ export class FinessSftpDownloadRawData implements DownloadRawData {
       .filter((file: FileInfo) => file.name.includes(fileName))
       .sort(this.sortByLastDate)
 
-    await this.sftp.fastGet(
+    if (orderedFiles.length === 0) return
+
+    await this.clientSftp.fastGet(
       `${remotePath}/${orderedFiles[0].name}`,
       `${this.environmentVariables.SFTP_LOCAL_PATH}/${localPath}/${orderedFiles[0].name}`,
       {
