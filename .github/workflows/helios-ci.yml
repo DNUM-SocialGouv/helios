@@ -49,7 +49,7 @@ jobs:
       - name: Run the CSS linter
         run: yarn lint:scss
 
-  tests-typescript:
+  tests-typescript-frontend:
     runs-on: ubuntu-latest
     needs: install
     services:
@@ -78,7 +78,39 @@ jobs:
       - name: Run the tests
         env:
           DATABASE_URL: postgres://helios:h3li0s@localhost:5433/helios
-        run: yarn test:typescript:coverage
+        run: yarn test:typescript:front
+      - uses: codecov/codecov-action@v3
+
+  tests-typescript-backend:
+    runs-on: ubuntu-latest
+    needs: install
+    services:
+      postgres:
+        image: postgres:13.7-alpine # Conserver la même version avec le fichier docker-compose.yaml
+        env:
+          POSTGRES_DB: helios
+          POSTGRES_PASSWORD: h3li0s
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: helios
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          cache: yarn
+          node-version-file: package.json
+      - name: Install packages
+        run: yarn --immutable
+      - name: Run the tests
+        env:
+          DATABASE_URL: postgres://helios:h3li0s@localhost:5433/helios
+        run: yarn test:typescript:back
       - uses: codecov/codecov-action@v3
 
   build:
