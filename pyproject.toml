@@ -6,3 +6,56 @@ strict_optional = true
 plugins = ["sqlmypy"]
 disallow_untyped_defs = true
 exclude = ["spikes"]
+
+[tool.pylint."messages control"]
+confidence = []
+disable = [
+  "bad-inline-option",
+  "deprecated-pragma",
+  "file-ignored",
+  "locally-disabled",
+  "missing-docstring",
+  "raw-checker-failed",
+  "similarities",
+  "suppressed-message",
+  "use-symbolic-message-instead",
+  "useless-suppression",
+  "non-ascii-name",
+  "non-ascii-module-import",
+  "non-ascii-file-name",
+  "logging-fstring-interpolation",
+]
+enable = ["c-extension-no-member"]
+
+[tool.pylint.reports]
+score = true
+
+[tool.pylint.basic]
+bad-names = ["foo", "bar", "baz", "toto", "tutu", "tata", "titi"]
+
+[tool.pylint.design]
+max-args = 8
+max-locals = 15
+min-public-methods = 0
+
+[tool.pylint.exceptions]
+# Exceptions that will emit a warning when caught.
+overgeneral-exceptions = ["BaseException", "Exception"]
+
+[tool.pylint.format]
+ignore-long-lines = "^[from|import].*|^\\s*(# )?<?https?://\\S+>?$"
+max-line-length = 160
+
+[tool.pylint.imports]
+allow-wildcard-with-all = false
+deprecated-modules = ["optparse", "tkinter.tix"]
+
+[tool.pylint.method_args]
+timeout-methods = ["requests.api.delete", "requests.api.get", "requests.api.head", "requests.api.options", "requests.api.patch", "requests.api.post", "requests.api.put", "requests.api.request"]
+
+[tool.pylint.string]
+check-str-concat-over-line-jumps = false
+
+[tool.pylint.variables]
+init-import = false
+redefining-builtins-modules = ["six.moves", "past.builtins", "future.builtins", "builtins", "io"]
