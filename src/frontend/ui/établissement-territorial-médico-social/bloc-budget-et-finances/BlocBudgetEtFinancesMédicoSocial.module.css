@@ -6,3 +6,31 @@
   padding: 0;
   width: 100%;
 }
+
+.liste-indicateurs > li {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.liste-indicateurs > li > div:nth-child(1)  {
+  margin-bottom: 1rem;
+}
+
+.liste-indicateurs canvas {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 36em) {
+  .liste-indicateurs {
+    display: inherit;
+  }
+
+  .liste-indicateurs > li {
+    margin-bottom: 1rem;
+  }
+
+  .liste-indicateurs > li div:nth-child(1)  {
+    min-height: 0;
+  }
+}
