@@ -16,7 +16,12 @@ from typing import List
     "nofinesset": "numero_finess_etablissement_territorial",
 }
 colonnes_à_garder_finess_cs1400105 = list(équivalences_finess_cs1400105_helios.keys())
-balises_à_échapper_finess_cs1400105 = ["nofinesset", "de", "ta", "client"]
+type_des_colonnes_finess_cs1400105 = {
+    "nofinesset": str,
+    "de": str,
+    "ta": str,
+    "client": str,
+}
 XPATH_FINESS_CS1400105 = "./equipementsocial"
 
 index_des_autorisations_médico_sociaux: List[str] = [
@@ -41,8 +46,12 @@ index_des_autorisations_médico_sociaux: List[str] = [
 }
 colonnes_à_garder_finess_cs1400103 = list(équivalences_finess_cs1400103_helios.keys())
 XPATH_FINESS_CS1400103 = "./activiteoffresoin"
-balises_à_échapper_finess_cs1400103 = ["nofinesset", "activite", "modalite", "forme"]
-
+type_des_colonnes_finess_cs1400103 = {
+    "nofinesset": str,
+    "activite": str,
+    "modalite": str,
+    "forme": str,
+}
 index_des_autorisations_sanitaires: List[str] = [
     "numero_finess_etablissement_territorial",
     "code_activite",
@@ -61,7 +70,10 @@ index_des_autorisations_sanitaires: List[str] = [
 }
 colonnes_à_garder_finess_cs1400104 = list(équivalences_finess_cs1400104_helios.keys())
 XPATH_FINESS_CS1400104 = "./equipmateriellourd"
-balises_à_échapper_finess_cs1400104 = ["eml", "nofinesset"]
+type_des_colonnes_finess_cs1400104 = {
+    "nofinesset": str,
+    "eml": str,
+}
 
 index_des_équipements_matériels_lourds: List[str] = [
     "numero_finess_etablissement_territorial",
@@ -83,7 +95,12 @@ index_des_équipements_matériels_lourds: List[str] = [
 }
 colonnes_à_garder_finess_cs1600101 = list(équivalences_finess_cs1600101_helios.keys())
 XPATH_FINESS_CS1600101 = "./autreactivite"
-balises_à_échapper_finess_cs1600101 = ["nofinesset", "activite", "modalite", "forme"]
+type_des_colonnes_finess_cs1600101 = {
+    "nofinesset": str,
+    "activite": str,
+    "modalite": str,
+    "forme": str,
+}
 
 index_des_autres_activités_sanitaires: List[str] = [
     "numero_finess_etablissement_territorial",
@@ -109,7 +126,12 @@ index_des_autres_activités_sanitaires: List[str] = [
 }
 colonnes_à_garder_finess_cs1600102 = list(équivalences_finess_cs1600102_helios.keys())
 XPATH_FINESS_CS1600102 = "./activitesoumiseareco"
-balises_à_échapper_finess_cs1600102 = ["nofinesset", "activite", "modalite", "forme"]
+type_des_colonnes_finess_cs1600102 = {
+    "nofinesset": str,
+    "activite": str,
+    "modalite": str,
+    "forme": str,
+}
 
 index_des_reconnaissances_contractuelles: List[str] = [
     "numero_finess_etablissement_territorial",

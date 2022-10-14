@@ -12,7 +12,7 @@ from datacrawler.extract.lecteur_xml import lis_le_fichier_xml
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.load.nom_des_tables import TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, FichierSource
 from datacrawler.transform.transforme_les_autorisations_des_établissements_médico_sociaux import transforme_les_autorisations_des_établissements_médico_sociaux
-from datacrawler.transform.équivalences_finess_helios import XPATH_FINESS_CS1400105, balises_à_échapper_finess_cs1400105
+from datacrawler.transform.équivalences_finess_helios import XPATH_FINESS_CS1400105, type_des_colonnes_finess_cs1400105
 
 
 def ajoute_les_autorisations_des_établissements_médico_sociaux(chemin_du_fichier: str, base_de_données: Engine, logger: Logger) -> None:
@@ -20,7 +20,7 @@ def ajoute_les_autorisations_des_établissements_médico_sociaux(chemin_du_fichi
     données_des_autorisations = lis_le_fichier_xml(
         chemin_du_fichier,
         XPATH_FINESS_CS1400105,
-        balises_à_échapper_finess_cs1400105,
+        type_des_colonnes_finess_cs1400105,
     )
     logger.info(f"[FINESS] {données_des_autorisations.shape[0]} lignes trouvées dans le fichier {chemin_du_fichier}")
     date_du_fichier_des_autorisations = extrais_la_date_du_nom_de_fichier_finess(chemin_du_fichier)

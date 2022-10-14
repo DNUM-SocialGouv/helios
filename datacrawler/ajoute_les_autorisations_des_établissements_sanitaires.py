@@ -1,6 +1,6 @@
 import os
 from logging import Logger
-from typing import List
+from typing import Dict
 
 import pandas as pd
 from sqlalchemy import create_engine
@@ -45,10 +45,10 @@ from datacrawler.transform.équivalences_finess_helios import (
     XPATH_FINESS_CS1400104,
     XPATH_FINESS_CS1600101,
     XPATH_FINESS_CS1600102,
-    balises_à_échapper_finess_cs1400103,
-    balises_à_échapper_finess_cs1400104,
-    balises_à_échapper_finess_cs1600101,
-    balises_à_échapper_finess_cs1600102,
+    type_des_colonnes_finess_cs1400103,
+    type_des_colonnes_finess_cs1400104,
+    type_des_colonnes_finess_cs1600101,
+    type_des_colonnes_finess_cs1600102,
 )
 
 
@@ -74,7 +74,7 @@ def ajoute_les_autorisations(
 ) -> None:
     logger.info("[FINESS] Récupère les autorisations des établissements sanitaires")
     données_des_autorisations = lis_le_fichier_xml_et_extrais_la_date_de_mise_à_jour(
-        chemin_du_fichier_finess_cs1400103, XPATH_FINESS_CS1400103, balises_à_échapper_finess_cs1400103
+        chemin_du_fichier_finess_cs1400103, XPATH_FINESS_CS1400103, type_des_colonnes_finess_cs1400103
     )
     logger.info(f"[FINESS] {données_des_autorisations.données.shape[0]} lignes trouvées dans le fichier {chemin_du_fichier_finess_cs1400103}.")
 
@@ -101,7 +101,7 @@ def ajoute_les_équipements_matériels_lourds(
     données_des_équipements_matériels_lourds = lis_le_fichier_xml_et_extrais_la_date_de_mise_à_jour(
         chemin_du_fichier_finess_cs1400104,
         XPATH_FINESS_CS1400104,
-        balises_à_échapper_finess_cs1400104,
+        type_des_colonnes_finess_cs1400104,
     )
     logger.info(f"[FINESS] {données_des_équipements_matériels_lourds.données.shape[0]} lignes trouvées dans le fichier {chemin_du_fichier_finess_cs1400104}.")
 
@@ -128,7 +128,7 @@ def ajoute_les_autres_activités(
     données_des_autres_activités = lis_le_fichier_xml_et_extrais_la_date_de_mise_à_jour(
         chemin_du_fichier_finess_cs1600101,
         XPATH_FINESS_CS1600101,
-        balises_à_échapper_finess_cs1600101,
+        type_des_colonnes_finess_cs1600101,
     )
     logger.info(f"[FINESS] {données_des_autres_activités.données.shape[0]} lignes trouvées dans le fichier {chemin_du_fichier_finess_cs1600101}.")
 
@@ -155,7 +155,7 @@ def ajoute_les_reconnaissances_contractuelles(
     données_des_reconnaissances_contractuelles = lis_le_fichier_xml_et_extrais_la_date_de_mise_à_jour(
         chemin_du_fichier_finess_cs1600102,
         XPATH_FINESS_CS1600102,
-        balises_à_échapper_finess_cs1600102,
+        type_des_colonnes_finess_cs1600102,
     )
     logger.info(f"[FINESS] {données_des_reconnaissances_contractuelles.données.shape[0]} lignes trouvées dans le fichier {chemin_du_fichier_finess_cs1600102}.")
 
@@ -205,11 +205,11 @@ def ajoute_les_capacités(
         )
 
 
-def lis_le_fichier_xml_et_extrais_la_date_de_mise_à_jour(chemin_du_fichier: str, xpath: str, balises_à_échapper: List[str]) -> FichierDeDonnées:
+def lis_le_fichier_xml_et_extrais_la_date_de_mise_à_jour(chemin_du_fichier: str, xpath: str, types_des_colonnes: Dict) -> FichierDeDonnées:
     données_des_autorisations = lis_le_fichier_xml(
         chemin_du_fichier,
         xpath,
-        balises_à_échapper,
+        types_des_colonnes,
     )
     date_du_fichier_des_autorisations = extrais_la_date_du_nom_de_fichier_finess(chemin_du_fichier)
     return FichierDeDonnées(données_des_autorisations, date_du_fichier_des_autorisations)

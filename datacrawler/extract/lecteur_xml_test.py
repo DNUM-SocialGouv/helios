@@ -13,11 +13,11 @@ from datacrawler.transform.équivalences_finess_helios import (
     XPATH_FINESS_CS1400105,
     XPATH_FINESS_CS1600101,
     XPATH_FINESS_CS1600102,
-    balises_à_échapper_finess_cs1400103,
-    balises_à_échapper_finess_cs1400104,
-    balises_à_échapper_finess_cs1400105,
-    balises_à_échapper_finess_cs1600101,
-    balises_à_échapper_finess_cs1600102,
+    type_des_colonnes_finess_cs1400103,
+    type_des_colonnes_finess_cs1400104,
+    type_des_colonnes_finess_cs1400105,
+    type_des_colonnes_finess_cs1600101,
+    type_des_colonnes_finess_cs1600102,
 )
 
 
@@ -72,7 +72,7 @@ class TestLisLeFichierXml:
         xpath = XPATH_FINESS_CS1400105
 
         # WHEN
-        données_lues = lis_le_fichier_xml(chemin_du_fichier, xpath, balises_à_échapper_finess_cs1400105)
+        données_lues = lis_le_fichier_xml(chemin_du_fichier, xpath, type_des_colonnes_finess_cs1400105)
 
         # THEN
         pd.testing.assert_frame_equal(
@@ -127,10 +127,10 @@ class TestLisLeFichierXml:
             </parent>""",
         )
         xpath = "./parent"
-        balises_à_échapper = ["echappe"]
+        type_de_la_colonne = {"echappe": str}
 
         # WHEN
-        données_lues = lis_le_fichier_xml(chemin_du_fichier, xpath, balises_à_échapper)
+        données_lues = lis_le_fichier_xml(chemin_du_fichier, xpath, type_de_la_colonne)
 
         # THEN
         pd.testing.assert_frame_equal(
@@ -182,9 +182,8 @@ class TestLisLeFichierXml:
             </equipementsocial>""",
         )
         xpath = XPATH_FINESS_CS1400105
-
         # WHEN
-        données_lues = lis_le_fichier_xml(chemin_du_fichier, xpath, balises_à_échapper_finess_cs1400105)
+        données_lues = lis_le_fichier_xml(chemin_du_fichier, xpath, type_des_colonnes_finess_cs1400105)
 
         # THEN
         pd.testing.assert_frame_equal(
@@ -302,7 +301,7 @@ class TestLisLeFichierXml:
         xpath = XPATH_FINESS_CS1400103
 
         # WHEN
-        données_lues = lis_le_fichier_xml(chemin_du_fichier, xpath, balises_à_échapper_finess_cs1400103)
+        données_lues = lis_le_fichier_xml(chemin_du_fichier, xpath, type_des_colonnes_finess_cs1400103)
 
         # THEN
         pd.testing.assert_frame_equal(
@@ -436,7 +435,7 @@ class TestLisLeFichierXml:
         xpath = XPATH_FINESS_CS1400104
 
         # WHEN
-        données_lues = lis_le_fichier_xml(chemin_du_fichier, xpath, balises_à_échapper_finess_cs1400104)
+        données_lues = lis_le_fichier_xml(chemin_du_fichier, xpath, type_des_colonnes_finess_cs1400104)
 
         # THEN
         pd.testing.assert_frame_equal(
@@ -557,7 +556,7 @@ class TestLisLeFichierXml:
         xpath = XPATH_FINESS_CS1600101
 
         # WHEN
-        données_lues = lis_le_fichier_xml(chemin_du_fichier, xpath, balises_à_échapper_finess_cs1600101)
+        données_lues = lis_le_fichier_xml(chemin_du_fichier, xpath, type_des_colonnes_finess_cs1600101)
 
         # THEN
         pd.testing.assert_frame_equal(
@@ -677,7 +676,7 @@ class TestLisLeFichierXml:
         xpath = XPATH_FINESS_CS1600102
 
         # WHEN
-        données_lues = lis_le_fichier_xml(chemin_du_fichier, xpath, balises_à_échapper_finess_cs1600102)
+        données_lues = lis_le_fichier_xml(chemin_du_fichier, xpath, type_des_colonnes_finess_cs1600102)
 
         # THEN
         pd.testing.assert_frame_equal(
