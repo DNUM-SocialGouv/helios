@@ -1,7 +1,8 @@
 import fs from 'fs'
-import Client from 'ssh2-sftp-client'
+import { FileInfo } from 'ssh2-sftp-client'
 
 import { getFakeDataCrawlerDependencies, fakeLogger } from '../../../testHelper'
+import { ClientSftp } from './ClientSftp'
 import { FinessSftpDownloadRawData } from './FinessSftpDownloadRawData'
 
 describe('Téléchargement de FINESS via un SFTP', () => {
@@ -11,6 +12,12 @@ describe('Téléchargement de FINESS via un SFTP', () => {
   const enrichiSftpPath = `${sftpPath}/enrichi`
   const localPath = 'source-fake'
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
+  const fakeClientSftp: ClientSftp = {
+    connect: jest.fn(),
+    end: jest.fn(),
+    fastGet: jest.fn(),
+    list: jest.fn(),
+  }
 
   afterEach(() => {
     fs.rmSync('data_test/source-fake', { recursive: true })
@@ -18,9 +25,17 @@ describe('Téléchargement de FINESS via un SFTP', () => {
 
   it('efface les dossiers contenant les anciens fichiers téléchargés en local pour éviter d’utiliser d’anciennes données', async () => {
     // GIVEN
-    simuleLeConnecteurDuSftp()
     simuleLaLectureDeLaClefPrivée()
-    const sftpDownloadDataSource = new FinessSftpDownloadRawData(sftpPath, localPath, fakeDataCrawlerDependencies.environmentVariables, fakeLogger)
+    simuleLaListeDesFichiersPrésentsDansLeDossierSimple(fakeClientSftp, [])
+    simuleLaListeDesFichiersPrésentsDansLeDossierNomenclature(fakeClientSftp, [])
+    simuleLaListeDesFichiersPrésentsDansLeDossierEnrichi(fakeClientSftp, [])
+    const sftpDownloadDataSource = new FinessSftpDownloadRawData(
+      fakeClientSftp,
+      sftpPath,
+      localPath,
+      fakeDataCrawlerDependencies.environmentVariables,
+      fakeLogger
+    )
 
     // WHEN
     await sftpDownloadDataSource.exécute()
@@ -31,9 +46,17 @@ describe('Téléchargement de FINESS via un SFTP', () => {
 
   it('crée le répertoire "simple"', async () => {
     // GIVEN
-    simuleLeConnecteurDuSftp()
     simuleLaLectureDeLaClefPrivée()
-    const sftpDownloadDataSource = new FinessSftpDownloadRawData(sftpPath, localPath, fakeDataCrawlerDependencies.environmentVariables, fakeLogger)
+    simuleLaListeDesFichiersPrésentsDansLeDossierSimple(fakeClientSftp, [])
+    simuleLaListeDesFichiersPrésentsDansLeDossierNomenclature(fakeClientSftp, [])
+    simuleLaListeDesFichiersPrésentsDansLeDossierEnrichi(fakeClientSftp, [])
+    const sftpDownloadDataSource = new FinessSftpDownloadRawData(
+      fakeClientSftp,
+      sftpPath,
+      localPath,
+      fakeDataCrawlerDependencies.environmentVariables,
+      fakeLogger
+    )
 
     // WHEN
     await sftpDownloadDataSource.exécute()
@@ -44,9 +67,17 @@ describe('Téléchargement de FINESS via un SFTP', () => {
 
   it('crée le répertoire "nomenclature"', async () => {
     // GIVEN
-    simuleLeConnecteurDuSftp()
     simuleLaLectureDeLaClefPrivée()
-    const sftpDownloadDataSource = new FinessSftpDownloadRawData(sftpPath, localPath, fakeDataCrawlerDependencies.environmentVariables, fakeLogger)
+    simuleLaListeDesFichiersPrésentsDansLeDossierSimple(fakeClientSftp, [])
+    simuleLaListeDesFichiersPrésentsDansLeDossierNomenclature(fakeClientSftp, [])
+    simuleLaListeDesFichiersPrésentsDansLeDossierEnrichi(fakeClientSftp, [])
+    const sftpDownloadDataSource = new FinessSftpDownloadRawData(
+      fakeClientSftp,
+      sftpPath,
+      localPath,
+      fakeDataCrawlerDependencies.environmentVariables,
+      fakeLogger
+    )
 
     // WHEN
     await sftpDownloadDataSource.exécute()
@@ -57,9 +88,17 @@ describe('Téléchargement de FINESS via un SFTP', () => {
 
   it('crée le répertoire "enrichi"', async () => {
     // GIVEN
-    simuleLeConnecteurDuSftp()
     simuleLaLectureDeLaClefPrivée()
-    const sftpDownloadDataSource = new FinessSftpDownloadRawData(sftpPath, localPath, fakeDataCrawlerDependencies.environmentVariables, fakeLogger)
+    simuleLaListeDesFichiersPrésentsDansLeDossierSimple(fakeClientSftp, [])
+    simuleLaListeDesFichiersPrésentsDansLeDossierNomenclature(fakeClientSftp, [])
+    simuleLaListeDesFichiersPrésentsDansLeDossierEnrichi(fakeClientSftp, [])
+    const sftpDownloadDataSource = new FinessSftpDownloadRawData(
+      fakeClientSftp,
+      sftpPath,
+      localPath,
+      fakeDataCrawlerDependencies.environmentVariables,
+      fakeLogger
+    )
 
     // WHEN
     await sftpDownloadDataSource.exécute()
@@ -70,15 +109,23 @@ describe('Téléchargement de FINESS via un SFTP', () => {
 
   it('se connecte au SFTP', async () => {
     // GIVEN
-    simuleLeConnecteurDuSftp()
     simuleLaLectureDeLaClefPrivée()
-    const sftpDownloadDataSource = new FinessSftpDownloadRawData(sftpPath, localPath, fakeDataCrawlerDependencies.environmentVariables, fakeLogger)
+    simuleLaListeDesFichiersPrésentsDansLeDossierSimple(fakeClientSftp, [])
+    simuleLaListeDesFichiersPrésentsDansLeDossierNomenclature(fakeClientSftp, [])
+    simuleLaListeDesFichiersPrésentsDansLeDossierEnrichi(fakeClientSftp, [])
+    const sftpDownloadDataSource = new FinessSftpDownloadRawData(
+      fakeClientSftp,
+      sftpPath,
+      localPath,
+      fakeDataCrawlerDependencies.environmentVariables,
+      fakeLogger
+    )
 
     // WHEN
     await sftpDownloadDataSource.exécute()
 
     // THEN
-    expect(Client.prototype.connect).toHaveBeenCalledWith({
+    expect(fakeClientSftp.connect).toHaveBeenCalledWith({
       algorithms: { kex: ['algo1', 'algo2'] },
       debug: undefined,
       host: 'localhost',
@@ -91,16 +138,29 @@ describe('Téléchargement de FINESS via un SFTP', () => {
 
   it('télécharge les dernières fiches d’identité en date du répertoire "simple"', async () => {
     // GIVEN
-    simuleLeConnecteurDuSftp()
     simuleLaLectureDeLaClefPrivée()
-    const sftpDownloadDataSource = new FinessSftpDownloadRawData(sftpPath, localPath, fakeDataCrawlerDependencies.environmentVariables, fakeLogger)
+    simuleLaListeDesFichiersPrésentsDansLeDossierSimple(fakeClientSftp, [
+      { name: 'finess_cs1400101_stock_20211214-0333.xml.gz' },
+      { name: 'finess_cs1400101_stock_20000101-0000.xml.gz' },
+      { name: 'finess_cs1400102_stock_20000101-0000.xml.gz' },
+      { name: 'finess_cs1400102_stock_20211214-0336.xml.gz' },
+    ])
+    simuleLaListeDesFichiersPrésentsDansLeDossierNomenclature(fakeClientSftp, [])
+    simuleLaListeDesFichiersPrésentsDansLeDossierEnrichi(fakeClientSftp, [])
+    const sftpDownloadDataSource = new FinessSftpDownloadRawData(
+      fakeClientSftp,
+      sftpPath,
+      localPath,
+      fakeDataCrawlerDependencies.environmentVariables,
+      fakeLogger
+    )
 
     // WHEN
     await sftpDownloadDataSource.exécute()
 
     // THEN
-    expect(Client.prototype.list).toHaveBeenNthCalledWith(1, simpleSftpPath, '*.xml.gz')
-    expect(Client.prototype.fastGet).toHaveBeenNthCalledWith(
+    expect(fakeClientSftp.list).toHaveBeenNthCalledWith(1, simpleSftpPath, '*.xml.gz')
+    expect(fakeClientSftp.fastGet).toHaveBeenNthCalledWith(
       1,
       `${simpleSftpPath}/finess_cs1400101_stock_20211214-0333.xml.gz`,
       `data_test/${localPath}/simple/finess_cs1400101_stock_20211214-0333.xml.gz`,
@@ -109,7 +169,7 @@ describe('Téléchargement de FINESS via un SFTP', () => {
         concurrency: 2,
       }
     )
-    expect(Client.prototype.fastGet).toHaveBeenNthCalledWith(
+    expect(fakeClientSftp.fastGet).toHaveBeenNthCalledWith(
       2,
       `${simpleSftpPath}/finess_cs1400102_stock_20211214-0336.xml.gz`,
       `data_test/${localPath}/simple/finess_cs1400102_stock_20211214-0336.xml.gz`,
@@ -123,17 +183,29 @@ describe('Téléchargement de FINESS via un SFTP', () => {
 
   it('télécharge les dernières catégories en date du répertoire "nomenclature"', async () => {
     // GIVEN
-    simuleLeConnecteurDuSftp()
     simuleLaLectureDeLaClefPrivée()
-    const sftpDownloadDataSource = new FinessSftpDownloadRawData(sftpPath, localPath, fakeDataCrawlerDependencies.environmentVariables, fakeLogger)
+    simuleLaListeDesFichiersPrésentsDansLeDossierSimple(fakeClientSftp, [])
+    simuleLaListeDesFichiersPrésentsDansLeDossierNomenclature(fakeClientSftp, [
+      { name: 'finess_cs1500106_stock_20211214-0417.xml.gz' },
+      { name: 'finess_cs1500106_stock_20000101-0000.xml.gz' },
+      { name: 'finess_cs1500107_stock_20221214-0336.xml.gz' },
+    ])
+    simuleLaListeDesFichiersPrésentsDansLeDossierEnrichi(fakeClientSftp, [])
+    const sftpDownloadDataSource = new FinessSftpDownloadRawData(
+      fakeClientSftp,
+      sftpPath,
+      localPath,
+      fakeDataCrawlerDependencies.environmentVariables,
+      fakeLogger
+    )
 
     // WHEN
     await sftpDownloadDataSource.exécute()
 
     // THEN
-    expect(Client.prototype.list).toHaveBeenNthCalledWith(2, nomenclatureSftpPath, '*.xml.gz')
-    expect(Client.prototype.fastGet).toHaveBeenNthCalledWith(
-      3,
+    expect(fakeClientSftp.list).toHaveBeenNthCalledWith(2, nomenclatureSftpPath, '*.xml.gz')
+    expect(fakeClientSftp.fastGet).toHaveBeenNthCalledWith(
+      1,
       `${nomenclatureSftpPath}/finess_cs1500106_stock_20211214-0417.xml.gz`,
       `data_test/${localPath}/nomenclature/finess_cs1500106_stock_20211214-0417.xml.gz`,
       {
@@ -146,17 +218,36 @@ describe('Téléchargement de FINESS via un SFTP', () => {
 
   it('télécharge les dernières autorisations en date du répertoire "enrichi"', async () => {
     // GIVEN
-    simuleLeConnecteurDuSftp()
     simuleLaLectureDeLaClefPrivée()
-    const sftpDownloadDataSource = new FinessSftpDownloadRawData(sftpPath, localPath, fakeDataCrawlerDependencies.environmentVariables, fakeLogger)
+    simuleLaListeDesFichiersPrésentsDansLeDossierSimple(fakeClientSftp, [])
+    simuleLaListeDesFichiersPrésentsDansLeDossierNomenclature(fakeClientSftp, [])
+    simuleLaListeDesFichiersPrésentsDansLeDossierEnrichi(fakeClientSftp, [
+      { name: 'finess_cs1400103_stock_20211214-0343.xml.gz' },
+      { name: 'finess_cs1400103_stock_20000101-0000.xml.gz' },
+      { name: 'finess_cs1400104_stock_20211214-0344.xml.gz' },
+      { name: 'finess_cs1400104_stock_20000101-0000.xml.gz' },
+      { name: 'finess_cs1400105_stock_20211214-0345.xml.gz' },
+      { name: 'finess_cs1400105_stock_20000101-0000.xml.gz' },
+      { name: 'finess_cs1600101_stock_20211214-0346.xml.gz' },
+      { name: 'finess_cs1600101_stock_20000101-0000.xml.gz' },
+      { name: 'finess_cs1600102_stock_20211214-0347.xml.gz' },
+      { name: 'finess_cs1600102_stock_20000101-0000.xml.gz' },
+    ])
+    const sftpDownloadDataSource = new FinessSftpDownloadRawData(
+      fakeClientSftp,
+      sftpPath,
+      localPath,
+      fakeDataCrawlerDependencies.environmentVariables,
+      fakeLogger
+    )
 
     // WHEN
     await sftpDownloadDataSource.exécute()
 
     // THEN
-    expect(Client.prototype.list).toHaveBeenNthCalledWith(3, enrichiSftpPath, '*.xml.gz')
-    expect(Client.prototype.fastGet).toHaveBeenNthCalledWith(
-      4,
+    expect(fakeClientSftp.list).toHaveBeenNthCalledWith(3, enrichiSftpPath, '*.xml.gz')
+    expect(fakeClientSftp.fastGet).toHaveBeenNthCalledWith(
+      1,
       `${enrichiSftpPath}/finess_cs1400103_stock_20211214-0343.xml.gz`,
       `data_test/${localPath}/enrichi/finess_cs1400103_stock_20211214-0343.xml.gz`,
       {
@@ -164,8 +255,8 @@ describe('Téléchargement de FINESS via un SFTP', () => {
         concurrency: 2,
       }
     )
-    expect(Client.prototype.fastGet).toHaveBeenNthCalledWith(
-      5,
+    expect(fakeClientSftp.fastGet).toHaveBeenNthCalledWith(
+      2,
       `${enrichiSftpPath}/finess_cs1400104_stock_20211214-0344.xml.gz`,
       `data_test/${localPath}/enrichi/finess_cs1400104_stock_20211214-0344.xml.gz`,
       {
@@ -173,8 +264,8 @@ describe('Téléchargement de FINESS via un SFTP', () => {
         concurrency: 2,
       }
     )
-    expect(Client.prototype.fastGet).toHaveBeenNthCalledWith(
-      6,
+    expect(fakeClientSftp.fastGet).toHaveBeenNthCalledWith(
+      3,
       `${enrichiSftpPath}/finess_cs1400105_stock_20211214-0345.xml.gz`,
       `data_test/${localPath}/enrichi/finess_cs1400105_stock_20211214-0345.xml.gz`,
       {
@@ -182,8 +273,8 @@ describe('Téléchargement de FINESS via un SFTP', () => {
         concurrency: 2,
       }
     )
-    expect(Client.prototype.fastGet).toHaveBeenNthCalledWith(
-      7,
+    expect(fakeClientSftp.fastGet).toHaveBeenNthCalledWith(
+      4,
       `${enrichiSftpPath}/finess_cs1600101_stock_20211214-0346.xml.gz`,
       `data_test/${localPath}/enrichi/finess_cs1600101_stock_20211214-0346.xml.gz`,
       {
@@ -191,8 +282,8 @@ describe('Téléchargement de FINESS via un SFTP', () => {
         concurrency: 2,
       }
     )
-    expect(Client.prototype.fastGet).toHaveBeenNthCalledWith(
-      8,
+    expect(fakeClientSftp.fastGet).toHaveBeenNthCalledWith(
+      5,
       `${enrichiSftpPath}/finess_cs1600102_stock_20211214-0347.xml.gz`,
       `data_test/${localPath}/enrichi/finess_cs1600102_stock_20211214-0347.xml.gz`,
       {
@@ -206,24 +297,40 @@ describe('Téléchargement de FINESS via un SFTP', () => {
   it('se déconnecte du SFTP', async () => {
     // GIVEN
     simuleLaLectureDeLaClefPrivée()
-    simuleLeConnecteurDuSftp()
-    const sftpDownloadDataSource = new FinessSftpDownloadRawData(sftpPath, localPath, fakeDataCrawlerDependencies.environmentVariables, fakeLogger)
+    simuleLaListeDesFichiersPrésentsDansLeDossierSimple(fakeClientSftp, [])
+    simuleLaListeDesFichiersPrésentsDansLeDossierNomenclature(fakeClientSftp, [])
+    simuleLaListeDesFichiersPrésentsDansLeDossierEnrichi(fakeClientSftp, [])
+    const sftpDownloadDataSource = new FinessSftpDownloadRawData(
+      fakeClientSftp,
+      sftpPath,
+      localPath,
+      fakeDataCrawlerDependencies.environmentVariables,
+      fakeLogger
+    )
 
     // WHEN
     await sftpDownloadDataSource.exécute()
 
     // THEN
     expect(fakeLogger.info).toHaveBeenNthCalledWith(5, '[FINESS] Le connexion au SFTP est fermée.')
-    expect(Client.prototype.end).toHaveBeenCalledWith()
+    expect(fakeClientSftp.end).toHaveBeenCalledWith()
   })
 
   it('signale un message d’erreur quand il se connecte au SFTP avec une mauvaise configuration', async () => {
     // GIVEN
     simuleLaLectureDeLaClefPrivée()
-    simuleLeConnecteurDuSftp()
+    simuleLaListeDesFichiersPrésentsDansLeDossierSimple(fakeClientSftp, [])
+    simuleLaListeDesFichiersPrésentsDansLeDossierNomenclature(fakeClientSftp, [])
+    simuleLaListeDesFichiersPrésentsDansLeDossierEnrichi(fakeClientSftp, [])
     const errorMessage = 'connexion impossible'
-    jest.spyOn(Client.prototype, 'connect').mockImplementation(async (): Promise<any> => await Promise.reject(new Error(errorMessage)))
-    const sftpDownloadDataSource = new FinessSftpDownloadRawData(sftpPath, localPath, fakeDataCrawlerDependencies.environmentVariables, fakeLogger)
+    jest.spyOn(fakeClientSftp, 'connect').mockImplementation().mockRejectedValueOnce(new Error(errorMessage))
+    const sftpDownloadDataSource = new FinessSftpDownloadRawData(
+      fakeClientSftp,
+      sftpPath,
+      localPath,
+      fakeDataCrawlerDependencies.environmentVariables,
+      fakeLogger
+    )
 
     try {
       // WHEN
@@ -240,38 +347,12 @@ function simuleLaLectureDeLaClefPrivée() {
   jest.spyOn(fs, 'readFileSync').mockReturnValueOnce('privateKey')
 }
 
-function simuleLeConnecteurDuSftp() {
-  jest.spyOn(Client.prototype, 'connect').mockImplementation((): any => jest.fn())
-  jest.spyOn(Client.prototype, 'list')
-    .mockImplementationOnce((): any => {
-      return [
-        { name: 'finess_cs1400101_stock_20211214-0333.xml.gz' },
-        { name: 'finess_cs1400101_stock_20000101-0000.xml.gz' },
-        { name: 'finess_cs1400102_stock_20000101-0000.xml.gz' },
-        { name: 'finess_cs1400102_stock_20211214-0336.xml.gz' },
-      ]
-    })
-    .mockImplementationOnce((): any => {
-      return [
-        { name: 'finess_cs1500106_stock_20211214-0417.xml.gz' },
-        { name: 'finess_cs1500106_stock_20000101-0000.xml.gz' },
-        { name: 'finess_cs1500107_stock_20221214-0336.xml.gz' },
-      ]
-    })
-    .mockImplementationOnce((): any => {
-      return [
-        { name: 'finess_cs1400103_stock_20211214-0343.xml.gz' },
-        { name: 'finess_cs1400103_stock_20000101-0000.xml.gz' },
-        { name: 'finess_cs1400104_stock_20211214-0344.xml.gz' },
-        { name: 'finess_cs1400104_stock_20000101-0000.xml.gz' },
-        { name: 'finess_cs1400105_stock_20211214-0345.xml.gz' },
-        { name: 'finess_cs1400105_stock_20000101-0000.xml.gz' },
-        { name: 'finess_cs1600101_stock_20211214-0346.xml.gz' },
-        { name: 'finess_cs1600101_stock_20000101-0000.xml.gz' },
-        { name: 'finess_cs1600102_stock_20211214-0347.xml.gz' },
-        { name: 'finess_cs1600102_stock_20000101-0000.xml.gz' },
-      ]
-    })
-  jest.spyOn(Client.prototype, 'fastGet').mockImplementation((): any => jest.fn())
-  jest.spyOn(Client.prototype, 'end').mockImplementation((): any => jest.fn())
+function simuleLaListeDesFichiersPrésentsDansLeDossierSimple(clientSftp: ClientSftp, fichiers: {name: string}[]) {
+  jest.spyOn(clientSftp, 'list').mockImplementation().mockResolvedValueOnce(fichiers as FileInfo[])
+}
+function simuleLaListeDesFichiersPrésentsDansLeDossierNomenclature(clientSftp: ClientSftp, fichiers: {name: string}[]) {
+  jest.spyOn(clientSftp, 'list').mockImplementation().mockResolvedValueOnce(fichiers as FileInfo[])
+}
+function simuleLaListeDesFichiersPrésentsDansLeDossierEnrichi(clientSftp: ClientSftp, fichiers: {name: string}[]) {
+  jest.spyOn(clientSftp, 'list').mockImplementation().mockResolvedValueOnce(fichiers as FileInfo[])
 }
