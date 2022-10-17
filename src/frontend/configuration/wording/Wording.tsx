@@ -158,6 +158,7 @@ export interface Wording {
   readonly MONTANT: string
   readonly TAUX_DE_VÉTUSTÉ_CONSTRUCTION: string
   readonly RÉSULTAT_NET_COMPTABLE: string
+  readonly TAUX_DE_CAF: string
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string

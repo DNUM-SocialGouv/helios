@@ -67,6 +67,7 @@ export class GraphiqueViewModel {
         {
           borderColor: this.couleurDuFondDeLaLigne,
           borderDash: [3, 3],
+          borderWidth: 2,
           data: [
             { x: -1, y: 100 },
             { x: 2, y: 100 },
@@ -375,6 +376,7 @@ export class GraphiqueViewModel {
             color: this.couleurDelAbscisse,
             // @ts-ignore
             font: { weight: grosseursDePoliceDesLibellés },
+            padding: 10,
           },
         },
         xLine: { display: false, max: 1, min: 0, type: 'linear' },
@@ -510,11 +512,11 @@ export class GraphiqueViewModel {
     }
   }
 
-  private ajouteLePourcentage(valeurs: string[]): string[] {
+  protected ajouteLePourcentage(valeurs: string[]): string[] {
     return valeurs.map((valeur) => valeur + ' %')
   }
 
-  private transformeEnFrançais(valeurs: (number | null)[]): (string | null)[] {
+  protected transformeEnFrançais(valeurs: (number | null)[]): (string | null)[] {
     return valeurs.map((valeur) => {
       if (valeur === null) return valeur
 

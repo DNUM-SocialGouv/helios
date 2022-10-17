@@ -13,12 +13,8 @@
   justify-content: flex-start;
 }
 
-.liste-indicateurs > li > div:nth-child(1)  {
-  margin-bottom: 1rem;
-}
-
 .liste-indicateurs canvas {
-  margin-bottom: 1rem;
+  margin: 1rem 0;
 }
 
 @media (max-width: 36em) {
