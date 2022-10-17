@@ -17,8 +17,6 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
   private readonly seuilDuContrasteDuLibellé = 10
   private readonly seuilMinimalDuTauxDeCaf = -20
   private readonly seuilMaximalDuTauxDeCaf = 20
-  private readonly minimalHistogrammeDuTauxDeCaf = -20
-  private readonly maximalHistogrammeDuTauxDeCaf = 20
   private readonly seuilDuTauxDeCaf = 2
   private readonly nombreDAnnéesParIndicateur = 3
 
@@ -175,8 +173,8 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     libellésDesValeurs: LibelléDeDonnéeGraphe[],
     libellésDesTicks: LibelléDeTickGraphe[]
   ) {
-    const maxDeLHistogramme = Math.max(...valeurs) > this.maximalHistogrammeDuTauxDeCaf ? this.maximalHistogrammeDuTauxDeCaf : undefined
-    const minDeLHistogramme = Math.min(...valeurs) < this.minimalHistogrammeDuTauxDeCaf ? this.minimalHistogrammeDuTauxDeCaf : undefined
+    const minDeLHistogramme = Math.min(...valeurs) < this.seuilMinimalDuTauxDeCaf ? this.seuilMinimalDuTauxDeCaf : undefined
+    const maxDeLHistogramme = Math.max(...valeurs) > this.seuilMaximalDuTauxDeCaf ? this.seuilMaximalDuTauxDeCaf : undefined
     const data: ChartData = {
       datasets: [
         {
