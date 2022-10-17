@@ -17,8 +17,8 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
   private readonly seuilDuContrasteDuLibellé = 10
   private readonly seuilMinimalDuTauxDeCaf = -20
   private readonly seuilMaximalDuTauxDeCaf = 20
-  private readonly minimalHistogrammeDuTauxDeCaf = -10
-  private readonly maximalHistogrammeDuTauxDeCaf = 10
+  private readonly minimalHistogrammeDuTauxDeCaf = -20
+  private readonly maximalHistogrammeDuTauxDeCaf = 20
   private readonly seuilDuTauxDeCaf = 2
   private readonly nombreDAnnéesParIndicateur = 3
 
@@ -152,7 +152,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       }
       return { premierPlan, secondPlan }
     }
-    const libellésDesValeurs = valeurs.map((valeur) => ({ couleur: Math.abs(valeur) > this.seuilDuTauxDeCaf ? this.couleurDuFond : this.couleurIdentifiant }))
+    const libellésDesValeurs = valeurs.map(() => ({ couleur: this.couleurDuFond }))
     const libellésDesTicks = années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }))
 
     return this.afficheLHistogrammeDuTauxDeCaf(
@@ -274,6 +274,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
             color: this.couleurDelAbscisse,
             // @ts-ignore
             font: { weight: libellésDesTicks.map((libellé) => libellé.tailleDePolice) },
+            padding: 10,
           },
         },
         xLine: {
@@ -290,7 +291,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
         },
         y: {
           grid: {
-            color: this.couleurDelAbscisse,
+            color: this.couleurDuFondDeLaLigne,
             drawBorder: false,
             drawOnChartArea: true,
             drawTicks: false,
