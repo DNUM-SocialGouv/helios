@@ -1,13 +1,9 @@
 import pandas as pd
 from numpy import NaN
 
-from datacrawler.test_helpers import (
-    NUMÉRO_FINESS_ÉTABLISSEMENT,
-    NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL,
-    helios_ann_errd_ej_budget_et_finances_builder,
-    mocked_logger,
-)
+from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL, mocked_logger
 from datacrawler.test_helpers.diamant_builder import csv_ann_errd_ej_builder, csv_ann_per_errd_eprd_builder
+from datacrawler.test_helpers.helios_builder import helios_ann_errd_ej_budget_et_finances_builder
 from datacrawler.transform.transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux.transforme_les_taux_des_données_budgétaires_des_établissements_errd import (
     transforme_les_taux_des_données_budgétaires_des_établissements_errd,
 )

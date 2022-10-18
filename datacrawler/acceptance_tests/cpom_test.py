@@ -11,7 +11,6 @@ from datacrawler.test_helpers import (
     NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
     NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL,
     base_de_données_test,
-    helios_date_d_entrée_en_vigueur_du_cpom_builder,
     mocked_logger,
     sauvegarde_un_établissement_en_base,
     sauvegarde_une_date_d_entrée_de_cpom_en_base,
@@ -19,6 +18,7 @@ from datacrawler.test_helpers import (
     sauvegarde_une_entité_juridique_en_base,
     supprime_les_données_des_tables,
 )
+from datacrawler.test_helpers.helios_builder import helios_date_d_entrée_en_vigueur_du_cpom_builder
 
 
 class TestAjouteLeCpomDesÉtablissementsMédicoSociaux:

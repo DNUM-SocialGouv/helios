@@ -23,11 +23,6 @@ from datacrawler.test_helpers import (
     NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
     NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
     base_de_données_test,
-    helios_ann_sae_builder,
-    helios_autorisation_sanitaire_builder,
-    helios_autre_activité_sanitaire_builder,
-    helios_reconnaissance_contractuelle_sanitaire_builder,
-    helios_équipement_matériel_lourd_sanitaire_builder,
     mocked_logger,
     sauvegarde_les_capacités_sanitaires_en_base,
     sauvegarde_un_équipement_matériel_lourd_en_base,
@@ -38,6 +33,13 @@ from datacrawler.test_helpers import (
     sauvegarde_une_entité_juridique_en_base,
     sauvegarde_une_reconnaissance_contractuelle_en_base,
     supprime_les_données_des_tables,
+)
+from datacrawler.test_helpers.helios_builder import (
+    helios_ann_sae_builder,
+    helios_autorisation_sanitaire_builder,
+    helios_autre_activité_sanitaire_builder,
+    helios_reconnaissance_contractuelle_sanitaire_builder,
+    helios_équipement_matériel_lourd_sanitaire_builder,
 )
 
 archive_de_données_finess_cs1400103_de_test = os.path.join("data_set", "flux_finess", "enrichi", "finess_cs1400103_stock_20211214-0343.xml.gz")
