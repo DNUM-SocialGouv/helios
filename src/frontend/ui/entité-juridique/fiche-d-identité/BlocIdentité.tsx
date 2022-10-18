@@ -18,7 +18,7 @@ export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéProps)
       titre={wording.TITRE_BLOC_IDENTITÉ}
     >
       <ul
-        className={styles['liste-indicateurs']}
+        className={`indicateurs ${styles['liste-indicateurs']}`}
       >
         <IndicateurIdentité
           dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJourDuNomDeLEntitéJuridique}

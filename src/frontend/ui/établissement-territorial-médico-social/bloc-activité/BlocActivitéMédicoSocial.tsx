@@ -40,7 +40,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéM
 
   return (
     <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
-      <ul className={styles['liste-indicateurs']}>
+      <ul className={`indicateurs ${styles['liste-indicateurs']}`}>
         <IndicateurGraphique
           contenuInfoBulle={<ContenuTauxOccupationHébergementPermanent
             dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementPermanent}

@@ -19,5 +19,13 @@
 .contenu-bloc {
   background: var(--background-alt-grey);
   margin-bottom: 1.5rem;
-  padding: 1rem 1rem 1.5rem;
+  padding: 1rem;
+}
+
+.contenu-bloc > ul {
+  margin: 0;
+}
+
+.contenu-bloc li {
+  padding-bottom: 0;
 }

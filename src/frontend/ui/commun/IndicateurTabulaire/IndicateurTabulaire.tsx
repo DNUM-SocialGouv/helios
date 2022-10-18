@@ -1,6 +1,5 @@
 import { useDependencies } from '../contexts/useDependencies'
 import { MiseEnExergue } from '../MiseEnExergue/MiseEnExergue'
-import styles from './IndicateurTabulaire.module.css'
 
 export type IndicateurTabulaireProps = Readonly<{
   annéesManquantes: number[]
@@ -10,7 +9,7 @@ export type IndicateurTabulaireProps = Readonly<{
 export const IndicateurTabulaire = ({ annéesManquantes, valeursParAnnée }: IndicateurTabulaireProps) => {
   const { wording } = useDependencies()
 
-  return <div className={styles['indicateur-tabulaire']}>
+  return <>
     <div className="fr-table">
       <table>
         <thead>
@@ -43,5 +42,5 @@ export const IndicateurTabulaire = ({ annéesManquantes, valeursParAnnée }: Ind
         {`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}
       </MiseEnExergue>
     }
-  </div>
+  </>
 }

@@ -38,7 +38,7 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
       titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}
     >
       <ul
-        className={styles['liste-indicateurs']}
+        className={`indicateurs ${styles['liste-indicateurs']}`}
       >
         {
           établissementTerritorialSanitaireAutorisationsViewModel.lesCapacitésParActivitésSontEllesRenseignées &&
