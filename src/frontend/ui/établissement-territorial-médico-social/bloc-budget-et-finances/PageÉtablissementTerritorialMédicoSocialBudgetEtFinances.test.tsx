@@ -1,6 +1,5 @@
 import { fireEvent, screen, within } from '@testing-library/react'
 
-import { CadreBudgétaire } from '../../../../../database/models/BudgetEtFinancesMédicoSocialModel'
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from '../../../test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder'
 import { fakeFrontDependencies, renderFakeComponent } from '../../../testHelper'
@@ -881,9 +880,9 @@ describe('La page établissement territorial - bloc budget et finances', () => {
         activités: [],
         autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
         budgetEtFinances: [
-          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinances({ année: 2019, cadreBudgétaire: CadreBudgétaire.CA_PA }),
-          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinances({ année: 2020, cadreBudgétaire: CadreBudgétaire.CA_PH }),
-          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinances({ année: 2021, cadreBudgétaire: CadreBudgétaire.ERRD }),
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPa({ année: 2019 }),
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPh({ année: 2020 }),
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2021 }),
         ],
         identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
       }, wording, paths)
@@ -904,9 +903,9 @@ describe('La page établissement territorial - bloc budget et finances', () => {
         activités: [],
         autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
         budgetEtFinances: [
-          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinances({ année: 2019, fondsDeRoulement: { dateMiseÀJourSource: '2020-01-01', valeur :null } }),
-          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinances({ année: 2020, fondsDeRoulement: { dateMiseÀJourSource: '2020-01-01', valeur :null } }),
-          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinances({ année: 2021, fondsDeRoulement: { dateMiseÀJourSource: '2020-01-01', valeur :null } }),
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2019, fondsDeRoulement: { dateMiseÀJourSource: '2020-01-01', valeur :null } }),
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2020, fondsDeRoulement: { dateMiseÀJourSource: '2020-01-01', valeur :null } }),
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2021, fondsDeRoulement: { dateMiseÀJourSource: '2020-01-01', valeur :null } }),
         ],
         identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
       }, wording, paths)

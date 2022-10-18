@@ -4,7 +4,6 @@ import { ChangeEvent } from 'react'
 import { Bar } from 'react-chartjs-2'
 
 import { CadreBudgétaire } from '../../../../../database/models/BudgetEtFinancesMédicoSocialModel'
-import { ÉtablissementTerritorialMédicoSocial } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
 import { Wording } from '../../../configuration/wording/Wording'
 import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from '../../commun/Graphique/GraphiqueViewModel'

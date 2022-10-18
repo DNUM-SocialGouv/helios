@@ -461,6 +461,50 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     }
   }
 
+  public static créeUneAnnéeBudgetEtFinancesCaPh(
+    champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialBudgetEtFinances>
+  ): ÉtablissementTerritorialMédicoSocialBudgetEtFinances {
+    return {
+      année: 2019,
+      cadreBudgétaire: CadreBudgétaire.CA_PH,
+      chargesEtProduits: {
+        charges: null,
+        dateMiseÀJourSource: '2022-02-02',
+        produits: null,
+      },
+      contributionAuxFraisDeSiège: {
+        dateMiseÀJourSource: '2022-01-01',
+        valeur: null,
+      },
+      fondsDeRoulement: {
+        dateMiseÀJourSource: '2022-03-03',
+        valeur: null,
+      },
+      recettesEtDépenses: {
+        dateMiseÀJourSource: '2022-02-02',
+        dépensesGroupe1: -16901.360000000001,
+        dépensesGroupe2: -464929.67000000004,
+        dépensesGroupe3: -51421.190000000002,
+        recettesGroupe1: 595042.94999999995,
+        recettesGroupe2: 17724.380000000001,
+        recettesGroupe3: 16484.099999999999,
+      },
+      résultatNetComptable: {
+        dateMiseÀJourSource: '2022-02-02',
+        valeur: 95999.209999999963,
+      },
+      tauxDeCafNette: {
+        dateMiseÀJourSource: '2022-02-02',
+        valeur: 0.16460754444264256,
+      },
+      tauxDeVétustéConstruction: {
+        dateMiseÀJourSource: '2022-02-02',
+        valeur: 0.5319629026790017,
+      },
+      ...champsSurchargés,
+    }
+  }
+
   public static créeUneAnnéeBudgetEtFinancesCaPa(
     champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialBudgetEtFinances>
   ): ÉtablissementTerritorialMédicoSocialBudgetEtFinances {
