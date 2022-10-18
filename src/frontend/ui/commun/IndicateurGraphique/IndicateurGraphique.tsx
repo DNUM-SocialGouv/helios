@@ -7,6 +7,7 @@ import styles from './IndicateurGraphique.module.css'
 import '@gouvfr/dsfr/dist/component/button/button.min.css'
 
 type IndicateurProps = Readonly<{
+  années?: ReactChild
   contenuInfoBulle: ReactChild
   dateDeMiseÀJour: string
   identifiant: string
@@ -16,7 +17,7 @@ type IndicateurProps = Readonly<{
 }>
 
 export const IndicateurGraphique = (
-  { contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source, children }: IndicateurProps
+  { années = <></>, contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source, children }: IndicateurProps
 ) => {
   const { wording } = useDependencies()
   const [estCeOuvert, setEstCeOuvert] = useState(false)
@@ -34,6 +35,7 @@ export const IndicateurGraphique = (
       <div>
         <p className="fr-m-0">
           {nomDeLIndicateur}
+          {années}
         </p>
         <div className={styles['mise-a-jour-source']}>
           <p className={`fr-text--xs ${styles['titraille']}`}>

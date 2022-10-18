@@ -114,7 +114,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
 
   public get fileActivePersonnesAccompagnées(): JSX.Element {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs('fileActivePersonnesAccompagnées')
-    const annéesManquantes = this.annéesManquantes(années, 3)
+    const annéesManquantes = this.annéesManquantes(années)
 
     return this.afficheUnHistogrammeHorizontal(
       valeurs,
@@ -139,7 +139,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
 
   public get nombreMoyenJournéesAbsencePersonnesAccompagnées(): JSX.Element {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs('nombreMoyenJournéesAbsencePersonnesAccompagnées')
-    const annéesManquantes = this.annéesManquantes(années, 3)
+    const annéesManquantes = this.annéesManquantes(années)
 
     return this.afficheUnHistogrammeHorizontal(
       valeurs,
@@ -164,7 +164,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
 
   public get duréeMoyenneSéjourAccompagnementPersonnesSorties(): JSX.Element {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs('duréeMoyenneSéjourAccompagnementPersonnesSorties')
-    const annéesManquantes = this.annéesManquantes(années, 3)
+    const annéesManquantes = this.annéesManquantes(années)
 
     return this.afficheUnHistogrammeHorizontal(
       valeurs,

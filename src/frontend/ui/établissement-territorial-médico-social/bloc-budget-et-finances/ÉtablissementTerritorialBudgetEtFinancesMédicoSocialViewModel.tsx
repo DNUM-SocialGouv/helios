@@ -1,13 +1,15 @@
 import { ChartData, ChartOptions, ScriptableScaleContext } from 'chart.js'
 import { Context } from 'chartjs-plugin-datalabels'
+import { ChangeEvent } from 'react'
 import { Bar } from 'react-chartjs-2'
 
-import { ÉtablissementTerritorialMédicoSocial } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
+import { CadreBudgétaire } from '../../../../../database/models/BudgetEtFinancesMédicoSocialModel'
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
 import { Wording } from '../../../configuration/wording/Wording'
 import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from '../../commun/Graphique/GraphiqueViewModel'
 import { IndicateurTabulaire } from '../../commun/IndicateurTabulaire/IndicateurTabulaire'
 import { MiseEnExergue } from '../../commun/MiseEnExergue/MiseEnExergue'
+import { Select } from '../../commun/Select/Select'
 import { StringFormater } from '../../commun/StringFormater'
 import { TableIndicateur } from '../../commun/TableIndicateur/TableIndicateur'
 
@@ -20,8 +22,90 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
   private readonly seuilDuTauxDeCaf = 2
   private readonly nombreDAnnéesParIndicateur = 3
 
-  constructor(private readonly budgetEtFinancesMédicoSocial: ÉtablissementTerritorialMédicoSocial['budgetEtFinances'], wording: Wording) {
+  constructor(
+    private readonly budgetEtFinancesMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[],
+    wording: Wording
+  ) {
     super(wording)
+  }
+
+  public get annéeInitiale() {
+    return this.budgetEtFinancesMédicoSocial[this.budgetEtFinancesMédicoSocial.length - 1]?.année
+  }
+
+  public intituléDuCompteDeRésultat(annéeEnCours: number) {
+    return this.budgetEtFinanceEnCours(annéeEnCours).cadreBudgétaire === CadreBudgétaire.ERRD ?
+      this.wording.COMPTE_DE_RÉSULTAT_ERRD :
+      this.wording.COMPTE_DE_RÉSULTAT_CA
+  }
+
+  public listeDéroulanteDesAnnéesDuCompteDeRésultat(setAnnéeEnCours: Function): JSX.Element {
+    const annéesRangéesAntéChronologiquement = this.annéesRangéesParAntéChronologie()
+
+    if (annéesRangéesAntéChronologiquement.length > 0) {
+      return (
+        <Select
+          label={this.wording.ANNÉE}
+          onChange={(event: ChangeEvent<HTMLSelectElement>) => {
+            setAnnéeEnCours(Number(event.target.value))
+          }}
+          options={annéesRangéesAntéChronologiquement}
+        />
+      )
+    }
+
+    return <></>
+  }
+
+  public compteDeRésultat(annéeEnCours: number): JSX.Element {
+    const budgetEtFinance = this.budgetEtFinanceEnCours(annéeEnCours)
+    const entêtePremièreColonne = this.wording.TITRE_BUDGÉTAIRE
+    const chartColors = [
+      this.couleurDuFondHistogrammePrimaire,
+      this.couleurDuFondHistogrammeSecondaire,
+      this.couleurDuFondHistogrammeSecondaire,
+      this.couleurDuFondHistogrammeSecondaire,
+    ]
+    const dépensesOuCharges = []
+    const recettesOuProduits = []
+    const libellés = []
+    const entêtesDesAutresColonnes = []
+    const annéesManquantes = this.annéesManquantes(this.lesAnnéesEffectivesDuCompteDeRésultat())
+
+    let ratioHistogramme = 2
+    if (budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA) {
+      const totalDesCharges = budgetEtFinance.chargesEtProduits.charges as number
+      const totalDesProduits = budgetEtFinance.chargesEtProduits.produits as number
+      dépensesOuCharges.push(totalDesCharges)
+      recettesOuProduits.push(totalDesProduits)
+      libellés.push(this.wording.TOTAL)
+      entêtesDesAutresColonnes.push(this.wording.CHARGES, this.wording.PRODUITS)
+      ratioHistogramme = 5
+    } else {
+      const dépensesGroupeI = budgetEtFinance.recettesEtDépenses.dépensesGroupe1 as number
+      const dépensesGroupeII = budgetEtFinance.recettesEtDépenses.dépensesGroupe2 as number
+      const dépensesGroupeIII = budgetEtFinance.recettesEtDépenses.dépensesGroupe3 as number
+      const recettesGroupeI = budgetEtFinance.recettesEtDépenses.recettesGroupe1 as number
+      const recettesGroupeII = budgetEtFinance.recettesEtDépenses.recettesGroupe2 as number
+      const recettesGroupeIII = budgetEtFinance.recettesEtDépenses.recettesGroupe3 as number
+      const totalDesDépenses = dépensesGroupeI + dépensesGroupeII + dépensesGroupeIII
+      const totalDesRecettes = recettesGroupeI + recettesGroupeII + recettesGroupeIII
+      dépensesOuCharges.push(totalDesDépenses, dépensesGroupeI, dépensesGroupeII, dépensesGroupeIII)
+      recettesOuProduits.push(totalDesRecettes, recettesGroupeI, recettesGroupeII, recettesGroupeIII)
+      libellés.push(this.wording.TOTAL, this.wording.GROUPE_I, this.wording.GROUPE_II, this.wording.GROUPE_III)
+      entêtesDesAutresColonnes.push(this.wording.DÉPENSES, this.wording.RECETTES)
+    }
+
+    return this.afficheUnCarrousel(
+      chartColors,
+      dépensesOuCharges,
+      recettesOuProduits,
+      libellés,
+      ratioHistogramme,
+      entêtePremièreColonne,
+      entêtesDesAutresColonnes,
+      annéesManquantes
+    )
   }
 
   public get desDonnéesBudgetEtFinancesSontRenseignées(): boolean {
@@ -115,8 +199,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     )
 
     const annéesManquantes = this.annéesManquantes(
-      this.budgetEtFinancesMédicoSocial.map((résultatNetComptableParAnnée) => résultatNetComptableParAnnée.année),
-      3
+      this.budgetEtFinancesMédicoSocial.map((résultatNetComptableParAnnée) => résultatNetComptableParAnnée.année)
     )
 
     return <IndicateurTabulaire
@@ -331,5 +414,64 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
 
   private transformeEnTaux(nombre: number): number {
     return Number((nombre * 100).toFixed(1))
+  }
+
+  private budgetEtFinanceEnCours(annéeEnCours: number): ÉtablissementTerritorialMédicoSocialBudgetEtFinances {
+    return this.budgetEtFinancesMédicoSocial
+      .find((budgetEtFinance) => budgetEtFinance.année === annéeEnCours) as ÉtablissementTerritorialMédicoSocialBudgetEtFinances
+  }
+
+  private lesAnnéesEffectivesDuCompteDeRésultat(): number[] {
+    const années: number[] = []
+
+    this.budgetEtFinancesMédicoSocial.forEach((budgetEtFinance) => {
+      if (budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA) {
+        if (
+          budgetEtFinance.chargesEtProduits.charges !== null &&
+          budgetEtFinance.chargesEtProduits.produits !== null
+        ) {
+          années.push(budgetEtFinance.année)
+        }
+      } else {
+        if (
+          budgetEtFinance.recettesEtDépenses.dépensesGroupe1 !== null &&
+          budgetEtFinance.recettesEtDépenses.dépensesGroupe2 !== null &&
+          budgetEtFinance.recettesEtDépenses.dépensesGroupe3 !== null &&
+          budgetEtFinance.recettesEtDépenses.recettesGroupe1 !== null &&
+          budgetEtFinance.recettesEtDépenses.recettesGroupe2 !== null &&
+          budgetEtFinance.recettesEtDépenses.recettesGroupe3 !== null
+        ) {
+          années.push(budgetEtFinance.année)
+        }
+      }
+    })
+
+    return années
+  }
+
+  private annéesRangéesParAntéChronologie(): number[] {
+    return this.budgetEtFinancesMédicoSocial
+      .filter(filtreParCadreBudgétaireEtRecettesEtDépenses)
+      .map((budgetEtFinance) => budgetEtFinance.année)
+      .reverse()
+
+    function filtreParCadreBudgétaireEtRecettesEtDépenses(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances): boolean {
+      if (budgetEtFinance.cadreBudgétaire !== CadreBudgétaire.CA_PA && (
+        budgetEtFinance.recettesEtDépenses.dépensesGroupe1 !== null ||
+          budgetEtFinance.recettesEtDépenses.dépensesGroupe2 !== null ||
+          budgetEtFinance.recettesEtDépenses.dépensesGroupe3 !== null ||
+          budgetEtFinance.recettesEtDépenses.recettesGroupe1 !== null ||
+          budgetEtFinance.recettesEtDépenses.recettesGroupe2 !== null ||
+          budgetEtFinance.recettesEtDépenses.recettesGroupe3 !== null
+      )) {
+        return true
+      } else if (budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA && (
+        budgetEtFinance.chargesEtProduits.charges !== null ||
+          budgetEtFinance.chargesEtProduits.produits !== null
+      )) {
+        return true
+      }
+      return false
+    }
   }
 }

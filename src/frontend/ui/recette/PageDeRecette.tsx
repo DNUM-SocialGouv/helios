@@ -106,6 +106,40 @@ export const PageDeRecette = () => {
       numéroFiness: '660009945',
     },
   ]
+  const établissementsTerritoriauxMédicoSociauxBudgetEtFinances: { identifiant: string, numéroFiness: string }[] = [
+    {
+      identifiant: 'ET - 690 024 898 - EHPAD SAINT-FRANCOIS D’ASSISE (2 années ERRD)',
+      numéroFiness: '690024898',
+    },
+    {
+      identifiant: 'ET - 370 103 137 - ESAT ANAIS DE METTRAY (2 années CA PH)',
+      numéroFiness: '370103137',
+    },
+    {
+      identifiant: 'ET - 660 009 945 - EEPA PHV BOUFFARD VERCELLI (2 années CA PA)',
+      numéroFiness: '660009945',
+    },
+    {
+      identifiant: 'ET - 010 003 218 - IME HENRI LAFAY (1 années ERRD et 1 année CA PH)',
+      numéroFiness: '010003218',
+    },
+    {
+      identifiant: 'ET - 750 803 553 - RESIDENCE AUTONOMIE ANDRE LEROUX (1 années ERRD et 1 année CA PA)',
+      numéroFiness: '750803553',
+    },
+    {
+      identifiant: 'ET - 890 971 294 - SPASAD ATOME AUXERRE (recette négative en 2019)',
+      numéroFiness: '890971294',
+    },
+    {
+      identifiant: 'ET - 410 005 946 - SERVICE DE SUITE ET D’ACCOMPAGNEMENT SOCIAL (dépense positive en 2020)',
+      numéroFiness: '410005946',
+    },
+    {
+      identifiant: 'ET - 130 802 119 - EHPAD B CARRARA DE L’HOPITAL D’ALLAUCH (sans année)',
+      numéroFiness: '130802119',
+    },
+  ]
   const établissementsTerritoriauxSanitaires: {identifiant: ReactElement, numéroFiness: string}[] = [
     {
       identifiant: <>
@@ -189,6 +223,28 @@ export const PageDeRecette = () => {
         <ul className={styles['liste-entités-juridiques'] + ' fr-raw-list fr-text--bold fr-raw-link'}>
           {
             établissementsTerritoriauxMédicoSociaux.map((établissementTerritorial) =>
+              <ListItem
+                key={établissementTerritorial.numéroFiness}
+                label={établissementTerritorial.identifiant}
+                lien= {`${paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL}/${établissementTerritorial.numéroFiness}`}
+                logo={<>
+                  <Image
+                    alt=""
+                    height="22"
+                    src={LogoÉtablissementTerritorialMédicoSocial}
+                    width="22"
+                  />
+                </>}
+              />)
+          }
+        </ul>
+        <hr />
+        <h2 className="fr-h4">
+          Budget et finances
+        </h2>
+        <ul className={styles['liste-entités-juridiques'] + ' fr-raw-list fr-text--bold fr-raw-link'}>
+          {
+            établissementsTerritoriauxMédicoSociauxBudgetEtFinances.map((établissementTerritorial) =>
               <ListItem
                 key={établissementTerritorial.numéroFiness}
                 label={établissementTerritorial.identifiant}

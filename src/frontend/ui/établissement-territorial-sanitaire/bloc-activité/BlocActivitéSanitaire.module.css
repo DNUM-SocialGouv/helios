@@ -1,5 +1,6 @@
 .liste-indicateurs {
   list-style-type: none;
+  padding: 0;
 }
 
 .liste-indicateurs > li {
