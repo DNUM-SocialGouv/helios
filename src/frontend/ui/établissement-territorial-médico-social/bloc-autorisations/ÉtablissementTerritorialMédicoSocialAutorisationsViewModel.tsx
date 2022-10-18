@@ -4,7 +4,6 @@ import { Wording } from '../../../configuration/wording/Wording'
 import { ActionneurDAccordéon } from '../../commun/Accordéon/ActionneurDAccordéon'
 import { CouleurHistogramme, GraphiqueViewModel } from '../../commun/Graphique/GraphiqueViewModel'
 import { StringFormater } from '../../commun/StringFormater'
-import styles from './BlocAutorisationEtCapacitéMédicoSocial.module.css'
 
 export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extends GraphiqueViewModel {
   constructor(
@@ -20,7 +19,7 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
     return (
       <ul
         aria-label="disciplines"
-        className={`${styles['liste-autorisations']}`}
+        className="autorisations"
       >
         {autorisationsDeLÉtablissement.disciplines.map((discipline) => (
           <li
@@ -31,7 +30,7 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
               titre={`${discipline.libellé} [${discipline.code}]`}
             />
             <ul
-              className={`fr-collapse ${styles['liste-activites']}`}
+              className="fr-collapse niveau1"
               id={`accordion-${discipline.code}`}
             >
               {
@@ -45,7 +44,7 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
                       titre={`${activité.libellé} [${activité.code}]`}
                     />
                     <ul
-                      className={`fr-collapse ${styles['liste-clienteles']}`}
+                      className="fr-collapse niveau2"
                       id={`accordion-${discipline.code}-${activité.code}`}
                     >
                       {

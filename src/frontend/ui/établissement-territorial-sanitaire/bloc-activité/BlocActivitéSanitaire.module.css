@@ -1,14 +1,7 @@
 .liste-indicateurs {
-  list-style-type: none;
-  padding: 0;
-}
-
-.liste-indicateurs > li {
-  margin-bottom: 1rem;
-}
-
-.liste-indicateurs > li > div:nth-child(1)  {
-  margin-bottom: 1rem;
+  display: grid;
+  gap: 1rem;
+  grid-auto-flow: row;
 }
 
 .graphique-sanitaire-légende {

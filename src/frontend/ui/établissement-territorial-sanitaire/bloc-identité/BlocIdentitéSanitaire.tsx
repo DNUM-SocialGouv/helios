@@ -17,7 +17,7 @@ export const BlocIdentitéSanitaire = ({ établissementTerritorialSanitaireIdent
       estCeIdentité={true}
       titre={wording.TITRE_BLOC_IDENTITÉ}
     >
-      <ul className={styles['liste-indicateurs']}>
+      <ul className={`indicateurs ${styles['liste-indicateurs']}`}>
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialSanitaireIdentitéViewModel.dateDeMiseÀJourDuNomDeLÉtablissementTerritorial}
           nomDeLIndicateur={wording.NOM_DE_L_ÉTABLISSEMENT}

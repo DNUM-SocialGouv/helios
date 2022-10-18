@@ -31,7 +31,7 @@ export const BlocAutorisationEtCapacitéMédicoSocial = (
       estCeIdentité={false}
       titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}
     >
-      <ul className={styles['liste-indicateurs']}>
+      <ul className={`indicateurs ${styles['liste-indicateurs']}`}>
         {établissementTerritorialAutorisationsMédicoSocialViewModel.lesCapacitésSontEllesRenseignées && (
           <IndicateurGraphique
             contenuInfoBulle={

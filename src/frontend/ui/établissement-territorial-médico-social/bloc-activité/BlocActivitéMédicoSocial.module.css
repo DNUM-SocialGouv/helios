@@ -1,15 +1,11 @@
 .liste-indicateurs {
-  column-gap: 3.5rem;
   display: grid;
+  gap: 1rem;
   grid-template-areas:
   "graph1 graph1 graph2 graph2 graph3 graph3"
   "graph4 graph4 graph4 graph5 graph5 graph5"
   "graph6 graph6 graph6 graph7 graph7 graph7";
   grid-template-columns: repeat(6, 1fr);
-  list-style-type: none;
-  padding: 0;
-  row-gap: 2rem;
-  width: 100%;
 }
 
 .liste-indicateurs > li {
@@ -19,7 +15,6 @@
 }
 
 .liste-indicateurs > li > div:nth-child(1)  {
-  margin-bottom: 1rem;
   min-height: 6rem;
 }
 

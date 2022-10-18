@@ -11,7 +11,7 @@ import { ContenuMontantDeLaContributionAuxFraisDeSiège } from '../InfoBulle/Con
 import { ContenuRésultatNetComptable } from '../InfoBulle/ContenuRésultatNetComptable'
 import { ContenuTauxDeCaf } from '../InfoBulle/ContenuTauxDeCaf'
 import { ContenuTauxDeVétustéConstruction } from '../InfoBulle/ContenuTauxDeVétustéConstruction'
-import style from './BlocBudgetEtFinancesMédicoSocial.module.css'
+import styles from './BlocBudgetEtFinancesMédicoSocial.module.css'
 import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from './ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel'
 
 type BlocBudgetEtFinancesMédicoSocialProps = Readonly<{
@@ -37,7 +37,7 @@ export const BlocBudgetEtFinancesMédicoSocial = (
       estCeIdentité={false}
       titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES}
     >
-      <ul className={style['liste-indicateurs']}>
+      <ul className={`indicateurs ${styles['liste-indicateurs']}`}>
         <IndicateurGraphique
           années={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.listeDéroulanteDesAnnéesDuCompteDeRésultat(setAnnéeEnCours)}
           contenuInfoBulle={<ContenuCompteDeRésultat

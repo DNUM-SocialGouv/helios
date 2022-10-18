@@ -32,7 +32,7 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireActiv
 
   return (
     <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
-      <ul className={styles['liste-indicateurs']}>
+      <ul className={`indicateurs ${styles['liste-indicateurs']}`}>
         {établissementTerritorialSanitaireActivitéViewModel.nombreDeSéjoursMCOSontIlsRenseignés &&
           <IndicateurGraphique
             contenuInfoBulle={<ContenuNombreDeSéjourMCO

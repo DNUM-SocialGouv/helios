@@ -81,7 +81,7 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
     return (
       <ul
         aria-label="activités"
-        className={`${stylesBlocAutorisationsEtCapacités['liste-activités']}`}
+        className="autorisations"
       >
         {autorisationsDeLÉtablissement.activités.map((activité) => (
           <li
@@ -92,7 +92,7 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
               titre={`${activité.libellé} [${activité.code}]`}
             />
             <ul
-              className={`fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-modalités']}`}
+              className="fr-collapse niveau1"
               id={`autorisations-accordion-${activité.code}`}
             >
               {
@@ -106,7 +106,7 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
                       titre={`${modalité.libellé} [${modalité.code}]`}
                     />
                     <ul
-                      className={`fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-formes']}`}
+                      className="fr-collapse niveau2"
                       id={`autorisations-accordion-${activité.code}-${modalité.code}`}
                     >
                       {
@@ -174,7 +174,7 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
               titre={`${activité.libellé} [${activité.code}]`}
             />
             <ul
-              className={` fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-modalités']}`}
+              className=" fr-collapse niveau1"
               id={`autresActivités-accordion-${activité.code}`}
             >
               {
@@ -188,7 +188,7 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
                       titre={`${modalité.libellé} [${modalité.code}]`}
                     />
                     <ul
-                      className={`fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-formes']}`}
+                      className="fr-collapse niveau2"
                       id={`autresActivités-accordion-${activité.code}-${modalité.code}`}
                     >
                       {
@@ -253,7 +253,7 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
               titre={`${activité.libellé} [${activité.code}]`}
             />
             <ul
-              className={`fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-modalités']}`}
+              className="fr-collapse niveau1"
               id={`reconnaissances-contractuelles-accordion-${activité.code}`}
             >
               {
@@ -267,7 +267,7 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
                       titre={`${modalité.libellé} [${modalité.code}]`}
                     />
                     <ul
-                      className={`fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-formes']}`}
+                      className="fr-collapse niveau2"
                       id={`reconnaissances-contractuelles-accordion-${activité.code}-${modalité.code}`}
                     >
                       {
@@ -345,7 +345,7 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
               titre={`${équipements.libellé} [${équipements.code}]`}
             />
             <ul
-              className={`fr-collapse ${stylesBlocAutorisationsEtCapacités['liste-modalités']}`}
+              className="fr-collapse niveau1"
               id={`équipements-matériels-lourds-accordion-${équipements.code}`}
             >
               {

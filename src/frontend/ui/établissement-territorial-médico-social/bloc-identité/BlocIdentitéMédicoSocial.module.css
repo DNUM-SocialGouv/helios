@@ -4,21 +4,11 @@
   grid-auto-flow: column;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(6, auto);
-  list-style-type: none;
-  padding: 0;
-  width: 100%;
-}
-
-.liste-indicateurs > li {
-  padding-bottom: 0;
 }
 
 @media (max-width: 36em) {
   .liste-indicateurs {
-    display: inherit;
-  }
-
-  .liste-indicateurs > li {
-    margin-bottom: 1rem;
+    grid-auto-flow: row;
+    grid-template-columns: inherit;
   }
 }

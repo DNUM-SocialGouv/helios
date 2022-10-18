@@ -1,15 +1,21 @@
 .liste-indicateurs {
-  column-gap: 3.5rem;
   display: grid;
+  gap: 1rem;
   grid-template-areas:
   "graph1 graph1 graph2"
   "graph3 graph4 graph5"
   "graph6 vide vide";
   grid-template-columns: repeat(3, 1fr);
-  list-style-type: none;
-  padding: 0;
-  row-gap: 2rem;
-  width: 100%;
+}
+
+.liste-indicateurs > li {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.liste-indicateurs > li > div:nth-child(1)  {
+  min-height: 6rem;
 }
 
 .liste-indicateurs > li:nth-child(1) {
@@ -36,14 +42,8 @@
   grid-area: graph6;
 }
 
-.liste-indicateurs > li {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
 .liste-indicateurs canvas {
-  margin: 1rem 0;
+  margin-bottom: 1rem;
 }
 
 @media (max-width: 36em) {
