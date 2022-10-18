@@ -119,6 +119,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       && !this.leMontantDeLaContributionAuxFraisDeSiègeEstIlRenseigné
       && !this.leTauxDeCafEstIlRenseigné
       && !this.leTauxDeVétustéEstIlRenseigné
+      && !this.leFondsDeRoulementEstIlRenseigné
   }
 
   public get montantDeLaContributionAuxFraisDeSiège(): JSX.Element {

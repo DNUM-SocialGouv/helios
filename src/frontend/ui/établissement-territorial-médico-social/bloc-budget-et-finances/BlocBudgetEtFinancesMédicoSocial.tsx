@@ -38,25 +38,22 @@ export const BlocBudgetEtFinancesMédicoSocial = (
       titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES}
     >
       <ul className={style['liste-indicateurs']}>
-        {
-          établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leCompteDeRésultatEstIlRenseigné &&
-          <IndicateurGraphique
-            années={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.listeDéroulanteDesAnnéesDuCompteDeRésultat(setAnnéeEnCours)}
-            contenuInfoBulle={<ContenuCompteDeRésultat
-              dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourTauxDeVétustéConstruction}
-              source={Sources(wording.DIAMANT, wording.CNSA)}
-            />}
+        <IndicateurGraphique
+          années={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.listeDéroulanteDesAnnéesDuCompteDeRésultat(setAnnéeEnCours)}
+          contenuInfoBulle={<ContenuCompteDeRésultat
             dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourTauxDeVétustéConstruction}
-            identifiant="budget-et-finances-compte-de-résultat"
-            nomDeLIndicateur={<>
-              {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.intituléDuCompteDeRésultat(annéeEnCours)}
-              {' '}
-            </>}
             source={Sources(wording.DIAMANT, wording.CNSA)}
-          >
-            {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.compteDeRésultat(annéeEnCours)}
-          </IndicateurGraphique>
-        }
+          />}
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourTauxDeVétustéConstruction}
+          identifiant="budget-et-finances-compte-de-résultat"
+          nomDeLIndicateur={<>
+            {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.intituléDuCompteDeRésultat(annéeEnCours)}
+            {' '}
+          </>}
+          source={Sources(wording.DIAMANT, wording.CNSA)}
+        >
+          {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.compteDeRésultat(annéeEnCours)}
+        </IndicateurGraphique>
         {
           établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leRésultatNetComptableEstIlRenseigné &&
           <Indicateur
@@ -87,36 +84,30 @@ export const BlocBudgetEtFinancesMédicoSocial = (
             {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.montantDeLaContributionAuxFraisDeSiège}
           </Indicateur>
         }
-        {
-          établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leTauxDeCafEstIlRenseigné &&
-          <IndicateurGraphique
-            contenuInfoBulle={<ContenuTauxDeCaf
-              dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourTauxDeCaf}
-              source={Sources(wording.DIAMANT, wording.CNSA)}
-            />}
+        <IndicateurGraphique
+          contenuInfoBulle={<ContenuTauxDeCaf
             dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourTauxDeCaf}
-            identifiant="budget-et-finances-taux-de-caf"
-            nomDeLIndicateur={wording.TAUX_DE_CAF}
             source={Sources(wording.DIAMANT, wording.CNSA)}
-          >
-            {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeCaf}
-          </IndicateurGraphique>
-        }
-        {
-          établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leTauxDeVétustéEstIlRenseigné &&
-          <IndicateurGraphique
-            contenuInfoBulle={<ContenuTauxDeVétustéConstruction
-              dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourTauxDeVétustéConstruction}
-              source={Sources(wording.DIAMANT, wording.CNSA)}
-            />}
+          />}
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourTauxDeCaf}
+          identifiant="budget-et-finances-taux-de-caf"
+          nomDeLIndicateur={wording.TAUX_DE_CAF}
+          source={Sources(wording.DIAMANT, wording.CNSA)}
+        >
+          {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeCaf}
+        </IndicateurGraphique>
+        <IndicateurGraphique
+          contenuInfoBulle={<ContenuTauxDeVétustéConstruction
             dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourTauxDeVétustéConstruction}
-            identifiant="budget-et-finances-taux-de-vétusté-construction"
-            nomDeLIndicateur={wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION}
             source={Sources(wording.DIAMANT, wording.CNSA)}
-          >
-            {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeVétustéConstruction}
-          </IndicateurGraphique>
-        }
+          />}
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourTauxDeVétustéConstruction}
+          identifiant="budget-et-finances-taux-de-vétusté-construction"
+          nomDeLIndicateur={wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION}
+          source={Sources(wording.DIAMANT, wording.CNSA)}
+        >
+          {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeVétustéConstruction}
+        </IndicateurGraphique>
         {
           établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leFondsDeRoulementEstIlRenseigné &&
           <IndicateurGraphique
