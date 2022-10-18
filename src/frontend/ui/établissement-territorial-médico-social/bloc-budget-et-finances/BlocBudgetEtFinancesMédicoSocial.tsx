@@ -6,6 +6,7 @@ import { Indicateur } from '../../commun/Indicateur/Indicateur'
 import { IndicateurGraphique } from '../../commun/IndicateurGraphique/IndicateurGraphique'
 import { Sources } from '../../commun/Sources/Sources'
 import { ContenuCompteDeRésultat } from '../InfoBulle/ContenuCompteDeRésultat'
+import { ContenuFondDeRoulementNetGlobal } from '../InfoBulle/ContenuFondDeRoulementNetGlobal'
 import { ContenuMontantDeLaContributionAuxFraisDeSiège } from '../InfoBulle/ContenuMontantDeLaContributionAuxFraisDeSiège'
 import { ContenuRésultatNetComptable } from '../InfoBulle/ContenuRésultatNetComptable'
 import { ContenuTauxDeCaf } from '../InfoBulle/ContenuTauxDeCaf'
@@ -114,6 +115,21 @@ export const BlocBudgetEtFinancesMédicoSocial = (
             source={Sources(wording.DIAMANT, wording.CNSA)}
           >
             {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeVétustéConstruction}
+          </IndicateurGraphique>
+        }
+        {
+          établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leFondsDeRoulementEstIlRenseigné &&
+          <IndicateurGraphique
+            contenuInfoBulle={<ContenuFondDeRoulementNetGlobal
+              dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourFondDeRoulementNetGlobal}
+              source={Sources(wording.DIAMANT, wording.CNSA)}
+            />}
+            dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourFondDeRoulementNetGlobal}
+            identifiant="budget-et-finances-fond-de-roulement-net-global"
+            nomDeLIndicateur={wording.FONDS_DE_ROULEMENT_NET_GLOBAL}
+            source={Sources(wording.DIAMANT, wording.CNSA)}
+          >
+            {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.fondDeRoulementNetGlobal}
           </IndicateurGraphique>
         }
       </ul>

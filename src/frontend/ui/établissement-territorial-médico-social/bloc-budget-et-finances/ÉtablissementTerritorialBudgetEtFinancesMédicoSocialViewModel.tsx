@@ -4,10 +4,11 @@ import { ChangeEvent } from 'react'
 import { Bar } from 'react-chartjs-2'
 
 import { CadreBudgétaire } from '../../../../../database/models/BudgetEtFinancesMédicoSocialModel'
+import { ÉtablissementTerritorialMédicoSocial } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
 import { Wording } from '../../../configuration/wording/Wording'
 import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from '../../commun/Graphique/GraphiqueViewModel'
-import { IndicateurTabulaire } from '../../commun/IndicateurTabulaire/IndicateurTabulaire'
+import { IndicateurTabulaire, IndicateurTabulaireProps } from '../../commun/IndicateurTabulaire/IndicateurTabulaire'
 import { MiseEnExergue } from '../../commun/MiseEnExergue/MiseEnExergue'
 import { Select } from '../../commun/Select/Select'
 import { StringFormater } from '../../commun/StringFormater'
@@ -17,9 +18,10 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
   private readonly seuilMinimalDuTauxDeVétustéConstruction = 0
   private readonly seuilMaximalDuTauxDeVétustéConstruction = 80
   private readonly seuilDuContrasteDuLibellé = 10
-  private readonly seuilMinimalDuTauxDeCaf = -20
-  private readonly seuilMaximalDuTauxDeCaf = 20
+  private readonly seuilMinimalDuTauxDeCaf = -21
+  private readonly seuilMaximalDuTauxDeCaf = 21
   private readonly seuilDuTauxDeCaf = 2
+  private readonly couleurDuSeuil = '#18753C'
   private readonly nombreDAnnéesParIndicateur = 3
 
   constructor(
@@ -268,6 +270,46 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].tauxDeCafNette?.dateMiseÀJourSource as string)
   }
 
+  public get fondDeRoulementNetGlobal(): JSX.Element {
+    const annéesSousCadreAutreQueErrd: number[] = []
+    const fondsDeRoulementNetGlobalParAnnée: IndicateurTabulaireProps['valeursParAnnée'] = this.budgetEtFinancesMédicoSocial.reduce(
+      (fondsParAnnée: IndicateurTabulaireProps['valeursParAnnée'], budgetEtFinancesMédicoSocial) => {
+        if (budgetEtFinancesMédicoSocial.cadreBudgétaire === CadreBudgétaire.ERRD) {
+          if (budgetEtFinancesMédicoSocial.fondsDeRoulement.valeur) {
+            fondsParAnnée.push({
+              année: budgetEtFinancesMédicoSocial.année,
+              miseEnForme: budgetEtFinancesMédicoSocial.fondsDeRoulement.valeur < 0 ? 'fr-text--bold fr-text-default--error' : '',
+              valeur: StringFormater.formateLeMontantEnEuros(budgetEtFinancesMédicoSocial.fondsDeRoulement.valeur),
+            })
+          }
+        } else {
+          annéesSousCadreAutreQueErrd.push(budgetEtFinancesMédicoSocial.année)
+        }
+        return fondsParAnnée
+      },
+      []
+    )
+    const annéesAvecDonnées = fondsDeRoulementNetGlobalParAnnée.map((fondsDeRoulementNetGlobalParAnnée) => fondsDeRoulementNetGlobalParAnnée.année)
+
+    const annéesAvecMiseEnExergue = this.annéesManquantes(
+      annéesAvecDonnées.concat(annéesSousCadreAutreQueErrd),
+      this.nombreDAnnéesParIndicateur
+    )
+
+    return <IndicateurTabulaire
+      annéesManquantes={annéesAvecMiseEnExergue}
+      valeursParAnnée={fondsDeRoulementNetGlobalParAnnée}
+    />
+  }
+
+  public get dateMiseÀJourFondDeRoulementNetGlobal(): string {
+    return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].fondsDeRoulement?.dateMiseÀJourSource as string)
+  }
+
+  public get leFondsDeRoulementEstIlRenseigné(): boolean {
+    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.fondsDeRoulement.valeur)
+  }
+
   private afficheLHistogrammeDuTauxDeCaf(
     valeurs: number[],
     années: number[],
@@ -288,7 +330,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
           xAxisID: 'x',
         },
         {
-          borderColor: 'green',
+          borderColor: this.couleurDuSeuil,
           data: [
             { x: -1, y: this.seuilDuTauxDeCaf },
             { x: 2, y: this.seuilDuTauxDeCaf },
@@ -318,7 +360,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
           <Bar
             // @ts-ignore
             data={data}
-            options={this.construisLesOptionsDeLHistogrammeDuTauxDeCaf(libellésDesTicks, maxDeLHistogramme, minDeLHistogramme)}
+            options={this.construisLesOptionsDeLHistogrammeDuTauxDeCaf(couleursDeLHistogramme, libellésDesTicks, maxDeLHistogramme, minDeLHistogramme)}
           />
         }
         {annéesManquantes.length > 0 && (
@@ -342,6 +384,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
   }
 
   private construisLesOptionsDeLHistogrammeDuTauxDeCaf(
+    couleursDeLHistogramme: CouleurHistogramme[],
     libellésDesTicks: LibelléDeTickGraphe[],
     maxDeLHistogramme: number | undefined,
     minDeLHistogramme: number | undefined
@@ -359,6 +402,8 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
             weight: 700,
           },
           formatter: (value: number, _context: Context): string => value.toLocaleString('fr') + ' %',
+          textStrokeColor: couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
+          textStrokeWidth: 2,
         },
         legend: { display: false },
         tooltip: { enabled: false },
@@ -408,6 +453,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
               weight: (context: ScriptableScaleContext) =>
                 context.tick && context.tick.value === this.seuilDuTauxDeCaf ? this.policeGrasse : this.policeNormale,
             },
+            includeBounds: false,
             stepSize: 2,
           },
         },

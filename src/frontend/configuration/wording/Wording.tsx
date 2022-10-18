@@ -170,6 +170,7 @@ export interface Wording {
   readonly GROUPE_II: string
   readonly GROUPE_III: string
   readonly TAUX_DE_CAF: string
+  readonly FONDS_DE_ROULEMENT_NET_GLOBAL: string
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string
