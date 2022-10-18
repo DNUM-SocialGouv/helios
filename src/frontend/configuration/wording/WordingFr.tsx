@@ -214,6 +214,7 @@ export class WordingFr implements Wording {
   readonly GROUPE_II: string = 'Groupe II'
   readonly GROUPE_III: string = 'Groupe III'
   readonly TAUX_DE_CAF: string = 'Taux de CAF'
+  readonly FONDS_DE_ROULEMENT_NET_GLOBAL: string = 'Fond de roulement net global'
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string = 'Établissement territorial'

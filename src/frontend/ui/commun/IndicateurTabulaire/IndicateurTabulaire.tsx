@@ -4,7 +4,7 @@ import styles from './IndicateurTabulaire.module.css'
 
 export type IndicateurTabulaireProps = Readonly<{
   annéesManquantes: number[]
-  valeursParAnnée: { année: number; valeur: string }[]
+  valeursParAnnée: { année: number, miseEnForme?: string, valeur: string }[]
 }>
 
 export const IndicateurTabulaire = ({ annéesManquantes, valeursParAnnée }: IndicateurTabulaireProps) => {
@@ -29,7 +29,7 @@ export const IndicateurTabulaire = ({ annéesManquantes, valeursParAnnée }: Ind
               <td>
                 {valeurParAnnée.année}
               </td>
-              <td>
+              <td className={valeurParAnnée.miseEnForme}>
                 {valeurParAnnée.valeur}
               </td>
             </tr>
@@ -37,8 +37,11 @@ export const IndicateurTabulaire = ({ annéesManquantes, valeursParAnnée }: Ind
         </tbody>
       </table>
     </div>
-    <MiseEnExergue>
-      {`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}
-    </MiseEnExergue>
+    {
+      annéesManquantes.length > 0 &&
+      <MiseEnExergue>
+        {`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}
+      </MiseEnExergue>
+    }
   </div>
 }

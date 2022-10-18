@@ -16,7 +16,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
     cadreBudgétaire: -1,
     chargesEtProduits: -1,
     contributionAuxFraisDeSiège: 2,
-    fondsDeRoulement: -1,
+    fondsDeRoulement: 5,
     recettesEtDépenses: 0,
     résultatNetComptable: 1,
     tauxDeCafNette: 3,
@@ -29,7 +29,8 @@ describe('La page établissement territorial - bloc budget et finances', () => {
     [indiceDeLIndicateur.contributionAuxFraisDeSiège, wording.MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE, 'budget-et-finances-montant-de-la-contribution'],
     [indiceDeLIndicateur.tauxDeCafNette, wording.TAUX_DE_CAF, 'budget-et-finances-taux-de-caf'],
     [indiceDeLIndicateur.tauxDeVétustéConstruction, wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION, 'budget-et-finances-taux-de-vétusté-construction'],
-  ])('affiche l’intitulé de l’indicateur %s, avec sa date de mise à jour, ses sources et un bouton pour accéder aux détails', (indiceDeLIndicateur, libelléDeLIndicateur, identifiantInfoBulle) => {
+    [indiceDeLIndicateur.fondsDeRoulement, wording.FONDS_DE_ROULEMENT_NET_GLOBAL, 'budget-et-finances-fond-de-roulement-net-global'],
+  ])('affiche l’intitulé de l’indicateur %s, avec sa date de mise à jour, ses sources  et un bouton pour accéder aux détails', (indiceDeLIndicateur, libelléDeLIndicateur, identifiantInfoBulle) => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
 
@@ -75,6 +76,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
     [indiceDeLIndicateur.contributionAuxFraisDeSiège, wording.MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE],
     [indiceDeLIndicateur.tauxDeCafNette, wording.TAUX_DE_CAF],
     [indiceDeLIndicateur.tauxDeVétustéConstruction, wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION],
+    [indiceDeLIndicateur.fondsDeRoulement, wording.FONDS_DE_ROULEMENT_NET_GLOBAL],
   ])('affiche le contenu de l’info bulle %s après avoir cliqué sur le bouton "détails"', (indiceDeLIndicateur, libelléDeLIndicateur) => {
     // GIVEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
@@ -111,6 +113,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
     [indiceDeLIndicateur.contributionAuxFraisDeSiège, wording.MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE],
     [indiceDeLIndicateur.tauxDeCafNette, wording.TAUX_DE_CAF],
     [indiceDeLIndicateur.tauxDeVétustéConstruction, wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION],
+    [indiceDeLIndicateur.fondsDeRoulement, wording.FONDS_DE_ROULEMENT_NET_GLOBAL],
   ])('ferme l’info bulle %s après avoir cliqué sur le bouton "Fermer"', (indiceDeLIndicateur, libelléDeLIndicateur) => {
     // GIVEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
@@ -135,6 +138,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
     [indiceDeLIndicateur.contributionAuxFraisDeSiège],
     [indiceDeLIndicateur.tauxDeCafNette],
     [indiceDeLIndicateur.tauxDeVétustéConstruction],
+    [indiceDeLIndicateur.fondsDeRoulement],
   ])('affiche une mise en exergue si une ou plusieurs années sont manquantes', (indiceDeLIndicateur) => {
     // GIVEN
     const établissementTerritorialAvecUneAnnéeManquante = new ÉtablissementTerritorialMédicoSocialViewModel({
@@ -832,6 +836,87 @@ describe('La page établissement territorial - bloc budget et finances', () => {
       // THEN
       const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
       expect(within(budgetEtFinances).queryByText(wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION, { selector: 'p' })).not.toBeInTheDocument()
+    })
+  })
+
+  describe('L’indicateur du fonds de roulement net global', () => {
+
+    it('affiche un tableau affichant le fonds de roulement net global des 3 années passées d’un établissement sous cadre ERRD', () => {
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+
+      // THEN
+      const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
+      const indicateurs = within(budgetEtFinances).getAllByRole('listitem')
+      const fondsDeRoulement = indicateurs[indiceDeLIndicateur.fondsDeRoulement]
+      const tableauDesRésultatNetComptable = within(fondsDeRoulement).getByRole('table')
+      expect(tableauDesRésultatNetComptable).toBeInTheDocument()
+
+      const annéeLigneDEnTête = within(tableauDesRésultatNetComptable).getByRole('columnheader', { name: wording.ANNÉE })
+      const indicateurLigneDEnTête = within(tableauDesRésultatNetComptable).getByRole('columnheader', { name: wording.MONTANT })
+      expect(annéeLigneDEnTête).toBeInTheDocument()
+      expect(indicateurLigneDEnTête).toBeInTheDocument()
+
+      const lignes = within(tableauDesRésultatNetComptable).getAllByRole('row')
+      expect(lignes).toHaveLength(1 + 3)
+      const premièreAnnée = within(lignes[1]).getByRole('cell', { name: '2019' })
+      expect(premièreAnnée).toBeInTheDocument()
+      const valeurDeLaPremièreAnnée = within(lignes[1]).getByRole('cell', { name: '1 057 218 €' })
+      expect(valeurDeLaPremièreAnnée).toBeInTheDocument()
+
+      const deuxièmeAnnée = within(lignes[2]).getByRole('cell', { name: '2020' })
+      expect(deuxièmeAnnée).toBeInTheDocument()
+      const valeurDeLaDeuxièmeAnnée = within(lignes[2]).getByRole('cell', { name: '3 988 284 €' })
+      expect(valeurDeLaDeuxièmeAnnée).toBeInTheDocument()
+
+      const troisièmeAnnée = within(lignes[3]).getByRole('cell', { name: '2021' })
+      expect(troisièmeAnnée).toBeInTheDocument()
+      const valeurDeLaTroisièmeAnnée = within(lignes[3]).getByRole('cell', { name: '2 206 969 €' })
+      expect(valeurDeLaTroisièmeAnnée).toBeInTheDocument()
+    })
+
+    it('n’affiche pas de mise en exergue pour les années sous un autre cadre budgétaire que ERRD', () => {
+      // GIVEN
+      const établissementTerritorialAvecDeuxAnnéesEnCa = new ÉtablissementTerritorialMédicoSocialViewModel({
+        activités: [],
+        autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
+        budgetEtFinances: [
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPa({ année: 2019 }),
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPh({ année: 2020 }),
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2021 }),
+        ],
+        identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+      }, wording, paths)
+
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialAvecDeuxAnnéesEnCa} />)
+
+      // THEN
+      const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
+      const indicateurs = within(budgetEtFinances).getAllByRole('listitem')
+      const indicateur = indicateurs[indiceDeLIndicateur.fondsDeRoulement]
+      expect(within(indicateur).queryByText(wording.AUCUNE_DONNÉE_RENSEIGNÉE, { selector: 'p' })).not.toBeInTheDocument()
+    })
+
+    it('n’affiche pas l’indicateur du résultat net comptable si aucune valeur n’est renseigné pour aucune année', () => {
+      // GIVEN
+      const établissementTerritorialSansFondsDeRoulement = new ÉtablissementTerritorialMédicoSocialViewModel({
+        activités: [],
+        autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
+        budgetEtFinances: [
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2019, fondsDeRoulement: { dateMiseÀJourSource: '2020-01-01', valeur :null } }),
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2020, fondsDeRoulement: { dateMiseÀJourSource: '2020-01-01', valeur :null } }),
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2021, fondsDeRoulement: { dateMiseÀJourSource: '2020-01-01', valeur :null } }),
+        ],
+        identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+      }, wording, paths)
+
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansFondsDeRoulement} />)
+
+      // THEN
+      const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
+      expect(within(budgetEtFinances).queryByText(wording.FONDS_DE_ROULEMENT_NET_GLOBAL, { selector: 'p' })).not.toBeInTheDocument()
     })
   })
 })
