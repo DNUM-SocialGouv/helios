@@ -2,7 +2,8 @@ import pandas as pd
 from numpy import NaN
 from pandas import NA
 
-from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, csv_ann_ms_tdp_et_builder, mocked_logger
+from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
+from datacrawler.test_helpers.diamant_builder import csv_ann_ms_tdp_et_builder
 from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.transforme_les_données_du_tableau_de_bord_de_la_performance import (
     récupère_le_taux_de_réalisation_des_établissements,
     transforme_les_données_ann_ms_tdp_et,

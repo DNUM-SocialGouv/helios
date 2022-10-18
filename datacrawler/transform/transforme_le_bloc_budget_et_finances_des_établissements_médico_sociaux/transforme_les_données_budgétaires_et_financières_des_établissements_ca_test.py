@@ -2,12 +2,8 @@ import pandas as pd
 from numpy import NaN
 from pandas import NA
 
-from datacrawler.test_helpers import (
-    NUMÉRO_FINESS_ÉTABLISSEMENT,
-    csv_ann_ca_ej_et_budget_et_finances_builder,
-    helios_ann_ca_ej_et_budget_et_finances_builder,
-    mocked_logger,
-)
+from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, helios_ann_ca_ej_et_budget_et_finances_builder, mocked_logger
+from datacrawler.test_helpers.diamant_builder import csv_ann_ca_ej_et_budget_et_finances_builder
 from datacrawler.transform.transforme_le_bloc_budget_et_finances_des_établissements_médico_sociaux.transforme_les_données_budgétaires_et_financières_des_établissements_ca import (
     transforme_les_données_budgétaires_et_financières_des_établissements_ca,
 )

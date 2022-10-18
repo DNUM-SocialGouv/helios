@@ -2,7 +2,8 @@ import pandas as pd
 from numpy import NaN
 from pandas import NA
 
-from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, csv_men_pmsi_annuel_builder, helios_men_pmsi_annuel_builder, mocked_logger
+from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, helios_men_pmsi_annuel_builder, mocked_logger
+from datacrawler.test_helpers.diamant_builder import csv_men_pmsi_annuel_builder
 from datacrawler.transform.transforme_les_activités_des_établissements_sanitaires.transforme_les_données_du_nombre_de_journées_et_séjours import (
     transforme_les_données_men_pmsi_annuel,
 )
