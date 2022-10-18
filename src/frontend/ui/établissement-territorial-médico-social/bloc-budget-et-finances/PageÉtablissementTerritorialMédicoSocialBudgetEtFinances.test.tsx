@@ -1,5 +1,6 @@
 import { fireEvent, screen, within } from '@testing-library/react'
 
+import { CadreBudgétaire } from '../../../../../database/models/BudgetEtFinancesMédicoSocialModel'
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from '../../../test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder'
 import { fakeFrontDependencies, renderFakeComponent } from '../../../testHelper'
@@ -162,7 +163,46 @@ describe('La page établissement territorial - bloc budget et finances', () => {
     const établissementTerritorialSansBudgetEtFinances = new ÉtablissementTerritorialMédicoSocialViewModel({
       activités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.activités,
       autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
-      budgetEtFinances: [],
+      budgetEtFinances: [
+        {
+          année: 2019,
+          cadreBudgétaire: CadreBudgétaire.ERRD,
+          chargesEtProduits: {
+            charges: null,
+            dateMiseÀJourSource: '2022-01-01',
+            produits: null,
+          },
+          contributionAuxFraisDeSiège: {
+            dateMiseÀJourSource: '2022-01-01',
+            valeur: null,
+          },
+          fondsDeRoulement: {
+            dateMiseÀJourSource: '2022-03-03',
+            valeur: null,
+          },
+          recettesEtDépenses: {
+            dateMiseÀJourSource: '2022-01-01',
+            dépensesGroupe1: null,
+            dépensesGroupe2: null,
+            dépensesGroupe3: null,
+            recettesGroupe1: null,
+            recettesGroupe2: null,
+            recettesGroupe3: null,
+          },
+          résultatNetComptable: {
+            dateMiseÀJourSource: '2022-01-01',
+            valeur: null,
+          },
+          tauxDeCafNette: {
+            dateMiseÀJourSource: '2022-03-03',
+            valeur: null,
+          },
+          tauxDeVétustéConstruction: {
+            dateMiseÀJourSource: '2022-03-03',
+            valeur: null,
+          },
+        },
+      ],
       identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
     }, wording, paths)
 
@@ -365,6 +405,44 @@ describe('La page établissement territorial - bloc budget et finances', () => {
       const colonne3Ligne4 = within(lignes[4]).getByRole('cell', { name: '0 €' })
       expect(colonne3Ligne4).toBeInTheDocument()
     })
+
+    it('n’affiche rien si aucune valeur n’est renseignée pour aucune année', () => {
+      // GIVEN
+      const établissementTerritorialSansRésultatNetComptable = new ÉtablissementTerritorialMédicoSocialViewModel({
+        activités: [],
+        autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
+        budgetEtFinances: [
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPa({
+            année: 2019,
+            chargesEtProduits: {
+              charges: null,
+              dateMiseÀJourSource: '2022-01-01',
+              produits: null,
+            },
+          }),
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({
+            année: 2020,
+            recettesEtDépenses: {
+              dateMiseÀJourSource: '2022-01-01',
+              dépensesGroupe1: null,
+              dépensesGroupe2: null,
+              dépensesGroupe3: null,
+              recettesGroupe1: null,
+              recettesGroupe2: null,
+              recettesGroupe3: null,
+            },
+          }),
+        ],
+        identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+      }, wording, paths)
+
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansRésultatNetComptable} />)
+
+      // THEN
+      const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
+      expect(within(budgetEtFinances).queryByText(wording.COMPTE_DE_RÉSULTAT_ERRD, { selector: 'p' })).not.toBeInTheDocument()
+    })
   })
 
   describe('L’indicateur du résultat net comptable', () => {
@@ -402,7 +480,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
       expect(valeurDeLaTroisièmeAnnée).toBeInTheDocument()
     })
 
-    it('n’affiche rien si aucune valeur n’est renseigné pour aucune année', () => {
+    it('n’affiche rien si aucune valeur n’est renseignée pour aucune année', () => {
       // GIVEN
       const établissementTerritorialSansRésultatNetComptable = new ÉtablissementTerritorialMédicoSocialViewModel({
         activités: [],
@@ -606,6 +684,31 @@ describe('La page établissement territorial - bloc budget et finances', () => {
       const valeurDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '13,5 %' })
       expect(valeurDeLaPremièreLigne).toBeInTheDocument()
     })
+
+    it('n’affiche rien si aucune valeur n’est renseignée pour aucune année', () => {
+      // GIVEN
+      const établissementTerritorialSansRésultatNetComptable = new ÉtablissementTerritorialMédicoSocialViewModel({
+        activités: [],
+        autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
+        budgetEtFinances: [
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({
+            année: 2020,
+            tauxDeCafNette: {
+              dateMiseÀJourSource: '2022-03-03',
+              valeur: null,
+            },
+          }),
+        ],
+        identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+      }, wording, paths)
+
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansRésultatNetComptable} />)
+
+      // THEN
+      const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
+      expect(within(budgetEtFinances).queryByText(wording.TAUX_DE_CAF, { selector: 'p' })).not.toBeInTheDocument()
+    })
   })
 
   describe('L’indicateur du taux de vétusté construction', () => {
@@ -704,6 +807,31 @@ describe('La page établissement territorial - bloc budget et finances', () => {
       expect(annéeDeLaPremièreLigne).toBeInTheDocument()
       const valeurDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '38,8 %' })
       expect(valeurDeLaPremièreLigne).toBeInTheDocument()
+    })
+
+    it('n’affiche rien si aucune valeur n’est renseignée pour aucune année', () => {
+      // GIVEN
+      const établissementTerritorialSansRésultatNetComptable = new ÉtablissementTerritorialMédicoSocialViewModel({
+        activités: [],
+        autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
+        budgetEtFinances: [
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({
+            année: 2020,
+            tauxDeVétustéConstruction: {
+              dateMiseÀJourSource: '2022-03-03',
+              valeur: null,
+            },
+          }),
+        ],
+        identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+      }, wording, paths)
+
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansRésultatNetComptable} />)
+
+      // THEN
+      const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
+      expect(within(budgetEtFinances).queryByText(wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION, { selector: 'p' })).not.toBeInTheDocument()
     })
   })
 })

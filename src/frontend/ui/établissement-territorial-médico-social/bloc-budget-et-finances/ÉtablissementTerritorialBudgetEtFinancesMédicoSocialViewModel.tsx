@@ -57,6 +57,10 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     return <></>
   }
 
+  public get leCompteDeRésultatEstIlRenseigné(): boolean {
+    return this.lesAnnéesManquantesDuCompteDeRésultat().length < this.nombreDAnnéesParIndicateur
+  }
+
   public compteDeRésultat(annéeEnCours: number): JSX.Element {
     const budgetEtFinance = this.budgetEtFinanceEnCours(annéeEnCours)
     const entêtePremièreColonne = this.wording.TITRE_BUDGÉTAIRE
@@ -70,7 +74,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     const recettesOuProduits = []
     const libellés = []
     const entêtesDesAutresColonnes = []
-    const annéesManquantes = this.annéesManquantes(this.lesAnnéesEffectivesDuCompteDeRésultat())
+    const annéesManquantes = this.lesAnnéesManquantesDuCompteDeRésultat()
 
     let ratioHistogramme = 2
     if (budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA) {
@@ -108,8 +112,12 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     )
   }
 
-  public get desDonnéesBudgetEtFinancesSontRenseignées(): boolean {
-    return this.budgetEtFinancesMédicoSocial.length > 0
+  public get desDonnéesBudgetEtFinancesSontNonRenseignées(): boolean {
+    return !this.leCompteDeRésultatEstIlRenseigné
+      && !this.leRésultatNetComptableEstIlRenseigné
+      && !this.leMontantDeLaContributionAuxFraisDeSiègeEstIlRenseigné
+      && !this.leTauxDeCafEstIlRenseigné
+      && !this.leTauxDeVétustéEstIlRenseigné
   }
 
   public get montantDeLaContributionAuxFraisDeSiège(): JSX.Element {
@@ -127,8 +135,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     )
 
     const annéesManquantes = this.annéesManquantes(
-      this.budgetEtFinancesMédicoSocial.map((montantDesContributionsAuxFraisDeSiègeParAnnée) => montantDesContributionsAuxFraisDeSiègeParAnnée.année),
-      this.nombreDAnnéesParIndicateur
+      this.budgetEtFinancesMédicoSocial.map((montantDesContributionsAuxFraisDeSiègeParAnnée) => montantDesContributionsAuxFraisDeSiègeParAnnée.année)
     )
 
     return <IndicateurTabulaire
@@ -143,6 +150,12 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
 
   public get leMontantDeLaContributionAuxFraisDeSiègeEstIlRenseigné(): boolean {
     return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.contributionAuxFraisDeSiège.valeur)
+  }
+
+  public get leTauxDeVétustéEstIlRenseigné(): boolean {
+    const [années] = this.construisLesAnnéesEtSesTaux('tauxDeVétustéConstruction')
+
+    return années.length > 0
   }
 
   public get tauxDeVétustéConstruction(): JSX.Element {
@@ -214,6 +227,12 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
 
   public get leRésultatNetComptableEstIlRenseigné(): boolean {
     return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.résultatNetComptable.valeur)
+  }
+
+  public get leTauxDeCafEstIlRenseigné(): boolean {
+    const [années] = this.construisLesAnnéesEtSesTaux('tauxDeCafNette')
+
+    return années.length > 0
   }
 
   public get tauxDeCaf(): JSX.Element {
@@ -289,7 +308,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       ],
       labels: années,
     }
-    const annéesManquantes = this.annéesManquantes(années, this.nombreDAnnéesParIndicateur)
+    const annéesManquantes = this.annéesManquantes(années)
     const valeursFrançaises = this.transformeEnFrançais(valeurs) as string[]
 
     return (
@@ -447,6 +466,10 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     })
 
     return années
+  }
+
+  private lesAnnéesManquantesDuCompteDeRésultat(): number[] {
+    return this.annéesManquantes(this.lesAnnéesEffectivesDuCompteDeRésultat())
   }
 
   private annéesRangéesParAntéChronologie(): number[] {
