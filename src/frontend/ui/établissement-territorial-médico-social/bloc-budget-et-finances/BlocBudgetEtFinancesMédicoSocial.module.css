@@ -2,9 +2,10 @@
   column-gap: 3.5rem;
   display: grid;
   grid-template-areas:
-  "graph1 graph1 graph1 graph1 graph2 graph2"
-  "graph3 graph3 graph4 graph4 graph5 graph5";
-  grid-template-columns: repeat(6, 1fr);
+  "graph1 graph1 graph2"
+  "graph3 graph4 graph5"
+  "graph6 vide vide";
+  grid-template-columns: repeat(3, 1fr);
   list-style-type: none;
   padding: 0;
   row-gap: 2rem;
@@ -29,6 +30,10 @@
 
 .liste-indicateurs > li:nth-child(5) {
   grid-area: graph5;
+}
+
+.liste-indicateurs > li:nth-child(6) {
+  grid-area: graph6;
 }
 
 .liste-indicateurs > li {
