@@ -5,7 +5,7 @@ from numpy import NaN
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT
 
 
-def csv_ann_ms_tdp_et_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
+def csv_ann_ms_tdp_et_activités_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
     ann_ms_tdp_et = {
         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "Année": 2018,
@@ -156,3 +156,24 @@ def csv_ann_sae_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, 
     if champs_surchargés:
         return {**ann_sae, **champs_surchargés}
     return ann_sae
+
+
+def csv_ann_ms_tdp_et_ressources_humaines_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
+    ann_ms_tdp_et = {
+        "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "Année": 2019,
+        "Nombre de CDD de remplacement": 19,
+        "Taux d'ETP vacants au 31/12": 0.0483,
+        "Taux de prestations externes sur les prestations directes": 0.0164,
+        "Taux de rotation du personnel sur effectifs réels": 0.1429,
+        "Taux d'absentéisme pour maladie ordinaire/courte durée": 0.0021,
+        "Taux d'absentéisme pour maladie moyenne durée": 0.0717,
+        "Taux d'absentéisme pour maladie longue durée": 0.1194,
+        "Taux d'absentéisme pour maternité/paternité": 0.0,
+        "Taux d'absentéisme pour accident du travail / maladie professionnelle": 0.0246,
+        "Taux d'absentéisme pour congés spéciaux dont sans solde": 0.0,
+        "Taux d'absentéisme (hors formation)": 0.2179,
+    }
+    if champs_surchargés:
+        return {**ann_ms_tdp_et, **champs_surchargés}
+    return ann_ms_tdp_et

@@ -239,3 +239,24 @@ def helios_ann_sae_builder(champs_surchargés: Optional[Dict] = None) -> Dict[st
     if champs_surchargés:
         return {**ann_sae, **champs_surchargés}
     return ann_sae
+
+
+def helios_ann_ms_tdp_et_ressources_humaines_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    ressources_humaines = {
+        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "annee": 2019,
+        "nombre_cdd_remplacement": 19,
+        "taux_etp_vacants": 0.0483,
+        "taux_prestation_externes": 0.0164,
+        "taux_rotation_personnel": 0.1429,
+        "taux_absenteisme_maladie_courte_duree": 0.0021,
+        "taux_absenteisme_maladie_moyenne_duree": 0.0717,
+        "taux_absenteisme_maladie_longue_duree": 0.1194,
+        "taux_absenteisme_maternite_paternite": 0.0,
+        "taux_absenteisme_accident_maladie_professionnelle": 0.0246,
+        "taux_absenteisme_conges_speciaux": 0.0,
+        "taux_absenteisme_hors_formation": 0.2179,
+    }
+    if champs_surchargés:
+        return {**ressources_humaines, **champs_surchargés}
+    return ressources_humaines
