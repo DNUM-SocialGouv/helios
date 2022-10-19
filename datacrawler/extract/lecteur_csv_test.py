@@ -8,10 +8,14 @@ from datacrawler.transform.équivalences_diamant_helios import (
     colonnes_à_lire_ann_rpu,
     colonnes_à_lire_ann_sae,
     colonnes_à_lire_bloc_activités_ann_errd_ej_et,
+    colonnes_à_lire_bloc_ressources_humaines_ann_ca_ej_et,
+    colonnes_à_lire_bloc_ressources_humaines_ann_errd_ej_et,
     colonnes_à_lire_bloc_ressources_humaines_ann_ms_tdp_et,
     colonnes_à_lire_men_pmsi_annuel,
     extrais_l_equivalence_des_types_des_colonnes,
+    équivalences_diamant_ann_ca_ej_et_ressources_humaines_helios,
     équivalences_diamant_ann_errd_ej_et_bloc_activités_helios,
+    équivalences_diamant_ann_errd_ej_et_ressources_humaines_helios,
     équivalences_diamant_ann_ms_tdp_et_cpom_helios,
     équivalences_diamant_ann_ms_tdp_et_helios,
     équivalences_diamant_ann_ms_tdp_et_ressources_humaines_helios,
@@ -218,7 +222,7 @@ class TestLisLeFichierCsv:
         # GIVEN
         chemin_du_fichier = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
         colonnes = colonnes_à_lire_bloc_ressources_humaines_ann_ms_tdp_et
-        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ms_tdp_et_ressources_humaines_helios)
+        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_errd_ej_et_ressources_humaines_helios)
 
         # WHEN
         données_des_ressources_humaines_reçues = lis_le_fichier_csv(chemin_du_fichier, colonnes, types_des_colonnes)
@@ -317,6 +321,65 @@ class TestLisLeFichierCsv:
                     0.0554,
                     0.0685,
                     0.0554,
+                    NaN,
+                ],
+            }
+        )
+        pd.testing.assert_frame_equal(
+            données_des_ressources_humaines_reçues,
+            données_des_ressources_humaines_attendues,
+        )
+
+    def test_lis_les_colonnes_du_bloc_ressources_humaines_du_fichier_ann_ca_ej_et(self) -> None:
+        # GIVEN
+        chemin_du_fichier = "data_set/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
+        colonnes = colonnes_à_lire_bloc_ressources_humaines_ann_ca_ej_et
+        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ca_ej_et_ressources_humaines_helios)
+
+        # WHEN
+        données_des_ressources_humaines_reçues = lis_le_fichier_csv(chemin_du_fichier, colonnes, types_des_colonnes)
+
+        # THEN
+        données_des_ressources_humaines_attendues = pd.DataFrame(
+            {
+                "Finess": ["010002269", "010002269", "010002269", "010009066", "010009066"],
+                "Année": [2020, 2019, 2018, 2020, 2019],
+                "Nombre ETP total réalisé CA": [
+                    9.2200000000000006,
+                    9.7100000000000009,
+                    10.34,
+                    3.9000000000000004,
+                    3.9000000000000004,
+                ],
+            }
+        )
+        pd.testing.assert_frame_equal(
+            données_des_ressources_humaines_reçues,
+            données_des_ressources_humaines_attendues,
+        )
+
+    def test_lis_les_colonnes_du_bloc_ressources_humaines_du_fichier_ann_errd_ej_et(self) -> None:
+        # GIVEN
+        chemin_du_fichier = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
+        colonnes = colonnes_à_lire_bloc_ressources_humaines_ann_errd_ej_et
+        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ms_tdp_et_ressources_humaines_helios)
+
+        # WHEN
+        données_des_ressources_humaines_reçues = lis_le_fichier_csv(chemin_du_fichier, colonnes, types_des_colonnes)
+
+        # THEN
+        données_des_ressources_humaines_attendues = pd.DataFrame(
+            {
+                "Finess": ["010003598", "010003598", "010003598", "010003598", "010786259", "010786259", "111111111", "010789717"],
+                "Année": [2018, 2019, 2020, 2021, 2018, 2018, 2020, 2019],
+                "Nombre ETP total réalisé ERRD": [
+                    4.5499999999999998,
+                    17.190000000000001,
+                    50.649999999999991,
+                    188.49999999999997,
+                    55.249999999999993,
+                    142.06,
+                    NaN,
                     NaN,
                 ],
             }

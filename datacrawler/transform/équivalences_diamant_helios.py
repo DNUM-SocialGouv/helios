@@ -170,6 +170,20 @@ index_du_bloc_ressources_humaines: List[str] = [
     "numero_finess_etablissement_territorial",
 ]
 
+équivalences_diamant_ann_errd_ej_et_ressources_humaines_helios: ÉquivalencesDiamantHelios = {
+    "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+    "Année": ColonneHelios(nom="annee", type=int),
+    "Nombre ETP total réalisé ERRD": ColonneHelios(nom="nombre_etp_realises", type=float),
+}
+colonnes_à_lire_bloc_ressources_humaines_ann_errd_ej_et: List[str] = list(équivalences_diamant_ann_errd_ej_et_ressources_humaines_helios.keys())
+
+équivalences_diamant_ann_ca_ej_et_ressources_humaines_helios: ÉquivalencesDiamantHelios = {
+    "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+    "Année": ColonneHelios(nom="annee", type=int),
+    "Nombre ETP total réalisé CA": ColonneHelios(nom="nombre_etp_realises", type=float),
+}
+colonnes_à_lire_bloc_ressources_humaines_ann_ca_ej_et: List[str] = list(équivalences_diamant_ann_ca_ej_et_ressources_humaines_helios.keys())
+
 
 def extrais_l_equivalence_des_types_des_colonnes(équivalences: ÉquivalencesDiamantHelios) -> Dict[str, type]:
     return {nom_diamant: colonne_diamant["type"] for nom_diamant, colonne_diamant in équivalences.items()}
