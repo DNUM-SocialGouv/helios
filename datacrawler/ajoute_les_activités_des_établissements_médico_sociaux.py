@@ -1,11 +1,14 @@
 import os
-from datetime import datetime
 from logging import Logger
 
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 
-from datacrawler import écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour
+from datacrawler import (
+    NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_MÉDICO_SOCIALES,
+    filtre_les_données_sur_les_n_dernières_années,
+    écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour,
+)
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_diamant
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
@@ -25,9 +28,6 @@ from datacrawler.transform.équivalences_diamant_helios import (
 def ajoute_les_activités_des_établissements_médico_sociaux(
     chemin_du_fichier_ann_errd_ej_et: str, chemin_du_fichier_ann_ms_tdp_et: str, base_de_données: Engine, logger: Logger
 ) -> None:
-    année_n_moins_1 = datetime.now().year - 1
-    année_n_moins_3 = datetime.now().year - 3
-
     logger.info("[DIAMANT] Récupère les activités des établissements médico-sociaux")
     données_ann_errd_ej_et = lis_le_fichier_csv(
         chemin_du_fichier_ann_errd_ej_et,
@@ -35,7 +35,9 @@ def ajoute_les_activités_des_établissements_médico_sociaux(
         extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_errd_ej_et_bloc_activités_helios),
     )
     logger.info(f"[DIAMANT] {données_ann_errd_ej_et.shape[0]} lignes trouvées dans le fichier ANN_ERRD_EJ_ET")
-    données_ann_errd_ej_et_filtré_sur_les_3_dernières_années = données_ann_errd_ej_et[données_ann_errd_ej_et["Année"].between(année_n_moins_3, année_n_moins_1)]
+    données_ann_errd_ej_et_filtré_sur_les_3_dernières_années = filtre_les_données_sur_les_n_dernières_années(
+        données_ann_errd_ej_et, NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_MÉDICO_SOCIALES
+    )
     date_du_fichier_ann_errd_ej_et = extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_ann_errd_ej_et)
 
     données_ann_ms_tdp_et = lis_le_fichier_csv(
@@ -44,7 +46,9 @@ def ajoute_les_activités_des_établissements_médico_sociaux(
         extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ms_tdp_et_helios),
     )
     logger.info(f"[DIAMANT] {données_ann_ms_tdp_et.shape[0]} lignes trouvées dans le fichier ANN_MS_TDP_ET")
-    données_ann_ms_tdp_et_filtré_sur_les_3_dernières_années = données_ann_ms_tdp_et[données_ann_ms_tdp_et["Année"].between(année_n_moins_3, année_n_moins_1)]
+    données_ann_ms_tdp_et_filtré_sur_les_3_dernières_années = filtre_les_données_sur_les_n_dernières_années(
+        données_ann_ms_tdp_et, NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_MÉDICO_SOCIALES
+    )
     date_du_fichier_ann_ms_tdp_et = extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_ann_ms_tdp_et)
 
     numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)

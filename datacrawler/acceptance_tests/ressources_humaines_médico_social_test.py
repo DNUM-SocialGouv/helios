@@ -314,7 +314,7 @@ class TestAjouteLeBlocDesRessourcesHumainesMédicoSocial:
         pd.testing.assert_frame_equal(données_ressources_humaines_enregistrées.sort_index(axis=1), données_ressources_humaines_attendues.sort_index(axis=1))
 
     @patch.object(datacrawler, "sauvegarde")
-    def test_revient_à_la_situation_initiale_si_l_écriture_des_indicateurs_budget_et_finances_échoue(self, mocked_sauvegarde: Mock) -> None:
+    def test_revient_à_la_situation_initiale_si_l_écriture_des_indicateurs_ressources_humaines_échoue(self, mocked_sauvegarde: Mock) -> None:
         # GIVEN
         chemin_du_fichier_ann_ms_tdp_et = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)

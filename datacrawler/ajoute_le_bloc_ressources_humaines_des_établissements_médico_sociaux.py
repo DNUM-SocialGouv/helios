@@ -4,7 +4,11 @@ from logging import Logger
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 
-from datacrawler import écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour
+from datacrawler import (
+    NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_MÉDICO_SOCIALES,
+    filtre_les_données_sur_les_n_dernières_années,
+    écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour,
+)
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_diamant
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
@@ -38,7 +42,7 @@ def ajoute_le_bloc_ressources_humaines_des_établissements_médico_sociaux(
     numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)
 
     taux_d_absenteismes_des_établissements_médico_sociaux = transforme_les_données_des_ressources_humaines(
-        données_ann_ms_tdp_et,
+        filtre_les_données_sur_les_n_dernières_années(données_ann_ms_tdp_et, NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_MÉDICO_SOCIALES),
         numéros_finess_des_établissements_connus,
         logger,
     )
