@@ -3,16 +3,18 @@ from numpy import NaN
 
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.transform.équivalences_diamant_helios import (
-    colonnes_à_lire_bloc_activités_ann_errd_ej_et,
     colonnes_à_lire_ann_ms_tdp_et,
     colonnes_à_lire_ann_ms_tdp_et_cpom,
     colonnes_à_lire_ann_rpu,
     colonnes_à_lire_ann_sae,
+    colonnes_à_lire_bloc_activités_ann_errd_ej_et,
+    colonnes_à_lire_bloc_ressources_humaines_ann_ms_tdp_et,
     colonnes_à_lire_men_pmsi_annuel,
     extrais_l_equivalence_des_types_des_colonnes,
     équivalences_diamant_ann_errd_ej_et_bloc_activités_helios,
     équivalences_diamant_ann_ms_tdp_et_cpom_helios,
     équivalences_diamant_ann_ms_tdp_et_helios,
+    équivalences_diamant_ann_ms_tdp_et_ressources_humaines_helios,
     équivalences_diamant_ann_rpu_helios,
     équivalences_diamant_ann_sae_helios,
     équivalences_diamant_men_pmsi_annuel_helios,
@@ -210,4 +212,116 @@ class TestLisLeFichierCsv:
                     "Date d'entrée en vigueur du CPOM": [NaN, NaN, "21/03/2012", "21/03/2012", "21/03/2012", NaN, "01/01/2015"],
                 }
             ),
+        )
+
+    def test_lis_les_colonnes_du_bloc_ressources_humaines_du_fichier_ann_ms_tsp_et(self) -> None:
+        # GIVEN
+        chemin_du_fichier = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
+        colonnes = colonnes_à_lire_bloc_ressources_humaines_ann_ms_tdp_et
+        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ms_tdp_et_ressources_humaines_helios)
+
+        # WHEN
+        données_des_ressources_humaines_reçues = lis_le_fichier_csv(chemin_du_fichier, colonnes, types_des_colonnes)
+
+        # THEN
+        données_des_ressources_humaines_attendues = pd.DataFrame(
+            {
+                "Finess": ["010001261", "010001261", "010003598", "010003598", "010003598", "010003598", "111111111"],
+                "Année": [2019, 2018, 2021, 2020, 2019, 2018, 2019],
+                "Nombre de CDD de remplacement": [2.0, 19.0, 5.0, 5.0, 5.0, 5.0, NaN],
+                "Taux d'ETP vacants au 31/12": [
+                    0.1197,
+                    0.0483,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0404,
+                ],
+                "Taux de prestations externes sur les prestations directes": [
+                    0.0232,
+                    NaN,
+                    0.0164,
+                    0.0164,
+                    0.0082,
+                    0.0164,
+                    0.0527,
+                ],
+                "Taux de rotation du personnel sur effectifs réels": [
+                    0.1923,
+                    0.1429,
+                    0.0352,
+                    0.0352,
+                    0.0141,
+                    0.0352,
+                    0.0797,
+                ],
+                "Taux d'absentéisme pour maladie ordinaire/courte durée": [
+                    0.0028,
+                    0.0021,
+                    0.0083,
+                    0.0083,
+                    0.0125,
+                    0.0083,
+                    NaN,
+                ],
+                "Taux d'absentéisme pour maladie moyenne durée": [
+                    0.0465,
+                    0.0717,
+                    0.0166,
+                    0.0166,
+                    0.0149,
+                    0.0166,
+                    NaN,
+                ],
+                "Taux d'absentéisme pour maladie longue durée": [
+                    0.0,
+                    0.1194,
+                    0.0089,
+                    0.0089,
+                    0.0319,
+                    0.0089,
+                    NaN,
+                ],
+                "Taux d'absentéisme pour maternité/paternité": [
+                    0.0,
+                    0.0,
+                    0.0128,
+                    0.0128,
+                    0.0005,
+                    0.0128,
+                    NaN,
+                ],
+                "Taux d'absentéisme pour accident du travail / maladie professionnelle": [
+                    0.0008,
+                    0.0246,
+                    0.0085,
+                    0.0085,
+                    0.0088,
+                    0.0085,
+                    NaN,
+                ],
+                "Taux d'absentéisme pour congés spéciaux dont sans solde": [
+                    0.0109,
+                    0.0,
+                    0.0004,
+                    0.0004,
+                    0.0,
+                    0.0004,
+                    NaN,
+                ],
+                "Taux d'absentéisme (hors formation)": [
+                    0.0609,
+                    0.2179,
+                    0.0554,
+                    0.0554,
+                    0.0685,
+                    0.0554,
+                    NaN,
+                ],
+            }
+        )
+        pd.testing.assert_frame_equal(
+            données_des_ressources_humaines_reçues,
+            données_des_ressources_humaines_attendues,
         )

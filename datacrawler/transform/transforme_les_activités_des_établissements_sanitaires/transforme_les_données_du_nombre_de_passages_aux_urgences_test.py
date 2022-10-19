@@ -2,7 +2,9 @@ import pandas as pd
 from numpy import NaN
 from pandas import NA
 
-from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, csv_ann_rpu_builder, mocked_logger, helios_ann_rpu_builder
+from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
+from datacrawler.test_helpers.diamant_builder import csv_ann_rpu_builder
+from datacrawler.test_helpers.helios_builder import helios_ann_rpu_builder
 from datacrawler.transform.transforme_les_activités_des_établissements_sanitaires.transforme_les_données_du_nombre_de_passages_aux_urgences import (
     transforme_les_données_ann_rpu,
 )

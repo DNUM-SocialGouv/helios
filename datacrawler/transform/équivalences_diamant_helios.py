@@ -149,6 +149,27 @@ colonnes_à_lire_bloc_budget_et_finances_ann_errd_ej: List[str] = list(équivale
 
 colonnes_à_lire_bloc_budget_et_finances_per_errd_eprd: List[str] = list(équivalences_diamant_per_errd_eprd_bloc_budget_et_finances_helios.keys())
 
+équivalences_diamant_ann_ms_tdp_et_ressources_humaines_helios: ÉquivalencesDiamantHelios = {
+    "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+    "Année": ColonneHelios(nom="annee", type=int),
+    "Nombre de CDD de remplacement": ColonneHelios(nom="nombre_cdd_remplacement", type=float),
+    "Taux d'ETP vacants au 31/12": ColonneHelios(nom="taux_etp_vacants", type=float),
+    "Taux de prestations externes sur les prestations directes": ColonneHelios(nom="taux_prestation_externes", type=float),
+    "Taux de rotation du personnel sur effectifs réels": ColonneHelios(nom="taux_rotation_personnel", type=float),
+    "Taux d'absentéisme pour maladie ordinaire/courte durée": ColonneHelios(nom="taux_absenteisme_maladie_courte_duree", type=float),
+    "Taux d'absentéisme pour maladie moyenne durée": ColonneHelios(nom="taux_absenteisme_maladie_moyenne_duree", type=float),
+    "Taux d'absentéisme pour maladie longue durée": ColonneHelios(nom="taux_absenteisme_maladie_longue_duree", type=float),
+    "Taux d'absentéisme pour maternité/paternité": ColonneHelios(nom="taux_absenteisme_maternite_paternite", type=float),
+    "Taux d'absentéisme pour accident du travail / maladie professionnelle": ColonneHelios(nom="taux_absenteisme_accident_maladie_professionnelle", type=float),
+    "Taux d'absentéisme pour congés spéciaux dont sans solde": ColonneHelios(nom="taux_absenteisme_conges_speciaux", type=float),
+    "Taux d'absentéisme (hors formation)": ColonneHelios(nom="taux_absenteisme_hors_formation", type=float),
+}
+colonnes_à_lire_bloc_ressources_humaines_ann_ms_tdp_et: List[str] = list(équivalences_diamant_ann_ms_tdp_et_ressources_humaines_helios.keys())
+index_du_bloc_ressources_humaines: List[str] = [
+    "annee",
+    "numero_finess_etablissement_territorial",
+]
+
 
 def extrais_l_equivalence_des_types_des_colonnes(équivalences: ÉquivalencesDiamantHelios) -> Dict[str, type]:
     return {nom_diamant: colonne_diamant["type"] for nom_diamant, colonne_diamant in équivalences.items()}

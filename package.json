@@ -42,6 +42,8 @@
     "updateCpomMedicoSocial:local": "pipenv run populate_cpom_medico_social",
     "updateBudgetEtFinancesMedicoSocial": "python -m datacrawler.ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux",
     "updateBudgetEtFinancesMedicoSocial:local": "pipenv run populate_budget_et_finances_medico_social",
+    "updateRessourcesHumainesMedicoSocial": "python -m datacrawler.ajoute_le_bloc_ressources_humaines_des_établissements_médico_sociaux",
+    "updateRessourcesHumainesMedicoSocial:local": "pipenv run populate_ressoures_humaines_medico_social",
     "start": "next start",
     "start:db": "docker-compose down && docker-compose up -d && while ! docker-compose logs | grep -q 'listening on IPv4 address'; do echo 'Waiting for database'; sleep 0.5; done; yarn migrations",
     "start:production": "ts-node -T src/backend/infrastructure/controllers/allumeLaProductionCron.ts",

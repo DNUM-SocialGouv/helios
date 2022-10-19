@@ -1,12 +1,14 @@
 import os
-from datetime import datetime
 from logging import Logger
 
-import pandas as pd
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 
-from datacrawler import écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour
+from datacrawler import (
+    filtre_les_données_sur_les_n_dernières_années,
+    NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_MÉDICO_SOCIALES,
+    écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour,
+)
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_diamant
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
@@ -27,12 +29,6 @@ from datacrawler.transform.équivalences_diamant_helios import (
     équivalences_diamant_ann_errd_ej_et_bloc_budget_et_finances_helios,
     équivalences_diamant_per_errd_eprd_bloc_budget_et_finances_helios,
 )
-
-
-def filtre_sur_les_trois_dernières_années(données_brutes: pd.DataFrame) -> pd.DataFrame:
-    année_n_moins_1 = datetime.now().year - 1
-    année_n_moins_3 = datetime.now().year - 3
-    return données_brutes[données_brutes["Année"].between(année_n_moins_3, année_n_moins_1)]
 
 
 def ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
@@ -77,10 +73,10 @@ def ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
     date_du_fichier_ann_ca_ej_et = extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_ann_ca_ej_et)
 
     budget_et_finances_des_établissements_médico_sociaux = transforme_les_données_budgétaires_et_financières(
-        filtre_sur_les_trois_dernières_années(données_ann_ca_ej_et),
-        filtre_sur_les_trois_dernières_années(données_ann_errd_ej_et),
-        filtre_sur_les_trois_dernières_années(données_ann_errd_ej),
-        filtre_sur_les_trois_dernières_années(données_per_errd_eprd),
+        filtre_les_données_sur_les_n_dernières_années(données_ann_ca_ej_et, NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_MÉDICO_SOCIALES),
+        filtre_les_données_sur_les_n_dernières_années(données_ann_errd_ej_et, NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_MÉDICO_SOCIALES),
+        filtre_les_données_sur_les_n_dernières_années(données_ann_errd_ej, NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_MÉDICO_SOCIALES),
+        filtre_les_données_sur_les_n_dernières_années(données_per_errd_eprd, NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_MÉDICO_SOCIALES),
         récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données),
         logger,
     )

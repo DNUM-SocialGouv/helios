@@ -11,12 +11,12 @@ from datacrawler.load.nom_des_tables import (
 from datacrawler.load.sauvegarde import mets_à_jour_la_date_de_mise_à_jour_du_fichier_source, sauvegarde
 from datacrawler.test_helpers import (
     base_de_données_test,
-    helios_activité_sanitaire_builder,
     sauvegarde_un_établissement_en_base,
     sauvegarde_une_date_de_mise_à_jour_de_fichier_source,
     sauvegarde_une_entité_juridique_en_base,
     supprime_les_données_des_tables,
 )
+from datacrawler.test_helpers.helios_builder import helios_activité_sanitaire_builder
 from datacrawler.transform.équivalences_diamant_helios import index_des_activités
 
 

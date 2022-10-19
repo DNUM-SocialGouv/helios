@@ -2,7 +2,8 @@ import pandas as pd
 from numpy import NaN
 from pandas import NA
 
-from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, csv_ann_ms_tdp_et_builder, mocked_logger
+from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
+from datacrawler.test_helpers.diamant_builder import csv_ann_ms_tdp_et_activités_builder
 from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.transforme_les_données_du_tableau_de_bord_de_la_performance import (
     récupère_le_taux_de_réalisation_des_établissements,
     transforme_les_données_ann_ms_tdp_et,
@@ -13,7 +14,7 @@ from datacrawler.transform.équivalences_diamant_helios import index_des_activit
 class TestTransformeLesDonnéesAnnMsTdpEt:
     def test_renomme_les_colonnes_et_crée_l_index(self) -> None:
         # GIVEN
-        données_ann_errd_ej_et = pd.DataFrame([csv_ann_ms_tdp_et_builder()])
+        données_ann_errd_ej_et = pd.DataFrame([csv_ann_ms_tdp_et_activités_builder()])
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
@@ -42,7 +43,7 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
 
     def test_ne_renvoie_pas_les_établissements_non_présents_en_base(self) -> None:
         # GIVEN
-        données_ann_ms_tdp_et = pd.DataFrame([csv_ann_ms_tdp_et_builder(), csv_ann_ms_tdp_et_builder({"Finess": "123456789"})])
+        données_ann_ms_tdp_et = pd.DataFrame([csv_ann_ms_tdp_et_activités_builder(), csv_ann_ms_tdp_et_activités_builder({"Finess": "123456789"})])
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
@@ -61,7 +62,7 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
         # GIVEN
         données_ann_ms_tdp_et = pd.DataFrame(
             [
-                csv_ann_ms_tdp_et_builder(
+                csv_ann_ms_tdp_et_activités_builder(
                     {
                         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
                         "Année": 2018,
@@ -72,7 +73,7 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
                         "File active des personnes accompagnées sur la période": 94,
                     }
                 ),
-                csv_ann_ms_tdp_et_builder(
+                csv_ann_ms_tdp_et_activités_builder(
                     {
                         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
                         "Année": 2018,
@@ -115,8 +116,8 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
         # GIVEN
         données_ann_ms_tdp_et = pd.DataFrame(
             [
-                csv_ann_ms_tdp_et_builder({"Finess": NaN}),
-                csv_ann_ms_tdp_et_builder(
+                csv_ann_ms_tdp_et_activités_builder({"Finess": NaN}),
+                csv_ann_ms_tdp_et_activités_builder(
                     {
                         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
                         "Année": 2018,
@@ -157,7 +158,7 @@ class TestTransformeLesDonnéesAnnMsTdpEt:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_l_année(self) -> None:
         # GIVEN
-        données_ann_ms_tdp_et = pd.DataFrame([csv_ann_ms_tdp_et_builder({"Année": NA}), csv_ann_ms_tdp_et_builder()])
+        données_ann_ms_tdp_et = pd.DataFrame([csv_ann_ms_tdp_et_activités_builder({"Année": NA}), csv_ann_ms_tdp_et_activités_builder()])
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {

@@ -1,7 +1,8 @@
 import pandas as pd
 from numpy import NaN
 
-from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger, xml_contenu_finess_cs1400103_builder
+from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
+from datacrawler.test_helpers.finess_builder import xml_contenu_finess_cs1400103_builder
 from datacrawler.transform.transforme_les_autorisations_des_établissements_sanitaires.transforme_les_données_des_autorisations import (
     transforme_les_données_des_autorisations,
 )
