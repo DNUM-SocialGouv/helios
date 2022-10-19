@@ -228,7 +228,7 @@ class TestLisLeFichierCsv:
             {
                 "Finess": ["010001261", "010001261", "010003598", "010003598", "010003598", "010003598", "111111111"],
                 "Année": [2019, 2018, 2021, 2020, 2019, 2018, 2019],
-                "Nombre de CDD de remplacement": pd.array([2, 19, 5, 5, 5, 5, None], dtype="Int64"),
+                "Nombre de CDD de remplacement": [2.0, 19.0, 5.0, 5.0, 5.0, 5.0, NaN],
                 "Taux d'ETP vacants au 31/12": [
                     0.1197,
                     0.0483,

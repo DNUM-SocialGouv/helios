@@ -5,7 +5,7 @@ class AjoutTableRessourcesHumainesMédicoSocial1666166794478 {
         annee INT NOT NULL,
         numero_finess_etablissement_territorial VARCHAR(9) NOT NULL,
 
-        nombre_cdd_remplacement INTEGER,
+        nombre_cdd_remplacement FLOAT,
         nombre_etp_realises FLOAT,
         taux_etp_vacants FLOAT,
         taux_prestation_externes FLOAT,

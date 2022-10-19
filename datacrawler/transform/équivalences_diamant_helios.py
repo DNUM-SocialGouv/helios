@@ -152,7 +152,7 @@ colonnes_à_lire_bloc_budget_et_finances_per_errd_eprd: List[str] = list(équiva
 équivalences_diamant_ann_ms_tdp_et_ressources_humaines_helios: ÉquivalencesDiamantHelios = {
     "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
     "Année": ColonneHelios(nom="annee", type=int),
-    "Nombre de CDD de remplacement": ColonneHelios(nom="nombre_cdd_remplacement", type=pd.Int64Dtype()),  # type: ignore
+    "Nombre de CDD de remplacement": ColonneHelios(nom="nombre_cdd_remplacement", type=float),
     "Taux d'ETP vacants au 31/12": ColonneHelios(nom="taux_etp_vacants", type=float),
     "Taux de prestations externes sur les prestations directes": ColonneHelios(nom="taux_prestation_externes", type=float),
     "Taux de rotation du personnel sur effectifs réels": ColonneHelios(nom="taux_rotation_personnel", type=float),

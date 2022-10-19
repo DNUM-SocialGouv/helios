@@ -40,6 +40,7 @@ populate_autorisation_et_capacite_medico_social = 'python -m datacrawler.ajoute_
 populate_autorisation_et_capacite_sanitaire = 'python -m datacrawler.ajoute_les_autorisations_des_établissements_sanitaires'
 populate_cpom_medico_social = 'python -m datacrawler.ajoute_le_cpom_des_établissements_médico_sociaux'
 populate_budget_et_finances_medico_social = 'python -m datacrawler.ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux'
+populate_ressoures_humaines_medico_social = 'python -m datacrawler.ajoute_le_bloc_ressources_humaines_des_établissements_médico_sociaux'
 test = 'pytest --tb=short'
 test_coverage = 'pytest --tb=short --cov=datacrawler --cov-report=xml'
 typecheck = 'mypy --config pyproject.toml .'
