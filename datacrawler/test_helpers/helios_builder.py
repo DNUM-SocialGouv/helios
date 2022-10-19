@@ -245,7 +245,7 @@ def helios_ressources_humaines_builder(champs_surchargés: Optional[Dict] = None
     ressources_humaines = {
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "annee": 2019,
-        "nombre_cdd_remplacement": 19,
+        "nombre_cdd_remplacement": 19.0,
         "taux_etp_vacants": 0.0483,
         "taux_prestation_externes": 0.0164,
         "taux_rotation_personnel": 0.1429,
