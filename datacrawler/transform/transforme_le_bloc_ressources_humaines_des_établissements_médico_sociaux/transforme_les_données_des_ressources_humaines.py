@@ -1,6 +1,7 @@
 from logging import Logger
 
 import pandas as pd
+from numpy import NaN
 
 from datacrawler.transform.équivalences_diamant_helios import (
     extrais_l_equivalence_des_noms_des_colonnes,
@@ -16,9 +17,13 @@ def transforme_les_données_des_ressources_humaines(
     logger.info(f"[DIAMANT] {est_dans_finess.sum()} lignes sont liées à un ET trouvé en base dans le fichier ann_ms_tdp_et")
 
     return (
-        données_ann_ms_tdp_et[est_dans_finess]
+        ajoute_le_nombre_d_etp_réalisés(données_ann_ms_tdp_et[est_dans_finess])
         .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_diamant_ann_ms_tdp_et_ressources_humaines_helios))
         .dropna(subset=index_du_bloc_ressources_humaines)
         .drop_duplicates(subset=index_du_bloc_ressources_humaines)
         .set_index(index_du_bloc_ressources_humaines)
     )
+
+
+def ajoute_le_nombre_d_etp_réalisés(données_ressources_humaines: pd.DataFrame) -> pd.DataFrame:
+    return données_ressources_humaines.assign(nombre_etp_realises=NaN)

@@ -3,7 +3,7 @@ from numpy import NaN
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
 from datacrawler.test_helpers.diamant_builder import csv_ann_ms_tdp_et_ressources_humaines_builder
-from datacrawler.test_helpers.helios_builder import helios_ann_ms_tdp_et_ressources_humaines_builder
+from datacrawler.test_helpers.helios_builder import helios_ressources_humaines_builder
 from datacrawler.transform.transforme_le_bloc_ressources_humaines_des_établissements_médico_sociaux.transforme_les_données_des_ressources_humaines import (
     transforme_les_données_des_ressources_humaines,
 )
@@ -42,6 +42,7 @@ class TestTransformeLesDonnéesDesRessourcesHumaines:
                     "taux_absenteisme_accident_maladie_professionnelle": 0.0246,
                     "taux_absenteisme_conges_speciaux": 0.0,
                     "taux_absenteisme_hors_formation": 0.2179,
+                    "nombre_etp_realises": NaN,
                 }
             ],
         ).set_index(index_du_bloc_ressources_humaines)
@@ -130,6 +131,7 @@ class TestTransformeLesDonnéesDesRessourcesHumaines:
                     "taux_absenteisme_accident_maladie_professionnelle": NaN,
                     "taux_absenteisme_conges_speciaux": NaN,
                     "taux_absenteisme_hors_formation": NaN,
+                    "nombre_etp_realises": NaN,
                 }
             ],
         ).set_index(index_du_bloc_ressources_humaines)
@@ -168,7 +170,7 @@ class TestTransformeLesDonnéesDesRessourcesHumaines:
 
         # THEN
         data_frame_attendu = pd.DataFrame(
-            [helios_ann_ms_tdp_et_ressources_humaines_builder({"annee": 2020, "nombre_cdd_remplacement": 1})],
+            [helios_ressources_humaines_builder({"annee": 2020, "nombre_cdd_remplacement": 1})],
         ).set_index(index_du_bloc_ressources_humaines)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
