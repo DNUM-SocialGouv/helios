@@ -256,7 +256,7 @@ def helios_ressources_humaines_builder(champs_surchargés: Optional[Dict] = None
         "taux_absenteisme_accident_maladie_professionnelle": 0.0246,
         "taux_absenteisme_conges_speciaux": 0.0,
         "taux_absenteisme_hors_formation": 0.2179,
-        "nombre_etp_realises": NaN,
+        "nombre_etp_realises": 172.0,
     }
     if champs_surchargés:
         return {**ressources_humaines, **champs_surchargés}

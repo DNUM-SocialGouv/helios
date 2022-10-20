@@ -2,16 +2,21 @@ import pandas as pd
 from numpy import NaN
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
-from datacrawler.test_helpers.diamant_builder import csv_ann_ms_tdp_et_ressources_humaines_builder
+from datacrawler.test_helpers.diamant_builder import (
+    csv_ann_ca_ej_et_ressources_humaines_builder,
+    csv_ann_errd_ej_et_ressources_humaines_builder,
+    csv_ann_ms_tdp_et_ressources_humaines_builder,
+)
 from datacrawler.test_helpers.helios_builder import helios_ressources_humaines_builder
 from datacrawler.transform.transforme_le_bloc_ressources_humaines_des_établissements_médico_sociaux.transforme_les_données_des_ressources_humaines import (
     transforme_les_données_des_ressources_humaines,
+    transforme_les_données_des_taux_d_absentéismes,
 )
 from datacrawler.transform.équivalences_diamant_helios import index_du_bloc_ressources_humaines
 
 
-class TestTransformeLesDonnéesDesRessourcesHumaines:
-    def test_renomme_des_colonnes_et_place_l_index(self) -> None:
+class TestTransformeLesDonnéesDesTauxDAbsentéismes:
+    def test_renomme_des_colonnes(self) -> None:
         # GIVEN
         données_ann_ms_tdp_et = pd.DataFrame([csv_ann_ms_tdp_et_ressources_humaines_builder()])
         numéros_finess_des_établissements_connus = pd.DataFrame(
@@ -23,7 +28,7 @@ class TestTransformeLesDonnéesDesRessourcesHumaines:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_des_ressources_humaines(données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_taux_d_absentéismes(données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
         data_frame_attendu = pd.DataFrame(
@@ -31,7 +36,7 @@ class TestTransformeLesDonnéesDesRessourcesHumaines:
                 {
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                     "annee": 2019,
-                    "nombre_cdd_remplacement": 19,
+                    "nombre_cdd_remplacement": 19.0,
                     "taux_etp_vacants": 0.0483,
                     "taux_prestation_externes": 0.0164,
                     "taux_rotation_personnel": 0.1429,
@@ -42,10 +47,9 @@ class TestTransformeLesDonnéesDesRessourcesHumaines:
                     "taux_absenteisme_accident_maladie_professionnelle": 0.0246,
                     "taux_absenteisme_conges_speciaux": 0.0,
                     "taux_absenteisme_hors_formation": 0.2179,
-                    "nombre_etp_realises": NaN,
                 }
             ],
-        ).set_index(index_du_bloc_ressources_humaines)
+        )
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self) -> None:
@@ -60,7 +64,7 @@ class TestTransformeLesDonnéesDesRessourcesHumaines:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_des_ressources_humaines(données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_taux_d_absentéismes(données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
         assert données_transformées.empty
@@ -77,7 +81,7 @@ class TestTransformeLesDonnéesDesRessourcesHumaines:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_des_ressources_humaines(données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_taux_d_absentéismes(données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
         assert données_transformées.empty
@@ -112,7 +116,7 @@ class TestTransformeLesDonnéesDesRessourcesHumaines:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_des_ressources_humaines(données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_taux_d_absentéismes(données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
         data_frame_attendu = pd.DataFrame(
@@ -131,10 +135,9 @@ class TestTransformeLesDonnéesDesRessourcesHumaines:
                     "taux_absenteisme_accident_maladie_professionnelle": NaN,
                     "taux_absenteisme_conges_speciaux": NaN,
                     "taux_absenteisme_hors_formation": NaN,
-                    "nombre_etp_realises": NaN,
                 }
             ],
-        ).set_index(index_du_bloc_ressources_humaines)
+        )
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
     def test_ne_considère_qu_une_seule_fois_un_même_couple_année_numéro_finess(self) -> None:
@@ -145,14 +148,14 @@ class TestTransformeLesDonnéesDesRessourcesHumaines:
                     {
                         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
                         "Année": 2020,
-                        "Nombre de CDD de remplacement": 1,
+                        "Nombre de CDD de remplacement": 1.0,
                     }
                 ),
                 csv_ann_ms_tdp_et_ressources_humaines_builder(
                     {
                         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
                         "Année": 2020,
-                        "Nombre de CDD de remplacement": 2,
+                        "Nombre de CDD de remplacement": 2.0,
                     }
                 ),
             ]
@@ -166,15 +169,32 @@ class TestTransformeLesDonnéesDesRessourcesHumaines:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_des_ressources_humaines(données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_taux_d_absentéismes(données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
         data_frame_attendu = pd.DataFrame(
-            [helios_ressources_humaines_builder({"annee": 2020, "nombre_cdd_remplacement": 1})],
-        ).set_index(index_du_bloc_ressources_humaines)
+            [
+                {
+                    "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
+                    "annee": 2020,
+                    "nombre_cdd_remplacement": 1.0,
+                    "taux_etp_vacants": 0.0483,
+                    "taux_prestation_externes": 0.0164,
+                    "taux_rotation_personnel": 0.1429,
+                    "taux_absenteisme_maladie_courte_duree": 0.0021,
+                    "taux_absenteisme_maladie_moyenne_duree": 0.0717,
+                    "taux_absenteisme_maladie_longue_duree": 0.1194,
+                    "taux_absenteisme_maternite_paternite": 0.0,
+                    "taux_absenteisme_accident_maladie_professionnelle": 0.0246,
+                    "taux_absenteisme_conges_speciaux": 0.0,
+                    "taux_absenteisme_hors_formation": 0.2179,
+                }
+            ],
+        )
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
     def test_ne_renvoie_pas_les_établissements_non_présents_en_base(self) -> None:
+
         # GIVEN
         données_ann_ms_tdp_et = pd.DataFrame([csv_ann_ms_tdp_et_ressources_humaines_builder({"Finess": NUMÉRO_FINESS_ÉTABLISSEMENT})])
         numéros_finess_des_établissements_connus = pd.DataFrame(
@@ -186,7 +206,45 @@ class TestTransformeLesDonnéesDesRessourcesHumaines:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_des_ressources_humaines(données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, mocked_logger)
+        données_transformées = transforme_les_données_des_taux_d_absentéismes(données_ann_ms_tdp_et, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
         assert données_transformées.empty
+
+
+class TestTransformeLesDonnéesDesRessourcesHumaines:
+    def test_ajoute_le_nombre_d_etp_réalisés_des_établissements_aux_taux_d_absentéismes(self) -> None:
+        # GIVEN
+        numéro_finess_ca = "123456789"
+        numéro_finess_errd = "987654321"
+        données_ann_ms_tdp_et = pd.DataFrame(
+            [
+                csv_ann_ms_tdp_et_ressources_humaines_builder({"Finess": numéro_finess_ca, "Année": 2019}),
+                csv_ann_ms_tdp_et_ressources_humaines_builder({"Finess": numéro_finess_errd, "Année": 2020}),
+            ]
+        )
+        données_ann_ca_ej_et_ressources_humaines = pd.DataFrame([csv_ann_ca_ej_et_ressources_humaines_builder({"Finess": numéro_finess_ca, "Année": 2019})])
+        données_ann_errd_ej_et_ressources_humaines = pd.DataFrame(
+            [csv_ann_errd_ej_et_ressources_humaines_builder({"Finess": numéro_finess_errd, "Année": 2020})]
+        )
+        numéros_finess_des_établissements_connus = pd.DataFrame({"numero_finess_etablissement_territorial": [numéro_finess_ca, numéro_finess_errd]})
+
+        # WHEN
+        données_transformées = transforme_les_données_des_ressources_humaines(
+            données_ann_ms_tdp_et,
+            données_ann_errd_ej_et_ressources_humaines,
+            données_ann_ca_ej_et_ressources_humaines,
+            numéros_finess_des_établissements_connus,
+            mocked_logger,
+        )
+
+        # THEN
+        data_frame_attendu = pd.DataFrame(
+            [
+                helios_ressources_humaines_builder({"numero_finess_etablissement_territorial": numéro_finess_ca, "annee": 2019, "nombre_etp_realises": 156.4}),
+                helios_ressources_humaines_builder(
+                    {"numero_finess_etablissement_territorial": numéro_finess_errd, "annee": 2020, "nombre_etp_realises": 172.0}
+                ),
+            ],
+        ).set_index(index_du_bloc_ressources_humaines)
+        pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)

@@ -162,7 +162,7 @@ def csv_ann_ms_tdp_et_ressources_humaines_builder(champs_surchargés: Optional[D
     ann_ms_tdp_et = {
         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "Année": 2019,
-        "Nombre de CDD de remplacement": 19,
+        "Nombre de CDD de remplacement": 19.0,
         "Taux d'ETP vacants au 31/12": 0.0483,
         "Taux de prestations externes sur les prestations directes": 0.0164,
         "Taux de rotation du personnel sur effectifs réels": 0.1429,
@@ -177,3 +177,25 @@ def csv_ann_ms_tdp_et_ressources_humaines_builder(champs_surchargés: Optional[D
     if champs_surchargés:
         return {**ann_ms_tdp_et, **champs_surchargés}
     return ann_ms_tdp_et
+
+
+def csv_ann_errd_ej_et_ressources_humaines_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
+    ann_errd_ej_et = {
+        "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "Année": 2020,
+        "Nombre ETP total réalisé ERRD": 172.0,
+    }
+    if champs_surchargés:
+        return {**ann_errd_ej_et, **champs_surchargés}
+    return ann_errd_ej_et
+
+
+def csv_ann_ca_ej_et_ressources_humaines_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
+    ann_ca_ej_et = {
+        "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "Année": 2020,
+        "Nombre ETP total réalisé CA": 156.4,
+    }
+    if champs_surchargés:
+        return {**ann_ca_ej_et, **champs_surchargés}
+    return ann_ca_ej_et
