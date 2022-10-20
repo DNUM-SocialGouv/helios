@@ -4,12 +4,14 @@ import { ActivitéMédicoSocialModel } from '../../../../../database/models/Acti
 import { AutorisationMédicoSocialModel } from '../../../../../database/models/AutorisationMédicoSocialModel'
 import { BudgetEtFinancesMédicoSocialModel, CadreBudgétaire } from '../../../../../database/models/BudgetEtFinancesMédicoSocialModel'
 import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
+import { RessourcesHumainesMédicoSocialModel } from '../../../../../database/models/RessourcesHumainesMédicoSocialModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { MonoÉtablissement } from '../../../métier/entities/établissement-territorial-médico-social/MonoÉtablissement'
 import { ÉtablissementTerritorialMédicoSocialActivité } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
 import { AutorisationMédicoSocialActivité, AutorisationMédicoSocialClientèle, AutorisationMédicoSocialDatesEtCapacités, AutorisationMédicoSocialDiscipline, ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation'
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
+import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
 import { ÉtablissementTerritorialMédicoSocialLoader } from '../../../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader'
@@ -87,6 +89,22 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     )
   }
 
+  async chargeRessourcesHumaines(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialMédicoSocialRessourcesHumaines[]> {
+    const ressourceHumainesModelDeLÉtablissementTerritorial = await this.chargeLesRessourcesHumainesModel(numéroFinessÉtablissementTerritorial)
+    const dateDeMiseÀJourAnnErrdEjEt = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_ERRD_EJ_ET)
+    const dateDeMiseÀJourAnnCaEjEt = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_CA_EJ_ET)
+    const dateDeMiseÀJourAnnMsTdpEt = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET)
+    const cadreBudgétaire = await this.chargeLeCadreBudgétaireDeLÉtablissement(numéroFinessÉtablissementTerritorial)
+
+    return this.construisLesRessourcesHumaines(
+      ressourceHumainesModelDeLÉtablissementTerritorial,
+      cadreBudgétaire,
+      dateDeMiseÀJourAnnErrdEjEt,
+      dateDeMiseÀJourAnnCaEjEt,
+      dateDeMiseÀJourAnnMsTdpEt
+    )
+  }
+
   private async chargeLesActivitésModel(numéroFinessÉtablissementTerritorial: string) {
     return await (await this.orm)
       .getRepository(ActivitéMédicoSocialModel)
@@ -126,10 +144,27 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       })
   }
 
+  private async chargeLesRessourcesHumainesModel(numéroFinessÉtablissementTerritorial: string) {
+    return await (await this.orm)
+      .getRepository(RessourcesHumainesMédicoSocialModel)
+      .find({
+        order: { année: 'ASC' },
+        where: { numéroFinessÉtablissementTerritorial },
+      })
+  }
+
   private async chargeLaDateDeMiseÀJourModel(source: FichierSource): Promise<DateMiseÀJourFichierSourceModel> {
     return await (await this.orm)
       .getRepository(DateMiseÀJourFichierSourceModel)
       .findOneBy({ fichier: source }) as DateMiseÀJourFichierSourceModel
+  }
+
+  private async chargeLeCadreBudgétaireDeLÉtablissement(numéroFinessÉtablissementTerritorial: string): Promise<CadreBudgétaire> {
+    const budgetEtFinancesModel = await(await this.orm)
+      .getRepository(BudgetEtFinancesMédicoSocialModel)
+      .find({ order: { année: 'DESC' }, select: { cadreBudgétaire: true }, where: { numéroFinessÉtablissementTerritorial } })
+
+    return budgetEtFinancesModel.length > 0 ? budgetEtFinancesModel[0].cadreBudgétaire : CadreBudgétaire.ERRD
   }
 
   private construisIdentité(
@@ -388,6 +423,53 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
             ? dateDeMiseÀJourAnnErrdEj.dernièreMiseÀJour
             : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour,
           valeur: budgetEtFinancesModel.tauxDeVétustéConstruction,
+        },
+      }
+    })
+  }
+
+  private construisLesRessourcesHumaines(
+    ressourcesHumainesModel: RessourcesHumainesMédicoSocialModel[],
+    cadreBudgétaire: CadreBudgétaire,
+    dateDeMiseÀJourAnnErrdEjEt: DateMiseÀJourFichierSourceModel,
+    dateDeMiseÀJourAnnCaEjEt: DateMiseÀJourFichierSourceModel,
+    dateDeMiseÀJourAnnMsTdpEt: DateMiseÀJourFichierSourceModel
+  ): ÉtablissementTerritorialMédicoSocialRessourcesHumaines[] {
+    const dateDuFichierAnnMsTdpEt = dateDeMiseÀJourAnnMsTdpEt.dernièreMiseÀJour
+    const dateDeMiseÀJourDuNombreDEtpRéalisés =
+      cadreBudgétaire === CadreBudgétaire.ERRD ? dateDeMiseÀJourAnnErrdEjEt.dernièreMiseÀJour : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour
+    return ressourcesHumainesModel.map((ressourceHumaineModel) => {
+      return {
+        année: ressourceHumaineModel.année,
+        nombreDEtpRéalisés: {
+          dateMiseÀJourSource: dateDeMiseÀJourDuNombreDEtpRéalisés,
+          valeur: ressourceHumaineModel.nombreDEtpRéalisés,
+        },
+        nombreDeCddDeRemplacement: {
+          dateMiseÀJourSource: dateDuFichierAnnMsTdpEt,
+          valeur: ressourceHumaineModel.nombreDeCddDeRemplacement,
+        },
+        tauxDAbsentéisme: {
+          dateMiseÀJourSource: dateDuFichierAnnMsTdpEt,
+          horsFormation: ressourceHumaineModel.tauxDAbsentéismeHorsFormation,
+          pourAccidentMaladieProfessionnelle: ressourceHumaineModel.tauxDAbsentéismePourAccidentEtMaladieProfessionelle,
+          pourCongésSpéciaux: ressourceHumaineModel.tauxDAbsentéismePourCongésSpéciaux,
+          pourMaladieCourteDurée: ressourceHumaineModel.tauxDAbsentéismePourMaladieCourteDurée,
+          pourMaladieLongueDurée: ressourceHumaineModel.tauxDAbsentéismePourMaladieLongueDurée,
+          pourMaladieMoyenneDurée: ressourceHumaineModel.tauxDAbsentéismePourMaladieMoyenneDurée,
+          pourMaternitéPaternité: ressourceHumaineModel.tauxDAbsentéismePourMaternitéPaternité,
+        },
+        tauxDEtpVacants: {
+          dateMiseÀJourSource: dateDuFichierAnnMsTdpEt,
+          valeur: ressourceHumaineModel.tauxDEtpVacants,
+        },
+        tauxDePrestationsExternes: {
+          dateMiseÀJourSource: dateDuFichierAnnMsTdpEt,
+          valeur: ressourceHumaineModel.tauxDePrestationsExternes,
+        },
+        tauxDeRotationDuPersonnel: {
+          dateMiseÀJourSource: dateDuFichierAnnMsTdpEt,
+          valeur: ressourceHumaineModel.tauxDeRotationDuPersonnel,
         },
       }
     })

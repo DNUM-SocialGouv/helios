@@ -6,6 +6,7 @@ import { BudgetEtFinancesMédicoSocialModel, CadreBudgétaire } from '../../../.
 import { CpomModel } from '../../../../../database/models/CpomModel'
 import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
+import { RessourcesHumainesMédicoSocialModel } from '../../../../../database/models/RessourcesHumainesMédicoSocialModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { DateMiseÀJourFichierSourceModelTestBuilder } from '../../../../../database/test-builder/DateMiseÀJourFichierSourceModelTestBuilder'
 import { EntitéJuridiqueModelTestBuilder } from '../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder'
@@ -13,10 +14,12 @@ import { ÉtablissementTerritorialActivitéModelTestBuilder } from '../../../../
 import { ÉtablissementTerritorialAutorisationModelTestBuilder } from '../../../../../database/test-builder/ÉtablissementTerritorialAutorisationModelTestBuilder'
 import { ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder } from '../../../../../database/test-builder/ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder'
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from '../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder'
+import { ÉtablissementTerritorialRessourcesHumainesModelTestBuilder } from '../../../../../database/test-builder/ÉtablissementTerritorialRessourcesHumainesModelTestBuilder'
 import { MonoÉtablissement } from '../../../métier/entities/établissement-territorial-médico-social/MonoÉtablissement'
 import { ÉtablissementTerritorialMédicoSocial } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation'
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
+import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines'
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialMédicoSocialNonTrouvée'
 import { ÉtablissementTerritorialTestBuilder } from '../../../test-builder/ÉtablissementTerritorialTestBuilder'
 import { clearAllTables, getOrm, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from '../../../testHelper'
@@ -31,6 +34,7 @@ describe('Établissement territorial médico-social loader', () => {
   let autorisationMédicoSocialModelRepository: Repository<AutorisationMédicoSocialModel>
   let cpomModelRepository: Repository<CpomModel>
   let budgetEtFinancesModelRepository: Repository<BudgetEtFinancesMédicoSocialModel>
+  let ressourcesHumainesModelRepository: Repository<RessourcesHumainesMédicoSocialModel>
 
   beforeAll(async () => {
     activitéMédicoSocialModelRepository = (await orm).getRepository(ActivitéMédicoSocialModel)
@@ -40,6 +44,7 @@ describe('Établissement territorial médico-social loader', () => {
     autorisationMédicoSocialModelRepository = (await orm).getRepository(AutorisationMédicoSocialModel)
     cpomModelRepository = (await orm).getRepository(CpomModel)
     budgetEtFinancesModelRepository = (await orm).getRepository(BudgetEtFinancesMédicoSocialModel)
+    ressourcesHumainesModelRepository = (await orm).getRepository(RessourcesHumainesMédicoSocialModel)
   })
 
   beforeEach(async () => {
@@ -519,6 +524,92 @@ describe('Établissement territorial médico-social loader', () => {
           ÉtablissementTerritorialTestBuilder.créeUnBlocBudgetEtFinancesErrdMédicoSocial({ année: 2021 }),
         ]
       )
+    })
+  })
+
+  describe('Charge les données du bloc ressources humaines d’un établissement médico-social', () => {
+    it('charge les indicateurs du bloc ressources humaines sur les 3 dernières années d’un établissement ERRD', async () => {
+      // GIVEN
+      await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
+      await établissementTerritorialIdentitéRepository.insert(
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
+      )
+      await dateMiseÀJourFichierSourceRepository.insert([
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-06-06',
+          fichier: FichierSource.DIAMANT_ANN_ERRD_EJ_ET,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-02-02',
+          fichier: FichierSource.DIAMANT_ANN_CA_EJ_ET,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-10-10',
+          fichier: FichierSource.DIAMANT_ANN_MS_TDP_ET,
+        }),
+      ])
+      await budgetEtFinancesModelRepository.insert(
+        ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder.créeMédicoSocial(CadreBudgétaire.ERRD, { année: 2021, numéroFinessÉtablissementTerritorial })
+      )
+      await ressourcesHumainesModelRepository.insert([
+        ÉtablissementTerritorialRessourcesHumainesModelTestBuilder.créeMédicoSocial({ année: 2021, numéroFinessÉtablissementTerritorial }),
+        ÉtablissementTerritorialRessourcesHumainesModelTestBuilder.créeMédicoSocial({ année: 2020, numéroFinessÉtablissementTerritorial }),
+        ÉtablissementTerritorialRessourcesHumainesModelTestBuilder.créeMédicoSocial({ année: 2019, numéroFinessÉtablissementTerritorial }),
+      ])
+
+      const typeOrmÉtablissementTerritorialMédicoSocialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
+
+      // WHEN
+      const ressourceHumaines = await typeOrmÉtablissementTerritorialMédicoSocialLoader.chargeRessourcesHumaines(numéroFinessÉtablissementTerritorial)
+
+      // THEN
+      expect(ressourceHumaines).toStrictEqual<ÉtablissementTerritorialMédicoSocialRessourcesHumaines[]>([
+        ÉtablissementTerritorialTestBuilder.créeUnBlocRessourcesHumainesMédicoSocial({ année: 2019 }),
+        ÉtablissementTerritorialTestBuilder.créeUnBlocRessourcesHumainesMédicoSocial({ année: 2020 }),
+        ÉtablissementTerritorialTestBuilder.créeUnBlocRessourcesHumainesMédicoSocial({ année: 2021 }),
+      ])
+    })
+
+    it('charge les indicateurs du bloc ressources humaines sur les 3 dernières années d’un établissement CA', async () => {
+      // GIVEN
+      await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
+      await établissementTerritorialIdentitéRepository.insert(
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
+      )
+      await dateMiseÀJourFichierSourceRepository.insert([
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-06-06',
+          fichier: FichierSource.DIAMANT_ANN_ERRD_EJ_ET,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-02-02',
+          fichier: FichierSource.DIAMANT_ANN_CA_EJ_ET,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: '2022-10-10',
+          fichier: FichierSource.DIAMANT_ANN_MS_TDP_ET,
+        }),
+      ])
+      await budgetEtFinancesModelRepository.insert(
+        ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder.créeMédicoSocial(CadreBudgétaire.CA_PH, { année: 2021, numéroFinessÉtablissementTerritorial })
+      )
+      await ressourcesHumainesModelRepository.insert([
+        ÉtablissementTerritorialRessourcesHumainesModelTestBuilder.créeMédicoSocial({ année: 2021, numéroFinessÉtablissementTerritorial }),
+        ÉtablissementTerritorialRessourcesHumainesModelTestBuilder.créeMédicoSocial({ année: 2020, numéroFinessÉtablissementTerritorial }),
+        ÉtablissementTerritorialRessourcesHumainesModelTestBuilder.créeMédicoSocial({ année: 2019, numéroFinessÉtablissementTerritorial }),
+      ])
+
+      const typeOrmÉtablissementTerritorialMédicoSocialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
+
+      // WHEN
+      const ressourceHumaines = await typeOrmÉtablissementTerritorialMédicoSocialLoader.chargeRessourcesHumaines(numéroFinessÉtablissementTerritorial)
+
+      // THEN
+      expect(ressourceHumaines).toStrictEqual<ÉtablissementTerritorialMédicoSocialRessourcesHumaines[]>([
+        ÉtablissementTerritorialTestBuilder.créeUnBlocRessourcesHumainesMédicoSocial({ année: 2019, nombreDEtpRéalisés: { dateMiseÀJourSource: '2022-02-02', valeur: 47.42 } }),
+        ÉtablissementTerritorialTestBuilder.créeUnBlocRessourcesHumainesMédicoSocial({ année: 2020, nombreDEtpRéalisés: { dateMiseÀJourSource: '2022-02-02', valeur: 47.42 } }),
+        ÉtablissementTerritorialTestBuilder.créeUnBlocRessourcesHumainesMédicoSocial({ année: 2021, nombreDEtpRéalisés: { dateMiseÀJourSource: '2022-02-02', valeur: 47.42 } }),
+      ])
     })
   })
 })

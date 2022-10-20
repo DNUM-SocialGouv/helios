@@ -48,6 +48,7 @@ describe('La récupération d’un établissement territorial médico-social', (
       chargeAutorisationsEtCapacités: jest.fn(),
       chargeBudgetEtFinances: jest.fn(),
       chargeIdentité: mockedChargeIdentité,
+      chargeRessourcesHumaines: jest.fn(),
       estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
     }
 
@@ -87,6 +88,7 @@ describe('La récupération d’un établissement territorial médico-social', (
       chargeAutorisationsEtCapacités: jest.fn(),
       chargeBudgetEtFinances: jest.fn(),
       chargeIdentité: mockedChargeParNuméroFiness,
+      chargeRessourcesHumaines: jest.fn(),
       estUnMonoÉtablissement: jest.fn(),
     }
     const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeIdentité: jest.fn(), chargeRattachement: jest.fn() }
@@ -138,6 +140,7 @@ describe('La récupération d’un établissement territorial médico-social', (
       chargeAutorisationsEtCapacités: jest.fn(),
       chargeBudgetEtFinances: jest.fn(),
       chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
+      chargeRessourcesHumaines: jest.fn(),
       estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
     }
 
@@ -186,6 +189,7 @@ describe('La récupération d’un établissement territorial médico-social', (
       chargeAutorisationsEtCapacités: mockedChargeAutorisations,
       chargeBudgetEtFinances: jest.fn(),
       chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
+      chargeRessourcesHumaines: jest.fn(),
       estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
     }
 
@@ -238,6 +242,7 @@ describe('La récupération d’un établissement territorial médico-social', (
       chargeAutorisationsEtCapacités: jest.fn(),
       chargeBudgetEtFinances: mockedChargeBudgetEtFinances,
       chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
+      chargeRessourcesHumaines: jest.fn(),
       estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
     }
 
@@ -255,4 +260,56 @@ describe('La récupération d’un établissement territorial médico-social', (
     expect(établissementTerritorialMédicoSocial.budgetEtFinances).toStrictEqual(budgetEtFinancesDeLÉtablissement)
   })
 
+  it('récupère les indicateurs de ressources humaines de l’établissement territorial médico-social', async () => {
+    // GIVEN
+    const fakeEstUnMonoÉtablissement: MonoÉtablissement = {
+      estMonoÉtablissement: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: false,
+      },
+    }
+    const mockedEstUnMonoÉtablissement = jest.fn().mockResolvedValueOnce(fakeEstUnMonoÉtablissement)
+
+    const fakeIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestBuilder.créeUneIdentitéMédicoSocial(
+      {
+        numéroFinessEntitéJuridique: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: numéroFinessEntitéJuridique,
+        },
+        numéroFinessÉtablissementTerritorial: {
+          dateMiseÀJourSource: '2021-07-07',
+          value: numéroFinessÉtablissementTerritorial,
+        },
+      }
+    )
+
+    const ressourcesHumainesDeLÉtablissement = [
+      ÉtablissementTerritorialTestBuilder.créeUnBlocRessourcesHumainesMédicoSocial({ année: 2021 }),
+      ÉtablissementTerritorialTestBuilder.créeUnBlocRessourcesHumainesMédicoSocial({ année: 2020 }),
+      ÉtablissementTerritorialTestBuilder.créeUnBlocRessourcesHumainesMédicoSocial({ année: 2019 }),
+    ]
+    const mockedChargeRessourcesHumaines = jest.fn().mockResolvedValueOnce(ressourcesHumainesDeLÉtablissement)
+
+    const mockedÉtablissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader = {
+      chargeActivité: jest.fn(),
+      chargeAutorisationsEtCapacités: jest.fn(),
+      chargeBudgetEtFinances: jest.fn(),
+      chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
+      chargeRessourcesHumaines: mockedChargeRessourcesHumaines,
+      estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
+    }
+
+    const mockedEntitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeIdentité: jest.fn(), chargeRattachement: jest.fn() }
+
+    const récupèreLÉtablissementTerritorialMédicoSocialUseCase =
+      new RécupèreLÉtablissementTerritorialMédicoSocialUseCase(mockedÉtablissementTerritorialMédicoSocialLoader, mockedEntitéJuridiqueLoader)
+
+    // WHEN
+    const établissementTerritorialMédicoSocial = await récupèreLÉtablissementTerritorialMédicoSocialUseCase.exécute(numéroFinessÉtablissementTerritorial)
+
+    // THEN
+    expect(mockedChargeRessourcesHumaines).toHaveBeenCalledWith(numéroFinessÉtablissementTerritorial)
+    expect(mockedChargeRessourcesHumaines).toHaveBeenCalledTimes(1)
+    expect(établissementTerritorialMédicoSocial.ressourcesHumaines).toStrictEqual(ressourcesHumainesDeLÉtablissement)
+  })
 })

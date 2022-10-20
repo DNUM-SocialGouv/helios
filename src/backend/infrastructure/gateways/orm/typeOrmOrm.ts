@@ -12,6 +12,7 @@ import { DateMiseÀJourFichierSourceModel } from '../../../../../database/models
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
 import { RechercheModel } from '../../../../../database/models/RechercheModel'
 import { ReconnaissanceContractuelleSanitaireModel } from '../../../../../database/models/ReconnaissanceContractuelleSanitaireModel'
+import { RessourcesHumainesMédicoSocialModel } from '../../../../../database/models/RessourcesHumainesMédicoSocialModel'
 import { ÉquipementMatérielLourdSanitaireModel } from '../../../../../database/models/ÉquipementMatérielLourdSanitaireModel'
 import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
 import { EnvironmentVariables } from '../../../métier/gateways/EnvironmentVariables'
@@ -34,6 +35,7 @@ export const typeOrmOrm: Orm<DataSource> = (environmentVariables: EnvironmentVar
       ÉtablissementTerritorialIdentitéModel,
       RechercheModel,
       ReconnaissanceContractuelleSanitaireModel,
+      RessourcesHumainesMédicoSocialModel,
     ],
     logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
     migrations: ['./../database/migrations/*.{js, ts}'],
