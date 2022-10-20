@@ -2,6 +2,7 @@ import { CadreBudgétaire } from '../../../database/models/BudgetEtFinancesMédi
 import { ÉtablissementTerritorialMédicoSocialActivité } from '../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
 import { ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from '../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation'
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
+import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from '../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines'
 import { ÉtablissementTerritorialSanitaireActivité } from '../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité'
 import { ÉtablissementTerritorialSanitaireAutorisationEtCapacité } from '../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation'
 import { ÉtablissementTerritorialIdentité } from '../métier/entities/ÉtablissementTerritorialIdentité'
@@ -461,7 +462,6 @@ export class ÉtablissementTerritorialTestBuilder {
       dateMiseÀJourSource: '2022-03-03',
       valeur: null,
     },
-
     recettesEtDépenses: {
       dateMiseÀJourSource: '2022-02-02',
       dépensesGroupe1: null,
@@ -482,6 +482,40 @@ export class ÉtablissementTerritorialTestBuilder {
     tauxDeVétustéConstruction: {
       dateMiseÀJourSource: '2022-02-02',
       valeur: 0.31154835988672847,
+    },
+  }
+
+  private static ressourcesHumainesMédicoSocial: ÉtablissementTerritorialMédicoSocialRessourcesHumaines = {
+    année: 2019,
+    nombreDEtpRéalisés: {
+      dateMiseÀJourSource: '2022-06-06',
+      valeur: 47.42,
+    },
+    nombreDeCddDeRemplacement: {
+      dateMiseÀJourSource: '2022-10-10',
+      valeur: 45,
+    },
+    tauxDAbsentéisme: {
+      dateMiseÀJourSource: '2022-10-10',
+      horsFormation: 0.0767,
+      pourAccidentMaladieProfessionnelle: 0.0042,
+      pourCongésSpéciaux: 0.022,
+      pourMaladieCourteDurée: 0.0003,
+      pourMaladieLongueDurée: 0.0381,
+      pourMaladieMoyenneDurée: 0.0057,
+      pourMaternitéPaternité: 0.0064,
+    },
+    tauxDEtpVacants: {
+      dateMiseÀJourSource: '2022-10-10',
+      valeur: 0.652,
+    },
+    tauxDePrestationsExternes: {
+      dateMiseÀJourSource: '2022-10-10',
+      valeur: 0.659,
+    },
+    tauxDeRotationDuPersonnel: {
+      dateMiseÀJourSource: '2022-10-10',
+      valeur: 0.667,
     },
   }
 
@@ -552,6 +586,13 @@ export class ÉtablissementTerritorialTestBuilder {
   public static créeUnBlocBudgetEtFinancesCaPaMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialBudgetEtFinances>) {
     return {
       ...ÉtablissementTerritorialTestBuilder.budgetEtFinancesCaPaMédicoSocial,
+      ...champsSurchargés,
+    }
+  }
+
+  public static créeUnBlocRessourcesHumainesMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialRessourcesHumaines>) {
+    return {
+      ...ÉtablissementTerritorialTestBuilder.ressourcesHumainesMédicoSocial,
       ...champsSurchargés,
     }
   }

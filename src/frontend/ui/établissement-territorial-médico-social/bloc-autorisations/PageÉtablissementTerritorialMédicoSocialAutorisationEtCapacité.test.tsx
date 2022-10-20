@@ -155,6 +155,7 @@ describe('La page établissement territorial médico-social - bloc autorisation 
       },
       budgetEtFinances: [],
       identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+      ressourcesHumaines: [],
     }, wording, paths)
 
     // WHEN
@@ -300,6 +301,7 @@ describe('La page établissement territorial médico-social - bloc autorisation 
       },
       budgetEtFinances: [],
       identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+      ressourcesHumaines: [],
     }, wording, paths)
 
     // WHEN

@@ -4,6 +4,7 @@ import { MonoÉtablissement } from './MonoÉtablissement'
 import { ÉtablissementTerritorialMédicoSocialActivité } from './ÉtablissementTerritorialMédicoSocialActivité'
 import { ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from './ÉtablissementTerritorialMédicoSocialAutorisation'
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from './ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
+import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from './ÉtablissementTerritorialMédicoSocialRessourcesHumaines'
 
 export type ÉtablissementTerritorialMédicoSocial = Readonly<{
   activités: ÉtablissementTerritorialMédicoSocialActivité[]
@@ -12,4 +13,5 @@ export type ÉtablissementTerritorialMédicoSocial = Readonly<{
   identité: ÉtablissementTerritorialIdentité &
     MonoÉtablissement &
     EntitéJuridiqueDeRattachement
+  ressourcesHumaines: ÉtablissementTerritorialMédicoSocialRessourcesHumaines[]
 }>

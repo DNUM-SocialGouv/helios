@@ -199,6 +199,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
       autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
       budgetEtFinances: [],
       identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+      ressourcesHumaines: [],
     }, wording, paths)
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
@@ -328,6 +329,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
       autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
       budgetEtFinances: [],
       identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+      ressourcesHumaines: [],
     }, wording, paths)
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
@@ -534,6 +536,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
       autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
       budgetEtFinances: [],
       identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+      ressourcesHumaines: [],
     }, wording, paths)
 
     // WHEN
@@ -652,6 +655,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
       autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
       budgetEtFinances: [],
       identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+      ressourcesHumaines: [],
     }, wording, paths)
 
     // WHEN
@@ -670,6 +674,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
       autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
       budgetEtFinances: [],
       identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+      ressourcesHumaines: [],
     }, wording, paths)
 
     // WHEN

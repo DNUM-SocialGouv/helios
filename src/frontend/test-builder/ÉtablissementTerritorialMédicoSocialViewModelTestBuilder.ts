@@ -397,6 +397,108 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     },
   ]
 
+  public static ressourcesHumaines: ÉtablissementTerritorialMédicoSocial['ressourcesHumaines'] = [
+    {
+      année: 2019,
+      nombreDEtpRéalisés: {
+        dateMiseÀJourSource: '2022-06-06',
+        valeur: 47.42,
+      },
+      nombreDeCddDeRemplacement: {
+        dateMiseÀJourSource: '2022-10-10',
+        valeur: 45,
+      },
+      tauxDAbsentéisme: {
+        dateMiseÀJourSource: '2022-10-10',
+        horsFormation: 0.0767,
+        pourAccidentMaladieProfessionnelle: 0.0042,
+        pourCongésSpéciaux: 0.022,
+        pourMaladieCourteDurée: 0.0003,
+        pourMaladieLongueDurée: 0.0381,
+        pourMaladieMoyenneDurée: 0.0057,
+        pourMaternitéPaternité: 0.0064,
+      },
+      tauxDEtpVacants: {
+        dateMiseÀJourSource: '2022-10-10',
+        valeur: 0.652,
+      },
+      tauxDePrestationsExternes: {
+        dateMiseÀJourSource: '2022-10-10',
+        valeur: 0.659,
+      },
+      tauxDeRotationDuPersonnel: {
+        dateMiseÀJourSource: '2022-10-10',
+        valeur: 0.667,
+      },
+    },
+    {
+      année: 2020,
+      nombreDEtpRéalisés: {
+        dateMiseÀJourSource: '2022-06-06',
+        valeur: 9.71,
+      },
+      nombreDeCddDeRemplacement: {
+        dateMiseÀJourSource: '2022-10-10',
+        valeur: 4,
+      },
+      tauxDAbsentéisme: {
+        dateMiseÀJourSource: '2022-10-10',
+        horsFormation: 0.1329,
+        pourAccidentMaladieProfessionnelle: 0.0038,
+        pourCongésSpéciaux: 0.006,
+        pourMaladieCourteDurée: 0.0068,
+        pourMaladieLongueDurée: 0.078,
+        pourMaladieMoyenneDurée: 0.0109,
+        pourMaternitéPaternité: 0.0273,
+      },
+      tauxDEtpVacants: {
+        dateMiseÀJourSource: '2022-10-10',
+        valeur: 0.1642,
+      },
+      tauxDePrestationsExternes: {
+        dateMiseÀJourSource: '2022-10-10',
+        valeur: 0.2322,
+      },
+      tauxDeRotationDuPersonnel: {
+        dateMiseÀJourSource: '2022-10-10',
+        valeur: 0.3438,
+      },
+    },
+    {
+      année: 2021,
+      nombreDEtpRéalisés: {
+        dateMiseÀJourSource: '2022-06-06',
+        valeur: 10.44,
+      },
+      nombreDeCddDeRemplacement: {
+        dateMiseÀJourSource: '2022-10-10',
+        valeur: 3,
+      },
+      tauxDAbsentéisme: {
+        dateMiseÀJourSource: '2022-10-10',
+        horsFormation: 0.2734,
+        pourAccidentMaladieProfessionnelle: 0.0,
+        pourCongésSpéciaux: 0.1156,
+        pourMaladieCourteDurée: 0.0054,
+        pourMaladieLongueDurée: 0.043,
+        pourMaladieMoyenneDurée: 0.0182,
+        pourMaternitéPaternité: 0.0911,
+      },
+      tauxDEtpVacants: {
+        dateMiseÀJourSource: '2022-10-10',
+        valeur: 0.1334,
+      },
+      tauxDePrestationsExternes: {
+        dateMiseÀJourSource: '2022-10-10',
+        valeur: 0.0931,
+      },
+      tauxDeRotationDuPersonnel: {
+        dateMiseÀJourSource: '2022-10-10',
+        valeur: 0.1471,
+      },
+    },
+  ]
+
   public static crée(
     wording: Wording,
     paths: Paths,
@@ -411,6 +513,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
           ...ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
           ...champsSurchargés,
         },
+        ressourcesHumaines: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines,
       },
       wording,
       paths
