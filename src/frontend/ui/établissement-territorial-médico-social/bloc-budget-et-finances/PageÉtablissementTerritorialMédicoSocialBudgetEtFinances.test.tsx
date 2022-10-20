@@ -58,6 +58,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
       autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
       budgetEtFinances: [ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPa({ année: 2019 })],
       identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+      ressourcesHumaines: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines,
     }, wording, paths)
 
     // WHEN
@@ -149,6 +150,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
         ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2020 }),
       ],
       identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+      ressourcesHumaines: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines,
     }, wording, paths)
 
     // WHEN
@@ -208,6 +210,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
         },
       ],
       identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+      ressourcesHumaines: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines,
     }, wording, paths)
 
     // WHEN
@@ -246,6 +249,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
           ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPa({ année: 2020 }),
         ],
         identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+        ressourcesHumaines: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines,
       }, wording, paths)
 
       // WHEN
@@ -290,6 +294,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
           }),
         ],
         identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+        ressourcesHumaines: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines,
       }, wording, paths)
 
       // WHEN
@@ -353,6 +358,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
         autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
         budgetEtFinances: [ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPa()],
         identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+        ressourcesHumaines: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines,
       }, wording, paths)
 
       // WHEN
@@ -457,6 +463,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
           ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2021, résultatNetComptable: { dateMiseÀJourSource: '2020-01-01', valeur :null } }),
         ],
         identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+        ressourcesHumaines: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines,
       }, wording, paths)
 
       // WHEN
@@ -542,6 +549,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
           ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2021, contributionAuxFraisDeSiège: { dateMiseÀJourSource: '2020-01-01', valeur :null } }),
         ],
         identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+        ressourcesHumaines: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines,
       }, wording, paths)
 
       // WHEN
@@ -595,6 +603,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
           ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2020 }),
         ],
         identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+        ressourcesHumaines: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines,
       }, wording, paths)
 
       // WHEN
@@ -629,6 +638,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
         autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
         budgetEtFinances: [ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2020 })],
         identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+        ressourcesHumaines: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines,
       }, wording, paths)
 
       // WHEN
@@ -694,6 +704,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
           ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2020 }),
         ],
         identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+        ressourcesHumaines: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines,
       }, wording, paths)
 
       // WHEN
@@ -728,6 +739,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
         autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
         budgetEtFinances: [ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2020 })],
         identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+        ressourcesHumaines: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines,
       }, wording, paths)
 
       // WHEN
@@ -798,6 +810,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
           ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2021 }),
         ],
         identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+        ressourcesHumaines: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines,
       }, wording, paths)
 
       // WHEN
@@ -821,6 +834,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
           ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2021, fondsDeRoulement: { dateMiseÀJourSource: '2020-01-01', valeur :null } }),
         ],
         identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+        ressourcesHumaines: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines,
       }, wording, paths)
 
       // WHEN
