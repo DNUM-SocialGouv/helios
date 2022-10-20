@@ -26,9 +26,10 @@ jobs:
       - uses: actions/checkout@master
       - uses: actions/setup-node@v3
         with:
+          cache: yarn
           node-version-file: package.json
       - name: Install node modules
-        run: yarn --frozen-lockfile --check-files
+        run: yarn --immutable
       - name: Run just one test
         run: yarn test:typescript src/backend/infrastructure/gateways/logger/ConsoleLogger.test.ts
       - name: Run the mutations

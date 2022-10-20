@@ -43,4 +43,4 @@ populate_budget_et_finances_medico_social = 'python -m datacrawler.ajoute_le_blo
 populate_ressoures_humaines_medico_social = 'python -m datacrawler.ajoute_le_bloc_ressources_humaines_des_établissements_médico_sociaux'
 test = 'pytest --tb=short'
 test_coverage = 'pytest --tb=short --cov=datacrawler --cov-report=xml'
-typecheck = 'mypy --config pyproject.toml .'
+typecheck = 'mypy --config pyproject.toml datacrawler'

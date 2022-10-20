@@ -1,0 +1,54 @@
+name: Tests on master
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:13.7-alpine # Conserver la même version avec le fichier docker-compose.yaml
+        env:
+          POSTGRES_DB: helios
+          POSTGRES_PASSWORD: h3li0s
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: helios
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          cache: yarn
+          node-version-file: package.json
+      - name: Install packages
+        env:
+          YARN_NODE_LINKER: pnp
+        run: yarn --immutable
+      - name: Run the migrations
+        env:
+          NODE_ENV: test
+          YARN_NODE_LINKER: pnp
+        run: yarn migrations
+      - name: Install pipenv
+        run: pipx install pipenv
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.10.6 # Conserver la même version que celle dans Pipfile
+          cache: pipenv
+      - name: Install dependencies
+        run: pipenv install --dev --deploy
+      - name: Create the DIAMANT public key
+        env:
+          DIAMANT_PRIVATE_KEY: ${{ secrets.DIAMANT_PRIVATE_KEY }}
+        run: echo "$DIAMANT_PRIVATE_KEY" | gpg --import
+      - name: Test
+        run: pipenv run test_coverage
+      - uses: codecov/codecov-action@v3
