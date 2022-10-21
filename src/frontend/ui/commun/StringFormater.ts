@@ -19,4 +19,20 @@ export namespace StringFormater {
   export function formateLeMontantEnEuros(montant: number): string {
     return `${Math.round(montant).toLocaleString('fr')} €`.replace('-', '−')
   }
+
+  export function formateEnFrançais(valeurs: (number | null)[]): (string | null)[] {
+    return valeurs.map((valeur) => {
+      if (valeur === null) return valeur
+
+      return valeur.toLocaleString('fr')
+    })
+  }
+
+  export function ajouteLePourcentage(valeurs: number[]): string[] {
+    return formateEnFrançais(valeurs).map((valeur) => valeur + ' %')
+  }
+
+  export function transformeEnTaux(nombre: number): number {
+    return Number((nombre * 100).toFixed(1))
+  }
 }

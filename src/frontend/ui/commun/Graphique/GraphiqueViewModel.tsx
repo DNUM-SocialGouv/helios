@@ -222,7 +222,6 @@ export class GraphiqueViewModel {
       labels: libellés,
     }
     const annéesManquantes = this.annéesManquantes(libellés, annéesTotales)
-    const valeursFrançaises = this.transformeEnFrançais(valeurs) as string[]
 
     return (
       <>
@@ -241,7 +240,7 @@ export class GraphiqueViewModel {
           entêteLibellé={entêteLibellé}
           identifiants={[identifiant]}
           libellés={libellés}
-          valeurs={[this.ajouteLePourcentage(valeursFrançaises)]}
+          valeurs={[StringFormater.ajouteLePourcentage(valeurs)]}
         />
       </>
     )
@@ -286,7 +285,7 @@ export class GraphiqueViewModel {
       ],
       labels: libellés,
     }
-    const valeursFrançaises = this.transformeEnFrançais(valeurs)
+    const valeursFrançaises = StringFormater.formateEnFrançais(valeurs)
 
     return (
       <>
@@ -345,7 +344,7 @@ export class GraphiqueViewModel {
       ],
       labels: libellés,
     }
-    const valeurs = [this.transformeEnFrançais(lits), this.transformeEnFrançais(places)]
+    const valeurs = [StringFormater.formateEnFrançais(lits), StringFormater.formateEnFrançais(places)]
 
     return (
       <>
@@ -649,17 +648,5 @@ export class GraphiqueViewModel {
         y: { grid: { color: this.couleurDelAbscisse, drawBorder: false }, stacked: true, ticks: { color: 'var(--text-default-grey)' } },
       },
     }
-  }
-
-  protected ajouteLePourcentage(valeurs: string[]): string[] {
-    return valeurs.map((valeur) => valeur + ' %')
-  }
-
-  protected transformeEnFrançais(valeurs: (number | null)[]): (string | null)[] {
-    return valeurs.map((valeur) => {
-      if (valeur === null) return valeur
-
-      return valeur.toLocaleString('fr')
-    })
   }
 }
