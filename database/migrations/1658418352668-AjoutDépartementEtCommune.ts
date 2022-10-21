@@ -1,8 +1,9 @@
-class AjoutDépartementEtCommune1658418352668 {
+import { MigrationInterface, QueryRunner } from 'typeorm'
 
-  async up(queryRunner) {
-    await queryRunner.query(
-      `ALTER TABLE entite_juridique
+export class AjoutDépartementEtCommune1658418352668 implements MigrationInterface {
+  async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
+      ALTER TABLE entite_juridique
         ADD commune VARCHAR(255) NOT NULL DEFAULT (''),
         ADD departement VARCHAR(255) NOT NULL DEFAULT ('');
 
@@ -27,13 +28,13 @@ class AjoutDépartementEtCommune1658418352668 {
           to_tsvector('unaccent_helios', raison_sociale || ' ' || numero_finess_etablissement_territorial) AS termes,
           commune,
           departement
-        FROM etablissement_territorial;`
-    )
+        FROM etablissement_territorial;
+    `)
   }
 
-  async down(queryRunner) {
-    await queryRunner.query(
-      `DROP VIEW recherche;
+  async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
+      DROP VIEW recherche;
 
       ALTER TABLE entite_juridique
         DROP COLUMN commune,
@@ -56,10 +57,7 @@ class AjoutDépartementEtCommune1658418352668 {
         raison_sociale,
         domaine::text AS type,
         to_tsvector('unaccent_helios', raison_sociale || ' ' || numero_finess_etablissement_territorial) AS termes
-      FROM etablissement_territorial;`
-    )
+      FROM etablissement_territorial;
+    `)
   }
-
 }
-
-module.exports = AjoutDépartementEtCommune1658418352668

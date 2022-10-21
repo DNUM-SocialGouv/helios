@@ -1,5 +1,7 @@
-class AjoutDesTauxPourLeBlocBudgetEtFinancesMédicoSocial1663852267673 {
-  async up(queryRunner) {
+import { MigrationInterface, QueryRunner } from 'typeorm'
+
+export class AjoutDesTauxPourLeBlocBudgetEtFinancesMédicoSocial1663852267673 implements MigrationInterface {
+  async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
       ALTER TABLE budget_et_finances_medico_social
         ADD COLUMN charges FLOAT,
@@ -12,7 +14,7 @@ class AjoutDesTauxPourLeBlocBudgetEtFinancesMédicoSocial1663852267673 {
     `)
   }
 
-  async down(queryRunner) {
+  async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
       ALTER TABLE budget_et_finances_medico_social
         DROP COLUMN charges,
@@ -22,5 +24,3 @@ class AjoutDesTauxPourLeBlocBudgetEtFinancesMédicoSocial1663852267673 {
     `)
   }
 }
-
-module.exports = AjoutDesTauxPourLeBlocBudgetEtFinancesMédicoSocial1663852267673

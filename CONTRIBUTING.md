@@ -355,7 +355,7 @@ yarn encryptDiamant:local
  ┣ 📂 database
  ┃  ┣ 📂 migrations               ->  Les migrations
  ┃  ┣ 📂 models                   ->  Définition des modèles des tables
- ┃  ┗ 📜 migrations.ts            ->  Pont d'entrée de lancement des migrations
+ ┃  ┗ 📜 dataSource.ts            ->  Pont d'entrée de lancement des migrations
  ┣ 📂 download_data_source        ->  Récupération des données des sources externes
  ┣ 📂 src
  ┃  ┣ 📂 frontend

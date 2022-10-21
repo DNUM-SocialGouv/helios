@@ -1,7 +1,9 @@
-class AjoutAutorisationsDesETSanitaires1661442115103 {
-  async up(queryRunner) {
-    await queryRunner.query(
-      `CREATE TABLE autorisation_sanitaire (
+import { MigrationInterface, QueryRunner } from 'typeorm'
+
+export class AjoutAutorisationsDesETSanitaires1661442115103 implements MigrationInterface {
+  async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
+      CREATE TABLE autorisation_sanitaire (
         code_activite VARCHAR(2) NOT NULL,
         code_forme VARCHAR(2) NOT NULL,
         code_modalite VARCHAR(2) NOT NULL,
@@ -87,18 +89,15 @@ class AjoutAutorisationsDesETSanitaires1661442115103 {
 
       ALTER TYPE fichier_source
         ADD VALUE IF NOT EXISTS 'finess_cs1600102';
-        `
-    )
+    `)
   }
 
-  async down(queryRunner) {
-    await queryRunner.query(
-      `DROP TABLE autorisation_sanitaire;
-      DROP TABLE equipement_materiel_lourd;
-      DROP TABLE autre_activite_sanitaire;
-      DROP TABLE reconnaissance_contractuelle_sanitaire;`
-    )
+  async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
+      DROP TABLE autorisation_sanitaire;
+        DROP TABLE equipement_materiel_lourd;
+        DROP TABLE autre_activite_sanitaire;
+        DROP TABLE reconnaissance_contractuelle_sanitaire;
+    `)
   }
 }
-
-module.exports = AjoutAutorisationsDesETSanitaires1661442115103

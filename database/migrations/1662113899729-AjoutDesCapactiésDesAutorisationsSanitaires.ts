@@ -1,7 +1,9 @@
-class AjoutDesCapactiésDesAutorisationsSanitaires1662113899729 {
-  async up(queryRunner) {
-    await queryRunner.query(
-      `CREATE TABLE capacite_autorisation_sanitaire (
+import { MigrationInterface, QueryRunner } from 'typeorm'
+
+export class AjoutDesCapactiésDesAutorisationsSanitaires1662113899729 implements MigrationInterface {
+  async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
+      CREATE TABLE capacite_autorisation_sanitaire (
         nombre_lits_chirurgie INTEGER,
         nombre_lits_médecine INTEGER,
         nombre_lits_obstétrique INTEGER,
@@ -19,15 +21,11 @@ class AjoutDesCapactiésDesAutorisationsSanitaires1662113899729 {
       );
 
       ALTER TYPE fichier_source
-        ADD VALUE IF NOT EXISTS 'ann_sae';`
-    )
+        ADD VALUE IF NOT EXISTS 'ann_sae';
+    `)
   }
 
-  async down(queryRunner) {
-    await queryRunner.query(
-      'DROP TABLE capacite_autorisation_sanitaire'
-    )
+  async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query('DROP TABLE capacite_autorisation_sanitaire;')
   }
 }
-
-module.exports = AjoutDesCapactiésDesAutorisationsSanitaires1662113899729
