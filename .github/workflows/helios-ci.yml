@@ -163,8 +163,7 @@ jobs:
       - name: Run the migrations
         env:
           NODE_ENV: test
-          YARN_NODE_LINKER: pnp
-        run: yarn test:python:coverage
+        run: yarn migrations:up
       - name: Install pipenv
         run: pipx install pipenv
       - uses: actions/setup-python@v4
@@ -183,4 +182,6 @@ jobs:
         env:
           DIAMANT_PRIVATE_KEY: ${{ secrets.DIAMANT_PRIVATE_KEY }}
         run: echo "$DIAMANT_PRIVATE_KEY" | gpg --import
+      - name: Test
+        run: pipenv run test_coverage
       - uses: codecov/codecov-action@v3
