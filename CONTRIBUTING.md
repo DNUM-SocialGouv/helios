@@ -207,7 +207,7 @@ Elles sont nécessaires dès lors que l'on veut créer ou supprimer des tables, 
 yarn migrations:create database/migrations/<NomDeMigration>
 ```
 
-Il ne reste qu'à compléter les deux méthodes *up* et *down* de la classe créée.
+> Ne pas oublier de la renseigner auprès de l'ORM dans le fichier `database/dataSource.ts`
 
 #### Appliquer les migrations
 
