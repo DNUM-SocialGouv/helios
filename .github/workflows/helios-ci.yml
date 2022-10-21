@@ -157,8 +157,6 @@ jobs:
           cache: yarn
           node-version-file: package.json
       - name: Install packages
-        env:
-          YARN_NODE_LINKER: pnp
         run: yarn --immutable
       - name: Run the migrations
         env:
