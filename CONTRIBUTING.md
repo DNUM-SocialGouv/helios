@@ -204,23 +204,23 @@ Elles sont nécessaires dès lors que l'on veut créer ou supprimer des tables, 
 #### Créer une migration pour les bases de données
 
 ```sh
-yarn typeorm migration:create database/migrations/<NomDeMigration> --outputJs
+yarn migrations:create database/migrations/<NomDeMigration>
 ```
 
-Un fichier *.js* est auto-généré sous `database/migrations`. Il faut modifier le fichier auto-généré. Enfin compléter les deux méthodes *up* et *down*.
+Il ne reste qu'à compléter les deux méthodes *up* et *down* de la classe créée.
 
 #### Appliquer les migrations
 
 Avec la commande `yarn dev`, les migrations sont appliquées en même temps que le lancement de la base de développement. Voici tout de même comment les appliquer indépendamment, une fois la base de données démarrée :
 
 ```sh
-yarn migration:up
+yarn migrations:up
 ```
 
 Et pour appliquer les migrations *down* (applique seulement 1 seule migration) :
 
 ```sh
-yarn migration:down
+yarn migrations:down
 ```
 
 > Plus d’infos sur [typeorm.io](https://typeorm.io/migrations)
