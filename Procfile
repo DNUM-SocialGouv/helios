@@ -1,1 +1,1 @@
-postdeploy: yarn migrations
+postdeploy: yarn migrations:up

@@ -214,13 +214,13 @@ Un fichier *.js* est auto-généré sous `database/migrations`. Il faut modifier
 Avec la commande `yarn dev`, les migrations sont appliquées en même temps que le lancement de la base de développement. Voici tout de même comment les appliquer indépendamment, une fois la base de données démarrée :
 
 ```sh
-yarn typeorm migration:run
+yarn migration:up
 ```
 
 Et pour appliquer les migrations *down* (applique seulement 1 seule migration) :
 
 ```sh
-yarn typeorm migration:revert
+yarn migration:down
 ```
 
 > Plus d’infos sur [typeorm.io](https://typeorm.io/migrations)

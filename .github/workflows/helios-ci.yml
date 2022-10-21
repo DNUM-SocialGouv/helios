@@ -164,7 +164,7 @@ jobs:
         env:
           NODE_ENV: test
           YARN_NODE_LINKER: pnp
-        run: yarn migrations
+        run: yarn migrations:up
       - name: Install pipenv
         run: pipx install pipenv
       - uses: actions/setup-python@v4
