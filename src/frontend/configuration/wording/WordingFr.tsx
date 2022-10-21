@@ -226,6 +226,18 @@ export class WordingFr implements Wording {
   readonly TAUX_DE_CAF: string = 'Taux de CAF'
   readonly FONDS_DE_ROULEMENT_NET_GLOBAL: string = 'Fond de roulement net global'
 
+  // Bloc ressources humaines
+  readonly TITRE_BLOC_RESSOURCES_HUMAINES: string = 'Ressources humaines'
+  readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ: ReactElement = (
+    <>
+      Nombre d’
+      <abbr title="Équivalent Temps Plein">ETP</abbr>
+      {' '}
+      Total réalisé
+    </>
+  )
+  readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION: string = 'Nombre d’ETP Total réalisé'
+
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string = 'Établissement territorial'
   readonly TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS: string = 'Les établissements rattachés'
