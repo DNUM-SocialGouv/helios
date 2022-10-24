@@ -20,7 +20,7 @@ export const PageDeRecette = () => {
       numéroFiness: '750060758',
     },
     {
-      identifiant: 'EJ - 500020839 - GCSMS &quot;PRESQU’ÎLE&quot; (sans ET)',
+      identifiant: 'EJ - 500020839 - GCSMS "PRESQU’ÎLE" (sans ET)',
       numéroFiness: '500020839',
     },
     {
