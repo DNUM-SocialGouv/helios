@@ -27,7 +27,7 @@ describe('Établissement territorial rattaché loader', () => {
     await (await orm).destroy()
   })
 
-  it('charge les établissements territoriaux rattachés à une entité juridique triés alphabétiquement par leur nom', async () => {
+  it('charge les établissements territoriaux rattachés à une entité juridique triés par domaine puis par numéro FINESS', async () => {
     // GIVEN
     const autreNuméroFinessEntitéJuridique = '987654322'
     const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
@@ -36,21 +36,31 @@ describe('Établissement territorial rattaché loader', () => {
     )
     await entitéJuridiqueRepository.insert([entitéJuridiqueModel, autreEntitéJuridiqueModel])
 
-    const numéroFinessET1 = '111222333'
+    const numéroFinessET1 = '222222222'
     const établissementTerritorial1RattachéModel =
     ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial(
       { domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial: numéroFinessET1, raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ' }
     )
-    const numéroFinessET2 = '111333222'
+    const numéroFinessET2 = '111111111'
     const établissementTerritorial2RattachéModel =
       ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire(
         { domaine: DomaineÉtablissementTerritorial.SANITAIRE, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial: numéroFinessET2, raisonSociale: 'CH NANTUA' }
+      )
+    const numéroFinessET3 = '999999999'
+    const établissementTerritorial3RattachéModel =
+      ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire(
+        { domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial: numéroFinessET3, raisonSociale: 'CH NANTUA v2' }
       )
     const établissementTerritorialNonRattachéModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial(
       { numéroFinessEntitéJuridique: autreNuméroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial: '321654987' }
     )
     await établissementTerritorialRepository.insert(
-      [établissementTerritorial1RattachéModel, établissementTerritorial2RattachéModel, établissementTerritorialNonRattachéModel]
+      [
+        établissementTerritorial1RattachéModel,
+        établissementTerritorial2RattachéModel,
+        établissementTerritorialNonRattachéModel,
+        établissementTerritorial3RattachéModel,
+      ]
     )
 
     const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialRattachéLoader(orm)
@@ -62,14 +72,19 @@ describe('Établissement territorial rattaché loader', () => {
     // THEN
     const établissementsTerritoriauxAttendus: ÉtablissementTerritorialRattaché[] = [
       {
-        domaine: DomaineÉtablissementTerritorial.SANITAIRE,
-        numéroFiness: numéroFinessET2,
-        raisonSociale: 'CH NANTUA',
-      },
-      {
         domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
         numéroFiness: numéroFinessET1,
         raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+      },
+      {
+        domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
+        numéroFiness: numéroFinessET3,
+        raisonSociale: 'CH NANTUA v2',
+      },
+      {
+        domaine: DomaineÉtablissementTerritorial.SANITAIRE,
+        numéroFiness: numéroFinessET2,
+        raisonSociale: 'CH NANTUA',
       },
     ]
     expect(établissementsTerritoriaux).toStrictEqual(établissementsTerritoriauxAttendus)

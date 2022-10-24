@@ -16,7 +16,7 @@ export class TypeOrmÉtablissementTerritorialRattachéLoader implements Établis
   private async chargeLesÉtablissementsRattachésÀLEntitéJuridique(numéroFinessEntitéJuridique: string) {
     return await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
-      .find({ order: { raisonSociale: 'ASC' }, where: { numéroFinessEntitéJuridique } })
+      .find({ order: { domaine: 'ASC', numéroFinessÉtablissementTerritorial: 'ASC' }, where: { numéroFinessEntitéJuridique } })
   }
 
   private construisLesÉtablissementsTerritoriauxRattachés(
