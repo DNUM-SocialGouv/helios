@@ -1,17 +1,17 @@
-import { ReactChild } from 'react'
+import { ReactChild, ReactElement } from 'react'
 
 import '@gouvfr/dsfr/dist/component/modal/modal.min.css'
 import { useDependencies } from '../contexts/useDependencies'
 
 type InfoBulleProps = Readonly<{
-  contenu: ReactChild
+  children: ReactElement
   estCeOuvert: boolean
   identifiant: string
   setEstCeOuvert: Function
   titre: ReactChild
 }>
 
-export const InfoBulle = ({ contenu, estCeOuvert, identifiant, setEstCeOuvert, titre }: InfoBulleProps) => {
+export const InfoBulle = ({ children, estCeOuvert, identifiant, setEstCeOuvert, titre }: InfoBulleProps) => {
   const { wording } = useDependencies()
   let className = 'fr-modal'
 
@@ -60,7 +60,7 @@ export const InfoBulle = ({ contenu, estCeOuvert, identifiant, setEstCeOuvert, t
                   ></span>
                   {titre}
                 </h1>
-                {contenu}
+                {children}
               </div>
             </div>
           </div>

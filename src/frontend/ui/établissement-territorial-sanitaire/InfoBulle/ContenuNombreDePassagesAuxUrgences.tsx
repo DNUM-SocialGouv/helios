@@ -1,10 +1,10 @@
-import { ReactChild } from 'react'
+import { ReactElement } from 'react'
 
 import { useDependencies } from '../../commun/contexts/useDependencies'
 
 type ContenuNombreDePassagesAuxUrgencesProps = Readonly<{
   dateDeMiseÀJour: string
-  source: ReactChild
+  source: ReactElement
 }>
 
 export const ContenuNombreDePassagesAuxUrgences =
@@ -14,13 +14,7 @@ export const ContenuNombreDePassagesAuxUrgences =
     return (
       <>
         <p>
-          Mise à jour :
-          {' '}
-          {dateDeMiseÀJour}
-          {' '}
-          - Source :
-          {' '}
-          {source}
+          {wording.miseÀJourEtSource(dateDeMiseÀJour, source)}
         </p>
         <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
           <p>

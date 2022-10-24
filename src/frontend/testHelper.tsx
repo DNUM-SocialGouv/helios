@@ -42,6 +42,8 @@ export const trimHtml = (reactElement: ReactElement): string => {
         sentence += children1
       }
     }
+  } else if (reactElement.props.children instanceof Object) {
+    sentence = reactElement.props.children.props.children
   } else {
     sentence = reactElement.props.children
   }
@@ -49,7 +51,11 @@ export const trimHtml = (reactElement: ReactElement): string => {
   return sentence
 }
 
-export const htmlNodeAndReactChildMatcher = (wording: ReactElement) => (_: any, node: Element | null) => {
-  const hasText = (node: Element | null) => node?.textContent === trimHtml(wording)
-  return hasText(node)
+export const htmlNodeAndReactElementMatcher = (wording: ReactElement) => (_: string, element?: Element | null) => {
+  const hasText = (node?: Element | null) => node?.textContent === trimHtml(wording)
+  return hasText(element)
+}
+
+export const textMatch = (wording: string) => (_: string, element?: Element | null): boolean => {
+  return element?.textContent === wording
 }

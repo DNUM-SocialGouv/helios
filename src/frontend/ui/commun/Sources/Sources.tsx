@@ -1,6 +1,6 @@
-import { ReactChild } from 'react'
+import { ReactElement } from 'react'
 
-export function Sources(sourceFournisseur: ReactChild, sourceOrigine?: ReactChild): ReactChild {
+export function Sources(sourceFournisseur: ReactElement, sourceOrigine?: ReactElement): ReactElement {
   if (sourceOrigine) {
     return <>
       {sourceOrigine}

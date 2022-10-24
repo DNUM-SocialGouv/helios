@@ -1,4 +1,4 @@
-import { ReactChild, useState } from 'react'
+import { ReactChild, ReactElement, useState } from 'react'
 
 import { useDependencies } from '../contexts/useDependencies'
 import { InfoBulle } from '../InfoBulle/InfoBulle'
@@ -7,27 +7,19 @@ import styles from './Indicateur.module.css'
 import '@gouvfr/dsfr/dist/component/button/button.min.css'
 
 type IndicateurProps = Readonly<{
-  contenuInfoBulle: ReactChild
+  children: ReactElement
+  contenuInfoBulle: ReactElement
   dateDeMiseÀJour: string
   identifiant: string
   nomDeLIndicateur: ReactChild
-  source: ReactChild
-  children: ReactChild
+  source: ReactElement
 }>
 
 export const Indicateur = (
-  { contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source, children }: IndicateurProps
+  { children, contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source }: IndicateurProps
 ) => {
   const { wording } = useDependencies()
   const [estCeOuvert, setEstCeOuvert] = useState(false)
-
-  let miseÀJour = ''
-  let wordingSource = ''
-
-  if (dateDeMiseÀJour !== undefined && source !== undefined) {
-    miseÀJour = `${wording.MISE_À_JOUR} : ${dateDeMiseÀJour} - `
-    wordingSource = `${wording.SOURCE} : `
-  }
 
   return (
     <li>
@@ -37,9 +29,7 @@ export const Indicateur = (
         </p>
         <div className={styles['mise-a-jour-source']}>
           <p className={`fr-text--xs ${styles['titraille']}`}>
-            {miseÀJour}
-            {wordingSource}
-            {source}
+            {wording.miseÀJourEtSource(dateDeMiseÀJour, source)}
           </p>
           <button
             aria-controls={`nom-info-bulle-${identifiant}`}
@@ -54,12 +44,13 @@ export const Indicateur = (
       </div>
       {children}
       <InfoBulle
-        contenu={contenuInfoBulle}
         estCeOuvert={estCeOuvert}
         identifiant={identifiant}
         setEstCeOuvert={setEstCeOuvert}
         titre={nomDeLIndicateur}
-      />
+      >
+        {contenuInfoBulle}
+      </InfoBulle>
     </li>
   )
 }

@@ -3,7 +3,7 @@ import mockRouter from 'next-router-mock'
 
 import { RésultatDeRecherche } from '../../../backend/métier/entities/RésultatDeRecherche'
 import { RésultatDeRechercheTestBuilder } from '../../../backend/test-builder/RésultatDeRechercheTestBuilder'
-import { fakeFrontDependencies, htmlNodeAndReactChildMatcher, renderFakeComponent } from '../../testHelper'
+import { fakeFrontDependencies, htmlNodeAndReactElementMatcher, renderFakeComponent } from '../../testHelper'
 import { régions } from '../région/régions'
 import { PageRecherche } from './PageRecherche'
 
@@ -27,7 +27,7 @@ describe('La page de d’accueil', () => {
     // THEN
     const titre = screen.getByRole('heading', { level: 1, name: wording.RECHERCHE_TITRE })
     expect(titre).toBeInTheDocument()
-    const description = screen.getByText(htmlNodeAndReactChildMatcher(wording.RECHERCHE_DESCRIPTION), { selector: 'p' })
+    const description = screen.getByText(htmlNodeAndReactElementMatcher(wording.RECHERCHE_DESCRIPTION), { selector: 'p' })
     expect(description).toBeInTheDocument()
     const formulaire = screen.getByRole('search')
     const label = within(formulaire).getByLabelText(wording.RECHERCHE_LABEL)

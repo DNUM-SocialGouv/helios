@@ -1,10 +1,10 @@
-import { ReactChild } from 'react'
+import { ReactElement } from 'react'
 
 import { useDependencies } from '../../commun/contexts/useDependencies'
 
 type ContenuDuTauxOccupationProps = Readonly<{
   dateDeMiseÀJour: string
-  source: ReactChild
+  source: ReactElement
 }>
 
 export const ContenuDuTauxOccupation = ({ dateDeMiseÀJour, source }: ContenuDuTauxOccupationProps) => {
@@ -13,13 +13,7 @@ export const ContenuDuTauxOccupation = ({ dateDeMiseÀJour, source }: ContenuDuT
   return (
     <>
       <p>
-        Mise à jour :
-        {' '}
-        {dateDeMiseÀJour}
-        {' '}
-        - Source :
-        {' '}
-        {source}
+        {wording.miseÀJourEtSource(dateDeMiseÀJour, source)}
       </p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>

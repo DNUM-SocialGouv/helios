@@ -1,4 +1,4 @@
-import { ReactChild, useState } from 'react'
+import { ReactChild, ReactElement, useState } from 'react'
 
 import { useDependencies } from '../contexts/useDependencies'
 import { InfoBulle } from '../InfoBulle/InfoBulle'
@@ -7,41 +7,31 @@ import styles from './IndicateurGraphique.module.css'
 import '@gouvfr/dsfr/dist/component/button/button.min.css'
 
 type IndicateurProps = Readonly<{
-  années?: ReactChild
-  contenuInfoBulle: ReactChild
+  années?: ReactElement
+  children: ReactElement
+  contenuInfoBulle: ReactElement
   dateDeMiseÀJour: string
   identifiant: string
   nomDeLIndicateur: ReactChild
-  source: ReactChild
-  children: ReactChild
+  source: ReactElement
 }>
 
 export const IndicateurGraphique = (
-  { années = <></>, contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source, children }: IndicateurProps
+  { années = <></>, children, contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source }: IndicateurProps
 ) => {
   const { wording } = useDependencies()
   const [estCeOuvert, setEstCeOuvert] = useState(false)
 
-  let miseÀJour = ''
-  let wordingSource = ''
-
-  if (dateDeMiseÀJour !== undefined && source !== undefined) {
-    miseÀJour = `${wording.MISE_À_JOUR} : ${dateDeMiseÀJour} - `
-    wordingSource = `${wording.SOURCE} : `
-  }
-
   return (
     <li>
       <div>
-        <p className="fr-m-0">
+        <p className={`fr-m-0 ${styles['intitule']}`}>
           {nomDeLIndicateur}
           {années}
         </p>
         <div className={styles['mise-a-jour-source']}>
           <p className={`fr-text--xs ${styles['titraille']}`}>
-            {miseÀJour}
-            {wordingSource}
-            {source}
+            {wording.miseÀJourEtSource(dateDeMiseÀJour, source)}
           </p>
           <button
             aria-controls={`nom-info-bulle-${identifiant}`}
@@ -58,12 +48,13 @@ export const IndicateurGraphique = (
         {children}
       </div>
       <InfoBulle
-        contenu={contenuInfoBulle}
         estCeOuvert={estCeOuvert}
         identifiant={identifiant}
         setEstCeOuvert={setEstCeOuvert}
         titre={nomDeLIndicateur}
-      />
+      >
+        {contenuInfoBulle}
+      </InfoBulle>
     </li>
   )
 }
