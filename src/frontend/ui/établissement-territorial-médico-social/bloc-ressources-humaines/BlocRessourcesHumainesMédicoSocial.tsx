@@ -3,6 +3,7 @@ import { useDependencies } from '../../commun/contexts/useDependencies'
 import { IndicateurGraphique } from '../../commun/IndicateurGraphique/IndicateurGraphique'
 import { Sources } from '../../commun/Sources/Sources'
 import { ContenuDuNombreDEtpRéalisé } from '../InfoBulle/ContenuDuNombreDEtpRéalisé'
+import styles from './BlocRessourcesHumainesMédicoSocial.module.css'
 import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } from './ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel'
 
 type BlocRessourcesHumainesMédicoSocialProps = Readonly<{
@@ -27,7 +28,7 @@ export const BlocRessourcesHumainesMédicoSocial = (
       estCeIdentité={false}
       titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES}
     >
-      <ul className="indicateurs">
+      <ul className={`indicateurs ${styles['liste-indicateurs']}`}>
         <IndicateurGraphique
           contenuInfoBulle={<ContenuDuNombreDEtpRéalisé
             dateDeMiseÀJour={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.dateDeMiseÀJourDuNombreDEtpRéalisé}

@@ -17,7 +17,7 @@ export const ContenuDuNombreDEtpRéalisé = ({ dateDeMiseÀJour, source }: Conte
       </p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
-          Nombre total d’équivalent temps plein (ETP) réalisé, quelle que soit la catégorie de l’établissement (EHPAD, FAM-SAMSAH, autres etc.)
+          Le nombre total d’équivalent temps plein (ETP) réalisé, quelle que soit la catégorie de l’établissement (EHPAD, FAM-SAMSAH, autres etc.).
           Un ETP est une unité de mesure proportionnelle au nombre d’heures travaillées par un salarié sur un an.
           <br />
           Exemple : 1 salarié à mi-temps sur 12 mois = 0,5 ETP.
