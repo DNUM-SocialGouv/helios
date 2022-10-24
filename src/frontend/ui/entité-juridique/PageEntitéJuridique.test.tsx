@@ -36,7 +36,7 @@ describe('La page Entité Juridique', () => {
     />)
 
     // THEN
-    const titre = screen.getByRole('heading', { level: 1, name: 'EJ - 220 000 020 - CENTRE HOSPITALIER DE SAINT BRIEUC' })
+    const titre = screen.getByRole('heading', { level: 1, name: 'EJ - 220000020 - CENTRE HOSPITALIER DE SAINT BRIEUC' })
     expect(titre).toBeInTheDocument()
   })
 
@@ -99,7 +99,7 @@ describe('La page Entité Juridique', () => {
       const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
       const labelNuméroFiness = within(indicateurs[1]).getByText(textMatch(`${wording.NUMÉRO_FINESS} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
       expect(labelNuméroFiness).toBeInTheDocument()
-      const numéroFiness = within(indicateurs[1]).getByText('220 000 020', { selector: 'p' })
+      const numéroFiness = within(indicateurs[1]).getByText('220000020', { selector: 'p' })
       expect(numéroFiness).toBeInTheDocument()
     })
 
@@ -249,12 +249,12 @@ describe('La page Entité Juridique', () => {
       expect(listeDesÉtablissementsRattachés).toHaveLength(2)
       const établissementTerritorial1 = within(listeDesÉtablissementsRattachés[0]).getByRole('link')
       expect(établissementTerritorial1).toHaveAttribute('href', `${paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE}/010000040`)
-      expect(within(établissementTerritorial1).getByText('- 010 000 040 - CH NANTUA')).toBeInTheDocument()
+      expect(within(établissementTerritorial1).getByText('- 010000040 - CH NANTUA')).toBeInTheDocument()
       const abréviationÉtablissementTerritorial = within(établissementTerritorial1).getByText('ET', { selector: 'abbr' })
       expect(abréviationÉtablissementTerritorial).toHaveAttribute('title', 'Établissement territorial')
       const établissementTerritorial2 = within(listeDesÉtablissementsRattachés[1]).getByRole('link')
       expect(établissementTerritorial2).toHaveAttribute('href', `${paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL}/590782553`)
-      expect(within(établissementTerritorial2).getByText('- 590 782 553 - HOPITAL PRIVE DE VILLENEUVE DASCQ')).toBeInTheDocument()
+      expect(within(établissementTerritorial2).getByText('- 590782553 - HOPITAL PRIVE DE VILLENEUVE DASCQ')).toBeInTheDocument()
     })
 
     it('n’affiche pas la liste des établissements territoriaux rattachés quand l’entité juridique n’en a pas', () => {

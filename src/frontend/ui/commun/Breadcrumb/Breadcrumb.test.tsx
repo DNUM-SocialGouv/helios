@@ -90,7 +90,7 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     expect(within(accueil).getByText(wording.ACCUEIL)).toHaveAttribute('href', '/')
     expect(within(entitéJuridique).queryByRole('link')).not.toBeInTheDocument()
     expect(within(entitéJuridique).getByText('EJ', { selector: 'abbr' })).toHaveAttribute('title', 'Entité juridique')
-    expect(within(entitéJuridique).getByText('- 220 000 020 - CENTRE HOSPITALIER DE SAINT BRIEUC')).toBeInTheDocument()
+    expect(within(entitéJuridique).getByText('- 220000020 - CENTRE HOSPITALIER DE SAINT BRIEUC')).toBeInTheDocument()
   })
 
   it('affiche le chemin jusqu’à la page établissement territorial médico-social', () => {
@@ -117,7 +117,7 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     expect(within(accueil).getByText(wording.ACCUEIL)).toHaveAttribute('href', '/')
     expect(within(entitéJuridique).getByRole('link')).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/010008407`)
     expect(within(entitéJuridique).getByText('EJ', { selector: 'abbr' })).toHaveAttribute('title', 'Entité juridique')
-    expect(within(entitéJuridique).getByText('- 010 008 407 - CH DU HAUT BUGEY')).toBeInTheDocument()
+    expect(within(entitéJuridique).getByText('- 010008407 - CH DU HAUT BUGEY')).toBeInTheDocument()
     expect(within(établissementTerritorial).queryByRole('link')).not.toBeInTheDocument()
     expect(within(établissementTerritorial).getByText('IFAS CH DU HAUT BUGEY')).toBeInTheDocument()
   })
@@ -145,7 +145,7 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     expect(within(accueil).getByText(wording.ACCUEIL)).toHaveAttribute('href', '/')
     expect(within(entitéJuridique).getByRole('link')).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/010008407`)
     expect(within(entitéJuridique).getByText('EJ', { selector: 'abbr' })).toHaveAttribute('title', 'Entité juridique')
-    expect(within(entitéJuridique).getByText('- 010 008 407 - HOPITAL PRIVE DE VILLENEUVE DASCQ')).toBeInTheDocument()
+    expect(within(entitéJuridique).getByText('- 010008407 - HOPITAL PRIVE DE VILLENEUVE DASCQ')).toBeInTheDocument()
     expect(within(établissementTerritorial).queryByRole('link')).not.toBeInTheDocument()
     expect(within(établissementTerritorial).getByText('CH NANTUA')).toBeInTheDocument()
   })

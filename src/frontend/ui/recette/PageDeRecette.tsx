@@ -1,5 +1,4 @@
 import Image from 'next/future/image'
-import { ReactElement } from 'react'
 
 import { useDependencies } from '../commun/contexts/useDependencies'
 import { ListItem } from '../commun/ListItem/ListItem'
@@ -11,176 +10,119 @@ import styles from './PageDeRecette.module.css'
 export const PageDeRecette = () => {
   const { paths, wording } = useDependencies()
 
-  const entitésJuridiques: {identifiant: ReactElement, numéroFiness: string}[] = [
+  const entitésJuridiques: {identifiant: string, numéroFiness: string}[] = [
     {
-      identifiant: <>
-        <abbr title={wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
-        - 750 050 759 - CANSSM FILIERIS (avec que des ET sanitaires)
-      </>,
+      identifiant: 'EJ - 750050759 - CANSSM FILIERIS (avec que des ET sanitaires)',
       numéroFiness: '750050759',
     },
     {
-      identifiant: <>
-        <abbr title={wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
-        - 750 060 758 - SARL DOMITYS NORD OUEST (avec que des ET médico-sociaux)
-      </>,
+      identifiant: 'EJ - 750060758 - SARL DOMITYS NORD OUEST (avec que des ET médico-sociaux)',
       numéroFiness: '750060758',
     },
     {
-      identifiant: <>
-        <abbr title={wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
-        - 500 020 839 - GCSMS &quot;PRESQU’ÎLE&quot; (sans ET)
-      </>,
+      identifiant: 'EJ - 500020839 - GCSMS "PRESQU’ÎLE" (sans ET)',
       numéroFiness: '500020839',
     },
     {
-      identifiant: <>
-        <abbr title={wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
-        - 750 721 334 - CROIX ROUGE FRANCAISE (avec beaucoup d’ET)
-      </>,
+      identifiant: 'EJ - 750721334 - CROIX ROUGE FRANCAISE (avec beaucoup d’ET)',
       numéroFiness: '750721334',
     },
     {
-      identifiant: <>
-        <abbr title={wording.ENTITÉ_JURIDIQUE}>EJ</abbr>
-        - 210 012 142 - CTRE HOSPITALIER DE LA HAUTE COTE D’OR (avec un nom d’établissement très long)
-      </>,
+      identifiant: 'EJ - 210012142 - CTRE HOSPITALIER DE LA HAUTE COTE D’OR (avec un nom d’établissement très long)',
       numéroFiness: '210012142',
     },
   ]
-  const établissementsTerritoriauxMédicoSociaux: {identifiant: ReactElement, numéroFiness: string}[] = [
+  const établissementsTerritoriauxMédicoSociaux: {identifiant: string, numéroFiness: string}[] = [
     {
-      identifiant: <>
-        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        - 690 024 898 - EHPAD SAINT-FRANCOIS D’ASSISE (avec toutes les données d’activités - cadre ERRD)
-      </>,
+      identifiant: 'ET - 690024898 - EHPAD SAINT-FRANCOIS D’ASSISE (avec toutes les données d’activités - cadre ERRD)',
       numéroFiness: '690024898',
     },
     {
-      identifiant: <>
-        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        - 690 015 458 - ACCUEIL DE JOUR LES PETITS BONHEURS (certains indicateurs ne sont pas disponibles dans les données activité - cadre ERRD)
-      </>,
+      identifiant: 'ET - 690015458 - ACCUEIL DE JOUR LES PETITS BONHEURS (certains indicateurs ne sont pas disponibles dans les données activité - cadre ERRD)',
       numéroFiness: '690015458',
     },
     {
-      identifiant: <>
-        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        - 370 103 137 - ESAT ANAIS DE METTRAY (avec une année manquante dans les données activité - cadre CA PH)
-      </>,
+      identifiant: 'ET - 370103137 - ESAT ANAIS DE METTRAY (avec une année manquante dans les données activité - cadre CA PH)',
       numéroFiness: '370103137',
     },
     {
-      identifiant: <>
-        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        - 130 008 329 - EHPAD RESIDENCE LES LAVANDINS (avec une année vide dans les données activité - cadre ERRD sans taux)
-      </>,
+      identifiant: 'ET - 130008329 - EHPAD RESIDENCE LES LAVANDINS (avec une année vide dans les données activité - cadre ERRD sans taux)',
       numéroFiness: '130008329',
     },
     {
-      identifiant: <>
-        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        - 010 007 425 - SSIAD EHPAD SAINT-TRIVIER-DE-COURTES (avec toutes les données activités disponibles mais vides - cadre ERRD)
-      </>,
+      identifiant: 'ET - 010007425 - SSIAD EHPAD SAINT-TRIVIER-DE-COURTES (avec toutes les données activités disponibles mais vides - cadre ERRD)',
       numéroFiness: '010007425',
     },
     {
-      identifiant: <>
-        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        - 660 011 859 - SAAD DOMITYS SUD EST LES TOURS D’OR (avec aucune activité ni données budget et finances)
-      </>,
+      identifiant: 'ET - 660011859 - SAAD DOMITYS SUD EST LES TOURS D’OR (avec aucune activité ni données budget et finances)',
       numéroFiness: '660011859',
     },
     {
-      identifiant: <>
-        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        - 590 006 961 - INSTITUT THERAPEUTIQUE EDUCATIF ET PEDAGOGIQUE DE TOURCOING (avec beaucoup d’autorisations - cadre CA PH)
-      </>,
+      identifiant: 'ET - 590006961 - INSTITUT THERAPEUTIQUE EDUCATIF ET PEDAGOGIQUE DE TOURCOING (avec beaucoup d’autorisations - cadre CA PH)',
       numéroFiness: '590006961',
     },
     {
-      identifiant: <>
-        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        - 660 009 945 - EEPA PHV BOUFFARD VERCELLI (cadre CA PA)
-      </>,
+      identifiant: 'ET - 660009945 - EEPA PHV BOUFFARD VERCELLI (cadre CA PA)',
       numéroFiness: '660009945',
     },
   ]
   const établissementsTerritoriauxMédicoSociauxBudgetEtFinances: { identifiant: string, numéroFiness: string }[] = [
     {
-      identifiant: 'ET - 690 024 898 - EHPAD SAINT-FRANCOIS D’ASSISE (2 années ERRD)',
+      identifiant: 'ET - 690024898 - EHPAD SAINT-FRANCOIS D’ASSISE (2 années ERRD)',
       numéroFiness: '690024898',
     },
     {
-      identifiant: 'ET - 370 103 137 - ESAT ANAIS DE METTRAY (2 années CA PH)',
+      identifiant: 'ET - 370103137 - ESAT ANAIS DE METTRAY (2 années CA PH)',
       numéroFiness: '370103137',
     },
     {
-      identifiant: 'ET - 660 009 945 - EEPA PHV BOUFFARD VERCELLI (2 années CA PA)',
+      identifiant: 'ET - 660009945 - EEPA PHV BOUFFARD VERCELLI (2 années CA PA)',
       numéroFiness: '660009945',
     },
     {
-      identifiant: 'ET - 010 003 218 - IME HENRI LAFAY (1 années ERRD et 1 année CA PH)',
+      identifiant: 'ET - 010003218 - IME HENRI LAFAY (1 années ERRD et 1 année CA PH)',
       numéroFiness: '010003218',
     },
     {
-      identifiant: 'ET - 750 803 553 - RESIDENCE AUTONOMIE ANDRE LEROUX (1 années ERRD et 1 année CA PA)',
+      identifiant: 'ET - 750803553 - RESIDENCE AUTONOMIE ANDRE LEROUX (1 années ERRD et 1 année CA PA)',
       numéroFiness: '750803553',
     },
     {
-      identifiant: 'ET - 890 971 294 - SPASAD ATOME AUXERRE (recette négative en 2019)',
+      identifiant: 'ET - 890971294 - SPASAD ATOME AUXERRE (recette négative en 2019)',
       numéroFiness: '890971294',
     },
     {
-      identifiant: 'ET - 410 005 946 - SERVICE DE SUITE ET D’ACCOMPAGNEMENT SOCIAL (dépense positive en 2020)',
+      identifiant: 'ET - 410005946 - SERVICE DE SUITE ET D’ACCOMPAGNEMENT SOCIAL (dépense positive en 2020)',
       numéroFiness: '410005946',
     },
     {
-      identifiant: 'ET - 130 802 119 - EHPAD B CARRARA DE L’HOPITAL D’ALLAUCH (sans année)',
+      identifiant: 'ET - 130802119 - EHPAD B CARRARA DE L’HOPITAL D’ALLAUCH (sans année)',
       numéroFiness: '130802119',
     },
   ]
-  const établissementsTerritoriauxSanitaires: {identifiant: ReactElement, numéroFiness: string}[] = [
+  const établissementsTerritoriauxSanitaires: {identifiant: string, numéroFiness: string}[] = [
     {
-      identifiant: <>
-        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        - 120 004 668 - CH EMILE BOREL ST AFFRIQUE (avec toutes les données d’activités)
-      </>,
+      identifiant: 'ET - 120004668 - CH EMILE BOREL ST AFFRIQUE (avec toutes les données d’activités)',
       numéroFiness: '120004668',
     },
     {
-      identifiant: <>
-        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        - 780 150 017 - CTR DE SOINS ET READAPTATION CESSRIN (sans nombres de passages urgences)
-      </>,
+      identifiant: 'ET - 780150017 - CTR DE SOINS ET READAPTATION CESSRIN (sans nombres de passages urgences)',
       numéroFiness: '780150017',
     },
     {
-      identifiant: <>
-        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        - 450 000 021 - HÔPITAL MADELEINE (sans données MCO)
-      </>,
+      identifiant: 'ET - 450000021 - HÔPITAL MADELEINE (sans données MCO)',
       numéroFiness: '450000021',
     },
     {
-      identifiant: <>
-        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        - 010 008 852 - CRF L’ORCET SITE DU CH DE FLEYRIAT (avec toutes les données activités disponibles mais vides)
-      </>,
+      identifiant: 'ET - 010008852 - CRF L’ORCET SITE DU CH DE FLEYRIAT (avec toutes les données activités disponibles mais vides)',
       numéroFiness: '010008852',
     },
     {
-      identifiant: <>
-        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        - 830 208 120 - CDS MEDICAL FILIERIS BRIGNOLES (avec aucune activité)
-      </>,
+      identifiant: 'ET - 830208120 - CDS MEDICAL FILIERIS BRIGNOLES (avec aucune activité)',
       numéroFiness: '830208120',
     },
     {
-      identifiant: <>
-        <abbr title={wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
-        - 220 000 012 - CENTRE HOSPITALIER YVES LE FOLL (avec des autorisations et des autres activités)
-      </>,
+      identifiant: 'ET - 220000012 - CENTRE HOSPITALIER YVES LE FOLL (avec des autorisations et des autres activités)',
       numéroFiness: '220000012',
     },
   ]

@@ -4,7 +4,6 @@ import { Bloc } from '../../commun/Bloc/Bloc'
 import { useDependencies } from '../../commun/contexts/useDependencies'
 import { Indicateur } from '../../commun/Indicateur/Indicateur'
 import { IndicateurGraphique } from '../../commun/IndicateurGraphique/IndicateurGraphique'
-import { Sources } from '../../commun/Sources/Sources'
 import { ContenuCompteDeRésultat } from '../InfoBulle/ContenuCompteDeRésultat'
 import { ContenuFondDeRoulementNetGlobal } from '../InfoBulle/ContenuFondDeRoulementNetGlobal'
 import { ContenuMontantDeLaContributionAuxFraisDeSiège } from '../InfoBulle/ContenuMontantDeLaContributionAuxFraisDeSiège'
@@ -42,14 +41,14 @@ export const BlocBudgetEtFinancesMédicoSocial = (
           années={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.listeDéroulanteDesAnnéesDuCompteDeRésultat(setAnnéeEnCours)}
           contenuInfoBulle={<ContenuCompteDeRésultat
             dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourTauxDeVétustéConstruction}
-            source={Sources(wording.DIAMANT, wording.CNSA)}
+            source={wording.CNSA}
           />}
           dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourTauxDeVétustéConstruction}
           identifiant="budget-et-finances-compte-de-résultat"
           nomDeLIndicateur={<>
             {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.intituléDuCompteDeRésultat(annéeEnCours)}
           </>}
-          source={Sources(wording.DIAMANT, wording.CNSA)}
+          source={wording.CNSA}
         >
           {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.compteDeRésultat(annéeEnCours)}
         </IndicateurGraphique>
@@ -58,12 +57,12 @@ export const BlocBudgetEtFinancesMédicoSocial = (
           <Indicateur
             contenuInfoBulle={<ContenuRésultatNetComptable
               dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourRésultatNetComptable}
-              source={Sources(wording.DIAMANT, wording.CNSA)}
+              source={wording.CNSA}
             />}
             dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourRésultatNetComptable}
             identifiant="budget-et-finances-résultat-net-comptable"
             nomDeLIndicateur={wording.RÉSULTAT_NET_COMPTABLE}
-            source={Sources(wording.DIAMANT, wording.CNSA)}
+            source={wording.CNSA}
           >
             {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.résultatNetComptable}
           </Indicateur>
@@ -73,12 +72,12 @@ export const BlocBudgetEtFinancesMédicoSocial = (
           <Indicateur
             contenuInfoBulle={<ContenuMontantDeLaContributionAuxFraisDeSiège
               dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourMontantDeLaContributionAuxFraisDeSiège}
-              source={Sources(wording.DIAMANT, wording.CNSA)}
+              source={wording.CNSA}
             />}
             dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourMontantDeLaContributionAuxFraisDeSiège}
             identifiant="budget-et-finances-montant-de-la-contribution"
             nomDeLIndicateur={wording.MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE}
-            source={Sources(wording.DIAMANT, wording.CNSA)}
+            source={wording.CNSA}
           >
             {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.montantDeLaContributionAuxFraisDeSiège}
           </Indicateur>
@@ -86,24 +85,24 @@ export const BlocBudgetEtFinancesMédicoSocial = (
         <IndicateurGraphique
           contenuInfoBulle={<ContenuTauxDeCaf
             dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourTauxDeCaf}
-            source={Sources(wording.DIAMANT, wording.CNSA)}
+            source={wording.CNSA}
           />}
           dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourTauxDeCaf}
           identifiant="budget-et-finances-taux-de-caf"
           nomDeLIndicateur={wording.TAUX_DE_CAF}
-          source={Sources(wording.DIAMANT, wording.CNSA)}
+          source={wording.CNSA}
         >
           {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeCaf}
         </IndicateurGraphique>
         <IndicateurGraphique
           contenuInfoBulle={<ContenuTauxDeVétustéConstruction
             dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourTauxDeVétustéConstruction}
-            source={Sources(wording.DIAMANT, wording.CNSA)}
+            source={wording.CNSA}
           />}
           dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourTauxDeVétustéConstruction}
           identifiant="budget-et-finances-taux-de-vétusté-construction"
           nomDeLIndicateur={wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION}
-          source={Sources(wording.DIAMANT, wording.CNSA)}
+          source={wording.CNSA}
         >
           {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeVétustéConstruction}
         </IndicateurGraphique>
@@ -112,12 +111,12 @@ export const BlocBudgetEtFinancesMédicoSocial = (
           <IndicateurGraphique
             contenuInfoBulle={<ContenuFondDeRoulementNetGlobal
               dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourFondDeRoulementNetGlobal}
-              source={Sources(wording.DIAMANT, wording.CNSA)}
+              source={wording.CNSA}
             />}
             dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourFondDeRoulementNetGlobal}
             identifiant="budget-et-finances-fond-de-roulement-net-global"
             nomDeLIndicateur={wording.FONDS_DE_ROULEMENT_NET_GLOBAL}
-            source={Sources(wording.DIAMANT, wording.CNSA)}
+            source={wording.CNSA}
           >
             {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.fondDeRoulementNetGlobal}
           </IndicateurGraphique>

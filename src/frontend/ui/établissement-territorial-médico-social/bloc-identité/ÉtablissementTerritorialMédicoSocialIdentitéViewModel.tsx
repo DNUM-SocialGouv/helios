@@ -22,7 +22,7 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
   }
 
   public get numéroFinessÉtablissementTerritorial(): string {
-    return StringFormater.formateLeNuméroFiness(this.établissementTerritorialIdentité.numéroFinessÉtablissementTerritorial.value)
+    return this.établissementTerritorialIdentité.numéroFinessÉtablissementTerritorial.value
   }
 
   public get dateDeMiseÀJourDuNuméroFinessÉtablissementTerritorial(): string {
@@ -92,7 +92,7 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
   public get principalOuSecondaire(): string {
     return this.établissementTerritorialIdentité.typeÉtablissement.value === 'P' ?
       this.wording.PRINCIPAL :
-      `${this.wording.SECONDAIRE} (${this.wording.PRINCIPAL} : ${StringFormater.formateLeNuméroFiness(this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal.value)})`
+      `${this.wording.SECONDAIRE} (${this.wording.PRINCIPAL} : ${this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal.value})`
   }
 
   public get dateDeMiseÀJourDuPrincipalOuDuSecondaire(): string {
@@ -109,9 +109,8 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
   }
 
   private formateLeTitreDeLEntitéJuridiqueDeRattachement(): string {
-    const numéroFinessEntitéJuridiqueFormaté = StringFormater.formateLeNuméroFiness(this.établissementTerritorialIdentité.numéroFinessEntitéJuridique.value)
     const nomDeLEntitéJuridique = this.établissementTerritorialIdentité.raisonSocialeDeLEntitéDeRattachement.value
-    return `${numéroFinessEntitéJuridiqueFormaté} - ${nomDeLEntitéJuridique}`
+    return `${this.établissementTerritorialIdentité.numéroFinessEntitéJuridique.value} - ${nomDeLEntitéJuridique}`
   }
 
   private valeurOuNonRenseigné(valeur: string): string {
