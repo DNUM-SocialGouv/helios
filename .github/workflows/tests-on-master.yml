@@ -1,48 +1,11 @@
-name: Install, build, lint and tests
+name: Tests on master
 
-on: pull_request
+on:
+  push:
+    branches: [ master ]
 
 jobs:
-  package-dedupe:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - uses: actions/setup-node@v3
-        with:
-          cache: yarn
-          node-version-file: package.json
-      - name: Check for duplicate dependencies (fix w/ "yarn dedupe")
-        run: yarn dedupe --check
-
-  lint-and-typecheck-typescript:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          cache: yarn
-          node-version-file: package.json
-      - name: Install packages
-        run: yarn --immutable
-      - name: Run the TS linter
-        run: yarn lint:typescript
-      - name: Run the typescript
-        run: yarn typecheck:typescript
-
-  lint-css:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          cache: yarn
-          node-version-file: package.json
-      - name: Install packages
-        run: yarn --immutable
-      - name: Run the CSS linter
-        run: yarn lint:scss
-
-  tests-typescript:
+  typescript:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -59,9 +22,6 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-    strategy:
-      matrix:
-        side: ['back', 'front']
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -73,26 +33,8 @@ jobs:
       - name: Run the tests
         env:
           DATABASE_URL: postgres://helios:h3li0s@localhost:5433/helios
-        run: yarn test:typescript:${{ matrix.side }}
+        run: yarn test:typescript:coverage
       - uses: codecov/codecov-action@v3
-
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          cache: yarn
-          node-version-file: package.json
-      - name: Install packages
-        env:
-          YARN_NODE_LINKER: pnp
-        run: yarn --immutable
-      - name: Build the app
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          YARN_NODE_LINKER: pnp
-        run: yarn build
 
   python:
     runs-on: ubuntu-latest
@@ -118,10 +60,13 @@ jobs:
           cache: yarn
           node-version-file: package.json
       - name: Install packages
+        env:
+          YARN_NODE_LINKER: pnp
         run: yarn --immutable
       - name: Run the migrations
         env:
           NODE_ENV: test
+          YARN_NODE_LINKER: pnp
         run: yarn migrations:up
       - name: Install pipenv
         run: pipx install pipenv
@@ -131,12 +76,6 @@ jobs:
           python-version: 3.10.6 # Conserver la même version que celle dans Pipfile
       - name: Install dependencies
         run: pipenv install --dev --deploy
-      - name: Lint
-        run: pipenv run lint
-      - name: Type check
-        run: pipenv run typecheck
-      - name: Check format
-        run: pipenv run format_check
       - name: Create the DIAMANT public key
         env:
           DIAMANT_PRIVATE_KEY: ${{ secrets.DIAMANT_PRIVATE_KEY }}

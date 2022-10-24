@@ -11,6 +11,7 @@
       "version": "detect"
     }
   },
+  "ignorePatterns": ["public/smarttag.js"],
   "parser": "@typescript-eslint/parser",
   "plugins": [
     "eslint-plugin-react",

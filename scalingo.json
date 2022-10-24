@@ -2,6 +2,12 @@
   "env": {
     "SENTRY_ENVIRONMENT": {
       "value": "review-app"
+    },
+    "NODE_ENV": {
+      "value": "review-app"
+    },
+    "NEXT_PUBLIC_AT_PIANO_SITE_ID": {
+      "value": "613767"
     }
   },
   "formation": {
