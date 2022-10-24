@@ -3,7 +3,6 @@ import { ReactElement } from 'react'
 import { ÉtablissementTerritorialSanitaire } from '../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire'
 import { Paths } from '../../configuration/Paths'
 import { Wording } from '../../configuration/wording/Wording'
-import { StringFormater } from '../commun/StringFormater'
 import { ÉtablissementTerritorialSanitaireActivitéViewModel } from './bloc-activité/ÉtablissementTerritorialSanitaireActivitéViewModel'
 import { ÉtablissementTerritorialSanitaireAutorisationsViewModel } from './bloc-autorisations/ÉtablissementTerritorialSanitaireAutorisationsViewModel'
 import { ÉtablissementTerritorialSanitaireIdentitéViewModel } from './bloc-identité/ÉtablissementTerritorialSanitaireIdentitéViewModel'
@@ -53,11 +52,7 @@ export class ÉtablissementTerritorialSanitaireViewModel {
   }
 
   private formateLeTitreDeLEntitéJuridiqueDeRattachement() {
-    const numéroFinessEntitéJuridiqueFormaté = StringFormater.insèreUnEspaceTousLesNCaractères(
-      this.établissementTerritorial.identité.numéroFinessEntitéJuridique.value,
-      3
-    )
     const nomDeLEntitéJuridique = this.établissementTerritorial.identité.raisonSocialeDeLEntitéDeRattachement.value
-    return `${numéroFinessEntitéJuridiqueFormaté} - ${nomDeLEntitéJuridique}`
+    return `${this.établissementTerritorial.identité.numéroFinessEntitéJuridique.value} - ${nomDeLEntitéJuridique}`
   }
 }

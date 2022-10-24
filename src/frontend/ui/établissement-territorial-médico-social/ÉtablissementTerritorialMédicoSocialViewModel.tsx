@@ -3,7 +3,6 @@ import { ReactElement } from 'react'
 import { ÉtablissementTerritorialMédicoSocial } from '../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
 import { Paths } from '../../configuration/Paths'
 import { Wording } from '../../configuration/wording/Wording'
-import { StringFormater } from '../commun/StringFormater'
 import { ÉtablissementTerritorialMédicoSocialActivitéViewModel } from './bloc-activité/ÉtablissementTerritorialMédicoSocialActivitéViewModel'
 import { ÉtablissementTerritorialMédicoSocialAutorisationsViewModel } from './bloc-autorisations/ÉtablissementTerritorialMédicoSocialAutorisationsViewModel'
 import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from './bloc-budget-et-finances/ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel'
@@ -55,9 +54,8 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   }
 
   private formateLeTitreDeLEntitéJuridiqueDeRattachement(): string {
-    const numéroFinessEntitéJuridiqueFormaté = StringFormater.formateLeNuméroFiness(this.établissementTerritorial.identité.numéroFinessEntitéJuridique.value)
     const nomDeLEntitéJuridique = this.établissementTerritorial.identité.raisonSocialeDeLEntitéDeRattachement.value
-    return `${numéroFinessEntitéJuridiqueFormaté} - ${nomDeLEntitéJuridique}`
+    return `${this.établissementTerritorial.identité.numéroFinessEntitéJuridique.value} - ${nomDeLEntitéJuridique}`
   }
 
   public get identitéViewModel(): ÉtablissementTerritorialMédicoSocialIdentitéViewModel {

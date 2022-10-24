@@ -32,7 +32,7 @@ export class EntitéJuridiqueViewModel {
   }
 
   public get numéroFiness(): string {
-    return StringFormater.formateLeNuméroFiness(this.entitéJuridique.numéroFinessEntitéJuridique.value)
+    return this.entitéJuridique.numéroFinessEntitéJuridique.value
   }
 
   public get dateDeMiseÀJourDuNuméroFiness(): string {

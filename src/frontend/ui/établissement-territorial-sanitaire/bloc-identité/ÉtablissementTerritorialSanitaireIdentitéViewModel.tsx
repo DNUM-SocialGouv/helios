@@ -21,7 +21,7 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
   }
 
   public get numéroFinessÉtablissementTerritorial(): string {
-    return StringFormater.insèreUnEspaceTousLesNCaractères(this.établissementTerritorialSanitaireIdentité.numéroFinessÉtablissementTerritorial.value, 3)
+    return this.établissementTerritorialSanitaireIdentité.numéroFinessÉtablissementTerritorial.value
   }
 
   public get dateDeMiseÀJourDuNuméroFinessÉtablissementTerritorial(): string {
@@ -38,7 +38,7 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
 
   public get téléphoneEtEmail(): string {
     const téléphoneFormaté = this.valeurOuNonRenseigné(
-      StringFormater.insèreUnEspaceTousLesNCaractères(this.établissementTerritorialSanitaireIdentité.téléphone.value, 2)
+      StringFormater.formateLeNuméroDeTéléphone(this.établissementTerritorialSanitaireIdentité.téléphone.value)
     )
     const email = this.valeurOuNonRenseigné(this.établissementTerritorialSanitaireIdentité.courriel.value)
     return `${téléphoneFormaté} | ${email}`
@@ -50,12 +50,8 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
 
   public get entitéJuridiqueDeRattachement(): JSX.Element {
     const lienVersLEntitéJuridique = `${this.paths.ENTITÉ_JURIDIQUE}/${this.établissementTerritorialSanitaireIdentité.numéroFinessEntitéJuridique.value}`
-    const numéroFinessEntitéJuridiqueFormaté = StringFormater.insèreUnEspaceTousLesNCaractères(
-      this.établissementTerritorialSanitaireIdentité.numéroFinessEntitéJuridique.value,
-      3
-    )
     const nomDeLEntitéJuridique = this.établissementTerritorialSanitaireIdentité.raisonSocialeDeLEntitéDeRattachement.value
-    const libellé = `EJ - ${numéroFinessEntitéJuridiqueFormaté} - ${nomDeLEntitéJuridique}`
+    const libellé = `EJ - ${this.établissementTerritorialSanitaireIdentité.numéroFinessEntitéJuridique.value} - ${nomDeLEntitéJuridique}`
 
     return (
       <Link

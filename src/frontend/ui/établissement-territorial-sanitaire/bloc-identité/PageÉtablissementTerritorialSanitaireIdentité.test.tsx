@@ -22,7 +22,7 @@ describe('La page établissement territorial sanitaire - bloc identité', () => 
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
     // THEN
-    const titre = screen.getByRole('heading', { level: 1, name: 'ET - 010 000 040 - CH NANTUA' })
+    const titre = screen.getByRole('heading', { level: 1, name: 'ET - 010000040 - CH NANTUA' })
     expect(titre).toBeInTheDocument()
   })
 
@@ -72,7 +72,7 @@ describe('La page établissement territorial sanitaire - bloc identité', () => 
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const labelNuméroFiness = within(indicateurs[1]).getByText(textMatch(`${wording.NUMÉRO_FINESS} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
     expect(labelNuméroFiness).toBeInTheDocument()
-    const numéroFiness = within(indicateurs[1]).getByText('010 000 040', { selector: 'p' })
+    const numéroFiness = within(indicateurs[1]).getByText('010000040', { selector: 'p' })
     expect(numéroFiness).toBeInTheDocument()
   })
 
@@ -111,7 +111,7 @@ describe('La page établissement territorial sanitaire - bloc identité', () => 
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const labelEntitéJuridiqueDeRattachement = within(indicateurs[4]).getByText(textMatch(`${wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
     expect(labelEntitéJuridiqueDeRattachement).toBeInTheDocument()
-    const entitéJuridiqueDeRattachement = within(indicateurs[4]).getByRole('link', { name: 'EJ - 010 008 407 - HOPITAL PRIVE DE VILLENEUVE DASCQ' })
+    const entitéJuridiqueDeRattachement = within(indicateurs[4]).getByRole('link', { name: 'EJ - 010008407 - HOPITAL PRIVE DE VILLENEUVE DASCQ' })
     expect(entitéJuridiqueDeRattachement).toHaveAttribute('href', '/entite-juridique/010008407')
   })
 

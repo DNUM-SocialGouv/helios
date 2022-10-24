@@ -5,7 +5,6 @@ import { DomaineÉtablissementTerritorial } from '../../../../backend/métier/en
 import { ÉtablissementTerritorialRattaché } from '../../../../backend/métier/entities/entité-juridique/ÉtablissementTerritorialRattaché'
 import { Paths } from '../../../configuration/Paths'
 import { Wording } from '../../../configuration/wording/Wording'
-import { StringFormater } from '../../commun/StringFormater'
 import logoÉtablissementTerritorialMédicoSocial from './logo-établissement-territorial-médico-social-noir.svg'
 import logoÉtablissementTerritorialSanitaire from './logo-établissement-territorial-sanitaire-noir.svg'
 
@@ -17,12 +16,11 @@ export class ÉtablissementTerritorialRattachéViewModel {
   }
 
   public get identifiant(): ReactElement {
-    const numéroFinessFormaté = StringFormater.formateLeNuméroFiness(this.numéroFiness)
     return (
       <>
         <abbr title={this.wording.ÉTABLISSEMENT_TERRITORIAL}>ET</abbr>
         {' - '}
-        {numéroFinessFormaté}
+        {this.numéroFiness}
         {' - '}
         {this.établissementTerritorialRattaché.raisonSociale}
       </>
