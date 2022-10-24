@@ -2,7 +2,7 @@ import { fireEvent, screen, within } from '@testing-library/react'
 
 import { numéroFinessÉtablissementTerritorial } from '../../../../backend/testHelper'
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from '../../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder'
-import { fakeFrontDependencies, renderFakeComponent } from '../../../testHelper'
+import { fakeFrontDependencies, renderFakeComponent, textMatch } from '../../../testHelper'
 import { PageÉtablissementTerritorialSanitaire } from '../PageÉtablissementTerritorialSanitaire'
 import { ÉtablissementTerritorialSanitaireViewModel } from '../ÉtablissementTerritorialSanitaireViewModel'
 
@@ -22,15 +22,15 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       const capacitéParActivités = indicateurs[0]
       const titre = within(capacitéParActivités).getByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: 'p' })
       expect(titre).toBeInTheDocument()
-      const dateMiseAJour = within(capacitéParActivités).getAllByText('Mise à jour', { exact: false, selector: 'p' })
-      expect(dateMiseAJour[0].textContent).toBe('Mise à jour : 02/09/2022 - Source : SAE, DIAMANT')
+      const dateMiseAJour = within(capacitéParActivités).getAllByText(textMatch(`${wording.miseÀJour('02/09/2022')} - Source : SAE, DIAMANT`), { selector: 'p' })
+      expect(dateMiseAJour[0]).toBeInTheDocument()
       const transcription = within(capacitéParActivités).getByText(wording.AFFICHER_LA_TRANSCRIPTION)
       expect(transcription).toHaveAttribute('aria-expanded', 'false')
       expect(transcription).not.toBeDisabled()
       const abréviationSourceFournisseur = within(capacitéParActivités).getAllByText('DIAMANT', { selector: 'abbr' })
-      expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
+      expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', wording.DIAMANT_TITLE)
       const abréviationSourceOrigine = within(capacitéParActivités).getAllByText('SAE', { selector: 'abbr' })
-      expect(abréviationSourceOrigine[0]).toHaveAttribute('title', 'Statistique Annuelle des Établissements de santé')
+      expect(abréviationSourceOrigine[0]).toHaveAttribute('title', wording.SAE_TITLE)
       const détails = within(capacitéParActivités).getByRole('button', { name: wording.DÉTAILS })
       expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-capacite-sanitaire')
       expect(détails).toHaveAttribute('data-fr-opened', 'false')
@@ -52,9 +52,9 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       const fermer = within(infoBulle).getByRole('button', { name: wording.FERMER })
       expect(fermer).toBeInTheDocument()
       const abréviationSourceFournisseur = within(infoBulle).getAllByText('DIAMANT', { selector: 'abbr' })
-      expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
+      expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', wording.DIAMANT_TITLE)
       const abréviationSourceOrigine = within(infoBulle).getAllByText('SAE', { selector: 'abbr' })
-      expect(abréviationSourceOrigine[0]).toHaveAttribute('title', 'Statistique Annuelle des Établissements de santé')
+      expect(abréviationSourceOrigine[0]).toHaveAttribute('title', wording.SAE_TITLE)
       const élémentsDeCompréhension = within(infoBulle).getByRole('region', { name: wording.ÉLÉMENTS_DE_COMPRÉHENSION })
       expect(élémentsDeCompréhension).toBeInTheDocument()
       const fréquence = within(infoBulle).getByRole('region', { name: wording.FRÉQUENCE })
@@ -219,12 +219,12 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     const autorisations = sélectionneLIndicateur(nomDeLIndicateur, indicateurs)
     const titre = within(autorisations).getByText(nomDeLIndicateur, { selector: 'p' })
     expect(titre).toBeInTheDocument()
-    const dateMiseAJour = within(autorisations).getAllByText('Mise à jour', { exact: false, selector: 'p' })
-    expect(dateMiseAJour[0].textContent).toBe('Mise à jour : 29/08/2022 - Source : ARHGOS, FINESS')
+    const dateMiseAJour = within(autorisations).getAllByText(textMatch(`${wording.miseÀJour('29/08/2022')} - Source : ARHGOS, FINESS`), { selector: 'p' })
+    expect(dateMiseAJour[0]).toBeInTheDocument()
     const abréviationSourceFournisseur = within(autorisations).getAllByText('FINESS', { selector: 'abbr' })
-    expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', 'Fichier National des Établissements Sanitaires et Sociaux')
+    expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', wording.FINESS_TITLE)
     const abréviationSourceOrigine = within(autorisations).getAllByText('ARHGOS', { selector: 'abbr' })
-    expect(abréviationSourceOrigine[0]).toHaveAttribute('title', 'Agence Régionale Hospitalière Gestion des Objectifs Sanitaires')
+    expect(abréviationSourceOrigine[0]).toHaveAttribute('title', wording.ARHGOS_TITLE)
     const détails = within(autorisations).getByRole('button', { name: wording.DÉTAILS })
     expect(détails).toHaveAttribute('aria-controls', `nom-info-bulle-${suffixeDeLInfoBulle}`)
     expect(détails).toHaveAttribute('data-fr-opened', 'false')
@@ -253,9 +253,9 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     const fermer = within(infoBulle).getByRole('button', { name: wording.FERMER })
     expect(fermer).toBeInTheDocument()
     const abréviationSourceFournisseur = within(infoBulle).getAllByText('FINESS', { selector: 'abbr' })
-    expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', 'Fichier National des Établissements Sanitaires et Sociaux')
+    expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', wording.FINESS_TITLE)
     const abréviationSourceOrigine = within(infoBulle).getAllByText('ARHGOS', { selector: 'abbr' })
-    expect(abréviationSourceOrigine[0]).toHaveAttribute('title', 'Agence Régionale Hospitalière Gestion des Objectifs Sanitaires')
+    expect(abréviationSourceOrigine[0]).toHaveAttribute('title', wording.ARHGOS_TITLE)
     const élémentsDeCompréhension = within(infoBulle).getByRole('region', { name: wording.ÉLÉMENTS_DE_COMPRÉHENSION })
     expect(élémentsDeCompréhension).toBeInTheDocument()
     const fréquence = within(infoBulle).getByRole('region', { name: wording.FRÉQUENCE })
@@ -303,7 +303,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
       const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
       const autorisations = sélectionneLIndicateur(wording.AUTORISATIONS, indicateurs)
-      expect(within(autorisations).getByRole('link', { name: 'Traitement de l\'insuffisance rénale chronique par épuration extrarénale [16]' })).toBeInTheDocument()
+      expect(within(autorisations).getByRole('link', { name: "Traitement de l'insuffisance rénale chronique par épuration extrarénale [16]" })).toBeInTheDocument()
     })
 
     it('affiche un lien pour chaque modalité d’une activité', () => {
@@ -327,11 +327,12 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       const autorisations = sélectionneLIndicateur(wording.AUTORISATIONS, indicateurs)
       const informationsDUneAutorisation = within(autorisations).getAllByRole('list', { name: 'autorisations' })[0]
       const tags = within(informationsDUneAutorisation).getAllByRole('listitem')
-      expect(within(tags[0]).getByText('Pas de forme [00]', { selector: 'li' })).toBeInTheDocument()
-      expect(within(tags[1]).getByText(`${wording.NUMÉRO_ARHGOS} : 01-00-000`, { selector: 'li' })).toBeInTheDocument()
-      expect(within(tags[2]).getByText(`${wording.DATE_DE_MISE_EN_OEUVRE} : N/A`, { selector: 'li' })).toBeInTheDocument()
-      expect(within(tags[3]).getByText(`${wording.DATE_DE_FIN} : 03/05/2026`, { selector: 'li' })).toBeInTheDocument()
-      expect(within(tags[4]).getByText(`${wording.DATE_D_AUTORISATION} : 11/10/2005`, { selector: 'li' })).toBeInTheDocument()
+
+      expect(tags[0].textContent).toBe('Pas de forme [00]')
+      expect(tags[1].textContent).toBe(`${wording.NUMÉRO_ARHGOS} : 01-00-000`)
+      expect(tags[2].textContent).toBe(`${wording.DATE_DE_MISE_EN_OEUVRE} : N/A`)
+      expect(tags[3].textContent).toBe(`${wording.DATE_DE_FIN} : 03/05/2026`)
+      expect(tags[4].textContent).toBe(`${wording.DATE_D_AUTORISATION} : 11/10/2005`)
     })
   })
 
@@ -376,10 +377,11 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       const autresActivités = sélectionneLIndicateur(wording.AUTRES_ACTIVITÉS, indicateurs)
       const informationsDUneAutreActivité = within(autresActivités).getAllByRole('list', { name: 'autre-activité' })[0]
       const tags = within(informationsDUneAutreActivité).getAllByRole('listitem')
-      expect(within(tags[0]).getByText('Pas de forme [00]', { selector: 'li' })).toBeInTheDocument()
-      expect(within(tags[1]).getByText(`${wording.DATE_D_AUTORISATION} : 03/06/2019`, { selector: 'li' })).toBeInTheDocument()
-      expect(within(tags[2]).getByText(`${wording.DATE_DE_MISE_EN_OEUVRE} : 03/06/2019`, { selector: 'li' })).toBeInTheDocument()
-      expect(within(tags[3]).getByText(`${wording.DATE_DE_FIN} : N/A`, { selector: 'li' })).toBeInTheDocument()
+
+      expect(tags[0].textContent).toBe('Pas de forme [00]')
+      expect(tags[1].textContent).toBe(`${wording.DATE_D_AUTORISATION} : 03/06/2019`)
+      expect(tags[2].textContent).toBe(`${wording.DATE_DE_MISE_EN_OEUVRE} : 03/06/2019`)
+      expect(tags[3].textContent).toBe(`${wording.DATE_DE_FIN} : N/A`)
     })
   })
 
@@ -646,13 +648,18 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       const reconnaissancesContractuelles = sélectionneLIndicateur(wording.RECONNAISSANCES_CONTRACTUELLES, indicateurs)
       const informationsDUneReconnaissanceContractuelle = within(reconnaissancesContractuelles).getAllByRole('list', { name: 'reconnaissance-contractuelle' })[0]
       const tags = within(informationsDUneReconnaissanceContractuelle).getAllByRole('listitem')
-      expect(within(tags[0]).getByText('Hospitalisation complète (24 heures consécutives ou plus) [01]', { selector: 'li' })).toBeInTheDocument()
-      expect(within(tags[1]).getByText(`${wording.NUMÉRO_ARHGOS} : 18-00-RC00000`, { selector: 'li' })).toBeInTheDocument()
-      expect(within(tags[2]).getByText('Numéro de : 18-00-C00000', { selector: 'li' })).toBeInTheDocument()
-      expect(within(tags[3]).getByText('Date d’effet de l’ : 30/11/2013', { selector: 'li' })).toBeInTheDocument()
-      expect(within(tags[4]).getByText('Date d’effet du : 01/11/2013', { selector: 'li' })).toBeInTheDocument()
-      expect(within(tags[5]).getByText('Date de fin du : 30/11/2018', { selector: 'li' })).toBeInTheDocument()
-      expect(within(tags[6]).getByText(`${wording.CAPACITÉ_AUTORISÉE} : 4`, { selector: 'li' })).toBeInTheDocument()
+
+      expect(tags[0].textContent).toBe('Hospitalisation complète (24 heures consécutives ou plus) [01]')
+      expect(tags[1].textContent).toBe(`${wording.NUMÉRO_ARHGOS} : 18-00-RC00000`)
+      expect(tags[2].textContent).toBe('Numéro de CPOM : 18-00-C00000')
+      expect(within(tags[2]).getByText('CPOM', { selector: 'abbr' })).toHaveAttribute('title', wording.CPOM_TITLE)
+      expect(tags[3].textContent).toBe('Date d’effet de l’ASR : 30/11/2013')
+      expect(within(tags[3]).getByText('ASR', { selector: 'abbr' })).toHaveAttribute('title', wording.ASR_TITLE)
+      expect(tags[4].textContent).toBe('Date d’effet du CPOM : 01/11/2013')
+      expect(within(tags[4]).getByText('CPOM', { selector: 'abbr' })).toHaveAttribute('title', wording.CPOM_TITLE)
+      expect(tags[5].textContent).toBe('Date de fin du CPOM : 30/11/2018')
+      expect(within(tags[5]).getByText('CPOM', { selector: 'abbr' })).toHaveAttribute('title', wording.CPOM_TITLE)
+      expect(tags[6].textContent).toBe(`${wording.CAPACITÉ_AUTORISÉE} : 4`)
     })
   })
 
@@ -665,7 +672,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
       const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
       const équipementsMatérielsLourds = sélectionneLIndicateur(wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, indicateurs)
-      const équipement = within(équipementsMatérielsLourds).getByRole('link', { name: 'Appareil d\'IRM à utilisation clinique [06201]' })
+      const équipement = within(équipementsMatérielsLourds).getByRole('link', { name: "Appareil d'IRM à utilisation clinique [06201]" })
       expect(équipement).toHaveAttribute('aria-expanded', 'false')
     })
 
@@ -680,14 +687,15 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       const informationsDUnEquipementMatérielLourd = within(équipementsMatérielsLourds).getAllByRole('list', { name: 'équipement-matériel-lourd' })
       const tagsLigne1 = within(informationsDUnEquipementMatérielLourd[0]).getAllByRole('listitem')
       const tagsLigne2 = within(informationsDUnEquipementMatérielLourd[1]).getAllByRole('listitem')
-      expect(within(tagsLigne1[0]).getByText(`${wording.NUMÉRO_ARHGOS} : 01-00-0000`, { selector: 'li' })).toBeInTheDocument()
-      expect(within(tagsLigne1[1]).getByText(`${wording.DATE_D_AUTORISATION} : 02/05/2006`, { selector: 'li' })).toBeInTheDocument()
-      expect(within(tagsLigne1[2]).getByText(`${wording.DATE_DE_MISE_EN_OEUVRE} : 20/01/2009`, { selector: 'li' })).toBeInTheDocument()
-      expect(within(tagsLigne1[3]).getByText(`${wording.DATE_DE_FIN} : 16/02/2027`, { selector: 'li' })).toBeInTheDocument()
-      expect(within(tagsLigne2[0]).getByText(`${wording.NUMÉRO_ARHGOS} : 01-20-0000`, { selector: 'li' })).toBeInTheDocument()
-      expect(within(tagsLigne2[1]).getByText(`${wording.DATE_D_AUTORISATION} : 14/12/2005`, { selector: 'li' })).toBeInTheDocument()
-      expect(within(tagsLigne2[2]).getByText(`${wording.DATE_DE_MISE_EN_OEUVRE} : N/A`, { selector: 'li' })).toBeInTheDocument()
-      expect(within(tagsLigne2[3]).getByText(`${wording.DATE_DE_FIN} : 16/03/2026`, { selector: 'li' })).toBeInTheDocument()
+
+      expect(tagsLigne1[0].textContent).toBe(`${wording.NUMÉRO_ARHGOS} : 01-00-0000`)
+      expect(tagsLigne1[1].textContent).toBe(`${wording.DATE_D_AUTORISATION} : 02/05/2006`)
+      expect(tagsLigne1[2].textContent).toBe(`${wording.DATE_DE_MISE_EN_OEUVRE} : 20/01/2009`)
+      expect(tagsLigne1[3].textContent).toBe(`${wording.DATE_DE_FIN} : 16/02/2027`)
+      expect(tagsLigne2[0].textContent).toBe(`${wording.NUMÉRO_ARHGOS} : 01-20-0000`)
+      expect(tagsLigne2[1].textContent).toBe(`${wording.DATE_D_AUTORISATION} : 14/12/2005`)
+      expect(tagsLigne2[2].textContent).toBe(`${wording.DATE_DE_MISE_EN_OEUVRE} : N/A`)
+      expect(tagsLigne2[3].textContent).toBe(`${wording.DATE_DE_FIN} : 16/03/2026`)
     })
   })
 
@@ -696,7 +704,6 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
     // THEN
-
     const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
     const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
     const itemCapacitéParActivités = sélectionneLIndicateur(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, indicateurs)

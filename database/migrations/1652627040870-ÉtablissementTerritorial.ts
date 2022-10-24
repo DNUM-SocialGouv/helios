@@ -1,7 +1,9 @@
-class ÉtablissementTerritorial1652627040870 {
-  async up(queryRunner) {
-    await queryRunner.query(
-      `CREATE TABLE etablissement_territorial (
+import { MigrationInterface, QueryRunner } from 'typeorm'
+
+export class ÉtablissementTerritorial1652627040870 implements MigrationInterface {
+  async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
+      CREATE TABLE etablissement_territorial (
         adresse_acheminement VARCHAR(255) NOT NULL,
         adresse_numero_voie VARCHAR(5) NOT NULL,
         adresse_type_voie VARCHAR(4) NOT NULL,
@@ -23,15 +25,11 @@ class ÉtablissementTerritorial1652627040870 {
           FOREIGN KEY (numero_finess_entite_juridique)
           REFERENCES entite_juridique (numero_finess_entite_juridique)
           ON DELETE CASCADE
-      );`
-    )
+      );
+    `)
   }
 
-  async down(queryRunner) {
-    await queryRunner.query(
-      'DROP TABLE etablissement_territorial;'
-    )
+  async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query('DROP TABLE etablissement_territorial;')
   }
 }
-
-module.exports = ÉtablissementTerritorial1652627040870

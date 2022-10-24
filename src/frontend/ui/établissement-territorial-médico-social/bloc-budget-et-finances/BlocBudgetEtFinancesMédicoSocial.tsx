@@ -48,7 +48,6 @@ export const BlocBudgetEtFinancesMédicoSocial = (
           identifiant="budget-et-finances-compte-de-résultat"
           nomDeLIndicateur={<>
             {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.intituléDuCompteDeRésultat(annéeEnCours)}
-            {' '}
           </>}
           source={Sources(wording.DIAMANT, wording.CNSA)}
         >

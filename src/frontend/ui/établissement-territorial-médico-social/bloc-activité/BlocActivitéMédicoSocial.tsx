@@ -12,9 +12,9 @@ import { ContenuTauxRéalisationActivité } from '../InfoBulle/ContenuTauxRéali
 import styles from './BlocActivitéMédicoSocial.module.css'
 import { ÉtablissementTerritorialMédicoSocialActivitéViewModel } from './ÉtablissementTerritorialMédicoSocialActivitéViewModel'
 
-type BlocActivitéMédicoSocialProps = {
+type BlocActivitéMédicoSocialProps = Readonly<{
   établissementTerritorialActivitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialActivitéViewModel
-}
+}>
 
 export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéMédicoSocialViewModel }: BlocActivitéMédicoSocialProps) => {
   const { wording } = useDependencies()

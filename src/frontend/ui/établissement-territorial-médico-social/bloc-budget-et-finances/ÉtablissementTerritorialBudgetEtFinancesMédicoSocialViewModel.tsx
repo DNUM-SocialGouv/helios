@@ -351,7 +351,6 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       labels: années,
     }
     const annéesManquantes = this.annéesManquantes(années)
-    const valeursFrançaises = this.transformeEnFrançais(valeurs) as string[]
 
     return (
       <>
@@ -373,7 +372,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
           entêteLibellé={this.wording.ANNÉE}
           identifiants={[this.wording.TAUX_DE_CAF]}
           libellés={années}
-          valeurs={[this.ajouteLePourcentage(valeursFrançaises)]}
+          valeurs={[StringFormater.ajouteLePourcentage(valeurs)]}
         />
       </>
     )
@@ -470,15 +469,11 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       const valeur = budgetEtFinancesMédicoSocial[indicateur].valeur
       if (valeur !== null) {
         années.push(budgetEtFinancesMédicoSocial.année)
-        valeurs.push(this.transformeEnTaux(valeur))
+        valeurs.push(StringFormater.transformeEnTaux(valeur))
       }
     })
 
     return [valeurs, années]
-  }
-
-  private transformeEnTaux(nombre: number): number {
-    return Number((nombre * 100).toFixed(1))
   }
 
   private budgetEtFinanceEnCours(annéeEnCours: number): ÉtablissementTerritorialMédicoSocialBudgetEtFinances {

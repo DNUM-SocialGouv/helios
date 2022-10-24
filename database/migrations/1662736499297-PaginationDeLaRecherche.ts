@@ -1,5 +1,7 @@
-class PaginationDeLaRecherche1662736499297 {
-  async up(queryRunner) {
+import { MigrationInterface, QueryRunner } from 'typeorm'
+
+export class PaginationDeLaRecherche1662736499297 implements MigrationInterface {
+  async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
       ALTER TABLE entite_juridique
         ADD COLUMN termes_de_recherche tsvector GENERATED ALWAYS AS (
@@ -37,12 +39,12 @@ class PaginationDeLaRecherche1662736499297 {
           commune,
           departement
         FROM etablissement_territorial;
-    `)
+      `)
   }
 
-  async down(queryRunner) {
+  async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-      CREATE OR REPLACE VIEW recherche AS
+        CREATE OR REPLACE VIEW recherche AS
         SELECT
           numero_finess_entite_juridique AS numero_finess,
           raison_sociale,
@@ -61,15 +63,13 @@ class PaginationDeLaRecherche1662736499297 {
           departement
         FROM etablissement_territorial;
 
-      DROP INDEX recherche_etablissement_territorial_idx;
+        DROP INDEX recherche_etablissement_territorial_idx;
 
-      DROP INDEX recherche_entite_juridique_idx;
+        DROP INDEX recherche_entite_juridique_idx;
 
-      ALTER TABLE etablissement_territorial DROP COLUMN termes_de_recherche;
+        ALTER TABLE etablissement_territorial DROP COLUMN termes_de_recherche;
 
-      ALTER TABLE entite_juridique DROP COLUMN termes_de_recherche;
-    `)
+        ALTER TABLE entite_juridique DROP COLUMN termes_de_recherche;
+      `)
   }
 }
-
-module.exports = PaginationDeLaRecherche1662736499297

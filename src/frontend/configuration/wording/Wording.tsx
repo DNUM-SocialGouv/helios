@@ -1,8 +1,14 @@
-import { ReactChild, ReactElement } from 'react'
+import { ReactElement } from 'react'
 
 export interface Wording {
+  // Abréviations
+  readonly CPOM_TITLE: string
+  readonly CPOM: ReactElement
+  readonly ASR_TITLE: string
+  readonly ASR: ReactElement
+
   // Header
-  readonly INTITULÉ_RÉPUBLIQUE_FRANÇAISE: ReactChild
+  readonly INTITULÉ_RÉPUBLIQUE_FRANÇAISE: ReactElement
   readonly ACCUEIL: string
   readonly MENU: string
   readonly DÉCONNEXION: string
@@ -50,8 +56,8 @@ export interface Wording {
   readonly régionAtlasSanté: (placeholder: string) => string
 
   // Fiches
-  readonly MISE_À_JOUR: string
-  readonly SOURCE: string
+  readonly miseÀJour: (date: string) => string
+  readonly miseÀJourEtSource: (date: string, source: ReactElement) => ReactElement
   readonly NON_RENSEIGNÉ: string
   readonly OUI: string
   readonly NON: string
@@ -177,7 +183,16 @@ export interface Wording {
   readonly TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS: string
   readonly ÉTABLISSEMENTS_RATTACHÉS: string
 
-  // Source
+  // Sources longue
+  readonly FINESS_TITLE: string
+  readonly DIAMANT_TITLE: string
+  readonly CNSA_TITLE: string
+  readonly TDB_PERF_TITLE: string
+  readonly PMSI_TITLE: string
+  readonly ARHGOS_TITLE: string
+  readonly SAE_TITLE: string
+  readonly RPU_TITLE: string
+  // Sources courtes
   readonly FINESS: ReactElement
   readonly DIAMANT: ReactElement
   readonly CNSA: ReactElement

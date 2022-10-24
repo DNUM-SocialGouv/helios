@@ -5,11 +5,11 @@ import { Paths } from './Paths'
 import { Wording } from './wording/Wording'
 import { WordingFr } from './wording/WordingFr'
 
-export type FrontDependencies = {
+export type FrontDependencies = Readonly<{
   breadcrumbHandler: BreadcrumbHandler
   paths: Paths
   wording: Wording
-}
+}>
 
 function createFrontDependencies(): FrontDependencies {
   Sentry.init({

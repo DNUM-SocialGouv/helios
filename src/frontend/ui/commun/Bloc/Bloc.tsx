@@ -3,9 +3,9 @@ import { ReactChild } from 'react'
 import styles from './Bloc.module.css'
 
 type BlocProps = Readonly<{
-  children?: ReactChild | ReactChild[];
-  estCeIdentité?: boolean,
-  titre: string;
+  children?: ReactChild | ReactChild[]
+  estCeIdentité?: boolean
+  titre: string
 }>
 
 export const Bloc = ({ children, estCeIdentité = false, titre }: BlocProps) => {

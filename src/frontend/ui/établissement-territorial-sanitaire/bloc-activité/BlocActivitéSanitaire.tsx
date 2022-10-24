@@ -8,9 +8,9 @@ import { ContenuNombreDeSéjourMCO } from '../InfoBulle/ContenuNombreDeSéjourMC
 import styles from './BlocActivitéSanitaire.module.css'
 import { ÉtablissementTerritorialSanitaireActivitéViewModel } from './ÉtablissementTerritorialSanitaireActivitéViewModel'
 
-type BlocActivitéSanitaireProps = {
+type BlocActivitéSanitaireProps = Readonly<{
   établissementTerritorialSanitaireActivitéViewModel: ÉtablissementTerritorialSanitaireActivitéViewModel
-}
+}>
 
 export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireActivitéViewModel }: BlocActivitéSanitaireProps) => {
   const { wording } = useDependencies()

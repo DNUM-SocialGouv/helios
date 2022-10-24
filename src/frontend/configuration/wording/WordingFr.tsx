@@ -1,12 +1,16 @@
-import { ReactChild, ReactElement } from 'react'
+import { ReactElement } from 'react'
 
 import { Wording } from './Wording'
 
 export class WordingFr implements Wording {
-  readonly ABRÉVIATION_CPOM: ReactElement = (<abbr title="Contrat Pluriannuel d’Objectifs et de Moyens">CPOM</abbr>)
+  // Abréviations
+  readonly CPOM_TITLE: string = 'Contrat Pluriannuel d’Objectifs et de Moyens'
+  readonly CPOM: ReactElement = (<abbr title={this.CPOM_TITLE}>CPOM</abbr>)
+  readonly ASR_TITLE: string = 'Activités Soumises à Reconnaissance contractuelle'
+  readonly ASR: ReactElement = (<abbr title={this.ASR_TITLE}>ASR</abbr>)
 
   // Header
-  readonly INTITULÉ_RÉPUBLIQUE_FRANÇAISE: ReactChild = (
+  readonly INTITULÉ_RÉPUBLIQUE_FRANÇAISE: ReactElement = (
     <>
       République
       <br />
@@ -70,8 +74,14 @@ export class WordingFr implements Wording {
   readonly régionAtlasSanté: (placeholder: string) => string = (placeholder: string) => `Carte de ${placeholder}`
 
   // Fiches
-  readonly MISE_À_JOUR: string = 'Mise à jour'
-  readonly SOURCE: string = 'Source'
+  readonly miseÀJour: (date: string) => string = (date: string): string => `Mise à jour : ${date}`
+  readonly miseÀJourEtSource: (date: string, source: ReactElement) => ReactElement = (date: string, source: ReactElement): ReactElement => <>
+    {this.miseÀJour(date)}
+    {' - '}
+    Source :
+    {' '}
+    {source}
+  </>
   readonly NON_RENSEIGNÉ: string = 'Non renseigné'
   readonly OUI: string = 'Oui'
   readonly NON: string = 'Non'
@@ -103,7 +113,7 @@ export class WordingFr implements Wording {
   readonly DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM: ReactElement = (
     <>
       {'Date d’entrée en vigueur du '}
-      {this.ABRÉVIATION_CPOM}
+      {this.CPOM}
     </>
   )
   readonly ENTITÉ_JURIDIQUE_DE_RATTACHEMENT: string = 'Entité juridique de rattachement'
@@ -167,22 +177,22 @@ export class WordingFr implements Wording {
   readonly DATE_D_EFFET_ASR: ReactElement = (
     <>
       Date d’effet de l’
-      <abbr title="Activités Soumises à Reconnaissance contractuelle">ASR</abbr>
+      {this.ASR}
       &nbsp;
     </>)
   readonly DATE_D_EFFET_CPOM: ReactElement = (<>
     Date d’effet du&nbsp;
-    {this.ABRÉVIATION_CPOM}
+    {this.CPOM}
     &nbsp;
   </>)
   readonly DATE_DE_FIN_CPOM: ReactElement = (<>
     Date de fin du&nbsp;
-    {this.ABRÉVIATION_CPOM}
+    {this.CPOM}
     &nbsp;
   </>)
   readonly NUMÉRO_CPOM: ReactElement = (<>
     Numéro de&nbsp;
-    {this.ABRÉVIATION_CPOM}
+    {this.CPOM}
     &nbsp;
   </>)
   readonly NUMÉRO_ARHGOS: string = 'Numéro ARHGOS'
@@ -221,15 +231,24 @@ export class WordingFr implements Wording {
   readonly TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS: string = 'Les établissements rattachés'
   readonly ÉTABLISSEMENTS_RATTACHÉS: string = 'Établissement(s) rattaché(s)'
 
-  // Source
-  readonly FINESS: ReactElement = (<abbr title="Fichier National des Établissements Sanitaires et Sociaux">FINESS</abbr>)
-  readonly DIAMANT: ReactElement = (<abbr title="Décisionnel Inter ARS pour la Maîtrise et ANTicipation">DIAMANT</abbr>)
-  readonly CNSA: ReactElement = (<abbr title="Caisse Nationale de Solidarité pour l’Autonomie">CNSA</abbr>)
-  readonly TDB_PERF: ReactElement = (<abbr title="Tableau de Bord de la Performance dans le secteur médico-social">TdB Perf</abbr>)
-  readonly PMSI: ReactElement = (<abbr title="Programme de Médicalisation des Systèmes d’Information">PMSI</abbr>)
-  readonly ARHGOS: ReactElement = (<abbr title="Agence Régionale Hospitalière Gestion des Objectifs Sanitaires">ARHGOS</abbr>)
-  readonly SAE: ReactElement = (<abbr title="Statistique Annuelle des Établissements de santé">SAE</abbr>)
-  readonly RPU: ReactElement = (<abbr title="Résumé de Passage aux Urgences">RPU</abbr>)
+  // Sources longue
+  readonly FINESS_TITLE: string = 'Fichier National des Établissements Sanitaires et Sociaux'
+  readonly DIAMANT_TITLE: string = 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation'
+  readonly CNSA_TITLE: string = 'Caisse Nationale de Solidarité pour l’Autonomie'
+  readonly TDB_PERF_TITLE: string = 'Tableau de Bord de la Performance dans le secteur médico-social'
+  readonly PMSI_TITLE: string = 'Programme de Médicalisation des Systèmes d’Information'
+  readonly ARHGOS_TITLE: string = 'Agence Régionale Hospitalière Gestion des Objectifs Sanitaires'
+  readonly SAE_TITLE: string = 'Statistique Annuelle des Établissements de santé'
+  readonly RPU_TITLE: string = 'Résumé de Passage aux Urgences'
+  // Sources courtes
+  readonly FINESS: ReactElement = (<abbr title={this.FINESS_TITLE}>FINESS</abbr>)
+  readonly DIAMANT: ReactElement = (<abbr title={this.DIAMANT_TITLE}>DIAMANT</abbr>)
+  readonly CNSA: ReactElement = (<abbr title={this.CNSA_TITLE}>CNSA</abbr>)
+  readonly TDB_PERF: ReactElement = (<abbr title={this.TDB_PERF_TITLE}>TdB Perf</abbr>)
+  readonly PMSI: ReactElement = (<abbr title={this.PMSI_TITLE}>PMSI</abbr>)
+  readonly ARHGOS: ReactElement = (<abbr title={this.ARHGOS_TITLE}>ARHGOS</abbr>)
+  readonly SAE: ReactElement = (<abbr title={this.SAE_TITLE}>SAE</abbr>)
+  readonly RPU: ReactElement = (<abbr title={this.RPU_TITLE}>RPU</abbr>)
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string = 'Accès refusé'

@@ -204,23 +204,23 @@ Elles sont nécessaires dès lors que l'on veut créer ou supprimer des tables, 
 #### Créer une migration pour les bases de données
 
 ```sh
-yarn typeorm migration:create database/migrations/<NomDeMigration> --outputJs
+yarn migrations:create database/migrations/<NomDeMigration>
 ```
 
-Un fichier *.js* est auto-généré sous `database/migrations`. Il faut modifier le fichier auto-généré. Enfin compléter les deux méthodes *up* et *down*.
+> Ne pas oublier de la renseigner auprès de l'ORM dans le fichier `database/dataSource.ts`
 
 #### Appliquer les migrations
 
 Avec la commande `yarn dev`, les migrations sont appliquées en même temps que le lancement de la base de développement. Voici tout de même comment les appliquer indépendamment, une fois la base de données démarrée :
 
 ```sh
-yarn typeorm migration:run
+yarn migrations:up
 ```
 
 Et pour appliquer les migrations *down* (applique seulement 1 seule migration) :
 
 ```sh
-yarn typeorm migration:revert
+yarn migrations:down
 ```
 
 > Plus d’infos sur [typeorm.io](https://typeorm.io/migrations)
@@ -355,7 +355,7 @@ yarn encryptDiamant:local
  ┣ 📂 database
  ┃  ┣ 📂 migrations               ->  Les migrations
  ┃  ┣ 📂 models                   ->  Définition des modèles des tables
- ┃  ┗ 📜 migrations.ts            ->  Pont d'entrée de lancement des migrations
+ ┃  ┗ 📜 dataSource.ts            ->  Pont d'entrée de lancement des migrations
  ┣ 📂 download_data_source        ->  Récupération des données des sources externes
  ┣ 📂 src
  ┃  ┣ 📂 frontend

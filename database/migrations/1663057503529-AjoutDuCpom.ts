@@ -1,7 +1,9 @@
-class AjoutDuCpom1663057503529 {
-  async up(queryRunner) {
-    await queryRunner.query(
-      `CREATE TABLE cpom (
+import { MigrationInterface, QueryRunner } from 'typeorm'
+
+export class AjoutDuCpom1663057503529 implements MigrationInterface {
+  async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
+      CREATE TABLE cpom (
         numero_finess_etablissement_territorial VARCHAR(9) NOT NULL,
         date_d_entree_en_vigueur DATE,
 
@@ -12,13 +14,11 @@ class AjoutDuCpom1663057503529 {
         FOREIGN KEY (numero_finess_etablissement_territorial)
         REFERENCES etablissement_territorial (numero_finess_etablissement_territorial)
         ON DELETE CASCADE
-      );`
-    )
+      );
+    `)
   }
 
-  async down(queryRunner) {
-    await queryRunner.query('DROP TABLE cpom')
+  async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query('DROP TABLE cpom;')
   }
 }
-
-module.exports = AjoutDuCpom1663057503529

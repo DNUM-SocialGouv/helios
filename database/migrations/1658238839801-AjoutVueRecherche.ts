@@ -1,8 +1,9 @@
-class AjoutVueRecherche1658238839801 {
+import { MigrationInterface, QueryRunner } from 'typeorm'
 
-  async up(queryRunner) {
-    await queryRunner.query(
-      `CREATE EXTENSION unaccent;
+export class AjoutVueRecherche1658238839801 implements MigrationInterface {
+  async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
+      CREATE EXTENSION unaccent;
 
       CREATE TEXT SEARCH CONFIGURATION unaccent_helios ( COPY = french );
       ALTER TEXT SEARCH CONFIGURATION unaccent_helios
@@ -22,17 +23,15 @@ class AjoutVueRecherche1658238839801 {
         raison_sociale,
         domaine::text AS type,
         to_tsvector('unaccent_helios', raison_sociale || ' ' || numero_finess_etablissement_territorial) AS termes
-      FROM etablissement_territorial;`
-    )
+      FROM etablissement_territorial;
+    `)
   }
 
-  async down(queryRunner) {
-    await queryRunner.query(
-      `DROP VIEW recherche;
+  async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
+      DROP VIEW recherche;
       DROP TEXT SEARCH CONFIGURATION unaccent_helios;
-      DROP EXTENSION unaccent;`
-    )
+      DROP EXTENSION unaccent;
+    `)
   }
 }
-
-module.exports = AjoutVueRecherche1658238839801

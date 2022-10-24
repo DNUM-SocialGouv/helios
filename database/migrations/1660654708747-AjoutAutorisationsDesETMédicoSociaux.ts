@@ -1,8 +1,9 @@
-class AjoutAutorisationsDesETMédicoSociaux1660654708747 {
+import { MigrationInterface, QueryRunner } from 'typeorm'
 
-  async up(queryRunner) {
-    await queryRunner.query(
-      `CREATE TABLE autorisation_medico_social (
+export class AjoutAutorisationsDesETMédicoSociaux1660654708747 implements MigrationInterface {
+  async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
+      CREATE TABLE autorisation_medico_social (
         _autorisation_id SERIAL PRIMARY KEY,
         activite VARCHAR(2) NOT NULL,
         capacite_autorisee_totale INTEGER,
@@ -25,15 +26,11 @@ class AjoutAutorisationsDesETMédicoSociaux1660654708747 {
       );
 
       ALTER TYPE fichier_source
-        ADD VALUE IF NOT EXISTS 'finess_cs1400105';`
-    )
+        ADD VALUE IF NOT EXISTS 'finess_cs1400105';
+    `)
   }
 
-  async down(queryRunner) {
-    await queryRunner.query(
-      'DROP TABLE autorisation_medico_social;'
-    )
+  async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query('DROP TABLE autorisation_medico_social;')
   }
 }
-
-module.exports = AjoutAutorisationsDesETMédicoSociaux1660654708747

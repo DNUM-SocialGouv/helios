@@ -5,9 +5,9 @@ import { Sources } from '../../commun/Sources/Sources'
 import styles from './BlocIdentitéSanitaire.module.css'
 import { ÉtablissementTerritorialSanitaireIdentitéViewModel } from './ÉtablissementTerritorialSanitaireIdentitéViewModel'
 
-type BlocIdentitéSanitaireProps = {
+type BlocIdentitéSanitaireProps = Readonly<{
   établissementTerritorialSanitaireIdentitéViewModel: ÉtablissementTerritorialSanitaireIdentitéViewModel
-}
+}>
 
 export const BlocIdentitéSanitaire = ({ établissementTerritorialSanitaireIdentitéViewModel }: BlocIdentitéSanitaireProps) => {
   const { wording } = useDependencies()
@@ -22,44 +22,51 @@ export const BlocIdentitéSanitaire = ({ établissementTerritorialSanitaireIdent
           dateDeMiseÀJour={établissementTerritorialSanitaireIdentitéViewModel.dateDeMiseÀJourDuNomDeLÉtablissementTerritorial}
           nomDeLIndicateur={wording.NOM_DE_L_ÉTABLISSEMENT}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialSanitaireIdentitéViewModel.nomDeLÉtablissementTerritorial}
-        />
+        >
+          {établissementTerritorialSanitaireIdentitéViewModel.nomDeLÉtablissementTerritorial}
+        </IndicateurIdentité>
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialSanitaireIdentitéViewModel.dateDeMiseÀJourDuNuméroFinessÉtablissementTerritorial}
           nomDeLIndicateur={wording.NUMÉRO_FINESS}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialSanitaireIdentitéViewModel.numéroFinessÉtablissementTerritorial}
-        />
+        >
+          {établissementTerritorialSanitaireIdentitéViewModel.numéroFinessÉtablissementTerritorial}
+        </IndicateurIdentité>
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialSanitaireIdentitéViewModel.dateDeMiseÀJourDeLAdresse}
           nomDeLIndicateur={wording.ADRESSE}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialSanitaireIdentitéViewModel.adresse}
-        />
+        >
+          {établissementTerritorialSanitaireIdentitéViewModel.adresse}
+        </IndicateurIdentité>
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialSanitaireIdentitéViewModel.dateDeMiseÀJourDutéléphoneEtDeLEmail}
           nomDeLIndicateur={wording.TÉLÉPHONE_ET_EMAIL}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialSanitaireIdentitéViewModel.téléphoneEtEmail}
-        />
+        >
+          {établissementTerritorialSanitaireIdentitéViewModel.téléphoneEtEmail}
+        </IndicateurIdentité>
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialSanitaireIdentitéViewModel.dateDeMiseÀJourDeLEntitéJuridiqueDeRattachement}
           nomDeLIndicateur={wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialSanitaireIdentitéViewModel.entitéJuridiqueDeRattachement}
-        />
+        >
+          {établissementTerritorialSanitaireIdentitéViewModel.entitéJuridiqueDeRattachement}
+        </IndicateurIdentité>
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialSanitaireIdentitéViewModel.dateDeMiseÀJourDeLaCatégorieDeLÉtablissement}
           nomDeLIndicateur={wording.CATÉGORIE_DE_L_ÉTABLISSEMENT}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialSanitaireIdentitéViewModel.catégorieDeLÉtablissement}
-        />
+        >
+          {établissementTerritorialSanitaireIdentitéViewModel.catégorieDeLÉtablissement}
+        </IndicateurIdentité>
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialSanitaireIdentitéViewModel.dateDeMiseÀJourDuStatutDeLÉtablissement}
           nomDeLIndicateur={wording.STATUT_JURIDIQUE_EJ}
           source={Sources(wording.FINESS)}
-          valeur={établissementTerritorialSanitaireIdentitéViewModel.statutDeLÉtablissement}
-        />
+        >
+          {établissementTerritorialSanitaireIdentitéViewModel.statutDeLÉtablissement}
+        </IndicateurIdentité>
       </ul>
     </Bloc>
   )

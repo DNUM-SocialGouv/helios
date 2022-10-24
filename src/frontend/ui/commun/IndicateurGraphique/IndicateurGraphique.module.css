@@ -1,5 +1,11 @@
-.graphe {
-  width: 99%;
+.intitule span {
+  margin-left: 1rem;
+}
+
+.mise-a-jour-source {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .titraille {
@@ -12,8 +18,6 @@
   margin-right: .5rem;
 }
 
-.mise-a-jour-source {
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
+.graphe {
+  width: 99%;
 }

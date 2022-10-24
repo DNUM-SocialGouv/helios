@@ -1,7 +1,7 @@
 import { fireEvent, screen, within } from '@testing-library/react'
 
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from '../../../test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder'
-import { fakeFrontDependencies, renderFakeComponent } from '../../../testHelper'
+import { fakeFrontDependencies, renderFakeComponent, textMatch } from '../../../testHelper'
 import { PageÉtablissementTerritorialMédicoSocial } from '../PageÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from '../ÉtablissementTerritorialMédicoSocialViewModel'
 
@@ -20,10 +20,10 @@ describe('La page établissement territorial médico-social - bloc autorisation 
     const capacités = indicateurs[0]
     const titre = within(capacités).getByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: 'p' })
     expect(titre).toBeInTheDocument()
-    const dateMiseAJour = within(capacités).getAllByText('Mise à jour', { exact: false, selector: 'p' })
-    expect(dateMiseAJour[0].textContent).toBe('Mise à jour : 19/08/2022 - Source : FINESS')
+    const dateMiseAJour = within(capacités).getAllByText(textMatch(`${wording.miseÀJour('19/08/2022')} - Source : FINESS`), { selector: 'p' })
+    expect(dateMiseAJour[0]).toBeInTheDocument()
     const abréviationSourceFournisseur = within(capacités).getAllByText('FINESS', { selector: 'abbr' })
-    expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', 'Fichier National des Établissements Sanitaires et Sociaux')
+    expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', wording.FINESS_TITLE)
     const détails = within(capacités).getByRole('button', { name: wording.DÉTAILS })
     expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-capacité-par-activités-médico-social')
     expect(détails).toHaveAttribute('data-fr-opened', 'false')
@@ -82,7 +82,7 @@ describe('La page établissement territorial médico-social - bloc autorisation 
     const fermer = within(infoBulle).getByRole('button', { name: wording.FERMER })
     expect(fermer).toBeInTheDocument()
     const abréviationSourceFournisseur = within(infoBulle).getAllByText('FINESS', { selector: 'abbr' })
-    expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', 'Fichier National des Établissements Sanitaires et Sociaux')
+    expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', wording.FINESS_TITLE)
     const élémentsDeCompréhension = within(infoBulle).getByRole('region', { name: wording.ÉLÉMENTS_DE_COMPRÉHENSION })
     expect(élémentsDeCompréhension).toBeInTheDocument()
     const fréquence = within(infoBulle).getByRole('region', { name: wording.FRÉQUENCE })
@@ -177,12 +177,12 @@ describe('La page établissement territorial médico-social - bloc autorisation 
     const autorisations = indicateurs[1]
     const titre = within(autorisations).getByText(wording.AUTORISATIONS, { selector: 'p' })
     expect(titre).toBeInTheDocument()
-    const dateMiseAJour = within(autorisations).getAllByText('Mise à jour', { exact: false, selector: 'p' })
-    expect(dateMiseAJour[0].textContent).toBe('Mise à jour : 18/08/2022 - Source : ARHGOS, FINESS')
+    const dateMiseAJour = within(autorisations).getAllByText(textMatch(`${wording.miseÀJour('18/08/2022')} - Source : ARHGOS, FINESS`), { selector: 'p' })
+    expect(dateMiseAJour[0]).toBeInTheDocument()
     const abréviationSourceFournisseur = within(autorisations).getAllByText('FINESS', { selector: 'abbr' })
-    expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', 'Fichier National des Établissements Sanitaires et Sociaux')
+    expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', wording.FINESS_TITLE)
     const abréviationSourceOrigine = within(autorisations).getAllByText('ARHGOS', { selector: 'abbr' })
-    expect(abréviationSourceOrigine[0]).toHaveAttribute('title', 'Agence Régionale Hospitalière Gestion des Objectifs Sanitaires')
+    expect(abréviationSourceOrigine[0]).toHaveAttribute('title', wording.ARHGOS_TITLE)
     const détails = within(autorisations).getByRole('button', { name: wording.DÉTAILS })
     expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-autorisations-médico-social')
     expect(détails).toHaveAttribute('data-fr-opened', 'false')
@@ -205,9 +205,9 @@ describe('La page établissement territorial médico-social - bloc autorisation 
     const fermer = within(infoBulle).getByRole('button', { name: wording.FERMER })
     expect(fermer).toBeInTheDocument()
     const abréviationSourceFournisseur = within(infoBulle).getAllByText('FINESS', { selector: 'abbr' })
-    expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', 'Fichier National des Établissements Sanitaires et Sociaux')
+    expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', wording.FINESS_TITLE)
     const abréviationSourceOrigine = within(infoBulle).getAllByText('ARHGOS', { selector: 'abbr' })
-    expect(abréviationSourceOrigine[0]).toHaveAttribute('title', 'Agence Régionale Hospitalière Gestion des Objectifs Sanitaires')
+    expect(abréviationSourceOrigine[0]).toHaveAttribute('title', wording.ARHGOS_TITLE)
     const élémentsDeCompréhension = within(infoBulle).getByRole('region', { name: wording.ÉLÉMENTS_DE_COMPRÉHENSION })
     expect(élémentsDeCompréhension).toBeInTheDocument()
     const fréquence = within(infoBulle).getByRole('region', { name: wording.FRÉQUENCE })
@@ -276,12 +276,13 @@ describe('La page établissement territorial médico-social - bloc autorisation 
     const autorisations = indicateurs[1]
     const informationsDUneAutorisation = within(autorisations).getAllByRole('list', { name: 'dates-et-capacités' })[0]
     const tags = within(informationsDUneAutorisation).getAllByRole('listitem')
-    expect(within(tags[0]).getByText('PH vieillissantes [702]', { selector: 'li' })).toBeInTheDocument()
-    expect(within(tags[1]).getByText(`${wording.DATE_D_AUTORISATION} : 01/01/2020`, { selector: 'li' })).toBeInTheDocument()
-    expect(within(tags[2]).getByText(`${wording.MISE_À_JOUR_AUTORISATION} : 01/01/2020`, { selector: 'li' })).toBeInTheDocument()
-    expect(within(tags[3]).getByText(`${wording.DERNIÈRE_INSTALLATION} : N/A`, { selector: 'li' })).toBeInTheDocument()
-    expect(within(tags[4]).getByText(`${wording.CAPACITÉ_AUTORISÉE} : 10`, { selector: 'li' })).toBeInTheDocument()
-    expect(within(tags[5]).getByText(`${wording.CAPACITÉ_INSTALLÉE} : 0`, { selector: 'li' })).toBeInTheDocument()
+
+    expect(tags[0].textContent).toBe('PH vieillissantes [702]')
+    expect(tags[1].textContent).toBe(`${wording.DATE_D_AUTORISATION} : 01/01/2020`)
+    expect(tags[2].textContent).toBe(`${wording.MISE_À_JOUR_AUTORISATION} : 01/01/2020`)
+    expect(tags[3].textContent).toBe(`${wording.DERNIÈRE_INSTALLATION} : N/A`)
+    expect(tags[4].textContent).toBe(`${wording.CAPACITÉ_AUTORISÉE} : 10`)
+    expect(tags[5].textContent).toBe(`${wording.CAPACITÉ_INSTALLÉE} : 0`)
   })
 
   it('affiche une phrase à la place des indicateurs lorsqu’aucune autorisation n’est renseignée', () => {

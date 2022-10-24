@@ -1,5 +1,7 @@
-class IndexationRaisonSocialeCourte1662997448422 {
-  async up(queryRunner) {
+import { MigrationInterface, QueryRunner } from 'typeorm'
+
+export class IndexationRaisonSocialeCourte1662997448422 implements MigrationInterface {
+  async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
       ALTER TABLE entite_juridique
         ADD COLUMN raison_sociale_courte VARCHAR(255);
@@ -66,10 +68,10 @@ class IndexationRaisonSocialeCourte1662997448422 {
           commune,
           departement
         FROM etablissement_territorial;
-    `)
+      `)
   }
 
-  async down(queryRunner) {
+  async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
       DROP VIEW recherche;
 
@@ -132,8 +134,6 @@ class IndexationRaisonSocialeCourte1662997448422 {
           commune,
           departement
         FROM etablissement_territorial;
-    `)
+      `)
   }
 }
-
-module.exports = IndexationRaisonSocialeCourte1662997448422

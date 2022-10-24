@@ -1,7 +1,9 @@
-class EntitéJuridique1652626977208 {
-  async up(queryRunner) {
-    await queryRunner.query(
-      `CREATE TABLE entite_juridique (
+import { MigrationInterface, QueryRunner } from 'typeorm'
+
+export class EntitéJuridique1652626977208 implements MigrationInterface {
+  async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
+      CREATE TABLE entite_juridique (
         adresse_acheminement VARCHAR(255) NOT NULL,
         adresse_numero_voie VARCHAR(5) NOT NULL,
         adresse_type_voie VARCHAR(4) NOT NULL,
@@ -12,15 +14,11 @@ class EntitéJuridique1652626977208 {
         telephone VARCHAR(10) NOT NULL,
 
         CONSTRAINT entite_juridique_primary_key PRIMARY KEY (numero_finess_entite_juridique)
-      );`
-    )
+      );
+    `)
   }
 
-  async down(queryRunner) {
-    await queryRunner.query(
-      'DROP TABLE entite_juridique;'
-    )
+  async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query('DROP TABLE entite_juridique;')
   }
 }
-
-module.exports = EntitéJuridique1652626977208

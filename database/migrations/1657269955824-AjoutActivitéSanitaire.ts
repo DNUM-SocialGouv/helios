@@ -1,7 +1,9 @@
-class AjoutActivitéSanitaire1657269955824 {
-  async up(queryRunner) {
-    await queryRunner.query(
-      `CREATE TABLE activite_sanitaire (
+import { MigrationInterface, QueryRunner } from 'typeorm'
+
+export class AjoutActivitéSanitaire1657269955824 implements MigrationInterface {
+  async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
+      CREATE TABLE activite_sanitaire (
         annee INT NOT NULL,
         numero_finess_etablissement_territorial VARCHAR(9) NOT NULL,
         nombre_sejours_partiels_medecine FLOAT,
@@ -21,13 +23,11 @@ class AjoutActivitéSanitaire1657269955824 {
           FOREIGN KEY (numero_finess_etablissement_territorial)
           REFERENCES etablissement_territorial (numero_finess_etablissement_territorial)
           ON DELETE CASCADE
-        );`
-    )
+        );
+      `)
   }
 
-  async down(queryRunner) {
+  async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query('DROP TABLE activite_sanitaire')
   }
 }
-
-module.exports = AjoutActivitéSanitaire1657269955824

@@ -54,9 +54,13 @@ iframe {
 
 /* Indicateurs */
 .indicateurs,
-.indicateurs > li > ul {
+.indicateurs > li ul {
   list-style-type: none;
   padding: 0;
+}
+
+.indicateurs > li > ul > li > ul{
+  padding-left: 1rem;
 }
 
 .indicateurs > li > div:nth-child(1)  {

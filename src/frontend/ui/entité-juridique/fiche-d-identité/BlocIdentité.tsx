@@ -5,9 +5,9 @@ import { Sources } from '../../commun/Sources/Sources'
 import { EntitéJuridiqueViewModel } from '../EntitéJuridiqueViewModel'
 import styles from './BlocIdentité.module.css'
 
-type BlocIdentitéProps = {
+type BlocIdentitéProps = Readonly<{
   entitéJuridiqueViewModel: EntitéJuridiqueViewModel
-}
+}>
 
 export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéProps) => {
   const { wording } = useDependencies()
@@ -24,32 +24,37 @@ export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéProps)
           dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJourDuNomDeLEntitéJuridique}
           nomDeLIndicateur={wording.NOM_DE_L_ÉTABLISSEMENT}
           source={Sources(wording.FINESS)}
-          valeur={entitéJuridiqueViewModel.nomDeLEntitéJuridique}
-        />
+        >
+          {entitéJuridiqueViewModel.nomDeLEntitéJuridique}
+        </IndicateurIdentité>
         <IndicateurIdentité
           dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJourDuNuméroFiness}
           nomDeLIndicateur={wording.NUMÉRO_FINESS}
           source={Sources(wording.FINESS)}
-          valeur={entitéJuridiqueViewModel.numéroFiness}
-        />
+        >
+          {entitéJuridiqueViewModel.numéroFiness}
+        </IndicateurIdentité>
         <IndicateurIdentité
           dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJourDeLAdresse}
           nomDeLIndicateur={wording.ADRESSE}
           source={Sources(wording.FINESS)}
-          valeur={entitéJuridiqueViewModel.adresse}
-        />
+        >
+          {entitéJuridiqueViewModel.adresse}
+        </IndicateurIdentité>
         <IndicateurIdentité
           dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJourDuTéléphone}
           nomDeLIndicateur={wording.TÉLÉPHONE}
           source={Sources(wording.FINESS)}
-          valeur={entitéJuridiqueViewModel.téléphone}
-        />
+        >
+          {entitéJuridiqueViewModel.téléphone}
+        </IndicateurIdentité>
         <IndicateurIdentité
           dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJourDuStatutDeLEntitéJuridique}
           nomDeLIndicateur={wording.STATUT_JURIDIQUE}
           source={Sources(wording.FINESS)}
-          valeur={entitéJuridiqueViewModel.statutDeLEntitéJuridique}
-        />
+        >
+          {entitéJuridiqueViewModel.statutDeLEntitéJuridique}
+        </IndicateurIdentité>
       </ul>
     </Bloc>
   )

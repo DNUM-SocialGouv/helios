@@ -1,5 +1,7 @@
-class AjoutTableRessourcesHumainesMédicoSocial1666166794478 {
-  async up(queryRunner) {
+import { MigrationInterface, QueryRunner } from 'typeorm'
+
+export class AjoutTableRessourcesHumainesMédicoSocial1666166794478 implements MigrationInterface {
+  async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
       CREATE TABLE ressources_humaines_medico_social (
         annee INT NOT NULL,
@@ -28,9 +30,7 @@ class AjoutTableRessourcesHumainesMédicoSocial1666166794478 {
     `)
   }
 
-  async down(queryRunner) {
+  async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query('DROP TABLE ressources_humaines_medico_social;')
   }
 }
-
-module.exports = AjoutTableRessourcesHumainesMédicoSocial1666166794478

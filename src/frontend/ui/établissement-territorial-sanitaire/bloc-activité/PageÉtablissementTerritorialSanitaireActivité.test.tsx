@@ -1,7 +1,7 @@
 import { fireEvent, screen, within } from '@testing-library/react'
 
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from '../../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder'
-import { fakeFrontDependencies, renderFakeComponent } from '../../../testHelper'
+import { fakeFrontDependencies, renderFakeComponent, textMatch } from '../../../testHelper'
 import { PageÉtablissementTerritorialSanitaire } from '../PageÉtablissementTerritorialSanitaire'
 import { ÉtablissementTerritorialSanitaireViewModel } from '../ÉtablissementTerritorialSanitaireViewModel'
 
@@ -12,9 +12,9 @@ describe('La page établissement territorial sanitaire - bloc activité', () => 
 
   it.each(
     [
-      [wording.NOMBRE_DE_SÉJOUR_MCO, 0, 'PMSI', 'Programme de Médicalisation des Systèmes d’Information'],
-      [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1, 'PMSI', 'Programme de Médicalisation des Systèmes d’Information'],
-      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 2, 'RPU', 'Résumé de Passage aux Urgences'],
+      [wording.NOMBRE_DE_SÉJOUR_MCO, 0, 'PMSI', wording.PMSI_TITLE],
+      [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1, 'PMSI', wording.PMSI_TITLE],
+      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 2, 'RPU', wording.RPU_TITLE],
     ]
   )('affiche les informations de l’indicateur %s', (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
     // WHEN
@@ -26,13 +26,13 @@ describe('La page établissement territorial sanitaire - bloc activité', () => 
     expect(indicateurs).toHaveLength(3)
     const titre = within(indicateurs[identifiant]).getByText(titreSection, { selector: 'p' })
     expect(titre).toBeInTheDocument()
-    const dateMiseAJour = within(indicateurs[identifiant]).getAllByText('Mise à jour', { exact: false, selector: 'p' })
-    expect(dateMiseAJour[0].textContent).toBe(`Mise à jour : 07/07/2021 - Source : ${sourceOrigineAttendue}, DIAMANT`)
+    const dateMiseAJour = within(indicateurs[identifiant]).getAllByText(textMatch(`${wording.miseÀJour('07/07/2021')} - Source : ${sourceOrigineAttendue}, DIAMANT`), { selector: 'p' })
+    expect(dateMiseAJour[0]).toBeInTheDocument()
     const transcription = within(indicateurs[identifiant]).getByText(wording.AFFICHER_LA_TRANSCRIPTION)
     expect(transcription).toHaveAttribute('aria-expanded', 'false')
     expect(transcription).not.toBeDisabled()
     const abréviation = within(indicateurs[identifiant]).getAllByText('DIAMANT', { selector: 'abbr' })
-    expect(abréviation[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
+    expect(abréviation[0]).toHaveAttribute('title', wording.DIAMANT_TITLE)
     const abréviationSourceOrigine = within(indicateurs[identifiant]).getAllByText(sourceOrigineAttendue, { selector: 'abbr' })
     expect(abréviationSourceOrigine[0]).toHaveAttribute('title', abréviationSourceOrigineAttendue)
     const détails = within(indicateurs[identifiant]).getByRole('button', { name: wording.DÉTAILS })
@@ -44,9 +44,9 @@ describe('La page établissement territorial sanitaire - bloc activité', () => 
 
   it.each(
     [
-      [wording.NOMBRE_DE_SÉJOUR_MCO, 0, 'PMSI', 'Programme de Médicalisation des Systèmes d’Information'],
-      [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1, 'PMSI', 'Programme de Médicalisation des Systèmes d’Information'],
-      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 2, 'RPU', 'Résumé de Passage aux Urgences'],
+      [wording.NOMBRE_DE_SÉJOUR_MCO, 0, 'PMSI', wording.PMSI_TITLE],
+      [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1, 'PMSI', wording.PMSI_TITLE],
+      [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 2, 'RPU', wording.RPU_TITLE],
     ]
   )('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails" (%s)', (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
     // GIVEN
@@ -64,7 +64,7 @@ describe('La page établissement territorial sanitaire - bloc activité', () => 
     const fermer = within(infoBulle).getByRole('button', { name: wording.FERMER })
     expect(fermer).toBeInTheDocument()
     const abréviationSourceFournisseur = within(infoBulle).getAllByText('DIAMANT', { selector: 'abbr' })
-    expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', 'Décisionnel Inter ARS pour la Maîtrise et ANTicipation')
+    expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', wording.DIAMANT_TITLE)
     const abréviationSourceOrigine = within(infoBulle).getAllByText(sourceOrigineAttendue, { selector: 'abbr' })
     expect(abréviationSourceOrigine[0]).toHaveAttribute('title', abréviationSourceOrigineAttendue)
     const élémentsDeCompréhension = within(infoBulle).getByRole('region', { name: wording.ÉLÉMENTS_DE_COMPRÉHENSION })

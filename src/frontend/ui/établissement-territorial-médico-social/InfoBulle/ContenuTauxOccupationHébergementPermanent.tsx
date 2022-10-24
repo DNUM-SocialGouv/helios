@@ -1,10 +1,10 @@
-import { ReactChild } from 'react'
+import { ReactElement } from 'react'
 
 import { ContenuDuTauxOccupation } from './ContenuDuTauxOccupation'
 
 type ContenuDuTauxOccupationHébergementPermanentProps = Readonly<{
   dateDeMiseÀJour: string
-  source: ReactChild
+  source: ReactElement
 }>
 
 export const ContenuTauxOccupationHébergementPermanent = ({ dateDeMiseÀJour, source }: ContenuDuTauxOccupationHébergementPermanentProps) => {

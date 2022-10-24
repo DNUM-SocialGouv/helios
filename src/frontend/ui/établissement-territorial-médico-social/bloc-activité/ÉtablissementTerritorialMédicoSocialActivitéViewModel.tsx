@@ -197,7 +197,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
 
       if (activité[indicateur].value !== null) {
         // @ts-ignore
-        valeurs.push(this.transformeEnTaux(activité[indicateur].value))
+        valeurs.push(StringFormater.transformeEnTaux(activité[indicateur].value))
       }
     })
 
@@ -222,10 +222,6 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   }
   private lIndicateurEstIlRenseigné(indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>): boolean {
     return this.établissementTerritorialActivité.some((activité: ÉtablissementTerritorialMédicoSocialActivité) => activité[indicateur].value !== null)
-  }
-
-  private transformeEnTaux(nombre: number): number {
-    return Number((nombre * 100).toFixed(1))
   }
 
   private construisLaCouleurDeLaBarreVerticale = (valeur: number, année: number | string): CouleurHistogramme => {
