@@ -24,7 +24,7 @@ export const BlocBudgetEtFinancesMédicoSocial = (
   const { wording } = useDependencies()
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.annéeInitiale)
 
-  if (établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.desDonnéesBudgetEtFinancesSontNonRenseignées) {
+  if (établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetEtFinancesNeSontPasRenseignées) {
     return (
       <Bloc titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES}>
         {wording.INDICATEURS_VIDES}

@@ -113,7 +113,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     )
   }
 
-  public get desDonnéesBudgetEtFinancesSontNonRenseignées(): boolean {
+  public get lesDonnéesBudgetEtFinancesNeSontPasRenseignées(): boolean {
     return !this.leCompteDeRésultatEstIlRenseigné
       && !this.leRésultatNetComptableEstIlRenseigné
       && !this.leMontantDeLaContributionAuxFraisDeSiègeEstIlRenseigné

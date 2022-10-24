@@ -1,6 +1,7 @@
 import { CadreBudgétaire } from '../../../database/models/BudgetEtFinancesMédicoSocialModel'
 import { ÉtablissementTerritorialMédicoSocial } from '../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
+import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from '../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines'
 import { Paths } from '../configuration/Paths'
 import { Wording } from '../configuration/wording/Wording'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from '../ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel'
@@ -648,6 +649,15 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
         dateMiseÀJourSource: '2022-03-03',
         valeur: 0.38845089702004892,
       },
+      ...champsSurchargés,
+    }
+  }
+
+  public static créeUneAnnéeRessourcesHumaines(
+    champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialBudgetEtFinances>
+  ): ÉtablissementTerritorialMédicoSocialRessourcesHumaines {
+    return {
+      ...ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines[1],
       ...champsSurchargés,
     }
   }

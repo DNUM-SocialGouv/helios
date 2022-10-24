@@ -1,6 +1,7 @@
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines'
 import { Wording } from '../../../configuration/wording/Wording'
 import { GraphiqueViewModel } from '../../commun/Graphique/GraphiqueViewModel'
+import { StringFormater } from '../../commun/StringFormater'
 
 export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel extends GraphiqueViewModel {
   private readonly ratioHistogrammeHorizontal = 2
@@ -10,6 +11,10 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
     wording: Wording
   ) {
     super(wording)
+  }
+
+  public get lesDonnéesRessourcesHumainesNeSontPasRenseignées(): boolean {
+    return this.ressourcesHumainesMédicoSocial.length === 0
   }
 
   public get nombreDEtpRéalisé(): JSX.Element {
@@ -33,6 +38,10 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
       this.wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION,
       annéesManquantes
     )
+  }
+
+  public get dateDeMiseÀJourDuNombreDEtpRéalisé(): string {
+    return StringFormater.formateLaDate(this.ressourcesHumainesMédicoSocial[0].nombreDEtpRéalisés.dateMiseÀJourSource)
   }
 
   private construisLesNombresDEtpRéalisés(): number[][] {

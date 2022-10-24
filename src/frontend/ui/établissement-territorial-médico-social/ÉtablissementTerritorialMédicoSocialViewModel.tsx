@@ -9,12 +9,14 @@ import { ÉtablissementTerritorialMédicoSocialAutorisationsViewModel } from './
 import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from './bloc-budget-et-finances/ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel'
 import { ÉtablissementTerritorialMédicoSocialIdentitéViewModel } from './bloc-identité/ÉtablissementTerritorialMédicoSocialIdentitéViewModel'
 import '@gouvfr/dsfr/dist/component/tag/tag.min.css'
+import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } from './bloc-ressources-humaines/ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel'
 
 export class ÉtablissementTerritorialMédicoSocialViewModel {
   private établissementTerritorialIdentitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialIdentitéViewModel
   private établissementTerritorialActivitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialActivitéViewModel
   private établissementTerritorialAutorisationsMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialAutorisationsViewModel
   private établissementTerritorialBudgetEtFinancesMédicoSocialViewModel: ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel
+  private établissementTerritorialRessourcesHumainesMédicoSocialViewModel: ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialMédicoSocial, private readonly wording: Wording, paths: Paths) {
     this.établissementTerritorialIdentitéMédicoSocialViewModel = new ÉtablissementTerritorialMédicoSocialIdentitéViewModel(
@@ -32,6 +34,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     )
     this.établissementTerritorialBudgetEtFinancesMédicoSocialViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
       établissementTerritorial.budgetEtFinances,
+      wording
+    )
+    this.établissementTerritorialRessourcesHumainesMédicoSocialViewModel = new ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel(
+      établissementTerritorial.ressourcesHumaines,
       wording
     )
   }
@@ -74,5 +80,9 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
 
   public get budgetEtFinancesViewModel(): ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
     return this.établissementTerritorialBudgetEtFinancesMédicoSocialViewModel
+  }
+
+  public get ressourcesHumainesViewModel(): ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
+    return this.établissementTerritorialRessourcesHumainesMédicoSocialViewModel
   }
 }
