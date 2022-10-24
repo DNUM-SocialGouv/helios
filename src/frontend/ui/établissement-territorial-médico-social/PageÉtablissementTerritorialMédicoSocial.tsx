@@ -7,6 +7,7 @@ import { BlocActivitéMédicoSocial } from './bloc-activité/BlocActivitéMédic
 import { BlocAutorisationEtCapacitéMédicoSocial } from './bloc-autorisations/BlocAutorisationEtCapacitéMédicoSocial'
 import { BlocBudgetEtFinancesMédicoSocial } from './bloc-budget-et-finances/BlocBudgetEtFinancesMédicoSocial'
 import { BlocIdentitéMédicoSocial } from './bloc-identité/BlocIdentitéMédicoSocial'
+import { BlocRessourcesHumainesMédicoSocial } from './bloc-ressources-humaines/BlocRessourcesHumainesMédicoSocial'
 import LogoÉtablissementTerritorial from './logo-établissement-territorial-médico-social.svg'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from './ÉtablissementTerritorialMédicoSocialViewModel'
 
@@ -43,6 +44,9 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ établissementTerri
         établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialViewModel.autorisationsViewModel}
       />
       <BlocActivitéMédicoSocial établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialViewModel.activitésViewModel} />
+      <BlocRessourcesHumainesMédicoSocial
+        établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialViewModel.ressourcesHumainesViewModel}
+      />
       <BlocBudgetEtFinancesMédicoSocial
         établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={établissementTerritorialViewModel.budgetEtFinancesViewModel}
       />

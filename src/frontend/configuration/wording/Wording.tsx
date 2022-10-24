@@ -178,6 +178,11 @@ export interface Wording {
   readonly TAUX_DE_CAF: string
   readonly FONDS_DE_ROULEMENT_NET_GLOBAL: string
 
+  // Bloc ressources humaines
+  readonly TITRE_BLOC_RESSOURCES_HUMAINES: string
+  readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ: ReactElement
+  readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION: string
+
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string
   readonly TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS: string
