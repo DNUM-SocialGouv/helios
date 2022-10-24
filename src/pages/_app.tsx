@@ -26,7 +26,12 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         secure: true,
         site: process.env['NEXT_PUBLIC_AT_PIANO_SITE_ID'],
       })
-      atPiano.page.send({ name: router.asPath })
+
+      if (router.pathname.includes('[numéroFiness]')) {
+        atPiano.page.send({ name: router.pathname })
+      } else {
+        atPiano.page.send({ name: router.asPath })
+      }
     }
   })
 

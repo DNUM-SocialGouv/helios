@@ -3,6 +3,17 @@ name: Install, build, lint and tests
 on: pull_request
 
 jobs:
+  package-dedupe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v3
+        with:
+          cache: yarn
+          node-version-file: package.json
+      - name: Check for duplicate dependencies (fix w/ "yarn dedupe")
+        run: yarn dedupe --check
+
   lint-and-typecheck-typescript:
     runs-on: ubuntu-latest
     steps:
@@ -116,8 +127,8 @@ jobs:
         run: pipx install pipenv
       - uses: actions/setup-python@v4
         with:
-          python-version: 3.10.6 # Conserver la même version que celle dans Pipfile
           cache: pipenv
+          python-version: 3.10.6 # Conserver la même version que celle dans Pipfile
       - name: Install dependencies
         run: pipenv install --dev --deploy
       - name: Lint
