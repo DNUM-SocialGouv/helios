@@ -26,6 +26,7 @@ export const PageRégion = ({ région }: { région: string }) => {
           {labelDeLaRégion}
         </h1>
         <iframe
+          allowFullScreen
           height="650"
           src={régions[région].source}
           title={wording.régionAtlasSanté(régions[région].label)}
