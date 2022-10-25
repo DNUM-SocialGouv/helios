@@ -197,12 +197,12 @@ export class WordingFr implements Wording {
   </>)
   readonly NUMÉRO_ARHGOS: string = 'Numéro ARHGOS'
   readonly ACTIVITÉS: string = 'Activités'
-  readonly CHIRURGIE: string = 'Chirurgie   '
-  readonly MÉDECINE: string = 'Médecine   '
-  readonly OBSTÉTRIQUE: string = 'Obstétrique   '
-  readonly SSR: string = 'SSR   '
-  readonly USLD: string = 'USLD   '
-  readonly PSYCHIATRIE: string = 'Psychiatrie   '
+  readonly CHIRURGIE: string = 'Chirurgie'
+  readonly MÉDECINE: string = 'Médecine'
+  readonly OBSTÉTRIQUE: string = 'Obstétrique'
+  readonly SSR: string = 'SSR'
+  readonly USLD: string = 'USLD'
+  readonly PSYCHIATRIE: string = 'Psychiatrie'
   readonly LITS: string = 'Lits'
   readonly PLACES: string = 'Places'
 
@@ -265,6 +265,7 @@ export class WordingFr implements Wording {
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string = 'Accès refusé'
+  readonly NON_RENSEIGNÉE: string = 'Non renseignée'
 
   // Erreur
   readonly PAGE_NON_TROUVÉE_404: string = 'Page non trouvée'

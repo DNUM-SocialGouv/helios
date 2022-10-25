@@ -63,7 +63,7 @@ export const TableIndicateur = ({ disabled = false, entêteLibellé, identifiant
                   {valeurs.map((valeur, index2) =>
                     <td key={valeur[index] + index2.toString()}>
                       {/* @ts-ignore */}
-                      {valeur[index] === null ? 'N/A' : valeur[index]}
+                      {valeur[index] === null ? wording.NON_RENSEIGNÉE : valeur[index]}
                     </td>)
                   }
                 </tr>)

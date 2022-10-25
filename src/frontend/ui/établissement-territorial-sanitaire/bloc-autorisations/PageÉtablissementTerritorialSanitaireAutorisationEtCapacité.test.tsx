@@ -97,14 +97,14 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
 
       const capacitésEtValeurs = [
         {
-          capacité: wording.CHIRURGIE,
-          index: 1,
-          valeur: ['10', '20'],
-        },
-        {
           capacité: wording.MÉDECINE,
           index: 2,
           valeur: ['20', '50'],
+        },
+        {
+          capacité: wording.CHIRURGIE,
+          index: 1,
+          valeur: ['10', '20'],
         },
         {
           capacité: wording.OBSTÉTRIQUE,
@@ -112,30 +112,67 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
           valeur: ['5', '6'],
         },
         {
-          capacité: wording.PSYCHIATRIE,
-          index: 4,
-          valeur: ['5', '13'],
-        },
-        {
           capacité: wording.SSR,
           index: 5,
-          valeur: ['2', '7'],
+          valeur: ['2', wording.NON_RENSEIGNÉE],
         },
         {
           capacité: wording.USLD,
           index: 6,
           valeur: ['15', '0'],
         },
+        {
+          capacité: wording.PSYCHIATRIE,
+          index: 4,
+          valeur: ['5', '13'],
+        },
       ]
-      const lignes = within(tableau).getAllByRole('row')
-      capacitésEtValeurs.forEach((capacitéEtValeur) => {
-        const capacité = within(lignes[capacitéEtValeur.index]).getByRole('cell', { name : capacitéEtValeur.capacité.trimEnd() })
+      const tbody = within(tableau).getAllByRole('rowgroup')[1]
+      const lignes = within(tbody).getAllByRole('row')
+      expect(lignes).toHaveLength(capacitésEtValeurs.length)
+      capacitésEtValeurs.forEach((capacitéEtValeur, index) => {
+        const capacité = within(lignes[index]).getByRole('cell', { name : capacitéEtValeur.capacité })
         expect(capacité).toBeInTheDocument()
-        const valeurLit = within(lignes[capacitéEtValeur.index]).getByRole('cell', { name: capacitéEtValeur.valeur[0] })
+        const valeurLit = within(lignes[index]).getByRole('cell', { name: capacitéEtValeur.valeur[0] })
         expect(valeurLit).toBeInTheDocument()
-        const valeurPlace = within(lignes[capacitéEtValeur.index]).getByRole('cell', { name: capacitéEtValeur.valeur[1] })
+        const valeurPlace = within(lignes[index]).getByRole('cell', { name: capacitéEtValeur.valeur[1] })
         expect(valeurPlace).toBeInTheDocument()
       })
+    })
+
+    it('affiche un tableau descriptif avec une activité en moins quand le nombre de lit et de place ne sont pas renseignés', () => {
+      // GIVEN
+      const établissementTerritorialSanitaireViewModel = ÉtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(
+        wording,
+        paths,
+        {
+          capacités: {
+            dateMiseÀJourSource: '2022-09-02',
+            nombreDeLitsEnChirurgie: 10,
+            nombreDeLitsEnMédecine: 20,
+            nombreDeLitsEnObstétrique: null,
+            nombreDeLitsEnSsr: 2,
+            nombreDeLitsEnUsld: 15,
+            nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 15,
+            nombreDePlacesEnChirurgie: 20,
+            nombreDePlacesEnMédecine: 50,
+            nombreDePlacesEnObstétrique: null,
+            nombreDePlacesEnPsyHospitalisationPartielle: 14,
+            nombreDePlacesEnSsr: null,
+          },
+        }
+      )
+
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
+
+      // THEN
+      const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
+      const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
+      const tableau = within(indicateurs[0]).getByRole('table')
+      const tbody = within(tableau).getAllByRole('rowgroup')[1]
+      const lignes = within(tbody).getAllByRole('row')
+      expect(lignes).toHaveLength(5)
     })
 
     it('n’affiche pas l’indicateur quand sa valeur est vide (Capacité par activités)', () => {
