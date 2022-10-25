@@ -30,10 +30,8 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     const indicateur = indicateurs[indiceDeLIndicateur.nombreDEtpRéalisés]
     const titre = within(indicateur).getByText(textMatch(wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION), { selector: 'p' })
     expect(titre).toBeInTheDocument()
-    const dateMiseAJour = within(indicateur).getAllByText(textMatch(`${wording.miseÀJour('06/06/2022')} - Source : CNSA, DIAMANT`), { selector: 'p' })
+    const dateMiseAJour = within(indicateur).getAllByText(textMatch(`${wording.miseÀJour('06/06/2022')} - Source : CNSA`), { selector: 'p' })
     expect(dateMiseAJour[0]).toBeInTheDocument()
-    const abréviationSourceFournisseur = within(indicateur).getAllByText('DIAMANT', { selector: 'abbr' })
-    expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', wording.DIAMANT_TITLE)
     const abréviationSourceOrigine = within(indicateur).getAllByText('CNSA', { selector: 'abbr' })
     expect(abréviationSourceOrigine[0]).toHaveAttribute('title', wording.CNSA_TITLE)
     const détails = within(indicateur).getByRole('button', { name: wording.DÉTAILS })
@@ -57,8 +55,6 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     const infoBulle = within(indicateur).getByRole('dialog', { name: 'Nombre d’ Équivalent Temps Plein Total réalisé' })
     const fermer = within(infoBulle).getByRole('button', { name: wording.FERMER })
     expect(fermer).toBeInTheDocument()
-    const abréviationSourceFournisseur = within(infoBulle).getAllByText('DIAMANT', { selector: 'abbr' })
-    expect(abréviationSourceFournisseur[0]).toHaveAttribute('title', wording.DIAMANT_TITLE)
     const abréviationSourceOrigine = within(infoBulle).getAllByText('CNSA', { selector: 'abbr' })
     expect(abréviationSourceOrigine[0]).toHaveAttribute('title', wording.CNSA_TITLE)
     const élémentsDeCompréhension = within(infoBulle).getByRole('region', { name: wording.ÉLÉMENTS_DE_COMPRÉHENSION })
@@ -131,29 +127,6 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
     const indicateur = indicateurs[indiceDeLIndicateur.nombreDEtpRéalisés]
     const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} 2019, 2021`, { selector: 'p' })
-    expect(exergue).toBeInTheDocument()
-  })
-
-  it('affiche une mise en exergue sur l’indicateur du nombre d’ETP réalisé si trois années sont manquantes', () => {
-    // GIVEN
-    const établissementTerritorialAvecUneAnnéeManquante = new ÉtablissementTerritorialMédicoSocialViewModel({
-      activités: [],
-      autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
-      budgetEtFinances: [],
-      identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
-      ressourcesHumaines: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines.map(
-        (blocRessourcesHumaines) => ({ ...blocRessourcesHumaines, nombreDEtpRéalisés: { dateMiseÀJourSource: '2022-06-06', valeur: null } })
-      ),
-    }, wording, paths)
-
-    // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialAvecUneAnnéeManquante} />)
-
-    // THEN
-    const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
-    const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
-    const indicateur = indicateurs[indiceDeLIndicateur.nombreDEtpRéalisés]
-    const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} 2019, 2020, 2021`, { selector: 'p' })
     expect(exergue).toBeInTheDocument()
   })
 

@@ -14,7 +14,11 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
   }
 
   public get lesDonnéesRessourcesHumainesNeSontPasRenseignées(): boolean {
-    return this.ressourcesHumainesMédicoSocial.length === 0
+    return !this.leNombreDEtpRéaliséEstIlRenseigné
+  }
+
+  private get leNombreDEtpRéaliséEstIlRenseigné(): boolean {
+    return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.nombreDEtpRéalisés.valeur !== null)
   }
 
   public get nombreDEtpRéalisé(): JSX.Element {
