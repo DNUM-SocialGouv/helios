@@ -36,6 +36,7 @@ export class GraphiqueViewModel {
   readonly couleurIdentifiant = '#000'
   readonly policeGrasse = 'bold'
   readonly policeNormale = 'normal'
+  readonly borneMaximaleDeLHistogrammeVertical = 105
 
   constructor(protected readonly wording: Wording) {
     ChartJS.register(
@@ -509,7 +510,7 @@ export class GraphiqueViewModel {
           },
         },
         xLine: { display: false, max: 1, min: 0, type: 'linear' },
-        y: { display: false },
+        y: { display: false, max: this.borneMaximaleDeLHistogrammeVertical },
       },
     }
   }
