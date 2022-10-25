@@ -32,12 +32,12 @@ export const BlocRessourcesHumainesMédicoSocial = (
         <IndicateurGraphique
           contenuInfoBulle={<ContenuDuNombreDEtpRéalisé
             dateDeMiseÀJour={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.dateDeMiseÀJourDuNombreDEtpRéalisé}
-            source={Sources(wording.DIAMANT, wording.CNSA)}
+            source={Sources(wording.CNSA)}
           />}
           dateDeMiseÀJour={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.dateDeMiseÀJourDuNombreDEtpRéalisé}
           identifiant="ressources-humaines-nombre-etp-réalisé"
           nomDeLIndicateur={wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ}
-          source={Sources(wording.DIAMANT, wording.CNSA)}
+          source={Sources(wording.CNSA)}
         >
           {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.nombreDEtpRéalisé}
         </IndicateurGraphique>
