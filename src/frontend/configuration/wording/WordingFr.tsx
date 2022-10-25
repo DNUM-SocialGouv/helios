@@ -237,6 +237,7 @@ export class WordingFr implements Wording {
     </>
   )
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION: string = 'Nombre d’ETP Total réalisé'
+  readonly TAUX_DE_ROTATION_DU_PERSONNEL: string = 'Taux de rotation du personnel sur effectifs réels'
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string = 'Établissement territorial'

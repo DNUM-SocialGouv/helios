@@ -182,6 +182,7 @@ export interface Wording {
   readonly TITRE_BLOC_RESSOURCES_HUMAINES: string
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ: ReactElement
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION: string
+  readonly TAUX_DE_ROTATION_DU_PERSONNEL: string
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string

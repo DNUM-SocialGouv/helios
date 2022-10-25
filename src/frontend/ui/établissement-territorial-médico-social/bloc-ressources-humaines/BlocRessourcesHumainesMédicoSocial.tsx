@@ -3,6 +3,7 @@ import { useDependencies } from '../../commun/contexts/useDependencies'
 import { IndicateurGraphique } from '../../commun/IndicateurGraphique/IndicateurGraphique'
 import { Sources } from '../../commun/Sources/Sources'
 import { ContenuDuNombreDEtpRéalisé } from '../InfoBulle/ContenuDuNombreDEtpRéalisé'
+import { ContenuDuTauxDeRotationDuPersonnel } from '../InfoBulle/ContenuDuTauxDeRotationDuPersonnel'
 import styles from './BlocRessourcesHumainesMédicoSocial.module.css'
 import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } from './ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel'
 
@@ -40,6 +41,18 @@ export const BlocRessourcesHumainesMédicoSocial = (
           source={Sources(wording.CNSA)}
         >
           {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.nombreDEtpRéalisé}
+        </IndicateurGraphique>
+        <IndicateurGraphique
+          contenuInfoBulle={<ContenuDuTauxDeRotationDuPersonnel
+            dateDeMiseÀJour={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.dateDeMiseÀJourDuTauxDeRotationDuPersonnel}
+            source={Sources(wording.TDB_PERF)}
+          />}
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.dateDeMiseÀJourDuTauxDeRotationDuPersonnel}
+          identifiant="ressources-humaines-taux-de-rotation-du-personnel"
+          nomDeLIndicateur={wording.TAUX_DE_ROTATION_DU_PERSONNEL}
+          source={Sources(wording.TDB_PERF)}
+        >
+          {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.tauxDeRotationDuPersonnel}
         </IndicateurGraphique>
       </ul>
     </Bloc>
