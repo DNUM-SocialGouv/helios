@@ -130,29 +130,6 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     expect(exergue).toBeInTheDocument()
   })
 
-  it('affiche une mise en exergue sur l’indicateur du nombre d’ETP réalisé si trois années sont manquantes', () => {
-    // GIVEN
-    const établissementTerritorialAvecUneAnnéeManquante = new ÉtablissementTerritorialMédicoSocialViewModel({
-      activités: [],
-      autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
-      budgetEtFinances: [],
-      identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
-      ressourcesHumaines: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines.map(
-        (blocRessourcesHumaines) => ({ ...blocRessourcesHumaines, nombreDEtpRéalisés: { dateMiseÀJourSource: '2022-06-06', valeur: null } })
-      ),
-    }, wording, paths)
-
-    // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialAvecUneAnnéeManquante} />)
-
-    // THEN
-    const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
-    const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
-    const indicateur = indicateurs[indiceDeLIndicateur.nombreDEtpRéalisés]
-    const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} 2019, 2020, 2021`, { selector: 'p' })
-    expect(exergue).toBeInTheDocument()
-  })
-
   it('affiche une phrase à la place des indicateurs lorsqu’aucune donnée n’est renseignée', () => {
     // GIVEN
     const établissementTerritorialSansBlocRessourcesHumaines = new ÉtablissementTerritorialMédicoSocialViewModel({

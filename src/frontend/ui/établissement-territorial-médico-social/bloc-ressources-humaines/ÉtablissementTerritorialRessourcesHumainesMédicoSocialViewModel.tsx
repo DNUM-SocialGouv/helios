@@ -17,8 +17,8 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
     return !this.leNombreDEtpRéaliséEstIlRenseigné
   }
 
-  public get leNombreDEtpRéaliséEstIlRenseigné(): boolean {
-    return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.nombreDEtpRéalisés !== null)
+  private get leNombreDEtpRéaliséEstIlRenseigné(): boolean {
+    return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.nombreDEtpRéalisés.valeur !== null)
   }
 
   public get nombreDEtpRéalisé(): JSX.Element {
