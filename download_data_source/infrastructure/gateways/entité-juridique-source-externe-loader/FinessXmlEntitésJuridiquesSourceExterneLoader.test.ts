@@ -29,6 +29,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
         <telephone>0474731001</telephone>
         <libstatutjuridique>Etablissement Public Intercommunal d'Hospitalisation</libstatutjuridique>
         <categetab>355</categetab>
+        <siren>260104631</siren>
         <datefermeture xsi:nil="true"/>
       </structureej>`
     const ejOuverte2 = `<structureej>
@@ -44,6 +45,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
         <telephone>0826666900</telephone>
         <libstatutjuridique>Société Anonyme (S.A.)</libstatutjuridique>
         <categetab xsi:nil="true"/>
+        <siren>260104632</siren>
         <datefermeture xsi:nil="true"/>
       </structureej>`
     const ejFermée = `<structureej>
@@ -59,6 +61,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
         <telephone>0474383000</telephone>
         <libstatutjuridique>Société A Responsabilité Limitée (S.A.R.L.)</libstatutjuridique>
         <categetab xsi:nil="true"/>
+        <siren>260104630</siren>
         <datefermeture>2002-07-10</datefermeture>
       </structureej>`
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -87,6 +90,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
           numéroFinessEntitéJuridique: '010008407',
           raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY',
           raisonSocialeCourte: 'CH DU HAUT BUGEY',
+          siren: '260104631',
           téléphone: '0474731001',
         },
         {
@@ -100,6 +104,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
           numéroFinessEntitéJuridique: '590000741',
           raisonSociale: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
           raisonSocialeCourte: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
+          siren: '260104632',
           téléphone: '0826666900',
         },
       ]
@@ -205,6 +210,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
           numéroFinessEntitéJuridique: '010008407',
           raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY',
           raisonSocialeCourte: 'CH DU HAUT BUGEY',
+          siren: '260110218',
           téléphone: '',
         },
         {
@@ -218,6 +224,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
           numéroFinessEntitéJuridique: '590000741',
           raisonSociale: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
           raisonSocialeCourte: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
+          siren: '476780333',
           téléphone: '0826666900',
         },
       ]
@@ -239,23 +246,25 @@ describe('Récupération des entités juridiques de la source de données FINESS
         <telephone>0474731001</telephone>
         <libstatutjuridique>Etablissement Public Intercommunal d'Hospitalisation</libstatutjuridique>
         <categetab>355</categetab>
+        <siren>260104631</siren>
         <datefermeture xsi:nil="true"/>
       </structureej>`
     const entitéSansRaisonSocialeLongue2 = `<structureej>
-          <nofiness>590000741</nofiness>
-          <rs>HOPITAL PRIVE DE VILLENEUVE D'ASCQ</rs>
-          <rslongue xsi:nil="true"/>
-          <numvoie>20</numvoie>
-          <typvoie>AV</typvoie>
-          <voie>DE LA RECONNAISSANCE</voie>
-          <ligneacheminement>59650 VILLENEUVE D ASCQ</ligneacheminement>
-          <libcommune>VILLENEUVE D ASCQ</libcommune>
-          <libdepartement>NORD</libdepartement>
-          <telephone>0826666900</telephone>
-          <libstatutjuridique>Société Anonyme (S.A.)</libstatutjuridique>
-          <categetab xsi:nil="true"/>
-          <datefermeture xsi:nil="true"/>
-        </structureej>`
+        <nofiness>590000741</nofiness>
+        <rs>HOPITAL PRIVE DE VILLENEUVE D'ASCQ</rs>
+        <rslongue xsi:nil="true"/>
+        <numvoie>20</numvoie>
+        <typvoie>AV</typvoie>
+        <voie>DE LA RECONNAISSANCE</voie>
+        <ligneacheminement>59650 VILLENEUVE D ASCQ</ligneacheminement>
+        <libcommune>VILLENEUVE D ASCQ</libcommune>
+        <libdepartement>NORD</libdepartement>
+        <telephone>0826666900</telephone>
+        <libstatutjuridique>Société Anonyme (S.A.)</libstatutjuridique>
+        <categetab xsi:nil="true"/>
+        <siren>260104632</siren>
+        <datefermeture xsi:nil="true"/>
+      </structureej>`
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
       <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         ${entitéSansRaisonSocialeLongue1}
@@ -281,6 +290,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
           numéroFinessEntitéJuridique: '010008407',
           raisonSociale: 'CH DU HAUT BUGEY',
           raisonSocialeCourte: 'CH DU HAUT BUGEY',
+          siren: '260104631',
           téléphone: '0474731001',
         },
         {
@@ -294,6 +304,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
           numéroFinessEntitéJuridique: '590000741',
           raisonSociale: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
           raisonSocialeCourte: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
+          siren: '260104632',
           téléphone: '0826666900',
         },
       ]

@@ -66,6 +66,7 @@ export const uneEntitéJuridique: EntitéJuridique = {
   numéroFinessEntitéJuridique: '010018407',
   raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY',
   raisonSocialeCourte: 'CH DU HAUT BUGEY',
+  siren: '260104631',
   téléphone: '0102030406',
 }
 
@@ -80,6 +81,7 @@ export const uneSecondeEntitéJuridique: EntitéJuridique = {
   numéroFinessEntitéJuridique: '590001741',
   raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
   raisonSocialeCourte: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+  siren: '260104632',
   téléphone: '0102030405',
 }
 

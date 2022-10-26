@@ -27,6 +27,7 @@ import { AjoutBudgetEtFinancesMédicoSocial1663593231271 } from './migrations/16
 import { AjoutDesTauxPourLeBlocBudgetEtFinancesMédicoSocial1663852267673 } from './migrations/1663852267673-AjoutDesTauxPourLeBlocBudgetEtFinancesMédicoSocial'
 import { AjoutFichierSourceAnnErrdEj1664462123042 } from './migrations/1664462123042-AjoutFichierSourceAnnErrdEj'
 import { AjoutTableRessourcesHumainesMédicoSocial1666166794478 } from './migrations/1666166794478-AjoutTableRessourcesHumainesMédicoSocial'
+import { AjoutSiren1666796630419 } from './migrations/1666796630419-AjoutSiren'
 import { ActivitéMédicoSocialModel } from './models/ActivitéMédicoSocialModel'
 import { ActivitéSanitaireModel } from './models/ActivitéSanitaireModel'
 import { AutorisationMédicoSocialModel } from './models/AutorisationMédicoSocialModel'
@@ -91,6 +92,7 @@ export default new DataSource({
     AjoutDesTauxPourLeBlocBudgetEtFinancesMédicoSocial1663852267673,
     AjoutFichierSourceAnnErrdEj1664462123042,
     AjoutTableRessourcesHumainesMédicoSocial1666166794478,
+    AjoutSiren1666796630419,
   ],
   type: 'postgres',
   url: environmentVariables.DATABASE_URL,
