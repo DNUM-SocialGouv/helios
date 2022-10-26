@@ -14,15 +14,15 @@ describe('La page établissement territorial - bloc identité', () => {
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
 
     // THEN
-    expect(document.title).toBe(établissementTerritorialMédicoSocial.titre)
+    expect(document.title).toBe(`ET - ${ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité.numéroFinessÉtablissementTerritorial.value} - ${ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité.raisonSocialeCourte.value}`)
   })
 
-  it('affiche le titre : "ET - numéro de FINESS - nom de l’établissement"', () => {
+  it('affiche le titre : "ET - numéro de FINESS - nom court de l’établissement"', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
 
     // THEN
-    const titre = screen.getByRole('heading', { level: 1, name: 'ET - 010003598 - IFAS CH DU HAUT BUGEY' })
+    const titre = screen.getByRole('heading', { level: 1, name: 'ET - 010003598 - CH DU HAUT BUGEY' })
     expect(titre).toBeInTheDocument()
   })
 

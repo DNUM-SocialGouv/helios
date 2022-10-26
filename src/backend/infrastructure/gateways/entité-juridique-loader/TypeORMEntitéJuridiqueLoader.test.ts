@@ -70,7 +70,7 @@ describe('Entité juridique loader', () => {
     // GIVEN
     await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({
       libelléStatutJuridique: 'fake libellé statut juridique',
-      raisonSociale: 'fake raison sociale',
+      raisonSocialeCourte: 'fake raison sociale courte',
     }))
     await dateMiseÀJourFichierSourceRepository.insert([
       DateMiseÀJourFichierSourceModelTestBuilder.crée({
@@ -87,7 +87,7 @@ describe('Entité juridique loader', () => {
     expect(entitéJuridique).toStrictEqual<EntitéJuridiqueDeRattachement>({
       raisonSocialeDeLEntitéDeRattachement: {
         dateMiseÀJourSource: '2022-05-14',
-        value: 'fake raison sociale',
+        value: 'fake raison sociale courte',
       },
       statutJuridique: {
         dateMiseÀJourSource: '2022-05-14',

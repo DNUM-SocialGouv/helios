@@ -11,12 +11,12 @@ describe('La récupération des établissements territoriaux rattachés à une e
       {
         domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
         numéroFiness: '111222333',
-        raisonSociale: 'Établissement 1',
+        raisonSocialeCourte: 'Établissement 1',
       },
       {
         domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
         numéroFiness: '333222111',
-        raisonSociale: 'Établissement 2',
+        raisonSocialeCourte: 'Établissement 2',
       },
     ]
     const mockedRécupèreParFinessDeLEntitéJuridiqueDeRattachement = jest.fn().mockResolvedValueOnce(établissementsTerritoriauxAttendus)

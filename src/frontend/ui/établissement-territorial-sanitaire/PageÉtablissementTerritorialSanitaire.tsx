@@ -22,7 +22,7 @@ export const PageÉtablissementTerritorialSanitaire = ({ établissementTerritori
       path: `${paths.ENTITÉ_JURIDIQUE}/${établissementTerritorialSanitaireViewModel.numéroFinessEntitéJuridiqueBrut}`,
     },
     {
-      label: établissementTerritorialSanitaireViewModel.identitéViewModel.nomDeLÉtablissementTerritorial,
+      label: établissementTerritorialSanitaireViewModel.identitéViewModel.nomCourtDeLÉtablissementTerritorial,
       path: '',
     },
   ])

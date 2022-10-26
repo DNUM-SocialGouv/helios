@@ -74,6 +74,10 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
         dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
         value: entitéJuridiqueModel.raisonSociale,
       },
+      raisonSocialeCourte: {
+        dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
+        value: entitéJuridiqueModel.raisonSocialeCourte,
+      },
       téléphone: {
         dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
         value: entitéJuridiqueModel.téléphone,
@@ -88,7 +92,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
     return {
       raisonSocialeDeLEntitéDeRattachement: {
         dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
-        value: entitéJuridiqueModel.raisonSociale,
+        value: entitéJuridiqueModel.raisonSocialeCourte,
       },
       statutJuridique: {
         dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,

@@ -18,6 +18,10 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
     return this.établissementTerritorialIdentité.raisonSociale.value
   }
 
+  public get nomCourtDeLÉtablissementTerritorial(): string {
+    return this.établissementTerritorialIdentité.raisonSocialeCourte.value
+  }
+
   public get dateDeMiseÀJourDuNomDeLÉtablissementTerritorial(): string {
     return StringFormater.formateLaDate(this.établissementTerritorialIdentité.raisonSociale.dateMiseÀJourSource)
   }

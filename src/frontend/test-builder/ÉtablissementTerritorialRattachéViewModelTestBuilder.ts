@@ -7,13 +7,13 @@ export class ÉtablissementTerritorialRattachéViewModelTestBuilder {
   private static établissementTerritorialRattaché1: ÉtablissementTerritorialRattaché = {
     domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
     numéroFiness: '010000040',
-    raisonSociale: 'CH NANTUA',
+    raisonSocialeCourte: 'CH NANTUA',
   }
 
   private static établissementTerritorialRattaché2: ÉtablissementTerritorialRattaché = {
     domaine: DomaineÉtablissementTerritorial.SANITAIRE,
     numéroFiness: '590782553',
-    raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+    raisonSocialeCourte: 'HP VILLENEUVE DASCQ',
   }
 
   public static créeÉtablissementTerritorialRattaché(

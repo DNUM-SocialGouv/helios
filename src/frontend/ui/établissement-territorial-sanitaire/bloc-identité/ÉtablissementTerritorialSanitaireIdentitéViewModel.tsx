@@ -17,6 +17,10 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
     return this.établissementTerritorialSanitaireIdentité.raisonSociale.value
   }
 
+  public get nomCourtDeLÉtablissementTerritorial(): string {
+    return this.établissementTerritorialSanitaireIdentité.raisonSocialeCourte.value
+  }
+
   public get dateDeMiseÀJourDuNomDeLÉtablissementTerritorial(): string {
     return StringFormater.formateLaDate(this.établissementTerritorialSanitaireIdentité.raisonSociale.dateMiseÀJourSource)
   }

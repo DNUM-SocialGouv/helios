@@ -22,7 +22,7 @@ export class ÉtablissementTerritorialSanitaireViewModel {
   }
 
   public get titre(): string {
-    return `ET - ${this.établissementTerritorialSanitaireIdentitéViewModel.numéroFinessÉtablissementTerritorial} - ${this.établissementTerritorialSanitaireIdentitéViewModel.nomDeLÉtablissementTerritorial}`
+    return `ET - ${this.établissementTerritorialSanitaireIdentitéViewModel.numéroFinessÉtablissementTerritorial} - ${this.établissementTerritorialSanitaireIdentitéViewModel.nomCourtDeLÉtablissementTerritorial}`
   }
 
   public get titreAccessibleDeLEntitéJuridique(): ReactElement {

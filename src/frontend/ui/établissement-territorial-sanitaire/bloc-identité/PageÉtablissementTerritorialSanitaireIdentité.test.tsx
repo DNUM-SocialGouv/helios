@@ -14,10 +14,10 @@ describe('La page établissement territorial sanitaire - bloc identité', () => 
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
     // THEN
-    expect(document.title).toBe(établissementTerritorialSanitaireViewModel.titre)
+    expect(document.title).toBe(`ET - ${ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité.numéroFinessÉtablissementTerritorial.value} - ${ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité.raisonSocialeCourte.value}`)
   })
 
-  it('affiche le titre : "ET - numéro de FINESS - nom de l’établissement"', () => {
+  it('affiche le titre : "ET - numéro de FINESS - nom court de l’établissement"', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
@@ -59,7 +59,7 @@ describe('La page établissement territorial sanitaire - bloc identité', () => 
     expect(labelÉtablissement).toBeInTheDocument()
     const abréviationFiness = within(indicateurs[0]).getByText('FINESS', { selector: 'abbr' })
     expect(abréviationFiness).toHaveAttribute('title', wording.FINESS_TITLE)
-    const nomDeLÉtablissement = within(indicateurs[0]).getByText('CH NANTUA', { selector: 'p' })
+    const nomDeLÉtablissement = within(indicateurs[0]).getByText('Centre Hospitalier NANTUA', { selector: 'p' })
     expect(nomDeLÉtablissement).toBeInTheDocument()
   })
 
@@ -111,7 +111,7 @@ describe('La page établissement territorial sanitaire - bloc identité', () => 
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const labelEntitéJuridiqueDeRattachement = within(indicateurs[4]).getByText(textMatch(`${wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
     expect(labelEntitéJuridiqueDeRattachement).toBeInTheDocument()
-    const entitéJuridiqueDeRattachement = within(indicateurs[4]).getByRole('link', { name: 'EJ - 010008407 - HOPITAL PRIVE DE VILLENEUVE DASCQ' })
+    const entitéJuridiqueDeRattachement = within(indicateurs[4]).getByRole('link', { name: 'EJ - 010008407 - HP VILLENEUVE DASCQ' })
     expect(entitéJuridiqueDeRattachement).toHaveAttribute('href', '/entite-juridique/010008407')
   })
 

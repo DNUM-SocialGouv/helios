@@ -30,6 +30,10 @@ export class EntitéJuridiqueTestBuilder {
       dateMiseÀJourSource: '2022-05-14',
       value: 'CENTRE HOSPITALIER DU HAUT BUGEY',
     },
+    raisonSocialeCourte: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 'CH DU HAUT BUGEY',
+    },
     téléphone: {
       dateMiseÀJourSource: '2022-05-14',
       value: '0102030406',

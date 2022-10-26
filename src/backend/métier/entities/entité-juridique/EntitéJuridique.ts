@@ -27,6 +27,10 @@ export type EntitéJuridique = Readonly<{
     dateMiseÀJourSource: string
     value: string
   }>
+  raisonSocialeCourte: Readonly<{
+    dateMiseÀJourSource: string
+    value: string
+  }>
   téléphone: Readonly<{
     dateMiseÀJourSource: string
     value: string
