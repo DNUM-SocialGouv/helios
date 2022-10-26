@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import { Bar } from 'react-chartjs-2'
 
 import { ÉtablissementTerritorialSanitaire } from '../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire'
@@ -42,6 +43,15 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
     super(wording)
   }
 
+  public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
+    return !this.activitéEstElleRenseignée ||
+      (
+        !this.nombreDeSéjoursMCOSontIlsRenseignés
+        && !this.nombreDeJournéesPsyEtSsrSontIlsRenseignés
+        && !this.nombreDePassagesAuxUrgencesEstIlRenseigné
+      )
+  }
+
   public get activitéEstElleRenseignée(): boolean {
     return this.établissementTerritorialSanitaireActivités.length === 0 ? false : true
   }
@@ -56,7 +66,7 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
       activité['nombreSéjoursCompletsObstétrique'].value !== null))
   }
 
-  public get nombreDeSéjoursMédecineChirurgieObstétrique(): JSX.Element {
+  public get nombreDeSéjoursMédecineChirurgieObstétrique(): ReactElement {
     const [nombreDeSéjours, années] = this.construisLesSéjoursMCOParAnnée()
 
     return this.afficheLHistogrammeDesSéjoursMCO(nombreDeSéjours, années)
@@ -74,7 +84,7 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
       activité['nombreJournéesCompletePsy'].value !== null))
   }
 
-  public get nombreDeJournéesPsyEtSsr(): JSX.Element {
+  public get nombreDeJournéesPsyEtSsr(): ReactElement {
     const [nombreDeJournées, années] = this.construisLesJournéesPsyEtSsrParAnnée()
 
     return this.afficheLHistogrammeDesJournéesPsyEtSsr(nombreDeJournées, années)
@@ -88,7 +98,7 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
     return this.lIndicateurEstIlRenseigné('nombreDePassagesAuxUrgences')
   }
 
-  public get nombreDePassagesAuxUrgences(): JSX.Element {
+  public get nombreDePassagesAuxUrgences(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs('nombreDePassagesAuxUrgences')
     const annéesManquantes = this.annéesManquantes(années, 5)
     const construisLaCouleurDeLaBarreHorizontale = (_valeur: number, année: number | string): CouleurHistogramme => {
@@ -184,7 +194,7 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
     return this.établissementTerritorialSanitaireActivités.some((activité: ÉtablissementTerritorialSanitaireActivité) => activité[indicateur].value !== null)
   }
 
-  private afficheLHistogrammeDesSéjoursMCO(nombreDeSéjours: DonnéesDeDiagrammeDesSéjoursMCO, années: number[]): JSX.Element {
+  private afficheLHistogrammeDesSéjoursMCO(nombreDeSéjours: DonnéesDeDiagrammeDesSéjoursMCO, années: number[]): ReactElement {
     const data = {
       datasets: [
         {
@@ -272,7 +282,7 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
     )
   }
 
-  private afficheLHistogrammeDesJournéesPsyEtSsr(nombreDeJournées: DonnéesDeDiagrammeDesJournéesPsyEtSsr, années: number[]): JSX.Element {
+  private afficheLHistogrammeDesJournéesPsyEtSsr(nombreDeJournées: DonnéesDeDiagrammeDesJournéesPsyEtSsr, années: number[]): ReactElement {
     const data = {
       datasets: [
         {

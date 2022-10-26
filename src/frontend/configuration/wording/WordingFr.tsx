@@ -197,12 +197,12 @@ export class WordingFr implements Wording {
   </>)
   readonly NUMÉRO_ARHGOS: string = 'Numéro ARHGOS'
   readonly ACTIVITÉS: string = 'Activités'
-  readonly CHIRURGIE: string = 'Chirurgie   '
-  readonly MÉDECINE: string = 'Médecine   '
-  readonly OBSTÉTRIQUE: string = 'Obstétrique   '
-  readonly SSR: string = 'SSR   '
-  readonly USLD: string = 'USLD   '
-  readonly PSYCHIATRIE: string = 'Psychiatrie   '
+  readonly CHIRURGIE: string = 'Chirurgie'
+  readonly MÉDECINE: string = 'Médecine'
+  readonly OBSTÉTRIQUE: string = 'Obstétrique'
+  readonly SSR: string = 'SSR'
+  readonly USLD: string = 'USLD'
+  readonly PSYCHIATRIE: string = 'Psychiatrie'
   readonly LITS: string = 'Lits'
   readonly PLACES: string = 'Places'
 

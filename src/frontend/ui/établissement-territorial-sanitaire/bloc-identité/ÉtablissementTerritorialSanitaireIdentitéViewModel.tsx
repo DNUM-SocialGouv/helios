@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { ReactElement } from 'react'
 
 import { ÉtablissementTerritorialSanitaire } from '../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire'
 import { Paths } from '../../../configuration/Paths'
@@ -48,7 +49,7 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
     return StringFormater.formateLaDate(this.établissementTerritorialSanitaireIdentité.téléphone.dateMiseÀJourSource)
   }
 
-  public get entitéJuridiqueDeRattachement(): JSX.Element {
+  public get entitéJuridiqueDeRattachement(): ReactElement {
     const lienVersLEntitéJuridique = `${this.paths.ENTITÉ_JURIDIQUE}/${this.établissementTerritorialSanitaireIdentité.numéroFinessEntitéJuridique.value}`
     const nomDeLEntitéJuridique = this.établissementTerritorialSanitaireIdentité.raisonSocialeDeLEntitéDeRattachement.value
     const libellé = `EJ - ${this.établissementTerritorialSanitaireIdentité.numéroFinessEntitéJuridique.value} - ${nomDeLEntitéJuridique}`

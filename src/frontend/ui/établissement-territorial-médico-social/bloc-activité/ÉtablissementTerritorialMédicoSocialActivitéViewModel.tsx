@@ -1,3 +1,5 @@
+import { ReactElement } from 'react'
+
 import { ÉtablissementTerritorialMédicoSocial } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialActivité } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
 import { Wording } from '../../../configuration/wording/Wording'
@@ -16,6 +18,19 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
     super(wording)
   }
 
+  public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
+    return !this.activitéEstElleRenseignée ||
+      (
+        !this.leTauxOccupationHébergementPermanentEstIlRenseigné
+        && !this.leTauxOccupationHébergementTemporaireEstIlRenseigné
+        && !this.leTauxOccupationAccueilDeJourEstIlRenseigné
+        && !this.leTauxRéalisationActivitéEstIlRenseigné
+        && !this.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné
+        && !this.laFileActivePersonnesAccompagnéesEstElleRenseignée
+        && !this.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée
+      )
+  }
+
   public get activitéEstElleRenseignée(): boolean {
     return this.établissementTerritorialActivité.length === 0 ? false : true
   }
@@ -24,7 +39,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
     return this.lIndicateurEstIlRenseigné('tauxOccupationHébergementPermanent')
   }
 
-  public get tauxOccupationHébergementPermanent(): JSX.Element {
+  public get tauxOccupationHébergementPermanent(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux('tauxOccupationHébergementPermanent')
 
     return this.afficheUnHistogrammeVertical(
@@ -46,7 +61,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
     return this.lIndicateurEstIlRenseigné('tauxOccupationHébergementTemporaire')
   }
 
-  public get tauxOccupationHébergementTemporaire(): JSX.Element {
+  public get tauxOccupationHébergementTemporaire(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux('tauxOccupationHébergementTemporaire')
 
     return this.afficheUnHistogrammeVertical(
@@ -68,7 +83,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
     return this.lIndicateurEstIlRenseigné('tauxOccupationAccueilDeJour')
   }
 
-  public get tauxOccupationAccueilDeJour(): JSX.Element {
+  public get tauxOccupationAccueilDeJour(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux('tauxOccupationAccueilDeJour')
 
     return this.afficheUnHistogrammeVertical(
@@ -90,7 +105,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
     return this.lIndicateurEstIlRenseigné('tauxRéalisationActivité')
   }
 
-  public get tauxRéalisationActivité(): JSX.Element {
+  public get tauxRéalisationActivité(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux('tauxRéalisationActivité')
 
     return this.afficheUnHistogrammeVertical(
@@ -112,7 +127,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
     return this.lIndicateurEstIlRenseigné('fileActivePersonnesAccompagnées')
   }
 
-  public get fileActivePersonnesAccompagnées(): JSX.Element {
+  public get fileActivePersonnesAccompagnées(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs('fileActivePersonnesAccompagnées')
     const annéesManquantes = this.annéesManquantes(années)
 
@@ -137,7 +152,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
     return this.lIndicateurEstIlRenseigné('nombreMoyenJournéesAbsencePersonnesAccompagnées')
   }
 
-  public get nombreMoyenJournéesAbsencePersonnesAccompagnées(): JSX.Element {
+  public get nombreMoyenJournéesAbsencePersonnesAccompagnées(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs('nombreMoyenJournéesAbsencePersonnesAccompagnées')
     const annéesManquantes = this.annéesManquantes(années)
 
@@ -162,7 +177,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
     return this.lIndicateurEstIlRenseigné('duréeMoyenneSéjourAccompagnementPersonnesSorties')
   }
 
-  public get duréeMoyenneSéjourAccompagnementPersonnesSorties(): JSX.Element {
+  public get duréeMoyenneSéjourAccompagnementPersonnesSorties(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs('duréeMoyenneSéjourAccompagnementPersonnesSorties')
     const annéesManquantes = this.annéesManquantes(années)
 

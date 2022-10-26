@@ -18,18 +18,7 @@ type BlocActivitéMédicoSocialProps = Readonly<{
 export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéMédicoSocialViewModel }: BlocActivitéMédicoSocialProps) => {
   const { wording } = useDependencies()
 
-  if (
-    !établissementTerritorialActivitéMédicoSocialViewModel.activitéEstElleRenseignée ||
-    (
-      !établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementPermanentEstIlRenseigné &&
-      !établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementTemporaireEstIlRenseigné &&
-      !établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationAccueilDeJourEstIlRenseigné &&
-      !établissementTerritorialActivitéMédicoSocialViewModel.leTauxRéalisationActivitéEstIlRenseigné &&
-      !établissementTerritorialActivitéMédicoSocialViewModel.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné &&
-      !établissementTerritorialActivitéMédicoSocialViewModel.laFileActivePersonnesAccompagnéesEstElleRenseignée &&
-      !établissementTerritorialActivitéMédicoSocialViewModel.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée
-    )
-  ) {
+  if (établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitéNeSontPasRenseignées) {
     return (
       <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
         {wording.INDICATEURS_VIDES}

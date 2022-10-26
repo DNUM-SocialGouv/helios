@@ -90,52 +90,118 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       const tableau = within(indicateurs[0]).getByRole('table')
 
       const libellésLigneDEnTête = [wording.ACTIVITÉS, wording.LITS, wording.PLACES]
-      libellésLigneDEnTête.forEach((libellé) => {
-        const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: libellé })
-        expect(indicateurLigneDEnTête).toBeInTheDocument()
+      const indicateursLigneDEnTête = within(tableau).getAllByRole('columnheader')
+      libellésLigneDEnTête.forEach((libellé, index) => {
+        expect(indicateursLigneDEnTête[index].textContent).toBe(libellé)
       })
 
-      const capacitésEtValeurs = [
+      const activitésEtValeurs = [
         {
-          capacité: wording.CHIRURGIE,
-          index: 1,
-          valeur: ['10', '20'],
-        },
-        {
-          capacité: wording.MÉDECINE,
-          index: 2,
+          activité: wording.MÉDECINE,
           valeur: ['20', '50'],
         },
         {
-          capacité: wording.OBSTÉTRIQUE,
-          index: 3,
+          activité: wording.CHIRURGIE,
+          valeur: ['10', '20'],
+        },
+        {
+          activité: wording.OBSTÉTRIQUE,
           valeur: ['5', '6'],
         },
         {
-          capacité: wording.PSYCHIATRIE,
-          index: 4,
-          valeur: ['5', '13'],
+          activité: wording.SSR,
+          valeur: ['2', wording.NON_RENSEIGNÉ],
         },
         {
-          capacité: wording.SSR,
-          index: 5,
-          valeur: ['2', '7'],
-        },
-        {
-          capacité: wording.USLD,
-          index: 6,
+          activité: wording.USLD,
           valeur: ['15', '0'],
         },
+        {
+          activité: wording.PSYCHIATRIE,
+          valeur: ['5', '13'],
+        },
       ]
-      const lignes = within(tableau).getAllByRole('row')
-      capacitésEtValeurs.forEach((capacitéEtValeur) => {
-        const capacité = within(lignes[capacitéEtValeur.index]).getByRole('cell', { name : capacitéEtValeur.capacité.trimEnd() })
-        expect(capacité).toBeInTheDocument()
-        const valeurLit = within(lignes[capacitéEtValeur.index]).getByRole('cell', { name: capacitéEtValeur.valeur[0] })
+      const tbody = within(tableau).getAllByRole('rowgroup')[1]
+      const lignes = within(tbody).getAllByRole('row')
+      expect(lignes).toHaveLength(activitésEtValeurs.length)
+      activitésEtValeurs.forEach((activitéEtValeur, index) => {
+        const activité = within(lignes[index]).getByRole('cell', { name : activitéEtValeur.activité })
+        expect(activité).toBeInTheDocument()
+        const valeurLit = within(lignes[index]).getByRole('cell', { name: activitéEtValeur.valeur[0] })
         expect(valeurLit).toBeInTheDocument()
-        const valeurPlace = within(lignes[capacitéEtValeur.index]).getByRole('cell', { name: capacitéEtValeur.valeur[1] })
+        const valeurPlace = within(lignes[index]).getByRole('cell', { name: activitéEtValeur.valeur[1] })
         expect(valeurPlace).toBeInTheDocument()
       })
+    })
+
+    it('affiche un tableau descriptif avec une activité en moins quand le nombre de lit et de place ne sont pas renseignés', () => {
+      // GIVEN
+      const établissementTerritorialSanitaireViewModel = ÉtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(
+        wording,
+        paths,
+        {
+          capacités: {
+            dateMiseÀJourSource: '2022-09-02',
+            nombreDeLitsEnChirurgie: 10,
+            nombreDeLitsEnMédecine: 20,
+            nombreDeLitsEnObstétrique: null,
+            nombreDeLitsEnSsr: 2,
+            nombreDeLitsEnUsld: 15,
+            nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 15,
+            nombreDePlacesEnChirurgie: 20,
+            nombreDePlacesEnMédecine: 50,
+            nombreDePlacesEnObstétrique: null,
+            nombreDePlacesEnPsyHospitalisationPartielle: 14,
+            nombreDePlacesEnSsr: null,
+          },
+        }
+      )
+
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
+
+      // THEN
+      const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
+      const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
+      const tableau = within(indicateurs[0]).getByRole('table')
+      const tbody = within(tableau).getAllByRole('rowgroup')[1]
+      const lignes = within(tbody).getAllByRole('row')
+      expect(lignes).toHaveLength(5)
+    })
+
+    it('affiche un tableau descriptif avec USLD en moins quand le nombre de lits est non renseigné', () => {
+      // GIVEN
+      const établissementTerritorialSanitaireViewModel = ÉtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(
+        wording,
+        paths,
+        {
+          capacités: {
+            dateMiseÀJourSource: '2022-09-02',
+            nombreDeLitsEnChirurgie: 10,
+            nombreDeLitsEnMédecine: 20,
+            nombreDeLitsEnObstétrique: 20,
+            nombreDeLitsEnSsr: 2,
+            nombreDeLitsEnUsld: null,
+            nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 15,
+            nombreDePlacesEnChirurgie: 20,
+            nombreDePlacesEnMédecine: 50,
+            nombreDePlacesEnObstétrique: 20,
+            nombreDePlacesEnPsyHospitalisationPartielle: 14,
+            nombreDePlacesEnSsr: 20,
+          },
+        }
+      )
+
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
+
+      // THEN
+      const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
+      const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
+      const tableau = within(indicateurs[0]).getByRole('table')
+      const tbody = within(tableau).getAllByRole('rowgroup')[1]
+      const lignes = within(tbody).getAllByRole('row')
+      expect(lignes).toHaveLength(5)
     })
 
     it('n’affiche pas l’indicateur quand sa valeur est vide (Capacité par activités)', () => {

@@ -1,19 +1,28 @@
+import { ReactElement } from 'react'
+
 import { ÉtablissementTerritorialSanitaire } from '../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire'
 import { Wording } from '../../../configuration/wording/Wording'
 import { ActionneurDAccordéon } from '../../commun/Accordéon/ActionneurDAccordéon'
 import { GraphiqueViewModel } from '../../commun/Graphique/GraphiqueViewModel'
 import { StringFormater } from '../../commun/StringFormater'
 import stylesBlocAutorisationsEtCapacités from './BlocAutorisationEtCapacitéSanitaire.module.css'
+
 import '@gouvfr/dsfr/dist/component/tag/tag.min.css'
 
 export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends GraphiqueViewModel {
-  readonly ratioHistogrammeCapacitéParActivités = 5
-
   constructor(
     private readonly établissementTerritorialSanitaireAutorisations: ÉtablissementTerritorialSanitaire['autorisationsEtCapacités'],
     wording: Wording
   ) {
     super(wording)
+  }
+
+  public get lesDonnéesAutorisationEtCapacitéNeSontPasRenseignées(): boolean {
+    return !this.lesCapacitésParActivitésSontEllesRenseignées
+      && !this.lesAutorisationsSontEllesRenseignées
+      && !this.lesAutresActivitésSontEllesRenseignées
+      && !this.lesReconnaissancesContractuellesSontEllesRenseignées
+      && !this.lesÉquipementsMatérielsLourdsSontIlsRenseignés
   }
 
   public get lesCapacitésParActivitésSontEllesRenseignées(): boolean {
@@ -36,46 +45,62 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
     return StringFormater.formateLaDate(this.établissementTerritorialSanitaireAutorisations.capacités?.dateMiseÀJourSource as string)
   }
 
-  public get capacitéParActivités(): JSX.Element {
-    const lits = [
-      this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDeLitsEnChirurgie as number,
-      this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDeLitsEnMédecine as number,
-      this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDeLitsEnObstétrique as number,
-      this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDeLitsOuPlacesEnPsyHospitalisationComplète as number,
-      this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDeLitsEnSsr as number,
-      this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDeLitsEnUsld as number,
+  public get capacitéParActivités(): ReactElement {
+    const litsEtPlaces = [
+      {
+        libellé: this.wording.MÉDECINE,
+        nombreDeLits: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDeLitsEnMédecine as number,
+        nombreDePlaces: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDePlacesEnMédecine as number,
+      },
+      {
+        libellé: this.wording.CHIRURGIE,
+        nombreDeLits: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDeLitsEnChirurgie as number,
+        nombreDePlaces: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDePlacesEnChirurgie as number,
+      },
+      {
+        libellé: this.wording.OBSTÉTRIQUE,
+        nombreDeLits: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDeLitsEnObstétrique as number,
+        nombreDePlaces: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDePlacesEnObstétrique as number,
+      },
+      {
+        libellé: this.wording.SSR,
+        nombreDeLits: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDeLitsEnSsr as number,
+        nombreDePlaces: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDePlacesEnSsr as number,
+      },
+      {
+        libellé: this.wording.USLD,
+        nombreDeLits: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDeLitsEnUsld as number,
+        nombreDePlaces: 0,
+      },
+      {
+        libellé: this.wording.PSYCHIATRIE,
+        nombreDeLits: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDeLitsOuPlacesEnPsyHospitalisationComplète as number,
+        nombreDePlaces: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDePlacesEnPsyHospitalisationPartielle as number,
+      },
     ]
-    const places = [
-      this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDePlacesEnChirurgie as number,
-      this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDePlacesEnMédecine as number,
-      this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDePlacesEnObstétrique as number,
-      this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDePlacesEnPsyHospitalisationPartielle as number,
-      this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDePlacesEnSsr as number,
-      0,
-    ]
+    const litsEtPlacesSansLignesVides = litsEtPlaces.filter((litEtPlace) => {
+      return !(litEtPlace.nombreDeLits === null && litEtPlace.nombreDePlaces === null
+      || litEtPlace.libellé === this.wording.USLD && litEtPlace.nombreDeLits === null)
+    })
+    const libellés = litsEtPlacesSansLignesVides.map((litEtPlace) => litEtPlace.libellé)
+    const lits = litsEtPlacesSansLignesVides.map((litEtPlace) => litEtPlace.nombreDeLits)
+    const places = litsEtPlacesSansLignesVides.map((litEtPlace) => litEtPlace.nombreDePlaces)
     const chartColors = [this.couleurDuFondHistogrammeSecondaire]
-    const libellés = [
-      this.wording.CHIRURGIE,
-      this.wording.MÉDECINE,
-      this.wording.OBSTÉTRIQUE,
-      this.wording.PSYCHIATRIE,
-      this.wording.SSR,
-      this.wording.USLD,
-    ]
     const identifiants = [this.wording.LITS, this.wording.PLACES]
+    const ratioHistogrammeCapacitéParActivités = litsEtPlacesSansLignesVides.length < 3 ? 9 : 5
 
     return this.afficheDeuxHistogrammesHorizontaux(
       chartColors,
       lits,
       places,
       libellés,
-      this.ratioHistogrammeCapacitéParActivités,
+      ratioHistogrammeCapacitéParActivités,
       this.wording.ACTIVITÉS,
       identifiants
     )
   }
 
-  public get autorisations(): JSX.Element {
+  public get autorisations(): ReactElement {
     const autorisationsDeLÉtablissement = this.établissementTerritorialSanitaireAutorisations.autorisations
 
     return (
@@ -157,7 +182,7 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
     return StringFormater.formateLaDate(this.établissementTerritorialSanitaireAutorisations.autorisations.dateMiseÀJourSource)
   }
 
-  public get autresActivités(): JSX.Element {
+  public get autresActivités(): ReactElement {
     const autresActivitésDeLÉtablissement = this.établissementTerritorialSanitaireAutorisations.autresActivités
 
     return (
@@ -236,7 +261,7 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
     return this.établissementTerritorialSanitaireAutorisations.autresActivités.activités.length !== 0
   }
 
-  public get reconnaissancesContractuelles(): JSX.Element {
+  public get reconnaissancesContractuelles(): ReactElement {
     const reconnaissancesContractuellesDeLÉtablissement = this.établissementTerritorialSanitaireAutorisations.reconnaissancesContractuelles
 
     return (
@@ -328,7 +353,7 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
     return this.établissementTerritorialSanitaireAutorisations.reconnaissancesContractuelles.activités.length !== 0
   }
 
-  public get équipementsMatérielsLourds(): JSX.Element {
+  public get équipementsMatérielsLourds(): ReactElement {
     const équipementsMatérielsLourdsDeLÉtablissement = this.établissementTerritorialSanitaireAutorisations.équipementsMatérielsLourds
 
     return (

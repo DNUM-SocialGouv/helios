@@ -155,21 +155,28 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     expect(annéeLigneDEnTête).toBeInTheDocument()
     expect(indicateurLigneDEnTête).toBeInTheDocument()
 
-    const lignes = within(tableau).getAllByRole('row')
-    const annéeDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '2019' })
-    expect(annéeDeLaPremièreLigne).toBeInTheDocument()
-    const valeurDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: valeur2019 })
-    expect(valeurDeLaPremièreLigne).toBeInTheDocument()
-
-    const annéeDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '2020' })
-    expect(annéeDeLaDeuxièmeLigne).toBeInTheDocument()
-    const valeurDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name:  valeur2020 })
-    expect(valeurDeLaDeuxièmeLigne).toBeInTheDocument()
-
-    const annéeDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: '2021' })
-    expect(annéeDeLaTroisièmeLigne).toBeInTheDocument()
-    const valeurDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: valeur2021 })
-    expect(valeurDeLaTroisièmeLigne).toBeInTheDocument()
+    const annéesEtValeurs = [
+      {
+        année: '2019',
+        valeur: valeur2019,
+      },
+      {
+        année: '2020',
+        valeur: valeur2020,
+      },
+      {
+        année: '2021',
+        valeur: valeur2021,
+      },
+    ]
+    const tbody = within(tableau).getAllByRole('rowgroup')[1]
+    const lignes = within(tbody).getAllByRole('row')
+    annéesEtValeurs.forEach((annéeEtValeur, index) => {
+      const année = within(lignes[index]).getByRole('cell', { name: annéeEtValeur.année })
+      expect(année).toBeInTheDocument()
+      const valeur = within(lignes[index]).getByRole('cell', { name: annéeEtValeur.valeur })
+      expect(valeur).toBeInTheDocument()
+    })
   })
 
   it.each([
@@ -201,16 +208,24 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     expect(annéeLigneDEnTête).toBeInTheDocument()
     expect(indicateurLigneDEnTête).toBeInTheDocument()
 
-    const lignes = within(tableau).getAllByRole('row')
-    const annéeDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '2019' })
-    expect(annéeDeLaPremièreLigne).toBeInTheDocument()
-    const valeurDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: valeur })
-    expect(valeurDeLaPremièreLigne).toBeInTheDocument()
-
-    const annéeDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '2020' })
-    expect(annéeDeLaDeuxièmeLigne).toBeInTheDocument()
-    const valeurDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: valeur })
-    expect(valeurDeLaDeuxièmeLigne).toBeInTheDocument()
+    const annéesEtValeurs = [
+      {
+        année: '2019',
+        valeur: valeur,
+      },
+      {
+        année: '2020',
+        valeur: valeur,
+      },
+    ]
+    const tbody = within(tableau).getAllByRole('rowgroup')[1]
+    const lignes = within(tbody).getAllByRole('row')
+    annéesEtValeurs.forEach((annéeEtValeur, index) => {
+      const année = within(lignes[index]).getByRole('cell', { name: annéeEtValeur.année })
+      expect(année).toBeInTheDocument()
+      const valeur = within(lignes[index]).getByRole('cell', { name: annéeEtValeur.valeur })
+      expect(valeur).toBeInTheDocument()
+    })
   })
 
   it.each([
@@ -239,10 +254,11 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     expect(annéeLigneDEnTête).toBeInTheDocument()
     expect(indicateurLigneDEnTête).toBeInTheDocument()
 
-    const lignes = within(tableau).getAllByRole('row')
-    const annéeDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '2020' })
+    const tbody = within(tableau).getAllByRole('rowgroup')[1]
+    const lignes = within(tbody).getAllByRole('row')
+    const annéeDeLaPremièreLigne = within(lignes[0]).getByRole('cell', { name: '2020' })
     expect(annéeDeLaPremièreLigne).toBeInTheDocument()
-    const valeurDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: valeur })
+    const valeurDeLaPremièreLigne = within(lignes[0]).getByRole('cell', { name: valeur })
     expect(valeurDeLaPremièreLigne).toBeInTheDocument()
   })
 

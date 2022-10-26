@@ -1,5 +1,6 @@
 import { BarElement, CategoryScale, Chart as ChartJS, ChartData, ChartOptions, Legend, LegendItem, LinearScale, LineController, LineElement, PointElement, Title, Tooltip } from 'chart.js'
 import ChartDataLabels, { Context } from 'chartjs-plugin-datalabels'
+import { ReactElement } from 'react'
 import { Bar } from 'react-chartjs-2'
 import '@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css'
 
@@ -64,7 +65,7 @@ export class GraphiqueViewModel {
     entêtesDesAutresColonnes: string[],
     annéesManquantes: number[] | string[],
     nombreDAnnéeTotale: number = 3
-  ): JSX.Element {
+  ): ReactElement {
     ChartJS.unregister()
     const chartColorsGauche = valeursDeGauche.map((valeurDeGauche, index) => {
       return (valeurDeGauche <= 0) ? chartColors[index] : this.couleurDuFondHistogrammeDeDépassement
@@ -188,7 +189,7 @@ export class GraphiqueViewModel {
     entêteLibellé: string,
     identifiant: string,
     annéesTotales: number = 3
-  ): JSX.Element {
+  ): ReactElement {
     const data: ChartData = {
       datasets: [
         {
@@ -272,7 +273,7 @@ export class GraphiqueViewModel {
     identifiant: string,
     libellésDeValeursManquantes: number[] | string[],
     nombreDeLibelléTotal: number = 3
-  ): JSX.Element {
+  ): ReactElement {
     const data: ChartData = {
       datasets: [
         {
@@ -319,33 +320,33 @@ export class GraphiqueViewModel {
 
   protected afficheDeuxHistogrammesHorizontaux(
     chartColors: string[],
-    lits: (number | null)[],
-    places: (number | null)[],
+    donnéesDeGauche: (number | null)[],
+    donnéesDeDroite: (number | null)[],
     libellés: string[],
     ratioLargeurSurHauteur: number,
     entêteLibellé: string,
     identifiants: string[]
-  ): JSX.Element {
+  ): ReactElement {
     const data: ChartData = {
       datasets: [
         {
           backgroundColor: chartColors,
-          data: lits,
+          data: donnéesDeGauche,
           datalabels: { labels: { title: { color: this.couleurDeLaValeur } } },
           type: 'bar',
           xAxisID: 'x2',
         },
         {
           backgroundColor: chartColors,
-          data: places,
+          data: donnéesDeDroite,
           datalabels: { labels: { title: { color: this.couleurDeLaValeur } } },
           type: 'bar',
           xAxisID: 'x',
         },
       ],
-      labels: libellés,
+      labels: libellés.map((libellé) => libellé + '   '),
     }
-    const valeurs = [StringFormater.formateEnFrançais(lits), StringFormater.formateEnFrançais(places)]
+    const valeurs = [StringFormater.formateEnFrançais(donnéesDeGauche), StringFormater.formateEnFrançais(donnéesDeDroite)]
 
     return (
       <>
@@ -355,7 +356,7 @@ export class GraphiqueViewModel {
             data={data}
             options={this.optionsDeuxHistogrammesHorizontaux(
               ratioLargeurSurHauteur,
-              Math.max(...lits.map(Number), ...places.map(Number)) * 1.1,
+              Math.max(...donnéesDeGauche.map(Number), ...donnéesDeDroite.map(Number)) * 1.1,
               [this.wording.PLACES, this.wording.LITS]
             )}
           />
@@ -581,7 +582,7 @@ export class GraphiqueViewModel {
           },
           formatter: (value: string, _context: Context): string => {
             if (value === null) {
-              return 'N/A'
+              return this.wording.NON_RENSEIGNÉ
             }
             return parseFloat(value).toLocaleString('fr')
           },
@@ -602,6 +603,7 @@ export class GraphiqueViewModel {
             align: 'start',
             color: this.couleurIdentifiant,
             display: true,
+            font: { weight: 'bold' },
             text: labelsOfScales[0],
           },
         },
@@ -616,6 +618,7 @@ export class GraphiqueViewModel {
             align: 'start',
             color: this.couleurIdentifiant,
             display: true,
+            font: { weight: 'bold' },
             text: labelsOfScales[1],
           },
         },

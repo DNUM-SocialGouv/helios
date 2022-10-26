@@ -17,10 +17,7 @@ export const BlocAutorisationEtCapacitéMédicoSocial = (
 ) => {
   const { wording } = useDependencies()
 
-  if (
-    !établissementTerritorialAutorisationsMédicoSocialViewModel.lesAutorisationsSontEllesRenseignées &&
-    !établissementTerritorialAutorisationsMédicoSocialViewModel.lesCapacitésSontEllesRenseignées
-  ) {
+  if (établissementTerritorialAutorisationsMédicoSocialViewModel.lesDonnéesAutorisationEtCapacitéNeSontPasRenseignées) {
     return <Bloc titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>
       {wording.INDICATEURS_VIDES}
     </Bloc>
