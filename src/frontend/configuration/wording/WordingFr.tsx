@@ -296,6 +296,7 @@ export class WordingFr implements Wording {
   readonly NON_CONFORME: string = 'non conforme'
   readonly MENTIONS_LÉGALES: string = 'Mentions légales'
   readonly DONNÉES_PERSONNELLES: string = 'Données personnelles'
+  readonly NOUS_CONTACTER: string = 'Nous contacter'
   readonly MENTION_LICENCE: string = 'Sauf mention contraire, tous les contenus de ce site sont sous '
   readonly LICENCE_ETALAB: string = 'licence etalab-2.0'
   readonly NOUVELLE_FENÊTRE: string = 'nouvelle Fenêtre'
