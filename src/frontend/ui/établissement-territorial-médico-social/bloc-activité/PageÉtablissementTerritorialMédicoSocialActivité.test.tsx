@@ -44,7 +44,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
     expect(exergue).not.toBeInTheDocument()
   })
 
-  it.each(
+  it.only.each(
     [
       [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0, '94,4 %', '97,5 %', '101,6 %'],
       [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1, '70,4 %', '121,5 %', '67,6 %'],
@@ -67,21 +67,28 @@ describe('La page établissement territorial médico-social - bloc activité', (
     expect(annéeLigneDEnTête).toBeInTheDocument()
     expect(indicateurLigneDEnTête).toBeInTheDocument()
 
-    const lignes = within(tableau).getAllByRole('row')
-    const annéeDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '2019' })
-    expect(annéeDeLaPremièreLigne).toBeInTheDocument()
-    const valeurDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: valeurIndicateur1 })
-    expect(valeurDeLaPremièreLigne).toBeInTheDocument()
-
-    const annéeDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '2020' })
-    expect(annéeDeLaDeuxièmeLigne).toBeInTheDocument()
-    const valeurDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: valeurIndicateur2 })
-    expect(valeurDeLaDeuxièmeLigne).toBeInTheDocument()
-
-    const annéeDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: '2021' })
-    expect(annéeDeLaTroisièmeLigne).toBeInTheDocument()
-    const valeurDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: valeurIndicateur3 })
-    expect(valeurDeLaTroisièmeLigne).toBeInTheDocument()
+    const annéesEtValeurs = [
+      {
+        année: '2019',
+        valeurIndicateur: valeurIndicateur1,
+      },
+      {
+        année: '2020',
+        valeurIndicateur: valeurIndicateur2,
+      },
+      {
+        année: '2021',
+        valeurIndicateur: valeurIndicateur3,
+      },
+    ]
+    const tbody = within(tableau).getAllByRole('rowgroup')[1]
+    const lignes = within(tbody).getAllByRole('row')
+    annéesEtValeurs.forEach((annéeEtValeur, index) => {
+      const annéeDeLaPremièreLigne = within(lignes[index]).getByRole('cell', { name: annéeEtValeur.année })
+      expect(annéeDeLaPremièreLigne).toBeInTheDocument()
+      const valeurDeLaPremièreLigne = within(lignes[index]).getByRole('cell', { name: annéeEtValeur.valeurIndicateur })
+      expect(valeurDeLaPremièreLigne).toBeInTheDocument()
+    })
   })
 
   it.each(
@@ -209,8 +216,8 @@ describe('La page établissement territorial médico-social - bloc activité', (
 
     // THEN
     const tableau = within(indicateurs[identifiant]).getByRole('table')
-    const rowgroup = within(tableau).getAllByRole('rowgroup')
-    const lignes = within(rowgroup[1]).getAllByRole('row')
+    const tbody = within(tableau).getAllByRole('rowgroup')[1]
+    const lignes = within(tbody).getAllByRole('row')
     expect(lignes).toHaveLength(2)
   })
 
@@ -339,8 +346,8 @@ describe('La page établissement territorial médico-social - bloc activité', (
 
     // THEN
     const tableau = within(indicateurs[identifiant]).getByRole('table')
-    const rowgroup = within(tableau).getAllByRole('rowgroup')
-    const lignes = within(rowgroup[1]).getAllByRole('row')
+    const tbody = within(tableau).getAllByRole('rowgroup')[1]
+    const lignes = within(tbody).getAllByRole('row')
     expect(lignes).toHaveLength(1)
   })
 

@@ -581,7 +581,7 @@ export class GraphiqueViewModel {
           },
           formatter: (value: string, _context: Context): string => {
             if (value === null) {
-              return this.wording.NON_RENSEIGNÉE
+              return this.wording.NON_RENSEIGNÉ
             }
             return parseFloat(value).toLocaleString('fr')
           },

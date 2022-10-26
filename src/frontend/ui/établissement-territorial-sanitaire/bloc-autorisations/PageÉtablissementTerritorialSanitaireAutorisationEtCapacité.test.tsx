@@ -90,52 +90,46 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       const tableau = within(indicateurs[0]).getByRole('table')
 
       const libellésLigneDEnTête = [wording.ACTIVITÉS, wording.LITS, wording.PLACES]
-      libellésLigneDEnTête.forEach((libellé) => {
-        const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: libellé })
-        expect(indicateurLigneDEnTête).toBeInTheDocument()
+      const indicateursLigneDEnTête = within(tableau).getAllByRole('columnheader')
+      libellésLigneDEnTête.forEach((libellé, index) => {
+        expect(indicateursLigneDEnTête[index].textContent).toBe(libellé)
       })
 
-      const capacitésEtValeurs = [
+      const activitésEtValeurs = [
         {
-          capacité: wording.MÉDECINE,
-          index: 2,
+          activité: wording.MÉDECINE,
           valeur: ['20', '50'],
         },
         {
-          capacité: wording.CHIRURGIE,
-          index: 1,
+          activité: wording.CHIRURGIE,
           valeur: ['10', '20'],
         },
         {
-          capacité: wording.OBSTÉTRIQUE,
-          index: 3,
+          activité: wording.OBSTÉTRIQUE,
           valeur: ['5', '6'],
         },
         {
-          capacité: wording.SSR,
-          index: 5,
-          valeur: ['2', wording.NON_RENSEIGNÉE],
+          activité: wording.SSR,
+          valeur: ['2', wording.NON_RENSEIGNÉ],
         },
         {
-          capacité: wording.USLD,
-          index: 6,
+          activité: wording.USLD,
           valeur: ['15', '0'],
         },
         {
-          capacité: wording.PSYCHIATRIE,
-          index: 4,
+          activité: wording.PSYCHIATRIE,
           valeur: ['5', '13'],
         },
       ]
       const tbody = within(tableau).getAllByRole('rowgroup')[1]
       const lignes = within(tbody).getAllByRole('row')
-      expect(lignes).toHaveLength(capacitésEtValeurs.length)
-      capacitésEtValeurs.forEach((capacitéEtValeur, index) => {
-        const capacité = within(lignes[index]).getByRole('cell', { name : capacitéEtValeur.capacité })
-        expect(capacité).toBeInTheDocument()
-        const valeurLit = within(lignes[index]).getByRole('cell', { name: capacitéEtValeur.valeur[0] })
+      expect(lignes).toHaveLength(activitésEtValeurs.length)
+      activitésEtValeurs.forEach((activitéEtValeur, index) => {
+        const activité = within(lignes[index]).getByRole('cell', { name : activitéEtValeur.activité })
+        expect(activité).toBeInTheDocument()
+        const valeurLit = within(lignes[index]).getByRole('cell', { name: activitéEtValeur.valeur[0] })
         expect(valeurLit).toBeInTheDocument()
-        const valeurPlace = within(lignes[index]).getByRole('cell', { name: capacitéEtValeur.valeur[1] })
+        const valeurPlace = within(lignes[index]).getByRole('cell', { name: activitéEtValeur.valeur[1] })
         expect(valeurPlace).toBeInTheDocument()
       })
     })

@@ -136,43 +136,39 @@ describe('La page établissement territorial sanitaire - bloc activité', () => 
     const indicateurs = within(activité).getAllByRole('listitem')
     const tableau = within(indicateurs[identifiant]).getByRole('table')
 
-    libellésLigneDEnTête.forEach((libellé) => {
-      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: libellé })
-      expect(indicateurLigneDEnTête).toBeInTheDocument()
+    const indicateursLigneDEnTête = within(tableau).getAllByRole('columnheader')
+    libellésLigneDEnTête.forEach((libellé, index) => {
+      expect(indicateursLigneDEnTête[index].textContent).toBe(libellé)
     })
 
     const annéesEtValeurs = [
       {
         année: '2017',
-        index: 1,
         valeur: '10',
       },
       {
         année: '2018',
-        index: 2,
         valeur: '20',
       },
       {
         année: '2019',
-        index: 3,
         valeur: '30',
       },
       {
         année: '2020',
-        index: 4,
         valeur: '40',
       },
       {
         année: '2021',
-        index: 5,
         valeur: (5000).toLocaleString('fr'),
       },
     ]
-    const lignes = within(tableau).getAllByRole('row')
-    annéesEtValeurs.forEach((annéeEtValeur) => {
-      const année = within(lignes[annéeEtValeur.index]).getByRole('cell', { name : annéeEtValeur.année })
+    const tbody = within(tableau).getAllByRole('rowgroup')[1]
+    const lignes = within(tbody).getAllByRole('row')
+    annéesEtValeurs.forEach((annéeEtValeur, index) => {
+      const année = within(lignes[index]).getByRole('cell', { name : annéeEtValeur.année })
       expect(année).toBeInTheDocument()
-      const valeurs = within(lignes[annéeEtValeur.index]).getAllByRole('cell', { name: annéeEtValeur.valeur })
+      const valeurs = within(lignes[index]).getAllByRole('cell', { name: annéeEtValeur.valeur })
       valeurs.forEach((valeur) => {
         expect(valeur).toBeInTheDocument()
       })

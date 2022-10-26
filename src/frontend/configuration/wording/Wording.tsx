@@ -210,7 +210,6 @@ export interface Wording {
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string
-  readonly NON_RENSEIGNÉE: string
 
   // Erreurs
   readonly PAGE_NON_TROUVÉE_404: string

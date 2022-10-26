@@ -43,26 +43,32 @@ describe('La page établissement territorial médico-social - bloc autorisation 
     expect(annéeLigneDEnTête).toBeInTheDocument()
     expect(indicateurLigneDEnTête).toBeInTheDocument()
 
-    const lignes = within(tableau).getAllByRole('row')
-    const annéeDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: wording.NOMBRE_TOTAL_DE_PLACE })
-    expect(annéeDeLaPremièreLigne).toBeInTheDocument()
-    const valeurDeLaPremièreLigne = within(lignes[1]).getByRole('cell', { name: '30' })
-    expect(valeurDeLaPremièreLigne).toBeInTheDocument()
-
-    const annéeDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: 'Accueil de Jour' })
-    expect(annéeDeLaDeuxièmeLigne).toBeInTheDocument()
-    const valeurDeLaDeuxièmeLigne = within(lignes[2]).getByRole('cell', { name: '10' })
-    expect(valeurDeLaDeuxièmeLigne).toBeInTheDocument()
-
-    const annéeDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: 'Hébergement Complet Internat' })
-    expect(annéeDeLaTroisièmeLigne).toBeInTheDocument()
-    const valeurDeLaTroisièmeLigne = within(lignes[3]).getByRole('cell', { name: '10' })
-    expect(valeurDeLaTroisièmeLigne).toBeInTheDocument()
-
-    const annéeDeLaQuatrièmeLigne = within(lignes[4]).getByRole('cell', { name: 'Prestation en milieu ordinaire' })
-    expect(annéeDeLaQuatrièmeLigne).toBeInTheDocument()
-    const valeurDeLaQuatrièmeLigne = within(lignes[4]).getByRole('cell', { name: '10' })
-    expect(valeurDeLaQuatrièmeLigne).toBeInTheDocument()
+    const activitésEtCapacités = [
+      {
+        activité: wording.NOMBRE_TOTAL_DE_PLACE,
+        capacité: '30',
+      },
+      {
+        activité: 'Accueil de Jour',
+        capacité: '10',
+      },
+      {
+        activité: 'Hébergement Complet Internat',
+        capacité: '10',
+      },
+      {
+        activité: 'Prestation en milieu ordinaire',
+        capacité: '10',
+      },
+    ]
+    const tbody = within(tableau).getAllByRole('rowgroup')[1]
+    const lignes = within(tbody).getAllByRole('row')
+    activitésEtCapacités.forEach((activitéEtCapacité, index) => {
+      const annéeDeLaPremièreLigne = within(lignes[index]).getByRole('cell', { name: activitéEtCapacité.activité })
+      expect(annéeDeLaPremièreLigne).toBeInTheDocument()
+      const valeurDeLaPremièreLigne = within(lignes[index]).getByRole('cell', { name: activitéEtCapacité.capacité })
+      expect(valeurDeLaPremièreLigne).toBeInTheDocument()
+    })
   })
 
   it('affiche le contenu de l’info bulle des capacités après avoir cliqué sur le bouton "détails"', () => {

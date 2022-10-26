@@ -265,7 +265,6 @@ export class WordingFr implements Wording {
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string = 'Accès refusé'
-  readonly NON_RENSEIGNÉE: string = 'Non renseignée'
 
   // Erreur
   readonly PAGE_NON_TROUVÉE_404: string = 'Page non trouvée'
