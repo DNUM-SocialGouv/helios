@@ -183,17 +183,17 @@ export class WordingFr implements Wording {
   readonly DATE_D_EFFET_CPOM: ReactElement = (<>
     Date d’effet du&nbsp;
     {this.CPOM}
-    &nbsp;
+      &nbsp;
   </>)
   readonly DATE_DE_FIN_CPOM: ReactElement = (<>
     Date de fin du&nbsp;
     {this.CPOM}
-    &nbsp;
+      &nbsp;
   </>)
   readonly NUMÉRO_CPOM: ReactElement = (<>
     Numéro de&nbsp;
     {this.CPOM}
-    &nbsp;
+      &nbsp;
   </>)
   readonly NUMÉRO_ARHGOS: string = 'Numéro ARHGOS'
   readonly ACTIVITÉS: string = 'Activités'
@@ -238,6 +238,27 @@ export class WordingFr implements Wording {
   )
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION: string = 'Nombre d’ETP Total réalisé'
   readonly TAUX_DE_ROTATION_DU_PERSONNEL: string = 'Taux de rotation du personnel sur effectifs réels'
+  readonly TAUX_D_ABSENTÉISME: string = 'Taux d’absentéisme'
+  readonly TAUX_D_ABSENTÉISME_HORS_FORMATION: (taux: string, enErreur: boolean, tauxNul: boolean) => ReactElement = (
+    taux: string,
+    enErreur: boolean,
+    tauxNul: boolean
+  ) => (
+    <p>
+      Taux hors formation =
+      {' '}
+      <span className={enErreur ? 'fr-text--bold fr-text-default--error' : 'fr-text--bold'}>
+        {taux}
+      </span>
+      {!tauxNul && ', dont'}
+    </p>
+  )
+  readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_COURTE_DURÉE: string = 'Pour maladie ordinaire / de courte durée'
+  readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_MOYENNE_DURÉE: string = 'Pour maladie de moyenne durée'
+  readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_LONGUE_DURÉE: string = 'Pour maladie de longue durée'
+  readonly TAUX_D_ABSENTÉISME_POUR_MATERNITÉ_PATERNITÉ: string = 'Pour maternité / paternité'
+  readonly TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX: string = 'Pour congés spéciaux dont les congés sans solde (hors congés payés)'
+  readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE: string = 'Pour accident du travail / maladie professionnelle'
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string = 'Établissement territorial'

@@ -1,0 +1,36 @@
+.donut-wrapper {
+  display: flex;
+  margin-top: .5rem;
+}
+
+.donut-wrapper > div {
+  width: 50%;
+}
+
+.légende-donut {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 1rem .5rem;
+  row-gap: 0.5rem;
+}
+
+.légende-donut li {
+  align-items: center;
+  display: flex;
+}
+
+.légende-donut li span {
+  border-radius: 50%;
+  flex-shrink: 0;
+  height: .8rem;
+  margin: 0 .25rem 0 0;
+  width: .8rem;
+}
+
+.légende-donut li label {
+  align-items: center;
+  cursor: inherit;
+  display: flex;
+  font-size: .8rem;
+  margin: 0;
+}

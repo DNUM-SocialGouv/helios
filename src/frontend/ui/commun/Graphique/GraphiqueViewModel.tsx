@@ -1,13 +1,15 @@
-import { BarElement, CategoryScale, Chart as ChartJS, ChartData, ChartOptions, Legend, LegendItem, LinearScale, LineController, LineElement, PointElement, Title, Tooltip } from 'chart.js'
+import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, ChartData, ChartOptions, Legend, LegendItem, LinearScale, LineController, LineElement, PointElement, Title, Tooltip } from 'chart.js'
 import ChartDataLabels, { Context } from 'chartjs-plugin-datalabels'
 import { ReactElement } from 'react'
-import { Bar } from 'react-chartjs-2'
+import { Bar, Doughnut } from 'react-chartjs-2'
+
 import '@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css'
 
 import { Wording } from '../../../configuration/wording/Wording'
 import { MiseEnExergue } from '../MiseEnExergue/MiseEnExergue'
 import { StringFormater } from '../StringFormater'
 import { TableIndicateur } from '../TableIndicateur/TableIndicateur'
+import styles from './GraphiqueViewModel.module.css'
 
 export type LibelléDeDonnéeGraphe = Readonly<{
   couleur: string
@@ -41,6 +43,7 @@ export class GraphiqueViewModel {
 
   constructor(protected readonly wording: Wording) {
     ChartJS.register(
+      ArcElement,
       BarElement,
       CategoryScale,
       ChartDataLabels,
@@ -51,7 +54,30 @@ export class GraphiqueViewModel {
       PointElement,
       Title,
       Tooltip,
-      this.construisLePluginDeLégende()
+      this.construisLePluginDeLégende(),
+      {
+        beforeDraw: function(chart: ChartJS) {
+          // @ts-ignore
+          const centerConfig = chart?.config?.options?.elements?.center
+          if (centerConfig) {
+            const ctx = chart.ctx
+            const fontStyle = centerConfig.fontStyle
+            const txt = centerConfig.text
+            const color = centerConfig.color
+
+            const centerX = ((chart.chartArea.left + chart.chartArea.right) / 2)
+            const centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2)
+
+            ctx.textAlign = 'center'
+            ctx.textBaseline = 'middle'
+            ctx.font = 'bold 20px ' + fontStyle
+            ctx.fillStyle = color
+
+            ctx.fillText(txt, centerX, centerY)
+          }
+        },
+        id: 'texteAuCentreDuDoughnut',
+      }
     )
   }
 
@@ -371,6 +397,41 @@ export class GraphiqueViewModel {
     )
   }
 
+  protected afficheUnDiagrammeEnDonut(
+    valeurs: number[],
+    libellés: string[],
+    couleursDuDoughnut: CouleurHistogramme[],
+    libellésDesValeurs: LibelléDeDonnéeGraphe[],
+    texteCentral: string,
+    total: number,
+    idDeLaLégende: string
+  ): JSX.Element {
+    const data: ChartData<'doughnut', number[], string> = {
+      datasets: [
+        {
+          backgroundColor: couleursDuDoughnut.map((couleur) => couleur.premierPlan),
+          data: valeurs,
+          datalabels: { labels: { title: { color: libellésDesValeurs.map((libellé) => libellé.couleur) } } },
+          type: 'doughnut',
+        },
+      ],
+      labels: libellés,
+    }
+
+    return <div className={styles['donut-wrapper']}>
+      <div>
+        <Doughnut
+          data={data}
+          options={this.optionsDiagrammeDoughnut(texteCentral, total, idDeLaLégende)}
+        />
+      </div>
+      <menu
+        className={styles['légende-donut']}
+        id={idDeLaLégende}
+      />
+    </div>
+  }
+
   protected construisLesLibellés(textes: (number | string)[], valeurs: number[], taillesDePolice: string[]): LibelléDeTickGraphe[] {
     const maxAvantDePerdreLeContraste = 20
 
@@ -651,6 +712,45 @@ export class GraphiqueViewModel {
         x: { grid: { drawOnChartArea: false }, ticks: { color: 'var(--text-default-grey)' } },
         y: { grid: { color: this.couleurDelAbscisse, drawBorder: false }, stacked: true, ticks: { color: 'var(--text-default-grey)' } },
       },
+    }
+  }
+
+  private optionsDiagrammeDoughnut(texteCentral: string, totalDesValeurs: number, idDeLaLégende: string): ChartOptions<'doughnut'> {
+    return {
+      animation: false,
+      aspectRatio: 1,
+      cutout: '40%',
+      elements: {
+        // @ts-ignore
+        center: {
+          color: this.couleurDelAbscisse,
+          fontStyle: 'Marianne',
+          text: texteCentral,
+        },
+      },
+      plugins: {
+        datalabels: {
+          align: 'center',
+          anchor: 'center',
+          display: (context: Context) => {
+            const dataset = context.dataset
+            const value = dataset.data[context.dataIndex]
+            // @ts-ignore
+            return value > 0.1 * totalDesValeurs
+          },
+          font: {
+            family: 'Marianne',
+            size: 16,
+            weight: 700,
+          },
+          formatter: (value: number): string => value.toLocaleString('fr') + ' %',
+        },
+        // @ts-ignore
+        htmlLegend: { containerID: idDeLaLégende },
+        legend: { display: false },
+        tooltip: { enabled: false },
+      },
+      responsive: true,
     }
   }
 }
