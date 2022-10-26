@@ -72,7 +72,10 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
         nombreDePlaces: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDePlacesEnPsyHospitalisationPartielle as number,
       },
     ]
-    const litsEtPlacesSansLignesVides = litsEtPlaces.filter((litEtPlace) => !(litEtPlace.nombreDeLits === null && litEtPlace.nombreDePlaces === null))
+    const litsEtPlacesSansLignesVides = litsEtPlaces.filter((litEtPlace) => {
+      return !(litEtPlace.nombreDeLits === null && litEtPlace.nombreDePlaces === null
+      || litEtPlace.libellé === this.wording.USLD && litEtPlace.nombreDeLits === null)
+    })
     const libellés = litsEtPlacesSansLignesVides.map((litEtPlace) => litEtPlace.libellé)
     const lits = litsEtPlacesSansLignesVides.map((litEtPlace) => litEtPlace.nombreDeLits)
     const places = litsEtPlacesSansLignesVides.map((litEtPlace) => litEtPlace.nombreDePlaces)

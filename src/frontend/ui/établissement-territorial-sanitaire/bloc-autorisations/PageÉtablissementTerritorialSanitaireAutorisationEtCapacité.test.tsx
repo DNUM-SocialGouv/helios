@@ -169,6 +169,41 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       expect(lignes).toHaveLength(5)
     })
 
+    it('affiche un tableau descriptif avec USLD en moins quand le nombre de lits est non renseigné', () => {
+      // GIVEN
+      const établissementTerritorialSanitaireViewModel = ÉtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(
+        wording,
+        paths,
+        {
+          capacités: {
+            dateMiseÀJourSource: '2022-09-02',
+            nombreDeLitsEnChirurgie: 10,
+            nombreDeLitsEnMédecine: 20,
+            nombreDeLitsEnObstétrique: 20,
+            nombreDeLitsEnSsr: 2,
+            nombreDeLitsEnUsld: null,
+            nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 15,
+            nombreDePlacesEnChirurgie: 20,
+            nombreDePlacesEnMédecine: 50,
+            nombreDePlacesEnObstétrique: 20,
+            nombreDePlacesEnPsyHospitalisationPartielle: 14,
+            nombreDePlacesEnSsr: 20,
+          },
+        }
+      )
+
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
+
+      // THEN
+      const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
+      const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
+      const tableau = within(indicateurs[0]).getByRole('table')
+      const tbody = within(tableau).getAllByRole('rowgroup')[1]
+      const lignes = within(tbody).getAllByRole('row')
+      expect(lignes).toHaveLength(5)
+    })
+
     it('n’affiche pas l’indicateur quand sa valeur est vide (Capacité par activités)', () => {
       const établissementTerritorialSansActivité = new ÉtablissementTerritorialSanitaireViewModel({
         activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
