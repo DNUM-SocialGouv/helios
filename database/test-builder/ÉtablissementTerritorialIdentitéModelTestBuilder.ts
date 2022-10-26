@@ -46,7 +46,7 @@ export class ÉtablissementTerritorialIdentitéModelTestBuilder {
     établissementTerritorialModel.numéroFinessÉtablissementPrincipal = champsSurchargés?.numéroFinessÉtablissementPrincipal || ''
     établissementTerritorialModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '590782553'
     établissementTerritorialModel.raisonSociale = champsSurchargés?.raisonSociale || 'HOPITAL PRIVE DE VILLENEUVE DASCQ'
-    établissementTerritorialModel.raisonSocialeCourte = champsSurchargés?.raisonSocialeCourte || 'HOPITAL PRIVE DE VILLENEUVE DASCQ'
+    établissementTerritorialModel.raisonSocialeCourte = champsSurchargés?.raisonSocialeCourte || 'HP VILLENEUVE DASCQ'
     établissementTerritorialModel.téléphone = champsSurchargés?.téléphone || '0102030406'
     établissementTerritorialModel.typeÉtablissement = champsSurchargés?.typeÉtablissement || 'P'
     return établissementTerritorialModel

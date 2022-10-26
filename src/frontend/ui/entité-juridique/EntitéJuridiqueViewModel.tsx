@@ -14,17 +14,21 @@ export class EntitéJuridiqueViewModel {
         {' - '}
         {this.numéroFiness}
         {' - '}
-        {this.nomDeLEntitéJuridique}
+        {this.nomCourtDeLEntitéJuridique}
       </>
     )
   }
 
   public get titre(): string {
-    return `EJ - ${this.numéroFiness} - ${this.nomDeLEntitéJuridique}`
+    return `EJ - ${this.numéroFiness} - ${this.nomCourtDeLEntitéJuridique}`
   }
 
   public get nomDeLEntitéJuridique(): string {
     return this.entitéJuridique.raisonSociale.value
+  }
+
+  public get nomCourtDeLEntitéJuridique(): string {
+    return this.entitéJuridique.raisonSocialeCourte.value
   }
 
   public get dateDeMiseÀJourDuNomDeLEntitéJuridique(): string {

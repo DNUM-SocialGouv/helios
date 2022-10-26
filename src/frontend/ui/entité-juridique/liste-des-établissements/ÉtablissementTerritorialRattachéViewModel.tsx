@@ -22,7 +22,7 @@ export class ÉtablissementTerritorialRattachéViewModel {
         {' - '}
         {this.numéroFiness}
         {' - '}
-        {this.établissementTerritorialRattaché.raisonSociale}
+        {this.établissementTerritorialRattaché.raisonSocialeCourte}
       </>
     )
   }
@@ -47,5 +47,4 @@ export class ÉtablissementTerritorialRattachéViewModel {
       />
     )
   }
-
 }

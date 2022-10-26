@@ -60,6 +60,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       dateMiseÀJourSource: '2021-07-07',
       value: 'IFAS CH DU HAUT BUGEY',
     },
+    raisonSocialeCourte: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: 'CH DU HAUT BUGEY',
+    },
     raisonSocialeDeLEntitéDeRattachement: {
       dateMiseÀJourSource: '2021-07-07',
       value: 'CH DU HAUT BUGEY',

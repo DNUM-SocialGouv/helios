@@ -3,7 +3,7 @@ import { Wording } from '../configuration/wording/Wording'
 import { EntitéJuridiqueViewModel } from '../ui/entité-juridique/EntitéJuridiqueViewModel'
 
 export class EntitéJuridiqueViewModelTestBuilder {
-  private static entitéJurique: EntitéJuridique = {
+  static entitéJurique: EntitéJuridique = {
     adresseAcheminement: {
       dateMiseÀJourSource: '2021-07-07',
       value: '22023 ST BRIEUC CEDEX 1',
@@ -31,6 +31,10 @@ export class EntitéJuridiqueViewModelTestBuilder {
     raisonSociale: {
       dateMiseÀJourSource: '2021-07-07',
       value: 'CENTRE HOSPITALIER DE SAINT BRIEUC',
+    },
+    raisonSocialeCourte: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: 'CH SAINT BRIEUC',
     },
     téléphone: {
       dateMiseÀJourSource: '2021-07-07',

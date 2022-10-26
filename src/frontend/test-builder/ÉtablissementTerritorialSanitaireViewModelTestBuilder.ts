@@ -51,11 +51,15 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     },
     raisonSociale: {
       dateMiseÀJourSource: '2021-07-07',
+      value: 'Centre Hospitalier NANTUA',
+    },
+    raisonSocialeCourte: {
+      dateMiseÀJourSource: '2021-07-07',
       value: 'CH NANTUA',
     },
     raisonSocialeDeLEntitéDeRattachement: {
       dateMiseÀJourSource: '2021-07-07',
-      value: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+      value: 'HP VILLENEUVE DASCQ',
     },
     statutJuridique: {
       dateMiseÀJourSource: '2021-07-07',

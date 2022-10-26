@@ -86,11 +86,11 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     expect(levels).toHaveLength(2)
     const accueil = levels[0]
     const entitéJuridique = levels[1]
-    expect(within(accueil).getByRole('link')).toBeInTheDocument()
-    expect(within(accueil).getByText(wording.ACCUEIL)).toHaveAttribute('href', '/')
+    const lienAccueil = within(accueil).getByRole('link', { name: wording.ACCUEIL })
+    expect(lienAccueil).toHaveAttribute('href', '/')
     expect(within(entitéJuridique).queryByRole('link')).not.toBeInTheDocument()
-    expect(within(entitéJuridique).getByText('EJ', { selector: 'abbr' })).toHaveAttribute('title', 'Entité juridique')
-    expect(within(entitéJuridique).getByText('- 220000020 - CENTRE HOSPITALIER DE SAINT BRIEUC')).toBeInTheDocument()
+    expect(within(entitéJuridique).getByText('EJ', { selector: 'abbr' })).toHaveAttribute('title', wording.ENTITÉ_JURIDIQUE)
+    expect(within(entitéJuridique).getByText('- 220000020 - CH SAINT BRIEUC')).toBeInTheDocument()
   })
 
   it('affiche le chemin jusqu’à la page établissement territorial médico-social', () => {
@@ -113,13 +113,14 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     const accueil = levels[0]
     const entitéJuridique = levels[1]
     const établissementTerritorial = levels[2]
-    expect(within(accueil).getByRole('link')).toBeInTheDocument()
-    expect(within(accueil).getByText(wording.ACCUEIL)).toHaveAttribute('href', '/')
-    expect(within(entitéJuridique).getByRole('link')).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/010008407`)
-    expect(within(entitéJuridique).getByText('EJ', { selector: 'abbr' })).toHaveAttribute('title', 'Entité juridique')
-    expect(within(entitéJuridique).getByText('- 010008407 - CH DU HAUT BUGEY')).toBeInTheDocument()
+    const lienAccueil = within(accueil).getByRole('link', { name: wording.ACCUEIL })
+    expect(lienAccueil).toHaveAttribute('href', '/')
+    const lienEntitéJuridique = within(entitéJuridique).getByRole('link', { name: 'Entité juridique - 010008407 - CH DU HAUT BUGEY' })
+    expect(lienEntitéJuridique).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/010008407`)
+    expect(lienEntitéJuridique.textContent).toBe('EJ - 010008407 - CH DU HAUT BUGEY')
+    expect(within(entitéJuridique).getByText('EJ', { selector: 'abbr' })).toHaveAttribute('title', wording.ENTITÉ_JURIDIQUE)
     expect(within(établissementTerritorial).queryByRole('link')).not.toBeInTheDocument()
-    expect(within(établissementTerritorial).getByText('IFAS CH DU HAUT BUGEY')).toBeInTheDocument()
+    expect(within(établissementTerritorial).getByText('CH DU HAUT BUGEY')).toBeInTheDocument()
   })
 
   it('affiche le chemin jusqu’à la page établissement territorial sanitaire', () => {
@@ -141,11 +142,13 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     const accueil = levels[0]
     const entitéJuridique = levels[1]
     const établissementTerritorial = levels[2]
-    expect(within(accueil).getByRole('link')).toBeInTheDocument()
-    expect(within(accueil).getByText(wording.ACCUEIL)).toHaveAttribute('href', '/')
-    expect(within(entitéJuridique).getByRole('link')).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/010008407`)
-    expect(within(entitéJuridique).getByText('EJ', { selector: 'abbr' })).toHaveAttribute('title', 'Entité juridique')
-    expect(within(entitéJuridique).getByText('- 010008407 - HOPITAL PRIVE DE VILLENEUVE DASCQ')).toBeInTheDocument()
+    const lienAccueil = within(accueil).getByRole('link', { name: wording.ACCUEIL })
+    expect(lienAccueil).toHaveAttribute('href', '/')
+    const lienEntitéJuridique = within(entitéJuridique).getByRole('link', { name: 'Entité juridique - 010008407 - HP VILLENEUVE DASCQ' })
+    expect(lienEntitéJuridique).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/010008407`)
+    expect(lienEntitéJuridique.textContent).toBe('EJ - 010008407 - HP VILLENEUVE DASCQ')
+    expect(within(entitéJuridique).getByText('EJ', { selector: 'abbr' })).toHaveAttribute('title', wording.ENTITÉ_JURIDIQUE)
+    expect(within(entitéJuridique).getByText('- 010008407 - HP VILLENEUVE DASCQ')).toBeInTheDocument()
     expect(within(établissementTerritorial).queryByRole('link')).not.toBeInTheDocument()
     expect(within(établissementTerritorial).getByText('CH NANTUA')).toBeInTheDocument()
   })
@@ -165,8 +168,8 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     expect(levels).toHaveLength(2)
     const accueil = levels[0]
     const région = levels[1]
-    expect(within(accueil).getByRole('link')).toBeInTheDocument()
-    expect(within(accueil).getByText(wording.ACCUEIL)).toHaveAttribute('href', '/')
+    const lienAccueil = within(accueil).getByRole('link', { name: wording.ACCUEIL })
+    expect(lienAccueil).toHaveAttribute('href', '/')
     expect(within(région).getByText(wording.régionBreadcrumb(régions['bretagne'].label))).toBeInTheDocument()
   })
 })

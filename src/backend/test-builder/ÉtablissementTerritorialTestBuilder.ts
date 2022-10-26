@@ -57,6 +57,10 @@ export class ÉtablissementTerritorialTestBuilder {
       dateMiseÀJourSource: '2022-05-14',
       value: 'CENTRE HOSPITALIER NANTUA',
     },
+    raisonSocialeCourte: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 'CH NANTUA',
+    },
     typeÉtablissement: {
       dateMiseÀJourSource: '2022-05-14',
       value: 'S',
@@ -115,6 +119,10 @@ export class ÉtablissementTerritorialTestBuilder {
     raisonSociale: {
       dateMiseÀJourSource: '2022-05-14',
       value: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+    },
+    raisonSocialeCourte: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 'HP VILLENEUVE DASCQ',
     },
     typeÉtablissement: {
       dateMiseÀJourSource: '2022-05-14',

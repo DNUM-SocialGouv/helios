@@ -47,6 +47,10 @@ export type ÉtablissementTerritorialIdentité = Readonly<{
     dateMiseÀJourSource: string
     value: string
   }>
+  raisonSocialeCourte: Readonly<{
+    dateMiseÀJourSource: string
+    value: string
+  }>
   téléphone: Readonly<{
     dateMiseÀJourSource: string
     value: string

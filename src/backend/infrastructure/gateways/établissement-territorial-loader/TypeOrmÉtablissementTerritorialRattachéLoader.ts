@@ -26,7 +26,7 @@ export class TypeOrmÉtablissementTerritorialRattachéLoader implements Établis
       return {
         domaine: établissementTerritorialModel.domaine,
         numéroFiness: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
-        raisonSociale: établissementTerritorialModel.raisonSociale,
+        raisonSocialeCourte: établissementTerritorialModel.raisonSocialeCourte,
       }
     })
   }

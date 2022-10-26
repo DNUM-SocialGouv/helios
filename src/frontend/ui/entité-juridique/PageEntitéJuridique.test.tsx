@@ -4,6 +4,7 @@ import { DomaineÉtablissementTerritorial } from '../../../backend/métier/entit
 import { EntitéJuridiqueViewModelTestBuilder } from '../../test-builder/EntitéJuridiqueViewModelTestBuilder'
 import { ÉtablissementTerritorialRattachéViewModelTestBuilder } from '../../test-builder/ÉtablissementTerritorialRattachéViewModelTestBuilder'
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from '../../testHelper'
+import { StringFormater } from '../commun/StringFormater'
 import { ÉtablissementTerritorialRattachéViewModel } from './liste-des-établissements/ÉtablissementTerritorialRattachéViewModel'
 import { PageEntitéJuridique } from './PageEntitéJuridique'
 
@@ -17,7 +18,7 @@ describe('La page Entité Juridique', () => {
     ÉtablissementTerritorialRattachéViewModelTestBuilder.créeAutreÉtablissementTerritorialRattaché(wording),
   ]
 
-  it('affiche le titre dans l’onglet', () => {
+  it('affiche le titre court dans l’onglet', () => {
     // WHEN
     renderFakeComponent(<PageEntitéJuridique
       entitéJuridiqueViewModel={entitéJuridiqueViewModel}
@@ -25,10 +26,10 @@ describe('La page Entité Juridique', () => {
     />)
 
     // THEN
-    expect(document.title).toBe(entitéJuridiqueViewModel.titre)
+    expect(document.title).toBe(`EJ - ${EntitéJuridiqueViewModelTestBuilder.entitéJurique.numéroFinessEntitéJuridique.value} - ${EntitéJuridiqueViewModelTestBuilder.entitéJurique.raisonSocialeCourte.value}`)
   })
 
-  it('affiche le titre : "EJ - numéro de FINESS - nom de l’entité juridique"', () => {
+  it('affiche le titre : "EJ - numéro de FINESS - nom court de l’entité juridique"', () => {
     // WHEN
     renderFakeComponent(<PageEntitéJuridique
       entitéJuridiqueViewModel={entitéJuridiqueViewModel}
@@ -36,7 +37,7 @@ describe('La page Entité Juridique', () => {
     />)
 
     // THEN
-    const titre = screen.getByRole('heading', { level: 1, name: 'EJ - 220000020 - CENTRE HOSPITALIER DE SAINT BRIEUC' })
+    const titre = screen.getByRole('heading', { level: 1, name: `EJ - ${EntitéJuridiqueViewModelTestBuilder.entitéJurique.numéroFinessEntitéJuridique.value} - ${EntitéJuridiqueViewModelTestBuilder.entitéJurique.raisonSocialeCourte.value}` })
     expect(titre).toBeInTheDocument()
   })
 
@@ -48,7 +49,7 @@ describe('La page Entité Juridique', () => {
     />)
 
     // THEN
-    const imprimer = screen.getByRole('button', { name: 'Télécharger en PDF' })
+    const imprimer = screen.getByRole('button', { name: wording.TÉLÉCHARGER_EN_PDF })
     expect(imprimer).toHaveAttribute('type', 'button')
   })
 
@@ -59,7 +60,7 @@ describe('La page Entité Juridique', () => {
       entitéJuridiqueViewModel={entitéJuridiqueViewModel}
       établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
     />)
-    const imprimer = screen.getByRole('button', { name: 'Télécharger en PDF' })
+    const imprimer = screen.getByRole('button', { name: wording.TÉLÉCHARGER_EN_PDF })
 
     // WHEN
     fireEvent.click(imprimer)
@@ -83,7 +84,7 @@ describe('La page Entité Juridique', () => {
       expect(labelÉtablissement).toBeInTheDocument()
       const abréviationFiness = within(indicateurs[0]).getByText('FINESS', { selector: 'abbr' })
       expect(abréviationFiness).toHaveAttribute('title', wording.FINESS_TITLE)
-      const nomDeLÉtablissement = within(indicateurs[0]).getByText('CENTRE HOSPITALIER DE SAINT BRIEUC', { selector: 'p' })
+      const nomDeLÉtablissement = within(indicateurs[0]).getByText(EntitéJuridiqueViewModelTestBuilder.entitéJurique.raisonSociale.value, { selector: 'p' })
       expect(nomDeLÉtablissement).toBeInTheDocument()
     })
 
@@ -99,7 +100,7 @@ describe('La page Entité Juridique', () => {
       const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
       const labelNuméroFiness = within(indicateurs[1]).getByText(textMatch(`${wording.NUMÉRO_FINESS} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
       expect(labelNuméroFiness).toBeInTheDocument()
-      const numéroFiness = within(indicateurs[1]).getByText('220000020', { selector: 'p' })
+      const numéroFiness = within(indicateurs[1]).getByText(EntitéJuridiqueViewModelTestBuilder.entitéJurique.numéroFinessEntitéJuridique.value, { selector: 'p' })
       expect(numéroFiness).toBeInTheDocument()
     })
 
@@ -131,7 +132,7 @@ describe('La page Entité Juridique', () => {
       const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
       const labelTéléphone = within(indicateurs[3]).getByText(textMatch(`${wording.TÉLÉPHONE} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
       expect(labelTéléphone).toBeInTheDocument()
-      const téléphone = within(indicateurs[3]).getByText('02 96 01 71 23', { selector: 'p' })
+      const téléphone = within(indicateurs[3]).getByText(StringFormater.formateLeNuméroDeTéléphone(EntitéJuridiqueViewModelTestBuilder.entitéJurique.téléphone.value), { selector: 'p' })
       expect(téléphone).toBeInTheDocument()
     })
 
@@ -147,7 +148,7 @@ describe('La page Entité Juridique', () => {
       const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
       const labelStatutÉtablissement = within(indicateurs[4]).getByText(textMatch(`${wording.STATUT_JURIDIQUE} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
       expect(labelStatutÉtablissement).toBeInTheDocument()
-      const statutÉtablissement = within(indicateurs[4]).getByText('Public')
+      const statutÉtablissement = within(indicateurs[4]).getByText(EntitéJuridiqueViewModelTestBuilder.entitéJurique.libelléStatutJuridique.value, { selector: 'p' })
       expect(statutÉtablissement).toBeInTheDocument()
     })
 
@@ -228,12 +229,12 @@ describe('La page Entité Juridique', () => {
         ÉtablissementTerritorialRattachéViewModelTestBuilder.créeÉtablissementTerritorialRattaché(wording, {
           domaine: DomaineÉtablissementTerritorial.SANITAIRE,
           numéroFiness: '010000040',
-          raisonSociale: 'CH NANTUA',
+          raisonSocialeCourte: 'CH NANTUA',
         }),
         ÉtablissementTerritorialRattachéViewModelTestBuilder.créeAutreÉtablissementTerritorialRattaché(wording, {
           domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
           numéroFiness: '590782553',
-          raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+          raisonSocialeCourte: 'HP VILLENEUVE DASCQ',
         }),
       ]
 
@@ -244,17 +245,15 @@ describe('La page Entité Juridique', () => {
       />)
 
       // THEN
-      const établissementTerritoriauxRattachés = screen.getByRole('region', { name: wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS })
-      const listeDesÉtablissementsRattachés = within(établissementTerritoriauxRattachés).getAllByRole('listitem')
-      expect(listeDesÉtablissementsRattachés).toHaveLength(2)
-      const établissementTerritorial1 = within(listeDesÉtablissementsRattachés[0]).getByRole('link')
+      const établissementsTerritoriauxRattachés = screen.getByRole('region', { name: wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS })
+      const listeDesÉtablissementsRattachés = within(établissementsTerritoriauxRattachés).getAllByRole('listitem')
+      expect(listeDesÉtablissementsRattachés).toHaveLength(établissementsTerritoriauxRattachésViewModels.length)
+      const établissementTerritorial1 = within(listeDesÉtablissementsRattachés[0]).getByRole('link', { name: 'Établissement territorial - 010000040 - CH NANTUA' })
       expect(établissementTerritorial1).toHaveAttribute('href', `${paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE}/010000040`)
-      expect(within(établissementTerritorial1).getByText('- 010000040 - CH NANTUA')).toBeInTheDocument()
       const abréviationÉtablissementTerritorial = within(établissementTerritorial1).getByText('ET', { selector: 'abbr' })
-      expect(abréviationÉtablissementTerritorial).toHaveAttribute('title', 'Établissement territorial')
-      const établissementTerritorial2 = within(listeDesÉtablissementsRattachés[1]).getByRole('link')
+      expect(abréviationÉtablissementTerritorial).toHaveAttribute('title', wording.ÉTABLISSEMENT_TERRITORIAL)
+      const établissementTerritorial2 = within(listeDesÉtablissementsRattachés[1]).getByRole('link', { name: 'Établissement territorial - 590782553 - HP VILLENEUVE DASCQ' })
       expect(établissementTerritorial2).toHaveAttribute('href', `${paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL}/590782553`)
-      expect(within(établissementTerritorial2).getByText('- 590782553 - HOPITAL PRIVE DE VILLENEUVE DASCQ')).toBeInTheDocument()
     })
 
     it('n’affiche pas la liste des établissements territoriaux rattachés quand l’entité juridique n’en a pas', () => {
