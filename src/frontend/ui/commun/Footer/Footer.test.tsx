@@ -72,6 +72,17 @@ describe('Le pied de page', () => {
     expect(donnéesPersonnelles).toHaveAttribute('href', paths.DONNÉES_PERSONNELLES)
   })
 
+  it('affiche un lien pour nous contacter', () => {
+    // WHEN
+    renderFakeComponent(<Footer />)
+
+    // THEN
+    const nousContacter = screen.getByRole('link', { name: wording.NOUS_CONTACTER })
+    expect(nousContacter).toHaveAttribute('href', 'mailto:dnum.scn-helios-support@sg.social.gouv.fr')
+    expect(nousContacter).toHaveAttribute('target', '_blank')
+    expect(nousContacter).toHaveAttribute('rel', 'external noopener noreferrer')
+  })
+
   it('affiche la mention que tout le contenu est sous une licence', () => {
     // WHEN
     renderFakeComponent(<Footer />)

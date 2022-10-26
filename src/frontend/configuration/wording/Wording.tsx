@@ -230,6 +230,7 @@ export interface Wording {
   readonly NON_CONFORME: string
   readonly MENTIONS_LÉGALES: string
   readonly DONNÉES_PERSONNELLES: string
+  readonly NOUS_CONTACTER: string
   readonly MENTION_LICENCE: string
   readonly LICENCE_ETALAB: string
   readonly NOUVELLE_FENÊTRE: string
