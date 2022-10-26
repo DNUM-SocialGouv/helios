@@ -16,6 +16,19 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
     super(wording)
   }
 
+  public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
+    return !this.activitéEstElleRenseignée ||
+      (
+        !this.leTauxOccupationHébergementPermanentEstIlRenseigné
+        && !this.leTauxOccupationHébergementTemporaireEstIlRenseigné
+        && !this.leTauxOccupationAccueilDeJourEstIlRenseigné
+        && !this.leTauxRéalisationActivitéEstIlRenseigné
+        && !this.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné
+        && !this.laFileActivePersonnesAccompagnéesEstElleRenseignée
+        && !this.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée
+      )
+  }
+
   public get activitéEstElleRenseignée(): boolean {
     return this.établissementTerritorialActivité.length === 0 ? false : true
   }

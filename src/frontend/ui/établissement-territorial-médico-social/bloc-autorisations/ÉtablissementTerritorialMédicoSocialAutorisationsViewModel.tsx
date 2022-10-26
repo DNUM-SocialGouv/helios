@@ -13,6 +13,11 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
     super(wording)
   }
 
+  public get lesDonnéesAutorisationEtCapacitéNeSontPasRenseignées(): boolean {
+    return !this.lesAutorisationsSontEllesRenseignées
+      && !this.lesCapacitésSontEllesRenseignées
+  }
+
   public get autorisations(): JSX.Element {
     const autorisationsDeLÉtablissement = this.établissementTerritorialAutorisations.autorisations
 

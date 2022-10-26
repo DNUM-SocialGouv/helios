@@ -14,14 +14,7 @@ type BlocActivitéSanitaireProps = Readonly<{
 export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireActivitéViewModel }: BlocActivitéSanitaireProps) => {
   const { wording } = useDependencies()
 
-  if (
-    !établissementTerritorialSanitaireActivitéViewModel.activitéEstElleRenseignée ||
-    (
-      !établissementTerritorialSanitaireActivitéViewModel.nombreDeSéjoursMCOSontIlsRenseignés &&
-      !établissementTerritorialSanitaireActivitéViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés &&
-      !établissementTerritorialSanitaireActivitéViewModel.nombreDePassagesAuxUrgencesEstIlRenseigné
-    )
-  ) {
+  if (établissementTerritorialSanitaireActivitéViewModel.lesDonnéesActivitéNeSontPasRenseignées) {
     return (
       <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
         {wording.INDICATEURS_VIDES}

@@ -42,6 +42,15 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
     super(wording)
   }
 
+  public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
+    return !this.activitéEstElleRenseignée ||
+      (
+        !this.nombreDeSéjoursMCOSontIlsRenseignés
+        && !this.nombreDeJournéesPsyEtSsrSontIlsRenseignés
+        && !this.nombreDePassagesAuxUrgencesEstIlRenseigné
+      )
+  }
+
   public get activitéEstElleRenseignée(): boolean {
     return this.établissementTerritorialSanitaireActivités.length === 0 ? false : true
   }

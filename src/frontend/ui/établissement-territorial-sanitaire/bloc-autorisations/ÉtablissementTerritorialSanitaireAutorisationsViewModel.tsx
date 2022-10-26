@@ -10,13 +10,19 @@ import stylesBlocAutorisationsEtCapacités from './BlocAutorisationEtCapacitéSa
 import '@gouvfr/dsfr/dist/component/tag/tag.min.css'
 
 export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends GraphiqueViewModel {
-  readonly ratioHistogrammeCapacitéParActivités = 5
-
   constructor(
     private readonly établissementTerritorialSanitaireAutorisations: ÉtablissementTerritorialSanitaire['autorisationsEtCapacités'],
     wording: Wording
   ) {
     super(wording)
+  }
+
+  public get lesDonnéesAutorisationEtCapacitéNeSontPasRenseignées(): boolean {
+    return !this.lesCapacitésParActivitésSontEllesRenseignées
+      && !this.lesAutorisationsSontEllesRenseignées
+      && !this.lesAutresActivitésSontEllesRenseignées
+      && !this.lesReconnaissancesContractuellesSontEllesRenseignées
+      && !this.lesÉquipementsMatérielsLourdsSontIlsRenseignés
   }
 
   public get lesCapacitésParActivitésSontEllesRenseignées(): boolean {
@@ -81,13 +87,14 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
     const places = litsEtPlacesSansLignesVides.map((litEtPlace) => litEtPlace.nombreDePlaces)
     const chartColors = [this.couleurDuFondHistogrammeSecondaire]
     const identifiants = [this.wording.LITS, this.wording.PLACES]
+    const ratioHistogrammeCapacitéParActivités = litsEtPlacesSansLignesVides.length < 3 ? 9 : 5
 
     return this.afficheDeuxHistogrammesHorizontaux(
       chartColors,
       lits,
       places,
       libellés,
-      this.ratioHistogrammeCapacitéParActivités,
+      ratioHistogrammeCapacitéParActivités,
       this.wording.ACTIVITÉS,
       identifiants
     )

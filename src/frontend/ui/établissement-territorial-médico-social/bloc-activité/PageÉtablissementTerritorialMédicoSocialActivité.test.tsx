@@ -44,7 +44,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
     expect(exergue).not.toBeInTheDocument()
   })
 
-  it.only.each(
+  it.each(
     [
       [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0, '94,4 %', '97,5 %', '101,6 %'],
       [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1, '70,4 %', '121,5 %', '67,6 %'],

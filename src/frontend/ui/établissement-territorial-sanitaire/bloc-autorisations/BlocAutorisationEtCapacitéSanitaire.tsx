@@ -18,13 +18,7 @@ type BlocAutorisationEtCapacitéSanitaireProps = Readonly<{
 export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorialSanitaireAutorisationsViewModel }: BlocAutorisationEtCapacitéSanitaireProps) => {
   const { wording } = useDependencies()
 
-  if (
-    !établissementTerritorialSanitaireAutorisationsViewModel.lesCapacitésParActivitésSontEllesRenseignées &&
-    !établissementTerritorialSanitaireAutorisationsViewModel.lesAutorisationsSontEllesRenseignées &&
-    !établissementTerritorialSanitaireAutorisationsViewModel.lesAutresActivitésSontEllesRenseignées &&
-    !établissementTerritorialSanitaireAutorisationsViewModel.lesReconnaissancesContractuellesSontEllesRenseignées &&
-    !établissementTerritorialSanitaireAutorisationsViewModel.lesÉquipementsMatérielsLourdsSontIlsRenseignés
-  ) {
+  if (établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéNeSontPasRenseignées) {
     return (
       <Bloc titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>
         {wording.INDICATEURS_VIDES}
