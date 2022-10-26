@@ -1,6 +1,6 @@
 import { ChartData, ChartOptions, ScriptableScaleContext } from 'chart.js'
 import { Context } from 'chartjs-plugin-datalabels'
-import { ChangeEvent } from 'react'
+import { ChangeEvent, ReactElement } from 'react'
 import { Bar } from 'react-chartjs-2'
 
 import { CadreBudgétaire } from '../../../../../database/models/BudgetEtFinancesMédicoSocialModel'
@@ -40,7 +40,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       this.wording.COMPTE_DE_RÉSULTAT_CA
   }
 
-  public listeDéroulanteDesAnnéesDuCompteDeRésultat(setAnnéeEnCours: Function): JSX.Element {
+  public listeDéroulanteDesAnnéesDuCompteDeRésultat(setAnnéeEnCours: Function): ReactElement {
     const annéesRangéesAntéChronologiquement = this.annéesRangéesParAntéChronologie()
 
     if (annéesRangéesAntéChronologiquement.length > 0) {
@@ -62,7 +62,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     return this.lesAnnéesManquantesDuCompteDeRésultat().length < this.nombreDAnnéesParIndicateur
   }
 
-  public compteDeRésultat(annéeEnCours: number): JSX.Element {
+  public compteDeRésultat(annéeEnCours: number): ReactElement {
     const budgetEtFinance = this.budgetEtFinanceEnCours(annéeEnCours)
     const entêtePremièreColonne = this.wording.TITRE_BUDGÉTAIRE
     const chartColors = [
@@ -122,7 +122,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       && !this.leFondsDeRoulementEstIlRenseigné
   }
 
-  public get montantDeLaContributionAuxFraisDeSiège(): JSX.Element {
+  public get montantDeLaContributionAuxFraisDeSiège(): ReactElement {
     const montantDesContributionsAuxFraisDeSiègeParAnnée: { année: number; valeur: string }[] = this.budgetEtFinancesMédicoSocial.reduce(
       (montantParAnnée: { année: number; valeur: string }[], budgetEtFinancesMédicoSocial) => {
         if (budgetEtFinancesMédicoSocial.contributionAuxFraisDeSiège.valeur) {
@@ -160,7 +160,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     return années.length > 0
   }
 
-  public get tauxDeVétustéConstruction(): JSX.Element {
+  public get tauxDeVétustéConstruction(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux('tauxDeVétustéConstruction')
     const construisLaCouleurDeLaBarre = (valeur: number, année: number | string): CouleurHistogramme => {
       let premierPlan = this.couleurDuFondHistogrammeSecondaire
@@ -199,7 +199,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     return valeur > this.seuilMaximalDuTauxDeVétustéConstruction || valeur < this.seuilMinimalDuTauxDeVétustéConstruction
   }
 
-  public get résultatNetComptable(): JSX.Element {
+  public get résultatNetComptable(): ReactElement {
     const résultatNetComptableParAnnée: { année: number; valeur: string }[] = this.budgetEtFinancesMédicoSocial.reduce(
       (résultatNetComptableParAnnée: { année: number; valeur: string }[], budgetEtFinancesMédicoSocial) => {
         if (budgetEtFinancesMédicoSocial.résultatNetComptable.valeur) {
@@ -237,7 +237,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     return années.length > 0
   }
 
-  public get tauxDeCaf(): JSX.Element {
+  public get tauxDeCaf(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux('tauxDeCafNette')
     const construisLaCouleurDeLaBarre = (valeur: number, année: number | string): CouleurHistogramme => {
       let premierPlan = this.couleurDuFondHistogrammeSecondaire
@@ -270,7 +270,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].tauxDeCafNette?.dateMiseÀJourSource as string)
   }
 
-  public get fondDeRoulementNetGlobal(): JSX.Element {
+  public get fondDeRoulementNetGlobal(): ReactElement {
     const annéesSousCadreAutreQueErrd: number[] = []
     const fondsDeRoulementNetGlobalParAnnée: IndicateurTabulaireProps['valeursParAnnée'] = this.budgetEtFinancesMédicoSocial.reduce(
       (fondsParAnnée: IndicateurTabulaireProps['valeursParAnnée'], budgetEtFinancesMédicoSocial) => {

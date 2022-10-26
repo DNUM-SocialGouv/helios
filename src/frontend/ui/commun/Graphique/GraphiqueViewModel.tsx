@@ -1,5 +1,6 @@
 import { BarElement, CategoryScale, Chart as ChartJS, ChartData, ChartOptions, Legend, LegendItem, LinearScale, LineController, LineElement, PointElement, Title, Tooltip } from 'chart.js'
 import ChartDataLabels, { Context } from 'chartjs-plugin-datalabels'
+import { ReactElement } from 'react'
 import { Bar } from 'react-chartjs-2'
 import '@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css'
 
@@ -64,7 +65,7 @@ export class GraphiqueViewModel {
     entêtesDesAutresColonnes: string[],
     annéesManquantes: number[] | string[],
     nombreDAnnéeTotale: number = 3
-  ): JSX.Element {
+  ): ReactElement {
     ChartJS.unregister()
     const chartColorsGauche = valeursDeGauche.map((valeurDeGauche, index) => {
       return (valeurDeGauche <= 0) ? chartColors[index] : this.couleurDuFondHistogrammeDeDépassement
@@ -188,7 +189,7 @@ export class GraphiqueViewModel {
     entêteLibellé: string,
     identifiant: string,
     annéesTotales: number = 3
-  ): JSX.Element {
+  ): ReactElement {
     const data: ChartData = {
       datasets: [
         {
@@ -272,7 +273,7 @@ export class GraphiqueViewModel {
     identifiant: string,
     libellésDeValeursManquantes: number[] | string[],
     nombreDeLibelléTotal: number = 3
-  ): JSX.Element {
+  ): ReactElement {
     const data: ChartData = {
       datasets: [
         {
@@ -325,7 +326,7 @@ export class GraphiqueViewModel {
     ratioLargeurSurHauteur: number,
     entêteLibellé: string,
     identifiants: string[]
-  ): JSX.Element {
+  ): ReactElement {
     const data: ChartData = {
       datasets: [
         {

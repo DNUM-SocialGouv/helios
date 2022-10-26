@@ -1,3 +1,5 @@
+import { ReactElement } from 'react'
+
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines'
 import { Wording } from '../../../configuration/wording/Wording'
 import { GraphiqueViewModel } from '../../commun/Graphique/GraphiqueViewModel'
@@ -23,7 +25,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
     return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.nombreDEtpRéalisés.valeur !== null)
   }
 
-  public get nombreDEtpRéalisé(): JSX.Element {
+  public get nombreDEtpRéalisé(): ReactElement {
     const [valeurs, années] = this.construisLesNombresDEtpRéalisés()
     const couleursDeLHistogramme = années.map((année) => ({
       premierPlan: this.estCeLAnnéePassée(année) ? this.couleurDuFondHistogrammePrimaire : this.couleurDuFondHistogrammeSecondaire,

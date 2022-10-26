@@ -1,3 +1,5 @@
+import { ReactElement } from 'react'
+
 import { ÉtablissementTerritorialMédicoSocial } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial'
 import { CapacitéParActivité } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation'
 import { Wording } from '../../../configuration/wording/Wording'
@@ -18,7 +20,7 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
       && !this.lesCapacitésSontEllesRenseignées
   }
 
-  public get autorisations(): JSX.Element {
+  public get autorisations(): ReactElement {
     const autorisationsDeLÉtablissement = this.établissementTerritorialAutorisations.autorisations
 
     return (
@@ -103,7 +105,7 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
     return StringFormater.formateLaDate(this.établissementTerritorialAutorisations.autorisations.dateMiseÀJourSource)
   }
 
-  public get capacitéParActivités(): JSX.Element {
+  public get capacitéParActivités(): ReactElement {
     const [activités, capacités] = this.construisLesCapacitésParActivités()
     const construisLaCouleurDeLaBarreHorizontale = (_valeur: number, libellé: number | string): CouleurHistogramme => {
       return {
