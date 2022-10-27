@@ -658,7 +658,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
   }
 
   public static créeUneAnnéeRessourcesHumaines(
-    champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialBudgetEtFinances>
+    champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialRessourcesHumaines>
   ): ÉtablissementTerritorialMédicoSocialRessourcesHumaines {
     return {
       ...ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines[1],
