@@ -34,6 +34,10 @@ export class EntitéJuridiqueTestBuilder {
       dateMiseÀJourSource: '2022-05-14',
       value: 'CH DU HAUT BUGEY',
     },
+    siren: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: '260104631',
+    },
     téléphone: {
       dateMiseÀJourSource: '2022-05-14',
       value: '0102030406',

@@ -36,6 +36,10 @@ export class EntitéJuridiqueViewModelTestBuilder {
       dateMiseÀJourSource: '2021-07-07',
       value: 'CH SAINT BRIEUC',
     },
+    siren: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: '262200090',
+    },
     téléphone: {
       dateMiseÀJourSource: '2021-07-07',
       value: '0296017123',

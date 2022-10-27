@@ -193,6 +193,10 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.catégorieÉtablissement,
       },
+      codeModeTarification: {
+        dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.codeModeTarification,
+      },
       courriel: {
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.courriel,
@@ -206,6 +210,10 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       libelléCatégorieÉtablissement: {
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.libelléCatégorieÉtablissement,
+      },
+      libelléModeTarification: {
+        dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.libelléModeTarification,
       },
       numéroFinessEntitéJuridique: {
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
@@ -226,6 +234,10 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       raisonSocialeCourte: {
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.raisonSocialeCourte,
+      },
+      siret: {
+        dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.siret,
       },
       typeÉtablissement: {
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
