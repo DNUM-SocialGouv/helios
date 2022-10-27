@@ -184,8 +184,8 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
         </MiseEnExergue>}
         <TableIndicateur
           disabled={annéesManquantes.length === 3}
-          entêteLibellé={this.wording.ANNÉE}
-          identifiants={[this.wording.TAUX_D_ABSENTÉISME]}
+          entêteLibellé={this.wording.MOTIF_DU_TAUX_D_ABSENTÉISME}
+          identifiants={[this.wording.TAUX]}
           libellés={motifsDesTauxDAbsentéismes}
           valeurs={[StringFormater.ajouteLePourcentage(valeursDesTauxDAbsentéismes)]}
         />

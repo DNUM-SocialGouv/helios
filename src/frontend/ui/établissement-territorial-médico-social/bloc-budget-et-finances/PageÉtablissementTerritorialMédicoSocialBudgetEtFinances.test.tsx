@@ -224,7 +224,9 @@ describe('La page établissement territorial - bloc budget et finances', () => {
 
       // THEN
       const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
-      const année = within(budgetEtFinances).getByLabelText(wording.ANNÉE)
+      const indicateurs = within(budgetEtFinances).getAllByRole('listitem')
+      const recettesEtDépenses = indicateurs[indiceDeLIndicateur.recettesEtDépenses]
+      const année = within(recettesEtDépenses).getByRole('combobox')
       expect(année).toBeInTheDocument()
       const années = within(année).getAllByRole('option')
       expect(années[0]).toHaveAttribute('value', '2021')
@@ -253,7 +255,9 @@ describe('La page établissement territorial - bloc budget et finances', () => {
 
       // THEN
       const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
-      const année = within(budgetEtFinances).getByLabelText(wording.ANNÉE)
+      const indicateurs = within(budgetEtFinances).getAllByRole('listitem')
+      const recettesEtDépenses = indicateurs[indiceDeLIndicateur.recettesEtDépenses]
+      const année = within(recettesEtDépenses).getByRole('combobox')
       expect(année).toBeInTheDocument()
       const années = within(année).getAllByRole('option')
       expect(années[0]).toHaveAttribute('value', '2020')
@@ -391,14 +395,14 @@ describe('La page établissement territorial - bloc budget et finances', () => {
       // GIVEN
       renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
       const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
-      const année = within(budgetEtFinances).getByLabelText(wording.ANNÉE)
+      const indicateurs = within(budgetEtFinances).getAllByRole('listitem')
+      const recettesEtDépenses = indicateurs[indiceDeLIndicateur.recettesEtDépenses]
+      const année = within(recettesEtDépenses).getByRole('combobox')
 
       // WHEN
       fireEvent.change(année, { target: { value: '2019' } })
 
       // THEN
-      const indicateurs = within(budgetEtFinances).getAllByRole('listitem')
-      const recettesEtDépenses = indicateurs[indiceDeLIndicateur.recettesEtDépenses]
       const tableau = within(recettesEtDépenses).getByRole('table')
 
       const dépensesEtRecettes = [

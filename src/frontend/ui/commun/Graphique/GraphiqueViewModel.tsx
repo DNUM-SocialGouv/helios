@@ -23,6 +23,7 @@ export type CouleurHistogramme = Readonly<{
   premierPlan: string
   secondPlan: string
 }>
+
 export class GraphiqueViewModel {
   readonly ratioMinHistogrammeHorizontal = 2
   readonly ratioMaxHistogrammeHorizontal = 15
@@ -40,7 +41,8 @@ export class GraphiqueViewModel {
   readonly policeGrasse = 'bold'
   readonly policeNormale = 'normal'
   readonly borneMaximaleDeLHistogrammeVertical = 105
-  private indexDeLArcSurvolé: number = -1
+  private readonly AUCUN_ARC_SURVOLÉ = -1
+  private indexDeLArcSurvolé = this.AUCUN_ARC_SURVOLÉ
   protected readonly couleurDesArcsDuDonut = {
     opaque: [
       '#99B3F9',
@@ -92,29 +94,7 @@ export class GraphiqueViewModel {
       Title,
       Tooltip,
       this.construisLePluginDeLégende(),
-      {
-        beforeDraw: function(chart: ChartJS) {
-          // @ts-ignore
-          const centerConfig = chart?.config?.options?.elements?.center
-          if (centerConfig) {
-            const ctx = chart.ctx
-            const fontStyle = centerConfig.fontStyle
-            const txt = centerConfig.text
-            const color = centerConfig.color
-
-            const centerX = ((chart.chartArea.left + chart.chartArea.right) / 2)
-            const centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2)
-
-            ctx.textAlign = 'center'
-            ctx.textBaseline = 'middle'
-            ctx.font = 'bold 20px ' + fontStyle
-            ctx.fillStyle = color
-
-            ctx.fillText(txt, centerX, centerY)
-          }
-        },
-        id: 'texteAuCentreDuDoughnut',
-      }
+      this.construisLePluginDeTexteAuCentreDuDonut()
     )
   }
 
@@ -761,8 +741,9 @@ export class GraphiqueViewModel {
     const enlèveLaPoliceGrasseDuLibelléDeLégende = (élément: Element) => {
       élément.classList.remove('fr-text--bold')
     }
-    const unAutreArcÉtaitSurvolé = (indexDeLArcSurvolé: number) => this.indexDeLArcSurvolé !== -1 && indexDeLArcSurvolé !== this.indexDeLArcSurvolé
-    const plusAucunArcNestSurvolé = (élémentsActifs: ActiveElement[]) => élémentsActifs.length === 0 && this.indexDeLArcSurvolé !== -1
+    const unAutreArcÉtaitSurvolé = (indexDeLArcSurvolé: number) =>
+      this.indexDeLArcSurvolé !== this.AUCUN_ARC_SURVOLÉ && indexDeLArcSurvolé !== this.indexDeLArcSurvolé
+    const plusAucunArcNestSurvolé = (élémentsActifs: ActiveElement[]) => élémentsActifs.length === 0 && this.indexDeLArcSurvolé !== this.AUCUN_ARC_SURVOLÉ
 
     return {
       animation: false,
@@ -809,7 +790,7 @@ export class GraphiqueViewModel {
 
           enlèveLaPoliceGrasseDuLibelléDeLégende(légende.children[this.indexDeLArcSurvolé])
 
-          this.indexDeLArcSurvolé = -1
+          this.indexDeLArcSurvolé = this.AUCUN_ARC_SURVOLÉ
         }
       },
       plugins: {
@@ -835,6 +816,32 @@ export class GraphiqueViewModel {
         tooltip: { enabled: false },
       },
       responsive: true,
+    }
+  }
+
+  private construisLePluginDeTexteAuCentreDuDonut() {
+    return {
+      beforeDraw: function (chart: ChartJS) {
+        // @ts-ignore
+        const centerConfig = chart?.config?.options?.elements?.center
+        if (centerConfig) {
+          const ctx = chart.ctx
+          const fontStyle = centerConfig.fontStyle
+          const txt = centerConfig.text
+          const color = centerConfig.color
+
+          const centerX = ((chart.chartArea.left + chart.chartArea.right) / 2)
+          const centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2)
+
+          ctx.textAlign = 'center'
+          ctx.textBaseline = 'middle'
+          ctx.font = 'bold 20px ' + fontStyle
+          ctx.fillStyle = color
+
+          ctx.fillText(txt, centerX, centerY)
+        }
+      },
+      id: 'texteAuCentreDuDonut',
     }
   }
 }

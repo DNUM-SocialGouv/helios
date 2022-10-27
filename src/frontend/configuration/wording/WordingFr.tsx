@@ -259,6 +259,8 @@ export class WordingFr implements Wording {
   readonly TAUX_D_ABSENTÉISME_POUR_MATERNITÉ_PATERNITÉ: string = 'Pour maternité / paternité'
   readonly TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX: string = 'Pour congés spéciaux dont les congés sans solde (hors congés payés)'
   readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE: string = 'Pour accident du travail / maladie professionnelle'
+  readonly MOTIF_DU_TAUX_D_ABSENTÉISME: string = 'Type'
+  readonly TAUX: string = 'Taux'
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string = 'Établissement territorial'

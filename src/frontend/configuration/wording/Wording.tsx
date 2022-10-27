@@ -191,6 +191,8 @@ export interface Wording {
   readonly TAUX_D_ABSENTÉISME_POUR_MATERNITÉ_PATERNITÉ: string
   readonly TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX: string
   readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE: string
+  readonly MOTIF_DU_TAUX_D_ABSENTÉISME: string
+  readonly TAUX: string
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string

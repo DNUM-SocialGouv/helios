@@ -272,7 +272,9 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
 
       // THEN
       const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
-      const année = within(ressourcesHumaines).getByLabelText(wording.ANNÉE)
+      const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
+      const tauxDAbsentéisme = indicateurs[indiceDeLIndicateur.tauxDAbsentéisme]
+      const année = within(tauxDAbsentéisme).getByRole('combobox')
       expect(année).toBeInTheDocument()
       const années = within(année).getAllByRole('option')
       expect(années[0]).toHaveAttribute('value', '2021')
@@ -313,8 +315,10 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
       renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialAvecDesTauxDAbsentéismeNuls} />)
 
       // THEN
-      const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
-      const année = within(budgetEtFinances).queryByLabelText(wording.ANNÉE)
+      const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
+      const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
+      const tauxDAbsentéisme = indicateurs[indiceDeLIndicateur.tauxDAbsentéisme]
+      const année = within(tauxDAbsentéisme).queryByRole('combobox')
       expect(année).not.toBeInTheDocument()
     })
   })
