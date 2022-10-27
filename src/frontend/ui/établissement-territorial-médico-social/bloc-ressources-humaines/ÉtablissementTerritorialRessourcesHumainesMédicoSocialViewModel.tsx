@@ -21,12 +21,12 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
   constructor(private readonly ressourcesHumainesMédicoSocial: ÉtablissementTerritorialMédicoSocialRessourcesHumaines[], wording: Wording) {
     super(wording)
     this.couleursDuDoughnutDesTauxDAbsentéismes = {
-      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_COURTE_DURÉE]: { couleurDeLArc: '#99B3F9', couleurDuLibellé: '#000' },
-      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_MOYENNE_DURÉE]: { couleurDeLArc: '#667DCF', couleurDuLibellé: '#000' },
-      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_LONGUE_DURÉE]: { couleurDeLArc: '#465F9D', couleurDuLibellé: '#FFF' },
-      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE]: { couleurDeLArc: '#2F4077', couleurDuLibellé: '#FFF' },
-      [this.wording.TAUX_D_ABSENTÉISME_POUR_MATERNITÉ_PATERNITÉ]: { couleurDeLArc: '#273563', couleurDuLibellé: '#FFF' },
-      [this.wording.TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX]: { couleurDeLArc: '#161D37', couleurDuLibellé: '#FFF' },
+      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_COURTE_DURÉE]: { couleurDeLArc: this.couleurDesArcsDuDonut.opaque[0], couleurDuLibellé: '#000' },
+      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_MOYENNE_DURÉE]: { couleurDeLArc: this.couleurDesArcsDuDonut.opaque[1], couleurDuLibellé: '#000' },
+      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_LONGUE_DURÉE]: { couleurDeLArc: this.couleurDesArcsDuDonut.opaque[2], couleurDuLibellé: '#FFF' },
+      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE]: { couleurDeLArc: this.couleurDesArcsDuDonut.opaque[3], couleurDuLibellé: '#FFF' },
+      [this.wording.TAUX_D_ABSENTÉISME_POUR_MATERNITÉ_PATERNITÉ]: { couleurDeLArc: this.couleurDesArcsDuDonut.opaque[4], couleurDuLibellé: '#FFF' },
+      [this.wording.TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX]: { couleurDeLArc: this.couleurDesArcsDuDonut.opaque[5], couleurDuLibellé: '#FFF' },
     }
     this.annéesAvecDesTauxDAbsentéismes = this.annéesRangéesParAntéChronologie()
   }
@@ -155,14 +155,17 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
     })
     const valeursDesTauxDAbsentéismes = valeursAvecMotif.map((tauxDAbsentéisme) => tauxDAbsentéisme.valeur)
     const motifsDesTauxDAbsentéismes = valeursAvecMotif.map((tauxDAbsentéisme) => tauxDAbsentéisme.motif)
-    const texteCentral = StringFormater.ajouteLePourcentage([tauxDAbsentéismeHorsFormation])[0]
+    const pourcentageDuTauxDAbsentéismeHorsFormation = StringFormater.ajouteLePourcentage([tauxDAbsentéismeHorsFormation])[0]
+    const texteCentral = this.leTauxDAbsentéismeHorsFormationEstIlDansLesBornesAcceptables(tauxDAbsentéismeHorsFormation)
+      ? pourcentageDuTauxDAbsentéismeHorsFormation
+      : `! ${pourcentageDuTauxDAbsentéismeHorsFormation}`
 
     const annéesManquantes = this.annéesManquantes(this.annéesAvecDesTauxDAbsentéismes)
 
     return (
       <>
         {this.wording.TAUX_D_ABSENTÉISME_HORS_FORMATION(
-          texteCentral,
+          pourcentageDuTauxDAbsentéismeHorsFormation,
           !this.leTauxDAbsentéismeHorsFormationEstIlDansLesBornesAcceptables(tauxDAbsentéismeHorsFormation),
           this.leTauxDAbsentéismeHorsFormationEstIlNul(tauxDAbsentéismeHorsFormation)
         )}

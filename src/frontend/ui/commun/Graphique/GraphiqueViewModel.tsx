@@ -1,4 +1,4 @@
-import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, ChartData, ChartOptions, Legend, LegendItem, LinearScale, LineController, LineElement, PointElement, Title, Tooltip } from 'chart.js'
+import { ActiveElement, ArcElement, BarElement, CategoryScale, Chart as ChartJS, ChartData, ChartEvent, ChartOptions, Legend, LegendItem, LinearScale, LineController, LineElement, PointElement, Title, Tooltip } from 'chart.js'
 import ChartDataLabels, { Context } from 'chartjs-plugin-datalabels'
 import { ReactElement } from 'react'
 import { Bar, Doughnut } from 'react-chartjs-2'
@@ -23,7 +23,6 @@ export type CouleurHistogramme = Readonly<{
   premierPlan: string
   secondPlan: string
 }>
-
 export class GraphiqueViewModel {
   readonly ratioMinHistogrammeHorizontal = 2
   readonly ratioMaxHistogrammeHorizontal = 15
@@ -33,6 +32,7 @@ export class GraphiqueViewModel {
   readonly couleurDuFondHistogrammeSecondaire = '#4E68BB'
   readonly couleurDuFondDeLaLigne = '#929292'
   readonly couleurDuFondHistogrammeDeDépassement = '#C9191E'
+  readonly couleurDuFondHistogrammeDeDépassementTransparent = 'rgba(201, 25, 30, 0.5)'
   readonly couleurSecondPlanHistogrammeDeDépassement = '#FFE9E9'
   readonly couleurDelAbscisse = '#161616'
   readonly couleurDeLaValeur = '#3A3A3A'
@@ -40,6 +40,43 @@ export class GraphiqueViewModel {
   readonly policeGrasse = 'bold'
   readonly policeNormale = 'normal'
   readonly borneMaximaleDeLHistogrammeVertical = 105
+  private indexDeLArcSurvolé: number = -1
+  protected readonly couleurDesArcsDuDonut = {
+    opaque: [
+      '#99B3F9',
+      '#667DCF',
+      '#465F9D',
+      '#2F4077',
+      '#273563',
+      '#161D37',
+    ],
+    transparent: [
+      'rgba(153, 179, 249, 0.5)',
+      'rgba(102, 125, 207, 0.5)',
+      'rgba(70, 95, 157, 0.5)',
+      'rgba(47, 64, 119, 0.5)',
+      'rgba(39, 53, 99, 0.5)',
+      'rgba(22, 29, 55, 0.5)',
+    ],
+  }
+  private readonly associeLaCouleurTransparente: Record<string, string> = {
+    [this.couleurDesArcsDuDonut.opaque[0]]: this.couleurDesArcsDuDonut.transparent[0],
+    [this.couleurDesArcsDuDonut.opaque[1]]: this.couleurDesArcsDuDonut.transparent[1],
+    [this.couleurDesArcsDuDonut.opaque[2]]: this.couleurDesArcsDuDonut.transparent[2],
+    [this.couleurDesArcsDuDonut.opaque[3]]: this.couleurDesArcsDuDonut.transparent[3],
+    [this.couleurDesArcsDuDonut.opaque[4]]: this.couleurDesArcsDuDonut.transparent[4],
+    [this.couleurDesArcsDuDonut.opaque[5]]: this.couleurDesArcsDuDonut.transparent[5],
+    [this.couleurDuFondHistogrammeDeDépassement]: this.couleurDuFondHistogrammeDeDépassementTransparent,
+  }
+  private readonly associeLaCouleurOpaque: Record<string, string> = {
+    [this.couleurDesArcsDuDonut.transparent[0]]: this.couleurDesArcsDuDonut.opaque[0],
+    [this.couleurDesArcsDuDonut.transparent[1]]: this.couleurDesArcsDuDonut.opaque[1],
+    [this.couleurDesArcsDuDonut.transparent[2]]: this.couleurDesArcsDuDonut.opaque[2],
+    [this.couleurDesArcsDuDonut.transparent[3]]: this.couleurDesArcsDuDonut.opaque[3],
+    [this.couleurDesArcsDuDonut.transparent[4]]: this.couleurDesArcsDuDonut.opaque[4],
+    [this.couleurDesArcsDuDonut.transparent[5]]: this.couleurDesArcsDuDonut.opaque[5],
+    [this.couleurDuFondHistogrammeDeDépassementTransparent]: this.couleurDuFondHistogrammeDeDépassement,
+  }
 
   constructor(protected readonly wording: Wording) {
     ChartJS.register(
@@ -412,6 +449,7 @@ export class GraphiqueViewModel {
           backgroundColor: couleursDuDoughnut.map((couleur) => couleur.premierPlan),
           data: valeurs,
           datalabels: { labels: { title: { color: libellésDesValeurs.map((libellé) => libellé.couleur) } } },
+          hoverBackgroundColor: couleursDuDoughnut.map((couleur) => couleur.premierPlan),
           type: 'doughnut',
         },
       ],
@@ -716,6 +754,16 @@ export class GraphiqueViewModel {
   }
 
   private optionsDiagrammeDoughnut(texteCentral: string, totalDesValeurs: number, idDeLaLégende: string): ChartOptions<'doughnut'> {
+    const unArcEstSurvolé = (élémentsActifs: ActiveElement[]) => élémentsActifs.length && élémentsActifs[0].element instanceof ArcElement
+    const metsEnGrasLaPoliceDuLibelléDeLégende = (élément: Element) => {
+      élément.classList.add('fr-text--bold')
+    }
+    const enlèveLaPoliceGrasseDuLibelléDeLégende = (élément: Element) => {
+      élément.classList.remove('fr-text--bold')
+    }
+    const unAutreArcÉtaitSurvolé = (indexDeLArcSurvolé: number) => this.indexDeLArcSurvolé !== -1 && indexDeLArcSurvolé !== this.indexDeLArcSurvolé
+    const plusAucunArcNestSurvolé = (élémentsActifs: ActiveElement[]) => élémentsActifs.length === 0 && this.indexDeLArcSurvolé !== -1
+
     return {
       animation: false,
       aspectRatio: 1,
@@ -727,6 +775,42 @@ export class GraphiqueViewModel {
           fontStyle: 'Marianne',
           text: texteCentral,
         },
+      },
+      onHover: (_event: ChartEvent, elements: ActiveElement[], chart: ChartJS) => {
+        if (unArcEstSurvolé(elements)) {
+          const indexDeLArcSurvolé = elements[0].index
+
+          const légende = document.getElementById(idDeLaLégende)
+          if (!légende) return
+
+          const couleurs = chart.data.datasets[0].backgroundColor as string[]
+          const nouvellesCouleursDesArcs = couleurs.map((couleur, index) =>
+            index !== indexDeLArcSurvolé && this.associeLaCouleurTransparente[couleur] ? this.associeLaCouleurTransparente[couleur] : couleur)
+
+          if (unAutreArcÉtaitSurvolé(indexDeLArcSurvolé)) {
+            enlèveLaPoliceGrasseDuLibelléDeLégende(légende.children[this.indexDeLArcSurvolé])
+          }
+          chart.data.datasets[0].backgroundColor = nouvellesCouleursDesArcs
+          chart.update()
+          metsEnGrasLaPoliceDuLibelléDeLégende(légende.children[indexDeLArcSurvolé])
+
+          this.indexDeLArcSurvolé = indexDeLArcSurvolé
+        }
+
+        if (plusAucunArcNestSurvolé(elements)) {
+          const légende = document.getElementById(idDeLaLégende)
+          if (!légende) return
+
+          const couleurs = chart.data.datasets[0].backgroundColor as string[]
+          const nouvellesCouleursDesArcs = couleurs.map((couleur) =>
+            this.associeLaCouleurOpaque[couleur] ? this.associeLaCouleurOpaque[couleur] : couleur)
+          chart.data.datasets[0].backgroundColor = nouvellesCouleursDesArcs
+          chart.update()
+
+          enlèveLaPoliceGrasseDuLibelléDeLégende(légende.children[this.indexDeLArcSurvolé])
+
+          this.indexDeLArcSurvolé = -1
+        }
       },
       plugins: {
         datalabels: {
