@@ -25,6 +25,10 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       dateMiseÀJourSource: '2021-07-07',
       value: '355',
     },
+    codeModeTarification: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: '99',
+    },
     courriel: {
       dateMiseÀJourSource: '2021-07-07',
       value: 'a@example.com',
@@ -36,6 +40,10 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     libelléCatégorieÉtablissement: {
       dateMiseÀJourSource: '2021-07-07',
       value: 'Centre Hospitalier (C.H.)',
+    },
+    libelléModeTarification: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: 'Indéterminé',
     },
     numéroFinessEntitéJuridique: {
       dateMiseÀJourSource: '2021-07-07',
@@ -60,6 +68,10 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     raisonSocialeDeLEntitéDeRattachement: {
       dateMiseÀJourSource: '2021-07-07',
       value: 'HP VILLENEUVE DASCQ',
+    },
+    siret: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: '20003004700017',
     },
     statutJuridique: {
       dateMiseÀJourSource: '2021-07-07',

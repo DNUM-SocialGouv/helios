@@ -29,6 +29,10 @@ export class ÉtablissementTerritorialTestBuilder {
       dateMiseÀJourSource: '2022-05-14',
       value: '159',
     },
+    codeModeTarification: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: '03',
+    },
     courriel: {
       dateMiseÀJourSource: '2022-05-14',
       value: 'a@example.com',
@@ -40,6 +44,10 @@ export class ÉtablissementTerritorialTestBuilder {
     libelléCatégorieÉtablissement: {
       dateMiseÀJourSource: '2022-05-14',
       value: 'Centre Hospitalier (C.H.)',
+    },
+    libelléModeTarification: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 'ARS établissements Publics de santé dotation globale',
     },
     numéroFinessEntitéJuridique: {
       dateMiseÀJourSource: '2022-05-14',
@@ -60,6 +68,10 @@ export class ÉtablissementTerritorialTestBuilder {
     raisonSocialeCourte: {
       dateMiseÀJourSource: '2022-05-14',
       value: 'CH NANTUA',
+    },
+    siret: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: '26011021800047',
     },
     typeÉtablissement: {
       dateMiseÀJourSource: '2022-05-14',
@@ -92,6 +104,10 @@ export class ÉtablissementTerritorialTestBuilder {
       dateMiseÀJourSource: '2022-05-14',
       value: '365',
     },
+    codeModeTarification: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: '07',
+    },
     courriel: {
       dateMiseÀJourSource: '2022-05-14',
       value: 'b@example.com',
@@ -103,6 +119,10 @@ export class ÉtablissementTerritorialTestBuilder {
     libelléCatégorieÉtablissement: {
       dateMiseÀJourSource: '2022-05-14',
       value: 'Centre Hospitalier (C.H.)',
+    },
+    libelléModeTarification: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: 'ARS établissements de santé non financés dotation globale',
     },
     numéroFinessEntitéJuridique: {
       dateMiseÀJourSource: '2022-05-14',
@@ -123,6 +143,10 @@ export class ÉtablissementTerritorialTestBuilder {
     raisonSocialeCourte: {
       dateMiseÀJourSource: '2022-05-14',
       value: 'HP VILLENEUVE DASCQ',
+    },
+    siret: {
+      dateMiseÀJourSource: '2022-05-14',
+      value: '47678033300037',
     },
     typeÉtablissement: {
       dateMiseÀJourSource: '2022-05-14',

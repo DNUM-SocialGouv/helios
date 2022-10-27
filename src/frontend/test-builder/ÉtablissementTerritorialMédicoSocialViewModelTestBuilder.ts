@@ -28,6 +28,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       dateMiseÀJourSource: '2021-07-07',
       value: '300',
     },
+    codeModeTarification: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: '03',
+    },
     courriel: {
       dateMiseÀJourSource: '2021-07-07',
       value: 'a@example.com',
@@ -43,6 +47,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     libelléCatégorieÉtablissement: {
       dateMiseÀJourSource: '2021-07-07',
       value: 'Ecoles Formant aux Professions Sanitaires',
+    },
+    libelléModeTarification: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: 'ARS établissements Publics de santé dotation globale',
     },
     numéroFinessEntitéJuridique: {
       dateMiseÀJourSource: '2021-07-07',
@@ -67,6 +75,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     raisonSocialeDeLEntitéDeRattachement: {
       dateMiseÀJourSource: '2021-07-07',
       value: 'CH DU HAUT BUGEY',
+    },
+    siret: {
+      dateMiseÀJourSource: '2021-07-07',
+      value: '26011021800096',
     },
     statutJuridique: {
       dateMiseÀJourSource: '2021-07-07',

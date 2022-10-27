@@ -19,6 +19,10 @@ export type ÉtablissementTerritorialIdentité = Readonly<{
     dateMiseÀJourSource: string
     value: string
   }>
+  codeModeTarification: Readonly<{
+    dateMiseÀJourSource: string
+    value: string
+  }>
   courriel: Readonly<{
     dateMiseÀJourSource: string
     value: string
@@ -28,6 +32,10 @@ export type ÉtablissementTerritorialIdentité = Readonly<{
     value: string
   }>
   libelléCatégorieÉtablissement: Readonly<{
+    dateMiseÀJourSource: string
+    value: string
+  }>
+  libelléModeTarification: Readonly<{
     dateMiseÀJourSource: string
     value: string
   }>
@@ -48,6 +56,10 @@ export type ÉtablissementTerritorialIdentité = Readonly<{
     value: string
   }>
   raisonSocialeCourte: Readonly<{
+    dateMiseÀJourSource: string
+    value: string
+  }>
+  siret: Readonly<{
     dateMiseÀJourSource: string
     value: string
   }>
