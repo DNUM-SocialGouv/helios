@@ -21,6 +21,9 @@ export class ÉtablissementTerritorialIdentitéModel {
   @Column({ length: 3, name: 'cat_etablissement' })
   public catégorieÉtablissement!: string
 
+  @Column({ length: 2, name: 'code_mode_tarification' })
+  public codeModeTarification!: string
+
   @Column({ length: 255, name: 'commune' })
   public commune!: string
 
@@ -47,6 +50,9 @@ export class ÉtablissementTerritorialIdentitéModel {
   @Column({ length: 255, name: 'libelle_court_categorie_etablissement' })
   public libelléCourtCatégorieÉtablissement!: string
 
+  @Column({ length: 255, name: 'libelle_du_mode_tarification' })
+  public libelléModeTarification!: string
+
   @Column({ length: 9, name: 'numero_finess_entite_juridique' })
   public numéroFinessEntitéJuridique!: string
 
@@ -61,6 +67,9 @@ export class ÉtablissementTerritorialIdentitéModel {
 
   @Column({ length: 255, name: 'raison_sociale_courte' })
   public raisonSocialeCourte!: string
+
+  @Column({ length: 14, name: 'siret' })
+  public siret!: string
 
   @Column({ length: 10, name: 'telephone' })
   public téléphone!: string

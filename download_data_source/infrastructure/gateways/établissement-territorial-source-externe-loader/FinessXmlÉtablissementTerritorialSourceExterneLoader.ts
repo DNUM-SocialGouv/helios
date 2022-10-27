@@ -305,12 +305,14 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
       adresseTypeVoie: valueOrEmpty(établissementTerritorialIdentitéFiness.typvoie._text),
       adresseVoie: valueOrEmpty(établissementTerritorialIdentitéFiness.voie._text),
       catégorieÉtablissement: valueOrEmpty(établissementTerritorialIdentitéFiness.categetab._text),
+      codeModeTarification: valueOrEmpty(établissementTerritorialIdentitéFiness.codemft._text),
       commune: valueOrEmpty(établissementTerritorialIdentitéFiness.libcommune._text),
       courriel: valueOrEmpty(établissementTerritorialIdentitéFiness.courriel._text),
       domaine: this.construisLeDomaine(établissementTerritorialIdentitéFiness, catégories),
       département: valueOrEmpty(établissementTerritorialIdentitéFiness.libdepartement._text),
       libelléCatégorieÉtablissement: valueOrEmpty(établissementTerritorialIdentitéFiness.libcategetab._text),
       libelléCourtCatégorieÉtablissement: valueOrEmpty(établissementTerritorialIdentitéFiness.libcourtcategetab._text),
+      libelléModeTarification: valueOrEmpty(établissementTerritorialIdentitéFiness.libmft._text),
       numéroFinessEntitéJuridique: valueOrEmpty(établissementTerritorialIdentitéFiness.nofinessej._text),
       numéroFinessÉtablissementPrincipal: valueOrEmpty(établissementTerritorialIdentitéFiness.nofinessppal._text),
       numéroFinessÉtablissementTerritorial: valueOrEmpty(établissementTerritorialIdentitéFiness.nofinesset._text),
@@ -318,6 +320,7 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
         valueOrEmpty(établissementTerritorialIdentitéFiness.rslongue._text) :
         valueOrEmpty(établissementTerritorialIdentitéFiness.rs._text),
       raisonSocialeCourte: valueOrEmpty(établissementTerritorialIdentitéFiness.rs._text),
+      siret: valueOrEmpty(établissementTerritorialIdentitéFiness.siret._text),
       typeÉtablissement: valueOrEmpty(établissementTerritorialIdentitéFiness.typeet._text),
       téléphone: valueOrEmpty(établissementTerritorialIdentitéFiness.telephone._text),
     }

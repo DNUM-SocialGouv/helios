@@ -6,17 +6,20 @@ export type ÉtablissementTerritorialIdentité = Readonly<{
   adresseTypeVoie: string
   adresseVoie: string
   catégorieÉtablissement: string
+  codeModeTarification: string
   commune: string
   courriel: string
   département: string
   domaine: DomaineÉtablissementTerritorial
   libelléCatégorieÉtablissement: string
   libelléCourtCatégorieÉtablissement: string
+  libelléModeTarification: string
   numéroFinessEntitéJuridique: string
   numéroFinessÉtablissementPrincipal: string
   numéroFinessÉtablissementTerritorial: string
   raisonSociale: string
   raisonSocialeCourte: string
+  siret: string
   téléphone: string
   typeÉtablissement: string
 }>
