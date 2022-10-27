@@ -105,6 +105,8 @@ export class WordingFr implements Wording {
   readonly TITRE_BLOC_IDENTITÉ: string = 'fiche d’identité'
   readonly NOM_DE_L_ÉTABLISSEMENT: string = 'Nom de l’établissement'
   readonly NUMÉRO_FINESS: string = 'Numéro FINESS'
+  readonly SIREN: string = 'SIREN'
+  readonly SIRET: string = 'SIRET'
   readonly ADRESSE: string = 'Adresse'
   readonly TÉLÉPHONE: string = 'Téléphone'
   readonly TÉLÉPHONE_ET_EMAIL: string = 'Téléphone et e-mail'
@@ -118,6 +120,7 @@ export class WordingFr implements Wording {
   )
   readonly ENTITÉ_JURIDIQUE_DE_RATTACHEMENT: string = 'Entité juridique de rattachement'
   readonly CATÉGORIE_DE_L_ÉTABLISSEMENT: string = 'Catégorie de l’établissement'
+  readonly MODE_DE_TARIFICATION: string = 'Mode de tarification'
   readonly MONO_ÉTABLISSEMENT: string = 'Mono-établissement'
   readonly ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE: string = 'Établissement Principal/Secondaire'
   readonly PRINCIPAL: string = 'Principal'

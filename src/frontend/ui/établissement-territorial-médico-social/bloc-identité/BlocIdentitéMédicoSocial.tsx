@@ -33,6 +33,13 @@ export const BlocIdentitéMédicoSocial = ({ établissementTerritorialIdentitéM
           {établissementTerritorialIdentitéMédicoSocialViewModel.numéroFinessÉtablissementTerritorial}
         </IndicateurIdentité>
         <IndicateurIdentité
+          dateDeMiseÀJour={établissementTerritorialIdentitéMédicoSocialViewModel.dateDeMiseÀJourDuSiret}
+          nomDeLIndicateur={wording.SIRET}
+          source={Sources(wording.FINESS)}
+        >
+          {établissementTerritorialIdentitéMédicoSocialViewModel.siret}
+        </IndicateurIdentité>
+        <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialIdentitéMédicoSocialViewModel.dateDeMiseÀJourDeLAdresse}
           nomDeLIndicateur={wording.ADRESSE}
           source={Sources(wording.FINESS)}
@@ -59,6 +66,13 @@ export const BlocIdentitéMédicoSocial = ({ établissementTerritorialIdentitéM
           source={Sources(wording.FINESS)}
         >
           {établissementTerritorialIdentitéMédicoSocialViewModel.catégorieDeLÉtablissement}
+        </IndicateurIdentité>
+        <IndicateurIdentité
+          dateDeMiseÀJour={établissementTerritorialIdentitéMédicoSocialViewModel.dateDeMiseÀJourDuModeDeTarification}
+          nomDeLIndicateur={wording.MODE_DE_TARIFICATION}
+          source={Sources(wording.FINESS)}
+        >
+          {établissementTerritorialIdentitéMédicoSocialViewModel.modeDeTarification}
         </IndicateurIdentité>
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialIdentitéMédicoSocialViewModel.dateDeMiseÀJourDuStatutDeLÉtablissement}

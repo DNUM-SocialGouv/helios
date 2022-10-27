@@ -39,6 +39,14 @@ export class EntitéJuridiqueViewModel {
     return this.entitéJuridique.numéroFinessEntitéJuridique.value
   }
 
+  public get dateDeMiseÀJourDusiren(): string {
+    return StringFormater.formateLaDate(this.entitéJuridique.siren.dateMiseÀJourSource)
+  }
+
+  public get siren(): string {
+    return this.entitéJuridique.siren.value
+  }
+
   public get dateDeMiseÀJourDuNuméroFiness(): string {
     return StringFormater.formateLaDate(this.entitéJuridique.numéroFinessEntitéJuridique.dateMiseÀJourSource)
   }

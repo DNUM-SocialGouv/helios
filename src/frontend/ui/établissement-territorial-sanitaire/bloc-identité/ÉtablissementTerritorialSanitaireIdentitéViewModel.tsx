@@ -29,6 +29,14 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
     return this.établissementTerritorialSanitaireIdentité.numéroFinessÉtablissementTerritorial.value
   }
 
+  public get dateDeMiseÀJourDuSiret(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorialSanitaireIdentité.siret.dateMiseÀJourSource)
+  }
+
+  public get siret(): string {
+    return this.établissementTerritorialSanitaireIdentité.siret.value
+  }
+
   public get dateDeMiseÀJourDuNuméroFinessÉtablissementTerritorial(): string {
     return StringFormater.formateLaDate(this.établissementTerritorialSanitaireIdentité.numéroFinessÉtablissementTerritorial.dateMiseÀJourSource)
   }
@@ -79,6 +87,14 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
 
   public get dateDeMiseÀJourDeLaCatégorieDeLÉtablissement(): string {
     return StringFormater.formateLaDate(this.établissementTerritorialSanitaireIdentité.catégorieÉtablissement.dateMiseÀJourSource)
+  }
+
+  public get modeDeTarification(): string {
+    return `${this.établissementTerritorialSanitaireIdentité.codeModeTarification.value} - ${this.établissementTerritorialSanitaireIdentité.libelléModeTarification.value}`
+  }
+
+  public get dateDeMiseÀJourDuModeDeTarification(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorialSanitaireIdentité.codeModeTarification.dateMiseÀJourSource)
   }
 
   public get statutDeLÉtablissement(): string {

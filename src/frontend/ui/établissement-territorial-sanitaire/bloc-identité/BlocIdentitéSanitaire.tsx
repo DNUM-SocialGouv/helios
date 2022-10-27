@@ -33,6 +33,13 @@ export const BlocIdentitéSanitaire = ({ établissementTerritorialSanitaireIdent
           {établissementTerritorialSanitaireIdentitéViewModel.numéroFinessÉtablissementTerritorial}
         </IndicateurIdentité>
         <IndicateurIdentité
+          dateDeMiseÀJour={établissementTerritorialSanitaireIdentitéViewModel.dateDeMiseÀJourDuSiret}
+          nomDeLIndicateur={wording.SIRET}
+          source={Sources(wording.FINESS)}
+        >
+          {établissementTerritorialSanitaireIdentitéViewModel.siret}
+        </IndicateurIdentité>
+        <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialSanitaireIdentitéViewModel.dateDeMiseÀJourDeLAdresse}
           nomDeLIndicateur={wording.ADRESSE}
           source={Sources(wording.FINESS)}
@@ -59,6 +66,13 @@ export const BlocIdentitéSanitaire = ({ établissementTerritorialSanitaireIdent
           source={Sources(wording.FINESS)}
         >
           {établissementTerritorialSanitaireIdentitéViewModel.catégorieDeLÉtablissement}
+        </IndicateurIdentité>
+        <IndicateurIdentité
+          dateDeMiseÀJour={établissementTerritorialSanitaireIdentitéViewModel.dateDeMiseÀJourDuModeDeTarification}
+          nomDeLIndicateur={wording.MODE_DE_TARIFICATION}
+          source={Sources(wording.FINESS)}
+        >
+          {établissementTerritorialSanitaireIdentitéViewModel.modeDeTarification}
         </IndicateurIdentité>
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialSanitaireIdentitéViewModel.dateDeMiseÀJourDuStatutDeLÉtablissement}

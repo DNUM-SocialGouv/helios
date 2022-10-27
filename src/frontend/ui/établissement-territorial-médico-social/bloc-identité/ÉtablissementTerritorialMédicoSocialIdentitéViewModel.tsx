@@ -34,6 +34,14 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
     return StringFormater.formateLaDate(this.établissementTerritorialIdentité.numéroFinessÉtablissementTerritorial.dateMiseÀJourSource)
   }
 
+  public get siret(): string {
+    return this.établissementTerritorialIdentité.siret.value
+  }
+
+  public get dateDeMiseÀJourDuSiret(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorialIdentité.siret.dateMiseÀJourSource)
+  }
+
   public get adresse(): string {
     return `${this.établissementTerritorialIdentité.adresseNuméroVoie.value} ${this.établissementTerritorialIdentité.adresseTypeVoie.value} ${this.établissementTerritorialIdentité.adresseVoie.value} ${this.établissementTerritorialIdentité.adresseAcheminement.value}`
   }
@@ -76,6 +84,14 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
 
   public get dateDeMiseÀJourDeLaCatégorieDeLÉtablissement(): string {
     return StringFormater.formateLaDate(this.établissementTerritorialIdentité.catégorieÉtablissement.dateMiseÀJourSource)
+  }
+
+  public get modeDeTarification(): string {
+    return `${this.établissementTerritorialIdentité.codeModeTarification.value} - ${this.établissementTerritorialIdentité.libelléModeTarification.value}`
+  }
+
+  public get dateDeMiseÀJourDuModeDeTarification(): string {
+    return StringFormater.formateLaDate(this.établissementTerritorialIdentité.codeModeTarification.dateMiseÀJourSource)
   }
 
   public get statutDeLÉtablissement(): string {
