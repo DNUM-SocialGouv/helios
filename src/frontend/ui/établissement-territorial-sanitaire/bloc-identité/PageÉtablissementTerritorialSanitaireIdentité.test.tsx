@@ -5,16 +5,16 @@ import { fakeFrontDependencies, renderFakeComponent, textMatch } from '../../../
 import { PageÉtablissementTerritorialSanitaire } from '../PageÉtablissementTerritorialSanitaire'
 
 const { paths, wording } = fakeFrontDependencies
+const établissementTerritorialSanitaireViewModel = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths)
+const identité = ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité
 
 describe('La page établissement territorial sanitaire - bloc identité', () => {
-  const établissementTerritorialSanitaireViewModel = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths)
-
   it('affiche le titre dans l’onglet', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
     // THEN
-    expect(document.title).toBe(`ET - ${ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité.numéroFinessÉtablissementTerritorial.value} - ${ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité.raisonSocialeCourte.value}`)
+    expect(document.title).toBe(`ET - ${identité.numéroFinessÉtablissementTerritorial.value} - ${identité.raisonSocialeCourte.value}`)
   })
 
   it('affiche le titre : "ET - numéro de FINESS - nom court de l’établissement"', () => {
@@ -22,7 +22,7 @@ describe('La page établissement territorial sanitaire - bloc identité', () => 
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
     // THEN
-    const titre = screen.getByRole('heading', { level: 1, name: 'ET - 010000040 - CH NANTUA' })
+    const titre = screen.getByRole('heading', { level: 1, name: `ET - ${identité.numéroFinessÉtablissementTerritorial.value} - ${identité.raisonSocialeCourte.value}` })
     expect(titre).toBeInTheDocument()
   })
 
@@ -31,7 +31,7 @@ describe('La page établissement territorial sanitaire - bloc identité', () => 
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
     // THEN
-    const imprimer = screen.getByRole('button', { name: 'Télécharger en PDF' })
+    const imprimer = screen.getByRole('button', { name: wording.TÉLÉCHARGER_EN_PDF })
     expect(imprimer).toHaveAttribute('type', 'button')
   })
 
@@ -39,7 +39,7 @@ describe('La page établissement territorial sanitaire - bloc identité', () => 
     // GIVEN
     jest.spyOn(window, 'print').mockImplementation()
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
-    const imprimer = screen.getByRole('button', { name: 'Télécharger en PDF' })
+    const imprimer = screen.getByRole('button', { name: wording.TÉLÉCHARGER_EN_PDF })
 
     // WHEN
     fireEvent.click(imprimer)
@@ -55,11 +55,11 @@ describe('La page établissement territorial sanitaire - bloc identité', () => 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelÉtablissement = within(indicateurs[0]).getByText(textMatch(`${wording.NOM_DE_L_ÉTABLISSEMENT} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
-    expect(labelÉtablissement).toBeInTheDocument()
+    const libelléÉtablissement = within(indicateurs[0]).getByText(textMatch(`${wording.NOM_DE_L_ÉTABLISSEMENT} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
+    expect(libelléÉtablissement).toBeInTheDocument()
     const abréviationFiness = within(indicateurs[0]).getByText('FINESS', { selector: 'abbr' })
     expect(abréviationFiness).toHaveAttribute('title', wording.FINESS_TITLE)
-    const nomDeLÉtablissement = within(indicateurs[0]).getByText('Centre Hospitalier NANTUA', { selector: 'p' })
+    const nomDeLÉtablissement = within(indicateurs[0]).getByText(identité.raisonSociale.value, { selector: 'p' })
     expect(nomDeLÉtablissement).toBeInTheDocument()
   })
 
@@ -70,9 +70,9 @@ describe('La page établissement territorial sanitaire - bloc identité', () => 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelNuméroFiness = within(indicateurs[1]).getByText(textMatch(`${wording.NUMÉRO_FINESS} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
-    expect(labelNuméroFiness).toBeInTheDocument()
-    const numéroFiness = within(indicateurs[1]).getByText('010000040', { selector: 'p' })
+    const libelléNuméroFiness = within(indicateurs[1]).getByText(textMatch(`${wording.NUMÉRO_FINESS} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
+    expect(libelléNuméroFiness).toBeInTheDocument()
+    const numéroFiness = within(indicateurs[1]).getByText(identité.numéroFinessÉtablissementTerritorial.value, { selector: 'p' })
     expect(numéroFiness).toBeInTheDocument()
   })
 
@@ -85,7 +85,7 @@ describe('La page établissement territorial sanitaire - bloc identité', () => 
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
     const libelléSiret = within(indicateurs[2]).getByText(textMatch(`${wording.SIRET} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
     expect(libelléSiret).toBeInTheDocument()
-    const siret = within(indicateurs[2]).getByText('20003004700017', { selector: 'p' })
+    const siret = within(indicateurs[2]).getByText(identité.siret.value, { selector: 'p' })
     expect(siret).toBeInTheDocument()
   })
 
@@ -96,8 +96,8 @@ describe('La page établissement territorial sanitaire - bloc identité', () => 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelAdresse = within(indicateurs[3]).getByText(textMatch(`${wording.ADRESSE} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
-    expect(labelAdresse).toBeInTheDocument()
+    const libelléAdresse = within(indicateurs[3]).getByText(textMatch(`${wording.ADRESSE} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
+    expect(libelléAdresse).toBeInTheDocument()
     const adresse = within(indicateurs[3]).getByText('50 R PAUL PAINLEVE 01130 NANTUA', { selector: 'p' })
     expect(adresse).toBeInTheDocument()
   })
@@ -109,8 +109,8 @@ describe('La page établissement territorial sanitaire - bloc identité', () => 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelTéléphoneEtEmail = within(indicateurs[4]).getByText(textMatch(`${wording.TÉLÉPHONE_ET_EMAIL} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
-    expect(labelTéléphoneEtEmail).toBeInTheDocument()
+    const libelléTéléphoneEtEmail = within(indicateurs[4]).getByText(textMatch(`${wording.TÉLÉPHONE_ET_EMAIL} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
+    expect(libelléTéléphoneEtEmail).toBeInTheDocument()
     const téléphoneEtEmail = within(indicateurs[4]).getByText('04 74 75 48 00 | a@example.com', { selector: 'p' })
     expect(téléphoneEtEmail).toBeInTheDocument()
   })
@@ -122,10 +122,10 @@ describe('La page établissement territorial sanitaire - bloc identité', () => 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelEntitéJuridiqueDeRattachement = within(indicateurs[5]).getByText(textMatch(`${wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
-    expect(labelEntitéJuridiqueDeRattachement).toBeInTheDocument()
+    const libelléEntitéJuridiqueDeRattachement = within(indicateurs[5]).getByText(textMatch(`${wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
+    expect(libelléEntitéJuridiqueDeRattachement).toBeInTheDocument()
     const entitéJuridiqueDeRattachement = within(indicateurs[5]).getByRole('link', { name: 'EJ - 010008407 - HP VILLENEUVE DASCQ' })
-    expect(entitéJuridiqueDeRattachement).toHaveAttribute('href', '/entite-juridique/010008407')
+    expect(entitéJuridiqueDeRattachement).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/010008407`)
   })
 
   it('affiche la catégorie de l’établissement avec son libellé', () => {
@@ -135,8 +135,8 @@ describe('La page établissement territorial sanitaire - bloc identité', () => 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelCatégorieDeLÉtablissement = within(indicateurs[6]).getByText(textMatch(`${wording.CATÉGORIE_DE_L_ÉTABLISSEMENT} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
-    expect(labelCatégorieDeLÉtablissement).toBeInTheDocument()
+    const libelléCatégorieDeLÉtablissement = within(indicateurs[6]).getByText(textMatch(`${wording.CATÉGORIE_DE_L_ÉTABLISSEMENT} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
+    expect(libelléCatégorieDeLÉtablissement).toBeInTheDocument()
     const catégorieDeLÉtablissement = within(indicateurs[6]).getByText('355 - Centre Hospitalier (C.H.)', { selector: 'p' })
     expect(catégorieDeLÉtablissement).toBeInTheDocument()
   })
@@ -154,16 +154,16 @@ describe('La page établissement territorial sanitaire - bloc identité', () => 
     expect(modeDeTarification).toBeInTheDocument()
   })
 
-  it('affiche le statut de l’établissement', () => {
+  it('affiche le statut juridique de l’établissement', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelStatutÉtablissement = within(indicateurs[8]).getByText(textMatch(`${wording.STATUT_JURIDIQUE_EJ} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
-    expect(labelStatutÉtablissement).toBeInTheDocument()
-    const statutÉtablissement = within(indicateurs[8]).getByText('Société Anonyme (S.A.)')
+    const libelléStatutÉtablissement = within(indicateurs[8]).getByText(textMatch(`${wording.STATUT_JURIDIQUE_EJ} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
+    expect(libelléStatutÉtablissement).toBeInTheDocument()
+    const statutÉtablissement = within(indicateurs[8]).getByText(identité.statutJuridique.value)
     expect(statutÉtablissement).toBeInTheDocument()
   })
 

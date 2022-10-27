@@ -9,7 +9,6 @@ import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from '../.
 import { ÉtablissementTerritorialRattachéViewModelTestBuilder } from '../../../test-builder/ÉtablissementTerritorialRattachéViewModelTestBuilder'
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from '../../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder'
 import { fakeFrontDependencies, renderFakeComponent } from '../../../testHelper'
-import { ÉtablissementTerritorialRattachéViewModel } from '../../entité-juridique/liste-des-établissements/ÉtablissementTerritorialRattachéViewModel'
 import { PageEntitéJuridique } from '../../entité-juridique/PageEntitéJuridique'
 import { PageRégion } from '../../région/PageRégion'
 import { régions } from '../../région/régions'
@@ -64,9 +63,9 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
   it('affiche le chemin jusqu’à la page entité juridique', () => {
     // GIVEN
     const entitéJuridiqueViewModel = EntitéJuridiqueViewModelTestBuilder.crée(wording)
-    const établissementsTerritoriauxRattachésViewModels: ÉtablissementTerritorialRattachéViewModel[] = [
-      ÉtablissementTerritorialRattachéViewModelTestBuilder.créeÉtablissementTerritorialRattaché(wording),
-      ÉtablissementTerritorialRattachéViewModelTestBuilder.créeAutreÉtablissementTerritorialRattaché(wording),
+    const établissementsTerritoriauxRattachésViewModels = [
+      ÉtablissementTerritorialRattachéViewModelTestBuilder.créeÉtablissementTerritorialMédicoSocialRattaché(wording),
+      ÉtablissementTerritorialRattachéViewModelTestBuilder.créeÉtablissementTerritorialSanitaireRattaché(wording),
     ]
 
     // WHEN
@@ -90,7 +89,7 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     expect(lienAccueil).toHaveAttribute('href', '/')
     expect(within(entitéJuridique).queryByRole('link')).not.toBeInTheDocument()
     expect(within(entitéJuridique).getByText('EJ', { selector: 'abbr' })).toHaveAttribute('title', wording.ENTITÉ_JURIDIQUE)
-    expect(within(entitéJuridique).getByText('- 220000020 - CH SAINT BRIEUC')).toBeInTheDocument()
+    expect(entitéJuridique.textContent).toBe('EJ - 220000020 - CH SAINT BRIEUC')
   })
 
   it('affiche le chemin jusqu’à la page établissement territorial médico-social', () => {
@@ -118,7 +117,7 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     const lienEntitéJuridique = within(entitéJuridique).getByRole('link', { name: 'Entité juridique - 010008407 - CH DU HAUT BUGEY' })
     expect(lienEntitéJuridique).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/010008407`)
     expect(lienEntitéJuridique.textContent).toBe('EJ - 010008407 - CH DU HAUT BUGEY')
-    expect(within(entitéJuridique).getByText('EJ', { selector: 'abbr' })).toHaveAttribute('title', wording.ENTITÉ_JURIDIQUE)
+    expect(within(lienEntitéJuridique).getByText('EJ', { selector: 'abbr' })).toHaveAttribute('title', wording.ENTITÉ_JURIDIQUE)
     expect(within(établissementTerritorial).queryByRole('link')).not.toBeInTheDocument()
     expect(within(établissementTerritorial).getByText('CH DU HAUT BUGEY')).toBeInTheDocument()
   })
@@ -147,8 +146,7 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     const lienEntitéJuridique = within(entitéJuridique).getByRole('link', { name: 'Entité juridique - 010008407 - HP VILLENEUVE DASCQ' })
     expect(lienEntitéJuridique).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/010008407`)
     expect(lienEntitéJuridique.textContent).toBe('EJ - 010008407 - HP VILLENEUVE DASCQ')
-    expect(within(entitéJuridique).getByText('EJ', { selector: 'abbr' })).toHaveAttribute('title', wording.ENTITÉ_JURIDIQUE)
-    expect(within(entitéJuridique).getByText('- 010008407 - HP VILLENEUVE DASCQ')).toBeInTheDocument()
+    expect(within(lienEntitéJuridique).getByText('EJ', { selector: 'abbr' })).toHaveAttribute('title', wording.ENTITÉ_JURIDIQUE)
     expect(within(établissementTerritorial).queryByRole('link')).not.toBeInTheDocument()
     expect(within(établissementTerritorial).getByText('CH NANTUA')).toBeInTheDocument()
   })
