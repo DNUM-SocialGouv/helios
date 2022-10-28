@@ -193,6 +193,8 @@ export interface Wording {
   readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE: string
   readonly MOTIF_DU_TAUX_D_ABSENTÉISME: string
   readonly TAUX: string
+  readonly NOMBRE_DE_CDD_DE_REMPLACEMENT: ReactElement
+  readonly NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION: string
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string
