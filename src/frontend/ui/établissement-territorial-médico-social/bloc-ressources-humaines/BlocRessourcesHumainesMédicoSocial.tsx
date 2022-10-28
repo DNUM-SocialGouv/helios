@@ -8,6 +8,7 @@ import { ContenuDesTauxDAbsentéismes } from '../InfoBulle/ContenuDesTauxDAbsent
 import { ContenuDuNombreDeCddDeRemplacement } from '../InfoBulle/ContenuDuNombreDeCddDeRemplacement'
 import { ContenuDuNombreDEtpRéalisé } from '../InfoBulle/ContenuDuNombreDEtpRéalisé'
 import { ContenuDuTauxDeRotationDuPersonnel } from '../InfoBulle/ContenuDuTauxDeRotationDuPersonnel'
+import { ContenuDuTauxDEtpVacants } from '../InfoBulle/ContenuDuTauxDEtpVacants'
 import styles from './BlocRessourcesHumainesMédicoSocial.module.css'
 import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } from './ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel'
 
@@ -58,6 +59,18 @@ export const BlocRessourcesHumainesMédicoSocial = (
           source={Sources(wording.TDB_PERF)}
         >
           {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.nombreDeCddDeRemplacement}
+        </IndicateurGraphique>
+        <IndicateurGraphique
+          contenuInfoBulle={<ContenuDuTauxDEtpVacants
+            dateDeMiseÀJour={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.dateDeMiseÀJourDuTauxDEtpVacants}
+            source={Sources(wording.TDB_PERF)}
+          />}
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.dateDeMiseÀJourDuTauxDEtpVacants}
+          identifiant="ressources-humaines-taux-d-etp-vacants"
+          nomDeLIndicateur={wording.TAUX_D_ETP_VACANTS_AU_31_12}
+          source={Sources(wording.TDB_PERF)}
+        >
+          {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.tauxDEtpVacants}
         </IndicateurGraphique>
         <IndicateurGraphique
           contenuInfoBulle={<ContenuDuTauxDeRotationDuPersonnel

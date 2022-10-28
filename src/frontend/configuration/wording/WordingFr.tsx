@@ -269,6 +269,7 @@ export class WordingFr implements Wording {
     de remplacement
   </>)
   readonly NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION: string = 'Nombre de CDD de remplacement'
+  readonly TAUX_D_ETP_VACANTS_AU_31_12: string = 'Taux d’ETP vacants au 31/12'
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string = 'Établissement territorial'
