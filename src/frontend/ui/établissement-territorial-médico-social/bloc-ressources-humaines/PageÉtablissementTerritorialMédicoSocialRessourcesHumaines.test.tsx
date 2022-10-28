@@ -229,10 +229,10 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
       const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
       const tauxDAbsentéisme = indicateurs[indiceDeLIndicateur.tauxDAbsentéisme]
       const tableau = within(tauxDAbsentéisme).getByRole('table')
-      const annéeLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.ANNÉE })
-      const indicateurLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.TAUX_D_ABSENTÉISME })
-      expect(annéeLigneDEnTête).toBeInTheDocument()
-      expect(indicateurLigneDEnTête).toBeInTheDocument()
+      const motifLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.MOTIF_DU_TAUX_D_ABSENTÉISME })
+      const tauxLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.TAUX })
+      expect(motifLigneDEnTête).toBeInTheDocument()
+      expect(tauxLigneDEnTête).toBeInTheDocument()
 
       const motifsEtValeurs = [
         {
