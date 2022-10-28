@@ -1,44 +1,33 @@
 .liste-indicateurs {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
-  grid-template-areas:
-  "graph1 graph2 graph3"
-  "graph4 graph5 graph6";
-  grid-template-columns: calc(30% - 1rem) calc(30% - 1rem) 40%;
 }
 
-.liste-indicateurs > li {
+.liste-indicateurs > ul:nth-child(1) {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 0;
+  padding: 0;
+}
+
+.liste-indicateurs > ul:nth-child(2) {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: calc(30% - 1rem) calc(30% - 1rem) 40%;
+  margin: 0;
+  padding: 0;
+}
+
+.liste-indicateurs > ul > li {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
-.liste-indicateurs > li > div:nth-child(1)  {
+.liste-indicateurs > ul > li > div:nth-child(1)  {
   min-height: 6rem;
-}
-
-.liste-indicateurs > li:nth-child(1) {
-  grid-area: graph1;
-}
-
-.liste-indicateurs > li:nth-child(2) {
-  grid-area: graph2;
-}
-
-.liste-indicateurs > li:nth-child(3) {
-  grid-area: graph3;
-}
-
-.liste-indicateurs > li:nth-child(4) {
-  grid-area: graph4;
-}
-
-.liste-indicateurs > li:nth-child(5) {
-  grid-area: graph5;
-}
-
-.liste-indicateurs > li:nth-child(6) {
-  grid-area: graph6;
 }
 
 .liste-indicateurs canvas {
