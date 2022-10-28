@@ -16,7 +16,7 @@ describe('La page des données personnelles', () => {
     expect(screen.getByRole('region', { name: wording.DROITS_DES_PERSONNES_CONCERNÉES })).toBeInTheDocument()
   })
 
-  it('affiche un lien pour envoyer un mail pour chaque délégué à la protection des données des 18 régions', () => {
+  it('affiche un lien pour envoyer un e-mail pour chaque délégué à la protection des données des 18 régions', () => {
     // WHEN
     renderFakeComponent(<PageDesDonnéesPersonnelles />)
 

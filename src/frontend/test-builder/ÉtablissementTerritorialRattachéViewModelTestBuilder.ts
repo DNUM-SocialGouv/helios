@@ -4,34 +4,34 @@ import { Wording } from '../configuration/wording/Wording'
 import { ÉtablissementTerritorialRattachéViewModel } from '../ui/entité-juridique/liste-des-établissements/ÉtablissementTerritorialRattachéViewModel'
 
 export class ÉtablissementTerritorialRattachéViewModelTestBuilder {
-  private static établissementTerritorialRattaché1: ÉtablissementTerritorialRattaché = {
+  private static établissementTerritorialMédicoSocialRattaché: ÉtablissementTerritorialRattaché = {
     domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
     numéroFiness: '010000040',
     raisonSocialeCourte: 'CH NANTUA',
   }
 
-  private static établissementTerritorialRattaché2: ÉtablissementTerritorialRattaché = {
+  private static établissementTerritorialSanitaireRattaché: ÉtablissementTerritorialRattaché = {
     domaine: DomaineÉtablissementTerritorial.SANITAIRE,
     numéroFiness: '590782553',
     raisonSocialeCourte: 'HP VILLENEUVE DASCQ',
   }
 
-  public static créeÉtablissementTerritorialRattaché(
+  public static créeÉtablissementTerritorialMédicoSocialRattaché(
     wording: Wording,
     champsSurchargés?: Partial<ÉtablissementTerritorialRattaché>
   ): ÉtablissementTerritorialRattachéViewModel {
     return new ÉtablissementTerritorialRattachéViewModel({
-      ...ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialRattaché1,
+      ...ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialMédicoSocialRattaché,
       ...champsSurchargés,
     }, wording)
   }
 
-  public static créeAutreÉtablissementTerritorialRattaché(
+  public static créeÉtablissementTerritorialSanitaireRattaché(
     wording: Wording,
     champsSurchargés?: Partial<ÉtablissementTerritorialRattaché>
   ): ÉtablissementTerritorialRattachéViewModel {
     return new ÉtablissementTerritorialRattachéViewModel({
-      ...ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialRattaché2,
+      ...ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialSanitaireRattaché,
       ...champsSurchargés,
     }, wording)
   }

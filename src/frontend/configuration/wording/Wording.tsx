@@ -81,6 +81,8 @@ export interface Wording {
   readonly TITRE_BLOC_IDENTITÉ: string
   readonly NOM_DE_L_ÉTABLISSEMENT: string
   readonly NUMÉRO_FINESS: string
+  readonly SIREN: string
+  readonly SIRET: string
   readonly ADRESSE: string
   readonly TÉLÉPHONE: string
   readonly TÉLÉPHONE_ET_EMAIL: string
@@ -89,6 +91,7 @@ export interface Wording {
   readonly DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM: ReactElement
   readonly ENTITÉ_JURIDIQUE_DE_RATTACHEMENT: string
   readonly CATÉGORIE_DE_L_ÉTABLISSEMENT: string
+  readonly MODE_DE_TARIFICATION: string
   readonly MONO_ÉTABLISSEMENT: string
   readonly ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE: string
   readonly PRINCIPAL: string

@@ -5,16 +5,16 @@ import { fakeFrontDependencies, renderFakeComponent, textMatch, trimHtml } from 
 import { PageÉtablissementTerritorialMédicoSocial } from '../PageÉtablissementTerritorialMédicoSocial'
 
 const { paths, wording } = fakeFrontDependencies
+const établissementTerritorialMédicoSocial = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths)
+const identité = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité
 
 describe('La page établissement territorial - bloc identité', () => {
-  const établissementTerritorialMédicoSocial = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths)
-
   it('affiche le titre dans l’onglet', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
 
     // THEN
-    expect(document.title).toBe(`ET - ${ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité.numéroFinessÉtablissementTerritorial.value} - ${ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité.raisonSocialeCourte.value}`)
+    expect(document.title).toBe(`ET - ${identité.numéroFinessÉtablissementTerritorial.value} - ${identité.raisonSocialeCourte.value}`)
   })
 
   it('affiche le titre : "ET - numéro de FINESS - nom court de l’établissement"', () => {
@@ -22,7 +22,7 @@ describe('La page établissement territorial - bloc identité', () => {
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
 
     // THEN
-    const titre = screen.getByRole('heading', { level: 1, name: 'ET - 010003598 - CH DU HAUT BUGEY' })
+    const titre = screen.getByRole('heading', { level: 1, name: `ET - ${identité.numéroFinessÉtablissementTerritorial.value} - ${identité.raisonSocialeCourte.value}` })
     expect(titre).toBeInTheDocument()
   })
 
@@ -31,7 +31,7 @@ describe('La page établissement territorial - bloc identité', () => {
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
 
     // THEN
-    const imprimer = screen.getByRole('button', { name: 'Télécharger en PDF' })
+    const imprimer = screen.getByRole('button', { name: wording.TÉLÉCHARGER_EN_PDF })
     expect(imprimer).toHaveAttribute('type', 'button')
   })
 
@@ -39,7 +39,7 @@ describe('La page établissement territorial - bloc identité', () => {
     // GIVEN
     jest.spyOn(window, 'print').mockImplementation()
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
-    const imprimer = screen.getByRole('button', { name: 'Télécharger en PDF' })
+    const imprimer = screen.getByRole('button', { name: wording.TÉLÉCHARGER_EN_PDF })
 
     // WHEN
     fireEvent.click(imprimer)
@@ -55,11 +55,11 @@ describe('La page établissement territorial - bloc identité', () => {
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelÉtablissement = within(indicateurs[0]).getByText(textMatch(`${wording.NOM_DE_L_ÉTABLISSEMENT} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
-    expect(labelÉtablissement).toBeInTheDocument()
+    const libelléÉtablissement = within(indicateurs[0]).getByText(textMatch(`${wording.NOM_DE_L_ÉTABLISSEMENT} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
+    expect(libelléÉtablissement).toBeInTheDocument()
     const abréviationFiness = within(indicateurs[0]).getByText('FINESS', { selector: 'abbr' })
     expect(abréviationFiness).toHaveAttribute('title', wording.FINESS_TITLE)
-    const nomDeLÉtablissement = within(indicateurs[0]).getByText('IFAS CH DU HAUT BUGEY', { selector: 'p' })
+    const nomDeLÉtablissement = within(indicateurs[0]).getByText(identité.raisonSociale.value, { selector: 'p' })
     expect(nomDeLÉtablissement).toBeInTheDocument()
   })
 
@@ -70,10 +70,23 @@ describe('La page établissement territorial - bloc identité', () => {
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelNuméroFiness = within(indicateurs[1]).getByText(textMatch(`${wording.NUMÉRO_FINESS} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
-    expect(labelNuméroFiness).toBeInTheDocument()
-    const numéroFiness = within(indicateurs[1]).getByText('010003598', { selector: 'p' })
+    const libelléNuméroFiness = within(indicateurs[1]).getByText(textMatch(`${wording.NUMÉRO_FINESS} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
+    expect(libelléNuméroFiness).toBeInTheDocument()
+    const numéroFiness = within(indicateurs[1]).getByText(identité.numéroFinessÉtablissementTerritorial.value, { selector: 'p' })
     expect(numéroFiness).toBeInTheDocument()
+  })
+
+  it('affiche le SIRET', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+
+    // THEN
+    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+    const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
+    const libelléSiret = within(indicateurs[2]).getByText(textMatch(`${wording.SIRET} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
+    expect(libelléSiret).toBeInTheDocument()
+    const siret = within(indicateurs[2]).getByText(identité.siret.value, { selector: 'p' })
+    expect(siret).toBeInTheDocument()
   })
 
   it('affiche l’adresse', () => {
@@ -83,9 +96,9 @@ describe('La page établissement territorial - bloc identité', () => {
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelAdresse = within(indicateurs[2]).getByText(textMatch(`${wording.ADRESSE} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
-    expect(labelAdresse).toBeInTheDocument()
-    const adresse = within(indicateurs[2]).getByText('1 RTE DE VEYZIAT 01117 OYONNAX CEDEX', { selector: 'p' })
+    const libelléAdresse = within(indicateurs[3]).getByText(textMatch(`${wording.ADRESSE} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
+    expect(libelléAdresse).toBeInTheDocument()
+    const adresse = within(indicateurs[3]).getByText('1 RTE DE VEYZIAT 01117 OYONNAX CEDEX', { selector: 'p' })
     expect(adresse).toBeInTheDocument()
   })
 
@@ -96,9 +109,9 @@ describe('La page établissement territorial - bloc identité', () => {
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelTéléphoneEtEmail = within(indicateurs[3]).getByText(textMatch(`${wording.TÉLÉPHONE_ET_EMAIL} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
-    expect(labelTéléphoneEtEmail).toBeInTheDocument()
-    const téléphoneEtEmail = within(indicateurs[3]).getByText('01 23 45 67 89 | a@example.com', { selector: 'p' })
+    const libelléTéléphoneEtEmail = within(indicateurs[4]).getByText(textMatch(`${wording.TÉLÉPHONE_ET_EMAIL} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
+    expect(libelléTéléphoneEtEmail).toBeInTheDocument()
+    const téléphoneEtEmail = within(indicateurs[4]).getByText('01 23 45 67 89 | a@example.com', { selector: 'p' })
     expect(téléphoneEtEmail).toBeInTheDocument()
   })
 
@@ -109,10 +122,10 @@ describe('La page établissement territorial - bloc identité', () => {
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelEntitéJuridiqueDeRattachement = within(indicateurs[4]).getByText(textMatch(`${wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
-    expect(labelEntitéJuridiqueDeRattachement).toBeInTheDocument()
-    const entitéJuridiqueDeRattachement = within(indicateurs[4]).getByRole('link', { name: 'EJ - 010008407 - CH DU HAUT BUGEY' })
-    expect(entitéJuridiqueDeRattachement).toHaveAttribute('href', '/entite-juridique/010008407')
+    const libelléEntitéJuridiqueDeRattachement = within(indicateurs[5]).getByText(textMatch(`${wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
+    expect(libelléEntitéJuridiqueDeRattachement).toBeInTheDocument()
+    const entitéJuridiqueDeRattachement = within(indicateurs[5]).getByRole('link', { name: 'EJ - 010008407 - CH DU HAUT BUGEY' })
+    expect(entitéJuridiqueDeRattachement).toHaveAttribute('href', `${paths.ENTITÉ_JURIDIQUE}/010008407`)
   })
 
   it('affiche la catégorie de l’établissement avec son libellé', () => {
@@ -122,34 +135,46 @@ describe('La page établissement territorial - bloc identité', () => {
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelCatégorieDeLÉtablissement = within(indicateurs[5]).getByText(textMatch(`${wording.CATÉGORIE_DE_L_ÉTABLISSEMENT} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
-    expect(labelCatégorieDeLÉtablissement).toBeInTheDocument()
-    const catégorieDeLÉtablissement = within(indicateurs[5]).getByText('300 - Ecoles Formant aux Professions Sanitaires', { selector: 'p' })
+    const libelléCatégorieDeLÉtablissement = within(indicateurs[6]).getByText(textMatch(`${wording.CATÉGORIE_DE_L_ÉTABLISSEMENT} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
+    expect(libelléCatégorieDeLÉtablissement).toBeInTheDocument()
+    const catégorieDeLÉtablissement = within(indicateurs[6]).getByText('300 - Ecoles Formant aux Professions Sanitaires', { selector: 'p' })
     expect(catégorieDeLÉtablissement).toBeInTheDocument()
   })
 
-  it('affiche le statut de l’établissement', () => {
+  it('affiche le mode de tarification', () => {
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
 
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelStatutÉtablissement = within(indicateurs[6]).getByText(textMatch(`${wording.STATUT_JURIDIQUE_EJ} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
-    expect(labelStatutÉtablissement).toBeInTheDocument()
-    const statutÉtablissement = within(indicateurs[6]).getByText('Etablissement Public Intercommunal d’Hospitalisation')
+    const libelléModeDeTarification = within(indicateurs[7]).getByText(textMatch(`${wording.MODE_DE_TARIFICATION} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
+    expect(libelléModeDeTarification).toBeInTheDocument()
+    const modeDeTarification = within(indicateurs[7]).getByText('03 - ARS établissements Publics de santé dotation globale', { selector: 'p' })
+    expect(modeDeTarification).toBeInTheDocument()
+  })
+
+  it('affiche le statut juridique de l’établissement', () => {
+    // WHEN
+    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+
+    // THEN
+    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
+    const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
+    const libelléStatutÉtablissement = within(indicateurs[8]).getByText(textMatch(`${wording.STATUT_JURIDIQUE_EJ} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
+    expect(libelléStatutÉtablissement).toBeInTheDocument()
+    const statutÉtablissement = within(indicateurs[8]).getByText(identité.statutJuridique.value)
     expect(statutÉtablissement).toBeInTheDocument()
   })
 
-  it('affiche l’indicateur de mono-établissement à oui quand il est tout seul dans l’EJ', () => {
+  it('affiche l’indicateur de mono-établissement à oui quand il est tout seul dans l’entité juridique', () => {
     // GIVEN
-    const établissementTerritorialMonoÉtablissement =
-      ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, {
-        estMonoÉtablissement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: true,
-        },
-      })
+    const établissementTerritorialMonoÉtablissement = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, {
+      estMonoÉtablissement: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: true,
+      },
+    })
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMonoÉtablissement} />)
@@ -157,21 +182,20 @@ describe('La page établissement territorial - bloc identité', () => {
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelMonoÉtablissement = within(indicateurs[7]).getByText(textMatch(`${wording.MONO_ÉTABLISSEMENT} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
-    expect(labelMonoÉtablissement).toBeInTheDocument()
-    const monoÉtablissement = within(indicateurs[7]).getByText(wording.OUI)
+    const libelléMonoÉtablissement = within(indicateurs[9]).getByText(textMatch(`${wording.MONO_ÉTABLISSEMENT} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
+    expect(libelléMonoÉtablissement).toBeInTheDocument()
+    const monoÉtablissement = within(indicateurs[9]).getByText(wording.OUI)
     expect(monoÉtablissement).toBeInTheDocument()
   })
 
   it('affiche l’indicateur de mono-établissement à non quand il n’est pas tout seul dans l’EJ', () => {
     // GIVEN
-    const établissementTerritorialMonoÉtablissement =
-      ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, {
-        estMonoÉtablissement: {
-          dateMiseÀJourSource: '2021-07-07',
-          value: false,
-        },
-      })
+    const établissementTerritorialMonoÉtablissement = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, {
+      estMonoÉtablissement: {
+        dateMiseÀJourSource: '2021-07-07',
+        value: false,
+      },
+    })
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMonoÉtablissement} />)
@@ -179,9 +203,9 @@ describe('La page établissement territorial - bloc identité', () => {
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelMonoÉtablissement = within(indicateurs[7]).getByText(textMatch(`${wording.MONO_ÉTABLISSEMENT} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
-    expect(labelMonoÉtablissement).toBeInTheDocument()
-    const monoÉtablissement = within(indicateurs[7]).getByText(wording.NON)
+    const libelléMonoÉtablissement = within(indicateurs[9]).getByText(textMatch(`${wording.MONO_ÉTABLISSEMENT} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
+    expect(libelléMonoÉtablissement).toBeInTheDocument()
+    const monoÉtablissement = within(indicateurs[9]).getByText(wording.NON)
     expect(monoÉtablissement).toBeInTheDocument()
   })
 
@@ -201,9 +225,9 @@ describe('La page établissement territorial - bloc identité', () => {
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
       const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-      const labelÉtablissementPrincipalOuSecondaire = within(indicateurs[8]).getByText(textMatch(`${wording.ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
-      expect(labelÉtablissementPrincipalOuSecondaire).toBeInTheDocument()
-      const établissementPrincipalOuSecondaire = within(indicateurs[8]).getByText(wording.PRINCIPAL)
+      const libelléÉtablissementPrincipalOuSecondaire = within(indicateurs[10]).getByText(textMatch(`${wording.ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
+      expect(libelléÉtablissementPrincipalOuSecondaire).toBeInTheDocument()
+      const établissementPrincipalOuSecondaire = within(indicateurs[10]).getByText(wording.PRINCIPAL)
       expect(établissementPrincipalOuSecondaire).toBeInTheDocument()
     })
 
@@ -214,9 +238,9 @@ describe('La page établissement territorial - bloc identité', () => {
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
       const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-      const labelÉtablissementPrincipalOuSecondaire = within(indicateurs[8]).getByText(textMatch(`${wording.ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
-      expect(labelÉtablissementPrincipalOuSecondaire).toBeInTheDocument()
-      const établissementPrincipalOuSecondaire = within(indicateurs[8]).getByText(`${wording.SECONDAIRE} (${wording.PRINCIPAL} : 010005239)`)
+      const libelléÉtablissementPrincipalOuSecondaire = within(indicateurs[10]).getByText(textMatch(`${wording.ÉTABLISSEMENT_PRINCIPAL_OU_SECONDAIRE} - ${wording.miseÀJour('07/07/2021')} - Source : FINESS`), { selector: 'p' })
+      expect(libelléÉtablissementPrincipalOuSecondaire).toBeInTheDocument()
+      const établissementPrincipalOuSecondaire = within(indicateurs[10]).getByText(`${wording.SECONDAIRE} (${wording.PRINCIPAL} : 010005239)`)
       expect(établissementPrincipalOuSecondaire).toBeInTheDocument()
     })
   })
@@ -228,22 +252,12 @@ describe('La page établissement territorial - bloc identité', () => {
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const labelDateDEntréeEnVigueurDuCpom = within(indicateurs[9]).getByText(textMatch(`${trimHtml(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM)} - ${wording.miseÀJour('08/07/2021')} - Source : DIAMANT`), { selector: 'p' })
-    expect(labelDateDEntréeEnVigueurDuCpom).toBeInTheDocument()
-    const abréviationCpom = within(indicateurs[9]).getByText('CPOM', { selector: 'abbr' })
+    const libelléDateDEntréeEnVigueurDuCpom = within(indicateurs[11]).getByText(textMatch(`${trimHtml(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM)} - ${wording.miseÀJour('08/07/2021')} - Source : DIAMANT`), { selector: 'p' })
+    expect(libelléDateDEntréeEnVigueurDuCpom).toBeInTheDocument()
+    const abréviationCpom = within(indicateurs[11]).getByText('CPOM', { selector: 'abbr' })
     expect(abréviationCpom).toHaveAttribute('title', 'Contrat Pluriannuel d’Objectifs et de Moyens')
-    const indicateurÀVenir = within(indicateurs[9]).getByText('01/01/2021')
+    const indicateurÀVenir = within(indicateurs[11]).getByText('01/01/2021')
     expect(indicateurÀVenir).toBeInTheDocument()
-  })
-
-  it('affiche dix indicateurs en tout', () => {
-    // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
-
-    // THEN
-    const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
-    const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    expect(indicateurs).toHaveLength(10)
   })
 
   describe('affiche "non renseigné" quand une valeur est vide', () => {
@@ -262,13 +276,13 @@ describe('La page établissement territorial - bloc identité', () => {
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
       const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-      const téléphoneEtEmail = within(indicateurs[3]).getByText(`${wording.NON_RENSEIGNÉ} | a@example.com`, { selector: 'p' })
+      const téléphoneEtEmail = within(indicateurs[4]).getByText(`${wording.NON_RENSEIGNÉ} | a@example.com`, { selector: 'p' })
       expect(téléphoneEtEmail).toBeInTheDocument()
     })
 
     it('pour l’e-mail', () => {
       // GIVEN
-      const établissementTerritorialSansCourriel = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, {
+      const établissementTerritorialSansEMail = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, {
         courriel: {
           dateMiseÀJourSource: '2022-05-14',
           value: '',
@@ -276,18 +290,18 @@ describe('La page établissement territorial - bloc identité', () => {
       })
 
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansCourriel} />)
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansEMail} />)
 
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
       const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-      const téléphoneEtEmail = within(indicateurs[3]).getByText(`01 23 45 67 89 | ${wording.NON_RENSEIGNÉ}`, { selector: 'p' })
+      const téléphoneEtEmail = within(indicateurs[4]).getByText(`01 23 45 67 89 | ${wording.NON_RENSEIGNÉ}`, { selector: 'p' })
       expect(téléphoneEtEmail).toBeInTheDocument()
     })
 
     it('pour la date d’entrée en vigueur du cpom', () => {
       // GIVEN
-      const établissementTerritorialSansCourriel = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, {
+      const établissementTerritorialSansDateDEntréeEnVigueurDuCpom = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, {
         dateDEntréeEnVigueurDuCpom: {
           dateMiseÀJourSource: '2022-05-14',
           value: '',
@@ -295,12 +309,14 @@ describe('La page établissement territorial - bloc identité', () => {
       })
 
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansCourriel} />)
+      renderFakeComponent(
+        <PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansDateDEntréeEnVigueurDuCpom} />
+      )
 
       // THEN
       const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
       const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-      expect(within(indicateurs[9]).getByText(wording.NON_RENSEIGNÉ)).toBeInTheDocument()
+      expect(within(indicateurs[11]).getByText(wording.NON_RENSEIGNÉ)).toBeInTheDocument()
     })
   })
 
@@ -319,7 +335,7 @@ describe('La page établissement territorial - bloc identité', () => {
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const adresseIncomplète = within(indicateurs[2]).getByText('1 RTE 01117 OYONNAX CEDEX', { selector: 'p' })
+    const adresseIncomplète = within(indicateurs[3]).getByText('1 RTE 01117 OYONNAX CEDEX', { selector: 'p' })
     expect(adresseIncomplète).toBeInTheDocument()
   })
 })

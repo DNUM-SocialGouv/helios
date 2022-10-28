@@ -3,7 +3,7 @@ import { Wording } from '../configuration/wording/Wording'
 import { EntitéJuridiqueViewModel } from '../ui/entité-juridique/EntitéJuridiqueViewModel'
 
 export class EntitéJuridiqueViewModelTestBuilder {
-  static entitéJurique: EntitéJuridique = {
+  static entitéJuridique: EntitéJuridique = {
     adresseAcheminement: {
       dateMiseÀJourSource: '2021-07-07',
       value: '22023 ST BRIEUC CEDEX 1',
@@ -48,7 +48,7 @@ export class EntitéJuridiqueViewModelTestBuilder {
 
   public static crée(wording: Wording, champsSurchargés?: Partial<EntitéJuridique>): EntitéJuridiqueViewModel {
     return new EntitéJuridiqueViewModel({
-      ...EntitéJuridiqueViewModelTestBuilder.entitéJurique,
+      ...EntitéJuridiqueViewModelTestBuilder.entitéJuridique,
       ...champsSurchargés,
     }, wording)
   }
