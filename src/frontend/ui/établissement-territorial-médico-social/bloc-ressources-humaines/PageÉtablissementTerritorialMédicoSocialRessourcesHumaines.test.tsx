@@ -14,10 +14,10 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     année: -1,
     nombreDEtpRéalisés: 0,
     nombreDeCddDeRemplacement: 1,
-    tauxDAbsentéisme: 4,
-    tauxDEtpVacants: 2,
-    tauxDePrestationsExternes: -1,
-    tauxDeRotationDuPersonnel: 3,
+    tauxDAbsentéisme: 5,
+    tauxDEtpVacants: 3,
+    tauxDePrestationsExternes: 2,
+    tauxDeRotationDuPersonnel: 4,
   }
 
   describe('L’indicateur du nombre d’ETP réalisé', () => {
@@ -107,6 +107,57 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
       expect(fermer).toBeInTheDocument()
       const abréviationSourceOrigine = within(infoBulle).getAllByText('TdB Perf', { selector: 'abbr' })
       expect(abréviationSourceOrigine[0]).toHaveAttribute('title', wording.TDB_PERF_TITLE)
+      const fréquence = within(infoBulle).getByRole('region', { name: wording.FRÉQUENCE })
+      expect(fréquence).toBeInTheDocument()
+      const modeDeCalcul = within(infoBulle).getByRole('region', { name: wording.MODE_DE_CALCUL })
+      expect(modeDeCalcul).toBeInTheDocument()
+      const sources = within(infoBulle).getByRole('region', { name: wording.SOURCES })
+      expect(sources).toBeInTheDocument()
+      const infosComplémentaires = within(infoBulle).getByRole('region', { name: wording.INFOS_COMPLÉMENTAIRES })
+      expect(infosComplémentaires).toBeInTheDocument()
+    })
+  })
+
+  describe('L’indicateur du taux de prestations externes sur les prestations directes', () => {
+    it('affiche l’intitulé de l’indicateur du taux de prestations externes sur les prestations directes, avec sa date de mise à jour, sa source et un bouton pour accéder aux détails', () => {
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+
+      // THEN
+      const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
+      const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
+      const indicateur = indicateurs[indiceDeLIndicateur.tauxDePrestationsExternes]
+      const titre = within(indicateur).getByText(wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, { selector: 'p' })
+      expect(titre).toBeInTheDocument()
+      const dateMiseAJour = within(indicateur).getAllByText(textMatch(`${wording.miseÀJour('10/10/2022')} - Source : TdB Perf`), { selector: 'p' })
+      expect(dateMiseAJour[0]).toBeInTheDocument()
+      const abréviationSourceOrigine = within(indicateur).getAllByText('TdB Perf', { selector: 'abbr' })
+      expect(abréviationSourceOrigine[0]).toHaveAttribute('title', wording.TDB_PERF_TITLE)
+      const détails = within(indicateur).getByRole('button', { name: wording.DÉTAILS })
+      expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-ressources-humaines-taux-de-prestations-externes')
+      expect(détails).toHaveAttribute('data-fr-opened', 'false')
+    })
+
+    it('affiche le contenu de l’info bulle du taux de prestations externes sur les prestations directes après avoir cliqué sur le bouton "détails"', () => {
+      // GIVEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+      const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
+      const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
+      const indicateur = indicateurs[indiceDeLIndicateur.tauxDePrestationsExternes]
+      const détails = within(indicateur).getByRole('button', { name: wording.DÉTAILS })
+
+      // WHEN
+      fireEvent.click(détails)
+
+      // THEN
+      expect(détails).toHaveAttribute('data-fr-opened', 'true')
+      const infoBulle = within(indicateur).getByRole('dialog', { name: wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES })
+      const fermer = within(infoBulle).getByRole('button', { name: wording.FERMER })
+      expect(fermer).toBeInTheDocument()
+      const abréviationSourceOrigine = within(infoBulle).getAllByText('TdB Perf', { selector: 'abbr' })
+      expect(abréviationSourceOrigine[0]).toHaveAttribute('title', wording.TDB_PERF_TITLE)
+      const élémentsDeCompréhension = within(infoBulle).getByRole('region', { name: wording.ÉLÉMENTS_DE_COMPRÉHENSION })
+      expect(élémentsDeCompréhension).toBeInTheDocument()
       const fréquence = within(infoBulle).getByRole('region', { name: wording.FRÉQUENCE })
       expect(fréquence).toBeInTheDocument()
       const modeDeCalcul = within(infoBulle).getByRole('region', { name: wording.MODE_DE_CALCUL })
@@ -426,6 +477,7 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
   it.each([
     ['Nombre d’ Équivalent Temps Plein Total réalisé', indiceDeLIndicateur.nombreDEtpRéalisés],
     ['Nombre de Contrat à Durée Déterminée de remplacement', indiceDeLIndicateur.nombreDeCddDeRemplacement],
+    [wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, indiceDeLIndicateur.tauxDePrestationsExternes],
     [wording.TAUX_D_ETP_VACANTS_AU_31_12, indiceDeLIndicateur.tauxDEtpVacants],
     [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel],
     [wording.TAUX_D_ABSENTÉISME, indiceDeLIndicateur.tauxDAbsentéisme],
@@ -451,6 +503,7 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
   it.each([
     [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDEtpRéalisés, '47,42', '9,71', '10,44'],
     [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDeCddDeRemplacement, '45', '4', '3'],
+    [wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, indiceDeLIndicateur.tauxDePrestationsExternes, '65,9 %', '23,2 %', '9,3 %'],
     [wording.TAUX_D_ETP_VACANTS_AU_31_12, indiceDeLIndicateur.tauxDEtpVacants, '65,2 %', '16,4 %', '13,3 %'],
     [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel, '66,7 %', '34,4 %', '14,7 %'],
   ])('affiche un tableau descriptif de l’indicateur %s avec les trois années', (enTêteDuTableau, indiceDeLIndicateur, valeur2019, valeur2020, valeur2021) => {
@@ -494,6 +547,7 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
   it.each([
     [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDEtpRéalisés, '9,71'],
     [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDeCddDeRemplacement, '4'],
+    [wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, indiceDeLIndicateur.tauxDePrestationsExternes, '23,2 %'],
     [wording.TAUX_D_ETP_VACANTS_AU_31_12, indiceDeLIndicateur.tauxDEtpVacants, '16,4 %'],
     [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel, '34,4 %'],
   ])('affiche un tableau descriptif de l’indicateur %s  avec deux années', (enTêteDuTableau, indiceDeLIndicateur, valeur) => {
@@ -545,6 +599,7 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
   it.each([
     [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDEtpRéalisés, '9,71'],
     [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDeCddDeRemplacement, '4'],
+    [wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, indiceDeLIndicateur.tauxDePrestationsExternes, '23,2 %'],
     [wording.TAUX_D_ETP_VACANTS_AU_31_12, indiceDeLIndicateur.tauxDEtpVacants, '16,4 %'],
     [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel, '34,4 %'],
   ])('affiche un tableau descriptif de l’indicateur %s avec une seule année', (enTêteDuTableau, indiceDeLIndicateur, valeur) => {
@@ -611,6 +666,7 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
   it.each([
     [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDEtpRéalisés],
     [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDeCddDeRemplacement],
+    [wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, indiceDeLIndicateur.tauxDePrestationsExternes],
     [wording.TAUX_D_ETP_VACANTS_AU_31_12, indiceDeLIndicateur.tauxDEtpVacants],
     [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel],
     [wording.TAUX_D_ABSENTÉISME, indiceDeLIndicateur.tauxDAbsentéisme],
@@ -638,6 +694,7 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
   it.each([
     [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDEtpRéalisés, 'nombreDEtpRéalisés'],
     [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDeCddDeRemplacement, 'nombreDeCddDeRemplacement'],
+    [wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, indiceDeLIndicateur.tauxDePrestationsExternes, 'tauxDePrestationsExternes'],
     [wording.TAUX_D_ETP_VACANTS_AU_31_12, indiceDeLIndicateur.tauxDEtpVacants, 'tauxDEtpVacants'],
     [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel, 'tauxDeRotationDuPersonnel'],
   ])('affiche une mise en exergue sur l’indicateur %s si trois années sont manquantes', (_titreDeLIndicateur, indiceDeLIndicateur, cléDeLaDonnée) => {

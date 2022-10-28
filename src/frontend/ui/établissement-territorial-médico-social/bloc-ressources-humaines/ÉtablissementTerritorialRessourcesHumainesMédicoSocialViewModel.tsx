@@ -20,6 +20,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
   private readonly RATIO_HISTOGRAMME_HORIZONTAL = 2
   private readonly SEUIL_DU_TAUX_DE_ROTATION_DU_PERSONNEL_ATYPIQUE: number = 50
   private readonly SEUIL_DU_TAUX_D_ETP_VACANTS_ATYPIQUE: number = 20
+  private readonly SEUIL_DU_TAUX_DE_PRESTATIONS_EXTERNES: number = 20
   private readonly IDENTIFIANT_DE_LA_LÉGENDE_DES_TAUX_D_ABSENTÉISMES = 'légende-graphique-médico-social-taux-d-absentéisme'
   private readonly BORNE_MAXIMALE_TAUX_D_ABSENTÉISME_PAR_MOTIF = 20
   private readonly BORNE_MAXIMALE_TAUX_D_ABSENTÉISME_HORS_FORMATION = 40
@@ -63,6 +64,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
   public get lesDonnéesRessourcesHumainesNeSontPasRenseignées(): boolean {
     return !this.leNombreDEtpRéaliséEstIlRenseigné &&
     !this.leNombreDeCddDeRemplacementEstIlRenseigné &&
+    !this.leTauxDePrestationsExternesEstIlRenseigné &&
     !this.leTauxDEtpVacantsEstIlRenseigné &&
     !this.leTauxDeRotationDuPersonnelEstIlRenseigné &&
     !this.lesTauxDAbsentéismeEstIlRenseigné
@@ -128,6 +130,54 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
 
   public get dateDeMiseÀJourDuNombreDeCddDeRemplacement(): string {
     return StringFormater.formateLaDate(this.ressourcesHumainesMédicoSocial[0].nombreDeCddDeRemplacement.dateMiseÀJourSource)
+  }
+
+  private get leTauxDePrestationsExternesEstIlRenseigné(): boolean {
+    return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.tauxDePrestationsExternes.valeur !== null)
+  }
+
+  public get tauxDePrestationsExternes(): JSX.Element {
+    const [valeurs, années] = this.extraisLesTauxDesIndicateurs('tauxDePrestationsExternes')
+    const construisLaCouleurDeLaBarreDeLHistogramme = (valeur: number, année: string | number) => {
+      if (!this.leTauxDePrestationsExternesEstIlDansLesBornesAcceptables(valeur)) {
+        return {
+          premierPlan: this.couleurDuFondHistogrammeDeDépassement,
+          secondPlan: this.couleurSecondPlanHistogrammeDeDépassement,
+        }
+      }
+
+      if (this.estCeLAnnéePassée(année)) {
+        return {
+          premierPlan: this.couleurDuFondHistogrammePrimaire,
+          secondPlan: this.couleurDuFond,
+        }
+      }
+
+      return {
+        premierPlan: this.couleurDuFondHistogrammeSecondaire,
+        secondPlan: this.couleurDuFond,
+      }
+    }
+    const libellésDesValeurs = Array(valeurs.length).fill({ couleur: this.couleurDuFond })
+    const libellésDesTicks = années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }))
+
+    return this.afficheUnHistogrammeVertical(
+      valeurs,
+      années,
+      this.construisLesCouleursDeLHistogramme(valeurs, années, construisLaCouleurDeLaBarreDeLHistogramme),
+      libellésDesValeurs,
+      libellésDesTicks,
+      this.wording.ANNÉE,
+      this.wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES
+    )
+  }
+
+  private leTauxDePrestationsExternesEstIlDansLesBornesAcceptables(valeur: number) {
+    return valeur >= 0 && valeur <= this.SEUIL_DU_TAUX_DE_PRESTATIONS_EXTERNES
+  }
+
+  public get dateDeMiseÀJourDuTauxDePrestationsExternes(): string {
+    return StringFormater.formateLaDate(this.ressourcesHumainesMédicoSocial[0].tauxDePrestationsExternes.dateMiseÀJourSource)
   }
 
   private get leTauxDEtpVacantsEstIlRenseigné(): boolean {

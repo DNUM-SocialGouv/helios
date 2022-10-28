@@ -270,6 +270,7 @@ export class WordingFr implements Wording {
   </>)
   readonly NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION: string = 'Nombre de CDD de remplacement'
   readonly TAUX_D_ETP_VACANTS_AU_31_12: string = 'Taux d’ETP vacants au 31/12'
+  readonly TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES: string = 'Taux de prestations externes sur les prestations directes'
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string = 'Établissement territorial'

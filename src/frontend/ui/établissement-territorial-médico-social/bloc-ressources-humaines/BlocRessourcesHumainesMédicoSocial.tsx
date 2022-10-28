@@ -7,6 +7,7 @@ import { Sources } from '../../commun/Sources/Sources'
 import { ContenuDesTauxDAbsentéismes } from '../InfoBulle/ContenuDesTauxDAbsentéismes'
 import { ContenuDuNombreDeCddDeRemplacement } from '../InfoBulle/ContenuDuNombreDeCddDeRemplacement'
 import { ContenuDuNombreDEtpRéalisé } from '../InfoBulle/ContenuDuNombreDEtpRéalisé'
+import { ContenuDePrestationsExternes } from '../InfoBulle/ContenuDuTauxDePrestationsExternes'
 import { ContenuDuTauxDeRotationDuPersonnel } from '../InfoBulle/ContenuDuTauxDeRotationDuPersonnel'
 import { ContenuDuTauxDEtpVacants } from '../InfoBulle/ContenuDuTauxDEtpVacants'
 import styles from './BlocRessourcesHumainesMédicoSocial.module.css'
@@ -59,6 +60,18 @@ export const BlocRessourcesHumainesMédicoSocial = (
           source={Sources(wording.TDB_PERF)}
         >
           {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.nombreDeCddDeRemplacement}
+        </IndicateurGraphique>
+        <IndicateurGraphique
+          contenuInfoBulle={<ContenuDePrestationsExternes
+            dateDeMiseÀJour={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.dateDeMiseÀJourDuTauxDePrestationsExternes}
+            source={Sources(wording.TDB_PERF)}
+          />}
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.dateDeMiseÀJourDuTauxDePrestationsExternes}
+          identifiant="ressources-humaines-taux-de-prestations-externes"
+          nomDeLIndicateur={wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES}
+          source={Sources(wording.TDB_PERF)}
+        >
+          {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.tauxDePrestationsExternes}
         </IndicateurGraphique>
         <IndicateurGraphique
           contenuInfoBulle={<ContenuDuTauxDEtpVacants
