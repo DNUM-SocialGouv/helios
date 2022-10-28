@@ -25,6 +25,7 @@ export type CouleurHistogramme = Readonly<{
 }>
 
 export class GraphiqueViewModel {
+  protected readonly SEUIL_DE_CONTRASTE_DES_LIBELLÉS_DES_TAUX = 20
   readonly ratioMinHistogrammeHorizontal = 2
   readonly ratioMaxHistogrammeHorizontal = 15
   readonly facteurDiminutionHistogrammeHorizontal = 1.5
@@ -274,7 +275,7 @@ export class GraphiqueViewModel {
           <Bar
             // @ts-ignore
             data={data}
-            options={this.optionsHistogrammeVertical(couleursDeLHistogramme, libellésDesTicks.map((libelléDuTick) => libelléDuTick.tailleDePolice))}
+            options={this.optionsHistogrammeVertical(libellésDesTicks.map((libelléDuTick) => libelléDuTick.tailleDePolice))}
           />
         )}
         {annéesManquantes.length > 0 && <MiseEnExergue>
@@ -558,7 +559,7 @@ export class GraphiqueViewModel {
     }
   }
 
-  private optionsHistogrammeVertical(couleursDeLHistogramme: CouleurHistogramme[], grosseursDePoliceDesLibellés: string[]): ChartOptions<'bar'> {
+  private optionsHistogrammeVertical(grosseursDePoliceDesLibellés: string[]): ChartOptions<'bar'> {
     return {
       animation: false,
       plugins: {
@@ -571,8 +572,6 @@ export class GraphiqueViewModel {
             weight: 700,
           },
           formatter: (value: number, _context: Context): string => value.toLocaleString('fr') + ' %',
-          textStrokeColor: couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
-          textStrokeWidth: 2,
         },
         legend: { display: false },
         tooltip: { enabled: false },

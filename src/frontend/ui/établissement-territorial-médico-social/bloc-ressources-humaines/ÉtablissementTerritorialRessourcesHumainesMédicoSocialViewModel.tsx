@@ -158,7 +158,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
         secondPlan: this.couleurDuFond,
       }
     }
-    const libellésDesValeurs = Array(valeurs.length).fill({ couleur: this.couleurDuFond })
+    const libellésDesValeurs = this.construisLesLibellésDesValeursDeTaux(valeurs)
     const libellésDesTicks = années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }))
 
     return this.afficheUnHistogrammeVertical(
@@ -206,7 +206,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
         secondPlan: this.couleurDuFond,
       }
     }
-    const libellésDesValeurs = Array(valeurs.length).fill({ couleur: this.couleurDuFond })
+    const libellésDesValeurs = this.construisLesLibellésDesValeursDeTaux(valeurs)
     const libellésDesTicks = années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }))
 
     return this.afficheUnHistogrammeVertical(
@@ -254,7 +254,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
         secondPlan: this.couleurDuFond,
       }
     }
-    const libellésDesValeurs = Array(valeurs.length).fill({ couleur: this.couleurDuFond })
+    const libellésDesValeurs = this.construisLesLibellésDesValeursDeTaux(valeurs)
     const libellésDesTicks = années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }))
 
     return this.afficheUnHistogrammeVertical(
@@ -489,5 +489,12 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
       }
       return false
     }
+  }
+
+  private construisLesLibellésDesValeursDeTaux(valeursDesTaux: number[]) {
+    return valeursDesTaux.map(
+      (valeur) =>
+        ({ couleur: valeur > this.SEUIL_DE_CONTRASTE_DES_LIBELLÉS_DES_TAUX ? this.couleurDuFond : valeur < 0 ? this.couleurDuFond : this.couleurIdentifiant })
+    )
   }
 }
