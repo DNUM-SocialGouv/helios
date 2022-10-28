@@ -5,6 +5,7 @@ import { useDependencies } from '../../commun/contexts/useDependencies'
 import { IndicateurGraphique } from '../../commun/IndicateurGraphique/IndicateurGraphique'
 import { Sources } from '../../commun/Sources/Sources'
 import { ContenuDesTauxDAbsentéismes } from '../InfoBulle/ContenuDesTauxDAbsentéismes'
+import { ContenuDuNombreDeCddDeRemplacement } from '../InfoBulle/ContenuDuNombreDeCddDeRemplacement'
 import { ContenuDuNombreDEtpRéalisé } from '../InfoBulle/ContenuDuNombreDEtpRéalisé'
 import { ContenuDuTauxDeRotationDuPersonnel } from '../InfoBulle/ContenuDuTauxDeRotationDuPersonnel'
 import styles from './BlocRessourcesHumainesMédicoSocial.module.css'
@@ -45,6 +46,18 @@ export const BlocRessourcesHumainesMédicoSocial = (
           source={Sources(wording.CNSA)}
         >
           {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.nombreDEtpRéalisé}
+        </IndicateurGraphique>
+        <IndicateurGraphique
+          contenuInfoBulle={<ContenuDuNombreDeCddDeRemplacement
+            dateDeMiseÀJour={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.dateDeMiseÀJourDuNombreDeCddDeRemplacement}
+            source={Sources(wording.TDB_PERF)}
+          />}
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.dateDeMiseÀJourDuNombreDeCddDeRemplacement}
+          identifiant="ressources-humaines-nombre-de-cdd-de-remplacement"
+          nomDeLIndicateur={wording.NOMBRE_DE_CDD_DE_REMPLACEMENT}
+          source={Sources(wording.TDB_PERF)}
+        >
+          {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.nombreDeCddDeRemplacement}
         </IndicateurGraphique>
         <IndicateurGraphique
           contenuInfoBulle={<ContenuDuTauxDeRotationDuPersonnel

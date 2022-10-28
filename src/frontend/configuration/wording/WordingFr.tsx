@@ -261,6 +261,14 @@ export class WordingFr implements Wording {
   readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE: string = 'Pour accident du travail / maladie professionnelle'
   readonly MOTIF_DU_TAUX_D_ABSENTÉISME: string = 'Type'
   readonly TAUX: string = 'Taux'
+  readonly NOMBRE_DE_CDD_DE_REMPLACEMENT: ReactElement = (<>
+    Nombre de
+    {' '}
+    <abbr title="Contrat à Durée Déterminée">CDD</abbr>
+    {' '}
+    de remplacement
+  </>)
+  readonly NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION: string = 'Nombre de CDD de remplacement'
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string = 'Établissement territorial'

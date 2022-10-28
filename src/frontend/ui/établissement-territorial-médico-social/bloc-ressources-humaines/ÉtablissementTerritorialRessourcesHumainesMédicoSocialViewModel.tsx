@@ -8,6 +8,10 @@ import { Select } from '../../commun/Select/Select'
 import { StringFormater } from '../../commun/StringFormater'
 import { TableIndicateur } from '../../commun/TableIndicateur/TableIndicateur'
 
+type IndicateurAvecUnNombre = Exclude<
+  keyof ÉtablissementTerritorialMédicoSocialRessourcesHumaines, 'année' | 'tauxDePrestationsExternes' | 'tauxDEtpVacants' | 'tauxDeRotationDuPersonnel' | 'tauxDAbsentéisme'
+>
+
 export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel extends GraphiqueViewModel {
   private readonly RATIO_HISTOGRAMME_HORIZONTAL = 2
   private readonly SEUIL_DU_TAUX_DE_ROTATION_DU_PERSONNEL_ATYPIQUE: number = 50
@@ -52,7 +56,10 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
   }
 
   public get lesDonnéesRessourcesHumainesNeSontPasRenseignées(): boolean {
-    return !this.leNombreDEtpRéaliséEstIlRenseigné && !this.leTauxDeRotationDuPersonnelEstIlRenseigné
+    return !this.leNombreDEtpRéaliséEstIlRenseigné &&
+    !this.leNombreDeCddDeRemplacementEstIlRenseigné &&
+    !this.leTauxDeRotationDuPersonnelEstIlRenseigné &&
+    !this.lesTauxDAbsentéismeEstIlRenseigné
   }
 
   private get leNombreDEtpRéaliséEstIlRenseigné(): boolean {
@@ -60,7 +67,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
   }
 
   public get nombreDEtpRéalisé(): ReactElement {
-    const [valeurs, années] = this.construisLesNombresDEtpRéalisés()
+    const [valeurs, années] = this.extraisLesValeursNombréesDesIndicateurs('nombreDEtpRéalisés')
     const couleursDeLHistogramme = années.map((année) => ({
       premierPlan: this.estCeLAnnéePassée(année) ? this.couleurDuFondHistogrammePrimaire : this.couleurDuFondHistogrammeSecondaire,
       secondPlan: this.couleurDuFond,
@@ -84,6 +91,37 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
 
   public get dateDeMiseÀJourDuNombreDEtpRéalisé(): string {
     return StringFormater.formateLaDate(this.ressourcesHumainesMédicoSocial[0].nombreDEtpRéalisés.dateMiseÀJourSource)
+  }
+
+  private get leNombreDeCddDeRemplacementEstIlRenseigné(): boolean {
+    return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.nombreDeCddDeRemplacement.valeur !== null)
+  }
+
+  public get nombreDeCddDeRemplacement(): ReactElement {
+    const [valeurs, années] = this.extraisLesValeursNombréesDesIndicateurs('nombreDeCddDeRemplacement')
+    const couleursDeLHistogramme = années.map((année) => ({
+      premierPlan: this.estCeLAnnéePassée(année) ? this.couleurDuFondHistogrammePrimaire : this.couleurDuFondHistogrammeSecondaire,
+      secondPlan: this.couleurDuFond,
+    }))
+    const libellésDesValeurs = Array(valeurs.length).fill({ couleur: this.couleurIdentifiant })
+    const libellésDesTicks = années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }))
+    const annéesManquantes = this.annéesManquantes(années)
+
+    return this.afficheUnHistogrammeHorizontal(
+      valeurs,
+      années,
+      couleursDeLHistogramme,
+      libellésDesValeurs,
+      libellésDesTicks,
+      this.RATIO_HISTOGRAMME_HORIZONTAL,
+      this.wording.ANNÉE,
+      this.wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION,
+      annéesManquantes
+    )
+  }
+
+  public get dateDeMiseÀJourDuNombreDeCddDeRemplacement(): string {
+    return StringFormater.formateLaDate(this.ressourcesHumainesMédicoSocial[0].nombreDeCddDeRemplacement.dateMiseÀJourSource)
   }
 
   private get leTauxDeRotationDuPersonnelEstIlRenseigné(): boolean {
@@ -132,6 +170,10 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
 
   public get dateDeMiseÀJourDuTauxDeRotationDuPersonnel(): string {
     return StringFormater.formateLaDate(this.ressourcesHumainesMédicoSocial[0].tauxDeRotationDuPersonnel.dateMiseÀJourSource)
+  }
+
+  private get lesTauxDAbsentéismeEstIlRenseigné(): boolean {
+    return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.tauxDAbsentéisme.horsFormation !== null)
   }
 
   public tauxDAbsentéisme(annéeEnCours: number): ReactElement {
@@ -295,11 +337,11 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
     return { couleur: this.couleursDuDoughnutDesTauxDAbsentéismes[motif].couleurDuLibellé }
   }
 
-  private construisLesNombresDEtpRéalisés(): number[][] {
+  private extraisLesValeursNombréesDesIndicateurs(indicateur: IndicateurAvecUnNombre): number[][] {
     const valeurs: number[] = []
     const années: number[] = []
     this.ressourcesHumainesMédicoSocial.forEach((ressourceHumaineMédicoSocial: ÉtablissementTerritorialMédicoSocialRessourcesHumaines) => {
-      const valeur = ressourceHumaineMédicoSocial.nombreDEtpRéalisés.valeur
+      const valeur = ressourceHumaineMédicoSocial[indicateur].valeur
       if (valeur !== null) {
         années.push(ressourceHumaineMédicoSocial.année)
         valeurs.push(valeur)

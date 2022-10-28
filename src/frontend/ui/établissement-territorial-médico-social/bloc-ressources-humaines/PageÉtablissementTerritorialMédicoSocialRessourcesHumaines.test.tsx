@@ -13,11 +13,11 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
   const indiceDeLIndicateur: Record<keyof ÉtablissementTerritorialMédicoSocialRessourcesHumaines, number> = {
     année: -1,
     nombreDEtpRéalisés: 0,
-    nombreDeCddDeRemplacement: -1,
-    tauxDAbsentéisme: 2,
+    nombreDeCddDeRemplacement: 1,
+    tauxDAbsentéisme: 3,
     tauxDEtpVacants: -1,
     tauxDePrestationsExternes: -1,
-    tauxDeRotationDuPersonnel: 1,
+    tauxDeRotationDuPersonnel: 2,
   }
 
   describe('L’indicateur du nombre d’ETP réalisé', () => {
@@ -62,6 +62,55 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
       expect(élémentsDeCompréhension).toBeInTheDocument()
       const fréquence = within(infoBulle).getByRole('region', { name: wording.FRÉQUENCE })
       expect(fréquence).toBeInTheDocument()
+      const sources = within(infoBulle).getByRole('region', { name: wording.SOURCES })
+      expect(sources).toBeInTheDocument()
+      const infosComplémentaires = within(infoBulle).getByRole('region', { name: wording.INFOS_COMPLÉMENTAIRES })
+      expect(infosComplémentaires).toBeInTheDocument()
+    })
+  })
+
+  describe('L’indicateur du nombre de CDD de remplacement', () => {
+    it('affiche l’intitulé de l’indicateur du nombre de CDD de remplacement, avec sa date de mise à jour, sa source et un bouton pour accéder aux détails', () => {
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+
+      // THEN
+      const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
+      const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
+      const indicateur = indicateurs[indiceDeLIndicateur.nombreDeCddDeRemplacement]
+      const titre = within(indicateur).getByText(textMatch(wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION), { selector: 'p' })
+      expect(titre).toBeInTheDocument()
+      const dateMiseAJour = within(indicateur).getAllByText(textMatch(`${wording.miseÀJour('10/10/2022')} - Source : TdB Perf`), { selector: 'p' })
+      expect(dateMiseAJour[0]).toBeInTheDocument()
+      const abréviationSourceOrigine = within(indicateur).getAllByText('TdB Perf', { selector: 'abbr' })
+      expect(abréviationSourceOrigine[0]).toHaveAttribute('title', wording.TDB_PERF_TITLE)
+      const détails = within(indicateur).getByRole('button', { name: wording.DÉTAILS })
+      expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-ressources-humaines-nombre-de-cdd-de-remplacement')
+      expect(détails).toHaveAttribute('data-fr-opened', 'false')
+    })
+
+    it('affiche le contenu de l’info bulle du nombre de CDD de remplacement après avoir cliqué sur le bouton "détails"', () => {
+      // GIVEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+      const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
+      const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
+      const indicateur = indicateurs[indiceDeLIndicateur.nombreDeCddDeRemplacement]
+      const détails = within(indicateur).getByRole('button', { name: wording.DÉTAILS })
+
+      // WHEN
+      fireEvent.click(détails)
+
+      // THEN
+      expect(détails).toHaveAttribute('data-fr-opened', 'true')
+      const infoBulle = within(indicateur).getByRole('dialog', { name: 'Nombre de Contrat à Durée Déterminée de remplacement' })
+      const fermer = within(infoBulle).getByRole('button', { name: wording.FERMER })
+      expect(fermer).toBeInTheDocument()
+      const abréviationSourceOrigine = within(infoBulle).getAllByText('TdB Perf', { selector: 'abbr' })
+      expect(abréviationSourceOrigine[0]).toHaveAttribute('title', wording.TDB_PERF_TITLE)
+      const fréquence = within(infoBulle).getByRole('region', { name: wording.FRÉQUENCE })
+      expect(fréquence).toBeInTheDocument()
+      const modeDeCalcul = within(infoBulle).getByRole('region', { name: wording.MODE_DE_CALCUL })
+      expect(modeDeCalcul).toBeInTheDocument()
       const sources = within(infoBulle).getByRole('region', { name: wording.SOURCES })
       expect(sources).toBeInTheDocument()
       const infosComplémentaires = within(infoBulle).getByRole('region', { name: wording.INFOS_COMPLÉMENTAIRES })
@@ -325,6 +374,7 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
 
   it.each([
     ['Nombre d’ Équivalent Temps Plein Total réalisé', indiceDeLIndicateur.nombreDEtpRéalisés],
+    ['Nombre de Contrat à Durée Déterminée de remplacement', indiceDeLIndicateur.nombreDeCddDeRemplacement],
     [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel],
     [wording.TAUX_D_ABSENTÉISME, indiceDeLIndicateur.tauxDAbsentéisme],
   ])
@@ -348,6 +398,7 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
 
   it.each([
     [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDEtpRéalisés, '47,42', '9,71', '10,44'],
+    [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDeCddDeRemplacement, '45', '4', '3'],
     [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel, '66,7 %', '34,4 %', '14,7 %'],
   ])('affiche un tableau descriptif de l’indicateur %s avec les trois années', (enTêteDuTableau, indiceDeLIndicateur, valeur2019, valeur2020, valeur2021) => {
     // WHEN
@@ -389,6 +440,7 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
 
   it.each([
     [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDEtpRéalisés, '9,71'],
+    [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDeCddDeRemplacement, '4'],
     [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel, '34,4 %'],
   ])('affiche un tableau descriptif de l’indicateur %s  avec deux années', (enTêteDuTableau, indiceDeLIndicateur, valeur) => {
     // GIVEN
@@ -438,6 +490,7 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
 
   it.each([
     [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDEtpRéalisés, '9,71'],
+    [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDeCddDeRemplacement, '4'],
     [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel, '34,4 %'],
   ])('affiche un tableau descriptif de l’indicateur %s avec une seule année', (enTêteDuTableau, indiceDeLIndicateur, valeur) => {
     // GIVEN
@@ -472,6 +525,7 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
 
   it.each([
     [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDEtpRéalisés],
+    [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDeCddDeRemplacement],
     [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel],
     [wording.TAUX_D_ABSENTÉISME, indiceDeLIndicateur.tauxDAbsentéisme],
   ])('affiche une mise en exergue sur l’indicateur %s si un année est manquante', (_titreDeLIndicateur, indiceDeLIndicateur) => {
@@ -500,6 +554,7 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
 
   it.each([
     [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDEtpRéalisés],
+    [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDeCddDeRemplacement],
     [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel],
     [wording.TAUX_D_ABSENTÉISME, indiceDeLIndicateur.tauxDAbsentéisme],
   ])('affiche une mise en exergue sur l’indicateur %s si deux années sont manquantes', (_titreDeLIndicateur, indiceDeLIndicateur) => {
@@ -525,6 +580,7 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
 
   it.each([
     [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDEtpRéalisés, 'nombreDEtpRéalisés'],
+    [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDeCddDeRemplacement, 'nombreDeCddDeRemplacement'],
     [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel, 'tauxDeRotationDuPersonnel'],
   ])('affiche une mise en exergue sur l’indicateur %s si trois années sont manquantes', (_titreDeLIndicateur, indiceDeLIndicateur, cléDeLaDonnée) => {
     // GIVEN
