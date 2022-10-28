@@ -4,7 +4,7 @@
   grid-template-areas:
   "graph1 graph2 graph3"
   "graph4 graph5 graph6";
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: calc(30% - 1rem) calc(30% - 1rem) 40%;
 }
 
 .liste-indicateurs > li {

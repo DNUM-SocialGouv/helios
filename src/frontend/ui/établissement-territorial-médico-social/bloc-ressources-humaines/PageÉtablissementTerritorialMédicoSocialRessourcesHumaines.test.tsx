@@ -14,14 +14,14 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     année: -1,
     nombreDEtpRéalisés: 0,
     nombreDeCddDeRemplacement: -1,
-    tauxDAbsentéisme: -1,
+    tauxDAbsentéisme: 2,
     tauxDEtpVacants: -1,
     tauxDePrestationsExternes: -1,
     tauxDeRotationDuPersonnel: 1,
   }
 
   describe('L’indicateur du nombre d’ETP réalisé', () => {
-    it('affiche l’intitulé de l’indicateur du nombre d’ETP réalisé, avec sa date de mise à jour, ses sources et un bouton pour accéder aux détails', () => {
+    it('affiche l’intitulé de l’indicateur du nombre d’ETP réalisé, avec sa date de mise à jour, sa source et un bouton pour accéder aux détails', () => {
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
 
@@ -70,7 +70,7 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
   })
 
   describe('L’indicateur du taux de rotation du personnel', () => {
-    it('affiche l’intitulé de l’indicateur du taux de rotation du personnel, avec sa date de mise à jour, ses sources et un bouton pour accéder aux détails', () => {
+    it('affiche l’intitulé de l’indicateur du taux de rotation du personnel, avec sa date de mise à jour, sa source et un bouton pour accéder aux détails', () => {
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
 
@@ -120,15 +120,223 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     })
   })
 
-  it('ferme l’info bulle du nombre d’ETP réalisé après avoir cliqué sur le bouton "Fermer"', () => {
+  describe('L’indicateur du taux d’absentéisme', () => {
+    it('affiche l’intitulé de l’indicateur du taux d’absentéisme, avec sa date de mise à jour, sa source et un bouton pour accéder aux détails', () => {
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+
+      // THEN
+      const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
+      const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
+      const indicateur = indicateurs[indiceDeLIndicateur.tauxDAbsentéisme]
+      const titre = within(indicateur).getByText(wording.TAUX_D_ABSENTÉISME, { selector: 'p' })
+      expect(titre).toBeInTheDocument()
+      const dateMiseAJour = within(indicateur).getAllByText(textMatch(`${wording.miseÀJour('10/10/2022')} - Source : TdB Perf`), { selector: 'p' })
+      expect(dateMiseAJour[0]).toBeInTheDocument()
+      const abréviationSourceOrigine = within(indicateur).getAllByText('TdB Perf', { selector: 'abbr' })
+      expect(abréviationSourceOrigine[0]).toHaveAttribute('title', wording.TDB_PERF_TITLE)
+      const détails = within(indicateur).getByRole('button', { name: wording.DÉTAILS })
+      expect(détails).toHaveAttribute('aria-controls', 'nom-info-bulle-ressources-humaines-taux-d-absentéisme')
+      expect(détails).toHaveAttribute('data-fr-opened', 'false')
+    })
+
+    it('affiche le contenu de l’info bulle du taux d’absentéisme après avoir cliqué sur le bouton "détails"', () => {
+      // GIVEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+      const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
+      const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
+      const indicateur = indicateurs[indiceDeLIndicateur.tauxDAbsentéisme]
+      const détails = within(indicateur).getByRole('button', { name: wording.DÉTAILS })
+
+      // WHEN
+      fireEvent.click(détails)
+
+      // THEN
+      expect(détails).toHaveAttribute('data-fr-opened', 'true')
+      const infoBulle = within(indicateur).getByRole('dialog', { name: wording.TAUX_D_ABSENTÉISME })
+      const fermer = within(infoBulle).getByRole('button', { name: wording.FERMER })
+      expect(fermer).toBeInTheDocument()
+      const abréviationSourceOrigine = within(infoBulle).getAllByText('TdB Perf', { selector: 'abbr' })
+      expect(abréviationSourceOrigine[0]).toHaveAttribute('title', wording.TDB_PERF_TITLE)
+      const élémentsDeCompréhension = within(infoBulle).getByRole('region', { name: wording.ÉLÉMENTS_DE_COMPRÉHENSION })
+      expect(élémentsDeCompréhension).toBeInTheDocument()
+      const fréquence = within(infoBulle).getByRole('region', { name: wording.FRÉQUENCE })
+      expect(fréquence).toBeInTheDocument()
+      const modeDeCalcul = within(infoBulle).getByRole('region', { name: wording.MODE_DE_CALCUL })
+      expect(modeDeCalcul).toBeInTheDocument()
+      const sources = within(infoBulle).getByRole('region', { name: wording.SOURCES })
+      expect(sources).toBeInTheDocument()
+      const infosComplémentaires = within(infoBulle).getByRole('region', { name: wording.INFOS_COMPLÉMENTAIRES })
+      expect(infosComplémentaires).toBeInTheDocument()
+    })
+
+    it('affiche une phrase présentant le taux d’absentéisme hors formation quand il n’est pas nul', () => {
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+
+      // THEN
+      const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
+      const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
+      const tauxDAbsentéisme = indicateurs[indiceDeLIndicateur.tauxDAbsentéisme]
+      expect(within(tauxDAbsentéisme).getByText(textMatch('Taux hors formation = 27,3 %, dont'))).toBeInTheDocument()
+    })
+
+    it('affiche une phrase présentant le taux d’absentéisme hors formation quand il est nul', () => {
+      // GIVEN
+      const tauxDAbsentéismeNul = {
+        dateMiseÀJourSource: '2022-10-10',
+        horsFormation: 0,
+        pourAccidentMaladieProfessionnelle: 0,
+        pourCongésSpéciaux: 0,
+        pourMaladieCourteDurée: 0,
+        pourMaladieLongueDurée: 0,
+        pourMaladieMoyenneDurée: null,
+        pourMaternitéPaternité: null,
+      }
+      const établissementTerritorialAvecUnTauxDAbsentéismeNul = new ÉtablissementTerritorialMédicoSocialViewModel(
+        {
+          activités: [],
+          autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
+          budgetEtFinances: [],
+          identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+          ressourcesHumaines: [
+            ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({
+              année: 2020,
+              tauxDAbsentéisme: tauxDAbsentéismeNul,
+            }),
+          ],
+        },
+        wording,
+        paths
+      )
+
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialAvecUnTauxDAbsentéismeNul} />)
+
+      // THEN
+      const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
+      const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
+      const tauxDAbsentéisme = indicateurs[indiceDeLIndicateur.tauxDAbsentéisme]
+      expect(within(tauxDAbsentéisme).getByText(textMatch('Taux hors formation = 0 %'))).toBeInTheDocument()
+    })
+
+    it('affiche un tableau descriptif avec tous les motifs d’absentéismes ayant des valeurs non nulles', () => {
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+
+      // THEN
+      const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
+      const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
+      const tauxDAbsentéisme = indicateurs[indiceDeLIndicateur.tauxDAbsentéisme]
+      const tableau = within(tauxDAbsentéisme).getByRole('table')
+      const motifLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.MOTIF_DU_TAUX_D_ABSENTÉISME })
+      const tauxLigneDEnTête = within(tableau).getByRole('columnheader', { name: wording.TAUX })
+      expect(motifLigneDEnTête).toBeInTheDocument()
+      expect(tauxLigneDEnTête).toBeInTheDocument()
+
+      const motifsEtValeurs = [
+        {
+          motif: wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_COURTE_DURÉE,
+          valeur: '0,5 %',
+        },
+        {
+          motif: wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_MOYENNE_DURÉE,
+          valeur: '1,8 %',
+        },
+        {
+          motif: wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_LONGUE_DURÉE,
+          valeur: '4,3 %',
+        },
+        {
+          motif: wording.TAUX_D_ABSENTÉISME_POUR_MATERNITÉ_PATERNITÉ,
+          valeur: '9,1 %',
+        },
+        {
+          motif: wording.TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX,
+          valeur: '11,6 %',
+        },
+      ]
+      const tbody = within(tableau).getAllByRole('rowgroup')[1]
+      const lignes = within(tbody).getAllByRole('row')
+      motifsEtValeurs.forEach((annéeEtValeur, index) => {
+        const motif = within(lignes[index]).getByRole('cell', { name: annéeEtValeur.motif })
+        expect(motif).toBeInTheDocument()
+        const valeur = within(lignes[index]).getByRole('cell', { name: annéeEtValeur.valeur })
+        expect(valeur).toBeInTheDocument()
+      })
+    })
+
+    it('affiche les années dans une liste déroulante par ordre anté-chronologique quand le taux d’absentéisme de ces années est renseigné', () => {
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
+
+      // THEN
+      const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
+      const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
+      const tauxDAbsentéisme = indicateurs[indiceDeLIndicateur.tauxDAbsentéisme]
+      const année = within(tauxDAbsentéisme).getByRole('combobox')
+      expect(année).toBeInTheDocument()
+      const années = within(année).getAllByRole('option')
+      expect(années[0]).toHaveAttribute('value', '2021')
+      expect(années[0].textContent).toBe('2021')
+      expect(années[1]).toHaveAttribute('value', '2020')
+      expect(années[1].textContent).toBe('2020')
+      expect(années[2]).toHaveAttribute('value', '2019')
+      expect(années[2].textContent).toBe('2019')
+    })
+
+    it('n’affiche pas les années dans une liste déroulante quand aucune donnée n’est renseignée', () => {
+      const tauxDAbsentéismeNul = {
+        dateMiseÀJourSource: '2022-10-10',
+        horsFormation: null,
+        pourAccidentMaladieProfessionnelle: null,
+        pourCongésSpéciaux: null,
+        pourMaladieCourteDurée: null,
+        pourMaladieLongueDurée: null,
+        pourMaladieMoyenneDurée: null,
+        pourMaternitéPaternité: null,
+      }
+      const établissementTerritorialAvecDesTauxDAbsentéismeNuls = new ÉtablissementTerritorialMédicoSocialViewModel(
+        {
+          activités: [],
+          autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
+          budgetEtFinances: [],
+          identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+          ressourcesHumaines: [
+            ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: 2019, tauxDAbsentéisme: tauxDAbsentéismeNul }),
+            ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: 2020, tauxDAbsentéisme: tauxDAbsentéismeNul }),
+          ],
+        },
+        wording,
+        paths
+      )
+
+      // WHEN
+      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialAvecDesTauxDAbsentéismeNuls} />)
+
+      // THEN
+      const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
+      const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
+      const tauxDAbsentéisme = indicateurs[indiceDeLIndicateur.tauxDAbsentéisme]
+      const année = within(tauxDAbsentéisme).queryByRole('combobox')
+      expect(année).not.toBeInTheDocument()
+    })
+  })
+
+  it.each([
+    ['Nombre d’ Équivalent Temps Plein Total réalisé', indiceDeLIndicateur.nombreDEtpRéalisés],
+    [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel],
+    [wording.TAUX_D_ABSENTÉISME, indiceDeLIndicateur.tauxDAbsentéisme],
+  ])
+  ('ferme l’info bulle du nombre d’ETP réalisé après avoir cliqué sur le bouton "Fermer"', (titreDeLInfoBulle, indiceDeLIndicateur) => {
     // GIVEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
     const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
     const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
-    const indicateur = indicateurs[indiceDeLIndicateur.nombreDEtpRéalisés]
+    const indicateur = indicateurs[indiceDeLIndicateur]
     const détails = within(indicateur).getByRole('button', { name: wording.DÉTAILS })
     fireEvent.click(détails)
-    const infoBulle = within(indicateur).getByRole('dialog', { name: 'Nombre d’ Équivalent Temps Plein Total réalisé' })
+    const infoBulle = within(indicateur).getByRole('dialog', { name: titreDeLInfoBulle })
     const fermer = within(infoBulle).getByRole('button', { name: wording.FERMER })
 
     // WHEN
@@ -263,8 +471,9 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
   })
 
   it.each([
-    [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDEtpRéalisés, '9,71'],
-    [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel, '34,4 %'],
+    [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDEtpRéalisés],
+    [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel],
+    [wording.TAUX_D_ABSENTÉISME, indiceDeLIndicateur.tauxDAbsentéisme],
   ])('affiche une mise en exergue sur l’indicateur %s si un année est manquante', (_titreDeLIndicateur, indiceDeLIndicateur) => {
     // GIVEN
     const établissementTerritorialAvecUneAnnéeManquante = new ÉtablissementTerritorialMédicoSocialViewModel({
@@ -292,6 +501,7 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
   it.each([
     [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDEtpRéalisés],
     [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel],
+    [wording.TAUX_D_ABSENTÉISME, indiceDeLIndicateur.tauxDAbsentéisme],
   ])('affiche une mise en exergue sur l’indicateur %s si deux années sont manquantes', (_titreDeLIndicateur, indiceDeLIndicateur) => {
     // GIVEN
     const établissementTerritorialAvecUneAnnéeManquante = new ÉtablissementTerritorialMédicoSocialViewModel({

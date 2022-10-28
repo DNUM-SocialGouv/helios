@@ -54,7 +54,8 @@ iframe {
 
 /* Indicateurs */
 .indicateurs,
-.indicateurs > li ul:not(dialog *) {
+.indicateurs > li ul:not(dialog *),
+.indicateurs > li menu:not(dialog *) {
   list-style-type: none;
   padding: 0;
 }

@@ -183,6 +183,16 @@ export interface Wording {
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ: ReactElement
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION: string
   readonly TAUX_DE_ROTATION_DU_PERSONNEL: string
+  readonly TAUX_D_ABSENTÉISME: string
+  readonly TAUX_D_ABSENTÉISME_HORS_FORMATION: (taux: string, enErreur: boolean, tauxNul: boolean) => ReactElement
+  readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_COURTE_DURÉE: string
+  readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_MOYENNE_DURÉE: string
+  readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_LONGUE_DURÉE: string
+  readonly TAUX_D_ABSENTÉISME_POUR_MATERNITÉ_PATERNITÉ: string
+  readonly TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX: string
+  readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE: string
+  readonly MOTIF_DU_TAUX_D_ABSENTÉISME: string
+  readonly TAUX: string
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string
