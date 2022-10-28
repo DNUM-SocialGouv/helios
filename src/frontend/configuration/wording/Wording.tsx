@@ -198,6 +198,8 @@ export interface Wording {
   readonly TAUX: string
   readonly NOMBRE_DE_CDD_DE_REMPLACEMENT: ReactElement
   readonly NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION: string
+  readonly TAUX_D_ETP_VACANTS_AU_31_12: string
+  readonly TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES: string
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string

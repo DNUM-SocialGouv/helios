@@ -25,10 +25,12 @@ export type CouleurHistogramme = Readonly<{
 }>
 
 export class GraphiqueViewModel {
+  protected readonly SEUIL_DE_CONTRASTE_DES_LIBELLÉS_DES_TAUX = 20
   readonly ratioMinHistogrammeHorizontal = 2
   readonly ratioMaxHistogrammeHorizontal = 15
   readonly facteurDiminutionHistogrammeHorizontal = 1.5
   readonly couleurDuFond = '#E8EDFF'
+  readonly couleurDeFondDuBloc = '#F6F6F6'
   readonly couleurDuFondHistogrammePrimaire = '#000091'
   readonly couleurDuFondHistogrammeSecondaire = '#4E68BB'
   readonly couleurDuFondDeLaLigne = '#929292'
@@ -427,6 +429,8 @@ export class GraphiqueViewModel {
       datasets: [
         {
           backgroundColor: couleursDuDoughnut.map((couleur) => couleur.premierPlan),
+          borderColor: this.couleurDeFondDuBloc,
+          borderWidth: 1,
           data: valeurs,
           datalabels: { labels: { title: { color: libellésDesValeurs.map((libellé) => libellé.couleur) } } },
           hoverBackgroundColor: couleursDuDoughnut.map((couleur) => couleur.premierPlan),

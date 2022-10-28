@@ -9,7 +9,6 @@ import { StringFormater } from '../../commun/StringFormater'
 export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends GraphiqueViewModel {
   readonly seuilValeurAtypique = 120
   readonly ratioHistogrammeBlocActivité = 2
-  readonly seuilDuContrasteDuLibellé = 20
 
   constructor(
     private readonly établissementTerritorialActivité: ÉtablissementTerritorialMédicoSocial['activités'],
@@ -268,7 +267,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   }
 
   private construisLesLibellésDesValeurs(valeurs: number[]): LibelléDeDonnéeGraphe[] {
-    return valeurs.map((valeur) => ({ couleur: valeur > this.seuilDuContrasteDuLibellé ? this.couleurDuFond : this.couleurIdentifiant }))
+    return valeurs.map((valeur) => ({ couleur: valeur > this.SEUIL_DE_CONTRASTE_DES_LIBELLÉS_DES_TAUX ? this.couleurDuFond : this.couleurIdentifiant }))
   }
 
   private construisLesLibellésDesTicks(libellés: (number | string)[]): LibelléDeTickGraphe[] {
