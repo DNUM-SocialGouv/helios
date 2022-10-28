@@ -30,6 +30,7 @@ export class GraphiqueViewModel {
   readonly ratioMaxHistogrammeHorizontal = 15
   readonly facteurDiminutionHistogrammeHorizontal = 1.5
   readonly couleurDuFond = '#E8EDFF'
+  readonly couleurDeFondDuBloc = '#F6F6F6'
   readonly couleurDuFondHistogrammePrimaire = '#000091'
   readonly couleurDuFondHistogrammeSecondaire = '#4E68BB'
   readonly couleurDuFondDeLaLigne = '#929292'
@@ -428,7 +429,7 @@ export class GraphiqueViewModel {
       datasets: [
         {
           backgroundColor: couleursDuDoughnut.map((couleur) => couleur.premierPlan),
-          borderColor: '#f6f6f6',
+          borderColor: this.couleurDeFondDuBloc,
           borderWidth: 1,
           data: valeurs,
           datalabels: { labels: { title: { color: libellésDesValeurs.map((libellé) => libellé.couleur) } } },
