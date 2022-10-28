@@ -74,7 +74,6 @@ jobs:
         env:
           DATABASE_URL: postgres://helios:h3li0s@localhost:5433/helios
         run: yarn test:typescript:${{ matrix.side }}
-      - uses: codecov/codecov-action@v3
 
   build:
     runs-on: ubuntu-latest
@@ -143,4 +142,3 @@ jobs:
         run: echo "$DIAMANT_PRIVATE_KEY" | gpg --import
       - name: Test
         run: pipenv run test_coverage
-      - uses: codecov/codecov-action@v3
