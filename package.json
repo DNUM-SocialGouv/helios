@@ -59,8 +59,8 @@
     "test:typescript:watch": "yarn test:typescript --watch",
     "test:typescript:coverage": "yarn test:typescript --coverage",
     "test:python": "NODE_ENV=test yarn migrations:up && pipenv run test",
-    "test:python:watch": "NODE_ENV=test yarn migrations:up && pipenv run test_watch",
     "test:python:coverage": "NODE_ENV=test yarn migrations:up && pipenv run test_coverage",
+    "test:python:watch": "NODE_ENV=test yarn migrations:up && pipenv run test_watch",
     "typecheck": "yarn typecheck:typescript && yarn typecheck:python",
     "typecheck:typescript": "tsc",
     "typecheck:python": "pipenv run typecheck"
