@@ -252,7 +252,7 @@ describe('La page établissement territorial - bloc identité', () => {
     // THEN
     const ficheDIdentité = screen.getByRole('region', { name: wording.TITRE_BLOC_IDENTITÉ })
     const indicateurs = within(ficheDIdentité).getAllByRole('listitem')
-    const libelléDateDEntréeEnVigueurDuCpom = within(indicateurs[11]).getByText(textMatch(`${trimHtml(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM)} - ${wording.miseÀJour('08/07/2021')} - Source : DIAMANT`), { selector: 'p' })
+    const libelléDateDEntréeEnVigueurDuCpom = within(indicateurs[11]).getByText(textMatch(`${trimHtml(wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM)} - ${wording.miseÀJour('08/07/2021')} - Source : TdB Perf`), { selector: 'p' })
     expect(libelléDateDEntréeEnVigueurDuCpom).toBeInTheDocument()
     const abréviationCpom = within(indicateurs[11]).getByText('CPOM', { selector: 'abbr' })
     expect(abréviationCpom).toHaveAttribute('title', 'Contrat Pluriannuel d’Objectifs et de Moyens')

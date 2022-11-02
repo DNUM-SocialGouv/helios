@@ -98,7 +98,7 @@ export const BlocIdentitéMédicoSocial = ({ établissementTerritorialIdentitéM
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialIdentitéMédicoSocialViewModel.dateDeMiseÀJourDeLEntréeEnVigueurDuCpom}
           nomDeLIndicateur={wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM}
-          source={Sources(wording.DIAMANT)}
+          source={Sources(wording.TDB_PERF)}
         >
           {établissementTerritorialIdentitéMédicoSocialViewModel.dateDeLEntréeEnVigueurDuCpom}
         </IndicateurIdentité>
