@@ -28,11 +28,11 @@ export function getStaticPaths(): GetStaticPathsResult {
   }
 }
 
-export async function getStaticProps({ params }: { params: { numéroFiness: string }}): Promise<GetStaticPropsResult<RouterProps> | void> {
+export async function getStaticProps({ params }: { params: { numeroFiness: string }}): Promise<GetStaticPropsResult<RouterProps> | void> {
   try {
     const { environmentVariables } = dependencies
     const établissementTerritorial =
-      await récupèreLÉtablissementTerritorialSanitaireEndpoint(dependencies, params.numéroFiness) as ÉtablissementTerritorialSanitaire
+      await récupèreLÉtablissementTerritorialSanitaireEndpoint(dependencies, params.numeroFiness) as ÉtablissementTerritorialSanitaire
 
     return { props: { établissementTerritorial }, revalidate: Number(environmentVariables.TIME_OF_CACHE_PAGE) }
   } catch (error) {

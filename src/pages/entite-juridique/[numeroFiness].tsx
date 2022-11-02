@@ -36,10 +36,10 @@ export function getStaticPaths(): GetStaticPathsResult {
   }
 }
 
-export async function getStaticProps({ params }: { params: { numéroFiness: string }}): Promise<GetStaticPropsResult<RouterProps> | void> {
+export async function getStaticProps({ params }: { params: { numeroFiness: string }}): Promise<GetStaticPropsResult<RouterProps> | void> {
   try {
     const { environmentVariables } = dependencies
-    const entitéJuridiqueEndpoint = await récupèreLEntitéJuridiqueEndpoint(dependencies, params.numéroFiness) as RouterProps
+    const entitéJuridiqueEndpoint = await récupèreLEntitéJuridiqueEndpoint(dependencies, params.numeroFiness) as RouterProps
 
     return {
       props: {
