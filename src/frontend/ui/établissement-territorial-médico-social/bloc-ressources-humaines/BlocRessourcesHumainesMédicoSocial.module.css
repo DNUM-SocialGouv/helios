@@ -27,7 +27,7 @@
 }
 
 .liste-indicateurs > ul > li > div:nth-child(1)  {
-  min-height: 6rem;
+  min-height: 6.3rem;
 }
 
 .liste-indicateurs canvas {
