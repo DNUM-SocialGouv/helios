@@ -16,20 +16,17 @@ export const Footer = () => {
               {wording.INTITULÉ_RÉPUBLIQUE_FRANÇAISE}
             </p>
             <Link
+              className="fr-footer__brand-link"
               href={paths.ACCUEIL}
               passHref
+              title={wording.ACCUEIL}
             >
-              <a
-                className="fr-footer__brand-link"
-                title={wording.ACCUEIL}
-              >
-                <Image
-                  alt=""
-                  height="100"
-                  src="/logo.svg"
-                  width="100"
-                />
-              </a>
+              <Image
+                alt=""
+                height="100"
+                src="/logo.svg"
+                width="100"
+              />
             </Link>
           </div>
           <div className="fr-footer__content">
@@ -85,32 +82,29 @@ export const Footer = () => {
           <ul className="fr-footer__bottom-list">
             <li className="fr-footer__bottom-item">
               <Link
+                className="fr-footer__bottom-link"
                 href={paths.ACCESSIBILITÉ}
                 passHref
               >
-                <a className="fr-footer__bottom-link">
-                  {`${wording.ACCESSIBILITÉ} : ${wording.NON_CONFORME}`}
-                </a>
+                {`${wording.ACCESSIBILITÉ} : ${wording.NON_CONFORME}`}
               </Link>
             </li>
             <li className="fr-footer__bottom-item">
               <Link
+                className="fr-footer__bottom-link"
                 href={paths.MENTIONS_LÉGALES}
                 passHref
               >
-                <a className="fr-footer__bottom-link">
-                  {wording.MENTIONS_LÉGALES}
-                </a>
+                {wording.MENTIONS_LÉGALES}
               </Link>
             </li>
             <li className="fr-footer__bottom-item">
               <Link
+                className="fr-footer__bottom-link"
                 href={paths.DONNÉES_PERSONNELLES}
                 passHref
               >
-                <a className="fr-footer__bottom-link">
-                  {wording.DONNÉES_PERSONNELLES}
-                </a>
+                {wording.DONNÉES_PERSONNELLES}
               </Link>
             </li>
             <li className="fr-footer__bottom-item">

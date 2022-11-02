@@ -50,13 +50,12 @@ export const Breadcrumb = () => {
                       </a>
                     ) : (
                       <Link
+                        className="fr-breadcrumb__link"
                         href={item.path}
                         passHref
                         prefetch={false}
                       >
-                        <a className="fr-breadcrumb__link">
-                          {item.label}
-                        </a>
+                        {item.label}
                       </Link>
                     )
                   }

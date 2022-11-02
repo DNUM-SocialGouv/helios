@@ -69,12 +69,11 @@ export const Header = () => {
                   <Link
                     href="/"
                     passHref
+                    title={wording.ACCUEIL}
                   >
-                    <a title={wording.ACCUEIL}>
-                      <p className="fr-header__service-title">
-                        {wording.TITRE_DU_SITE}
-                      </p>
-                    </a>
+                    <p className="fr-header__service-title">
+                      {wording.TITRE_DU_SITE}
+                    </p>
                   </Link>
                 </div>
               </div>

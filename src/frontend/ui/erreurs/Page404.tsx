@@ -31,12 +31,11 @@ export const Page404 = () => {
             {wording.DESCRIPTION_ERREUR_404}
           </p>
           <Link
+            className="fr-btn"
             href={paths.ACCUEIL}
             passHref
           >
-            <a className="fr-btn">
-              {wording.ACCUEIL}
-            </a>
+            {wording.ACCUEIL}
           </Link>
         </div>
         <div className="fr-col-5 fr-pl-15w">

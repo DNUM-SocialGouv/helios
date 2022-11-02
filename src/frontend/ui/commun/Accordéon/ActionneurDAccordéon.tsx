@@ -12,20 +12,16 @@ export const ActionneurDAccordéon = ({ for: identifiant, titre, texteGras = tru
 
   return (
     <Link
+      aria-controls={identifiant}
+      aria-expanded="false"
+      className={`fr-tag fr-text-label--grey ${texteGras ? 'fr-text--bold' : ''} ` + styles['tag-actionnable']}
       href="#"
+      onClick={(event) => {
+        event.preventDefault()
+      }}
       passHref
     >
-      <a
-        aria-controls={identifiant}
-        aria-expanded="false"
-        className={`fr-tag fr-text-label--grey ${texteGras ? 'fr-text--bold' : ''} ` + styles['tag-actionnable']}
-        href="#"
-        onClick={(event) => {
-          event.preventDefault()
-        }}
-      >
-        {titre}
-      </a>
+      {titre}
     </Link>
   )
 }

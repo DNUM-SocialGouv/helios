@@ -69,6 +69,7 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
     return (
       <Link
         href={lienVersLEntitéJuridique}
+        legacyBehavior
         passHref
         prefetch={false}
       >
