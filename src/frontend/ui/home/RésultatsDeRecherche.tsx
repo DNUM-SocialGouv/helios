@@ -1,4 +1,4 @@
-import Image from 'next/future/image'
+import Image from 'next/image'
 
 import { useDependencies } from '../commun/contexts/useDependencies'
 import '@gouvfr/dsfr/dist/component/tile/tile.min.css'
