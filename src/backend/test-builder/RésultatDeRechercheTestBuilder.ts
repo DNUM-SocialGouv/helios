@@ -5,21 +5,21 @@ export class RésultatDeRechercheTestBuilder {
     commune: 'OYONNAX',
     département: 'AIN',
     numéroFiness: '010018407',
-    raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY',
+    raisonSocialeCourte: 'CH DU HAUT BUGEY',
     type: 'Entité juridique',
   }
   private static résultatDeRechercheÉtablissementMédicoSocial: Résultat = {
     commune: 'NANTUA',
     département: 'AIN',
     numéroFiness: '010000040',
-    raisonSociale: 'CENTRE HOSPITALIER NANTUA',
+    raisonSocialeCourte: 'CH NANTUA',
     type: 'Médico-social',
   }
   private static résultatDeRechercheÉtablissementSanitaire: Résultat = {
     commune: 'VILLENEUVE D ASCQ',
     département: 'NORD',
     numéroFiness: '590782553',
-    raisonSociale: 'HOPITAL PRIVE DE VILLENEUVE DASCQ',
+    raisonSocialeCourte: 'HP VILLENEUVE DASCQ',
     type: 'Sanitaire',
   }
 

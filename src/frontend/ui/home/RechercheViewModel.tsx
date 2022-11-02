@@ -18,7 +18,7 @@ export class RechercheViewModel {
       <>
         {this.recherche.numéroFiness}
         {' - '}
-        {this.recherche.raisonSociale}
+        {this.recherche.raisonSocialeCourte}
       </>
     )
   }

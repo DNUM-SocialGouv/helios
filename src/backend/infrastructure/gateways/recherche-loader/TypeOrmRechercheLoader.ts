@@ -8,7 +8,7 @@ type RechercheTypeOrm = Readonly<{
   commune: string
   departement: string
   numero_finess: string
-  raison_sociale: string
+  raison_sociale_courte: string
   type: string
 }>
 
@@ -23,7 +23,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
 
     const requêteDeLaRecherche = (await this.orm).createQueryBuilder()
       .select('recherche.numero_finess', 'numero_finess')
-      .addSelect('recherche.raison_sociale', 'raison_sociale')
+      .addSelect('recherche.raison_sociale_courte', 'raison_sociale_courte')
       .addSelect('recherche.type', 'type')
       .addSelect('recherche.commune', 'commune')
       .addSelect('recherche.departement', 'departement')
@@ -56,7 +56,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
           commune: rechercheRésultat.commune,
           département: rechercheRésultat.departement,
           numéroFiness: rechercheRésultat.numero_finess,
-          raisonSociale: rechercheRésultat.raison_sociale,
+          raisonSocialeCourte: rechercheRésultat.raison_sociale_courte,
           type: rechercheRésultat.type,
         }
       }),
