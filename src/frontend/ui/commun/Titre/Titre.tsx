@@ -1,4 +1,4 @@
-import Image, { StaticImageData } from 'next/future/image'
+import Image, { StaticImageData } from 'next/image'
 import { ReactElement } from 'react'
 
 import { useDependencies } from '../contexts/useDependencies'

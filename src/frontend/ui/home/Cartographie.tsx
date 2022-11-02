@@ -1,4 +1,4 @@
-import Image from 'next/future/image'
+import Image from 'next/image'
 import Link from 'next/link'
 
 import { useDependencies } from '../commun/contexts/useDependencies'
@@ -29,42 +29,38 @@ export const Cartographie = () => {
             <ul className="fr-btns-group fr-btns-group--inline-reverse fr-btns-group--inline-lg">
               <li>
                 <Link
+                  className="fr-btn"
                   href={paths.RÉGION + '/auvergne-rhone-alpes'}
                   passHref
                 >
-                  <a className="fr-btn">
-                    {régions['auvergne-rhone-alpes'].label}
-                  </a>
+                  {régions['auvergne-rhone-alpes'].label}
                 </Link>
               </li>
               <li>
                 <Link
+                  className="fr-btn"
                   href={paths.RÉGION + '/occitanie'}
                   passHref
                 >
-                  <a className="fr-btn">
-                    {régions['occitanie'].label}
-                  </a>
+                  {régions['occitanie'].label}
                 </Link>
               </li>
               <li>
                 <Link
+                  className="fr-btn"
                   href={paths.RÉGION + '/bretagne'}
                   passHref
                 >
-                  <a className="fr-btn">
-                    {régions['bretagne'].label}
-                  </a>
+                  {régions['bretagne'].label}
                 </Link>
               </li>
               <li>
                 <Link
+                  className="fr-btn"
                   href={paths.RÉGION + '/pays-de-la-loire'}
                   passHref
                 >
-                  <a className="fr-btn">
-                    {régions['pays-de-la-loire'].label}
-                  </a>
+                  {régions['pays-de-la-loire'].label}
                 </Link>
               </li>
             </ul>

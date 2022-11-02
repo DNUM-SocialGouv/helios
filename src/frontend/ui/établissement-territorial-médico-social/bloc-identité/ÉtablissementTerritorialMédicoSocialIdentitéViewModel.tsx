@@ -65,13 +65,14 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
     const titreDeLEntitéJuridiqueDeRattachement = this.formateLeTitreDeLEntitéJuridiqueDeRattachement()
     const libellé = `EJ - ${titreDeLEntitéJuridiqueDeRattachement}`
 
-    return (<Link
+    return <Link
       href={lienVersLEntitéJuridique}
+      legacyBehavior
       passHref
       prefetch={false}
     >
       {libellé}
-    </Link>)
+    </Link>
   }
 
   public get dateDeMiseÀJourDeLEntitéJuridiqueDeRattachement(): string {

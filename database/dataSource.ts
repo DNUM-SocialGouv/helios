@@ -68,6 +68,7 @@ export default new DataSource({
     ReconnaissanceContractuelleSanitaireModel,
     RessourcesHumainesMédicoSocialModel,
   ],
+  logger: 'debug',
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
   migrations: [
     EntitéJuridique1652626977208,

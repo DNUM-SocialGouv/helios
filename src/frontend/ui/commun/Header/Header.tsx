@@ -1,4 +1,4 @@
-import Image from 'next/future/image'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ChangeEvent, useState } from 'react'
@@ -69,12 +69,11 @@ export const Header = () => {
                   <Link
                     href="/"
                     passHref
+                    title={wording.ACCUEIL}
                   >
-                    <a title={wording.ACCUEIL}>
-                      <p className="fr-header__service-title">
-                        {wording.TITRE_DU_SITE}
-                      </p>
-                    </a>
+                    <p className="fr-header__service-title">
+                      {wording.TITRE_DU_SITE}
+                    </p>
                   </Link>
                 </div>
               </div>
