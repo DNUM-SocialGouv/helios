@@ -60,6 +60,7 @@
     "test:typescript:coverage": "yarn test:typescript --coverage",
     "test:python": "NODE_ENV=test yarn migrations:up && pipenv run test",
     "test:python:coverage": "NODE_ENV=test yarn migrations:up && pipenv run test_coverage",
+    "test:python:watch": "NODE_ENV=test yarn migrations:up && pipenv run test_watch",
     "typecheck": "yarn typecheck:typescript && yarn typecheck:python",
     "typecheck:typescript": "tsc",
     "typecheck:python": "pipenv run typecheck"
@@ -112,7 +113,6 @@
     "husky": "^7.0.4",
     "jest": "^28.0.2",
     "jest-environment-jsdom": "^28.0.2",
-    "jest-when": "^3.5.1",
     "next-router-mock": "^0.7.4",
     "stylelint": "^14.9.1",
     "stylelint-order": "^5.0.0",

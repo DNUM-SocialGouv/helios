@@ -1,41 +1,41 @@
-name: Mutation testing
+# name: Mutation testing
 
 # on:
 #   schedule:
 #     - cron: '0 0 * * 5'
 
-jobs:
-  install-for-mutation:
-    runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:13.7-alpine # Conserver la même version avec le fichier docker-compose.yaml
-        env:
-          POSTGRES_DB: helios
-          POSTGRES_PASSWORD: h3li0s
-          POSTGRES_PORT: 5432
-          POSTGRES_USER: helios
-        ports:
-          - 5433:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-    steps:
-      - uses: actions/checkout@master
-      - uses: actions/setup-node@v3
-        with:
-          cache: yarn
-          node-version-file: package.json
-      - name: Install node modules
-        run: yarn --immutable
-      - name: Run just one test
-        run: yarn test:typescript src/backend/infrastructure/gateways/logger/ConsoleLogger.test.ts
-      - name: Run the mutations
-        run: yarn test:mutation
-      - uses: actions/upload-artifact@v3
-        with:
-          name: mutation-report
-          path: reports/mutation/mutation.html
-          retention-days: 1
+# jobs:
+#   install-for-mutation:
+#     runs-on: ubuntu-latest
+#     services:
+#       postgres:
+#         image: postgres:13.7-alpine # Conserver la même version avec le fichier docker-compose.yaml
+#         env:
+#           POSTGRES_DB: helios
+#           POSTGRES_PASSWORD: h3li0s
+#           POSTGRES_PORT: 5432
+#           POSTGRES_USER: helios
+#         ports:
+#           - 5433:5432
+#         options: >-
+#           --health-cmd pg_isready
+#           --health-interval 10s
+#           --health-timeout 5s
+#           --health-retries 5
+#     steps:
+#       - uses: actions/checkout@master
+#       - uses: actions/setup-node@v3
+#         with:
+#           cache: yarn
+#           node-version-file: package.json
+#       - name: Install node modules
+#         run: yarn --immutable
+#       - name: Run just one test
+#         run: yarn test:typescript src/backend/infrastructure/gateways/logger/ConsoleLogger.test.ts
+#       - name: Run the mutations
+#         run: yarn test:mutation
+#       - uses: actions/upload-artifact@v3
+#         with:
+#           name: mutation-report
+#           path: reports/mutation/mutation.html
+#           retention-days: 1

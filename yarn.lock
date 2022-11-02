@@ -5566,7 +5566,6 @@ __metadata:
     husky: ^7.0.4
     jest: ^28.0.2
     jest-environment-jsdom: ^28.0.2
-    jest-when: ^3.5.1
     next: 12.3.2-canary.10
     next-router-mock: ^0.7.4
     node-fetch: 2.6.7
@@ -6823,15 +6822,6 @@ __metadata:
     jest-util: ^28.0.2
     string-length: ^4.0.1
   checksum: 11ee5ad02d4427eb290406c59615afa009125ae21ff0c1ad9c4e094270f3ec89535caa1bcfc72883251eacfccc29d3c9eb63da26d4525d82a014bd8d7c2bfdd9
-  languageName: node
-  linkType: hard
-
-"jest-when@npm:^3.5.1":
-  version: 3.5.1
-  resolution: "jest-when@npm:3.5.1"
-  peerDependencies:
-    jest: ">= 25"
-  checksum: 1efb9f497f7c846fe8b0f4125d5f449c4a4d78d5d0afa910d134b301ae4c119ea52c9465db38d2146269d42808afe8f3a4328d1d656878a9a69458ee653f6499
   languageName: node
   linkType: hard
 

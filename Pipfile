@@ -24,6 +24,7 @@ sqlalchemy-stubs = "~=0.4"
 freezegun = "1.2.1"
 matplotlib = "3.5.2"
 pytest-cov = "4.0.0"
+pytest-watcher = "==0.2.1"
 
 [requires]
 python_full_version = "3.10.8" # Conserver la même version que celle dans helios-ci.yml
@@ -43,4 +44,5 @@ populate_budget_et_finances_medico_social = 'python -m datacrawler.ajoute_le_blo
 populate_ressoures_humaines_medico_social = 'python -m datacrawler.ajoute_le_bloc_ressources_humaines_des_établissements_médico_sociaux'
 test = 'pytest --tb=short'
 test_coverage = 'pytest --tb=short --cov=datacrawler --cov-report=xml'
+test_watch = 'ptw'
 typecheck = 'mypy --config pyproject.toml datacrawler'

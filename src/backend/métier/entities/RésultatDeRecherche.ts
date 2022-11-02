@@ -2,7 +2,7 @@ export type Résultat = Readonly<{
   commune: string
   département: string
   numéroFiness: string
-  raisonSociale: string
+  raisonSocialeCourte: string
   type: string
 }>
 

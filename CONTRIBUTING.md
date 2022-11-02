@@ -63,7 +63,7 @@ pipenv install
 Pour installer l'environnement de dev :
 
 ```sh
-pipenv install --dev
+pipenv install --dev --keep-outdated
 ```
 
 > Pipenv installe l'environnement virtuel sous `$HOME/.local` par défaut, mais il est possible de le stocker au même niveau que le dépôt grâce à la commande `PIPENV_VENV_IN_PROJECT=1 pipenv install`
