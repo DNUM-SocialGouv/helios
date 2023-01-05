@@ -1,5 +1,6 @@
 # Vérifier avant de merger
 
+
 - [ ] As-tu correctement relu ton code ?
 - [ ] As-tu besoin de revoir ton ticket avec la PO ou UX ?
 - [ ] Faut-il rajouter une nouvelle date de mise à jour sur la production ?
