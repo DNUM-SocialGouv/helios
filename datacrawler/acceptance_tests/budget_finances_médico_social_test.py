@@ -1,5 +1,6 @@
 from datetime import date
 from unittest.mock import Mock, patch
+from freezegun import freeze_time
 
 import pandas as pd
 import pytest
@@ -30,6 +31,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
     def setup_method(self) -> None:
         supprime_les_données_des_tables(base_de_données_test)
 
+    @freeze_time("2022-01-14")
     def test_sauvegarde_les_données_financières_et_les_taux_de_caf_et_vétusté(self) -> None:
         # GIVEN
         chemin_du_fichier_ann_errd_ej_et = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
@@ -203,6 +205,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         )
         assert date_du_fichier_ann_errd_ej.fetchone() == (date(2022, 9, 1), FichierSource.DIAMANT_ANN_ERRD_EJ.value)
 
+    @freeze_time("2022-01-14")
     def test_supprime_les_données_existantes_avant_de_sauvegarder_les_données_en_base(self) -> None:
         # GIVEN
         chemin_du_fichier_ann_errd_ej_et = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
