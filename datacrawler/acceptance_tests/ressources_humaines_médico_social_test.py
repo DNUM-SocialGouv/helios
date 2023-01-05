@@ -2,7 +2,6 @@ from datetime import date
 from unittest.mock import Mock, patch
 
 import pandas as pd
-from freezegun import freeze_time
 import pytest
 from numpy import NaN
 
@@ -30,7 +29,6 @@ class TestAjouteLeBlocDesRessourcesHumainesMédicoSocial:
     def setup_method(self) -> None:
         supprime_les_données_des_tables(base_de_données_test)
 
-    @freeze_time("2022-01-14")
     def test_sauvegarde_les_données_des_ressources_humaines(self) -> None:
         # GIVEN
         chemin_du_fichier_ann_ms_tdp_et = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
@@ -119,7 +117,6 @@ class TestAjouteLeBlocDesRessourcesHumainesMédicoSocial:
         )
         assert date_du_fichier_ann_ms_tdp_et.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_ANN_MS_TDP_ET.value)
 
-    @freeze_time("2022-01-14")
     def test_supprime_les_données_existantes_avant_de_sauvegarder_les_données_en_base(self) -> None:
         # GIVEN
         chemin_du_fichier_ann_ms_tdp_et = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
