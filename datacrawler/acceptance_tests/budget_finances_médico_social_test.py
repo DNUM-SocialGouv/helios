@@ -1,16 +1,13 @@
 from datetime import date
 from unittest.mock import Mock, patch
 
-from freezegun import freeze_time
 import pandas as pd
 import pytest
 from numpy import NaN
 
 import datacrawler
-from datacrawler.ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux import \
-    ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux
-from datacrawler.load.nom_des_tables import TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES, \
-    TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL, FichierSource
+from datacrawler.ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux import ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux
+from datacrawler.load.nom_des_tables import TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES, TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL, FichierSource
 from datacrawler.test_helpers import (
     NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
     NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL,
@@ -33,7 +30,6 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
     def setup_method(self) -> None:
         supprime_les_données_des_tables(base_de_données_test)
 
-    @freeze_time("2022-01-14")
     def test_sauvegarde_les_données_financières_et_les_taux_de_caf_et_vétusté(self) -> None:
         # GIVEN
         chemin_du_fichier_ann_errd_ej_et = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
@@ -42,14 +38,11 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         chemin_du_fichier_ann_per_errd_eprd = "data_set/diamant/ANN_PER_ERRD_EPRD_2022_09_01.CSV"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_errd = NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL
-        sauvegarde_un_établissement_en_base(numéro_finess_établissement_errd, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
-                                            base_de_données_test)
+        sauvegarde_un_établissement_en_base(numéro_finess_établissement_errd, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_ca_ph = "010002269"
-        sauvegarde_un_établissement_en_base(numéro_finess_établissement_ca_ph, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
-                                            base_de_données_test)
+        sauvegarde_un_établissement_en_base(numéro_finess_établissement_ca_ph, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_ca_pa = "010009066"
-        sauvegarde_un_établissement_en_base(numéro_finess_établissement_ca_pa, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
-                                            base_de_données_test)
+        sauvegarde_un_établissement_en_base(numéro_finess_établissement_ca_pa, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
 
         # WHEN
         ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
@@ -168,8 +161,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
             base_de_données_test,
         )
 
-        pd.testing.assert_frame_equal(budget_et_finances_enregistrés.sort_index(axis=1),
-                                      budget_et_finances_attendus.sort_index(axis=1))
+        pd.testing.assert_frame_equal(budget_et_finances_enregistrés.sort_index(axis=1), budget_et_finances_attendus.sort_index(axis=1))
 
     def test_sauvegarde_les_dates_de_mises_à_jour_des_indicateurs_budget_et_finances(self) -> None:
         # GIVEN
@@ -179,14 +171,11 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         chemin_du_fichier_ann_per_errd_eprd = "data_set/diamant/ANN_PER_ERRD_EPRD_2022_09_01.CSV"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_errd = NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL
-        sauvegarde_un_établissement_en_base(numéro_finess_établissement_errd, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
-                                            base_de_données_test)
+        sauvegarde_un_établissement_en_base(numéro_finess_établissement_errd, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_ca_ph = "010002269"
-        sauvegarde_un_établissement_en_base(numéro_finess_établissement_ca_ph, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
-                                            base_de_données_test)
+        sauvegarde_un_établissement_en_base(numéro_finess_établissement_ca_ph, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_ca_pa = "010009066"
-        sauvegarde_un_établissement_en_base(numéro_finess_établissement_ca_pa, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
-                                            base_de_données_test)
+        sauvegarde_un_établissement_en_base(numéro_finess_établissement_ca_pa, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
 
         # WHEN
         ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux(
@@ -202,8 +191,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         date_du_fichier_ann_errd_ej_et = base_de_données_test.execute(
             f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'"
         )
-        assert date_du_fichier_ann_errd_ej_et.fetchone() == (
-        date(2022, 6, 7), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)
+        assert date_du_fichier_ann_errd_ej_et.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)
 
         date_du_fichier_ann_ca_ej_et = base_de_données_test.execute(
             f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_CA_EJ_ET.value}'"
@@ -215,7 +203,6 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         )
         assert date_du_fichier_ann_errd_ej.fetchone() == (date(2022, 9, 1), FichierSource.DIAMANT_ANN_ERRD_EJ.value)
 
-    @freeze_time("2022-01-14")
     def test_supprime_les_données_existantes_avant_de_sauvegarder_les_données_en_base(self) -> None:
         # GIVEN
         chemin_du_fichier_ann_errd_ej_et = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
@@ -224,22 +211,17 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         chemin_du_fichier_ann_per_errd_eprd = "data_set/diamant/ANN_PER_ERRD_EPRD_2022_09_01.CSV"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_errd = NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL
-        sauvegarde_un_établissement_en_base(numéro_finess_établissement_errd, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
-                                            base_de_données_test)
+        sauvegarde_un_établissement_en_base(numéro_finess_établissement_errd, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_ca_ph = "010002269"
-        sauvegarde_un_établissement_en_base(numéro_finess_établissement_ca_ph, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
-                                            base_de_données_test)
+        sauvegarde_un_établissement_en_base(numéro_finess_établissement_ca_ph, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_ca_pa = "010009066"
-        sauvegarde_un_établissement_en_base(numéro_finess_établissement_ca_pa, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
-                                            base_de_données_test)
+        sauvegarde_un_établissement_en_base(numéro_finess_établissement_ca_pa, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
 
         sauvegarde_les_indicateurs_budget_et_finances_en_base(
             pd.DataFrame(
                 [
-                    helios_ann_errd_ej_et_budget_et_finances_builder(
-                        {"numero_finess_etablissement_territorial": numéro_finess_établissement_errd}),
-                    helios_ann_ca_ej_et_budget_et_finances_builder(
-                        {"numero_finess_etablissement_territorial": numéro_finess_établissement_ca_ph}),
+                    helios_ann_errd_ej_et_budget_et_finances_builder({"numero_finess_etablissement_territorial": numéro_finess_établissement_errd}),
+                    helios_ann_ca_ej_et_budget_et_finances_builder({"numero_finess_etablissement_territorial": numéro_finess_établissement_ca_ph}),
                 ]
             ),
             base_de_données_test,
@@ -362,12 +344,10 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
             base_de_données_test,
         )
 
-        pd.testing.assert_frame_equal(budget_et_finances_enregistrés.sort_index(axis=1),
-                                      budget_et_finances_attendus.sort_index(axis=1))
+        pd.testing.assert_frame_equal(budget_et_finances_enregistrés.sort_index(axis=1), budget_et_finances_attendus.sort_index(axis=1))
 
     @patch.object(datacrawler, "sauvegarde")
-    def test_revient_à_la_situation_initiale_si_l_écriture_des_indicateurs_budget_et_finances_échoue(self,
-                                                                                                     mocked_sauvegarde: Mock) -> None:
+    def test_revient_à_la_situation_initiale_si_l_écriture_des_indicateurs_budget_et_finances_échoue(self, mocked_sauvegarde: Mock) -> None:
         # GIVEN
         chemin_du_fichier_ann_errd_ej_et = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
         chemin_du_fichier_ann_ca_ej_et = "data_set/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
@@ -375,18 +355,14 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         chemin_du_fichier_ann_per_errd_eprd = "data_set/diamant/ANN_PER_ERRD_EPRD_2022_09_01.CSV"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_errd = NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL
-        sauvegarde_un_établissement_en_base(numéro_finess_établissement_errd, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
-                                            base_de_données_test)
+        sauvegarde_un_établissement_en_base(numéro_finess_établissement_errd, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_ca_ph = "010002269"
-        sauvegarde_un_établissement_en_base(numéro_finess_établissement_ca_ph, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
-                                            base_de_données_test)
+        sauvegarde_un_établissement_en_base(numéro_finess_établissement_ca_ph, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         indicateurs_budget_et_finances_établissement_errd = {
             **helios_ann_errd_ej_et_budget_et_finances_builder(
-                {"numero_finess_etablissement_territorial": numéro_finess_établissement_errd,
-                 "cadre_budgetaire": "ERRD"}
+                {"numero_finess_etablissement_territorial": numéro_finess_établissement_errd, "cadre_budgetaire": "ERRD"}
             ),
-            **helios_ann_errd_ej_budget_et_finances_builder(
-                {"numero_finess_etablissement_territorial": numéro_finess_établissement_errd}),
+            **helios_ann_errd_ej_budget_et_finances_builder({"numero_finess_etablissement_territorial": numéro_finess_établissement_errd}),
         }
         indicateurs_budget_et_finances_établissement_ca = helios_ann_ca_ej_et_budget_et_finances_builder(
             {"numero_finess_etablissement_territorial": numéro_finess_établissement_ca_ph}
@@ -400,10 +376,8 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
             ),
             base_de_données_test,
         )
-        sauvegarde_une_date_de_mise_à_jour_de_fichier_source("2020-01-01", FichierSource.DIAMANT_ANN_ERRD_EJ_ET,
-                                                             base_de_données_test)
-        sauvegarde_une_date_de_mise_à_jour_de_fichier_source("2020-02-02", FichierSource.DIAMANT_ANN_CA_EJ_ET,
-                                                             base_de_données_test)
+        sauvegarde_une_date_de_mise_à_jour_de_fichier_source("2020-01-01", FichierSource.DIAMANT_ANN_ERRD_EJ_ET, base_de_données_test)
+        sauvegarde_une_date_de_mise_à_jour_de_fichier_source("2020-02-02", FichierSource.DIAMANT_ANN_CA_EJ_ET, base_de_données_test)
 
         mocked_sauvegarde.side_effect = ValueError()
 
@@ -428,8 +402,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
             budget_et_finances_enregistrés.sort_index(axis=1),
             pd.DataFrame(
                 {
-                    "numero_finess_etablissement_territorial": [numéro_finess_établissement_errd,
-                                                                numéro_finess_établissement_ca_ph],
+                    "numero_finess_etablissement_territorial": [numéro_finess_établissement_errd, numéro_finess_établissement_ca_ph],
                     "annee": [2020, 2020],
                     "contribution_frais_de_siege_groupement": [-300.0, NaN],
                     "depenses_groupe_i": [-100.0, -100.0],
@@ -452,8 +425,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         date_du_fichier_de_données_errd = base_de_données_test.execute(
             f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'"""
         )
-        assert date_du_fichier_de_données_errd.fetchone() == (
-        date(2020, 1, 1), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)
+        assert date_du_fichier_de_données_errd.fetchone() == (date(2020, 1, 1), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)
 
         date_du_fichier_de_données_ca = base_de_données_test.execute(
             f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_CA_EJ_ET.value}'"""
