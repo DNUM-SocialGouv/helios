@@ -6,7 +6,7 @@ services:
     container_name: helios_sftp_finess
     ports:
       - target: 22
-        published: 22
+        published: 24
     volumes:
       - type: bind
         source: $PWD/data_set

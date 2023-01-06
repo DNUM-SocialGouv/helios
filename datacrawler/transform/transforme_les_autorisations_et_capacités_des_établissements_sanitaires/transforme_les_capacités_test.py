@@ -1,5 +1,6 @@
 import pandas as pd
 from numpy import NaN
+from freezegun import freeze_time
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, mocked_logger
 from datacrawler.test_helpers.diamant_builder import csv_ann_sae_builder
@@ -9,6 +10,7 @@ from datacrawler.transform.transforme_les_autorisations_et_capacités_des_établ
 from datacrawler.transform.équivalences_diamant_helios import index_des_capacités_sanitaires
 
 
+@freeze_time("2023-01-01")
 class TestTransformeLesDonnéesDesCapacitésSanitaires:
     def test_filtre_et_renomme_les_colonnes_et_place_l_index(self) -> None:
         # GIVEN
@@ -42,7 +44,28 @@ class TestTransformeLesDonnéesDesCapacitésSanitaires:
         ).set_index(index_des_capacités_sanitaires)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
-    def test_conserve_les_5_dernières_années_pour_chaque_établissement(self) -> None:
+    def test_trie_par_annee(self) -> None:
+        # GIVEN
+        données_diamant_ann_sae = pd.DataFrame(
+            {
+                "Finess": [NUMÉRO_FINESS_ÉTABLISSEMENT, NUMÉRO_FINESS_ÉTABLISSEMENT, NUMÉRO_FINESS_ÉTABLISSEMENT],
+                "Année": [2020, 2019, 2022],
+            }
+        )
+        numéros_finess_connus = pd.DataFrame(
+            {
+                "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT],
+            }
+        )
+
+        # WHEN
+        données_transformées = transforme_les_données_des_capacités(données_diamant_ann_sae, numéros_finess_connus, mocked_logger)
+
+        # THEN
+        annees_attendues = [2022, 2020, 2019]
+        assert données_transformées["annee"].tolist() == annees_attendues
+
+    def test_limite_aux_5_dernières_annees(self) -> None:
         # GIVEN
         données_diamant_ann_sae = pd.DataFrame(
             {
@@ -52,29 +75,14 @@ class TestTransformeLesDonnéesDesCapacitésSanitaires:
                     NUMÉRO_FINESS_ÉTABLISSEMENT,
                     NUMÉRO_FINESS_ÉTABLISSEMENT,
                     NUMÉRO_FINESS_ÉTABLISSEMENT,
-                    NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                    NUMÉRO_FINESS_ÉTABLISSEMENT,
                 ],
-                "Année": [2022, 2021, 2020, 2019, 2018, 2021, 2020, 2019, 2018, 2017],
-                "Nombre de places de chirurgie": [7, 7, 7, 7, 7, 6, 6, 6, 6, 6],
-                "Nombre de places d'obstétrique": [1, 1, 1, 1, 1, NaN, NaN, NaN, NaN, NaN],
-                "Nombre de places de médecine": [7, 7, 7, 7, 7, 2, 2, 2, 2, 2],
-                "Nombre de places de SSR": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
-                "Nombre de lits de chirurgie": [26, 21, 26, 26, 26, 12, 30, 30, 30, 30],
-                "Nombre de lits d'obstétrique": [20, 21, 21, 21, 21, 8, 8, 8, 8, 8],
-                "Nombre de lits de médecine": [62, 60, 60, 68, 76, 20, 20, 20, 20, 20],
-                "Nombre de lits de SSR": [30, 30, 30, 30, 30, NaN, NaN, NaN, NaN, NaN],
-                "nombre_lits_usld": [15, 15, 15, 15, 15, NaN, NaN, NaN, NaN, NaN],
-                "nombre_lits_ou_places_psy_complet": [NaN, NaN, NaN, NaN, NaN, 5, 5, 5, 5, 5],
-                "nombre_places_psy_partiel": [NaN, NaN, NaN, NaN, NaN, 13, 13, 13, 13, 13],
+                "Année": [2022, 2021, 2020, 2019, 2018, 2017],
             }
         )
         numéros_finess_connus = pd.DataFrame(
             {
-                "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT, NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE],
+                "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT],
             }
         )
 
@@ -82,35 +90,8 @@ class TestTransformeLesDonnéesDesCapacitésSanitaires:
         données_transformées = transforme_les_données_des_capacités(données_diamant_ann_sae, numéros_finess_connus, mocked_logger)
 
         # THEN
-        data_frame_attendu = pd.DataFrame(
-            {
-                "annee": [2022, 2021, 2020, 2019, 2018, 2021, 2020, 2019, 2018, 2017],
-                "numero_finess_etablissement_territorial": [
-                    NUMÉRO_FINESS_ÉTABLISSEMENT,
-                    NUMÉRO_FINESS_ÉTABLISSEMENT,
-                    NUMÉRO_FINESS_ÉTABLISSEMENT,
-                    NUMÉRO_FINESS_ÉTABLISSEMENT,
-                    NUMÉRO_FINESS_ÉTABLISSEMENT,
-                    NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                    NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
-                ],
-                "nombre_places_chirurgie": [7, 7, 7, 7, 7, 6, 6, 6, 6, 6],
-                "nombre_places_obstétrique": [1, 1, 1, 1, 1, NaN, NaN, NaN, NaN, NaN],
-                "nombre_places_médecine": [7, 7, 7, 7, 7, 2, 2, 2, 2, 2],
-                "nombre_places_ssr": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
-                "nombre_lits_chirurgie": [26, 21, 26, 26, 26, 12, 30, 30, 30, 30],
-                "nombre_lits_obstétrique": [20, 21, 21, 21, 21, 8, 8, 8, 8, 8],
-                "nombre_lits_médecine": [62, 60, 60, 68, 76, 20, 20, 20, 20, 20],
-                "nombre_lits_ssr": [30, 30, 30, 30, 30, NaN, NaN, NaN, NaN, NaN],
-                "nombre_lits_usld": [15, 15, 15, 15, 15, NaN, NaN, NaN, NaN, NaN],
-                "nombre_lits_ou_places_psy_complet": [NaN, NaN, NaN, NaN, NaN, 5, 5, 5, 5, 5],
-                "nombre_places_psy_partiel": [NaN, NaN, NaN, NaN, NaN, 13, 13, 13, 13, 13],
-            }
-        ).set_index(index_des_capacités_sanitaires)
-        pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
+        annees_attendues = [2022, 2021, 2020, 2019, 2018]
+        assert données_transformées["annee"].tolist() == annees_attendues
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self) -> None:
         # GIVEN
