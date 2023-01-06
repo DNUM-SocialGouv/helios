@@ -811,7 +811,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             assert date_du_fichier_de_données.fetchone() == (date(2020, 1, 1), FichierSource.FINESS_CS1600102.value)
 
     class TestAjouteLesCapacitésDesÉtablissementsSanitaires:
-        def test_sauvegarde_les_capacités_des_établissements_sanitaires(self) -> None:
+        def test_sauvegarde_les_capacités_des_établissements_sanitaires_des_5_dernières_annees(self) -> None:
             # GIVEN
             autre_numéro_finess_sanitaire = "2A0000154"
             sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
@@ -832,18 +832,30 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             # THEN
             capacités_attendues = pd.DataFrame(
                 {
-                    "nombre_lits_chirurgie": [26, 12],
-                    "nombre_lits_médecine": [62, 20],
-                    "nombre_lits_obstétrique": [20, 8],
-                    "nombre_lits_ssr": [30, NaN],
-                    "nombre_places_chirurgie": [7, 6],
-                    "nombre_places_médecine": [7, 2],
-                    "nombre_places_obstétrique": [1, NaN],
-                    "nombre_places_ssr": [3, NaN],
-                    "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, autre_numéro_finess_sanitaire],
-                    "nombre_lits_usld": [15, 10],
-                    "nombre_lits_ou_places_psy_complet": [NaN, 5],
-                    "nombre_places_psy_partiel": [NaN, 13],
+                    "nombre_lits_chirurgie": [26, 21, 26, 26, 26, 12, 30, 30, 30, 30],
+                    "nombre_lits_médecine": [62, 60, 60, 68, 76, 20, 20, 20, 20, 20],
+                    "nombre_lits_obstétrique": [20, 21, 21, 21, 21, 8, 8, 8, 8, 8],
+                    "nombre_lits_ssr": [30.0, 30.0, 30.0, 30.0, 30.0, NaN, NaN, NaN, NaN, NaN],
+                    "nombre_places_chirurgie": [7, 7, 7, 7, 7, 6, 6, 6, 6, 6],
+                    "nombre_places_médecine": [7, 7, 7, 7, 7, 2, 2, 2, 2, 2],
+                    "nombre_places_obstétrique": [1.0, 1.0, 1.0, 1.0, 1.0, NaN, NaN, NaN, NaN, NaN],
+                    "nombre_places_ssr": [3.0, 3.0, 3.0, 3.0, 3.0, NaN, NaN, NaN, NaN, NaN],
+                    "numero_finess_etablissement_territorial": [
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        autre_numéro_finess_sanitaire,
+                        autre_numéro_finess_sanitaire,
+                        autre_numéro_finess_sanitaire,
+                        autre_numéro_finess_sanitaire,
+                        autre_numéro_finess_sanitaire,
+                    ],
+                    "nombre_lits_usld": [15, 15, 15, 15, 15, 10, 10, 10, 10, 10],
+                    "nombre_lits_ou_places_psy_complet": [NaN, NaN, NaN, NaN, NaN, 5.0, 5.0, 5.0, 5.0, 5.0],
+                    "nombre_places_psy_partiel": [NaN, NaN, NaN, NaN, NaN, 13.0, 13.0, 13.0, 13.0, 13.0],
+                    "annee": [2020, 2019, 2018, 2017, 2016, 2020, 2019, 2018, 2017, 2016],
                 }
             )
 
@@ -851,7 +863,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                 TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
                 base_de_données_test,
             )
-
+            print(capacités_enregistrées.transpose().to_string())
             pd.testing.assert_frame_equal(capacités_attendues, capacités_enregistrées)
 
         def test_sauvegarde_la_date_de_mise_à_jour_des_capacités(self) -> None:
@@ -901,18 +913,30 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             # THEN
             capacités_attendues = pd.DataFrame(
                 {
-                    "nombre_lits_chirurgie": [26, 12],
-                    "nombre_lits_médecine": [62, 20],
-                    "nombre_lits_obstétrique": [20, 8],
-                    "nombre_lits_ssr": [30, NaN],
-                    "nombre_places_chirurgie": [7, 6],
-                    "nombre_places_médecine": [7, 2],
-                    "nombre_places_obstétrique": [1, NaN],
-                    "nombre_places_ssr": [3, NaN],
-                    "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, autre_numéro_finess_sanitaire],
-                    "nombre_lits_usld": [15, 10],
-                    "nombre_lits_ou_places_psy_complet": [NaN, 5],
-                    "nombre_places_psy_partiel": [NaN, 13],
+                    "nombre_lits_chirurgie": [26, 21, 26, 26, 26, 12, 30, 30, 30, 30],
+                    "nombre_lits_médecine": [62, 60, 60, 68, 76, 20, 20, 20, 20, 20],
+                    "nombre_lits_obstétrique": [20, 21, 21, 21, 21, 8, 8, 8, 8, 8],
+                    "nombre_lits_ssr": [30.0, 30.0, 30.0, 30.0, 30.0, NaN, NaN, NaN, NaN, NaN],
+                    "nombre_places_chirurgie": [7, 7, 7, 7, 7, 6, 6, 6, 6, 6],
+                    "nombre_places_médecine": [7, 7, 7, 7, 7, 2, 2, 2, 2, 2],
+                    "nombre_places_obstétrique": [1.0, 1.0, 1.0, 1.0, 1.0, NaN, NaN, NaN, NaN, NaN],
+                    "nombre_places_ssr": [3.0, 3.0, 3.0, 3.0, 3.0, NaN, NaN, NaN, NaN, NaN],
+                    "numero_finess_etablissement_territorial": [
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                        autre_numéro_finess_sanitaire,
+                        autre_numéro_finess_sanitaire,
+                        autre_numéro_finess_sanitaire,
+                        autre_numéro_finess_sanitaire,
+                        autre_numéro_finess_sanitaire,
+                    ],
+                    "nombre_lits_usld": [15, 15, 15, 15, 15, 10, 10, 10, 10, 10],
+                    "nombre_lits_ou_places_psy_complet": [NaN, NaN, NaN, NaN, NaN, 5.0, 5.0, 5.0, 5.0, 5.0],
+                    "nombre_places_psy_partiel": [NaN, NaN, NaN, NaN, NaN, 13.0, 13.0, 13.0, 13.0, 13.0],
+                    "annee": [2020, 2019, 2018, 2017, 2016, 2020, 2019, 2018, 2017, 2016],
                 }
             )
 
