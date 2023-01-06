@@ -41,7 +41,7 @@ class TestTransformeLesDonnéesDesCapacitésSanitaires:
         ).set_index(index_des_capacités_sanitaires)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
-    def test_conserve_uniquement_l_année_la_plus_récente_pour_chaque_établissement(self) -> None:
+    def test_conserve_les_5_dernières_années_pour_chaque_établissement(self) -> None:
         # GIVEN
         données_diamant_ann_sae = pd.DataFrame(
             {
@@ -57,14 +57,14 @@ class TestTransformeLesDonnéesDesCapacitésSanitaires:
                     NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                     NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                 ],
-                "Année": [2020, 2019, 2018, 2017, 2016, 2020, 2019, 2018, 2017, 2016],
-                "Nombre de places de chirurgie": [7.0, 7, 7, 7, 7, 6, 6, 6, 6, 6],
+                "Année": [2022, 2021, 2020, 2019, 2018, 2021, 2020, 2019, 2018, 2017],
+                "Nombre de places de chirurgie": [7, 7, 7, 7, 7, 6, 6, 6, 6, 6],
                 "Nombre de places d'obstétrique": [1, 1, 1, 1, 1, NaN, NaN, NaN, NaN, NaN],
-                "Nombre de places de médecine": [7.0, 7, 7, 7, 7, 2, 2, 2, 2, 2],
+                "Nombre de places de médecine": [7, 7, 7, 7, 7, 2, 2, 2, 2, 2],
                 "Nombre de places de SSR": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
-                "Nombre de lits de chirurgie": [26.0, 21, 26, 26, 26, 12, 30, 30, 30, 30],
-                "Nombre de lits d'obstétrique": [20.0, 21, 21, 21, 21, 8, 8, 8, 8, 8],
-                "Nombre de lits de médecine": [62.0, 60, 60, 68, 76, 20, 20, 20, 20, 20],
+                "Nombre de lits de chirurgie": [26, 21, 26, 26, 26, 12, 30, 30, 30, 30],
+                "Nombre de lits d'obstétrique": [20, 21, 21, 21, 21, 8, 8, 8, 8, 8],
+                "Nombre de lits de médecine": [62, 60, 60, 68, 76, 20, 20, 20, 20, 20],
                 "Nombre de lits de SSR": [30, 30, 30, 30, 30, NaN, NaN, NaN, NaN, NaN],
                 "nombre_lits_usld": [15, 15, 15, 15, 15, NaN, NaN, NaN, NaN, NaN],
                 "nombre_lits_ou_places_psy_complet": [NaN, NaN, NaN, NaN, NaN, 5, 5, 5, 5, 5],
@@ -85,19 +85,27 @@ class TestTransformeLesDonnéesDesCapacitésSanitaires:
             {
                 "numero_finess_etablissement_territorial": [
                     NUMÉRO_FINESS_ÉTABLISSEMENT,
+                    NUMÉRO_FINESS_ÉTABLISSEMENT,
+                    NUMÉRO_FINESS_ÉTABLISSEMENT,
+                    NUMÉRO_FINESS_ÉTABLISSEMENT,
+                    NUMÉRO_FINESS_ÉTABLISSEMENT,
+                    NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                    NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                    NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
+                    NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                     NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                 ],
-                "nombre_places_chirurgie": [7.0, 6],
-                "nombre_places_obstétrique": [1, NaN],
-                "nombre_places_médecine": [7.0, 2],
-                "nombre_places_ssr": [NaN, NaN],
-                "nombre_lits_chirurgie": [26.0, 12],
-                "nombre_lits_obstétrique": [20.0, 8],
-                "nombre_lits_médecine": [62.0, 20],
-                "nombre_lits_ssr": [30, NaN],
-                "nombre_lits_usld": [15, NaN],
-                "nombre_lits_ou_places_psy_complet": [NaN, 5],
-                "nombre_places_psy_partiel": [NaN, 13],
+                "nombre_places_chirurgie": [7, 7, 7, 7, 7, 6, 6, 6, 6, 6],
+                "nombre_places_obstétrique": [1, 1, 1, 1, 1, NaN, NaN, NaN, NaN, NaN],
+                "nombre_places_médecine": [7, 7, 7, 7, 7, 2, 2, 2, 2, 2],
+                "nombre_places_ssr": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
+                "nombre_lits_chirurgie": [26, 21, 26, 26, 26, 12, 30, 30, 30, 30],
+                "nombre_lits_obstétrique": [20, 21, 21, 21, 21, 8, 8, 8, 8, 8],
+                "nombre_lits_médecine": [62, 60, 60, 68, 76, 20, 20, 20, 20, 20],
+                "nombre_lits_ssr": [30, 30, 30, 30, 30, NaN, NaN, NaN, NaN, NaN],
+                "nombre_lits_usld": [15, 15, 15, 15, 15, NaN, NaN, NaN, NaN, NaN],
+                "nombre_lits_ou_places_psy_complet": [NaN, NaN, NaN, NaN, NaN, 5, 5, 5, 5, 5],
+                "nombre_places_psy_partiel": [NaN, NaN, NaN, NaN, NaN, 13, 13, 13, 13, 13],
             }
         ).set_index(index_des_capacités_sanitaires)
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
