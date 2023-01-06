@@ -6,7 +6,11 @@ import pandas as pd
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 
-from datacrawler import écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour
+from datacrawler import (
+    écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour,
+    NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_SANITAIRES,
+    filtre_les_données_sur_les_n_dernières_années,
+)
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract import FichierDeDonnées
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_diamant, extrais_la_date_du_nom_de_fichier_finess
@@ -192,7 +196,9 @@ def ajoute_les_capacités(
     logger.info(f"[DIAMANT] {données_des_capacités.données.shape[0]} lignes trouvées dans le fichier {chemin_du_fichier_ann_sae}.")
 
     capacités_des_établissements_sanitaires = transforme_les_données_des_capacités(
-        données_des_capacités.données, numéros_finess_des_établissements_connus, logger
+        filtre_les_données_sur_les_n_dernières_années(données_des_capacités.données, NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_SANITAIRES),
+        numéros_finess_des_établissements_connus,
+        logger,
     )
 
     with base_de_données.begin() as connection:
