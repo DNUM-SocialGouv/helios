@@ -2,9 +2,9 @@ import { fireEvent, screen, within } from '@testing-library/react'
 
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from '../../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder'
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from '../../../testHelper'
+import { annéeEnCours } from '../../../testUtils'
 import { PageÉtablissementTerritorialSanitaire } from '../PageÉtablissementTerritorialSanitaire'
 import { ÉtablissementTerritorialSanitaireViewModel } from '../ÉtablissementTerritorialSanitaireViewModel'
-import { annéeEnCours } from '../../../testUtils'
 
 const { paths, wording } = fakeFrontDependencies
 

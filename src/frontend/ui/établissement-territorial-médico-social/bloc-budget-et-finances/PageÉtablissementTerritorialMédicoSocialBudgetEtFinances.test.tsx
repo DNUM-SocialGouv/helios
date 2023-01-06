@@ -4,9 +4,9 @@ import { CadreBudgétaire } from '../../../../../database/models/BudgetEtFinance
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from '../../../test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder'
 import { textMatch, fakeFrontDependencies, renderFakeComponent } from '../../../testHelper'
+import { annéeEnCours } from '../../../testUtils'
 import { PageÉtablissementTerritorialMédicoSocial } from '../PageÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from '../ÉtablissementTerritorialMédicoSocialViewModel'
-import { annéeEnCours } from '../../../testUtils'
 
 const { paths, wording } = fakeFrontDependencies
 
@@ -23,7 +23,6 @@ describe('La page établissement territorial - bloc budget et finances', () => {
     tauxDeCafNette: 3,
     tauxDeVétustéConstruction: 4,
   }
-
 
   it.each([
     [indiceDeLIndicateur.recettesEtDépenses, wording.COMPTE_DE_RÉSULTAT_ERRD, 'budget-et-finances-compte-de-résultat'],
