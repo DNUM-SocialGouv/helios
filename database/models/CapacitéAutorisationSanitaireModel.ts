@@ -43,4 +43,7 @@ export class CapacitéAutorisationSanitaireModel {
 
   @PrimaryColumn({ length: 9, name: 'numero_finess_etablissement_territorial' })
   public numéroFinessÉtablissementTerritorial!: string
+
+  @PrimaryColumn({ name: 'annee', type: 'int' })
+  public année!: number
 }
