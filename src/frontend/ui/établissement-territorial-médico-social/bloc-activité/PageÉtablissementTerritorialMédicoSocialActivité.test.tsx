@@ -4,6 +4,7 @@ import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from '../.
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from '../../../testHelper'
 import { PageÉtablissementTerritorialMédicoSocial } from '../PageÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from '../ÉtablissementTerritorialMédicoSocialViewModel'
+import { annéeEnCours } from '../../../testUtils'
 
 const { paths, wording } = fakeFrontDependencies
 
@@ -437,7 +438,6 @@ describe('La page établissement territorial médico-social - bloc activité', (
     indicateur6,
     indicateur7
   ) => {
-    const annéeEnCours = new Date().getFullYear()
     const établissementTerritorialSansActivité = new ÉtablissementTerritorialMédicoSocialViewModel({
       activités: [
         {

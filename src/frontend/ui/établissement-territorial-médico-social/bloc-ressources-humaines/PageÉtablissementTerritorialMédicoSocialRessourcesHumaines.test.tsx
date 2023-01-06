@@ -5,6 +5,7 @@ import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from '../.
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from '../../../testHelper'
 import { PageÉtablissementTerritorialMédicoSocial } from '../PageÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from '../ÉtablissementTerritorialMédicoSocialViewModel'
+import { annéeEnCours } from '../../../testUtils'
 
 const { paths, wording } = fakeFrontDependencies
 
@@ -19,8 +20,6 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     tauxDePrestationsExternes: 2,
     tauxDeRotationDuPersonnel: 4,
   }
-
-  const annéeEnCours = new Date().getFullYear()
 
   describe('L’indicateur du nombre d’ETP réalisé', () => {
     it('affiche l’intitulé de l’indicateur du nombre d’ETP réalisé, avec sa date de mise à jour, sa source et un bouton pour accéder aux détails', () => {
@@ -689,7 +688,7 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
     const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
     const indicateur = indicateurs[indiceDeLIndicateur]
-    const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} 2019, 2021`, { selector: 'p' })
+    const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 2}, ${annéeEnCours - 1}`, { selector: 'p' })
     expect(exergue).toBeInTheDocument()
   })
 
@@ -718,7 +717,7 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
     const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
     const indicateur = indicateurs[indiceDeLIndicateur]
-    const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} 2019, 2020, 2021`, { selector: 'p' })
+    const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 3}, ${annéeEnCours - 2}, ${annéeEnCours - 1}`, { selector: 'p' })
     expect(exergue).toBeInTheDocument()
   })
 

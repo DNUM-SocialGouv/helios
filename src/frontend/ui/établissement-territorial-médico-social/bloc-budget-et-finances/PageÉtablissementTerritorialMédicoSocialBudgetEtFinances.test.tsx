@@ -6,6 +6,7 @@ import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from '../.
 import { textMatch, fakeFrontDependencies, renderFakeComponent } from '../../../testHelper'
 import { PageÉtablissementTerritorialMédicoSocial } from '../PageÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from '../ÉtablissementTerritorialMédicoSocialViewModel'
+import { annéeEnCours } from '../../../testUtils'
 
 const { paths, wording } = fakeFrontDependencies
 
