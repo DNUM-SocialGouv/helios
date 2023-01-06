@@ -11,7 +11,9 @@ from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_�
 from datacrawler.extract.lecteur_xml import lis_le_fichier_xml
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.load.nom_des_tables import TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, FichierSource
-from datacrawler.transform.transforme_les_autorisations_des_établissements_médico_sociaux import transforme_les_autorisations_des_établissements_médico_sociaux
+from datacrawler.transform.transforme_les_autorisations_et_capacités_des_établissements_médico_sociaux import (
+    transforme_les_autorisations_des_établissements_médico_sociaux,
+)
 from datacrawler.transform.équivalences_finess_helios import XPATH_FINESS_CS1400105, type_des_colonnes_finess_cs1400105
 
 

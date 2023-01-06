@@ -3,7 +3,9 @@ from numpy import NaN
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, mocked_logger
 from datacrawler.test_helpers.diamant_builder import csv_ann_sae_builder
-from datacrawler.transform.transforme_les_autorisations_des_établissements_sanitaires.transforme_les_capacités import transforme_les_données_des_capacités
+from datacrawler.transform.transforme_les_autorisations_et_capacités_des_établissements_sanitaires.transforme_les_capacités import (
+    transforme_les_données_des_capacités,
+)
 from datacrawler.transform.équivalences_diamant_helios import index_des_capacités_sanitaires
 
 
