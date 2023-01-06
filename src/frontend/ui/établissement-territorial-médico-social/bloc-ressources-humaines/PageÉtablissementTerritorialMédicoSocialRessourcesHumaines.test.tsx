@@ -20,6 +20,8 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     tauxDeRotationDuPersonnel: 4,
   }
 
+  const annéeEnCours = new Date().getFullYear()
+
   describe('L’indicateur du nombre d’ETP réalisé', () => {
     it('affiche l’intitulé de l’indicateur du nombre d’ETP réalisé, avec sa date de mise à jour, sa source et un bouton pour accéder aux détails', () => {
       // WHEN
@@ -647,8 +649,8 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
       budgetEtFinances: [],
       identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
       ressourcesHumaines: [
-        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: 2019 }),
-        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: 2020 }),
+        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: annéeEnCours - 3 }), // 2019
+        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: annéeEnCours - 2 }), // 2020
       ],
     }, wording, paths)
 
@@ -659,7 +661,7 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
     const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
     const indicateur = indicateurs[indiceDeLIndicateur]
-    const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} 2021`, { selector: 'p' })
+    const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 1}`, { selector: 'p' })
     expect(exergue).toBeInTheDocument()
   })
 
