@@ -3,6 +3,7 @@ import { fireEvent, screen, within } from '@testing-library/react'
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines'
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from '../../../test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder'
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from '../../../testHelper'
+import { annéeEnCours } from '../../../testUtils'
 import { PageÉtablissementTerritorialMédicoSocial } from '../PageÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from '../ÉtablissementTerritorialMédicoSocialViewModel'
 
@@ -647,8 +648,8 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
       budgetEtFinances: [],
       identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
       ressourcesHumaines: [
-        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: 2019 }),
-        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: 2020 }),
+        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: annéeEnCours - 3 }), // 2019
+        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: annéeEnCours - 2 }), // 2020
       ],
     }, wording, paths)
 
@@ -659,7 +660,7 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
     const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
     const indicateur = indicateurs[indiceDeLIndicateur]
-    const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} 2021`, { selector: 'p' })
+    const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 1}`, { selector: 'p' })
     expect(exergue).toBeInTheDocument()
   })
 
@@ -687,7 +688,7 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
     const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
     const indicateur = indicateurs[indiceDeLIndicateur]
-    const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} 2019, 2021`, { selector: 'p' })
+    const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 2}, ${annéeEnCours - 1}`, { selector: 'p' })
     expect(exergue).toBeInTheDocument()
   })
 
@@ -716,7 +717,7 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
     const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
     const indicateur = indicateurs[indiceDeLIndicateur]
-    const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} 2019, 2020, 2021`, { selector: 'p' })
+    const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 3}, ${annéeEnCours - 2}, ${annéeEnCours - 1}`, { selector: 'p' })
     expect(exergue).toBeInTheDocument()
   })
 

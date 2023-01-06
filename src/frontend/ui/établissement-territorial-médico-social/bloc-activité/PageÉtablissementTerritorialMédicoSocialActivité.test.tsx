@@ -2,6 +2,7 @@ import { fireEvent, screen, within } from '@testing-library/react'
 
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from '../../../test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder'
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from '../../../testHelper'
+import { annéeEnCours } from '../../../testUtils'
 import { PageÉtablissementTerritorialMédicoSocial } from '../PageÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from '../ÉtablissementTerritorialMédicoSocialViewModel'
 
@@ -548,7 +549,7 @@ describe('La page établissement territorial médico-social - bloc activité', (
     // THEN
     const activité = screen.getByRole('region', { name: wording.TITRE_BLOC_ACTIVITÉ })
     const indicateurs = within(activité).queryAllByRole('listitem')
-    const exergue = within(indicateurs[identifiant]).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} 2019, 2020, 2021`, { selector: 'p' })
+    const exergue = within(indicateurs[identifiant]).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 3}, ${annéeEnCours - 2}, ${annéeEnCours - 1}`, { selector: 'p' })
     expect(exergue).toBeInTheDocument()
     const transcription = within(indicateurs[identifiant]).getByText(wording.AFFICHER_LA_TRANSCRIPTION)
     expect(transcription).toBeDisabled()

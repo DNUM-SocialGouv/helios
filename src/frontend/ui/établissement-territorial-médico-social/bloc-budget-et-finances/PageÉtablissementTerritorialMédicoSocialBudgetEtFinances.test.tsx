@@ -4,6 +4,7 @@ import { CadreBudgétaire } from '../../../../../database/models/BudgetEtFinance
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from '../../../test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder'
 import { textMatch, fakeFrontDependencies, renderFakeComponent } from '../../../testHelper'
+import { annéeEnCours } from '../../../testUtils'
 import { PageÉtablissementTerritorialMédicoSocial } from '../PageÉtablissementTerritorialMédicoSocial'
 import { ÉtablissementTerritorialMédicoSocialViewModel } from '../ÉtablissementTerritorialMédicoSocialViewModel'
 
@@ -142,8 +143,8 @@ describe('La page établissement territorial - bloc budget et finances', () => {
       activités: [],
       autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
       budgetEtFinances: [
-        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPa({ année: 2019 }),
-        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2020 }),
+        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPa({ année: annéeEnCours -3 }),
+        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: annéeEnCours -2 }),
       ],
       identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
       ressourcesHumaines: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines,
@@ -156,7 +157,7 @@ describe('La page établissement territorial - bloc budget et finances', () => {
     const budgetEtFinances = screen.getByRole('region', { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES })
     const indicateurs = within(budgetEtFinances).getAllByRole('listitem')
     const indicateur = indicateurs[indiceDeLIndicateur]
-    const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} 2021`, { selector: 'p' })
+    const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 1}`, { selector: 'p' })
     expect(exergue).toBeInTheDocument()
   })
 
