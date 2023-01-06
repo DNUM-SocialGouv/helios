@@ -19,6 +19,5 @@ def transforme_les_données_des_capacités(
         données_diamant_ann_sae[est_dans_finess]
         .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_diamant_ann_sae_helios))
         .dropna(subset=index_des_capacités_sanitaires)
-        .drop(["annee"], axis=1)
         .set_index(index_des_capacités_sanitaires)
     )

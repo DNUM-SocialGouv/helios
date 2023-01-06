@@ -25,6 +25,7 @@ class TestTransformeLesDonnéesDesCapacitésSanitaires:
         # THEN
         data_frame_attendu = pd.DataFrame(
             {
+                "annee": [2020],
                 "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT],
                 "nombre_places_chirurgie": [7.0],
                 "nombre_places_obstétrique": [1.0],
@@ -83,6 +84,7 @@ class TestTransformeLesDonnéesDesCapacitésSanitaires:
         # THEN
         data_frame_attendu = pd.DataFrame(
             {
+                "annee": [2022, 2021, 2020, 2019, 2018, 2021, 2020, 2019, 2018, 2017],
                 "numero_finess_etablissement_territorial": [
                     NUMÉRO_FINESS_ÉTABLISSEMENT,
                     NUMÉRO_FINESS_ÉTABLISSEMENT,
