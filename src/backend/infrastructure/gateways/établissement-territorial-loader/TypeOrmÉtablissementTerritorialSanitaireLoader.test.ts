@@ -4,7 +4,7 @@ import { ActivitéSanitaireModel } from '../../../../../database/models/Activit�
 import { AutorisationSanitaireModel } from '../../../../../database/models/AutorisationSanitaireModel'
 import { AutreActivitéSanitaireModel } from '../../../../../database/models/AutreActivitéSanitaireModel'
 import { CapacitéAutorisationSanitaireModel } from '../../../../../database/models/CapacitéAutorisationSanitaireModel'
-import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
+import { DateMiseÀJourFichierSourceModel } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
 import { ReconnaissanceContractuelleSanitaireModel } from '../../../../../database/models/ReconnaissanceContractuelleSanitaireModel'
 import { ÉquipementMatérielLourdSanitaireModel } from '../../../../../database/models/ÉquipementMatérielLourdSanitaireModel'
@@ -20,43 +20,6 @@ import { ÉtablissementTerritorialSanitaireNonTrouvée } from '../../../métier/
 import { ÉtablissementTerritorialTestBuilder } from '../../../test-builder/ÉtablissementTerritorialTestBuilder'
 import { clearAllTables, getOrm, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from '../../../testHelper'
 import { TypeOrmÉtablissementTerritorialSanitaireLoader } from './TypeOrmÉtablissementTerritorialSanitaireLoader'
-
-async function créerDateMiseAJourFichier(dateMiseÀJourFichierSourceRepository: Repository<DateMiseÀJourFichierSourceModel>) {
-  await dateMiseÀJourFichierSourceRepository.insert([
-    DateMiseÀJourFichierSourceModelTestBuilder.crée({
-      dernièreMiseÀJour: '2022-05-14',
-      fichier: FichierSource.FINESS_CS1400102,
-    }),
-    DateMiseÀJourFichierSourceModelTestBuilder.crée({
-      dernièreMiseÀJour: '2022-08-29',
-      fichier: FichierSource.FINESS_CS1400103,
-    }),
-    DateMiseÀJourFichierSourceModelTestBuilder.crée({
-      dernièreMiseÀJour: '2022-08-29',
-      fichier: FichierSource.FINESS_CS1400104,
-    }),
-    DateMiseÀJourFichierSourceModelTestBuilder.crée({
-      dernièreMiseÀJour: '2022-08-29',
-      fichier: FichierSource.FINESS_CS1600101,
-    }),
-    DateMiseÀJourFichierSourceModelTestBuilder.crée({
-      dernièreMiseÀJour: '2022-08-29',
-      fichier: FichierSource.FINESS_CS1600102,
-    }),
-    DateMiseÀJourFichierSourceModelTestBuilder.crée({
-      dernièreMiseÀJour: '2022-09-02',
-      fichier: FichierSource.DIAMANT_ANN_SAE,
-    }),
-    DateMiseÀJourFichierSourceModelTestBuilder.crée({
-      dernièreMiseÀJour: '2022-05-14',
-      fichier: FichierSource.DIAMANT_ANN_RPU,
-    }),
-    DateMiseÀJourFichierSourceModelTestBuilder.crée({
-      dernièreMiseÀJour: '2022-05-15',
-      fichier: FichierSource.DIAMANT_MEN_PMSI_ANNUEL,
-    }),
-  ])
-}
 
 describe('Établissement territorial sanitaire loader', () => {
   const orm = getOrm()
@@ -84,7 +47,7 @@ describe('Établissement territorial sanitaire loader', () => {
 
   beforeEach(async () => {
     await clearAllTables(await orm)
-    await créerDateMiseAJourFichier(dateMiseÀJourFichierSourceRepository)
+    await dateMiseÀJourFichierSourceRepository.insert(DateMiseÀJourFichierSourceModelTestBuilder.créePourTousLesFichiers())
   })
 
   afterAll(async () => {
@@ -110,11 +73,11 @@ describe('Établissement territorial sanitaire loader', () => {
       expect(établissementTerritorial).toStrictEqual(ÉtablissementTerritorialTestBuilder.créeUneIdentitéSanitaire(
         {
           numéroFinessEntitéJuridique: {
-            dateMiseÀJourSource: '2022-05-14',
+            dateMiseÀJourSource: '2022-02-02',
             value: numéroFinessEntitéJuridique,
           },
           numéroFinessÉtablissementTerritorial: {
-            dateMiseÀJourSource: '2022-05-14',
+            dateMiseÀJourSource: '2022-02-02',
             value: numéroFinessÉtablissementTerritorial,
           },
         }
@@ -193,7 +156,7 @@ describe('Établissement territorial sanitaire loader', () => {
         ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
           année: 2016,
           nombreDePassagesAuxUrgences: {
-            dateMiseÀJourSource: '2022-05-14',
+            dateMiseÀJourSource: '2022-02-02',
             value: 60_000,
           },
           numéroFinessÉtablissementTerritorial,
@@ -201,7 +164,7 @@ describe('Établissement territorial sanitaire loader', () => {
         ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
           année: 2017,
           nombreDePassagesAuxUrgences: {
-            dateMiseÀJourSource: '2022-05-14',
+            dateMiseÀJourSource: '2022-02-02',
             value: 60_000,
           },
           numéroFinessÉtablissementTerritorial,
@@ -209,7 +172,7 @@ describe('Établissement territorial sanitaire loader', () => {
         ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
           année: 2018,
           nombreDePassagesAuxUrgences: {
-            dateMiseÀJourSource: '2022-05-14',
+            dateMiseÀJourSource: '2022-02-02',
             value: 60_000,
           },
           numéroFinessÉtablissementTerritorial,
@@ -217,7 +180,7 @@ describe('Établissement territorial sanitaire loader', () => {
         ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
           année: 2019,
           nombreDePassagesAuxUrgences: {
-            dateMiseÀJourSource: '2022-05-14',
+            dateMiseÀJourSource: '2022-02-02',
             value: 60_000,
           },
           numéroFinessÉtablissementTerritorial,
@@ -225,7 +188,7 @@ describe('Établissement territorial sanitaire loader', () => {
         ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
           année: 2020,
           nombreDePassagesAuxUrgences: {
-            dateMiseÀJourSource: '2022-05-14',
+            dateMiseÀJourSource: '2022-02-02',
             value: 60_000,
           },
           numéroFinessÉtablissementTerritorial,
@@ -264,7 +227,7 @@ describe('Établissement territorial sanitaire loader', () => {
       expect(capacités[0]).toStrictEqual<ÉtablissementTerritorialSanitaireAutorisationEtCapacité['capacités'][0]>(
         {
           année: 2021,
-          dateMiseÀJourSource: '2022-09-02',
+          dateMiseÀJourSource: '2022-02-02',
           nombreDeLitsEnChirurgie: 20,
           nombreDeLitsEnMédecine: 35,
           nombreDeLitsEnObstétrique: 12,
@@ -411,7 +374,7 @@ describe('Établissement territorial sanitaire loader', () => {
             ],
           },
         ],
-        dateMiseÀJourSource: '2022-08-29',
+        dateMiseÀJourSource: '2022-02-02',
       })
     })
 
@@ -537,7 +500,7 @@ describe('Établissement territorial sanitaire loader', () => {
             ],
           },
         ],
-        dateMiseÀJourSource: '2022-08-29',
+        dateMiseÀJourSource: '2022-02-02',
       })
     })
 
@@ -679,7 +642,7 @@ describe('Établissement territorial sanitaire loader', () => {
             ],
           },
         ],
-        dateMiseÀJourSource: '2022-08-29',
+        dateMiseÀJourSource: '2022-02-02',
       })
     })
 
@@ -719,7 +682,7 @@ describe('Établissement territorial sanitaire loader', () => {
 
       // THEN
       expect(équipementsMatérielsLourds).toStrictEqual<ÉtablissementTerritorialSanitaireAutorisationEtCapacité['équipementsMatérielsLourds']>({
-        dateMiseÀJourSource: '2022-08-29',
+        dateMiseÀJourSource: '2022-02-02',
         équipements: [
           {
             autorisations: [
