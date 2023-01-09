@@ -1,7 +1,7 @@
 import { EntitéJuridique } from '../métier/entities/entité-juridique/EntitéJuridique'
 
 export class EntitéJuridiqueTestBuilder {
-  private static entitéJurique: EntitéJuridique = {
+  private static entitéJuridique: EntitéJuridique = {
     adresseAcheminement: {
       dateMiseÀJourSource: '2022-05-14',
       value: '01117 OYONNAX CEDEX',
@@ -46,7 +46,7 @@ export class EntitéJuridiqueTestBuilder {
 
   public static créeEntitéJuridique(champsSurchargés?: Partial<EntitéJuridique>): EntitéJuridique {
     return {
-      ...EntitéJuridiqueTestBuilder.entitéJurique,
+      ...EntitéJuridiqueTestBuilder.entitéJuridique,
       ...champsSurchargés,
     }
   }
