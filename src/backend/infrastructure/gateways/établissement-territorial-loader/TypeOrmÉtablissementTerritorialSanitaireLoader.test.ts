@@ -263,7 +263,7 @@ describe('Établissement territorial sanitaire loader', () => {
       // THEN
       expect(capacités[0]).toStrictEqual<ÉtablissementTerritorialSanitaireAutorisationEtCapacité['capacités'][0]>(
         {
-          année: 2022,
+          année: 2021,
           dateMiseÀJourSource: '2022-09-02',
           nombreDeLitsEnChirurgie: 20,
           nombreDeLitsEnMédecine: 35,

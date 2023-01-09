@@ -88,7 +88,7 @@ export type ÉquipementMatérielLourd = Readonly<{
 }>
 
 export type CapacitéSanitaire = Readonly<{
-  année: number,
+  année: number | null,
   dateMiseÀJourSource: string
   nombreDeLitsEnChirurgie: number | null
   nombreDeLitsEnMédecine: number | null
