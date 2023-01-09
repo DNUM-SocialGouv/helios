@@ -887,8 +887,6 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             )
             assert date_du_fichier_ann_sae.fetchone() == (date(2022, 8, 3), FichierSource.DIAMANT_ANN_SAE.value)
 
-        # TODO : J'ai l'impression que ce test contient trop d'information pour juste valider une suppression,
-        #  doit on vraiment refaire un assert sur la capacité attendue sachant que c'est déjà testé ?
         @freeze_time("2023-01-01")
         def test_supprime_les_données_existantes_avant_de_sauvegarder_les_données_en_base(self) -> None:
             # GIVEN
