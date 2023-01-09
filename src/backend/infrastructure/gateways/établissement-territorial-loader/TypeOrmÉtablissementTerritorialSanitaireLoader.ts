@@ -33,7 +33,8 @@ import { ÉtablissementTerritorialSanitaireNonTrouvée } from '../../../métier/
 import { ÉtablissementTerritorialSanitaireLoader } from '../../../métier/gateways/ÉtablissementTerritorialSanitaireLoader'
 
 export class TypeOrmÉtablissementTerritorialSanitaireLoader implements ÉtablissementTerritorialSanitaireLoader {
-  constructor(private readonly orm: Promise<DataSource>) {}
+  constructor(private readonly orm: Promise<DataSource>) {
+  }
 
   async chargeActivité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialSanitaireActivité[]> {
     const activitésÉtablissementTerritorialActivitésModel = await this.chargeLesActivitésModel(numéroFinessÉtablissementTerritorial)
@@ -84,24 +85,27 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     }
   }
 
-  private async chargeLesCapacitésModel(numéroFinessÉtablissementTerritorial: string): Promise<CapacitéAutorisationSanitaireModel | null> {
+  private async chargeLesCapacitésModel(numéroFinessÉtablissementTerritorial: string): Promise<CapacitéAutorisationSanitaireModel[]> {
     return await (await this.orm)
       .getRepository(CapacitéAutorisationSanitaireModel)
-      .findOne({ where: { numéroFinessÉtablissementTerritorial } })
+      .find({ where: { numéroFinessÉtablissementTerritorial } })
   }
 
   private async chargeLesÉquipementsMatérielsLourdsModel(numéroFinessÉtablissementTerritorial: string):
-  Promise<ÉquipementMatérielLourdSanitaireModel[]> {
+    Promise<ÉquipementMatérielLourdSanitaireModel[]> {
     return await (await this.orm)
       .getRepository(ÉquipementMatérielLourdSanitaireModel)
       .find({
-        order: { codeÉquipementMatérielLourd: 'ASC', numéroAutorisationArhgos: 'ASC' },
+        order: {
+          codeÉquipementMatérielLourd: 'ASC',
+          numéroAutorisationArhgos: 'ASC',
+        },
         where: { numéroFinessÉtablissementTerritorial },
       })
   }
 
   private async chargeLesReconnaissancesContractuellesModel(numéroFinessÉtablissementTerritorial: string):
-  Promise<ReconnaissanceContractuelleSanitaireModel[]> {
+    Promise<ReconnaissanceContractuelleSanitaireModel[]> {
     return await (await this.orm)
       .getRepository(ReconnaissanceContractuelleSanitaireModel)
       .find({
@@ -528,7 +532,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   }
 
   private construisLActivitéDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel):
-  ReconnaissanceContractuelleSanitaireActivité {
+    ReconnaissanceContractuelleSanitaireActivité {
     return {
       code: reconnaissanceContractuelleModel.codeActivité,
       libellé: reconnaissanceContractuelleModel.libelléActivité,
@@ -537,7 +541,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   }
 
   private construisLaModalitéDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel):
-  ReconnaissanceContractuelleSanitaireModalité {
+    ReconnaissanceContractuelleSanitaireModalité {
     return {
       code: reconnaissanceContractuelleModel.codeModalité,
       formes: [this.construisLaFormeDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel)],
@@ -546,7 +550,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   }
 
   private construisLaFormeDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel):
-  ReconnaissanceContractuelleSanitaireForme {
+    ReconnaissanceContractuelleSanitaireForme {
     return {
       code: reconnaissanceContractuelleModel.codeForme,
       libellé: reconnaissanceContractuelleModel.libelléForme,
@@ -555,7 +559,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   }
 
   private construisUneReconnaissanceContractuelle(reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel):
-  ReconnaissanceContractuelleSanitaire {
+    ReconnaissanceContractuelleSanitaire {
     return {
       capacitéAutorisée: reconnaissanceContractuelleModel.capacitéAutorisée,
       dateDEffetAsr: reconnaissanceContractuelleModel.dateEffetAsr,
@@ -609,7 +613,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   }
 
   private construisUnÉquipementMatérielLourd(équipementMatérielLourd: ÉquipementMatérielLourdSanitaireModel):
-  AutorisationÉquipementMatérielLourd {
+    AutorisationÉquipementMatérielLourd {
     return {
       dateDAutorisation: équipementMatérielLourd.dateAutorisation,
       dateDeFin: équipementMatérielLourd.dateFin,
@@ -619,26 +623,23 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   }
 
   private construisLesCapacités(
-    capacitésDeLÉtablissementModel: CapacitéAutorisationSanitaireModel | null,
+    capacitésDeLÉtablissementModel: CapacitéAutorisationSanitaireModel[],
     dateDeMiseÀJourDiamantAnnSaeModel: DateMiseÀJourFichierSourceModel
-  ): CapacitéSanitaire {
-    if (capacitésDeLÉtablissementModel) {
-      return {
-        dateMiseÀJourSource: dateDeMiseÀJourDiamantAnnSaeModel.dernièreMiseÀJour,
-        nombreDeLitsEnChirurgie: capacitésDeLÉtablissementModel.nombreDeLitsEnChirurgie,
-        nombreDeLitsEnMédecine: capacitésDeLÉtablissementModel.nombreDeLitsEnMédecine,
-        nombreDeLitsEnObstétrique: capacitésDeLÉtablissementModel.nombreDeLitsEnObstétrique,
-        nombreDeLitsEnSsr: capacitésDeLÉtablissementModel.nombreDeLitsEnSsr,
-        nombreDeLitsEnUsld: capacitésDeLÉtablissementModel.nombreDeLitsEnUsld,
-        nombreDeLitsOuPlacesEnPsyHospitalisationComplète: capacitésDeLÉtablissementModel.nombreDeLitsOuPlacesEnPsyHospitalisationComplète,
-        nombreDePlacesEnChirurgie: capacitésDeLÉtablissementModel.nombreDePlacesEnChirurgie,
-        nombreDePlacesEnMédecine: capacitésDeLÉtablissementModel.nombreDePlacesEnMédecine,
-        nombreDePlacesEnObstétrique: capacitésDeLÉtablissementModel.nombreDePlacesEnObstétrique,
-        nombreDePlacesEnPsyHospitalisationPartielle: capacitésDeLÉtablissementModel.nombreDePlacesEnPsyHospitalisationPartielle,
-        nombreDePlacesEnSsr: capacitésDeLÉtablissementModel.nombreDePlacesEnSsr,
-      }
-    } else {
-      return null
-    }
+  ): CapacitéSanitaire[] {
+    return capacitésDeLÉtablissementModel.map((capacités) => ({
+      année: capacités.année,
+      dateMiseÀJourSource: dateDeMiseÀJourDiamantAnnSaeModel.dernièreMiseÀJour,
+      nombreDeLitsEnChirurgie: capacités.nombreDeLitsEnChirurgie,
+      nombreDeLitsEnMédecine: capacités.nombreDeLitsEnMédecine,
+      nombreDeLitsEnObstétrique: capacités.nombreDeLitsEnObstétrique,
+      nombreDeLitsEnSsr: capacités.nombreDeLitsEnSsr,
+      nombreDeLitsEnUsld: capacités.nombreDeLitsEnUsld,
+      nombreDeLitsOuPlacesEnPsyHospitalisationComplète: capacités.nombreDeLitsOuPlacesEnPsyHospitalisationComplète,
+      nombreDePlacesEnChirurgie: capacités.nombreDePlacesEnChirurgie,
+      nombreDePlacesEnMédecine: capacités.nombreDePlacesEnMédecine,
+      nombreDePlacesEnObstétrique: capacités.nombreDePlacesEnObstétrique,
+      nombreDePlacesEnPsyHospitalisationPartielle: capacités.nombreDePlacesEnPsyHospitalisationPartielle,
+      nombreDePlacesEnSsr: capacités.nombreDePlacesEnSsr,
+    }))
   }
 }

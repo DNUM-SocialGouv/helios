@@ -99,6 +99,7 @@ export class ÉtablissementTerritorialAutorisationModelTestBuilder {
     champsSurchargés?: Partial<CapacitéAutorisationSanitaireModel>
   ): CapacitéAutorisationSanitaireModel {
     const capacitéAutorisationSanitaireModel = new CapacitéAutorisationSanitaireModel()
+    capacitéAutorisationSanitaireModel.année = champsSurchargés?.année || 2022
     capacitéAutorisationSanitaireModel.nombreDeLitsEnChirurgie = champsSurchargés?.nombreDeLitsEnChirurgie || 20
     capacitéAutorisationSanitaireModel.nombreDeLitsEnMédecine = champsSurchargés?.nombreDeLitsEnMédecine || 35
     capacitéAutorisationSanitaireModel.nombreDeLitsEnObstétrique = champsSurchargés?.nombreDeLitsEnObstétrique || 12

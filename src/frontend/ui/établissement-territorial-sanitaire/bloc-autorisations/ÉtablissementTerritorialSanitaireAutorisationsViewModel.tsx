@@ -26,9 +26,10 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
   }
 
   public get lesCapacitésParActivitésSontEllesRenseignées(): boolean {
-    const capacités = this.établissementTerritorialSanitaireAutorisations.capacités
+    const capacités = this.établissementTerritorialSanitaireAutorisations.capacités[0]
 
-    return (capacités !== null) && (
+    return !!capacités && (
+      capacités.année !== null ||
       capacités.nombreDeLitsEnMédecine !== null ||
       capacités.nombreDeLitsEnObstétrique !== null ||
       capacités.nombreDeLitsEnSsr !== null ||
@@ -42,40 +43,41 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
   }
 
   public get dateDeMiseÀJourDeLaCapacitéInstalléeParActivités(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialSanitaireAutorisations.capacités?.dateMiseÀJourSource as string)
+    return StringFormater.formateLaDate(this.établissementTerritorialSanitaireAutorisations.capacités[0]?.dateMiseÀJourSource as string)
   }
 
   public get capacitéParActivités(): ReactElement {
+    const capacitésDernièreAnnée = this.établissementTerritorialSanitaireAutorisations.capacités[0]
     const litsEtPlaces = [
       {
         libellé: this.wording.MÉDECINE,
-        nombreDeLits: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDeLitsEnMédecine as number,
-        nombreDePlaces: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDePlacesEnMédecine as number,
+        nombreDeLits: capacitésDernièreAnnée?.nombreDeLitsEnMédecine as number,
+        nombreDePlaces: capacitésDernièreAnnée?.nombreDePlacesEnMédecine as number,
       },
       {
         libellé: this.wording.CHIRURGIE,
-        nombreDeLits: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDeLitsEnChirurgie as number,
-        nombreDePlaces: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDePlacesEnChirurgie as number,
+        nombreDeLits: capacitésDernièreAnnée?.nombreDeLitsEnChirurgie as number,
+        nombreDePlaces: capacitésDernièreAnnée?.nombreDePlacesEnChirurgie as number,
       },
       {
         libellé: this.wording.OBSTÉTRIQUE,
-        nombreDeLits: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDeLitsEnObstétrique as number,
-        nombreDePlaces: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDePlacesEnObstétrique as number,
+        nombreDeLits: capacitésDernièreAnnée?.nombreDeLitsEnObstétrique as number,
+        nombreDePlaces: capacitésDernièreAnnée?.nombreDePlacesEnObstétrique as number,
       },
       {
         libellé: this.wording.SSR,
-        nombreDeLits: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDeLitsEnSsr as number,
-        nombreDePlaces: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDePlacesEnSsr as number,
+        nombreDeLits: capacitésDernièreAnnée?.nombreDeLitsEnSsr as number,
+        nombreDePlaces: capacitésDernièreAnnée?.nombreDePlacesEnSsr as number,
       },
       {
         libellé: this.wording.USLD,
-        nombreDeLits: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDeLitsEnUsld as number,
+        nombreDeLits: capacitésDernièreAnnée?.nombreDeLitsEnUsld as number,
         nombreDePlaces: 0,
       },
       {
         libellé: this.wording.PSYCHIATRIE,
-        nombreDeLits: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDeLitsOuPlacesEnPsyHospitalisationComplète as number,
-        nombreDePlaces: this.établissementTerritorialSanitaireAutorisations.capacités?.nombreDePlacesEnPsyHospitalisationPartielle as number,
+        nombreDeLits: capacitésDernièreAnnée?.nombreDeLitsOuPlacesEnPsyHospitalisationComplète as number,
+        nombreDePlaces: capacitésDernièreAnnée?.nombreDePlacesEnPsyHospitalisationPartielle as number,
       },
     ]
     const litsEtPlacesSansLignesVides = litsEtPlaces.filter((litEtPlace) => {
