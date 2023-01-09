@@ -235,7 +235,7 @@ def helios_ann_sae_builder(champs_surchargés: Optional[Dict] = None) -> Dict[st
         "nombre_lits_usld": 15,
         "nombre_lits_ou_places_psy_complet": 13,
         "nombre_places_psy_partiel": 5,
-        "annee": 2023
+        "annee": 2023,
     }
     if champs_surchargés:
         return {**ann_sae, **champs_surchargés}
