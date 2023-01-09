@@ -10,11 +10,8 @@ from datacrawler.transform.équivalences_diamant_helios import (
 )
 
 
-# TODO : Pourquoi ne pas passer directment la liste des établissement connus plutot que de passer par un DataFrame
-def transforme_les_données_des_capacités(
-    données_diamant_ann_sae: pd.DataFrame, numéros_finess_des_établissements_connus: pd.DataFrame, logger: Logger
-) -> pd.DataFrame:
-    est_dans_finess = données_diamant_ann_sae["Finess"].isin(numéros_finess_des_établissements_connus["numero_finess_etablissement_territorial"])
+def transforme_les_données_des_capacités(données_diamant_ann_sae: pd.DataFrame, numéros_finess_des_établissements_connus: list, logger: Logger) -> pd.DataFrame:
+    est_dans_finess = données_diamant_ann_sae["Finess"].isin(numéros_finess_des_établissements_connus)
     logger.info(f"[DIAMANT] {est_dans_finess.sum()} capacités sont liées à un ET trouvé en base dans le fichier ann_sae")
 
     données_n_dernieres_annees = filtre_les_données_sur_les_n_dernières_années(

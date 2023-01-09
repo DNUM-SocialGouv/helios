@@ -192,7 +192,7 @@ def ajoute_les_capacités(
     logger.info(f"[DIAMANT] {données_des_capacités.données.shape[0]} lignes trouvées dans le fichier {chemin_du_fichier_ann_sae}.")
 
     capacités_des_établissements_sanitaires = transforme_les_données_des_capacités(
-        données_des_capacités.données, numéros_finess_des_établissements_connus, logger
+        données_des_capacités.données, numéros_finess_des_établissements_connus["numero_finess_etablissement_territorial"], logger
     )
 
     with base_de_données.begin() as connection:
