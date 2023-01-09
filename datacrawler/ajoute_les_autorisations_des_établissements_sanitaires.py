@@ -22,17 +22,19 @@ from datacrawler.load.nom_des_tables import (
     TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS,
     FichierSource,
 )
-from datacrawler.transform.transforme_les_autorisations_des_établissements_sanitaires.transforme_les_capacités import transforme_les_données_des_capacités
-from datacrawler.transform.transforme_les_autorisations_des_établissements_sanitaires.transforme_les_données_des_autorisations import (
+from datacrawler.transform.transforme_les_autorisations_et_capacités_des_établissements_sanitaires.transforme_les_capacités import (
+    transforme_les_données_des_capacités,
+)
+from datacrawler.transform.transforme_les_autorisations_et_capacités_des_établissements_sanitaires.transforme_les_données_des_autorisations import (
     transforme_les_données_des_autorisations,
 )
-from datacrawler.transform.transforme_les_autorisations_des_établissements_sanitaires.transforme_les_données_des_autres_activités import (
+from datacrawler.transform.transforme_les_autorisations_et_capacités_des_établissements_sanitaires.transforme_les_données_des_autres_activités import (
     transforme_les_données_des_autres_activités,
 )
-from datacrawler.transform.transforme_les_autorisations_des_établissements_sanitaires.transforme_les_données_des_reconnaissances_contractuelles import (
+from datacrawler.transform.transforme_les_autorisations_et_capacités_des_établissements_sanitaires.transforme_les_données_des_reconnaissances_contractuelles import (
     transforme_les_données_des_reconnaissances_contractuelles,
 )
-from datacrawler.transform.transforme_les_autorisations_des_établissements_sanitaires.transforme_les_données_des_équipements_matériels_lourds import (
+from datacrawler.transform.transforme_les_autorisations_et_capacités_des_établissements_sanitaires.transforme_les_données_des_équipements_matériels_lourds import (
     transforme_les_données_des_équipements_matériels_lourds,
 )
 from datacrawler.transform.équivalences_diamant_helios import (
@@ -190,7 +192,7 @@ def ajoute_les_capacités(
     logger.info(f"[DIAMANT] {données_des_capacités.données.shape[0]} lignes trouvées dans le fichier {chemin_du_fichier_ann_sae}.")
 
     capacités_des_établissements_sanitaires = transforme_les_données_des_capacités(
-        données_des_capacités.données, numéros_finess_des_établissements_connus, logger
+        données_des_capacités.données, numéros_finess_des_établissements_connus["numero_finess_etablissement_territorial"].tolist(), logger
     )
 
     with base_de_données.begin() as connection:
