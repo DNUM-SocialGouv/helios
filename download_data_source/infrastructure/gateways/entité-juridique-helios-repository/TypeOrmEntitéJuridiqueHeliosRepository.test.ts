@@ -107,10 +107,7 @@ describe('Sauvegarde des entités juridiques', () => {
     const entitéJuridique = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
     await entitéJuridiqueRepository.insert([entitéJuridique])
     await dateMiseÀJourFichierSourceRepository.insert(
-      DateMiseÀJourFichierSourceModelTestBuilder.crée({
-        dernièreMiseÀJour: '2020-01-01',
-        fichier: FichierSource.FINESS_CS1400101,
-      })
+      DateMiseÀJourFichierSourceModelTestBuilder.créePourTousLesFichiers()
     )
     const entitéJuridiqueMalFormée = {
       ...uneEntitéJuridique,

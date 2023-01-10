@@ -6,4 +6,5 @@ if [[ "$STAGED_FILES" = "" ]]; then
   exit 0
 fi
 
+# Supprimer l'output des notebook pour éviter de les commiter (peut contenir des données sensibles de fichiers de prod)
 jupyter nbconvert --clear-output --inplace $(git diff --cached --name-only --diff-filter=ACM -- "*.ipynb" | tr "\n" " ")
