@@ -1,24 +1,25 @@
-import { EntitéJuridique } from '../../métier/entities/entité-juridique/EntitéJuridique'
-import { ÉtablissementTerritorialRattaché } from '../../métier/entities/entité-juridique/ÉtablissementTerritorialRattaché'
-import { RécupèreLEntitéJuridiqueUseCase } from '../../métier/use-cases/RécupèreLEntitéJuridiqueUseCase'
-import { RécupèreLesÉtablissementsTerritoriauxRattachésUseCase } from '../../métier/use-cases/RécupèreLesÉtablissementsTerritoriauxRattachésÀLEntitéJuridiqueUseCase'
-import { Dependencies } from '../dependencies'
+import { EntitéJuridique } from "../../métier/entities/entité-juridique/EntitéJuridique";
+import { ÉtablissementTerritorialRattaché } from "../../métier/entities/entité-juridique/ÉtablissementTerritorialRattaché";
+import { RécupèreLEntitéJuridiqueUseCase } from "../../métier/use-cases/RécupèreLEntitéJuridiqueUseCase";
+import { RécupèreLesÉtablissementsTerritoriauxRattachésUseCase } from "../../métier/use-cases/RécupèreLesÉtablissementsTerritoriauxRattachésÀLEntitéJuridiqueUseCase";
+import { Dependencies } from "../dependencies";
 
 type EntitéJuridiqueEndpoint = Readonly<{
-  entitéJuridique: EntitéJuridique
-  établissementsTerritoriauxRattachés: ÉtablissementTerritorialRattaché[]
-}>
+  entitéJuridique: EntitéJuridique;
+  établissementsTerritoriauxRattachés: ÉtablissementTerritorialRattaché[];
+}>;
 
-export async function récupèreLEntitéJuridiqueEndpoint(
-  dependencies: Dependencies,
-  numéroFiness: string
-): Promise<EntitéJuridiqueEndpoint> {
-  const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(dependencies.entitéJuridiqueLoader)
-  const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFiness)
+export async function récupèreLEntitéJuridiqueEndpoint(dependencies: Dependencies, numéroFiness: string): Promise<EntitéJuridiqueEndpoint> {
+  const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(dependencies.entitéJuridiqueLoader);
+  const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFiness);
 
-  const récupèreLesÉtablissementsTerritoriauxRattachésUseCase =
-    new RécupèreLesÉtablissementsTerritoriauxRattachésUseCase(dependencies.établissementTerritorialRattachéLoader)
-  const établissementsTerritoriauxRattachés = await récupèreLesÉtablissementsTerritoriauxRattachésUseCase.exécute(numéroFiness)
+  const récupèreLesÉtablissementsTerritoriauxRattachésUseCase = new RécupèreLesÉtablissementsTerritoriauxRattachésUseCase(
+    dependencies.établissementTerritorialRattachéLoader
+  );
+  const établissementsTerritoriauxRattachés = await récupèreLesÉtablissementsTerritoriauxRattachésUseCase.exécute(numéroFiness);
 
-  return { entitéJuridique, établissementsTerritoriauxRattachés }
+  return {
+    entitéJuridique,
+    établissementsTerritoriauxRattachés,
+  };
 }

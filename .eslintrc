@@ -1,5 +1,5 @@
 {
-  "extends": "next/core-web-vitals",
+  "extends": ["next/core-web-vitals", "prettier"],
   "env": {
     "browser": true,
     "es2021": true,
@@ -18,55 +18,13 @@
     "@typescript-eslint"
   ],
   "rules": {
-    "array-bracket-newline": ["error", { "multiline": true }],
-    "array-bracket-spacing": ["error", "never"],
-    "array-element-newline": ["error", "consistent"],
-    "arrow-parens": ["error", "always"],
-    "arrow-spacing": "error",
-    "brace-style": "error",
-    "comma-dangle": [
-      "error",
-      {
-        "arrays": "always-multiline",
-        "imports": "always-multiline",
-        "objects": "always-multiline"
-      }
-    ],
-    "comma-spacing": ["error", {"before": false, "after": true}],
     "default-case": "error",
-    "eol-last": ["error", "always"],
     "eqeqeq": "error",
-    "function-paren-newline": ["error", "consistent"],
     "id-match": "error",
-    "indent": ["error", 2, { "SwitchCase": 1 }],
-    "jsx-quotes": ["error", "prefer-double"],
-    "keyword-spacing": "error",
-    "max-len": [
-      "error",
-      {
-        "code": 160,
-        "ignoreUrls": true,
-        "ignoreStrings": true,
-        "ignoreTemplateLiterals": true,
-        "ignoreRegExpLiterals": true
-      }
-    ],
     "no-console": "error",
-    "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0, "maxBOF": 0 }],
-    "no-multi-spaces": "error",
     "no-param-reassign": "error",
-    "no-tabs": "error",
-    "no-trailing-spaces": "error",
-    "no-whitespace-before-property": "error",
-    "object-curly-spacing": ["error", "always"],
-    "object-curly-newline": ["error", { "multiline": true }],
-    "object-property-newline": ["error", { "allowAllPropertiesOnSameLine": true }],
     "prefer-const": "error",
-    "quote-props": ["error", "as-needed"],
-    "quotes": ["error", "single", { "avoidEscape": true }],
-    "semi": ["error", "never"],
     "sort-keys": ["error"],
-    "space-before-blocks": "error",
     "yoda": "error",
     "@typescript-eslint/array-type": ["error", { "ArrayOption": "array" }],
     "@typescript-eslint/naming-convention": [
@@ -83,17 +41,9 @@
     ],
     "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
     "@typescript-eslint/no-var-requires": "error",
-    "@typescript-eslint/type-annotation-spacing": "error",
     "react-hooks/exhaustive-deps": "off",
-    "react/jsx-closing-bracket-location": ["error", "line-aligned"],
     "react/jsx-curly-brace-presence": "error",
-    "react/jsx-first-prop-new-line": ["error", "multiline"],
-    "react/jsx-indent": [2, 2],
-    "react/jsx-indent-props": [2, 2],
-    "react/jsx-max-props-per-line": [1, { "when": "always" }],
-    "react/jsx-one-expression-per-line": ["error", { "allow": "literal" }],
     "react/jsx-sort-props": "error",
-    "react/jsx-tag-spacing": ["error", { "beforeSelfClosing": "always" }],
     "import/newline-after-import": "error",
     "import/no-duplicates": "error",
     "import/no-extraneous-dependencies": "error",
