@@ -13,7 +13,7 @@
     "depcheck": "depcheck --ignore-patterns=spikes,.venv",
     "dev": "yarn start:db && next dev",
     "encryptDiamant:local": "pipenv run encrypt_diamant",
-    "format:typescript": "prettier --ignorpath .gitignore --write \"**/*.+(js|ts|json|tsx|jsx)\"",
+    "format:typescript": "prettier --write \"**/*.+(js|ts|json|tsx|jsx)\"",
     "lint": "yarn lint:typescript && yarn lint:python",
     "lint:typescript": "npx eslint src database download_data_source",
     "lint:typescript:fix": "yarn lint:typescript --fix",
