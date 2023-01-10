@@ -7,4 +7,13 @@ export class DateMiseÀJourFichierSourceModelTestBuilder {
     dateMiseÀJourFichierSourceModel.fichier = champsSurchargés?.fichier || FichierSource.FINESS_CS1400101
     return dateMiseÀJourFichierSourceModel
   }
+
+  public static créePourTousLesFichiers(): DateMiseÀJourFichierSourceModel[] {
+    return Object.values(FichierSource).map((fichier) => {
+      return DateMiseÀJourFichierSourceModelTestBuilder.crée({
+        dernièreMiseÀJour: '2022-02-02',
+        fichier,
+      })
+    })
+  }
 }

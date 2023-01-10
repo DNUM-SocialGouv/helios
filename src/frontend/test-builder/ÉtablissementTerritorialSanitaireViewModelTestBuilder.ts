@@ -332,9 +332,9 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     autorisations: {
       activités: [
         {
-          code:'16',
-          libellé: "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
-          modalités : [
+          code: '16',
+          libellé: 'Traitement de l\'insuffisance rénale chronique par épuration extrarénale',
+          modalités: [
             {
               code: '42',
               formes: [
@@ -359,9 +359,9 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     autresActivités: {
       activités: [
         {
-          code:'A0',
+          code: 'A0',
           libellé: 'Installation de chirurgie esthétique',
-          modalités : [
+          modalités: [
             {
               code: 'M2',
               formes: [
@@ -380,9 +380,9 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
           ],
         },
         {
-          code:'A1',
+          code: 'A1',
           libellé: 'Dépôt de sang',
-          modalités : [
+          modalités: [
             {
               code: 'M0',
               formes: [
@@ -405,7 +405,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
                   libellé: 'Forme non précisée',
                 },
               ],
-              libellé: "Dépôt d'urgence",
+              libellé: 'Dépôt d\'urgence',
             },
             {
               code: '31',
@@ -427,27 +427,30 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       ],
       dateMiseÀJourSource: '2022-08-29',
     },
-    capacités: {
-      dateMiseÀJourSource: '2022-09-02',
-      nombreDeLitsEnChirurgie: 10,
-      nombreDeLitsEnMédecine: 20,
-      nombreDeLitsEnObstétrique: 5,
-      nombreDeLitsEnSsr: 2,
-      nombreDeLitsEnUsld: 15,
-      nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 5,
-      nombreDePlacesEnChirurgie: 20,
-      nombreDePlacesEnMédecine: 50,
-      nombreDePlacesEnObstétrique: 6,
-      nombreDePlacesEnPsyHospitalisationPartielle: 13,
-      nombreDePlacesEnSsr: null,
-    },
+    capacités: [
+      {
+        année: 2022,
+        dateMiseÀJourSource: '2022-09-02',
+        nombreDeLitsEnChirurgie: 10,
+        nombreDeLitsEnMédecine: 20,
+        nombreDeLitsEnObstétrique: 5,
+        nombreDeLitsEnSsr: 2,
+        nombreDeLitsEnUsld: 15,
+        nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 5,
+        nombreDePlacesEnChirurgie: 20,
+        nombreDePlacesEnMédecine: 50,
+        nombreDePlacesEnObstétrique: 6,
+        nombreDePlacesEnPsyHospitalisationPartielle: 13,
+        nombreDePlacesEnSsr: null,
+      },
+    ],
     numéroFinessÉtablissementTerritorial: '123456789',
     reconnaissancesContractuelles: {
       activités: [
         {
-          code:'R7',
+          code: 'R7',
           libellé: 'Surveillance continue',
-          modalités : [
+          modalités: [
             {
               code: 'N8',
               formes: [
@@ -475,7 +478,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       dateMiseÀJourSource: '2022-08-29',
       équipements: [
         {
-          autorisations : [
+          autorisations: [
             {
               dateDAutorisation: '2006-05-02',
               dateDeFin: '2027-02-16',
@@ -489,8 +492,8 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
               numéroArhgos: '01-20-0000',
             },
           ],
-          code:'06201',
-          libellé: "Appareil d'IRM à utilisation clinique",
+          code: '06201',
+          libellé: 'Appareil d\'IRM à utilisation clinique',
         },
       ],
     },

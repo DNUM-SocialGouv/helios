@@ -4,7 +4,7 @@ import { ActivitéSanitaireModel } from '../../../../../database/models/Activit�
 import { AutorisationSanitaireModel } from '../../../../../database/models/AutorisationSanitaireModel'
 import { AutreActivitéSanitaireModel } from '../../../../../database/models/AutreActivitéSanitaireModel'
 import { CapacitéAutorisationSanitaireModel } from '../../../../../database/models/CapacitéAutorisationSanitaireModel'
-import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
+import { DateMiseÀJourFichierSourceModel } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
 import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
 import { ReconnaissanceContractuelleSanitaireModel } from '../../../../../database/models/ReconnaissanceContractuelleSanitaireModel'
 import { ÉquipementMatérielLourdSanitaireModel } from '../../../../../database/models/ÉquipementMatérielLourdSanitaireModel'
@@ -47,6 +47,7 @@ describe('Établissement territorial sanitaire loader', () => {
 
   beforeEach(async () => {
     await clearAllTables(await orm)
+    await dateMiseÀJourFichierSourceRepository.insert(DateMiseÀJourFichierSourceModelTestBuilder.créePourTousLesFichiers())
   })
 
   afterAll(async () => {
@@ -57,14 +58,11 @@ describe('Établissement territorial sanitaire loader', () => {
     it('charge par numéro FINESS et domaine sanitaire', async () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
-      await dateMiseÀJourFichierSourceRepository.insert([
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-05-14',
-          fichier: FichierSource.FINESS_CS1400102,
-        }),
-      ])
       await établissementTerritorialIdentitéRepository.insert(
-        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
+          numéroFinessEntitéJuridique,
+          numéroFinessÉtablissementTerritorial,
+        })
       )
       const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm)
 
@@ -75,11 +73,11 @@ describe('Établissement territorial sanitaire loader', () => {
       expect(établissementTerritorial).toStrictEqual(ÉtablissementTerritorialTestBuilder.créeUneIdentitéSanitaire(
         {
           numéroFinessEntitéJuridique: {
-            dateMiseÀJourSource: '2022-05-14',
+            dateMiseÀJourSource: '2022-02-02',
             value: numéroFinessEntitéJuridique,
           },
           numéroFinessÉtablissementTerritorial: {
-            dateMiseÀJourSource: '2022-05-14',
+            dateMiseÀJourSource: '2022-02-02',
             value: numéroFinessÉtablissementTerritorial,
           },
         }
@@ -101,7 +99,10 @@ describe('Établissement territorial sanitaire loader', () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
       await établissementTerritorialIdentitéRepository.insert(
-        ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({
+          numéroFinessEntitéJuridique,
+          numéroFinessÉtablissementTerritorial,
+        })
       )
       const typeOrmÉtablissementTerritorialSanitaireLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm)
 
@@ -117,25 +118,33 @@ describe('Établissement territorial sanitaire loader', () => {
     it('charge par numéro FINESS rangé par année ascendante', async () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
-      await dateMiseÀJourFichierSourceRepository.insert([
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-05-14',
-          fichier: FichierSource.DIAMANT_ANN_RPU,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-05-15',
-          fichier: FichierSource.DIAMANT_MEN_PMSI_ANNUEL,
-        }),
-      ])
       await établissementTerritorialIdentitéRepository.insert(
-        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
+          numéroFinessEntitéJuridique,
+          numéroFinessÉtablissementTerritorial,
+        })
       )
       await activitéSanitaireModelRepository.insert([
-        ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({ année: 2020, numéroFinessÉtablissementTerritorial }),
-        ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({ année: 2019, numéroFinessÉtablissementTerritorial }),
-        ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({ année: 2018, numéroFinessÉtablissementTerritorial }),
-        ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({ année: 2017, numéroFinessÉtablissementTerritorial }),
-        ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({ année: 2016, numéroFinessÉtablissementTerritorial }),
+        ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({
+          année: 2020,
+          numéroFinessÉtablissementTerritorial,
+        }),
+        ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({
+          année: 2019,
+          numéroFinessÉtablissementTerritorial,
+        }),
+        ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({
+          année: 2018,
+          numéroFinessÉtablissementTerritorial,
+        }),
+        ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({
+          année: 2017,
+          numéroFinessÉtablissementTerritorial,
+        }),
+        ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({
+          année: 2016,
+          numéroFinessÉtablissementTerritorial,
+        }),
       ])
       const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm)
 
@@ -147,7 +156,7 @@ describe('Établissement territorial sanitaire loader', () => {
         ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
           année: 2016,
           nombreDePassagesAuxUrgences: {
-            dateMiseÀJourSource: '2022-05-14',
+            dateMiseÀJourSource: '2022-02-02',
             value: 60_000,
           },
           numéroFinessÉtablissementTerritorial,
@@ -155,7 +164,7 @@ describe('Établissement territorial sanitaire loader', () => {
         ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
           année: 2017,
           nombreDePassagesAuxUrgences: {
-            dateMiseÀJourSource: '2022-05-14',
+            dateMiseÀJourSource: '2022-02-02',
             value: 60_000,
           },
           numéroFinessÉtablissementTerritorial,
@@ -163,7 +172,7 @@ describe('Établissement territorial sanitaire loader', () => {
         ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
           année: 2018,
           nombreDePassagesAuxUrgences: {
-            dateMiseÀJourSource: '2022-05-14',
+            dateMiseÀJourSource: '2022-02-02',
             value: 60_000,
           },
           numéroFinessÉtablissementTerritorial,
@@ -171,7 +180,7 @@ describe('Établissement territorial sanitaire loader', () => {
         ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
           année: 2019,
           nombreDePassagesAuxUrgences: {
-            dateMiseÀJourSource: '2022-05-14',
+            dateMiseÀJourSource: '2022-02-02',
             value: 60_000,
           },
           numéroFinessÉtablissementTerritorial,
@@ -179,7 +188,7 @@ describe('Établissement territorial sanitaire loader', () => {
         ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
           année: 2020,
           nombreDePassagesAuxUrgences: {
-            dateMiseÀJourSource: '2022-05-14',
+            dateMiseÀJourSource: '2022-02-02',
             value: 60_000,
           },
           numéroFinessÉtablissementTerritorial,
@@ -192,90 +201,64 @@ describe('Établissement territorial sanitaire loader', () => {
     it('charge les capacités', async () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
-      await dateMiseÀJourFichierSourceRepository.insert([
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1400103,
+      await établissementTerritorialIdentitéRepository.insert(
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
+          numéroFinessEntitéJuridique,
+          numéroFinessÉtablissementTerritorial,
+        })
+      )
+      await capacitéSanitaireRepository.insert([
+        ÉtablissementTerritorialAutorisationModelTestBuilder.créeCapacitéSanitaire({
+          année: 2021,
+          numéroFinessÉtablissementTerritorial,
         }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1400104,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1600101,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1600102,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-09-02',
-          fichier: FichierSource.DIAMANT_ANN_SAE,
+        ÉtablissementTerritorialAutorisationModelTestBuilder.créeCapacitéSanitaire({
+          année: 2022,
+          nombreDeLitsEnChirurgie: 10,
+          numéroFinessÉtablissementTerritorial,
         }),
       ])
-      await établissementTerritorialIdentitéRepository.insert(
-        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
-      )
-      await capacitéSanitaireRepository.insert(
-        ÉtablissementTerritorialAutorisationModelTestBuilder.créeCapacitéSanitaire({ numéroFinessÉtablissementTerritorial })
-      )
       const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm)
 
       // WHEN
       const { capacités } = await typeOrmÉtablissementTerritorialLoader.chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial)
 
       // THEN
-      expect(capacités).toStrictEqual<ÉtablissementTerritorialSanitaireAutorisationEtCapacité['capacités']>({
-        dateMiseÀJourSource: '2022-09-02',
-        nombreDeLitsEnChirurgie: 20,
-        nombreDeLitsEnMédecine: 35,
-        nombreDeLitsEnObstétrique: 12,
-        nombreDeLitsEnSsr: 3,
-        nombreDeLitsEnUsld: 15,
-        nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 5,
-        nombreDePlacesEnChirurgie: 25,
-        nombreDePlacesEnMédecine: 40,
-        nombreDePlacesEnObstétrique: 12,
-        nombreDePlacesEnPsyHospitalisationPartielle: 13,
-        nombreDePlacesEnSsr: 3,
-      })
+      expect(capacités[0]).toStrictEqual<ÉtablissementTerritorialSanitaireAutorisationEtCapacité['capacités'][0]>(
+        {
+          année: 2021,
+          dateMiseÀJourSource: '2022-02-02',
+          nombreDeLitsEnChirurgie: 20,
+          nombreDeLitsEnMédecine: 35,
+          nombreDeLitsEnObstétrique: 12,
+          nombreDeLitsEnSsr: 3,
+          nombreDeLitsEnUsld: 15,
+          nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 5,
+          nombreDePlacesEnChirurgie: 25,
+          nombreDePlacesEnMédecine: 40,
+          nombreDePlacesEnObstétrique: 12,
+          nombreDePlacesEnPsyHospitalisationPartielle: 13,
+          nombreDePlacesEnSsr: 3,
+        }
+      )
+      expect(capacités[1]?.nombreDeLitsEnChirurgie).toBe(10)
     })
 
     it('charge les autorisations groupées par activité, modalité puis par forme. Chaque niveau de groupe est trié par ordre croissant de code.', async () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
-      await dateMiseÀJourFichierSourceRepository.insert([
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1400103,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1400104,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1600101,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1600102,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-09-02',
-          fichier: FichierSource.DIAMANT_ANN_SAE,
-        }),
-      ])
       await établissementTerritorialIdentitéRepository.insert(
-        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
+          numéroFinessEntitéJuridique,
+          numéroFinessÉtablissementTerritorial,
+        })
       )
       await autorisationSanitaireRepository.insert([
         ÉtablissementTerritorialAutorisationModelTestBuilder.créeAutorisationSanitaire({
           codeActivité: '16',
           codeForme: '14',
           codeModalité: '45',
-          libelléActivité: "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
+          libelléActivité: 'Traitement de l\'insuffisance rénale chronique par épuration extrarénale',
           libelléForme: 'Non saisonnier',
           libelléModalité: 'Hémodialyse à domicile',
           numéroAutorisationArhgos: '01-00-0000',
@@ -285,7 +268,7 @@ describe('Établissement territorial sanitaire loader', () => {
           codeActivité: '16',
           codeForme: '15',
           codeModalité: '42',
-          libelléActivité: "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
+          libelléActivité: 'Traitement de l\'insuffisance rénale chronique par épuration extrarénale',
           libelléForme: 'Pas de forme',
           libelléModalité: 'Hémodialyse en unité médicalisée',
           numéroAutorisationArhgos: '02-00-0000',
@@ -305,7 +288,7 @@ describe('Établissement territorial sanitaire loader', () => {
           codeActivité: '16',
           codeForme: '15',
           codeModalité: '45',
-          libelléActivité: "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
+          libelléActivité: 'Traitement de l\'insuffisance rénale chronique par épuration extrarénale',
           libelléForme: 'Non saisonnier',
           libelléModalité: 'Hémodialyse à domicile',
           numéroAutorisationArhgos: '04-00-0000',
@@ -322,7 +305,7 @@ describe('Établissement territorial sanitaire loader', () => {
         activités: [
           {
             code: '16',
-            libellé: "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
+            libellé: 'Traitement de l\'insuffisance rénale chronique par épuration extrarénale',
             modalités: [
               {
                 code: '42',
@@ -391,37 +374,18 @@ describe('Établissement territorial sanitaire loader', () => {
             ],
           },
         ],
-        dateMiseÀJourSource: '2022-08-29',
+        dateMiseÀJourSource: '2022-02-02',
       })
     })
 
     it('charge les autres activités groupées par activité, modalité puis par forme. Chaque niveau de groupe est trié par ordre croissant de code.', async () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
-      await dateMiseÀJourFichierSourceRepository.insert([
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1400103,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1400104,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1600101,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1600102,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-09-02',
-          fichier: FichierSource.DIAMANT_ANN_SAE,
-        }),
-      ])
       await établissementTerritorialIdentitéRepository.insert(
-        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
+          numéroFinessEntitéJuridique,
+          numéroFinessÉtablissementTerritorial,
+        })
       )
       await autreActivitéSanitaireRepository.insert([
         ÉtablissementTerritorialAutorisationModelTestBuilder.créeAutreActivitéSanitaire({
@@ -430,7 +394,7 @@ describe('Établissement territorial sanitaire loader', () => {
           codeModalité: 'M1',
           libelléActivité: 'Dépôt de sang',
           libelléForme: 'Pas de forme',
-          libelléModalité: "Dépôt d'urgence",
+          libelléModalité: 'Dépôt d\'urgence',
           numéroFinessÉtablissementTerritorial,
         }),
         ÉtablissementTerritorialAutorisationModelTestBuilder.créeAutreActivitéSanitaire({
@@ -457,7 +421,7 @@ describe('Établissement territorial sanitaire loader', () => {
           codeModalité: 'M0',
           libelléActivité: 'Installation de chirurgie esthétique',
           libelléForme: 'Pas de forme',
-          libelléModalité: "Dépôt d'urgence",
+          libelléModalité: 'Dépôt d\'urgence',
           numéroFinessÉtablissementTerritorial,
         }),
       ])
@@ -486,7 +450,7 @@ describe('Établissement territorial sanitaire loader', () => {
                     libellé: 'Pas de forme',
                   },
                 ],
-                libellé: "Dépôt d'urgence",
+                libellé: 'Dépôt d\'urgence',
               },
             ],
           },
@@ -507,7 +471,7 @@ describe('Établissement territorial sanitaire loader', () => {
                     libellé: 'Pas de forme',
                   },
                 ],
-                libellé: "Dépôt d'urgence",
+                libellé: 'Dépôt d\'urgence',
               },
               {
                 code: 'M2',
@@ -536,37 +500,18 @@ describe('Établissement territorial sanitaire loader', () => {
             ],
           },
         ],
-        dateMiseÀJourSource: '2022-08-29',
+        dateMiseÀJourSource: '2022-02-02',
       })
     })
 
     it('charge les reconnaissances contractuelles groupées par activité, modalité puis par forme. Chaque niveau de groupe est trié par ordre croissant de code.', async () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
-      await dateMiseÀJourFichierSourceRepository.insert([
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1400103,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1400104,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1600101,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1600102,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-09-02',
-          fichier: FichierSource.DIAMANT_ANN_SAE,
-        }),
-      ])
       await établissementTerritorialIdentitéRepository.insert(
-        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
+          numéroFinessEntitéJuridique,
+          numéroFinessÉtablissementTerritorial,
+        })
       )
       await reconnaissanceContractuelleSanitaireRepository.insert([
         ÉtablissementTerritorialAutorisationModelTestBuilder.créeReconnaissanceContractuelleSanitaire({
@@ -603,7 +548,7 @@ describe('Établissement territorial sanitaire loader', () => {
           codeActivité: 'S6',
           codeForme: '00',
           codeModalité: 'B3',
-          libelléActivité: "Structure spécifique d'hospitalisation",
+          libelléActivité: 'Structure spécifique d\'hospitalisation',
           libelléForme: 'Pas de forme',
           libelléModalité: 'Clinique ouverte',
           numéroAutorisationArhgos: '04-00-0000',
@@ -674,7 +619,7 @@ describe('Établissement territorial sanitaire loader', () => {
           },
           {
             code: 'S6',
-            libellé: "Structure spécifique d'hospitalisation",
+            libellé: 'Structure spécifique d\'hospitalisation',
             modalités: [
               {
                 code: 'B3',
@@ -697,37 +642,18 @@ describe('Établissement territorial sanitaire loader', () => {
             ],
           },
         ],
-        dateMiseÀJourSource: '2022-08-29',
+        dateMiseÀJourSource: '2022-02-02',
       })
     })
 
     it('charge les équipements matériels lourds groupés par équipement. Chaque autorisation d’équipement est trié par ordre croissant.', async () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
-      await dateMiseÀJourFichierSourceRepository.insert([
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1400103,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1400104,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1600101,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1600102,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-09-02',
-          fichier: FichierSource.DIAMANT_ANN_SAE,
-        }),
-      ])
       await établissementTerritorialIdentitéRepository.insert(
-        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
+          numéroFinessEntitéJuridique,
+          numéroFinessÉtablissementTerritorial,
+        })
       )
       await équipementMatérielLourdSanitaireRepository.insert([
         ÉtablissementTerritorialAutorisationModelTestBuilder.créeÉquipementMatérielLourdSanitaire({
@@ -744,7 +670,7 @@ describe('Établissement territorial sanitaire loader', () => {
         }),
         ÉtablissementTerritorialAutorisationModelTestBuilder.créeÉquipementMatérielLourdSanitaire({
           codeÉquipementMatérielLourd: '06201',
-          libelléÉquipementMatérielLourd: "Appareil d'IRM à utilisation clinique",
+          libelléÉquipementMatérielLourd: 'Appareil d\'IRM à utilisation clinique',
           numéroAutorisationArhgos: '11-11-1111',
           numéroFinessÉtablissementTerritorial,
         }),
@@ -756,7 +682,7 @@ describe('Établissement territorial sanitaire loader', () => {
 
       // THEN
       expect(équipementsMatérielsLourds).toStrictEqual<ÉtablissementTerritorialSanitaireAutorisationEtCapacité['équipementsMatérielsLourds']>({
-        dateMiseÀJourSource: '2022-08-29',
+        dateMiseÀJourSource: '2022-02-02',
         équipements: [
           {
             autorisations: [
@@ -786,39 +712,20 @@ describe('Établissement territorial sanitaire loader', () => {
               },
             ],
             code: '06201',
-            libellé: "Appareil d'IRM à utilisation clinique",
+            libellé: 'Appareil d\'IRM à utilisation clinique',
           },
         ],
       })
     })
 
-    it('ne renvoie rien si l’établissement n’a pas de capacités', async () => {
+    it('renvoit un tableau vide si l’établissement n’a pas de capacités', async () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }))
-      await dateMiseÀJourFichierSourceRepository.insert([
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1400103,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1400104,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1600101,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-08-29',
-          fichier: FichierSource.FINESS_CS1600102,
-        }),
-        DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: '2022-09-02',
-          fichier: FichierSource.DIAMANT_ANN_SAE,
-        }),
-      ])
       await établissementTerritorialIdentitéRepository.insert(
-        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
+          numéroFinessEntitéJuridique,
+          numéroFinessÉtablissementTerritorial,
+        })
       )
 
       const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm)
@@ -827,7 +734,7 @@ describe('Établissement territorial sanitaire loader', () => {
       const { capacités } = await typeOrmÉtablissementTerritorialLoader.chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial)
 
       // THEN
-      expect(capacités).toBeNull()
+      expect(capacités).toStrictEqual([])
     })
   })
 })

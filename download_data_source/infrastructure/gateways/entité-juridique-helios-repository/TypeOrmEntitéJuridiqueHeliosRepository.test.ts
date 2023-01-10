@@ -106,6 +106,7 @@ describe('Sauvegarde des entités juridiques', () => {
     const numéroFinessEntitéJuridique = '010018407'
     const entitéJuridique = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
     await entitéJuridiqueRepository.insert([entitéJuridique])
+
     await dateMiseÀJourFichierSourceRepository.insert(
       DateMiseÀJourFichierSourceModelTestBuilder.crée({
         dernièreMiseÀJour: '2020-01-01',

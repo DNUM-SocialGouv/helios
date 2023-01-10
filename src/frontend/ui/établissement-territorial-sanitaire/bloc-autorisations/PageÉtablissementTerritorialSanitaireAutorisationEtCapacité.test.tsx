@@ -6,7 +6,10 @@ import { fakeFrontDependencies, renderFakeComponent, textMatch } from '../../../
 import { PageÉtablissementTerritorialSanitaire } from '../PageÉtablissementTerritorialSanitaire'
 import { ÉtablissementTerritorialSanitaireViewModel } from '../ÉtablissementTerritorialSanitaireViewModel'
 
-const { paths, wording } = fakeFrontDependencies
+const {
+  paths,
+  wording,
+} = fakeFrontDependencies
 
 describe('La page établissement territorial sanitaire - bloc autorisation et capacité', () => {
   const établissementTerritorialSanitaireViewModel = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths)
@@ -125,7 +128,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       const lignes = within(tbody).getAllByRole('row')
       expect(lignes).toHaveLength(activitésEtValeurs.length)
       activitésEtValeurs.forEach((activitéEtValeur, index) => {
-        const activité = within(lignes[index]).getByRole('cell', { name : activitéEtValeur.activité })
+        const activité = within(lignes[index]).getByRole('cell', { name: activitéEtValeur.activité })
         expect(activité).toBeInTheDocument()
         const valeurLit = within(lignes[index]).getByRole('cell', { name: activitéEtValeur.valeur[0] })
         expect(valeurLit).toBeInTheDocument()
@@ -140,20 +143,23 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
         wording,
         paths,
         {
-          capacités: {
-            dateMiseÀJourSource: '2022-09-02',
-            nombreDeLitsEnChirurgie: 10,
-            nombreDeLitsEnMédecine: 20,
-            nombreDeLitsEnObstétrique: null,
-            nombreDeLitsEnSsr: 2,
-            nombreDeLitsEnUsld: 15,
-            nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 15,
-            nombreDePlacesEnChirurgie: 20,
-            nombreDePlacesEnMédecine: 50,
-            nombreDePlacesEnObstétrique: null,
-            nombreDePlacesEnPsyHospitalisationPartielle: 14,
-            nombreDePlacesEnSsr: null,
-          },
+          capacités: [
+            {
+              année: 2022,
+              dateMiseÀJourSource: '2022-09-02',
+              nombreDeLitsEnChirurgie: 10,
+              nombreDeLitsEnMédecine: 20,
+              nombreDeLitsEnObstétrique: null,
+              nombreDeLitsEnSsr: 2,
+              nombreDeLitsEnUsld: 15,
+              nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 15,
+              nombreDePlacesEnChirurgie: 20,
+              nombreDePlacesEnMédecine: 50,
+              nombreDePlacesEnObstétrique: null,
+              nombreDePlacesEnPsyHospitalisationPartielle: 14,
+              nombreDePlacesEnSsr: null,
+            },
+          ],
         }
       )
 
@@ -175,20 +181,23 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
         wording,
         paths,
         {
-          capacités: {
-            dateMiseÀJourSource: '2022-09-02',
-            nombreDeLitsEnChirurgie: 10,
-            nombreDeLitsEnMédecine: 20,
-            nombreDeLitsEnObstétrique: 20,
-            nombreDeLitsEnSsr: 2,
-            nombreDeLitsEnUsld: null,
-            nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 15,
-            nombreDePlacesEnChirurgie: 20,
-            nombreDePlacesEnMédecine: 50,
-            nombreDePlacesEnObstétrique: 20,
-            nombreDePlacesEnPsyHospitalisationPartielle: 14,
-            nombreDePlacesEnSsr: 20,
-          },
+          capacités: [
+            {
+              année: 2022,
+              dateMiseÀJourSource: '2022-09-02',
+              nombreDeLitsEnChirurgie: 10,
+              nombreDeLitsEnMédecine: 20,
+              nombreDeLitsEnObstétrique: 20,
+              nombreDeLitsEnSsr: 2,
+              nombreDeLitsEnUsld: null,
+              nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 15,
+              nombreDePlacesEnChirurgie: 20,
+              nombreDePlacesEnMédecine: 50,
+              nombreDePlacesEnObstétrique: 20,
+              nombreDePlacesEnPsyHospitalisationPartielle: 14,
+              nombreDePlacesEnSsr: 20,
+            },
+          ],
         }
       )
 
@@ -210,20 +219,23 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
         autorisationsEtCapacités: {
           autorisations: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.autorisations,
           autresActivités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.autresActivités,
-          capacités: {
-            dateMiseÀJourSource: '2022-09-02',
-            nombreDeLitsEnChirurgie: null,
-            nombreDeLitsEnMédecine: null,
-            nombreDeLitsEnObstétrique: null,
-            nombreDeLitsEnSsr: null,
-            nombreDeLitsEnUsld: null,
-            nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
-            nombreDePlacesEnChirurgie: null,
-            nombreDePlacesEnMédecine: null,
-            nombreDePlacesEnObstétrique: null,
-            nombreDePlacesEnPsyHospitalisationPartielle: null,
-            nombreDePlacesEnSsr: null,
-          },
+          capacités: [
+            {
+              année: null,
+              dateMiseÀJourSource: '2022-09-02',
+              nombreDeLitsEnChirurgie: null,
+              nombreDeLitsEnMédecine: null,
+              nombreDeLitsEnObstétrique: null,
+              nombreDeLitsEnSsr: null,
+              nombreDeLitsEnUsld: null,
+              nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
+              nombreDePlacesEnChirurgie: null,
+              nombreDePlacesEnMédecine: null,
+              nombreDePlacesEnObstétrique: null,
+              nombreDePlacesEnPsyHospitalisationPartielle: null,
+              nombreDePlacesEnSsr: null,
+            },
+          ],
           numéroFinessÉtablissementTerritorial: '123456789',
           reconnaissancesContractuelles: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.reconnaissancesContractuelles,
           équipementsMatérielsLourds: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.équipementsMatérielsLourds,
@@ -247,7 +259,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
         autorisationsEtCapacités: {
           autorisations: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.autorisations,
           autresActivités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.autresActivités,
-          capacités: null,
+          capacités: [],
           numéroFinessÉtablissementTerritorial: '123456789',
           reconnaissancesContractuelles: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.reconnaissancesContractuelles,
           équipementsMatérielsLourds: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.équipementsMatérielsLourds,
@@ -365,7 +377,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
       const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
       const autorisations = sélectionneLIndicateur(wording.AUTORISATIONS, indicateurs)
-      expect(within(autorisations).getByRole('link', { name: "Traitement de l'insuffisance rénale chronique par épuration extrarénale [16]" })).toBeInTheDocument()
+      expect(within(autorisations).getByRole('link', { name: 'Traitement de l\'insuffisance rénale chronique par épuration extrarénale [16]' })).toBeInTheDocument()
     })
 
     it('affiche un lien pour chaque modalité d’une activité', () => {
@@ -423,7 +435,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       const autresActivités = sélectionneLIndicateur(wording.AUTRES_ACTIVITÉS, indicateurs)
       const modalité1 = within(autresActivités).getByRole('link', { name: 'Dépôt relais [M2]' })
       expect(modalité1).toHaveAttribute('aria-expanded', 'false')
-      const modalité2 = within(autresActivités).getByRole('link', { name: "Dépôt d'urgence [M0]" })
+      const modalité2 = within(autresActivités).getByRole('link', { name: 'Dépôt d\'urgence [M0]' })
       expect(modalité2).toHaveAttribute('aria-expanded', 'false')
       const modalité3 = within(autresActivités).getByRole('link', { name: 'Multi-Organes [31]' })
       expect(modalité3).toHaveAttribute('aria-expanded', 'false')
@@ -460,20 +472,23 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
           activités: [],
           dateMiseÀJourSource: '2022-09-05',
         },
-        capacités: {
-          dateMiseÀJourSource: '2022-09-02',
-          nombreDeLitsEnChirurgie: null,
-          nombreDeLitsEnMédecine: null,
-          nombreDeLitsEnObstétrique: null,
-          nombreDeLitsEnSsr: null,
-          nombreDeLitsEnUsld: null,
-          nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
-          nombreDePlacesEnChirurgie: null,
-          nombreDePlacesEnMédecine: null,
-          nombreDePlacesEnObstétrique: null,
-          nombreDePlacesEnPsyHospitalisationPartielle: null,
-          nombreDePlacesEnSsr: null,
-        },
+        capacités: [
+          {
+            année: null,
+            dateMiseÀJourSource: '2022-09-02',
+            nombreDeLitsEnChirurgie: null,
+            nombreDeLitsEnMédecine: null,
+            nombreDeLitsEnObstétrique: null,
+            nombreDeLitsEnSsr: null,
+            nombreDeLitsEnUsld: null,
+            nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
+            nombreDePlacesEnChirurgie: null,
+            nombreDePlacesEnMédecine: null,
+            nombreDePlacesEnObstétrique: null,
+            nombreDePlacesEnPsyHospitalisationPartielle: null,
+            nombreDePlacesEnSsr: null,
+          },
+        ],
         numéroFinessÉtablissementTerritorial,
         reconnaissancesContractuelles: {
           activités: [],
@@ -508,20 +523,23 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
             activités: [],
             dateMiseÀJourSource: '2022-08-29',
           },
-          capacités: {
-            dateMiseÀJourSource: '2022-09-02',
-            nombreDeLitsEnChirurgie: null,
-            nombreDeLitsEnMédecine: null,
-            nombreDeLitsEnObstétrique: null,
-            nombreDeLitsEnSsr: null,
-            nombreDeLitsEnUsld: null,
-            nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
-            nombreDePlacesEnChirurgie: null,
-            nombreDePlacesEnMédecine: null,
-            nombreDePlacesEnObstétrique: null,
-            nombreDePlacesEnPsyHospitalisationPartielle: null,
-            nombreDePlacesEnSsr: null,
-          },
+          capacités: [
+            {
+              année: 2022,
+              dateMiseÀJourSource: '2022-09-02',
+              nombreDeLitsEnChirurgie: null,
+              nombreDeLitsEnMédecine: null,
+              nombreDeLitsEnObstétrique: null,
+              nombreDeLitsEnSsr: null,
+              nombreDeLitsEnUsld: null,
+              nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
+              nombreDePlacesEnChirurgie: null,
+              nombreDePlacesEnMédecine: null,
+              nombreDePlacesEnObstétrique: null,
+              nombreDePlacesEnPsyHospitalisationPartielle: null,
+              nombreDePlacesEnSsr: null,
+            },
+          ],
           numéroFinessÉtablissementTerritorial: '123456789',
           reconnaissancesContractuelles: {
             activités: [],
@@ -544,20 +562,23 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
             activités: [],
             dateMiseÀJourSource: '2022-08-29',
           },
-          capacités: {
-            dateMiseÀJourSource: '2022-09-02',
-            nombreDeLitsEnChirurgie: null,
-            nombreDeLitsEnMédecine: null,
-            nombreDeLitsEnObstétrique: null,
-            nombreDeLitsEnSsr: null,
-            nombreDeLitsEnUsld: null,
-            nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
-            nombreDePlacesEnChirurgie: null,
-            nombreDePlacesEnMédecine: null,
-            nombreDePlacesEnObstétrique: null,
-            nombreDePlacesEnPsyHospitalisationPartielle: null,
-            nombreDePlacesEnSsr: null,
-          },
+          capacités: [
+            {
+              année: 2022,
+              dateMiseÀJourSource: '2022-09-02',
+              nombreDeLitsEnChirurgie: null,
+              nombreDeLitsEnMédecine: null,
+              nombreDeLitsEnObstétrique: null,
+              nombreDeLitsEnSsr: null,
+              nombreDeLitsEnUsld: null,
+              nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
+              nombreDePlacesEnChirurgie: null,
+              nombreDePlacesEnMédecine: null,
+              nombreDePlacesEnObstétrique: null,
+              nombreDePlacesEnPsyHospitalisationPartielle: null,
+              nombreDePlacesEnSsr: null,
+            },
+          ],
           reconnaissancesContractuelles: {
             activités: [],
             dateMiseÀJourSource: '2022-08-29',
@@ -608,20 +629,23 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
             activités: [],
             dateMiseÀJourSource: '2022-08-29',
           },
-          capacités: {
-            dateMiseÀJourSource: '2022-09-02',
-            nombreDeLitsEnChirurgie: null,
-            nombreDeLitsEnMédecine: null,
-            nombreDeLitsEnObstétrique: null,
-            nombreDeLitsEnSsr: null,
-            nombreDeLitsEnUsld: null,
-            nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
-            nombreDePlacesEnChirurgie: null,
-            nombreDePlacesEnMédecine: null,
-            nombreDePlacesEnObstétrique: null,
-            nombreDePlacesEnPsyHospitalisationPartielle: null,
-            nombreDePlacesEnSsr: null,
-          },
+          capacités: [
+            {
+              année: 2022,
+              dateMiseÀJourSource: '2022-09-02',
+              nombreDeLitsEnChirurgie: null,
+              nombreDeLitsEnMédecine: null,
+              nombreDeLitsEnObstétrique: null,
+              nombreDeLitsEnSsr: null,
+              nombreDeLitsEnUsld: null,
+              nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
+              nombreDePlacesEnChirurgie: null,
+              nombreDePlacesEnMédecine: null,
+              nombreDePlacesEnObstétrique: null,
+              nombreDePlacesEnPsyHospitalisationPartielle: null,
+              nombreDePlacesEnSsr: null,
+            },
+          ],
           équipementsMatérielsLourds: {
             dateMiseÀJourSource: '2022-08-29',
             équipements: [],
@@ -643,20 +667,23 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
             activités: [],
             dateMiseÀJourSource: '2022-08-29',
           },
-          capacités: {
-            dateMiseÀJourSource: '2022-09-02',
-            nombreDeLitsEnChirurgie: null,
-            nombreDeLitsEnMédecine: null,
-            nombreDeLitsEnObstétrique: null,
-            nombreDeLitsEnSsr: null,
-            nombreDeLitsEnUsld: null,
-            nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
-            nombreDePlacesEnChirurgie: null,
-            nombreDePlacesEnMédecine: null,
-            nombreDePlacesEnObstétrique: null,
-            nombreDePlacesEnPsyHospitalisationPartielle: null,
-            nombreDePlacesEnSsr: null,
-          },
+          capacités: [
+            {
+              année: 2022,
+              dateMiseÀJourSource: '2022-09-02',
+              nombreDeLitsEnChirurgie: null,
+              nombreDeLitsEnMédecine: null,
+              nombreDeLitsEnObstétrique: null,
+              nombreDeLitsEnSsr: null,
+              nombreDeLitsEnUsld: null,
+              nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
+              nombreDePlacesEnChirurgie: null,
+              nombreDePlacesEnMédecine: null,
+              nombreDePlacesEnObstétrique: null,
+              nombreDePlacesEnPsyHospitalisationPartielle: null,
+              nombreDePlacesEnSsr: null,
+            },
+          ],
           reconnaissancesContractuelles: {
             activités: [],
             dateMiseÀJourSource: '2022-08-29',
@@ -664,7 +691,10 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
         }
       ),
     },
-  ])('affiche l’indicateur $indicateurAffiché lorsqu’il est le seul à être renseigné', ({ indicateurAffiché, viewModel }) => {
+  ])('affiche l’indicateur $indicateurAffiché lorsqu’il est le seul à être renseigné', ({
+    indicateurAffiché,
+    viewModel,
+  }) => {
     // GIVEN
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={viewModel} />)
@@ -734,7 +764,7 @@ describe('La page établissement territorial sanitaire - bloc autorisation et ca
       const autorisationEtCapacité = screen.getByRole('region', { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ })
       const indicateurs = within(autorisationEtCapacité).getAllByRole('listitem')
       const équipementsMatérielsLourds = sélectionneLIndicateur(wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, indicateurs)
-      const équipement = within(équipementsMatérielsLourds).getByRole('link', { name: "Appareil d'IRM à utilisation clinique [06201]" })
+      const équipement = within(équipementsMatérielsLourds).getByRole('link', { name: 'Appareil d\'IRM à utilisation clinique [06201]' })
       expect(équipement).toHaveAttribute('aria-expanded', 'false')
     })
 
