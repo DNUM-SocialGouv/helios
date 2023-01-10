@@ -9,19 +9,13 @@ import { DependenciesProvider } from './ui/commun/contexts/useDependencies'
 
 // Cela permet de pouvoir tester ce qu'il y a dans <head>.
 // https://github.com/vercel/next.js/discussions/11060
-jest.mock('next/head', () => (
-  {
-    __esModule: true,
-    default: ({ children }: { children: ReactElement[] }) => children,
-  }
-))
+jest.mock('next/head', () => ({
+  __esModule: true,
+  default: ({ children }: { children: ReactElement[] }) => children,
+}))
 
 export const renderFakeComponent = (component: ReactChild): RenderResult => {
-  return render(
-    <DependenciesProvider>
-      {component}
-    </DependenciesProvider>
-  )
+  return render(<DependenciesProvider>{component}</DependenciesProvider>)
 }
 
 export const fakeFrontDependencies: FrontDependencies = {
@@ -56,6 +50,8 @@ export const htmlNodeAndReactElementMatcher = (wording: ReactElement) => (_: str
   return hasText(element)
 }
 
-export const textMatch = (wording: string) => (_: string, element?: Element | null): boolean => {
-  return element?.textContent === wording
-}
+export const textMatch =
+  (wording: string) =>
+  (_: string, element?: Element | null): boolean => {
+    return element?.textContent === wording
+  }

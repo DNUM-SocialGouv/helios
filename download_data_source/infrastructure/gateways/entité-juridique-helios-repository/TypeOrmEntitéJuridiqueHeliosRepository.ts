@@ -12,7 +12,9 @@ export class TypeOrmEntitéJuridiqueHeliosRepository implements EntitéJuridique
   constructor(private readonly orm: Promise<DataSource>, private logger: Logger) {}
 
   async sauvegarde(entitésJuridiques: EntitéJuridique[], dateDeMiseAJourDuFichierSource: string): Promise<void> {
-    await (await this.orm).transaction(async (transactionalEntityManager: EntityManager) => {
+    await (
+      await this.orm
+    ).transaction(async (transactionalEntityManager: EntityManager) => {
       try {
         await this.sauvegardeLesEntitésJuridiques(transactionalEntityManager, entitésJuridiques)
         this.logger.info(`Sauvegarde ${entitésJuridiques.length} entités juridiques.`)
@@ -30,26 +32,23 @@ export class TypeOrmEntitéJuridiqueHeliosRepository implements EntitéJuridique
   }
 
   private async sauvegardeLesEntitésJuridiques(entityManager: EntityManager, entitésJuridiques: EntitéJuridique[]) {
-    await entityManager
-      .getRepository(EntitéJuridiqueModel)
-      .save(entitésJuridiques, { chunk: this.TAILLE_DE_FRAGMENT })
+    await entityManager.getRepository(EntitéJuridiqueModel).save(entitésJuridiques, { chunk: this.TAILLE_DE_FRAGMENT })
   }
 
   private async metsÀJourLaDateDeMiseÀJourDuFichierSource(entityManager: EntityManager, dateDeMiseAJourDuFichierSource: string): Promise<void> {
-    await entityManager
-      .getRepository(DateMiseÀJourFichierSourceModel)
-      .upsert([
+    await entityManager.getRepository(DateMiseÀJourFichierSourceModel).upsert(
+      [
         {
           dernièreMiseÀJour: dateDeMiseAJourDuFichierSource,
           fichier: FichierSource.FINESS_CS1400101,
         },
-      ], ['fichier'])
+      ],
+      ['fichier']
+    )
   }
 
   private async supprimeLesEntitésJuridiques(entitésJuridiquesÀSupprimer: EntitéJuridiqueModel[]) {
-    await (await this.orm)
-      .getRepository(EntitéJuridiqueModel)
-      .remove(entitésJuridiquesÀSupprimer, { chunk: this.TAILLE_DE_FRAGMENT })
+    await (await this.orm).getRepository(EntitéJuridiqueModel).remove(entitésJuridiquesÀSupprimer, { chunk: this.TAILLE_DE_FRAGMENT })
   }
 
   private construisLesEntitésJuridiquesModels(numérosFinessDEntitésJuridiques: string[]) {

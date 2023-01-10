@@ -35,9 +35,9 @@ export type ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité = Read
   autorisations: {
     disciplines: AutorisationMédicoSocialDiscipline[]
     dateMiseÀJourSource: string
-  },
+  }
   capacités: {
-    capacitéParActivité: CapacitéParActivité[],
+    capacitéParActivité: CapacitéParActivité[]
     dateMiseÀJourSource: string
   }
 }>

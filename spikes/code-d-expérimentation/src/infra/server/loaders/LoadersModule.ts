@@ -1,5 +1,5 @@
-import { Module } from '@nestjs/common';
-import { InMemoryCatLoader } from './InMemoryCatLoader';
+import { Module } from '@nestjs/common'
+import { InMemoryCatLoader } from './InMemoryCatLoader'
 
 @Module({
   providers: [

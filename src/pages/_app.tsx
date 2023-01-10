@@ -39,24 +39,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <DependenciesProvider>
       <Head>
         <meta charSet="utf-8" />
-        <meta
-          content="width=device-width, initial-scale=1, shrink-to-fit=no"
-          name="viewport"
-        />
+        <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
       </Head>
       <Header />
       <Component {...pageProps} />
       <Footer />
-      <Script
-        src="/dsfr-1.4.1.module.min.js"
-        strategy="lazyOnload"
-      />
-      {process.env.NODE_ENV !== 'development' &&
-        <Script
-          src="/smarttag.js"
-          strategy="beforeInteractive"
-        />
-      }
+      <Script src="/dsfr-1.4.1.module.min.js" strategy="lazyOnload" />
+      {process.env.NODE_ENV !== 'development' && <Script src="/smarttag.js" strategy="beforeInteractive" />}
     </DependenciesProvider>
   )
 }

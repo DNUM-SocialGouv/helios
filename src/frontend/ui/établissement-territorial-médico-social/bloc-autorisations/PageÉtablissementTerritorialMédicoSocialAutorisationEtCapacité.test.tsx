@@ -121,48 +121,52 @@ describe('La page établissement territorial médico-social - bloc autorisation 
 
   it('n’affiche pas l’histogramme des capacités si elles ne sont pas renseignées', () => {
     // GIVEN
-    const établissementTerritorialSansAutorisation = new ÉtablissementTerritorialMédicoSocialViewModel({
-      activités: [],
-      autorisationsEtCapacités: {
-        autorisations: {
-          dateMiseÀJourSource: '2022-05-14',
-          disciplines: [
-            {
-              activités: [
-                {
-                  clientèles: [
-                    {
-                      code: '010',
-                      datesEtCapacités: {
-                        capacitéAutoriséeTotale: 10,
-                        capacitéInstalléeTotale: 10,
-                        dateDAutorisation: '2020-01-01',
-                        dateDeDernièreInstallation: '2020-01-01',
-                        dateDeMiseÀJourDAutorisation: '2020-01-01',
-                        estInstallée: true,
+    const établissementTerritorialSansAutorisation = new ÉtablissementTerritorialMédicoSocialViewModel(
+      {
+        activités: [],
+        autorisationsEtCapacités: {
+          autorisations: {
+            dateMiseÀJourSource: '2022-05-14',
+            disciplines: [
+              {
+                activités: [
+                  {
+                    clientèles: [
+                      {
+                        code: '010',
+                        datesEtCapacités: {
+                          capacitéAutoriséeTotale: 10,
+                          capacitéInstalléeTotale: 10,
+                          dateDAutorisation: '2020-01-01',
+                          dateDeDernièreInstallation: '2020-01-01',
+                          dateDeMiseÀJourDAutorisation: '2020-01-01',
+                          estInstallée: true,
+                        },
+                        libellé: 'Tous Types de Déficiences Pers.Handicap.(sans autre indic.)',
                       },
-                      libellé: 'Tous Types de Déficiences Pers.Handicap.(sans autre indic.)',
-                    },
-                  ],
-                  code: '21',
-                  libellé: 'Accueil de Jour',
-                },
-              ],
-              code: '658',
-              libellé: 'Accueil temporaire pour adultes handicapés',
-            },
-          ],
+                    ],
+                    code: '21',
+                    libellé: 'Accueil de Jour',
+                  },
+                ],
+                code: '658',
+                libellé: 'Accueil temporaire pour adultes handicapés',
+              },
+            ],
+          },
+          capacités: {
+            capacitéParActivité: [],
+            dateMiseÀJourSource: '2022-08-18',
+          },
+          numéroFinessÉtablissementTerritorial: '010000040',
         },
-        capacités: {
-          capacitéParActivité: [],
-          dateMiseÀJourSource: '2022-08-18',
-        },
-        numéroFinessÉtablissementTerritorial: '010000040',
+        budgetEtFinances: [],
+        identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+        ressourcesHumaines: [],
       },
-      budgetEtFinances: [],
-      identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
-      ressourcesHumaines: [],
-    }, wording, paths)
+      wording,
+      paths
+    )
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansAutorisation} />)
@@ -293,23 +297,27 @@ describe('La page établissement territorial médico-social - bloc autorisation 
 
   it('affiche une phrase à la place des indicateurs lorsqu’aucune autorisation n’est renseignée', () => {
     // GIVEN
-    const établissementTerritorialSansAutorisation = new ÉtablissementTerritorialMédicoSocialViewModel({
-      activités: [],
-      autorisationsEtCapacités: {
-        autorisations: {
-          dateMiseÀJourSource: '2022-05-14',
-          disciplines: [],
+    const établissementTerritorialSansAutorisation = new ÉtablissementTerritorialMédicoSocialViewModel(
+      {
+        activités: [],
+        autorisationsEtCapacités: {
+          autorisations: {
+            dateMiseÀJourSource: '2022-05-14',
+            disciplines: [],
+          },
+          capacités: {
+            capacitéParActivité: [],
+            dateMiseÀJourSource: '2022-08-18',
+          },
+          numéroFinessÉtablissementTerritorial: '010000040',
         },
-        capacités: {
-          capacitéParActivité: [],
-          dateMiseÀJourSource: '2022-08-18',
-        },
-        numéroFinessÉtablissementTerritorial: '010000040',
+        budgetEtFinances: [],
+        identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+        ressourcesHumaines: [],
       },
-      budgetEtFinances: [],
-      identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
-      ressourcesHumaines: [],
-    }, wording, paths)
+      wording,
+      paths
+    )
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansAutorisation} />)

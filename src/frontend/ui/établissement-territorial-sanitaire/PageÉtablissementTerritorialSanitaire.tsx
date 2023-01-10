@@ -30,13 +30,9 @@ export const PageÉtablissementTerritorialSanitaire = ({ établissementTerritori
   return (
     <main className="fr-container">
       <Head>
-        <title>
-          {établissementTerritorialSanitaireViewModel.titre}
-        </title>
+        <title>{établissementTerritorialSanitaireViewModel.titre}</title>
       </Head>
-      <Titre logo={LogoÉtablissementTerritorial}>
-        {établissementTerritorialSanitaireViewModel.titre}
-      </Titre>
+      <Titre logo={LogoÉtablissementTerritorial}>{établissementTerritorialSanitaireViewModel.titre}</Titre>
       <BlocIdentitéSanitaire établissementTerritorialSanitaireIdentitéViewModel={établissementTerritorialSanitaireViewModel.identitéViewModel} />
       <BlocAutorisationEtCapacitéSanitaire
         établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}

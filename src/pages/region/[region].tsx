@@ -21,7 +21,7 @@ export function getStaticPaths(): GetStaticPathsResult {
   }
 }
 
-export async function getStaticProps({ params }: { params: { region: string }}): Promise<GetStaticPropsResult<RouterProps>> {
+export async function getStaticProps({ params }: { params: { region: string } }): Promise<GetStaticPropsResult<RouterProps>> {
   const { environmentVariables } = dependencies
 
   const régionsAcceptées = Object.keys(régions)

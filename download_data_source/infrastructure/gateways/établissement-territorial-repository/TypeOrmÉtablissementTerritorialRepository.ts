@@ -12,7 +12,9 @@ export class TypeOrmÉtablissementTerritorialRepository implements Établissemen
   constructor(private readonly orm: Promise<DataSource>, private logger: Logger) {}
 
   async sauvegarde(établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[], dateDeMiseÀJourDuFichierSource: string): Promise<void> {
-    await (await this.orm).transaction(async (transactionalEntityManager: EntityManager) => {
+    await (
+      await this.orm
+    ).transaction(async (transactionalEntityManager: EntityManager) => {
       try {
         await this.sauvegardeLesÉtablissementsTerritoriaux(transactionalEntityManager, établissementsTerritoriauxIdentité)
         this.logger.info(`Sauvegarde ${établissementsTerritoriauxIdentité.length} fiches d’identité d’établissements territoriaux.`)
@@ -32,14 +34,15 @@ export class TypeOrmÉtablissementTerritorialRepository implements Établissemen
   }
 
   private async metsÀJourLaDateDeMiseÀJourDuFichierSource(entityManager: EntityManager, dateDeMiseAJourDuFichierSource: string): Promise<void> {
-    await entityManager
-      .getRepository(DateMiseÀJourFichierSourceModel)
-      .upsert([
+    await entityManager.getRepository(DateMiseÀJourFichierSourceModel).upsert(
+      [
         {
           dernièreMiseÀJour: dateDeMiseAJourDuFichierSource,
           fichier: FichierSource.FINESS_CS1400102,
         },
-      ], ['fichier'])
+      ],
+      ['fichier']
+    )
   }
 
   private async supprimeLesÉtablissementsTerritoriaux(établissementsTerritoriauxÀSupprimer: ÉtablissementTerritorialIdentitéModel[]) {
@@ -47,15 +50,13 @@ export class TypeOrmÉtablissementTerritorialRepository implements Établissemen
   }
 
   private construisLesÉtablissementsTerritoriauxModels(numérosFinessDesÉtablissementsTerritoriaux: string[]) {
-    return numérosFinessDesÉtablissementsTerritoriaux.map((numéroFiness) => (
-      { numéroFinessÉtablissementTerritorial: numéroFiness }
-    )) as ÉtablissementTerritorialIdentitéModel[]
+    return numérosFinessDesÉtablissementsTerritoriaux.map((numéroFiness) => ({
+      numéroFinessÉtablissementTerritorial: numéroFiness,
+    })) as ÉtablissementTerritorialIdentitéModel[]
   }
 
   private async sauvegardeLesÉtablissementsTerritoriaux(entityManager: EntityManager, établissementsTerritoriauxIdentité: ÉtablissementTerritorialIdentité[]) {
-    await entityManager
-      .getRepository(ÉtablissementTerritorialIdentitéModel)
-      .save(établissementsTerritoriauxIdentité, { chunk: this.TAILLE_DE_FRAGMENT })
+    await entityManager.getRepository(ÉtablissementTerritorialIdentitéModel).save(établissementsTerritoriauxIdentité, { chunk: this.TAILLE_DE_FRAGMENT })
   }
 
   private async repository() {

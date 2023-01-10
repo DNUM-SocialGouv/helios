@@ -7,109 +7,109 @@ import { XmlToJs } from '../../../métier/gateways/XmlToJs'
 
 type EntitéJuridiqueFiness = Readonly<{
   categetab: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   codeape: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   codepays: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   codepostal: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   commune: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   compldistrib: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   complrs: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   compvoie: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   datecrea: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   datefermeture: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   datemaj: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   datemodifsiren: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   departement: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   libcategetab: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   libcommune: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   libcourtcategetab: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   libcourtstatutjuridique: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   libdepartement: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   libellepays: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   libstatutjuridique: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   lieuditbp: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   ligneacheminement: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   nofiness: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   numvoie: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   originemodifsiren: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   qualifcreation: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   rs: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   rslongue: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   siren: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   statutjuridique: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   telecopie: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   telephone: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   typefermeture: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   typvoie: Readonly<{
-    _text?: string,
+    _text?: string
   }>
   voie: Readonly<{
-    _text?: string,
+    _text?: string
   }>
 }>
 
@@ -134,8 +134,8 @@ export class FinessXmlEntitéJuridiqueSourceExterneLoader implements EntitéJuri
     const entitésJuridiquesFinessOuvertes = this.conserveLesEntitésJuridiquesOuvertes(entitésJuridiquesFiness)
     this.logger.info(`[FINESS] ${entitésJuridiquesFinessOuvertes.length} entités juridiques sont ouvertes.`)
 
-    return entitésJuridiquesFinessOuvertes.map(
-      (entitéJuridiqueFinessOuverte: EntitéJuridiqueFiness) => this.construisLEntitéJuridique(entitéJuridiqueFinessOuverte)
+    return entitésJuridiquesFinessOuvertes.map((entitéJuridiqueFinessOuverte: EntitéJuridiqueFiness) =>
+      this.construisLEntitéJuridique(entitéJuridiqueFinessOuverte)
     )
   }
 
@@ -170,9 +170,9 @@ export class FinessXmlEntitéJuridiqueSourceExterneLoader implements EntitéJuri
       département: valueOrEmpty(entitésJuridiquesFiness.libdepartement._text),
       libelléStatutJuridique: valueOrEmpty(entitésJuridiquesFiness.libstatutjuridique._text),
       numéroFinessEntitéJuridique: valueOrEmpty(entitésJuridiquesFiness.nofiness._text),
-      raisonSociale: valueOrEmpty(entitésJuridiquesFiness.rslongue._text) ?
-        valueOrEmpty(entitésJuridiquesFiness.rslongue._text) :
-        valueOrEmpty(entitésJuridiquesFiness.rs._text),
+      raisonSociale: valueOrEmpty(entitésJuridiquesFiness.rslongue._text)
+        ? valueOrEmpty(entitésJuridiquesFiness.rslongue._text)
+        : valueOrEmpty(entitésJuridiquesFiness.rs._text),
       raisonSocialeCourte: valueOrEmpty(entitésJuridiquesFiness.rs._text),
       siren: valueOrEmpty(entitésJuridiquesFiness.siren._text),
       téléphone: valueOrEmpty(entitésJuridiquesFiness.telephone._text),

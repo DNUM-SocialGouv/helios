@@ -7,14 +7,9 @@
   "jest": {
     "configFile": "jest-for-mutation-testing.json"
   },
-  "mutate": [
-    "src/backend/infrastructure/**/*.ts",
-    "!src/backend/**/*.test.ts"
-  ],
+  "mutate": ["src/backend/infrastructure/**/*.ts", "!src/backend/**/*.test.ts"],
   "packageManager": "yarn",
-  "reporters": [
-    "html"
-  ],
+  "reporters": ["html"],
   "testRunner": "jest",
   "tsconfigFile": "tsconfig.json"
 }

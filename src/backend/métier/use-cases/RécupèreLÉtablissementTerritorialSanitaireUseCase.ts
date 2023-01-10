@@ -7,8 +7,9 @@ export class RécupèreLÉtablissementTerritorialSanitaireUseCase {
   constructor(private établissementTerritorialSanitaireLoader: ÉtablissementTerritorialSanitaireLoader, private entitéJuridiqueLoader: EntitéJuridiqueLoader) {}
 
   async exécute(numéroFinessÉtablissementTerritorialSanitaire: string): Promise<ÉtablissementTerritorialSanitaire> {
-    const établissementTerritorialSanitaireOuErreur =
-      await this.établissementTerritorialSanitaireLoader.chargeIdentité(numéroFinessÉtablissementTerritorialSanitaire)
+    const établissementTerritorialSanitaireOuErreur = await this.établissementTerritorialSanitaireLoader.chargeIdentité(
+      numéroFinessÉtablissementTerritorialSanitaire
+    )
 
     if (établissementTerritorialSanitaireOuErreur instanceof ÉtablissementTerritorialSanitaireNonTrouvée) {
       throw établissementTerritorialSanitaireOuErreur
@@ -18,11 +19,13 @@ export class RécupèreLÉtablissementTerritorialSanitaireUseCase {
       établissementTerritorialSanitaireOuErreur.numéroFinessEntitéJuridique.value
     )
 
-    const établissementTerritorialSanitaireActivités =
-      await this.établissementTerritorialSanitaireLoader.chargeActivité(numéroFinessÉtablissementTerritorialSanitaire)
+    const établissementTerritorialSanitaireActivités = await this.établissementTerritorialSanitaireLoader.chargeActivité(
+      numéroFinessÉtablissementTerritorialSanitaire
+    )
 
-    const établissementTerritorialSanitaireAutorisations =
-      await this.établissementTerritorialSanitaireLoader.chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorialSanitaire)
+    const établissementTerritorialSanitaireAutorisations = await this.établissementTerritorialSanitaireLoader.chargeAutorisationsEtCapacités(
+      numéroFinessÉtablissementTerritorialSanitaire
+    )
 
     return {
       activités: établissementTerritorialSanitaireActivités,

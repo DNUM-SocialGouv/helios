@@ -30,44 +30,33 @@ export const TableIndicateur = ({ disabled = false, entêteLibellé, identifiant
           {wording.AFFICHER_LA_TRANSCRIPTION}
         </button>
       </h3>
-      <div
-        className={'fr-collapse ' + styles['helios-collapse']}
-        id={identifiant}
-      >
+      <div className={'fr-collapse ' + styles['helios-collapse']} id={identifiant}>
         <div className={'fr-table fr-table--bordered ' + styles['helios-collapse']}>
           <table>
             <thead>
               <tr>
-                <th
-                  className={styles['table-header']}
-                  scope="col"
-                >
+                <th className={styles['table-header']} scope="col">
                   {entêteLibellé}
                 </th>
-                {identifiants.map((identifiant) =>
-                  <th
-                    key={identifiant}
-                    scope="col"
-                  >
+                {identifiants.map((identifiant) => (
+                  <th key={identifiant} scope="col">
                     {identifiant}
-                  </th>)
-                }
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
-              {libellés.map((libellé, index) =>
+              {libellés.map((libellé, index) => (
                 <tr key={libellé}>
-                  <td>
-                    {libellé}
-                  </td>
-                  {valeurs.map((valeur, index2) =>
+                  <td>{libellé}</td>
+                  {valeurs.map((valeur, index2) => (
                     <td key={valeur[index] + index2.toString()}>
                       {/* @ts-ignore */}
                       {valeur[index] === null ? wording.NON_RENSEIGNÉ : valeur[index]}
-                    </td>)
-                  }
-                </tr>)
-              }
+                    </td>
+                  ))}
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

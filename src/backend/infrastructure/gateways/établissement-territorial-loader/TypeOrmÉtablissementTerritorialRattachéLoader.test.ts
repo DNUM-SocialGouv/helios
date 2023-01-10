@@ -35,47 +35,43 @@ describe('Établissement territorial rattaché loader', () => {
     await entitéJuridiqueRepository.insert([entitéJuridiqueModel, autreEntitéJuridiqueModel])
 
     const numéroFinessET1 = '222222222'
-    const établissementTerritorial1RattachéModel =
-    ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({
+    const établissementTerritorial1RattachéModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({
       domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
       numéroFinessEntitéJuridique,
       numéroFinessÉtablissementTerritorial: numéroFinessET1,
       raisonSocialeCourte: 'HP VILLENEUVE DASCQ',
     })
     const numéroFinessET2 = '111111111'
-    const établissementTerritorial2RattachéModel =
-      ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
-        domaine: DomaineÉtablissementTerritorial.SANITAIRE,
-        numéroFinessEntitéJuridique,
-        numéroFinessÉtablissementTerritorial: numéroFinessET2,
-        raisonSocialeCourte: 'CH NANTUA',
-      })
+    const établissementTerritorial2RattachéModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
+      domaine: DomaineÉtablissementTerritorial.SANITAIRE,
+      numéroFinessEntitéJuridique,
+      numéroFinessÉtablissementTerritorial: numéroFinessET2,
+      raisonSocialeCourte: 'CH NANTUA',
+    })
     const numéroFinessET3 = '999999999'
-    const établissementTerritorial3RattachéModel =
-      ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
-        domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
-        numéroFinessEntitéJuridique,
-        numéroFinessÉtablissementTerritorial: numéroFinessET3,
-        raisonSocialeCourte: 'CH NANTUA v2',
-      })
+    const établissementTerritorial3RattachéModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
+      domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
+      numéroFinessEntitéJuridique,
+      numéroFinessÉtablissementTerritorial: numéroFinessET3,
+      raisonSocialeCourte: 'CH NANTUA v2',
+    })
     const établissementTerritorialNonRattachéModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({
       numéroFinessEntitéJuridique: autreNuméroFinessEntitéJuridique,
       numéroFinessÉtablissementTerritorial: '321654987',
     })
-    await établissementTerritorialRepository.insert(
-      [
-        établissementTerritorial1RattachéModel,
-        établissementTerritorial2RattachéModel,
-        établissementTerritorialNonRattachéModel,
-        établissementTerritorial3RattachéModel,
-      ]
-    )
+    await établissementTerritorialRepository.insert([
+      établissementTerritorial1RattachéModel,
+      établissementTerritorial2RattachéModel,
+      établissementTerritorialNonRattachéModel,
+      établissementTerritorial3RattachéModel,
+    ])
 
     const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialRattachéLoader(orm)
 
     // WHEN
-    const établissementsTerritoriaux =
-      await typeOrmÉtablissementTerritorialLoader.chargeLesÉtablissementsDeLEntitéJuridiqueDeRattachement(numéroFinessEntitéJuridique)
+    const établissementsTerritoriaux = await typeOrmÉtablissementTerritorialLoader.chargeLesÉtablissementsDeLEntitéJuridiqueDeRattachement(
+      numéroFinessEntitéJuridique
+    )
 
     // THEN
     const établissementsTerritoriauxAttendus: ÉtablissementTerritorialRattaché[] = [
@@ -106,8 +102,9 @@ describe('Établissement territorial rattaché loader', () => {
     const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialRattachéLoader(orm)
 
     // WHEN
-    const établissementsTerritoriaux =
-      await typeOrmÉtablissementTerritorialLoader.chargeLesÉtablissementsDeLEntitéJuridiqueDeRattachement(numéroFinessEntitéJuridique)
+    const établissementsTerritoriaux = await typeOrmÉtablissementTerritorialLoader.chargeLesÉtablissementsDeLEntitéJuridiqueDeRattachement(
+      numéroFinessEntitéJuridique
+    )
 
     // THEN
     expect(établissementsTerritoriaux).toStrictEqual([])

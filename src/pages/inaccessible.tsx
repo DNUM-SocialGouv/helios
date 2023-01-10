@@ -8,13 +8,9 @@ export default function Inaccessible() {
   return (
     <main className="fr-container">
       <Head>
-        <title>
-          {wording.TITRE_PAGE_INACCESSIBLE}
-        </title>
+        <title>{wording.TITRE_PAGE_INACCESSIBLE}</title>
       </Head>
-      <h1 className="inaccessible">
-        {wording.ACCÈS_REFUSÉ}
-      </h1>
+      <h1 className="inaccessible">{wording.ACCÈS_REFUSÉ}</h1>
     </main>
   )
 }

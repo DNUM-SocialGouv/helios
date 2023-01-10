@@ -9,7 +9,11 @@ export namespace StringFormater {
   }
 
   function insèreUnEspaceTousLesNCaractères(str: string, nombreDeCaractères: number): string {
-    return str.split('').map((letter, index) => index % nombreDeCaractères === 0 ? ' ' + letter : letter).join('').trim()
+    return str
+      .split('')
+      .map((letter, index) => (index % nombreDeCaractères === 0 ? ' ' + letter : letter))
+      .join('')
+      .trim()
   }
 
   export function formateLeMontantEnEuros(montant: number): string {

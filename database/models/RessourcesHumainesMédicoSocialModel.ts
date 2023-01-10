@@ -11,7 +11,7 @@ export class RessourcesHumainesMédicoSocialModel {
   @Column({ name: 'nombre_etp_realises', nullable: true, type: 'float' })
   public nombreDEtpRéalisés!: number | null
 
-  @PrimaryColumn({ length:9, name: 'numero_finess_etablissement_territorial' })
+  @PrimaryColumn({ length: 9, name: 'numero_finess_etablissement_territorial' })
   public numéroFinessÉtablissementTerritorial!: string
 
   @Column({ name: 'taux_absenteisme_maladie_courte_duree', nullable: true, type: 'float' })

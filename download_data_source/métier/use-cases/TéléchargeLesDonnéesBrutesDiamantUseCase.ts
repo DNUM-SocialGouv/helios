@@ -2,9 +2,7 @@ import { HeliosError } from '../../infrastructure/HeliosError'
 import { DownloadRawData } from '../gateways/DownloadRawData'
 
 export class TéléchargeLesDonnéesBrutesDiamantUseCase {
-  constructor(
-    private readonly dnumDownloadRawData: DownloadRawData
-  ) {}
+  constructor(private readonly dnumDownloadRawData: DownloadRawData) {}
 
   async exécute() {
     try {

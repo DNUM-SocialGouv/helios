@@ -22,7 +22,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder {
       budgetEtFinancesMédicoSocialModel.produits = champsSurchargés?.produits || null
       budgetEtFinancesMédicoSocialModel.tauxDeCaf = champsSurchargés?.tauxDeCaf || 0.13548734436644624
       budgetEtFinancesMédicoSocialModel.tauxDeVétustéConstruction = champsSurchargés?.tauxDeVétustéConstruction || 0.38845089702004892
-      budgetEtFinancesMédicoSocialModel.fondsDeRoulement = champsSurchargés?.fondsDeRoulement || 2206969.259999999800000000
+      budgetEtFinancesMédicoSocialModel.fondsDeRoulement = champsSurchargés?.fondsDeRoulement || 2206969.2599999998
       budgetEtFinancesMédicoSocialModel.cadreBudgétaire = CadreBudgétaire.ERRD
     } else if (cadreBudgétaire === CadreBudgétaire.CA_PH) {
       budgetEtFinancesMédicoSocialModel.année = champsSurchargés?.année || 2020
@@ -36,7 +36,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder {
       budgetEtFinancesMédicoSocialModel.recettesGroupe3 = champsSurchargés?.recettesGroupe3 || 16484.099999999999
       budgetEtFinancesMédicoSocialModel.résultatNetComptable = champsSurchargés?.résultatNetComptable || 95999.209999999963
       budgetEtFinancesMédicoSocialModel.charges = champsSurchargés?.charges || null
-      budgetEtFinancesMédicoSocialModel.produits = champsSurchargés?.produits ||null
+      budgetEtFinancesMédicoSocialModel.produits = champsSurchargés?.produits || null
       budgetEtFinancesMédicoSocialModel.tauxDeCaf = champsSurchargés?.tauxDeCaf || 0.16460754444264256
       budgetEtFinancesMédicoSocialModel.tauxDeVétustéConstruction = champsSurchargés?.tauxDeVétustéConstruction || 0.5319629026790017
       budgetEtFinancesMédicoSocialModel.fondsDeRoulement = champsSurchargés?.fondsDeRoulement || null

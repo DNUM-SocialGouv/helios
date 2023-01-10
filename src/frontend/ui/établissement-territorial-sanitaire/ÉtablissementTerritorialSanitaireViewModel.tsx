@@ -13,12 +13,19 @@ export class ÉtablissementTerritorialSanitaireViewModel {
   private établissementTerritorialSanitaireAutorisationsViewModel: ÉtablissementTerritorialSanitaireAutorisationsViewModel
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, private readonly wording: Wording, paths: Paths) {
-    this.établissementTerritorialSanitaireIdentitéViewModel =
-      new ÉtablissementTerritorialSanitaireIdentitéViewModel(établissementTerritorial.identité, wording, paths)
-    this.établissementTerritorialSanitaireActivitésViewModel =
-      new ÉtablissementTerritorialSanitaireActivitéViewModel(établissementTerritorial.activités, wording)
-    this.établissementTerritorialSanitaireAutorisationsViewModel =
-      new ÉtablissementTerritorialSanitaireAutorisationsViewModel(établissementTerritorial.autorisationsEtCapacités, wording)
+    this.établissementTerritorialSanitaireIdentitéViewModel = new ÉtablissementTerritorialSanitaireIdentitéViewModel(
+      établissementTerritorial.identité,
+      wording,
+      paths
+    )
+    this.établissementTerritorialSanitaireActivitésViewModel = new ÉtablissementTerritorialSanitaireActivitéViewModel(
+      établissementTerritorial.activités,
+      wording
+    )
+    this.établissementTerritorialSanitaireAutorisationsViewModel = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
+      établissementTerritorial.autorisationsEtCapacités,
+      wording
+    )
   }
 
   public get titre(): string {

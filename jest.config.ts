@@ -15,19 +15,12 @@ const customJestConfig = {
   coverageDirectory: '<rootDir>/coverage',
   coverageReporters: ['cobertura'],
   fakeTimers: { now: 1664703388050 }, // 2022-01-01T23:00:00.135Z
-  moduleFileExtensions: [
-    'ts',
-    'tsx',
-    'js',
-  ],
+  moduleFileExtensions: ['ts', 'tsx', 'js'],
   resetMocks: true,
   restoreMocks: true,
   setupFilesAfterEnv: ['./jest.setup.ts'],
   testEnvironment: 'jest-environment-jsdom',
-  testMatch: [
-    '<rootDir>/src/**/*(*.)@(test).ts?(x)',
-    '<rootDir>/download_data_source/**/*(*.)@(test).ts',
-  ],
+  testMatch: ['<rootDir>/src/**/*(*.)@(test).ts?(x)', '<rootDir>/download_data_source/**/*(*.)@(test).ts'],
 }
 
 async function jestConfig() {

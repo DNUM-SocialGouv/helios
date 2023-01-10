@@ -15,22 +15,10 @@ export const Titre = ({ logo, children }: TitreProps) => {
 
   return (
     <div className={styles['titre']}>
-      <Image
-        alt=""
-        height="27"
-        src={logo}
-        width="27"
-      />
-      <h1>
-        {children}
-      </h1>
+      <Image alt="" height="27" src={logo} width="27" />
+      <h1>{children}</h1>
       <div>
-        <button
-          className="fr-btn fr-btn--secondary fr-fi-download-line fr-btn--icon-left"
-          onClick={imprimer}
-          title={wording.TÉLÉCHARGER_EN_PDF}
-          type="button"
-        >
+        <button className="fr-btn fr-btn--secondary fr-fi-download-line fr-btn--icon-left" onClick={imprimer} title={wording.TÉLÉCHARGER_EN_PDF} type="button">
           {wording.TÉLÉCHARGER_EN_PDF}
         </button>
       </div>

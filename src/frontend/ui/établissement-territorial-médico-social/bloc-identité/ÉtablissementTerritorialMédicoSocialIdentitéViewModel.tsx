@@ -7,7 +7,6 @@ import { Wording } from '../../../configuration/wording/Wording'
 import { StringFormater } from '../../commun/StringFormater'
 
 export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
-
   constructor(
     private readonly établissementTerritorialIdentité: ÉtablissementTerritorialMédicoSocial['identité'],
     private readonly wording: Wording,
@@ -65,14 +64,11 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
     const titreDeLEntitéJuridiqueDeRattachement = this.formateLeTitreDeLEntitéJuridiqueDeRattachement()
     const libellé = `EJ - ${titreDeLEntitéJuridiqueDeRattachement}`
 
-    return <Link
-      href={lienVersLEntitéJuridique}
-      legacyBehavior
-      passHref
-      prefetch={false}
-    >
-      {libellé}
-    </Link>
+    return (
+      <Link href={lienVersLEntitéJuridique} legacyBehavior passHref prefetch={false}>
+        {libellé}
+      </Link>
+    )
   }
 
   public get dateDeMiseÀJourDeLEntitéJuridiqueDeRattachement(): string {
@@ -112,9 +108,9 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
   }
 
   public get principalOuSecondaire(): string {
-    return this.établissementTerritorialIdentité.typeÉtablissement.value === 'P' ?
-      this.wording.PRINCIPAL :
-      `${this.wording.SECONDAIRE} (${this.wording.PRINCIPAL} : ${this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal.value})`
+    return this.établissementTerritorialIdentité.typeÉtablissement.value === 'P'
+      ? this.wording.PRINCIPAL
+      : `${this.wording.SECONDAIRE} (${this.wording.PRINCIPAL} : ${this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal.value})`
   }
 
   public get dateDeMiseÀJourDuPrincipalOuDuSecondaire(): string {

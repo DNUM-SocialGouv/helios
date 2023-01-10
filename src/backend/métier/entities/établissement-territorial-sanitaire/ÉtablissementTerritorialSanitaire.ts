@@ -6,6 +6,5 @@ import { ÉtablissementTerritorialSanitaireAutorisationEtCapacité } from './Ét
 export type ÉtablissementTerritorialSanitaire = Readonly<{
   activités: ÉtablissementTerritorialSanitaireActivité[]
   autorisationsEtCapacités: ÉtablissementTerritorialSanitaireAutorisationEtCapacité
-  identité: ÉtablissementTerritorialIdentité &
-    EntitéJuridiqueDeRattachement
+  identité: ÉtablissementTerritorialIdentité & EntitéJuridiqueDeRattachement
 }>

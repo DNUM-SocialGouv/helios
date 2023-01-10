@@ -333,7 +333,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       activités: [
         {
           code: '16',
-          libellé: 'Traitement de l\'insuffisance rénale chronique par épuration extrarénale',
+          libellé: "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
           modalités: [
             {
               code: '42',
@@ -405,7 +405,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
                   libellé: 'Forme non précisée',
                 },
               ],
-              libellé: 'Dépôt d\'urgence',
+              libellé: "Dépôt d'urgence",
             },
             {
               code: '31',
@@ -493,35 +493,47 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
             },
           ],
           code: '06201',
-          libellé: 'Appareil d\'IRM à utilisation clinique',
+          libellé: "Appareil d'IRM à utilisation clinique",
         },
       ],
     },
   }
 
   public static crée(
-    wording: Wording, paths: Paths, champsSurchargés?: Partial<ÉtablissementTerritorialSanitaire['identité']>
+    wording: Wording,
+    paths: Paths,
+    champsSurchargés?: Partial<ÉtablissementTerritorialSanitaire['identité']>
   ): ÉtablissementTerritorialSanitaireViewModel {
-    return new ÉtablissementTerritorialSanitaireViewModel({
-      activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
-      autorisationsEtCapacités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
-      identité: {
-        ...ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
-        ...champsSurchargés,
+    return new ÉtablissementTerritorialSanitaireViewModel(
+      {
+        activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
+        autorisationsEtCapacités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
+        identité: {
+          ...ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
+          ...champsSurchargés,
+        },
       },
-    }, wording, paths)
+      wording,
+      paths
+    )
   }
 
   public static créeAvecAutorisationsEtCapacités(
-    wording: Wording, paths: Paths, champsSurchargés?: Partial<ÉtablissementTerritorialSanitaire['autorisationsEtCapacités']>
+    wording: Wording,
+    paths: Paths,
+    champsSurchargés?: Partial<ÉtablissementTerritorialSanitaire['autorisationsEtCapacités']>
   ): ÉtablissementTerritorialSanitaireViewModel {
-    return new ÉtablissementTerritorialSanitaireViewModel({
-      activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
-      autorisationsEtCapacités: {
-        ...ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
-        ...champsSurchargés,
+    return new ÉtablissementTerritorialSanitaireViewModel(
+      {
+        activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
+        autorisationsEtCapacités: {
+          ...ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
+          ...champsSurchargés,
+        },
+        identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
       },
-      identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
-    }, wording, paths)
+      wording,
+      paths
+    )
   }
 }

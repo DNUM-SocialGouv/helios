@@ -88,7 +88,7 @@ export type ÉquipementMatérielLourd = Readonly<{
 }>
 
 export type CapacitéSanitaire = Readonly<{
-  année: number | null,
+  année: number | null
   dateMiseÀJourSource: string
   nombreDeLitsEnChirurgie: number | null
   nombreDeLitsEnMédecine: number | null
@@ -108,16 +108,16 @@ export type ÉtablissementTerritorialSanitaireAutorisationEtCapacité = Readonly
   autorisations: {
     activités: AutorisationSanitaireActivité[]
     dateMiseÀJourSource: string
-  },
+  }
   autresActivités: {
     activités: AutreActivitéSanitaireActivité[]
     dateMiseÀJourSource: string
-  },
-  capacités: CapacitéSanitaire[],
+  }
+  capacités: CapacitéSanitaire[]
   équipementsMatérielsLourds: {
     équipements: ÉquipementMatérielLourd[]
     dateMiseÀJourSource: string
-  },
+  }
   reconnaissancesContractuelles: {
     activités: ReconnaissanceContractuelleSanitaireActivité[]
     dateMiseÀJourSource: string

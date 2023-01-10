@@ -7,12 +7,10 @@ type MiseEnExergueProps = Readonly<{
   children: ReactChild
 }>
 
-export const MiseEnExergue = ({ children }: MiseEnExergueProps ) => {
+export const MiseEnExergue = ({ children }: MiseEnExergueProps) => {
   return (
     <div className="fr-highlight">
-      <p className={styles['mise-en-exergue']}>
-        {children}
-      </p>
+      <p className={styles['mise-en-exergue']}>{children}</p>
     </div>
   )
 }

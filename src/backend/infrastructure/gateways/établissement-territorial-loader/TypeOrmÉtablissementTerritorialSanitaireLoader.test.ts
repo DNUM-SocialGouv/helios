@@ -70,8 +70,8 @@ describe('Établissement territorial sanitaire loader', () => {
       const établissementTerritorial = await typeOrmÉtablissementTerritorialLoader.chargeIdentité(numéroFinessÉtablissementTerritorial)
 
       // THEN
-      expect(établissementTerritorial).toStrictEqual(ÉtablissementTerritorialTestBuilder.créeUneIdentitéSanitaire(
-        {
+      expect(établissementTerritorial).toStrictEqual(
+        ÉtablissementTerritorialTestBuilder.créeUneIdentitéSanitaire({
           numéroFinessEntitéJuridique: {
             dateMiseÀJourSource: '2022-02-02',
             value: numéroFinessEntitéJuridique,
@@ -80,8 +80,8 @@ describe('Établissement territorial sanitaire loader', () => {
             dateMiseÀJourSource: '2022-02-02',
             value: numéroFinessÉtablissementTerritorial,
           },
-        }
-      ))
+        })
+      )
     })
 
     it('signale que l’établissement territorial n’a pas été trouvé quand celui-ci n’existe pas', async () => {
@@ -224,23 +224,21 @@ describe('Établissement territorial sanitaire loader', () => {
       const { capacités } = await typeOrmÉtablissementTerritorialLoader.chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial)
 
       // THEN
-      expect(capacités[0]).toStrictEqual<ÉtablissementTerritorialSanitaireAutorisationEtCapacité['capacités'][0]>(
-        {
-          année: 2021,
-          dateMiseÀJourSource: '2022-02-02',
-          nombreDeLitsEnChirurgie: 20,
-          nombreDeLitsEnMédecine: 35,
-          nombreDeLitsEnObstétrique: 12,
-          nombreDeLitsEnSsr: 3,
-          nombreDeLitsEnUsld: 15,
-          nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 5,
-          nombreDePlacesEnChirurgie: 25,
-          nombreDePlacesEnMédecine: 40,
-          nombreDePlacesEnObstétrique: 12,
-          nombreDePlacesEnPsyHospitalisationPartielle: 13,
-          nombreDePlacesEnSsr: 3,
-        }
-      )
+      expect(capacités[0]).toStrictEqual<ÉtablissementTerritorialSanitaireAutorisationEtCapacité['capacités'][0]>({
+        année: 2021,
+        dateMiseÀJourSource: '2022-02-02',
+        nombreDeLitsEnChirurgie: 20,
+        nombreDeLitsEnMédecine: 35,
+        nombreDeLitsEnObstétrique: 12,
+        nombreDeLitsEnSsr: 3,
+        nombreDeLitsEnUsld: 15,
+        nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 5,
+        nombreDePlacesEnChirurgie: 25,
+        nombreDePlacesEnMédecine: 40,
+        nombreDePlacesEnObstétrique: 12,
+        nombreDePlacesEnPsyHospitalisationPartielle: 13,
+        nombreDePlacesEnSsr: 3,
+      })
       expect(capacités[1]?.nombreDeLitsEnChirurgie).toBe(10)
     })
 
@@ -258,7 +256,7 @@ describe('Établissement territorial sanitaire loader', () => {
           codeActivité: '16',
           codeForme: '14',
           codeModalité: '45',
-          libelléActivité: 'Traitement de l\'insuffisance rénale chronique par épuration extrarénale',
+          libelléActivité: "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
           libelléForme: 'Non saisonnier',
           libelléModalité: 'Hémodialyse à domicile',
           numéroAutorisationArhgos: '01-00-0000',
@@ -268,7 +266,7 @@ describe('Établissement territorial sanitaire loader', () => {
           codeActivité: '16',
           codeForme: '15',
           codeModalité: '42',
-          libelléActivité: 'Traitement de l\'insuffisance rénale chronique par épuration extrarénale',
+          libelléActivité: "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
           libelléForme: 'Pas de forme',
           libelléModalité: 'Hémodialyse en unité médicalisée',
           numéroAutorisationArhgos: '02-00-0000',
@@ -288,7 +286,7 @@ describe('Établissement territorial sanitaire loader', () => {
           codeActivité: '16',
           codeForme: '15',
           codeModalité: '45',
-          libelléActivité: 'Traitement de l\'insuffisance rénale chronique par épuration extrarénale',
+          libelléActivité: "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
           libelléForme: 'Non saisonnier',
           libelléModalité: 'Hémodialyse à domicile',
           numéroAutorisationArhgos: '04-00-0000',
@@ -305,7 +303,7 @@ describe('Établissement territorial sanitaire loader', () => {
         activités: [
           {
             code: '16',
-            libellé: 'Traitement de l\'insuffisance rénale chronique par épuration extrarénale',
+            libellé: "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
             modalités: [
               {
                 code: '42',
@@ -394,7 +392,7 @@ describe('Établissement territorial sanitaire loader', () => {
           codeModalité: 'M1',
           libelléActivité: 'Dépôt de sang',
           libelléForme: 'Pas de forme',
-          libelléModalité: 'Dépôt d\'urgence',
+          libelléModalité: "Dépôt d'urgence",
           numéroFinessÉtablissementTerritorial,
         }),
         ÉtablissementTerritorialAutorisationModelTestBuilder.créeAutreActivitéSanitaire({
@@ -421,7 +419,7 @@ describe('Établissement territorial sanitaire loader', () => {
           codeModalité: 'M0',
           libelléActivité: 'Installation de chirurgie esthétique',
           libelléForme: 'Pas de forme',
-          libelléModalité: 'Dépôt d\'urgence',
+          libelléModalité: "Dépôt d'urgence",
           numéroFinessÉtablissementTerritorial,
         }),
       ])
@@ -450,7 +448,7 @@ describe('Établissement territorial sanitaire loader', () => {
                     libellé: 'Pas de forme',
                   },
                 ],
-                libellé: 'Dépôt d\'urgence',
+                libellé: "Dépôt d'urgence",
               },
             ],
           },
@@ -471,7 +469,7 @@ describe('Établissement territorial sanitaire loader', () => {
                     libellé: 'Pas de forme',
                   },
                 ],
-                libellé: 'Dépôt d\'urgence',
+                libellé: "Dépôt d'urgence",
               },
               {
                 code: 'M2',
@@ -548,7 +546,7 @@ describe('Établissement territorial sanitaire loader', () => {
           codeActivité: 'S6',
           codeForme: '00',
           codeModalité: 'B3',
-          libelléActivité: 'Structure spécifique d\'hospitalisation',
+          libelléActivité: "Structure spécifique d'hospitalisation",
           libelléForme: 'Pas de forme',
           libelléModalité: 'Clinique ouverte',
           numéroAutorisationArhgos: '04-00-0000',
@@ -619,7 +617,7 @@ describe('Établissement territorial sanitaire loader', () => {
           },
           {
             code: 'S6',
-            libellé: 'Structure spécifique d\'hospitalisation',
+            libellé: "Structure spécifique d'hospitalisation",
             modalités: [
               {
                 code: 'B3',
@@ -670,7 +668,7 @@ describe('Établissement territorial sanitaire loader', () => {
         }),
         ÉtablissementTerritorialAutorisationModelTestBuilder.créeÉquipementMatérielLourdSanitaire({
           codeÉquipementMatérielLourd: '06201',
-          libelléÉquipementMatérielLourd: 'Appareil d\'IRM à utilisation clinique',
+          libelléÉquipementMatérielLourd: "Appareil d'IRM à utilisation clinique",
           numéroAutorisationArhgos: '11-11-1111',
           numéroFinessÉtablissementTerritorial,
         }),
@@ -712,7 +710,7 @@ describe('Établissement territorial sanitaire loader', () => {
               },
             ],
             code: '06201',
-            libellé: 'Appareil d\'IRM à utilisation clinique',
+            libellé: "Appareil d'IRM à utilisation clinique",
           },
         ],
       })

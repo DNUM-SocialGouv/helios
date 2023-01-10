@@ -5,7 +5,7 @@ import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
   const allowedIps = (process.env['WHITELIST_IP'] as string).split(',')
-  const userIp = request.headers.get('x-forwarded-for') || request.ip as string
+  const userIp = request.headers.get('x-forwarded-for') || (request.ip as string)
 
   // Pour l'environnement de développement
   if (userIp === undefined) {

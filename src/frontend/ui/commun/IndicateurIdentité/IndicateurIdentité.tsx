@@ -17,13 +17,9 @@ export const IndicateurIdentité = ({ children, dateDeMiseÀJour, nomDeLIndicate
       <p className="fr-m-0">
         {nomDeLIndicateur}
         {' - '}
-        <span className="fr-text--xs">
-          {wording.miseÀJourEtSource(dateDeMiseÀJour, source)}
-        </span>
+        <span className="fr-text--xs">{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</span>
       </p>
-      <p className="fr-m-0 fr-text--bold">
-        {children}
-      </p>
+      <p className="fr-m-0 fr-text--bold">{children}</p>
     </li>
   )
 }

@@ -28,12 +28,7 @@ export const InfoBulle = ({ children, estCeOuvert, identifiant, setEstCeOuvert, 
   }
 
   return (
-    <dialog
-      aria-labelledby={`titre-info-bulle-${identifiant}`}
-      className={className}
-      id={`nom-info-bulle-${identifiant}`}
-      open={estCeOuvert}
-    >
+    <dialog aria-labelledby={`titre-info-bulle-${identifiant}`} className={className} id={`nom-info-bulle-${identifiant}`} open={estCeOuvert}>
       <div className="fr-container fr-container--fluid fr-container-md">
         <div className="fr-grid-row fr-grid-row--center">
           <div className="fr-col-12 fr-col-md-8">
@@ -50,14 +45,8 @@ export const InfoBulle = ({ children, estCeOuvert, identifiant, setEstCeOuvert, 
                 </button>
               </div>
               <div className="fr-modal__content">
-                <h1
-                  className="fr-modal__title"
-                  id={`titre-info-bulle-${identifiant}`}
-                >
-                  <span
-                    aria-hidden="true"
-                    className="fr-fi-arrow-right-line fr-fi--lg"
-                  ></span>
+                <h1 className="fr-modal__title" id={`titre-info-bulle-${identifiant}`}>
+                  <span aria-hidden="true" className="fr-fi-arrow-right-line fr-fi--lg"></span>
                   {titre}
                 </h1>
                 {children}

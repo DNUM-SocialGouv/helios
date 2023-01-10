@@ -13,13 +13,8 @@ export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéProps)
   const { wording } = useDependencies()
 
   return (
-    <Bloc
-      estCeIdentité={true}
-      titre={wording.TITRE_BLOC_IDENTITÉ}
-    >
-      <ul
-        className={`indicateurs ${styles['liste-indicateurs']}`}
-      >
+    <Bloc estCeIdentité={true} titre={wording.TITRE_BLOC_IDENTITÉ}>
+      <ul className={`indicateurs ${styles['liste-indicateurs']}`}>
         <IndicateurIdentité
           dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJourDuNomDeLEntitéJuridique}
           nomDeLIndicateur={wording.NOM_DE_L_ÉTABLISSEMENT}
@@ -34,11 +29,7 @@ export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéProps)
         >
           {entitéJuridiqueViewModel.numéroFiness}
         </IndicateurIdentité>
-        <IndicateurIdentité
-          dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJourDusiren}
-          nomDeLIndicateur={wording.SIREN}
-          source={Sources(wording.FINESS)}
-        >
+        <IndicateurIdentité dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJourDusiren} nomDeLIndicateur={wording.SIREN} source={Sources(wording.FINESS)}>
           {entitéJuridiqueViewModel.siren}
         </IndicateurIdentité>
         <IndicateurIdentité

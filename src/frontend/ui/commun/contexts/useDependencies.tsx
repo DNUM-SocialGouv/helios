@@ -15,7 +15,5 @@ type DependenciesProviderProps = Readonly<{
 }>
 
 export const DependenciesProvider = ({ children }: DependenciesProviderProps) => (
-  <DependenciesContext.Provider value={frontDependencies}>
-    {children}
-  </DependenciesContext.Provider>
+  <DependenciesContext.Provider value={frontDependencies}>{children}</DependenciesContext.Provider>
 )

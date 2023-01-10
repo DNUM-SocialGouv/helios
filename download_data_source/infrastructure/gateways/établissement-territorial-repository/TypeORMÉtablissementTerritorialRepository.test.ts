@@ -29,7 +29,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
   })
 
   afterAll(async () => {
-    await(await orm).destroy()
+    await (await orm).destroy()
   })
 
   it('sauvegarde un établissement territorial et sa date de mise à jour FINESS même s’il existe déjà', async () => {
@@ -62,27 +62,27 @@ describe('Sauvegarde de l’établissement territorial', () => {
     await entitéJuridiqueRepository.insert([entitéJuridique1, entitéJuridique2])
 
     const établissementTerritorialIdentité1 = new ÉtablissementTerritorialIdentitéModel()
-    établissementTerritorialIdentité1.adresseAcheminement = 'fake',
-    établissementTerritorialIdentité1.adresseNuméroVoie = 'fake',
-    établissementTerritorialIdentité1.adresseTypeVoie = 'fake',
-    établissementTerritorialIdentité1.adresseVoie = 'fake',
-    établissementTerritorialIdentité1.catégorieÉtablissement = 'fak',
-    établissementTerritorialIdentité1.codeModeTarification = '00',
-    établissementTerritorialIdentité1.commune = 'fake',
-    établissementTerritorialIdentité1.courriel = 'fake',
-    établissementTerritorialIdentité1.département = 'fake',
-    établissementTerritorialIdentité1.libelléCatégorieÉtablissement = 'fake',
-    établissementTerritorialIdentité1.libelléCourtCatégorieÉtablissement = 'fake',
-    établissementTerritorialIdentité1.libelléModeTarification = 'fake',
-    établissementTerritorialIdentité1.numéroFinessEntitéJuridique = entitéJuridique1.numéroFinessEntitéJuridique,
-    établissementTerritorialIdentité1.numéroFinessÉtablissementPrincipal = 'fake',
-    établissementTerritorialIdentité1.numéroFinessÉtablissementTerritorial = '010000040',
-    établissementTerritorialIdentité1.raisonSociale = 'fake',
-    établissementTerritorialIdentité1.raisonSocialeCourte = 'fake',
-    établissementTerritorialIdentité1.siret = 'fake',
-    établissementTerritorialIdentité1.typeÉtablissement = 'F',
-    établissementTerritorialIdentité1.téléphone = 'fake',
-    await établissementTerritorialIdentitéRepository.insert([établissementTerritorialIdentité1])
+    ;(établissementTerritorialIdentité1.adresseAcheminement = 'fake'),
+      (établissementTerritorialIdentité1.adresseNuméroVoie = 'fake'),
+      (établissementTerritorialIdentité1.adresseTypeVoie = 'fake'),
+      (établissementTerritorialIdentité1.adresseVoie = 'fake'),
+      (établissementTerritorialIdentité1.catégorieÉtablissement = 'fak'),
+      (établissementTerritorialIdentité1.codeModeTarification = '00'),
+      (établissementTerritorialIdentité1.commune = 'fake'),
+      (établissementTerritorialIdentité1.courriel = 'fake'),
+      (établissementTerritorialIdentité1.département = 'fake'),
+      (établissementTerritorialIdentité1.libelléCatégorieÉtablissement = 'fake'),
+      (établissementTerritorialIdentité1.libelléCourtCatégorieÉtablissement = 'fake'),
+      (établissementTerritorialIdentité1.libelléModeTarification = 'fake'),
+      (établissementTerritorialIdentité1.numéroFinessEntitéJuridique = entitéJuridique1.numéroFinessEntitéJuridique),
+      (établissementTerritorialIdentité1.numéroFinessÉtablissementPrincipal = 'fake'),
+      (établissementTerritorialIdentité1.numéroFinessÉtablissementTerritorial = '010000040'),
+      (établissementTerritorialIdentité1.raisonSociale = 'fake'),
+      (établissementTerritorialIdentité1.raisonSocialeCourte = 'fake'),
+      (établissementTerritorialIdentité1.siret = 'fake'),
+      (établissementTerritorialIdentité1.typeÉtablissement = 'F'),
+      (établissementTerritorialIdentité1.téléphone = 'fake'),
+      await établissementTerritorialIdentitéRepository.insert([établissementTerritorialIdentité1])
     await dateMiseÀJourFichierSourceRepository.insert([
       {
         dernièreMiseÀJour: '2020-01-02',
@@ -97,8 +97,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
     await typeOrmÉtablissementTerritorialRepository.sauvegarde(établissementsTerritoriaux, nouvelleDateDeMiseÀJour)
 
     // THEN
-    const établissementsTerritoriauxSauvés = await établissementTerritorialIdentitéRepository
-      .find({ order: { numéroFinessÉtablissementTerritorial: 'ASC' } })
+    const établissementsTerritoriauxSauvés = await établissementTerritorialIdentitéRepository.find({ order: { numéroFinessÉtablissementTerritorial: 'ASC' } })
 
     const établissementTerritorial1MisAJourAttendu = new ÉtablissementTerritorialIdentitéModel()
     établissementTerritorial1MisAJourAttendu.adresseAcheminement = '01130 NANTUA'
@@ -145,11 +144,8 @@ describe('Sauvegarde de l’établissement territorial', () => {
     établissementTerritorial2MisAJourAttendu.typeÉtablissement = 'P'
     établissementTerritorial2MisAJourAttendu.téléphone = '0102030406'
 
-    expect(établissementsTerritoriauxSauvés).toStrictEqual(
-      [établissementTerritorial1MisAJourAttendu, établissementTerritorial2MisAJourAttendu]
-    )
-    const dateMiseÀJourFichierSourceSauvée = await dateMiseÀJourFichierSourceRepository
-      .find({ where: { fichier: FichierSource.FINESS_CS1400102 } })
+    expect(établissementsTerritoriauxSauvés).toStrictEqual([établissementTerritorial1MisAJourAttendu, établissementTerritorial2MisAJourAttendu])
+    const dateMiseÀJourFichierSourceSauvée = await dateMiseÀJourFichierSourceRepository.find({ where: { fichier: FichierSource.FINESS_CS1400102 } })
     const dateMiseÀJourFichierSourceAttendue = new DateMiseÀJourFichierSourceModel()
     dateMiseÀJourFichierSourceAttendue.fichier = FichierSource.FINESS_CS1400102
     dateMiseÀJourFichierSourceAttendue.dernièreMiseÀJour = '2022-07-28'
@@ -163,9 +159,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
     await entitéJuridiqueRepository.insert([entitéJuridique])
     const numéroFinessÉtablissementTerritorial = '999777444'
     await établissementTerritorialIdentitéRepository.insert(
-      ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial(
-        { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial }
-      )
+      ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
     )
     await dateMiseÀJourFichierSourceRepository.insert(
       DateMiseÀJourFichierSourceModelTestBuilder.crée({
@@ -213,8 +207,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
 
     expect(établissementsTerritoriauxSauvés).toStrictEqual([établissementTerritorialAttendu])
 
-    const dateMiseÀJourFichierSourceSauvée = await dateMiseÀJourFichierSourceRepository
-      .find({ where: { fichier: FichierSource.FINESS_CS1400102 } })
+    const dateMiseÀJourFichierSourceSauvée = await dateMiseÀJourFichierSourceRepository.find({ where: { fichier: FichierSource.FINESS_CS1400102 } })
     const dateMiseÀJourFichierSourceAttendue = new DateMiseÀJourFichierSourceModel()
     dateMiseÀJourFichierSourceAttendue.fichier = FichierSource.FINESS_CS1400102
     dateMiseÀJourFichierSourceAttendue.dernièreMiseÀJour = '2020-01-01'
@@ -229,9 +222,7 @@ describe('Sauvegarde de l’établissement territorial', () => {
     const numéroFinessÉtablissementTerritorial = '999777444'
 
     await établissementTerritorialIdentitéRepository.insert(
-      ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial(
-        { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial }
-      )
+      ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
     )
     const typeOrmÉtablissementTerritorialRepository = new TypeOrmÉtablissementTerritorialRepository(orm, fakeLogger)
 

@@ -11,7 +11,7 @@ import { ÉtablissementTerritorialRattachéViewModel } from '../../frontend/ui/e
 import { PageEntitéJuridique } from '../../frontend/ui/entité-juridique/PageEntitéJuridique'
 
 type RouterProps = Readonly<{
-  entitéJuridique: EntitéJuridique,
+  entitéJuridique: EntitéJuridique
   établissementsTerritoriauxRattachés: ÉtablissementTerritorialRattaché[]
 }>
 
@@ -21,12 +21,15 @@ export default function Router({ entitéJuridique, établissementsTerritoriauxRa
   if (!établissementsTerritoriauxRattachés || !entitéJuridique) return null
 
   const entitéJuridiqueViewModel = new EntitéJuridiqueViewModel(entitéJuridique, wording)
-  const établissementsTerritoriauxRattachésViewModels =
-    établissementsTerritoriauxRattachés.map((établissementTerritorial) => new ÉtablissementTerritorialRattachéViewModel(établissementTerritorial, wording))
-  return <PageEntitéJuridique
-    entitéJuridiqueViewModel={entitéJuridiqueViewModel}
-    établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
-  />
+  const établissementsTerritoriauxRattachésViewModels = établissementsTerritoriauxRattachés.map(
+    (établissementTerritorial) => new ÉtablissementTerritorialRattachéViewModel(établissementTerritorial, wording)
+  )
+  return (
+    <PageEntitéJuridique
+      entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+      établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
+    />
+  )
 }
 
 export function getStaticPaths(): GetStaticPathsResult {
@@ -36,10 +39,10 @@ export function getStaticPaths(): GetStaticPathsResult {
   }
 }
 
-export async function getStaticProps({ params }: { params: { numeroFiness: string }}): Promise<GetStaticPropsResult<RouterProps> | void> {
+export async function getStaticProps({ params }: { params: { numeroFiness: string } }): Promise<GetStaticPropsResult<RouterProps> | void> {
   try {
     const { environmentVariables } = dependencies
-    const entitéJuridiqueEndpoint = await récupèreLEntitéJuridiqueEndpoint(dependencies, params.numeroFiness) as RouterProps
+    const entitéJuridiqueEndpoint = (await récupèreLEntitéJuridiqueEndpoint(dependencies, params.numeroFiness)) as RouterProps
 
     return {
       props: {

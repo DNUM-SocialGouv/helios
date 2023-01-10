@@ -220,11 +220,7 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
   private readonly préfixeDuFichierÉtablissementTerritorialIdentité = 'finess_cs1400102_stock_'
   private readonly préfixeDuFichierCatégorie = 'finess_cs1500106_stock_'
 
-  constructor(
-    private readonly convertXmlToJs: XmlToJs,
-    private readonly localPath: string,
-    private logger: Logger
-  ) {}
+  constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string, private logger: Logger) {}
 
   récupèreLesÉtablissementsTerritoriauxOuverts(numéroFinessDesEntitésJuridiques: string[]): ÉtablissementTerritorialIdentité[] {
     const cheminDuFichierÉtablissementTerritorialIdentité = this.récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(this.localPath)
@@ -233,24 +229,26 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
 
     const catégories = this.convertXmlToJs.exécute<CatégorieFluxFiness>(cheminDuFichierCatégorie)
 
-    const établissementTerritorialFluxFinessIdentité = this.convertXmlToJs.exécute
-      <ÉtablissementTerritorialIdentitéFluxFiness>(cheminDuFichierÉtablissementTerritorialIdentité)
+    const établissementTerritorialFluxFinessIdentité = this.convertXmlToJs.exécute<ÉtablissementTerritorialIdentitéFluxFiness>(
+      cheminDuFichierÉtablissementTerritorialIdentité
+    )
     const établissementTerritoriauxFluxFiness = établissementTerritorialFluxFinessIdentité.fluxfiness.structureet
     this.logger.info(`[FINESS] ${établissementTerritoriauxFluxFiness.length} établissements territoriaux récupérés depuis FINESS.`)
 
     const établissementsTerritoriauxFinessOuverts = this.conserveLesÉtablissementsOuverts(établissementTerritoriauxFluxFiness, numéroFinessDesEntitésJuridiques)
     this.logger.info(`[FINESS] ${établissementsTerritoriauxFinessOuverts.length} établissements territoriaux sont ouverts.`)
 
-    return établissementsTerritoriauxFinessOuverts
-      .map((établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) =>
-        this.construisÉtablissementTerritorialIdentité(établissementTerritorialIdentitéFiness, catégories))
+    return établissementsTerritoriauxFinessOuverts.map((établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) =>
+      this.construisÉtablissementTerritorialIdentité(établissementTerritorialIdentitéFiness, catégories)
+    )
   }
 
   récupèreLaDateDeMiseÀJourDuFichierSource(): string {
     const cheminDuFichierÉtablissementTerritorialIdentité = this.récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(this.localPath)
 
-    const dateDeMiseAJourDeLaFichierSource =
-      cheminDuFichierÉtablissementTerritorialIdentité.split(this.préfixeDuFichierÉtablissementTerritorialIdentité)[1].slice(0, 8)
+    const dateDeMiseAJourDeLaFichierSource = cheminDuFichierÉtablissementTerritorialIdentité
+      .split(this.préfixeDuFichierÉtablissementTerritorialIdentité)[1]
+      .slice(0, 8)
     this.logger.info(`[FINESS] Date de mise à jour des fichiers FINESS des établissements territoriaux : ${dateDeMiseAJourDeLaFichierSource}`)
 
     return dateDeMiseAJourDeLaFichierSource
@@ -264,7 +262,8 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
       return !(
         this.établissementTerritorialEstCaduc(établissementTerritorialIdentitéFiness) ||
         this.établissementTerritorialEstFermé(établissementTerritorialIdentitéFiness) ||
-        !this.entitéJuridiqueDeRattachementEstOuverte(établissementTerritorialIdentitéFiness, numéroFinessDesEntitésJuridiques) )
+        !this.entitéJuridiqueDeRattachementEstOuverte(établissementTerritorialIdentitéFiness, numéroFinessDesEntitésJuridiques)
+      )
     })
   }
 
@@ -276,15 +275,19 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
     return établissementTerritorialIdentitéFiness.datefermeture._text !== undefined
   }
 
-  private entitéJuridiqueDeRattachementEstOuverte(établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness,
-    numéroFinessDesEntitésJuridiques: string[]) {
+  private entitéJuridiqueDeRattachementEstOuverte(
+    établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness,
+    numéroFinessDesEntitésJuridiques: string[]
+  ) {
     return numéroFinessDesEntitésJuridiques.includes(établissementTerritorialIdentitéFiness.nofinessej._text as string)
   }
 
   private récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(localPath: string): string {
     const fichiersDuRépertoireSimple = readdirSync(`${localPath}/finess/simple`)
 
-    return localPath + '/finess/simple/' + fichiersDuRépertoireSimple.filter((fichier) => fichier.includes(this.préfixeDuFichierÉtablissementTerritorialIdentité))
+    return (
+      localPath + '/finess/simple/' + fichiersDuRépertoireSimple.filter((fichier) => fichier.includes(this.préfixeDuFichierÉtablissementTerritorialIdentité))
+    )
   }
 
   private récupèreLeCheminDuFichierCatégorie(localPath: string): string {
@@ -316,9 +319,9 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
       numéroFinessEntitéJuridique: valueOrEmpty(établissementTerritorialIdentitéFiness.nofinessej._text),
       numéroFinessÉtablissementPrincipal: valueOrEmpty(établissementTerritorialIdentitéFiness.nofinessppal._text),
       numéroFinessÉtablissementTerritorial: valueOrEmpty(établissementTerritorialIdentitéFiness.nofinesset._text),
-      raisonSociale: valueOrEmpty(établissementTerritorialIdentitéFiness.rslongue._text) ?
-        valueOrEmpty(établissementTerritorialIdentitéFiness.rslongue._text) :
-        valueOrEmpty(établissementTerritorialIdentitéFiness.rs._text),
+      raisonSociale: valueOrEmpty(établissementTerritorialIdentitéFiness.rslongue._text)
+        ? valueOrEmpty(établissementTerritorialIdentitéFiness.rslongue._text)
+        : valueOrEmpty(établissementTerritorialIdentitéFiness.rs._text),
       raisonSocialeCourte: valueOrEmpty(établissementTerritorialIdentitéFiness.rs._text),
       siret: valueOrEmpty(établissementTerritorialIdentitéFiness.siret._text),
       typeÉtablissement: valueOrEmpty(établissementTerritorialIdentitéFiness.typeet._text),

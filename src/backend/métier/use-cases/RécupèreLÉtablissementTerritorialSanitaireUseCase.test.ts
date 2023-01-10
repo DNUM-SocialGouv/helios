@@ -10,18 +10,16 @@ import { RécupèreLÉtablissementTerritorialSanitaireUseCase } from './Récupè
 describe('La récupération d’un établissement territorial sanitaire', () => {
   it('récupère la fiche identité de l’établissement territorial sanitaire', async () => {
     // GIVEN
-    const fakeFicheIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestBuilder.créeUneIdentitéSanitaire(
-      {
-        numéroFinessEntitéJuridique: {
-          dateMiseÀJourSource: '2022-05-14',
-          value: numéroFinessEntitéJuridique,
-        },
-        numéroFinessÉtablissementTerritorial: {
-          dateMiseÀJourSource: '2022-05-14',
-          value: numéroFinessÉtablissementTerritorial,
-        },
-      }
-    )
+    const fakeFicheIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestBuilder.créeUneIdentitéSanitaire({
+      numéroFinessEntitéJuridique: {
+        dateMiseÀJourSource: '2022-05-14',
+        value: numéroFinessEntitéJuridique,
+      },
+      numéroFinessÉtablissementTerritorial: {
+        dateMiseÀJourSource: '2022-05-14',
+        value: numéroFinessÉtablissementTerritorial,
+      },
+    })
     const mockedChargeParNuméroFiness = jest.fn().mockResolvedValueOnce(fakeFicheIdentitéÉtablissementTerritorial)
     const entitéJuridiqueDeRattachement: EntitéJuridiqueDeRattachement = {
       raisonSocialeDeLEntitéDeRattachement: {
@@ -39,10 +37,11 @@ describe('La récupération d’un établissement territorial sanitaire', () => 
       chargeAutorisationsEtCapacités: jest.fn(),
       chargeIdentité: mockedChargeParNuméroFiness,
     }
-    const mockedEntitéJuridiqueLoader: EntitéJuridiqueLoader =
-      { chargeIdentité: jest.fn(), chargeRattachement: mockedChargeLEntitéJuridiqueDeRattachement }
-    const récupèreLÉtablissementTerritorialUseCase =
-      new RécupèreLÉtablissementTerritorialSanitaireUseCase(mockedÉtablissementTerritorialLoader, mockedEntitéJuridiqueLoader)
+    const mockedEntitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeIdentité: jest.fn(), chargeRattachement: mockedChargeLEntitéJuridiqueDeRattachement }
+    const récupèreLÉtablissementTerritorialUseCase = new RécupèreLÉtablissementTerritorialSanitaireUseCase(
+      mockedÉtablissementTerritorialLoader,
+      mockedEntitéJuridiqueLoader
+    )
 
     // WHEN
     const ficheIdentitéRécupérée = await récupèreLÉtablissementTerritorialUseCase.exécute(numéroFinessÉtablissementTerritorial)
@@ -69,8 +68,10 @@ describe('La récupération d’un établissement territorial sanitaire', () => 
       chargeIdentité: mockedChargeParNuméroFiness,
     }
     const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeIdentité: jest.fn(), chargeRattachement: jest.fn() }
-    const récupèreLÉtablissementTerritorialUseCase =
-      new RécupèreLÉtablissementTerritorialSanitaireUseCase(établissementTerritorialLoader, entitéJuridiqueLoader)
+    const récupèreLÉtablissementTerritorialUseCase = new RécupèreLÉtablissementTerritorialSanitaireUseCase(
+      établissementTerritorialLoader,
+      entitéJuridiqueLoader
+    )
 
     // WHEN
     try {
@@ -84,50 +85,38 @@ describe('La récupération d’un établissement territorial sanitaire', () => 
 
   it('récupère les activités de l’établissement territorial sanitaire', async () => {
     // GIVEN
-    const fakeIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestBuilder.créeUneIdentitéSanitaire(
-      {
-        numéroFinessEntitéJuridique: {
-          dateMiseÀJourSource: '2022-05-14',
-          value: numéroFinessEntitéJuridique,
-        },
-        numéroFinessÉtablissementTerritorial: {
-          dateMiseÀJourSource: '2022-05-14',
-          value: numéroFinessÉtablissementTerritorial,
-        },
-      }
-    )
+    const fakeIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestBuilder.créeUneIdentitéSanitaire({
+      numéroFinessEntitéJuridique: {
+        dateMiseÀJourSource: '2022-05-14',
+        value: numéroFinessEntitéJuridique,
+      },
+      numéroFinessÉtablissementTerritorial: {
+        dateMiseÀJourSource: '2022-05-14',
+        value: numéroFinessÉtablissementTerritorial,
+      },
+    })
 
     const fakeActivitésSanitaires: ÉtablissementTerritorialSanitaire['activités'] = [
-      ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire(
-        {
-          année: 2016,
-          numéroFinessÉtablissementTerritorial,
-        }
-      ),
-      ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire(
-        {
-          année: 2017,
-          numéroFinessÉtablissementTerritorial,
-        }
-      ),
-      ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire(
-        {
-          année: 2018,
-          numéroFinessÉtablissementTerritorial,
-        }
-      ),
-      ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire(
-        {
-          année: 2019,
-          numéroFinessÉtablissementTerritorial,
-        }
-      ),
-      ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire(
-        {
-          année: 2020,
-          numéroFinessÉtablissementTerritorial,
-        }
-      ),
+      ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
+        année: 2016,
+        numéroFinessÉtablissementTerritorial,
+      }),
+      ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
+        année: 2017,
+        numéroFinessÉtablissementTerritorial,
+      }),
+      ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
+        année: 2018,
+        numéroFinessÉtablissementTerritorial,
+      }),
+      ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
+        année: 2019,
+        numéroFinessÉtablissementTerritorial,
+      }),
+      ÉtablissementTerritorialTestBuilder.créeUneActivitéSanitaire({
+        année: 2020,
+        numéroFinessÉtablissementTerritorial,
+      }),
     ]
     const mockedChargeActivité = jest.fn().mockResolvedValueOnce(fakeActivitésSanitaires)
 
@@ -137,11 +126,12 @@ describe('La récupération d’un établissement territorial sanitaire', () => 
       chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
     }
 
-    const mockedEntitéJuridiqueLoader: EntitéJuridiqueLoader =
-      { chargeIdentité: jest.fn(), chargeRattachement: jest.fn() }
+    const mockedEntitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeIdentité: jest.fn(), chargeRattachement: jest.fn() }
 
-    const récupèreLÉtablissementTerritorialUseCase =
-      new RécupèreLÉtablissementTerritorialSanitaireUseCase(mockedÉtablissementTerritorialSanitaireLoader, mockedEntitéJuridiqueLoader)
+    const récupèreLÉtablissementTerritorialUseCase = new RécupèreLÉtablissementTerritorialSanitaireUseCase(
+      mockedÉtablissementTerritorialSanitaireLoader,
+      mockedEntitéJuridiqueLoader
+    )
 
     // WHEN
     const établissementTerritorialSanitaire = await récupèreLÉtablissementTerritorialUseCase.exécute(numéroFinessÉtablissementTerritorial)
@@ -154,20 +144,20 @@ describe('La récupération d’un établissement territorial sanitaire', () => 
 
   it('récupère les autorisations de l’établissement territorial sanitaire', async () => {
     // GIVEN
-    const fakeIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestBuilder.créeUneIdentitéSanitaire(
-      {
-        numéroFinessEntitéJuridique: {
-          dateMiseÀJourSource: '2022-05-14',
-          value: numéroFinessEntitéJuridique,
-        },
-        numéroFinessÉtablissementTerritorial: {
-          dateMiseÀJourSource: '2022-05-14',
-          value: numéroFinessÉtablissementTerritorial,
-        },
-      }
-    )
+    const fakeIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestBuilder.créeUneIdentitéSanitaire({
+      numéroFinessEntitéJuridique: {
+        dateMiseÀJourSource: '2022-05-14',
+        value: numéroFinessEntitéJuridique,
+      },
+      numéroFinessÉtablissementTerritorial: {
+        dateMiseÀJourSource: '2022-05-14',
+        value: numéroFinessÉtablissementTerritorial,
+      },
+    })
 
-    const autorisations: ÉtablissementTerritorialSanitaire['autorisationsEtCapacités'] = ÉtablissementTerritorialTestBuilder.créeUneAutorisationSanitaire({ numéroFinessÉtablissementTerritorial })
+    const autorisations: ÉtablissementTerritorialSanitaire['autorisationsEtCapacités'] = ÉtablissementTerritorialTestBuilder.créeUneAutorisationSanitaire({
+      numéroFinessÉtablissementTerritorial,
+    })
     const mockedChargeAutorisations = jest.fn().mockResolvedValueOnce(autorisations)
     const mockedÉtablissementTerritorialSanitaireLoader: ÉtablissementTerritorialSanitaireLoader = {
       chargeActivité: jest.fn(),
@@ -177,8 +167,10 @@ describe('La récupération d’un établissement territorial sanitaire', () => 
 
     const mockedEntitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeIdentité: jest.fn(), chargeRattachement: jest.fn() }
 
-    const récupèreLÉtablissementTerritorialUseCase =
-      new RécupèreLÉtablissementTerritorialSanitaireUseCase(mockedÉtablissementTerritorialSanitaireLoader, mockedEntitéJuridiqueLoader)
+    const récupèreLÉtablissementTerritorialUseCase = new RécupèreLÉtablissementTerritorialSanitaireUseCase(
+      mockedÉtablissementTerritorialSanitaireLoader,
+      mockedEntitéJuridiqueLoader
+    )
 
     // WHEN
     const établissementTerritorialSanitaire = await récupèreLÉtablissementTerritorialUseCase.exécute(numéroFinessÉtablissementTerritorial)

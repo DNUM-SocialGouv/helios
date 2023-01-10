@@ -27,34 +27,31 @@ describe('La recherche des entités juridiques et des établissements territoria
     // THEN
     expect(mockedRechercheParTerme).toHaveBeenCalledWith(termeDeLaRecherche, premièrePage)
     expect(mockedRechercheParTerme).toHaveBeenCalledTimes(1)
-    expect(résultatsDeLaRecherche).toStrictEqual<RésultatDeRecherche>(
-      {
-        nombreDeRésultats: 3,
-        résultats:
-        [
-          {
-            commune: 'OYONNAX',
-            département: 'AIN',
-            numéroFiness: '010018407',
-            raisonSocialeCourte: 'CH DU HAUT BUGEY',
-            type: 'Entité juridique',
-          },
-          {
-            commune: 'NANTUA',
-            département: 'AIN',
-            numéroFiness: '010000040',
-            raisonSocialeCourte: 'CH NANTUA',
-            type: 'Médico-social',
-          },
-          {
-            commune: 'VILLENEUVE D ASCQ',
-            département: 'NORD',
-            numéroFiness: '590782553',
-            raisonSocialeCourte: 'HP VILLENEUVE DASCQ',
-            type: 'Sanitaire',
-          },
-        ],
-      }
-    )
+    expect(résultatsDeLaRecherche).toStrictEqual<RésultatDeRecherche>({
+      nombreDeRésultats: 3,
+      résultats: [
+        {
+          commune: 'OYONNAX',
+          département: 'AIN',
+          numéroFiness: '010018407',
+          raisonSocialeCourte: 'CH DU HAUT BUGEY',
+          type: 'Entité juridique',
+        },
+        {
+          commune: 'NANTUA',
+          département: 'AIN',
+          numéroFiness: '010000040',
+          raisonSocialeCourte: 'CH NANTUA',
+          type: 'Médico-social',
+        },
+        {
+          commune: 'VILLENEUVE D ASCQ',
+          département: 'NORD',
+          numéroFiness: '590782553',
+          raisonSocialeCourte: 'HP VILLENEUVE DASCQ',
+          type: 'Sanitaire',
+        },
+      ],
+    })
   })
 })

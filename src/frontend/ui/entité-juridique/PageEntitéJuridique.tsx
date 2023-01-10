@@ -24,13 +24,9 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, établissement
   return (
     <main className="fr-container">
       <Head>
-        <title>
-          {entitéJuridiqueViewModel.titre}
-        </title>
+        <title>{entitéJuridiqueViewModel.titre}</title>
       </Head>
-      <Titre logo={LogoEntitéJuridique}>
-        {entitéJuridiqueViewModel.titre}
-      </Titre>
+      <Titre logo={LogoEntitéJuridique}>{entitéJuridiqueViewModel.titre}</Titre>
       <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
       <ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels} />
     </main>

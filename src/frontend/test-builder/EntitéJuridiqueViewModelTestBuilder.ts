@@ -47,9 +47,12 @@ export class EntitéJuridiqueViewModelTestBuilder {
   }
 
   public static crée(wording: Wording, champsSurchargés?: Partial<EntitéJuridique>): EntitéJuridiqueViewModel {
-    return new EntitéJuridiqueViewModel({
-      ...EntitéJuridiqueViewModelTestBuilder.entitéJuridique,
-      ...champsSurchargés,
-    }, wording)
+    return new EntitéJuridiqueViewModel(
+      {
+        ...EntitéJuridiqueViewModelTestBuilder.entitéJuridique,
+        ...champsSurchargés,
+      },
+      wording
+    )
   }
 }

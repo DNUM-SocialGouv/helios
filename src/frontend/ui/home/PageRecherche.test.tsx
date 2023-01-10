@@ -89,10 +89,11 @@ describe('La page de d’accueil', () => {
     ]
     // @ts-ignore
     jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: () => Promise.resolve<RésultatDeRecherche>({
-        nombreDeRésultats,
-        résultats,
-      }),
+      json: () =>
+        Promise.resolve<RésultatDeRecherche>({
+          nombreDeRésultats,
+          résultats,
+        }),
     })
     renderFakeComponent(<PageRecherche />)
     const terme = 'hospitalier'
@@ -136,10 +137,11 @@ describe('La page de d’accueil', () => {
 
     // @ts-ignore
     jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: () => Promise.resolve<RésultatDeRecherche>({
-        nombreDeRésultats,
-        résultats,
-      }),
+      json: () =>
+        Promise.resolve<RésultatDeRecherche>({
+          nombreDeRésultats,
+          résultats,
+        }),
     })
     renderFakeComponent(<PageRecherche />)
     const terme = 'hospitalier'
@@ -159,7 +161,7 @@ describe('La page de d’accueil', () => {
     expect(within(résultatsDeLaRecherche).getByRole('button', { name: wording.VOIR_PLUS_RÉSULTATS })).toBeInTheDocument()
   })
 
-  it('n’affiche pas le bouton permettant de charger les résultats suivants quand tous les résultats sont affichés', async() => {
+  it('n’affiche pas le bouton permettant de charger les résultats suivants quand tous les résultats sont affichés', async () => {
     // GIVEN
     const résultats = [
       RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({ numéroFiness: '000000000' }),
@@ -170,10 +172,11 @@ describe('La page de d’accueil', () => {
 
     // @ts-ignore
     jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: () => Promise.resolve<RésultatDeRecherche>({
-        nombreDeRésultats,
-        résultats,
-      }),
+      json: () =>
+        Promise.resolve<RésultatDeRecherche>({
+          nombreDeRésultats,
+          résultats,
+        }),
     })
     renderFakeComponent(<PageRecherche />)
     const terme = 'hospitalier'
@@ -221,17 +224,19 @@ describe('La page de d’accueil', () => {
       .spyOn(global, 'fetch')
       // @ts-ignore
       .mockResolvedValueOnce({
-        json: () => Promise.resolve<RésultatDeRecherche>({
-          nombreDeRésultats,
-          résultats: résultatsPremièrePage,
-        }),
+        json: () =>
+          Promise.resolve<RésultatDeRecherche>({
+            nombreDeRésultats,
+            résultats: résultatsPremièrePage,
+          }),
       })
       // @ts-ignore
       .mockResolvedValueOnce({
-        json: () => Promise.resolve<RésultatDeRecherche>({
-          nombreDeRésultats,
-          résultats: résultatsSecondePage,
-        }),
+        json: () =>
+          Promise.resolve<RésultatDeRecherche>({
+            nombreDeRésultats,
+            résultats: résultatsSecondePage,
+          }),
       })
     renderFakeComponent(<PageRecherche />)
     const terme = 'hospitalier'
@@ -288,17 +293,19 @@ describe('La page de d’accueil', () => {
       .spyOn(global, 'fetch')
       // @ts-ignore
       .mockResolvedValueOnce({
-        json: () => Promise.resolve<RésultatDeRecherche>({
-          nombreDeRésultats: nombreDeRésultatsDeLaPremièreRecherche,
-          résultats: résultatsPremièreRecherche,
-        }),
+        json: () =>
+          Promise.resolve<RésultatDeRecherche>({
+            nombreDeRésultats: nombreDeRésultatsDeLaPremièreRecherche,
+            résultats: résultatsPremièreRecherche,
+          }),
       })
       // @ts-ignore
       .mockResolvedValueOnce({
-        json: () => Promise.resolve<RésultatDeRecherche>({
-          nombreDeRésultats: nombreDeRésultatsDeLaSecondeRecherche,
-          résultats: résultatsSecondeRecherche,
-        }),
+        json: () =>
+          Promise.resolve<RésultatDeRecherche>({
+            nombreDeRésultats: nombreDeRésultatsDeLaSecondeRecherche,
+            résultats: résultatsSecondeRecherche,
+          }),
       })
     renderFakeComponent(<PageRecherche />)
     const termeDeLaPremièreRecherche = 'hospitalier'
@@ -332,10 +339,11 @@ describe('La page de d’accueil', () => {
     // GIVEN
     // @ts-ignore
     jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: () => Promise.resolve<RésultatDeRecherche>({
-        nombreDeRésultats: 0,
-        résultats: [],
-      }),
+      json: () =>
+        Promise.resolve<RésultatDeRecherche>({
+          nombreDeRésultats: 0,
+          résultats: [],
+        }),
     })
     renderFakeComponent(<PageRecherche />)
     const terme = 'hospitalier'
@@ -406,10 +414,11 @@ describe('La page de d’accueil', () => {
     ]
     // @ts-ignore
     jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: () => Promise.resolve<RésultatDeRecherche>({
-        nombreDeRésultats,
-        résultats,
-      }),
+      json: () =>
+        Promise.resolve<RésultatDeRecherche>({
+          nombreDeRésultats,
+          résultats,
+        }),
     })
 
     // WHEN

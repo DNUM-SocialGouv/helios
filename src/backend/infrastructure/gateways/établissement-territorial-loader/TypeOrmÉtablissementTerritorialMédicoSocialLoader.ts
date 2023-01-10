@@ -9,7 +9,13 @@ import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database
 import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
 import { MonoÉtablissement } from '../../../métier/entities/établissement-territorial-médico-social/MonoÉtablissement'
 import { ÉtablissementTerritorialMédicoSocialActivité } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité'
-import { AutorisationMédicoSocialActivité, AutorisationMédicoSocialClientèle, AutorisationMédicoSocialDatesEtCapacités, AutorisationMédicoSocialDiscipline, ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation'
+import {
+  AutorisationMédicoSocialActivité,
+  AutorisationMédicoSocialClientèle,
+  AutorisationMédicoSocialDatesEtCapacités,
+  AutorisationMédicoSocialDiscipline,
+  ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité,
+} from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation'
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from '../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines'
 import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
@@ -19,18 +25,12 @@ import { ÉtablissementTerritorialMédicoSocialLoader } from '../../../métier/g
 export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements ÉtablissementTerritorialMédicoSocialLoader {
   constructor(private readonly orm: Promise<DataSource>) {}
 
-  async chargeActivité(
-    numéroFinessÉtablissementTerritorial: string
-  ): Promise<ÉtablissementTerritorialMédicoSocialActivité[]> {
+  async chargeActivité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialMédicoSocialActivité[]> {
     const activitésÉtablissementTerritorialActivitésModel = await this.chargeLesActivitésModel(numéroFinessÉtablissementTerritorial)
     const dateDeMiseÀJourAnnMsTdpEtModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET)
     const dateDeMiseÀJourAnnErrdEjEtModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_ERRD_EJ_ET)
 
-    return this.construisActivité(
-      activitésÉtablissementTerritorialActivitésModel,
-      dateDeMiseÀJourAnnMsTdpEtModel,
-      dateDeMiseÀJourAnnErrdEjEtModel
-    )
+    return this.construisActivité(activitésÉtablissementTerritorialActivitésModel, dateDeMiseÀJourAnnMsTdpEtModel, dateDeMiseÀJourAnnErrdEjEtModel)
   }
 
   async chargeIdentité(
@@ -42,15 +42,13 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       return new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial)
     }
 
-    const dateDeMiseÀJourIdentitéModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102) as DateMiseÀJourFichierSourceModel
-    const dateDeMiseÀJourAnnMsTdpEtModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET) as DateMiseÀJourFichierSourceModel
+    const dateDeMiseÀJourIdentitéModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102)) as DateMiseÀJourFichierSourceModel
+    const dateDeMiseÀJourAnnMsTdpEtModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET)) as DateMiseÀJourFichierSourceModel
 
     return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseÀJourIdentitéModel, dateDeMiseÀJourAnnMsTdpEtModel)
   }
 
-  async chargeAutorisationsEtCapacités(
-    numéroFinessÉtablissementTerritorial: string
-  ): Promise<ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité> {
+  async chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité> {
     const autorisationsDeLÉtablissementModel = await this.chargeLesAutorisationsModel(numéroFinessÉtablissementTerritorial)
     const dateDeMiseÀJourFinessCs1400105Model = await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400105)
 
@@ -65,7 +63,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     const nombreDÉtablissementTerritoriauxDansLEntitéJuridique = await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
       .countBy({ numéroFinessEntitéJuridique })
-    const dateDeMiseÀJourIdentitéModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102) as DateMiseÀJourFichierSourceModel
+    const dateDeMiseÀJourIdentitéModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102)) as DateMiseÀJourFichierSourceModel
 
     return {
       estMonoÉtablissement: {
@@ -106,61 +104,49 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
   }
 
   private async chargeLesActivitésModel(numéroFinessÉtablissementTerritorial: string) {
-    return await (await this.orm)
-      .getRepository(ActivitéMédicoSocialModel)
-      .find({
-        order: { année: 'ASC' },
-        where: { numéroFinessÉtablissementTerritorial },
-      })
+    return await (await this.orm).getRepository(ActivitéMédicoSocialModel).find({
+      order: { année: 'ASC' },
+      where: { numéroFinessÉtablissementTerritorial },
+    })
   }
 
   private async chargeLIdentitéModel(numéroFinessÉtablissementTerritorial: string) {
-    return await (await this.orm)
-      .getRepository(ÉtablissementTerritorialIdentitéModel)
-      .findOne({
-        relations: { cpom: true },
-        where: {
-          domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
-          numéroFinessÉtablissementTerritorial,
-        },
-      })
+    return await (await this.orm).getRepository(ÉtablissementTerritorialIdentitéModel).findOne({
+      relations: { cpom: true },
+      where: {
+        domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
+        numéroFinessÉtablissementTerritorial,
+      },
+    })
   }
 
   private async chargeLesAutorisationsModel(numéroFinessÉtablissementTerritorial: string) {
-    return await (await this.orm)
-      .getRepository(AutorisationMédicoSocialModel)
-      .find({
-        order: { disciplineDÉquipement: 'ASC' },
-        where: { numéroFinessÉtablissementTerritorial },
-      })
+    return await (await this.orm).getRepository(AutorisationMédicoSocialModel).find({
+      order: { disciplineDÉquipement: 'ASC' },
+      where: { numéroFinessÉtablissementTerritorial },
+    })
   }
 
   private async chargeLesBudgetEtFinancesModel(numéroFinessÉtablissementTerritorial: string) {
-    return await (await this.orm)
-      .getRepository(BudgetEtFinancesMédicoSocialModel)
-      .find({
-        order: { année: 'ASC' },
-        where: { numéroFinessÉtablissementTerritorial },
-      })
+    return await (await this.orm).getRepository(BudgetEtFinancesMédicoSocialModel).find({
+      order: { année: 'ASC' },
+      where: { numéroFinessÉtablissementTerritorial },
+    })
   }
 
   private async chargeLesRessourcesHumainesModel(numéroFinessÉtablissementTerritorial: string) {
-    return await (await this.orm)
-      .getRepository(RessourcesHumainesMédicoSocialModel)
-      .find({
-        order: { année: 'ASC' },
-        where: { numéroFinessÉtablissementTerritorial },
-      })
+    return await (await this.orm).getRepository(RessourcesHumainesMédicoSocialModel).find({
+      order: { année: 'ASC' },
+      where: { numéroFinessÉtablissementTerritorial },
+    })
   }
 
   private async chargeLaDateDeMiseÀJourModel(source: FichierSource): Promise<DateMiseÀJourFichierSourceModel> {
-    return await (await this.orm)
-      .getRepository(DateMiseÀJourFichierSourceModel)
-      .findOneBy({ fichier: source }) as DateMiseÀJourFichierSourceModel
+    return (await (await this.orm).getRepository(DateMiseÀJourFichierSourceModel).findOneBy({ fichier: source })) as DateMiseÀJourFichierSourceModel
   }
 
   private async chargeLeCadreBudgétaireDeLÉtablissement(numéroFinessÉtablissementTerritorial: string): Promise<CadreBudgétaire> {
-    const budgetEtFinancesModel = await(await this.orm)
+    const budgetEtFinancesModel = await (await this.orm)
       .getRepository(BudgetEtFinancesMédicoSocialModel)
       .find({ order: { année: 'DESC' }, select: { cadreBudgétaire: true }, where: { numéroFinessÉtablissementTerritorial } })
 
@@ -203,9 +189,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       },
       dateDEntréeEnVigueurDuCpom: {
         dateMiseÀJourSource: dateDeMiseÀJourAnnMsTdpEtModel.dernièreMiseÀJour,
-        value: établissementTerritorialIdentitéModel.cpom ?
-          établissementTerritorialIdentitéModel.cpom.dateDEntréeEnVigueur :
-          '',
+        value: établissementTerritorialIdentitéModel.cpom ? établissementTerritorialIdentitéModel.cpom.dateDEntréeEnVigueur : '',
       },
       libelléCatégorieÉtablissement: {
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
@@ -255,39 +239,38 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     dateDeMiseAJourAnnMsTdpEtModel: DateMiseÀJourFichierSourceModel,
     dateDeMiseAJourAnnErrdEjEtModel: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialMédicoSocialActivité[] {
-    return établissementTerritorialActivitésModel.map<ÉtablissementTerritorialMédicoSocialActivité>((établissementTerritorialModel) =>
-      ({
-        année: établissementTerritorialModel.année,
-        duréeMoyenneSéjourAccompagnementPersonnesSorties: {
-          dateMiseÀJourSource: dateDeMiseAJourAnnMsTdpEtModel.dernièreMiseÀJour,
-          value: établissementTerritorialModel.duréeMoyenneSéjourAccompagnementPersonnesSorties,
-        },
-        fileActivePersonnesAccompagnées: {
-          dateMiseÀJourSource: dateDeMiseAJourAnnMsTdpEtModel.dernièreMiseÀJour,
-          value: établissementTerritorialModel.fileActivePersonnesAccompagnées,
-        },
-        nombreMoyenJournéesAbsencePersonnesAccompagnées: {
-          dateMiseÀJourSource: dateDeMiseAJourAnnMsTdpEtModel.dernièreMiseÀJour,
-          value: établissementTerritorialModel.nombreMoyenJournéesAbsencePersonnesAccompagnées,
-        },
-        numéroFinessÉtablissementTerritorial: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
-        tauxOccupationAccueilDeJour: {
-          dateMiseÀJourSource: dateDeMiseAJourAnnErrdEjEtModel.dernièreMiseÀJour,
-          value: établissementTerritorialModel.tauxOccupationAccueilDeJour,
-        },
-        tauxOccupationHébergementPermanent: {
-          dateMiseÀJourSource: dateDeMiseAJourAnnErrdEjEtModel.dernièreMiseÀJour,
-          value: établissementTerritorialModel.tauxOccupationHébergementPermanent,
-        },
-        tauxOccupationHébergementTemporaire: {
-          dateMiseÀJourSource: dateDeMiseAJourAnnErrdEjEtModel.dernièreMiseÀJour,
-          value: établissementTerritorialModel.tauxOccupationHébergementTemporaire,
-        },
-        tauxRéalisationActivité: {
-          dateMiseÀJourSource: dateDeMiseAJourAnnMsTdpEtModel.dernièreMiseÀJour,
-          value: établissementTerritorialModel.tauxRéalisationActivité,
-        },
-      }))
+    return établissementTerritorialActivitésModel.map<ÉtablissementTerritorialMédicoSocialActivité>((établissementTerritorialModel) => ({
+      année: établissementTerritorialModel.année,
+      duréeMoyenneSéjourAccompagnementPersonnesSorties: {
+        dateMiseÀJourSource: dateDeMiseAJourAnnMsTdpEtModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.duréeMoyenneSéjourAccompagnementPersonnesSorties,
+      },
+      fileActivePersonnesAccompagnées: {
+        dateMiseÀJourSource: dateDeMiseAJourAnnMsTdpEtModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.fileActivePersonnesAccompagnées,
+      },
+      nombreMoyenJournéesAbsencePersonnesAccompagnées: {
+        dateMiseÀJourSource: dateDeMiseAJourAnnMsTdpEtModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.nombreMoyenJournéesAbsencePersonnesAccompagnées,
+      },
+      numéroFinessÉtablissementTerritorial: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
+      tauxOccupationAccueilDeJour: {
+        dateMiseÀJourSource: dateDeMiseAJourAnnErrdEjEtModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.tauxOccupationAccueilDeJour,
+      },
+      tauxOccupationHébergementPermanent: {
+        dateMiseÀJourSource: dateDeMiseAJourAnnErrdEjEtModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.tauxOccupationHébergementPermanent,
+      },
+      tauxOccupationHébergementTemporaire: {
+        dateMiseÀJourSource: dateDeMiseAJourAnnErrdEjEtModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.tauxOccupationHébergementTemporaire,
+      },
+      tauxRéalisationActivité: {
+        dateMiseÀJourSource: dateDeMiseAJourAnnMsTdpEtModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.tauxRéalisationActivité,
+      },
+    }))
   }
 
   private construisLesAutorisations(
@@ -330,22 +313,24 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     autorisationsModel: AutorisationMédicoSocialModel[],
     dateMiseÀJourSource: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité['capacités'] {
-    const capacitéParActivité = autorisationsModel.reduce((activités: { capacité: number, libellé: string }[], autorisation: AutorisationMédicoSocialModel) => {
-      if (!autorisation.capacitéInstalléeTotale) return activités
-      if (autorisation.estInstallée) {
-        const activité = activités.find((capacitéParActivité) => capacitéParActivité.libellé === autorisation.libelléActivité)
+    const capacitéParActivité = autorisationsModel
+      .reduce((activités: { capacité: number; libellé: string }[], autorisation: AutorisationMédicoSocialModel) => {
+        if (!autorisation.capacitéInstalléeTotale) return activités
+        if (autorisation.estInstallée) {
+          const activité = activités.find((capacitéParActivité) => capacitéParActivité.libellé === autorisation.libelléActivité)
 
-        if (!activité) {
-          activités.push({
-            capacité: autorisation.capacitéInstalléeTotale,
-            libellé: autorisation.libelléActivité,
-          })
-        } else {
-          activité.capacité += autorisation.capacitéInstalléeTotale
+          if (!activité) {
+            activités.push({
+              capacité: autorisation.capacitéInstalléeTotale,
+              libellé: autorisation.libelléActivité,
+            })
+          } else {
+            activité.capacité += autorisation.capacitéInstalléeTotale
+          }
         }
-      }
-      return activités
-    }, []).sort((a, b) => a.libellé.localeCompare(b.libellé))
+        return activités
+      }, [])
+      .sort((a, b) => a.libellé.localeCompare(b.libellé))
 
     return {
       capacitéParActivité,
@@ -412,9 +397,10 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
           valeur: budgetEtFinancesModel.fondsDeRoulement,
         },
         recettesEtDépenses: {
-          dateMiseÀJourSource: budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.ERRD
-            ? dateDeMiseÀJourAnnErrdEjEt.dernièreMiseÀJour
-            : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour,
+          dateMiseÀJourSource:
+            budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.ERRD
+              ? dateDeMiseÀJourAnnErrdEjEt.dernièreMiseÀJour
+              : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour,
           dépensesGroupe1: budgetEtFinancesModel.dépensesGroupe1,
           dépensesGroupe2: budgetEtFinancesModel.dépensesGroupe2,
           dépensesGroupe3: budgetEtFinancesModel.dépensesGroupe3,
@@ -423,21 +409,24 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
           recettesGroupe3: budgetEtFinancesModel.recettesGroupe3,
         },
         résultatNetComptable: {
-          dateMiseÀJourSource: budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.ERRD
-            ? dateDeMiseÀJourAnnErrdEjEt.dernièreMiseÀJour
-            : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour,
+          dateMiseÀJourSource:
+            budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.ERRD
+              ? dateDeMiseÀJourAnnErrdEjEt.dernièreMiseÀJour
+              : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour,
           valeur: budgetEtFinancesModel.résultatNetComptable,
         },
         tauxDeCafNette: {
-          dateMiseÀJourSource: budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.ERRD
-            ? dateDeMiseÀJourAnnErrdEj.dernièreMiseÀJour
-            : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour,
+          dateMiseÀJourSource:
+            budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.ERRD
+              ? dateDeMiseÀJourAnnErrdEj.dernièreMiseÀJour
+              : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour,
           valeur: budgetEtFinancesModel.tauxDeCaf,
         },
         tauxDeVétustéConstruction: {
-          dateMiseÀJourSource: budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.ERRD
-            ? dateDeMiseÀJourAnnErrdEj.dernièreMiseÀJour
-            : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour,
+          dateMiseÀJourSource:
+            budgetEtFinancesModel.cadreBudgétaire === CadreBudgétaire.ERRD
+              ? dateDeMiseÀJourAnnErrdEj.dernièreMiseÀJour
+              : dateDeMiseÀJourAnnCaEjEt.dernièreMiseÀJour,
           valeur: budgetEtFinancesModel.tauxDeVétustéConstruction,
         },
       }

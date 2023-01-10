@@ -26,9 +26,11 @@ describe('Décompression d’une source de données', () => {
     const dataSource = 'fake-data-source'
     const localPath = 'fake_local_path'
     const errorMessage = 'unzip failed'
-    jest.spyOn(child, 'execSync').mockImplementation(jest.fn(() => {
-      throw new Error(errorMessage)
-    }))
+    jest.spyOn(child, 'execSync').mockImplementation(
+      jest.fn(() => {
+        throw new Error(errorMessage)
+      })
+    )
     const gunzipUnzipDataSource = new GunzipUnzipRawData(fakeDataCrawlerDependencies.environmentVariables, fakeLogger)
 
     try {

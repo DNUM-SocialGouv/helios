@@ -24,7 +24,9 @@ describe('Conversion d’un fichier XML en un objet JavaScript', () => {
       throw new Error('ne devrait pas passer ici')
     } catch (error) {
       // THEN
-      expect(error.message).toBe(`[Helios] Une erreur est survenue lors de la lecture du fichier ${xmlPath} : ENOENT: no such file or directory, open '${xmlPath}'`)
+      expect(error.message).toBe(
+        `[Helios] Une erreur est survenue lors de la lecture du fichier ${xmlPath} : ENOENT: no such file or directory, open '${xmlPath}'`
+      )
     }
   })
 
@@ -39,7 +41,9 @@ describe('Conversion d’un fichier XML en un objet JavaScript', () => {
       throw new Error('ne devrait pas passer ici')
     } catch (error) {
       // THEN
-      expect(error.message).toBe(`[Helios] Une erreur est survenue lors de la lecture du fichier ${xmlPath} : Unexpected close tag\nLine: 3\nColumn: 12\nChar: >`)
+      expect(error.message).toBe(
+        `[Helios] Une erreur est survenue lors de la lecture du fichier ${xmlPath} : Unexpected close tag\nLine: 3\nColumn: 12\nChar: >`
+      )
     }
   })
 })

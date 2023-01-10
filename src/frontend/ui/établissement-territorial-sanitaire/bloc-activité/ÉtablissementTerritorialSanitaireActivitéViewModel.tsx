@@ -10,19 +10,19 @@ import { TableIndicateur } from '../../commun/TableIndicateur/TableIndicateur'
 import stylesBlocActivité from './BlocActivitéSanitaire.module.css'
 
 type DonnéesDeDiagrammeDesSéjoursMCO = Readonly<{
-  nombreSéjoursCompletsMédecine: {x: number, y: number | null}[]
-  nombreSéjoursCompletsChirurgie: {x: number, y: number | null}[]
-  nombreSéjoursCompletsObstétrique: {x: number, y: number | null}[]
-  nombreSéjoursPartielsMédecine: {x: number, y: number | null}[]
-  nombreSéjoursPartielsChirurgie: {x: number, y: number | null}[]
-  nombreSéjoursPartielsObstétrique: {x: number, y: number | null}[]
+  nombreSéjoursCompletsMédecine: { x: number; y: number | null }[]
+  nombreSéjoursCompletsChirurgie: { x: number; y: number | null }[]
+  nombreSéjoursCompletsObstétrique: { x: number; y: number | null }[]
+  nombreSéjoursPartielsMédecine: { x: number; y: number | null }[]
+  nombreSéjoursPartielsChirurgie: { x: number; y: number | null }[]
+  nombreSéjoursPartielsObstétrique: { x: number; y: number | null }[]
 }>
 
 type DonnéesDeDiagrammeDesJournéesPsyEtSsr = Readonly<{
-  nombreJournéesComplètesPsy: {x: number, y: number | null}[]
-  nombreJournéesComplètesSsr: {x: number, y: number | null}[]
-  nombreJournéesPartiellesPsy: {x: number, y: number | null}[]
-  nombreJournéesPartiellesSsr: {x: number, y: number | null}[]
+  nombreJournéesComplètesPsy: { x: number; y: number | null }[]
+  nombreJournéesComplètesSsr: { x: number; y: number | null }[]
+  nombreJournéesPartiellesPsy: { x: number; y: number | null }[]
+  nombreJournéesPartiellesSsr: { x: number; y: number | null }[]
 }>
 
 export class ÉtablissementTerritorialSanitaireActivitéViewModel extends GraphiqueViewModel {
@@ -36,20 +36,15 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
   readonly identifiantDeLaLégendeDesJournéesPsyEtSsr = 'légende-graphique-sanitaire-journées-psy-et-ssr'
   readonly ratioHistogrammeNombreDePassagesAuxUrgences = 7
 
-  constructor(
-    private readonly établissementTerritorialSanitaireActivités: ÉtablissementTerritorialSanitaire['activités'],
-    wording: Wording
-  ) {
+  constructor(private readonly établissementTerritorialSanitaireActivités: ÉtablissementTerritorialSanitaire['activités'], wording: Wording) {
     super(wording)
   }
 
   public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
-    return !this.activitéEstElleRenseignée ||
-      (
-        !this.nombreDeSéjoursMCOSontIlsRenseignés
-        && !this.nombreDeJournéesPsyEtSsrSontIlsRenseignés
-        && !this.nombreDePassagesAuxUrgencesEstIlRenseigné
-      )
+    return (
+      !this.activitéEstElleRenseignée ||
+      (!this.nombreDeSéjoursMCOSontIlsRenseignés && !this.nombreDeJournéesPsyEtSsrSontIlsRenseignés && !this.nombreDePassagesAuxUrgencesEstIlRenseigné)
+    )
   }
 
   public get activitéEstElleRenseignée(): boolean {
@@ -57,13 +52,15 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
   }
 
   public get nombreDeSéjoursMCOSontIlsRenseignés(): boolean {
-    return this.établissementTerritorialSanitaireActivités.some((activité: ÉtablissementTerritorialSanitaireActivité) => (
-      activité['nombreSéjoursPartielsMédecine'].value !== null ||
-      activité['nombreSéjoursCompletsMédecine'].value !== null ||
-      activité['nombreSéjoursPartielsChirurgie'].value !== null ||
-      activité['nombreSéjoursCompletsChirurgie'].value !== null ||
-      activité['nombreSéjoursPartielsObstétrique'].value !== null ||
-      activité['nombreSéjoursCompletsObstétrique'].value !== null))
+    return this.établissementTerritorialSanitaireActivités.some(
+      (activité: ÉtablissementTerritorialSanitaireActivité) =>
+        activité['nombreSéjoursPartielsMédecine'].value !== null ||
+        activité['nombreSéjoursCompletsMédecine'].value !== null ||
+        activité['nombreSéjoursPartielsChirurgie'].value !== null ||
+        activité['nombreSéjoursCompletsChirurgie'].value !== null ||
+        activité['nombreSéjoursPartielsObstétrique'].value !== null ||
+        activité['nombreSéjoursCompletsObstétrique'].value !== null
+    )
   }
 
   public get nombreDeSéjoursMédecineChirurgieObstétrique(): ReactElement {
@@ -77,11 +74,13 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
   }
 
   public get nombreDeJournéesPsyEtSsrSontIlsRenseignés(): boolean {
-    return this.établissementTerritorialSanitaireActivités.some((activité: ÉtablissementTerritorialSanitaireActivité) => (
-      activité['nombreJournéesPartiellesPsy'].value !== null ||
-      activité['nombreJournéesCompletesSsr'].value !== null ||
-      activité['nombreJournéesPartiellesPsy'].value !== null ||
-      activité['nombreJournéesCompletePsy'].value !== null))
+    return this.établissementTerritorialSanitaireActivités.some(
+      (activité: ÉtablissementTerritorialSanitaireActivité) =>
+        activité['nombreJournéesPartiellesPsy'].value !== null ||
+        activité['nombreJournéesCompletesSsr'].value !== null ||
+        activité['nombreJournéesPartiellesPsy'].value !== null ||
+        activité['nombreJournéesCompletePsy'].value !== null
+    )
   }
 
   public get nombreDeJournéesPsyEtSsr(): ReactElement {
@@ -104,13 +103,13 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
     const construisLaCouleurDeLaBarreHorizontale = (_valeur: number, année: number | string): CouleurHistogramme => {
       return this.estCeLAnnéePassée(année)
         ? {
-          premierPlan: this.couleurDuFondHistogrammePrimaire,
-          secondPlan: this.couleurDuFond,
-        }
+            premierPlan: this.couleurDuFondHistogrammePrimaire,
+            secondPlan: this.couleurDuFond,
+          }
         : {
-          premierPlan: this.couleurDuFondHistogrammeSecondaire,
-          secondPlan: this.couleurDuFond,
-        }
+            premierPlan: this.couleurDuFondHistogrammeSecondaire,
+            secondPlan: this.couleurDuFond,
+          }
     }
 
     return this.afficheUnHistogrammeHorizontal(
@@ -173,7 +172,9 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
     return [nombreDeJournées, années]
   }
 
-  private construisLesAnnéesEtSesValeurs(indicateur: Exclude<keyof ÉtablissementTerritorialSanitaireActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>): number[][] {
+  private construisLesAnnéesEtSesValeurs(
+    indicateur: Exclude<keyof ÉtablissementTerritorialSanitaireActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>
+  ): number[][] {
     const valeurs: number[] = []
     const années: number[] = []
     this.établissementTerritorialSanitaireActivités.forEach((activité: ÉtablissementTerritorialSanitaireActivité) => {
@@ -190,7 +191,9 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
     return [valeurs, années]
   }
 
-  private lIndicateurEstIlRenseigné(indicateur: Exclude<keyof ÉtablissementTerritorialSanitaireActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>): boolean {
+  private lIndicateurEstIlRenseigné(
+    indicateur: Exclude<keyof ÉtablissementTerritorialSanitaireActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>
+  ): boolean {
     return this.établissementTerritorialSanitaireActivités.some((activité: ÉtablissementTerritorialSanitaireActivité) => activité[indicateur].value !== null)
   }
 
@@ -243,21 +246,12 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
       labels: années,
     }
 
-    const options = this.optionsHistogrammeÀBandes(
-      this.identifiantDeLaLégendeDesSéjoursMCO,
-      this.tooltipSéjoursMCO
-    )
+    const options = this.optionsHistogrammeÀBandes(this.identifiantDeLaLégendeDesSéjoursMCO, this.tooltipSéjoursMCO)
 
     return (
       <>
-        <Bar
-          data={data}
-          options={options}
-        />
-        <menu
-          className={'fr-checkbox-group ' + stylesBlocActivité['graphique-sanitaire-légende']}
-          id={this.identifiantDeLaLégendeDesSéjoursMCO}
-        />
+        <Bar data={data} options={options} />
+        <menu className={'fr-checkbox-group ' + stylesBlocActivité['graphique-sanitaire-légende']} id={this.identifiantDeLaLégendeDesSéjoursMCO} />
         <TableIndicateur
           entêteLibellé={this.wording.ANNÉE}
           identifiants={[
@@ -317,21 +311,12 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
       labels: années,
     }
 
-    const options = this.optionsHistogrammeÀBandes(
-      this.identifiantDeLaLégendeDesJournéesPsyEtSsr,
-      this.tooltipJournéesPsyEtSsr
-    )
+    const options = this.optionsHistogrammeÀBandes(this.identifiantDeLaLégendeDesJournéesPsyEtSsr, this.tooltipJournéesPsyEtSsr)
 
     return (
       <>
-        <Bar
-          data={data}
-          options={options}
-        />
-        <menu
-          className={'fr-checkbox-group ' + stylesBlocActivité['graphique-sanitaire-légende']}
-          id={this.identifiantDeLaLégendeDesJournéesPsyEtSsr}
-        />
+        <Bar data={data} options={options} />
+        <menu className={'fr-checkbox-group ' + stylesBlocActivité['graphique-sanitaire-légende']} id={this.identifiantDeLaLégendeDesJournéesPsyEtSsr} />
         <TableIndicateur
           entêteLibellé={this.wording.ANNÉE}
           identifiants={[
@@ -352,30 +337,45 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
     )
   }
 
-  private valeursDesNombresDeSéjours(nombresSéjours: {x: number, y: number | null}[]): (string | null)[] {
+  private valeursDesNombresDeSéjours(nombresSéjours: { x: number; y: number | null }[]): (string | null)[] {
     return nombresSéjours.map((nombreSéjour) => {
-      return nombreSéjour.y ? (nombreSéjour.y).toLocaleString('fr') : null
+      return nombreSéjour.y ? nombreSéjour.y.toLocaleString('fr') : null
     })
   }
 
   private tooltipSéjoursMCO(wording: Wording) {
     return function (context: any) {
-      const label = `${context.dataset.label} : ${(context.parsed.y).toLocaleString('fr')}`
+      const label = `${context.dataset.label} : ${context.parsed.y.toLocaleString('fr')}`
 
       if (context.datasetIndex <= 1) {
         const nombreSéjoursHospitalisationPartielleMédecine = context.parsed._stacks.y['0']
         const nombreSéjoursHospitalisationComplèteMédecine = context.parsed._stacks.y['1']
-        return [label, `${wording.TOTAL_HOSPITALISATION_MÉDECINE} : ${(nombreSéjoursHospitalisationPartielleMédecine + nombreSéjoursHospitalisationComplèteMédecine).toLocaleString('fr')}`]
+        return [
+          label,
+          `${wording.TOTAL_HOSPITALISATION_MÉDECINE} : ${(
+            nombreSéjoursHospitalisationPartielleMédecine + nombreSéjoursHospitalisationComplèteMédecine
+          ).toLocaleString('fr')}`,
+        ]
       }
       if (context.datasetIndex === 2 || context.datasetIndex === 3) {
         const nombreSéjoursHospitalisationPartielleChirurgie = context.parsed._stacks.y['2']
         const nombreSéjoursHospitalisationComplèteChirurgie = context.parsed._stacks.y['3']
-        return [label, `${wording.TOTAL_HOSPITALISATION_CHIRURGIE} : ${(nombreSéjoursHospitalisationPartielleChirurgie + nombreSéjoursHospitalisationComplèteChirurgie).toLocaleString('fr')}`]
+        return [
+          label,
+          `${wording.TOTAL_HOSPITALISATION_CHIRURGIE} : ${(
+            nombreSéjoursHospitalisationPartielleChirurgie + nombreSéjoursHospitalisationComplèteChirurgie
+          ).toLocaleString('fr')}`,
+        ]
       }
       if (context.datasetIndex === 4 || context.datasetIndex === 5) {
         const nombreSéjoursHospitalisationPartielleObstétrique = context.parsed._stacks.y['4']
         const nombreSéjoursHospitalisationComplèteObstétrique = context.parsed._stacks.y['5']
-        return [label, `${wording.TOTAL_HOSPITALISATION_OBSTÉTRIQUE} : ${(nombreSéjoursHospitalisationPartielleObstétrique + nombreSéjoursHospitalisationComplèteObstétrique).toLocaleString('fr')}`]
+        return [
+          label,
+          `${wording.TOTAL_HOSPITALISATION_OBSTÉTRIQUE} : ${(
+            nombreSéjoursHospitalisationPartielleObstétrique + nombreSéjoursHospitalisationComplèteObstétrique
+          ).toLocaleString('fr')}`,
+        ]
       }
       return label
     }
@@ -383,17 +383,23 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
 
   private tooltipJournéesPsyEtSsr(wording: Wording) {
     return function (context: any) {
-      const label = `${context.dataset.label} : ${(context.parsed.y).toLocaleString('fr')}`
+      const label = `${context.dataset.label} : ${context.parsed.y.toLocaleString('fr')}`
 
       if (context.datasetIndex <= 1) {
         const nombreSéjoursHospitalisationPartielleSsr = context.parsed._stacks.y['0']
         const nombreSéjoursHospitalisationComplèteSsr = context.parsed._stacks.y['1']
-        return [label, `${wording.TOTAL_HOSPITALISATION_SSR} : ${(nombreSéjoursHospitalisationPartielleSsr + nombreSéjoursHospitalisationComplèteSsr).toLocaleString('fr')}`]
+        return [
+          label,
+          `${wording.TOTAL_HOSPITALISATION_SSR} : ${(nombreSéjoursHospitalisationPartielleSsr + nombreSéjoursHospitalisationComplèteSsr).toLocaleString('fr')}`,
+        ]
       }
       if (context.datasetIndex === 2 || context.datasetIndex === 3) {
         const nombreSéjoursHospitalisationPartiellePsy = context.parsed._stacks.y['2']
         const nombreSéjoursHospitalisationComplètePsy = context.parsed._stacks.y['3']
-        return [label, `${wording.TOTAL_HOSPITALISATION_PSY} : ${(nombreSéjoursHospitalisationPartiellePsy + nombreSéjoursHospitalisationComplètePsy).toLocaleString('fr')}`]
+        return [
+          label,
+          `${wording.TOTAL_HOSPITALISATION_PSY} : ${(nombreSéjoursHospitalisationPartiellePsy + nombreSéjoursHospitalisationComplètePsy).toLocaleString('fr')}`,
+        ]
       }
       return label
     }

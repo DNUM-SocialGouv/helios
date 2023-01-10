@@ -9,18 +9,11 @@ type ListItemProps = Readonly<{
   logo: ReactChild
 }>
 
-export const ListItem = ({ label, lien, logo }: ListItemProps ) => {
-
+export const ListItem = ({ label, lien, logo }: ListItemProps) => {
   return (
-    <li
-      className={styles['élément-liste']}
-    >
+    <li className={styles['élément-liste']}>
       {logo}
-      <Link
-        href={lien}
-        passHref
-        prefetch={false}
-      >
+      <Link href={lien} passHref prefetch={false}>
         {label}
       </Link>
     </li>

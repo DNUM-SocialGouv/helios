@@ -17,21 +17,11 @@ export const PageRégion = ({ région }: { région: string }) => {
   return (
     <main className="fr-container--fluid">
       <Head>
-        <title>
-          {labelDeLaRégion}
-        </title>
+        <title>{labelDeLaRégion}</title>
       </Head>
       <section>
-        <h1 className="fr-container">
-          {labelDeLaRégion}
-        </h1>
-        <iframe
-          allowFullScreen
-          height="650"
-          src={régions[région].source}
-          title={wording.régionAtlasSanté(régions[région].label)}
-          width="100%"
-        />
+        <h1 className="fr-container">{labelDeLaRégion}</h1>
+        <iframe allowFullScreen height="650" src={régions[région].source} title={wording.régionAtlasSanté(régions[région].label)} width="100%" />
       </section>
     </main>
   )

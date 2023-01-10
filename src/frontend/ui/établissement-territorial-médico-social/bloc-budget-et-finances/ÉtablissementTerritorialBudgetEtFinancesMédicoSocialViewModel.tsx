@@ -23,10 +23,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
   private readonly couleurDuSeuil = '#18753C'
   private readonly nombreDAnnéesParIndicateur = 3
 
-  constructor(
-    private readonly budgetEtFinancesMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[],
-    wording: Wording
-  ) {
+  constructor(private readonly budgetEtFinancesMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[], wording: Wording) {
     super(wording)
   }
 
@@ -35,9 +32,9 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
   }
 
   public intituléDuCompteDeRésultat(annéeEnCours: number) {
-    return this.budgetEtFinanceEnCours(annéeEnCours).cadreBudgétaire === CadreBudgétaire.ERRD ?
-      this.wording.COMPTE_DE_RÉSULTAT_ERRD :
-      this.wording.COMPTE_DE_RÉSULTAT_CA
+    return this.budgetEtFinanceEnCours(annéeEnCours).cadreBudgétaire === CadreBudgétaire.ERRD
+      ? this.wording.COMPTE_DE_RÉSULTAT_ERRD
+      : this.wording.COMPTE_DE_RÉSULTAT_CA
   }
 
   public listeDéroulanteDesAnnéesDuCompteDeRésultat(setAnnéeEnCours: Function): ReactElement {
@@ -114,12 +111,14 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
   }
 
   public get lesDonnéesBudgetEtFinancesNeSontPasRenseignées(): boolean {
-    return !this.leCompteDeRésultatEstIlRenseigné
-      && !this.leRésultatNetComptableEstIlRenseigné
-      && !this.leMontantDeLaContributionAuxFraisDeSiègeEstIlRenseigné
-      && !this.leTauxDeCafEstIlRenseigné
-      && !this.leTauxDeVétustéEstIlRenseigné
-      && !this.leFondsDeRoulementEstIlRenseigné
+    return (
+      !this.leCompteDeRésultatEstIlRenseigné &&
+      !this.leRésultatNetComptableEstIlRenseigné &&
+      !this.leMontantDeLaContributionAuxFraisDeSiègeEstIlRenseigné &&
+      !this.leTauxDeCafEstIlRenseigné &&
+      !this.leTauxDeVétustéEstIlRenseigné &&
+      !this.leFondsDeRoulementEstIlRenseigné
+    )
   }
 
   public get montantDeLaContributionAuxFraisDeSiège(): ReactElement {
@@ -140,10 +139,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       this.budgetEtFinancesMédicoSocial.map((montantDesContributionsAuxFraisDeSiègeParAnnée) => montantDesContributionsAuxFraisDeSiègeParAnnée.année)
     )
 
-    return <IndicateurTabulaire
-      annéesManquantes={annéesManquantes}
-      valeursParAnnée={montantDesContributionsAuxFraisDeSiègeParAnnée}
-    />
+    return <IndicateurTabulaire annéesManquantes={annéesManquantes} valeursParAnnée={montantDesContributionsAuxFraisDeSiègeParAnnée} />
   }
 
   public get dateMiseÀJourMontantDeLaContributionAuxFraisDeSiège(): string {
@@ -213,14 +209,9 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       []
     )
 
-    const annéesManquantes = this.annéesManquantes(
-      this.budgetEtFinancesMédicoSocial.map((résultatNetComptableParAnnée) => résultatNetComptableParAnnée.année)
-    )
+    const annéesManquantes = this.annéesManquantes(this.budgetEtFinancesMédicoSocial.map((résultatNetComptableParAnnée) => résultatNetComptableParAnnée.année))
 
-    return <IndicateurTabulaire
-      annéesManquantes={annéesManquantes}
-      valeursParAnnée={résultatNetComptableParAnnée}
-    />
+    return <IndicateurTabulaire annéesManquantes={annéesManquantes} valeursParAnnée={résultatNetComptableParAnnée} />
   }
 
   public get dateMiseÀJourRésultatNetComptable(): string {
@@ -291,15 +282,9 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     )
     const annéesAvecDonnées = fondsDeRoulementNetGlobalParAnnée.map((fondsDeRoulementNetGlobalParAnnée) => fondsDeRoulementNetGlobalParAnnée.année)
 
-    const annéesAvecMiseEnExergue = this.annéesManquantes(
-      annéesAvecDonnées.concat(annéesSousCadreAutreQueErrd),
-      this.nombreDAnnéesParIndicateur
-    )
+    const annéesAvecMiseEnExergue = this.annéesManquantes(annéesAvecDonnées.concat(annéesSousCadreAutreQueErrd), this.nombreDAnnéesParIndicateur)
 
-    return <IndicateurTabulaire
-      annéesManquantes={annéesAvecMiseEnExergue}
-      valeursParAnnée={fondsDeRoulementNetGlobalParAnnée}
-    />
+    return <IndicateurTabulaire annéesManquantes={annéesAvecMiseEnExergue} valeursParAnnée={fondsDeRoulementNetGlobalParAnnée} />
   }
 
   public get dateMiseÀJourFondDeRoulementNetGlobal(): string {
@@ -354,19 +339,14 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
 
     return (
       <>
-        {
-          annéesManquantes.length < this.nombreDAnnéesParIndicateur &&
+        {annéesManquantes.length < this.nombreDAnnéesParIndicateur && (
           <Bar
             // @ts-ignore
             data={data}
             options={this.construisLesOptionsDeLHistogrammeDuTauxDeCaf(couleursDeLHistogramme, libellésDesTicks, maxDeLHistogramme, minDeLHistogramme)}
           />
-        }
-        {annéesManquantes.length > 0 && (
-          <MiseEnExergue>
-            {`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}
-          </MiseEnExergue>
         )}
+        {annéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}</MiseEnExergue>}
         <TableIndicateur
           disabled={annéesManquantes.length === this.nombreDAnnéesParIndicateur}
           entêteLibellé={this.wording.ANNÉE}
@@ -477,8 +457,9 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
   }
 
   private budgetEtFinanceEnCours(annéeEnCours: number): ÉtablissementTerritorialMédicoSocialBudgetEtFinances {
-    return this.budgetEtFinancesMédicoSocial
-      .find((budgetEtFinance) => budgetEtFinance.année === annéeEnCours) as ÉtablissementTerritorialMédicoSocialBudgetEtFinances
+    return this.budgetEtFinancesMédicoSocial.find(
+      (budgetEtFinance) => budgetEtFinance.année === annéeEnCours
+    ) as ÉtablissementTerritorialMédicoSocialBudgetEtFinances
   }
 
   private lesAnnéesEffectivesDuCompteDeRésultat(): number[] {
@@ -486,10 +467,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
 
     this.budgetEtFinancesMédicoSocial.forEach((budgetEtFinance) => {
       if (budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA) {
-        if (
-          budgetEtFinance.chargesEtProduits.charges !== null &&
-          budgetEtFinance.chargesEtProduits.produits !== null
-        ) {
+        if (budgetEtFinance.chargesEtProduits.charges !== null && budgetEtFinance.chargesEtProduits.produits !== null) {
           années.push(budgetEtFinance.année)
         }
       } else {
@@ -520,19 +498,20 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       .reverse()
 
     function filtreParCadreBudgétaireEtRecettesEtDépenses(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances): boolean {
-      if (budgetEtFinance.cadreBudgétaire !== CadreBudgétaire.CA_PA && (
-        budgetEtFinance.recettesEtDépenses.dépensesGroupe1 !== null ||
+      if (
+        budgetEtFinance.cadreBudgétaire !== CadreBudgétaire.CA_PA &&
+        (budgetEtFinance.recettesEtDépenses.dépensesGroupe1 !== null ||
           budgetEtFinance.recettesEtDépenses.dépensesGroupe2 !== null ||
           budgetEtFinance.recettesEtDépenses.dépensesGroupe3 !== null ||
           budgetEtFinance.recettesEtDépenses.recettesGroupe1 !== null ||
           budgetEtFinance.recettesEtDépenses.recettesGroupe2 !== null ||
-          budgetEtFinance.recettesEtDépenses.recettesGroupe3 !== null
-      )) {
+          budgetEtFinance.recettesEtDépenses.recettesGroupe3 !== null)
+      ) {
         return true
-      } else if (budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA && (
-        budgetEtFinance.chargesEtProduits.charges !== null ||
-          budgetEtFinance.chargesEtProduits.produits !== null
-      )) {
+      } else if (
+        budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA &&
+        (budgetEtFinance.chargesEtProduits.charges !== null || budgetEtFinance.chargesEtProduits.produits !== null)
+      ) {
         return true
       }
       return false

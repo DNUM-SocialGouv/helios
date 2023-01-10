@@ -12,9 +12,7 @@ export const ContenuCapacitéParActivités = ({ dateDeMiseÀJour, source }: Cont
 
   return (
     <>
-      <p>
-        {wording.miseÀJourEtSource(dateDeMiseÀJour, source)}
-      </p>
+      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Permet de caractériser les capacités d’accueil de l’établissement et les alternatives à l’hospitalisation conventionnelle avec nuitée dont il dispose.
@@ -60,15 +58,15 @@ export const ContenuCapacitéParActivités = ({ dateDeMiseÀJour, source }: Cont
           Statistique annuelle des établissements de santé (SAE) - Direction de la Recherche, des Études, de l’Évaluation et des Statistiques (DREES).
           <br />
           <br />
-          DIAMANT « Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation. » est un outil décisionnel de pilotage centré sur la régulation de
-          l’offre de soins, abordée sous les aspects des moyens humains, financiers, et productivité.
+          DIAMANT « Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation. » est un outil décisionnel de pilotage centré sur la régulation de l’offre de
+          soins, abordée sous les aspects des moyens humains, financiers, et productivité.
         </p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
         <p>
           La Statistique annuelle des établissements de santé (SAE) est une enquête administrative exhaustive obligatoire, réalisée chaque année par la DREES
-          auprès de tous les établissements de santé de France, pour recueillir des informations sur leur activité, leurs capacités, leurs équipements,
-          et leurs personnel médicaux et non-médicaux.
+          auprès de tous les établissements de santé de France, pour recueillir des informations sur leur activité, leurs capacités, leurs équipements, et leurs
+          personnel médicaux et non-médicaux.
         </p>
       </section>
     </>

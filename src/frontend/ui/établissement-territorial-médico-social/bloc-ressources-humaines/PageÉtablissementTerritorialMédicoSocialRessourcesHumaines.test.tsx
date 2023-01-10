@@ -482,8 +482,7 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     [wording.TAUX_D_ETP_VACANTS_AU_31_12, indiceDeLIndicateur.tauxDEtpVacants],
     [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel],
     [wording.TAUX_D_ABSENTÉISME, indiceDeLIndicateur.tauxDAbsentéisme],
-  ])
-  ('ferme l’info bulle du nombre d’ETP réalisé après avoir cliqué sur le bouton "Fermer"', (titreDeLInfoBulle, indiceDeLIndicateur) => {
+  ])('ferme l’info bulle du nombre d’ETP réalisé après avoir cliqué sur le bouton "Fermer"', (titreDeLInfoBulle, indiceDeLIndicateur) => {
     // GIVEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />)
     const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
@@ -553,16 +552,20 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel, '34,4 %'],
   ])('affiche un tableau descriptif de l’indicateur %s  avec deux années', (enTêteDuTableau, indiceDeLIndicateur, valeur) => {
     // GIVEN
-    const établissementTerritorialAvecDeuxAnnées = new ÉtablissementTerritorialMédicoSocialViewModel({
-      activités: [],
-      autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
-      budgetEtFinances: [],
-      identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
-      ressourcesHumaines: [
-        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: 2019 }),
-        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: 2020 }),
-      ],
-    }, wording, paths)
+    const établissementTerritorialAvecDeuxAnnées = new ÉtablissementTerritorialMédicoSocialViewModel(
+      {
+        activités: [],
+        autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
+        budgetEtFinances: [],
+        identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+        ressourcesHumaines: [
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: 2019 }),
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: 2020 }),
+        ],
+      },
+      wording,
+      paths
+    )
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialAvecDeuxAnnées} />)
@@ -605,13 +608,17 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel, '34,4 %'],
   ])('affiche un tableau descriptif de l’indicateur %s avec une seule année', (enTêteDuTableau, indiceDeLIndicateur, valeur) => {
     // GIVEN
-    const établissementTerritorialAvecUneSeuleAnnée = new ÉtablissementTerritorialMédicoSocialViewModel({
-      activités: [],
-      autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
-      budgetEtFinances: [],
-      identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
-      ressourcesHumaines: [ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: 2020 })],
-    }, wording, paths)
+    const établissementTerritorialAvecUneSeuleAnnée = new ÉtablissementTerritorialMédicoSocialViewModel(
+      {
+        activités: [],
+        autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
+        budgetEtFinances: [],
+        identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+        ressourcesHumaines: [ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: 2020 })],
+      },
+      wording,
+      paths
+    )
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialAvecUneSeuleAnnée} />)
@@ -642,16 +649,20 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     [wording.TAUX_D_ABSENTÉISME, indiceDeLIndicateur.tauxDAbsentéisme],
   ])('affiche une mise en exergue sur l’indicateur %s si un année est manquante', (_titreDeLIndicateur, indiceDeLIndicateur) => {
     // GIVEN
-    const établissementTerritorialAvecUneAnnéeManquante = new ÉtablissementTerritorialMédicoSocialViewModel({
-      activités: [],
-      autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
-      budgetEtFinances: [],
-      identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
-      ressourcesHumaines: [
-        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: annéeEnCours - 3 }), // 2019
-        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: annéeEnCours - 2 }), // 2020
-      ],
-    }, wording, paths)
+    const établissementTerritorialAvecUneAnnéeManquante = new ÉtablissementTerritorialMédicoSocialViewModel(
+      {
+        activités: [],
+        autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
+        budgetEtFinances: [],
+        identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+        ressourcesHumaines: [
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: annéeEnCours - 3 }), // 2019
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: annéeEnCours - 2 }), // 2020
+        ],
+      },
+      wording,
+      paths
+    )
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialAvecUneAnnéeManquante} />)
@@ -673,13 +684,17 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     [wording.TAUX_D_ABSENTÉISME, indiceDeLIndicateur.tauxDAbsentéisme],
   ])('affiche une mise en exergue sur l’indicateur %s si deux années sont manquantes', (_titreDeLIndicateur, indiceDeLIndicateur) => {
     // GIVEN
-    const établissementTerritorialAvecUneAnnéeManquante = new ÉtablissementTerritorialMédicoSocialViewModel({
-      activités: [],
-      autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
-      budgetEtFinances: [],
-      identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
-      ressourcesHumaines: [ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: 2020 })],
-    }, wording, paths)
+    const établissementTerritorialAvecUneAnnéeManquante = new ÉtablissementTerritorialMédicoSocialViewModel(
+      {
+        activités: [],
+        autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
+        budgetEtFinances: [],
+        identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+        ressourcesHumaines: [ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: 2020 })],
+      },
+      wording,
+      paths
+    )
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialAvecUneAnnéeManquante} />)
@@ -700,15 +715,20 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel, 'tauxDeRotationDuPersonnel'],
   ])('affiche une mise en exergue sur l’indicateur %s si trois années sont manquantes', (_titreDeLIndicateur, indiceDeLIndicateur, cléDeLaDonnée) => {
     // GIVEN
-    const établissementTerritorialAvecUneAnnéeManquante = new ÉtablissementTerritorialMédicoSocialViewModel({
-      activités: [],
-      autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
-      budgetEtFinances: [],
-      identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
-      ressourcesHumaines: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines.map(
-        (blocRessourcesHumaines) => ({ ...blocRessourcesHumaines, [cléDeLaDonnée]: { dateMiseÀJourSource: '2022-06-06', valeur: null } })
-      ),
-    }, wording, paths)
+    const établissementTerritorialAvecUneAnnéeManquante = new ÉtablissementTerritorialMédicoSocialViewModel(
+      {
+        activités: [],
+        autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
+        budgetEtFinances: [],
+        identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+        ressourcesHumaines: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines.map((blocRessourcesHumaines) => ({
+          ...blocRessourcesHumaines,
+          [cléDeLaDonnée]: { dateMiseÀJourSource: '2022-06-06', valeur: null },
+        })),
+      },
+      wording,
+      paths
+    )
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialAvecUneAnnéeManquante} />)
@@ -717,19 +737,25 @@ describe('La page établissement territorial - bloc ressources humaines', () => 
     const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES })
     const indicateurs = within(ressourcesHumaines).getAllByRole('listitem')
     const indicateur = indicateurs[indiceDeLIndicateur]
-    const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 3}, ${annéeEnCours - 2}, ${annéeEnCours - 1}`, { selector: 'p' })
+    const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 3}, ${annéeEnCours - 2}, ${annéeEnCours - 1}`, {
+      selector: 'p',
+    })
     expect(exergue).toBeInTheDocument()
   })
 
   it('affiche une phrase à la place des indicateurs lorsqu’aucune donnée n’est renseignée', () => {
     // GIVEN
-    const établissementTerritorialSansBlocRessourcesHumaines = new ÉtablissementTerritorialMédicoSocialViewModel({
-      activités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.activités,
-      autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
-      budgetEtFinances: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.budgetEtFinances,
-      identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
-      ressourcesHumaines: [],
-    }, wording, paths)
+    const établissementTerritorialSansBlocRessourcesHumaines = new ÉtablissementTerritorialMédicoSocialViewModel(
+      {
+        activités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.activités,
+        autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
+        budgetEtFinances: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.budgetEtFinances,
+        identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
+        ressourcesHumaines: [],
+      },
+      wording,
+      paths
+    )
 
     // WHEN
     renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansBlocRessourcesHumaines} />)

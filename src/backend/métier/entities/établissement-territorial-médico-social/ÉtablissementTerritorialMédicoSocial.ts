@@ -10,8 +10,6 @@ export type ÉtablissementTerritorialMédicoSocial = Readonly<{
   activités: ÉtablissementTerritorialMédicoSocialActivité[]
   autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité
   budgetEtFinances: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[]
-  identité: ÉtablissementTerritorialIdentité &
-    MonoÉtablissement &
-    EntitéJuridiqueDeRattachement
+  identité: ÉtablissementTerritorialIdentité & MonoÉtablissement & EntitéJuridiqueDeRattachement
   ressourcesHumaines: ÉtablissementTerritorialMédicoSocialRessourcesHumaines[]
 }>

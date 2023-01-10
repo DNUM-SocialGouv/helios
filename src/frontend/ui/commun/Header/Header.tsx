@@ -28,20 +28,13 @@ export const Header = () => {
               <div className="fr-header__brand fr-enlarge-link">
                 <div className="fr-header__brand-top">
                   <div className="fr-header__logo">
-                    <p className="fr-logo">
-                      {wording.INTITULÉ_RÉPUBLIQUE_FRANÇAISE}
-                    </p>
+                    <p className="fr-logo">{wording.INTITULÉ_RÉPUBLIQUE_FRANÇAISE}</p>
                   </div>
                   <div className="fr-header__operator">
-                    <Image
-                      alt=""
-                      height="80"
-                      src="/logo.svg"
-                      width="80"
-                    />
+                    <Image alt="" height="80" src="/logo.svg" width="80" />
                   </div>
                   <div className="fr-header__navbar">
-                    {router.pathname !== paths.ACCUEIL &&
+                    {router.pathname !== paths.ACCUEIL && (
                       <button
                         aria-controls="modal-541"
                         className="fr-btn--search fr-btn"
@@ -51,7 +44,7 @@ export const Header = () => {
                       >
                         {wording.RECHERCHE_LABEL}
                       </button>
-                    }
+                    )}
                     <button
                       aria-controls="modal-833"
                       aria-haspopup="menu"
@@ -66,14 +59,8 @@ export const Header = () => {
                   </div>
                 </div>
                 <div className="fr-header__service">
-                  <Link
-                    href="/"
-                    passHref
-                    title={wording.ACCUEIL}
-                  >
-                    <p className="fr-header__service-title">
-                      {wording.TITRE_DU_SITE}
-                    </p>
+                  <Link href="/" passHref title={wording.ACCUEIL}>
+                    <p className="fr-header__service-title">{wording.TITRE_DU_SITE}</p>
                   </Link>
                 </div>
               </div>
@@ -81,38 +68,20 @@ export const Header = () => {
                 <div className="fr-header__tools-links">
                   <ul className="fr-links-group">
                     <li>
-                      <a
-                        className="fr-link fr-fi-logout-box-r-fill"
-                        href="#"
-                      >
+                      <a className="fr-link fr-fi-logout-box-r-fill" href="#">
                         {wording.DÉCONNEXION}
                       </a>
                     </li>
                   </ul>
                 </div>
-                {router.pathname !== paths.ACCUEIL &&
-                  <div
-                    className="fr-header__search fr-modal"
-                    id="modal-541"
-                  >
+                {router.pathname !== paths.ACCUEIL && (
+                  <div className="fr-header__search fr-modal" id="modal-541">
                     <div className="fr-container fr-container-lg--fluid">
-                      <button
-                        aria-controls="modal-541"
-                        className="fr-btn--close fr-btn"
-                        title="Fermer"
-                      >
+                      <button aria-controls="modal-541" className="fr-btn--close fr-btn" title="Fermer">
                         {wording.FERMER}
                       </button>
-                      <form
-                        action="/recherche"
-                        className="fr-search-bar"
-                        id="search-540"
-                        role="search"
-                      >
-                        <label
-                          className="fr-label"
-                          htmlFor="search-540-input"
-                        >
+                      <form action="/recherche" className="fr-search-bar" id="search-540" role="search">
+                        <label className="fr-label" htmlFor="search-540-input">
                           {wording.RECHERCHE_LABEL}
                         </label>
                         <input
@@ -138,22 +107,14 @@ export const Header = () => {
                       </form>
                     </div>
                   </div>
-                }
+                )}
               </div>
             </div>
           </div>
         </div>
-        <div
-          aria-labelledby="fr-btn-menu-mobile"
-          className="fr-header__menu fr-modal"
-          id="modal-833"
-        >
+        <div aria-labelledby="fr-btn-menu-mobile" className="fr-header__menu fr-modal" id="modal-833">
           <div className="fr-container">
-            <button
-              aria-controls="modal-833"
-              className="fr-link--close fr-link"
-              type="button"
-            >
+            <button aria-controls="modal-833" className="fr-link--close fr-link" type="button">
               {wording.FERMER}
             </button>
             <div className="fr-header__menu-links"></div>

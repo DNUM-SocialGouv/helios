@@ -44,12 +44,14 @@ describe('Entité juridique loader', () => {
       const entitéJuridique = await typeOrmEntitéJuridiqueLoader.chargeIdentité(numéroFinessEntitéJuridique)
 
       // THEN
-      expect(entitéJuridique).toStrictEqual(EntitéJuridiqueTestBuilder.créeEntitéJuridique({
-        numéroFinessEntitéJuridique: {
-          dateMiseÀJourSource: '2022-05-14',
-          value: numéroFinessEntitéJuridique,
-        },
-      }))
+      expect(entitéJuridique).toStrictEqual(
+        EntitéJuridiqueTestBuilder.créeEntitéJuridique({
+          numéroFinessEntitéJuridique: {
+            dateMiseÀJourSource: '2022-05-14',
+            value: numéroFinessEntitéJuridique,
+          },
+        })
+      )
     })
 
     it('signale que l’entité juridique n’a pas été trouvée quand celle-ci n’existe pas', async () => {
@@ -68,10 +70,12 @@ describe('Entité juridique loader', () => {
 
   it('charge l’entité juridique de rattachement par numéro FINESS', async () => {
     // GIVEN
-    await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({
-      libelléStatutJuridique: 'fake libellé statut juridique',
-      raisonSocialeCourte: 'fake raison sociale courte',
-    }))
+    await entitéJuridiqueRepository.insert(
+      EntitéJuridiqueModelTestBuilder.crée({
+        libelléStatutJuridique: 'fake libellé statut juridique',
+        raisonSocialeCourte: 'fake raison sociale courte',
+      })
+    )
     await dateMiseÀJourFichierSourceRepository.insert([
       DateMiseÀJourFichierSourceModelTestBuilder.crée({
         dernièreMiseÀJour: '2022-05-14',

@@ -3,10 +3,7 @@ import { DownloadRawData } from '../gateways/DownloadRawData'
 import { UnzipRawData } from '../gateways/UnzipRawData'
 
 export class TéléchargeLesDonnéesBrutesDeFinessUseCase {
-  constructor(
-    private readonly finessDownloadRawData: DownloadRawData,
-    private readonly unzipRawData: UnzipRawData
-  ) {}
+  constructor(private readonly finessDownloadRawData: DownloadRawData, private readonly unzipRawData: UnzipRawData) {}
 
   async exécute() {
     try {

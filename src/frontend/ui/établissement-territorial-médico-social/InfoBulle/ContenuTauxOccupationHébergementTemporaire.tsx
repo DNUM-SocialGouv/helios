@@ -8,8 +8,5 @@ type ContenuDuTauxOccupationHébergementTemporaireProps = Readonly<{
 }>
 
 export const ContenuTauxOccupationHébergementTemporaire = ({ dateDeMiseÀJour, source }: ContenuDuTauxOccupationHébergementTemporaireProps) => {
-  return <ContenuDuTauxOccupation
-    dateDeMiseÀJour={dateDeMiseÀJour}
-    source={source}
-  />
+  return <ContenuDuTauxOccupation dateDeMiseÀJour={dateDeMiseÀJour} source={source} />
 }

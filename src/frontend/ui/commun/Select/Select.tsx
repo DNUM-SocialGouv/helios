@@ -9,33 +9,20 @@ type SelectProps = Readonly<{
   options: (number | string)[]
 }>
 
-export const Select = ({ label, onChange, options }: SelectProps ) => {
+export const Select = ({ label, onChange, options }: SelectProps) => {
   return (
     <span className={'fr-select-group ' + styles['années']}>
-      <label
-        className={styles['invisible']}
-        htmlFor="select"
-      >
+      <label className={styles['invisible']} htmlFor="select">
         {label}
       </label>
-      <select
-        className="fr-select"
-        id="select"
-        name="select"
-        onChange={onChange}
-      >
-        {
-          options.map((option) => {
-            return (
-              <option
-                key={option}
-                value={option}
-              >
-                {option}
-              </option>
-            )
-          })
-        }
+      <select className="fr-select" id="select" name="select" onChange={onChange}>
+        {options.map((option) => {
+          return (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          )
+        })}
       </select>
     </span>
   )

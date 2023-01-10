@@ -16,9 +16,7 @@ export default function DonnéesPersonnelles() {
   return (
     <main className="fr-container">
       <Head>
-        <title>
-          {wording.TITRE_PAGE_DONNÉES_PERSONNELLES}
-        </title>
+        <title>{wording.TITRE_PAGE_DONNÉES_PERSONNELLES}</title>
       </Head>
       <PageDesDonnéesPersonnelles />
     </main>

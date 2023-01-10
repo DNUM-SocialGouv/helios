@@ -1,4 +1,21 @@
-import { ActiveElement, ArcElement, BarElement, CategoryScale, Chart as ChartJS, ChartData, ChartEvent, ChartOptions, Legend, LegendItem, LinearScale, LineController, LineElement, PointElement, Title, Tooltip } from 'chart.js'
+import {
+  ActiveElement,
+  ArcElement,
+  BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  ChartData,
+  ChartEvent,
+  ChartOptions,
+  Legend,
+  LegendItem,
+  LinearScale,
+  LineController,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+} from 'chart.js'
 import ChartDataLabels, { Context } from 'chartjs-plugin-datalabels'
 import { ReactElement } from 'react'
 import { Bar, Doughnut } from 'react-chartjs-2'
@@ -46,14 +63,7 @@ export class GraphiqueViewModel {
   private readonly AUCUN_ARC_SURVOLÉ = -1
   private indexDeLArcSurvolé = this.AUCUN_ARC_SURVOLÉ
   protected readonly couleurDesArcsDuDonut = {
-    opaque: [
-      '#99B3F9',
-      '#667DCF',
-      '#465F9D',
-      '#2F4077',
-      '#273563',
-      '#161D37',
-    ],
+    opaque: ['#99B3F9', '#667DCF', '#465F9D', '#2F4077', '#273563', '#161D37'],
     transparent: [
       'rgba(153, 179, 249, 0.5)',
       'rgba(102, 125, 207, 0.5)',
@@ -113,16 +123,16 @@ export class GraphiqueViewModel {
   ): ReactElement {
     ChartJS.unregister()
     const chartColorsGauche = valeursDeGauche.map((valeurDeGauche, index) => {
-      return (valeurDeGauche <= 0) ? chartColors[index] : this.couleurDuFondHistogrammeDeDépassement
+      return valeurDeGauche <= 0 ? chartColors[index] : this.couleurDuFondHistogrammeDeDépassement
     })
     const chartColorsDroite = valeursDeDroite.map((valeurDeDroite, index) => {
-      return (valeurDeDroite >= 0) ? chartColors[index] : this.couleurDuFondHistogrammeDeDépassement
+      return valeurDeDroite >= 0 ? chartColors[index] : this.couleurDuFondHistogrammeDeDépassement
     })
     const datalabelsColorsGauche = valeursDeGauche.map((valeurDeGauche) => {
-      return (valeurDeGauche <= 0) ? this.couleurDeLaValeur : this.couleurDuFondHistogrammeDeDépassement
+      return valeurDeGauche <= 0 ? this.couleurDeLaValeur : this.couleurDuFondHistogrammeDeDépassement
     })
     const datalabelsColorsDroite = valeursDeDroite.map((valeurDeDroite) => {
-      return (valeurDeDroite >= 0) ? this.couleurDeLaValeur : this.couleurDuFondHistogrammeDeDépassement
+      return valeurDeDroite >= 0 ? this.couleurDeLaValeur : this.couleurDuFondHistogrammeDeDépassement
     })
     const dataGauche: ChartData = {
       datasets: [
@@ -178,7 +188,7 @@ export class GraphiqueViewModel {
 
     return (
       <>
-        {annéesManquantes.length < nombreDAnnéeTotale &&
+        {annéesManquantes.length < nombreDAnnéeTotale && (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 50%)' }}>
             <div>
               <Bar
@@ -207,12 +217,8 @@ export class GraphiqueViewModel {
               />
             </div>
           </div>
-        }
-        {annéesManquantes.length > 0 && (
-          <MiseEnExergue>
-            {`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}
-          </MiseEnExergue>
         )}
+        {annéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}</MiseEnExergue>}
         <TableIndicateur
           disabled={annéesManquantes.length === nombreDAnnéeTotale}
           entêteLibellé={entêtePremièreColonne}
@@ -279,9 +285,7 @@ export class GraphiqueViewModel {
             options={this.optionsHistogrammeVertical(libellésDesTicks.map((libelléDuTick) => libelléDuTick.tailleDePolice))}
           />
         )}
-        {annéesManquantes.length > 0 && <MiseEnExergue>
-          {`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}
-        </MiseEnExergue>}
+        {annéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}</MiseEnExergue>}
         <TableIndicateur
           disabled={annéesManquantes.length === annéesTotales}
           entêteLibellé={entêteLibellé}
@@ -348,9 +352,7 @@ export class GraphiqueViewModel {
           />
         )}
         {libellésDeValeursManquantes.length > 0 && (
-          <MiseEnExergue>
-            {`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${libellésDeValeursManquantes.join(', ')}`}
-          </MiseEnExergue>
+          <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${libellésDeValeursManquantes.join(', ')}`}</MiseEnExergue>
         )}
         <TableIndicateur
           disabled={libellésDeValeursManquantes.length === nombreDeLibelléTotal}
@@ -406,12 +408,7 @@ export class GraphiqueViewModel {
             )}
           />
         </div>
-        <TableIndicateur
-          entêteLibellé={entêteLibellé}
-          identifiants={identifiants}
-          libellés={libellés}
-          valeurs={valeurs}
-        />
+        <TableIndicateur entêteLibellé={entêteLibellé} identifiants={identifiants} libellés={libellés} valeurs={valeurs} />
       </>
     )
   }
@@ -440,18 +437,14 @@ export class GraphiqueViewModel {
       labels: libellés,
     }
 
-    return <div className={styles['donut-wrapper']}>
-      <div>
-        <Doughnut
-          data={data}
-          options={this.optionsDiagrammeDoughnut(texteCentral, total, idDeLaLégende)}
-        />
+    return (
+      <div className={styles['donut-wrapper']}>
+        <div>
+          <Doughnut data={data} options={this.optionsDiagrammeDoughnut(texteCentral, total, idDeLaLégende)} />
+        </div>
+        <menu className={styles['légende-donut']} id={idDeLaLégende} />
       </div>
-      <menu
-        className={styles['légende-donut']}
-        id={idDeLaLégende}
-      />
-    </div>
+    )
   }
 
   protected construisLesLibellés(textes: (number | string)[], valeurs: number[], taillesDePolice: string[]): LibelléDeTickGraphe[] {
@@ -599,7 +592,12 @@ export class GraphiqueViewModel {
     }
   }
 
-  private optionsHistogrammeHorizontal(ratioLargeurSurHauteur: number, valeurMaximale: number, grosseursDePoliceDesLibellés: string[], title: string = ''): ChartOptions<'bar'> {
+  private optionsHistogrammeHorizontal(
+    ratioLargeurSurHauteur: number,
+    valeurMaximale: number,
+    grosseursDePoliceDesLibellés: string[],
+    title: string = ''
+  ): ChartOptions<'bar'> {
     return {
       animation: false,
       aspectRatio: ratioLargeurSurHauteur,
@@ -770,7 +768,8 @@ export class GraphiqueViewModel {
 
           const couleurs = chart.data.datasets[0].backgroundColor as string[]
           const nouvellesCouleursDesArcs = couleurs.map((couleur, index) =>
-            index !== indexDeLArcSurvolé && this.associeLaCouleurTransparente[couleur] ? this.associeLaCouleurTransparente[couleur] : couleur)
+            index !== indexDeLArcSurvolé && this.associeLaCouleurTransparente[couleur] ? this.associeLaCouleurTransparente[couleur] : couleur
+          )
 
           if (unAutreArcÉtaitSurvolé(indexDeLArcSurvolé)) {
             enlèveLaPoliceGrasseDuLibelléDeLégende(légende.children[this.indexDeLArcSurvolé])
@@ -787,8 +786,7 @@ export class GraphiqueViewModel {
           if (!légende) return
 
           const couleurs = chart.data.datasets[0].backgroundColor as string[]
-          const nouvellesCouleursDesArcs = couleurs.map((couleur) =>
-            this.associeLaCouleurOpaque[couleur] ? this.associeLaCouleurOpaque[couleur] : couleur)
+          const nouvellesCouleursDesArcs = couleurs.map((couleur) => (this.associeLaCouleurOpaque[couleur] ? this.associeLaCouleurOpaque[couleur] : couleur))
           chart.data.datasets[0].backgroundColor = nouvellesCouleursDesArcs
           chart.update()
 
@@ -834,8 +832,8 @@ export class GraphiqueViewModel {
           const txt = centerConfig.text
           const color = centerConfig.color
 
-          const centerX = ((chart.chartArea.left + chart.chartArea.right) / 2)
-          const centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2)
+          const centerX = (chart.chartArea.left + chart.chartArea.right) / 2
+          const centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2
 
           ctx.textAlign = 'center'
           ctx.textBaseline = 'middle'

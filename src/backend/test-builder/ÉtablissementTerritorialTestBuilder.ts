@@ -287,7 +287,7 @@ export class ÉtablissementTerritorialTestBuilder {
       activités: [
         {
           code: '16',
-          libellé: 'Traitement de l\'insuffisance rénale chronique par épuration extrarénale',
+          libellé: "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
           modalités: [
             {
               code: '42',
@@ -329,7 +329,7 @@ export class ÉtablissementTerritorialTestBuilder {
                   libellé: 'Pas de forme',
                 },
               ],
-              libellé: 'Dépôt d\'urgence',
+              libellé: "Dépôt d'urgence",
             },
           ],
         },
@@ -396,7 +396,7 @@ export class ÉtablissementTerritorialTestBuilder {
             },
           ],
           code: '06201',
-          libellé: 'Appareil d\'IRM à utilisation clinique',
+          libellé: "Appareil d'IRM à utilisation clinique",
         },
       ],
     },
@@ -416,7 +416,7 @@ export class ÉtablissementTerritorialTestBuilder {
     },
     fondsDeRoulement: {
       dateMiseÀJourSource: '2022-02-02',
-      valeur: 2206969.259999999800000000,
+      valeur: 2206969.2599999998,
     },
     recettesEtDépenses: {
       dateMiseÀJourSource: '2022-02-02',
@@ -577,9 +577,7 @@ export class ÉtablissementTerritorialTestBuilder {
     }
   }
 
-  public static créeUneActivitéSanitaire(
-    champsSurchargés?: Partial<ÉtablissementTerritorialSanitaireActivité>
-  ): ÉtablissementTerritorialSanitaireActivité {
+  public static créeUneActivitéSanitaire(champsSurchargés?: Partial<ÉtablissementTerritorialSanitaireActivité>): ÉtablissementTerritorialSanitaireActivité {
     return {
       ...ÉtablissementTerritorialTestBuilder.activitéSanitaire,
       ...champsSurchargés,

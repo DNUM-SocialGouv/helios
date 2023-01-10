@@ -63,20 +63,18 @@ describe('Établissement territorial médico-social loader', () => {
       await établissementTerritorialIdentitéRepository.insert(
         ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
       )
-      await cpomModelRepository.insert(
-        {
-          dateDEntréeEnVigueur: '2020-04-10',
-          numéroFinessÉtablissementTerritorial,
-        }
-      )
+      await cpomModelRepository.insert({
+        dateDEntréeEnVigueur: '2020-04-10',
+        numéroFinessÉtablissementTerritorial,
+      })
       const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
 
       // WHEN
       const établissementTerritorial = await typeOrmÉtablissementTerritorialLoader.chargeIdentité(numéroFinessÉtablissementTerritorial)
 
       // THEN
-      expect(établissementTerritorial).toStrictEqual(ÉtablissementTerritorialTestBuilder.créeUneIdentitéMédicoSocial(
-        {
+      expect(établissementTerritorial).toStrictEqual(
+        ÉtablissementTerritorialTestBuilder.créeUneIdentitéMédicoSocial({
           dateDEntréeEnVigueurDuCpom: {
             dateMiseÀJourSource: '2022-02-02',
             value: '2020-04-10',
@@ -89,8 +87,8 @@ describe('Établissement territorial médico-social loader', () => {
             dateMiseÀJourSource: '2022-02-02',
             value: numéroFinessÉtablissementTerritorial,
           },
-        }
-      ))
+        })
+      )
     })
 
     it('signale que l’établissement territorial n’a pas été trouvé quand celui-ci n’existe pas', async () => {
@@ -168,19 +166,20 @@ describe('Établissement territorial médico-social loader', () => {
       // GIVEN
       const autreNuméroFinessEntitéJuridique = '333222111'
       const entitéJuridiqueAyantDesÉtablissementsModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
-      const entitéJuridiqueSansÉtablissementsModel = EntitéJuridiqueModelTestBuilder.crée(
-        { numéroFinessEntitéJuridique: autreNuméroFinessEntitéJuridique }
-      )
+      const entitéJuridiqueSansÉtablissementsModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: autreNuméroFinessEntitéJuridique })
       await entitéJuridiqueRepository.insert([entitéJuridiqueAyantDesÉtablissementsModel, entitéJuridiqueSansÉtablissementsModel])
 
       const établissementTerritorial1AffiliéModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({ numéroFinessEntitéJuridique })
       const établissementTerritorial2AffiliéModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique })
-      const établissementTerritorialNonAffiliéModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial(
-        { numéroFinessEntitéJuridique: autreNuméroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial: '321654987' }
-      )
-      await établissementTerritorialIdentitéRepository.insert(
-        [établissementTerritorial1AffiliéModel, établissementTerritorial2AffiliéModel, établissementTerritorialNonAffiliéModel]
-      )
+      const établissementTerritorialNonAffiliéModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({
+        numéroFinessEntitéJuridique: autreNuméroFinessEntitéJuridique,
+        numéroFinessÉtablissementTerritorial: '321654987',
+      })
+      await établissementTerritorialIdentitéRepository.insert([
+        établissementTerritorial1AffiliéModel,
+        établissementTerritorial2AffiliéModel,
+        établissementTerritorialNonAffiliéModel,
+      ])
 
       const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm)
 
@@ -198,9 +197,7 @@ describe('Établissement territorial médico-social loader', () => {
       // GIVEN
       const autreNuméroFinessEntitéJuridique = '333222111'
       const entitéJuridiqueAyantDesÉtablissementsModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique })
-      const entitéJuridiqueSansÉtablissementsModel = EntitéJuridiqueModelTestBuilder.crée(
-        { numéroFinessEntitéJuridique: autreNuméroFinessEntitéJuridique }
-      )
+      const entitéJuridiqueSansÉtablissementsModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: autreNuméroFinessEntitéJuridique })
       await entitéJuridiqueRepository.insert([entitéJuridiqueAyantDesÉtablissementsModel, entitéJuridiqueSansÉtablissementsModel])
 
       const établissementTerritorial1AffiliéModel = ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({ numéroFinessEntitéJuridique })
@@ -460,13 +457,11 @@ describe('Établissement territorial médico-social loader', () => {
       const budgetEtFinances = await typeOrmÉtablissementTerritorialMédicoSocialLoader.chargeBudgetEtFinances(numéroFinessÉtablissementTerritorial)
 
       // THEN
-      expect(budgetEtFinances).toStrictEqual<ÉtablissementTerritorialMédicoSocialBudgetEtFinances[]>(
-        [
-          ÉtablissementTerritorialTestBuilder.créeUnBlocBudgetEtFinancesCaPaMédicoSocial({ année: 2019 }),
-          ÉtablissementTerritorialTestBuilder.créeUnBlocBudgetEtFinancesCaPhMédicoSocial({ année: 2020 }),
-          ÉtablissementTerritorialTestBuilder.créeUnBlocBudgetEtFinancesErrdMédicoSocial({ année: 2021 }),
-        ]
-      )
+      expect(budgetEtFinances).toStrictEqual<ÉtablissementTerritorialMédicoSocialBudgetEtFinances[]>([
+        ÉtablissementTerritorialTestBuilder.créeUnBlocBudgetEtFinancesCaPaMédicoSocial({ année: 2019 }),
+        ÉtablissementTerritorialTestBuilder.créeUnBlocBudgetEtFinancesCaPhMédicoSocial({ année: 2020 }),
+        ÉtablissementTerritorialTestBuilder.créeUnBlocBudgetEtFinancesErrdMédicoSocial({ année: 2021 }),
+      ])
     })
   })
 
@@ -521,9 +516,18 @@ describe('Établissement territorial médico-social loader', () => {
 
       // THEN
       expect(ressourceHumaines).toStrictEqual<ÉtablissementTerritorialMédicoSocialRessourcesHumaines[]>([
-        ÉtablissementTerritorialTestBuilder.créeUnBlocRessourcesHumainesMédicoSocial({ année: 2019, nombreDEtpRéalisés: { dateMiseÀJourSource: '2022-02-02', valeur: 47.42 } }),
-        ÉtablissementTerritorialTestBuilder.créeUnBlocRessourcesHumainesMédicoSocial({ année: 2020, nombreDEtpRéalisés: { dateMiseÀJourSource: '2022-02-02', valeur: 47.42 } }),
-        ÉtablissementTerritorialTestBuilder.créeUnBlocRessourcesHumainesMédicoSocial({ année: 2021, nombreDEtpRéalisés: { dateMiseÀJourSource: '2022-02-02', valeur: 47.42 } }),
+        ÉtablissementTerritorialTestBuilder.créeUnBlocRessourcesHumainesMédicoSocial({
+          année: 2019,
+          nombreDEtpRéalisés: { dateMiseÀJourSource: '2022-02-02', valeur: 47.42 },
+        }),
+        ÉtablissementTerritorialTestBuilder.créeUnBlocRessourcesHumainesMédicoSocial({
+          année: 2020,
+          nombreDEtpRéalisés: { dateMiseÀJourSource: '2022-02-02', valeur: 47.42 },
+        }),
+        ÉtablissementTerritorialTestBuilder.créeUnBlocRessourcesHumainesMédicoSocial({
+          année: 2021,
+          nombreDEtpRéalisés: { dateMiseÀJourSource: '2022-02-02', valeur: 47.42 },
+        }),
       ])
     })
   })

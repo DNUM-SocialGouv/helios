@@ -4,7 +4,5 @@ import { PageRecherche } from '../frontend/ui/home/PageRecherche'
 export default function PageDAccueil() {
   useBreadcrumb([])
 
-  return (
-    <PageRecherche />
-  )
+  return <PageRecherche />
 }

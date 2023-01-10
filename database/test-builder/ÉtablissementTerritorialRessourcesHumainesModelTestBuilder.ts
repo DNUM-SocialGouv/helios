@@ -1,9 +1,7 @@
 import { RessourcesHumainesMédicoSocialModel } from '../models/RessourcesHumainesMédicoSocialModel'
 
 export class ÉtablissementTerritorialRessourcesHumainesModelTestBuilder {
-  public static créeMédicoSocial(
-    champsSurchargés?: Partial<RessourcesHumainesMédicoSocialModel>
-  ): RessourcesHumainesMédicoSocialModel {
+  public static créeMédicoSocial(champsSurchargés?: Partial<RessourcesHumainesMédicoSocialModel>): RessourcesHumainesMédicoSocialModel {
     const ressourcesHumainesMédicoSocialModel = new RessourcesHumainesMédicoSocialModel()
     ressourcesHumainesMédicoSocialModel.année = champsSurchargés?.année || 2019
     ressourcesHumainesMédicoSocialModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '590782553'

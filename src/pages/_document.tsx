@@ -5,8 +5,7 @@ export default class MyDocument extends Document {
   override render(): ReactElement {
     return (
       <Html lang="fr">
-        <Head>
-        </Head>
+        <Head></Head>
         <body>
           <Main />
           <NextScript />

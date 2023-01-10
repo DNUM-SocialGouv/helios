@@ -6,45 +6,34 @@ export const PageDesDonnéesPersonnelles = () => {
 
   return (
     <>
-      <h1>
-        {wording.DONNÉES_PERSONNELLES}
-      </h1>
+      <h1>{wording.DONNÉES_PERSONNELLES}</h1>
       <section aria-label={wording.FINALITÉ_ET_FONDEMENT_DU_TRAITEMENT}>
         <h2>Finalité et fondement du traitement</h2>
         <p>
-          <b>Helios – Fiche de synthèse</b>
-          {' '}
-          a pour finalité de proposer aux agents en
-          {' '}
-          <abbr title="Agence Régionale de Santé">ARS</abbr>
-          {' '}
-          une vision consolidée et unifiée des données associées aux acteurs et établissements sanitaires ou médico-sociaux.
-          Ce traitement entre dans le cadre des missions d’intérêt public confiées aux ARS en application de l’article L 1431-2 du code de santé publique.
-          Il est mis en œuvre sur le fondement de l’article 6 e) Règlement (UE) 2016/679 du Parlement européen et du Conseil du 27 avril 2016
-          (règlement général sur la protection des données ou
-          {' '}
+          <b>Helios – Fiche de synthèse</b> a pour finalité de proposer aux agents en <abbr title="Agence Régionale de Santé">ARS</abbr> une vision consolidée
+          et unifiée des données associées aux acteurs et établissements sanitaires ou médico-sociaux. Ce traitement entre dans le cadre des missions d’intérêt
+          public confiées aux ARS en application de l’article L 1431-2 du code de santé publique. Il est mis en œuvre sur le fondement de l’article 6 e)
+          Règlement (UE) 2016/679 du Parlement européen et du Conseil du 27 avril 2016 (règlement général sur la protection des données ou{' '}
           <abbr title="Règlement Général sur la Protection des Données">RGPD</abbr>
           ).
           <br />
-          Les finalités ainsi déterminées sont explicites et les données collectées dans le cadre de ce traitement ne pourront être traitées que
-          pour les finalités précitées. Les données personnelles collectées sont limitées au strict nécessaire (minimisation des données).
+          Les finalités ainsi déterminées sont explicites et les données collectées dans le cadre de ce traitement ne pourront être traitées que pour les
+          finalités précitées. Les données personnelles collectées sont limitées au strict nécessaire (minimisation des données).
         </p>
       </section>
       <section aria-label={wording.PROTECTION_DES_DONNÉES_PERSONNELLES}>
         <h2>Protection des données personnelles</h2>
         <p>
-          Sont destinataires des données les agents habilités du ministère des solidarités et de la santé et des ARS.
-          Ces derniers s’engagent à ce que la collecte et le traitement de vos données, effectués à partir de
-          {' '}
-          <b>Helios – Fiche de synthèse</b>
-          , soient conformes au RGPD et à la loi Informatique et Libertés.
+          Sont destinataires des données les agents habilités du ministère des solidarités et de la santé et des ARS. Ces derniers s’engagent à ce que la
+          collecte et le traitement de vos données, effectués à partir de <b>Helios – Fiche de synthèse</b>, soient conformes au RGPD et à la loi Informatique
+          et Libertés.
         </p>
       </section>
       <section aria-label={wording.DROITS_DES_PERSONNES_CONCERNÉES}>
         <h2>Droits des personnes concernées</h2>
         <p>
-          Conformément au règlement (UE) 2016/679 du Parlement européen et à la loi Informatique et Liberté 78-17 du 6 janvier 1978 modifiée,
-          vous disposez d’un droit d’accès, de rectification et de limitation des données qui vous concernent.
+          Conformément au règlement (UE) 2016/679 du Parlement européen et à la loi Informatique et Liberté 78-17 du 6 janvier 1978 modifiée, vous disposez d’un
+          droit d’accès, de rectification et de limitation des données qui vous concernent.
           <br />
           Pour toute information ou exercice des droits précités, vous pouvez contacter le délégué à la protection des données (DPO) de l’ARS de votre région :
         </p>
@@ -53,9 +42,7 @@ export const PageDesDonnéesPersonnelles = () => {
             <tr>
               <th>Agence Régionale de Santé</th>
               <th>
-                Adresse de contact du
-                {' '}
-                <abbr title="Data Protection Officer (Délégué à la Protection des Données)">DPO</abbr>
+                Adresse de contact du <abbr title="Data Protection Officer (Délégué à la Protection des Données)">DPO</abbr>
               </th>
             </tr>
           </thead>
@@ -171,11 +158,11 @@ export const PageDesDonnéesPersonnelles = () => {
           </tbody>
         </table>
         <p>
-          Au sein du ministère des solidarités et de la santé, vous pouvez vous adresser à Mme la Déléguée à la protection des données des ministères sociaux
-          - 14, avenue Duquesne, 75007 PARIS.
+          Au sein du ministère des solidarités et de la santé, vous pouvez vous adresser à Mme la Déléguée à la protection des données des ministères sociaux -
+          14, avenue Duquesne, 75007 PARIS.
           <br />
-          Enfin, si vous estimez, après nous avoir contactés, que vos droits sur vos données ne sont pas respectés,
-          vous pouvez adresser une réclamation auprès de la Commission Nationale de l’Informatique et des Libertés.
+          Enfin, si vous estimez, après nous avoir contactés, que vos droits sur vos données ne sont pas respectés, vous pouvez adresser une réclamation auprès
+          de la Commission Nationale de l’Informatique et des Libertés.
         </p>
       </section>
     </>

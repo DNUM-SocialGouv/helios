@@ -24,12 +24,8 @@ describe('La récupération des entités juridiques d’Helios', () => {
   it('récupère les numéros FINESS des entités juridiques', async () => {
     // GIVEN
     const typeOrmEntitéJuridiqueHeliosLoader = new TypeOrmEntitéJuridiqueHeliosLoader(orm)
-    const entitéJuridique1 = EntitéJuridiqueModelTestBuilder.crée(
-      { numéroFinessEntitéJuridique: '900000000' }
-    )
-    const entitéJuridique2 = EntitéJuridiqueModelTestBuilder.crée(
-      { numéroFinessEntitéJuridique: '123456789' }
-    )
+    const entitéJuridique1 = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '900000000' })
+    const entitéJuridique2 = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: '123456789' })
     await entitéJuridiqueRepository.insert([entitéJuridique1, entitéJuridique2])
 
     // WHEN

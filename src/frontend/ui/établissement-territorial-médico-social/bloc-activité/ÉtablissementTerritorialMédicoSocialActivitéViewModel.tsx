@@ -10,24 +10,21 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   readonly seuilValeurAtypique = 120
   readonly ratioHistogrammeBlocActivité = 2
 
-  constructor(
-    private readonly établissementTerritorialActivité: ÉtablissementTerritorialMédicoSocial['activités'],
-    wording: Wording
-  ) {
+  constructor(private readonly établissementTerritorialActivité: ÉtablissementTerritorialMédicoSocial['activités'], wording: Wording) {
     super(wording)
   }
 
   public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
-    return !this.activitéEstElleRenseignée ||
-      (
-        !this.leTauxOccupationHébergementPermanentEstIlRenseigné
-        && !this.leTauxOccupationHébergementTemporaireEstIlRenseigné
-        && !this.leTauxOccupationAccueilDeJourEstIlRenseigné
-        && !this.leTauxRéalisationActivitéEstIlRenseigné
-        && !this.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné
-        && !this.laFileActivePersonnesAccompagnéesEstElleRenseignée
-        && !this.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée
-      )
+    return (
+      !this.activitéEstElleRenseignée ||
+      (!this.leTauxOccupationHébergementPermanentEstIlRenseigné &&
+        !this.leTauxOccupationHébergementTemporaireEstIlRenseigné &&
+        !this.leTauxOccupationAccueilDeJourEstIlRenseigné &&
+        !this.leTauxRéalisationActivitéEstIlRenseigné &&
+        !this.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné &&
+        !this.laFileActivePersonnesAccompagnéesEstElleRenseignée &&
+        !this.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée)
+    )
   }
 
   public get activitéEstElleRenseignée(): boolean {
@@ -201,7 +198,9 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
     return valeur <= this.seuilValeurAtypique
   }
 
-  private construisLesAnnéesEtSesTaux(indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>): number[][] {
+  private construisLesAnnéesEtSesTaux(
+    indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>
+  ): number[][] {
     const valeurs: number[] = []
     const années: number[] = []
     this.établissementTerritorialActivité.forEach((activité: ÉtablissementTerritorialMédicoSocialActivité) => {
@@ -218,7 +217,9 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
     return [valeurs, années]
   }
 
-  private construisLesAnnéesEtSesValeurs(indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>): number[][] {
+  private construisLesAnnéesEtSesValeurs(
+    indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>
+  ): number[][] {
     const valeurs: number[] = []
     const années: number[] = []
     this.établissementTerritorialActivité.forEach((activité: ÉtablissementTerritorialMédicoSocialActivité) => {
@@ -234,7 +235,9 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
 
     return [valeurs, années]
   }
-  private lIndicateurEstIlRenseigné(indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>): boolean {
+  private lIndicateurEstIlRenseigné(
+    indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialActivité, 'année' | 'dateMiseÀJourSource' | 'numéroFinessÉtablissementTerritorial'>
+  ): boolean {
     return this.établissementTerritorialActivité.some((activité: ÉtablissementTerritorialMédicoSocialActivité) => activité[indicateur].value !== null)
   }
 
@@ -257,13 +260,13 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   private construisLaCouleurDeLaBarreHorizontale = (_valeur: number, année: number | string): CouleurHistogramme => {
     return this.estCeLAnnéePassée(année)
       ? {
-        premierPlan: this.couleurDuFondHistogrammePrimaire,
-        secondPlan: this.couleurDuFond,
-      }
+          premierPlan: this.couleurDuFondHistogrammePrimaire,
+          secondPlan: this.couleurDuFond,
+        }
       : {
-        premierPlan: this.couleurDuFondHistogrammeSecondaire,
-        secondPlan: this.couleurDuFond,
-      }
+          premierPlan: this.couleurDuFondHistogrammeSecondaire,
+          secondPlan: this.couleurDuFond,
+        }
   }
 
   private construisLesLibellésDesValeurs(valeurs: number[]): LibelléDeDonnéeGraphe[] {

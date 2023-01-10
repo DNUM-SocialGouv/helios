@@ -89,12 +89,8 @@ describe('Sauvegarde des entités juridiques', () => {
     entitéJuridiqueMisÀJourAttendu2.raisonSocialeCourte = 'HOPITAL PRIVE DE VILLENEUVE DASCQ'
     entitéJuridiqueMisÀJourAttendu2.siren = '260104632'
     entitéJuridiqueMisÀJourAttendu2.téléphone = '0102030405'
-    expect(entitésJuridiquesQuery).toStrictEqual([
-      entitéJuridiqueMisÀJourAttendu1,
-      entitéJuridiqueMisÀJourAttendu2,
-    ])
-    const dateMiseÀJourFichierSourceSauvée = await dateMiseÀJourFichierSourceRepository
-      .find({ where: { fichier: FichierSource.FINESS_CS1400101 } })
+    expect(entitésJuridiquesQuery).toStrictEqual([entitéJuridiqueMisÀJourAttendu1, entitéJuridiqueMisÀJourAttendu2])
+    const dateMiseÀJourFichierSourceSauvée = await dateMiseÀJourFichierSourceRepository.find({ where: { fichier: FichierSource.FINESS_CS1400101 } })
     const dateMiseÀJourFichierSourceAttendue = new DateMiseÀJourFichierSourceModel()
     dateMiseÀJourFichierSourceAttendue.fichier = FichierSource.FINESS_CS1400101
     dateMiseÀJourFichierSourceAttendue.dernièreMiseÀJour = '2022-07-28'
@@ -140,8 +136,7 @@ describe('Sauvegarde des entités juridiques', () => {
     entitéJuridiqueAttendu.téléphone = '0102030406'
     expect(entitésJuridiquesSauvées).toStrictEqual([entitéJuridiqueAttendu])
 
-    const dateMiseÀJourFichierSourceSauvée = await dateMiseÀJourFichierSourceRepository
-      .find({ where: { fichier: FichierSource.FINESS_CS1400101 } })
+    const dateMiseÀJourFichierSourceSauvée = await dateMiseÀJourFichierSourceRepository.find({ where: { fichier: FichierSource.FINESS_CS1400101 } })
     const dateMiseÀJourFichierSourceAttendue = new DateMiseÀJourFichierSourceModel()
     dateMiseÀJourFichierSourceAttendue.fichier = FichierSource.FINESS_CS1400101
     dateMiseÀJourFichierSourceAttendue.dernièreMiseÀJour = '2020-01-01'

@@ -20,8 +20,9 @@ describe('La récupération des établissements territoriaux rattachés à une e
       },
     ]
     const mockedRécupèreParFinessDeLEntitéJuridiqueDeRattachement = jest.fn().mockResolvedValueOnce(établissementsTerritoriauxAttendus)
-    const établissementTerritorialLoader: ÉtablissementTerritorialRattachéLoader
-      = { chargeLesÉtablissementsDeLEntitéJuridiqueDeRattachement: mockedRécupèreParFinessDeLEntitéJuridiqueDeRattachement }
+    const établissementTerritorialLoader: ÉtablissementTerritorialRattachéLoader = {
+      chargeLesÉtablissementsDeLEntitéJuridiqueDeRattachement: mockedRécupèreParFinessDeLEntitéJuridiqueDeRattachement,
+    }
     const récupèreLesÉtablissementsTerritoriauxRattachésUseCase = new RécupèreLesÉtablissementsTerritoriauxRattachésUseCase(établissementTerritorialLoader)
 
     // WHEN

@@ -6,12 +6,9 @@ type BandeauDInformationProps = Readonly<{
 }>
 
 export const BandeauDInformation = ({ texte }: BandeauDInformationProps) => {
-
   return (
     <div className={'fr-alert fr-alert--info fr-alert--sm ' + styles['bandeau-d-information']}>
-      <p>
-        {texte}
-      </p>
+      <p>{texte}</p>
     </div>
   )
 }

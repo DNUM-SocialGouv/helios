@@ -6,8 +6,10 @@ export async function récupèreLÉtablissementTerritorialSanitaireEndpoint(
   dependencies: Dependencies,
   numéroFinessÉtablissementTerritorialSanitaire: string
 ): Promise<ÉtablissementTerritorialSanitaire> {
-  const récupèreLÉtablissementTerritorialSanitaireUseCase =
-    new RécupèreLÉtablissementTerritorialSanitaireUseCase(dependencies.établissementTerritorialSanitaireLoader, dependencies.entitéJuridiqueLoader)
+  const récupèreLÉtablissementTerritorialSanitaireUseCase = new RécupèreLÉtablissementTerritorialSanitaireUseCase(
+    dependencies.établissementTerritorialSanitaireLoader,
+    dependencies.entitéJuridiqueLoader
+  )
 
   return await récupèreLÉtablissementTerritorialSanitaireUseCase.exécute(numéroFinessÉtablissementTerritorialSanitaire)
 }

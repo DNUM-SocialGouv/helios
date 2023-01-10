@@ -11,13 +11,9 @@ export const ContenuNombreDeJournéesPSYetSSR = ({ dateDeMiseÀJour, source }: C
   const { wording } = useDependencies()
   return (
     <>
-      <p>
-        {wording.miseÀJourEtSource(dateDeMiseÀJour, source)}
-      </p>
+      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
-        <p>
-          Permet d’observer l’évolution de l’activité de l’établissement et le développement des prises en charge ambulatoires.
-        </p>
+        <p>Permet d’observer l’évolution de l’activité de l’établissement et le développement des prises en charge ambulatoires.</p>
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
@@ -30,14 +26,11 @@ export const ContenuNombreDeJournéesPSYetSSR = ({ dateDeMiseÀJour, source }: C
           <span className="fr-text--bold">Mode de calcul : </span>
         </p>
         <p>
-          <b>Nombre de journées Soins de Suite et de Réadaptation (SSR) :</b>
-          {' '}
-          nombre de journées des RHA (Résumés Hebdomadaires de sortie Anonymes).
+          <b>Nombre de journées Soins de Suite et de Réadaptation (SSR) :</b> nombre de journées des RHA (Résumés Hebdomadaires de sortie Anonymes).
         </p>
         <p>
-          <b>SSR :</b>
-          {' '}
-          Le type d’hospitalisation est déduit sur la base du type d’hospitalisation de l’unité médicale, disponible dans le RHA, qui prend les valeurs :
+          <b>SSR :</b> Le type d’hospitalisation est déduit sur la base du type d’hospitalisation de l’unité médicale, disponible dans le RHA, qui prend les
+          valeurs :
         </p>
         <ol>
           <li>Hospitalisation complète ou de semaine en soins de suite médicalisés =&gt; Hospitalisation complète ou de semaine (HC)</li>
@@ -45,16 +38,12 @@ export const ContenuNombreDeJournéesPSYetSSR = ({ dateDeMiseÀJour, source }: C
           <li>Hospitalisation de nuit en soins de suite médicalisés =&gt; Hospitalisation de jour ou de nuit (HP)</li>
         </ol>
         <p>
-          <b>Nombre de journées Psychiatrie (PSY) :</b>
-          {' '}
-          le nombre de journées correspond à la somme du nombre de journées de présence et du nombre de demi-journées de présence.
-          Le nombre de demi-journées n’est comptabilisé que pour les prises en charge à temps partiel (formes d’activité 20, 21, 23).
+          <b>Nombre de journées Psychiatrie (PSY) :</b> le nombre de journées correspond à la somme du nombre de journées de présence et du nombre de
+          demi-journées de présence. Le nombre de demi-journées n’est comptabilisé que pour les prises en charge à temps partiel (formes d’activité 20, 21, 23).
           Seules des journées entières sont recueillies pour les prises en charge à temps complet (formes d’activité 01, 02, 03, 04, 05, 06, 07).
         </p>
         <p>
-          <b>PSY :</b>
-          {' '}
-          Le type d’hospitalisation est déduit sur la base des formes d’activité :
+          <b>PSY :</b> Le type d’hospitalisation est déduit sur la base des formes d’activité :
         </p>
         <ul>
           <li>
@@ -84,16 +73,16 @@ export const ContenuNombreDeJournéesPSYetSSR = ({ dateDeMiseÀJour, source }: C
           <span className="fr-text--bold">Source(s) : </span>
         </p>
         <ul>
-          <li>Programme de médicalisation des systèmes d’information (PMSI)  - Agence technique de l’information sur l’hospitalisation (ATIH)</li>
+          <li>Programme de médicalisation des systèmes d’information (PMSI) - Agence technique de l’information sur l’hospitalisation (ATIH)</li>
           <li>Soins de Suite et de Réadaptation (SSR) - fichiers RHA (Résumés Hebdomadaires de sortie Anonymes)</li>
           <li>Psychiatrie - fichiers RPSA (Résumé Par Séquence Anonymisé)</li>
         </ul>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
         <p>
-          Dans le cadre du PMSI, tout séjour dans un établissement de santé, public ou privé, fait l’objet d’un recueil systématique
-          et minimal d’informations administratives et médicales qui sont utilisées principalement pour le financement des établissements
-          de santé (tarification à l’activité) et pour l’organisation de l’offre de soins (planification).
+          Dans le cadre du PMSI, tout séjour dans un établissement de santé, public ou privé, fait l’objet d’un recueil systématique et minimal d’informations
+          administratives et médicales qui sont utilisées principalement pour le financement des établissements de santé (tarification à l’activité) et pour
+          l’organisation de l’offre de soins (planification).
         </p>
       </section>
     </>

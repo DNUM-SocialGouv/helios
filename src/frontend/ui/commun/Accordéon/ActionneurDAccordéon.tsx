@@ -9,7 +9,6 @@ type ActionneurDAccordéonProps = Readonly<{
 }>
 
 export const ActionneurDAccordéon = ({ for: identifiant, titre, texteGras = true }: ActionneurDAccordéonProps) => {
-
   return (
     <Link
       aria-controls={identifiant}

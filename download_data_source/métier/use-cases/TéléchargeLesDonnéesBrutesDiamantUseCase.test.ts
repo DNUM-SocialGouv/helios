@@ -6,9 +6,7 @@ describe('Récupération des fichiers sources de DIAMANT en local', () => {
 
   it('récupère les fichiers sources de DIAMANT en local', async () => {
     // GIVEN
-    const téléchargeLesDonnéesBrutesDiamantUseCase = new TéléchargeLesDonnéesBrutesDiamantUseCase(
-      fakeDataCrawlerDependencies.dnumDownloadRawData
-    )
+    const téléchargeLesDonnéesBrutesDiamantUseCase = new TéléchargeLesDonnéesBrutesDiamantUseCase(fakeDataCrawlerDependencies.dnumDownloadRawData)
 
     // WHEN
     await téléchargeLesDonnéesBrutesDiamantUseCase.exécute()
@@ -21,9 +19,7 @@ describe('Récupération des fichiers sources de DIAMANT en local', () => {
     // GIVEN
     const messageDerreur = 'téléchargement interrompu'
     jest.spyOn(fakeDataCrawlerDependencies.dnumDownloadRawData, 'exécute').mockImplementation().mockRejectedValueOnce(new Error(messageDerreur))
-    const téléchargeLesDonnéesBrutesDiamantUseCase = new TéléchargeLesDonnéesBrutesDiamantUseCase(
-      fakeDataCrawlerDependencies.dnumDownloadRawData
-    )
+    const téléchargeLesDonnéesBrutesDiamantUseCase = new TéléchargeLesDonnéesBrutesDiamantUseCase(fakeDataCrawlerDependencies.dnumDownloadRawData)
 
     try {
       // WHEN

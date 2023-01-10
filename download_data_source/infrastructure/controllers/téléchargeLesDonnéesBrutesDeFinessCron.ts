@@ -2,10 +2,7 @@ import { TéléchargeLesDonnéesBrutesDeFinessUseCase } from '../../métier/use-
 import { Dependencies, dependencies } from '../dependencies'
 
 const téléchargeLesDonnéesBrutesDeFinessCron = (dependencies: Dependencies) => {
-  const téléchargeLesDonnéesBrutesDeFinessUseCase = new TéléchargeLesDonnéesBrutesDeFinessUseCase(
-    dependencies.finessDownloadRawData,
-    dependencies.unzipRawData
-  )
+  const téléchargeLesDonnéesBrutesDeFinessUseCase = new TéléchargeLesDonnéesBrutesDeFinessUseCase(dependencies.finessDownloadRawData, dependencies.unzipRawData)
 
   téléchargeLesDonnéesBrutesDeFinessUseCase.exécute()
 }

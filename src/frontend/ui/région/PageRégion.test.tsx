@@ -7,14 +7,12 @@ import { régions } from './régions'
 const { wording } = fakeFrontDependencies
 
 describe('La page d’une région', () => {
-  it.each(
-    [
-      ['auvergne-rhone-alpes', régions['auvergne-rhone-alpes'].label, régions['auvergne-rhone-alpes'].source],
-      ['bretagne', régions['bretagne'].label, régions['bretagne'].source],
-      ['occitanie', régions['occitanie'].label, régions['occitanie'].source],
-      ['pays-de-la-loire', régions['pays-de-la-loire'].label, régions['pays-de-la-loire'].source],
-    ]
-  )('affiche la carte de %s', (région, label, source) => {
+  it.each([
+    ['auvergne-rhone-alpes', régions['auvergne-rhone-alpes'].label, régions['auvergne-rhone-alpes'].source],
+    ['bretagne', régions['bretagne'].label, régions['bretagne'].source],
+    ['occitanie', régions['occitanie'].label, régions['occitanie'].source],
+    ['pays-de-la-loire', régions['pays-de-la-loire'].label, régions['pays-de-la-loire'].source],
+  ])('affiche la carte de %s', (région, label, source) => {
     // WHEN
     renderFakeComponent(<PageRégion région={région} />)
 

@@ -16,9 +16,15 @@ type IndicateurProps = Readonly<{
   source: ReactElement
 }>
 
-export const IndicateurGraphique = (
-  { années = <></>, children, contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source }: IndicateurProps
-) => {
+export const IndicateurGraphique = ({
+  années = <></>,
+  children,
+  contenuInfoBulle,
+  dateDeMiseÀJour,
+  identifiant,
+  nomDeLIndicateur,
+  source,
+}: IndicateurProps) => {
   const { wording } = useDependencies()
   const [estCeOuvert, setEstCeOuvert] = useState(false)
 
@@ -30,9 +36,7 @@ export const IndicateurGraphique = (
           {années}
         </p>
         <div className={styles['mise-a-jour-source']}>
-          <p className={`fr-text--xs ${styles['titraille']}`}>
-            {wording.miseÀJourEtSource(dateDeMiseÀJour, source)}
-          </p>
+          <p className={`fr-text--xs ${styles['titraille']}`}>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
           <button
             aria-controls={`nom-info-bulle-${identifiant}`}
             className="fr-btn fr-fi-information-line fr-btn--icon-left fr-btn--tertiary fr-btn--sm"
@@ -44,15 +48,8 @@ export const IndicateurGraphique = (
           </button>
         </div>
       </div>
-      <div className={styles['graphe']}>
-        {children}
-      </div>
-      <InfoBulle
-        estCeOuvert={estCeOuvert}
-        identifiant={identifiant}
-        setEstCeOuvert={setEstCeOuvert}
-        titre={nomDeLIndicateur}
-      >
+      <div className={styles['graphe']}>{children}</div>
+      <InfoBulle estCeOuvert={estCeOuvert} identifiant={identifiant} setEstCeOuvert={setEstCeOuvert} titre={nomDeLIndicateur}>
         {contenuInfoBulle}
       </InfoBulle>
     </li>

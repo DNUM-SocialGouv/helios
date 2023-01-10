@@ -10,7 +10,7 @@ import styles from './PageDeRecette.module.css'
 export const PageDeRecette = () => {
   const { paths, wording } = useDependencies()
 
-  const entitésJuridiques: {identifiant: string, numéroFiness: string}[] = [
+  const entitésJuridiques: { identifiant: string; numéroFiness: string }[] = [
     {
       identifiant: 'EJ - 750050759 - CANSSM FILIERIS (avec que des ET sanitaires)',
       numéroFiness: '750050759',
@@ -32,7 +32,7 @@ export const PageDeRecette = () => {
       numéroFiness: '210012142',
     },
   ]
-  const établissementsTerritoriauxMédicoSociaux: {identifiant: string, numéroFiness: string}[] = [
+  const établissementsTerritoriauxMédicoSociaux: { identifiant: string; numéroFiness: string }[] = [
     {
       identifiant: 'ET - 690024898 - EHPAD SAINT-FRANCOIS D’ASSISE (avec toutes les données d’activités - cadre ERRD)',
       numéroFiness: '690024898',
@@ -66,7 +66,7 @@ export const PageDeRecette = () => {
       numéroFiness: '660009945',
     },
   ]
-  const établissementsTerritoriauxMédicoSociauxBudgetEtFinances: { identifiant: string, numéroFiness: string }[] = [
+  const établissementsTerritoriauxMédicoSociauxBudgetEtFinances: { identifiant: string; numéroFiness: string }[] = [
     {
       identifiant: 'ET - 690024898 - EHPAD SAINT-FRANCOIS D’ASSISE (2 années ERRD)',
       numéroFiness: '690024898',
@@ -100,7 +100,7 @@ export const PageDeRecette = () => {
       numéroFiness: '130802119',
     },
   ]
-  const établissementsTerritoriauxSanitaires: {identifiant: string, numéroFiness: string}[] = [
+  const établissementsTerritoriauxSanitaires: { identifiant: string; numéroFiness: string }[] = [
     {
       identifiant: 'ET - 120004668 - CH EMILE BOREL ST AFFRIQUE (avec toutes les données d’activités)',
       numéroFiness: '120004668',
@@ -129,104 +129,71 @@ export const PageDeRecette = () => {
 
   return (
     <main className="fr-container">
-      <section
-        aria-label={wording.TITRE_LISTE_DES_ENTITÉS_JURIDIQUES}
-        className="fr-mt-5w"
-      >
-        <h1 className="fr-h3">
-          {wording.ENTITÉS_JURIDIQUES}
-        </h1>
+      <section aria-label={wording.TITRE_LISTE_DES_ENTITÉS_JURIDIQUES} className="fr-mt-5w">
+        <h1 className="fr-h3">{wording.ENTITÉS_JURIDIQUES}</h1>
         <ul className={styles['liste-entités-juridiques'] + ' fr-raw-list fr-text--bold fr-raw-link'}>
-          {
-            entitésJuridiques.map((entitéJuridique) =>
-              <ListItem
-                key={entitéJuridique.numéroFiness}
-                label={entitéJuridique.identifiant}
-                lien={`${paths.ENTITÉ_JURIDIQUE}/${entitéJuridique.numéroFiness}`}
-                logo={<>
-                  <Image
-                    alt=""
-                    height="22"
-                    src={LogoEntitéJuridiqueNoir}
-                    width="22"
-                  />
-                </>}
-              />)
-          }
+          {entitésJuridiques.map((entitéJuridique) => (
+            <ListItem
+              key={entitéJuridique.numéroFiness}
+              label={entitéJuridique.identifiant}
+              lien={`${paths.ENTITÉ_JURIDIQUE}/${entitéJuridique.numéroFiness}`}
+              logo={
+                <>
+                  <Image alt="" height="22" src={LogoEntitéJuridiqueNoir} width="22" />
+                </>
+              }
+            />
+          ))}
         </ul>
       </section>
-      <section
-        aria-label={wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_TERRITORIAUX}
-        className="fr-mt-5w"
-      >
-        <h1 className="fr-h3">
-          {wording.ÉTABLISSEMENT_TERRITORIAUX + ' Médico-Sociaux'}
-        </h1>
+      <section aria-label={wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_TERRITORIAUX} className="fr-mt-5w">
+        <h1 className="fr-h3">{wording.ÉTABLISSEMENT_TERRITORIAUX + ' Médico-Sociaux'}</h1>
         <ul className={styles['liste-entités-juridiques'] + ' fr-raw-list fr-text--bold fr-raw-link'}>
-          {
-            établissementsTerritoriauxMédicoSociaux.map((établissementTerritorial) =>
-              <ListItem
-                key={établissementTerritorial.numéroFiness}
-                label={établissementTerritorial.identifiant}
-                lien= {`${paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL}/${établissementTerritorial.numéroFiness}`}
-                logo={<>
-                  <Image
-                    alt=""
-                    height="22"
-                    src={LogoÉtablissementTerritorialMédicoSocial}
-                    width="22"
-                  />
-                </>}
-              />)
-          }
+          {établissementsTerritoriauxMédicoSociaux.map((établissementTerritorial) => (
+            <ListItem
+              key={établissementTerritorial.numéroFiness}
+              label={établissementTerritorial.identifiant}
+              lien={`${paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL}/${établissementTerritorial.numéroFiness}`}
+              logo={
+                <>
+                  <Image alt="" height="22" src={LogoÉtablissementTerritorialMédicoSocial} width="22" />
+                </>
+              }
+            />
+          ))}
         </ul>
         <hr />
-        <h2 className="fr-h4">
-          Budget et finances
-        </h2>
+        <h2 className="fr-h4">Budget et finances</h2>
         <ul className={styles['liste-entités-juridiques'] + ' fr-raw-list fr-text--bold fr-raw-link'}>
-          {
-            établissementsTerritoriauxMédicoSociauxBudgetEtFinances.map((établissementTerritorial) =>
-              <ListItem
-                key={établissementTerritorial.numéroFiness}
-                label={établissementTerritorial.identifiant}
-                lien= {`${paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL}/${établissementTerritorial.numéroFiness}`}
-                logo={<>
-                  <Image
-                    alt=""
-                    height="22"
-                    src={LogoÉtablissementTerritorialMédicoSocial}
-                    width="22"
-                  />
-                </>}
-              />)
-          }
+          {établissementsTerritoriauxMédicoSociauxBudgetEtFinances.map((établissementTerritorial) => (
+            <ListItem
+              key={établissementTerritorial.numéroFiness}
+              label={établissementTerritorial.identifiant}
+              lien={`${paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL}/${établissementTerritorial.numéroFiness}`}
+              logo={
+                <>
+                  <Image alt="" height="22" src={LogoÉtablissementTerritorialMédicoSocial} width="22" />
+                </>
+              }
+            />
+          ))}
         </ul>
       </section>
-      <section
-        aria-label={wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_TERRITORIAUX}
-        className="fr-mt-5w"
-      >
-        <h1 className="fr-h3">
-          {wording.ÉTABLISSEMENT_TERRITORIAUX + ' Sanitaires'}
-        </h1>
+      <section aria-label={wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_TERRITORIAUX} className="fr-mt-5w">
+        <h1 className="fr-h3">{wording.ÉTABLISSEMENT_TERRITORIAUX + ' Sanitaires'}</h1>
         <ul className={styles['liste-entités-juridiques'] + ' fr-raw-list fr-text--bold fr-raw-link'}>
-          {
-            établissementsTerritoriauxSanitaires.map((établissementTerritorial) =>
-              <ListItem
-                key={établissementTerritorial.numéroFiness}
-                label={établissementTerritorial.identifiant}
-                lien= {`${paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE}/${établissementTerritorial.numéroFiness}`}
-                logo={<>
-                  <Image
-                    alt=""
-                    height="22"
-                    src={LogoÉtablissementTerritorialSanitaire}
-                    width="22"
-                  />
-                </>}
-              />)
-          }
+          {établissementsTerritoriauxSanitaires.map((établissementTerritorial) => (
+            <ListItem
+              key={établissementTerritorial.numéroFiness}
+              label={établissementTerritorial.identifiant}
+              lien={`${paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE}/${établissementTerritorial.numéroFiness}`}
+              logo={
+                <>
+                  <Image alt="" height="22" src={LogoÉtablissementTerritorialSanitaire} width="22" />
+                </>
+              }
+            />
+          ))}
         </ul>
       </section>
     </main>

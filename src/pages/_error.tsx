@@ -8,9 +8,10 @@ type PageErrorProps = Readonly<{
   hasGetInitialPropsRun: boolean
 }>
 
-type PageErrorServerProps = ErrorProps & Readonly<{
-  hasGetInitialPropsRun: boolean
-}>
+type PageErrorServerProps = ErrorProps &
+  Readonly<{
+    hasGetInitialPropsRun: boolean
+  }>
 
 export default function PageError({ statusCode, hasGetInitialPropsRun, error }: PageErrorProps) {
   if (!hasGetInitialPropsRun && error) {
@@ -42,9 +43,7 @@ PageError.getInitialProps = async (context: NextPageContext): Promise<PageErrorS
     return pageErrorProps
   }
 
-  Sentry.captureException(
-    new Error(`[Helios] _error.ts getInitialProps missing data at path: ${asPath}`)
-  )
+  Sentry.captureException(new Error(`[Helios] _error.ts getInitialProps missing data at path: ${asPath}`))
   await Sentry.flush(2000)
 
   return pageErrorProps

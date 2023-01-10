@@ -12,17 +12,14 @@ export const ContenuCapacitéParActivité = ({ dateDeMiseÀJour, source }: Conte
 
   return (
     <>
-      <p>
-        {wording.miseÀJourEtSource(dateDeMiseÀJour, source)}
-      </p>
+      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
-          Les établissements sont caractérisés dans FINESS par les activités, ou disciplines, qu’ils sont autorisés à exercer.
-          Ces informations sont la traduction d’une réglementation et de la possibilité de pluridisciplinarité des établissements.
-          Dans le domaine social et médico-social, les autorisations sont enregistrées directement au niveau des établissements.
-          Pour indiquer les services offerts, FINESS identifie ceux-ci à l’aide d’un triplet composé des éléments suivants :
-          Discipline/Fonctionnement/Clientèle. Exemple : Accueil en maison de retraite/ Hébergement complet internat/Personnes âgées autonomes.
-          L’information disponible de la &quot;capacité&quot; des établissements concerne les places &quot;installées&quot;.
+          Les établissements sont caractérisés dans FINESS par les activités, ou disciplines, qu’ils sont autorisés à exercer. Ces informations sont la
+          traduction d’une réglementation et de la possibilité de pluridisciplinarité des établissements. Dans le domaine social et médico-social, les
+          autorisations sont enregistrées directement au niveau des établissements. Pour indiquer les services offerts, FINESS identifie ceux-ci à l’aide d’un
+          triplet composé des éléments suivants : Discipline/Fonctionnement/Clientèle. Exemple : Accueil en maison de retraite/ Hébergement complet
+          internat/Personnes âgées autonomes. L’information disponible de la &quot;capacité&quot; des établissements concerne les places &quot;installées&quot;.
         </p>
       </section>
       <section aria-label={wording.FRÉQUENCE}>
@@ -45,11 +42,9 @@ export const ContenuCapacitéParActivité = ({ dateDeMiseÀJour, source }: Conte
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
         <p>
-          FINESS constitue la référence en matière d’inventaire des structures et équipements des domaines sanitaire,
-          médico-social, social et de formation aux professions de ces secteurs.
-
-          Les données de ce répertoire sont actualisées de façon continue par des agents en service dans les agences régionales de santé
-          et dans les services déconcentrés de l’État.
+          FINESS constitue la référence en matière d’inventaire des structures et équipements des domaines sanitaire, médico-social, social et de formation aux
+          professions de ces secteurs. Les données de ce répertoire sont actualisées de façon continue par des agents en service dans les agences régionales de
+          santé et dans les services déconcentrés de l’État.
         </p>
       </section>
     </>

@@ -17,28 +17,24 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
       return new EntitéJuridiqueNonTrouvée(numéroFiness)
     }
 
-    const dateDeMiseAJourFichierSourceModel = await this.chargeLaDateDeMiseÀJourFinessCs1400101Model() as DateMiseÀJourFichierSourceModel
+    const dateDeMiseAJourFichierSourceModel = (await this.chargeLaDateDeMiseÀJourFinessCs1400101Model()) as DateMiseÀJourFichierSourceModel
 
     return this.construisLEntitéJuridique(entitéJuridiqueIdentitéModel, dateDeMiseAJourFichierSourceModel)
   }
 
   async chargeRattachement(numéroFiness: string): Promise<EntitéJuridiqueDeRattachement> {
-    const entitéJuridiqueModel = await this.chargeLIdentitéModel(numéroFiness) as EntitéJuridiqueModel
-    const dateDeMiseAJourFichierSourceModel = await this.chargeLaDateDeMiseÀJourFinessCs1400101Model() as DateMiseÀJourFichierSourceModel
+    const entitéJuridiqueModel = (await this.chargeLIdentitéModel(numéroFiness)) as EntitéJuridiqueModel
+    const dateDeMiseAJourFichierSourceModel = (await this.chargeLaDateDeMiseÀJourFinessCs1400101Model()) as DateMiseÀJourFichierSourceModel
 
     return this.construisLEntitéJuridiqueDeRattachement(entitéJuridiqueModel, dateDeMiseAJourFichierSourceModel)
   }
 
   private async chargeLaDateDeMiseÀJourFinessCs1400101Model(): Promise<DateMiseÀJourFichierSourceModel | null> {
-    return await (await this.orm)
-      .getRepository(DateMiseÀJourFichierSourceModel)
-      .findOneBy({ fichier: FichierSource.FINESS_CS1400101 })
+    return await (await this.orm).getRepository(DateMiseÀJourFichierSourceModel).findOneBy({ fichier: FichierSource.FINESS_CS1400101 })
   }
 
   private async chargeLIdentitéModel(numéroFinessEntitéJuridique: string): Promise<EntitéJuridiqueModel | null> {
-    return await (await this.orm)
-      .getRepository(EntitéJuridiqueModel)
-      .findOneBy({ numéroFinessEntitéJuridique })
+    return await (await this.orm).getRepository(EntitéJuridiqueModel).findOneBy({ numéroFinessEntitéJuridique })
   }
 
   private construisLEntitéJuridique(

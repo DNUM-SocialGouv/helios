@@ -6,9 +6,7 @@ import { ReconnaissanceContractuelleSanitaireModel } from '../models/Reconnaissa
 import { ÉquipementMatérielLourdSanitaireModel } from '../models/ÉquipementMatérielLourdSanitaireModel'
 
 export class ÉtablissementTerritorialAutorisationModelTestBuilder {
-  public static créeMédicoSocial(
-    champsSurchargés?: Partial<AutorisationMédicoSocialModel>
-  ): AutorisationMédicoSocialModel {
+  public static créeMédicoSocial(champsSurchargés?: Partial<AutorisationMédicoSocialModel>): AutorisationMédicoSocialModel {
     const autorisationMédicoSocialModel = new AutorisationMédicoSocialModel()
     autorisationMédicoSocialModel.activité = champsSurchargés?.activité || '11'
     autorisationMédicoSocialModel.capacitéAutoriséeTotale = champsSurchargés?.capacitéAutoriséeTotale || 10
@@ -26,9 +24,7 @@ export class ÉtablissementTerritorialAutorisationModelTestBuilder {
     return autorisationMédicoSocialModel
   }
 
-  public static créeAutorisationSanitaire(
-    champsSurchargés?: Partial<AutorisationSanitaireModel>
-  ): AutorisationSanitaireModel {
+  public static créeAutorisationSanitaire(champsSurchargés?: Partial<AutorisationSanitaireModel>): AutorisationSanitaireModel {
     const autorisationSanitaireModel = new AutorisationSanitaireModel()
     autorisationSanitaireModel.codeActivité = champsSurchargés?.codeActivité || '16'
     autorisationSanitaireModel.dateAutorisation = champsSurchargés?.dateAutorisation || '2005-10-11'
@@ -44,9 +40,7 @@ export class ÉtablissementTerritorialAutorisationModelTestBuilder {
     return autorisationSanitaireModel
   }
 
-  public static créeAutreActivitéSanitaire(
-    champsSurchargés?: Partial<AutreActivitéSanitaireModel>
-  ): AutreActivitéSanitaireModel {
+  public static créeAutreActivitéSanitaire(champsSurchargés?: Partial<AutreActivitéSanitaireModel>): AutreActivitéSanitaireModel {
     const autreActivitéSanitaireModel = new AutreActivitéSanitaireModel()
     autreActivitéSanitaireModel.codeActivité = champsSurchargés?.codeActivité || 'A1'
     autreActivitéSanitaireModel.dateAutorisation = champsSurchargés?.dateAutorisation || '2019-06-03'
@@ -81,9 +75,7 @@ export class ÉtablissementTerritorialAutorisationModelTestBuilder {
     return reconnaissanceContractuelleSanitaireModel
   }
 
-  public static créeÉquipementMatérielLourdSanitaire(
-    champsSurchargés?: Partial<ÉquipementMatérielLourdSanitaireModel>
-  ): ÉquipementMatérielLourdSanitaireModel {
+  public static créeÉquipementMatérielLourdSanitaire(champsSurchargés?: Partial<ÉquipementMatérielLourdSanitaireModel>): ÉquipementMatérielLourdSanitaireModel {
     const équipementMatérielLourdModel = new ÉquipementMatérielLourdSanitaireModel()
     équipementMatérielLourdModel.dateAutorisation = champsSurchargés?.dateAutorisation || '2007-11-06'
     équipementMatérielLourdModel.dateFin = champsSurchargés?.dateFin || '2029-01-01'
@@ -95,9 +87,7 @@ export class ÉtablissementTerritorialAutorisationModelTestBuilder {
     return équipementMatérielLourdModel
   }
 
-  public static créeCapacitéSanitaire(
-    champsSurchargés?: Partial<CapacitéAutorisationSanitaireModel>
-  ): CapacitéAutorisationSanitaireModel {
+  public static créeCapacitéSanitaire(champsSurchargés?: Partial<CapacitéAutorisationSanitaireModel>): CapacitéAutorisationSanitaireModel {
     const capacitéAutorisationSanitaireModel = new CapacitéAutorisationSanitaireModel()
     capacitéAutorisationSanitaireModel.année = champsSurchargés?.année || 2022
     capacitéAutorisationSanitaireModel.nombreDeLitsEnChirurgie = champsSurchargés?.nombreDeLitsEnChirurgie || 20

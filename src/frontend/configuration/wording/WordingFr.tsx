@@ -60,9 +60,9 @@ export class WordingFr implements Wording {
   readonly rechercheNombreRésultats: (nombre: number, terme: string) => string = (nombre, terme: string) =>
     `${nombre} résultat(s) correspond(ent) à votre recherche « ${terme} ».`
   readonly RECHERCHE_EN_ATTENTE: string = 'En cours de recherche...'
-  readonly aucunRésultat: (terme: string) => string = (terme: string) =>
-    `Aucun résultat ne correspond à votre recherche « ${terme} ».`
-  readonly ERREUR_TECHNIQUE: string = 'Veuillez nous excuser, nous venons de rencontrer une erreur technique. Nous vous invitons à effectuer une nouvelle recherche plus tard.'
+  readonly aucunRésultat: (terme: string) => string = (terme: string) => `Aucun résultat ne correspond à votre recherche « ${terme} ».`
+  readonly ERREUR_TECHNIQUE: string =
+    'Veuillez nous excuser, nous venons de rencontrer une erreur technique. Nous vous invitons à effectuer une nouvelle recherche plus tard.'
   readonly VOIR_PLUS_RÉSULTATS: string = 'Voir plus de résultats'
 
   // Cartographie
@@ -75,13 +75,13 @@ export class WordingFr implements Wording {
 
   // Fiches
   readonly miseÀJour: (date: string) => string = (date: string): string => `Mise à jour : ${date}`
-  readonly miseÀJourEtSource: (date: string, source: ReactElement) => ReactElement = (date: string, source: ReactElement): ReactElement => <>
-    {this.miseÀJour(date)}
-    {' - '}
-    Source :
-    {' '}
-    {source}
-  </>
+  readonly miseÀJourEtSource: (date: string, source: ReactElement) => ReactElement = (date: string, source: ReactElement): ReactElement => (
+    <>
+      {this.miseÀJour(date)}
+      {' - '}
+      Source : {source}
+    </>
+  )
   readonly NON_RENSEIGNÉ: string = 'Non renseigné'
   readonly OUI: string = 'Oui'
   readonly NON: string = 'Non'
@@ -135,11 +135,13 @@ export class WordingFr implements Wording {
   readonly TAUX_RÉALISATION_ACTIVITÉ: string = 'Taux de réalisation de l’activité'
   readonly FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES: string = 'File active des personnes accompagnées sur la période'
   readonly NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES: string = 'Nombre moyen de journées d’absence des personnes accompagnées sur la période'
-  readonly DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES: string = 'Durée moyenne de séjour/d’accompagnement des personnes sorties définitivement au cours de l’année (en nombre de jours)'
+  readonly DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES: string =
+    'Durée moyenne de séjour/d’accompagnement des personnes sorties définitivement au cours de l’année (en nombre de jours)'
   readonly NOMBRE_DE_PASSAGES_AUX_URGENCES: string = 'Nombre de passages aux urgences'
 
   // Bloc Activité Sanitaire
-  readonly NOMBRE_DE_SÉJOUR_MCO: string = 'Nombre de séjours Médecine, Chirurgie et Obstétrique en Hospitalisation Complète et Hospitalisation Partielle par année (si applicable)'
+  readonly NOMBRE_DE_SÉJOUR_MCO: string =
+    'Nombre de séjours Médecine, Chirurgie et Obstétrique en Hospitalisation Complète et Hospitalisation Partielle par année (si applicable)'
   readonly TOTAL_HOSPITALISATION_MÉDECINE: string = 'Total Hospitalisation Médecine'
   readonly TOTAL_HOSPITALISATION_CHIRURGIE: string = 'Total Hospitalisation Chirurgie'
   readonly TOTAL_HOSPITALISATION_OBSTÉTRIQUE: string = 'Total Hospitalisation Obstétrique'
@@ -151,7 +153,8 @@ export class WordingFr implements Wording {
   readonly HOSPITALISATION_COMPLÈTE_OBSTÉTRIQUE: string = 'Hospitalisation Complète Obstétrique'
   readonly TOTAL_HOSPITALISATION_SSR: string = 'Total Hospitalisation SSR'
   readonly TOTAL_HOSPITALISATION_PSY: string = 'Total Hospitalisation PSY'
-  readonly NOMBRE_DE_JOURNÉES_PSY_ET_SSR: string = 'Nombre de journées PSY et SSR en Hospitalisation Complète et Hospitalisation Partielle par année (si applicable)'
+  readonly NOMBRE_DE_JOURNÉES_PSY_ET_SSR: string =
+    'Nombre de journées PSY et SSR en Hospitalisation Complète et Hospitalisation Partielle par année (si applicable)'
   readonly HOSPITALISATION_PARTIELLE_SSR: string = 'Hospitalisation Partielle SSR'
   readonly HOSPITALISATION_COMPLÈTE_SSR: string = 'Hospitalisation Complète SSR'
   readonly HOSPITALISATION_PARTIELLE_PSY: string = 'Hospitalisation Partielle PSY'
@@ -182,22 +185,29 @@ export class WordingFr implements Wording {
       Date d’effet de l’
       {this.ASR}
       &nbsp;
-    </>)
-  readonly DATE_D_EFFET_CPOM: ReactElement = (<>
-    Date d’effet du&nbsp;
-    {this.CPOM}
+    </>
+  )
+  readonly DATE_D_EFFET_CPOM: ReactElement = (
+    <>
+      Date d’effet du&nbsp;
+      {this.CPOM}
       &nbsp;
-  </>)
-  readonly DATE_DE_FIN_CPOM: ReactElement = (<>
-    Date de fin du&nbsp;
-    {this.CPOM}
+    </>
+  )
+  readonly DATE_DE_FIN_CPOM: ReactElement = (
+    <>
+      Date de fin du&nbsp;
+      {this.CPOM}
       &nbsp;
-  </>)
-  readonly NUMÉRO_CPOM: ReactElement = (<>
-    Numéro de&nbsp;
-    {this.CPOM}
+    </>
+  )
+  readonly NUMÉRO_CPOM: ReactElement = (
+    <>
+      Numéro de&nbsp;
+      {this.CPOM}
       &nbsp;
-  </>)
+    </>
+  )
   readonly NUMÉRO_ARHGOS: string = 'Numéro ARHGOS'
   readonly ACTIVITÉS: string = 'Activités'
   readonly CHIRURGIE: string = 'Chirurgie'
@@ -234,9 +244,7 @@ export class WordingFr implements Wording {
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ: ReactElement = (
     <>
       Nombre d’
-      <abbr title="Équivalent Temps Plein">ETP</abbr>
-      {' '}
-      Total réalisé
+      <abbr title="Équivalent Temps Plein">ETP</abbr> Total réalisé
     </>
   )
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION: string = 'Nombre d’ETP Total réalisé'
@@ -248,11 +256,7 @@ export class WordingFr implements Wording {
     tauxNul: boolean
   ) => (
     <p>
-      Taux hors formation =
-      {' '}
-      <span className={enErreur ? 'fr-text--bold fr-text-default--error' : 'fr-text--bold'}>
-        {taux}
-      </span>
+      Taux hors formation = <span className={enErreur ? 'fr-text--bold fr-text-default--error' : 'fr-text--bold'}>{taux}</span>
       {!tauxNul && ', dont'}
     </p>
   )
@@ -264,13 +268,11 @@ export class WordingFr implements Wording {
   readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE: string = 'Pour accident du travail / maladie professionnelle'
   readonly MOTIF_DU_TAUX_D_ABSENTÉISME: string = 'Type'
   readonly TAUX: string = 'Taux'
-  readonly NOMBRE_DE_CDD_DE_REMPLACEMENT: ReactElement = (<>
-    Nombre de
-    {' '}
-    <abbr title="Contrat à Durée Déterminée">CDD</abbr>
-    {' '}
-    de remplacement
-  </>)
+  readonly NOMBRE_DE_CDD_DE_REMPLACEMENT: ReactElement = (
+    <>
+      Nombre de <abbr title="Contrat à Durée Déterminée">CDD</abbr> de remplacement
+    </>
+  )
   readonly NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION: string = 'Nombre de CDD de remplacement'
   readonly TAUX_D_ETP_VACANTS_AU_31_12: string = 'Taux d’ETP vacants au 31/12'
   readonly TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES: string = 'Taux de prestations externes sur les prestations directes'
@@ -306,22 +308,26 @@ export class WordingFr implements Wording {
   readonly PAGE_NON_TROUVÉE_404: string = 'Page non trouvée'
   readonly CODE_ERREUR_404: string = 'Erreur 404'
   readonly SOUS_TITRE_ERREUR_404: string = 'La page que vous cherchez est introuvable. Excusez-nous pour la gêne occasionnée.'
-  readonly DESCRIPTION_ERREUR_404: ReactElement = (<>
-    Si vous avez tapé l’adresse web dans le navigateur, vérifiez qu’elle est correcte. La page n’est peut-être plus disponible.
-    <br />
-    Dans ce cas, pour continuer votre visite vous pouvez consulter notre page d’accueil,
-    ou effectuer une recherche avec notre moteur de recherche en haut de page.
-    <br />
-    Si vous avez besoin d’une aide, merci de nous contacter.
-  </>)
+  readonly DESCRIPTION_ERREUR_404: ReactElement = (
+    <>
+      Si vous avez tapé l’adresse web dans le navigateur, vérifiez qu’elle est correcte. La page n’est peut-être plus disponible.
+      <br />
+      Dans ce cas, pour continuer votre visite vous pouvez consulter notre page d’accueil, ou effectuer une recherche avec notre moteur de recherche en haut de
+      page.
+      <br />
+      Si vous avez besoin d’une aide, merci de nous contacter.
+    </>
+  )
   readonly ERREUR_INATTENDUE_500: string = 'Erreur inattendue'
   readonly CODE_ERREUR_500: string = 'Erreur 500'
   readonly SOUS_TITRE_ERREUR_500: string = 'Désolé, le service rencontre un problème. Nous travaillons pour le résoudre le plus rapidement possible.'
-  readonly DESCRIPTION_ERREUR_500: ReactElement = (<>
-    Essayez de rafraîchir la page ou bien ressayez plus tard.
-    <br />
-    Si vous avez besoin d’une aide, merci de nous contacter.
-  </>)
+  readonly DESCRIPTION_ERREUR_500: ReactElement = (
+    <>
+      Essayez de rafraîchir la page ou bien ressayez plus tard.
+      <br />
+      Si vous avez besoin d’une aide, merci de nous contacter.
+    </>
+  )
 
   // Footer
   readonly LEGIFRANCE: string = 'legifrance.gouv.fr'

@@ -69,10 +69,7 @@ describe('Téléchargement des données DIAMANT via SFTP', () => {
   it('télécharge la dernière version des fichiers', async () => {
     // GIVEN
     simuleLaLectureDeLaClefPrivée(fakeCléPrivé)
-    simuleLaListeDesFichiersPrésentsSurLeSftp(fakeClientSftp, [
-      { name: 'ANN_ERRD_EJ_ET_2022_08_03.CSV.gpg' },
-      { name: 'ANN_ERRD_EJ_ET_2022_09_01.CSV.gpg' },
-    ])
+    simuleLaListeDesFichiersPrésentsSurLeSftp(fakeClientSftp, [{ name: 'ANN_ERRD_EJ_ET_2022_08_03.CSV.gpg' }, { name: 'ANN_ERRD_EJ_ET_2022_09_01.CSV.gpg' }])
     const fichierÀTélécharger = ['ANN_ERRD_EJ_ET']
     const dnumSftpDownloadRawData = new DnumSftpDownloadRawData(
       fakeClientSftp,
@@ -147,10 +144,7 @@ describe('Téléchargement des données DIAMANT via SFTP', () => {
   it('signale un message d’erreur si le fichier à télécharger n’est pas présent', async () => {
     // GIVEN
     simuleLaLectureDeLaClefPrivée(fakeCléPrivé)
-    simuleLaListeDesFichiersPrésentsSurLeSftp(fakeClientSftp, [
-      { name: 'ANN_ERRD_EJ_ET_2022_08_03.CSV.gpg' },
-      { name: 'ANN_ERRD_EJ_ET_2022_09_01.CSV.gpg' },
-    ])
+    simuleLaListeDesFichiersPrésentsSurLeSftp(fakeClientSftp, [{ name: 'ANN_ERRD_EJ_ET_2022_08_03.CSV.gpg' }, { name: 'ANN_ERRD_EJ_ET_2022_09_01.CSV.gpg' }])
     const fichierÀTélécharger = ['fichier_non_présent']
     const dnumSftpDownloadRawData = new DnumSftpDownloadRawData(
       fakeClientSftp,
@@ -236,8 +230,11 @@ describe('Téléchargement des données DIAMANT via SFTP', () => {
   })
 })
 
-function simuleLaListeDesFichiersPrésentsSurLeSftp(clientSftp: ClientSftp, fichiers: {name: string}[]) {
-  jest.spyOn(clientSftp, 'list').mockImplementation().mockResolvedValueOnce(fichiers as FileInfo[])
+function simuleLaListeDesFichiersPrésentsSurLeSftp(clientSftp: ClientSftp, fichiers: { name: string }[]) {
+  jest
+    .spyOn(clientSftp, 'list')
+    .mockImplementation()
+    .mockResolvedValueOnce(fichiers as FileInfo[])
 }
 
 function simuleLaLectureDeLaClefPrivée(cléPrivé: string) {

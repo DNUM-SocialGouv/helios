@@ -22,9 +22,11 @@ describe('Récupération des sources de données FINESS en local', () => {
   it('signale quand une erreur est survenue lors du téléchargement des données', async () => {
     // GIVEN
     const messageDerreur = 'téléchargement interrompu'
-    jest.spyOn(fakeDataCrawlerDependencies.finessDownloadRawData, 'exécute').mockImplementation(jest.fn(async () => {
-      await Promise.reject(new Error(messageDerreur))
-    }))
+    jest.spyOn(fakeDataCrawlerDependencies.finessDownloadRawData, 'exécute').mockImplementation(
+      jest.fn(async () => {
+        await Promise.reject(new Error(messageDerreur))
+      })
+    )
     const téléchargerLesDonnéesBrutesDeFiness = new TéléchargeLesDonnéesBrutesDeFinessUseCase(
       fakeDataCrawlerDependencies.finessDownloadRawData,
       fakeDataCrawlerDependencies.unzipRawData
@@ -43,9 +45,11 @@ describe('Récupération des sources de données FINESS en local', () => {
   it('signale quand une erreur est survenue lors du la décompression des fichiers', async () => {
     // GIVEN
     const messageDerreur = 'décompression interrompue'
-    jest.spyOn(fakeDataCrawlerDependencies.unzipRawData, 'exécute').mockImplementation(jest.fn(async () => {
-      await Promise.reject(new Error(messageDerreur))
-    }))
+    jest.spyOn(fakeDataCrawlerDependencies.unzipRawData, 'exécute').mockImplementation(
+      jest.fn(async () => {
+        await Promise.reject(new Error(messageDerreur))
+      })
+    )
     const téléchargerLesDonnéesBrutesDeFiness = new TéléchargeLesDonnéesBrutesDeFinessUseCase(
       fakeDataCrawlerDependencies.finessDownloadRawData,
       fakeDataCrawlerDependencies.unzipRawData

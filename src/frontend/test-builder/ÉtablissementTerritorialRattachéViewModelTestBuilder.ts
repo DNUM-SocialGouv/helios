@@ -20,19 +20,25 @@ export class ÉtablissementTerritorialRattachéViewModelTestBuilder {
     wording: Wording,
     champsSurchargés?: Partial<ÉtablissementTerritorialRattaché>
   ): ÉtablissementTerritorialRattachéViewModel {
-    return new ÉtablissementTerritorialRattachéViewModel({
-      ...ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialMédicoSocialRattaché,
-      ...champsSurchargés,
-    }, wording)
+    return new ÉtablissementTerritorialRattachéViewModel(
+      {
+        ...ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialMédicoSocialRattaché,
+        ...champsSurchargés,
+      },
+      wording
+    )
   }
 
   public static créeÉtablissementTerritorialSanitaireRattaché(
     wording: Wording,
     champsSurchargés?: Partial<ÉtablissementTerritorialRattaché>
   ): ÉtablissementTerritorialRattachéViewModel {
-    return new ÉtablissementTerritorialRattachéViewModel({
-      ...ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialSanitaireRattaché,
-      ...champsSurchargés,
-    }, wording)
+    return new ÉtablissementTerritorialRattachéViewModel(
+      {
+        ...ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialSanitaireRattaché,
+        ...champsSurchargés,
+      },
+      wording
+    )
   }
 }

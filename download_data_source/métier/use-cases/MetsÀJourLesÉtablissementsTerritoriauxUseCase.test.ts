@@ -23,7 +23,9 @@ describe('Mise à jour des établissements territoriaux', () => {
 
     // THEN
     expect(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader.récupèreLaDateDeMiseÀJourDuFichierSource).toHaveBeenCalledWith()
-    expect(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader.récupèreLesÉtablissementsTerritoriauxOuverts).toHaveBeenCalledWith(['123456789'])
+    expect(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader.récupèreLesÉtablissementsTerritoriauxOuverts).toHaveBeenCalledWith([
+      '123456789',
+    ])
   })
 
   it('sauvegarde les établissements territoriaux des sources de données externes avec la date de mise à jour de leur fichier source', async () => {
@@ -34,12 +36,11 @@ describe('Mise à jour des établissements territoriaux', () => {
       fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader,
       fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader
     )
-    const établissementsTerritoriaux: ÉtablissementTerritorialIdentité[] = [
-      unÉtablissementMédicoSocial,
-      unÉtablissementSanitaire,
-    ]
+    const établissementsTerritoriaux: ÉtablissementTerritorialIdentité[] = [unÉtablissementMédicoSocial, unÉtablissementSanitaire]
     jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, 'récupèreLaDateDeMiseÀJourDuFichierSource').mockReturnValue('20220728')
-    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts').mockReturnValue(établissementsTerritoriaux)
+    jest
+      .spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts')
+      .mockReturnValue(établissementsTerritoriaux)
     jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader, 'récupèreLeNuméroFinessDesÉtablissementsTerritoriaux').mockResolvedValue([])
 
     // WHEN
@@ -65,13 +66,14 @@ describe('Mise à jour des établissements territoriaux', () => {
         numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorialToujoursOuvert,
       },
     ]
-    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts').mockReturnValue(établissementTerritorialOuvert)
+    jest
+      .spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts')
+      .mockReturnValue(établissementTerritorialOuvert)
 
-    const numérosFinessDesÉtablissementsEnBase = [
-      numéroFinessÉtablissementTerritorialToujoursOuvert,
-      '123456789',
-    ]
-    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader, 'récupèreLeNuméroFinessDesÉtablissementsTerritoriaux').mockResolvedValue(numérosFinessDesÉtablissementsEnBase)
+    const numérosFinessDesÉtablissementsEnBase = [numéroFinessÉtablissementTerritorialToujoursOuvert, '123456789']
+    jest
+      .spyOn(fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader, 'récupèreLeNuméroFinessDesÉtablissementsTerritoriaux')
+      .mockResolvedValue(numérosFinessDesÉtablissementsEnBase)
 
     // WHEN
     await sauvegardeLesÉtablissementsTerritoriaux.exécute()
@@ -90,9 +92,11 @@ describe('Mise à jour des établissements territoriaux', () => {
       fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader
     )
 
-    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts').mockImplementation(() => {
-      throw new Error(messageDerreur)
-    })
+    jest
+      .spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, 'récupèreLesÉtablissementsTerritoriauxOuverts')
+      .mockImplementation(() => {
+        throw new Error(messageDerreur)
+      })
 
     try {
       // WHEN

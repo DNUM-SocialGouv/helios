@@ -1,7 +1,7 @@
 type Régions = Readonly<{
   [key: string]: Readonly<{
-    label: string,
-    source: string,
+    label: string
+    source: string
   }>
 }>
 

@@ -5,9 +5,7 @@ export const RechercheEnAttente = () => {
 
   return (
     <section>
-      <p className="fr-mt-4w">
-        {wording.RECHERCHE_EN_ATTENTE}
-      </p>
+      <p className="fr-mt-4w">{wording.RECHERCHE_EN_ATTENTE}</p>
     </section>
   )
 }

@@ -29,22 +29,16 @@ export const PageRecherche = () => {
   return (
     <main className="fr-container">
       <Head>
-        <title>
-          {wording.TITRE_PAGE_ACCUEIL}
-        </title>
+        <title>{wording.TITRE_PAGE_ACCUEIL}</title>
       </Head>
       <BandeauDInformation texte={wording.SITE_EN_CONSTRUCTION} />
-      <FormulaireDeRecherche
-        lancerLaRecherche={lancerLaRecherche}
-        rechercheOnChange={rechercheOnChange}
-        terme={terme}
-      />
+      <FormulaireDeRecherche lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} terme={terme} />
 
       {estCeEnAttente && <RechercheEnAttente />}
 
       {estCeQueLeBackendNeRépondPas && <RechercheCassée />}
 
-      {estCeQueLesRésultatsSontReçus &&
+      {estCeQueLesRésultatsSontReçus && (
         <RésultatsDeRecherche
           chargeLesRésultatsSuivants={chargeLesRésultatsSuivants}
           estCeQueLesRésultatsSontTousAffichés={estCeQueLesRésultatsSontTousAffichés()}
@@ -52,7 +46,7 @@ export const PageRecherche = () => {
           résultats={résultats}
           termeFixe={termeFixe}
         />
-      }
+      )}
       <Cartographie />
     </main>
   )

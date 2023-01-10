@@ -28,23 +28,18 @@ export class ÉtablissementTerritorialRattachéViewModel {
   }
 
   public lienVersLÉtablissement(paths: Paths): string {
-    const préfixe = this.établissementTerritorialRattaché.domaine === DomaineÉtablissementTerritorial.MÉDICO_SOCIAL ?
-      paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL :
-      paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE
+    const préfixe =
+      this.établissementTerritorialRattaché.domaine === DomaineÉtablissementTerritorial.MÉDICO_SOCIAL
+        ? paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL
+        : paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE
     return `${préfixe}/${this.numéroFiness}`
   }
 
   public get logo(): ReactElement {
-    const logo = this.établissementTerritorialRattaché.domaine === DomaineÉtablissementTerritorial.MÉDICO_SOCIAL ?
-      logoÉtablissementTerritorialMédicoSocial :
-      logoÉtablissementTerritorialSanitaire
-    return (
-      <Image
-        alt=""
-        height="25"
-        src={logo}
-        width="25"
-      />
-    )
+    const logo =
+      this.établissementTerritorialRattaché.domaine === DomaineÉtablissementTerritorial.MÉDICO_SOCIAL
+        ? logoÉtablissementTerritorialMédicoSocial
+        : logoÉtablissementTerritorialSanitaire
+    return <Image alt="" height="25" src={logo} width="25" />
   }
 }

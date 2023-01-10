@@ -2,9 +2,7 @@ import { TéléchargeLesDonnéesBrutesDiamantUseCase } from '../../métier/use-c
 import { Dependencies, dependencies } from '../dependencies'
 
 const téléchargeLesDonnéesBrutesDiamantCron = (dependencies: Dependencies) => {
-  const téléchargeLesDonnéesBrutesDeFinessUseCase = new TéléchargeLesDonnéesBrutesDiamantUseCase(
-    dependencies.dnumDownloadRawData
-  )
+  const téléchargeLesDonnéesBrutesDeFinessUseCase = new TéléchargeLesDonnéesBrutesDiamantUseCase(dependencies.dnumDownloadRawData)
 
   téléchargeLesDonnéesBrutesDeFinessUseCase.exécute()
 }

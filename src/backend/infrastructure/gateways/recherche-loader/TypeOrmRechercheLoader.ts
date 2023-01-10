@@ -21,7 +21,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     const termeSansEspaces = terme.replaceAll(/\s/g, '')
     const termeSansTirets = terme.replaceAll(/-/g, ' ')
 
-    const requêteDeLaRecherche = (await this.orm).createQueryBuilder()
+    const requêteDeLaRecherche = (await this.orm)
+      .createQueryBuilder()
       .select('recherche.numero_finess', 'numero_finess')
       .addSelect('recherche.raison_sociale_courte', 'raison_sociale_courte')
       .addSelect('recherche.type', 'type')

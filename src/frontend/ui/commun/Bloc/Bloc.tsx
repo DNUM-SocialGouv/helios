@@ -13,12 +13,8 @@ export const Bloc = ({ children, estCeIdentité = false, titre }: BlocProps) => 
 
   return (
     <section aria-label={titre}>
-      <h2 className={styles['titre-bloc'] + ' ' + classeDuTitre}>
-        {titre}
-      </h2>
-      <div className={styles['contenu-bloc']}>
-        {children}
-      </div>
+      <h2 className={styles['titre-bloc'] + ' ' + classeDuTitre}>{titre}</h2>
+      <div className={styles['contenu-bloc']}>{children}</div>
     </section>
   )
 }

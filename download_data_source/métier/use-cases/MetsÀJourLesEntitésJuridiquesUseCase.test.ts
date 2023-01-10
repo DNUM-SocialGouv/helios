@@ -33,10 +33,7 @@ describe('Mise à jour des entités juridiques', () => {
       fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository,
       fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader
     )
-    const entitésJuridiques: EntitéJuridique[] = [
-      uneEntitéJuridique,
-      uneSecondeEntitéJuridique,
-    ]
+    const entitésJuridiques: EntitéJuridique[] = [uneEntitéJuridique, uneSecondeEntitéJuridique]
     jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, 'récupèreLaDateDeMiseÀJourDuFichierSource').mockReturnValue('20200101')
     jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, 'récupèreLesEntitésJuridiquesOuvertes').mockReturnValue(entitésJuridiques)
     jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader, 'récupèreLeNuméroFinessDesEntitésJuridiques').mockResolvedValue([])
@@ -63,12 +60,11 @@ describe('Mise à jour des entités juridiques', () => {
         numéroFinessEntitéJuridique: numéroFinessEntitéJuridiqueToujoursOuverte,
       },
     ]
-    jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, 'récupèreLesEntitésJuridiquesOuvertes').mockReturnValue(entitésJuridiquesOuvertes)
+    jest
+      .spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, 'récupèreLesEntitésJuridiquesOuvertes')
+      .mockReturnValue(entitésJuridiquesOuvertes)
 
-    const entitésJuridiquesEnBase = [
-      numéroFinessEntitéJuridiqueToujoursOuverte,
-      '123456789',
-    ]
+    const entitésJuridiquesEnBase = [numéroFinessEntitéJuridiqueToujoursOuverte, '123456789']
     jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader, 'récupèreLeNuméroFinessDesEntitésJuridiques').mockResolvedValue(entitésJuridiquesEnBase)
 
     // WHEN

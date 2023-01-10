@@ -33,13 +33,11 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
     expect(screen.queryByRole('navigation')).not.toBeInTheDocument()
   })
 
-  it.each(
-    [
-      [Accessibilité, wording.ACCESSIBILITÉ],
-      [MentionsLégales, wording.MENTIONS_LÉGALES],
-      [DonnéesPersonnelles, wording.DONNÉES_PERSONNELLES],
-    ]
-  )('affiche le chemin jusqu’à la page courante', (Page, expected) => {
+  it.each([
+    [Accessibilité, wording.ACCESSIBILITÉ],
+    [MentionsLégales, wording.MENTIONS_LÉGALES],
+    [DonnéesPersonnelles, wording.DONNÉES_PERSONNELLES],
+  ])('affiche le chemin jusqu’à la page courante', (Page, expected) => {
     // WHEN
     renderFakeComponent(
       <>
@@ -94,8 +92,7 @@ describe('Le fil d’Ariane (breadcrumb)', () => {
 
   it('affiche le chemin jusqu’à la page établissement territorial médico-social', () => {
     // GIVEN
-    const établissementTerritorialMédicoSocialViewModel =
-      ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths)
+    const établissementTerritorialMédicoSocialViewModel = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths)
 
     // WHEN
     renderFakeComponent(

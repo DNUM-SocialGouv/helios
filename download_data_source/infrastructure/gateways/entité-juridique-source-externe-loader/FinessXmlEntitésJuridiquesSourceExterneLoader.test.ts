@@ -77,38 +77,36 @@ describe('Récupération des entités juridiques de la source de données FINESS
     const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes()
 
     // THEN
-    expect(entitésJuridiques).toStrictEqual<EntitéJuridique[]>(
-      [
-        {
-          adresseAcheminement: '01117 OYONNAX CEDEX',
-          adresseNuméroVoie: '1',
-          adresseTypeVoie: 'RTE',
-          adresseVoie: 'DE VEYZIAT',
-          commune: 'OYONNAX',
-          département: 'AIN',
-          libelléStatutJuridique: "Etablissement Public Intercommunal d'Hospitalisation",
-          numéroFinessEntitéJuridique: '010008407',
-          raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY',
-          raisonSocialeCourte: 'CH DU HAUT BUGEY',
-          siren: '260104631',
-          téléphone: '0474731001',
-        },
-        {
-          adresseAcheminement: '59650 VILLENEUVE D ASCQ',
-          adresseNuméroVoie: '20',
-          adresseTypeVoie: 'AV',
-          adresseVoie: 'DE LA RECONNAISSANCE',
-          commune: 'VILLENEUVE D ASCQ',
-          département: 'NORD',
-          libelléStatutJuridique: 'Société Anonyme (S.A.)',
-          numéroFinessEntitéJuridique: '590000741',
-          raisonSociale: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
-          raisonSocialeCourte: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
-          siren: '260104632',
-          téléphone: '0826666900',
-        },
-      ]
-    )
+    expect(entitésJuridiques).toStrictEqual<EntitéJuridique[]>([
+      {
+        adresseAcheminement: '01117 OYONNAX CEDEX',
+        adresseNuméroVoie: '1',
+        adresseTypeVoie: 'RTE',
+        adresseVoie: 'DE VEYZIAT',
+        commune: 'OYONNAX',
+        département: 'AIN',
+        libelléStatutJuridique: "Etablissement Public Intercommunal d'Hospitalisation",
+        numéroFinessEntitéJuridique: '010008407',
+        raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY',
+        raisonSocialeCourte: 'CH DU HAUT BUGEY',
+        siren: '260104631',
+        téléphone: '0474731001',
+      },
+      {
+        adresseAcheminement: '59650 VILLENEUVE D ASCQ',
+        adresseNuméroVoie: '20',
+        adresseTypeVoie: 'AV',
+        adresseVoie: 'DE LA RECONNAISSANCE',
+        commune: 'VILLENEUVE D ASCQ',
+        département: 'NORD',
+        libelléStatutJuridique: 'Société Anonyme (S.A.)',
+        numéroFinessEntitéJuridique: '590000741',
+        raisonSociale: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
+        raisonSocialeCourte: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
+        siren: '260104632',
+        téléphone: '0826666900',
+      },
+    ])
   })
 
   it('ne renvoie pas de valeur lorsque la valeur d’un champ n’est pas renseignée', () => {
@@ -197,38 +195,36 @@ describe('Récupération des entités juridiques de la source de données FINESS
     const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes()
 
     // THEN
-    expect(entitésJuridiques).toStrictEqual<EntitéJuridique[]>(
-      [
-        {
-          adresseAcheminement: '01117 OYONNAX CEDEX',
-          adresseNuméroVoie: '',
-          adresseTypeVoie: 'RTE',
-          adresseVoie: 'DE VEYZIAT',
-          commune: 'OYONNAX',
-          département: 'AIN',
-          libelléStatutJuridique: "Etablissement Public Intercommunal d'Hospitalisation",
-          numéroFinessEntitéJuridique: '010008407',
-          raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY',
-          raisonSocialeCourte: 'CH DU HAUT BUGEY',
-          siren: '260110218',
-          téléphone: '',
-        },
-        {
-          adresseAcheminement: '59650 VILLENEUVE D ASCQ',
-          adresseNuméroVoie: '20',
-          adresseTypeVoie: 'AV',
-          adresseVoie: 'DE LA RECONNAISSANCE',
-          commune: 'VILLENEUVE D ASCQ',
-          département: 'NORD',
-          libelléStatutJuridique: 'Société Anonyme (S.A.)',
-          numéroFinessEntitéJuridique: '590000741',
-          raisonSociale: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
-          raisonSocialeCourte: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
-          siren: '476780333',
-          téléphone: '0826666900',
-        },
-      ]
-    )
+    expect(entitésJuridiques).toStrictEqual<EntitéJuridique[]>([
+      {
+        adresseAcheminement: '01117 OYONNAX CEDEX',
+        adresseNuméroVoie: '',
+        adresseTypeVoie: 'RTE',
+        adresseVoie: 'DE VEYZIAT',
+        commune: 'OYONNAX',
+        département: 'AIN',
+        libelléStatutJuridique: "Etablissement Public Intercommunal d'Hospitalisation",
+        numéroFinessEntitéJuridique: '010008407',
+        raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY',
+        raisonSocialeCourte: 'CH DU HAUT BUGEY',
+        siren: '260110218',
+        téléphone: '',
+      },
+      {
+        adresseAcheminement: '59650 VILLENEUVE D ASCQ',
+        adresseNuméroVoie: '20',
+        adresseTypeVoie: 'AV',
+        adresseVoie: 'DE LA RECONNAISSANCE',
+        commune: 'VILLENEUVE D ASCQ',
+        département: 'NORD',
+        libelléStatutJuridique: 'Société Anonyme (S.A.)',
+        numéroFinessEntitéJuridique: '590000741',
+        raisonSociale: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
+        raisonSocialeCourte: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
+        siren: '476780333',
+        téléphone: '0826666900',
+      },
+    ])
   })
 
   it('récupère la raison sociale écourtée si la raison sociale longue n’est pas renseignée', () => {
@@ -277,38 +273,36 @@ describe('Récupération des entités juridiques de la source de données FINESS
     const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes()
 
     // THEN
-    expect(entitésJuridiques).toStrictEqual<EntitéJuridique[]>(
-      [
-        {
-          adresseAcheminement: '01117 OYONNAX CEDEX',
-          adresseNuméroVoie: '1',
-          adresseTypeVoie: 'RTE',
-          adresseVoie: 'DE VEYZIAT',
-          commune: 'OYONNAX',
-          département: 'AIN',
-          libelléStatutJuridique: "Etablissement Public Intercommunal d'Hospitalisation",
-          numéroFinessEntitéJuridique: '010008407',
-          raisonSociale: 'CH DU HAUT BUGEY',
-          raisonSocialeCourte: 'CH DU HAUT BUGEY',
-          siren: '260104631',
-          téléphone: '0474731001',
-        },
-        {
-          adresseAcheminement: '59650 VILLENEUVE D ASCQ',
-          adresseNuméroVoie: '20',
-          adresseTypeVoie: 'AV',
-          adresseVoie: 'DE LA RECONNAISSANCE',
-          commune: 'VILLENEUVE D ASCQ',
-          département: 'NORD',
-          libelléStatutJuridique: 'Société Anonyme (S.A.)',
-          numéroFinessEntitéJuridique: '590000741',
-          raisonSociale: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
-          raisonSocialeCourte: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
-          siren: '260104632',
-          téléphone: '0826666900',
-        },
-      ]
-    )
+    expect(entitésJuridiques).toStrictEqual<EntitéJuridique[]>([
+      {
+        adresseAcheminement: '01117 OYONNAX CEDEX',
+        adresseNuméroVoie: '1',
+        adresseTypeVoie: 'RTE',
+        adresseVoie: 'DE VEYZIAT',
+        commune: 'OYONNAX',
+        département: 'AIN',
+        libelléStatutJuridique: "Etablissement Public Intercommunal d'Hospitalisation",
+        numéroFinessEntitéJuridique: '010008407',
+        raisonSociale: 'CH DU HAUT BUGEY',
+        raisonSocialeCourte: 'CH DU HAUT BUGEY',
+        siren: '260104631',
+        téléphone: '0474731001',
+      },
+      {
+        adresseAcheminement: '59650 VILLENEUVE D ASCQ',
+        adresseNuméroVoie: '20',
+        adresseTypeVoie: 'AV',
+        adresseVoie: 'DE LA RECONNAISSANCE',
+        commune: 'VILLENEUVE D ASCQ',
+        département: 'NORD',
+        libelléStatutJuridique: 'Société Anonyme (S.A.)',
+        numéroFinessEntitéJuridique: '590000741',
+        raisonSociale: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
+        raisonSocialeCourte: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
+        siren: '260104632',
+        téléphone: '0826666900',
+      },
+    ])
   })
 
   it('récupère la date de mise à jour du fichier source', () => {

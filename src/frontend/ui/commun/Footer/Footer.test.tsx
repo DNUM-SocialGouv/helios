@@ -64,7 +64,7 @@ describe('Le pied de page', () => {
   })
 
   it('affiche un lien pour accéder à la page d’informations relatives aux données personnelles', () => {
-  // WHEN
+    // WHEN
     renderFakeComponent(<Footer />)
 
     // THEN

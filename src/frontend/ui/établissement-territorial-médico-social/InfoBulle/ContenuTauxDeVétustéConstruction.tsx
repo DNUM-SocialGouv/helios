@@ -12,13 +12,11 @@ export const ContenuTauxDeVétustéConstruction = ({ dateDeMiseÀJour, source }:
 
   return (
     <>
-      <p>
-        {wording.miseÀJourEtSource(dateDeMiseÀJour, source)}
-      </p>
+      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
-          Cet indicateur permet d’estimer le degré d’amortissement des constructions sur la base des éléments comptables.
-          Plus le taux est élevé, plus les constructions sont amorties.
+          Cet indicateur permet d’estimer le degré d’amortissement des constructions sur la base des éléments comptables. Plus le taux est élevé, plus les
+          constructions sont amorties.
         </p>
       </section>
       <section aria-label={wording.FRÉQUENCE}>
@@ -39,16 +37,12 @@ export const ContenuTauxDeVétustéConstruction = ({ dateDeMiseÀJour, source }:
           Caisse nationale de solidarité pour l’autonomie (CNSA)
         </p>
         <ul>
-          <li>
-            ERRD annexe 8 (feuilles « Ratios financiers »)
-          </li>
-          <li>
-            CA (feuille « ANNEXE 8 »)
-          </li>
+          <li>ERRD annexe 8 (feuilles « Ratios financiers »)</li>
+          <li>CA (feuille « ANNEXE 8 »)</li>
         </ul>
         <p>
-          Hélios collecte ces données depuis le SI mutualisé des ARS DIAMANT « Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation »,
-          outil décisionnel de pilotage centré sur la régulation de l’offre de soins, abordée sous les aspects des moyens humains, financiers, et productivité.
+          Hélios collecte ces données depuis le SI mutualisé des ARS DIAMANT « Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation », outil décisionnel de
+          pilotage centré sur la régulation de l’offre de soins, abordée sous les aspects des moyens humains, financiers, et productivité.
         </p>
       </section>
     </>

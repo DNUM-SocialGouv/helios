@@ -9,11 +9,13 @@ import { StringFormater } from '../../commun/StringFormater'
 import { TableIndicateur } from '../../commun/TableIndicateur/TableIndicateur'
 
 type IndicateurAvecUnNombre = Exclude<
-  keyof ÉtablissementTerritorialMédicoSocialRessourcesHumaines, 'année' | 'tauxDePrestationsExternes' | 'tauxDEtpVacants' | 'tauxDeRotationDuPersonnel' | 'tauxDAbsentéisme'
+  keyof ÉtablissementTerritorialMédicoSocialRessourcesHumaines,
+  'année' | 'tauxDePrestationsExternes' | 'tauxDEtpVacants' | 'tauxDeRotationDuPersonnel' | 'tauxDAbsentéisme'
 >
 
 type IndicateurAvecUnTaux = Exclude<
-  keyof ÉtablissementTerritorialMédicoSocialRessourcesHumaines, 'année' | 'nombreDEtpRéalisés' | 'nombreDeCddDeRemplacement' | 'tauxDAbsentéisme'
+  keyof ÉtablissementTerritorialMédicoSocialRessourcesHumaines,
+  'année' | 'nombreDEtpRéalisés' | 'nombreDeCddDeRemplacement' | 'tauxDAbsentéisme'
 >
 
 export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel extends GraphiqueViewModel {
@@ -62,12 +64,14 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
   }
 
   public get lesDonnéesRessourcesHumainesNeSontPasRenseignées(): boolean {
-    return !this.leNombreDEtpRéaliséEstIlRenseigné &&
-    !this.leNombreDeCddDeRemplacementEstIlRenseigné &&
-    !this.leTauxDePrestationsExternesEstIlRenseigné &&
-    !this.leTauxDEtpVacantsEstIlRenseigné &&
-    !this.leTauxDeRotationDuPersonnelEstIlRenseigné &&
-    !this.lesTauxDAbsentéismeEstIlRenseigné
+    return (
+      !this.leNombreDEtpRéaliséEstIlRenseigné &&
+      !this.leNombreDeCddDeRemplacementEstIlRenseigné &&
+      !this.leTauxDePrestationsExternesEstIlRenseigné &&
+      !this.leTauxDEtpVacantsEstIlRenseigné &&
+      !this.leTauxDeRotationDuPersonnelEstIlRenseigné &&
+      !this.lesTauxDAbsentéismeEstIlRenseigné
+    )
   }
 
   private get leNombreDEtpRéaliséEstIlRenseigné(): boolean {
@@ -316,18 +320,16 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
           this.leTauxDAbsentéismeHorsFormationEstIlNul(tauxDAbsentéismeHorsFormation)
         )}
         {!this.leTauxDAbsentéismeHorsFormationEstIlNul(tauxDAbsentéismeHorsFormation) &&
-        this.afficheUnDiagrammeEnDonut(
-          valeursDesTauxDAbsentéismes,
-          motifsDesTauxDAbsentéismes,
-          couleursDuDoughnut,
-          libellésDesValeurs,
-          texteCentral,
-          tauxDAbsentéismeHorsFormation,
-          this.IDENTIFIANT_DE_LA_LÉGENDE_DES_TAUX_D_ABSENTÉISMES
-        )}
-        {annéesManquantes.length > 0 && <MiseEnExergue>
-          {`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}
-        </MiseEnExergue>}
+          this.afficheUnDiagrammeEnDonut(
+            valeursDesTauxDAbsentéismes,
+            motifsDesTauxDAbsentéismes,
+            couleursDuDoughnut,
+            libellésDesValeurs,
+            texteCentral,
+            tauxDAbsentéismeHorsFormation,
+            this.IDENTIFIANT_DE_LA_LÉGENDE_DES_TAUX_D_ABSENTÉISMES
+          )}
+        {annéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}</MiseEnExergue>}
         <TableIndicateur
           disabled={annéesManquantes.length === 3}
           entêteLibellé={this.wording.MOTIF_DU_TAUX_D_ABSENTÉISME}
@@ -344,16 +346,8 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
 
     return (
       <>
-        {annéesManquantes.length > 0 && <MiseEnExergue>
-          {`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}
-        </MiseEnExergue>}
-        <TableIndicateur
-          disabled={true}
-          entêteLibellé={this.wording.ANNÉE}
-          identifiants={[this.wording.TAUX_D_ABSENTÉISME]}
-          libellés={[]}
-          valeurs={[]}
-        />
+        {annéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}</MiseEnExergue>}
+        <TableIndicateur disabled={true} entêteLibellé={this.wording.ANNÉE} identifiants={[this.wording.TAUX_D_ABSENTÉISME]} libellés={[]} valeurs={[]} />
       </>
     )
   }
@@ -364,7 +358,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
 
   private construisLesTauxDAbsentéisme(
     tauxDAbsentéismesDeLAnnéeEnCours: ÉtablissementTerritorialMédicoSocialRessourcesHumaines['tauxDAbsentéisme']
-  ): [{valeur: number, motif: string}[], number] {
+  ): [{ valeur: number; motif: string }[], number] {
     const valeursAvecMotif = []
 
     const tauxDAbsentéismeHorsFormation = StringFormater.transformeEnTaux(tauxDAbsentéismesDeLAnnéeEnCours.horsFormation || 0)
@@ -492,9 +486,8 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
   }
 
   private construisLesLibellésDesValeursDeTaux(valeursDesTaux: number[]) {
-    return valeursDesTaux.map(
-      (valeur) =>
-        ({ couleur: valeur > this.SEUIL_DE_CONTRASTE_DES_LIBELLÉS_DES_TAUX ? this.couleurDuFond : valeur < 0 ? this.couleurDuFond : this.couleurIdentifiant })
-    )
+    return valeursDesTaux.map((valeur) => ({
+      couleur: valeur > this.SEUIL_DE_CONTRASTE_DES_LIBELLÉS_DES_TAUX ? this.couleurDuFond : valeur < 0 ? this.couleurDuFond : this.couleurIdentifiant,
+    }))
   }
 }

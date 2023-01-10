@@ -2,9 +2,7 @@ import { ActivitéMédicoSocialModel } from '../models/ActivitéMédicoSocialMod
 import { ActivitéSanitaireModel } from '../models/ActivitéSanitaireModel'
 
 export class ÉtablissementTerritorialActivitéModelTestBuilder {
-  public static créeMédicoSocial(
-    champsSurchargés?: Partial<ActivitéMédicoSocialModel>
-  ): ActivitéMédicoSocialModel {
+  public static créeMédicoSocial(champsSurchargés?: Partial<ActivitéMédicoSocialModel>): ActivitéMédicoSocialModel {
     const activitéMédicoSocialModel = new ActivitéMédicoSocialModel()
     activitéMédicoSocialModel.année = champsSurchargés?.année || 2019
     activitéMédicoSocialModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '590782553'
@@ -18,9 +16,7 @@ export class ÉtablissementTerritorialActivitéModelTestBuilder {
     return activitéMédicoSocialModel
   }
 
-  public static créeSanitaire(
-    champsSurchargés?: Partial<ActivitéSanitaireModel>
-  ): ActivitéSanitaireModel {
+  public static créeSanitaire(champsSurchargés?: Partial<ActivitéSanitaireModel>): ActivitéSanitaireModel {
     const activitéSanitaireModel = new ActivitéSanitaireModel()
     activitéSanitaireModel.année = champsSurchargés?.année || 2019
     activitéSanitaireModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '210987665'

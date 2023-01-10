@@ -11,8 +11,9 @@ export async function récupèreLÉtablissementTerritorialMédicoSocialEndpoint(
     dependencies.entitéJuridiqueLoader
   )
 
-  const établissementTerritorialMédicoSocial =
-    await récupèreLÉtablissementTerritorialMédicoSocialUseCase.exécute(numéroFinessÉtablissementTerritorialMédicoSocial)
+  const établissementTerritorialMédicoSocial = await récupèreLÉtablissementTerritorialMédicoSocialUseCase.exécute(
+    numéroFinessÉtablissementTerritorialMédicoSocial
+  )
 
   return établissementTerritorialMédicoSocial
 }

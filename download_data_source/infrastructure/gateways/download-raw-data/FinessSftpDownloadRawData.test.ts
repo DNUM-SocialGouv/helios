@@ -347,12 +347,21 @@ function simuleLaLectureDeLaClefPrivée() {
   jest.spyOn(fs, 'readFileSync').mockReturnValueOnce('privateKey')
 }
 
-function simuleLaListeDesFichiersPrésentsDansLeDossierSimple(clientSftp: ClientSftp, fichiers: {name: string}[]) {
-  jest.spyOn(clientSftp, 'list').mockImplementation().mockResolvedValueOnce(fichiers as FileInfo[])
+function simuleLaListeDesFichiersPrésentsDansLeDossierSimple(clientSftp: ClientSftp, fichiers: { name: string }[]) {
+  jest
+    .spyOn(clientSftp, 'list')
+    .mockImplementation()
+    .mockResolvedValueOnce(fichiers as FileInfo[])
 }
-function simuleLaListeDesFichiersPrésentsDansLeDossierNomenclature(clientSftp: ClientSftp, fichiers: {name: string}[]) {
-  jest.spyOn(clientSftp, 'list').mockImplementation().mockResolvedValueOnce(fichiers as FileInfo[])
+function simuleLaListeDesFichiersPrésentsDansLeDossierNomenclature(clientSftp: ClientSftp, fichiers: { name: string }[]) {
+  jest
+    .spyOn(clientSftp, 'list')
+    .mockImplementation()
+    .mockResolvedValueOnce(fichiers as FileInfo[])
 }
-function simuleLaListeDesFichiersPrésentsDansLeDossierEnrichi(clientSftp: ClientSftp, fichiers: {name: string}[]) {
-  jest.spyOn(clientSftp, 'list').mockImplementation().mockResolvedValueOnce(fichiers as FileInfo[])
+function simuleLaListeDesFichiersPrésentsDansLeDossierEnrichi(clientSftp: ClientSftp, fichiers: { name: string }[]) {
+  jest
+    .spyOn(clientSftp, 'list')
+    .mockImplementation()
+    .mockResolvedValueOnce(fichiers as FileInfo[])
 }

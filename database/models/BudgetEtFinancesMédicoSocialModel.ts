@@ -3,7 +3,7 @@ import { Column, Entity, PrimaryColumn } from 'typeorm'
 export enum CadreBudgétaire {
   ERRD = 'ERRD',
   CA_PA = 'CA_PA',
-  CA_PH = 'CA_PH'
+  CA_PH = 'CA_PH',
 }
 
 @Entity({ name: 'budget_et_finances_medico_social' })
@@ -37,7 +37,7 @@ export class BudgetEtFinancesMédicoSocialModel {
   @Column({ name: 'fonds_de_roulement', nullable: true, type: 'float' })
   public fondsDeRoulement!: number | null
 
-  @PrimaryColumn({ length:9, name: 'numero_finess_etablissement_territorial' })
+  @PrimaryColumn({ length: 9, name: 'numero_finess_etablissement_territorial' })
   public numéroFinessÉtablissementTerritorial!: string
 
   @Column({ name: 'produits', nullable: true, type: 'float' })

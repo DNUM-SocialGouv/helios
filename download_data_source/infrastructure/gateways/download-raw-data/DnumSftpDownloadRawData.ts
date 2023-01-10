@@ -92,9 +92,7 @@ export class DnumSftpDownloadRawData implements DownloadRawData {
   private trouveLeFichierLePlusRécentPortantLePréfixe(préfixeDuFichierÀTélécharger: string, fichiersSurLeSftp: FileInfo[]) {
     const formatDuNomDeFichier = new RegExp(`^${préfixeDuFichierÀTélécharger}_\\d{4}_\\d{2}_\\d{2}.CSV.gpg`)
 
-    const fichiersPertinentsTriésParDate = fichiersSurLeSftp
-      .filter((file: FileInfo) => formatDuNomDeFichier.test(file.name))
-      .sort(this.sortByLastDate)
+    const fichiersPertinentsTriésParDate = fichiersSurLeSftp.filter((file: FileInfo) => formatDuNomDeFichier.test(file.name)).sort(this.sortByLastDate)
 
     return fichiersPertinentsTriésParDate[0]
   }

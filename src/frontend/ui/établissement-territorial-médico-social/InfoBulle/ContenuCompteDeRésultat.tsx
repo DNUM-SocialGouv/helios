@@ -12,15 +12,13 @@ export const ContenuCompteDeRésultat = ({ dateDeMiseÀJour, source }: ContenuCo
 
   return (
     <>
-      <p>
-        {wording.miseÀJourEtSource(dateDeMiseÀJour, source)}
-      </p>
+      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           L’Etat Réalisé des Recettes et des Dépenses (ERRD) remplace le Compte Administratif (CA) pour les ESMS qui sont passés sous le régime de l’Etat
           Prévisionnel des Recettes et des Dépenses (EPRD). L’article 58 de la loi d’adaptation de la société au vieillissement complété par les lois de
-          financement de la sécurité sociale créent les conditions d’un pilotage par les ressources (et non plus par les dépenses) avec l’introduction de
-          l’EPRD qui se caractérise par une inversion de la logique antérieure : la prévision des produits détermine dorénavant celle des charges.
+          financement de la sécurité sociale créent les conditions d’un pilotage par les ressources (et non plus par les dépenses) avec l’introduction de l’EPRD
+          qui se caractérise par une inversion de la logique antérieure : la prévision des produits détermine dorénavant celle des charges.
           <br />
           GROUPE I : PRODUITS DE LA TARIFICATION
           <br />
@@ -41,8 +39,7 @@ export const ContenuCompteDeRésultat = ({ dateDeMiseÀJour, source }: ContenuCo
           Annuelle
         </p>
       </section>
-      <section aria-label={wording.MODE_DE_CALCUL}>
-      </section>
+      <section aria-label={wording.MODE_DE_CALCUL}></section>
       <section aria-label={wording.SOURCES}>
         <p>
           <span className="fr-text--bold">Source(s) : </span>
@@ -58,8 +55,8 @@ export const ContenuCompteDeRésultat = ({ dateDeMiseÀJour, source }: ContenuCo
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
         <p>
-          Hélios collecte ces données depuis le SI mutualisé des ARS DIAMANT « Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation. »,
-          outil décisionnel de pilotage centré sur la régulation de l’offre de soins, abordée sous les aspects des moyens humains, financiers, et productivité.
+          Hélios collecte ces données depuis le SI mutualisé des ARS DIAMANT « Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation. », outil décisionnel de
+          pilotage centré sur la régulation de l’offre de soins, abordée sous les aspects des moyens humains, financiers, et productivité.
         </p>
       </section>
     </>

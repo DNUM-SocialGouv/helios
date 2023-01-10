@@ -2,9 +2,7 @@ import { DomaineÉtablissementTerritorial } from '../../download_data_source/mé
 import { ÉtablissementTerritorialIdentitéModel } from '../models/ÉtablissementTerritorialIdentitéModel'
 
 export class ÉtablissementTerritorialIdentitéModelTestBuilder {
-  public static créeMédicoSocial(
-    champsSurchargés?: Partial<ÉtablissementTerritorialIdentitéModel>
-  ): ÉtablissementTerritorialIdentitéModel {
+  public static créeMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialIdentitéModel>): ÉtablissementTerritorialIdentitéModel {
     const établissementTerritorialModel = new ÉtablissementTerritorialIdentitéModel()
     établissementTerritorialModel.adresseAcheminement = champsSurchargés?.adresseAcheminement || '01130 NANTUA'
     établissementTerritorialModel.adresseNuméroVoie = champsSurchargés?.adresseNuméroVoie || '50'
@@ -30,9 +28,7 @@ export class ÉtablissementTerritorialIdentitéModelTestBuilder {
     return établissementTerritorialModel
   }
 
-  public static créeSanitaire(
-    champsSurchargés?: Partial<ÉtablissementTerritorialIdentitéModel>
-  ): ÉtablissementTerritorialIdentitéModel {
+  public static créeSanitaire(champsSurchargés?: Partial<ÉtablissementTerritorialIdentitéModel>): ÉtablissementTerritorialIdentitéModel {
     const établissementTerritorialModel = new ÉtablissementTerritorialIdentitéModel()
     établissementTerritorialModel.adresseAcheminement = champsSurchargés?.adresseAcheminement || '59650 VILLENEUVE D ASCQ'
     établissementTerritorialModel.adresseNuméroVoie = champsSurchargés?.adresseNuméroVoie || '20'
@@ -46,7 +42,8 @@ export class ÉtablissementTerritorialIdentitéModelTestBuilder {
     établissementTerritorialModel.département = champsSurchargés?.département || 'NORD'
     établissementTerritorialModel.libelléCatégorieÉtablissement = champsSurchargés?.libelléCatégorieÉtablissement || 'Centre Hospitalier (C.H.)'
     établissementTerritorialModel.libelléCourtCatégorieÉtablissement = champsSurchargés?.libelléCourtCatégorieÉtablissement || 'C.H.'
-    établissementTerritorialModel.libelléModeTarification = champsSurchargés?.libelléModeTarification || 'ARS établissements de santé non financés dotation globale'
+    établissementTerritorialModel.libelléModeTarification =
+      champsSurchargés?.libelléModeTarification || 'ARS établissements de santé non financés dotation globale'
     établissementTerritorialModel.numéroFinessEntitéJuridique = champsSurchargés?.numéroFinessEntitéJuridique || '590000741'
     établissementTerritorialModel.numéroFinessÉtablissementPrincipal = champsSurchargés?.numéroFinessÉtablissementPrincipal || ''
     établissementTerritorialModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '590782553'

@@ -63,9 +63,7 @@ export function useRecherche() {
           estCeQueLesRésultatsSontReçus: true,
           nombreRésultats: data.nombreDeRésultats,
           page,
-          résultats: page === pageInitiale
-            ? construisLesRésultatsDeLaRecherche(data)
-            : state.résultats.concat(construisLesRésultatsDeLaRecherche(data)),
+          résultats: page === pageInitiale ? construisLesRésultatsDeLaRecherche(data) : state.résultats.concat(construisLesRésultatsDeLaRecherche(data)),
           terme,
           termeFixe: terme,
         })
