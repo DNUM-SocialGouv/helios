@@ -1,11 +1,11 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import '@gouvfr/dsfr/dist/component/footer/footer.min.css'
+import Image from "next/image";
+import Link from "next/link";
+import "@gouvfr/dsfr/dist/component/footer/footer.min.css";
 
-import { useDependencies } from '../contexts/useDependencies'
+import { useDependencies } from "../contexts/useDependencies";
 
 export const Footer = () => {
-  const { paths, wording } = useDependencies()
+  const { paths, wording } = useDependencies();
 
   return (
     <footer className="fr-footer fr-mt-6w">
@@ -105,5 +105,5 @@ export const Footer = () => {
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};

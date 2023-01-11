@@ -1,25 +1,25 @@
-import { useRouter } from 'next/router'
-import { ChangeEvent, MouseEvent, useEffect, useState } from 'react'
+import { useRouter } from "next/router";
+import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 
-import { Résultat, RésultatDeRecherche } from '../../../backend/métier/entities/RésultatDeRecherche'
-import { useDependencies } from '../commun/contexts/useDependencies'
-import { RechercheViewModel } from './RechercheViewModel'
+import { Résultat, RésultatDeRecherche } from "../../../backend/métier/entities/RésultatDeRecherche";
+import { useDependencies } from "../commun/contexts/useDependencies";
+import { RechercheViewModel } from "./RechercheViewModel";
 
 type RechercheState = Readonly<{
-  estCeEnAttente: boolean
-  estCeQueLeBackendNeRépondPas: boolean
-  estCeQueLesRésultatsSontReçus: boolean
-  nombreRésultats: number
-  page: number
-  résultats: RechercheViewModel[]
-  terme: string
-  termeFixe: string
-}>
+  estCeEnAttente: boolean;
+  estCeQueLeBackendNeRépondPas: boolean;
+  estCeQueLesRésultatsSontReçus: boolean;
+  nombreRésultats: number;
+  page: number;
+  résultats: RechercheViewModel[];
+  terme: string;
+  termeFixe: string;
+}>;
 
 export function useRecherche() {
-  const { paths } = useDependencies()
-  const router = useRouter()
-  const pageInitiale = 1
+  const { paths } = useDependencies();
+  const router = useRouter();
+  const pageInitiale = 1;
 
   const [state, setState] = useState<RechercheState>({
     estCeEnAttente: false,
@@ -28,32 +28,32 @@ export function useRecherche() {
     nombreRésultats: 0,
     page: pageInitiale,
     résultats: [],
-    terme: '',
-    termeFixe: '',
-  })
+    terme: "",
+    termeFixe: "",
+  });
 
   const lancerLaRecherche = (event: MouseEvent) => {
-    event.preventDefault()
+    event.preventDefault();
     setState({
       ...state,
       estCeEnAttente: true,
       estCeQueLesRésultatsSontReçus: false,
-    })
-    rechercher(state.terme, pageInitiale)
-  }
+    });
+    rechercher(state.terme, pageInitiale);
+  };
 
   const rechercheOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     setState({
       ...state,
       terme: event.target.value,
-    })
-  }
+    });
+  };
 
   const rechercher = (terme: string, page: number) => {
-    fetch('/api/recherche', {
+    fetch("/api/recherche", {
       body: JSON.stringify({ page, terme }),
-      headers: { 'Content-Type': 'application/json' },
-      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
     })
       .then((response) => response.json())
       .then((data) => {
@@ -66,48 +66,48 @@ export function useRecherche() {
           résultats: page === pageInitiale ? construisLesRésultatsDeLaRecherche(data) : state.résultats.concat(construisLesRésultatsDeLaRecherche(data)),
           terme,
           termeFixe: terme,
-        })
+        });
       })
       .catch(() => {
         setState({
           ...state,
           estCeEnAttente: false,
           estCeQueLeBackendNeRépondPas: true,
-        })
-      })
-  }
+        });
+      });
+  };
 
   useEffect(() => {
-    if (router.query['terme']) {
+    if (router.query["terme"]) {
       setState({
         ...state,
         estCeEnAttente: true,
         estCeQueLesRésultatsSontReçus: false,
-        terme: router.query['terme'] as string,
-      })
-      rechercher(router.query['terme'] as string, pageInitiale)
+        terme: router.query["terme"] as string,
+      });
+      rechercher(router.query["terme"] as string, pageInitiale);
     }
-  }, [])
+  }, []);
 
   const estCeQueLesRésultatsSontTousAffichés = () => {
-    return state.nombreRésultats === state.résultats.length
-  }
+    return state.nombreRésultats === state.résultats.length;
+  };
 
   const pageSuivante = () => {
-    return state.page + 1
-  }
+    return state.page + 1;
+  };
 
   const chargeLesRésultatsSuivants = () => {
     setState({
       ...state,
       estCeEnAttente: true,
-    })
-    rechercher(state.terme, pageSuivante())
-  }
+    });
+    rechercher(state.terme, pageSuivante());
+  };
 
   const construisLesRésultatsDeLaRecherche = (data: RésultatDeRecherche): RechercheViewModel[] => {
-    return data.résultats.map((résultat: Résultat) => new RechercheViewModel(résultat, paths))
-  }
+    return data.résultats.map((résultat: Résultat) => new RechercheViewModel(résultat, paths));
+  };
 
   return {
     chargeLesRésultatsSuivants,
@@ -121,5 +121,5 @@ export function useRecherche() {
     résultats: state.résultats,
     terme: state.terme,
     termeFixe: state.termeFixe,
-  }
+  };
 }

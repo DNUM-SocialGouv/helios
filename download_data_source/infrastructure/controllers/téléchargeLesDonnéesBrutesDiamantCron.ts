@@ -1,10 +1,10 @@
-import { TéléchargeLesDonnéesBrutesDiamantUseCase } from '../../métier/use-cases/TéléchargeLesDonnéesBrutesDiamantUseCase'
-import { Dependencies, dependencies } from '../dependencies'
+import { TéléchargeLesDonnéesBrutesDiamantUseCase } from "../../métier/use-cases/TéléchargeLesDonnéesBrutesDiamantUseCase";
+import { Dependencies, dependencies } from "../dependencies";
 
 const téléchargeLesDonnéesBrutesDiamantCron = (dependencies: Dependencies) => {
-  const téléchargeLesDonnéesBrutesDeFinessUseCase = new TéléchargeLesDonnéesBrutesDiamantUseCase(dependencies.dnumDownloadRawData)
+  const téléchargeLesDonnéesBrutesDeFinessUseCase = new TéléchargeLesDonnéesBrutesDiamantUseCase(dependencies.dnumDownloadRawData);
 
-  téléchargeLesDonnéesBrutesDeFinessUseCase.exécute()
-}
+  téléchargeLesDonnéesBrutesDeFinessUseCase.exécute();
+};
 
-téléchargeLesDonnéesBrutesDiamantCron(dependencies)
+téléchargeLesDonnéesBrutesDiamantCron(dependencies);

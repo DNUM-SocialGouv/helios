@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner } from 'typeorm'
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class AjoutDesCapacitésPsy1662368876558 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
@@ -7,7 +7,7 @@ export class AjoutDesCapacitésPsy1662368876558 implements MigrationInterface {
         ADD nombre_lits_usld INTEGER,
         ADD nombre_lits_ou_places_psy_complet INTEGER,
         ADD nombre_places_psy_partiel INTEGER;
-    `)
+    `);
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
@@ -16,6 +16,6 @@ export class AjoutDesCapacitésPsy1662368876558 implements MigrationInterface {
         DROP COLUMN nombre_lits_usld,
         DROP COLUMN nombre_lits_ou_places_psy_complet,
         DROP COLUMN nombre_places_psy_partiel;
-    `)
+    `);
   }
 }

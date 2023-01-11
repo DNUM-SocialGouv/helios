@@ -1,8 +1,8 @@
-import { useDependencies } from '../commun/contexts/useDependencies'
-import '@gouvfr/dsfr/dist/component/table/table.min.css'
+import { useDependencies } from "../commun/contexts/useDependencies";
+import "@gouvfr/dsfr/dist/component/table/table.min.css";
 
 export const PageDesDonnéesPersonnelles = () => {
-  const { wording } = useDependencies()
+  const { wording } = useDependencies();
 
   return (
     <>
@@ -13,7 +13,7 @@ export const PageDesDonnéesPersonnelles = () => {
           <b>Helios – Fiche de synthèse</b> a pour finalité de proposer aux agents en <abbr title="Agence Régionale de Santé">ARS</abbr> une vision consolidée
           et unifiée des données associées aux acteurs et établissements sanitaires ou médico-sociaux. Ce traitement entre dans le cadre des missions d’intérêt
           public confiées aux ARS en application de l’article L 1431-2 du code de santé publique. Il est mis en œuvre sur le fondement de l’article 6 e)
-          Règlement (UE) 2016/679 du Parlement européen et du Conseil du 27 avril 2016 (règlement général sur la protection des données ou{' '}
+          Règlement (UE) 2016/679 du Parlement européen et du Conseil du 27 avril 2016 (règlement général sur la protection des données ou{" "}
           <abbr title="Règlement Général sur la Protection des Données">RGPD</abbr>
           ).
           <br />
@@ -166,5 +166,5 @@ export const PageDesDonnéesPersonnelles = () => {
         </p>
       </section>
     </>
-  )
-}
+  );
+};

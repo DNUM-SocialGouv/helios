@@ -1,14 +1,14 @@
-import { ReactElement } from 'react'
+import { ReactElement } from "react";
 
-import { useDependencies } from '../../commun/contexts/useDependencies'
+import { useDependencies } from "../../commun/contexts/useDependencies";
 
 type ContenuDuNombreDeJournéesPSYetSSRProps = Readonly<{
-  dateDeMiseÀJour: string
-  source: ReactElement
-}>
+  dateDeMiseÀJour: string;
+  source: ReactElement;
+}>;
 
 export const ContenuNombreDeJournéesPSYetSSR = ({ dateDeMiseÀJour, source }: ContenuDuNombreDeJournéesPSYetSSRProps) => {
-  const { wording } = useDependencies()
+  const { wording } = useDependencies();
   return (
     <>
       <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
@@ -86,5 +86,5 @@ export const ContenuNombreDeJournéesPSYetSSR = ({ dateDeMiseÀJour, source }: C
         </p>
       </section>
     </>
-  )
-}
+  );
+};

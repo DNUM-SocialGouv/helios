@@ -1,29 +1,29 @@
-import { Bloc } from '../../commun/Bloc/Bloc'
-import { useDependencies } from '../../commun/contexts/useDependencies'
-import { Indicateur } from '../../commun/Indicateur/Indicateur'
-import { IndicateurGraphique } from '../../commun/IndicateurGraphique/IndicateurGraphique'
-import { Sources } from '../../commun/Sources/Sources'
-import { ContenuAutorisations } from '../InfoBulle/ContenuAutorisations'
-import { ContenuCapacitéParActivité } from '../InfoBulle/ContenuCapacitéParActivité'
-import styles from './BlocAutorisationEtCapacitéMédicoSocial.module.css'
-import { ÉtablissementTerritorialMédicoSocialAutorisationsViewModel } from './ÉtablissementTerritorialMédicoSocialAutorisationsViewModel'
+import { Bloc } from "../../commun/Bloc/Bloc";
+import { useDependencies } from "../../commun/contexts/useDependencies";
+import { Indicateur } from "../../commun/Indicateur/Indicateur";
+import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
+import { Sources } from "../../commun/Sources/Sources";
+import { ContenuAutorisations } from "../InfoBulle/ContenuAutorisations";
+import { ContenuCapacitéParActivité } from "../InfoBulle/ContenuCapacitéParActivité";
+import styles from "./BlocAutorisationEtCapacitéMédicoSocial.module.css";
+import { ÉtablissementTerritorialMédicoSocialAutorisationsViewModel } from "./ÉtablissementTerritorialMédicoSocialAutorisationsViewModel";
 
 type BlocAutorisationEtCapacitéMédicoSocialProps = Readonly<{
-  établissementTerritorialAutorisationsMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialAutorisationsViewModel
-}>
+  établissementTerritorialAutorisationsMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialAutorisationsViewModel;
+}>;
 
 export const BlocAutorisationEtCapacitéMédicoSocial = ({
   établissementTerritorialAutorisationsMédicoSocialViewModel,
 }: BlocAutorisationEtCapacitéMédicoSocialProps) => {
-  const { wording } = useDependencies()
+  const { wording } = useDependencies();
 
   if (établissementTerritorialAutorisationsMédicoSocialViewModel.lesDonnéesAutorisationEtCapacitéNeSontPasRenseignées) {
-    return <Bloc titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>{wording.INDICATEURS_VIDES}</Bloc>
+    return <Bloc titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>{wording.INDICATEURS_VIDES}</Bloc>;
   }
 
   return (
     <Bloc estCeIdentité={false} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>
-      <ul className={`indicateurs ${styles['liste-indicateurs']}`}>
+      <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         {établissementTerritorialAutorisationsMédicoSocialViewModel.lesCapacitésSontEllesRenseignées && (
           <IndicateurGraphique
             contenuInfoBulle={
@@ -56,5 +56,5 @@ export const BlocAutorisationEtCapacitéMédicoSocial = ({
         </Indicateur>
       </ul>
     </Bloc>
-  )
-}
+  );
+};

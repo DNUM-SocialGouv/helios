@@ -1,14 +1,14 @@
-import { ReactElement } from 'react'
+import { ReactElement } from "react";
 
-import { useDependencies } from '../../commun/contexts/useDependencies'
+import { useDependencies } from "../../commun/contexts/useDependencies";
 
 type ContenuFondDeRoulementNetGlobalProps = Readonly<{
-  dateDeMiseÀJour: string
-  source: ReactElement
-}>
+  dateDeMiseÀJour: string;
+  source: ReactElement;
+}>;
 
 export const ContenuFondDeRoulementNetGlobal = ({ dateDeMiseÀJour, source }: ContenuFondDeRoulementNetGlobalProps) => {
-  const { wording } = useDependencies()
+  const { wording } = useDependencies();
 
   return (
     <>
@@ -51,5 +51,5 @@ export const ContenuFondDeRoulementNetGlobal = ({ dateDeMiseÀJour, source }: Co
         </p>
       </section>
     </>
-  )
-}
+  );
+};

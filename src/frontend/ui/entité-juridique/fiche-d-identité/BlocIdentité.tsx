@@ -1,20 +1,20 @@
-import { Bloc } from '../../commun/Bloc/Bloc'
-import { useDependencies } from '../../commun/contexts/useDependencies'
-import { IndicateurIdentité } from '../../commun/IndicateurIdentité/IndicateurIdentité'
-import { Sources } from '../../commun/Sources/Sources'
-import { EntitéJuridiqueViewModel } from '../EntitéJuridiqueViewModel'
-import styles from './BlocIdentité.module.css'
+import { Bloc } from "../../commun/Bloc/Bloc";
+import { useDependencies } from "../../commun/contexts/useDependencies";
+import { IndicateurIdentité } from "../../commun/IndicateurIdentité/IndicateurIdentité";
+import { Sources } from "../../commun/Sources/Sources";
+import { EntitéJuridiqueViewModel } from "../EntitéJuridiqueViewModel";
+import styles from "./BlocIdentité.module.css";
 
 type BlocIdentitéProps = Readonly<{
-  entitéJuridiqueViewModel: EntitéJuridiqueViewModel
-}>
+  entitéJuridiqueViewModel: EntitéJuridiqueViewModel;
+}>;
 
 export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéProps) => {
-  const { wording } = useDependencies()
+  const { wording } = useDependencies();
 
   return (
     <Bloc estCeIdentité={true} titre={wording.TITRE_BLOC_IDENTITÉ}>
-      <ul className={`indicateurs ${styles['liste-indicateurs']}`}>
+      <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         <IndicateurIdentité
           dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJourDuNomDeLEntitéJuridique}
           nomDeLIndicateur={wording.NOM_DE_L_ÉTABLISSEMENT}
@@ -55,5 +55,5 @@ export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéProps)
         </IndicateurIdentité>
       </ul>
     </Bloc>
-  )
-}
+  );
+};

@@ -1,17 +1,17 @@
-import Head from 'next/head'
+import Head from "next/head";
 
-import { useDependencies } from '../frontend/ui/commun/contexts/useDependencies'
-import { useBreadcrumb } from '../frontend/ui/commun/hooks/useBreadcrumb'
-import { PageDesMentionsLégales } from '../frontend/ui/mentions-légales/PageDesMentionsLégales'
+import { useDependencies } from "../frontend/ui/commun/contexts/useDependencies";
+import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
+import { PageDesMentionsLégales } from "../frontend/ui/mentions-légales/PageDesMentionsLégales";
 
 export default function MentionsLégales() {
-  const { wording } = useDependencies()
+  const { wording } = useDependencies();
   useBreadcrumb([
     {
       label: wording.MENTIONS_LÉGALES,
-      path: '',
+      path: "",
     },
-  ])
+  ]);
 
   return (
     <main className="fr-container">
@@ -20,5 +20,5 @@ export default function MentionsLégales() {
       </Head>
       <PageDesMentionsLégales />
     </main>
-  )
+  );
 }

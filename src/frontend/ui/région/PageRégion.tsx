@@ -1,18 +1,18 @@
-import Head from 'next/head'
+import Head from "next/head";
 
-import { useDependencies } from '../commun/contexts/useDependencies'
-import { useBreadcrumb } from '../commun/hooks/useBreadcrumb'
-import { régions } from './régions'
+import { useDependencies } from "../commun/contexts/useDependencies";
+import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
+import { régions } from "./régions";
 
 export const PageRégion = ({ région }: { région: string }) => {
-  const labelDeLaRégion = régions[région].label
-  const { wording } = useDependencies()
+  const labelDeLaRégion = régions[région].label;
+  const { wording } = useDependencies();
   useBreadcrumb([
     {
       label: wording.régionBreadcrumb(labelDeLaRégion),
-      path: '',
+      path: "",
     },
-  ])
+  ]);
 
   return (
     <main className="fr-container--fluid">
@@ -24,5 +24,5 @@ export const PageRégion = ({ région }: { région: string }) => {
         <iframe allowFullScreen height="650" src={régions[région].source} title={wording.régionAtlasSanté(régions[région].label)} width="100%" />
       </section>
     </main>
-  )
-}
+  );
+};

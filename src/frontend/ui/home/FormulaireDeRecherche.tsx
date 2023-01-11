@@ -1,20 +1,20 @@
-import { ChangeEventHandler, MouseEventHandler } from 'react'
+import { ChangeEventHandler, MouseEventHandler } from "react";
 
-import { useDependencies } from '../commun/contexts/useDependencies'
-import styles from './Recherche.module.css'
+import { useDependencies } from "../commun/contexts/useDependencies";
+import styles from "./Recherche.module.css";
 
 type FormulaireDeRechercheProps = Readonly<{
-  lancerLaRecherche: MouseEventHandler<HTMLButtonElement>
-  rechercheOnChange: ChangeEventHandler<HTMLInputElement>
-  terme: string
-}>
+  lancerLaRecherche: MouseEventHandler<HTMLButtonElement>;
+  rechercheOnChange: ChangeEventHandler<HTMLInputElement>;
+  terme: string;
+}>;
 
 export const FormulaireDeRecherche = ({ lancerLaRecherche, rechercheOnChange, terme }: FormulaireDeRechercheProps) => {
-  const { wording } = useDependencies()
+  const { wording } = useDependencies();
 
   return (
     <div className="fr-grid-row fr-grid-row--center">
-      <section className={'fr-col-8 ' + styles['formulaire']}>
+      <section className={"fr-col-8 " + styles["formulaire"]}>
         <h1>{wording.RECHERCHE_TITRE}</h1>
         <p>{wording.RECHERCHE_DESCRIPTION}</p>
         <form action="/" className="fr-search-bar fr-search-bar--lg" id="search-2" role="search">
@@ -36,5 +36,5 @@ export const FormulaireDeRecherche = ({ lancerLaRecherche, rechercheOnChange, te
         </form>
       </section>
     </div>
-  )
-}
+  );
+};

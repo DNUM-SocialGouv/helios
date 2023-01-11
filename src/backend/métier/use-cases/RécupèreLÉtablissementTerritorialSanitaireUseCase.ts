@@ -1,7 +1,7 @@
-import { ÉtablissementTerritorialSanitaire } from '../entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire'
-import { ÉtablissementTerritorialSanitaireNonTrouvée } from '../entities/ÉtablissementTerritorialSanitaireNonTrouvée'
-import { EntitéJuridiqueLoader } from '../gateways/EntitéJuridiqueLoader'
-import { ÉtablissementTerritorialSanitaireLoader } from '../gateways/ÉtablissementTerritorialSanitaireLoader'
+import { ÉtablissementTerritorialSanitaire } from "../entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
+import { ÉtablissementTerritorialSanitaireNonTrouvée } from "../entities/ÉtablissementTerritorialSanitaireNonTrouvée";
+import { EntitéJuridiqueLoader } from "../gateways/EntitéJuridiqueLoader";
+import { ÉtablissementTerritorialSanitaireLoader } from "../gateways/ÉtablissementTerritorialSanitaireLoader";
 
 export class RécupèreLÉtablissementTerritorialSanitaireUseCase {
   constructor(private établissementTerritorialSanitaireLoader: ÉtablissementTerritorialSanitaireLoader, private entitéJuridiqueLoader: EntitéJuridiqueLoader) {}
@@ -9,23 +9,23 @@ export class RécupèreLÉtablissementTerritorialSanitaireUseCase {
   async exécute(numéroFinessÉtablissementTerritorialSanitaire: string): Promise<ÉtablissementTerritorialSanitaire> {
     const établissementTerritorialSanitaireOuErreur = await this.établissementTerritorialSanitaireLoader.chargeIdentité(
       numéroFinessÉtablissementTerritorialSanitaire
-    )
+    );
 
     if (établissementTerritorialSanitaireOuErreur instanceof ÉtablissementTerritorialSanitaireNonTrouvée) {
-      throw établissementTerritorialSanitaireOuErreur
+      throw établissementTerritorialSanitaireOuErreur;
     }
 
     const entitéJuridiqueDeRattachement = await this.entitéJuridiqueLoader.chargeRattachement(
       établissementTerritorialSanitaireOuErreur.numéroFinessEntitéJuridique.value
-    )
+    );
 
     const établissementTerritorialSanitaireActivités = await this.établissementTerritorialSanitaireLoader.chargeActivité(
       numéroFinessÉtablissementTerritorialSanitaire
-    )
+    );
 
     const établissementTerritorialSanitaireAutorisations = await this.établissementTerritorialSanitaireLoader.chargeAutorisationsEtCapacités(
       numéroFinessÉtablissementTerritorialSanitaire
-    )
+    );
 
     return {
       activités: établissementTerritorialSanitaireActivités,
@@ -34,6 +34,6 @@ export class RécupèreLÉtablissementTerritorialSanitaireUseCase {
         ...établissementTerritorialSanitaireOuErreur,
         ...entitéJuridiqueDeRattachement,
       },
-    }
+    };
   }
 }

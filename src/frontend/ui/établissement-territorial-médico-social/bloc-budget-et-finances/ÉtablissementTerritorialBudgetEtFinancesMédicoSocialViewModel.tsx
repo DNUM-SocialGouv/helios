@@ -1,101 +1,101 @@
-import { ChartData, ChartOptions, ScriptableScaleContext } from 'chart.js'
-import { Context } from 'chartjs-plugin-datalabels'
-import { ChangeEvent, ReactElement } from 'react'
-import { Bar } from 'react-chartjs-2'
+import { ChartData, ChartOptions, ScriptableScaleContext } from "chart.js";
+import { Context } from "chartjs-plugin-datalabels";
+import { ChangeEvent, ReactElement } from "react";
+import { Bar } from "react-chartjs-2";
 
-import { CadreBudgétaire } from '../../../../../database/models/BudgetEtFinancesMédicoSocialModel'
-import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances'
-import { Wording } from '../../../configuration/wording/Wording'
-import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from '../../commun/Graphique/GraphiqueViewModel'
-import { IndicateurTabulaire, IndicateurTabulaireProps } from '../../commun/IndicateurTabulaire/IndicateurTabulaire'
-import { MiseEnExergue } from '../../commun/MiseEnExergue/MiseEnExergue'
-import { Select } from '../../commun/Select/Select'
-import { StringFormater } from '../../commun/StringFormater'
-import { TableIndicateur } from '../../commun/TableIndicateur/TableIndicateur'
+import { CadreBudgétaire } from "../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
+import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
+import { Wording } from "../../../configuration/wording/Wording";
+import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
+import { IndicateurTabulaire, IndicateurTabulaireProps } from "../../commun/IndicateurTabulaire/IndicateurTabulaire";
+import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
+import { Select } from "../../commun/Select/Select";
+import { StringFormater } from "../../commun/StringFormater";
+import { TableIndicateur } from "../../commun/TableIndicateur/TableIndicateur";
 
 export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel extends GraphiqueViewModel {
-  private readonly seuilMinimalDuTauxDeVétustéConstruction = 0
-  private readonly seuilMaximalDuTauxDeVétustéConstruction = 80
-  private readonly seuilDuContrasteDuLibellé = 10
-  private readonly seuilMinimalDuTauxDeCaf = -21
-  private readonly seuilMaximalDuTauxDeCaf = 21
-  private readonly seuilDuTauxDeCaf = 2
-  private readonly couleurDuSeuil = '#18753C'
-  private readonly nombreDAnnéesParIndicateur = 3
+  private readonly seuilMinimalDuTauxDeVétustéConstruction = 0;
+  private readonly seuilMaximalDuTauxDeVétustéConstruction = 80;
+  private readonly seuilDuContrasteDuLibellé = 10;
+  private readonly seuilMinimalDuTauxDeCaf = -21;
+  private readonly seuilMaximalDuTauxDeCaf = 21;
+  private readonly seuilDuTauxDeCaf = 2;
+  private readonly couleurDuSeuil = "#18753C";
+  private readonly nombreDAnnéesParIndicateur = 3;
 
   constructor(private readonly budgetEtFinancesMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[], wording: Wording) {
-    super(wording)
+    super(wording);
   }
 
   public get annéeInitiale() {
-    return this.budgetEtFinancesMédicoSocial[this.budgetEtFinancesMédicoSocial.length - 1]?.année
+    return this.budgetEtFinancesMédicoSocial[this.budgetEtFinancesMédicoSocial.length - 1]?.année;
   }
 
   public intituléDuCompteDeRésultat(annéeEnCours: number) {
     return this.budgetEtFinanceEnCours(annéeEnCours).cadreBudgétaire === CadreBudgétaire.ERRD
       ? this.wording.COMPTE_DE_RÉSULTAT_ERRD
-      : this.wording.COMPTE_DE_RÉSULTAT_CA
+      : this.wording.COMPTE_DE_RÉSULTAT_CA;
   }
 
   public listeDéroulanteDesAnnéesDuCompteDeRésultat(setAnnéeEnCours: Function): ReactElement {
-    const annéesRangéesAntéChronologiquement = this.annéesRangéesParAntéChronologie()
+    const annéesRangéesAntéChronologiquement = this.annéesRangéesParAntéChronologie();
 
     if (annéesRangéesAntéChronologiquement.length > 0) {
       return (
         <Select
           label={this.wording.ANNÉE}
           onChange={(event: ChangeEvent<HTMLSelectElement>) => {
-            setAnnéeEnCours(Number(event.target.value))
+            setAnnéeEnCours(Number(event.target.value));
           }}
           options={annéesRangéesAntéChronologiquement}
         />
-      )
+      );
     }
 
-    return <></>
+    return <></>;
   }
 
   public get leCompteDeRésultatEstIlRenseigné(): boolean {
-    return this.lesAnnéesManquantesDuCompteDeRésultat().length < this.nombreDAnnéesParIndicateur
+    return this.lesAnnéesManquantesDuCompteDeRésultat().length < this.nombreDAnnéesParIndicateur;
   }
 
   public compteDeRésultat(annéeEnCours: number): ReactElement {
-    const budgetEtFinance = this.budgetEtFinanceEnCours(annéeEnCours)
-    const entêtePremièreColonne = this.wording.TITRE_BUDGÉTAIRE
+    const budgetEtFinance = this.budgetEtFinanceEnCours(annéeEnCours);
+    const entêtePremièreColonne = this.wording.TITRE_BUDGÉTAIRE;
     const chartColors = [
       this.couleurDuFondHistogrammePrimaire,
       this.couleurDuFondHistogrammeSecondaire,
       this.couleurDuFondHistogrammeSecondaire,
       this.couleurDuFondHistogrammeSecondaire,
-    ]
-    const dépensesOuCharges = []
-    const recettesOuProduits = []
-    const libellés = []
-    const entêtesDesAutresColonnes = []
-    const annéesManquantes = this.lesAnnéesManquantesDuCompteDeRésultat()
+    ];
+    const dépensesOuCharges = [];
+    const recettesOuProduits = [];
+    const libellés = [];
+    const entêtesDesAutresColonnes = [];
+    const annéesManquantes = this.lesAnnéesManquantesDuCompteDeRésultat();
 
-    let ratioHistogramme = 2
+    let ratioHistogramme = 2;
     if (budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA) {
-      const totalDesCharges = budgetEtFinance.chargesEtProduits.charges as number
-      const totalDesProduits = budgetEtFinance.chargesEtProduits.produits as number
-      dépensesOuCharges.push(totalDesCharges)
-      recettesOuProduits.push(totalDesProduits)
-      libellés.push(this.wording.TOTAL)
-      entêtesDesAutresColonnes.push(this.wording.CHARGES, this.wording.PRODUITS)
-      ratioHistogramme = 5
+      const totalDesCharges = budgetEtFinance.chargesEtProduits.charges as number;
+      const totalDesProduits = budgetEtFinance.chargesEtProduits.produits as number;
+      dépensesOuCharges.push(totalDesCharges);
+      recettesOuProduits.push(totalDesProduits);
+      libellés.push(this.wording.TOTAL);
+      entêtesDesAutresColonnes.push(this.wording.CHARGES, this.wording.PRODUITS);
+      ratioHistogramme = 5;
     } else {
-      const dépensesGroupeI = budgetEtFinance.recettesEtDépenses.dépensesGroupe1 as number
-      const dépensesGroupeII = budgetEtFinance.recettesEtDépenses.dépensesGroupe2 as number
-      const dépensesGroupeIII = budgetEtFinance.recettesEtDépenses.dépensesGroupe3 as number
-      const recettesGroupeI = budgetEtFinance.recettesEtDépenses.recettesGroupe1 as number
-      const recettesGroupeII = budgetEtFinance.recettesEtDépenses.recettesGroupe2 as number
-      const recettesGroupeIII = budgetEtFinance.recettesEtDépenses.recettesGroupe3 as number
-      const totalDesDépenses = dépensesGroupeI + dépensesGroupeII + dépensesGroupeIII
-      const totalDesRecettes = recettesGroupeI + recettesGroupeII + recettesGroupeIII
-      dépensesOuCharges.push(totalDesDépenses, dépensesGroupeI, dépensesGroupeII, dépensesGroupeIII)
-      recettesOuProduits.push(totalDesRecettes, recettesGroupeI, recettesGroupeII, recettesGroupeIII)
-      libellés.push(this.wording.TOTAL, this.wording.GROUPE_I, this.wording.GROUPE_II, this.wording.GROUPE_III)
-      entêtesDesAutresColonnes.push(this.wording.DÉPENSES, this.wording.RECETTES)
+      const dépensesGroupeI = budgetEtFinance.recettesEtDépenses.dépensesGroupe1 as number;
+      const dépensesGroupeII = budgetEtFinance.recettesEtDépenses.dépensesGroupe2 as number;
+      const dépensesGroupeIII = budgetEtFinance.recettesEtDépenses.dépensesGroupe3 as number;
+      const recettesGroupeI = budgetEtFinance.recettesEtDépenses.recettesGroupe1 as number;
+      const recettesGroupeII = budgetEtFinance.recettesEtDépenses.recettesGroupe2 as number;
+      const recettesGroupeIII = budgetEtFinance.recettesEtDépenses.recettesGroupe3 as number;
+      const totalDesDépenses = dépensesGroupeI + dépensesGroupeII + dépensesGroupeIII;
+      const totalDesRecettes = recettesGroupeI + recettesGroupeII + recettesGroupeIII;
+      dépensesOuCharges.push(totalDesDépenses, dépensesGroupeI, dépensesGroupeII, dépensesGroupeIII);
+      recettesOuProduits.push(totalDesRecettes, recettesGroupeI, recettesGroupeII, recettesGroupeIII);
+      libellés.push(this.wording.TOTAL, this.wording.GROUPE_I, this.wording.GROUPE_II, this.wording.GROUPE_III);
+      entêtesDesAutresColonnes.push(this.wording.DÉPENSES, this.wording.RECETTES);
     }
 
     return this.afficheUnCarrousel(
@@ -107,7 +107,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       entêtePremièreColonne,
       entêtesDesAutresColonnes,
       annéesManquantes
-    )
+    );
   }
 
   public get lesDonnéesBudgetEtFinancesNeSontPasRenseignées(): boolean {
@@ -118,7 +118,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       !this.leTauxDeCafEstIlRenseigné &&
       !this.leTauxDeVétustéEstIlRenseigné &&
       !this.leFondsDeRoulementEstIlRenseigné
-    )
+    );
   }
 
   public get montantDeLaContributionAuxFraisDeSiège(): ReactElement {
@@ -128,53 +128,53 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
           montantParAnnée.push({
             année: budgetEtFinancesMédicoSocial.année,
             valeur: StringFormater.formateLeMontantEnEuros(budgetEtFinancesMédicoSocial.contributionAuxFraisDeSiège.valeur),
-          })
+          });
         }
-        return montantParAnnée
+        return montantParAnnée;
       },
       []
-    )
+    );
 
     const annéesManquantes = this.annéesManquantes(
       this.budgetEtFinancesMédicoSocial.map((montantDesContributionsAuxFraisDeSiègeParAnnée) => montantDesContributionsAuxFraisDeSiègeParAnnée.année)
-    )
+    );
 
-    return <IndicateurTabulaire annéesManquantes={annéesManquantes} valeursParAnnée={montantDesContributionsAuxFraisDeSiègeParAnnée} />
+    return <IndicateurTabulaire annéesManquantes={annéesManquantes} valeursParAnnée={montantDesContributionsAuxFraisDeSiègeParAnnée} />;
   }
 
   public get dateMiseÀJourMontantDeLaContributionAuxFraisDeSiège(): string {
-    return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].contributionAuxFraisDeSiège?.dateMiseÀJourSource as string)
+    return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].contributionAuxFraisDeSiège?.dateMiseÀJourSource as string);
   }
 
   public get leMontantDeLaContributionAuxFraisDeSiègeEstIlRenseigné(): boolean {
-    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.contributionAuxFraisDeSiège.valeur)
+    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.contributionAuxFraisDeSiège.valeur);
   }
 
   public get leTauxDeVétustéEstIlRenseigné(): boolean {
-    const [années] = this.construisLesAnnéesEtSesTaux('tauxDeVétustéConstruction')
+    const [années] = this.construisLesAnnéesEtSesTaux("tauxDeVétustéConstruction");
 
-    return années.length > 0
+    return années.length > 0;
   }
 
   public get tauxDeVétustéConstruction(): ReactElement {
-    const [valeurs, années] = this.construisLesAnnéesEtSesTaux('tauxDeVétustéConstruction')
+    const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxDeVétustéConstruction");
     const construisLaCouleurDeLaBarre = (valeur: number, année: number | string): CouleurHistogramme => {
-      let premierPlan = this.couleurDuFondHistogrammeSecondaire
-      let secondPlan = this.couleurDuFond
+      let premierPlan = this.couleurDuFondHistogrammeSecondaire;
+      let secondPlan = this.couleurDuFond;
 
       if (this.estCeLAnnéePassée(année)) {
-        premierPlan = this.couleurDuFondHistogrammePrimaire
-        secondPlan = this.couleurDuFond
+        premierPlan = this.couleurDuFondHistogrammePrimaire;
+        secondPlan = this.couleurDuFond;
       }
 
       if (this.leTauxDeVétustéConstructionEstIlAberrant(valeur)) {
-        premierPlan = this.couleurDuFondHistogrammeDeDépassement
-        secondPlan = this.couleurSecondPlanHistogrammeDeDépassement
+        premierPlan = this.couleurDuFondHistogrammeDeDépassement;
+        secondPlan = this.couleurSecondPlanHistogrammeDeDépassement;
       }
-      return { premierPlan, secondPlan }
-    }
-    const libellésDesValeurs = valeurs.map((valeur) => ({ couleur: valeur > this.seuilDuContrasteDuLibellé ? this.couleurDuFond : this.couleurIdentifiant }))
-    const libellésDesTicks = années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }))
+      return { premierPlan, secondPlan };
+    };
+    const libellésDesValeurs = valeurs.map((valeur) => ({ couleur: valeur > this.seuilDuContrasteDuLibellé ? this.couleurDuFond : this.couleurIdentifiant }));
+    const libellésDesTicks = années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
 
     return this.afficheUnHistogrammeVertical(
       valeurs,
@@ -184,16 +184,16 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       libellésDesTicks,
       this.wording.ANNÉE,
       this.wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION
-    )
+    );
   }
 
   public get dateMiseÀJourTauxDeVétustéConstruction(): string {
-    return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].tauxDeVétustéConstruction?.dateMiseÀJourSource as string)
+    return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].tauxDeVétustéConstruction?.dateMiseÀJourSource as string);
   }
 
   private leTauxDeVétustéConstructionEstIlAberrant = (valeur: number): boolean => {
-    return valeur > this.seuilMaximalDuTauxDeVétustéConstruction || valeur < this.seuilMinimalDuTauxDeVétustéConstruction
-  }
+    return valeur > this.seuilMaximalDuTauxDeVétustéConstruction || valeur < this.seuilMinimalDuTauxDeVétustéConstruction;
+  };
 
   public get résultatNetComptable(): ReactElement {
     const résultatNetComptableParAnnée: { année: number; valeur: string }[] = this.budgetEtFinancesMédicoSocial.reduce(
@@ -202,51 +202,51 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
           résultatNetComptableParAnnée.push({
             année: budgetEtFinancesMédicoSocial.année,
             valeur: StringFormater.formateLeMontantEnEuros(budgetEtFinancesMédicoSocial.résultatNetComptable.valeur),
-          })
+          });
         }
-        return résultatNetComptableParAnnée
+        return résultatNetComptableParAnnée;
       },
       []
-    )
+    );
 
-    const annéesManquantes = this.annéesManquantes(this.budgetEtFinancesMédicoSocial.map((résultatNetComptableParAnnée) => résultatNetComptableParAnnée.année))
+    const annéesManquantes = this.annéesManquantes(this.budgetEtFinancesMédicoSocial.map((résultatNetComptableParAnnée) => résultatNetComptableParAnnée.année));
 
-    return <IndicateurTabulaire annéesManquantes={annéesManquantes} valeursParAnnée={résultatNetComptableParAnnée} />
+    return <IndicateurTabulaire annéesManquantes={annéesManquantes} valeursParAnnée={résultatNetComptableParAnnée} />;
   }
 
   public get dateMiseÀJourRésultatNetComptable(): string {
-    return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].résultatNetComptable?.dateMiseÀJourSource as string)
+    return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].résultatNetComptable?.dateMiseÀJourSource as string);
   }
 
   public get leRésultatNetComptableEstIlRenseigné(): boolean {
-    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.résultatNetComptable.valeur)
+    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.résultatNetComptable.valeur);
   }
 
   public get leTauxDeCafEstIlRenseigné(): boolean {
-    const [années] = this.construisLesAnnéesEtSesTaux('tauxDeCafNette')
+    const [années] = this.construisLesAnnéesEtSesTaux("tauxDeCafNette");
 
-    return années.length > 0
+    return années.length > 0;
   }
 
   public get tauxDeCaf(): ReactElement {
-    const [valeurs, années] = this.construisLesAnnéesEtSesTaux('tauxDeCafNette')
+    const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxDeCafNette");
     const construisLaCouleurDeLaBarre = (valeur: number, année: number | string): CouleurHistogramme => {
-      let premierPlan = this.couleurDuFondHistogrammeSecondaire
-      let secondPlan = this.couleurDuFond
+      let premierPlan = this.couleurDuFondHistogrammeSecondaire;
+      let secondPlan = this.couleurDuFond;
 
       if (this.estCeLAnnéePassée(année)) {
-        premierPlan = this.couleurDuFondHistogrammePrimaire
-        secondPlan = this.couleurDuFond
+        premierPlan = this.couleurDuFondHistogrammePrimaire;
+        secondPlan = this.couleurDuFond;
       }
 
       if (this.leTauxDeCafEstIlAberrant(valeur)) {
-        premierPlan = this.couleurDuFondHistogrammeDeDépassement
-        secondPlan = this.couleurSecondPlanHistogrammeDeDépassement
+        premierPlan = this.couleurDuFondHistogrammeDeDépassement;
+        secondPlan = this.couleurSecondPlanHistogrammeDeDépassement;
       }
-      return { premierPlan, secondPlan }
-    }
-    const libellésDesValeurs = valeurs.map(() => ({ couleur: this.couleurDuFond }))
-    const libellésDesTicks = années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }))
+      return { premierPlan, secondPlan };
+    };
+    const libellésDesValeurs = valeurs.map(() => ({ couleur: this.couleurDuFond }));
+    const libellésDesTicks = années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
 
     return this.afficheLHistogrammeDuTauxDeCaf(
       valeurs,
@@ -254,45 +254,45 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       this.construisLesCouleursDeLHistogramme(valeurs, années, construisLaCouleurDeLaBarre),
       libellésDesValeurs,
       libellésDesTicks
-    )
+    );
   }
 
   public get dateMiseÀJourTauxDeCaf(): string {
-    return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].tauxDeCafNette?.dateMiseÀJourSource as string)
+    return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].tauxDeCafNette?.dateMiseÀJourSource as string);
   }
 
   public get fondDeRoulementNetGlobal(): ReactElement {
-    const annéesSousCadreAutreQueErrd: number[] = []
-    const fondsDeRoulementNetGlobalParAnnée: IndicateurTabulaireProps['valeursParAnnée'] = this.budgetEtFinancesMédicoSocial.reduce(
-      (fondsParAnnée: IndicateurTabulaireProps['valeursParAnnée'], budgetEtFinancesMédicoSocial) => {
+    const annéesSousCadreAutreQueErrd: number[] = [];
+    const fondsDeRoulementNetGlobalParAnnée: IndicateurTabulaireProps["valeursParAnnée"] = this.budgetEtFinancesMédicoSocial.reduce(
+      (fondsParAnnée: IndicateurTabulaireProps["valeursParAnnée"], budgetEtFinancesMédicoSocial) => {
         if (budgetEtFinancesMédicoSocial.cadreBudgétaire === CadreBudgétaire.ERRD) {
           if (budgetEtFinancesMédicoSocial.fondsDeRoulement.valeur) {
             fondsParAnnée.push({
               année: budgetEtFinancesMédicoSocial.année,
-              miseEnForme: budgetEtFinancesMédicoSocial.fondsDeRoulement.valeur < 0 ? 'fr-text--bold fr-text-default--error' : '',
+              miseEnForme: budgetEtFinancesMédicoSocial.fondsDeRoulement.valeur < 0 ? "fr-text--bold fr-text-default--error" : "",
               valeur: StringFormater.formateLeMontantEnEuros(budgetEtFinancesMédicoSocial.fondsDeRoulement.valeur),
-            })
+            });
           }
         } else {
-          annéesSousCadreAutreQueErrd.push(budgetEtFinancesMédicoSocial.année)
+          annéesSousCadreAutreQueErrd.push(budgetEtFinancesMédicoSocial.année);
         }
-        return fondsParAnnée
+        return fondsParAnnée;
       },
       []
-    )
-    const annéesAvecDonnées = fondsDeRoulementNetGlobalParAnnée.map((fondsDeRoulementNetGlobalParAnnée) => fondsDeRoulementNetGlobalParAnnée.année)
+    );
+    const annéesAvecDonnées = fondsDeRoulementNetGlobalParAnnée.map((fondsDeRoulementNetGlobalParAnnée) => fondsDeRoulementNetGlobalParAnnée.année);
 
-    const annéesAvecMiseEnExergue = this.annéesManquantes(annéesAvecDonnées.concat(annéesSousCadreAutreQueErrd), this.nombreDAnnéesParIndicateur)
+    const annéesAvecMiseEnExergue = this.annéesManquantes(annéesAvecDonnées.concat(annéesSousCadreAutreQueErrd), this.nombreDAnnéesParIndicateur);
 
-    return <IndicateurTabulaire annéesManquantes={annéesAvecMiseEnExergue} valeursParAnnée={fondsDeRoulementNetGlobalParAnnée} />
+    return <IndicateurTabulaire annéesManquantes={annéesAvecMiseEnExergue} valeursParAnnée={fondsDeRoulementNetGlobalParAnnée} />;
   }
 
   public get dateMiseÀJourFondDeRoulementNetGlobal(): string {
-    return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].fondsDeRoulement?.dateMiseÀJourSource as string)
+    return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].fondsDeRoulement?.dateMiseÀJourSource as string);
   }
 
   public get leFondsDeRoulementEstIlRenseigné(): boolean {
-    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.fondsDeRoulement.valeur)
+    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.fondsDeRoulement.valeur);
   }
 
   private afficheLHistogrammeDuTauxDeCaf(
@@ -302,8 +302,8 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     libellésDesValeurs: LibelléDeDonnéeGraphe[],
     libellésDesTicks: LibelléDeTickGraphe[]
   ) {
-    const minDeLHistogramme = Math.min(...valeurs) < this.seuilMinimalDuTauxDeCaf ? this.seuilMinimalDuTauxDeCaf : undefined
-    const maxDeLHistogramme = Math.max(...valeurs) > this.seuilMaximalDuTauxDeCaf ? this.seuilMaximalDuTauxDeCaf : undefined
+    const minDeLHistogramme = Math.min(...valeurs) < this.seuilMinimalDuTauxDeCaf ? this.seuilMinimalDuTauxDeCaf : undefined;
+    const maxDeLHistogramme = Math.max(...valeurs) > this.seuilMaximalDuTauxDeCaf ? this.seuilMaximalDuTauxDeCaf : undefined;
     const data: ChartData = {
       datasets: [
         {
@@ -311,8 +311,8 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
           data: valeurs,
           datalabels: { labels: { title: { color: libellésDesValeurs.map((libelléDeValeur) => libelléDeValeur.couleur) } } },
           maxBarThickness: 60,
-          type: 'bar',
-          xAxisID: 'x',
+          type: "bar",
+          xAxisID: "x",
         },
         {
           borderColor: this.couleurDuSeuil,
@@ -320,8 +320,8 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
             { x: -1, y: this.seuilDuTauxDeCaf },
             { x: 2, y: this.seuilDuTauxDeCaf },
           ],
-          type: 'line',
-          xAxisID: 'xLine',
+          type: "line",
+          xAxisID: "xLine",
         },
         {
           borderColor: this.couleurDelAbscisse,
@@ -329,13 +329,13 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
             { x: -1, y: 0 },
             { x: 2, y: 0 },
           ],
-          type: 'line',
-          xAxisID: 'xLine2',
+          type: "line",
+          xAxisID: "xLine2",
         },
       ],
       labels: années,
-    }
-    const annéesManquantes = this.annéesManquantes(années)
+    };
+    const annéesManquantes = this.annéesManquantes(années);
 
     return (
       <>
@@ -346,7 +346,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
             options={this.construisLesOptionsDeLHistogrammeDuTauxDeCaf(couleursDeLHistogramme, libellésDesTicks, maxDeLHistogramme, minDeLHistogramme)}
           />
         )}
-        {annéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}</MiseEnExergue>}
+        {annéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
         <TableIndicateur
           disabled={annéesManquantes.length === this.nombreDAnnéesParIndicateur}
           entêteLibellé={this.wording.ANNÉE}
@@ -355,32 +355,32 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
           valeurs={[StringFormater.ajouteLePourcentage(valeurs)]}
         />
       </>
-    )
+    );
   }
 
   private leTauxDeCafEstIlAberrant = (valeur: number): boolean => {
-    return valeur < this.seuilMinimalDuTauxDeCaf || valeur > this.seuilMaximalDuTauxDeCaf
-  }
+    return valeur < this.seuilMinimalDuTauxDeCaf || valeur > this.seuilMaximalDuTauxDeCaf;
+  };
 
   private construisLesOptionsDeLHistogrammeDuTauxDeCaf(
     couleursDeLHistogramme: CouleurHistogramme[],
     libellésDesTicks: LibelléDeTickGraphe[],
     maxDeLHistogramme: number | undefined,
     minDeLHistogramme: number | undefined
-  ): ChartOptions<'bar'> {
+  ): ChartOptions<"bar"> {
     return {
       animation: false,
       plugins: {
         datalabels: {
-          align: 'end',
-          anchor: 'start',
+          align: "end",
+          anchor: "start",
           clamp: true,
           font: {
-            family: 'Marianne',
+            family: "Marianne",
             size: 16,
             weight: 700,
           },
-          formatter: (value: number, _context: Context): string => value.toLocaleString('fr') + ' %',
+          formatter: (value: number, _context: Context): string => value.toLocaleString("fr") + " %",
           textStrokeColor: couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
           textStrokeWidth: 2,
         },
@@ -405,13 +405,13 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
           display: false,
           max: 1,
           min: 0,
-          type: 'linear',
+          type: "linear",
         },
         xLine2: {
           display: false,
           max: 1,
           min: 0,
-          type: 'linear',
+          type: "linear",
         },
         y: {
           grid: {
@@ -424,7 +424,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
           min: minDeLHistogramme,
           ticks: {
             callback: (tickValue: string | number) => {
-              return tickValue === this.seuilDuTauxDeCaf ? `${tickValue} (seuil)` : tickValue
+              return tickValue === this.seuilDuTauxDeCaf ? `${tickValue} (seuil)` : tickValue;
             },
             color: this.couleurDelAbscisse,
             // @ts-ignore
@@ -437,38 +437,38 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
           },
         },
       },
-    }
+    };
   }
 
   private construisLesAnnéesEtSesTaux(
-    indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialBudgetEtFinances, 'année' | 'cadreBudgétaire' | 'chargesEtProduits' | 'recettesEtDépenses'>
+    indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialBudgetEtFinances, "année" | "cadreBudgétaire" | "chargesEtProduits" | "recettesEtDépenses">
   ): number[][] {
-    const valeurs: number[] = []
-    const années: number[] = []
+    const valeurs: number[] = [];
+    const années: number[] = [];
     this.budgetEtFinancesMédicoSocial.forEach((budgetEtFinancesMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances) => {
-      const valeur = budgetEtFinancesMédicoSocial[indicateur].valeur
+      const valeur = budgetEtFinancesMédicoSocial[indicateur].valeur;
       if (valeur !== null) {
-        années.push(budgetEtFinancesMédicoSocial.année)
-        valeurs.push(StringFormater.transformeEnTaux(valeur))
+        années.push(budgetEtFinancesMédicoSocial.année);
+        valeurs.push(StringFormater.transformeEnTaux(valeur));
       }
-    })
+    });
 
-    return [valeurs, années]
+    return [valeurs, années];
   }
 
   private budgetEtFinanceEnCours(annéeEnCours: number): ÉtablissementTerritorialMédicoSocialBudgetEtFinances {
     return this.budgetEtFinancesMédicoSocial.find(
       (budgetEtFinance) => budgetEtFinance.année === annéeEnCours
-    ) as ÉtablissementTerritorialMédicoSocialBudgetEtFinances
+    ) as ÉtablissementTerritorialMédicoSocialBudgetEtFinances;
   }
 
   private lesAnnéesEffectivesDuCompteDeRésultat(): number[] {
-    const années: number[] = []
+    const années: number[] = [];
 
     this.budgetEtFinancesMédicoSocial.forEach((budgetEtFinance) => {
       if (budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA) {
         if (budgetEtFinance.chargesEtProduits.charges !== null && budgetEtFinance.chargesEtProduits.produits !== null) {
-          années.push(budgetEtFinance.année)
+          années.push(budgetEtFinance.année);
         }
       } else {
         if (
@@ -479,23 +479,23 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
           budgetEtFinance.recettesEtDépenses.recettesGroupe2 !== null &&
           budgetEtFinance.recettesEtDépenses.recettesGroupe3 !== null
         ) {
-          années.push(budgetEtFinance.année)
+          années.push(budgetEtFinance.année);
         }
       }
-    })
+    });
 
-    return années
+    return années;
   }
 
   private lesAnnéesManquantesDuCompteDeRésultat(): number[] {
-    return this.annéesManquantes(this.lesAnnéesEffectivesDuCompteDeRésultat())
+    return this.annéesManquantes(this.lesAnnéesEffectivesDuCompteDeRésultat());
   }
 
   private annéesRangéesParAntéChronologie(): number[] {
     return this.budgetEtFinancesMédicoSocial
       .filter(filtreParCadreBudgétaireEtRecettesEtDépenses)
       .map((budgetEtFinance) => budgetEtFinance.année)
-      .reverse()
+      .reverse();
 
     function filtreParCadreBudgétaireEtRecettesEtDépenses(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances): boolean {
       if (
@@ -507,14 +507,14 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
           budgetEtFinance.recettesEtDépenses.recettesGroupe2 !== null ||
           budgetEtFinance.recettesEtDépenses.recettesGroupe3 !== null)
       ) {
-        return true
+        return true;
       } else if (
         budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA &&
         (budgetEtFinance.chargesEtProduits.charges !== null || budgetEtFinance.chargesEtProduits.produits !== null)
       ) {
-        return true
+        return true;
       }
-      return false
+      return false;
     }
   }
 }

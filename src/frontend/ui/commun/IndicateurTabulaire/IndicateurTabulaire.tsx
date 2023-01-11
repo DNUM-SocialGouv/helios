@@ -1,13 +1,13 @@
-import { useDependencies } from '../contexts/useDependencies'
-import { MiseEnExergue } from '../MiseEnExergue/MiseEnExergue'
+import { useDependencies } from "../contexts/useDependencies";
+import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 
 export type IndicateurTabulaireProps = Readonly<{
-  annéesManquantes: number[]
-  valeursParAnnée: { année: number; miseEnForme?: string; valeur: string }[]
-}>
+  annéesManquantes: number[];
+  valeursParAnnée: { année: number; miseEnForme?: string; valeur: string }[];
+}>;
 
 export const IndicateurTabulaire = ({ annéesManquantes, valeursParAnnée }: IndicateurTabulaireProps) => {
-  const { wording } = useDependencies()
+  const { wording } = useDependencies();
 
   return (
     <>
@@ -29,7 +29,7 @@ export const IndicateurTabulaire = ({ annéesManquantes, valeursParAnnée }: Ind
           </tbody>
         </table>
       </div>
-      {annéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}</MiseEnExergue>}
+      {annéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
     </>
-  )
-}
+  );
+};

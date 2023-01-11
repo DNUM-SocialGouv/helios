@@ -1,16 +1,16 @@
-import Head from 'next/head'
+import Head from "next/head";
 
-import { useDependencies } from '../commun/contexts/useDependencies'
-import { BandeauDInformation } from './BandeauDInformation'
-import { Cartographie } from './Cartographie'
-import { FormulaireDeRecherche } from './FormulaireDeRecherche'
-import { RechercheCassée } from './RechercheCassée'
-import { RechercheEnAttente } from './RechercheEnAttente'
-import { RésultatsDeRecherche } from './RésultatsDeRecherche'
-import { useRecherche } from './useRecherche'
+import { useDependencies } from "../commun/contexts/useDependencies";
+import { BandeauDInformation } from "./BandeauDInformation";
+import { Cartographie } from "./Cartographie";
+import { FormulaireDeRecherche } from "./FormulaireDeRecherche";
+import { RechercheCassée } from "./RechercheCassée";
+import { RechercheEnAttente } from "./RechercheEnAttente";
+import { RésultatsDeRecherche } from "./RésultatsDeRecherche";
+import { useRecherche } from "./useRecherche";
 
 export const PageRecherche = () => {
-  const { wording } = useDependencies()
+  const { wording } = useDependencies();
 
   const {
     estCeEnAttente,
@@ -24,7 +24,7 @@ export const PageRecherche = () => {
     résultats,
     terme,
     termeFixe,
-  } = useRecherche()
+  } = useRecherche();
 
   return (
     <main className="fr-container">
@@ -49,5 +49,5 @@ export const PageRecherche = () => {
       )}
       <Cartographie />
     </main>
-  )
-}
+  );
+};

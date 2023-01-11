@@ -1,30 +1,30 @@
-import { Bloc } from '../../commun/Bloc/Bloc'
-import { useDependencies } from '../../commun/contexts/useDependencies'
-import { IndicateurGraphique } from '../../commun/IndicateurGraphique/IndicateurGraphique'
-import { ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties } from '../InfoBulle/ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties'
-import { ContenuFileActivePersonnesAccompagnées } from '../InfoBulle/ContenuFileActivePersonnesAccompagnées'
-import { ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées } from '../InfoBulle/ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées'
-import { ContenuTauxOccupationAccueilDeJour } from '../InfoBulle/ContenuTauxOccupationAccueilDeJour'
-import { ContenuTauxOccupationHébergementPermanent } from '../InfoBulle/ContenuTauxOccupationHébergementPermanent'
-import { ContenuTauxOccupationHébergementTemporaire } from '../InfoBulle/ContenuTauxOccupationHébergementTemporaire'
-import { ContenuTauxRéalisationActivité } from '../InfoBulle/ContenuTauxRéalisationActivité'
-import styles from './BlocActivitéMédicoSocial.module.css'
-import { ÉtablissementTerritorialMédicoSocialActivitéViewModel } from './ÉtablissementTerritorialMédicoSocialActivitéViewModel'
+import { Bloc } from "../../commun/Bloc/Bloc";
+import { useDependencies } from "../../commun/contexts/useDependencies";
+import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
+import { ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties } from "../InfoBulle/ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties";
+import { ContenuFileActivePersonnesAccompagnées } from "../InfoBulle/ContenuFileActivePersonnesAccompagnées";
+import { ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées } from "../InfoBulle/ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées";
+import { ContenuTauxOccupationAccueilDeJour } from "../InfoBulle/ContenuTauxOccupationAccueilDeJour";
+import { ContenuTauxOccupationHébergementPermanent } from "../InfoBulle/ContenuTauxOccupationHébergementPermanent";
+import { ContenuTauxOccupationHébergementTemporaire } from "../InfoBulle/ContenuTauxOccupationHébergementTemporaire";
+import { ContenuTauxRéalisationActivité } from "../InfoBulle/ContenuTauxRéalisationActivité";
+import styles from "./BlocActivitéMédicoSocial.module.css";
+import { ÉtablissementTerritorialMédicoSocialActivitéViewModel } from "./ÉtablissementTerritorialMédicoSocialActivitéViewModel";
 
 type BlocActivitéMédicoSocialProps = Readonly<{
-  établissementTerritorialActivitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialActivitéViewModel
-}>
+  établissementTerritorialActivitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialActivitéViewModel;
+}>;
 
 export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéMédicoSocialViewModel }: BlocActivitéMédicoSocialProps) => {
-  const { wording } = useDependencies()
+  const { wording } = useDependencies();
 
   if (établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitéNeSontPasRenseignées) {
-    return <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>{wording.INDICATEURS_VIDES}</Bloc>
+    return <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>{wording.INDICATEURS_VIDES}</Bloc>;
   }
 
   return (
     <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
-      <ul className={`indicateurs ${styles['liste-indicateurs']}`}>
+      <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         <IndicateurGraphique
           contenuInfoBulle={
             <ContenuTauxOccupationHébergementPermanent
@@ -125,5 +125,5 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéM
         </IndicateurGraphique>
       </ul>
     </Bloc>
-  )
-}
+  );
+};

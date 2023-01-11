@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner } from 'typeorm'
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class AjoutAutorisationsDesETSanitaires1661442115103 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
@@ -89,7 +89,7 @@ export class AjoutAutorisationsDesETSanitaires1661442115103 implements Migration
 
       ALTER TYPE fichier_source
         ADD VALUE IF NOT EXISTS 'finess_cs1600102';
-    `)
+    `);
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
@@ -98,6 +98,6 @@ export class AjoutAutorisationsDesETSanitaires1661442115103 implements Migration
         DROP TABLE equipement_materiel_lourd;
         DROP TABLE autre_activite_sanitaire;
         DROP TABLE reconnaissance_contractuelle_sanitaire;
-    `)
+    `);
   }
 }

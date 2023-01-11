@@ -1,14 +1,14 @@
-import { ReactElement } from 'react'
+import { ReactElement } from "react";
 
-import { useDependencies } from '../../commun/contexts/useDependencies'
+import { useDependencies } from "../../commun/contexts/useDependencies";
 
 type ContenuNombreDePassagesAuxUrgencesProps = Readonly<{
-  dateDeMiseÀJour: string
-  source: ReactElement
-}>
+  dateDeMiseÀJour: string;
+  source: ReactElement;
+}>;
 
 export const ContenuNombreDePassagesAuxUrgences = ({ dateDeMiseÀJour, source }: ContenuNombreDePassagesAuxUrgencesProps) => {
-  const { wording } = useDependencies()
+  const { wording } = useDependencies();
 
   return (
     <>
@@ -46,5 +46,5 @@ export const ContenuNombreDePassagesAuxUrgences = ({ dateDeMiseÀJour, source }:
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}></section>
     </>
-  )
-}
+  );
+};

@@ -1,20 +1,20 @@
-import { DomaineÉtablissementTerritorial } from '../../backend/métier/entities/DomaineÉtablissementTerritorial'
-import { ÉtablissementTerritorialRattaché } from '../../backend/métier/entities/entité-juridique/ÉtablissementTerritorialRattaché'
-import { Wording } from '../configuration/wording/Wording'
-import { ÉtablissementTerritorialRattachéViewModel } from '../ui/entité-juridique/liste-des-établissements/ÉtablissementTerritorialRattachéViewModel'
+import { DomaineÉtablissementTerritorial } from "../../backend/métier/entities/DomaineÉtablissementTerritorial";
+import { ÉtablissementTerritorialRattaché } from "../../backend/métier/entities/entité-juridique/ÉtablissementTerritorialRattaché";
+import { Wording } from "../configuration/wording/Wording";
+import { ÉtablissementTerritorialRattachéViewModel } from "../ui/entité-juridique/liste-des-établissements/ÉtablissementTerritorialRattachéViewModel";
 
 export class ÉtablissementTerritorialRattachéViewModelTestBuilder {
   private static établissementTerritorialMédicoSocialRattaché: ÉtablissementTerritorialRattaché = {
     domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
-    numéroFiness: '010000040',
-    raisonSocialeCourte: 'CH NANTUA',
-  }
+    numéroFiness: "010000040",
+    raisonSocialeCourte: "CH NANTUA",
+  };
 
   private static établissementTerritorialSanitaireRattaché: ÉtablissementTerritorialRattaché = {
     domaine: DomaineÉtablissementTerritorial.SANITAIRE,
-    numéroFiness: '590782553',
-    raisonSocialeCourte: 'HP VILLENEUVE DASCQ',
-  }
+    numéroFiness: "590782553",
+    raisonSocialeCourte: "HP VILLENEUVE DASCQ",
+  };
 
   public static créeÉtablissementTerritorialMédicoSocialRattaché(
     wording: Wording,
@@ -26,7 +26,7 @@ export class ÉtablissementTerritorialRattachéViewModelTestBuilder {
         ...champsSurchargés,
       },
       wording
-    )
+    );
   }
 
   public static créeÉtablissementTerritorialSanitaireRattaché(
@@ -39,6 +39,6 @@ export class ÉtablissementTerritorialRattachéViewModelTestBuilder {
         ...champsSurchargés,
       },
       wording
-    )
+    );
   }
 }

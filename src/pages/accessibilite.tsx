@@ -1,16 +1,16 @@
-import Head from 'next/head'
+import Head from "next/head";
 
-import { useDependencies } from '../frontend/ui/commun/contexts/useDependencies'
-import { useBreadcrumb } from '../frontend/ui/commun/hooks/useBreadcrumb'
+import { useDependencies } from "../frontend/ui/commun/contexts/useDependencies";
+import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
 
 export default function Accessibilité() {
-  const { wording } = useDependencies()
+  const { wording } = useDependencies();
   useBreadcrumb([
     {
       label: wording.ACCESSIBILITÉ,
-      path: '',
+      path: "",
     },
-  ])
+  ]);
 
   return (
     <main className="fr-container">
@@ -20,5 +20,5 @@ export default function Accessibilité() {
       <h1>{`${wording.ACCESSIBILITÉ} : ${wording.NON_CONFORME}`}</h1>
       <p>{wording.AUDIT_EN_COURS}</p>
     </main>
-  )
+  );
 }

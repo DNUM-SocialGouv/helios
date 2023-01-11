@@ -1,22 +1,22 @@
-import Link from 'next/link'
-import { ReactChild } from 'react'
-import '@gouvfr/dsfr/dist/component/breadcrumb/breadcrumb.min.css'
+import Link from "next/link";
+import { ReactChild } from "react";
+import "@gouvfr/dsfr/dist/component/breadcrumb/breadcrumb.min.css";
 
-import { useDependencies } from '../contexts/useDependencies'
-import { useBreadcrumb } from '../hooks/useBreadcrumb'
+import { useDependencies } from "../contexts/useDependencies";
+import { useBreadcrumb } from "../hooks/useBreadcrumb";
 
 export const Breadcrumb = () => {
-  const { wording } = useDependencies()
-  const { breadcrumb } = useBreadcrumb([])
+  const { wording } = useDependencies();
+  const { breadcrumb } = useBreadcrumb([]);
 
-  if (breadcrumb.length === 0) return null
+  if (breadcrumb.length === 0) return null;
 
   const HomeAndBreadcrumb = [
     {
       label: wording.ACCUEIL as ReactChild,
-      path: '/',
+      path: "/",
     },
-  ].concat(breadcrumb)
+  ].concat(breadcrumb);
 
   return (
     <section className="fr-container">
@@ -28,7 +28,7 @@ export const Breadcrumb = () => {
           <ol className="fr-breadcrumb__list">
             {HomeAndBreadcrumb.map((item, index) => (
               <li key={index}>
-                {item.path === '' ? (
+                {item.path === "" ? (
                   <a aria-current="page" className="fr-breadcrumb__link">
                     {item.label}
                   </a>
@@ -43,5 +43,5 @@ export const Breadcrumb = () => {
         </div>
       </nav>
     </section>
-  )
-}
+  );
+};

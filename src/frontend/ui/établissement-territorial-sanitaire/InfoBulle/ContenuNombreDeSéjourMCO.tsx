@@ -1,14 +1,14 @@
-import { ReactElement } from 'react'
+import { ReactElement } from "react";
 
-import { useDependencies } from '../../commun/contexts/useDependencies'
+import { useDependencies } from "../../commun/contexts/useDependencies";
 
 type ContenuDuNombreDeSéjourMCOProps = Readonly<{
-  dateDeMiseÀJour: string
-  source: ReactElement
-}>
+  dateDeMiseÀJour: string;
+  source: ReactElement;
+}>;
 
 export const ContenuNombreDeSéjourMCO = ({ dateDeMiseÀJour, source }: ContenuDuNombreDeSéjourMCOProps) => {
-  const { wording } = useDependencies()
+  const { wording } = useDependencies();
   return (
     <>
       <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
@@ -52,5 +52,5 @@ export const ContenuNombreDeSéjourMCO = ({ dateDeMiseÀJour, source }: ContenuD
         </p>
       </section>
     </>
-  )
-}
+  );
+};

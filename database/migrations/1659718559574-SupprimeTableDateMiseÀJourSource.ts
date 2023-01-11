@@ -1,11 +1,11 @@
-import { MigrationInterface, QueryRunner } from 'typeorm'
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class SupprimeTableDateMiseÀJourSource1659718559574 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
       DROP TABLE date_mise_a_jour_source;
         DROP TYPE source_de_donnees;
-    `)
+    `);
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
@@ -18,6 +18,6 @@ export class SupprimeTableDateMiseÀJourSource1659718559574 implements Migration
 
         CONSTRAINT source_primary_key PRIMARY KEY (source)
       );
-    `)
+    `);
   }
 }

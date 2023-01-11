@@ -1,14 +1,14 @@
-import { ReactElement } from 'react'
+import { ReactElement } from "react";
 
-import { useDependencies } from '../../commun/contexts/useDependencies'
+import { useDependencies } from "../../commun/contexts/useDependencies";
 
 type ContenuDePrestationsExternesProps = Readonly<{
-  dateDeMiseÀJour: string
-  source: ReactElement
-}>
+  dateDeMiseÀJour: string;
+  source: ReactElement;
+}>;
 
 export const ContenuDePrestationsExternes = ({ dateDeMiseÀJour, source }: ContenuDePrestationsExternesProps) => {
-  const { wording } = useDependencies()
+  const { wording } = useDependencies();
 
   return (
     <>
@@ -33,7 +33,7 @@ export const ContenuDePrestationsExternes = ({ dateDeMiseÀJour, source }: Conte
           <li>6112 « Prestations à caractère médico-social » (M22) / « Sous-traitance à caractère médico-social » (M21) </li>
           <li>
             621 « Personnel extérieur à l’établissement » en lien avec des prestations directes (hors 62111 « Personnel administratif et hôtelier » et autres
-            personnels sans lien avec des prestations directes) (M21 et M22){' '}
+            personnels sans lien avec des prestations directes) (M21 et M22){" "}
           </li>
           <li>6223 « Intervenants médicaux (consultants exceptionnels) » (M21 et M22) </li>
           <li>6226 « Honoraires » en lien avec des prestations directes (M21 et M22) </li>
@@ -60,5 +60,5 @@ export const ContenuDePrestationsExternes = ({ dateDeMiseÀJour, source }: Conte
         </p>
       </section>
     </>
-  )
-}
+  );
+};

@@ -1,24 +1,24 @@
-import { ReactChild } from 'react'
+import { ReactChild } from "react";
 
 export type Breadcrumb = Readonly<{
-  label: ReactChild
-  path: string
-}>[]
+  label: ReactChild;
+  path: string;
+}>[];
 
-type UpdateBreadcrumb = (breadcrumb: Breadcrumb) => void
+type UpdateBreadcrumb = (breadcrumb: Breadcrumb) => void;
 
 export class BreadcrumbHandler {
-  private subscriptions: UpdateBreadcrumb[] = []
+  private subscriptions: UpdateBreadcrumb[] = [];
 
   updateBreadcrum(breadcrumb: Breadcrumb) {
-    this.subscriptions.forEach((updateBreadcrumb) => updateBreadcrumb(breadcrumb))
+    this.subscriptions.forEach((updateBreadcrumb) => updateBreadcrumb(breadcrumb));
   }
 
   addSubscription(newSubscription: UpdateBreadcrumb) {
-    this.subscriptions.push(newSubscription)
+    this.subscriptions.push(newSubscription);
 
     return () => {
-      this.subscriptions = this.subscriptions.filter((existingSubscription) => existingSubscription !== newSubscription)
-    }
+      this.subscriptions = this.subscriptions.filter((existingSubscription) => existingSubscription !== newSubscription);
+    };
   }
 }

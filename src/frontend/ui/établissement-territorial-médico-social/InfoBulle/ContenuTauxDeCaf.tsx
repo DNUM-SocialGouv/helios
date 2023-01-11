@@ -1,14 +1,14 @@
-import { ReactElement } from 'react'
+import { ReactElement } from "react";
 
-import { useDependencies } from '../../commun/contexts/useDependencies'
+import { useDependencies } from "../../commun/contexts/useDependencies";
 
 type ContenuTauxDeCafProps = Readonly<{
-  dateDeMiseÀJour: string
-  source: ReactElement
-}>
+  dateDeMiseÀJour: string;
+  source: ReactElement;
+}>;
 
 export const ContenuTauxDeCaf = ({ dateDeMiseÀJour, source }: ContenuTauxDeCafProps) => {
-  const { wording } = useDependencies()
+  const { wording } = useDependencies();
 
   return (
     <>
@@ -66,5 +66,5 @@ export const ContenuTauxDeCaf = ({ dateDeMiseÀJour, source }: ContenuTauxDeCafP
         </p>
       </section>
     </>
-  )
-}
+  );
+};

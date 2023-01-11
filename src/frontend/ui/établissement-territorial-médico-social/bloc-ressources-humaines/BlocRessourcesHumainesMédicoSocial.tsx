@@ -1,35 +1,35 @@
-import { useState } from 'react'
+import { useState } from "react";
 
-import { Bloc } from '../../commun/Bloc/Bloc'
-import { useDependencies } from '../../commun/contexts/useDependencies'
-import { IndicateurGraphique } from '../../commun/IndicateurGraphique/IndicateurGraphique'
-import { Sources } from '../../commun/Sources/Sources'
-import { ContenuDesTauxDAbsentéismes } from '../InfoBulle/ContenuDesTauxDAbsentéismes'
-import { ContenuDuNombreDeCddDeRemplacement } from '../InfoBulle/ContenuDuNombreDeCddDeRemplacement'
-import { ContenuDuNombreDEtpRéalisé } from '../InfoBulle/ContenuDuNombreDEtpRéalisé'
-import { ContenuDePrestationsExternes } from '../InfoBulle/ContenuDuTauxDePrestationsExternes'
-import { ContenuDuTauxDeRotationDuPersonnel } from '../InfoBulle/ContenuDuTauxDeRotationDuPersonnel'
-import { ContenuDuTauxDEtpVacants } from '../InfoBulle/ContenuDuTauxDEtpVacants'
-import styles from './BlocRessourcesHumainesMédicoSocial.module.css'
-import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } from './ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel'
+import { Bloc } from "../../commun/Bloc/Bloc";
+import { useDependencies } from "../../commun/contexts/useDependencies";
+import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
+import { Sources } from "../../commun/Sources/Sources";
+import { ContenuDesTauxDAbsentéismes } from "../InfoBulle/ContenuDesTauxDAbsentéismes";
+import { ContenuDuNombreDeCddDeRemplacement } from "../InfoBulle/ContenuDuNombreDeCddDeRemplacement";
+import { ContenuDuNombreDEtpRéalisé } from "../InfoBulle/ContenuDuNombreDEtpRéalisé";
+import { ContenuDePrestationsExternes } from "../InfoBulle/ContenuDuTauxDePrestationsExternes";
+import { ContenuDuTauxDeRotationDuPersonnel } from "../InfoBulle/ContenuDuTauxDeRotationDuPersonnel";
+import { ContenuDuTauxDEtpVacants } from "../InfoBulle/ContenuDuTauxDEtpVacants";
+import styles from "./BlocRessourcesHumainesMédicoSocial.module.css";
+import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } from "./ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel";
 
 type BlocRessourcesHumainesMédicoSocialProps = Readonly<{
-  établissementTerritorialMédicoSocialRessourcesHumainesViewModel: ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel
-}>
+  établissementTerritorialMédicoSocialRessourcesHumainesViewModel: ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel;
+}>;
 
 export const BlocRessourcesHumainesMédicoSocial = ({
   établissementTerritorialMédicoSocialRessourcesHumainesViewModel,
 }: BlocRessourcesHumainesMédicoSocialProps) => {
-  const { wording } = useDependencies()
-  const [annéeEnCours, setAnnéeEnCours] = useState<number>(établissementTerritorialMédicoSocialRessourcesHumainesViewModel.annéeInitiale)
+  const { wording } = useDependencies();
+  const [annéeEnCours, setAnnéeEnCours] = useState<number>(établissementTerritorialMédicoSocialRessourcesHumainesViewModel.annéeInitiale);
 
   if (établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRessourcesHumainesNeSontPasRenseignées) {
-    return <Bloc titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES}>{wording.INDICATEURS_VIDES}</Bloc>
+    return <Bloc titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES}>{wording.INDICATEURS_VIDES}</Bloc>;
   }
 
   return (
     <Bloc estCeIdentité={false} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES}>
-      <ul className={`indicateurs ${styles['liste-indicateurs']}`}>
+      <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         <ul>
           <IndicateurGraphique
             contenuInfoBulle={
@@ -121,5 +121,5 @@ export const BlocRessourcesHumainesMédicoSocial = ({
         </ul>
       </ul>
     </Bloc>
-  )
-}
+  );
+};

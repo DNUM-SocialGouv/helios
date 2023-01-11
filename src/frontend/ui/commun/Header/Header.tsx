@@ -1,23 +1,23 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { ChangeEvent, useState } from 'react'
-import '@gouvfr/dsfr/dist/component/header/header.min.css'
-import '@gouvfr/dsfr/dist/component/logo/logo.min.css'
-import '@gouvfr/dsfr/dist/component/link/link.min.css'
-import '@gouvfr/dsfr/dist/component/modal/modal.min.css'
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { ChangeEvent, useState } from "react";
+import "@gouvfr/dsfr/dist/component/header/header.min.css";
+import "@gouvfr/dsfr/dist/component/logo/logo.min.css";
+import "@gouvfr/dsfr/dist/component/link/link.min.css";
+import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 
-import { Breadcrumb } from '../Breadcrumb/Breadcrumb'
-import { useDependencies } from '../contexts/useDependencies'
+import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
+import { useDependencies } from "../contexts/useDependencies";
 
 export const Header = () => {
-  const { paths, wording } = useDependencies()
-  const router = useRouter()
-  const [terme, setTerme] = useState<string>('')
+  const { paths, wording } = useDependencies();
+  const router = useRouter();
+  const [terme, setTerme] = useState<string>("");
 
   const rechercheOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTerme(event.target.value)
-  }
+    setTerme(event.target.value);
+  };
 
   return (
     <>
@@ -96,8 +96,8 @@ export const Header = () => {
                         <button
                           className="fr-btn"
                           onClick={(event) => {
-                            event.preventDefault()
-                            router.push(paths.ACCUEIL + '?terme=' + terme, paths.ACCUEIL)
+                            event.preventDefault();
+                            router.push(paths.ACCUEIL + "?terme=" + terme, paths.ACCUEIL);
                           }}
                           title="Rechercher"
                           type="submit"
@@ -123,5 +123,5 @@ export const Header = () => {
       </header>
       <Breadcrumb />
     </>
-  )
-}
+  );
+};

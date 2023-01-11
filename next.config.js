@@ -4,15 +4,15 @@ const securityHeaders = [
    * This header enforces the use of HTTPS.
    **/
   {
-    key: 'Strict-Transport-Security',
-    value: 'max-age=31536000; includeSubDomains',
+    key: "Strict-Transport-Security",
+    value: "max-age=31536000; includeSubDomains",
   },
   /**
    * Content-Security-Policy, see: https://scotthelme.co.uk/content-security-policy-an-introduction/
    * This header define approved sources for content on the site that the browser can load.
    **/
   {
-    key: 'Content-Security-Policy',
+    key: "Content-Security-Policy",
     value: "default-src https: 'unsafe-inline'; script-src https: 'unsafe-eval'; img-src https: data:; font-src 'self' data:;",
   },
   /**
@@ -23,9 +23,9 @@ const securityHeaders = [
    * CHOICE: disable all the features that we are not currently using.
    **/
   {
-    key: 'Permissions-Policy',
+    key: "Permissions-Policy",
     value:
-      'accelerometer=(), camera=(), microphone=(), geolocation=(), document-domain=(), gyroscope=(), magnetometer=(), payment=(), usb=(), xr-spatial-tracking=()',
+      "accelerometer=(), camera=(), microphone=(), geolocation=(), document-domain=(), gyroscope=(), magnetometer=(), payment=(), usb=(), xr-spatial-tracking=()",
   },
   /**
    * Referrer-Policy, see: https://scotthelme.co.uk/a-new-security-header-referrer-policy/
@@ -35,8 +35,8 @@ const securityHeaders = [
    * CHOICE: the browser will send the full URL to HTTPS requests to the same origin, and will send origin URL when the HTTPS requests are cross-origin.
    **/
   {
-    key: 'Referrer-Policy',
-    value: 'strict-origin-when-cross-origin',
+    key: "Referrer-Policy",
+    value: "strict-origin-when-cross-origin",
   },
   /**
    * X-Content-Type-Options, see: https://scotthelme.co.uk/hardening-your-http-response-headers/
@@ -44,8 +44,8 @@ const securityHeaders = [
    * There is only one value "nosniff"
    **/
   {
-    key: 'X-Content-Type-Options',
-    value: 'nosniff',
+    key: "X-Content-Type-Options",
+    value: "nosniff",
   },
   /**
    * X-Frame-Options, see: https://scotthelme.co.uk/hardening-your-http-response-headers/
@@ -54,26 +54,26 @@ const securityHeaders = [
    * CHOICE: The value "SAMEORIGIN" allows you to frame your own site
    **/
   {
-    key: 'X-Frame-Options',
-    value: 'SAMEORIGIN',
+    key: "X-Frame-Options",
+    value: "SAMEORIGIN",
   },
-]
+];
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  devIndicators: { buildActivityPosition: 'bottom-right' },
+  devIndicators: { buildActivityPosition: "bottom-right" },
   async headers() {
-    return process.env['NODE_ENV'] !== 'development'
+    return process.env["NODE_ENV"] !== "development"
       ? [
           {
             headers: securityHeaders,
-            source: '/:path*',
+            source: "/:path*",
           },
         ]
-      : []
+      : [];
   },
   poweredByHeader: false,
   reactStrictMode: true,
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

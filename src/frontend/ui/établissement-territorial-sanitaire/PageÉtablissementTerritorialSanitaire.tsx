@@ -1,20 +1,20 @@
-import Head from 'next/head'
+import Head from "next/head";
 
-import { useDependencies } from '../commun/contexts/useDependencies'
-import { useBreadcrumb } from '../commun/hooks/useBreadcrumb'
-import { Titre } from '../commun/Titre/Titre'
-import { BlocActivitéSanitaire } from './bloc-activité/BlocActivitéSanitaire'
-import { BlocAutorisationEtCapacitéSanitaire } from './bloc-autorisations/BlocAutorisationEtCapacitéSanitaire'
-import { BlocIdentitéSanitaire } from './bloc-identité/BlocIdentitéSanitaire'
-import LogoÉtablissementTerritorial from './logo-établissement-territorial-sanitaire.svg'
-import { ÉtablissementTerritorialSanitaireViewModel } from './ÉtablissementTerritorialSanitaireViewModel'
+import { useDependencies } from "../commun/contexts/useDependencies";
+import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
+import { Titre } from "../commun/Titre/Titre";
+import { BlocActivitéSanitaire } from "./bloc-activité/BlocActivitéSanitaire";
+import { BlocAutorisationEtCapacitéSanitaire } from "./bloc-autorisations/BlocAutorisationEtCapacitéSanitaire";
+import { BlocIdentitéSanitaire } from "./bloc-identité/BlocIdentitéSanitaire";
+import LogoÉtablissementTerritorial from "./logo-établissement-territorial-sanitaire.svg";
+import { ÉtablissementTerritorialSanitaireViewModel } from "./ÉtablissementTerritorialSanitaireViewModel";
 
 type ÉtablissementTerritorialProps = Readonly<{
-  établissementTerritorialSanitaireViewModel: ÉtablissementTerritorialSanitaireViewModel
-}>
+  établissementTerritorialSanitaireViewModel: ÉtablissementTerritorialSanitaireViewModel;
+}>;
 
 export const PageÉtablissementTerritorialSanitaire = ({ établissementTerritorialSanitaireViewModel }: ÉtablissementTerritorialProps) => {
-  const { paths } = useDependencies()
+  const { paths } = useDependencies();
 
   useBreadcrumb([
     {
@@ -23,9 +23,9 @@ export const PageÉtablissementTerritorialSanitaire = ({ établissementTerritori
     },
     {
       label: établissementTerritorialSanitaireViewModel.identitéViewModel.nomCourtDeLÉtablissementTerritorial,
-      path: '',
+      path: "",
     },
-  ])
+  ]);
 
   return (
     <main className="fr-container">
@@ -39,5 +39,5 @@ export const PageÉtablissementTerritorialSanitaire = ({ établissementTerritori
       />
       <BlocActivitéSanitaire établissementTerritorialSanitaireActivitéViewModel={établissementTerritorialSanitaireViewModel.activitésViewModel} />
     </main>
-  )
-}
+  );
+};

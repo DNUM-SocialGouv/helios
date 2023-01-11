@@ -1,26 +1,26 @@
-import { Bloc } from '../../commun/Bloc/Bloc'
-import { useDependencies } from '../../commun/contexts/useDependencies'
-import { IndicateurGraphique } from '../../commun/IndicateurGraphique/IndicateurGraphique'
-import { ContenuNombreDeJournéesPSYetSSR } from '../InfoBulle/ContenuNombreDeJournéesPSYetSSR'
-import { ContenuNombreDePassagesAuxUrgences } from '../InfoBulle/ContenuNombreDePassagesAuxUrgences'
-import { ContenuNombreDeSéjourMCO } from '../InfoBulle/ContenuNombreDeSéjourMCO'
-import styles from './BlocActivitéSanitaire.module.css'
-import { ÉtablissementTerritorialSanitaireActivitéViewModel } from './ÉtablissementTerritorialSanitaireActivitéViewModel'
+import { Bloc } from "../../commun/Bloc/Bloc";
+import { useDependencies } from "../../commun/contexts/useDependencies";
+import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
+import { ContenuNombreDeJournéesPSYetSSR } from "../InfoBulle/ContenuNombreDeJournéesPSYetSSR";
+import { ContenuNombreDePassagesAuxUrgences } from "../InfoBulle/ContenuNombreDePassagesAuxUrgences";
+import { ContenuNombreDeSéjourMCO } from "../InfoBulle/ContenuNombreDeSéjourMCO";
+import styles from "./BlocActivitéSanitaire.module.css";
+import { ÉtablissementTerritorialSanitaireActivitéViewModel } from "./ÉtablissementTerritorialSanitaireActivitéViewModel";
 
 type BlocActivitéSanitaireProps = Readonly<{
-  établissementTerritorialSanitaireActivitéViewModel: ÉtablissementTerritorialSanitaireActivitéViewModel
-}>
+  établissementTerritorialSanitaireActivitéViewModel: ÉtablissementTerritorialSanitaireActivitéViewModel;
+}>;
 
 export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireActivitéViewModel }: BlocActivitéSanitaireProps) => {
-  const { wording } = useDependencies()
+  const { wording } = useDependencies();
 
   if (établissementTerritorialSanitaireActivitéViewModel.lesDonnéesActivitéNeSontPasRenseignées) {
-    return <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>{wording.INDICATEURS_VIDES}</Bloc>
+    return <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>{wording.INDICATEURS_VIDES}</Bloc>;
   }
 
   return (
     <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
-      <ul className={`indicateurs ${styles['liste-indicateurs']}`}>
+      <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         {établissementTerritorialSanitaireActivitéViewModel.nombreDeSéjoursMCOSontIlsRenseignés && (
           <IndicateurGraphique
             contenuInfoBulle={
@@ -69,5 +69,5 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireActiv
         </IndicateurGraphique>
       </ul>
     </Bloc>
-  )
-}
+  );
+};

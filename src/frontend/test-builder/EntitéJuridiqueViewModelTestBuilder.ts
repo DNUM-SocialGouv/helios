@@ -1,50 +1,50 @@
-import { EntitéJuridique } from '../../backend/métier/entities/entité-juridique/EntitéJuridique'
-import { Wording } from '../configuration/wording/Wording'
-import { EntitéJuridiqueViewModel } from '../ui/entité-juridique/EntitéJuridiqueViewModel'
+import { EntitéJuridique } from "../../backend/métier/entities/entité-juridique/EntitéJuridique";
+import { Wording } from "../configuration/wording/Wording";
+import { EntitéJuridiqueViewModel } from "../ui/entité-juridique/EntitéJuridiqueViewModel";
 
 export class EntitéJuridiqueViewModelTestBuilder {
   static entitéJuridique: EntitéJuridique = {
     adresseAcheminement: {
-      dateMiseÀJourSource: '2021-07-07',
-      value: '22023 ST BRIEUC CEDEX 1',
+      dateMiseÀJourSource: "2021-07-07",
+      value: "22023 ST BRIEUC CEDEX 1",
     },
     adresseNuméroVoie: {
-      dateMiseÀJourSource: '2021-07-07',
-      value: '10',
+      dateMiseÀJourSource: "2021-07-07",
+      value: "10",
     },
     adresseTypeVoie: {
-      dateMiseÀJourSource: '2021-07-07',
-      value: 'Rue',
+      dateMiseÀJourSource: "2021-07-07",
+      value: "Rue",
     },
     adresseVoie: {
-      dateMiseÀJourSource: '2021-07-07',
-      value: 'Marcel Proust',
+      dateMiseÀJourSource: "2021-07-07",
+      value: "Marcel Proust",
     },
     libelléStatutJuridique: {
-      dateMiseÀJourSource: '2021-07-07',
-      value: 'Public',
+      dateMiseÀJourSource: "2021-07-07",
+      value: "Public",
     },
     numéroFinessEntitéJuridique: {
-      dateMiseÀJourSource: '2021-07-07',
-      value: '220000020',
+      dateMiseÀJourSource: "2021-07-07",
+      value: "220000020",
     },
     raisonSociale: {
-      dateMiseÀJourSource: '2021-07-07',
-      value: 'CENTRE HOSPITALIER DE SAINT BRIEUC',
+      dateMiseÀJourSource: "2021-07-07",
+      value: "CENTRE HOSPITALIER DE SAINT BRIEUC",
     },
     raisonSocialeCourte: {
-      dateMiseÀJourSource: '2021-07-07',
-      value: 'CH SAINT BRIEUC',
+      dateMiseÀJourSource: "2021-07-07",
+      value: "CH SAINT BRIEUC",
     },
     siren: {
-      dateMiseÀJourSource: '2021-07-07',
-      value: '262200090',
+      dateMiseÀJourSource: "2021-07-07",
+      value: "262200090",
     },
     téléphone: {
-      dateMiseÀJourSource: '2021-07-07',
-      value: '0296017123',
+      dateMiseÀJourSource: "2021-07-07",
+      value: "0296017123",
     },
-  }
+  };
 
   public static crée(wording: Wording, champsSurchargés?: Partial<EntitéJuridique>): EntitéJuridiqueViewModel {
     return new EntitéJuridiqueViewModel(
@@ -53,6 +53,6 @@ export class EntitéJuridiqueViewModelTestBuilder {
         ...champsSurchargés,
       },
       wording
-    )
+    );
   }
 }

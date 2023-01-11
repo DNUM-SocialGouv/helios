@@ -1,14 +1,14 @@
-import { Controller, Get, Render } from '@nestjs/common'
-import { Entité } from '../../domain/Entité'
+import { Controller, Get, Render } from "@nestjs/common";
+import { Entité } from "../../domain/Entité";
 
-@Controller('/spike')
+@Controller("/spike")
 export class SpikeEndpoint {
   @Get()
-  @Render('index')
+  @Render("index")
   home() {
-    const entité = new Entité()
-    console.log(entité)
+    const entité = new Entité();
+    console.log(entité);
 
-    return entité
+    return entité;
   }
 }

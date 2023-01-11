@@ -1,20 +1,20 @@
-import { ReactChild, ReactElement, useState } from 'react'
+import { ReactChild, ReactElement, useState } from "react";
 
-import { useDependencies } from '../contexts/useDependencies'
-import { InfoBulle } from '../InfoBulle/InfoBulle'
-import styles from './IndicateurGraphique.module.css'
+import { useDependencies } from "../contexts/useDependencies";
+import { InfoBulle } from "../InfoBulle/InfoBulle";
+import styles from "./IndicateurGraphique.module.css";
 
-import '@gouvfr/dsfr/dist/component/button/button.min.css'
+import "@gouvfr/dsfr/dist/component/button/button.min.css";
 
 type IndicateurProps = Readonly<{
-  années?: ReactElement
-  children: ReactElement
-  contenuInfoBulle: ReactElement
-  dateDeMiseÀJour: string
-  identifiant: string
-  nomDeLIndicateur: ReactChild
-  source: ReactElement
-}>
+  années?: ReactElement;
+  children: ReactElement;
+  contenuInfoBulle: ReactElement;
+  dateDeMiseÀJour: string;
+  identifiant: string;
+  nomDeLIndicateur: ReactChild;
+  source: ReactElement;
+}>;
 
 export const IndicateurGraphique = ({
   années = <></>,
@@ -25,18 +25,18 @@ export const IndicateurGraphique = ({
   nomDeLIndicateur,
   source,
 }: IndicateurProps) => {
-  const { wording } = useDependencies()
-  const [estCeOuvert, setEstCeOuvert] = useState(false)
+  const { wording } = useDependencies();
+  const [estCeOuvert, setEstCeOuvert] = useState(false);
 
   return (
     <li>
       <div>
-        <p className={`fr-m-0 ${styles['intitule']}`}>
+        <p className={`fr-m-0 ${styles["intitule"]}`}>
           {nomDeLIndicateur}
           {années}
         </p>
-        <div className={styles['mise-a-jour-source']}>
-          <p className={`fr-text--xs ${styles['titraille']}`}>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+        <div className={styles["mise-a-jour-source"]}>
+          <p className={`fr-text--xs ${styles["titraille"]}`}>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
           <button
             aria-controls={`nom-info-bulle-${identifiant}`}
             className="fr-btn fr-fi-information-line fr-btn--icon-left fr-btn--tertiary fr-btn--sm"
@@ -48,10 +48,10 @@ export const IndicateurGraphique = ({
           </button>
         </div>
       </div>
-      <div className={styles['graphe']}>{children}</div>
+      <div className={styles["graphe"]}>{children}</div>
       <InfoBulle estCeOuvert={estCeOuvert} identifiant={identifiant} setEstCeOuvert={setEstCeOuvert} titre={nomDeLIndicateur}>
         {contenuInfoBulle}
       </InfoBulle>
     </li>
-  )
-}
+  );
+};

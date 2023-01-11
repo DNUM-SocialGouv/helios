@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner } from 'typeorm'
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class AjoutDesTauxPourLeBlocBudgetEtFinancesMédicoSocial1663852267673 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
@@ -11,7 +11,7 @@ export class AjoutDesTauxPourLeBlocBudgetEtFinancesMédicoSocial1663852267673 im
 
       ALTER TYPE fichier_source
         ADD VALUE IF NOT EXISTS 'ann_ca_ej_et'
-    `)
+    `);
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
@@ -21,6 +21,6 @@ export class AjoutDesTauxPourLeBlocBudgetEtFinancesMédicoSocial1663852267673 im
         DROP COLUMN produits,
         DROP COLUMN taux_de_caf,
         DROP COLUMN taux_de_vetuste_construction;
-    `)
+    `);
   }
 }

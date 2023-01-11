@@ -1,31 +1,31 @@
-import { ReactChild, ReactElement } from 'react'
+import { ReactChild, ReactElement } from "react";
 
-import '@gouvfr/dsfr/dist/component/modal/modal.min.css'
-import { useDependencies } from '../contexts/useDependencies'
+import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
+import { useDependencies } from "../contexts/useDependencies";
 
 type InfoBulleProps = Readonly<{
-  children: ReactElement
-  estCeOuvert: boolean
-  identifiant: string
-  setEstCeOuvert: Function
-  titre: ReactChild
-}>
+  children: ReactElement;
+  estCeOuvert: boolean;
+  identifiant: string;
+  setEstCeOuvert: Function;
+  titre: ReactChild;
+}>;
 
 export const InfoBulle = ({ children, estCeOuvert, identifiant, setEstCeOuvert, titre }: InfoBulleProps) => {
-  const { wording } = useDependencies()
-  let className = 'fr-modal'
+  const { wording } = useDependencies();
+  let className = "fr-modal";
 
   if (estCeOuvert) {
-    className = 'fr-modal fr-modal--opened'
+    className = "fr-modal fr-modal--opened";
   }
 
   if (estCeOuvert) {
-    className = 'fr-modal'
+    className = "fr-modal";
   }
 
   const fermelInfoBulle = () => {
-    setEstCeOuvert(false)
-  }
+    setEstCeOuvert(false);
+  };
 
   return (
     <dialog aria-labelledby={`titre-info-bulle-${identifiant}`} className={className} id={`nom-info-bulle-${identifiant}`} open={estCeOuvert}>
@@ -56,5 +56,5 @@ export const InfoBulle = ({ children, estCeOuvert, identifiant, setEstCeOuvert, 
         </div>
       </div>
     </dialog>
-  )
-}
+  );
+};

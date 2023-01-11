@@ -1,7 +1,7 @@
-import { useDependencies } from '../commun/contexts/useDependencies'
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 export const PageDesMentionsLégales = () => {
-  const { wording } = useDependencies()
+  const { wording } = useDependencies();
   return (
     <>
       <h1>{wording.MENTIONS_LÉGALES}</h1>
@@ -50,8 +50,8 @@ export const PageDesMentionsLégales = () => {
           vertu de l’article L.122-4 du Code de la propriété intellectuelle. Ces contenus ne sauraient être reproduits librement sans demande préalable et sans
           l’indication de la source.
           <br />
-          Les demandes d’autorisation de reproduction d’un contenu doivent être adressées au ministère des solidarités et de la santé (Direction du numérique /{' '}
-          <abbr title="Service à Compétence National">SCN</abbr> <abbr title="Systèmes d’Information Mutualisés">SIM</abbr>{' '}
+          Les demandes d’autorisation de reproduction d’un contenu doivent être adressées au ministère des solidarités et de la santé (Direction du numérique /{" "}
+          <abbr title="Service à Compétence National">SCN</abbr> <abbr title="Systèmes d’Information Mutualisés">SIM</abbr>{" "}
           <abbr title="Agence Régionale de Santé">ARS</abbr> – Tour Mirabeau 39-43 Quai André Citroën 75015 PARIS).
           <br />
           Les reproductions à but commercial ou publicitaire ne seront, sauf exceptions, pas autorisées.
@@ -91,5 +91,5 @@ export const PageDesMentionsLégales = () => {
         </p>
       </section>
     </>
-  )
-}
+  );
+};
