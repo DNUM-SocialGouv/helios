@@ -39,7 +39,7 @@ export function getStaticPaths(): GetStaticPathsResult {
   };
 }
 
-export async function getStaticProps({ params }: { params: { numeroFiness: string } }): Promise<GetStaticPropsResult<RouterProps> | void> {
+export async function getStaticProps({ params }: { params: { numeroFiness: string } }): Promise<GetStaticPropsResult<RouterProps>> {
   try {
     const { environmentVariables } = dependencies;
     const entitéJuridiqueEndpoint = (await récupèreLEntitéJuridiqueEndpoint(dependencies, params.numeroFiness)) as RouterProps;
@@ -56,5 +56,6 @@ export async function getStaticProps({ params }: { params: { numeroFiness: strin
       dependencies.logger.error(error.message);
       return { notFound: true, revalidate: 1 };
     }
+    throw error;
   }
 }
