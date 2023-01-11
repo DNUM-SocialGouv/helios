@@ -1,22 +1,22 @@
-import { DataSource } from 'typeorm'
+import { DataSource } from "typeorm";
 
-import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
-import { ÉtablissementTerritorialRattaché } from '../../../métier/entities/entité-juridique/ÉtablissementTerritorialRattaché'
-import { ÉtablissementTerritorialRattachéLoader } from '../../../métier/gateways/ÉtablissementTerritorialRattachéLoader'
+import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
+import { ÉtablissementTerritorialRattaché } from "../../../métier/entities/entité-juridique/ÉtablissementTerritorialRattaché";
+import { ÉtablissementTerritorialRattachéLoader } from "../../../métier/gateways/ÉtablissementTerritorialRattachéLoader";
 
 export class TypeOrmÉtablissementTerritorialRattachéLoader implements ÉtablissementTerritorialRattachéLoader {
   constructor(private readonly orm: Promise<DataSource>) {}
 
   async chargeLesÉtablissementsDeLEntitéJuridiqueDeRattachement(numéroFinessEntitéJuridique: string): Promise<ÉtablissementTerritorialRattaché[]> {
-    const établissementsTerritoriauxModels = await this.chargeLesÉtablissementsRattachésÀLEntitéJuridique(numéroFinessEntitéJuridique)
+    const établissementsTerritoriauxModels = await this.chargeLesÉtablissementsRattachésÀLEntitéJuridique(numéroFinessEntitéJuridique);
 
-    return this.construisLesÉtablissementsTerritoriauxRattachés(établissementsTerritoriauxModels)
+    return this.construisLesÉtablissementsTerritoriauxRattachés(établissementsTerritoriauxModels);
   }
 
   private async chargeLesÉtablissementsRattachésÀLEntitéJuridique(numéroFinessEntitéJuridique: string) {
     return await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
-      .find({ order: { domaine: 'ASC', numéroFinessÉtablissementTerritorial: 'ASC' }, where: { numéroFinessEntitéJuridique } })
+      .find({ order: { domaine: "ASC", numéroFinessÉtablissementTerritorial: "ASC" }, where: { numéroFinessEntitéJuridique } });
   }
 
   private construisLesÉtablissementsTerritoriauxRattachés(
@@ -27,7 +27,7 @@ export class TypeOrmÉtablissementTerritorialRattachéLoader implements Établis
         domaine: établissementTerritorialModel.domaine,
         numéroFiness: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
         raisonSocialeCourte: établissementTerritorialModel.raisonSocialeCourte,
-      }
-    })
+      };
+    });
   }
 }

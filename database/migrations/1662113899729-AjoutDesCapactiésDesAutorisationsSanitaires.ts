@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner } from 'typeorm'
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class AjoutDesCapactiésDesAutorisationsSanitaires1662113899729 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
@@ -22,10 +22,10 @@ export class AjoutDesCapactiésDesAutorisationsSanitaires1662113899729 implement
 
       ALTER TYPE fichier_source
         ADD VALUE IF NOT EXISTS 'ann_sae';
-    `)
+    `);
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query('DROP TABLE capacite_autorisation_sanitaire;')
+    await queryRunner.query("DROP TABLE capacite_autorisation_sanitaire;");
   }
 }

@@ -1,22 +1,22 @@
-import Head from 'next/head'
+import Head from "next/head";
 
-import { useDependencies } from '../commun/contexts/useDependencies'
-import { useBreadcrumb } from '../commun/hooks/useBreadcrumb'
-import { Titre } from '../commun/Titre/Titre'
-import { BlocActivitéMédicoSocial } from './bloc-activité/BlocActivitéMédicoSocial'
-import { BlocAutorisationEtCapacitéMédicoSocial } from './bloc-autorisations/BlocAutorisationEtCapacitéMédicoSocial'
-import { BlocBudgetEtFinancesMédicoSocial } from './bloc-budget-et-finances/BlocBudgetEtFinancesMédicoSocial'
-import { BlocIdentitéMédicoSocial } from './bloc-identité/BlocIdentitéMédicoSocial'
-import { BlocRessourcesHumainesMédicoSocial } from './bloc-ressources-humaines/BlocRessourcesHumainesMédicoSocial'
-import LogoÉtablissementTerritorial from './logo-établissement-territorial-médico-social.svg'
-import { ÉtablissementTerritorialMédicoSocialViewModel } from './ÉtablissementTerritorialMédicoSocialViewModel'
+import { useDependencies } from "../commun/contexts/useDependencies";
+import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
+import { Titre } from "../commun/Titre/Titre";
+import { BlocActivitéMédicoSocial } from "./bloc-activité/BlocActivitéMédicoSocial";
+import { BlocAutorisationEtCapacitéMédicoSocial } from "./bloc-autorisations/BlocAutorisationEtCapacitéMédicoSocial";
+import { BlocBudgetEtFinancesMédicoSocial } from "./bloc-budget-et-finances/BlocBudgetEtFinancesMédicoSocial";
+import { BlocIdentitéMédicoSocial } from "./bloc-identité/BlocIdentitéMédicoSocial";
+import { BlocRessourcesHumainesMédicoSocial } from "./bloc-ressources-humaines/BlocRessourcesHumainesMédicoSocial";
+import LogoÉtablissementTerritorial from "./logo-établissement-territorial-médico-social.svg";
+import { ÉtablissementTerritorialMédicoSocialViewModel } from "./ÉtablissementTerritorialMédicoSocialViewModel";
 
 type ÉtablissementTerritorialProps = Readonly<{
-  établissementTerritorialViewModel: ÉtablissementTerritorialMédicoSocialViewModel
-}>
+  établissementTerritorialViewModel: ÉtablissementTerritorialMédicoSocialViewModel;
+}>;
 
 export const PageÉtablissementTerritorialMédicoSocial = ({ établissementTerritorialViewModel }: ÉtablissementTerritorialProps) => {
-  const { paths } = useDependencies()
+  const { paths } = useDependencies();
 
   useBreadcrumb([
     {
@@ -25,20 +25,16 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ établissementTerri
     },
     {
       label: établissementTerritorialViewModel.identitéViewModel.nomCourtDeLÉtablissementTerritorial,
-      path: '',
+      path: "",
     },
-  ])
+  ]);
 
   return (
     <main className="fr-container">
       <Head>
-        <title>
-          {établissementTerritorialViewModel.titre}
-        </title>
+        <title>{établissementTerritorialViewModel.titre}</title>
       </Head>
-      <Titre logo={LogoÉtablissementTerritorial}>
-        {établissementTerritorialViewModel.titre}
-      </Titre>
+      <Titre logo={LogoÉtablissementTerritorial}>{établissementTerritorialViewModel.titre}</Titre>
       <BlocIdentitéMédicoSocial établissementTerritorialIdentitéMédicoSocialViewModel={établissementTerritorialViewModel.identitéViewModel} />
       <BlocAutorisationEtCapacitéMédicoSocial
         établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialViewModel.autorisationsViewModel}
@@ -51,5 +47,5 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ établissementTerri
         établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={établissementTerritorialViewModel.budgetEtFinancesViewModel}
       />
     </main>
-  )
-}
+  );
+};

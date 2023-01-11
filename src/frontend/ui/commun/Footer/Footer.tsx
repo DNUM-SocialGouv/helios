@@ -1,32 +1,20 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import '@gouvfr/dsfr/dist/component/footer/footer.min.css'
+import Image from "next/image";
+import Link from "next/link";
+import "@gouvfr/dsfr/dist/component/footer/footer.min.css";
 
-import { useDependencies } from '../contexts/useDependencies'
+import { useDependencies } from "../contexts/useDependencies";
 
 export const Footer = () => {
-  const { paths, wording } = useDependencies()
+  const { paths, wording } = useDependencies();
 
   return (
     <footer className="fr-footer fr-mt-6w">
       <div className="fr-container">
         <div className="fr-footer__body">
           <div className="fr-footer__brand fr-enlarge-link">
-            <p className="fr-logo">
-              {wording.INTITULÉ_RÉPUBLIQUE_FRANÇAISE}
-            </p>
-            <Link
-              className="fr-footer__brand-link"
-              href={paths.ACCUEIL}
-              passHref
-              title={wording.ACCUEIL}
-            >
-              <Image
-                alt=""
-                height="100"
-                src="/logo.svg"
-                width="100"
-              />
+            <p className="fr-logo">{wording.INTITULÉ_RÉPUBLIQUE_FRANÇAISE}</p>
+            <Link className="fr-footer__brand-link" href={paths.ACCUEIL} passHref title={wording.ACCUEIL}>
+              <Image alt="" height="100" src="/logo.svg" width="100" />
             </Link>
           </div>
           <div className="fr-footer__content">
@@ -81,39 +69,22 @@ export const Footer = () => {
         <div className="fr-footer__bottom">
           <ul className="fr-footer__bottom-list">
             <li className="fr-footer__bottom-item">
-              <Link
-                className="fr-footer__bottom-link"
-                href={paths.ACCESSIBILITÉ}
-                passHref
-              >
+              <Link className="fr-footer__bottom-link" href={paths.ACCESSIBILITÉ} passHref>
                 {`${wording.ACCESSIBILITÉ} : ${wording.NON_CONFORME}`}
               </Link>
             </li>
             <li className="fr-footer__bottom-item">
-              <Link
-                className="fr-footer__bottom-link"
-                href={paths.MENTIONS_LÉGALES}
-                passHref
-              >
+              <Link className="fr-footer__bottom-link" href={paths.MENTIONS_LÉGALES} passHref>
                 {wording.MENTIONS_LÉGALES}
               </Link>
             </li>
             <li className="fr-footer__bottom-item">
-              <Link
-                className="fr-footer__bottom-link"
-                href={paths.DONNÉES_PERSONNELLES}
-                passHref
-              >
+              <Link className="fr-footer__bottom-link" href={paths.DONNÉES_PERSONNELLES} passHref>
                 {wording.DONNÉES_PERSONNELLES}
               </Link>
             </li>
             <li className="fr-footer__bottom-item">
-              <a
-                className="fr-footer__bottom-link"
-                href="mailto:dnum.scn-helios-support@sg.social.gouv.fr"
-                rel="external noopener noreferrer"
-                target="_blank"
-              >
+              <a className="fr-footer__bottom-link" href="mailto:dnum.scn-helios-support@sg.social.gouv.fr" rel="external noopener noreferrer" target="_blank">
                 {wording.NOUS_CONTACTER}
               </a>
             </li>
@@ -134,5 +105,5 @@ export const Footer = () => {
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};

@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner } from 'typeorm'
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class PaginationDeLaRecherche1662736499297 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
@@ -39,7 +39,7 @@ export class PaginationDeLaRecherche1662736499297 implements MigrationInterface 
           commune,
           departement
         FROM etablissement_territorial;
-      `)
+      `);
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
@@ -70,6 +70,6 @@ export class PaginationDeLaRecherche1662736499297 implements MigrationInterface 
         ALTER TABLE etablissement_territorial DROP COLUMN termes_de_recherche;
 
         ALTER TABLE entite_juridique DROP COLUMN termes_de_recherche;
-      `)
+      `);
   }
 }

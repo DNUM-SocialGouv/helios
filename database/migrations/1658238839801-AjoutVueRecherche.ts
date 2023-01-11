@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner } from 'typeorm'
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class AjoutVueRecherche1658238839801 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
@@ -24,7 +24,7 @@ export class AjoutVueRecherche1658238839801 implements MigrationInterface {
         domaine::text AS type,
         to_tsvector('unaccent_helios', raison_sociale || ' ' || numero_finess_etablissement_territorial) AS termes
       FROM etablissement_territorial;
-    `)
+    `);
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
@@ -32,6 +32,6 @@ export class AjoutVueRecherche1658238839801 implements MigrationInterface {
       DROP VIEW recherche;
       DROP TEXT SEARCH CONFIGURATION unaccent_helios;
       DROP EXTENSION unaccent;
-    `)
+    `);
   }
 }

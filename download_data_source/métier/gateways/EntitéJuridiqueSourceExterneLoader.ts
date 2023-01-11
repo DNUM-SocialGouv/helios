@@ -1,6 +1,6 @@
-import { EntitéJuridique } from '../entities/EntitéJuridique'
+import { EntitéJuridique } from "../entities/EntitéJuridique";
 
 export interface EntitéJuridiqueSourceExterneLoader {
-  récupèreLesEntitésJuridiquesOuvertes(): EntitéJuridique[]
-  récupèreLaDateDeMiseÀJourDuFichierSource(): string
+  récupèreLesEntitésJuridiquesOuvertes(): EntitéJuridique[];
+  récupèreLaDateDeMiseÀJourDuFichierSource(): string;
 }

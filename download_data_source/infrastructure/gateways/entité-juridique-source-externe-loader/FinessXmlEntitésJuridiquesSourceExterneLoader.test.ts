@@ -1,20 +1,20 @@
-import { mkdirSync, rmSync, writeFileSync } from 'fs'
+import { mkdirSync, rmSync, writeFileSync } from "fs";
 
-import { EntitéJuridique } from '../../../métier/entities/EntitéJuridique'
-import { fakeLogger, getFakeDataCrawlerDependencies } from '../../../testHelper'
-import { NodeXmlToJs } from '../xml-to-js/NodeXmlToJs'
-import { FinessXmlEntitéJuridiqueSourceExterneLoader } from './FinessXmlEntitéJuridiqueSourceExterneLoader'
+import { EntitéJuridique } from "../../../métier/entities/EntitéJuridique";
+import { fakeLogger, getFakeDataCrawlerDependencies } from "../../../testHelper";
+import { NodeXmlToJs } from "../xml-to-js/NodeXmlToJs";
+import { FinessXmlEntitéJuridiqueSourceExterneLoader } from "./FinessXmlEntitéJuridiqueSourceExterneLoader";
 
-describe('Récupération des entités juridiques de la source de données FINESS', () => {
-  const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
-  const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_ej`
-  const finessLocalPath = `${localPath}/finess/simple`
+describe("Récupération des entités juridiques de la source de données FINESS", () => {
+  const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies();
+  const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_ej`;
+  const finessLocalPath = `${localPath}/finess/simple`;
 
   afterEach(() => {
-    rmSync(localPath, { recursive: true })
-  })
+    rmSync(localPath, { recursive: true });
+  });
 
-  it('récupère uniquement les entités juridiques ouvertes de la source de données FINESS', () => {
+  it("récupère uniquement les entités juridiques ouvertes de la source de données FINESS", () => {
     // GIVEN
     const ejOuverte1 = `<structureej>
         <nofiness>010008407</nofiness>
@@ -31,7 +31,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
         <categetab>355</categetab>
         <siren>260104631</siren>
         <datefermeture xsi:nil="true"/>
-      </structureej>`
+      </structureej>`;
     const ejOuverte2 = `<structureej>
         <nofiness>590000741</nofiness>
         <rs>HOPITAL PRIVE DE VILLENEUVE D'ASCQ</rs>
@@ -47,7 +47,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
         <categetab xsi:nil="true"/>
         <siren>260104632</siren>
         <datefermeture xsi:nil="true"/>
-      </structureej>`
+      </structureej>`;
     const ejFermée = `<structureej>
         <nofiness>010000164</nofiness>
         <rs>[Fermé] POLYCLINIQUE D'AMBERIEU</rs>
@@ -63,55 +63,53 @@ describe('Récupération des entités juridiques de la source de données FINESS
         <categetab xsi:nil="true"/>
         <siren>260104630</siren>
         <datefermeture>2002-07-10</datefermeture>
-      </structureej>`
+      </structureej>`;
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
     <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
       ${ejOuverte1}
       ${ejOuverte2}
       ${ejFermée}
-    </fluxfiness>`
-    mkdirSync(finessLocalPath, { recursive: true })
-    writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, xml)
+    </fluxfiness>`;
+    mkdirSync(finessLocalPath, { recursive: true });
+    writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, xml);
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger)
-    const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes()
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
+    const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes();
 
     // THEN
-    expect(entitésJuridiques).toStrictEqual<EntitéJuridique[]>(
-      [
-        {
-          adresseAcheminement: '01117 OYONNAX CEDEX',
-          adresseNuméroVoie: '1',
-          adresseTypeVoie: 'RTE',
-          adresseVoie: 'DE VEYZIAT',
-          commune: 'OYONNAX',
-          département: 'AIN',
-          libelléStatutJuridique: "Etablissement Public Intercommunal d'Hospitalisation",
-          numéroFinessEntitéJuridique: '010008407',
-          raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY',
-          raisonSocialeCourte: 'CH DU HAUT BUGEY',
-          siren: '260104631',
-          téléphone: '0474731001',
-        },
-        {
-          adresseAcheminement: '59650 VILLENEUVE D ASCQ',
-          adresseNuméroVoie: '20',
-          adresseTypeVoie: 'AV',
-          adresseVoie: 'DE LA RECONNAISSANCE',
-          commune: 'VILLENEUVE D ASCQ',
-          département: 'NORD',
-          libelléStatutJuridique: 'Société Anonyme (S.A.)',
-          numéroFinessEntitéJuridique: '590000741',
-          raisonSociale: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
-          raisonSocialeCourte: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
-          siren: '260104632',
-          téléphone: '0826666900',
-        },
-      ]
-    )
-  })
+    expect(entitésJuridiques).toStrictEqual<EntitéJuridique[]>([
+      {
+        adresseAcheminement: "01117 OYONNAX CEDEX",
+        adresseNuméroVoie: "1",
+        adresseTypeVoie: "RTE",
+        adresseVoie: "DE VEYZIAT",
+        commune: "OYONNAX",
+        département: "AIN",
+        libelléStatutJuridique: "Etablissement Public Intercommunal d'Hospitalisation",
+        numéroFinessEntitéJuridique: "010008407",
+        raisonSociale: "CENTRE HOSPITALIER DU HAUT BUGEY",
+        raisonSocialeCourte: "CH DU HAUT BUGEY",
+        siren: "260104631",
+        téléphone: "0474731001",
+      },
+      {
+        adresseAcheminement: "59650 VILLENEUVE D ASCQ",
+        adresseNuméroVoie: "20",
+        adresseTypeVoie: "AV",
+        adresseVoie: "DE LA RECONNAISSANCE",
+        commune: "VILLENEUVE D ASCQ",
+        département: "NORD",
+        libelléStatutJuridique: "Société Anonyme (S.A.)",
+        numéroFinessEntitéJuridique: "590000741",
+        raisonSociale: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
+        raisonSocialeCourte: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
+        siren: "260104632",
+        téléphone: "0826666900",
+      },
+    ]);
+  });
 
-  it('ne renvoie pas de valeur lorsque la valeur d’un champ n’est pas renseignée', () => {
+  it("ne renvoie pas de valeur lorsque la valeur d’un champ n’est pas renseignée", () => {
     // GIVEN
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
     <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -189,49 +187,47 @@ describe('Récupération des entités juridiques de la source de données FINESS
         <typefermeture xsi:nil="true"/>
         <qualifcreation>GEN</qualifcreation>
       </structureej>
-    </fluxfiness>`
-    mkdirSync(finessLocalPath, { recursive: true })
-    writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, xml)
+    </fluxfiness>`;
+    mkdirSync(finessLocalPath, { recursive: true });
+    writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, xml);
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger)
-    const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes()
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
+    const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes();
 
     // THEN
-    expect(entitésJuridiques).toStrictEqual<EntitéJuridique[]>(
-      [
-        {
-          adresseAcheminement: '01117 OYONNAX CEDEX',
-          adresseNuméroVoie: '',
-          adresseTypeVoie: 'RTE',
-          adresseVoie: 'DE VEYZIAT',
-          commune: 'OYONNAX',
-          département: 'AIN',
-          libelléStatutJuridique: "Etablissement Public Intercommunal d'Hospitalisation",
-          numéroFinessEntitéJuridique: '010008407',
-          raisonSociale: 'CENTRE HOSPITALIER DU HAUT BUGEY',
-          raisonSocialeCourte: 'CH DU HAUT BUGEY',
-          siren: '260110218',
-          téléphone: '',
-        },
-        {
-          adresseAcheminement: '59650 VILLENEUVE D ASCQ',
-          adresseNuméroVoie: '20',
-          adresseTypeVoie: 'AV',
-          adresseVoie: 'DE LA RECONNAISSANCE',
-          commune: 'VILLENEUVE D ASCQ',
-          département: 'NORD',
-          libelléStatutJuridique: 'Société Anonyme (S.A.)',
-          numéroFinessEntitéJuridique: '590000741',
-          raisonSociale: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
-          raisonSocialeCourte: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
-          siren: '476780333',
-          téléphone: '0826666900',
-        },
-      ]
-    )
-  })
+    expect(entitésJuridiques).toStrictEqual<EntitéJuridique[]>([
+      {
+        adresseAcheminement: "01117 OYONNAX CEDEX",
+        adresseNuméroVoie: "",
+        adresseTypeVoie: "RTE",
+        adresseVoie: "DE VEYZIAT",
+        commune: "OYONNAX",
+        département: "AIN",
+        libelléStatutJuridique: "Etablissement Public Intercommunal d'Hospitalisation",
+        numéroFinessEntitéJuridique: "010008407",
+        raisonSociale: "CENTRE HOSPITALIER DU HAUT BUGEY",
+        raisonSocialeCourte: "CH DU HAUT BUGEY",
+        siren: "260110218",
+        téléphone: "",
+      },
+      {
+        adresseAcheminement: "59650 VILLENEUVE D ASCQ",
+        adresseNuméroVoie: "20",
+        adresseTypeVoie: "AV",
+        adresseVoie: "DE LA RECONNAISSANCE",
+        commune: "VILLENEUVE D ASCQ",
+        département: "NORD",
+        libelléStatutJuridique: "Société Anonyme (S.A.)",
+        numéroFinessEntitéJuridique: "590000741",
+        raisonSociale: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
+        raisonSocialeCourte: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
+        siren: "476780333",
+        téléphone: "0826666900",
+      },
+    ]);
+  });
 
-  it('récupère la raison sociale écourtée si la raison sociale longue n’est pas renseignée', () => {
+  it("récupère la raison sociale écourtée si la raison sociale longue n’est pas renseignée", () => {
     // GIVEN
     const entitéSansRaisonSocialeLongue1 = `<structureej>
         <nofiness>010008407</nofiness>
@@ -248,7 +244,7 @@ describe('Récupération des entités juridiques de la source de données FINESS
         <categetab>355</categetab>
         <siren>260104631</siren>
         <datefermeture xsi:nil="true"/>
-      </structureej>`
+      </structureej>`;
     const entitéSansRaisonSocialeLongue2 = `<structureej>
         <nofiness>590000741</nofiness>
         <rs>HOPITAL PRIVE DE VILLENEUVE D'ASCQ</rs>
@@ -264,64 +260,62 @@ describe('Récupération des entités juridiques de la source de données FINESS
         <categetab xsi:nil="true"/>
         <siren>260104632</siren>
         <datefermeture xsi:nil="true"/>
-      </structureej>`
+      </structureej>`;
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
       <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         ${entitéSansRaisonSocialeLongue1}
         ${entitéSansRaisonSocialeLongue2}
-      </fluxfiness>`
-    mkdirSync(finessLocalPath, { recursive: true })
-    writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, xml)
+      </fluxfiness>`;
+    mkdirSync(finessLocalPath, { recursive: true });
+    writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, xml);
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger)
-    const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes()
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
+    const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes();
 
     // THEN
-    expect(entitésJuridiques).toStrictEqual<EntitéJuridique[]>(
-      [
-        {
-          adresseAcheminement: '01117 OYONNAX CEDEX',
-          adresseNuméroVoie: '1',
-          adresseTypeVoie: 'RTE',
-          adresseVoie: 'DE VEYZIAT',
-          commune: 'OYONNAX',
-          département: 'AIN',
-          libelléStatutJuridique: "Etablissement Public Intercommunal d'Hospitalisation",
-          numéroFinessEntitéJuridique: '010008407',
-          raisonSociale: 'CH DU HAUT BUGEY',
-          raisonSocialeCourte: 'CH DU HAUT BUGEY',
-          siren: '260104631',
-          téléphone: '0474731001',
-        },
-        {
-          adresseAcheminement: '59650 VILLENEUVE D ASCQ',
-          adresseNuméroVoie: '20',
-          adresseTypeVoie: 'AV',
-          adresseVoie: 'DE LA RECONNAISSANCE',
-          commune: 'VILLENEUVE D ASCQ',
-          département: 'NORD',
-          libelléStatutJuridique: 'Société Anonyme (S.A.)',
-          numéroFinessEntitéJuridique: '590000741',
-          raisonSociale: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
-          raisonSocialeCourte: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
-          siren: '260104632',
-          téléphone: '0826666900',
-        },
-      ]
-    )
-  })
+    expect(entitésJuridiques).toStrictEqual<EntitéJuridique[]>([
+      {
+        adresseAcheminement: "01117 OYONNAX CEDEX",
+        adresseNuméroVoie: "1",
+        adresseTypeVoie: "RTE",
+        adresseVoie: "DE VEYZIAT",
+        commune: "OYONNAX",
+        département: "AIN",
+        libelléStatutJuridique: "Etablissement Public Intercommunal d'Hospitalisation",
+        numéroFinessEntitéJuridique: "010008407",
+        raisonSociale: "CH DU HAUT BUGEY",
+        raisonSocialeCourte: "CH DU HAUT BUGEY",
+        siren: "260104631",
+        téléphone: "0474731001",
+      },
+      {
+        adresseAcheminement: "59650 VILLENEUVE D ASCQ",
+        adresseNuméroVoie: "20",
+        adresseTypeVoie: "AV",
+        adresseVoie: "DE LA RECONNAISSANCE",
+        commune: "VILLENEUVE D ASCQ",
+        département: "NORD",
+        libelléStatutJuridique: "Société Anonyme (S.A.)",
+        numéroFinessEntitéJuridique: "590000741",
+        raisonSociale: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
+        raisonSocialeCourte: "HOPITAL PRIVE DE VILLENEUVE D'ASCQ",
+        siren: "260104632",
+        téléphone: "0826666900",
+      },
+    ]);
+  });
 
-  it('récupère la date de mise à jour du fichier source', () => {
+  it("récupère la date de mise à jour du fichier source", () => {
     // GIVEN
-    mkdirSync(finessLocalPath, { recursive: true })
-    writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, 'empty file')
+    mkdirSync(finessLocalPath, { recursive: true });
+    writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, "empty file");
 
-    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger)
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
 
     // WHEN
-    const dateDeMiseÀJourDuFichierSource = entitéJuridiqueFinessLoader.récupèreLaDateDeMiseÀJourDuFichierSource()
+    const dateDeMiseÀJourDuFichierSource = entitéJuridiqueFinessLoader.récupèreLaDateDeMiseÀJourDuFichierSource();
 
     // THEN
-    expect(dateDeMiseÀJourDuFichierSource).toBe('20211214')
-  })
-})
+    expect(dateDeMiseÀJourDuFichierSource).toBe("20211214");
+  });
+});

@@ -1,3 +1,3 @@
 export interface XmlToJs {
-  exécute<T>(xmlPath: string): T
+  exécute<T>(xmlPath: string): T;
 }

@@ -1,4 +1,4 @@
-import { ViewColumn, ViewEntity } from 'typeorm'
+import { ViewColumn, ViewEntity } from "typeorm";
 
 @ViewEntity({
   expression: `CREATE OR REPLACE VIEW recherche AS
@@ -19,21 +19,21 @@ import { ViewColumn, ViewEntity } from 'typeorm'
       commune,
       departement
     FROM etablissement_territorial;`,
-  name: 'recherche',
+  name: "recherche",
 })
 export class RechercheModel {
-  @ViewColumn({ name: 'commune' })
-  public commune!: string
+  @ViewColumn({ name: "commune" })
+  public commune!: string;
 
-  @ViewColumn({ name: 'departement' })
-  public département!: string
+  @ViewColumn({ name: "departement" })
+  public département!: string;
 
-  @ViewColumn({ name: 'numero_finess' })
-  public numeroFiness!: string
+  @ViewColumn({ name: "numero_finess" })
+  public numeroFiness!: string;
 
-  @ViewColumn({ name: 'raison_sociale_courte' })
-  public raisonSocialeCourte!: string
+  @ViewColumn({ name: "raison_sociale_courte" })
+  public raisonSocialeCourte!: string;
 
-  @ViewColumn({ name: 'type' })
-  public type!: string
+  @ViewColumn({ name: "type" })
+  public type!: string;
 }

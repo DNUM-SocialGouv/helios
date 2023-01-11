@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner } from 'typeorm'
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class AjoutDatesMisesÀJourParFichier1658996326544 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
@@ -13,13 +13,13 @@ export class AjoutDatesMisesÀJourParFichier1658996326544 implements MigrationIn
         CONSTRAINT fichier_primary_key
           PRIMARY KEY (fichier)
       );
-    `)
+    `);
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
       DROP TABLE date_mise_a_jour_fichier_source;
         DROP TYPE fichier_source;
-    `)
+    `);
   }
 }

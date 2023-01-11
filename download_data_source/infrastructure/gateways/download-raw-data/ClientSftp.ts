@@ -1,4 +1,4 @@
-import { ConnectOptions, FileInfo, FastGetTransferOptions } from 'ssh2-sftp-client'
+import { ConnectOptions, FileInfo, FastGetTransferOptions } from "ssh2-sftp-client";
 
 export interface ClientSftp {
   connect(options: ConnectOptions): Promise<any>;

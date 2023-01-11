@@ -1,68 +1,78 @@
-import { ActiveElement, ArcElement, BarElement, CategoryScale, Chart as ChartJS, ChartData, ChartEvent, ChartOptions, Legend, LegendItem, LinearScale, LineController, LineElement, PointElement, Title, Tooltip } from 'chart.js'
-import ChartDataLabels, { Context } from 'chartjs-plugin-datalabels'
-import { ReactElement } from 'react'
-import { Bar, Doughnut } from 'react-chartjs-2'
+import {
+  ActiveElement,
+  ArcElement,
+  BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  ChartData,
+  ChartEvent,
+  ChartOptions,
+  Legend,
+  LegendItem,
+  LinearScale,
+  LineController,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+} from "chart.js";
+import ChartDataLabels, { Context } from "chartjs-plugin-datalabels";
+import { ReactElement } from "react";
+import { Bar, Doughnut } from "react-chartjs-2";
 
-import '@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css'
+import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
-import { Wording } from '../../../configuration/wording/Wording'
-import { MiseEnExergue } from '../MiseEnExergue/MiseEnExergue'
-import { StringFormater } from '../StringFormater'
-import { TableIndicateur } from '../TableIndicateur/TableIndicateur'
-import styles from './GraphiqueViewModel.module.css'
+import { Wording } from "../../../configuration/wording/Wording";
+import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
+import { StringFormater } from "../StringFormater";
+import { TableIndicateur } from "../TableIndicateur/TableIndicateur";
+import styles from "./GraphiqueViewModel.module.css";
 
 export type LibelléDeDonnéeGraphe = Readonly<{
-  couleur: string
-}>
+  couleur: string;
+}>;
 
 export type LibelléDeTickGraphe = Readonly<{
-  tailleDePolice: string
-}>
+  tailleDePolice: string;
+}>;
 
 export type CouleurHistogramme = Readonly<{
-  premierPlan: string
-  secondPlan: string
-}>
+  premierPlan: string;
+  secondPlan: string;
+}>;
 
 export class GraphiqueViewModel {
-  protected readonly SEUIL_DE_CONTRASTE_DES_LIBELLÉS_DES_TAUX = 20
-  readonly ratioMinHistogrammeHorizontal = 2
-  readonly ratioMaxHistogrammeHorizontal = 15
-  readonly facteurDiminutionHistogrammeHorizontal = 1.5
-  readonly couleurDuFond = '#E8EDFF'
-  readonly couleurDeFondDuBloc = '#F6F6F6'
-  readonly couleurDuFondHistogrammePrimaire = '#000091'
-  readonly couleurDuFondHistogrammeSecondaire = '#4E68BB'
-  readonly couleurDuFondDeLaLigne = '#929292'
-  readonly couleurDuFondHistogrammeDeDépassement = '#C9191E'
-  readonly couleurDuFondHistogrammeDeDépassementTransparent = 'rgba(201, 25, 30, 0.5)'
-  readonly couleurSecondPlanHistogrammeDeDépassement = '#FFE9E9'
-  readonly couleurDelAbscisse = '#161616'
-  readonly couleurDeLaValeur = '#3A3A3A'
-  readonly couleurIdentifiant = '#000'
-  readonly policeGrasse = 'bold'
-  readonly policeNormale = 'normal'
-  readonly borneMaximaleDeLHistogrammeVertical = 105
-  private readonly AUCUN_ARC_SURVOLÉ = -1
-  private indexDeLArcSurvolé = this.AUCUN_ARC_SURVOLÉ
+  protected readonly SEUIL_DE_CONTRASTE_DES_LIBELLÉS_DES_TAUX = 20;
+  readonly ratioMinHistogrammeHorizontal = 2;
+  readonly ratioMaxHistogrammeHorizontal = 15;
+  readonly facteurDiminutionHistogrammeHorizontal = 1.5;
+  readonly couleurDuFond = "#E8EDFF";
+  readonly couleurDeFondDuBloc = "#F6F6F6";
+  readonly couleurDuFondHistogrammePrimaire = "#000091";
+  readonly couleurDuFondHistogrammeSecondaire = "#4E68BB";
+  readonly couleurDuFondDeLaLigne = "#929292";
+  readonly couleurDuFondHistogrammeDeDépassement = "#C9191E";
+  readonly couleurDuFondHistogrammeDeDépassementTransparent = "rgba(201, 25, 30, 0.5)";
+  readonly couleurSecondPlanHistogrammeDeDépassement = "#FFE9E9";
+  readonly couleurDelAbscisse = "#161616";
+  readonly couleurDeLaValeur = "#3A3A3A";
+  readonly couleurIdentifiant = "#000";
+  readonly policeGrasse = "bold";
+  readonly policeNormale = "normal";
+  readonly borneMaximaleDeLHistogrammeVertical = 105;
+  private readonly AUCUN_ARC_SURVOLÉ = -1;
+  private indexDeLArcSurvolé = this.AUCUN_ARC_SURVOLÉ;
   protected readonly couleurDesArcsDuDonut = {
-    opaque: [
-      '#99B3F9',
-      '#667DCF',
-      '#465F9D',
-      '#2F4077',
-      '#273563',
-      '#161D37',
-    ],
+    opaque: ["#99B3F9", "#667DCF", "#465F9D", "#2F4077", "#273563", "#161D37"],
     transparent: [
-      'rgba(153, 179, 249, 0.5)',
-      'rgba(102, 125, 207, 0.5)',
-      'rgba(70, 95, 157, 0.5)',
-      'rgba(47, 64, 119, 0.5)',
-      'rgba(39, 53, 99, 0.5)',
-      'rgba(22, 29, 55, 0.5)',
+      "rgba(153, 179, 249, 0.5)",
+      "rgba(102, 125, 207, 0.5)",
+      "rgba(70, 95, 157, 0.5)",
+      "rgba(47, 64, 119, 0.5)",
+      "rgba(39, 53, 99, 0.5)",
+      "rgba(22, 29, 55, 0.5)",
     ],
-  }
+  };
   private readonly associeLaCouleurTransparente: Record<string, string> = {
     [this.couleurDesArcsDuDonut.opaque[0]]: this.couleurDesArcsDuDonut.transparent[0],
     [this.couleurDesArcsDuDonut.opaque[1]]: this.couleurDesArcsDuDonut.transparent[1],
@@ -71,7 +81,7 @@ export class GraphiqueViewModel {
     [this.couleurDesArcsDuDonut.opaque[4]]: this.couleurDesArcsDuDonut.transparent[4],
     [this.couleurDesArcsDuDonut.opaque[5]]: this.couleurDesArcsDuDonut.transparent[5],
     [this.couleurDuFondHistogrammeDeDépassement]: this.couleurDuFondHistogrammeDeDépassementTransparent,
-  }
+  };
   private readonly associeLaCouleurOpaque: Record<string, string> = {
     [this.couleurDesArcsDuDonut.transparent[0]]: this.couleurDesArcsDuDonut.opaque[0],
     [this.couleurDesArcsDuDonut.transparent[1]]: this.couleurDesArcsDuDonut.opaque[1],
@@ -80,7 +90,7 @@ export class GraphiqueViewModel {
     [this.couleurDesArcsDuDonut.transparent[4]]: this.couleurDesArcsDuDonut.opaque[4],
     [this.couleurDesArcsDuDonut.transparent[5]]: this.couleurDesArcsDuDonut.opaque[5],
     [this.couleurDuFondHistogrammeDeDépassementTransparent]: this.couleurDuFondHistogrammeDeDépassement,
-  }
+  };
 
   constructor(protected readonly wording: Wording) {
     ChartJS.register(
@@ -97,7 +107,7 @@ export class GraphiqueViewModel {
       Tooltip,
       this.construisLePluginDeLégende(),
       this.construisLePluginDeTexteAuCentreDuDonut()
-    )
+    );
   }
 
   protected afficheUnCarrousel(
@@ -111,56 +121,56 @@ export class GraphiqueViewModel {
     annéesManquantes: number[] | string[],
     nombreDAnnéeTotale: number = 3
   ): ReactElement {
-    ChartJS.unregister()
+    ChartJS.unregister();
     const chartColorsGauche = valeursDeGauche.map((valeurDeGauche, index) => {
-      return (valeurDeGauche <= 0) ? chartColors[index] : this.couleurDuFondHistogrammeDeDépassement
-    })
+      return valeurDeGauche <= 0 ? chartColors[index] : this.couleurDuFondHistogrammeDeDépassement;
+    });
     const chartColorsDroite = valeursDeDroite.map((valeurDeDroite, index) => {
-      return (valeurDeDroite >= 0) ? chartColors[index] : this.couleurDuFondHistogrammeDeDépassement
-    })
+      return valeurDeDroite >= 0 ? chartColors[index] : this.couleurDuFondHistogrammeDeDépassement;
+    });
     const datalabelsColorsGauche = valeursDeGauche.map((valeurDeGauche) => {
-      return (valeurDeGauche <= 0) ? this.couleurDeLaValeur : this.couleurDuFondHistogrammeDeDépassement
-    })
+      return valeurDeGauche <= 0 ? this.couleurDeLaValeur : this.couleurDuFondHistogrammeDeDépassement;
+    });
     const datalabelsColorsDroite = valeursDeDroite.map((valeurDeDroite) => {
-      return (valeurDeDroite >= 0) ? this.couleurDeLaValeur : this.couleurDuFondHistogrammeDeDépassement
-    })
+      return valeurDeDroite >= 0 ? this.couleurDeLaValeur : this.couleurDuFondHistogrammeDeDépassement;
+    });
     const dataGauche: ChartData = {
       datasets: [
         {
           backgroundColor: chartColorsGauche,
           data: valeursDeGauche.map((valeurDeGauche) => Math.abs(valeurDeGauche)),
           datalabels: {
-            font: { weight: 'bold' },
+            font: { weight: "bold" },
             formatter: (valeurDeGauche) => {
-              const valeurDeGaucheSignée = valeursDeGauche.includes(valeurDeGauche) ? valeurDeGauche : valeurDeGauche * -1
-              return StringFormater.formateLeMontantEnEuros(valeurDeGaucheSignée)
+              const valeurDeGaucheSignée = valeursDeGauche.includes(valeurDeGauche) ? valeurDeGauche : valeurDeGauche * -1;
+              return StringFormater.formateLeMontantEnEuros(valeurDeGaucheSignée);
             },
             labels: { title: { color: datalabelsColorsGauche } },
           },
           maxBarThickness: 60,
-          type: 'bar',
-          yAxisID: 'y',
+          type: "bar",
+          yAxisID: "y",
         },
       ],
       labels: libellés,
-    }
+    };
     const dataDroite: ChartData = {
       datasets: [
         {
           backgroundColor: chartColorsDroite,
           data: valeursDeDroite,
           datalabels: {
-            font: { weight: 'bold' },
+            font: { weight: "bold" },
             formatter: (valeurDeDroite) => StringFormater.formateLeMontantEnEuros(valeurDeDroite),
             labels: { title: { color: datalabelsColorsDroite } },
           },
           maxBarThickness: 60,
-          type: 'bar',
-          yAxisID: 'y',
+          type: "bar",
+          yAxisID: "y",
         },
       ],
       labels: libellés,
-    }
+    };
     const valeursTableau = [
       [
         StringFormater.formateLeMontantEnEuros(valeursDeGauche[0]),
@@ -174,12 +184,12 @@ export class GraphiqueViewModel {
         StringFormater.formateLeMontantEnEuros(valeursDeDroite[2]),
         StringFormater.formateLeMontantEnEuros(valeursDeDroite[3]),
       ],
-    ]
+    ];
 
     return (
       <>
-        {annéesManquantes.length < nombreDAnnéeTotale &&
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 50%)' }}>
+        {annéesManquantes.length < nombreDAnnéeTotale && (
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 50%)" }}>
             <div>
               <Bar
                 // @ts-ignore
@@ -187,7 +197,7 @@ export class GraphiqueViewModel {
                 options={this.optionsHistogrammeHorizontal(
                   ratioLargeurSurHauteur,
                   Math.max(...valeursDeGauche.map(Number), ...valeursDeDroite.map(Number)) * 1.1,
-                  ['400'],
+                  ["400"],
                   entêtesDesAutresColonnes[0]
                 )}
                 redraw={true}
@@ -200,19 +210,15 @@ export class GraphiqueViewModel {
                 options={this.optionsHistogrammeHorizontal(
                   ratioLargeurSurHauteur,
                   Math.max(...valeursDeGauche.map(Number), ...valeursDeDroite.map(Number)),
-                  ['400'],
+                  ["400"],
                   entêtesDesAutresColonnes[1]
                 )}
                 redraw={true}
               />
             </div>
           </div>
-        }
-        {annéesManquantes.length > 0 && (
-          <MiseEnExergue>
-            {`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}
-          </MiseEnExergue>
         )}
+        {annéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
         <TableIndicateur
           disabled={annéesManquantes.length === nombreDAnnéeTotale}
           entêteLibellé={entêtePremièreColonne}
@@ -222,7 +228,7 @@ export class GraphiqueViewModel {
           valeurs={valeursTableau}
         />
       </>
-    )
+    );
   }
 
   protected afficheUnHistogrammeVertical(
@@ -246,29 +252,29 @@ export class GraphiqueViewModel {
             { x: 2, y: 100 },
           ],
           datalabels: { display: false },
-          type: 'line',
-          xAxisID: 'xLine',
+          type: "line",
+          xAxisID: "xLine",
         },
         {
           backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
           data: valeurs,
           datalabels: { labels: { title: { color: libellésDesValeurs.map((libellé) => libellé.couleur) } } },
           maxBarThickness: 60,
-          type: 'bar',
-          xAxisID: 'x',
+          type: "bar",
+          xAxisID: "x",
         },
         {
           backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.secondPlan),
           data: Array(valeurs.length).fill(100),
           datalabels: { display: false },
           maxBarThickness: 60,
-          type: 'bar',
-          xAxisID: 'x',
+          type: "bar",
+          xAxisID: "x",
         },
       ],
       labels: libellés,
-    }
-    const annéesManquantes = this.annéesManquantes(libellés, annéesTotales)
+    };
+    const annéesManquantes = this.annéesManquantes(libellés, annéesTotales);
 
     return (
       <>
@@ -279,9 +285,7 @@ export class GraphiqueViewModel {
             options={this.optionsHistogrammeVertical(libellésDesTicks.map((libelléDuTick) => libelléDuTick.tailleDePolice))}
           />
         )}
-        {annéesManquantes.length > 0 && <MiseEnExergue>
-          {`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(', ')}`}
-        </MiseEnExergue>}
+        {annéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
         <TableIndicateur
           disabled={annéesManquantes.length === annéesTotales}
           entêteLibellé={entêteLibellé}
@@ -290,7 +294,7 @@ export class GraphiqueViewModel {
           valeurs={[StringFormater.ajouteLePourcentage(valeurs)]}
         />
       </>
-    )
+    );
   }
 
   protected construisLesCouleursDeLHistogramme(
@@ -299,12 +303,12 @@ export class GraphiqueViewModel {
     calculeLaCouleurDesBarresDeLHistogramme: (valeur: number, libellés: number | string) => CouleurHistogramme
   ): CouleurHistogramme[] {
     return valeurs.map((valeur: number, index: number) => {
-      return calculeLaCouleurDesBarresDeLHistogramme(valeur, libellés[index])
-    })
+      return calculeLaCouleurDesBarresDeLHistogramme(valeur, libellés[index]);
+    });
   }
 
   protected estCeLAnnéePassée(année: number | string): boolean {
-    return new Date().getFullYear() - 1 === Number(année)
+    return new Date().getFullYear() - 1 === Number(année);
   }
 
   protected afficheUnHistogrammeHorizontal(
@@ -326,13 +330,13 @@ export class GraphiqueViewModel {
           data: valeurs,
           datalabels: { labels: { title: { color: libellésDesValeurs.map((libellé) => libellé.couleur) } } },
           maxBarThickness: 60,
-          type: 'bar',
-          yAxisID: 'y',
+          type: "bar",
+          yAxisID: "y",
         },
       ],
       labels: libellés,
-    }
-    const valeursFrançaises = StringFormater.formateEnFrançais(valeurs)
+    };
+    const valeursFrançaises = StringFormater.formateEnFrançais(valeurs);
 
     return (
       <>
@@ -348,9 +352,7 @@ export class GraphiqueViewModel {
           />
         )}
         {libellésDeValeursManquantes.length > 0 && (
-          <MiseEnExergue>
-            {`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${libellésDeValeursManquantes.join(', ')}`}
-          </MiseEnExergue>
+          <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${libellésDeValeursManquantes.join(", ")}`}</MiseEnExergue>
         )}
         <TableIndicateur
           disabled={libellésDeValeursManquantes.length === nombreDeLibelléTotal}
@@ -360,7 +362,7 @@ export class GraphiqueViewModel {
           valeurs={[valeursFrançaises]}
         />
       </>
-    )
+    );
   }
 
   protected afficheDeuxHistogrammesHorizontaux(
@@ -378,20 +380,20 @@ export class GraphiqueViewModel {
           backgroundColor: chartColors,
           data: donnéesDeGauche,
           datalabels: { labels: { title: { color: this.couleurDeLaValeur } } },
-          type: 'bar',
-          xAxisID: 'x2',
+          type: "bar",
+          xAxisID: "x2",
         },
         {
           backgroundColor: chartColors,
           data: donnéesDeDroite,
           datalabels: { labels: { title: { color: this.couleurDeLaValeur } } },
-          type: 'bar',
-          xAxisID: 'x',
+          type: "bar",
+          xAxisID: "x",
         },
       ],
-      labels: libellés.map((libellé) => libellé + '   '),
-    }
-    const valeurs = [StringFormater.formateEnFrançais(donnéesDeGauche), StringFormater.formateEnFrançais(donnéesDeDroite)]
+      labels: libellés.map((libellé) => libellé + "   "),
+    };
+    const valeurs = [StringFormater.formateEnFrançais(donnéesDeGauche), StringFormater.formateEnFrançais(donnéesDeDroite)];
 
     return (
       <>
@@ -406,14 +408,9 @@ export class GraphiqueViewModel {
             )}
           />
         </div>
-        <TableIndicateur
-          entêteLibellé={entêteLibellé}
-          identifiants={identifiants}
-          libellés={libellés}
-          valeurs={valeurs}
-        />
+        <TableIndicateur entêteLibellé={entêteLibellé} identifiants={identifiants} libellés={libellés} valeurs={valeurs} />
       </>
-    )
+    );
   }
 
   protected afficheUnDiagrammeEnDonut(
@@ -425,7 +422,7 @@ export class GraphiqueViewModel {
     total: number,
     idDeLaLégende: string
   ): JSX.Element {
-    const data: ChartData<'doughnut', number[], string> = {
+    const data: ChartData<"doughnut", number[], string> = {
       datasets: [
         {
           backgroundColor: couleursDuDoughnut.map((couleur) => couleur.premierPlan),
@@ -434,145 +431,141 @@ export class GraphiqueViewModel {
           data: valeurs,
           datalabels: { labels: { title: { color: libellésDesValeurs.map((libellé) => libellé.couleur) } } },
           hoverBackgroundColor: couleursDuDoughnut.map((couleur) => couleur.premierPlan),
-          type: 'doughnut',
+          type: "doughnut",
         },
       ],
       labels: libellés,
-    }
+    };
 
-    return <div className={styles['donut-wrapper']}>
-      <div>
-        <Doughnut
-          data={data}
-          options={this.optionsDiagrammeDoughnut(texteCentral, total, idDeLaLégende)}
-        />
+    return (
+      <div className={styles["donut-wrapper"]}>
+        <div>
+          <Doughnut data={data} options={this.optionsDiagrammeDoughnut(texteCentral, total, idDeLaLégende)} />
+        </div>
+        <menu className={styles["légende-donut"]} id={idDeLaLégende} />
       </div>
-      <menu
-        className={styles['légende-donut']}
-        id={idDeLaLégende}
-      />
-    </div>
+    );
   }
 
   protected construisLesLibellés(textes: (number | string)[], valeurs: number[], taillesDePolice: string[]): LibelléDeTickGraphe[] {
-    const maxAvantDePerdreLeContraste = 20
+    const maxAvantDePerdreLeContraste = 20;
 
     return textes.map((texte, index) => {
       return {
-        couleur: valeurs[index] < maxAvantDePerdreLeContraste ? 'black' : this.couleurDeLaValeur,
+        couleur: valeurs[index] < maxAvantDePerdreLeContraste ? "black" : this.couleurDeLaValeur,
         tailleDePolice: taillesDePolice[index],
         texte,
-      }
-    })
+      };
+    });
   }
 
   protected construisLaCouleurDuLabel(valeurs: number[], seuilMaximal: number, estHorizontal: boolean = false): string[] {
-    const maxAvantDePerdreLeContraste = 0.2 * seuilMaximal
-    const couleurDesAnnées = estHorizontal ? Array(valeurs.length).fill(this.couleurDeLaValeur) : Array(valeurs.length).fill(this.couleurDuFond)
+    const maxAvantDePerdreLeContraste = 0.2 * seuilMaximal;
+    const couleurDesAnnées = estHorizontal ? Array(valeurs.length).fill(this.couleurDeLaValeur) : Array(valeurs.length).fill(this.couleurDuFond);
 
     valeurs.forEach((valeur: number, index: number) => {
       if (valeur < maxAvantDePerdreLeContraste) {
-        couleurDesAnnées[index] = 'black'
+        couleurDesAnnées[index] = "black";
       }
-    })
+    });
 
-    return couleurDesAnnées
+    return couleurDesAnnées;
   }
 
   protected annéesManquantes(années: (number | string)[], annéesTotales: number = 3): number[] {
-    const annéeEnCours = new Date().getFullYear()
+    const annéeEnCours = new Date().getFullYear();
 
     return Array(annéesTotales)
       .fill(annéeEnCours)
       .map((annéeÀAvoir, index) => annéeÀAvoir - index - 1)
       .reverse()
-      .filter((année) => !années.includes(année))
+      .filter((année) => !années.includes(année));
   }
 
   protected calculeLeRatioDesHistogrammesHorizontaux(nombreDeLignes: number): number {
     return this.ratioMaxHistogrammeHorizontal - this.facteurDiminutionHistogrammeHorizontal * nombreDeLignes > this.ratioMinHistogrammeHorizontal
       ? this.ratioMaxHistogrammeHorizontal - this.facteurDiminutionHistogrammeHorizontal * nombreDeLignes
-      : this.ratioMinHistogrammeHorizontal
+      : this.ratioMinHistogrammeHorizontal;
   }
 
   private construisLePluginDeLégende() {
     function créeLeLibelléPourLaLégende(chart: ChartJS, libellé: LegendItem): HTMLLIElement {
-      const conteneur = document.createElement('li')
+      const conteneur = document.createElement("li");
 
-      const caseÀCocher = document.createElement('input')
-      caseÀCocher.type = 'checkbox'
-      caseÀCocher.id = libellé.text
-      caseÀCocher.name = libellé.text
-      caseÀCocher.checked = chart.isDatasetVisible(libellé.datasetIndex)
+      const caseÀCocher = document.createElement("input");
+      caseÀCocher.type = "checkbox";
+      caseÀCocher.id = libellé.text;
+      caseÀCocher.name = libellé.text;
+      caseÀCocher.checked = chart.isDatasetVisible(libellé.datasetIndex);
 
-      const libelléCaseÀCocher = document.createElement('label')
-      libelléCaseÀCocher.classList.add('fr-label')
-      libelléCaseÀCocher.htmlFor = libellé.text
+      const libelléCaseÀCocher = document.createElement("label");
+      libelléCaseÀCocher.classList.add("fr-label");
+      libelléCaseÀCocher.htmlFor = libellé.text;
 
       libelléCaseÀCocher.onclick = () => {
-        chart.setDatasetVisibility(libellé.datasetIndex, !chart.isDatasetVisible(libellé.datasetIndex))
-        chart.update()
-      }
+        chart.setDatasetVisibility(libellé.datasetIndex, !chart.isDatasetVisible(libellé.datasetIndex));
+        chart.update();
+      };
 
       caseÀCocher.onkeydown = (event) => {
-        if (event.code === 'Space') {
-          event.preventDefault()
-          chart.setDatasetVisibility(libellé.datasetIndex, !chart.isDatasetVisible(libellé.datasetIndex))
-          chart.update()
+        if (event.code === "Space") {
+          event.preventDefault();
+          chart.setDatasetVisibility(libellé.datasetIndex, !chart.isDatasetVisible(libellé.datasetIndex));
+          chart.update();
           // @ts-ignore
-          document.getElementById(event.target.id).focus()
+          document.getElementById(event.target.id).focus();
         }
-      }
+      };
 
-      const cercleDeCouleur = document.createElement('span')
-      cercleDeCouleur.style.background = libellé.fillStyle as string
-      cercleDeCouleur.style.border = `solid ${libellé.strokeStyle} 1px`
-      cercleDeCouleur.innerHTML = '&nbsp;'
-      libelléCaseÀCocher.appendChild(cercleDeCouleur)
+      const cercleDeCouleur = document.createElement("span");
+      cercleDeCouleur.style.background = libellé.fillStyle as string;
+      cercleDeCouleur.style.border = `solid ${libellé.strokeStyle} 1px`;
+      cercleDeCouleur.innerHTML = "&nbsp;";
+      libelléCaseÀCocher.appendChild(cercleDeCouleur);
 
-      const texteDuLibellé = document.createTextNode(libellé.text)
-      libelléCaseÀCocher.appendChild(texteDuLibellé)
+      const texteDuLibellé = document.createTextNode(libellé.text);
+      libelléCaseÀCocher.appendChild(texteDuLibellé);
 
-      conteneur.appendChild(caseÀCocher)
-      conteneur.appendChild(libelléCaseÀCocher)
-      return conteneur
+      conteneur.appendChild(caseÀCocher);
+      conteneur.appendChild(libelléCaseÀCocher);
+      return conteneur;
     }
 
     return {
       afterUpdate(chart: ChartJS, _args: Object, options: any) {
-        const légende = document.getElementById(options.containerID)
+        const légende = document.getElementById(options.containerID);
 
-        if (!légende) return
+        if (!légende) return;
 
         while (légende.firstChild) {
-          légende.firstChild.remove()
+          légende.firstChild.remove();
         }
 
         // @ts-ignore
-        const libellésDeLaLégende = chart.options.plugins?.legend?.labels.generateLabels(chart) || []
+        const libellésDeLaLégende = chart.options.plugins?.legend?.labels.generateLabels(chart) || [];
 
         libellésDeLaLégende.forEach((libellé) => {
-          const libelléDeLégende = créeLeLibelléPourLaLégende(chart, libellé)
-          légende.appendChild(libelléDeLégende)
-        })
+          const libelléDeLégende = créeLeLibelléPourLaLégende(chart, libellé);
+          légende.appendChild(libelléDeLégende);
+        });
       },
-      id: 'htmlLegend',
-    }
+      id: "htmlLegend",
+    };
   }
 
-  private optionsHistogrammeVertical(grosseursDePoliceDesLibellés: string[]): ChartOptions<'bar'> {
+  private optionsHistogrammeVertical(grosseursDePoliceDesLibellés: string[]): ChartOptions<"bar"> {
     return {
       animation: false,
       plugins: {
         datalabels: {
-          align: 'end',
-          anchor: 'start',
+          align: "end",
+          anchor: "start",
           font: {
-            family: 'Marianne',
+            family: "Marianne",
             size: 16,
             weight: 700,
           },
-          formatter: (value: number, _context: Context): string => value.toLocaleString('fr') + ' %',
+          formatter: (value: number, _context: Context): string => value.toLocaleString("fr") + " %",
         },
         legend: { display: false },
         tooltip: { enabled: false },
@@ -593,26 +586,31 @@ export class GraphiqueViewModel {
             padding: 10,
           },
         },
-        xLine: { display: false, max: 1, min: 0, type: 'linear' },
+        xLine: { display: false, max: 1, min: 0, type: "linear" },
         y: { display: false, max: this.borneMaximaleDeLHistogrammeVertical },
       },
-    }
+    };
   }
 
-  private optionsHistogrammeHorizontal(ratioLargeurSurHauteur: number, valeurMaximale: number, grosseursDePoliceDesLibellés: string[], title: string = ''): ChartOptions<'bar'> {
+  private optionsHistogrammeHorizontal(
+    ratioLargeurSurHauteur: number,
+    valeurMaximale: number,
+    grosseursDePoliceDesLibellés: string[],
+    title: string = ""
+  ): ChartOptions<"bar"> {
     return {
       animation: false,
       aspectRatio: ratioLargeurSurHauteur,
-      indexAxis: 'y',
+      indexAxis: "y",
       plugins: {
         datalabels: {
-          align: 'end',
-          anchor: 'end',
+          align: "end",
+          anchor: "end",
           font: {
-            family: 'Marianne',
+            family: "Marianne",
             size: 14,
           },
-          formatter: (value: string, _context: Context): string => parseFloat(value).toLocaleString('fr'),
+          formatter: (value: string, _context: Context): string => parseFloat(value).toLocaleString("fr"),
         },
         legend: { display: false },
         tooltip: { enabled: false },
@@ -622,13 +620,13 @@ export class GraphiqueViewModel {
           grid: { display: false, drawBorder: false },
           max: 1.45 * (valeurMaximale > 0 ? valeurMaximale : 1),
           min: 0,
-          position: 'top',
+          position: "top",
           ticks: { display: false },
           title: {
-            align: 'start',
+            align: "start",
             color: this.couleurIdentifiant,
-            display: title === '' ? false : true,
-            font: { weight: 'bold' },
+            display: title === "" ? false : true,
+            font: { weight: "bold" },
             text: title,
           },
         },
@@ -646,28 +644,28 @@ export class GraphiqueViewModel {
           },
         },
       },
-    }
+    };
   }
 
-  private optionsDeuxHistogrammesHorizontaux(ratioLargeurSurHauteur: number, maxOfScale: number, labelsOfScales: string[]): ChartOptions<'bar'> {
+  private optionsDeuxHistogrammesHorizontaux(ratioLargeurSurHauteur: number, maxOfScale: number, labelsOfScales: string[]): ChartOptions<"bar"> {
     return {
       animation: false,
       aspectRatio: ratioLargeurSurHauteur,
-      indexAxis: 'y',
+      indexAxis: "y",
       plugins: {
         datalabels: {
-          align: 'end',
-          anchor: 'end',
+          align: "end",
+          anchor: "end",
           font: {
-            family: 'Marianne',
+            family: "Marianne",
             size: 14,
             weight: 700,
           },
           formatter: (value: string, _context: Context): string => {
             if (value === null) {
-              return this.wording.NON_RENSEIGNÉ
+              return this.wording.NON_RENSEIGNÉ;
             }
-            return parseFloat(value).toLocaleString('fr')
+            return parseFloat(value).toLocaleString("fr");
           },
           offset: 0,
         },
@@ -678,30 +676,30 @@ export class GraphiqueViewModel {
         x: {
           grid: { display: false, drawBorder: false },
           max: maxOfScale,
-          position: 'top',
-          stack: 'capacite',
+          position: "top",
+          stack: "capacite",
           stackWeight: 1,
           ticks: { display: false },
           title: {
-            align: 'start',
+            align: "start",
             color: this.couleurIdentifiant,
             display: true,
-            font: { weight: 'bold' },
+            font: { weight: "bold" },
             text: labelsOfScales[0],
           },
         },
         x2: {
           grid: { display: false, drawBorder: false },
           max: maxOfScale,
-          position: 'top',
-          stack: 'capacite',
+          position: "top",
+          stack: "capacite",
           stackWeight: 2,
           ticks: { display: false },
           title: {
-            align: 'start',
+            align: "start",
             color: this.couleurIdentifiant,
             display: true,
-            font: { weight: 'bold' },
+            font: { weight: "bold" },
             text: labelsOfScales[1],
           },
         },
@@ -715,10 +713,10 @@ export class GraphiqueViewModel {
           ticks: { color: this.couleurDelAbscisse },
         },
       },
-    }
+    };
   }
 
-  protected optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuTooltip: Function): ChartOptions<'bar'> {
+  protected optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuTooltip: Function): ChartOptions<"bar"> {
     return {
       animation: false,
       elements: { bar: { borderWidth: 2 } },
@@ -731,88 +729,88 @@ export class GraphiqueViewModel {
       },
       responsive: true,
       scales: {
-        x: { grid: { drawOnChartArea: false }, ticks: { color: 'var(--text-default-grey)' } },
-        y: { grid: { color: this.couleurDelAbscisse, drawBorder: false }, stacked: true, ticks: { color: 'var(--text-default-grey)' } },
+        x: { grid: { drawOnChartArea: false }, ticks: { color: "var(--text-default-grey)" } },
+        y: { grid: { color: this.couleurDelAbscisse, drawBorder: false }, stacked: true, ticks: { color: "var(--text-default-grey)" } },
       },
-    }
+    };
   }
 
-  private optionsDiagrammeDoughnut(texteCentral: string, totalDesValeurs: number, idDeLaLégende: string): ChartOptions<'doughnut'> {
-    const unArcEstSurvolé = (élémentsActifs: ActiveElement[]) => élémentsActifs.length && élémentsActifs[0].element instanceof ArcElement
+  private optionsDiagrammeDoughnut(texteCentral: string, totalDesValeurs: number, idDeLaLégende: string): ChartOptions<"doughnut"> {
+    const unArcEstSurvolé = (élémentsActifs: ActiveElement[]) => élémentsActifs.length && élémentsActifs[0].element instanceof ArcElement;
     const metsEnGrasLaPoliceDuLibelléDeLégende = (élément: Element) => {
-      élément.classList.add('fr-text--bold')
-    }
+      élément.classList.add("fr-text--bold");
+    };
     const enlèveLaPoliceGrasseDuLibelléDeLégende = (élément: Element) => {
-      élément.classList.remove('fr-text--bold')
-    }
+      élément.classList.remove("fr-text--bold");
+    };
     const unAutreArcÉtaitSurvolé = (indexDeLArcSurvolé: number) =>
-      this.indexDeLArcSurvolé !== this.AUCUN_ARC_SURVOLÉ && indexDeLArcSurvolé !== this.indexDeLArcSurvolé
-    const plusAucunArcNestSurvolé = (élémentsActifs: ActiveElement[]) => élémentsActifs.length === 0 && this.indexDeLArcSurvolé !== this.AUCUN_ARC_SURVOLÉ
+      this.indexDeLArcSurvolé !== this.AUCUN_ARC_SURVOLÉ && indexDeLArcSurvolé !== this.indexDeLArcSurvolé;
+    const plusAucunArcNestSurvolé = (élémentsActifs: ActiveElement[]) => élémentsActifs.length === 0 && this.indexDeLArcSurvolé !== this.AUCUN_ARC_SURVOLÉ;
 
     return {
       animation: false,
       aspectRatio: 1,
-      cutout: '40%',
+      cutout: "40%",
       elements: {
         // @ts-ignore
         center: {
           color: this.couleurDelAbscisse,
-          fontStyle: 'Marianne',
+          fontStyle: "Marianne",
           text: texteCentral,
         },
       },
       onHover: (_event: ChartEvent, elements: ActiveElement[], chart: ChartJS) => {
         if (unArcEstSurvolé(elements)) {
-          const indexDeLArcSurvolé = elements[0].index
+          const indexDeLArcSurvolé = elements[0].index;
 
-          const légende = document.getElementById(idDeLaLégende)
-          if (!légende) return
+          const légende = document.getElementById(idDeLaLégende);
+          if (!légende) return;
 
-          const couleurs = chart.data.datasets[0].backgroundColor as string[]
+          const couleurs = chart.data.datasets[0].backgroundColor as string[];
           const nouvellesCouleursDesArcs = couleurs.map((couleur, index) =>
-            index !== indexDeLArcSurvolé && this.associeLaCouleurTransparente[couleur] ? this.associeLaCouleurTransparente[couleur] : couleur)
+            index !== indexDeLArcSurvolé && this.associeLaCouleurTransparente[couleur] ? this.associeLaCouleurTransparente[couleur] : couleur
+          );
 
           if (unAutreArcÉtaitSurvolé(indexDeLArcSurvolé)) {
-            enlèveLaPoliceGrasseDuLibelléDeLégende(légende.children[this.indexDeLArcSurvolé])
+            enlèveLaPoliceGrasseDuLibelléDeLégende(légende.children[this.indexDeLArcSurvolé]);
           }
-          chart.data.datasets[0].backgroundColor = nouvellesCouleursDesArcs
-          chart.update()
-          metsEnGrasLaPoliceDuLibelléDeLégende(légende.children[indexDeLArcSurvolé])
+          chart.data.datasets[0].backgroundColor = nouvellesCouleursDesArcs;
+          chart.update();
+          metsEnGrasLaPoliceDuLibelléDeLégende(légende.children[indexDeLArcSurvolé]);
 
-          this.indexDeLArcSurvolé = indexDeLArcSurvolé
+          this.indexDeLArcSurvolé = indexDeLArcSurvolé;
         }
 
         if (plusAucunArcNestSurvolé(elements)) {
-          const légende = document.getElementById(idDeLaLégende)
-          if (!légende) return
+          const légende = document.getElementById(idDeLaLégende);
+          if (!légende) return;
 
-          const couleurs = chart.data.datasets[0].backgroundColor as string[]
-          const nouvellesCouleursDesArcs = couleurs.map((couleur) =>
-            this.associeLaCouleurOpaque[couleur] ? this.associeLaCouleurOpaque[couleur] : couleur)
-          chart.data.datasets[0].backgroundColor = nouvellesCouleursDesArcs
-          chart.update()
+          const couleurs = chart.data.datasets[0].backgroundColor as string[];
+          const nouvellesCouleursDesArcs = couleurs.map((couleur) => (this.associeLaCouleurOpaque[couleur] ? this.associeLaCouleurOpaque[couleur] : couleur));
+          chart.data.datasets[0].backgroundColor = nouvellesCouleursDesArcs;
+          chart.update();
 
-          enlèveLaPoliceGrasseDuLibelléDeLégende(légende.children[this.indexDeLArcSurvolé])
+          enlèveLaPoliceGrasseDuLibelléDeLégende(légende.children[this.indexDeLArcSurvolé]);
 
-          this.indexDeLArcSurvolé = this.AUCUN_ARC_SURVOLÉ
+          this.indexDeLArcSurvolé = this.AUCUN_ARC_SURVOLÉ;
         }
       },
       plugins: {
         datalabels: {
-          align: 'center',
-          anchor: 'center',
+          align: "center",
+          anchor: "center",
           display: (context: Context) => {
-            const dataset = context.dataset
-            const value = dataset.data[context.dataIndex]
+            const dataset = context.dataset;
+            const value = dataset.data[context.dataIndex];
             // @ts-ignore
-            return value > 0.1 * totalDesValeurs
+            return value > 0.1 * totalDesValeurs;
           },
           font: {
-            family: 'Marianne',
+            family: "Marianne",
             size: 16,
             weight: 700,
           },
-          formatter: (value: number): string => value.toLocaleString('fr') + ' %',
+          formatter: (value: number): string => value.toLocaleString("fr") + " %",
         },
         // @ts-ignore
         htmlLegend: { containerID: idDeLaLégende },
@@ -820,32 +818,32 @@ export class GraphiqueViewModel {
         tooltip: { enabled: false },
       },
       responsive: true,
-    }
+    };
   }
 
   private construisLePluginDeTexteAuCentreDuDonut() {
     return {
       beforeDraw: function (chart: ChartJS) {
         // @ts-ignore
-        const centerConfig = chart?.config?.options?.elements?.center
+        const centerConfig = chart?.config?.options?.elements?.center;
         if (centerConfig) {
-          const ctx = chart.ctx
-          const fontStyle = centerConfig.fontStyle
-          const txt = centerConfig.text
-          const color = centerConfig.color
+          const ctx = chart.ctx;
+          const fontStyle = centerConfig.fontStyle;
+          const txt = centerConfig.text;
+          const color = centerConfig.color;
 
-          const centerX = ((chart.chartArea.left + chart.chartArea.right) / 2)
-          const centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2)
+          const centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
+          const centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
 
-          ctx.textAlign = 'center'
-          ctx.textBaseline = 'middle'
-          ctx.font = 'bold 20px ' + fontStyle
-          ctx.fillStyle = color
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.font = "bold 20px " + fontStyle;
+          ctx.fillStyle = color;
 
-          ctx.fillText(txt, centerX, centerY)
+          ctx.fillText(txt, centerX, centerY);
         }
       },
-      id: 'texteAuCentreDuDonut',
-    }
+      id: "texteAuCentreDuDonut",
+    };
   }
 }

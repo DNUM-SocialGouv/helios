@@ -1,17 +1,17 @@
-import { mkdirSync, rmSync, writeFileSync } from 'fs'
+import { mkdirSync, rmSync, writeFileSync } from "fs";
 
-import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
-import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
-import { fakeLogger, getFakeDataCrawlerDependencies } from '../../../testHelper'
-import { NodeXmlToJs } from '../xml-to-js/NodeXmlToJs'
-import { FinessXmlÉtablissementTerritorialSourceExterneLoader } from './FinessXmlÉtablissementTerritorialSourceExterneLoader'
+import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
+import { ÉtablissementTerritorialIdentité } from "../../../métier/entities/ÉtablissementTerritorialIdentité";
+import { fakeLogger, getFakeDataCrawlerDependencies } from "../../../testHelper";
+import { NodeXmlToJs } from "../xml-to-js/NodeXmlToJs";
+import { FinessXmlÉtablissementTerritorialSourceExterneLoader } from "./FinessXmlÉtablissementTerritorialSourceExterneLoader";
 
-const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies()
-const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_et`
-const finessLocalPath = `${localPath}/finess/simple`
-const nomenclatureLocalPath = `${localPath}/finess/nomenclature`
+const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies();
+const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_et`;
+const finessLocalPath = `${localPath}/finess/simple`;
+const nomenclatureLocalPath = `${localPath}/finess/nomenclature`;
 
-describe('Récupération des établissements territoriaux de la source de données FINESS', () => {
+describe("Récupération des établissements territoriaux de la source de données FINESS", () => {
   const etOuvert1 = `<structureet>
     <nofinesset>010000040</nofinesset>
     <nofinessej>010008407</nofinessej>
@@ -36,7 +36,7 @@ describe('Récupération des établissements territoriaux de la source de donné
     <nofinessppal>010000057</nofinessppal>
     <indcaduc xsi:nil="true"/>
     <datefermeture xsi:nil="true"/>
-  </structureet>`
+  </structureet>`;
   const etOuvert2 = `<structureet>
     <nofinesset>010000057</nofinesset>
     <nofinessej>010008407</nofinessej>
@@ -61,17 +61,17 @@ describe('Récupération des établissements territoriaux de la source de donné
     <nofinessppal>010005239</nofinessppal>
     <indcaduc xsi:nil="true"/>
     <datefermeture xsi:nil="true"/>
-  </structureet>`
+  </structureet>`;
 
-  beforeEach(async() => {
-    créationDuFichierXmlEj()
-  })
+  beforeEach(async () => {
+    créationDuFichierXmlEj();
+  });
 
   afterEach(() => {
-    rmSync(localPath, { recursive: true })
-  })
+    rmSync(localPath, { recursive: true });
+  });
 
-  it('récupère les établissements territoriaux de la source de données FINESS uniquement s’ils ne sont pas fermés', () => {
+  it("récupère les établissements territoriaux de la source de données FINESS uniquement s’ils ne sont pas fermés", () => {
     // GIVEN
     const etFermé = `<structureet>
         <nofinesset>010787190</nofinesset>
@@ -97,69 +97,65 @@ describe('Récupération des établissements territoriaux de la source de donné
         <nofinessppal xsi:nil="true"/>
         <indcaduc xsi:nil="true"/>
         <datefermeture>1993-01-01</datefermeture>
-      </structureet>`
-    écritureDuFichierXmlEt([etOuvert1, etOuvert2, etFermé])
-    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(
-      new NodeXmlToJs(), localPath, fakeLogger
-    )
+      </structureet>`;
+    écritureDuFichierXmlEt([etOuvert1, etOuvert2, etFermé]);
+    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
 
     // WHEN
-    const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts(['010008407', '010000164'])
+    const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts(["010008407", "010000164"]);
 
     // THEN
-    expect(établissementsTerritoriaux).toStrictEqual<ÉtablissementTerritorialIdentité[]>(
-      [
-        {
-          adresseAcheminement: '01130 NANTUA',
-          adresseNuméroVoie: '50',
-          adresseTypeVoie: 'R',
-          adresseVoie: 'PAUL PAINLEVE',
-          catégorieÉtablissement: '355',
-          codeModeTarification: '03',
-          commune: 'NANTUA',
-          courriel: '',
-          domaine: DomaineÉtablissementTerritorial.SANITAIRE,
-          département: 'AIN',
-          libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
-          libelléCourtCatégorieÉtablissement: 'C.H.',
-          libelléModeTarification: 'ARS établissements Publics de santé dotation globale',
-          numéroFinessEntitéJuridique: '010008407',
-          numéroFinessÉtablissementPrincipal: '010000057',
-          numéroFinessÉtablissementTerritorial: '010000040',
-          raisonSociale: 'CENTRE HOSPITALIER NANTUA',
-          raisonSocialeCourte: 'CH NANTUA',
-          siret: '26011021800047',
-          typeÉtablissement: 'S',
-          téléphone: '0474754800',
-        },
-        {
-          adresseAcheminement: '01100 OYONNAX',
-          adresseNuméroVoie: '',
-          adresseTypeVoie: 'RTE',
-          adresseVoie: 'DE VEYZIAT',
-          catégorieÉtablissement: '001',
-          codeModeTarification: '03',
-          commune: 'OYONNAX',
-          courriel: '',
-          domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
-          département: 'AIN',
-          libelléCatégorieÉtablissement: 'Autres lits de m.R.',
-          libelléCourtCatégorieÉtablissement: 'C.H.',
-          libelléModeTarification: 'ARS établissements Publics de santé dotation globale',
-          numéroFinessEntitéJuridique: '010008407',
-          numéroFinessÉtablissementPrincipal: '010005239',
-          numéroFinessÉtablissementTerritorial: '010000057',
-          raisonSociale: 'CENTRE HOSPITALIER OYONNAX',
-          raisonSocialeCourte: 'CH OYONNAX',
-          siret: '26011021800013',
-          typeÉtablissement: 'S',
-          téléphone: '0474731001',
-        },
-      ]
-    )
-  })
+    expect(établissementsTerritoriaux).toStrictEqual<ÉtablissementTerritorialIdentité[]>([
+      {
+        adresseAcheminement: "01130 NANTUA",
+        adresseNuméroVoie: "50",
+        adresseTypeVoie: "R",
+        adresseVoie: "PAUL PAINLEVE",
+        catégorieÉtablissement: "355",
+        codeModeTarification: "03",
+        commune: "NANTUA",
+        courriel: "",
+        domaine: DomaineÉtablissementTerritorial.SANITAIRE,
+        département: "AIN",
+        libelléCatégorieÉtablissement: "Centre Hospitalier (C.H.)",
+        libelléCourtCatégorieÉtablissement: "C.H.",
+        libelléModeTarification: "ARS établissements Publics de santé dotation globale",
+        numéroFinessEntitéJuridique: "010008407",
+        numéroFinessÉtablissementPrincipal: "010000057",
+        numéroFinessÉtablissementTerritorial: "010000040",
+        raisonSociale: "CENTRE HOSPITALIER NANTUA",
+        raisonSocialeCourte: "CH NANTUA",
+        siret: "26011021800047",
+        typeÉtablissement: "S",
+        téléphone: "0474754800",
+      },
+      {
+        adresseAcheminement: "01100 OYONNAX",
+        adresseNuméroVoie: "",
+        adresseTypeVoie: "RTE",
+        adresseVoie: "DE VEYZIAT",
+        catégorieÉtablissement: "001",
+        codeModeTarification: "03",
+        commune: "OYONNAX",
+        courriel: "",
+        domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
+        département: "AIN",
+        libelléCatégorieÉtablissement: "Autres lits de m.R.",
+        libelléCourtCatégorieÉtablissement: "C.H.",
+        libelléModeTarification: "ARS établissements Publics de santé dotation globale",
+        numéroFinessEntitéJuridique: "010008407",
+        numéroFinessÉtablissementPrincipal: "010005239",
+        numéroFinessÉtablissementTerritorial: "010000057",
+        raisonSociale: "CENTRE HOSPITALIER OYONNAX",
+        raisonSocialeCourte: "CH OYONNAX",
+        siret: "26011021800013",
+        typeÉtablissement: "S",
+        téléphone: "0474731001",
+      },
+    ]);
+  });
 
-  it('récupère les établissements territoriaux de la source de données FINESS uniquement s’ils ne sont pas caducs', () => {
+  it("récupère les établissements territoriaux de la source de données FINESS uniquement s’ils ne sont pas caducs", () => {
     // GIVEN
     const etCaduc = `<structureet>
       <nofinesset>100007012</nofinesset>
@@ -185,73 +181,69 @@ describe('Récupération des établissements territoriaux de la source de donné
       <nofinessppal xsi:nil="true"/>
       <indcaduc>O</indcaduc>
       <datefermeture xsi:nil="true"/>
-    </structureet>`
-    écritureDuFichierXmlEt([etOuvert1, etOuvert2, etCaduc])
-    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(
-      new NodeXmlToJs(), localPath, fakeLogger
-    )
+    </structureet>`;
+    écritureDuFichierXmlEt([etOuvert1, etOuvert2, etCaduc]);
+    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
 
     // WHEN
-    const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts(['010008407', '100000983'])
+    const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts(["010008407", "100000983"]);
 
     // THEN
-    expect(établissementsTerritoriaux).toStrictEqual<ÉtablissementTerritorialIdentité[]>(
-      [
-        {
-          adresseAcheminement: '01130 NANTUA',
-          adresseNuméroVoie: '50',
-          adresseTypeVoie: 'R',
-          adresseVoie: 'PAUL PAINLEVE',
-          catégorieÉtablissement: '355',
-          codeModeTarification: '03',
-          commune: 'NANTUA',
-          courriel: '',
-          domaine: DomaineÉtablissementTerritorial.SANITAIRE,
-          département: 'AIN',
-          libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
-          libelléCourtCatégorieÉtablissement: 'C.H.',
-          libelléModeTarification: 'ARS établissements Publics de santé dotation globale',
-          numéroFinessEntitéJuridique: '010008407',
-          numéroFinessÉtablissementPrincipal: '010000057',
-          numéroFinessÉtablissementTerritorial: '010000040',
-          raisonSociale: 'CENTRE HOSPITALIER NANTUA',
-          raisonSocialeCourte: 'CH NANTUA',
-          siret: '26011021800047',
-          typeÉtablissement: 'S',
-          téléphone: '0474754800',
-        },
-        {
-          adresseAcheminement: '01100 OYONNAX',
-          adresseNuméroVoie: '',
-          adresseTypeVoie: 'RTE',
-          adresseVoie: 'DE VEYZIAT',
-          catégorieÉtablissement: '001',
-          codeModeTarification: '03',
-          commune: 'OYONNAX',
-          courriel: '',
-          domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
-          département: 'AIN',
-          libelléCatégorieÉtablissement: 'Autres lits de m.R.',
-          libelléCourtCatégorieÉtablissement: 'C.H.',
-          libelléModeTarification: 'ARS établissements Publics de santé dotation globale',
-          numéroFinessEntitéJuridique: '010008407',
-          numéroFinessÉtablissementPrincipal: '010005239',
-          numéroFinessÉtablissementTerritorial: '010000057',
-          raisonSociale: 'CENTRE HOSPITALIER OYONNAX',
-          raisonSocialeCourte: 'CH OYONNAX',
-          siret: '26011021800013',
-          typeÉtablissement: 'S',
-          téléphone: '0474731001',
-        },
-      ]
-    )
-  })
+    expect(établissementsTerritoriaux).toStrictEqual<ÉtablissementTerritorialIdentité[]>([
+      {
+        adresseAcheminement: "01130 NANTUA",
+        adresseNuméroVoie: "50",
+        adresseTypeVoie: "R",
+        adresseVoie: "PAUL PAINLEVE",
+        catégorieÉtablissement: "355",
+        codeModeTarification: "03",
+        commune: "NANTUA",
+        courriel: "",
+        domaine: DomaineÉtablissementTerritorial.SANITAIRE,
+        département: "AIN",
+        libelléCatégorieÉtablissement: "Centre Hospitalier (C.H.)",
+        libelléCourtCatégorieÉtablissement: "C.H.",
+        libelléModeTarification: "ARS établissements Publics de santé dotation globale",
+        numéroFinessEntitéJuridique: "010008407",
+        numéroFinessÉtablissementPrincipal: "010000057",
+        numéroFinessÉtablissementTerritorial: "010000040",
+        raisonSociale: "CENTRE HOSPITALIER NANTUA",
+        raisonSocialeCourte: "CH NANTUA",
+        siret: "26011021800047",
+        typeÉtablissement: "S",
+        téléphone: "0474754800",
+      },
+      {
+        adresseAcheminement: "01100 OYONNAX",
+        adresseNuméroVoie: "",
+        adresseTypeVoie: "RTE",
+        adresseVoie: "DE VEYZIAT",
+        catégorieÉtablissement: "001",
+        codeModeTarification: "03",
+        commune: "OYONNAX",
+        courriel: "",
+        domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
+        département: "AIN",
+        libelléCatégorieÉtablissement: "Autres lits de m.R.",
+        libelléCourtCatégorieÉtablissement: "C.H.",
+        libelléModeTarification: "ARS établissements Publics de santé dotation globale",
+        numéroFinessEntitéJuridique: "010008407",
+        numéroFinessÉtablissementPrincipal: "010005239",
+        numéroFinessÉtablissementTerritorial: "010000057",
+        raisonSociale: "CENTRE HOSPITALIER OYONNAX",
+        raisonSocialeCourte: "CH OYONNAX",
+        siret: "26011021800013",
+        typeÉtablissement: "S",
+        téléphone: "0474731001",
+      },
+    ]);
+  });
 
-  it('récupère les établissements territoriaux de la source de données FINESS uniquement si leur EJ associée est ouverte donc existe en base', () => {
+  it("récupère les établissements territoriaux de la source de données FINESS uniquement si leur EJ associée est ouverte donc existe en base", () => {
     // GIVEN
-    const numéroFinessDeLEjEnBase = '010008407'
-    const numéroFinessDeLEjFermé = '010008408'
-    const etOuvertAssociéÀLEjExistant = etOuvert1
+    const numéroFinessDeLEjEnBase = "010008407";
+    const numéroFinessDeLEjFermé = "010008408";
+    const etOuvertAssociéÀLEjExistant = etOuvert1;
     const etOuvertAssociéÀUnEjNonExistant = `<structureet>
         <nofinesset>010000057</nofinesset>
         <nofinessej>${numéroFinessDeLEjFermé}</nofinessej>
@@ -276,46 +268,42 @@ describe('Récupération des établissements territoriaux de la source de donné
         <nofinessppal>010005239</nofinessppal>
         <indcaduc xsi:nil="true"/>
         <datefermeture xsi:nil="true"/>
-      </structureet>`
-    écritureDuFichierXmlEt([etOuvertAssociéÀLEjExistant, etOuvertAssociéÀUnEjNonExistant])
-    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(
-      new NodeXmlToJs(), localPath, fakeLogger
-    )
+      </structureet>`;
+    écritureDuFichierXmlEt([etOuvertAssociéÀLEjExistant, etOuvertAssociéÀUnEjNonExistant]);
+    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
 
     // WHEN
-    const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts([numéroFinessDeLEjEnBase])
+    const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts([numéroFinessDeLEjEnBase]);
 
     // THEN
-    expect(établissementsTerritoriaux).toStrictEqual<ÉtablissementTerritorialIdentité[]>(
-      [
-        {
-          adresseAcheminement: '01130 NANTUA',
-          adresseNuméroVoie: '50',
-          adresseTypeVoie: 'R',
-          adresseVoie: 'PAUL PAINLEVE',
-          catégorieÉtablissement: '355',
-          codeModeTarification: '03',
-          commune: 'NANTUA',
-          courriel: '',
-          domaine: DomaineÉtablissementTerritorial.SANITAIRE,
-          département: 'AIN',
-          libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
-          libelléCourtCatégorieÉtablissement: 'C.H.',
-          libelléModeTarification: 'ARS établissements Publics de santé dotation globale',
-          numéroFinessEntitéJuridique: '010008407',
-          numéroFinessÉtablissementPrincipal: '010000057',
-          numéroFinessÉtablissementTerritorial: '010000040',
-          raisonSociale: 'CENTRE HOSPITALIER NANTUA',
-          raisonSocialeCourte: 'CH NANTUA',
-          siret: '26011021800047',
-          typeÉtablissement: 'S',
-          téléphone: '0474754800',
-        },
-      ]
-    )
-  })
+    expect(établissementsTerritoriaux).toStrictEqual<ÉtablissementTerritorialIdentité[]>([
+      {
+        adresseAcheminement: "01130 NANTUA",
+        adresseNuméroVoie: "50",
+        adresseTypeVoie: "R",
+        adresseVoie: "PAUL PAINLEVE",
+        catégorieÉtablissement: "355",
+        codeModeTarification: "03",
+        commune: "NANTUA",
+        courriel: "",
+        domaine: DomaineÉtablissementTerritorial.SANITAIRE,
+        département: "AIN",
+        libelléCatégorieÉtablissement: "Centre Hospitalier (C.H.)",
+        libelléCourtCatégorieÉtablissement: "C.H.",
+        libelléModeTarification: "ARS établissements Publics de santé dotation globale",
+        numéroFinessEntitéJuridique: "010008407",
+        numéroFinessÉtablissementPrincipal: "010000057",
+        numéroFinessÉtablissementTerritorial: "010000040",
+        raisonSociale: "CENTRE HOSPITALIER NANTUA",
+        raisonSocialeCourte: "CH NANTUA",
+        siret: "26011021800047",
+        typeÉtablissement: "S",
+        téléphone: "0474754800",
+      },
+    ]);
+  });
 
-  it('récupère la raison sociale écourtée si la raison sociale longue n’est pas renseignée', () => {
+  it("récupère la raison sociale écourtée si la raison sociale longue n’est pas renseignée", () => {
     const etSansRaisonSocialeLongue1 = `<structureet>
       <nofinesset>010000040</nofinesset>
       <nofinessej>010008407</nofinessej>
@@ -340,7 +328,7 @@ describe('Récupération des établissements territoriaux de la source de donné
       <nofinessppal>010000057</nofinessppal>
       <indcaduc xsi:nil="true"/>
       <datefermeture xsi:nil="true"/>
-    </structureet>`
+    </structureet>`;
     const etSansRaisonSocialeLongue2 = `<structureet>
       <nofinesset>010000057</nofinesset>
       <nofinessej>010008407</nofinessej>
@@ -365,95 +353,89 @@ describe('Récupération des établissements territoriaux de la source de donné
       <nofinessppal>010005239</nofinessppal>
       <indcaduc xsi:nil="true"/>
       <datefermeture xsi:nil="true"/>
-    </structureet>`
-    écritureDuFichierXmlEt([etSansRaisonSocialeLongue1, etSansRaisonSocialeLongue2])
-    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(
-      new NodeXmlToJs(), localPath, fakeLogger
-    )
+    </structureet>`;
+    écritureDuFichierXmlEt([etSansRaisonSocialeLongue1, etSansRaisonSocialeLongue2]);
+    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
 
     // WHEN
-    const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts(['010008407', '010000164'])
+    const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts(["010008407", "010000164"]);
 
     // THEN
-    expect(établissementsTerritoriaux).toStrictEqual<ÉtablissementTerritorialIdentité[]>(
-      [
-        {
-          adresseAcheminement: '01130 NANTUA',
-          adresseNuméroVoie: '50',
-          adresseTypeVoie: 'R',
-          adresseVoie: 'PAUL PAINLEVE',
-          catégorieÉtablissement: '355',
-          codeModeTarification: '03',
-          commune: 'NANTUA',
-          courriel: '',
-          domaine: DomaineÉtablissementTerritorial.SANITAIRE,
-          département: 'AIN',
-          libelléCatégorieÉtablissement: 'Centre Hospitalier (C.H.)',
-          libelléCourtCatégorieÉtablissement: 'C.H.',
-          libelléModeTarification: 'ARS établissements Publics de santé dotation globale',
-          numéroFinessEntitéJuridique: '010008407',
-          numéroFinessÉtablissementPrincipal: '010000057',
-          numéroFinessÉtablissementTerritorial: '010000040',
-          raisonSociale: 'CH NANTUA',
-          raisonSocialeCourte: 'CH NANTUA',
-          siret: '26011021800047',
-          typeÉtablissement: 'S',
-          téléphone: '0474754800',
-        },
-        {
-          adresseAcheminement: '01100 OYONNAX',
-          adresseNuméroVoie: '',
-          adresseTypeVoie: 'RTE',
-          adresseVoie: 'DE VEYZIAT',
-          catégorieÉtablissement: '001',
-          codeModeTarification: '03',
-          commune: 'OYONNAX',
-          courriel: '',
-          domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
-          département: 'AIN',
-          libelléCatégorieÉtablissement: 'Autres lits de m.R.',
-          libelléCourtCatégorieÉtablissement: 'C.H.',
-          libelléModeTarification: 'ARS établissements Publics de santé dotation globale',
-          numéroFinessEntitéJuridique: '010008407',
-          numéroFinessÉtablissementPrincipal: '010005239',
-          numéroFinessÉtablissementTerritorial: '010000057',
-          raisonSociale: 'CH OYONNAX',
-          raisonSocialeCourte: 'CH OYONNAX',
-          siret: '26011021800013',
-          typeÉtablissement: 'S',
-          téléphone: '0474731001',
-        },
-      ]
-    )
-  })
+    expect(établissementsTerritoriaux).toStrictEqual<ÉtablissementTerritorialIdentité[]>([
+      {
+        adresseAcheminement: "01130 NANTUA",
+        adresseNuméroVoie: "50",
+        adresseTypeVoie: "R",
+        adresseVoie: "PAUL PAINLEVE",
+        catégorieÉtablissement: "355",
+        codeModeTarification: "03",
+        commune: "NANTUA",
+        courriel: "",
+        domaine: DomaineÉtablissementTerritorial.SANITAIRE,
+        département: "AIN",
+        libelléCatégorieÉtablissement: "Centre Hospitalier (C.H.)",
+        libelléCourtCatégorieÉtablissement: "C.H.",
+        libelléModeTarification: "ARS établissements Publics de santé dotation globale",
+        numéroFinessEntitéJuridique: "010008407",
+        numéroFinessÉtablissementPrincipal: "010000057",
+        numéroFinessÉtablissementTerritorial: "010000040",
+        raisonSociale: "CH NANTUA",
+        raisonSocialeCourte: "CH NANTUA",
+        siret: "26011021800047",
+        typeÉtablissement: "S",
+        téléphone: "0474754800",
+      },
+      {
+        adresseAcheminement: "01100 OYONNAX",
+        adresseNuméroVoie: "",
+        adresseTypeVoie: "RTE",
+        adresseVoie: "DE VEYZIAT",
+        catégorieÉtablissement: "001",
+        codeModeTarification: "03",
+        commune: "OYONNAX",
+        courriel: "",
+        domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
+        département: "AIN",
+        libelléCatégorieÉtablissement: "Autres lits de m.R.",
+        libelléCourtCatégorieÉtablissement: "C.H.",
+        libelléModeTarification: "ARS établissements Publics de santé dotation globale",
+        numéroFinessEntitéJuridique: "010008407",
+        numéroFinessÉtablissementPrincipal: "010005239",
+        numéroFinessÉtablissementTerritorial: "010000057",
+        raisonSociale: "CH OYONNAX",
+        raisonSocialeCourte: "CH OYONNAX",
+        siret: "26011021800013",
+        typeÉtablissement: "S",
+        téléphone: "0474731001",
+      },
+    ]);
+  });
 
-  it('récupère la date de mise à jour du fichier source', () => {
+  it("récupère la date de mise à jour du fichier source", () => {
     // GIVEN
-    écritureDuFichierXmlEt()
-    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(
-      new NodeXmlToJs(), localPath, fakeLogger
-    )
+    écritureDuFichierXmlEt();
+    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
 
     // WHEN
-    const dateDeMiseÀJourDuFichierSource = établissementTerritorialFinessLoader.récupèreLaDateDeMiseÀJourDuFichierSource()
+    const dateDeMiseÀJourDuFichierSource = établissementTerritorialFinessLoader.récupèreLaDateDeMiseÀJourDuFichierSource();
 
     // THEN
-    expect(dateDeMiseÀJourDuFichierSource).toBe('20211214')
-  })
-})
+    expect(dateDeMiseÀJourDuFichierSource).toBe("20211214");
+  });
+});
 
 function écritureDuFichierXmlEt(xmlEt: string[] = []): void {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
     <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
       ${xmlEt.join()}
-    </fluxfiness>`
+    </fluxfiness>`;
 
-  mkdirSync(finessLocalPath, { recursive: true })
-  writeFileSync(`${finessLocalPath}/finess_cs1400102_stock_20211214-0336.xml`, xml)
+  mkdirSync(finessLocalPath, { recursive: true });
+  writeFileSync(`${finessLocalPath}/finess_cs1400102_stock_20211214-0336.xml`, xml);
 }
 
 function créationDuFichierXmlEj(): void {
-  mkdirSync(nomenclatureLocalPath, { recursive: true })
+  mkdirSync(nomenclatureLocalPath, { recursive: true });
   const xmlNomenclature = `<?xml version="1.0" encoding="UTF-8"?>
   <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <nomenclcategorieETavecagr>
@@ -466,6 +448,6 @@ function créationDuFichierXmlEj(): void {
       <libelle>Autres lits de m.R.</libelle>
       <domaine>SOC</domaine>
     </nomenclcategorieETavecagr>
-  </fluxfiness>`
-  writeFileSync(`${nomenclatureLocalPath}/finess_cs1500106_stock_20211214-0417.xml`, xmlNomenclature)
+  </fluxfiness>`;
+  writeFileSync(`${nomenclatureLocalPath}/finess_cs1500106_stock_20211214-0417.xml`, xmlNomenclature);
 }

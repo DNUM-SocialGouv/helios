@@ -1,1 +1,1 @@
-export const annéeEnCours = new Date().getFullYear()
+export const annéeEnCours = new Date().getFullYear();

@@ -1,10 +1,10 @@
-import { HeliosError } from '../../infrastructure/HeliosError'
-import { ÉtablissementTerritorialIdentité } from '../entities/ÉtablissementTerritorialIdentité'
-import { EntitéJuridiqueHeliosLoader } from '../gateways/EntitéJuridiqueHeliosLoader'
-import { ÉtablissementTerritorialHeliosLoader } from '../gateways/ÉtablissementTerritorialHeliosLoader'
-import { ÉtablissementTerritorialRepository } from '../gateways/ÉtablissementTerritorialRepository'
-import { ÉtablissementTerritorialSourceExterneLoader } from '../gateways/ÉtablissementTerritorialSourceExterneLoader'
-import { détecteLesObjetsÀSupprimer } from './détecteLesObjetsÀSupprimer'
+import { HeliosError } from "../../infrastructure/HeliosError";
+import { ÉtablissementTerritorialIdentité } from "../entities/ÉtablissementTerritorialIdentité";
+import { EntitéJuridiqueHeliosLoader } from "../gateways/EntitéJuridiqueHeliosLoader";
+import { ÉtablissementTerritorialHeliosLoader } from "../gateways/ÉtablissementTerritorialHeliosLoader";
+import { ÉtablissementTerritorialRepository } from "../gateways/ÉtablissementTerritorialRepository";
+import { ÉtablissementTerritorialSourceExterneLoader } from "../gateways/ÉtablissementTerritorialSourceExterneLoader";
+import { détecteLesObjetsÀSupprimer } from "./détecteLesObjetsÀSupprimer";
 
 export class MetsÀJourLesÉtablissementsTerritoriauxUseCase {
   constructor(
@@ -16,23 +16,23 @@ export class MetsÀJourLesÉtablissementsTerritoriauxUseCase {
 
   async exécute(): Promise<void> {
     try {
-      const numéroFinessDesEntitésJuridiques = await this.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques()
-      const dateDeMiseAJourDuFichierSource = this.établissementTerritorialSourceExterneLoader.récupèreLaDateDeMiseÀJourDuFichierSource()
+      const numéroFinessDesEntitésJuridiques = await this.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques();
+      const dateDeMiseAJourDuFichierSource = this.établissementTerritorialSourceExterneLoader.récupèreLaDateDeMiseÀJourDuFichierSource();
       const établissementsTerritoriauxOuverts =
-        this.établissementTerritorialSourceExterneLoader.récupèreLesÉtablissementsTerritoriauxOuverts(numéroFinessDesEntitésJuridiques)
+        this.établissementTerritorialSourceExterneLoader.récupèreLesÉtablissementsTerritoriauxOuverts(numéroFinessDesEntitésJuridiques);
 
-      const établissementsTerritoriauxSauvegardés = await this.établissementTerritorialHeliosLoader.récupèreLeNuméroFinessDesÉtablissementsTerritoriaux()
+      const établissementsTerritoriauxSauvegardés = await this.établissementTerritorialHeliosLoader.récupèreLeNuméroFinessDesÉtablissementsTerritoriaux();
 
       const établissementsTerritoriauxÀSupprimer = this.extraisLesÉtablissementsTerritoriauxRécemmentFermés(
         établissementsTerritoriauxOuverts,
         établissementsTerritoriauxSauvegardés
-      )
+      );
 
-      await this.établissementTerritorialHeliosRepository.supprime(établissementsTerritoriauxÀSupprimer)
+      await this.établissementTerritorialHeliosRepository.supprime(établissementsTerritoriauxÀSupprimer);
 
-      await this.établissementTerritorialHeliosRepository.sauvegarde(établissementsTerritoriauxOuverts, dateDeMiseAJourDuFichierSource)
+      await this.établissementTerritorialHeliosRepository.sauvegarde(établissementsTerritoriauxOuverts, dateDeMiseAJourDuFichierSource);
     } catch (error) {
-      throw new HeliosError(error.message)
+      throw new HeliosError(error.message);
     }
   }
 
@@ -42,9 +42,9 @@ export class MetsÀJourLesÉtablissementsTerritoriauxUseCase {
   ) {
     const numérosFinessDesÉtablissementsTerritoriauxOuverts = new Set(
       établissementsTerritoriauxOuverts.map((établissementTerritorial) => établissementTerritorial.numéroFinessÉtablissementTerritorial)
-    )
-    const numérosFinessDesÉtablissementsTerritoriauxSauvegardés = new Set(établissementsTerritoriauxSauvegardés)
+    );
+    const numérosFinessDesÉtablissementsTerritoriauxSauvegardés = new Set(établissementsTerritoriauxSauvegardés);
 
-    return détecteLesObjetsÀSupprimer(numérosFinessDesÉtablissementsTerritoriauxOuverts, numérosFinessDesÉtablissementsTerritoriauxSauvegardés)
+    return détecteLesObjetsÀSupprimer(numérosFinessDesÉtablissementsTerritoriauxOuverts, numérosFinessDesÉtablissementsTerritoriauxSauvegardés);
   }
 }

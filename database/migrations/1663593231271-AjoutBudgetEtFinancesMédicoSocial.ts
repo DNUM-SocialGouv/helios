@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner } from 'typeorm'
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class AjoutBudgetEtFinancesMédicoSocial1663593231271 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
@@ -29,13 +29,13 @@ export class AjoutBudgetEtFinancesMédicoSocial1663593231271 implements Migratio
 
       ALTER TYPE fichier_source
         ADD VALUE IF NOT EXISTS 'ann_errd_ej_et_budget_et_finances';
-    `)
+    `);
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
       DROP TABLE budget_et_finances_medico_social;
       DROP TYPE cadre_budgetaire;
-    `)
+    `);
   }
 }

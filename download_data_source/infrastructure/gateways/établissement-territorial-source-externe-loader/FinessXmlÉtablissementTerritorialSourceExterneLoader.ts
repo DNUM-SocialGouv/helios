@@ -1,259 +1,260 @@
-import { readdirSync } from 'fs'
+import { readdirSync } from "fs";
 
-import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
-import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
-import { Logger } from '../../../métier/gateways/Logger'
-import { XmlToJs } from '../../../métier/gateways/XmlToJs'
-import { ÉtablissementTerritorialSourceExterneLoader } from '../../../métier/gateways/ÉtablissementTerritorialSourceExterneLoader'
+import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
+import { ÉtablissementTerritorialIdentité } from "../../../métier/entities/ÉtablissementTerritorialIdentité";
+import { Logger } from "../../../métier/gateways/Logger";
+import { XmlToJs } from "../../../métier/gateways/XmlToJs";
+import { ÉtablissementTerritorialSourceExterneLoader } from "../../../métier/gateways/ÉtablissementTerritorialSourceExterneLoader";
 
 type ÉtablissementTerritorialIdentitéFiness = Readonly<{
   nofinesset: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   nofinessej: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   rs: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   rslongue: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   complrs: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   compldistrib: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   numvoie: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   typvoie: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   voie: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   compvoie: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   lieuditbp: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   commune: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   libcommune: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   departement: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   libdepartement: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   codepostal: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   ligneacheminement: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   codepays: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   libellepays: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   telephone: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   telecopie: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   courriel: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   categetab: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   libcategetab: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   libcourtcategetab: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   categagretab: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   libcategagretab: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   libcourtcategagretab: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   typeet: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   nofinessppal: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   natureet: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   siret: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   datemodifsiret: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   originemodifsiret: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   codeape: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   codemft: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   libmft: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   libcourtmft: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   codesph: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   libsph: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   libcourtsph: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   dateouv: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   datelimite: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   indcaduc: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   typefermeture: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   datefermeture: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   dateautor: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   datemaj: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   numuai: Readonly<{
-    _text?: string
-  }>
-}>
+    _text?: string;
+  }>;
+}>;
 
 type ÉtablissementTerritorialIdentitéFluxFiness = Readonly<{
   fluxfiness: {
-    structureet: ÉtablissementTerritorialIdentitéFiness[]
-  }
-}>
+    structureet: ÉtablissementTerritorialIdentitéFiness[];
+  };
+}>;
 
 type CatégorieFiness = Readonly<{
   code: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   libelle: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   libellecourt: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   domaine: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   datedeb: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   datefin: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   codeagr3: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   libelleagr3: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   libellecourtagr3: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   codeagr2: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   libelleagr2: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   libellecourtagr2: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   codeagr1: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   libelleagr1: Readonly<{
-    _text?: string
-  }>
+    _text?: string;
+  }>;
   libellecourtagr1: Readonly<{
-    _text?: string
-  }>
-}>
+    _text?: string;
+  }>;
+}>;
 
 type CatégorieFluxFiness = Readonly<{
   fluxfiness: {
-    nomenclcategorieETavecagr: CatégorieFiness[]
-  }
-}>
+    nomenclcategorieETavecagr: CatégorieFiness[];
+  };
+}>;
 
 export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements ÉtablissementTerritorialSourceExterneLoader {
-  private readonly préfixeDuFichierÉtablissementTerritorialIdentité = 'finess_cs1400102_stock_'
-  private readonly préfixeDuFichierCatégorie = 'finess_cs1500106_stock_'
+  private readonly préfixeDuFichierÉtablissementTerritorialIdentité = "finess_cs1400102_stock_";
+  private readonly préfixeDuFichierCatégorie = "finess_cs1500106_stock_";
 
-  constructor(
-    private readonly convertXmlToJs: XmlToJs,
-    private readonly localPath: string,
-    private logger: Logger
-  ) {}
+  constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string, private logger: Logger) {}
 
   récupèreLesÉtablissementsTerritoriauxOuverts(numéroFinessDesEntitésJuridiques: string[]): ÉtablissementTerritorialIdentité[] {
-    const cheminDuFichierÉtablissementTerritorialIdentité = this.récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(this.localPath)
+    const cheminDuFichierÉtablissementTerritorialIdentité = this.récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(this.localPath);
 
-    const cheminDuFichierCatégorie = this.récupèreLeCheminDuFichierCatégorie(this.localPath)
+    const cheminDuFichierCatégorie = this.récupèreLeCheminDuFichierCatégorie(this.localPath);
 
-    const catégories = this.convertXmlToJs.exécute<CatégorieFluxFiness>(cheminDuFichierCatégorie)
+    const catégories = this.convertXmlToJs.exécute<CatégorieFluxFiness>(cheminDuFichierCatégorie);
 
-    const établissementTerritorialFluxFinessIdentité = this.convertXmlToJs.exécute
-      <ÉtablissementTerritorialIdentitéFluxFiness>(cheminDuFichierÉtablissementTerritorialIdentité)
-    const établissementTerritoriauxFluxFiness = établissementTerritorialFluxFinessIdentité.fluxfiness.structureet
-    this.logger.info(`[FINESS] ${établissementTerritoriauxFluxFiness.length} établissements territoriaux récupérés depuis FINESS.`)
+    const établissementTerritorialFluxFinessIdentité = this.convertXmlToJs.exécute<ÉtablissementTerritorialIdentitéFluxFiness>(
+      cheminDuFichierÉtablissementTerritorialIdentité
+    );
+    const établissementTerritoriauxFluxFiness = établissementTerritorialFluxFinessIdentité.fluxfiness.structureet;
+    this.logger.info(`[FINESS] ${établissementTerritoriauxFluxFiness.length} établissements territoriaux récupérés depuis FINESS.`);
 
-    const établissementsTerritoriauxFinessOuverts = this.conserveLesÉtablissementsOuverts(établissementTerritoriauxFluxFiness, numéroFinessDesEntitésJuridiques)
-    this.logger.info(`[FINESS] ${établissementsTerritoriauxFinessOuverts.length} établissements territoriaux sont ouverts.`)
+    const établissementsTerritoriauxFinessOuverts = this.conserveLesÉtablissementsOuverts(
+      établissementTerritoriauxFluxFiness,
+      numéroFinessDesEntitésJuridiques
+    );
+    this.logger.info(`[FINESS] ${établissementsTerritoriauxFinessOuverts.length} établissements territoriaux sont ouverts.`);
 
-    return établissementsTerritoriauxFinessOuverts
-      .map((établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) =>
-        this.construisÉtablissementTerritorialIdentité(établissementTerritorialIdentitéFiness, catégories))
+    return établissementsTerritoriauxFinessOuverts.map((établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) =>
+      this.construisÉtablissementTerritorialIdentité(établissementTerritorialIdentitéFiness, catégories)
+    );
   }
 
   récupèreLaDateDeMiseÀJourDuFichierSource(): string {
-    const cheminDuFichierÉtablissementTerritorialIdentité = this.récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(this.localPath)
+    const cheminDuFichierÉtablissementTerritorialIdentité = this.récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(this.localPath);
 
-    const dateDeMiseAJourDeLaFichierSource =
-      cheminDuFichierÉtablissementTerritorialIdentité.split(this.préfixeDuFichierÉtablissementTerritorialIdentité)[1].slice(0, 8)
-    this.logger.info(`[FINESS] Date de mise à jour des fichiers FINESS des établissements territoriaux : ${dateDeMiseAJourDeLaFichierSource}`)
+    const dateDeMiseAJourDeLaFichierSource = cheminDuFichierÉtablissementTerritorialIdentité
+      .split(this.préfixeDuFichierÉtablissementTerritorialIdentité)[1]
+      .slice(0, 8);
+    this.logger.info(`[FINESS] Date de mise à jour des fichiers FINESS des établissements territoriaux : ${dateDeMiseAJourDeLaFichierSource}`);
 
-    return dateDeMiseAJourDeLaFichierSource
+    return dateDeMiseAJourDeLaFichierSource;
   }
 
   private conserveLesÉtablissementsOuverts(
@@ -264,40 +265,45 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
       return !(
         this.établissementTerritorialEstCaduc(établissementTerritorialIdentitéFiness) ||
         this.établissementTerritorialEstFermé(établissementTerritorialIdentitéFiness) ||
-        !this.entitéJuridiqueDeRattachementEstOuverte(établissementTerritorialIdentitéFiness, numéroFinessDesEntitésJuridiques) )
-    })
+        !this.entitéJuridiqueDeRattachementEstOuverte(établissementTerritorialIdentitéFiness, numéroFinessDesEntitésJuridiques)
+      );
+    });
   }
 
   private établissementTerritorialEstCaduc(établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) {
-    return établissementTerritorialIdentitéFiness.indcaduc._text === 'O'
+    return établissementTerritorialIdentitéFiness.indcaduc._text === "O";
   }
 
   private établissementTerritorialEstFermé(établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) {
-    return établissementTerritorialIdentitéFiness.datefermeture._text !== undefined
+    return établissementTerritorialIdentitéFiness.datefermeture._text !== undefined;
   }
 
-  private entitéJuridiqueDeRattachementEstOuverte(établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness,
-    numéroFinessDesEntitésJuridiques: string[]) {
-    return numéroFinessDesEntitésJuridiques.includes(établissementTerritorialIdentitéFiness.nofinessej._text as string)
+  private entitéJuridiqueDeRattachementEstOuverte(
+    établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness,
+    numéroFinessDesEntitésJuridiques: string[]
+  ) {
+    return numéroFinessDesEntitésJuridiques.includes(établissementTerritorialIdentitéFiness.nofinessej._text as string);
   }
 
   private récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(localPath: string): string {
-    const fichiersDuRépertoireSimple = readdirSync(`${localPath}/finess/simple`)
+    const fichiersDuRépertoireSimple = readdirSync(`${localPath}/finess/simple`);
 
-    return localPath + '/finess/simple/' + fichiersDuRépertoireSimple.filter((fichier) => fichier.includes(this.préfixeDuFichierÉtablissementTerritorialIdentité))
+    return (
+      localPath + "/finess/simple/" + fichiersDuRépertoireSimple.filter((fichier) => fichier.includes(this.préfixeDuFichierÉtablissementTerritorialIdentité))
+    );
   }
 
   private récupèreLeCheminDuFichierCatégorie(localPath: string): string {
-    const fichiersDuRépertoireCatégorie = readdirSync(`${localPath}/finess/nomenclature`)
+    const fichiersDuRépertoireCatégorie = readdirSync(`${localPath}/finess/nomenclature`);
 
-    return localPath + '/finess/nomenclature/' + fichiersDuRépertoireCatégorie.filter((fichier) => fichier.includes(this.préfixeDuFichierCatégorie))
+    return localPath + "/finess/nomenclature/" + fichiersDuRépertoireCatégorie.filter((fichier) => fichier.includes(this.préfixeDuFichierCatégorie));
   }
 
   private construisÉtablissementTerritorialIdentité(
     établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness,
     catégories: CatégorieFluxFiness
   ): ÉtablissementTerritorialIdentité {
-    const valueOrEmpty = (value?: string): string => value || ''
+    const valueOrEmpty = (value?: string): string => value || "";
 
     return {
       adresseAcheminement: valueOrEmpty(établissementTerritorialIdentitéFiness.ligneacheminement._text),
@@ -316,14 +322,14 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
       numéroFinessEntitéJuridique: valueOrEmpty(établissementTerritorialIdentitéFiness.nofinessej._text),
       numéroFinessÉtablissementPrincipal: valueOrEmpty(établissementTerritorialIdentitéFiness.nofinessppal._text),
       numéroFinessÉtablissementTerritorial: valueOrEmpty(établissementTerritorialIdentitéFiness.nofinesset._text),
-      raisonSociale: valueOrEmpty(établissementTerritorialIdentitéFiness.rslongue._text) ?
-        valueOrEmpty(établissementTerritorialIdentitéFiness.rslongue._text) :
-        valueOrEmpty(établissementTerritorialIdentitéFiness.rs._text),
+      raisonSociale: valueOrEmpty(établissementTerritorialIdentitéFiness.rslongue._text)
+        ? valueOrEmpty(établissementTerritorialIdentitéFiness.rslongue._text)
+        : valueOrEmpty(établissementTerritorialIdentitéFiness.rs._text),
       raisonSocialeCourte: valueOrEmpty(établissementTerritorialIdentitéFiness.rs._text),
       siret: valueOrEmpty(établissementTerritorialIdentitéFiness.siret._text),
       typeÉtablissement: valueOrEmpty(établissementTerritorialIdentitéFiness.typeet._text),
       téléphone: valueOrEmpty(établissementTerritorialIdentitéFiness.telephone._text),
-    }
+    };
   }
 
   private construisLeDomaine(
@@ -331,15 +337,15 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
     catégories: CatégorieFluxFiness
   ): DomaineÉtablissementTerritorial {
     const catégorie = catégories.fluxfiness.nomenclcategorieETavecagr.filter((catégorie) => {
-      return catégorie.code._text === établissementTerritorialIdentitéFiness.categetab._text
-    })
+      return catégorie.code._text === établissementTerritorialIdentitéFiness.categetab._text;
+    });
 
     switch (catégorie[0].domaine._text) {
-      case 'SAN':
-        return DomaineÉtablissementTerritorial.SANITAIRE
+      case "SAN":
+        return DomaineÉtablissementTerritorial.SANITAIRE;
 
       default:
-        return DomaineÉtablissementTerritorial.MÉDICO_SOCIAL
+        return DomaineÉtablissementTerritorial.MÉDICO_SOCIAL;
     }
   }
 }

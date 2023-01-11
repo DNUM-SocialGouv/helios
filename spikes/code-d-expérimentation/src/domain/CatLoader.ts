@@ -1,4 +1,4 @@
-import { Cat } from './Cat';
+import { Cat } from "./Cat";
 
 export interface CatLoader {
   getAllCats(): Promise<Cat[]>;

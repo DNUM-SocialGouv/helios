@@ -1,36 +1,30 @@
-import { ReactChild, ReactElement, useState } from 'react'
+import { ReactChild, ReactElement, useState } from "react";
 
-import { useDependencies } from '../contexts/useDependencies'
-import { InfoBulle } from '../InfoBulle/InfoBulle'
-import styles from './Indicateur.module.css'
+import { useDependencies } from "../contexts/useDependencies";
+import { InfoBulle } from "../InfoBulle/InfoBulle";
+import styles from "./Indicateur.module.css";
 
-import '@gouvfr/dsfr/dist/component/button/button.min.css'
+import "@gouvfr/dsfr/dist/component/button/button.min.css";
 
 type IndicateurProps = Readonly<{
-  children: ReactElement
-  contenuInfoBulle: ReactElement
-  dateDeMiseÀJour: string
-  identifiant: string
-  nomDeLIndicateur: ReactChild
-  source: ReactElement
-}>
+  children: ReactElement;
+  contenuInfoBulle: ReactElement;
+  dateDeMiseÀJour: string;
+  identifiant: string;
+  nomDeLIndicateur: ReactChild;
+  source: ReactElement;
+}>;
 
-export const Indicateur = (
-  { children, contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source }: IndicateurProps
-) => {
-  const { wording } = useDependencies()
-  const [estCeOuvert, setEstCeOuvert] = useState(false)
+export const Indicateur = ({ children, contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source }: IndicateurProps) => {
+  const { wording } = useDependencies();
+  const [estCeOuvert, setEstCeOuvert] = useState(false);
 
   return (
     <li>
       <div>
-        <p className="fr-m-0">
-          {nomDeLIndicateur}
-        </p>
-        <div className={styles['mise-a-jour-source']}>
-          <p className={`fr-text--xs ${styles['titraille']}`}>
-            {wording.miseÀJourEtSource(dateDeMiseÀJour, source)}
-          </p>
+        <p className="fr-m-0">{nomDeLIndicateur}</p>
+        <div className={styles["mise-a-jour-source"]}>
+          <p className={`fr-text--xs ${styles["titraille"]}`}>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
           <button
             aria-controls={`nom-info-bulle-${identifiant}`}
             className="fr-btn fr-fi-information-line fr-btn--icon-left fr-btn--tertiary fr-btn--sm"
@@ -43,14 +37,9 @@ export const Indicateur = (
         </div>
       </div>
       {children}
-      <InfoBulle
-        estCeOuvert={estCeOuvert}
-        identifiant={identifiant}
-        setEstCeOuvert={setEstCeOuvert}
-        titre={nomDeLIndicateur}
-      >
+      <InfoBulle estCeOuvert={estCeOuvert} identifiant={identifiant} setEstCeOuvert={setEstCeOuvert} titre={nomDeLIndicateur}>
         {contenuInfoBulle}
       </InfoBulle>
     </li>
-  )
-}
+  );
+};

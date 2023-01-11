@@ -1,44 +1,40 @@
-import { DataSource } from 'typeorm'
+import { DataSource } from "typeorm";
 
-import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
-import { EntitéJuridiqueModel } from '../../../../../database/models/EntitéJuridiqueModel'
-import { EntitéJuridique } from '../../../métier/entities/entité-juridique/EntitéJuridique'
-import { EntitéJuridiqueNonTrouvée } from '../../../métier/entities/EntitéJuridiqueNonTrouvée'
-import { EntitéJuridiqueDeRattachement } from '../../../métier/entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement'
-import { EntitéJuridiqueLoader } from '../../../métier/gateways/EntitéJuridiqueLoader'
+import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
+import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
+import { EntitéJuridique } from "../../../métier/entities/entité-juridique/EntitéJuridique";
+import { EntitéJuridiqueNonTrouvée } from "../../../métier/entities/EntitéJuridiqueNonTrouvée";
+import { EntitéJuridiqueDeRattachement } from "../../../métier/entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement";
+import { EntitéJuridiqueLoader } from "../../../métier/gateways/EntitéJuridiqueLoader";
 
 export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
   constructor(private readonly orm: Promise<DataSource>) {}
 
   async chargeIdentité(numéroFiness: string): Promise<EntitéJuridique | EntitéJuridiqueNonTrouvée> {
-    const entitéJuridiqueIdentitéModel = await this.chargeLIdentitéModel(numéroFiness)
+    const entitéJuridiqueIdentitéModel = await this.chargeLIdentitéModel(numéroFiness);
 
     if (!entitéJuridiqueIdentitéModel) {
-      return new EntitéJuridiqueNonTrouvée(numéroFiness)
+      return new EntitéJuridiqueNonTrouvée(numéroFiness);
     }
 
-    const dateDeMiseAJourFichierSourceModel = await this.chargeLaDateDeMiseÀJourFinessCs1400101Model() as DateMiseÀJourFichierSourceModel
+    const dateDeMiseAJourFichierSourceModel = (await this.chargeLaDateDeMiseÀJourFinessCs1400101Model()) as DateMiseÀJourFichierSourceModel;
 
-    return this.construisLEntitéJuridique(entitéJuridiqueIdentitéModel, dateDeMiseAJourFichierSourceModel)
+    return this.construisLEntitéJuridique(entitéJuridiqueIdentitéModel, dateDeMiseAJourFichierSourceModel);
   }
 
   async chargeRattachement(numéroFiness: string): Promise<EntitéJuridiqueDeRattachement> {
-    const entitéJuridiqueModel = await this.chargeLIdentitéModel(numéroFiness) as EntitéJuridiqueModel
-    const dateDeMiseAJourFichierSourceModel = await this.chargeLaDateDeMiseÀJourFinessCs1400101Model() as DateMiseÀJourFichierSourceModel
+    const entitéJuridiqueModel = (await this.chargeLIdentitéModel(numéroFiness)) as EntitéJuridiqueModel;
+    const dateDeMiseAJourFichierSourceModel = (await this.chargeLaDateDeMiseÀJourFinessCs1400101Model()) as DateMiseÀJourFichierSourceModel;
 
-    return this.construisLEntitéJuridiqueDeRattachement(entitéJuridiqueModel, dateDeMiseAJourFichierSourceModel)
+    return this.construisLEntitéJuridiqueDeRattachement(entitéJuridiqueModel, dateDeMiseAJourFichierSourceModel);
   }
 
   private async chargeLaDateDeMiseÀJourFinessCs1400101Model(): Promise<DateMiseÀJourFichierSourceModel | null> {
-    return await (await this.orm)
-      .getRepository(DateMiseÀJourFichierSourceModel)
-      .findOneBy({ fichier: FichierSource.FINESS_CS1400101 })
+    return await (await this.orm).getRepository(DateMiseÀJourFichierSourceModel).findOneBy({ fichier: FichierSource.FINESS_CS1400101 });
   }
 
   private async chargeLIdentitéModel(numéroFinessEntitéJuridique: string): Promise<EntitéJuridiqueModel | null> {
-    return await (await this.orm)
-      .getRepository(EntitéJuridiqueModel)
-      .findOneBy({ numéroFinessEntitéJuridique })
+    return await (await this.orm).getRepository(EntitéJuridiqueModel).findOneBy({ numéroFinessEntitéJuridique });
   }
 
   private construisLEntitéJuridique(
@@ -86,7 +82,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
         dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
         value: entitéJuridiqueModel.téléphone,
       },
-    }
+    };
   }
 
   private construisLEntitéJuridiqueDeRattachement(
@@ -102,6 +98,6 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
         dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
         value: entitéJuridiqueModel.libelléStatutJuridique,
       },
-    }
+    };
   }
 }

@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner } from 'typeorm'
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class AjoutActivitéMédicoSocial1656002701263 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
@@ -21,10 +21,10 @@ export class AjoutActivitéMédicoSocial1656002701263 implements MigrationInterf
             REFERENCES etablissement_territorial (numero_finess_etablissement_territorial)
             ON DELETE CASCADE
       );
-    `)
+    `);
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query('DROP TABLE activite_medico_social')
+    await queryRunner.query("DROP TABLE activite_medico_social");
   }
 }

@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner } from 'typeorm'
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class AjoutDomaineÉtablissement1654002237462 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
@@ -6,7 +6,7 @@ export class AjoutDomaineÉtablissement1654002237462 implements MigrationInterfa
       CREATE TYPE domaine_et AS ENUM ('Médico-social','Sanitaire');
         ALTER TABLE etablissement_territorial
         ADD domaine domaine_et NOT NULL DEFAULT ('Médico-social');
-    `)
+    `);
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
@@ -14,6 +14,6 @@ export class AjoutDomaineÉtablissement1654002237462 implements MigrationInterfa
       ALTER TABLE ÉtablissementTerritorialIdentité
         DROP COLUMN domaine;
         DROP TYPE domaine_et;
-    `)
+    `);
   }
 }

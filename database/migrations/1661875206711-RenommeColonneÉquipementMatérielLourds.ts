@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner } from 'typeorm'
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class RenommeColonneÉquipementMatérielLourds1661875206711 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
@@ -11,7 +11,7 @@ export class RenommeColonneÉquipementMatérielLourds1661875206711 implements Mi
 
       ALTER TABLE reconnaissance_contractuelle_sanitaire
         RENAME COLUMN id_cpom TO numero_cpom;
-    `)
+    `);
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
@@ -24,6 +24,6 @@ export class RenommeColonneÉquipementMatérielLourds1661875206711 implements Mi
 
       ALTER TABLE equipement_materiel_lourd
         RENAME COLUMN libelle_eml TO libelle_equipement_materiel_lourd;
-    `)
+    `);
   }
 }

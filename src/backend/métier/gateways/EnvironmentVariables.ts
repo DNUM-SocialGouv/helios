@@ -1,13 +1,13 @@
 export interface EnvironmentVariables {
-  readonly DATABASE_URL: string
+  readonly DATABASE_URL: string;
 
-  readonly ORM_DEBUG: string
+  readonly ORM_DEBUG: string;
 
-  readonly SCALINGO_TOKEN: string
+  readonly SCALINGO_TOKEN: string;
 
-  readonly SENTRY_AUTH_TOKEN: string
-  readonly SENTRY_DSN: string
-  readonly SENTRY_ENVIRONMENT: string
+  readonly SENTRY_AUTH_TOKEN: string;
+  readonly SENTRY_DSN: string;
+  readonly SENTRY_ENVIRONMENT: string;
 
-  readonly TIME_OF_CACHE_PAGE: string
+  readonly TIME_OF_CACHE_PAGE: string;
 }

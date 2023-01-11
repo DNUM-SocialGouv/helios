@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner } from 'typeorm'
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class AjoutDesCommunesEtDépartementsDansLaRecherche1662644327376 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
@@ -21,7 +21,7 @@ export class AjoutDesCommunesEtDépartementsDansLaRecherche1662644327376 impleme
         commune,
         departement
       FROM etablissement_territorial;
-    `)
+    `);
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
@@ -44,6 +44,6 @@ export class AjoutDesCommunesEtDépartementsDansLaRecherche1662644327376 impleme
         commune,
         departement
       FROM etablissement_territorial;
-    `)
+    `);
   }
 }

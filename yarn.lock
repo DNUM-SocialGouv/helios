@@ -4486,6 +4486,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-config-prettier@npm:^8.6.0":
+  version: 8.6.0
+  resolution: "eslint-config-prettier@npm:8.6.0"
+  peerDependencies:
+    eslint: ">=7.0.0"
+  bin:
+    eslint-config-prettier: bin/cli.js
+  checksum: ff0d0dfc839a556355422293428637e8d35693de58dabf8638bf0b6529131a109d0b2ade77521aa6e54573bb842d7d9d322e465dd73dd61c7590fa3834c3fa81
+  languageName: node
+  linkType: hard
+
 "eslint-import-resolver-node@npm:0.3.4":
   version: 0.3.4
   resolution: "eslint-import-resolver-node@npm:0.3.4"
@@ -5567,6 +5578,7 @@ __metadata:
     env-cmd: ^10.1.0
     eslint: 8.13.0
     eslint-config-next: 12.1.4
+    eslint-config-prettier: ^8.6.0
     eslint-plugin-jest: ^26.1.4
     eslint-plugin-jest-formatting: ^3.1.0
     eslint-plugin-testing-library: ^5.3.0
@@ -5577,6 +5589,7 @@ __metadata:
     next-router-mock: ^0.7.4
     node-fetch: 2.6.7
     pg: ^8.7.3
+    prettier: ^2.8.2
     react: 18.0.0
     react-chartjs-2: ^4.2.0
     react-dom: 18.0.0
@@ -8752,6 +8765,15 @@ __metadata:
   version: 1.1.2
   resolution: "prelude-ls@npm:1.1.2"
   checksum: c4867c87488e4a0c233e158e4d0d5565b609b105d75e4c05dc760840475f06b731332eb93cc8c9cecb840aa8ec323ca3c9a56ad7820ad2e63f0261dadcb154e4
+  languageName: node
+  linkType: hard
+
+"prettier@npm:^2.8.2":
+  version: 2.8.2
+  resolution: "prettier@npm:2.8.2"
+  bin:
+    prettier: bin-prettier.js
+  checksum: 740c56c2128d587d656ea1dde9bc9c3503dfc94db4f3ac387259215eeb2e216680bdad9d18a0c9feecc6b42cfa188d6fa777df4c36c1d00cedd4199074fbfbd2
   languageName: node
   linkType: hard
 

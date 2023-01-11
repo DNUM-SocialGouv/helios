@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner } from 'typeorm'
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class IndexationRaisonSocialeCourte1662997448422 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
@@ -68,7 +68,7 @@ export class IndexationRaisonSocialeCourte1662997448422 implements MigrationInte
           commune,
           departement
         FROM etablissement_territorial;
-      `)
+      `);
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
@@ -134,6 +134,6 @@ export class IndexationRaisonSocialeCourte1662997448422 implements MigrationInte
           commune,
           departement
         FROM etablissement_territorial;
-      `)
+      `);
   }
 }

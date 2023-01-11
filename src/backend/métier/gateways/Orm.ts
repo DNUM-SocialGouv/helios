@@ -1,3 +1,3 @@
-import { EnvironmentVariables } from './EnvironmentVariables'
+import { EnvironmentVariables } from "./EnvironmentVariables";
 
-export type Orm<T> = (environmentVariables: EnvironmentVariables) => Promise<T>
+export type Orm<T> = (environmentVariables: EnvironmentVariables) => Promise<T>;

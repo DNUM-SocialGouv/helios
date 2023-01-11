@@ -1,4 +1,4 @@
 export enum DomaineÉtablissementTerritorial {
-  MÉDICO_SOCIAL = 'Médico-social',
-  SANITAIRE = 'Sanitaire'
+  MÉDICO_SOCIAL = "Médico-social",
+  SANITAIRE = "Sanitaire",
 }

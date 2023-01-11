@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner } from 'typeorm'
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class AjoutAutorisationsDesETMédicoSociaux1660654708747 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
@@ -27,10 +27,10 @@ export class AjoutAutorisationsDesETMédicoSociaux1660654708747 implements Migra
 
       ALTER TYPE fichier_source
         ADD VALUE IF NOT EXISTS 'finess_cs1400105';
-    `)
+    `);
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query('DROP TABLE autorisation_medico_social;')
+    await queryRunner.query("DROP TABLE autorisation_medico_social;");
   }
 }

@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner } from 'typeorm'
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class AjoutDépartementEtCommune1658418352668 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
@@ -29,7 +29,7 @@ export class AjoutDépartementEtCommune1658418352668 implements MigrationInterfa
           commune,
           departement
         FROM etablissement_territorial;
-    `)
+    `);
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
@@ -58,6 +58,6 @@ export class AjoutDépartementEtCommune1658418352668 implements MigrationInterfa
         domaine::text AS type,
         to_tsvector('unaccent_helios', raison_sociale || ' ' || numero_finess_etablissement_territorial) AS termes
       FROM etablissement_territorial;
-    `)
+    `);
   }
 }

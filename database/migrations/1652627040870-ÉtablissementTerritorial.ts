@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner } from 'typeorm'
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class ÉtablissementTerritorial1652627040870 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
@@ -26,10 +26,10 @@ export class ÉtablissementTerritorial1652627040870 implements MigrationInterfac
           REFERENCES entite_juridique (numero_finess_entite_juridique)
           ON DELETE CASCADE
       );
-    `)
+    `);
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query('DROP TABLE etablissement_territorial;')
+    await queryRunner.query("DROP TABLE etablissement_territorial;");
   }
 }

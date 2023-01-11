@@ -1,15 +1,15 @@
-import { DataSource } from 'typeorm'
+import { DataSource } from "typeorm";
 
-import { ActivitéSanitaireModel } from '../../../../../database/models/ActivitéSanitaireModel'
-import { AutorisationSanitaireModel } from '../../../../../database/models/AutorisationSanitaireModel'
-import { AutreActivitéSanitaireModel } from '../../../../../database/models/AutreActivitéSanitaireModel'
-import { CapacitéAutorisationSanitaireModel } from '../../../../../database/models/CapacitéAutorisationSanitaireModel'
-import { DateMiseÀJourFichierSourceModel, FichierSource } from '../../../../../database/models/DateMiseÀJourFichierSourceModel'
-import { ReconnaissanceContractuelleSanitaireModel } from '../../../../../database/models/ReconnaissanceContractuelleSanitaireModel'
-import { ÉquipementMatérielLourdSanitaireModel } from '../../../../../database/models/ÉquipementMatérielLourdSanitaireModel'
-import { ÉtablissementTerritorialIdentitéModel } from '../../../../../database/models/ÉtablissementTerritorialIdentitéModel'
-import { DomaineÉtablissementTerritorial } from '../../../métier/entities/DomaineÉtablissementTerritorial'
-import { ÉtablissementTerritorialSanitaireActivité } from '../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité'
+import { ActivitéSanitaireModel } from "../../../../../database/models/ActivitéSanitaireModel";
+import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
+import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
+import { CapacitéAutorisationSanitaireModel } from "../../../../../database/models/CapacitéAutorisationSanitaireModel";
+import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
+import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
+import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
+import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
+import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
+import { ÉtablissementTerritorialSanitaireActivité } from "../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
 import {
   AutorisationSanitaireForme,
   AutorisationSanitaireModalité,
@@ -27,50 +27,47 @@ import {
   ReconnaissanceContractuelleSanitaire,
   AutorisationSanitaire,
   CapacitéSanitaire,
-} from '../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation'
-import { ÉtablissementTerritorialIdentité } from '../../../métier/entities/ÉtablissementTerritorialIdentité'
-import { ÉtablissementTerritorialSanitaireNonTrouvée } from '../../../métier/entities/ÉtablissementTerritorialSanitaireNonTrouvée'
-import { ÉtablissementTerritorialSanitaireLoader } from '../../../métier/gateways/ÉtablissementTerritorialSanitaireLoader'
+} from "../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
+import { ÉtablissementTerritorialIdentité } from "../../../métier/entities/ÉtablissementTerritorialIdentité";
+import { ÉtablissementTerritorialSanitaireNonTrouvée } from "../../../métier/entities/ÉtablissementTerritorialSanitaireNonTrouvée";
+import { ÉtablissementTerritorialSanitaireLoader } from "../../../métier/gateways/ÉtablissementTerritorialSanitaireLoader";
 
 export class TypeOrmÉtablissementTerritorialSanitaireLoader implements ÉtablissementTerritorialSanitaireLoader {
-  constructor(private readonly orm: Promise<DataSource>) {
-  }
+  constructor(private readonly orm: Promise<DataSource>) {}
 
   async chargeActivité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialSanitaireActivité[]> {
-    const activitésÉtablissementTerritorialActivitésModel = await this.chargeLesActivitésModel(numéroFinessÉtablissementTerritorial)
-    const dateDeMiseAJourAnnRpuModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_RPU) as DateMiseÀJourFichierSourceModel
-    const dateDeMiseAJourMenPmsiAnnuelModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_MEN_PMSI_ANNUEL) as DateMiseÀJourFichierSourceModel
+    const activitésÉtablissementTerritorialActivitésModel = await this.chargeLesActivitésModel(numéroFinessÉtablissementTerritorial);
+    const dateDeMiseAJourAnnRpuModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_RPU)) as DateMiseÀJourFichierSourceModel;
+    const dateDeMiseAJourMenPmsiAnnuelModel = (await this.chargeLaDateDeMiseÀJourModel(
+      FichierSource.DIAMANT_MEN_PMSI_ANNUEL
+    )) as DateMiseÀJourFichierSourceModel;
 
-    return this.construisActivité(
-      activitésÉtablissementTerritorialActivitésModel,
-      dateDeMiseAJourAnnRpuModel,
-      dateDeMiseAJourMenPmsiAnnuelModel
-    )
+    return this.construisActivité(activitésÉtablissementTerritorialActivitésModel, dateDeMiseAJourAnnRpuModel, dateDeMiseAJourMenPmsiAnnuelModel);
   }
 
   async chargeIdentité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialSanitaireNonTrouvée> {
-    const établissementTerritorialIdentitéModel = await this.chargeLIdentitéModel(numéroFinessÉtablissementTerritorial)
+    const établissementTerritorialIdentitéModel = await this.chargeLIdentitéModel(numéroFinessÉtablissementTerritorial);
 
     if (!établissementTerritorialIdentitéModel) {
-      return new ÉtablissementTerritorialSanitaireNonTrouvée(numéroFinessÉtablissementTerritorial)
+      return new ÉtablissementTerritorialSanitaireNonTrouvée(numéroFinessÉtablissementTerritorial);
     }
 
-    const dateDeMiseÀJourIdentitéModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102) as DateMiseÀJourFichierSourceModel
+    const dateDeMiseÀJourIdentitéModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102)) as DateMiseÀJourFichierSourceModel;
 
-    return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseÀJourIdentitéModel)
+    return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseÀJourIdentitéModel);
   }
 
   async chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialSanitaireAutorisationEtCapacité> {
-    const autorisationsDeLÉtablissementModel = await this.chargeLesAutorisationsModel(numéroFinessÉtablissementTerritorial)
-    const équipementsDeLÉtablissementModel = await this.chargeLesÉquipementsMatérielsLourdsModel(numéroFinessÉtablissementTerritorial)
-    const autresActivitésDeLÉtablissementModel = await this.chargeLesAutresActivitésModel(numéroFinessÉtablissementTerritorial)
-    const reconnaissancesContractuellesDeLÉtablissementModel = await this.chargeLesReconnaissancesContractuellesModel(numéroFinessÉtablissementTerritorial)
-    const capacitésDeLÉtablissementModel = await this.chargeLesCapacitésModel(numéroFinessÉtablissementTerritorial)
-    const dateDeMiseÀJourFinessCs1400103Model = await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400103) as DateMiseÀJourFichierSourceModel
-    const dateDeMiseÀJourFinessCs1400104Model = await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400104) as DateMiseÀJourFichierSourceModel
-    const dateDeMiseÀJourFinessCs1600101Mode1 = await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1600101) as DateMiseÀJourFichierSourceModel
-    const dateDeMiseÀJourFinessCs1600102Mode1 = await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1600102) as DateMiseÀJourFichierSourceModel
-    const dateDeMiseÀJourDiamantAnnSaeModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_SAE) as DateMiseÀJourFichierSourceModel
+    const autorisationsDeLÉtablissementModel = await this.chargeLesAutorisationsModel(numéroFinessÉtablissementTerritorial);
+    const équipementsDeLÉtablissementModel = await this.chargeLesÉquipementsMatérielsLourdsModel(numéroFinessÉtablissementTerritorial);
+    const autresActivitésDeLÉtablissementModel = await this.chargeLesAutresActivitésModel(numéroFinessÉtablissementTerritorial);
+    const reconnaissancesContractuellesDeLÉtablissementModel = await this.chargeLesReconnaissancesContractuellesModel(numéroFinessÉtablissementTerritorial);
+    const capacitésDeLÉtablissementModel = await this.chargeLesCapacitésModel(numéroFinessÉtablissementTerritorial);
+    const dateDeMiseÀJourFinessCs1400103Model = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400103)) as DateMiseÀJourFichierSourceModel;
+    const dateDeMiseÀJourFinessCs1400104Model = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400104)) as DateMiseÀJourFichierSourceModel;
+    const dateDeMiseÀJourFinessCs1600101Mode1 = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1600101)) as DateMiseÀJourFichierSourceModel;
+    const dateDeMiseÀJourFinessCs1600102Mode1 = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1600102)) as DateMiseÀJourFichierSourceModel;
+    const dateDeMiseÀJourDiamantAnnSaeModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_SAE)) as DateMiseÀJourFichierSourceModel;
 
     return {
       autorisations: this.construisLesAutorisations(autorisationsDeLÉtablissementModel, dateDeMiseÀJourFinessCs1400103Model),
@@ -82,81 +79,65 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
         dateDeMiseÀJourFinessCs1600102Mode1
       ),
       équipementsMatérielsLourds: this.construisLesÉquipementsMatérielsLourds(équipementsDeLÉtablissementModel, dateDeMiseÀJourFinessCs1400104Model),
-    }
+    };
   }
 
   private async chargeLesCapacitésModel(numéroFinessÉtablissementTerritorial: string): Promise<CapacitéAutorisationSanitaireModel[]> {
-    return await (await this.orm)
-      .getRepository(CapacitéAutorisationSanitaireModel)
-      .find({ where: { numéroFinessÉtablissementTerritorial } })
+    return await (await this.orm).getRepository(CapacitéAutorisationSanitaireModel).find({ where: { numéroFinessÉtablissementTerritorial } });
   }
 
-  private async chargeLesÉquipementsMatérielsLourdsModel(numéroFinessÉtablissementTerritorial: string):
-    Promise<ÉquipementMatérielLourdSanitaireModel[]> {
-    return await (await this.orm)
-      .getRepository(ÉquipementMatérielLourdSanitaireModel)
-      .find({
-        order: {
-          codeÉquipementMatérielLourd: 'ASC',
-          numéroAutorisationArhgos: 'ASC',
-        },
-        where: { numéroFinessÉtablissementTerritorial },
-      })
+  private async chargeLesÉquipementsMatérielsLourdsModel(numéroFinessÉtablissementTerritorial: string): Promise<ÉquipementMatérielLourdSanitaireModel[]> {
+    return await (await this.orm).getRepository(ÉquipementMatérielLourdSanitaireModel).find({
+      order: {
+        codeÉquipementMatérielLourd: "ASC",
+        numéroAutorisationArhgos: "ASC",
+      },
+      where: { numéroFinessÉtablissementTerritorial },
+    });
   }
 
-  private async chargeLesReconnaissancesContractuellesModel(numéroFinessÉtablissementTerritorial: string):
-    Promise<ReconnaissanceContractuelleSanitaireModel[]> {
-    return await (await this.orm)
-      .getRepository(ReconnaissanceContractuelleSanitaireModel)
-      .find({
-        // eslint-disable-next-line sort-keys
-        order: { codeActivité: 'ASC', codeModalité: 'ASC', codeForme: 'ASC' },
-        where: { numéroFinessÉtablissementTerritorial },
-      })
+  private async chargeLesReconnaissancesContractuellesModel(
+    numéroFinessÉtablissementTerritorial: string
+  ): Promise<ReconnaissanceContractuelleSanitaireModel[]> {
+    return await (await this.orm).getRepository(ReconnaissanceContractuelleSanitaireModel).find({
+      // eslint-disable-next-line sort-keys
+      order: { codeActivité: "ASC", codeModalité: "ASC", codeForme: "ASC" },
+      where: { numéroFinessÉtablissementTerritorial },
+    });
   }
 
   private async chargeLesAutresActivitésModel(numéroFinessÉtablissementTerritorial: string): Promise<AutreActivitéSanitaireModel[]> {
-    return await (await this.orm)
-      .getRepository(AutreActivitéSanitaireModel)
-      .find({
-        // eslint-disable-next-line sort-keys
-        order: { codeActivité: 'ASC', codeModalité: 'ASC', codeForme: 'ASC' },
-        where: { numéroFinessÉtablissementTerritorial },
-      })
+    return await (await this.orm).getRepository(AutreActivitéSanitaireModel).find({
+      // eslint-disable-next-line sort-keys
+      order: { codeActivité: "ASC", codeModalité: "ASC", codeForme: "ASC" },
+      where: { numéroFinessÉtablissementTerritorial },
+    });
   }
 
   private async chargeLesAutorisationsModel(numéroFinessÉtablissementTerritorial: string): Promise<AutorisationSanitaireModel[]> {
-    return await (await this.orm)
-      .getRepository(AutorisationSanitaireModel)
-      .find({
-        // eslint-disable-next-line sort-keys
-        order: { codeActivité: 'ASC', codeModalité: 'ASC', codeForme: 'ASC' },
-        where: { numéroFinessÉtablissementTerritorial },
-      })
+    return await (await this.orm).getRepository(AutorisationSanitaireModel).find({
+      // eslint-disable-next-line sort-keys
+      order: { codeActivité: "ASC", codeModalité: "ASC", codeForme: "ASC" },
+      where: { numéroFinessÉtablissementTerritorial },
+    });
   }
 
   private async chargeLesActivitésModel(numéroFinessÉtablissementTerritorial: string) {
-    return await (await this.orm)
-      .getRepository(ActivitéSanitaireModel)
-      .find({
-        order: { année: 'ASC' },
-        where: { numéroFinessÉtablissementTerritorial },
-      })
+    return await (await this.orm).getRepository(ActivitéSanitaireModel).find({
+      order: { année: "ASC" },
+      where: { numéroFinessÉtablissementTerritorial },
+    });
   }
 
   private async chargeLIdentitéModel(numéroFinessÉtablissementTerritorial: string) {
-    return await (await this.orm)
-      .getRepository(ÉtablissementTerritorialIdentitéModel)
-      .findOneBy({
-        domaine: DomaineÉtablissementTerritorial.SANITAIRE,
-        numéroFinessÉtablissementTerritorial,
-      })
+    return await (await this.orm).getRepository(ÉtablissementTerritorialIdentitéModel).findOneBy({
+      domaine: DomaineÉtablissementTerritorial.SANITAIRE,
+      numéroFinessÉtablissementTerritorial,
+    });
   }
 
   private async chargeLaDateDeMiseÀJourModel(fichierSource: FichierSource): Promise<DateMiseÀJourFichierSourceModel | null> {
-    return await (await this.orm)
-      .getRepository(DateMiseÀJourFichierSourceModel)
-      .findOneBy({ fichier: fichierSource })
+    return await (await this.orm).getRepository(DateMiseÀJourFichierSourceModel).findOneBy({ fichier: fichierSource });
   }
 
   private construisIdentité(
@@ -193,8 +174,8 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
         value: établissementTerritorialIdentitéModel.courriel,
       },
       dateDEntréeEnVigueurDuCpom: {
-        dateMiseÀJourSource: '',
-        value: '',
+        dateMiseÀJourSource: "",
+        value: "",
       },
       libelléCatégorieÉtablissement: {
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
@@ -236,7 +217,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.téléphone,
       },
-    }
+    };
   }
 
   private construisActivité(
@@ -244,107 +225,106 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     dateDeMiseAJourAnnRpuModel: DateMiseÀJourFichierSourceModel,
     dateDeMiseAJourMenPmsiAnnuelModel: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialSanitaireActivité[] {
-    return établissementTerritorialActivitésModel.map<ÉtablissementTerritorialSanitaireActivité>((établissementTerritorialModel) =>
-      ({
-        année: établissementTerritorialModel.année,
-        nombreDePassagesAuxUrgences: {
-          dateMiseÀJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
-          value: établissementTerritorialModel.nombreDePassagesAuxUrgences,
-        },
-        nombreJournéesCompletePsy: {
-          dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
-          value: établissementTerritorialModel.nombreJournéesCompletePsy,
-        },
-        nombreJournéesCompletesSsr: {
-          dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
-          value: établissementTerritorialModel.nombreJournéesCompletesSsr,
-        },
-        nombreJournéesPartiellesPsy: {
-          dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
-          value: établissementTerritorialModel.nombreJournéesPartiellesPsy,
-        },
-        nombreJournéesPartielsSsr: {
-          dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
-          value: établissementTerritorialModel.nombreJournéesPartielsSsr,
-        },
-        nombreSéjoursCompletsChirurgie: {
-          dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
-          value: établissementTerritorialModel.nombreSéjoursCompletsChirurgie,
-        },
-        nombreSéjoursCompletsMédecine: {
-          dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
-          value: établissementTerritorialModel.nombreSéjoursCompletsMédecine,
-        },
-        nombreSéjoursCompletsObstétrique: {
-          dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
-          value: établissementTerritorialModel.nombreSéjoursCompletsObstétrique,
-        },
-        nombreSéjoursPartielsChirurgie: {
-          dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
-          value: établissementTerritorialModel.nombreSéjoursPartielsChirurgie,
-        },
-        nombreSéjoursPartielsMédecine: {
-          dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
-          value: établissementTerritorialModel.nombreSéjoursPartielsMédecine,
-        },
-        nombreSéjoursPartielsObstétrique: {
-          dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
-          value: établissementTerritorialModel.nombreSéjoursPartielsObstétrique,
-        },
-        numéroFinessÉtablissementTerritorial: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
-      }))
+    return établissementTerritorialActivitésModel.map<ÉtablissementTerritorialSanitaireActivité>((établissementTerritorialModel) => ({
+      année: établissementTerritorialModel.année,
+      nombreDePassagesAuxUrgences: {
+        dateMiseÀJourSource: dateDeMiseAJourAnnRpuModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.nombreDePassagesAuxUrgences,
+      },
+      nombreJournéesCompletePsy: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.nombreJournéesCompletePsy,
+      },
+      nombreJournéesCompletesSsr: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.nombreJournéesCompletesSsr,
+      },
+      nombreJournéesPartiellesPsy: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.nombreJournéesPartiellesPsy,
+      },
+      nombreJournéesPartielsSsr: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.nombreJournéesPartielsSsr,
+      },
+      nombreSéjoursCompletsChirurgie: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.nombreSéjoursCompletsChirurgie,
+      },
+      nombreSéjoursCompletsMédecine: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.nombreSéjoursCompletsMédecine,
+      },
+      nombreSéjoursCompletsObstétrique: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.nombreSéjoursCompletsObstétrique,
+      },
+      nombreSéjoursPartielsChirurgie: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.nombreSéjoursPartielsChirurgie,
+      },
+      nombreSéjoursPartielsMédecine: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.nombreSéjoursPartielsMédecine,
+      },
+      nombreSéjoursPartielsObstétrique: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.nombreSéjoursPartielsObstétrique,
+      },
+      numéroFinessÉtablissementTerritorial: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
+    }));
   }
 
   private construisLesAutorisations(
     autorisationSanitaireModels: AutorisationSanitaireModel[],
     dateMiseÀJourSourceModel: DateMiseÀJourFichierSourceModel
-  ): ÉtablissementTerritorialSanitaireAutorisationEtCapacité['autorisations'] {
-    const autorisationsGroupéesDeLÉtablissement: AutorisationSanitaireActivité[] = []
+  ): ÉtablissementTerritorialSanitaireAutorisationEtCapacité["autorisations"] {
+    const autorisationsGroupéesDeLÉtablissement: AutorisationSanitaireActivité[] = [];
 
     autorisationSanitaireModels.forEach((autorisationModel: AutorisationSanitaireModel) => {
-      const activitéEstConnue = autorisationsGroupéesDeLÉtablissement.find((activité) => activité.code === autorisationModel.codeActivité)
+      const activitéEstConnue = autorisationsGroupéesDeLÉtablissement.find((activité) => activité.code === autorisationModel.codeActivité);
 
       if (!activitéEstConnue) {
-        this.ajouteLAutorisationÀUneNouvelleActivité(autorisationsGroupéesDeLÉtablissement, autorisationModel)
+        this.ajouteLAutorisationÀUneNouvelleActivité(autorisationsGroupéesDeLÉtablissement, autorisationModel);
       } else {
-        this.ajouteLAutorisationÀLActivitéExistante(activitéEstConnue, autorisationModel)
+        this.ajouteLAutorisationÀLActivitéExistante(activitéEstConnue, autorisationModel);
       }
-    })
+    });
 
     return {
       activités: autorisationsGroupéesDeLÉtablissement,
       dateMiseÀJourSource: dateMiseÀJourSourceModel.dernièreMiseÀJour,
-    }
+    };
   }
 
   private ajouteLAutorisationÀLActivitéExistante(activitéSanitaire: AutorisationSanitaireActivité, autorisationModel: AutorisationSanitaireModel) {
-    const modalitéEstDéjàCréée = activitéSanitaire.modalités.find((modalité) => modalité.code === autorisationModel.codeModalité)
+    const modalitéEstDéjàCréée = activitéSanitaire.modalités.find((modalité) => modalité.code === autorisationModel.codeModalité);
 
     if (!modalitéEstDéjàCréée) {
-      this.ajouteLAutorisationÀUneNouvelleModalité(activitéSanitaire, autorisationModel)
+      this.ajouteLAutorisationÀUneNouvelleModalité(activitéSanitaire, autorisationModel);
     } else {
-      this.ajouteLAutorisationÀLaModalitéExistante(modalitéEstDéjàCréée, autorisationModel)
+      this.ajouteLAutorisationÀLaModalitéExistante(modalitéEstDéjàCréée, autorisationModel);
     }
   }
 
   private ajouteLAutorisationÀLaModalitéExistante(modalitéSanitaire: AutorisationSanitaireModalité, autorisationModel: AutorisationSanitaireModel) {
-    const formeEstDéjàCréée = modalitéSanitaire.formes.find((forme) => forme.code === autorisationModel.codeForme)
+    const formeEstDéjàCréée = modalitéSanitaire.formes.find((forme) => forme.code === autorisationModel.codeForme);
 
     if (!formeEstDéjàCréée) {
-      this.ajouteLAutorisationÀUneNouvelleForme(modalitéSanitaire, autorisationModel)
+      this.ajouteLAutorisationÀUneNouvelleForme(modalitéSanitaire, autorisationModel);
     }
   }
 
   private ajouteLAutorisationÀUneNouvelleForme(modalitéSanitaire: AutorisationSanitaireModalité, autorisationModel: AutorisationSanitaireModel) {
-    modalitéSanitaire.formes.push(this.construisLaFormeDUneAutorisation(autorisationModel))
+    modalitéSanitaire.formes.push(this.construisLaFormeDUneAutorisation(autorisationModel));
   }
 
   private ajouteLAutorisationÀUneNouvelleModalité(activitéSanitaire: AutorisationSanitaireActivité, autorisationModel: AutorisationSanitaireModel) {
-    activitéSanitaire.modalités.push(this.construisLaModalitéDUneAutorisation(autorisationModel))
+    activitéSanitaire.modalités.push(this.construisLaModalitéDUneAutorisation(autorisationModel));
   }
 
   private ajouteLAutorisationÀUneNouvelleActivité(activitésSanitaires: AutorisationSanitaireActivité[], autorisationModel: AutorisationSanitaireModel) {
-    activitésSanitaires.push(this.construisLActivitéDUneAutorisation(autorisationModel))
+    activitésSanitaires.push(this.construisLActivitéDUneAutorisation(autorisationModel));
   }
 
   private construisLActivitéDUneAutorisation(autorisationModel: AutorisationSanitaireModel): AutorisationSanitaireActivité {
@@ -352,7 +332,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       code: autorisationModel.codeActivité,
       libellé: autorisationModel.libelléActivité,
       modalités: [this.construisLaModalitéDUneAutorisation(autorisationModel)],
-    }
+    };
   }
 
   private construisLaModalitéDUneAutorisation(autorisationModel: AutorisationSanitaireModel): AutorisationSanitaireModalité {
@@ -360,7 +340,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       code: autorisationModel.codeModalité,
       formes: [this.construisLaFormeDUneAutorisation(autorisationModel)],
       libellé: autorisationModel.libelléModalité,
-    }
+    };
   }
 
   private construisLaFormeDUneAutorisation(autorisationModel: AutorisationSanitaireModel): AutorisationSanitaireForme {
@@ -368,7 +348,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       autorisationSanitaire: this.construisUneAutorisation(autorisationModel),
       code: autorisationModel.codeForme,
       libellé: autorisationModel.libelléForme,
-    }
+    };
   }
 
   private construisUneAutorisation(autorisationModel: AutorisationSanitaireModel): AutorisationSanitaire {
@@ -377,61 +357,62 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       dateDeFin: autorisationModel.dateFin,
       dateDeMiseEnOeuvre: autorisationModel.dateMiseEnOeuvre,
       numéroArhgos: autorisationModel.numéroAutorisationArhgos,
-    }
+    };
   }
 
   private construisLesAutresActivités(
     autreActivitéSanitaireModels: AutreActivitéSanitaireModel[],
     dateMiseÀJourSourceModel: DateMiseÀJourFichierSourceModel
-  ): ÉtablissementTerritorialSanitaireAutorisationEtCapacité['autresActivités'] {
-    const autresActivitésGroupéesDeLÉtablissement: AutreActivitéSanitaireActivité[] = []
+  ): ÉtablissementTerritorialSanitaireAutorisationEtCapacité["autresActivités"] {
+    const autresActivitésGroupéesDeLÉtablissement: AutreActivitéSanitaireActivité[] = [];
 
     autreActivitéSanitaireModels.forEach((autreActivitéModel: AutreActivitéSanitaireModel) => {
-      const activitéConnue = autresActivitésGroupéesDeLÉtablissement.find((activité) => activité.code === autreActivitéModel.codeActivité)
+      const activitéConnue = autresActivitésGroupéesDeLÉtablissement.find((activité) => activité.code === autreActivitéModel.codeActivité);
 
       if (!activitéConnue) {
-        this.ajouteLAutreActivitéÀUneNouvelleActivité(autresActivitésGroupéesDeLÉtablissement, autreActivitéModel)
+        this.ajouteLAutreActivitéÀUneNouvelleActivité(autresActivitésGroupéesDeLÉtablissement, autreActivitéModel);
       } else {
-        this.ajouteLAutreActivitéÀLActivitéExistante(activitéConnue, autreActivitéModel)
+        this.ajouteLAutreActivitéÀLActivitéExistante(activitéConnue, autreActivitéModel);
       }
-    })
+    });
 
     return {
       activités: autresActivitésGroupéesDeLÉtablissement,
       dateMiseÀJourSource: dateMiseÀJourSourceModel.dernièreMiseÀJour,
-    }
+    };
   }
 
   private ajouteLAutreActivitéÀLActivitéExistante(activitéSanitaire: AutreActivitéSanitaireActivité, autreActivitéModel: AutreActivitéSanitaireModel) {
-    const modalitéConnue = activitéSanitaire.modalités.find((modalité) => modalité.code === autreActivitéModel.codeModalité)
+    const modalitéConnue = activitéSanitaire.modalités.find((modalité) => modalité.code === autreActivitéModel.codeModalité);
 
     if (!modalitéConnue) {
-      this.ajouteLAutreActivitéÀUneNouvelleModalité(activitéSanitaire, autreActivitéModel)
+      this.ajouteLAutreActivitéÀUneNouvelleModalité(activitéSanitaire, autreActivitéModel);
     } else {
-      this.ajouteLAutreActivitéÀLaModalitéExistante(modalitéConnue, autreActivitéModel)
+      this.ajouteLAutreActivitéÀLaModalitéExistante(modalitéConnue, autreActivitéModel);
     }
   }
 
   private ajouteLAutreActivitéÀLaModalitéExistante(modalitéSanitaire: AutreActivitéSanitaireModalité, autreActivitéModel: AutreActivitéSanitaireModel) {
-    const formeConnue = modalitéSanitaire.formes.find((forme) => forme.code === autreActivitéModel.codeForme)
+    const formeConnue = modalitéSanitaire.formes.find((forme) => forme.code === autreActivitéModel.codeForme);
 
     if (!formeConnue) {
-      this.ajouteLAutreActivitéÀUneNouvelleForme(modalitéSanitaire, autreActivitéModel)
+      this.ajouteLAutreActivitéÀUneNouvelleForme(modalitéSanitaire, autreActivitéModel);
     }
   }
 
   private ajouteLAutreActivitéÀUneNouvelleActivité(
-    autresActivitésSanitaires: AutreActivitéSanitaireActivité[], autreActivitéModel: AutreActivitéSanitaireModel
+    autresActivitésSanitaires: AutreActivitéSanitaireActivité[],
+    autreActivitéModel: AutreActivitéSanitaireModel
   ) {
-    autresActivitésSanitaires.push(this.construisLActivitéDUneAutreActivité(autreActivitéModel))
+    autresActivitésSanitaires.push(this.construisLActivitéDUneAutreActivité(autreActivitéModel));
   }
 
   private ajouteLAutreActivitéÀUneNouvelleModalité(activitéSanitaire: AutreActivitéSanitaireActivité, autreActivitéModel: AutreActivitéSanitaireModel) {
-    activitéSanitaire.modalités.push(this.construisLaModalitéDUneAutreActivité(autreActivitéModel))
+    activitéSanitaire.modalités.push(this.construisLaModalitéDUneAutreActivité(autreActivitéModel));
   }
 
   private ajouteLAutreActivitéÀUneNouvelleForme(modalitéSanitaire: AutreActivitéSanitaireModalité, autreActivitéModel: AutreActivitéSanitaireModel) {
-    modalitéSanitaire.formes.push(this.construisLaFormeDUneAutreActivité(autreActivitéModel))
+    modalitéSanitaire.formes.push(this.construisLaFormeDUneAutreActivité(autreActivitéModel));
   }
 
   private construisLActivitéDUneAutreActivité(autreActivitéModel: AutreActivitéSanitaireModel): AutreActivitéSanitaireActivité {
@@ -439,7 +420,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       code: autreActivitéModel.codeActivité,
       libellé: autreActivitéModel.libelléActivité,
       modalités: [this.construisLaModalitéDUneAutreActivité(autreActivitéModel)],
-    }
+    };
   }
 
   private construisLaModalitéDUneAutreActivité(autreActivitéModel: AutreActivitéSanitaireModel): AutreActivitéSanitaireModalité {
@@ -447,7 +428,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       code: autreActivitéModel.codeModalité,
       formes: [this.construisLaFormeDUneAutreActivité(autreActivitéModel)],
       libellé: autreActivitéModel.libelléModalité,
-    }
+    };
   }
 
   private construisLaFormeDUneAutreActivité(autreActivitéModel: AutreActivitéSanitaireModel): AutreActivitéSanitaireForme {
@@ -455,7 +436,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       autreActivitéSanitaire: this.construisUneAutreActivité(autreActivitéModel),
       code: autreActivitéModel.codeForme,
       libellé: autreActivitéModel.libelléForme,
-    }
+    };
   }
 
   private construisUneAutreActivité(autreActivitéModel: AutreActivitéSanitaireModel): AutreActivitéSanitaire {
@@ -463,52 +444,54 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       dateDAutorisation: autreActivitéModel.dateAutorisation,
       dateDeFin: autreActivitéModel.dateFin,
       dateDeMiseEnOeuvre: autreActivitéModel.dateMiseEnOeuvre,
-    }
+    };
   }
 
   private construisLesReconnaissancesContractuelles(
     reconnaissanceContractuelleSanitaireModels: ReconnaissanceContractuelleSanitaireModel[],
     dateMiseÀJourSourceModel: DateMiseÀJourFichierSourceModel
-  ): ÉtablissementTerritorialSanitaireAutorisationEtCapacité['reconnaissancesContractuelles'] {
-    const reconnaissancesContractuellesGroupéesDeLÉtablissement: ReconnaissanceContractuelleSanitaireActivité[] = []
+  ): ÉtablissementTerritorialSanitaireAutorisationEtCapacité["reconnaissancesContractuelles"] {
+    const reconnaissancesContractuellesGroupéesDeLÉtablissement: ReconnaissanceContractuelleSanitaireActivité[] = [];
 
     reconnaissanceContractuelleSanitaireModels.forEach((reconnaissanceContractuelle: ReconnaissanceContractuelleSanitaireModel) => {
       const activitéConnue = reconnaissancesContractuellesGroupéesDeLÉtablissement.find(
         (activité) => activité.code === reconnaissanceContractuelle.codeActivité
-      )
+      );
 
       if (!activitéConnue) {
-        this.ajouteLaReconnaissanceContractuelleÀUneNouvelleActivité(reconnaissancesContractuellesGroupéesDeLÉtablissement, reconnaissanceContractuelle)
+        this.ajouteLaReconnaissanceContractuelleÀUneNouvelleActivité(reconnaissancesContractuellesGroupéesDeLÉtablissement, reconnaissanceContractuelle);
       } else {
-        this.ajouteLaReconnaissanceContractuelleÀLActivitéExistante(activitéConnue, reconnaissanceContractuelle)
+        this.ajouteLaReconnaissanceContractuelleÀLActivitéExistante(activitéConnue, reconnaissanceContractuelle);
       }
-    })
+    });
 
     return {
       activités: reconnaissancesContractuellesGroupéesDeLÉtablissement,
       dateMiseÀJourSource: dateMiseÀJourSourceModel.dernièreMiseÀJour,
-    }
+    };
   }
 
   private ajouteLaReconnaissanceContractuelleÀLActivitéExistante(
-    activitéSanitaire: ReconnaissanceContractuelleSanitaireActivité, reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel
+    activitéSanitaire: ReconnaissanceContractuelleSanitaireActivité,
+    reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel
   ) {
-    const modalitéConnue = activitéSanitaire.modalités.find((modalité) => modalité.code === reconnaissanceContractuelleModel.codeModalité)
+    const modalitéConnue = activitéSanitaire.modalités.find((modalité) => modalité.code === reconnaissanceContractuelleModel.codeModalité);
 
     if (!modalitéConnue) {
-      this.ajouteLaReconnaissanceContractuelleÀUneNouvelleModalité(activitéSanitaire, reconnaissanceContractuelleModel)
+      this.ajouteLaReconnaissanceContractuelleÀUneNouvelleModalité(activitéSanitaire, reconnaissanceContractuelleModel);
     } else {
-      this.ajouteLaReconnaissanceContractuelleÀUneModalitéExistante(modalitéConnue, reconnaissanceContractuelleModel)
+      this.ajouteLaReconnaissanceContractuelleÀUneModalitéExistante(modalitéConnue, reconnaissanceContractuelleModel);
     }
   }
 
   private ajouteLaReconnaissanceContractuelleÀUneModalitéExistante(
-    modalitéSanitaire: ReconnaissanceContractuelleSanitaireModalité, reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel
+    modalitéSanitaire: ReconnaissanceContractuelleSanitaireModalité,
+    reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel
   ) {
-    const formeConnue = modalitéSanitaire.formes.find((forme) => forme.code === reconnaissanceContractuelleModel.codeForme)
+    const formeConnue = modalitéSanitaire.formes.find((forme) => forme.code === reconnaissanceContractuelleModel.codeForme);
 
     if (!formeConnue) {
-      this.ajouteLaReconnaissanceContractuelleÀUneNouvelleForme(modalitéSanitaire, reconnaissanceContractuelleModel)
+      this.ajouteLaReconnaissanceContractuelleÀUneNouvelleForme(modalitéSanitaire, reconnaissanceContractuelleModel);
     }
   }
 
@@ -516,50 +499,56 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     reconnaissancesContractuellesSanitaires: ReconnaissanceContractuelleSanitaireActivité[],
     reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel
   ) {
-    reconnaissancesContractuellesSanitaires.push(this.construisLActivitéDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel))
+    reconnaissancesContractuellesSanitaires.push(this.construisLActivitéDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel));
   }
 
   private ajouteLaReconnaissanceContractuelleÀUneNouvelleModalité(
-    activitéSanitaire: ReconnaissanceContractuelleSanitaireActivité, reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel
+    activitéSanitaire: ReconnaissanceContractuelleSanitaireActivité,
+    reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel
   ) {
-    activitéSanitaire.modalités.push(this.construisLaModalitéDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel))
+    activitéSanitaire.modalités.push(this.construisLaModalitéDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel));
   }
 
   private ajouteLaReconnaissanceContractuelleÀUneNouvelleForme(
-    modalitéSanitaire: ReconnaissanceContractuelleSanitaireModalité, reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel
+    modalitéSanitaire: ReconnaissanceContractuelleSanitaireModalité,
+    reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel
   ) {
-    modalitéSanitaire.formes.push(this.construisLaFormeDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel))
+    modalitéSanitaire.formes.push(this.construisLaFormeDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel));
   }
 
-  private construisLActivitéDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel):
-    ReconnaissanceContractuelleSanitaireActivité {
+  private construisLActivitéDUneReconnaissanceContractuelle(
+    reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel
+  ): ReconnaissanceContractuelleSanitaireActivité {
     return {
       code: reconnaissanceContractuelleModel.codeActivité,
       libellé: reconnaissanceContractuelleModel.libelléActivité,
       modalités: [this.construisLaModalitéDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel)],
-    }
+    };
   }
 
-  private construisLaModalitéDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel):
-    ReconnaissanceContractuelleSanitaireModalité {
+  private construisLaModalitéDUneReconnaissanceContractuelle(
+    reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel
+  ): ReconnaissanceContractuelleSanitaireModalité {
     return {
       code: reconnaissanceContractuelleModel.codeModalité,
       formes: [this.construisLaFormeDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel)],
       libellé: reconnaissanceContractuelleModel.libelléModalité,
-    }
+    };
   }
 
-  private construisLaFormeDUneReconnaissanceContractuelle(reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel):
-    ReconnaissanceContractuelleSanitaireForme {
+  private construisLaFormeDUneReconnaissanceContractuelle(
+    reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel
+  ): ReconnaissanceContractuelleSanitaireForme {
     return {
       code: reconnaissanceContractuelleModel.codeForme,
       libellé: reconnaissanceContractuelleModel.libelléForme,
       reconnaissanceContractuelleSanitaire: this.construisUneReconnaissanceContractuelle(reconnaissanceContractuelleModel),
-    }
+    };
   }
 
-  private construisUneReconnaissanceContractuelle(reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel):
-    ReconnaissanceContractuelleSanitaire {
+  private construisUneReconnaissanceContractuelle(
+    reconnaissanceContractuelleModel: ReconnaissanceContractuelleSanitaireModel
+  ): ReconnaissanceContractuelleSanitaire {
     return {
       capacitéAutorisée: reconnaissanceContractuelleModel.capacitéAutorisée,
       dateDEffetAsr: reconnaissanceContractuelleModel.dateEffetAsr,
@@ -567,41 +556,43 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       dateDeFinCpom: reconnaissanceContractuelleModel.dateFinCpom,
       numéroArhgos: reconnaissanceContractuelleModel.numéroAutorisationArhgos,
       numéroCpom: reconnaissanceContractuelleModel.numéroCpom,
-    }
+    };
   }
 
   private construisLesÉquipementsMatérielsLourds(
     équipementMatérielLourdSanitaireModels: ÉquipementMatérielLourdSanitaireModel[],
     dateMiseÀJourSourceModel: DateMiseÀJourFichierSourceModel
-  ): ÉtablissementTerritorialSanitaireAutorisationEtCapacité['équipementsMatérielsLourds'] {
-    const équipementsGroupésDeLÉtablissement: ÉquipementMatérielLourd[] = []
+  ): ÉtablissementTerritorialSanitaireAutorisationEtCapacité["équipementsMatérielsLourds"] {
+    const équipementsGroupésDeLÉtablissement: ÉquipementMatérielLourd[] = [];
 
     équipementMatérielLourdSanitaireModels.forEach((équipementMatérielLourd: ÉquipementMatérielLourdSanitaireModel) => {
-      const équipementConnu = équipementsGroupésDeLÉtablissement.find((équipement) => équipement.code === équipementMatérielLourd.codeÉquipementMatérielLourd)
+      const équipementConnu = équipementsGroupésDeLÉtablissement.find((équipement) => équipement.code === équipementMatérielLourd.codeÉquipementMatérielLourd);
 
       if (!équipementConnu) {
-        this.ajouteLAutorisationDÉquipementMatérielLourdÀUnNouvelÉquipement(équipementsGroupésDeLÉtablissement, équipementMatérielLourd)
+        this.ajouteLAutorisationDÉquipementMatérielLourdÀUnNouvelÉquipement(équipementsGroupésDeLÉtablissement, équipementMatérielLourd);
       } else {
-        this.ajouteLAutorisationDÉquipementMatérielLourdÀUnÉquipementExistant(équipementConnu, équipementMatérielLourd)
+        this.ajouteLAutorisationDÉquipementMatérielLourdÀUnÉquipementExistant(équipementConnu, équipementMatérielLourd);
       }
-    })
+    });
 
     return {
       dateMiseÀJourSource: dateMiseÀJourSourceModel.dernièreMiseÀJour,
       équipements: équipementsGroupésDeLÉtablissement,
-    }
+    };
   }
 
   private ajouteLAutorisationDÉquipementMatérielLourdÀUnÉquipementExistant(
-    équipementMatérielLourdSanitaire: ÉquipementMatérielLourd, équipementMatérielLourd: ÉquipementMatérielLourdSanitaireModel
+    équipementMatérielLourdSanitaire: ÉquipementMatérielLourd,
+    équipementMatérielLourd: ÉquipementMatérielLourdSanitaireModel
   ) {
-    équipementMatérielLourdSanitaire.autorisations.push(this.construisUnÉquipementMatérielLourd(équipementMatérielLourd))
+    équipementMatérielLourdSanitaire.autorisations.push(this.construisUnÉquipementMatérielLourd(équipementMatérielLourd));
   }
 
   private ajouteLAutorisationDÉquipementMatérielLourdÀUnNouvelÉquipement(
-    équipementsGroupés: ÉquipementMatérielLourd[], équipementMatérielLourd: ÉquipementMatérielLourdSanitaireModel
+    équipementsGroupés: ÉquipementMatérielLourd[],
+    équipementMatérielLourd: ÉquipementMatérielLourdSanitaireModel
   ) {
-    équipementsGroupés.push(this.construisLÉquipementMatérielLourd(équipementMatérielLourd))
+    équipementsGroupés.push(this.construisLÉquipementMatérielLourd(équipementMatérielLourd));
   }
 
   private construisLÉquipementMatérielLourd(équipementMatérielLourd: ÉquipementMatérielLourdSanitaireModel): ÉquipementMatérielLourd {
@@ -609,17 +600,16 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       autorisations: [this.construisUnÉquipementMatérielLourd(équipementMatérielLourd)],
       code: équipementMatérielLourd.codeÉquipementMatérielLourd,
       libellé: équipementMatérielLourd.libelléÉquipementMatérielLourd,
-    }
+    };
   }
 
-  private construisUnÉquipementMatérielLourd(équipementMatérielLourd: ÉquipementMatérielLourdSanitaireModel):
-    AutorisationÉquipementMatérielLourd {
+  private construisUnÉquipementMatérielLourd(équipementMatérielLourd: ÉquipementMatérielLourdSanitaireModel): AutorisationÉquipementMatérielLourd {
     return {
       dateDAutorisation: équipementMatérielLourd.dateAutorisation,
       dateDeFin: équipementMatérielLourd.dateFin,
       dateDeMiseEnOeuvre: équipementMatérielLourd.dateMiseEnOeuvre,
       numéroArhgos: équipementMatérielLourd.numéroAutorisationArhgos,
-    }
+    };
   }
 
   private construisLesCapacités(
@@ -640,6 +630,6 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       nombreDePlacesEnObstétrique: capacités.nombreDePlacesEnObstétrique,
       nombreDePlacesEnPsyHospitalisationPartielle: capacités.nombreDePlacesEnPsyHospitalisationPartielle,
       nombreDePlacesEnSsr: capacités.nombreDePlacesEnSsr,
-    }))
+    }));
   }
 }

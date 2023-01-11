@@ -1,23 +1,20 @@
-import { Bloc } from '../../commun/Bloc/Bloc'
-import { useDependencies } from '../../commun/contexts/useDependencies'
-import { IndicateurIdentité } from '../../commun/IndicateurIdentité/IndicateurIdentité'
-import { Sources } from '../../commun/Sources/Sources'
-import styles from './BlocIdentitéMédicoSocial.module.css'
-import { ÉtablissementTerritorialMédicoSocialIdentitéViewModel } from './ÉtablissementTerritorialMédicoSocialIdentitéViewModel'
+import { Bloc } from "../../commun/Bloc/Bloc";
+import { useDependencies } from "../../commun/contexts/useDependencies";
+import { IndicateurIdentité } from "../../commun/IndicateurIdentité/IndicateurIdentité";
+import { Sources } from "../../commun/Sources/Sources";
+import styles from "./BlocIdentitéMédicoSocial.module.css";
+import { ÉtablissementTerritorialMédicoSocialIdentitéViewModel } from "./ÉtablissementTerritorialMédicoSocialIdentitéViewModel";
 
 type BlocIdentitéMédicoSocialProps = Readonly<{
-  établissementTerritorialIdentitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialIdentitéViewModel
-}>
+  établissementTerritorialIdentitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialIdentitéViewModel;
+}>;
 
 export const BlocIdentitéMédicoSocial = ({ établissementTerritorialIdentitéMédicoSocialViewModel }: BlocIdentitéMédicoSocialProps) => {
-  const { wording } = useDependencies()
+  const { wording } = useDependencies();
 
   return (
-    <Bloc
-      estCeIdentité={true}
-      titre={wording.TITRE_BLOC_IDENTITÉ}
-    >
-      <ul className={`indicateurs ${styles['liste-indicateurs']}`}>
+    <Bloc estCeIdentité={true} titre={wording.TITRE_BLOC_IDENTITÉ}>
+      <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialIdentitéMédicoSocialViewModel.dateDeMiseÀJourDuNomDeLÉtablissementTerritorial}
           nomDeLIndicateur={wording.NOM_DE_L_ÉTABLISSEMENT}
@@ -104,5 +101,5 @@ export const BlocIdentitéMédicoSocial = ({ établissementTerritorialIdentitéM
         </IndicateurIdentité>
       </ul>
     </Bloc>
-  )
-}
+  );
+};

@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner } from 'typeorm'
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class EntitéJuridique1652626977208 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
@@ -15,10 +15,10 @@ export class EntitéJuridique1652626977208 implements MigrationInterface {
 
         CONSTRAINT entite_juridique_primary_key PRIMARY KEY (numero_finess_entite_juridique)
       );
-    `)
+    `);
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query('DROP TABLE entite_juridique;')
+    await queryRunner.query("DROP TABLE entite_juridique;");
   }
 }

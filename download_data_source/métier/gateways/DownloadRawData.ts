@@ -1,3 +1,3 @@
 export interface DownloadRawData {
-  exécute(): Promise<void>
+  exécute(): Promise<void>;
 }

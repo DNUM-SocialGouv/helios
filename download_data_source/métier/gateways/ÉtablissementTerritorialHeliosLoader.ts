@@ -1,3 +1,3 @@
 export interface ÉtablissementTerritorialHeliosLoader {
-  récupèreLeNuméroFinessDesÉtablissementsTerritoriaux(): Promise<string[]>
+  récupèreLeNuméroFinessDesÉtablissementsTerritoriaux(): Promise<string[]>;
 }
