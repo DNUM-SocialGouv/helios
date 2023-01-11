@@ -35,12 +35,12 @@ export async function getStaticProps({ params }: { params: { numeroFiness: strin
       dependencies,
       params.numeroFiness
     )) as ÉtablissementTerritorialSanitaire;
-
     return { props: { établissementTerritorial }, revalidate: Number(environmentVariables.TIME_OF_CACHE_PAGE) };
   } catch (error) {
     if (error instanceof ÉtablissementTerritorialSanitaireNonTrouvée) {
       dependencies.logger.error(error.message);
       return { notFound: true, revalidate: 1 };
     }
+    throw error;
   }
 }
