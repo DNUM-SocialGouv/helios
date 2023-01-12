@@ -1,4 +1,4 @@
-import { fireEvent, screen, within } from "@testing-library/react";
+import {fireEvent, screen, within} from "@testing-library/react";
 
 import { numéroFinessÉtablissementTerritorial } from "../../../../backend/testHelper";
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
@@ -281,6 +281,76 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
       const titreCapacitéParActivité = within(indicateursAutorisationsEtCapacités).queryByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: "p" });
       expect(titreCapacitéParActivité).not.toBeInTheDocument();
     });
+
+    describe("Afficher une selection avec les années des capacités", () => {
+      // GIVEN
+      const établissementTerritorialSansActivité = new ÉtablissementTerritorialSanitaireViewModel(
+          {
+            activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
+            autorisationsEtCapacités: {
+              autorisations: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.autorisations,
+              autresActivités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.autresActivités,
+              capacités: [
+                {
+                  année: 2022,
+                  dateMiseÀJourSource: "2022-09-02",
+                  nombreDeLitsEnChirurgie: 10,
+                  nombreDeLitsEnMédecine: 20,
+                  nombreDeLitsEnObstétrique: 20,
+                  nombreDeLitsEnSsr: 2,
+                  nombreDeLitsEnUsld: null,
+                  nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 15,
+                  nombreDePlacesEnChirurgie: 20,
+                  nombreDePlacesEnMédecine: 50,
+                  nombreDePlacesEnObstétrique: 20,
+                  nombreDePlacesEnPsyHospitalisationPartielle: 14,
+                  nombreDePlacesEnSsr: 20,
+                },
+                {
+                  année: 2021,
+                  dateMiseÀJourSource: "2021-12-02",
+                  nombreDeLitsEnChirurgie: 15,
+                  nombreDeLitsEnMédecine: 30,
+                  nombreDeLitsEnObstétrique: 20,
+                  nombreDeLitsEnSsr: 2,
+                  nombreDeLitsEnUsld: null,
+                  nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 15,
+                  nombreDePlacesEnChirurgie: 20,
+                  nombreDePlacesEnMédecine: 50,
+                  nombreDePlacesEnObstétrique: 20,
+                  nombreDePlacesEnPsyHospitalisationPartielle: 14,
+                  nombreDePlacesEnSsr: 20,
+                },
+              ],
+              numéroFinessÉtablissementTerritorial: "123456789",
+              reconnaissancesContractuelles: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.reconnaissancesContractuelles,
+              équipementsMatérielsLourds: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.équipementsMatérielsLourds,
+            },
+            identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
+          },
+          wording,
+          paths
+      )
+
+      it("les deux années sont dans le select", () => {
+        // WHEN
+        renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSansActivité} />);
+        // THEN
+        const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
+        const indicateursAutorisationsEtCapacités = within(autorisationEtCapacité).getAllByRole("option");
+        expect(indicateursAutorisationsEtCapacités).toHaveLength(2);
+      });
+
+      it("l’année la plus récente est selectionnée par défaut", () => {
+        // WHEN
+        renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSansActivité} />);
+        // THEN
+        const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
+        const annéesAutorisationsEtCapacités = within(autorisationEtCapacité).getAllByRole("list")[0];
+        const années = within(annéesAutorisationsEtCapacités).getAllByRole("option");
+        expect((années[0] as HTMLOptionElement).selected).toBe(true)
+      });
+    })
   });
 
   it.each([
@@ -808,6 +878,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     expect(indexPartieAutresActivités).toBeLessThan(indexPartieReconnaissancesContractuelles);
     expect(indexPartieReconnaissancesContractuelles).toBeLessThan(indexPartieÉquipementsMatérielsLourds);
   });
+
 });
 
 function sélectionneLIndicateur(indicateur: string, éléments: HTMLElement[]): HTMLElement {
