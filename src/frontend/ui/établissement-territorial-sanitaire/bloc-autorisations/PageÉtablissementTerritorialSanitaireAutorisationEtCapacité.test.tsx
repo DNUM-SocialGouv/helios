@@ -219,7 +219,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
             autresActivités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.autresActivités,
             capacités: [
               {
-                année: null,
+                année: 2022,
                 dateMiseÀJourSource: "2022-09-02",
                 nombreDeLitsEnChirurgie: null,
                 nombreDeLitsEnMédecine: null,
@@ -484,7 +484,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
           },
           capacités: [
             {
-              année: null,
+              année: 2022,
               dateMiseÀJourSource: "2022-09-02",
               nombreDeLitsEnChirurgie: null,
               nombreDeLitsEnMédecine: null,

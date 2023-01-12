@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { Indicateur } from "../../commun/Indicateur/Indicateur";
@@ -17,6 +19,7 @@ type BlocAutorisationEtCapacitéSanitaireProps = Readonly<{
 
 export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorialSanitaireAutorisationsViewModel }: BlocAutorisationEtCapacitéSanitaireProps) => {
   const { wording } = useDependencies();
+  const [annéeSelectionnée, setAnnéeSelectionnée] = useState<number>(établissementTerritorialSanitaireAutorisationsViewModel.annéeInitiale);
 
   if (établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéNeSontPasRenseignées) {
     return <Bloc titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>{wording.INDICATEURS_VIDES}</Bloc>;
@@ -25,8 +28,9 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
   return (
     <Bloc estCeIdentité={false} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
-        {établissementTerritorialSanitaireAutorisationsViewModel.lesCapacitésParActivitésSontEllesRenseignées && (
+        {annéeSelectionnée && (
           <IndicateurGraphique
+            années={établissementTerritorialSanitaireAutorisationsViewModel.listeDéroulanteDesAnnéesDesCapacités(setAnnéeSelectionnée)}
             contenuInfoBulle={
               <ContenuCapacitéParActivités
                 dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDeLaCapacitéInstalléeParActivités}
@@ -38,9 +42,10 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             nomDeLIndicateur={wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
             source={wording.SAE}
           >
-            {établissementTerritorialSanitaireAutorisationsViewModel.capacitéParActivités}
+            {établissementTerritorialSanitaireAutorisationsViewModel.capacitéParActivités(annéeSelectionnée)}
           </IndicateurGraphique>
         )}
+
         {établissementTerritorialSanitaireAutorisationsViewModel.lesAutorisationsSontEllesRenseignées && (
           <Indicateur
             contenuInfoBulle={
