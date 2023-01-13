@@ -1,4 +1,4 @@
-import {fireEvent, screen, within} from "@testing-library/react";
+import { fireEvent, screen, within } from "@testing-library/react";
 
 import { numéroFinessÉtablissementTerritorial } from "../../../../backend/testHelper";
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
@@ -285,51 +285,51 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     describe("Afficher une selection avec les années des capacités", () => {
       // GIVEN
       const établissementTerritorialAvecActivité = new ÉtablissementTerritorialSanitaireViewModel(
-          {
-            activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
-            autorisationsEtCapacités: {
-              autorisations: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.autorisations,
-              autresActivités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.autresActivités,
-              capacités: [
-                {
-                  année: 2022,
-                  dateMiseÀJourSource: "2022-09-02",
-                  nombreDeLitsEnChirurgie: 10,
-                  nombreDeLitsEnMédecine: 20,
-                  nombreDeLitsEnObstétrique: 20,
-                  nombreDeLitsEnSsr: 2,
-                  nombreDeLitsEnUsld: null,
-                  nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 15,
-                  nombreDePlacesEnChirurgie: 20,
-                  nombreDePlacesEnMédecine: 50,
-                  nombreDePlacesEnObstétrique: 20,
-                  nombreDePlacesEnPsyHospitalisationPartielle: 14,
-                  nombreDePlacesEnSsr: 20,
-                },
-                {
-                  année: 2021,
-                  dateMiseÀJourSource: "2021-12-02",
-                  nombreDeLitsEnChirurgie: 15,
-                  nombreDeLitsEnMédecine: 30,
-                  nombreDeLitsEnObstétrique: 20,
-                  nombreDeLitsEnSsr: 2,
-                  nombreDeLitsEnUsld: null,
-                  nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 15,
-                  nombreDePlacesEnChirurgie: 20,
-                  nombreDePlacesEnMédecine: 50,
-                  nombreDePlacesEnObstétrique: 20,
-                  nombreDePlacesEnPsyHospitalisationPartielle: 14,
-                  nombreDePlacesEnSsr: 20,
-                },
-              ],
-              numéroFinessÉtablissementTerritorial: "123456789",
-              reconnaissancesContractuelles: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.reconnaissancesContractuelles,
-              équipementsMatérielsLourds: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.équipementsMatérielsLourds,
-            },
-            identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
+        {
+          activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
+          autorisationsEtCapacités: {
+            autorisations: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.autorisations,
+            autresActivités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.autresActivités,
+            capacités: [
+              {
+                année: 2022,
+                dateMiseÀJourSource: "2022-09-02",
+                nombreDeLitsEnChirurgie: 10,
+                nombreDeLitsEnMédecine: 20,
+                nombreDeLitsEnObstétrique: 20,
+                nombreDeLitsEnSsr: 2,
+                nombreDeLitsEnUsld: null,
+                nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 15,
+                nombreDePlacesEnChirurgie: 20,
+                nombreDePlacesEnMédecine: 50,
+                nombreDePlacesEnObstétrique: 20,
+                nombreDePlacesEnPsyHospitalisationPartielle: 14,
+                nombreDePlacesEnSsr: 20,
+              },
+              {
+                année: 2021,
+                dateMiseÀJourSource: "2021-12-02",
+                nombreDeLitsEnChirurgie: 15,
+                nombreDeLitsEnMédecine: 30,
+                nombreDeLitsEnObstétrique: 20,
+                nombreDeLitsEnSsr: 2,
+                nombreDeLitsEnUsld: null,
+                nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 15,
+                nombreDePlacesEnChirurgie: 20,
+                nombreDePlacesEnMédecine: 50,
+                nombreDePlacesEnObstétrique: 20,
+                nombreDePlacesEnPsyHospitalisationPartielle: 14,
+                nombreDePlacesEnSsr: 20,
+              },
+            ],
+            numéroFinessÉtablissementTerritorial: "123456789",
+            reconnaissancesContractuelles: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.reconnaissancesContractuelles,
+            équipementsMatérielsLourds: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.équipementsMatérielsLourds,
           },
-          wording,
-          paths
+          identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
+        },
+        wording,
+        paths
       );
 
       it("les deux années sont dans le select", () => {
@@ -348,58 +348,58 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
         const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
         const annéesAutorisationsEtCapacités = within(autorisationEtCapacité).getAllByRole("list")[0];
         const années = within(annéesAutorisationsEtCapacités).getAllByRole("option");
-        expect((années[0] as HTMLOptionElement).selected).toBe(true)
+        expect((années[0] as HTMLOptionElement).selected).toBe(true);
       });
     });
 
     it("n'affiche pas les années avec des capacités vides", () => {
       // GIVEN
       const établissementTerritorial = new ÉtablissementTerritorialSanitaireViewModel(
-          {
-            activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
-            autorisationsEtCapacités: {
-              autorisations: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.autorisations,
-              autresActivités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.autresActivités,
-              capacités: [
-                {
-                  année: 2022,
-                  dateMiseÀJourSource: "2022-09-02",
-                  nombreDeLitsEnChirurgie: null,
-                  nombreDeLitsEnMédecine: null,
-                  nombreDeLitsEnObstétrique: null,
-                  nombreDeLitsEnSsr: null,
-                  nombreDeLitsEnUsld: null,
-                  nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
-                  nombreDePlacesEnChirurgie: null,
-                  nombreDePlacesEnMédecine: null,
-                  nombreDePlacesEnObstétrique: null,
-                  nombreDePlacesEnPsyHospitalisationPartielle: null,
-                  nombreDePlacesEnSsr: null,
-                },
-                {
-                  année: 2021,
-                  dateMiseÀJourSource: "2021-12-02",
-                  nombreDeLitsEnChirurgie: 15,
-                  nombreDeLitsEnMédecine: 30,
-                  nombreDeLitsEnObstétrique: 20,
-                  nombreDeLitsEnSsr: 2,
-                  nombreDeLitsEnUsld: null,
-                  nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 15,
-                  nombreDePlacesEnChirurgie: 20,
-                  nombreDePlacesEnMédecine: 50,
-                  nombreDePlacesEnObstétrique: 20,
-                  nombreDePlacesEnPsyHospitalisationPartielle: 14,
-                  nombreDePlacesEnSsr: 20,
-                },
-              ],
-              numéroFinessÉtablissementTerritorial: "123456789",
-              reconnaissancesContractuelles: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.reconnaissancesContractuelles,
-              équipementsMatérielsLourds: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.équipementsMatérielsLourds,
-            },
-            identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
+        {
+          activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
+          autorisationsEtCapacités: {
+            autorisations: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.autorisations,
+            autresActivités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.autresActivités,
+            capacités: [
+              {
+                année: 2022,
+                dateMiseÀJourSource: "2022-09-02",
+                nombreDeLitsEnChirurgie: null,
+                nombreDeLitsEnMédecine: null,
+                nombreDeLitsEnObstétrique: null,
+                nombreDeLitsEnSsr: null,
+                nombreDeLitsEnUsld: null,
+                nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
+                nombreDePlacesEnChirurgie: null,
+                nombreDePlacesEnMédecine: null,
+                nombreDePlacesEnObstétrique: null,
+                nombreDePlacesEnPsyHospitalisationPartielle: null,
+                nombreDePlacesEnSsr: null,
+              },
+              {
+                année: 2021,
+                dateMiseÀJourSource: "2021-12-02",
+                nombreDeLitsEnChirurgie: 15,
+                nombreDeLitsEnMédecine: 30,
+                nombreDeLitsEnObstétrique: 20,
+                nombreDeLitsEnSsr: 2,
+                nombreDeLitsEnUsld: null,
+                nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 15,
+                nombreDePlacesEnChirurgie: 20,
+                nombreDePlacesEnMédecine: 50,
+                nombreDePlacesEnObstétrique: 20,
+                nombreDePlacesEnPsyHospitalisationPartielle: 14,
+                nombreDePlacesEnSsr: 20,
+              },
+            ],
+            numéroFinessÉtablissementTerritorial: "123456789",
+            reconnaissancesContractuelles: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.reconnaissancesContractuelles,
+            équipementsMatérielsLourds: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.équipementsMatérielsLourds,
           },
-          wording,
-          paths
+          identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
+        },
+        wording,
+        paths
       );
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorial} />);
@@ -408,68 +408,68 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
       const indicateursAutorisationsEtCapacités = within(autorisationEtCapacité).getAllByRole("option");
       expect(indicateursAutorisationsEtCapacités).toHaveLength(1);
     });
-    // TODO: skipped test
-    it.skip("quand on selectionne une autre année, le graphique se met à jour avec la capacité de l’année selectionnée", () => {
+
+    it("quand on selectionne une autre année, le graphique se met à jour avec la capacité de l’année selectionnée", () => {
       // GIVEN
       const établissementTerritorialAvecActivité = new ÉtablissementTerritorialSanitaireViewModel(
-          {
-            activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
-            autorisationsEtCapacités: {
-              autorisations: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.autorisations,
-              autresActivités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.autresActivités,
-              capacités: [
-                {
-                  année: 2022,
-                  dateMiseÀJourSource: "2022-09-02",
-                  nombreDeLitsEnChirurgie: 10,
-                  nombreDeLitsEnMédecine: 20,
-                  nombreDeLitsEnObstétrique: 20,
-                  nombreDeLitsEnSsr: 2,
-                  nombreDeLitsEnUsld: null,
-                  nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 15,
-                  nombreDePlacesEnChirurgie: 1,
-                  nombreDePlacesEnMédecine: 50,
-                  nombreDePlacesEnObstétrique: 20,
-                  nombreDePlacesEnPsyHospitalisationPartielle: 14,
-                  nombreDePlacesEnSsr: 20,
-                },
-                {
-                  année: 2021,
-                  dateMiseÀJourSource: "2021-12-02",
-                  nombreDeLitsEnChirurgie: 15,
-                  nombreDeLitsEnMédecine: 30,
-                  nombreDeLitsEnObstétrique: 20,
-                  nombreDeLitsEnSsr: 2,
-                  nombreDeLitsEnUsld: null,
-                  nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 15,
-                  nombreDePlacesEnChirurgie: 20,
-                  nombreDePlacesEnMédecine: 50,
-                  nombreDePlacesEnObstétrique: 20,
-                  nombreDePlacesEnPsyHospitalisationPartielle: 14,
-                  nombreDePlacesEnSsr: 20,
-                },
-              ],
-              numéroFinessÉtablissementTerritorial: "123456789",
-              reconnaissancesContractuelles: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.reconnaissancesContractuelles,
-              équipementsMatérielsLourds: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.équipementsMatérielsLourds,
-            },
-            identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
+        {
+          activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
+          autorisationsEtCapacités: {
+            autorisations: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.autorisations,
+            autresActivités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.autresActivités,
+            capacités: [
+              {
+                année: 2022,
+                dateMiseÀJourSource: "2022-09-02",
+                nombreDeLitsEnChirurgie: 10,
+                nombreDeLitsEnMédecine: 20,
+                nombreDeLitsEnObstétrique: 20,
+                nombreDeLitsEnSsr: 2,
+                nombreDeLitsEnUsld: null,
+                nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 15,
+                nombreDePlacesEnChirurgie: 1,
+                nombreDePlacesEnMédecine: 50,
+                nombreDePlacesEnObstétrique: 20,
+                nombreDePlacesEnPsyHospitalisationPartielle: 14,
+                nombreDePlacesEnSsr: 20,
+              },
+              {
+                année: 2021,
+                dateMiseÀJourSource: "2021-12-02",
+                nombreDeLitsEnChirurgie: 15,
+                nombreDeLitsEnMédecine: 30,
+                nombreDeLitsEnObstétrique: 20,
+                nombreDeLitsEnSsr: 2,
+                nombreDeLitsEnUsld: null,
+                nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 15,
+                nombreDePlacesEnChirurgie: 20,
+                nombreDePlacesEnMédecine: 50,
+                nombreDePlacesEnObstétrique: 20,
+                nombreDePlacesEnPsyHospitalisationPartielle: 14,
+                nombreDePlacesEnSsr: 20,
+              },
+            ],
+            numéroFinessÉtablissementTerritorial: "123456789",
+            reconnaissancesContractuelles: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.reconnaissancesContractuelles,
+            équipementsMatérielsLourds: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.équipementsMatérielsLourds,
           },
-          wording,
-          paths
+          identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
+        },
+        wording,
+        paths
       );
       // WHEN
       renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialAvecActivité} />);
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
       const select = within(autorisationEtCapacité).getByRole("combobox");
-      fireEvent.change(select, { target: { value: '2021' } })
-      const transcription = within(autorisationEtCapacité).getByText(wording.AFFICHER_LA_TRANSCRIPTION);
-      const tableauDesCapacités = within(transcription).getByRole("table");
-      const tbody = within(tableauDesCapacités).getAllByRole("rowgroup")[1];
-      const lignes = within(tbody).getAllByRole("row");
-      const colonne2Ligne2 = within(lignes[1]).getByRole("cell", { name: 'Places' });
-      expect(colonne2Ligne2).toBeInTheDocument();
+      fireEvent.change(select, { target: { value: "2021" } });
 
+      // THEN
+      const tableauDesCapacités = within(autorisationEtCapacité).getByRole("table");
+      const body = within(tableauDesCapacités).getAllByRole("rowgroup")[1];
+      const médecine = within(body).getAllByRole("row")[0];
+      const nbLitMédecine = within(médecine).getAllByRole("cell")[1];
+      expect(nbLitMédecine.textContent).toBe("30");
     });
   });
 
@@ -998,7 +998,6 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     expect(indexPartieAutresActivités).toBeLessThan(indexPartieReconnaissancesContractuelles);
     expect(indexPartieReconnaissancesContractuelles).toBeLessThan(indexPartieÉquipementsMatérielsLourds);
   });
-
 });
 
 function sélectionneLIndicateur(indicateur: string, éléments: HTMLElement[]): HTMLElement {
