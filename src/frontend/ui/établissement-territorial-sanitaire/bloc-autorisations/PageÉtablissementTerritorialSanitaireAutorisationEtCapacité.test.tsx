@@ -1,10 +1,17 @@
 import { fireEvent, screen, within } from "@testing-library/react";
+import { mock, mockDeep } from "jest-mock-extended";
 
+import {
+  CapacitéSanitaire,
+  ÉtablissementTerritorialSanitaireAutorisationEtCapacité,
+} from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 import { numéroFinessÉtablissementTerritorial } from "../../../../backend/testHelper";
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../testHelper";
 import { PageÉtablissementTerritorialSanitaire } from "../PageÉtablissementTerritorialSanitaire";
 import { ÉtablissementTerritorialSanitaireViewModel } from "../ÉtablissementTerritorialSanitaireViewModel";
+import { BlocAutorisationEtCapacitéSanitaire } from "./BlocAutorisationEtCapacitéSanitaire";
+import { ÉtablissementTerritorialSanitaireAutorisationsViewModel } from "./ÉtablissementTerritorialSanitaireAutorisationsViewModel";
 
 const { paths, wording } = fakeFrontDependencies;
 
@@ -219,7 +226,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
             autresActivités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.autresActivités,
             capacités: [
               {
-                année: null,
+                année: 2022,
                 dateMiseÀJourSource: "2022-09-02",
                 nombreDeLitsEnChirurgie: null,
                 nombreDeLitsEnMédecine: null,
@@ -280,6 +287,105 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
       const indicateursAutorisationsEtCapacités = within(autorisationEtCapacité).getAllByRole("list")[0];
       const titreCapacitéParActivité = within(indicateursAutorisationsEtCapacités).queryByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: "p" });
       expect(titreCapacitéParActivité).not.toBeInTheDocument();
+    });
+
+    describe("Afficher une selection avec les années des capacités", () => {
+      let autorisationsViewModel: ÉtablissementTerritorialSanitaireAutorisationsViewModel;
+
+      beforeAll(() => {
+        // GIVEN
+        autorisationsViewModel = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
+          mockDeep<ÉtablissementTerritorialSanitaireAutorisationEtCapacité>({
+            capacités: [mock<CapacitéSanitaire>({ année: 2022 }), mock<CapacitéSanitaire>({ année: 2021 })],
+          }),
+          wording
+        );
+      });
+
+      it("les deux années sont dans le select", () => {
+        // WHEN
+        renderFakeComponent(<BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModel} />);
+        // THEN
+        const indicateursAutorisationsEtCapacités = screen.getAllByRole("option");
+        expect(indicateursAutorisationsEtCapacités).toHaveLength(2);
+        expect(indicateursAutorisationsEtCapacités[0].textContent).toBe("2022");
+        expect(indicateursAutorisationsEtCapacités[1].textContent).toBe("2021");
+      });
+
+      it("l’année la plus récente est selectionnée par défaut", () => {
+        // WHEN
+        renderFakeComponent(<BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModel} />);
+        // THEN
+        const annéesAutorisationsEtCapacités = screen.getAllByRole("list")[0];
+        const années: HTMLOptionElement[] = within(annéesAutorisationsEtCapacités).getAllByRole("option");
+        expect(années[0].selected).toBe(true);
+      });
+    });
+
+    it("n'affiche pas les années avec des capacités vides", () => {
+      // GIVEN
+      const autorisationsViewModel = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
+        mockDeep<ÉtablissementTerritorialSanitaireAutorisationEtCapacité>({
+          capacités: [
+            mock<CapacitéSanitaire>({
+              année: 2022,
+              nombreDeLitsEnChirurgie: null,
+              nombreDeLitsEnMédecine: null,
+              nombreDeLitsEnObstétrique: null,
+              nombreDeLitsEnSsr: null,
+              nombreDeLitsEnUsld: null,
+              nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
+              nombreDePlacesEnChirurgie: null,
+              nombreDePlacesEnMédecine: null,
+              nombreDePlacesEnObstétrique: null,
+              nombreDePlacesEnPsyHospitalisationPartielle: null,
+              nombreDePlacesEnSsr: null,
+            }),
+            mock<CapacitéSanitaire>({
+              année: 2021,
+              nombreDeLitsEnChirurgie: 15,
+            }),
+          ],
+        }),
+        wording
+      );
+
+      // WHEN
+      renderFakeComponent(<BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModel} />);
+      // THEN
+      const indicateursAutorisationsEtCapacités = screen.getAllByRole("option");
+      expect(indicateursAutorisationsEtCapacités).toHaveLength(1);
+    });
+
+    it("quand on selectionne une autre année, le graphique se met à jour avec la capacité de l’année selectionnée", () => {
+      // GIVEN
+      const autorisationsViewModel = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
+        mockDeep<ÉtablissementTerritorialSanitaireAutorisationEtCapacité>({
+          capacités: [
+            mock<CapacitéSanitaire>({
+              année: 2022,
+              nombreDeLitsEnMédecine: 10,
+            }),
+            mock<CapacitéSanitaire>({
+              année: 2021,
+              nombreDeLitsEnMédecine: 30,
+            }),
+          ],
+        }),
+        wording
+      );
+
+      // WHEN
+      renderFakeComponent(<BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModel} />);
+      const select = screen.getByRole("combobox");
+      fireEvent.change(select, { target: { value: "2021" } });
+
+      // THEN
+      const tableauDesCapacités = screen.getByRole("table");
+      const body = within(tableauDesCapacités).getAllByRole("rowgroup")[1];
+      const médecine = within(body).getAllByRole("row")[0];
+      const nbLitMédecine = within(médecine).getAllByRole("cell")[1];
+      expect(nbLitMédecine.textContent).toBe("30");
     });
   });
 
@@ -484,7 +590,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
           },
           capacités: [
             {
-              année: null,
+              année: 2022,
               dateMiseÀJourSource: "2022-09-02",
               nombreDeLitsEnChirurgie: null,
               nombreDeLitsEnMédecine: null,

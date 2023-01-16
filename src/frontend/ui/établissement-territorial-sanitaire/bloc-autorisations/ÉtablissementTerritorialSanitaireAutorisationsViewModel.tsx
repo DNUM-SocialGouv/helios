@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ChangeEvent, ReactElement } from "react";
 
 import { ÉtablissementTerritorialSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 import { Wording } from "../../../configuration/wording/Wording";
@@ -8,6 +8,8 @@ import { StringFormater } from "../../commun/StringFormater";
 import stylesBlocAutorisationsEtCapacités from "./BlocAutorisationEtCapacitéSanitaire.module.css";
 
 import "@gouvfr/dsfr/dist/component/tag/tag.min.css";
+import { Select } from "../../commun/Select/Select";
+import { CapacitéSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 
 export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends GraphiqueViewModel {
   constructor(
@@ -27,12 +29,36 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
     );
   }
 
-  public get lesCapacitésParActivitésSontEllesRenseignées(): boolean {
-    const capacités = this.établissementTerritorialSanitaireAutorisations.capacités[0];
+  public get annéeInitiale() {
+    return this.filtrerLesAnnéesAvecDesCapacités()[0];
+  }
 
-    return (
-      !!capacités &&
-      (capacités.année !== null ||
+  public listeDéroulanteDesAnnéesDesCapacités(setAnnéeEnCours: Function): ReactElement {
+    const annéesRangéesAntéChronologiquement = this.filtrerLesAnnéesAvecDesCapacités();
+
+    if (annéesRangéesAntéChronologiquement.length > 0) {
+      return (
+        <Select
+          label={this.wording.ANNÉE}
+          onChange={(event: ChangeEvent<HTMLSelectElement>) => {
+            setAnnéeEnCours(Number(event.target.value));
+          }}
+          options={annéesRangéesAntéChronologiquement}
+        />
+      );
+    }
+
+    return <></>;
+  }
+
+  private filtrerLesAnnéesAvecDesCapacités() {
+    const capacitésRenseignées = this.filtreLesCapacitésRenseignées();
+    return this.annéesRangéesParAntéChronologie(capacitésRenseignées);
+  }
+
+  private filtreLesCapacitésRenseignées() {
+    return this.établissementTerritorialSanitaireAutorisations.capacités.filter((capacités) => {
+      return (
         capacités.nombreDeLitsEnMédecine !== null ||
         capacités.nombreDeLitsEnObstétrique !== null ||
         capacités.nombreDeLitsEnSsr !== null ||
@@ -41,47 +67,57 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
         capacités.nombreDePlacesEnObstétrique !== null ||
         capacités.nombreDePlacesEnSsr !== null ||
         capacités.nombreDeLitsEnUsld !== null ||
+        capacités.nombreDeLitsEnChirurgie !== null ||
         capacités.nombreDeLitsOuPlacesEnPsyHospitalisationComplète !== null ||
-        capacités.nombreDePlacesEnPsyHospitalisationPartielle !== null)
-    );
+        capacités.nombreDePlacesEnPsyHospitalisationPartielle !== null
+      );
+    });
+  }
+
+  private annéesRangéesParAntéChronologie(capacités: CapacitéSanitaire[]): number[] {
+    return capacités.map((capacité) => capacité.année);
+  }
+
+  public get lesCapacitésParActivitésSontEllesRenseignées(): boolean {
+    return this.filtreLesCapacitésRenseignées().length > 0;
   }
 
   public get dateDeMiseÀJourDeLaCapacitéInstalléeParActivités(): string {
     return StringFormater.formateLaDate(this.établissementTerritorialSanitaireAutorisations.capacités[0]?.dateMiseÀJourSource as string);
   }
 
-  public get capacitéParActivités(): ReactElement {
-    const capacitésDernièreAnnée = this.établissementTerritorialSanitaireAutorisations.capacités[0];
+  public capacitéParActivités(annéeSelectionnée: number): ReactElement {
+    const capacitéAnnéeSelectionnée = this.établissementTerritorialSanitaireAutorisations.capacités.find((capacité) => capacité.année === annéeSelectionnée);
     const litsEtPlaces = [
       {
         libellé: this.wording.MÉDECINE,
-        nombreDeLits: capacitésDernièreAnnée?.nombreDeLitsEnMédecine as number,
-        nombreDePlaces: capacitésDernièreAnnée?.nombreDePlacesEnMédecine as number,
+        nombreDeLits: capacitéAnnéeSelectionnée?.nombreDeLitsEnMédecine as number,
+        nombreDePlaces: capacitéAnnéeSelectionnée?.nombreDePlacesEnMédecine as number,
       },
       {
         libellé: this.wording.CHIRURGIE,
-        nombreDeLits: capacitésDernièreAnnée?.nombreDeLitsEnChirurgie as number,
-        nombreDePlaces: capacitésDernièreAnnée?.nombreDePlacesEnChirurgie as number,
+        nombreDeLits: capacitéAnnéeSelectionnée?.nombreDeLitsEnChirurgie as number,
+        nombreDePlaces: capacitéAnnéeSelectionnée?.nombreDePlacesEnChirurgie as number,
       },
       {
         libellé: this.wording.OBSTÉTRIQUE,
-        nombreDeLits: capacitésDernièreAnnée?.nombreDeLitsEnObstétrique as number,
-        nombreDePlaces: capacitésDernièreAnnée?.nombreDePlacesEnObstétrique as number,
+        nombreDeLits: capacitéAnnéeSelectionnée?.nombreDeLitsEnObstétrique as number,
+        nombreDePlaces: capacitéAnnéeSelectionnée?.nombreDePlacesEnObstétrique as number,
       },
       {
         libellé: this.wording.SSR,
-        nombreDeLits: capacitésDernièreAnnée?.nombreDeLitsEnSsr as number,
-        nombreDePlaces: capacitésDernièreAnnée?.nombreDePlacesEnSsr as number,
+        nombreDeLits: capacitéAnnéeSelectionnée?.nombreDeLitsEnSsr as number,
+        nombreDePlaces: capacitéAnnéeSelectionnée?.nombreDePlacesEnSsr as number,
       },
       {
         libellé: this.wording.USLD,
-        nombreDeLits: capacitésDernièreAnnée?.nombreDeLitsEnUsld as number,
+        nombreDeLits: capacitéAnnéeSelectionnée?.nombreDeLitsEnUsld as number,
         nombreDePlaces: 0,
       },
       {
         libellé: this.wording.PSYCHIATRIE,
-        nombreDeLits: capacitésDernièreAnnée?.nombreDeLitsOuPlacesEnPsyHospitalisationComplète as number,
-        nombreDePlaces: capacitésDernièreAnnée?.nombreDePlacesEnPsyHospitalisationPartielle as number,
+        nombreDeLits: capacitéAnnéeSelectionnée?.nombreDeLitsOuPlacesEnPsyHospitalisationComplète as number,
+        nombreDePlaces: capacitéAnnéeSelectionnée?.nombreDePlacesEnPsyHospitalisationPartielle as number,
       },
     ];
     const litsEtPlacesSansLignesVides = litsEtPlaces.filter((litEtPlace) => {
