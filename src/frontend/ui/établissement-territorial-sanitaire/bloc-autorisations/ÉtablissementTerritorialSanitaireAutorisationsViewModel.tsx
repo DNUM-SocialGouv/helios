@@ -140,7 +140,8 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
       libellés,
       ratioHistogrammeCapacitéParActivités,
       this.wording.ACTIVITÉS,
-      identifiants
+      identifiants,
+      this.annéesManquantes(this.filtrerLesAnnéesAvecDesCapacités(), 5)
     );
   }
 

@@ -22,7 +22,7 @@ export namespace StringFormater {
 
   export function formateEnFrançais(valeurs: (number | null)[]): (string | null)[] {
     return valeurs.map((valeur) => {
-      if (valeur === null) return valeur;
+      if (valeur === null || valeur === undefined) return valeur;
 
       return valeur.toLocaleString("fr");
     });

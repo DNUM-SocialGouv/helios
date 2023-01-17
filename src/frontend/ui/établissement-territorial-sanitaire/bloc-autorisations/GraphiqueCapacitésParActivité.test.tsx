@@ -7,6 +7,7 @@ import {
 } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../testHelper";
+import { annéeEnCours } from "../../../testUtils";
 import { GraphiqueCapacitésParActivité } from "./GraphiqueCapacitésParActivité";
 import { ÉtablissementTerritorialSanitaireAutorisationsViewModel } from "./ÉtablissementTerritorialSanitaireAutorisationsViewModel";
 
@@ -202,6 +203,66 @@ describe("GraphiqueCapacitésParActivité", () => {
       const tbody = within(tableau).getAllByRole("rowgroup")[1];
       const lignes = within(tbody).getAllByRole("row");
       expect(lignes).toHaveLength(5);
+    });
+  });
+
+  describe("Mise en exergue", () => {
+    it("doit afficher la mise en exergue pour les 5 dernières années si aucune données n'est disponible", () => {
+      // GIVEN
+      const autorisationsSansActivité = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
+        mock<ÉtablissementTerritorialSanitaireAutorisationEtCapacité>({ capacités: [] }),
+        wording
+      );
+      // WHEN
+      renderFakeComponent(<GraphiqueCapacitésParActivité établissementTerritorialSanitaireAutorisationsViewModel={autorisationsSansActivité} />);
+
+      // THEN
+      const exergue = screen.getByText(
+        `${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 5}, ${annéeEnCours - 4}, ${annéeEnCours - 3}, ${annéeEnCours - 2}, ${annéeEnCours - 1}`,
+        { selector: "p" }
+      );
+      expect(exergue).toBeInTheDocument();
+    });
+
+    it("doit afficher la mise en exergue pour les années manquantes sur les 5 dernières années", () => {
+      // GIVEN
+      const autorisationsSansActivité = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
+        mock<ÉtablissementTerritorialSanitaireAutorisationEtCapacité>({
+          capacités: [mock<CapacitéSanitaire>({ année: annéeEnCours - 2 }), mock<CapacitéSanitaire>({ année: annéeEnCours - 4 })],
+        }),
+        wording
+      );
+      // WHEN
+      renderFakeComponent(<GraphiqueCapacitésParActivité établissementTerritorialSanitaireAutorisationsViewModel={autorisationsSansActivité} />);
+
+      // THEN
+      const exergue = screen.getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 5}, ${annéeEnCours - 3}, ${annéeEnCours - 1}`, { selector: "p" });
+      expect(exergue).toBeInTheDocument();
+    });
+
+    it("ne doit pas afficher la mise en exergue si toutes les années sont présentes", () => {
+      // GIVEN
+      const autorisationsSansActivité = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
+        mock<ÉtablissementTerritorialSanitaireAutorisationEtCapacité>({
+          capacités: [
+            mock<CapacitéSanitaire>({ année: annéeEnCours - 1 }),
+            mock<CapacitéSanitaire>({ année: annéeEnCours - 2 }),
+            mock<CapacitéSanitaire>({ année: annéeEnCours - 3 }),
+            mock<CapacitéSanitaire>({ année: annéeEnCours - 4 }),
+            mock<CapacitéSanitaire>({ année: annéeEnCours - 5 }),
+          ],
+        }),
+        wording
+      );
+      // WHEN
+      renderFakeComponent(<GraphiqueCapacitésParActivité établissementTerritorialSanitaireAutorisationsViewModel={autorisationsSansActivité} />);
+
+      // THEN
+      const exergue = screen.queryByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE}`, {
+        exact: false,
+        selector: "p",
+      });
+      expect(exergue).not.toBeInTheDocument();
     });
   });
 

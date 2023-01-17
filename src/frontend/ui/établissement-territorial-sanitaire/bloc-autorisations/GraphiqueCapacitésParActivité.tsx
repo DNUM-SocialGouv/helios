@@ -12,7 +12,7 @@ export const GraphiqueCapacitésParActivité = ({ établissementTerritorialSanit
   const { wording } = useDependencies();
   const [annéeSelectionnée, setAnnéeSelectionnée] = useState<number>(établissementTerritorialSanitaireAutorisationsViewModel.annéeInitiale);
 
-  return annéeSelectionnée ? (
+  return (
     <IndicateurGraphique
       années={établissementTerritorialSanitaireAutorisationsViewModel.listeDéroulanteDesAnnéesDesCapacités(setAnnéeSelectionnée)}
       contenuInfoBulle={
@@ -28,7 +28,5 @@ export const GraphiqueCapacitésParActivité = ({ établissementTerritorialSanit
     >
       {établissementTerritorialSanitaireAutorisationsViewModel.capacitéParActivités(annéeSelectionnée)}
     </IndicateurGraphique>
-  ) : (
-    <></>
   );
 };

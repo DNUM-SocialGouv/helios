@@ -189,7 +189,12 @@ export class GraphiqueViewModel {
     return (
       <>
         {annéesManquantes.length < nombreDAnnéeTotale && (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 50%)" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 50%)",
+            }}
+          >
             <div>
               <Bar
                 // @ts-ignore
@@ -248,8 +253,14 @@ export class GraphiqueViewModel {
           borderDash: [3, 3],
           borderWidth: 2,
           data: [
-            { x: -1, y: 100 },
-            { x: 2, y: 100 },
+            {
+              x: -1,
+              y: 100,
+            },
+            {
+              x: 2,
+              y: 100,
+            },
           ],
           datalabels: { display: false },
           type: "line",
@@ -372,7 +383,9 @@ export class GraphiqueViewModel {
     libellés: string[],
     ratioLargeurSurHauteur: number,
     entêteLibellé: string,
-    identifiants: string[]
+    identifiants: string[],
+    annéesManquantes: number[] | string[],
+    annéeTotales: number = 3
   ): ReactElement {
     const data: ChartData = {
       datasets: [
@@ -397,17 +410,21 @@ export class GraphiqueViewModel {
 
     return (
       <>
-        <div>
-          <Bar
-            // @ts-ignore
-            data={data}
-            options={this.optionsDeuxHistogrammesHorizontaux(
-              ratioLargeurSurHauteur,
-              Math.max(...donnéesDeGauche.map(Number), ...donnéesDeDroite.map(Number)) * 1.1,
-              [this.wording.PLACES, this.wording.LITS]
-            )}
-          />
-        </div>
+        {annéesManquantes.length < annéeTotales && (
+          <div>
+            <Bar
+              // @ts-ignore
+              data={data}
+              options={this.optionsDeuxHistogrammesHorizontaux(
+                ratioLargeurSurHauteur,
+                Math.max(...donnéesDeGauche.map(Number), ...donnéesDeDroite.map(Number)) * 1.1,
+                [this.wording.PLACES, this.wording.LITS]
+              )}
+            />
+          </div>
+        )}
+
+        {annéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
         <TableIndicateur entêteLibellé={entêteLibellé} identifiants={identifiants} libellés={libellés} valeurs={valeurs} />
       </>
     );
@@ -457,19 +474,6 @@ export class GraphiqueViewModel {
         texte,
       };
     });
-  }
-
-  protected construisLaCouleurDuLabel(valeurs: number[], seuilMaximal: number, estHorizontal: boolean = false): string[] {
-    const maxAvantDePerdreLeContraste = 0.2 * seuilMaximal;
-    const couleurDesAnnées = estHorizontal ? Array(valeurs.length).fill(this.couleurDeLaValeur) : Array(valeurs.length).fill(this.couleurDuFond);
-
-    valeurs.forEach((valeur: number, index: number) => {
-      if (valeur < maxAvantDePerdreLeContraste) {
-        couleurDesAnnées[index] = "black";
-      }
-    });
-
-    return couleurDesAnnées;
   }
 
   protected annéesManquantes(années: (number | string)[], annéesTotales: number = 3): number[] {
@@ -586,8 +590,16 @@ export class GraphiqueViewModel {
             padding: 10,
           },
         },
-        xLine: { display: false, max: 1, min: 0, type: "linear" },
-        y: { display: false, max: this.borneMaximaleDeLHistogrammeVertical },
+        xLine: {
+          display: false,
+          max: 1,
+          min: 0,
+          type: "linear",
+        },
+        y: {
+          display: false,
+          max: this.borneMaximaleDeLHistogrammeVertical,
+        },
       },
     };
   }
@@ -617,7 +629,10 @@ export class GraphiqueViewModel {
       },
       scales: {
         x: {
-          grid: { display: false, drawBorder: false },
+          grid: {
+            display: false,
+            drawBorder: false,
+          },
           max: 1.45 * (valeurMaximale > 0 ? valeurMaximale : 1),
           min: 0,
           position: "top",
@@ -674,7 +689,10 @@ export class GraphiqueViewModel {
       },
       scales: {
         x: {
-          grid: { display: false, drawBorder: false },
+          grid: {
+            display: false,
+            drawBorder: false,
+          },
           max: maxOfScale,
           position: "top",
           stack: "capacite",
@@ -689,7 +707,10 @@ export class GraphiqueViewModel {
           },
         },
         x2: {
-          grid: { display: false, drawBorder: false },
+          grid: {
+            display: false,
+            drawBorder: false,
+          },
           max: maxOfScale,
           position: "top",
           stack: "capacite",
@@ -729,8 +750,18 @@ export class GraphiqueViewModel {
       },
       responsive: true,
       scales: {
-        x: { grid: { drawOnChartArea: false }, ticks: { color: "var(--text-default-grey)" } },
-        y: { grid: { color: this.couleurDelAbscisse, drawBorder: false }, stacked: true, ticks: { color: "var(--text-default-grey)" } },
+        x: {
+          grid: { drawOnChartArea: false },
+          ticks: { color: "var(--text-default-grey)" },
+        },
+        y: {
+          grid: {
+            color: this.couleurDelAbscisse,
+            drawBorder: false,
+          },
+          stacked: true,
+          ticks: { color: "var(--text-default-grey)" },
+        },
       },
     };
   }
