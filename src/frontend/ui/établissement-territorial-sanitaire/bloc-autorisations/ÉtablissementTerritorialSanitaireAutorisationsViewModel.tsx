@@ -12,6 +12,8 @@ import { Select } from "../../commun/Select/Select";
 import { CapacitéSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 
 export class GraphiqueCapacitésParActivitéViewModel extends GraphiqueViewModel {
+  private NOMBRE_ANNEES = 5;
+
   constructor(private readonly capacitésSanitaire: CapacitéSanitaire[], wording: Wording) {
     super(wording);
   }
@@ -128,12 +130,15 @@ export class GraphiqueCapacitésParActivitéViewModel extends GraphiqueViewModel
       ratioHistogrammeCapacitéParActivités,
       this.wording.ACTIVITÉS,
       identifiants,
-      this.annéesManquantes(this.filtrerLesAnnéesAvecDesCapacités(), 5)
+      this.annéesManquantes(this.filtrerLesAnnéesAvecDesCapacités(), this.NOMBRE_ANNEES),
+      this.NOMBRE_ANNEES
     );
   }
 }
+
 export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends GraphiqueViewModel {
   public graphiqueCapacitésParActivitéViewModel: GraphiqueCapacitésParActivitéViewModel;
+
   constructor(
     private readonly établissementTerritorialSanitaireAutorisations: ÉtablissementTerritorialSanitaire["autorisationsEtCapacités"],
     wording: Wording

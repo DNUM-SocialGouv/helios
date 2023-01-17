@@ -11,14 +11,14 @@ import { GraphiqueCapacitésParActivitéViewModel } from "./ÉtablissementTerrit
 const { wording } = fakeFrontDependencies;
 
 describe("GraphiqueCapacitésParActivité", () => {
-  const autorisationsViewModel = new GraphiqueCapacitésParActivitéViewModel(
+  const graphiqurCapacitésViewModel = new GraphiqueCapacitésParActivitéViewModel(
     ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.capacités,
     wording
   );
 
   it('affiche les informations de l’indicateur "Capacité par activités"', () => {
     // WHEN
-    renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={autorisationsViewModel} />);
+    renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={graphiqurCapacitésViewModel} />);
 
     // THEN
     const capacitéParActivités = screen.getByRole("listitem");
@@ -39,7 +39,7 @@ describe("GraphiqueCapacitésParActivité", () => {
   describe("Info bulle", () => {
     it('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails" (Capacité par activités)', () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={autorisationsViewModel} />);
+      renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={graphiqurCapacitésViewModel} />);
       const détails = screen.getByRole("button", { name: wording.DÉTAILS });
 
       // WHEN
@@ -66,7 +66,7 @@ describe("GraphiqueCapacitésParActivité", () => {
 
     it('ferme l’info bulle après avoir cliqué sur le bouton "Fermer" (Capacité par activités)', () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={autorisationsViewModel} />);
+      renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={graphiqurCapacitésViewModel} />);
       const détails = screen.getByRole("button", { name: wording.DÉTAILS });
       fireEvent.click(détails);
       const infoBulle = screen.getByRole("dialog", { name: wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS });
@@ -83,7 +83,7 @@ describe("GraphiqueCapacitésParActivité", () => {
   describe("Transcription textuelle", () => {
     it("affiche un tableau descriptif avec les toutes les activités", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={autorisationsViewModel} />);
+      renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={graphiqurCapacitésViewModel} />);
 
       // THEN
       const tableau = screen.getByRole("table");
@@ -196,6 +196,16 @@ describe("GraphiqueCapacitésParActivité", () => {
       const tbody = within(tableau).getAllByRole("rowgroup")[1];
       const lignes = within(tbody).getAllByRole("row");
       expect(lignes).toHaveLength(5);
+    });
+
+    it("ne doit pas afficher de tableau s'il n'y a pas de données disponible", () => {
+      // GIVEN
+      const autorisationsSansActivité = new GraphiqueCapacitésParActivitéViewModel([], wording);
+      // WHEN
+      renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={autorisationsSansActivité} />);
+      // THEN
+      const tableau = screen.queryByRole("table");
+      expect(tableau).not.toBeInTheDocument();
     });
   });
 

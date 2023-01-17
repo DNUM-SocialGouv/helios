@@ -384,7 +384,7 @@ export class GraphiqueViewModel {
     ratioLargeurSurHauteur: number,
     entêteLibellé: string,
     identifiants: string[],
-    annéesManquantes: number[] | string[],
+    annéesManquantes: number[] | string[] = [],
     annéeTotales: number = 3
   ): ReactElement {
     const data: ChartData = {
@@ -407,10 +407,11 @@ export class GraphiqueViewModel {
       labels: libellés.map((libellé) => libellé + "   "),
     };
     const valeurs = [StringFormater.formateEnFrançais(donnéesDeGauche), StringFormater.formateEnFrançais(donnéesDeDroite)];
+    const aucuneDonnées = annéesManquantes.length >= annéeTotales;
 
     return (
       <>
-        {annéesManquantes.length < annéeTotales && (
+        {!aucuneDonnées && (
           <div>
             <Bar
               // @ts-ignore
@@ -425,7 +426,7 @@ export class GraphiqueViewModel {
         )}
 
         {annéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
-        <TableIndicateur entêteLibellé={entêteLibellé} identifiants={identifiants} libellés={libellés} valeurs={valeurs} />
+        {!aucuneDonnées && <TableIndicateur entêteLibellé={entêteLibellé} identifiants={identifiants} libellés={libellés} valeurs={valeurs} />}
       </>
     );
   }
