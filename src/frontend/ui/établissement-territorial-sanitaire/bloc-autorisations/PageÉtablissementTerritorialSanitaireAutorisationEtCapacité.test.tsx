@@ -565,57 +565,48 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
 
   it("affiche une phrase à la place des indicateurs lorsqu’aucune autorisation ni capacité n’est renseignée", () => {
     // GIVEN
-    const établissementTerritorialSansAutorisationsNiCapacités = new ÉtablissementTerritorialSanitaireViewModel(
+    const autorisationsViewModel = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
       {
-        activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
-        autorisationsEtCapacités: {
-          autorisations: {
-            activités: [],
-            dateMiseÀJourSource: "2022-09-05",
-          },
-          autresActivités: {
-            activités: [],
-            dateMiseÀJourSource: "2022-09-05",
-          },
-          capacités: [
-            {
-              année: 2022,
-              dateMiseÀJourSource: "2022-09-02",
-              nombreDeLitsEnChirurgie: null,
-              nombreDeLitsEnMédecine: null,
-              nombreDeLitsEnObstétrique: null,
-              nombreDeLitsEnSsr: null,
-              nombreDeLitsEnUsld: null,
-              nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
-              nombreDePlacesEnChirurgie: null,
-              nombreDePlacesEnMédecine: null,
-              nombreDePlacesEnObstétrique: null,
-              nombreDePlacesEnPsyHospitalisationPartielle: null,
-              nombreDePlacesEnSsr: null,
-            },
-          ],
-          numéroFinessÉtablissementTerritorial,
-          reconnaissancesContractuelles: {
-            activités: [],
-            dateMiseÀJourSource: "2022-09-05",
-          },
-          équipementsMatérielsLourds: {
-            dateMiseÀJourSource: "2022-09-05",
-            équipements: [],
-          },
+        autorisations: {
+          activités: [],
+          dateMiseÀJourSource: "2022-09-05",
         },
-        identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
+        autresActivités: {
+          activités: [],
+          dateMiseÀJourSource: "2022-09-05",
+        },
+        capacités: [
+          {
+            année: 2022,
+            dateMiseÀJourSource: "2022-09-02",
+            nombreDeLitsEnChirurgie: null,
+            nombreDeLitsEnMédecine: null,
+            nombreDeLitsEnObstétrique: null,
+            nombreDeLitsEnSsr: null,
+            nombreDeLitsEnUsld: null,
+            nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
+            nombreDePlacesEnChirurgie: null,
+            nombreDePlacesEnMédecine: null,
+            nombreDePlacesEnObstétrique: null,
+            nombreDePlacesEnPsyHospitalisationPartielle: null,
+            nombreDePlacesEnSsr: null,
+          },
+        ],
+        numéroFinessÉtablissementTerritorial,
+        reconnaissancesContractuelles: {
+          activités: [],
+          dateMiseÀJourSource: "2022-09-05",
+        },
+        équipementsMatérielsLourds: {
+          dateMiseÀJourSource: "2022-09-05",
+          équipements: [],
+        },
       },
-      wording,
-      paths
+      wording
     );
 
     // WHEN
-    renderFakeComponent(
-      <BlocAutorisationEtCapacitéSanitaire
-        établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSansAutorisationsNiCapacités.autorisationsViewModel}
-      />
-    );
+    renderFakeComponent(<BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModel} />);
 
     // THEN
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
