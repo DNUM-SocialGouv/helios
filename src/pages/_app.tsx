@@ -5,6 +5,7 @@ import Script from "next/script";
 import { useEffect } from "react";
 
 import "@gouvfr/dsfr/dist/core/core.min.css";
+import "@gouvfr/dsfr/dist/utility/icons/icons-system/icons-system.css";
 import "@gouvfr/dsfr/dist/component/button/button.min.css";
 import "@gouvfr/dsfr/dist/component/input/input.min.css";
 import "@gouvfr/dsfr/dist/component/search/search.min.css";
