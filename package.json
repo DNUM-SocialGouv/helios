@@ -67,7 +67,7 @@
     "typecheck:python": "pipenv run typecheck"
   },
   "dependencies": {
-    "@gouvfr/dsfr": "1.4.1",
+    "@gouvfr/dsfr": "1.8.5",
     "@sentry/nextjs": "^7.1.1",
     "chart.js": "^3.8.0",
     "chartjs-plugin-datalabels": "^2.0.0",
