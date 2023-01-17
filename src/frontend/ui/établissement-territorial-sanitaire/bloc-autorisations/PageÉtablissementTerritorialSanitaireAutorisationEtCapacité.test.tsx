@@ -296,13 +296,13 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
         // GIVEN
         autorisationsViewModel = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
           mockDeep<ÉtablissementTerritorialSanitaireAutorisationEtCapacité>({
-            capacités: [mock<CapacitéSanitaire>({ année: 2022 }), mock<CapacitéSanitaire>({ année: 2021 })],
+            capacités: [mock<CapacitéSanitaire>({ année: 2021 }), mock<CapacitéSanitaire>({ année: 2022 })],
           }),
           wording
         );
       });
 
-      it("les deux années sont dans le select", () => {
+      it("les deux années sont dans le select trié par ordre anté chronologique", () => {
         // WHEN
         renderFakeComponent(<BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModel} />);
         // THEN

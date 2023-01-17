@@ -75,7 +75,7 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
   }
 
   private annéesRangéesParAntéChronologie(capacités: CapacitéSanitaire[]): number[] {
-    return capacités.map((capacité) => capacité.année);
+    return capacités.map((capacité) => capacité.année).sort((année1, année2) => année2 - année1);
   }
 
   public get lesCapacitésParActivitésSontEllesRenseignées(): boolean {
