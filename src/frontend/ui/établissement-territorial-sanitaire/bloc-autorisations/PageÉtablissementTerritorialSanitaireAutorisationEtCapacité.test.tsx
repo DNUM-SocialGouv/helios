@@ -8,7 +8,6 @@ import {
 import { numéroFinessÉtablissementTerritorial } from "../../../../backend/testHelper";
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../testHelper";
-import { PageÉtablissementTerritorialSanitaire } from "../PageÉtablissementTerritorialSanitaire";
 import { ÉtablissementTerritorialSanitaireViewModel } from "../ÉtablissementTerritorialSanitaireViewModel";
 import { BlocAutorisationEtCapacitéSanitaire } from "./BlocAutorisationEtCapacitéSanitaire";
 import { ÉtablissementTerritorialSanitaireAutorisationsViewModel } from "./ÉtablissementTerritorialSanitaireAutorisationsViewModel";
@@ -21,7 +20,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
   describe("L’indicateur de la capacité par activités", () => {
     it('affiche les informations de l’indicateur "Capacité par activités"', () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />);
+      renderFakeComponent(
+        <BlocAutorisationEtCapacitéSanitaire
+          établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+        />
+      );
 
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -43,7 +46,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
 
     it('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails" (Capacité par activités)', () => {
       // GIVEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />);
+      renderFakeComponent(
+        <BlocAutorisationEtCapacitéSanitaire
+          établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+        />
+      );
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
       const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
       const détails = within(indicateurs[0]).getByRole("button", { name: wording.DÉTAILS });
@@ -72,7 +79,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
 
     it('ferme l’info bulle après avoir cliqué sur le bouton "Fermer" (Capacité par activités)', () => {
       // GIVEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />);
+      renderFakeComponent(
+        <BlocAutorisationEtCapacitéSanitaire
+          établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+        />
+      );
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
       const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
       const détails = within(indicateurs[0]).getByRole("button", { name: wording.DÉTAILS });
@@ -89,7 +100,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
 
     it("affiche un tableau descriptif avec les toutes les activités", () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />);
+      renderFakeComponent(
+        <BlocAutorisationEtCapacitéSanitaire
+          établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+        />
+      );
 
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -168,7 +183,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
       );
 
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />);
+      renderFakeComponent(
+        <BlocAutorisationEtCapacitéSanitaire
+          établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+        />
+      );
 
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -206,7 +225,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
       );
 
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />);
+      renderFakeComponent(
+        <BlocAutorisationEtCapacitéSanitaire
+          établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+        />
+      );
 
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -252,7 +275,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
       );
 
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSansActivité} />);
+      renderFakeComponent(
+        <BlocAutorisationEtCapacitéSanitaire
+          établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSansActivité.autorisationsViewModel}
+        />
+      );
 
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -280,7 +307,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
       );
 
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSansActivité} />);
+      renderFakeComponent(
+        <BlocAutorisationEtCapacitéSanitaire
+          établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSansActivité.autorisationsViewModel}
+        />
+      );
 
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -289,10 +320,10 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
       expect(titreCapacitéParActivité).not.toBeInTheDocument();
     });
 
-    describe("Afficher une selection avec les années des capacités", () => {
+    describe("Changes les capacités par année", () => {
       let autorisationsViewModel: ÉtablissementTerritorialSanitaireAutorisationsViewModel;
 
-      beforeAll(() => {
+      it("les deux années sont dans le select trié par ordre anté chronologique", () => {
         // GIVEN
         autorisationsViewModel = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
           mockDeep<ÉtablissementTerritorialSanitaireAutorisationEtCapacité>({
@@ -300,9 +331,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
           }),
           wording
         );
-      });
 
-      it("les deux années sont dans le select trié par ordre anté chronologique", () => {
         // WHEN
         renderFakeComponent(<BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModel} />);
         // THEN
@@ -313,6 +342,14 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
       });
 
       it("l’année la plus récente est selectionnée par défaut", () => {
+        // GIVEN
+        autorisationsViewModel = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
+          mockDeep<ÉtablissementTerritorialSanitaireAutorisationEtCapacité>({
+            capacités: [mock<CapacitéSanitaire>({ année: 2021 }), mock<CapacitéSanitaire>({ année: 2022 })],
+          }),
+          wording
+        );
+
         // WHEN
         renderFakeComponent(<BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModel} />);
         // THEN
@@ -320,72 +357,72 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
         const années: HTMLOptionElement[] = within(annéesAutorisationsEtCapacités).getAllByRole("option");
         expect(années[0].selected).toBe(true);
       });
-    });
 
-    it("n'affiche pas les années avec des capacités vides", () => {
-      // GIVEN
-      const autorisationsViewModel = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
-        mockDeep<ÉtablissementTerritorialSanitaireAutorisationEtCapacité>({
-          capacités: [
-            mock<CapacitéSanitaire>({
-              année: 2022,
-              nombreDeLitsEnChirurgie: null,
-              nombreDeLitsEnMédecine: null,
-              nombreDeLitsEnObstétrique: null,
-              nombreDeLitsEnSsr: null,
-              nombreDeLitsEnUsld: null,
-              nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
-              nombreDePlacesEnChirurgie: null,
-              nombreDePlacesEnMédecine: null,
-              nombreDePlacesEnObstétrique: null,
-              nombreDePlacesEnPsyHospitalisationPartielle: null,
-              nombreDePlacesEnSsr: null,
-            }),
-            mock<CapacitéSanitaire>({
-              année: 2021,
-              nombreDeLitsEnChirurgie: 15,
-            }),
-          ],
-        }),
-        wording
-      );
+      it("n'affiche pas les années avec des capacités vides", () => {
+        // GIVEN
+        const autorisationsViewModel = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
+          mockDeep<ÉtablissementTerritorialSanitaireAutorisationEtCapacité>({
+            capacités: [
+              mock<CapacitéSanitaire>({
+                année: 2022,
+                nombreDeLitsEnChirurgie: null,
+                nombreDeLitsEnMédecine: null,
+                nombreDeLitsEnObstétrique: null,
+                nombreDeLitsEnSsr: null,
+                nombreDeLitsEnUsld: null,
+                nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
+                nombreDePlacesEnChirurgie: null,
+                nombreDePlacesEnMédecine: null,
+                nombreDePlacesEnObstétrique: null,
+                nombreDePlacesEnPsyHospitalisationPartielle: null,
+                nombreDePlacesEnSsr: null,
+              }),
+              mock<CapacitéSanitaire>({
+                année: 2021,
+                nombreDeLitsEnChirurgie: 15,
+              }),
+            ],
+          }),
+          wording
+        );
 
-      // WHEN
-      renderFakeComponent(<BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModel} />);
-      // THEN
-      const indicateursAutorisationsEtCapacités = screen.getAllByRole("option");
-      expect(indicateursAutorisationsEtCapacités).toHaveLength(1);
-    });
+        // WHEN
+        renderFakeComponent(<BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModel} />);
+        // THEN
+        const indicateursAutorisationsEtCapacités = screen.getAllByRole("option");
+        expect(indicateursAutorisationsEtCapacités).toHaveLength(1);
+      });
 
-    it("quand on selectionne une autre année, le graphique se met à jour avec la capacité de l’année selectionnée", () => {
-      // GIVEN
-      const autorisationsViewModel = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
-        mockDeep<ÉtablissementTerritorialSanitaireAutorisationEtCapacité>({
-          capacités: [
-            mock<CapacitéSanitaire>({
-              année: 2022,
-              nombreDeLitsEnMédecine: 10,
-            }),
-            mock<CapacitéSanitaire>({
-              année: 2021,
-              nombreDeLitsEnMédecine: 30,
-            }),
-          ],
-        }),
-        wording
-      );
+      it("quand on selectionne une autre année, le graphique se met à jour avec la capacité de l’année selectionnée", () => {
+        // GIVEN
+        const autorisationsViewModel = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
+          mockDeep<ÉtablissementTerritorialSanitaireAutorisationEtCapacité>({
+            capacités: [
+              mock<CapacitéSanitaire>({
+                année: 2022,
+                nombreDeLitsEnMédecine: 10,
+              }),
+              mock<CapacitéSanitaire>({
+                année: 2021,
+                nombreDeLitsEnMédecine: 30,
+              }),
+            ],
+          }),
+          wording
+        );
 
-      // WHEN
-      renderFakeComponent(<BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModel} />);
-      const select = screen.getByRole("combobox");
-      fireEvent.change(select, { target: { value: "2021" } });
+        // WHEN
+        renderFakeComponent(<BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModel} />);
+        const select = screen.getByRole("combobox");
+        fireEvent.change(select, { target: { value: "2021" } });
 
-      // THEN
-      const tableauDesCapacités = screen.getByRole("table");
-      const body = within(tableauDesCapacités).getAllByRole("rowgroup")[1];
-      const médecine = within(body).getAllByRole("row")[0];
-      const nbLitMédecine = within(médecine).getAllByRole("cell")[1];
-      expect(nbLitMédecine.textContent).toBe("30");
+        // THEN
+        const tableauDesCapacités = screen.getByRole("table");
+        const body = within(tableauDesCapacités).getAllByRole("rowgroup")[1];
+        const médecine = within(body).getAllByRole("row")[0];
+        const nbLitMédecine = within(médecine).getAllByRole("cell")[1];
+        expect(nbLitMédecine.textContent).toBe("30");
+      });
     });
   });
 
@@ -396,7 +433,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     [wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, "équipements-matériels-lourds-sanitaire"],
   ])("affiche le titre de la partie %s, sa source et l’accès aux détails", (nomDeLIndicateur: string, suffixeDeLInfoBulle: string) => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />);
+    renderFakeComponent(
+      <BlocAutorisationEtCapacitéSanitaire
+        établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+      />
+    );
 
     // THEN
     const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -419,7 +460,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     "a une infobulle avec le contenu relatif aux %s",
     (nomDeLIndicateur: string) => {
       // GIVEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />);
+      renderFakeComponent(
+        <BlocAutorisationEtCapacitéSanitaire
+          établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+        />
+      );
 
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
       const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
@@ -473,7 +518,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     );
 
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSansAutorisations} />);
+    renderFakeComponent(
+      <BlocAutorisationEtCapacitéSanitaire
+        établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSansAutorisations.autorisationsViewModel}
+      />
+    );
 
     // THEN
     const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -484,7 +533,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
   describe("L’indicateur des autorisations", () => {
     it("affiche un lien pour chaque activité de l’établissement", () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />);
+      renderFakeComponent(
+        <BlocAutorisationEtCapacitéSanitaire
+          établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+        />
+      );
 
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -497,7 +550,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
 
     it("affiche un lien pour chaque modalité d’une activité", () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />);
+      renderFakeComponent(
+        <BlocAutorisationEtCapacitéSanitaire
+          établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+        />
+      );
 
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -508,7 +565,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
 
     it("affiche le libellé et le code de la forme, les dates et le numéro arhgos pour chacune des formes quand ces informations sont renseignées", () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />);
+      renderFakeComponent(
+        <BlocAutorisationEtCapacitéSanitaire
+          établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+        />
+      );
 
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -528,7 +589,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
   describe("L’indicateur des autres activités", () => {
     it("affiche un lien pour chaque autre activité de l’établissement", () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />);
+      renderFakeComponent(
+        <BlocAutorisationEtCapacitéSanitaire
+          établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+        />
+      );
 
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -542,7 +607,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
 
     it("affiche un lien pour chaque modalité d’une autre activité", () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />);
+      renderFakeComponent(
+        <BlocAutorisationEtCapacitéSanitaire
+          établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+        />
+      );
 
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -558,7 +627,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
 
     it("affiche le libellé et le code de la forme et les dates pour chacune des formes quand ces informations sont renseignées", () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />);
+      renderFakeComponent(
+        <BlocAutorisationEtCapacitéSanitaire
+          établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+        />
+      );
 
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -623,7 +696,9 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
 
     // WHEN
     renderFakeComponent(
-      <PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSansAutorisationsNiCapacités} />
+      <BlocAutorisationEtCapacitéSanitaire
+        établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSansAutorisationsNiCapacités.autorisationsViewModel}
+      />
     );
 
     // THEN
@@ -793,7 +868,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
   ])("affiche l’indicateur $indicateurAffiché lorsqu’il est le seul à être renseigné", ({ indicateurAffiché, viewModel }) => {
     // GIVEN
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={viewModel} />);
+    renderFakeComponent(<BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={viewModel.autorisationsViewModel} />);
 
     // THEN
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -804,7 +879,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
   describe("L’indicateur des reconnaissances contractuelles", () => {
     it("affiche un lien pour chaque reconnaissance contractuelle de l’établissement", () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />);
+      renderFakeComponent(
+        <BlocAutorisationEtCapacitéSanitaire
+          établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+        />
+      );
 
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -816,7 +895,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
 
     it("affiche un lien pour chaque modalité d’une reconnaissance contractuelle", () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />);
+      renderFakeComponent(
+        <BlocAutorisationEtCapacitéSanitaire
+          établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+        />
+      );
 
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -830,7 +913,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
 
     it("affiche le libellé et le code de la forme, le numéro AHRGOS, CPOM et et les dates pour chacune des formes quand ces informations sont renseignées", () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />);
+      renderFakeComponent(
+        <BlocAutorisationEtCapacitéSanitaire
+          établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+        />
+      );
 
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -858,7 +945,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
   describe("L’indicateur des équipements matériels lourds", () => {
     it("affiche un lien pour chaque équipement matériel lourd de l’établissement", () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />);
+      renderFakeComponent(
+        <BlocAutorisationEtCapacitéSanitaire
+          établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+        />
+      );
 
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -870,7 +961,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
 
     it("affiche les autorisations et leurs dates quand ces informations sont renseignées", () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />);
+      renderFakeComponent(
+        <BlocAutorisationEtCapacitéSanitaire
+          établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+        />
+      );
 
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -893,7 +988,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
 
   it("affiche les autorisations et capacités dans le bon ordre", () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />);
+    renderFakeComponent(
+      <BlocAutorisationEtCapacitéSanitaire
+        établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+      />
+    );
 
     // THEN
     const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
