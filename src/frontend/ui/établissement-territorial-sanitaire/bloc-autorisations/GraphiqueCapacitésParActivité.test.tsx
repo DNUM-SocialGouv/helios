@@ -264,54 +264,38 @@ describe("GraphiqueCapacitésParActivité", () => {
       });
       expect(exergue).not.toBeInTheDocument();
     });
-  });
 
-  it("n’affiche pas l’indicateur quand sa valeur est vide (Capacité par activités)", () => {
-    const autorisationsSansActivité = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
-      mock<ÉtablissementTerritorialSanitaireAutorisationEtCapacité>({
-        capacités: [
-          {
-            année: 2022,
-            dateMiseÀJourSource: "2022-09-02",
-            nombreDeLitsEnChirurgie: null,
-            nombreDeLitsEnMédecine: null,
-            nombreDeLitsEnObstétrique: null,
-            nombreDeLitsEnSsr: null,
-            nombreDeLitsEnUsld: null,
-            nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
-            nombreDePlacesEnChirurgie: null,
-            nombreDePlacesEnMédecine: null,
-            nombreDePlacesEnObstétrique: null,
-            nombreDePlacesEnPsyHospitalisationPartielle: null,
-            nombreDePlacesEnSsr: null,
-          },
-        ],
-      }),
-      wording
-    );
+    it("doit considérer une capacité vide comme une donnée manquante", () => {
+      const autorisationsSansActivité = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
+        mock<ÉtablissementTerritorialSanitaireAutorisationEtCapacité>({
+          capacités: [
+            {
+              année: annéeEnCours - 5,
+              dateMiseÀJourSource: "2022-09-02",
+              nombreDeLitsEnChirurgie: null,
+              nombreDeLitsEnMédecine: null,
+              nombreDeLitsEnObstétrique: null,
+              nombreDeLitsEnSsr: null,
+              nombreDeLitsEnUsld: null,
+              nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
+              nombreDePlacesEnChirurgie: null,
+              nombreDePlacesEnMédecine: null,
+              nombreDePlacesEnObstétrique: null,
+              nombreDePlacesEnPsyHospitalisationPartielle: null,
+              nombreDePlacesEnSsr: null,
+            },
+          ],
+        }),
+        wording
+      );
 
-    // WHEN
-    renderFakeComponent(<GraphiqueCapacitésParActivité établissementTerritorialSanitaireAutorisationsViewModel={autorisationsSansActivité} />);
+      // WHEN
+      renderFakeComponent(<GraphiqueCapacitésParActivité établissementTerritorialSanitaireAutorisationsViewModel={autorisationsSansActivité} />);
 
-    // THEN
-    const titreCapacitéParActivité = screen.queryByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: "p" });
-    expect(titreCapacitéParActivité).not.toBeInTheDocument();
-  });
-
-  it("n’affiche pas les capacités lorsque celles-ci ne sont pas renseignées", () => {
-    const autorisationsViewModel = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
-      mock<ÉtablissementTerritorialSanitaireAutorisationEtCapacité>({
-        capacités: [],
-      }),
-      wording
-    );
-
-    // WHEN
-    renderFakeComponent(<GraphiqueCapacitésParActivité établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModel} />);
-
-    // THEN
-    const titreCapacitéParActivité = screen.queryByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: "p" });
-    expect(titreCapacitéParActivité).not.toBeInTheDocument();
+      // THEN
+      const exergue = screen.getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 5}`, { exact: false, selector: "p" });
+      expect(exergue).toBeInTheDocument();
+    });
   });
 
   describe("Changes les capacités par année", () => {
