@@ -3,32 +3,30 @@ import { useState } from "react";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ContenuCapacitéParActivités } from "../InfoBulle/ContenuCapacitéParActivités";
-import { ÉtablissementTerritorialSanitaireAutorisationsViewModel } from "./ÉtablissementTerritorialSanitaireAutorisationsViewModel";
+import { GraphiqueCapacitésParActivitéViewModel } from "./ÉtablissementTerritorialSanitaireAutorisationsViewModel";
 
 type GraphiqueCapacitésParActivitéProps = Readonly<{
-  établissementTerritorialSanitaireAutorisationsViewModel: ÉtablissementTerritorialSanitaireAutorisationsViewModel;
+  graphiqueCapacitésParActivitéViewModel: GraphiqueCapacitésParActivitéViewModel;
 }>;
-export const GraphiqueCapacitésParActivité = ({ établissementTerritorialSanitaireAutorisationsViewModel }: GraphiqueCapacitésParActivitéProps) => {
+export const GraphiqueCapacitésParActivité = ({ graphiqueCapacitésParActivitéViewModel }: GraphiqueCapacitésParActivitéProps) => {
   const { wording } = useDependencies();
-  const [annéeSelectionnée, setAnnéeSelectionnée] = useState<number>(établissementTerritorialSanitaireAutorisationsViewModel.annéeInitiale);
+  const [annéeSelectionnée, setAnnéeSelectionnée] = useState<number>(graphiqueCapacitésParActivitéViewModel.annéeInitiale);
 
-  return annéeSelectionnée ? (
+  return (
     <IndicateurGraphique
-      années={établissementTerritorialSanitaireAutorisationsViewModel.listeDéroulanteDesAnnéesDesCapacités(setAnnéeSelectionnée)}
+      années={graphiqueCapacitésParActivitéViewModel.listeDéroulanteDesAnnéesDesCapacités(setAnnéeSelectionnée)}
       contenuInfoBulle={
         <ContenuCapacitéParActivités
-          dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDeLaCapacitéInstalléeParActivités}
+          dateDeMiseÀJour={graphiqueCapacitésParActivitéViewModel.dateDeMiseÀJourDeLaCapacitéInstalléeParActivités}
           source={wording.SAE}
         />
       }
-      dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDeLaCapacitéInstalléeParActivités}
+      dateDeMiseÀJour={graphiqueCapacitésParActivitéViewModel.dateDeMiseÀJourDeLaCapacitéInstalléeParActivités}
       identifiant="capacite-sanitaire"
       nomDeLIndicateur={wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
       source={wording.SAE}
     >
-      {établissementTerritorialSanitaireAutorisationsViewModel.capacitéParActivités(annéeSelectionnée)}
+      {graphiqueCapacitésParActivitéViewModel.capacitéParActivités(annéeSelectionnée)}
     </IndicateurGraphique>
-  ) : (
-    <></>
   );
 };

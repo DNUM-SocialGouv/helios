@@ -11,22 +11,11 @@ import "@gouvfr/dsfr/dist/component/tag/tag.min.css";
 import { Select } from "../../commun/Select/Select";
 import { CapacitéSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 
-export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends GraphiqueViewModel {
-  constructor(
-    private readonly établissementTerritorialSanitaireAutorisations: ÉtablissementTerritorialSanitaire["autorisationsEtCapacités"],
-    wording: Wording
-  ) {
-    super(wording);
-  }
+export class GraphiqueCapacitésParActivitéViewModel extends GraphiqueViewModel {
+  private NOMBRE_ANNEES = 5;
 
-  public get lesDonnéesAutorisationEtCapacitéNeSontPasRenseignées(): boolean {
-    return (
-      !this.lesCapacitésParActivitésSontEllesRenseignées &&
-      !this.lesAutorisationsSontEllesRenseignées &&
-      !this.lesAutresActivitésSontEllesRenseignées &&
-      !this.lesReconnaissancesContractuellesSontEllesRenseignées &&
-      !this.lesÉquipementsMatérielsLourdsSontIlsRenseignés
-    );
+  constructor(private readonly capacitésSanitaire: CapacitéSanitaire[], wording: Wording) {
+    super(wording);
   }
 
   public get annéeInitiale() {
@@ -57,7 +46,7 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
   }
 
   private filtreLesCapacitésRenseignées() {
-    return this.établissementTerritorialSanitaireAutorisations.capacités.filter((capacités) => {
+    return this.capacitésSanitaire.filter((capacités) => {
       return (
         capacités.nombreDeLitsEnMédecine !== null ||
         capacités.nombreDeLitsEnObstétrique !== null ||
@@ -83,11 +72,11 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
   }
 
   public get dateDeMiseÀJourDeLaCapacitéInstalléeParActivités(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialSanitaireAutorisations.capacités[0]?.dateMiseÀJourSource as string);
+    return StringFormater.formateLaDate(this.capacitésSanitaire[0]?.dateMiseÀJourSource as string);
   }
 
   public capacitéParActivités(annéeSelectionnée: number): ReactElement {
-    const capacitéAnnéeSelectionnée = this.établissementTerritorialSanitaireAutorisations.capacités.find((capacité) => capacité.année === annéeSelectionnée);
+    const capacitéAnnéeSelectionnée = this.capacitésSanitaire.find((capacité) => capacité.année === annéeSelectionnée);
     const litsEtPlaces = [
       {
         libellé: this.wording.MÉDECINE,
@@ -140,7 +129,31 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
       libellés,
       ratioHistogrammeCapacitéParActivités,
       this.wording.ACTIVITÉS,
-      identifiants
+      identifiants,
+      this.annéesManquantes(this.filtrerLesAnnéesAvecDesCapacités(), this.NOMBRE_ANNEES),
+      this.NOMBRE_ANNEES
+    );
+  }
+}
+
+export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends GraphiqueViewModel {
+  public graphiqueCapacitésParActivitéViewModel: GraphiqueCapacitésParActivitéViewModel;
+
+  constructor(
+    private readonly établissementTerritorialSanitaireAutorisations: ÉtablissementTerritorialSanitaire["autorisationsEtCapacités"],
+    wording: Wording
+  ) {
+    super(wording);
+    this.graphiqueCapacitésParActivitéViewModel = new GraphiqueCapacitésParActivitéViewModel(établissementTerritorialSanitaireAutorisations.capacités, wording);
+  }
+
+  public get lesDonnéesAutorisationEtCapacitéNeSontPasRenseignées(): boolean {
+    return (
+      !this.graphiqueCapacitésParActivitéViewModel.lesCapacitésParActivitésSontEllesRenseignées &&
+      !this.lesAutorisationsSontEllesRenseignées &&
+      !this.lesAutresActivitésSontEllesRenseignées &&
+      !this.lesReconnaissancesContractuellesSontEllesRenseignées &&
+      !this.lesÉquipementsMatérielsLourdsSontIlsRenseignés
     );
   }
 

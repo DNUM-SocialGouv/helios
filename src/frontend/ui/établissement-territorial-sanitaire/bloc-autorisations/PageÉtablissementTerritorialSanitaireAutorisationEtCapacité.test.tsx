@@ -88,7 +88,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     // GIVEN
     const autorisationsViewModelSansAutorisations = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
       mockDeep<ÉtablissementTerritorialSanitaireAutorisationEtCapacité>({
-        capacités: [mock<CapacitéSanitaire>()],
+        capacités: [mock<CapacitéSanitaire>({ année: 2022 })],
         [champDeLaDonnéeVide]: {
           [activitésOuÉquipements]: [],
         },
