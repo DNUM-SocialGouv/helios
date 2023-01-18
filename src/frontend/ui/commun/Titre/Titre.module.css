@@ -16,6 +16,7 @@
 }
 
 .titre button {
+  justify-content: center;
   min-width: 14rem;
 }
 

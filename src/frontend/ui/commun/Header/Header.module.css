@@ -1,0 +1,5 @@
+@media print {
+    .header-brand{
+        background-color: transparent !important;
+    }
+}

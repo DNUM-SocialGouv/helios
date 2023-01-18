@@ -9,6 +9,7 @@ import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 
 import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
 import { useDependencies } from "../contexts/useDependencies";
+import styles from "./Header.module.css";
 
 export const Header = () => {
   const { paths, wording } = useDependencies();
@@ -25,7 +26,7 @@ export const Header = () => {
         <div className="fr-header__body">
           <div className="fr-container">
             <div className="fr-header__body-row">
-              <div className="fr-header__brand fr-enlarge-link">
+              <div className={styles["header-brand"] + " fr-header__brand fr-enlarge-link"}>
                 <div className="fr-header__brand-top">
                   <div className="fr-header__logo">
                     <p className="fr-logo">{wording.INTITULÉ_RÉPUBLIQUE_FRANÇAISE}</p>
