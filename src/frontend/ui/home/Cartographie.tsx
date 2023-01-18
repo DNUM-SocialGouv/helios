@@ -44,7 +44,7 @@ export const Cartographie = () => {
             </ul>
           </div>
         </div>
-        <div className="fr-card__header">
+        <div>
           <Image alt="" height="300" src={carteFrance} width="300" />
         </div>
       </div>

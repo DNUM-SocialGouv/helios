@@ -601,10 +601,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gouvfr/dsfr@npm:1.4.1":
-  version: 1.4.1
-  resolution: "@gouvfr/dsfr@npm:1.4.1"
-  checksum: e97e4ef15d8cdb2aea5bb9da85e13df523356937d0dc5fecb5a9e94f0505550eae47c42adfef212708eb551888f0ee6954dbb7a8cff015b6a1f339f741eae3b7
+"@gouvfr/dsfr@npm:1.8.5":
+  version: 1.8.5
+  resolution: "@gouvfr/dsfr@npm:1.8.5"
+  checksum: 7eb4be75e79f76a48efc13f285b543e8b07d86114afd568785992ea9a0e5f2f04448d8418b0a4df5b00a1c9b985901d5f388525882751c8476c7d3ad97e021b1
   languageName: node
   linkType: hard
 
@@ -5542,7 +5542,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "helios@workspace:."
   dependencies:
-    "@gouvfr/dsfr": 1.4.1
+    "@gouvfr/dsfr": 1.8.5
     "@lhci/cli": ^0.9.0
     "@sentry/nextjs": ^7.1.1
     "@stryker-mutator/core": ^6.2.2
