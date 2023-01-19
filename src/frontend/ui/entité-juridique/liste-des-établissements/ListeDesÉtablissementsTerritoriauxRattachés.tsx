@@ -60,7 +60,7 @@ export const ListeDesÉtablissementsTerritoriauxRattachés = ({
 
   return (
     <section aria-label={wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS} className="fr-mt-4w">
-      <h2 className="fr-h3">{wording.ÉTABLISSEMENTS_RATTACHÉS}</h2>
+      <h2 className="fr-h3">{nombreEtablissementsRattachés + " " + wording.ÉTABLISSEMENTS_RATTACHÉS}</h2>
       {établissementsSanitaire.length > établissementsMedicauxSociaux.length ? [listeSanitaire, listeMedicauxSociaux] : [listeMedicauxSociaux, listeSanitaire]}
     </section>
   );

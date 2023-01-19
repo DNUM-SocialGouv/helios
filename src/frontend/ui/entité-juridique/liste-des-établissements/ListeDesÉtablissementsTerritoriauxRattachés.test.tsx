@@ -12,7 +12,7 @@ const établissementsTerritoriauxRattachésViewModels = [
 ];
 
 describe("affiche la liste des établissements territoriaux rattachés à l’entité juridique", () => {
-  it("affiche le titre de la liste", () => {
+  it("affiche le titre de la liste avec le nombre d'établissements total", () => {
     // WHEN
     renderFakeComponent(
       <ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels} />
@@ -21,7 +21,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
     // THEN
     const titre = screen.getByRole("heading", {
       level: 2,
-      name: wording.ÉTABLISSEMENTS_RATTACHÉS,
+      name: "2 " + wording.ÉTABLISSEMENTS_RATTACHÉS,
     });
     expect(titre).toBeInTheDocument();
   });
