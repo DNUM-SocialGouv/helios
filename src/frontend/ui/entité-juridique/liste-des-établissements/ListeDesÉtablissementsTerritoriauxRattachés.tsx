@@ -1,4 +1,5 @@
 import { DomaineÉtablissementTerritorial } from "../../../../backend/métier/entities/DomaineÉtablissementTerritorial";
+import { EtablissementsTerritoriauxRattachésViewModel } from "../../../../pages/entite-juridique/[numeroFiness]";
 import { FrontDependencies } from "../../../configuration/frontDependencies";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { ListItem } from "../../commun/ListItem/ListItem";
@@ -6,7 +7,7 @@ import styles from "./ListeDesÉtablissementsTerritoriauxRattachés.module.css";
 import { ÉtablissementTerritorialRattachéViewModel } from "./ÉtablissementTerritorialRattachéViewModel";
 
 type ÉtablissementsTerritoriauxRattachésTypeProps = Readonly<{
-  établissementsTerritoriauxRattachésViewModels: ÉtablissementTerritorialRattachéViewModel[];
+  établissementsTerritoriauxRattachésViewModels: EtablissementsTerritoriauxRattachésViewModel;
 }>;
 
 const listeDunTypeDetablissement = (
@@ -46,21 +47,16 @@ export const ListeDesÉtablissementsTerritoriauxRattachés = ({
   établissementsTerritoriauxRattachésViewModels,
 }: ÉtablissementsTerritoriauxRattachésTypeProps) => {
   const { paths, wording } = useDependencies();
-  const nombreEtablissementsRattachés = établissementsTerritoriauxRattachésViewModels.length;
-  const établissementsSanitaire = établissementsTerritoriauxRattachésViewModels.filter(
-    (etablissement) => etablissement.domaine === DomaineÉtablissementTerritorial.SANITAIRE
-  );
-  const établissementsMedicauxSociaux = établissementsTerritoriauxRattachésViewModels.filter(
-    (etablissement) => etablissement.domaine === DomaineÉtablissementTerritorial.MÉDICO_SOCIAL
-  );
-  if (nombreEtablissementsRattachés === 0) return null;
+  const établissementsSanitaire = établissementsTerritoriauxRattachésViewModels.établissementSanitaires;
+  const établissementsMedicauxSociaux = établissementsTerritoriauxRattachésViewModels.établissementMedicauxSociaux;
+  if (établissementsTerritoriauxRattachésViewModels.nombreEtablissements === 0) return null;
 
   const listeMedicauxSociaux = listeDunTypeDetablissement(établissementsMedicauxSociaux, DomaineÉtablissementTerritorial.MÉDICO_SOCIAL, paths);
   const listeSanitaire = listeDunTypeDetablissement(établissementsSanitaire, DomaineÉtablissementTerritorial.SANITAIRE, paths);
 
   return (
     <section aria-label={wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS} className="fr-mt-4w">
-      <h2 className="fr-h3">{nombreEtablissementsRattachés + " " + wording.ÉTABLISSEMENTS_RATTACHÉS}</h2>
+      <h2 className="fr-h3">{établissementsTerritoriauxRattachésViewModels.nombreEtablissements + " " + wording.ÉTABLISSEMENTS_RATTACHÉS}</h2>
       {établissementsSanitaire.length > établissementsMedicauxSociaux.length ? [listeSanitaire, listeMedicauxSociaux] : [listeMedicauxSociaux, listeSanitaire]}
     </section>
   );

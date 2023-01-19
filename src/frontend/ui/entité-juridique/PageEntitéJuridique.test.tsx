@@ -1,5 +1,6 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 
+import { EtablissementsTerritoriauxRattachésViewModel } from "../../../pages/entite-juridique/[numeroFiness]";
 import { EntitéJuridiqueViewModelTestBuilder } from "../../test-builder/EntitéJuridiqueViewModelTestBuilder";
 import { ÉtablissementTerritorialRattachéViewModelTestBuilder } from "../../test-builder/ÉtablissementTerritorialRattachéViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../testHelper";
@@ -8,10 +9,13 @@ import { PageEntitéJuridique } from "./PageEntitéJuridique";
 const { wording } = fakeFrontDependencies;
 const entitéJuridiqueViewModel = EntitéJuridiqueViewModelTestBuilder.crée(wording);
 const entitéJuridique = EntitéJuridiqueViewModelTestBuilder.entitéJuridique;
-const établissementsTerritoriauxRattachésViewModels = [
-  ÉtablissementTerritorialRattachéViewModelTestBuilder.créeÉtablissementTerritorialMédicoSocialRattaché(wording),
-  ÉtablissementTerritorialRattachéViewModelTestBuilder.créeÉtablissementTerritorialSanitaireRattaché(wording),
-];
+const établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésViewModel(
+  [
+    ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialMédicoSocialRattaché,
+    ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialSanitaireRattaché,
+  ],
+  wording
+);
 
 describe("La page Entité Juridique", () => {
   it("affiche le titre court dans l’onglet", () => {
