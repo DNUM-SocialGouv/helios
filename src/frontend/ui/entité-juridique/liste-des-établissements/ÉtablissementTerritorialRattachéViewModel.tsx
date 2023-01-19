@@ -37,9 +37,11 @@ export class ÉtablissementTerritorialRattachéViewModel {
 
   public get logo(): ReactElement {
     const logo =
-      this.établissementTerritorialRattaché.domaine === DomaineÉtablissementTerritorial.MÉDICO_SOCIAL
-        ? logoÉtablissementTerritorialMédicoSocial
-        : logoÉtablissementTerritorialSanitaire;
+      this.domaine === DomaineÉtablissementTerritorial.MÉDICO_SOCIAL ? logoÉtablissementTerritorialMédicoSocial : logoÉtablissementTerritorialSanitaire;
     return <Image alt="" height="25" src={logo} width="25" />;
+  }
+
+  public get domaine(): DomaineÉtablissementTerritorial {
+    return this.établissementTerritorialRattaché.domaine;
   }
 }
