@@ -1,12 +1,10 @@
 import { screen, within } from "@testing-library/react";
 
-import { EntitéJuridiqueViewModelTestBuilder } from "../../../test-builder/EntitéJuridiqueViewModelTestBuilder";
 import { ÉtablissementTerritorialRattachéViewModelTestBuilder } from "../../../test-builder/ÉtablissementTerritorialRattachéViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent } from "../../../testHelper";
-import { PageEntitéJuridique } from "../PageEntitéJuridique";
+import { ListeDesÉtablissementsTerritoriauxRattachés } from "./ListeDesÉtablissementsTerritoriauxRattachés";
 
 const { paths, wording } = fakeFrontDependencies;
-const entitéJuridiqueViewModel = EntitéJuridiqueViewModelTestBuilder.crée(wording);
 const établissementsTerritoriauxRattachésViewModels = [
   ÉtablissementTerritorialRattachéViewModelTestBuilder.créeÉtablissementTerritorialMédicoSocialRattaché(wording),
   ÉtablissementTerritorialRattachéViewModelTestBuilder.créeÉtablissementTerritorialSanitaireRattaché(wording),
@@ -16,29 +14,22 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
   it("affiche le titre de la liste", () => {
     // WHEN
     renderFakeComponent(
-      <PageEntitéJuridique
-        entitéJuridiqueViewModel={entitéJuridiqueViewModel}
-        établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
-      />
+      <ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels} />
     );
 
     // THEN
-    const établissementTerritoriauxRattachés = screen.getByRole("region", { name: wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS });
-    expect(within(établissementTerritoriauxRattachés).getByRole("heading", { level: 2, name: wording.ÉTABLISSEMENTS_RATTACHÉS })).toBeInTheDocument();
+    const titre = screen.getByRole("heading", { level: 2, name: wording.ÉTABLISSEMENTS_RATTACHÉS });
+    expect(titre).toBeInTheDocument();
   });
 
   it("affiche la liste des établissements rattachés avec un lien pour accéder à chaque établissement comportant le numéro FINESS de l’établissement et son nom court", () => {
     // WHEN
     renderFakeComponent(
-      <PageEntitéJuridique
-        entitéJuridiqueViewModel={entitéJuridiqueViewModel}
-        établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
-      />
+      <ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels} />
     );
 
     // THEN
-    const établissementsTerritoriauxRattachés = screen.getByRole("region", { name: wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS });
-    const listeDesÉtablissementsRattachés = within(établissementsTerritoriauxRattachés).getAllByRole("listitem");
+    const listeDesÉtablissementsRattachés = screen.getAllByRole("listitem");
     expect(listeDesÉtablissementsRattachés).toHaveLength(établissementsTerritoriauxRattachésViewModels.length);
     const établissementTerritorialMédicoSocial = within(listeDesÉtablissementsRattachés[0]).getByRole("link", {
       name: "Établissement territorial - 010000040 - CH NANTUA",
@@ -54,7 +45,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
 
   it("n’affiche pas la liste des établissements territoriaux rattachés quand l’entité juridique n’en a pas", () => {
     // WHEN
-    renderFakeComponent(<PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridiqueViewModel} établissementsTerritoriauxRattachésViewModels={[]} />);
+    renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={[]} />);
 
     // THEN
     const établissementTerritoriauxRattachés = screen.queryByRole("region", { name: wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS });
