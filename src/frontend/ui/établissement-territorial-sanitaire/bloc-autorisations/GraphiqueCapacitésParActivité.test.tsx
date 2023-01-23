@@ -3,8 +3,7 @@ import { mock } from "jest-mock-extended";
 
 import { CapacitéSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
-import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../testHelper";
-import { annéeEnCours } from "../../../testUtils";
+import { annéeEnCours, fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../testHelper";
 import { GraphiqueCapacitésParActivité } from "./GraphiqueCapacitésParActivité";
 import { GraphiqueCapacitésParActivitéViewModel } from "./ÉtablissementTerritorialSanitaireAutorisationsViewModel";
 

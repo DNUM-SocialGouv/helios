@@ -2,41 +2,18 @@ import { GetStaticPathsResult, GetStaticPropsResult } from "next";
 
 import { récupèreLEntitéJuridiqueEndpoint } from "../../backend/infrastructure/controllers/récupèreLEntitéJuridiqueEndpoint";
 import { dependencies } from "../../backend/infrastructure/dependencies";
-import { DomaineÉtablissementTerritorial } from "../../backend/métier/entities/DomaineÉtablissementTerritorial";
 import { EntitéJuridique } from "../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { ÉtablissementTerritorialRattaché } from "../../backend/métier/entities/entité-juridique/ÉtablissementTerritorialRattaché";
 import { EntitéJuridiqueNonTrouvée } from "../../backend/métier/entities/EntitéJuridiqueNonTrouvée";
-import { Wording } from "../../frontend/configuration/wording/Wording";
 import { useDependencies } from "../../frontend/ui/commun/contexts/useDependencies";
 import { EntitéJuridiqueViewModel } from "../../frontend/ui/entité-juridique/EntitéJuridiqueViewModel";
-import { ÉtablissementTerritorialRattachéViewModel } from "../../frontend/ui/entité-juridique/liste-des-établissements/ÉtablissementTerritorialRattachéViewModel";
+import { EtablissementsTerritoriauxRattachésViewModel } from "../../frontend/ui/entité-juridique/liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
 import { PageEntitéJuridique } from "../../frontend/ui/entité-juridique/PageEntitéJuridique";
 
 type RouterProps = Readonly<{
   entitéJuridique: EntitéJuridique;
   établissementsTerritoriauxRattachés: ÉtablissementTerritorialRattaché[];
 }>;
-
-export class EtablissementsTerritoriauxRattachésViewModel {
-  private établissementTerritoriauxRattachésViewModels: ÉtablissementTerritorialRattachéViewModel[];
-  constructor(établissementsTerritoriauxRattachés: ÉtablissementTerritorialRattaché[], wording: Wording) {
-    this.établissementTerritoriauxRattachésViewModels = établissementsTerritoriauxRattachés.map(
-      (établissement) => new ÉtablissementTerritorialRattachéViewModel(établissement, wording)
-    );
-  }
-
-  public get nombreEtablissements(): number {
-    return this.établissementTerritoriauxRattachésViewModels.length;
-  }
-
-  public get établissementSanitaires(): ÉtablissementTerritorialRattachéViewModel[] {
-    return this.établissementTerritoriauxRattachésViewModels.filter((établissement) => établissement.domaine === DomaineÉtablissementTerritorial.SANITAIRE);
-  }
-
-  public get établissementMedicauxSociaux(): ÉtablissementTerritorialRattachéViewModel[] {
-    return this.établissementTerritoriauxRattachésViewModels.filter((établissement) => établissement.domaine === DomaineÉtablissementTerritorial.MÉDICO_SOCIAL);
-  }
-}
 
 export default function Router({ entitéJuridique, établissementsTerritoriauxRattachés }: RouterProps) {
   const { wording } = useDependencies();

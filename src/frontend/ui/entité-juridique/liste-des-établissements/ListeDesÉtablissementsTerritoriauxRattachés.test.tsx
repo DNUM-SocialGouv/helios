@@ -1,8 +1,8 @@
 import { screen, within } from "@testing-library/react";
 
-import { EtablissementsTerritoriauxRattachésViewModel } from "../../../../pages/entite-juridique/[numeroFiness]";
 import { ÉtablissementTerritorialRattachéViewModelTestBuilder } from "../../../test-builder/ÉtablissementTerritorialRattachéViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent } from "../../../testHelper";
+import { EtablissementsTerritoriauxRattachésViewModel } from "./EtablissementsTerritoriauxRattachésViewModel";
 import { ListeDesÉtablissementsTerritoriauxRattachés } from "./ListeDesÉtablissementsTerritoriauxRattachés";
 
 const { paths, wording } = fakeFrontDependencies;

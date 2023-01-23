@@ -1,9 +1,9 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 
-import { EtablissementsTerritoriauxRattachésViewModel } from "../../../pages/entite-juridique/[numeroFiness]";
 import { EntitéJuridiqueViewModelTestBuilder } from "../../test-builder/EntitéJuridiqueViewModelTestBuilder";
 import { ÉtablissementTerritorialRattachéViewModelTestBuilder } from "../../test-builder/ÉtablissementTerritorialRattachéViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../testHelper";
+import { EtablissementsTerritoriauxRattachésViewModel } from "./liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
 import { PageEntitéJuridique } from "./PageEntitéJuridique";
 
 const { wording } = fakeFrontDependencies;

@@ -1,8 +1,8 @@
 import { DomaineÉtablissementTerritorial } from "../../../../backend/métier/entities/DomaineÉtablissementTerritorial";
-import { EtablissementsTerritoriauxRattachésViewModel } from "../../../../pages/entite-juridique/[numeroFiness]";
 import { FrontDependencies } from "../../../configuration/frontDependencies";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { ListItem } from "../../commun/ListItem/ListItem";
+import { EtablissementsTerritoriauxRattachésViewModel } from "./EtablissementsTerritoriauxRattachésViewModel";
 import styles from "./ListeDesÉtablissementsTerritoriauxRattachés.module.css";
 import { ÉtablissementTerritorialRattachéViewModel } from "./ÉtablissementTerritorialRattachéViewModel";
 

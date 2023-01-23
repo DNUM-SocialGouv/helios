@@ -1,10 +1,10 @@
 import Head from "next/head";
 
-import { EtablissementsTerritoriauxRattachésViewModel } from "../../../pages/entite-juridique/[numeroFiness]";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { Titre } from "../commun/Titre/Titre";
 import { EntitéJuridiqueViewModel } from "./EntitéJuridiqueViewModel";
 import { BlocIdentité } from "./fiche-d-identité/BlocIdentité";
+import { EtablissementsTerritoriauxRattachésViewModel } from "./liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
 import { ListeDesÉtablissementsTerritoriauxRattachés } from "./liste-des-établissements/ListeDesÉtablissementsTerritoriauxRattachés";
 import LogoEntitéJuridique from "./logo-entité-juridique.svg";
 
