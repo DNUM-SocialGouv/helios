@@ -21,8 +21,13 @@ export default function Router({ entitéJuridique, établissementsTerritoriauxRa
   if (!établissementsTerritoriauxRattachés || !entitéJuridique) return null;
 
   const entitéJuridiqueViewModel = new EntitéJuridiqueViewModel(entitéJuridique, wording);
-  const etVM = new EtablissementsTerritoriauxRattachésViewModel(établissementsTerritoriauxRattachés, wording);
-  return <PageEntitéJuridique entitéJuridiqueViewModel={entitéJuridiqueViewModel} établissementsTerritoriauxRattachésViewModels={etVM} />;
+  const établissementsTerritoriauxRattachéesViewModel = new EtablissementsTerritoriauxRattachésViewModel(établissementsTerritoriauxRattachés, wording);
+  return (
+    <PageEntitéJuridique
+      entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+      établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachéesViewModel}
+    />
+  );
 }
 
 export function getStaticPaths(): GetStaticPathsResult {
