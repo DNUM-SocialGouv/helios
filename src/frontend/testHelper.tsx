@@ -55,3 +55,4 @@ export const textMatch =
   (_: string, element?: Element | null): boolean => {
     return element?.textContent === wording;
   };
+export const annéeEnCours = new Date().getFullYear();

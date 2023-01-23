@@ -7,7 +7,7 @@ import { ÉtablissementTerritorialRattaché } from "../../backend/métier/entiti
 import { EntitéJuridiqueNonTrouvée } from "../../backend/métier/entities/EntitéJuridiqueNonTrouvée";
 import { useDependencies } from "../../frontend/ui/commun/contexts/useDependencies";
 import { EntitéJuridiqueViewModel } from "../../frontend/ui/entité-juridique/EntitéJuridiqueViewModel";
-import { ÉtablissementTerritorialRattachéViewModel } from "../../frontend/ui/entité-juridique/liste-des-établissements/ÉtablissementTerritorialRattachéViewModel";
+import { EtablissementsTerritoriauxRattachésViewModel } from "../../frontend/ui/entité-juridique/liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
 import { PageEntitéJuridique } from "../../frontend/ui/entité-juridique/PageEntitéJuridique";
 
 type RouterProps = Readonly<{
@@ -21,13 +21,11 @@ export default function Router({ entitéJuridique, établissementsTerritoriauxRa
   if (!établissementsTerritoriauxRattachés || !entitéJuridique) return null;
 
   const entitéJuridiqueViewModel = new EntitéJuridiqueViewModel(entitéJuridique, wording);
-  const établissementsTerritoriauxRattachésViewModels = établissementsTerritoriauxRattachés.map(
-    (établissementTerritorial) => new ÉtablissementTerritorialRattachéViewModel(établissementTerritorial, wording)
-  );
+  const établissementsTerritoriauxRattachéesViewModel = new EtablissementsTerritoriauxRattachésViewModel(établissementsTerritoriauxRattachés, wording);
   return (
     <PageEntitéJuridique
       entitéJuridiqueViewModel={entitéJuridiqueViewModel}
-      établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
+      établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachéesViewModel}
     />
   );
 }
@@ -54,7 +52,10 @@ export async function getStaticProps({ params }: { params: { numeroFiness: strin
   } catch (error) {
     if (error instanceof EntitéJuridiqueNonTrouvée) {
       dependencies.logger.error(error.message);
-      return { notFound: true, revalidate: 1 };
+      return {
+        notFound: true,
+        revalidate: 1,
+      };
     }
     throw error;
   }

@@ -1,0 +1,233 @@
+import { screen, within } from "@testing-library/react";
+
+import { EtablissementsTerritoriauxRattachésTestBuilder } from "../../../test-builder/EtablissementsTerritoriauxRattachésTestBuilder";
+import { fakeFrontDependencies, renderFakeComponent } from "../../../testHelper";
+import { EtablissementsTerritoriauxRattachésViewModel } from "./EtablissementsTerritoriauxRattachésViewModel";
+import { ListeDesÉtablissementsTerritoriauxRattachés } from "./ListeDesÉtablissementsTerritoriauxRattachés";
+
+const { paths, wording } = fakeFrontDependencies;
+
+describe("affiche la liste des établissements territoriaux rattachés à l’entité juridique", () => {
+  let établissementsTerritoriauxRattachésViewModels: EtablissementsTerritoriauxRattachésViewModel;
+
+  beforeAll(() => {
+    établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésTestBuilder(wording)
+      .avecEtablissementMédicoSocial()
+      .avecEtablissementSanitaire()
+      .build();
+  });
+
+  it("affiche le titre de la liste avec le nombre d'établissements total", () => {
+    // WHEN
+    renderFakeComponent(
+      <ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels} />
+    );
+
+    // THEN
+    const titre = screen.getByRole("heading", {
+      level: 2,
+      name: "2 " + wording.ÉTABLISSEMENTS_RATTACHÉS,
+    });
+    expect(titre).toBeInTheDocument();
+  });
+
+  it("affiche la liste des établissements rattachés avec un lien pour accéder à chaque établissement comportant le numéro FINESS de l’établissement et son nom court", () => {
+    // WHEN
+    renderFakeComponent(
+      <ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels} />
+    );
+
+    // THEN
+    const listeDesÉtablissementsRattachés = screen.getAllByRole("listitem");
+    expect(listeDesÉtablissementsRattachés).toHaveLength(établissementsTerritoriauxRattachésViewModels.nombreEtablissements);
+    const établissementTerritorialMédicoSocial = within(listeDesÉtablissementsRattachés[0]).getByRole("link", {
+      name: "Établissement territorial - 010000040 - CH NANTUA",
+    });
+    expect(établissementTerritorialMédicoSocial).toHaveAttribute("href", `${paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL}/010000040`);
+    const abréviationÉtablissementTerritorial = within(établissementTerritorialMédicoSocial).getByText("ET", { selector: "abbr" });
+    expect(abréviationÉtablissementTerritorial).toHaveAttribute("title", wording.ÉTABLISSEMENT_TERRITORIAL);
+    const établissementTerritorialSanitaire = within(listeDesÉtablissementsRattachés[1]).getByRole("link", {
+      name: "Établissement territorial - 590782553 - HP VILLENEUVE DASCQ",
+    });
+    expect(établissementTerritorialSanitaire).toHaveAttribute("href", `${paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE}/590782553`);
+  });
+
+  describe("EJ avec des ET sanitaires rattachés uniquement", () => {
+    beforeAll(() => {
+      // GIVEN
+      établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésTestBuilder(wording)
+        .avecEtablissementSanitaire({ numéroFiness: "445566" })
+        .avecEtablissementSanitaire({ numéroFiness: "112233" })
+        .build();
+    });
+
+    it("affiche un tag pour regrouper les établissements sanitaires avec le nombre d'établissements", () => {
+      // WHEN
+      renderFakeComponent(
+        <ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels} />
+      );
+
+      // THEN
+      const tagSanitaire = screen.getByText(wording.DOMAINE_SANITAIRE + " (2)");
+      expect(tagSanitaire).toBeInTheDocument();
+    });
+
+    it("affiche la liste des établissements sanitaires sous le tag trié par FINESS", () => {
+      // WHEN
+      renderFakeComponent(
+        <ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels} />
+      );
+
+      // THEN
+      const listeEtablissementSanitaire = screen.getAllByRole("list")[0];
+      const itemEtablissementSanitaire = within(listeEtablissementSanitaire).getAllByRole("listitem");
+      expect(itemEtablissementSanitaire).toHaveLength(2);
+      expect(within(itemEtablissementSanitaire[0]).getByText("112233", { exact: false })).toBeInTheDocument();
+      expect(within(itemEtablissementSanitaire[1]).getByText("445566", { exact: false })).toBeInTheDocument();
+    });
+
+    it("n'affiche pas le tag ni la liste s'il n'y a pas d'établissements sanitaire", () => {
+      // GIVEN
+      const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
+
+      // WHEN
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);
+
+      // THEN
+      const tagSanitaire = screen.queryByText(wording.DOMAINE_SANITAIRE, { exact: false });
+      expect(tagSanitaire).not.toBeInTheDocument();
+    });
+  });
+
+  describe("EJ avec des ET médicaux sociaux rattachés uniquement", () => {
+    beforeAll(() => {
+      // GIVEN
+      établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésTestBuilder(wording)
+        .avecEtablissementMédicoSocial({ numéroFiness: "445566" })
+        .avecEtablissementMédicoSocial({ numéroFiness: "112233" })
+        .build();
+    });
+
+    it("affiche un tag pour regrouper les établissements médicaux sociaux avec le nombre d'établissements", () => {
+      // WHEN
+      renderFakeComponent(
+        <ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels} />
+      );
+
+      // THEN
+      const tagSanitaire = screen.getByText(wording.DOMAINE_MEDICAUX_SOCIAL + " (2)");
+      expect(tagSanitaire).toBeInTheDocument();
+    });
+
+    it("affiche la liste des établissements médicaux sociaux sous le tag trié par FINESS", () => {
+      // WHEN
+      renderFakeComponent(
+        <ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels} />
+      );
+
+      // THEN
+      const listeEtablissementSanitaire = screen.getAllByRole("list")[0];
+      const itemEtablissementSanitaire = within(listeEtablissementSanitaire).getAllByRole("listitem");
+      expect(itemEtablissementSanitaire).toHaveLength(2);
+      expect(within(itemEtablissementSanitaire[0]).getByText("112233", { exact: false })).toBeInTheDocument();
+      expect(within(itemEtablissementSanitaire[1]).getByText("445566", { exact: false })).toBeInTheDocument();
+    });
+
+    it("n'affiche pas le tag ni la liste s'il n'y a pas d'établissements médicaux sociaux", () => {
+      // GIVEN
+      const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
+
+      // WHEN
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);
+
+      // THEN
+      const tagSanitaire = screen.queryByText(wording.DOMAINE_MEDICAUX_SOCIAL, { exact: false });
+      expect(tagSanitaire).not.toBeInTheDocument();
+    });
+  });
+
+  describe("EJ avec des ET médicaux sociaux et des ET sanitaires rattachés", () => {
+    beforeAll(() => {
+      // GIVEN
+      établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésTestBuilder(wording)
+        .avecEtablissementMédicoSocial({ numéroFiness: "445566" })
+        .avecEtablissementSanitaire({ numéroFiness: "999888" })
+        .avecEtablissementMédicoSocial({ numéroFiness: "778899" })
+        .avecEtablissementMédicoSocial({ numéroFiness: "556677" })
+        .avecEtablissementSanitaire({ numéroFiness: "222333" })
+        .build();
+    });
+
+    it("affiche les deux tags avec en premier celui qui contient le plus d'établissements", () => {
+      // WHEN
+      renderFakeComponent(
+        <ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels} />
+      );
+
+      // THEN
+      const tagMedicauxSocial = screen.getByText(wording.DOMAINE_MEDICAUX_SOCIAL + " (3)");
+      expect(tagMedicauxSocial).toBeInTheDocument();
+      const tagSanitaire = screen.getByText(wording.DOMAINE_SANITAIRE + " (2)");
+      expect(tagSanitaire).toBeInTheDocument();
+    });
+
+    it("affiche la liste des établissements en fonction de leur tag trié par finess", () => {
+      // WHEN
+      renderFakeComponent(
+        <ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels} />
+      );
+
+      // THEN
+      const listeEtablissementMedicauxSociaux = screen.getAllByRole("list")[0];
+      const itemEtablissementMedicauxSociaux = within(listeEtablissementMedicauxSociaux).getAllByRole("listitem");
+      expect(itemEtablissementMedicauxSociaux).toHaveLength(3);
+      expect(within(itemEtablissementMedicauxSociaux[0]).getByText("445566", { exact: false })).toBeInTheDocument();
+      expect(within(itemEtablissementMedicauxSociaux[1]).getByText("556677", { exact: false })).toBeInTheDocument();
+      expect(within(itemEtablissementMedicauxSociaux[2]).getByText("778899", { exact: false })).toBeInTheDocument();
+
+      const listeEtablissementSanitaire = screen.getAllByRole("list")[1];
+      const itemEtablissementSanitaire = within(listeEtablissementSanitaire).getAllByRole("listitem");
+      expect(itemEtablissementSanitaire).toHaveLength(2);
+      expect(within(itemEtablissementSanitaire[0]).getByText("222333", { exact: false })).toBeInTheDocument();
+      expect(within(itemEtablissementSanitaire[1]).getByText("999888", { exact: false })).toBeInTheDocument();
+    });
+
+    it("n'affiche pas le tag ni la liste s'il n'y a pas d'établissements médicaux sociaux", () => {
+      // GIVEN
+      const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
+
+      // WHEN
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);
+
+      // THEN
+      const tagSanitaire = screen.queryByText(wording.DOMAINE_MEDICAUX_SOCIAL, { exact: false });
+      expect(tagSanitaire).not.toBeInTheDocument();
+    });
+  });
+
+  describe("EJ sans ET rattachés", () => {
+    it("doit afficher qu'aucun n'établissements n'est rattaché à cet EJ", () => {
+      // GIVEN
+      const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
+
+      // WHEN
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);
+
+      // THEN
+      const titre = screen.getByRole("heading", { level: 2, name: wording.AUCUN_ÉTABLISSEMENTS_RATTACHÉS });
+      expect(titre).toBeInTheDocument();
+    });
+  });
+
+  it("n’affiche pas la liste des établissements territoriaux rattachés quand l’entité juridique n’en a pas", () => {
+    // GIVEN
+    const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
+
+    // WHEN
+    renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);
+
+    // THEN
+    const établissementTerritoriauxRattachés = screen.queryByRole("list");
+    expect(établissementTerritoriauxRattachés).not.toBeInTheDocument();
+  });
+});

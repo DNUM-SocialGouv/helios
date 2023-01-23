@@ -204,9 +204,13 @@ export interface Wording {
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string;
   readonly TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS: string;
+  readonly DOMAINE_MEDICAUX_SOCIAL: string;
+  readonly DOMAINE_SANITAIRE: string;
   readonly ÉTABLISSEMENTS_RATTACHÉS: string;
 
-  // Sources longue
+  readonly AUCUN_ÉTABLISSEMENTS_RATTACHÉS: string;
+
+  // Sources longues
   readonly FINESS_TITLE: string;
   readonly DIAMANT_TITLE: string;
   readonly CNSA_TITLE: string;

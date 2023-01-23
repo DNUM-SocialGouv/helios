@@ -1,5 +1,7 @@
+import { DomaineÉtablissementTerritorial } from "../DomaineÉtablissementTerritorial";
+
 export type ÉtablissementTerritorialRattaché = Readonly<{
-  domaine: string;
+  domaine: DomaineÉtablissementTerritorial;
   numéroFiness: string;
   raisonSocialeCourte: string;
 }>;
