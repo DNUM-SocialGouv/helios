@@ -208,6 +208,8 @@ export interface Wording {
   readonly DOMAINE_SANITAIRE: string;
   readonly ÉTABLISSEMENTS_RATTACHÉS: string;
 
+  readonly AUCUN_ÉTABLISSEMENTS_RATTACHÉS: string;
+
   // Sources longues
   readonly FINESS_TITLE: string;
   readonly DIAMANT_TITLE: string;

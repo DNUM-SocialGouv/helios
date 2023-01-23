@@ -52,18 +52,6 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
     expect(établissementTerritorialSanitaire).toHaveAttribute("href", `${paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE}/590782553`);
   });
 
-  it("n’affiche pas la liste des établissements territoriaux rattachés quand l’entité juridique n’en a pas", () => {
-    // GIVEN
-    const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
-
-    // WHEN
-    renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);
-
-    // THEN
-    const établissementTerritoriauxRattachés = screen.queryByRole("region", { name: wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS });
-    expect(établissementTerritoriauxRattachés).not.toBeInTheDocument();
-  });
-
   describe("EJ avec des ET sanitaires rattachés uniquement", () => {
     beforeAll(() => {
       // GIVEN
@@ -215,5 +203,31 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       const tagSanitaire = screen.queryByText(wording.DOMAINE_MEDICAUX_SOCIAL, { exact: false });
       expect(tagSanitaire).not.toBeInTheDocument();
     });
+  });
+
+  describe("EJ sans ET rattachés", () => {
+    it("doit afficher qu'aucun n'établissements n'est rattaché à cet EJ", () => {
+      // GIVEN
+      const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
+
+      // WHEN
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);
+
+      // THEN
+      const titre = screen.getByRole("heading", { level: 2, name: wording.AUCUN_ÉTABLISSEMENTS_RATTACHÉS });
+      expect(titre).toBeInTheDocument();
+    });
+  });
+
+  it("n’affiche pas la liste des établissements territoriaux rattachés quand l’entité juridique n’en a pas", () => {
+    // GIVEN
+    const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
+
+    // WHEN
+    renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);
+
+    // THEN
+    const établissementTerritoriauxRattachés = screen.queryByRole("list");
+    expect(établissementTerritoriauxRattachés).not.toBeInTheDocument();
   });
 });

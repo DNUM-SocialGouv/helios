@@ -56,19 +56,26 @@ const tagDomaineEtablissement = (nombreEtablissements: number, domaine: Domaine�
   return <Badge className={couleurTexte + " " + couleurFond + " fr-text--bold fr-mb-1w"} label={texteTag + " (" + nombreEtablissements + ")"} />;
 };
 
+function titreEtablissementsRattaches(nombreEtablissements: number, wording: Wording) {
+  return (
+    <h2 className="fr-h3">
+      {nombreEtablissements > 0 ? nombreEtablissements + " " + wording.ÉTABLISSEMENTS_RATTACHÉS : wording.AUCUN_ÉTABLISSEMENTS_RATTACHÉS}
+    </h2>
+  );
+}
+
 export const ListeDesÉtablissementsTerritoriauxRattachés = ({
   établissementsTerritoriauxRattachésViewModels,
 }: ÉtablissementsTerritoriauxRattachésTypeProps) => {
   const { paths, wording } = useDependencies();
+
   const établissementsSanitaire = établissementsTerritoriauxRattachésViewModels.établissementSanitaires;
   const établissementsMedicauxSociaux = établissementsTerritoriauxRattachésViewModels.établissementMedicauxSociaux;
-  if (établissementsTerritoriauxRattachésViewModels.nombreEtablissements === 0) return null;
-
   const listeMedicauxSociaux = listeDunTypeDetablissement(établissementsMedicauxSociaux, DomaineÉtablissementTerritorial.MÉDICO_SOCIAL, paths, wording);
   const listeSanitaire = listeDunTypeDetablissement(établissementsSanitaire, DomaineÉtablissementTerritorial.SANITAIRE, paths, wording);
   return (
     <section aria-label={wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS} className={styles["liste-établissements-territoriaux-rattachés"] + " fr-mt-4w"}>
-      <h2 className="fr-h3">{établissementsTerritoriauxRattachésViewModels.nombreEtablissements + " " + wording.ÉTABLISSEMENTS_RATTACHÉS}</h2>
+      {titreEtablissementsRattaches(établissementsTerritoriauxRattachésViewModels.nombreEtablissements, wording)}
       <div className="fr-grid-row fr-grid-row--gutters">
         {établissementsSanitaire.length > établissementsMedicauxSociaux.length
           ? [listeSanitaire, listeMedicauxSociaux]
