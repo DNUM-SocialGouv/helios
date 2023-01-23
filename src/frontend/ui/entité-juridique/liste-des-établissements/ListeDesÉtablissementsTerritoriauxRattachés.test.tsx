@@ -1,17 +1,22 @@
 import { screen, within } from "@testing-library/react";
 
-import { établissementMédicoSocial, établissementSanitaire } from "../../../test-builder/ÉtablissementTerritorialRattachéTestBuilder";
+import { EtablissementsTerritoriauxRattachésTestBuilder } from "../../../test-builder/EtablissementsTerritoriauxRattachésTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent } from "../../../testHelper";
 import { EtablissementsTerritoriauxRattachésViewModel } from "./EtablissementsTerritoriauxRattachésViewModel";
 import { ListeDesÉtablissementsTerritoriauxRattachés } from "./ListeDesÉtablissementsTerritoriauxRattachés";
 
 const { paths, wording } = fakeFrontDependencies;
-const établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésViewModel(
-  [établissementMédicoSocial, établissementSanitaire],
-  wording
-);
 
 describe("affiche la liste des établissements territoriaux rattachés à l’entité juridique", () => {
+  let établissementsTerritoriauxRattachésViewModels: EtablissementsTerritoriauxRattachésViewModel;
+
+  beforeAll(() => {
+    établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésTestBuilder(wording)
+      .avecEtablissementMédicoSocial()
+      .avecEtablissementSanitaire()
+      .build();
+  });
+
   it("affiche le titre de la liste avec le nombre d'établissements total", () => {
     // WHEN
     renderFakeComponent(
@@ -49,7 +54,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
 
   it("n’affiche pas la liste des établissements territoriaux rattachés quand l’entité juridique n’en a pas", () => {
     // GIVEN
-    const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésViewModel([], wording);
+    const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
 
     // WHEN
     renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);
@@ -60,23 +65,12 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
   });
 
   describe("EJ avec des ET sanitaires rattachés uniquement", () => {
-    let établissementsTerritoriauxRattachésViewModels: EtablissementsTerritoriauxRattachésViewModel;
-
     beforeAll(() => {
       // GIVEN
-      établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésViewModel(
-        [
-          {
-            ...établissementSanitaire,
-            numéroFiness: "445566",
-          },
-          {
-            ...établissementSanitaire,
-            numéroFiness: "112233",
-          },
-        ],
-        wording
-      );
+      établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésTestBuilder(wording)
+        .avecEtablissementSanitaire({ numéroFiness: "445566" })
+        .avecEtablissementSanitaire({ numéroFiness: "112233" })
+        .build();
     });
 
     it("affiche un tag pour regrouper les établissements sanitaires avec le nombre d'établissements", () => {
@@ -106,7 +100,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
 
     it("n'affiche pas le tag ni la liste s'il n'y a pas d'établissements sanitaire", () => {
       // GIVEN
-      const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésViewModel([], wording);
+      const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
 
       // WHEN
       renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);
@@ -118,23 +112,12 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
   });
 
   describe("EJ avec des ET médicaux sociaux rattachés uniquement", () => {
-    let établissementsTerritoriauxRattachésViewModels: EtablissementsTerritoriauxRattachésViewModel;
-
     beforeAll(() => {
       // GIVEN
-      établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésViewModel(
-        [
-          {
-            ...établissementMédicoSocial,
-            numéroFiness: "445566",
-          },
-          {
-            ...établissementMédicoSocial,
-            numéroFiness: "112233",
-          },
-        ],
-        wording
-      );
+      établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésTestBuilder(wording)
+        .avecEtablissementMédicoSocial({ numéroFiness: "445566" })
+        .avecEtablissementMédicoSocial({ numéroFiness: "112233" })
+        .build();
     });
 
     it("affiche un tag pour regrouper les établissements médicaux sociaux avec le nombre d'établissements", () => {
@@ -164,7 +147,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
 
     it("n'affiche pas le tag ni la liste s'il n'y a pas d'établissements médicaux sociaux", () => {
       // GIVEN
-      const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésViewModel([], wording);
+      const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
 
       // WHEN
       renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);
@@ -176,35 +159,15 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
   });
 
   describe("EJ avec des ET médicaux sociaux et des ET sanitaires rattachés", () => {
-    let établissementsTerritoriauxRattachésViewModels: EtablissementsTerritoriauxRattachésViewModel;
-
     beforeAll(() => {
       // GIVEN
-      établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésViewModel(
-        [
-          {
-            ...établissementMédicoSocial,
-            numéroFiness: "445566",
-          },
-          {
-            ...établissementSanitaire,
-            numéroFiness: "999888",
-          },
-          {
-            ...établissementMédicoSocial,
-            numéroFiness: "778899",
-          },
-          {
-            ...établissementMédicoSocial,
-            numéroFiness: "556677",
-          },
-          {
-            ...établissementSanitaire,
-            numéroFiness: "222333",
-          },
-        ],
-        wording
-      );
+      établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésTestBuilder(wording)
+        .avecEtablissementMédicoSocial({ numéroFiness: "445566" })
+        .avecEtablissementSanitaire({ numéroFiness: "999888" })
+        .avecEtablissementMédicoSocial({ numéroFiness: "778899" })
+        .avecEtablissementMédicoSocial({ numéroFiness: "556677" })
+        .avecEtablissementSanitaire({ numéroFiness: "222333" })
+        .build();
     });
 
     it("affiche les deux tags avec en premier celui qui contient le plus d'établissements", () => {
@@ -243,7 +206,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
 
     it("n'affiche pas le tag ni la liste s'il n'y a pas d'établissements médicaux sociaux", () => {
       // GIVEN
-      const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésViewModel([], wording);
+      const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
 
       // WHEN
       renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);

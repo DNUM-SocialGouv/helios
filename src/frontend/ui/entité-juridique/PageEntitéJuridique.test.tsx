@@ -1,18 +1,14 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 
 import { EntitéJuridiqueViewModelTestBuilder } from "../../test-builder/EntitéJuridiqueViewModelTestBuilder";
-import { établissementMédicoSocial, établissementSanitaire } from "../../test-builder/ÉtablissementTerritorialRattachéTestBuilder";
+import { EtablissementsTerritoriauxRattachésTestBuilder } from "../../test-builder/EtablissementsTerritoriauxRattachésTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../testHelper";
-import { EtablissementsTerritoriauxRattachésViewModel } from "./liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
 import { PageEntitéJuridique } from "./PageEntitéJuridique";
 
 const { wording } = fakeFrontDependencies;
 const entitéJuridiqueViewModel = EntitéJuridiqueViewModelTestBuilder.crée(wording);
 const entitéJuridique = EntitéJuridiqueViewModelTestBuilder.entitéJuridique;
-const établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésViewModel(
-  [établissementMédicoSocial, établissementSanitaire],
-  wording
-);
+const établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
 
 describe("La page Entité Juridique", () => {
   it("affiche le titre court dans l’onglet", () => {

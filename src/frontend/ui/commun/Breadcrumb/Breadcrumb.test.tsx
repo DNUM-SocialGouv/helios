@@ -5,11 +5,10 @@ import Accessibilité from "../../../../pages/accessibilite";
 import DonnéesPersonnelles from "../../../../pages/donnees-personnelles";
 import MentionsLégales from "../../../../pages/mentions-legales";
 import { EntitéJuridiqueViewModelTestBuilder } from "../../../test-builder/EntitéJuridiqueViewModelTestBuilder";
+import { EtablissementsTerritoriauxRattachésTestBuilder } from "../../../test-builder/EtablissementsTerritoriauxRattachésTestBuilder";
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
-import { établissementMédicoSocial, établissementSanitaire } from "../../../test-builder/ÉtablissementTerritorialRattachéTestBuilder";
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent } from "../../../testHelper";
-import { EtablissementsTerritoriauxRattachésViewModel } from "../../entité-juridique/liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
 import { PageEntitéJuridique } from "../../entité-juridique/PageEntitéJuridique";
 import { PageRégion } from "../../région/PageRégion";
 import { régions } from "../../région/régions";
@@ -62,10 +61,10 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
   it("affiche le chemin jusqu’à la page entité juridique", () => {
     // GIVEN
     const entitéJuridiqueViewModel = EntitéJuridiqueViewModelTestBuilder.crée(wording);
-    const établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésViewModel(
-      [établissementMédicoSocial, établissementSanitaire],
-      wording
-    );
+    const établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésTestBuilder(wording)
+      .avecEtablissementMédicoSocial()
+      .avecEtablissementSanitaire()
+      .build();
 
     // WHEN
     renderFakeComponent(
