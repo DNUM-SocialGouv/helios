@@ -523,7 +523,20 @@ class NomDeMaClasse:
 - chaque composant du DSFR doit importer son CSS (minifié) et celui de ses dépendances, le CSS **core** étant déjà importé globalement
   > Réduire au maximum la taille des fichiers téléchargés
 
-- le javascript du DSFR est importé globalement
+- le javascript du DSFR est importé globalement et la version minifiée est mise dans le dossier public
+
+##### Mettre à jour le design système : 
+Pour mettre à jour le design système il faut :
+- Mettre à jour la dépendance avec yarn 
+- Copier, depuis les node_modules, les fichiers `dsfr.module.min.js` et `dsfr.nomodule.min.js` de la nouvelle version dans le dossier public (on peut également ajouter les sources maps)
+- Si besoin, mettre à jour le lien des scripts dans `_app.tsx`
+- Faire un contrôle visuel de l'appli et des intéractions
+- Consulter les [notes de version](https://www.systeme-de-design.gouv.fr/a-propos/versions-du-dsfr/version-courante#code) pour s'assurer qu'il n'y a pas de breaking changes 
+
+Pour le moment le design système est très éparpillé dans le code. Le html et les classes sont copiés collés un peu partout   
+il faut donc être assez vigilant sur la régression visuelle. Une modification du design system pourra entrainer des rechercher / remplacer dans toute l'app. 
+
+Une solution à mettre en place serait d'isoler les composant du DS dans nos composants React au maximum.
 
 #### Tests
 
