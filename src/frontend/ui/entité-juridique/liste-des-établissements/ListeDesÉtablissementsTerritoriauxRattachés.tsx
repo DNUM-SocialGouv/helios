@@ -28,7 +28,6 @@ const listeDunTypeDetablissement = (
               key={établissementTerritorialRattachéViewModel.numéroFiness}
               label={établissementTerritorialRattachéViewModel.identifiant}
               lien={établissementTerritorialRattachéViewModel.lienVersLÉtablissement(paths)}
-              logo={établissementTerritorialRattachéViewModel.logo}
             />
           ))}
       </ol>,

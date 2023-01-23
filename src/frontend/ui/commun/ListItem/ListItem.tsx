@@ -6,7 +6,7 @@ import styles from "./ListItem.module.css";
 type ListItemProps = Readonly<{
   label: ReactChild;
   lien: string;
-  logo: ReactChild;
+  logo?: ReactChild;
 }>;
 
 export const ListItem = ({ label, lien, logo }: ListItemProps) => {
