@@ -281,8 +281,10 @@ export class WordingFr implements Wording {
   readonly ÉTABLISSEMENT_TERRITORIAL: string = "Établissement territorial";
   readonly TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS: string = "Les établissements rattachés";
   readonly ÉTABLISSEMENTS_RATTACHÉS: string = "Établissement(s) rattaché(s)";
+  readonly DOMAINE_MEDICAUX_SOCIAL: string = "SOCIAL ET MEDICO-SOCIAL";
+  readonly DOMAINE_SANITAIRE: string = "SANITAIRE";
 
-  // Sources longue
+  // Sources longues
   readonly FINESS_TITLE: string = "Fichier National des Établissements Sanitaires et Sociaux";
   readonly DIAMANT_TITLE: string = "Décisionnel Inter ARS pour la Maîtrise et ANTicipation";
   readonly CNSA_TITLE: string = "Caisse Nationale de Solidarité pour l’Autonomie";

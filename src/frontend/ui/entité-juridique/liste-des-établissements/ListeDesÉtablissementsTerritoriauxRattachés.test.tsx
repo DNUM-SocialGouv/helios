@@ -89,7 +89,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       );
 
       // THEN
-      const tagSanitaire = screen.getByText("SANITAIRE (2)");
+      const tagSanitaire = screen.getByText(wording.DOMAINE_SANITAIRE + " (2)");
       expect(tagSanitaire).toBeInTheDocument();
     });
 
@@ -115,7 +115,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);
 
       // THEN
-      const tagSanitaire = screen.queryByText("SANITAIRE", { exact: false });
+      const tagSanitaire = screen.queryByText(wording.DOMAINE_SANITAIRE, { exact: false });
       expect(tagSanitaire).not.toBeInTheDocument();
     });
   });
@@ -147,7 +147,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       );
 
       // THEN
-      const tagSanitaire = screen.getByText("SOCIAL ET MEDICO-SOCIAL (2)");
+      const tagSanitaire = screen.getByText(wording.DOMAINE_MEDICAUX_SOCIAL + " (2)");
       expect(tagSanitaire).toBeInTheDocument();
     });
 
@@ -173,7 +173,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);
 
       // THEN
-      const tagSanitaire = screen.queryByText("SOCIAL ET MEDICO-SOCIAL", { exact: false });
+      const tagSanitaire = screen.queryByText(wording.DOMAINE_MEDICAUX_SOCIAL, { exact: false });
       expect(tagSanitaire).not.toBeInTheDocument();
     });
   });
@@ -217,9 +217,9 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       );
 
       // THEN
-      const tagMedicauxSocial = screen.getByText("SOCIAL ET MEDICO-SOCIAL (3)");
+      const tagMedicauxSocial = screen.getByText(wording.DOMAINE_MEDICAUX_SOCIAL + " (3)");
       expect(tagMedicauxSocial).toBeInTheDocument();
-      const tagSanitaire = screen.getByText("SANITAIRE (2)");
+      const tagSanitaire = screen.getByText(wording.DOMAINE_SANITAIRE + " (2)");
       expect(tagSanitaire).toBeInTheDocument();
     });
 
@@ -252,7 +252,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);
 
       // THEN
-      const tagSanitaire = screen.queryByText("SOCIAL ET MEDICO-SOCIAL", { exact: false });
+      const tagSanitaire = screen.queryByText(wording.DOMAINE_MEDICAUX_SOCIAL, { exact: false });
       expect(tagSanitaire).not.toBeInTheDocument();
     });
   });
