@@ -1,9 +1,9 @@
 import { DomaineÉtablissementTerritorial } from "../../../../backend/métier/entities/DomaineÉtablissementTerritorial";
 import { FrontDependencies } from "../../../configuration/frontDependencies";
 import { Wording } from "../../../configuration/wording/Wording";
+import { Badge } from "../../commun/Badge/Badge";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { ListItem } from "../../commun/ListItem/ListItem";
-import { Tag } from "../../commun/Tag/Tag";
 import { EtablissementsTerritoriauxRattachésViewModel } from "./EtablissementsTerritoriauxRattachésViewModel";
 import styles from "./ListeDesÉtablissementsTerritoriauxRattachés.module.css";
 import { ÉtablissementTerritorialRattachéViewModel } from "./ÉtablissementTerritorialRattachéViewModel";
@@ -19,20 +19,23 @@ const listeDunTypeDetablissement = (
   wording: Wording
 ) => {
   return (
-    établissementsViewModel.length > 0 && [
-      tagDomaineEtablissement(établissementsViewModel.length, domaine, wording),
-      <ol className=" fr-raw-list fr-text--bold fr-raw-link" key={"liste-" + domaine}>
-        {établissementsViewModel
-          .sort((établissement1, établissement2) => établissement1.numéroFiness.localeCompare(établissement2.numéroFiness))
-          .map((établissementTerritorialRattachéViewModel: ÉtablissementTerritorialRattachéViewModel) => (
-            <ListItem
-              key={établissementTerritorialRattachéViewModel.numéroFiness}
-              label={établissementTerritorialRattachéViewModel.identifiant}
-              lien={établissementTerritorialRattachéViewModel.lienVersLÉtablissement(paths)}
-            />
-          ))}
-      </ol>,
-    ]
+    établissementsViewModel.length > 0 && (
+      <div className="fr-col">
+        {tagDomaineEtablissement(établissementsViewModel.length, domaine, wording)}
+        <ol className=" fr-raw-list fr-text--bold fr-raw-link fr-text--sm" key={"liste-" + domaine}>
+          {établissementsViewModel
+            .sort((établissement1, établissement2) => établissement1.numéroFiness.localeCompare(établissement2.numéroFiness))
+            .map((établissementTerritorialRattachéViewModel: ÉtablissementTerritorialRattachéViewModel) => (
+              <ListItem
+                key={établissementTerritorialRattachéViewModel.numéroFiness}
+                label={établissementTerritorialRattachéViewModel.identifiant}
+                lien={établissementTerritorialRattachéViewModel.lienVersLÉtablissement(paths)}
+              />
+            ))}
+        </ol>
+        ,
+      </div>
+    )
   );
 };
 
@@ -41,16 +44,22 @@ const tagDomaineEtablissement = (nombreEtablissements: number, domaine: Domaine�
   switch (domaine) {
     case DomaineÉtablissementTerritorial.MÉDICO_SOCIAL:
       texteTag = wording.DOMAINE_MEDICAUX_SOCIAL;
-      couleurTexte = "fr-text-label--green-emeraude";
-      couleurFond = "fr-background-contrast--green-emeraude";
+      couleurTexte = "fr-badge--green-emeraude";
+      couleurFond = "fr-badge--green-emeraude";
       break;
     default:
       texteTag = wording.DOMAINE_SANITAIRE;
-      couleurTexte = "fr-text-label--pink-tuile";
-      couleurFond = "fr-background-contrast--pink-tuile";
+      couleurTexte = "fr-badge--pink-tuile";
+      couleurFond = "fr-tag--pink-tuile";
       break;
   }
-  return <Tag className={couleurTexte + " " + couleurFond + " fr-text--bold "} key={"tag-" + domaine} label={texteTag + " (" + nombreEtablissements + ")"} />;
+  return (
+    <Badge
+      className={couleurTexte + " " + couleurFond + " fr-text--bold fr-mb-1w"}
+      key={"badge-" + domaine}
+      label={texteTag + " (" + nombreEtablissements + ")"}
+    />
+  );
 };
 
 export const ListeDesÉtablissementsTerritoriauxRattachés = ({
@@ -63,11 +72,14 @@ export const ListeDesÉtablissementsTerritoriauxRattachés = ({
 
   const listeMedicauxSociaux = listeDunTypeDetablissement(établissementsMedicauxSociaux, DomaineÉtablissementTerritorial.MÉDICO_SOCIAL, paths, wording);
   const listeSanitaire = listeDunTypeDetablissement(établissementsSanitaire, DomaineÉtablissementTerritorial.SANITAIRE, paths, wording);
-  console.log(styles);
   return (
     <section aria-label={wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS} className={styles["liste-établissements-territoriaux-rattachés"] + " fr-mt-4w"}>
       <h2 className="fr-h3">{établissementsTerritoriauxRattachésViewModels.nombreEtablissements + " " + wording.ÉTABLISSEMENTS_RATTACHÉS}</h2>
-      {établissementsSanitaire.length > établissementsMedicauxSociaux.length ? [listeSanitaire, listeMedicauxSociaux] : [listeMedicauxSociaux, listeSanitaire]}
+      <div className="fr-grid-row fr-grid-row--gutters">
+        {établissementsSanitaire.length > établissementsMedicauxSociaux.length
+          ? [listeSanitaire, listeMedicauxSociaux]
+          : [listeMedicauxSociaux, listeSanitaire]}
+      </div>
     </section>
   );
 };
