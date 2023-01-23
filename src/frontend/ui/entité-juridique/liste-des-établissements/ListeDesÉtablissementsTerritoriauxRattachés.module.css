@@ -1,7 +1,11 @@
-.liste-établissements-territoriaux-rattachés {
+.liste-établissements-territoriaux-rattachés ol {
   color: var(--text-action-high-grey);
 }
 
 .liste-établissements-territoriaux-rattachés li:not(:last-child) {
   margin-bottom: .375rem;
+}
+
+.liste-établissements-territoriaux-rattachés .domaine {
+  color: var(--pink-tuile-sun-425);
 }

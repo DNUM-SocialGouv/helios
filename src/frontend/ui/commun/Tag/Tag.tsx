@@ -1,5 +1,5 @@
 import "@gouvfr/dsfr/dist/component/tag/tag.min.css";
 
-export const Tag = ({ label }: { label: string }) => {
-  return <p className="fr-tag">{label}</p>;
+export const Tag = ({ label, className }: { label: string; className: string }) => {
+  return <p className={"fr-tag " + className}>{label}</p>;
 };

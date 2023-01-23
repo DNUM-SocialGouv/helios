@@ -21,7 +21,7 @@ const listeDunTypeDetablissement = (
   return (
     établissementsViewModel.length > 0 && [
       tagDomaineEtablissement(établissementsViewModel.length, domaine, wording),
-      <ol className={styles["liste-établissements-territoriaux-rattachés"] + " fr-raw-list fr-text--bold fr-raw-link"} key={"liste-" + domaine}>
+      <ol className=" fr-raw-list fr-text--bold fr-raw-link" key={"liste-" + domaine}>
         {établissementsViewModel
           .sort((établissement1, établissement2) => établissement1.numéroFiness.localeCompare(établissement2.numéroFiness))
           .map((établissementTerritorialRattachéViewModel: ÉtablissementTerritorialRattachéViewModel) => (
@@ -37,8 +37,20 @@ const listeDunTypeDetablissement = (
 };
 
 const tagDomaineEtablissement = (nombreEtablissements: number, domaine: DomaineÉtablissementTerritorial, wording: Wording) => {
-  const texteTag = domaine === DomaineÉtablissementTerritorial.MÉDICO_SOCIAL ? wording.DOMAINE_MEDICAUX_SOCIAL : wording.DOMAINE_SANITAIRE;
-  return <Tag key={"tag-" + domaine} label={texteTag + " (" + nombreEtablissements + ")"} />;
+  let texteTag: string, couleurTexte: string, couleurFond: string;
+  switch (domaine) {
+    case DomaineÉtablissementTerritorial.MÉDICO_SOCIAL:
+      texteTag = wording.DOMAINE_MEDICAUX_SOCIAL;
+      couleurTexte = "fr-text-label--green-emeraude";
+      couleurFond = "fr-background-contrast--green-emeraude";
+      break;
+    default:
+      texteTag = wording.DOMAINE_SANITAIRE;
+      couleurTexte = "fr-text-label--pink-tuile";
+      couleurFond = "fr-background-contrast--pink-tuile";
+      break;
+  }
+  return <Tag className={couleurTexte + " " + couleurFond + " fr-text--bold "} key={"tag-" + domaine} label={texteTag + " (" + nombreEtablissements + ")"} />;
 };
 
 export const ListeDesÉtablissementsTerritoriauxRattachés = ({
@@ -51,9 +63,9 @@ export const ListeDesÉtablissementsTerritoriauxRattachés = ({
 
   const listeMedicauxSociaux = listeDunTypeDetablissement(établissementsMedicauxSociaux, DomaineÉtablissementTerritorial.MÉDICO_SOCIAL, paths, wording);
   const listeSanitaire = listeDunTypeDetablissement(établissementsSanitaire, DomaineÉtablissementTerritorial.SANITAIRE, paths, wording);
-
+  console.log(styles);
   return (
-    <section aria-label={wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS} className="fr-mt-4w">
+    <section aria-label={wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS} className={styles["liste-établissements-territoriaux-rattachés"] + " fr-mt-4w"}>
       <h2 className="fr-h3">{établissementsTerritoriauxRattachésViewModels.nombreEtablissements + " " + wording.ÉTABLISSEMENTS_RATTACHÉS}</h2>
       {établissementsSanitaire.length > établissementsMedicauxSociaux.length ? [listeSanitaire, listeMedicauxSociaux] : [listeMedicauxSociaux, listeSanitaire]}
     </section>
