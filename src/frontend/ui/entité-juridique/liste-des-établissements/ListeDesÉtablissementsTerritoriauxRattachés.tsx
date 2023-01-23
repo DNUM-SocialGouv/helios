@@ -20,9 +20,9 @@ const listeDunTypeDetablissement = (
 ) => {
   return (
     établissementsViewModel.length > 0 && (
-      <div className="fr-col">
+      <div className="fr-col" key={"liste-" + domaine}>
         {tagDomaineEtablissement(établissementsViewModel.length, domaine, wording)}
-        <ol className=" fr-raw-list fr-text--bold fr-raw-link fr-text--sm" key={"liste-" + domaine}>
+        <ol className=" fr-raw-list fr-text--bold fr-raw-link fr-text--sm">
           {établissementsViewModel
             .sort((établissement1, établissement2) => établissement1.numéroFiness.localeCompare(établissement2.numéroFiness))
             .map((établissementTerritorialRattachéViewModel: ÉtablissementTerritorialRattachéViewModel) => (
@@ -53,13 +53,7 @@ const tagDomaineEtablissement = (nombreEtablissements: number, domaine: Domaine�
       couleurFond = "fr-tag--pink-tuile";
       break;
   }
-  return (
-    <Badge
-      className={couleurTexte + " " + couleurFond + " fr-text--bold fr-mb-1w"}
-      key={"badge-" + domaine}
-      label={texteTag + " (" + nombreEtablissements + ")"}
-    />
-  );
+  return <Badge className={couleurTexte + " " + couleurFond + " fr-text--bold fr-mb-1w"} label={texteTag + " (" + nombreEtablissements + ")"} />;
 };
 
 export const ListeDesÉtablissementsTerritoriauxRattachés = ({

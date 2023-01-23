@@ -1,7 +1,7 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 
 import { EntitéJuridiqueViewModelTestBuilder } from "../../test-builder/EntitéJuridiqueViewModelTestBuilder";
-import { ÉtablissementTerritorialRattachéViewModelTestBuilder } from "../../test-builder/ÉtablissementTerritorialRattachéViewModelTestBuilder";
+import { établissementMédicoSocial, établissementSanitaire } from "../../test-builder/ÉtablissementTerritorialRattachéTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../testHelper";
 import { EtablissementsTerritoriauxRattachésViewModel } from "./liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
 import { PageEntitéJuridique } from "./PageEntitéJuridique";
@@ -10,10 +10,7 @@ const { wording } = fakeFrontDependencies;
 const entitéJuridiqueViewModel = EntitéJuridiqueViewModelTestBuilder.crée(wording);
 const entitéJuridique = EntitéJuridiqueViewModelTestBuilder.entitéJuridique;
 const établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésViewModel(
-  [
-    ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialMédicoSocialRattaché,
-    ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialSanitaireRattaché,
-  ],
+  [établissementMédicoSocial, établissementSanitaire],
   wording
 );
 

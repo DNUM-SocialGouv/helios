@@ -6,7 +6,7 @@ import DonnéesPersonnelles from "../../../../pages/donnees-personnelles";
 import MentionsLégales from "../../../../pages/mentions-legales";
 import { EntitéJuridiqueViewModelTestBuilder } from "../../../test-builder/EntitéJuridiqueViewModelTestBuilder";
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
-import { ÉtablissementTerritorialRattachéViewModelTestBuilder } from "../../../test-builder/ÉtablissementTerritorialRattachéViewModelTestBuilder";
+import { établissementMédicoSocial, établissementSanitaire } from "../../../test-builder/ÉtablissementTerritorialRattachéTestBuilder";
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent } from "../../../testHelper";
 import { EtablissementsTerritoriauxRattachésViewModel } from "../../entité-juridique/liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
@@ -63,10 +63,7 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
     // GIVEN
     const entitéJuridiqueViewModel = EntitéJuridiqueViewModelTestBuilder.crée(wording);
     const établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésViewModel(
-      [
-        ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialMédicoSocialRattaché,
-        ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialSanitaireRattaché,
-      ],
+      [établissementMédicoSocial, établissementSanitaire],
       wording
     );
 

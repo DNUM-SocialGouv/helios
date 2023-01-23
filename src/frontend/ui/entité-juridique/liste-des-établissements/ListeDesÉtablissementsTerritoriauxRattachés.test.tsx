@@ -1,16 +1,13 @@
 import { screen, within } from "@testing-library/react";
 
-import { ÉtablissementTerritorialRattachéViewModelTestBuilder } from "../../../test-builder/ÉtablissementTerritorialRattachéViewModelTestBuilder";
+import { établissementMédicoSocial, établissementSanitaire } from "../../../test-builder/ÉtablissementTerritorialRattachéTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent } from "../../../testHelper";
 import { EtablissementsTerritoriauxRattachésViewModel } from "./EtablissementsTerritoriauxRattachésViewModel";
 import { ListeDesÉtablissementsTerritoriauxRattachés } from "./ListeDesÉtablissementsTerritoriauxRattachés";
 
 const { paths, wording } = fakeFrontDependencies;
 const établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésViewModel(
-  [
-    ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialMédicoSocialRattaché,
-    ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialSanitaireRattaché,
-  ],
+  [établissementMédicoSocial, établissementSanitaire],
   wording
 );
 
@@ -70,11 +67,11 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésViewModel(
         [
           {
-            ...ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialSanitaireRattaché,
+            ...établissementSanitaire,
             numéroFiness: "445566",
           },
           {
-            ...ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialSanitaireRattaché,
+            ...établissementSanitaire,
             numéroFiness: "112233",
           },
         ],
@@ -128,11 +125,11 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésViewModel(
         [
           {
-            ...ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialMédicoSocialRattaché,
+            ...établissementMédicoSocial,
             numéroFiness: "445566",
           },
           {
-            ...ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialMédicoSocialRattaché,
+            ...établissementMédicoSocial,
             numéroFiness: "112233",
           },
         ],
@@ -186,23 +183,23 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésViewModel(
         [
           {
-            ...ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialMédicoSocialRattaché,
+            ...établissementMédicoSocial,
             numéroFiness: "445566",
           },
           {
-            ...ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialSanitaireRattaché,
+            ...établissementSanitaire,
             numéroFiness: "999888",
           },
           {
-            ...ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialMédicoSocialRattaché,
+            ...établissementMédicoSocial,
             numéroFiness: "778899",
           },
           {
-            ...ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialMédicoSocialRattaché,
+            ...établissementMédicoSocial,
             numéroFiness: "556677",
           },
           {
-            ...ÉtablissementTerritorialRattachéViewModelTestBuilder.établissementTerritorialSanitaireRattaché,
+            ...établissementSanitaire,
             numéroFiness: "222333",
           },
         ],
