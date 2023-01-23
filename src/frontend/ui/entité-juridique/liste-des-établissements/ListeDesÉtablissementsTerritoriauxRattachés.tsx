@@ -3,6 +3,7 @@ import { FrontDependencies } from "../../../configuration/frontDependencies";
 import { Wording } from "../../../configuration/wording/Wording";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { ListItem } from "../../commun/ListItem/ListItem";
+import { Tag } from "../../commun/Tag/Tag";
 import { EtablissementsTerritoriauxRattachésViewModel } from "./EtablissementsTerritoriauxRattachésViewModel";
 import styles from "./ListeDesÉtablissementsTerritoriauxRattachés.module.css";
 import { ÉtablissementTerritorialRattachéViewModel } from "./ÉtablissementTerritorialRattachéViewModel";
@@ -37,11 +38,7 @@ const listeDunTypeDetablissement = (
 
 const tagDomaineEtablissement = (nombreEtablissements: number, domaine: DomaineÉtablissementTerritorial, wording: Wording) => {
   const texteTag = domaine === DomaineÉtablissementTerritorial.MÉDICO_SOCIAL ? wording.DOMAINE_MEDICAUX_SOCIAL : wording.DOMAINE_SANITAIRE;
-  return (
-    <p className="fr-tag" key={"tag-" + domaine}>
-      {texteTag} ({nombreEtablissements})
-    </p>
-  );
+  return <Tag key={"tag-" + domaine} label={texteTag + " (" + nombreEtablissements + ")"} />;
 };
 
 export const ListeDesÉtablissementsTerritoriauxRattachés = ({
