@@ -89,7 +89,7 @@ function VoirPlus(
 ) {
   return (
     <>
-      {!voirTout && ETRattachés.depasseLimiteAffichage && (
+      {!voirTout && (
         <button className="fr-btn fr-btn--secondary" onClick={() => ETRattachés.voirPlus(setVoirTout)}>
           {wording.VOIR_TOUS_LES_ET}
         </button>
@@ -122,10 +122,12 @@ export const ListeDesÉtablissementsTerritoriauxRattachés = ({ ETRattachés }: 
       <div className="fr-grid-row fr-grid-row--gutters">
         {ETRattachés.plusDETSanitaire ? [listeSanitaire, listeMedicauxSociaux] : [listeMedicauxSociaux, listeSanitaire]}
       </div>
-      <div className={styles["voir_plus"] + " fr-grid-row fr-grid-row--center"}>
-        {VoirMoins(voirTout, ETRattachés, setVoirTout, wording)}
-        {VoirPlus(voirTout, ETRattachés, setVoirTout, wording)}
-      </div>
+      {ETRattachés.depasseLimiteAffichage && (
+        <div className={styles["voir_plus"] + " fr-grid-row fr-grid-row--center"}>
+          {VoirMoins(voirTout, ETRattachés, setVoirTout, wording)}
+          {VoirPlus(voirTout, ETRattachés, setVoirTout, wording)}
+        </div>
+      )}
     </section>
   );
 };
