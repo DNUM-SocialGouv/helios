@@ -19,9 +19,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
 
   it("affiche le titre de la liste avec le nombre d'établissements total", () => {
     // WHEN
-    renderFakeComponent(
-      <ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels} />
-    );
+    renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />);
 
     // THEN
     const titre = screen.getByRole("heading", {
@@ -33,9 +31,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
 
   it("affiche la liste des établissements rattachés avec un lien pour accéder à chaque établissement comportant le numéro FINESS de l’établissement et son nom court", () => {
     // WHEN
-    renderFakeComponent(
-      <ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels} />
-    );
+    renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />);
 
     // THEN
     const listeDesÉtablissementsRattachés = screen.getAllByRole("listitem");
@@ -63,9 +59,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
 
     it("affiche un tag pour regrouper les établissements sanitaires avec le nombre d'établissements", () => {
       // WHEN
-      renderFakeComponent(
-        <ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels} />
-      );
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />);
 
       // THEN
       const tagSanitaire = screen.getByText(wording.DOMAINE_SANITAIRE + " (2)");
@@ -74,9 +68,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
 
     it("affiche la liste des établissements sanitaires sous le tag trié par FINESS", () => {
       // WHEN
-      renderFakeComponent(
-        <ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels} />
-      );
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />);
 
       // THEN
       const listeEtablissementSanitaire = screen.getAllByRole("list")[0];
@@ -91,7 +83,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
 
       // WHEN
-      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={pasDetablissementTerritoriaux} />);
 
       // THEN
       const tagSanitaire = screen.queryByText(wording.DOMAINE_SANITAIRE, { exact: false });
@@ -110,9 +102,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
 
     it("affiche un tag pour regrouper les établissements médicaux sociaux avec le nombre d'établissements", () => {
       // WHEN
-      renderFakeComponent(
-        <ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels} />
-      );
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />);
 
       // THEN
       const tagSanitaire = screen.getByText(wording.DOMAINE_MEDICAUX_SOCIAL + " (2)");
@@ -121,9 +111,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
 
     it("affiche la liste des établissements médicaux sociaux sous le tag trié par FINESS", () => {
       // WHEN
-      renderFakeComponent(
-        <ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels} />
-      );
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />);
 
       // THEN
       const listeEtablissementSanitaire = screen.getAllByRole("list")[0];
@@ -138,7 +126,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
 
       // WHEN
-      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={pasDetablissementTerritoriaux} />);
 
       // THEN
       const tagSanitaire = screen.queryByText(wording.DOMAINE_MEDICAUX_SOCIAL, { exact: false });
@@ -160,9 +148,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
 
     it("affiche les deux tags avec en premier celui qui contient le plus d'établissements", () => {
       // WHEN
-      renderFakeComponent(
-        <ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels} />
-      );
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />);
 
       // THEN
       const tagMedicauxSocial = screen.getByText(wording.DOMAINE_MEDICAUX_SOCIAL + " (3)");
@@ -173,9 +159,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
 
     it("affiche la liste des établissements en fonction de leur tag trié par finess", () => {
       // WHEN
-      renderFakeComponent(
-        <ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels} />
-      );
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />);
 
       // THEN
       const listeEtablissementMedicauxSociaux = screen.getAllByRole("list")[0];
@@ -197,7 +181,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
 
       // WHEN
-      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={pasDetablissementTerritoriaux} />);
 
       // THEN
       const tagSanitaire = screen.queryByText(wording.DOMAINE_MEDICAUX_SOCIAL, { exact: false });
@@ -211,7 +195,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
 
       // WHEN
-      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={pasDetablissementTerritoriaux} />);
 
       // THEN
       const titre = screen.getByRole("heading", {
@@ -226,7 +210,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
 
       // WHEN
-      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={pasDetablissementTerritoriaux} />);
 
       // THEN
       const établissementTerritoriauxRattachés = screen.queryByRole("list");
@@ -240,7 +224,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       const onzeETSanitaire = new EtablissementsTerritoriauxRattachésTestBuilder(wording).avecNEtablissementsSanitaires(11).build();
 
       // WHEN
-      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={onzeETSanitaire} />);
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={onzeETSanitaire} />);
 
       // THEN
       const listeEtablissementSanitaire = screen.getAllByRole("list")[0];
@@ -255,7 +239,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       const onzeETMedicoSociaux = new EtablissementsTerritoriauxRattachésTestBuilder(wording).avecNEtablissementsMedicoSociaux(11).build();
 
       // WHEN
-      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={onzeETMedicoSociaux} />);
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={onzeETMedicoSociaux} />);
 
       // THEN
       const listeEtablissementMedicoSociaux = screen.getAllByRole("list")[0];
@@ -270,7 +254,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
         .avecNEtablissementsSanitaires(15)
         .avecNEtablissementsMedicoSociaux(12)
         .build();
-      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={onzeETMedicoSociauxEtSanitaires} />);
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={onzeETMedicoSociauxEtSanitaires} />);
 
       // WHEN
       const voirPlus = screen.getByText("Voir tous les établissements rattachés");
@@ -288,7 +272,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
 
     it("doit cacher le bouton voir plus et afficher le bouton voir moins quand on affiche tout", () => {
       const onzeEtSanitaires = new EtablissementsTerritoriauxRattachésTestBuilder(wording).avecNEtablissementsSanitaires(15).build();
-      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={onzeEtSanitaires} />);
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={onzeEtSanitaires} />);
 
       // WHEN
       const voirPlus = screen.getByText("Voir tous les établissements rattachés");
@@ -302,7 +286,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
 
     it("doit afficher 10 ET maximum au clic sur voir moins", () => {
       const quinzeETSanitaires = new EtablissementsTerritoriauxRattachésTestBuilder(wording).avecNEtablissementsSanitaires(15).build();
-      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={quinzeETSanitaires} />);
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={quinzeETSanitaires} />);
       const voirPlus = screen.getByText("Voir tous les établissements rattachés");
       fireEvent.click(voirPlus);
 
@@ -323,7 +307,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
         .build();
 
       // WHEN
-      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={deuxETSanitaires} />);
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={deuxETSanitaires} />);
 
       // THEN
       const voirPlus = screen.queryByText("Voir tous les établissements rattachés");
@@ -337,7 +321,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
         .build();
 
       // WHEN
-      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={deuxETSanitaires} />);
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={deuxETSanitaires} />);
 
       // THEN
       const boutonVoirMoins = screen.queryByText("Voir moins d'établissements rattachés");
