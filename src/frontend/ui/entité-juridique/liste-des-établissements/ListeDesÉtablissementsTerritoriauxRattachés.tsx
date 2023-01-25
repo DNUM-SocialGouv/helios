@@ -65,22 +65,20 @@ function TitreEtablissementsRattaches(nombreEtablissements: number, wording: Wor
 function VoirMoins(
   voirTout: boolean,
   ETRattachés: EtablissementsTerritoriauxRattachésViewModel,
-  setVoirTout: (value: ((prevState: boolean) => boolean) | boolean) => void
+  setVoirTout: (value: ((prevState: boolean) => boolean) | boolean) => void,
+  wording: Wording
 ) {
-  return <> {voirTout && <button onClick={() => ETRattachés.voirMoins(setVoirTout)}>Voir moins d'établissements rattachés</button>}</>;
+  return <> {voirTout && <button onClick={() => ETRattachés.voirMoins(setVoirTout)}>{wording.VOIR_MOINS_ET}</button>}</>;
 }
 
 function VoirPlus(
   voirTout: boolean,
   ETRattachés: EtablissementsTerritoriauxRattachésViewModel,
-  setVoirTout: (value: ((prevState: boolean) => boolean) | boolean) => void
+  setVoirTout: (value: ((prevState: boolean) => boolean) | boolean) => void,
+  wording: Wording
 ) {
   return (
-    <>
-      {!voirTout && ETRattachés.depasseLimiteAffichage && (
-        <button onClick={() => ETRattachés.voirPlus(setVoirTout)}>Voir tous les établissements rattachés</button>
-      )}
-    </>
+    <>{!voirTout && ETRattachés.depasseLimiteAffichage && <button onClick={() => ETRattachés.voirPlus(setVoirTout)}>{wording.VOIR_TOUS_LES_ET}</button>}</>
   );
 }
 
@@ -108,8 +106,8 @@ export const ListeDesÉtablissementsTerritoriauxRattachés = ({ ETRattachés }: 
       <div className="fr-grid-row fr-grid-row--gutters">
         {ETRattachés.plusDETSanitaire ? [listeSanitaire, listeMedicauxSociaux] : [listeMedicauxSociaux, listeSanitaire]}
       </div>
-      {VoirPlus(voirTout, ETRattachés, setVoirTout)}
-      {VoirMoins(voirTout, ETRattachés, setVoirTout)}
+      {VoirPlus(voirTout, ETRattachés, setVoirTout, wording)}
+      {VoirMoins(voirTout, ETRattachés, setVoirTout, wording)}
     </section>
   );
 };

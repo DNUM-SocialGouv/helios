@@ -230,7 +230,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       const listeEtablissementSanitaire = screen.getAllByRole("list")[0];
       const itemEtablissementSanitaire = within(listeEtablissementSanitaire).getAllByRole("listitem");
       expect(itemEtablissementSanitaire).toHaveLength(10);
-      const boutonVoirPlus = screen.getByText("Voir tous les établissements rattachés");
+      const boutonVoirPlus = screen.getByText(wording.VOIR_TOUS_LES_ET);
       expect(boutonVoirPlus).toBeInTheDocument();
     });
 
@@ -245,7 +245,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       const listeEtablissementMedicoSociaux = screen.getAllByRole("list")[0];
       const itemEtablissementMedicoSociaux = within(listeEtablissementMedicoSociaux).getAllByRole("listitem");
       expect(itemEtablissementMedicoSociaux).toHaveLength(10);
-      const boutonVoirPlus = screen.getByText("Voir tous les établissements rattachés");
+      const boutonVoirPlus = screen.getByText(wording.VOIR_TOUS_LES_ET);
       expect(boutonVoirPlus).toBeInTheDocument();
     });
 
@@ -257,7 +257,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={onzeETMedicoSociauxEtSanitaires} />);
 
       // WHEN
-      const voirPlus = screen.getByText("Voir tous les établissements rattachés");
+      const voirPlus = screen.getByText(wording.VOIR_TOUS_LES_ET);
       fireEvent.click(voirPlus);
 
       // THEN
@@ -275,11 +275,11 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={onzeEtSanitaires} />);
 
       // WHEN
-      const voirPlus = screen.getByText("Voir tous les établissements rattachés");
+      const voirPlus = screen.getByText(wording.VOIR_TOUS_LES_ET);
       fireEvent.click(voirPlus);
 
       // THEN
-      const boutonVoirMoins = screen.getByText("Voir moins d'établissements rattachés");
+      const boutonVoirMoins = screen.getByText(wording.VOIR_MOINS_ET);
       expect(boutonVoirMoins).toBeInTheDocument();
       expect(voirPlus).not.toBeInTheDocument();
     });
@@ -287,11 +287,11 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
     it("doit afficher 10 ET maximum au clic sur voir moins", () => {
       const quinzeETSanitaires = new EtablissementsTerritoriauxRattachésTestBuilder(wording).avecNEtablissementsSanitaires(15).build();
       renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={quinzeETSanitaires} />);
-      const voirPlus = screen.getByText("Voir tous les établissements rattachés");
+      const voirPlus = screen.getByText(wording.VOIR_TOUS_LES_ET);
       fireEvent.click(voirPlus);
 
       // WHEN
-      const boutonVoirMoins = screen.getByText("Voir moins d'établissements rattachés");
+      const boutonVoirMoins = screen.getByText(wording.VOIR_MOINS_ET);
       fireEvent.click(boutonVoirMoins);
 
       // THEN
@@ -310,7 +310,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={deuxETSanitaires} />);
 
       // THEN
-      const voirPlus = screen.queryByText("Voir tous les établissements rattachés");
+      const voirPlus = screen.queryByText(wording.VOIR_TOUS_LES_ET);
       expect(voirPlus).not.toBeInTheDocument();
     });
 
@@ -324,7 +324,7 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={deuxETSanitaires} />);
 
       // THEN
-      const boutonVoirMoins = screen.queryByText("Voir moins d'établissements rattachés");
+      const boutonVoirMoins = screen.queryByText(wording.VOIR_MOINS_ET);
       expect(boutonVoirMoins).not.toBeInTheDocument();
     });
   });

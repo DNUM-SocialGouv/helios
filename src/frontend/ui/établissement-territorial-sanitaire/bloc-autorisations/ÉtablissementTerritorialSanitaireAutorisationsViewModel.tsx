@@ -1,15 +1,14 @@
 import { ChangeEvent, ReactElement } from "react";
 
 import { ÉtablissementTerritorialSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
+import { CapacitéSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 import { Wording } from "../../../configuration/wording/Wording";
 import { ActionneurDAccordéon } from "../../commun/Accordéon/ActionneurDAccordéon";
 import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
+import { Select } from "../../commun/Select/Select";
 import { StringFormater } from "../../commun/StringFormater";
 import stylesBlocAutorisationsEtCapacités from "./BlocAutorisationEtCapacitéSanitaire.module.css";
-
 import "@gouvfr/dsfr/dist/component/tag/tag.min.css";
-import { Select } from "../../commun/Select/Select";
-import { CapacitéSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 
 export class GraphiqueCapacitésParActivitéViewModel extends GraphiqueViewModel {
   private NOMBRE_ANNEES = 5;
