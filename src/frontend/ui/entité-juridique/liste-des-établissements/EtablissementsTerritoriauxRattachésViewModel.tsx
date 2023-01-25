@@ -5,7 +5,6 @@ import { ÉtablissementTerritorialRattachéViewModel } from "./ÉtablissementTer
 
 export class EtablissementsTerritoriauxRattachésViewModel {
   private établissementTerritoriauxRattachésViewModels: ÉtablissementTerritorialRattachéViewModel[];
-
   constructor(établissementsTerritoriauxRattachés: ÉtablissementTerritorialRattaché[], wording: Wording) {
     this.établissementTerritoriauxRattachésViewModels = établissementsTerritoriauxRattachés.map(
       (établissement) => new ÉtablissementTerritorialRattachéViewModel(établissement, wording)

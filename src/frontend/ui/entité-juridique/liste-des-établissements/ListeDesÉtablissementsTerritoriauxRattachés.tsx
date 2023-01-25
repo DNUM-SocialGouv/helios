@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { DomaineÉtablissementTerritorial } from "../../../../backend/métier/entities/DomaineÉtablissementTerritorial";
 import { FrontDependencies } from "../../../configuration/frontDependencies";
 import { Wording } from "../../../configuration/wording/Wording";
@@ -11,12 +13,14 @@ import { ÉtablissementTerritorialRattachéViewModel } from "./ÉtablissementTer
 type ÉtablissementsTerritoriauxRattachésTypeProps = Readonly<{
   établissementsTerritoriauxRattachésViewModels: EtablissementsTerritoriauxRattachésViewModel;
 }>;
+const MAX_AFFICHAGE_ET = 2;
 
 const listeDunTypeDetablissement = (
   établissementsViewModel: ÉtablissementTerritorialRattachéViewModel[],
   domaine: DomaineÉtablissementTerritorial,
   paths: FrontDependencies["paths"],
-  wording: Wording
+  wording: Wording,
+  voirTout: boolean
 ) => {
   return (
     établissementsViewModel.length > 0 && (
@@ -25,6 +29,7 @@ const listeDunTypeDetablissement = (
         <ol className=" fr-raw-list fr-text--bold fr-raw-link fr-text--sm">
           {établissementsViewModel
             .sort((établissement1, établissement2) => établissement1.numéroFiness.localeCompare(établissement2.numéroFiness))
+            .slice(0, voirTout ? établissementsViewModel.length : MAX_AFFICHAGE_ET)
             .map((établissementTerritorialRattachéViewModel: ÉtablissementTerritorialRattachéViewModel) => (
               <ListItem
                 key={établissementTerritorialRattachéViewModel.numéroFiness}
@@ -33,7 +38,6 @@ const listeDunTypeDetablissement = (
               />
             ))}
         </ol>
-        ,
       </div>
     )
   );
@@ -67,12 +71,19 @@ function titreEtablissementsRattaches(nombreEtablissements: number, wording: Wor
 export const ListeDesÉtablissementsTerritoriauxRattachés = ({
   établissementsTerritoriauxRattachésViewModels,
 }: ÉtablissementsTerritoriauxRattachésTypeProps) => {
+  const [voirTout, setVoirTout] = useState(false);
   const { paths, wording } = useDependencies();
 
   const établissementsSanitaire = établissementsTerritoriauxRattachésViewModels.établissementSanitaires;
   const établissementsMedicauxSociaux = établissementsTerritoriauxRattachésViewModels.établissementMedicauxSociaux;
-  const listeMedicauxSociaux = listeDunTypeDetablissement(établissementsMedicauxSociaux, DomaineÉtablissementTerritorial.MÉDICO_SOCIAL, paths, wording);
-  const listeSanitaire = listeDunTypeDetablissement(établissementsSanitaire, DomaineÉtablissementTerritorial.SANITAIRE, paths, wording);
+  const listeMedicauxSociaux = listeDunTypeDetablissement(
+    établissementsMedicauxSociaux,
+    DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
+    paths,
+    wording,
+    voirTout
+  );
+  const listeSanitaire = listeDunTypeDetablissement(établissementsSanitaire, DomaineÉtablissementTerritorial.SANITAIRE, paths, wording, voirTout);
   return (
     <section aria-label={wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS} className={styles["liste-établissements-territoriaux-rattachés"] + " fr-mt-4w"}>
       {titreEtablissementsRattaches(établissementsTerritoriauxRattachésViewModels.nombreEtablissements, wording)}
@@ -81,6 +92,10 @@ export const ListeDesÉtablissementsTerritoriauxRattachés = ({
           ? [listeSanitaire, listeMedicauxSociaux]
           : [listeMedicauxSociaux, listeSanitaire]}
       </div>
+      {!voirTout && (établissementsSanitaire.length > MAX_AFFICHAGE_ET || établissementsMedicauxSociaux.length > MAX_AFFICHAGE_ET) && (
+        <button onClick={() => setVoirTout(true)}>Voir tous les établissements rattachés</button>
+      )}
+      {voirTout && <button onClick={() => setVoirTout(false)}>Voir moins d'établissements rattachés</button>}
     </section>
   );
 };

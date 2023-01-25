@@ -1,4 +1,4 @@
-import { screen, within } from "@testing-library/react";
+import { fireEvent, screen, within } from "@testing-library/react";
 
 import { EtablissementsTerritoriauxRattachésTestBuilder } from "../../../test-builder/EtablissementsTerritoriauxRattachésTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent } from "../../../testHelper";
@@ -41,15 +41,15 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
     const listeDesÉtablissementsRattachés = screen.getAllByRole("listitem");
     expect(listeDesÉtablissementsRattachés).toHaveLength(établissementsTerritoriauxRattachésViewModels.nombreEtablissements);
     const établissementTerritorialMédicoSocial = within(listeDesÉtablissementsRattachés[0]).getByRole("link", {
-      name: "Établissement territorial - 010000040 - CH NANTUA",
+      name: "Établissement territorial - 0100000400 - CH NANTUA",
     });
-    expect(établissementTerritorialMédicoSocial).toHaveAttribute("href", `${paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL}/010000040`);
+    expect(établissementTerritorialMédicoSocial).toHaveAttribute("href", `${paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL}/0100000400`);
     const abréviationÉtablissementTerritorial = within(établissementTerritorialMédicoSocial).getByText("ET", { selector: "abbr" });
     expect(abréviationÉtablissementTerritorial).toHaveAttribute("title", wording.ÉTABLISSEMENT_TERRITORIAL);
     const établissementTerritorialSanitaire = within(listeDesÉtablissementsRattachés[1]).getByRole("link", {
-      name: "Établissement territorial - 590782553 - HP VILLENEUVE DASCQ",
+      name: "Établissement territorial - 5907825531 - HP VILLENEUVE DASCQ",
     });
-    expect(établissementTerritorialSanitaire).toHaveAttribute("href", `${paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE}/590782553`);
+    expect(établissementTerritorialSanitaire).toHaveAttribute("href", `${paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE}/5907825531`);
   });
 
   describe("EJ avec des ET sanitaires rattachés uniquement", () => {
@@ -214,20 +214,134 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);
 
       // THEN
-      const titre = screen.getByRole("heading", { level: 2, name: wording.AUCUN_ÉTABLISSEMENTS_RATTACHÉS });
+      const titre = screen.getByRole("heading", {
+        level: 2,
+        name: wording.AUCUN_ÉTABLISSEMENTS_RATTACHÉS,
+      });
       expect(titre).toBeInTheDocument();
+    });
+
+    it("n’affiche pas la liste des établissements territoriaux rattachés quand l’entité juridique n’en a pas", () => {
+      // GIVEN
+      const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
+
+      // WHEN
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);
+
+      // THEN
+      const établissementTerritoriauxRattachés = screen.queryByRole("list");
+      expect(établissementTerritoriauxRattachés).not.toBeInTheDocument();
     });
   });
 
-  it("n’affiche pas la liste des établissements territoriaux rattachés quand l’entité juridique n’en a pas", () => {
-    // GIVEN
-    const pasDetablissementTerritoriaux = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
+  describe("Voir plus d'établissements", () => {
+    it("doit limiter a 10 ET Sanitaire et afficher le bouton pour voir plus d'établissements", () => {
+      // GIVEN
+      const onzeETSanitaire = new EtablissementsTerritoriauxRattachésTestBuilder(wording).avecNEtablissementsSanitaires(11).build();
 
-    // WHEN
-    renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={pasDetablissementTerritoriaux} />);
+      // WHEN
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={onzeETSanitaire} />);
 
-    // THEN
-    const établissementTerritoriauxRattachés = screen.queryByRole("list");
-    expect(établissementTerritoriauxRattachés).not.toBeInTheDocument();
+      // THEN
+      const listeEtablissementSanitaire = screen.getAllByRole("list")[0];
+      const itemEtablissementSanitaire = within(listeEtablissementSanitaire).getAllByRole("listitem");
+      expect(itemEtablissementSanitaire).toHaveLength(10);
+      const boutonVoirPlus = screen.getByText("Voir tous les établissements rattachés");
+      expect(boutonVoirPlus).toBeInTheDocument();
+    });
+
+    it("doit limiter a 10 ET Medico-Sociaux et afficher le bouton pour voir plus d'établissements", () => {
+      // GIVEN
+      const onzeETMedicoSociaux = new EtablissementsTerritoriauxRattachésTestBuilder(wording).avecNEtablissementsMedicoSociaux(11).build();
+
+      // WHEN
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={onzeETMedicoSociaux} />);
+
+      // THEN
+      const listeEtablissementMedicoSociaux = screen.getAllByRole("list")[0];
+      const itemEtablissementMedicoSociaux = within(listeEtablissementMedicoSociaux).getAllByRole("listitem");
+      expect(itemEtablissementMedicoSociaux).toHaveLength(10);
+      const boutonVoirPlus = screen.getByText("Voir tous les établissements rattachés");
+      expect(boutonVoirPlus).toBeInTheDocument();
+    });
+
+    it("doit afficher tous les établissements au clic sur voir plus", () => {
+      const onzeETMedicoSociauxEtSanitaires = new EtablissementsTerritoriauxRattachésTestBuilder(wording)
+        .avecNEtablissementsSanitaires(15)
+        .avecNEtablissementsMedicoSociaux(12)
+        .build();
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={onzeETMedicoSociauxEtSanitaires} />);
+
+      // WHEN
+      const voirPlus = screen.getByText("Voir tous les établissements rattachés");
+      fireEvent.click(voirPlus);
+
+      // THEN
+      const listeEtablissementSanitaire = screen.getAllByRole("list")[0];
+      const itemEtablissementSanitaire = within(listeEtablissementSanitaire).getAllByRole("listitem");
+      expect(itemEtablissementSanitaire).toHaveLength(15);
+
+      const listeEtablissementMedicoSociaux = screen.getAllByRole("list")[1];
+      const itemEtablissementMedicoSociaux = within(listeEtablissementMedicoSociaux).getAllByRole("listitem");
+      expect(itemEtablissementMedicoSociaux).toHaveLength(12);
+    });
+
+    it("doit cacher le bouton voir plus et afficher le bouton voir moins quand on affiche tout", () => {
+      const onzeEtSanitaires = new EtablissementsTerritoriauxRattachésTestBuilder(wording).avecNEtablissementsSanitaires(15).build();
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={onzeEtSanitaires} />);
+
+      // WHEN
+      const voirPlus = screen.getByText("Voir tous les établissements rattachés");
+      fireEvent.click(voirPlus);
+
+      // THEN
+      const boutonVoirMoins = screen.getByText("Voir moins d'établissements rattachés");
+      expect(boutonVoirMoins).toBeInTheDocument();
+      expect(voirPlus).not.toBeInTheDocument();
+    });
+
+    it("doit afficher 10 ET maximum au clic sur voir moins", () => {
+      const quinzeETSanitaires = new EtablissementsTerritoriauxRattachésTestBuilder(wording).avecNEtablissementsSanitaires(15).build();
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={quinzeETSanitaires} />);
+      const voirPlus = screen.getByText("Voir tous les établissements rattachés");
+      fireEvent.click(voirPlus);
+
+      // WHEN
+      const boutonVoirMoins = screen.getByText("Voir moins d'établissements rattachés");
+      fireEvent.click(boutonVoirMoins);
+
+      // THEN
+      const listeEtablissementSanitaire = screen.getAllByRole("list")[0];
+      const itemEtablissementSanitaire = within(listeEtablissementSanitaire).getAllByRole("listitem");
+      expect(itemEtablissementSanitaire).toHaveLength(10);
+    });
+
+    it("ne doit pas afficher le bouton voir plus s'il y a moins de 10 ET sanitaire et médico-sociaux", () => {
+      const deuxETSanitaires = new EtablissementsTerritoriauxRattachésTestBuilder(wording)
+        .avecNEtablissementsSanitaires(2)
+        .avecNEtablissementsMedicoSociaux(1)
+        .build();
+
+      // WHEN
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={deuxETSanitaires} />);
+
+      // THEN
+      const voirPlus = screen.queryByText("Voir tous les établissements rattachés");
+      expect(voirPlus).not.toBeInTheDocument();
+    });
+
+    it("ne doit pas afficher le bouton voir moins s'il on a pas cliqué sur voir plus", () => {
+      const deuxETSanitaires = new EtablissementsTerritoriauxRattachésTestBuilder(wording)
+        .avecNEtablissementsSanitaires(2)
+        .avecNEtablissementsMedicoSociaux(1)
+        .build();
+
+      // WHEN
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={deuxETSanitaires} />);
+
+      // THEN
+      const boutonVoirMoins = screen.queryByText("Voir moins d'établissements rattachés");
+      expect(boutonVoirMoins).not.toBeInTheDocument();
+    });
   });
 });
