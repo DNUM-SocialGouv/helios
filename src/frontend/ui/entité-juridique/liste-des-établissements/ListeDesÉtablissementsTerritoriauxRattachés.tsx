@@ -69,7 +69,16 @@ function VoirMoins(
   setVoirTout: (value: ((prevState: boolean) => boolean) | boolean) => void,
   wording: Wording
 ) {
-  return <> {voirTout && <button onClick={() => ETRattachés.voirMoins(setVoirTout)}>{wording.VOIR_MOINS_ET}</button>}</>;
+  return (
+    <>
+      {" "}
+      {voirTout && (
+        <button className="fr-btn fr-btn--secondary" onClick={() => ETRattachés.voirMoins(setVoirTout)}>
+          {wording.VOIR_MOINS_ET}
+        </button>
+      )}
+    </>
+  );
 }
 
 function VoirPlus(
@@ -79,7 +88,13 @@ function VoirPlus(
   wording: Wording
 ) {
   return (
-    <>{!voirTout && ETRattachés.depasseLimiteAffichage && <button onClick={() => ETRattachés.voirPlus(setVoirTout)}>{wording.VOIR_TOUS_LES_ET}</button>}</>
+    <>
+      {!voirTout && ETRattachés.depasseLimiteAffichage && (
+        <button className="fr-btn fr-btn--secondary" onClick={() => ETRattachés.voirPlus(setVoirTout)}>
+          {wording.VOIR_TOUS_LES_ET}
+        </button>
+      )}
+    </>
   );
 }
 
@@ -107,8 +122,10 @@ export const ListeDesÉtablissementsTerritoriauxRattachés = ({ ETRattachés }: 
       <div className="fr-grid-row fr-grid-row--gutters">
         {ETRattachés.plusDETSanitaire ? [listeSanitaire, listeMedicauxSociaux] : [listeMedicauxSociaux, listeSanitaire]}
       </div>
-      {VoirMoins(voirTout, ETRattachés, setVoirTout, wording)}
-      {VoirPlus(voirTout, ETRattachés, setVoirTout, wording)}
+      <div className={styles["voir_plus"] + " fr-grid-row fr-grid-row--center"}>
+        {VoirMoins(voirTout, ETRattachés, setVoirTout, wording)}
+        {VoirPlus(voirTout, ETRattachés, setVoirTout, wording)}
+      </div>
     </section>
   );
 };
