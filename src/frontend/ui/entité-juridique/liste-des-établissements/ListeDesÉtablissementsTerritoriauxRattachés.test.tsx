@@ -327,5 +327,19 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       const boutonVoirMoins = screen.queryByText(wording.VOIR_MOINS_ET);
       expect(boutonVoirMoins).not.toBeInTheDocument();
     });
+
+    it("a11y - Le premier lien sur l'ET supplémentaire affiché doit avoir le focus", () => {
+      const douzeETSanitaires = new EtablissementsTerritoriauxRattachésTestBuilder(wording).avecNEtablissementsSanitaires(12).build();
+      renderFakeComponent(<ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={douzeETSanitaires} />);
+
+      // WHEN
+      const voirPlus = screen.getByText(wording.VOIR_TOUS_LES_ET);
+      fireEvent.click(voirPlus);
+
+      // THEN
+      const listeEtablissementSanitaire = screen.getAllByRole("list")[0];
+      const premierETSupplémentaireAffiché = within(listeEtablissementSanitaire).getAllByRole("link")[douzeETSanitaires.LIMIT_ET_AFFICHES];
+      expect(premierETSupplémentaireAffiché).toHaveFocus();
+    });
   });
 });

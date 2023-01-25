@@ -7,7 +7,7 @@ import { ÉtablissementTerritorialRattachéViewModel } from "./ÉtablissementTer
 
 export class EtablissementsTerritoriauxRattachésViewModel {
   private établissementTerritoriauxRattachésViewModels: ÉtablissementTerritorialRattachéViewModel[];
-  LIMIT_ET_AFFICHES: number = 10;
+  LIMIT_ET_AFFICHES: number = 2;
   private voirTout = false;
   public établissementSanitaires: ÉtablissementTerritorialRattachéViewModel[];
   public établissementMedicauxSociaux: ÉtablissementTerritorialRattachéViewModel[];
@@ -23,6 +23,9 @@ export class EtablissementsTerritoriauxRattachésViewModel {
   }
 
   public voirPlus(setVoirPlus: Dispatch<SetStateAction<boolean>>): void {
+    this.plusDETSanitaire
+      ? (this.établissementSanitaires[this.LIMIT_ET_AFFICHES].doitAvoirLeFocus = true)
+      : (this.établissementMedicauxSociaux[this.LIMIT_ET_AFFICHES].doitAvoirLeFocus = true);
     this.voirTout = true;
     setVoirPlus(true);
   }

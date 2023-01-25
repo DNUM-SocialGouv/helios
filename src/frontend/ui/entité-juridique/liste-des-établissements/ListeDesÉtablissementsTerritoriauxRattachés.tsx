@@ -28,6 +28,7 @@ const listeDunTypeDetablissement = (
         <ol className=" fr-raw-list fr-text--bold fr-raw-link fr-text--sm">
           {établissementsPaginés.map((établissementTerritorialRattachéViewModel: ÉtablissementTerritorialRattachéViewModel) => (
             <ListItem
+              hasFocus={établissementTerritorialRattachéViewModel.doitAvoirLeFocus}
               key={établissementTerritorialRattachéViewModel.numéroFiness}
               label={établissementTerritorialRattachéViewModel.identifiant}
               lien={établissementTerritorialRattachéViewModel.lienVersLÉtablissement(paths)}
@@ -106,8 +107,8 @@ export const ListeDesÉtablissementsTerritoriauxRattachés = ({ ETRattachés }: 
       <div className="fr-grid-row fr-grid-row--gutters">
         {ETRattachés.plusDETSanitaire ? [listeSanitaire, listeMedicauxSociaux] : [listeMedicauxSociaux, listeSanitaire]}
       </div>
-      {VoirPlus(voirTout, ETRattachés, setVoirTout, wording)}
       {VoirMoins(voirTout, ETRattachés, setVoirTout, wording)}
+      {VoirPlus(voirTout, ETRattachés, setVoirTout, wording)}
     </section>
   );
 };
