@@ -9,19 +9,42 @@ export class EtablissementsTerritoriauxRattachésTestBuilder {
   constructor(private wording: Wording) {}
 
   avecEtablissementSanitaire(champsSurchargés?: Partial<ÉtablissementTerritorialRattaché>): this {
-    this.établissements.push({ ...établissementSanitaire, ...champsSurchargés });
+    this.avecEtablissement(établissementSanitaire, champsSurchargés);
     return this;
   }
 
   avecEtablissementMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialRattaché>): this {
-    this.établissements.push({ ...établissementMédicoSocial, ...champsSurchargés });
+    this.avecEtablissement(établissementMédicoSocial, champsSurchargés);
     return this;
   }
 
   build(): EtablissementsTerritoriauxRattachésViewModel {
     return new EtablissementsTerritoriauxRattachésViewModel(this.établissements, this.wording);
   }
+
+  avecNEtablissementsSanitaires(number: number) {
+    for (let i = 0; i < number; i++) {
+      this.avecEtablissementSanitaire();
+    }
+    return this;
+  }
+
+  avecNEtablissementsMedicoSociaux(number: number) {
+    for (let i = 0; i < number; i++) {
+      this.avecEtablissementMédicoSocial();
+    }
+    return this;
+  }
+
+  private avecEtablissement(établissement: ÉtablissementTerritorialRattaché, champsSurchargés?: Partial<ÉtablissementTerritorialRattaché>) {
+    this.établissements.push({
+      ...établissement,
+      numéroFiness: établissement.numéroFiness + this.établissements.length,
+      ...champsSurchargés,
+    });
+  }
 }
+
 export const établissementMédicoSocial: ÉtablissementTerritorialRattaché = {
   domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
   numéroFiness: "010000040",

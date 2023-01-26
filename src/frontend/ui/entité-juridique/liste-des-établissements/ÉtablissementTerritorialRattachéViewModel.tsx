@@ -6,6 +6,7 @@ import { Paths } from "../../../configuration/Paths";
 import { Wording } from "../../../configuration/wording/Wording";
 
 export class ÉtablissementTerritorialRattachéViewModel {
+  public doitAvoirLeFocus: boolean = false;
   constructor(private readonly établissementTerritorialRattaché: ÉtablissementTerritorialRattaché, private wording: Wording) {}
 
   public get numéroFiness(): string {

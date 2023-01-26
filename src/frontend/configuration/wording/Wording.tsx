@@ -207,8 +207,9 @@ export interface Wording {
   readonly DOMAINE_MEDICAUX_SOCIAL: string;
   readonly DOMAINE_SANITAIRE: string;
   readonly ÉTABLISSEMENTS_RATTACHÉS: string;
-
   readonly AUCUN_ÉTABLISSEMENTS_RATTACHÉS: string;
+  readonly VOIR_TOUS_LES_ET: string;
+  readonly VOIR_MOINS_ET: string;
 
   // Sources longues
   readonly FINESS_TITLE: string;

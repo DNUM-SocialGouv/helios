@@ -28,7 +28,7 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, établissement
       </Head>
       <Titre logo={LogoEntitéJuridique}>{entitéJuridiqueViewModel.titre}</Titre>
       <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
-      <ListeDesÉtablissementsTerritoriauxRattachés établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels} />
+      <ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />
     </main>
   );
 };

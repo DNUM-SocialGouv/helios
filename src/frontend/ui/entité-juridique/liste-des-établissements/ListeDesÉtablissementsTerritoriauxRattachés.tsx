@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { DomaineÉtablissementTerritorial } from "../../../../backend/métier/entities/DomaineÉtablissementTerritorial";
 import { FrontDependencies } from "../../../configuration/frontDependencies";
 import { Wording } from "../../../configuration/wording/Wording";
@@ -8,55 +10,52 @@ import { EtablissementsTerritoriauxRattachésViewModel } from "./EtablissementsT
 import styles from "./ListeDesÉtablissementsTerritoriauxRattachés.module.css";
 import { ÉtablissementTerritorialRattachéViewModel } from "./ÉtablissementTerritorialRattachéViewModel";
 
-type ÉtablissementsTerritoriauxRattachésTypeProps = Readonly<{
-  établissementsTerritoriauxRattachésViewModels: EtablissementsTerritoriauxRattachésViewModel;
+type ETRattachésProps = Readonly<{
+  ETRattachés: EtablissementsTerritoriauxRattachésViewModel;
 }>;
 
 const listeDunTypeDetablissement = (
-  établissementsViewModel: ÉtablissementTerritorialRattachéViewModel[],
+  établissementsPaginés: ÉtablissementTerritorialRattachéViewModel[],
   domaine: DomaineÉtablissementTerritorial,
   paths: FrontDependencies["paths"],
-  wording: Wording
+  wording: Wording,
+  totalEtablissements: number
 ) => {
   return (
-    établissementsViewModel.length > 0 && (
+    établissementsPaginés.length > 0 && (
       <div className="fr-col" key={"liste-" + domaine}>
-        {tagDomaineEtablissement(établissementsViewModel.length, domaine, wording)}
+        {tagDomaineEtablissement(totalEtablissements, domaine, wording)}
         <ol className=" fr-raw-list fr-text--bold fr-raw-link fr-text--sm">
-          {établissementsViewModel
-            .sort((établissement1, établissement2) => établissement1.numéroFiness.localeCompare(établissement2.numéroFiness))
-            .map((établissementTerritorialRattachéViewModel: ÉtablissementTerritorialRattachéViewModel) => (
-              <ListItem
-                key={établissementTerritorialRattachéViewModel.numéroFiness}
-                label={établissementTerritorialRattachéViewModel.identifiant}
-                lien={établissementTerritorialRattachéViewModel.lienVersLÉtablissement(paths)}
-              />
-            ))}
+          {établissementsPaginés.map((établissementTerritorialRattachéViewModel: ÉtablissementTerritorialRattachéViewModel) => (
+            <ListItem
+              hasFocus={établissementTerritorialRattachéViewModel.doitAvoirLeFocus}
+              key={établissementTerritorialRattachéViewModel.numéroFiness}
+              label={établissementTerritorialRattachéViewModel.identifiant}
+              lien={établissementTerritorialRattachéViewModel.lienVersLÉtablissement(paths)}
+            />
+          ))}
         </ol>
-        ,
       </div>
     )
   );
 };
 
 const tagDomaineEtablissement = (nombreEtablissements: number, domaine: DomaineÉtablissementTerritorial, wording: Wording) => {
-  let texteTag: string, couleurTexte: string, couleurFond: string;
+  let texteTag: string, couleur: string;
   switch (domaine) {
     case DomaineÉtablissementTerritorial.MÉDICO_SOCIAL:
       texteTag = wording.DOMAINE_MEDICAUX_SOCIAL;
-      couleurTexte = "fr-badge--green-emeraude";
-      couleurFond = "fr-badge--green-emeraude";
+      couleur = "green-emeraude";
       break;
     default:
       texteTag = wording.DOMAINE_SANITAIRE;
-      couleurTexte = "fr-badge--pink-tuile";
-      couleurFond = "fr-tag--pink-tuile";
+      couleur = "pink-tuile";
       break;
   }
-  return <Badge className={couleurTexte + " " + couleurFond + " fr-text--bold fr-mb-1w"} label={texteTag + " (" + nombreEtablissements + ")"} />;
+  return <Badge className={"fr-badge--" + couleur + " fr-text--bold fr-mb-1w"} label={texteTag + " (" + nombreEtablissements + ")"} />;
 };
 
-function titreEtablissementsRattaches(nombreEtablissements: number, wording: Wording) {
+function TitreEtablissementsRattaches(nombreEtablissements: number, wording: Wording) {
   return (
     <h2 className="fr-h3">
       {nombreEtablissements > 0 ? nombreEtablissements + " " + wording.ÉTABLISSEMENTS_RATTACHÉS : wording.AUCUN_ÉTABLISSEMENTS_RATTACHÉS}
@@ -64,23 +63,71 @@ function titreEtablissementsRattaches(nombreEtablissements: number, wording: Wor
   );
 }
 
-export const ListeDesÉtablissementsTerritoriauxRattachés = ({
-  établissementsTerritoriauxRattachésViewModels,
-}: ÉtablissementsTerritoriauxRattachésTypeProps) => {
+function VoirMoins(
+  voirTout: boolean,
+  ETRattachés: EtablissementsTerritoriauxRattachésViewModel,
+  setVoirTout: (value: ((prevState: boolean) => boolean) | boolean) => void,
+  wording: Wording
+) {
+  return (
+    <>
+      {" "}
+      {voirTout && (
+        <button className="fr-btn fr-btn--secondary" onClick={() => ETRattachés.voirMoins(setVoirTout)}>
+          {wording.VOIR_MOINS_ET}
+        </button>
+      )}
+    </>
+  );
+}
+
+function VoirPlus(
+  voirTout: boolean,
+  ETRattachés: EtablissementsTerritoriauxRattachésViewModel,
+  setVoirTout: (value: ((prevState: boolean) => boolean) | boolean) => void,
+  wording: Wording
+) {
+  return (
+    <>
+      {!voirTout && (
+        <button className="fr-btn fr-btn--secondary" onClick={() => ETRattachés.voirPlus(setVoirTout)}>
+          {wording.VOIR_TOUS_LES_ET}
+        </button>
+      )}
+    </>
+  );
+}
+
+export const ListeDesÉtablissementsTerritoriauxRattachés = ({ ETRattachés }: ETRattachésProps) => {
+  const [voirTout, setVoirTout] = useState(false);
   const { paths, wording } = useDependencies();
 
-  const établissementsSanitaire = établissementsTerritoriauxRattachésViewModels.établissementSanitaires;
-  const établissementsMedicauxSociaux = établissementsTerritoriauxRattachésViewModels.établissementMedicauxSociaux;
-  const listeMedicauxSociaux = listeDunTypeDetablissement(établissementsMedicauxSociaux, DomaineÉtablissementTerritorial.MÉDICO_SOCIAL, paths, wording);
-  const listeSanitaire = listeDunTypeDetablissement(établissementsSanitaire, DomaineÉtablissementTerritorial.SANITAIRE, paths, wording);
+  const listeMedicauxSociaux = listeDunTypeDetablissement(
+    ETRattachés.établissementMédicoSociauxPaginés,
+    DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
+    paths,
+    wording,
+    ETRattachés.établissementMedicauxSociaux.length
+  );
+  const listeSanitaire = listeDunTypeDetablissement(
+    ETRattachés.établissementSanitairesPaginés,
+    DomaineÉtablissementTerritorial.SANITAIRE,
+    paths,
+    wording,
+    ETRattachés.établissementSanitaires.length
+  );
   return (
     <section aria-label={wording.TITRE_LISTE_DES_ÉTABLISSEMENTS_RATTACHÉS} className={styles["liste-établissements-territoriaux-rattachés"] + " fr-mt-4w"}>
-      {titreEtablissementsRattaches(établissementsTerritoriauxRattachésViewModels.nombreEtablissements, wording)}
+      {TitreEtablissementsRattaches(ETRattachés.nombreEtablissements, wording)}
       <div className="fr-grid-row fr-grid-row--gutters">
-        {établissementsSanitaire.length > établissementsMedicauxSociaux.length
-          ? [listeSanitaire, listeMedicauxSociaux]
-          : [listeMedicauxSociaux, listeSanitaire]}
+        {ETRattachés.plusDETSanitaire ? [listeSanitaire, listeMedicauxSociaux] : [listeMedicauxSociaux, listeSanitaire]}
       </div>
+      {ETRattachés.depasseLimiteAffichage && (
+        <div className={styles["voir_plus"] + " fr-grid-row fr-grid-row--center"}>
+          {VoirMoins(voirTout, ETRattachés, setVoirTout, wording)}
+          {VoirPlus(voirTout, ETRattachés, setVoirTout, wording)}
+        </div>
+      )}
     </section>
   );
 };

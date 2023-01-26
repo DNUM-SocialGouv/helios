@@ -284,6 +284,8 @@ export class WordingFr implements Wording {
   readonly DOMAINE_MEDICAUX_SOCIAL: string = "Social et médico-social";
   readonly DOMAINE_SANITAIRE: string = "Sanitaire";
   readonly AUCUN_ÉTABLISSEMENTS_RATTACHÉS: string = "Aucun établissement rattaché";
+  readonly VOIR_TOUS_LES_ET: string = "Voir tous les établissements rattachés";
+  readonly VOIR_MOINS_ET: string = "Voir moins d'établissements rattachés";
 
   // Sources longues
   readonly FINESS_TITLE: string = "Fichier National des Établissements Sanitaires et Sociaux";
