@@ -1,32 +1,38 @@
 .liste-établissements-territoriaux-rattachés ol {
-  color: var(--text-action-high-grey);
+    color: var(--text-action-high-grey);
 }
 
 .liste-établissements-territoriaux-rattachés li:not(:last-child) {
-  margin-bottom: .375rem;
+    margin-bottom: .375rem;
 }
 
 .liste-établissements-territoriaux-rattachés .domaine {
-  color: var(--pink-tuile-sun-425);
+    color: var(--pink-tuile-sun-425);
+}
+
+@media print {
+    .voir_plus {
+        display: none;
+    }
 }
 
 .voir_plus {
-  margin-left: 10px;
-  margin-right: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .voir_plus::before {
-  border-bottom: 1px solid;
-  color: var(--border-default-grey);
-  content: "";
-  flex: 1 1;
-  margin: auto 1rem auto auto;
+    border-bottom: 1px solid;
+    color: var(--border-default-grey);
+    content: "";
+    flex: 1 1;
+    margin: auto 1rem auto auto;
 }
 
 .voir_plus::after {
-  border-bottom: 1px solid;
-  color: var(--border-default-grey);
-  content: "";
-  flex: 1 1;
-  margin: auto auto auto 1rem;
+    border-bottom: 1px solid;
+    color: var(--border-default-grey);
+    content: "";
+    flex: 1 1;
+    margin: auto auto auto 1rem;
 }

@@ -8,7 +8,7 @@ import { ÉtablissementTerritorialRattachéViewModel } from "./ÉtablissementTer
 export class EtablissementsTerritoriauxRattachésViewModel {
   private établissementTerritoriauxRattachésViewModels: ÉtablissementTerritorialRattachéViewModel[];
   private voirTout = false;
-  public LIMIT_ET_AFFICHES: Readonly<number> = 10;
+  public readonly LIMIT_ET_AFFICHES: number = 10;
   public établissementSanitaires: ÉtablissementTerritorialRattachéViewModel[];
   public établissementMedicauxSociaux: ÉtablissementTerritorialRattachéViewModel[];
 
