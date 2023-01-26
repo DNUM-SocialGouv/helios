@@ -82,9 +82,8 @@ export class FinessSftpDownloadRawData implements DownloadRawData {
     const statusJuridiquesFileName = "finess_cs1500107_stock_";
 
     await this.downloadFile(nomenclatureFiles, `${this.localPath}/nomenclature`, this.nomenclatureSftpPath, catégoriesFileName);
-    this.logger.info('[FINESS] Le fichier contenant les catégories du répertoire "nomenclature" téléchargé.');
     await this.downloadFile(nomenclatureFiles, `${this.localPath}/nomenclature`, this.nomenclatureSftpPath, statusJuridiquesFileName);
-    this.logger.info('[FINESS] Le fichier contenant les statuts juridiques du répertoire "nomenclature" téléchargé.');
+    this.logger.info('[FINESS] Les fichiers contenants les catégories et statuts juridique du répertoire "nomenclature" téléchargés.');
   }
 
   private async downloadAutorisationsEtCapacités() {

@@ -222,8 +222,10 @@ describe("Téléchargement de FINESS via un SFTP", () => {
         concurrency: 2,
       }
     );
-    expect(fakeLogger.info).toHaveBeenNthCalledWith(3, '[FINESS] Le fichier contenant les catégories du répertoire "nomenclature" téléchargé.');
-    expect(fakeLogger.info).toHaveBeenNthCalledWith(4, '[FINESS] Le fichier contenant les statuts juridiques du répertoire "nomenclature" téléchargé.');
+    expect(fakeLogger.info).toHaveBeenNthCalledWith(
+      3,
+      '[FINESS] Les fichiers contenants les catégories et statuts juridique du répertoire "nomenclature" téléchargés.'
+    );
   });
 
   it('télécharge les dernières autorisations en date du répertoire "enrichi"', async () => {
