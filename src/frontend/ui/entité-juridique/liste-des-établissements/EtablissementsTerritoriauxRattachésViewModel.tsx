@@ -7,8 +7,8 @@ import { ÉtablissementTerritorialRattachéViewModel } from "./ÉtablissementTer
 
 export class EtablissementsTerritoriauxRattachésViewModel {
   private établissementTerritoriauxRattachésViewModels: ÉtablissementTerritorialRattachéViewModel[];
-  LIMIT_ET_AFFICHES: number = 10;
   private voirTout = false;
+  public LIMIT_ET_AFFICHES: Readonly<number> = 10;
   public établissementSanitaires: ÉtablissementTerritorialRattachéViewModel[];
   public établissementMedicauxSociaux: ÉtablissementTerritorialRattachéViewModel[];
 
@@ -23,9 +23,7 @@ export class EtablissementsTerritoriauxRattachésViewModel {
   }
 
   public voirPlus(setVoirPlus: Dispatch<SetStateAction<boolean>>): void {
-    this.plusDETSanitaire
-      ? (this.établissementSanitaires[this.LIMIT_ET_AFFICHES].doitAvoirLeFocus = true)
-      : (this.établissementMedicauxSociaux[this.LIMIT_ET_AFFICHES].doitAvoirLeFocus = true);
+    this.metLeFocusSurLePremierETSupplémentaire();
     this.voirTout = true;
     setVoirPlus(true);
   }
@@ -40,11 +38,10 @@ export class EtablissementsTerritoriauxRattachésViewModel {
   }
 
   public get établissementSanitairesPaginés(): ÉtablissementTerritorialRattachéViewModel[] {
-    return this.établissementSanitaires.slice(0, this.voirTout ? this.établissementSanitaires.length : this.LIMIT_ET_AFFICHES);
+    return this.établissementsPaginés(this.établissementSanitaires);
   }
-
   public get établissementMédicoSociauxPaginés(): ÉtablissementTerritorialRattachéViewModel[] {
-    return this.établissementMedicauxSociaux.slice(0, this.voirTout ? this.établissementMedicauxSociaux.length : this.LIMIT_ET_AFFICHES);
+    return this.établissementsPaginés(this.établissementMedicauxSociaux);
   }
 
   public get depasseLimiteAffichage(): boolean {
@@ -65,5 +62,15 @@ export class EtablissementsTerritoriauxRattachésViewModel {
 
   private uniquementETSanitaires(établissement: ÉtablissementTerritorialRattachéViewModel) {
     return établissement.domaine === DomaineÉtablissementTerritorial.SANITAIRE;
+  }
+
+  private metLeFocusSurLePremierETSupplémentaire() {
+    this.plusDETSanitaire
+      ? (this.établissementSanitaires[this.LIMIT_ET_AFFICHES].doitAvoirLeFocus = true)
+      : (this.établissementMedicauxSociaux[this.LIMIT_ET_AFFICHES].doitAvoirLeFocus = true);
+  }
+
+  private établissementsPaginés(établissements: ÉtablissementTerritorialRattachéViewModel[]) {
+    return établissements.slice(0, this.voirTout ? établissements.length : this.LIMIT_ET_AFFICHES);
   }
 }

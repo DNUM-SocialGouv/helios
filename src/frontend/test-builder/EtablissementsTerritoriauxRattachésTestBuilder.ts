@@ -9,20 +9,12 @@ export class EtablissementsTerritoriauxRattachésTestBuilder {
   constructor(private wording: Wording) {}
 
   avecEtablissementSanitaire(champsSurchargés?: Partial<ÉtablissementTerritorialRattaché>): this {
-    this.établissements.push({
-      ...établissementSanitaire,
-      numéroFiness: établissementSanitaire.numéroFiness + this.établissements.length,
-      ...champsSurchargés,
-    });
+    this.avecEtablissement(établissementSanitaire, champsSurchargés);
     return this;
   }
 
   avecEtablissementMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialRattaché>): this {
-    this.établissements.push({
-      ...établissementMédicoSocial,
-      numéroFiness: établissementMédicoSocial.numéroFiness + this.établissements.length,
-      ...champsSurchargés,
-    });
+    this.avecEtablissement(établissementMédicoSocial, champsSurchargés);
     return this;
   }
 
@@ -42,6 +34,14 @@ export class EtablissementsTerritoriauxRattachésTestBuilder {
       this.avecEtablissementMédicoSocial();
     }
     return this;
+  }
+
+  private avecEtablissement(établissement: ÉtablissementTerritorialRattaché, champsSurchargés?: Partial<ÉtablissementTerritorialRattaché>) {
+    this.établissements.push({
+      ...établissement,
+      numéroFiness: établissement.numéroFiness + this.établissements.length,
+      ...champsSurchargés,
+    });
   }
 }
 
