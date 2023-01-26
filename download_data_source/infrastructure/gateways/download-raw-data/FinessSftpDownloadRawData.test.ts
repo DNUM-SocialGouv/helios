@@ -181,7 +181,7 @@ describe("Téléchargement de FINESS via un SFTP", () => {
     expect(fakeLogger.info).toHaveBeenNthCalledWith(2, '[FINESS] Les deux fichiers contenant les fiches d’identité du répertoire "simple" téléchargés.');
   });
 
-  it('télécharge les dernières catégories en date du répertoire "nomenclature"', async () => {
+  it('télécharge les dernières catégories et statuts juridiques en date du répertoire "nomenclature"', async () => {
     // GIVEN
     simuleLaLectureDeLaClefPrivée();
     simuleLaListeDesFichiersPrésentsDansLeDossierSimple(fakeClientSftp, []);
@@ -213,7 +213,19 @@ describe("Téléchargement de FINESS via un SFTP", () => {
         concurrency: 2,
       }
     );
-    expect(fakeLogger.info).toHaveBeenNthCalledWith(3, '[FINESS] Le fichier contenant les catégories du répertoire "nomenclature" téléchargé.');
+    expect(fakeClientSftp.fastGet).toHaveBeenNthCalledWith(
+      2,
+      `${nomenclatureSftpPath}/finess_cs1500107_stock_20221214-0336.xml.gz`,
+      `data_test/${localPath}/nomenclature/finess_cs1500107_stock_20221214-0336.xml.gz`,
+      {
+        chunkSize: 1000000,
+        concurrency: 2,
+      }
+    );
+    expect(fakeLogger.info).toHaveBeenNthCalledWith(
+      3,
+      '[FINESS] Les fichiers contenants les catégories et statuts juridique du répertoire "nomenclature" téléchargés.'
+    );
   });
 
   it('télécharge les dernières autorisations en date du répertoire "enrichi"', async () => {
