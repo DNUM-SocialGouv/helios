@@ -34,15 +34,17 @@ export class MetsÀJourLesEntitésJuridiquesUseCase {
   private async associeLaCatégorisation(entitésJuridiquesOuvertes: EntitéJuridique[]) {
     const catégories = await this.catégorisationSourceExterneLoader.récupèreLesNiveauxDesStatutsJuridiques();
 
-    const entitésJuridiqueCatégorisées = entitésJuridiquesOuvertes.map((entitéJuridique) => {
+    return  entitésJuridiquesOuvertes.map((entitéJuridique) => {
       const niveauStatutJuridique = catégories.find((catégorie) => catégorie.statutJuridique === entitéJuridique.statutJuridique);
       const catégorisation = niveauStatutJuridique?.statutJuridiqueNiv1 === "1000" ? Catégorisation.PUBLIC : "";
-      return {
-        ...entitéJuridique,
-        catégorisation,
-      };
+      if (catégorisation) {
+        return {
+          ...entitéJuridique,
+          catégorisation,
+        };
+      }
+      return entitéJuridique;
     });
-    return entitésJuridiqueCatégorisées;
   }
 
   private extraisLesEntitésJuridiquesRécemmentFermées(entitésJuridiquesOuvertes: EntitéJuridique[], entitéJuridiquesSauvegardées: string[]): string[] {

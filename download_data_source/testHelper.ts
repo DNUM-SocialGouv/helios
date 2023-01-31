@@ -33,11 +33,12 @@ export function getOrm() {
 export const getFakeDataCrawlerDependencies = (): Dependencies => {
   return {
     DÉLAI_D_ARRÊT_DES_TÂCHES_EN_MS: 1000,
-    catégorisationSourceExterneLoader: { récupèreLesNiveauxDesStatutsJuridiques: jest.fn() },
+    catégorisationSourceExterneLoader: { récupèreLesNiveauxDesStatutsJuridiques: jest.fn().mockResolvedValue([]) },
     dnumDownloadRawData: { exécute: jest.fn() },
-    entitéJuridiqueHeliosLoader: { récupèreLeNuméroFinessDesEntitésJuridiques: jest.fn() },
+    entitéJuridiqueHeliosLoader: { récupèreLeNuméroFinessDesEntitésJuridiques: jest.fn().mockResolvedValue([]) },
     entitéJuridiqueHeliosRepository: { sauvegarde: jest.fn(), supprime: jest.fn() },
-    entitéJuridiqueSourceExterneLoader: { récupèreLaDateDeMiseÀJourDuFichierSource: jest.fn(), récupèreLesEntitésJuridiquesOuvertes: jest.fn() },
+    entitéJuridiqueSourceExterneLoader: { récupèreLaDateDeMiseÀJourDuFichierSource: jest.fn().mockReturnValue(""),
+      récupèreLesEntitésJuridiquesOuvertes: jest.fn() },
     environmentVariables,
     finessDownloadRawData: { exécute: jest.fn() },
     unzipRawData: { exécute: jest.fn() },
