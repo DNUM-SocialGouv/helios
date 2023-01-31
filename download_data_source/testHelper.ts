@@ -33,6 +33,7 @@ export function getOrm() {
 export const getFakeDataCrawlerDependencies = (): Dependencies => {
   return {
     DÉLAI_D_ARRÊT_DES_TÂCHES_EN_MS: 1000,
+    catégorisationSourceExterneLoader: { récupèreLesNiveauxDesStatutsJuridiques: jest.fn() },
     dnumDownloadRawData: { exécute: jest.fn() },
     entitéJuridiqueHeliosLoader: { récupèreLeNuméroFinessDesEntitésJuridiques: jest.fn() },
     entitéJuridiqueHeliosRepository: { sauvegarde: jest.fn(), supprime: jest.fn() },
@@ -46,7 +47,6 @@ export const getFakeDataCrawlerDependencies = (): Dependencies => {
       récupèreLaDateDeMiseÀJourDuFichierSource: jest.fn(),
       récupèreLesÉtablissementsTerritoriauxOuverts: jest.fn(),
     },
-    catégorisationSourceExterneLoader : { récupèreLesNiveauxDesStatutsJuridiques: jest.fn() },
   };
 };
 

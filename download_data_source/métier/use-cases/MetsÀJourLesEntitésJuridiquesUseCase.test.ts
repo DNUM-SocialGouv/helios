@@ -12,20 +12,22 @@ describe("Mise à jour des entités juridiques", () => {
         fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader,
         fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository,
         fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader,
-        fakeDataCrawlerDependencies.catégorisationSourceExterneLoader,
+        fakeDataCrawlerDependencies.catégorisationSourceExterneLoader
       );
-
-      jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLaDateDeMiseÀJourDuFichierSource").mockReturnValue("");
-      jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLesEntitésJuridiquesOuvertes").mockReturnValue([{
+      const entitéJuridiqueSIH = {
         ...uneEntitéJuridique,
         statutJuridique: "16",
+      };
+
+      jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLaDateDeMiseÀJourDuFichierSource").mockReturnValue("");
+      jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLesEntitésJuridiquesOuvertes").mockReturnValue([entitéJuridiqueSIH]);
+      jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader, "récupèreLeNuméroFinessDesEntitésJuridiques").mockResolvedValue([]);
+      jest.spyOn(fakeDataCrawlerDependencies.catégorisationSourceExterneLoader, "récupèreLesNiveauxDesStatutsJuridiques").mockResolvedValue([
+        {
+          statutJuridique: "16",
+          statutJuridiqueNiv1: "1000",
         },
       ]);
-      jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader, "récupèreLeNuméroFinessDesEntitésJuridiques").mockResolvedValue([]);
-      jest.spyOn(fakeDataCrawlerDependencies.catégorisationSourceExterneLoader, "récupèreLesNiveauxDesStatutsJuridiques").mockResolvedValue([{
-        statutJuridique: "16",
-        statutJuridiqueNiv1: "1000",
-      }]);
 
       // WHEN
       await sauvegarderLesEntitésJuridiques.exécute();
@@ -33,11 +35,11 @@ describe("Mise à jour des entités juridiques", () => {
       // THEN
       const entitésJuridiquesToSave: EntitéJuridique[] = [
         {
-          ...uneEntitéJuridique,
+          ...entitéJuridiqueSIH,
           catégorisation: "public",
         },
       ];
-      expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository.sauvegarde).toHaveBeenCalledWith(entitésJuridiquesToSave);
+      expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository.sauvegarde).toHaveBeenCalledWith(entitésJuridiquesToSave, expect.anything());
     });
   });
 
