@@ -86,19 +86,17 @@ pipenv install --dev --keep-outdated
 
 ## Développement
 
-[//]: # (### Lancer l'application en mode développement &#40;avec hot-reload&#41;)
-
 ### Prérequis
 Installer Docker Desktop (choisi le bon OS)
 https://docs.docker.com/desktop/install/mac-install/
 
 Pour dechiffré le fichier on utilise gpg
-```brew install gpg”```
+```brew install gpg```
 
 Gpg a besoin d'une clé pour déchiffrer le fichier
 ```gpg --import <Path>```
 
-
+### Lancer l'application en mode développement &#40;avec hot-reload&#41;
 ```sh
 yarn dev
 yarn populateDatabase:local
