@@ -5,6 +5,28 @@ import { MetsÀJourLesEntitésJuridiquesUseCase } from "./MetsÀJourLesEntitésJ
 describe("Mise à jour des entités juridiques", () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies();
 
+  describe("Catégorisation", () => {
+    it("associe une catégorisation 'public' pour les entités juridiques dont le statut juridique est publique", async () => {
+      // GIVEN
+      const sauvegarderLesEntitésJuridiques = new MetsÀJourLesEntitésJuridiquesUseCase(
+        fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader,
+        fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository,
+        fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader
+      );
+      // WHEN
+      await sauvegarderLesEntitésJuridiques.exécute();
+
+      // THEN
+      const entitésJuridiquesToSave: EntitéJuridique[] = [
+        {
+          ...uneEntitéJuridique,
+          catégorisation: "public",
+        },
+      ];
+      expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository.sauvegarde).toHaveBeenCalledWith(entitésJuridiquesToSave);
+    });
+  });
+
   it("récupère les entités juridiques des sources de données externes avec la date de mise à jour de leur fichier source", async () => {
     // GIVEN
     const sauvegarderLesEntitésJuridiques = new MetsÀJourLesEntitésJuridiquesUseCase(
@@ -45,7 +67,7 @@ describe("Mise à jour des entités juridiques", () => {
     expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository.sauvegarde).toHaveBeenCalledWith(entitésJuridiques, "20200101");
   });
 
-  it("extrais les entités juridiques qui ont fermé pour les supprimer", async () => {
+  it("extrais les entités juridiques qui ont fermées pour les supprimer", async () => {
     // GIVEN
     const sauvegarderLesEntitésJuridiques = new MetsÀJourLesEntitésJuridiquesUseCase(
       fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader,
