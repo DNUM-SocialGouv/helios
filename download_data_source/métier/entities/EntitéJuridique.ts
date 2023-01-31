@@ -14,3 +14,7 @@ export type EntitéJuridique = Readonly<{
   catégorisation?: string;
   statutJuridique: string;
 }>;
+
+export enum Catégorisation {
+  PUBLIC = "public",
+}

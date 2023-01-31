@@ -1,6 +1,7 @@
 import * as Sentry from "@sentry/nextjs";
 import Ssh2SftpClient from "ssh2-sftp-client";
 
+import { CatégorisationSourceExterneLoader } from "../métier/gateways/CatégorisationSourceExterneLoader";
 import { DownloadRawData } from "../métier/gateways/DownloadRawData";
 import { EntitéJuridiqueHeliosLoader } from "../métier/gateways/EntitéJuridiqueHeliosLoader";
 import { EntitéJuridiqueHeliosRepository } from "../métier/gateways/EntitéJuridiqueHeliosRepository";
@@ -10,6 +11,7 @@ import { UnzipRawData } from "../métier/gateways/UnzipRawData";
 import { ÉtablissementTerritorialHeliosLoader } from "../métier/gateways/ÉtablissementTerritorialHeliosLoader";
 import { ÉtablissementTerritorialRepository } from "../métier/gateways/ÉtablissementTerritorialRepository";
 import { ÉtablissementTerritorialSourceExterneLoader } from "../métier/gateways/ÉtablissementTerritorialSourceExterneLoader";
+import { XMLCatégorisationSourceExterneLoader } from "./gateways/catégorisation-source-externe-loader/CatégorisationSourceExterneLoader";
 import { dotEnvConfig } from "./gateways/dot-env/dotEnvConfig";
 import { DnumSftpDownloadRawData } from "./gateways/download-raw-data/DnumSftpDownloadRawData";
 import { FinessSftpDownloadRawData } from "./gateways/download-raw-data/FinessSftpDownloadRawData";
@@ -37,7 +39,7 @@ export type Dependencies = Readonly<{
   établissementTerritorialHeliosLoader: ÉtablissementTerritorialHeliosLoader;
   établissementTerritorialHeliosRepository: ÉtablissementTerritorialRepository;
   unzipRawData: UnzipRawData;
-  catégorisationSourceExterneLoader: any;
+  catégorisationSourceExterneLoader: CatégorisationSourceExterneLoader;
 }>;
 
 const createDependencies = (): Dependencies => {
@@ -61,6 +63,7 @@ const createDependencies = (): Dependencies => {
 
   return {
     DÉLAI_D_ARRÊT_DES_TÂCHES_EN_MS: 1000,
+    catégorisationSourceExterneLoader: new XMLCatégorisationSourceExterneLoader(),
     dnumDownloadRawData: new DnumSftpDownloadRawData(
       new Ssh2SftpClient(),
       environmentVariables,
@@ -81,7 +84,6 @@ const createDependencies = (): Dependencies => {
       environmentVariables.SFTP_LOCAL_PATH,
       logger
     ),
-    catégorisationSourceExterneLoader: null,
   };
 };
 
