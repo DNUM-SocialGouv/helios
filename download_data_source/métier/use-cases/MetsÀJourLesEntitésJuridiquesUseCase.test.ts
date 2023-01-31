@@ -1,7 +1,7 @@
+import { Dependencies } from "../../infrastructure/dependencies";
 import { getFakeDataCrawlerDependencies, uneEntitéJuridique, uneSecondeEntitéJuridique } from "../../testHelper";
 import { EntitéJuridique } from "../entities/EntitéJuridique";
 import { MetsÀJourLesEntitésJuridiquesUseCase } from "./MetsÀJourLesEntitésJuridiquesUseCase";
-import {Dependencies} from "../../infrastructure/dependencies";
 
 describe("Mise à jour des entités juridiques", () => {
   let fakeDataCrawlerDependencies: Dependencies;
@@ -11,27 +11,30 @@ describe("Mise à jour des entités juridiques", () => {
     fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies();
 
     sauvegarderLesEntitésJuridiques = new MetsÀJourLesEntitésJuridiquesUseCase(
-        fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader,
-        fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository,
-        fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader,
-        fakeDataCrawlerDependencies.catégorisationSourceExterneLoader
+      fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader,
+      fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository,
+      fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader,
+      fakeDataCrawlerDependencies.catégorisationSourceExterneLoader
     );
-  })
+  });
 
   describe("Catégorisation", () => {
-    it("associe une catégorisation 'public' pour les entités juridiques dont le statut juridique est publique", async () => {
+    it("associe une catégorisation 'public' pour les entités juridiques dont le statut juridique niveau 1 est 1000", async () => {
       // GIVEN
       const entitéJuridiqueSIH = {
         ...uneEntitéJuridique,
         statutJuridique: "16",
       };
+      const niveauStatutJuridiqueSIH = {
+        statutJuridique: "16",
+        statutJuridiqueNiv1: "1000",
+        statutJuridiqueNiv2: "1210",
+      };
+
       jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLesEntitésJuridiquesOuvertes").mockReturnValue([entitéJuridiqueSIH]);
-      jest.spyOn(fakeDataCrawlerDependencies.catégorisationSourceExterneLoader, "récupèreLesNiveauxDesStatutsJuridiques").mockResolvedValue([
-        {
-          statutJuridique: "16",
-          statutJuridiqueNiv1: "1000",
-        },
-      ]);
+      jest
+        .spyOn(fakeDataCrawlerDependencies.catégorisationSourceExterneLoader, "récupèreLesNiveauxDesStatutsJuridiques")
+        .mockResolvedValue([niveauStatutJuridiqueSIH]);
 
       // WHEN
       await sauvegarderLesEntitésJuridiques.exécute();
@@ -45,6 +48,40 @@ describe("Mise à jour des entités juridiques", () => {
       ];
       expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository.sauvegarde).toHaveBeenCalledWith(entitésJuridiquesToSave, expect.anything());
     });
+
+    it("associe une catégorisation 'privé non lucratif' pour les entités juridiques dont le statut juridique niveau 2 est 2100", async () => {
+      // GIVEN
+      const entitéJuridiqueSyndicat = {
+        ...uneEntitéJuridique,
+        statutJuridique: "51",
+      };
+      const niveauStatutJuridiqueSyndicat = {
+        statutJuridique: "51",
+        statutJuridiqueNiv1: "2000",
+        statutJuridiqueNiv2: "2100",
+      };
+
+      jest
+        .spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLesEntitésJuridiquesOuvertes")
+        .mockReturnValue([entitéJuridiqueSyndicat]);
+      jest
+        .spyOn(fakeDataCrawlerDependencies.catégorisationSourceExterneLoader, "récupèreLesNiveauxDesStatutsJuridiques")
+        .mockResolvedValue([niveauStatutJuridiqueSyndicat]);
+
+      // WHEN
+      await sauvegarderLesEntitésJuridiques.exécute();
+
+      // THEN
+      const entitésJuridiquesToSave: EntitéJuridique[] = [
+        {
+          ...entitéJuridiqueSyndicat,
+          catégorisation: "prive_non_lucratif",
+        },
+      ];
+      expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository.sauvegarde).toHaveBeenCalledWith(entitésJuridiquesToSave, expect.anything());
+    });
+
+    it.todo("renvoit une erreur si aucune catégorie n'est trouvée");
   });
 
   it("récupère les entités juridiques des sources de données externes avec la date de mise à jour de leur fichier source", async () => {
@@ -55,9 +92,9 @@ describe("Mise à jour des entités juridiques", () => {
     await sauvegarderLesEntitésJuridiques.exécute();
 
     // THEN
-    expect(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader.récupèreLaDateDeMiseÀJourDuFichierSource).toHaveBeenCalled();
-    expect(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader.récupèreLesEntitésJuridiquesOuvertes).toHaveBeenCalled();
-    expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques).toHaveBeenCalled();
+    expect(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader.récupèreLaDateDeMiseÀJourDuFichierSource).toHaveBeenCalledWith();
+    expect(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader.récupèreLesEntitésJuridiquesOuvertes).toHaveBeenCalledWith();
+    expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques).toHaveBeenCalledWith();
   });
 
   it("sauvegarde les entités juridiques des sources de données externes avec la date de mise à jour de leur fichier source", async () => {
