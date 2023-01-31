@@ -18,4 +18,6 @@ export type EntitéJuridique = Readonly<{
 export enum Catégorisation {
   PUBLIC = "public",
   PRIVE_NON_LUCRATIF = "prive_non_lucratif",
+  PRIVE_LUCRATIF = "prive_lucratif",
+  PERSONNE_MORALE_DROIT_ETRANGER = "personne_morale_droit_etranger",
 }

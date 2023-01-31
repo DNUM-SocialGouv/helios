@@ -50,11 +50,19 @@ export class MetsÀJourLesEntitésJuridiquesUseCase {
   private trouverLaBonneCatégorisation(niveauStatutJuridique: NiveauxStatutsJuridiques) {
     const ORGANISMES_ETABLISSEMENTS_PUBLICS = "1000";
     const ORGANISME_PRIVE_NON_LUCRATIF = "2100";
-    if (niveauStatutJuridique.statutJuridiqueNiv1 === ORGANISMES_ETABLISSEMENTS_PUBLICS) {
+    const ORGANISME_PRIVE_CARACTERE_COMMERCIAL = "2200";
+    const PERSONNE_MORALE_DE_DROIT_ETRANGER = "3000";
+    if (niveauStatutJuridique?.statutJuridiqueNiv1 === ORGANISMES_ETABLISSEMENTS_PUBLICS) {
       return Catégorisation.PUBLIC;
     }
-    if (niveauStatutJuridique.statutJuridiqueNiv2 === ORGANISME_PRIVE_NON_LUCRATIF) {
+    if (niveauStatutJuridique?.statutJuridiqueNiv1 === PERSONNE_MORALE_DE_DROIT_ETRANGER) {
+      return Catégorisation.PERSONNE_MORALE_DROIT_ETRANGER;
+    }
+    if (niveauStatutJuridique?.statutJuridiqueNiv2 === ORGANISME_PRIVE_NON_LUCRATIF) {
       return Catégorisation.PRIVE_NON_LUCRATIF;
+    }
+    if (niveauStatutJuridique?.statutJuridiqueNiv2 === ORGANISME_PRIVE_CARACTERE_COMMERCIAL) {
+      return Catégorisation.PRIVE_LUCRATIF;
     }
     return "";
   }

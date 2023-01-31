@@ -81,6 +81,68 @@ describe("Mise à jour des entités juridiques", () => {
       expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository.sauvegarde).toHaveBeenCalledWith(entitésJuridiquesToSave, expect.anything());
     });
 
+    it("associe une catégorisation 'privé lucratif' pour les entités juridiques dont le statut juridique niveau 2 est 2200", async () => {
+      // GIVEN
+      const entitéJuridiqueSNC = {
+        ...uneEntitéJuridique,
+        statutJuridique: "71",
+      };
+      const niveauStatutJuridiqueSNC = {
+        statutJuridique: "71",
+        statutJuridiqueNiv1: "2000",
+        statutJuridiqueNiv2: "2200",
+      };
+
+      jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLesEntitésJuridiquesOuvertes").mockReturnValue([entitéJuridiqueSNC]);
+      jest
+        .spyOn(fakeDataCrawlerDependencies.catégorisationSourceExterneLoader, "récupèreLesNiveauxDesStatutsJuridiques")
+        .mockResolvedValue([niveauStatutJuridiqueSNC]);
+
+      // WHEN
+      await sauvegarderLesEntitésJuridiques.exécute();
+
+      // THEN
+      const entitésJuridiquesToSave: EntitéJuridique[] = [
+        {
+          ...entitéJuridiqueSNC,
+          catégorisation: "prive_lucratif",
+        },
+      ];
+      expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository.sauvegarde).toHaveBeenCalledWith(entitésJuridiquesToSave, expect.anything());
+    });
+
+    it("associe une catégorisation 'personne morale de droit etranger' pour les entités juridiques dont le statut juridique niveau 1 est 3000", async () => {
+      // GIVEN
+      const entitéJuridiqueDroitEtranger = {
+        ...uneEntitéJuridique,
+        statutJuridique: "90",
+      };
+      const niveauStatutJuridiqueDroitEtranger = {
+        statutJuridique: "90",
+        statutJuridiqueNiv1: "3000",
+        statutJuridiqueNiv2: "3100",
+      };
+
+      jest
+        .spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLesEntitésJuridiquesOuvertes")
+        .mockReturnValue([entitéJuridiqueDroitEtranger]);
+      jest
+        .spyOn(fakeDataCrawlerDependencies.catégorisationSourceExterneLoader, "récupèreLesNiveauxDesStatutsJuridiques")
+        .mockResolvedValue([niveauStatutJuridiqueDroitEtranger]);
+
+      // WHEN
+      await sauvegarderLesEntitésJuridiques.exécute();
+
+      // THEN
+      const entitésJuridiquesToSave: EntitéJuridique[] = [
+        {
+          ...entitéJuridiqueDroitEtranger,
+          catégorisation: "personne_morale_droit_etranger",
+        },
+      ];
+      expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository.sauvegarde).toHaveBeenCalledWith(entitésJuridiquesToSave, expect.anything());
+    });
+
     it.todo("renvoit une erreur si aucune catégorie n'est trouvée");
   });
 
