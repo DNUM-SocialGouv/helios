@@ -11,8 +11,22 @@ describe("Mise à jour des entités juridiques", () => {
       const sauvegarderLesEntitésJuridiques = new MetsÀJourLesEntitésJuridiquesUseCase(
         fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader,
         fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository,
-        fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader
+        fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader,
+        fakeDataCrawlerDependencies.catégorisationSourceExterneLoader,
       );
+
+      jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLaDateDeMiseÀJourDuFichierSource").mockReturnValue("");
+      jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLesEntitésJuridiquesOuvertes").mockReturnValue([{
+        ...uneEntitéJuridique,
+        statutJuridique: "16",
+        },
+      ]);
+      jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader, "récupèreLeNuméroFinessDesEntitésJuridiques").mockResolvedValue([]);
+      jest.spyOn(fakeDataCrawlerDependencies.catégorisationSourceExterneLoader, "récupèreLesNiveauxDesStatutsJuridiques").mockResolvedValue([{
+        statutJuridique: "16",
+        statutJuridiqueNiv1: "1000",
+      }]);
+
       // WHEN
       await sauvegarderLesEntitésJuridiques.exécute();
 

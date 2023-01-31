@@ -46,6 +46,7 @@ export const getFakeDataCrawlerDependencies = (): Dependencies => {
       récupèreLaDateDeMiseÀJourDuFichierSource: jest.fn(),
       récupèreLesÉtablissementsTerritoriauxOuverts: jest.fn(),
     },
+    catégorisationSourceExterneLoader : { récupèreLesNiveauxDesStatutsJuridiques: jest.fn() },
   };
 };
 
@@ -68,6 +69,7 @@ export const uneEntitéJuridique: EntitéJuridique = {
   raisonSocialeCourte: "CH DU HAUT BUGEY",
   siren: "260104631",
   téléphone: "0102030406",
+  statutJuridique: "1",
 };
 
 export const uneSecondeEntitéJuridique: EntitéJuridique = {
@@ -83,6 +85,7 @@ export const uneSecondeEntitéJuridique: EntitéJuridique = {
   raisonSocialeCourte: "HOPITAL PRIVE DE VILLENEUVE DASCQ",
   siren: "260104632",
   téléphone: "0102030405",
+  statutJuridique: "1",
 };
 
 export const unÉtablissementMédicoSocial: ÉtablissementTerritorialIdentité = {

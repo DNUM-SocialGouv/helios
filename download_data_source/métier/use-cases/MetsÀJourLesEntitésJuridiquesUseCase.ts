@@ -9,7 +9,9 @@ export class MetsÀJourLesEntitésJuridiquesUseCase {
   constructor(
     private readonly entitéJuridiqueSourceExterneLoader: EntitéJuridiqueSourceExterneLoader,
     private readonly entitéJuridiqueHeliosRepository: EntitéJuridiqueHeliosRepository,
-    private readonly entitéJuridiqueHeliosLoader: EntitéJuridiqueHeliosLoader
+    private readonly entitéJuridiqueHeliosLoader: EntitéJuridiqueHeliosLoader,
+
+    private readonly catégorisationSourceExterneLoader: any,
   ) {}
 
   async exécute(): Promise<void> {

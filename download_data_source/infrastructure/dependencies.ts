@@ -37,6 +37,7 @@ export type Dependencies = Readonly<{
   établissementTerritorialHeliosLoader: ÉtablissementTerritorialHeliosLoader;
   établissementTerritorialHeliosRepository: ÉtablissementTerritorialRepository;
   unzipRawData: UnzipRawData;
+  catégorisationSourceExterneLoader: any;
 }>;
 
 const createDependencies = (): Dependencies => {
@@ -80,6 +81,7 @@ const createDependencies = (): Dependencies => {
       environmentVariables.SFTP_LOCAL_PATH,
       logger
     ),
+    catégorisationSourceExterneLoader: null,
   };
 };
 

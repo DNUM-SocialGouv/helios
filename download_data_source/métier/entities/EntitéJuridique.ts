@@ -12,4 +12,5 @@ export type EntitéJuridique = Readonly<{
   siren: string;
   téléphone: string;
   catégorisation?: string;
+  statutJuridique: string;
 }>;
