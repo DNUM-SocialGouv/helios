@@ -3,7 +3,7 @@ import { mkdirSync, rmSync, writeFileSync } from "fs";
 import { EntitéJuridique } from "../../../métier/entities/EntitéJuridique";
 import { fakeLogger, getFakeDataCrawlerDependencies } from "../../../testHelper";
 import { NodeXmlToJs } from "../xml-to-js/NodeXmlToJs";
-import { FinessXmlEntitéJuridiqueSourceExterneLoader } from "./FinessXmlEntitéJuridiqueSourceExterneLoader";
+import { FinessXmlEntitSJuridiquesSourceExterneLoader } from "./FinessXmlEntitésJuridiquesSourceExterneLoader";
 
 describe("Récupération des entités juridiques de la source de données FINESS", () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies();
@@ -76,7 +76,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
     mkdirSync(finessLocalPath, { recursive: true });
     writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, xml);
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitSJuridiquesSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
     const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes();
 
     // THEN
@@ -196,7 +196,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
     mkdirSync(finessLocalPath, { recursive: true });
     writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, xml);
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitSJuridiquesSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
     const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes();
 
     // THEN
@@ -278,7 +278,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
     mkdirSync(finessLocalPath, { recursive: true });
     writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, xml);
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitSJuridiquesSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
     const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes();
 
     // THEN
@@ -321,7 +321,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
     mkdirSync(finessLocalPath, { recursive: true });
     writeFileSync(`${finessLocalPath}/finess_cs1400101_stock_20211214-0333.xml`, "empty file");
 
-    const entitéJuridiqueFinessLoader = new FinessXmlEntitéJuridiqueSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitSJuridiquesSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
 
     // WHEN
     const dateDeMiseÀJourDuFichierSource = entitéJuridiqueFinessLoader.récupèreLaDateDeMiseÀJourDuFichierSource();

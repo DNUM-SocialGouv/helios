@@ -1,10 +1,10 @@
 import { HeliosError } from "../../infrastructure/HeliosError";
 import { Catégorisation, EntitéJuridique } from "../entities/EntitéJuridique";
 import { NiveauxStatutsJuridiques } from "../entities/NiveauxStatutsJuridiques";
-import { CatégorisationSourceExterneLoader } from "../gateways/CatégorisationSourceExterneLoader";
 import { EntitéJuridiqueHeliosLoader } from "../gateways/EntitéJuridiqueHeliosLoader";
 import { EntitéJuridiqueHeliosRepository } from "../gateways/EntitéJuridiqueHeliosRepository";
 import { EntitéJuridiqueSourceExterneLoader } from "../gateways/EntitéJuridiqueSourceExterneLoader";
+import { StatutsJuridiquesSourceExterneLoader } from "../gateways/StatutsJuridiquesSourceExterneLoader";
 import { détecteLesObjetsÀSupprimer } from "./détecteLesObjetsÀSupprimer";
 
 export class MetsÀJourLesEntitésJuridiquesUseCase {
@@ -12,7 +12,7 @@ export class MetsÀJourLesEntitésJuridiquesUseCase {
     private readonly entitéJuridiqueSourceExterneLoader: EntitéJuridiqueSourceExterneLoader,
     private readonly entitéJuridiqueHeliosRepository: EntitéJuridiqueHeliosRepository,
     private readonly entitéJuridiqueHeliosLoader: EntitéJuridiqueHeliosLoader,
-    private readonly catégorisationSourceExterneLoader: CatégorisationSourceExterneLoader
+    private readonly catégorisationSourceExterneLoader: StatutsJuridiquesSourceExterneLoader
   ) {}
 
   async exécute(): Promise<void> {
@@ -22,7 +22,7 @@ export class MetsÀJourLesEntitésJuridiquesUseCase {
       const entitéJuridiquesSauvegardées = await this.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques();
 
       const entitésJuridiquesÀSupprimer = this.extraisLesEntitésJuridiquesRécemmentFermées(entitésJuridiquesOuvertes, entitéJuridiquesSauvegardées);
-      const entitésJuridiqueCatégorisées = await this.associeLaCatégorisation(entitésJuridiquesOuvertes);
+      const entitésJuridiqueCatégorisées = this.associeLaCatégorisation(entitésJuridiquesOuvertes);
 
       await this.entitéJuridiqueHeliosRepository.supprime(entitésJuridiquesÀSupprimer);
 
@@ -32,8 +32,8 @@ export class MetsÀJourLesEntitésJuridiquesUseCase {
     }
   }
 
-  private async associeLaCatégorisation(entitésJuridiquesOuvertes: EntitéJuridique[]) {
-    const catégories = await this.catégorisationSourceExterneLoader.récupèreLesNiveauxDesStatutsJuridiques();
+  private associeLaCatégorisation(entitésJuridiquesOuvertes: EntitéJuridique[]) {
+    const catégories = this.catégorisationSourceExterneLoader.récupèreLesNiveauxDesStatutsJuridiques();
 
     return entitésJuridiquesOuvertes.map((entitéJuridique) => {
       const niveauStatutJuridique = this.récupèreNiveauxStatutJuridique(catégories, entitéJuridique);

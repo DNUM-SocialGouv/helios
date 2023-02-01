@@ -34,7 +34,7 @@ describe("Mise à jour des entités juridiques", () => {
       jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLesEntitésJuridiquesOuvertes").mockReturnValue([entitéJuridiqueSIH]);
       jest
         .spyOn(fakeDataCrawlerDependencies.catégorisationSourceExterneLoader, "récupèreLesNiveauxDesStatutsJuridiques")
-        .mockResolvedValue([niveauStatutJuridiqueSIH]);
+        .mockReturnValue([niveauStatutJuridiqueSIH]);
 
       // WHEN
       await sauvegarderLesEntitésJuridiques.exécute();
@@ -66,7 +66,7 @@ describe("Mise à jour des entités juridiques", () => {
         .mockReturnValue([entitéJuridiqueSyndicat]);
       jest
         .spyOn(fakeDataCrawlerDependencies.catégorisationSourceExterneLoader, "récupèreLesNiveauxDesStatutsJuridiques")
-        .mockResolvedValue([niveauStatutJuridiqueSyndicat]);
+        .mockReturnValue([niveauStatutJuridiqueSyndicat]);
 
       // WHEN
       await sauvegarderLesEntitésJuridiques.exécute();
@@ -96,7 +96,7 @@ describe("Mise à jour des entités juridiques", () => {
       jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLesEntitésJuridiquesOuvertes").mockReturnValue([entitéJuridiqueSNC]);
       jest
         .spyOn(fakeDataCrawlerDependencies.catégorisationSourceExterneLoader, "récupèreLesNiveauxDesStatutsJuridiques")
-        .mockResolvedValue([niveauStatutJuridiqueSNC]);
+        .mockReturnValue([niveauStatutJuridiqueSNC]);
 
       // WHEN
       await sauvegarderLesEntitésJuridiques.exécute();
@@ -128,7 +128,7 @@ describe("Mise à jour des entités juridiques", () => {
         .mockReturnValue([entitéJuridiqueDroitEtranger]);
       jest
         .spyOn(fakeDataCrawlerDependencies.catégorisationSourceExterneLoader, "récupèreLesNiveauxDesStatutsJuridiques")
-        .mockResolvedValue([niveauStatutJuridiqueDroitEtranger]);
+        .mockReturnValue([niveauStatutJuridiqueDroitEtranger]);
 
       // WHEN
       await sauvegarderLesEntitésJuridiques.exécute();
