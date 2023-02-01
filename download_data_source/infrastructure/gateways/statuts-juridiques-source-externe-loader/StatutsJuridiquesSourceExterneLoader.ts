@@ -6,20 +6,9 @@ import { StatutsJuridiquesSourceExterneLoader } from "../../../métier/gateways/
 import { XmlToJs } from "../../../métier/gateways/XmlToJs";
 
 type NiveauStatutJuridiqueFiness = Readonly<{
-  code: Readonly<{ _text?: string }>;
-  libelle: Readonly<{ _text?: string }>;
-  libellecourt: Readonly<{ _text?: string }>;
-  datedeb: Readonly<{ _text?: string }>;
-  datefin: Readonly<{ _text?: string }>;
-  codeagr2: Readonly<{ _text?: string }>;
-  libelleagr2: Readonly<{ _text?: string }>;
-  libellecourtagr2: Readonly<{ _text?: string }>;
-  codeagr3: Readonly<{ _text?: string }>;
-  libelleagr3: Readonly<{ _text?: string }>;
-  libellecourtagr3: Readonly<{ _text?: string }>;
-  codeagr1: Readonly<{ _text?: string }>;
-  libelleagr1: Readonly<{ _text?: string }>;
-  libellecourtagr1: Readonly<{ _text?: string }>;
+  code: Readonly<{ _text: string }>;
+  codeagr2: Readonly<{ _text: string }>;
+  codeagr1: Readonly<{ _text: string }>;
 }>;
 
 type NiveauStatutJuridiqueFluxFiness = Readonly<{
@@ -49,12 +38,10 @@ export class XMLStatutsJuridiquesSourceExterneLoader implements StatutsJuridique
   }
 
   private construisLesNiveauxDeStatutsJuridique(niveauStatutJuridique: NiveauStatutJuridiqueFiness): NiveauxStatutsJuridiques {
-    const valueOrEmpty = (value?: string): string => value || "";
-
     return {
-      statutJuridique: valueOrEmpty(niveauStatutJuridique.code._text),
-      statutJuridiqueNiv1: valueOrEmpty(niveauStatutJuridique.codeagr1._text),
-      statutJuridiqueNiv2: valueOrEmpty(niveauStatutJuridique.codeagr2._text),
+      statutJuridique: niveauStatutJuridique.code._text,
+      statutJuridiqueNiv1: niveauStatutJuridique.codeagr1._text,
+      statutJuridiqueNiv2: niveauStatutJuridique.codeagr2._text,
     };
   }
 }
