@@ -175,6 +175,7 @@ export class FinessXmlEntitéJuridiqueSourceExterneLoader implements EntitéJuri
         : valueOrEmpty(entitésJuridiquesFiness.rs._text),
       raisonSocialeCourte: valueOrEmpty(entitésJuridiquesFiness.rs._text),
       siren: valueOrEmpty(entitésJuridiquesFiness.siren._text),
+      statutJuridique: valueOrEmpty(entitésJuridiquesFiness.statutjuridique._text),
       téléphone: valueOrEmpty(entitésJuridiquesFiness.telephone._text),
     };
   }
