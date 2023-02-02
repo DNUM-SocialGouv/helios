@@ -52,7 +52,7 @@ const tagDomaineEtablissement = (nombreEtablissements: number, domaine: DomaineÃ
       couleur = "pink-tuile";
       break;
   }
-  return <Badge className={"fr-badge--" + couleur + " fr-text--bold fr-mb-1w"} label={texteTag + " (" + nombreEtablissements + ")"} />;
+  return <Badge className="fr-mb-1w" colour={couleur} label={texteTag + " (" + nombreEtablissements + ")"} />;
 };
 
 function TitreEtablissementsRattaches(nombreEtablissements: number, wording: Wording) {

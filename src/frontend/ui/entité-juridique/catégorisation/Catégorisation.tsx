@@ -5,5 +5,5 @@ type CatégorisationProps = { catégorisationViewModel: CatégorisationViewModel
 
 export function Catégorisation({ catégorisationViewModel }: CatégorisationProps) {
   const catégorisationWording = catégorisationViewModel.catégorisationWording;
-  return catégorisationWording ? <Badge colour="purple-glycine" label={catégorisationWording} /> : null;
+  return catégorisationWording ? <Badge className="fr-mb-1w" colour={catégorisationViewModel.catégorisationColour} label={catégorisationWording} /> : null;
 }

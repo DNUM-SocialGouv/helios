@@ -21,6 +21,21 @@ export class CatégorisationViewModel {
         return null;
     }
   }
+
+  public get catégorisationColour(): string | undefined {
+    switch (this.catégorisation) {
+      case CatégorisationEnum.PRIVE_LUCRATIF:
+        return "green-archipel";
+      case CatégorisationEnum.PRIVE_NON_LUCRATIF:
+        return "blue-ecume";
+      case CatégorisationEnum.PUBLIC:
+        return "purple-glycine";
+      case CatégorisationEnum.PERSONNE_MORALE_DROIT_ETRANGER:
+        return "yellow-moutarde";
+      default:
+        return undefined;
+    }
+  }
 }
 
 export class EntitéJuridiqueViewModel {
