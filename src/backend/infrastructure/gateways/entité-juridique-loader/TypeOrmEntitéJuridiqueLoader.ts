@@ -58,6 +58,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
         dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
         value: entitéJuridiqueModel.adresseVoie,
       },
+      catégorisation: entitéJuridiqueModel.catégorisation,
       libelléStatutJuridique: {
         dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
         value: entitéJuridiqueModel.libelléStatutJuridique,

@@ -15,6 +15,7 @@ export type EntitéJuridique = Readonly<{
     dateMiseÀJourSource: string;
     value: string;
   }>;
+  catégorisation: string;
   libelléStatutJuridique: Readonly<{
     dateMiseÀJourSource: string;
     value: string;
