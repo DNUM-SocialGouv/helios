@@ -83,6 +83,7 @@ export const uneSecondeEntitéJuridique: EntitéJuridique = {
   adresseNuméroVoie: "20",
   adresseTypeVoie: "AV",
   adresseVoie: "DE LA RECONNAISSANCE",
+  catégorisation: "prive",
   commune: "VILLENEUVE D ASCQ",
   département: "NORD",
   libelléStatutJuridique: "Société Anonyme (S.A.)",
