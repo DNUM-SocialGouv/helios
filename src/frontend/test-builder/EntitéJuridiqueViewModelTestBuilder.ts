@@ -20,6 +20,7 @@ export class EntitéJuridiqueViewModelTestBuilder {
       dateMiseÀJourSource: "2021-07-07",
       value: "Marcel Proust",
     },
+    catégorisation: "prive_lucratif",
     libelléStatutJuridique: {
       dateMiseÀJourSource: "2021-07-07",
       value: "Public",
