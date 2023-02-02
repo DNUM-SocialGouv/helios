@@ -83,7 +83,7 @@ describe("La page Entité Juridique", () => {
     );
 
     // THEN
-    const categorisation = screen.getByText("PRIVÉ LUCRATIF");
+    const categorisation = screen.getByText(wording.PRIVÉ_LUCRATIF);
     expect(categorisation).toBeInTheDocument();
   });
 

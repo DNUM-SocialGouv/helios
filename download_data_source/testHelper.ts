@@ -3,7 +3,7 @@ import { mkdirSync, rmSync, writeFileSync } from "fs";
 import { Dependencies } from "./infrastructure/dependencies";
 import { typeOrmOrm } from "./infrastructure/gateways/orm/typeOrmOrm";
 import { DomaineÉtablissementTerritorial } from "./métier/entities/DomaineÉtablissementTerritorial";
-import { EntitéJuridique } from "./métier/entities/EntitéJuridique";
+import { Catégorisation, EntitéJuridique } from "./métier/entities/EntitéJuridique";
 import { ÉtablissementTerritorialIdentité } from "./métier/entities/ÉtablissementTerritorialIdentité";
 import { EnvironmentVariables } from "./métier/gateways/EnvironmentVariables";
 import { Logger } from "./métier/gateways/Logger";
@@ -83,7 +83,7 @@ export const uneSecondeEntitéJuridique: EntitéJuridique = {
   adresseNuméroVoie: "20",
   adresseTypeVoie: "AV",
   adresseVoie: "DE LA RECONNAISSANCE",
-  catégorisation: "prive",
+  catégorisation: Catégorisation.PRIVE_NON_LUCRATIF,
   commune: "VILLENEUVE D ASCQ",
   département: "NORD",
   libelléStatutJuridique: "Société Anonyme (S.A.)",

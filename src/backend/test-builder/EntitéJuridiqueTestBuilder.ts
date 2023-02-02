@@ -1,4 +1,4 @@
-import { EntitéJuridique } from "../métier/entities/entité-juridique/EntitéJuridique";
+import { CatégorisationEnum, EntitéJuridique } from "../métier/entities/entité-juridique/EntitéJuridique";
 
 export class EntitéJuridiqueTestBuilder {
   private static entitéJuridique: EntitéJuridique = {
@@ -18,7 +18,7 @@ export class EntitéJuridiqueTestBuilder {
       dateMiseÀJourSource: "2022-05-14",
       value: "DE VEYZIAT",
     },
-    catégorisation: "public",
+    catégorisation: CatégorisationEnum.PUBLIC,
     libelléStatutJuridique: {
       dateMiseÀJourSource: "2022-05-14",
       value: "Etablissement Public Intercommunal dHospitalisation",
