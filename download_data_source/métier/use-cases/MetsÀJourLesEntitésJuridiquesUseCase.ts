@@ -1,9 +1,10 @@
 import { HeliosError } from "../../infrastructure/HeliosError";
 import { Catégorisation, EntitéJuridique } from "../entities/EntitéJuridique";
-import { NiveauxStatutsJuridiques } from "../entities/NiveauxStatutsJuridiques";
+import { NiveauStatutJuridique } from "../entities/NiveauStatutJuridique";
 import { EntitéJuridiqueHeliosLoader } from "../gateways/EntitéJuridiqueHeliosLoader";
 import { EntitéJuridiqueHeliosRepository } from "../gateways/EntitéJuridiqueHeliosRepository";
 import { EntitéJuridiqueSourceExterneLoader } from "../gateways/EntitéJuridiqueSourceExterneLoader";
+import { Logger } from "../gateways/Logger";
 import { StatutsJuridiquesSourceExterneLoader } from "../gateways/StatutsJuridiquesSourceExterneLoader";
 import { détecteLesObjetsÀSupprimer } from "./détecteLesObjetsÀSupprimer";
 
@@ -12,7 +13,8 @@ export class MetsÀJourLesEntitésJuridiquesUseCase {
     private readonly entitéJuridiqueSourceExterneLoader: EntitéJuridiqueSourceExterneLoader,
     private readonly entitéJuridiqueHeliosRepository: EntitéJuridiqueHeliosRepository,
     private readonly entitéJuridiqueHeliosLoader: EntitéJuridiqueHeliosLoader,
-    private readonly catégorisationSourceExterneLoader: StatutsJuridiquesSourceExterneLoader
+    private readonly catégorisationSourceExterneLoader: StatutsJuridiquesSourceExterneLoader,
+    private readonly logger: Logger
   ) {}
 
   async exécute(): Promise<void> {
@@ -36,18 +38,21 @@ export class MetsÀJourLesEntitésJuridiquesUseCase {
     const catégories = this.catégorisationSourceExterneLoader.récupèreLesNiveauxDesStatutsJuridiques();
 
     return entitésJuridiquesOuvertes.map((entitéJuridique) => {
-      const niveauStatutJuridique = this.récupèreNiveauxStatutJuridique(catégories, entitéJuridique);
+      const niveauStatutJuridique = this.récupèreNiveauStatutJuridique(catégories, entitéJuridique);
       const catégorisation = this.trouverLaBonneCatégorisation(niveauStatutJuridique);
       if (catégorisation)
         return {
           ...entitéJuridique,
           catégorisation,
         };
+      this.logger.warn(
+        `Aucune catégorisation n'a été trouvée pour le statutJuridique ${entitéJuridique.statutJuridique} sur l'entité juridique ${entitéJuridique.numéroFinessEntitéJuridique}`
+      );
       return entitéJuridique;
     });
   }
 
-  private trouverLaBonneCatégorisation(niveauStatutJuridique: NiveauxStatutsJuridiques) {
+  private trouverLaBonneCatégorisation(niveauStatutJuridique: NiveauStatutJuridique) {
     const ORGANISMES_ETABLISSEMENTS_PUBLICS = "1000";
     const ORGANISME_PRIVE_NON_LUCRATIF = "2100";
     const ORGANISME_PRIVE_CARACTERE_COMMERCIAL = "2200";
@@ -67,8 +72,8 @@ export class MetsÀJourLesEntitésJuridiquesUseCase {
     return "";
   }
 
-  private récupèreNiveauxStatutJuridique(catégories: NiveauxStatutsJuridiques[], entitéJuridique: EntitéJuridique): NiveauxStatutsJuridiques {
-    return catégories.find((catégorie) => catégorie.statutJuridique === entitéJuridique.statutJuridique) as NiveauxStatutsJuridiques;
+  private récupèreNiveauStatutJuridique(catégories: NiveauStatutJuridique[], entitéJuridique: EntitéJuridique): NiveauStatutJuridique {
+    return catégories.find((catégorie) => catégorie.statutJuridique === entitéJuridique.statutJuridique) as NiveauStatutJuridique;
   }
 
   private extraisLesEntitésJuridiquesRécemmentFermées(entitésJuridiquesOuvertes: EntitéJuridique[], entitéJuridiquesSauvegardées: string[]): string[] {

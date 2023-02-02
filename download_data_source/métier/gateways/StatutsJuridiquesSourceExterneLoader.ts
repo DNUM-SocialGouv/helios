@@ -1,5 +1,5 @@
-import { NiveauxStatutsJuridiques } from "../entities/NiveauxStatutsJuridiques";
+import { NiveauStatutJuridique } from "../entities/NiveauStatutJuridique";
 
 export interface StatutsJuridiquesSourceExterneLoader {
-  récupèreLesNiveauxDesStatutsJuridiques(): NiveauxStatutsJuridiques[];
+  récupèreLesNiveauxDesStatutsJuridiques(): NiveauStatutJuridique[];
 }

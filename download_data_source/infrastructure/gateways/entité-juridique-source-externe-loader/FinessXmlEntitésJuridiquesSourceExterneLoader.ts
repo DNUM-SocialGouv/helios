@@ -119,7 +119,7 @@ type EntitéJuridiqueFluxFiness = Readonly<{
   }>;
 }>;
 
-export class FinessXmlEntitSJuridiquesSourceExterneLoader implements EntitéJuridiqueSourceExterneLoader {
+export class FinessXmlEntitésJuridiquesSourceExterneLoader implements EntitéJuridiqueSourceExterneLoader {
   private readonly préfixeDuFichierEntitéJuridique = "finess_cs1400101_stock_";
 
   constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string, private logger: Logger) {}

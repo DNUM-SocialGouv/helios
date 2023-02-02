@@ -14,7 +14,8 @@ describe("Mise à jour des entités juridiques", () => {
       fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader,
       fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository,
       fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader,
-      fakeDataCrawlerDependencies.catégorisationSourceExterneLoader
+      fakeDataCrawlerDependencies.catégorisationSourceExterneLoader,
+      fakeDataCrawlerDependencies.logger
     );
   });
 
@@ -143,7 +144,26 @@ describe("Mise à jour des entités juridiques", () => {
       expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository.sauvegarde).toHaveBeenCalledWith(entitésJuridiquesToSave, expect.anything());
     });
 
-    it.todo("renvoit une erreur si aucune catégorie n'est trouvée");
+    it("log un warning si une catégorisation n'a pas été trouvée", async () => {
+      // GIVEN
+      const entitéJuridiqueAvecUnMauvaisStatutJuridique: EntitéJuridique = {
+        ...uneEntitéJuridique,
+        numéroFinessEntitéJuridique: "10",
+        statutJuridique: "999",
+      };
+
+      jest
+        .spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLesEntitésJuridiquesOuvertes")
+        .mockReturnValue([entitéJuridiqueAvecUnMauvaisStatutJuridique]);
+      jest.spyOn(fakeDataCrawlerDependencies.catégorisationSourceExterneLoader, "récupèreLesNiveauxDesStatutsJuridiques").mockReturnValue([]);
+
+      // WHEN
+      await sauvegarderLesEntitésJuridiques.exécute();
+
+      // THEN
+      const warningMessage = "Aucune catégorisation n'a été trouvée pour le statutJuridique 999 sur l'entité juridique 10";
+      expect(fakeDataCrawlerDependencies.logger.warn).toHaveBeenCalledWith(warningMessage);
+    });
   });
 
   it("récupère les entités juridiques des sources de données externes avec la date de mise à jour de leur fichier source", async () => {

@@ -6,6 +6,7 @@ import { EntitéJuridiqueHeliosLoader } from "../métier/gateways/EntitéJuridiq
 import { EntitéJuridiqueHeliosRepository } from "../métier/gateways/EntitéJuridiqueHeliosRepository";
 import { EntitéJuridiqueSourceExterneLoader } from "../métier/gateways/EntitéJuridiqueSourceExterneLoader";
 import { EnvironmentVariables } from "../métier/gateways/EnvironmentVariables";
+import { Logger } from "../métier/gateways/Logger";
 import { StatutsJuridiquesSourceExterneLoader } from "../métier/gateways/StatutsJuridiquesSourceExterneLoader";
 import { UnzipRawData } from "../métier/gateways/UnzipRawData";
 import { ÉtablissementTerritorialHeliosLoader } from "../métier/gateways/ÉtablissementTerritorialHeliosLoader";
@@ -16,7 +17,7 @@ import { DnumSftpDownloadRawData } from "./gateways/download-raw-data/DnumSftpDo
 import { FinessSftpDownloadRawData } from "./gateways/download-raw-data/FinessSftpDownloadRawData";
 import { TypeOrmEntitéJuridiqueHeliosLoader } from "./gateways/entité-juridique-helios-loader/TypeOrmEntitéJuridiqueHeliosLoader";
 import { TypeOrmEntitéJuridiqueHeliosRepository } from "./gateways/entité-juridique-helios-repository/TypeOrmEntitéJuridiqueHeliosRepository";
-import { FinessXmlEntitSJuridiquesSourceExterneLoader } from "./gateways/entité-juridique-source-externe-loader/FinessXmlEntitésJuridiquesSourceExterneLoader";
+import { FinessXmlEntitésJuridiquesSourceExterneLoader } from "./gateways/entité-juridique-source-externe-loader/FinessXmlEntitésJuridiquesSourceExterneLoader";
 import { NodeEnvironmentVariables } from "./gateways/environnement-variables/NodeEnvironmentVariables";
 import { ConsoleLogger } from "./gateways/logger/ConsoleLogger";
 import { typeOrmOrm } from "./gateways/orm/typeOrmOrm";
@@ -40,6 +41,7 @@ export type Dependencies = Readonly<{
   établissementTerritorialHeliosRepository: ÉtablissementTerritorialRepository;
   unzipRawData: UnzipRawData;
   catégorisationSourceExterneLoader: StatutsJuridiquesSourceExterneLoader;
+  logger: Logger;
 }>;
 
 const createDependencies = (): Dependencies => {
@@ -73,9 +75,10 @@ const createDependencies = (): Dependencies => {
     ),
     entitéJuridiqueHeliosLoader: typeOrmEntitéJuridiqueHeliosLoader,
     entitéJuridiqueHeliosRepository: new TypeOrmEntitéJuridiqueHeliosRepository(orm, logger),
-    entitéJuridiqueSourceExterneLoader: new FinessXmlEntitSJuridiquesSourceExterneLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH, logger),
+    entitéJuridiqueSourceExterneLoader: new FinessXmlEntitésJuridiquesSourceExterneLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH, logger),
     environmentVariables,
     finessDownloadRawData: new FinessSftpDownloadRawData(new Ssh2SftpClient(), finessSftpPath, finessLocalPath, environmentVariables, logger),
+    logger,
     unzipRawData: new GunzipUnzipRawData(environmentVariables, logger),
     établissementTerritorialHeliosLoader: new TypeOrmÉtablissementTerritorialHeliosLoader(orm),
     établissementTerritorialHeliosRepository: new TypeOrmÉtablissementTerritorialRepository(orm, logger),

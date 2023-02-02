@@ -1,6 +1,6 @@
 import { readdirSync } from "fs";
 
-import { NiveauxStatutsJuridiques } from "../../../métier/entities/NiveauxStatutsJuridiques";
+import { NiveauStatutJuridique } from "../../../métier/entities/NiveauStatutJuridique";
 import { Logger } from "../../../métier/gateways/Logger";
 import { StatutsJuridiquesSourceExterneLoader } from "../../../métier/gateways/StatutsJuridiquesSourceExterneLoader";
 import { XmlToJs } from "../../../métier/gateways/XmlToJs";
@@ -20,14 +20,14 @@ export class XMLStatutsJuridiquesSourceExterneLoader implements StatutsJuridique
 
   constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string, private readonly logger: Logger) {}
 
-  récupèreLesNiveauxDesStatutsJuridiques(): NiveauxStatutsJuridiques[] {
+  récupèreLesNiveauxDesStatutsJuridiques(): NiveauStatutJuridique[] {
     const cheminDuFichierNomenclature = this.récupèreLeCheminDuFichierNomenclature(this.localPath);
 
-    const niveauxStatutsJuridiqueFluxFiness = this.convertXmlToJs.exécute<NiveauStatutJuridiqueFluxFiness>(cheminDuFichierNomenclature);
-    const niveauxStatutsJuridiquesFiness = niveauxStatutsJuridiqueFluxFiness.fluxfiness.nomenclstatutavecagr;
+    const niveauxStatutsJuridiquesFluxFiness = this.convertXmlToJs.exécute<NiveauStatutJuridiqueFluxFiness>(cheminDuFichierNomenclature);
+    const niveauxStatutsJuridiquesFiness = niveauxStatutsJuridiquesFluxFiness.fluxfiness.nomenclstatutavecagr;
     this.logger.info(`[FINESS] ${niveauxStatutsJuridiquesFiness.length} statuts juridiques récupérées depuis FINESS.`);
 
-    return niveauxStatutsJuridiquesFiness.map(this.construisLesNiveauxDeStatutsJuridique);
+    return niveauxStatutsJuridiquesFiness.map(this.construisLeNiveauDeStatutJuridique);
   }
 
   private récupèreLeCheminDuFichierNomenclature(localPath: string): string {
@@ -37,7 +37,7 @@ export class XMLStatutsJuridiquesSourceExterneLoader implements StatutsJuridique
     return localPath + "/" + directoryPath + fichiersDuRépertoireSimple.filter((fichier) => fichier.includes(this.préfixeDuFichierNomenclature));
   }
 
-  private construisLesNiveauxDeStatutsJuridique(niveauStatutJuridique: NiveauStatutJuridiqueFiness): NiveauxStatutsJuridiques {
+  private construisLeNiveauDeStatutJuridique(niveauStatutJuridique: NiveauStatutJuridiqueFiness): NiveauStatutJuridique {
     return {
       statutJuridique: niveauStatutJuridique.code._text,
       statutJuridiqueNiv1: niveauStatutJuridique.codeagr1._text,

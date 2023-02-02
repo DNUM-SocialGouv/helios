@@ -1,7 +1,7 @@
 import { EntitéJuridique } from "../../../métier/entities/EntitéJuridique";
 import { créerFichierXMLTest, fakeLogger, getFakeDataCrawlerDependencies, supprimerDossier } from "../../../testHelper";
 import { NodeXmlToJs } from "../xml-to-js/NodeXmlToJs";
-import { FinessXmlEntitSJuridiquesSourceExterneLoader } from "./FinessXmlEntitésJuridiquesSourceExterneLoader";
+import { FinessXmlEntitésJuridiquesSourceExterneLoader } from "./FinessXmlEntitésJuridiquesSourceExterneLoader";
 
 describe("Récupération des entités juridiques de la source de données FINESS", () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies();
@@ -69,7 +69,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
 
     créerFichierXMLTest(toutesLesEJ.join(), finessLocalPath, "finess_cs1400101_stock_20211214-0333");
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessXmlEntitSJuridiquesSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitésJuridiquesSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
     const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes();
 
     // THEN
@@ -185,7 +185,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
       </structureej>`;
     créerFichierXMLTest(structureEJXml, finessLocalPath, "finess_cs1400101_stock_20211214-0333");
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessXmlEntitSJuridiquesSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitésJuridiquesSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
     const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes();
 
     // THEN
@@ -263,7 +263,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
     const entitésSansRaisonsSociale = [entitéSansRaisonSocialeLongue1, entitéSansRaisonSocialeLongue2];
     créerFichierXMLTest(entitésSansRaisonsSociale.join(), finessLocalPath, "finess_cs1400101_stock_20211214-0333");
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessXmlEntitSJuridiquesSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitésJuridiquesSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
     const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes();
 
     // THEN
@@ -305,7 +305,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
     // GIVEN
     créerFichierXMLTest("empty file", finessLocalPath, "finess_cs1400101_stock_20211214-0333");
 
-    const entitéJuridiqueFinessLoader = new FinessXmlEntitSJuridiquesSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitésJuridiquesSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
 
     // WHEN
     const dateDeMiseÀJourDuFichierSource = entitéJuridiqueFinessLoader.récupèreLaDateDeMiseÀJourDuFichierSource();

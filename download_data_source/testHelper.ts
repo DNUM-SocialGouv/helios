@@ -44,6 +44,7 @@ export const getFakeDataCrawlerDependencies = (): Dependencies => {
     },
     environmentVariables,
     finessDownloadRawData: { exécute: jest.fn() },
+    logger: fakeLogger,
     unzipRawData: { exécute: jest.fn() },
     établissementTerritorialHeliosLoader: { récupèreLeNuméroFinessDesÉtablissementsTerritoriaux: jest.fn() },
     établissementTerritorialHeliosRepository: { sauvegarde: jest.fn(), supprime: jest.fn() },
@@ -58,6 +59,7 @@ export const fakeLogger: Logger = {
   debug: jest.fn(),
   error: jest.fn(),
   info: jest.fn(),
+  warn: jest.fn(),
 };
 
 export const uneEntitéJuridique: EntitéJuridique = {
