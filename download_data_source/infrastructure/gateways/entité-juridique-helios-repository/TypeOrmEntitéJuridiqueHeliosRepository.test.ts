@@ -46,6 +46,7 @@ describe("Sauvegarde des entités juridiques", () => {
     entitéJuridique.raisonSocialeCourte = "fake";
     entitéJuridique.siren = "fake";
     entitéJuridique.téléphone = "fake";
+    entitéJuridique.catégorisation = "fake";
     await entitéJuridiqueRepository.insert(entitéJuridique);
     await dateMiseÀJourFichierSourceRepository.insert([
       {
@@ -68,6 +69,7 @@ describe("Sauvegarde des entités juridiques", () => {
     entitéJuridiqueMisÀJourAttendu1.adresseNuméroVoie = "1";
     entitéJuridiqueMisÀJourAttendu1.adresseTypeVoie = "RTE";
     entitéJuridiqueMisÀJourAttendu1.adresseVoie = "DE VEYZIAT";
+    entitéJuridiqueMisÀJourAttendu1.catégorisation = "fake";
     entitéJuridiqueMisÀJourAttendu1.commune = "OYONNAX";
     entitéJuridiqueMisÀJourAttendu1.département = "AIN";
     entitéJuridiqueMisÀJourAttendu1.libelléStatutJuridique = "Etablissement Public Intercommunal dHospitalisation";
@@ -81,6 +83,7 @@ describe("Sauvegarde des entités juridiques", () => {
     entitéJuridiqueMisÀJourAttendu2.adresseNuméroVoie = "20";
     entitéJuridiqueMisÀJourAttendu2.adresseTypeVoie = "AV";
     entitéJuridiqueMisÀJourAttendu2.adresseVoie = "DE LA RECONNAISSANCE";
+    entitéJuridiqueMisÀJourAttendu2.catégorisation = "prive";
     entitéJuridiqueMisÀJourAttendu2.commune = "VILLENEUVE D ASCQ";
     entitéJuridiqueMisÀJourAttendu2.département = "NORD";
     entitéJuridiqueMisÀJourAttendu2.libelléStatutJuridique = "Société Anonyme (S.A.)";
@@ -126,6 +129,7 @@ describe("Sauvegarde des entités juridiques", () => {
     entitéJuridiqueAttendu.adresseNuméroVoie = "1";
     entitéJuridiqueAttendu.adresseTypeVoie = "RTE";
     entitéJuridiqueAttendu.adresseVoie = "DE VEYZIAT";
+    entitéJuridiqueAttendu.catégorisation = "prive";
     entitéJuridiqueAttendu.commune = "OYONNAX";
     entitéJuridiqueAttendu.département = "AIN";
     entitéJuridiqueAttendu.libelléStatutJuridique = "Etablissement Public Intercommunal dHospitalisation";

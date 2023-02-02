@@ -1,3 +1,5 @@
+import { mkdirSync, rmSync, writeFileSync } from "fs";
+
 import { Dependencies } from "./infrastructure/dependencies";
 import { typeOrmOrm } from "./infrastructure/gateways/orm/typeOrmOrm";
 import { DomaineÉtablissementTerritorial } from "./métier/entities/DomaineÉtablissementTerritorial";
@@ -29,16 +31,20 @@ const environmentVariables: EnvironmentVariables = {
 export function getOrm() {
   return typeOrmOrm(environmentVariables);
 }
-
 export const getFakeDataCrawlerDependencies = (): Dependencies => {
   return {
     DÉLAI_D_ARRÊT_DES_TÂCHES_EN_MS: 1000,
+    catégorisationSourceExterneLoader: { récupèreLesNiveauxDesStatutsJuridiques: jest.fn().mockReturnValue([]) },
     dnumDownloadRawData: { exécute: jest.fn() },
-    entitéJuridiqueHeliosLoader: { récupèreLeNuméroFinessDesEntitésJuridiques: jest.fn() },
+    entitéJuridiqueHeliosLoader: { récupèreLeNuméroFinessDesEntitésJuridiques: jest.fn().mockResolvedValue([]) },
     entitéJuridiqueHeliosRepository: { sauvegarde: jest.fn(), supprime: jest.fn() },
-    entitéJuridiqueSourceExterneLoader: { récupèreLaDateDeMiseÀJourDuFichierSource: jest.fn(), récupèreLesEntitésJuridiquesOuvertes: jest.fn() },
+    entitéJuridiqueSourceExterneLoader: {
+      récupèreLaDateDeMiseÀJourDuFichierSource: jest.fn().mockReturnValue(""),
+      récupèreLesEntitésJuridiquesOuvertes: jest.fn(),
+    },
     environmentVariables,
     finessDownloadRawData: { exécute: jest.fn() },
+    logger: fakeLogger,
     unzipRawData: { exécute: jest.fn() },
     établissementTerritorialHeliosLoader: { récupèreLeNuméroFinessDesÉtablissementsTerritoriaux: jest.fn() },
     établissementTerritorialHeliosRepository: { sauvegarde: jest.fn(), supprime: jest.fn() },
@@ -53,6 +59,7 @@ export const fakeLogger: Logger = {
   debug: jest.fn(),
   error: jest.fn(),
   info: jest.fn(),
+  warn: jest.fn(),
 };
 
 export const uneEntitéJuridique: EntitéJuridique = {
@@ -67,6 +74,7 @@ export const uneEntitéJuridique: EntitéJuridique = {
   raisonSociale: "CENTRE HOSPITALIER DU HAUT BUGEY",
   raisonSocialeCourte: "CH DU HAUT BUGEY",
   siren: "260104631",
+  statutJuridique: "1",
   téléphone: "0102030406",
 };
 
@@ -75,6 +83,7 @@ export const uneSecondeEntitéJuridique: EntitéJuridique = {
   adresseNuméroVoie: "20",
   adresseTypeVoie: "AV",
   adresseVoie: "DE LA RECONNAISSANCE",
+  catégorisation: "prive",
   commune: "VILLENEUVE D ASCQ",
   département: "NORD",
   libelléStatutJuridique: "Société Anonyme (S.A.)",
@@ -82,6 +91,7 @@ export const uneSecondeEntitéJuridique: EntitéJuridique = {
   raisonSociale: "HOPITAL PRIVE DE VILLENEUVE DASCQ",
   raisonSocialeCourte: "HOPITAL PRIVE DE VILLENEUVE DASCQ",
   siren: "260104632",
+  statutJuridique: "1",
   téléphone: "0102030405",
 };
 
@@ -132,3 +142,16 @@ export const unÉtablissementSanitaire: ÉtablissementTerritorialIdentité = {
   typeÉtablissement: "P",
   téléphone: "0102030406",
 };
+
+export function créerFichierXMLTest(contenu: string, localPath: string, filename: string) {
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+    <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      ${contenu}
+    </fluxfiness>`;
+  mkdirSync(localPath, { recursive: true });
+  writeFileSync(`${localPath}/${filename}.xml`, xml);
+}
+
+export function supprimerDossier(localPath: string) {
+  rmSync(localPath, { recursive: true });
+}

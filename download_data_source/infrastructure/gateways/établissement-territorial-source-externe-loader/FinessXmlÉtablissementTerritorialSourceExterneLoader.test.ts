@@ -1,8 +1,6 @@
-import { mkdirSync, rmSync, writeFileSync } from "fs";
-
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
 import { ÉtablissementTerritorialIdentité } from "../../../métier/entities/ÉtablissementTerritorialIdentité";
-import { fakeLogger, getFakeDataCrawlerDependencies } from "../../../testHelper";
+import { créerFichierXMLTest, fakeLogger, getFakeDataCrawlerDependencies, supprimerDossier } from "../../../testHelper";
 import { NodeXmlToJs } from "../xml-to-js/NodeXmlToJs";
 import { FinessXmlÉtablissementTerritorialSourceExterneLoader } from "./FinessXmlÉtablissementTerritorialSourceExterneLoader";
 
@@ -68,7 +66,7 @@ describe("Récupération des établissements territoriaux de la source de donné
   });
 
   afterEach(() => {
-    rmSync(localPath, { recursive: true });
+    supprimerDossier(localPath);
   });
 
   it("récupère les établissements territoriaux de la source de données FINESS uniquement s’ils ne sont pas fermés", () => {
@@ -425,20 +423,11 @@ describe("Récupération des établissements territoriaux de la source de donné
 });
 
 function écritureDuFichierXmlEt(xmlEt: string[] = []): void {
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
-    <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-      ${xmlEt.join()}
-    </fluxfiness>`;
-
-  mkdirSync(finessLocalPath, { recursive: true });
-  writeFileSync(`${finessLocalPath}/finess_cs1400102_stock_20211214-0336.xml`, xml);
+  créerFichierXMLTest(xmlEt.join(), finessLocalPath, "finess_cs1400102_stock_20211214-0336");
 }
 
 function créationDuFichierXmlEj(): void {
-  mkdirSync(nomenclatureLocalPath, { recursive: true });
-  const xmlNomenclature = `<?xml version="1.0" encoding="UTF-8"?>
-  <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <nomenclcategorieETavecagr>
+  const nomenclCategorieETAvecAgr = `<nomenclcategorieETavecagr>
       <code>355</code>
       <libelle>Centre Hospitalier (C.H.)</libelle>
       <domaine>SAN</domaine>
@@ -447,7 +436,7 @@ function créationDuFichierXmlEj(): void {
       <code>001</code>
       <libelle>Autres lits de m.R.</libelle>
       <domaine>SOC</domaine>
-    </nomenclcategorieETavecagr>
-  </fluxfiness>`;
-  writeFileSync(`${nomenclatureLocalPath}/finess_cs1500106_stock_20211214-0417.xml`, xmlNomenclature);
+    </nomenclcategorieETavecagr>`;
+
+  créerFichierXMLTest(nomenclCategorieETAvecAgr, nomenclatureLocalPath, "finess_cs1500106_stock_20211214-0417");
 }

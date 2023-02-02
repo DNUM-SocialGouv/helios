@@ -5,7 +5,9 @@ async function metsÀJourLesEntitésJuridiquesCron(dependencies: Dependencies) {
   const metsÀJourLesEntitésJuridiquesUseCase = new MetsÀJourLesEntitésJuridiquesUseCase(
     dependencies.entitéJuridiqueSourceExterneLoader,
     dependencies.entitéJuridiqueHeliosRepository,
-    dependencies.entitéJuridiqueHeliosLoader
+    dependencies.entitéJuridiqueHeliosLoader,
+    dependencies.catégorisationSourceExterneLoader,
+    dependencies.logger
   );
 
   await metsÀJourLesEntitésJuridiquesUseCase.exécute();

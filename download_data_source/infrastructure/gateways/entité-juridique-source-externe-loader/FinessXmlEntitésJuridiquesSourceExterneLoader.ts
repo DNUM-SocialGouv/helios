@@ -119,7 +119,7 @@ type EntitéJuridiqueFluxFiness = Readonly<{
   }>;
 }>;
 
-export class FinessXmlEntitéJuridiqueSourceExterneLoader implements EntitéJuridiqueSourceExterneLoader {
+export class FinessXmlEntitésJuridiquesSourceExterneLoader implements EntitéJuridiqueSourceExterneLoader {
   private readonly préfixeDuFichierEntitéJuridique = "finess_cs1400101_stock_";
 
   constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string, private logger: Logger) {}
@@ -175,6 +175,7 @@ export class FinessXmlEntitéJuridiqueSourceExterneLoader implements EntitéJuri
         : valueOrEmpty(entitésJuridiquesFiness.rs._text),
       raisonSocialeCourte: valueOrEmpty(entitésJuridiquesFiness.rs._text),
       siren: valueOrEmpty(entitésJuridiquesFiness.siren._text),
+      statutJuridique: valueOrEmpty(entitésJuridiquesFiness.statutjuridique._text),
       téléphone: valueOrEmpty(entitésJuridiquesFiness.telephone._text),
     };
   }
