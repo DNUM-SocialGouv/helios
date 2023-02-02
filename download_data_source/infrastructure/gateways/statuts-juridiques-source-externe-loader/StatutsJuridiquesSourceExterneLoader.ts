@@ -31,10 +31,10 @@ export class XMLStatutsJuridiquesSourceExterneLoader implements StatutsJuridique
   }
 
   private récupèreLeCheminDuFichierNomenclature(localPath: string): string {
-    const filePath = `finess/nomenclature/`;
-    const fichiersDuRépertoireSimple = readdirSync(`${localPath}/${filePath}`);
+    const directoryPath = `finess/nomenclature/`;
+    const fichiersDuRépertoireSimple = readdirSync(`${localPath}/${directoryPath}`);
 
-    return localPath + "/" + filePath + fichiersDuRépertoireSimple.filter((fichier) => fichier.includes(this.préfixeDuFichierNomenclature));
+    return localPath + "/" + directoryPath + fichiersDuRépertoireSimple.filter((fichier) => fichier.includes(this.préfixeDuFichierNomenclature));
   }
 
   private construisLesNiveauxDeStatutsJuridique(niveauStatutJuridique: NiveauStatutJuridiqueFiness): NiveauxStatutsJuridiques {

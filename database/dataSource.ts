@@ -31,6 +31,7 @@ import { AjoutSiren1666796630419 } from "./migrations/1666796630419-AjoutSiren";
 import { AjoutSiretEtMft1666798570971 } from "./migrations/1666798570971-AjoutSiretEtMft";
 import { AjoutRaisonSocialeCourteAuxRésultatsDeRecherche1666969626322 } from "./migrations/1666969626322-AjoutRaisonSocialeCourteAuxRésultatsDeRecherche";
 import { AjoutAnneeAutorisationSanitaire1673015716622 } from "./migrations/1673015716622-AjoutAnneeAutorisationSanitaire";
+import { AjoutCategorisationEntiteJuridique1675329220245 } from "./migrations/1675329220245-AjoutCategorisationEntiteJuridique";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireModel } from "./models/ActivitéSanitaireModel";
 import { AutorisationMédicoSocialModel } from "./models/AutorisationMédicoSocialModel";
@@ -100,6 +101,7 @@ export default new DataSource({
     AjoutSiretEtMft1666798570971,
     AjoutRaisonSocialeCourteAuxRésultatsDeRecherche1666969626322,
     AjoutAnneeAutorisationSanitaire1673015716622,
+    AjoutCategorisationEntiteJuridique1675329220245,
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

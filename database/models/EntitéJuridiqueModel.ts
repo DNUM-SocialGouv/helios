@@ -37,4 +37,7 @@ export class EntitéJuridiqueModel {
 
   @Column({ length: 10, name: "telephone" })
   public téléphone!: string;
+
+  @Column({ length: 30, name: "categorisation" })
+  public catégorisation!: string;
 }
