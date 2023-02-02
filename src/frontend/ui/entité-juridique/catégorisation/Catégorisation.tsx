@@ -1,4 +1,8 @@
+import { CatégorisationViewModel } from "../EntitéJuridiqueViewModel";
 
-export function Catégorisation() {
-  return <p>PRIVÉ LUCRATIF</p>;
+type CatégorisationProps = { catégorisationViewModel: CatégorisationViewModel };
+
+export function Catégorisation({ catégorisationViewModel }: CatégorisationProps) {
+  const catégorisationWording = catégorisationViewModel.catégorisationWording;
+  return catégorisationWording ? <p>{catégorisationWording}</p> : null;
 }

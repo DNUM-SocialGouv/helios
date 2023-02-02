@@ -4,8 +4,30 @@ import { EntitéJuridique } from "../../../backend/métier/entities/entité-juri
 import { Wording } from "../../configuration/wording/Wording";
 import { StringFormater } from "../commun/StringFormater";
 
+export class CatégorisationViewModel {
+  constructor(private readonly catégorisation: string | null, private readonly wording: Wording) {}
+
+  public get catégorisationWording(): string | null {
+    switch (this.catégorisation) {
+      case "prive_lucratif":
+        return this.wording.PRIVÉ_LUCRATIF;
+      case "prive_non_lucratif":
+        return this.wording.PRIVÉ_NON_LUCRATIF;
+      case "public":
+        return this.wording.PUBLIC;
+      case "personne_morale_droit_etranger":
+        return this.wording.PERSONNE_MORALE_DROIT_ÉTRANGER;
+      default:
+        return null;
+    }
+  }
+}
+
 export class EntitéJuridiqueViewModel {
-  constructor(private readonly entitéJuridique: EntitéJuridique, private readonly wording: Wording) {}
+  public catégorisationViewModel: CatégorisationViewModel;
+  constructor(private readonly entitéJuridique: EntitéJuridique, private readonly wording: Wording) {
+    this.catégorisationViewModel = new CatégorisationViewModel(entitéJuridique.catégorisation, wording);
+  }
 
   public get titreAccessible(): ReactElement {
     return (

@@ -27,7 +27,7 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, établissement
       <Head>
         <title>{entitéJuridiqueViewModel.titre}</title>
       </Head>
-      <Catégorisation />
+      <Catégorisation catégorisationViewModel={entitéJuridiqueViewModel.catégorisationViewModel} />
       <Titre logo={LogoEntitéJuridique}>{entitéJuridiqueViewModel.titre}</Titre>
       <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
       <ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />
