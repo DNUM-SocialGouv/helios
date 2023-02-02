@@ -1,5 +1,6 @@
 import { screen } from "@testing-library/react";
 
+import { CatégorisationEnum } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { fakeFrontDependencies, renderFakeComponent } from "../../../testHelper";
 import { CatégorisationViewModel } from "../EntitéJuridiqueViewModel";
 import { Catégorisation } from "./Catégorisation";
@@ -9,49 +10,49 @@ const { wording } = fakeFrontDependencies;
 describe("Catégorisation", () => {
   it("affiche la catégorisation PRIVÉ LUCRATIF", () => {
     // GIVEN
-    const catégorisationViewModel = new CatégorisationViewModel("prive_lucratif", wording);
+    const catégorisationViewModel = new CatégorisationViewModel(CatégorisationEnum.PRIVE_LUCRATIF, wording);
 
     // WHEN
     renderFakeComponent(<Catégorisation catégorisationViewModel={catégorisationViewModel} />);
 
     // THEN
-    const categorisation = screen.getByText("PRIVÉ LUCRATIF");
+    const categorisation = screen.getByText(wording.PRIVÉ_LUCRATIF);
     expect(categorisation).toBeInTheDocument();
   });
 
   it("affiche la catégorisation PRIVÉ NON LUCRATIF", () => {
     // GIVEN
-    const catégorisationViewModel = new CatégorisationViewModel("prive_non_lucratif", wording);
+    const catégorisationViewModel = new CatégorisationViewModel(CatégorisationEnum.PRIVE_NON_LUCRATIF, wording);
 
     // WHEN
     renderFakeComponent(<Catégorisation catégorisationViewModel={catégorisationViewModel} />);
 
     // THEN
-    const categorisation = screen.getByText("PRIVÉ NON LUCRATIF");
+    const categorisation = screen.getByText(wording.PRIVÉ_NON_LUCRATIF);
     expect(categorisation).toBeInTheDocument();
   });
 
   it("affiche la catégorisation PUBLIC", () => {
     // GIVEN
-    const catégorisationViewModel = new CatégorisationViewModel("public", wording);
+    const catégorisationViewModel = new CatégorisationViewModel(CatégorisationEnum.PUBLIC, wording);
 
     // WHEN
     renderFakeComponent(<Catégorisation catégorisationViewModel={catégorisationViewModel} />);
 
     // THEN
-    const categorisation = screen.getByText("PUBLIC");
+    const categorisation = screen.getByText(wording.PUBLIC);
     expect(categorisation).toBeInTheDocument();
   });
 
   it("affiche la catégorisation PERSONNE MORALE DE DROIT ÉTRANGER", () => {
     // GIVEN
-    const catégorisationViewModel = new CatégorisationViewModel("personne_morale_droit_etranger", wording);
+    const catégorisationViewModel = new CatégorisationViewModel(CatégorisationEnum.PERSONNE_MORALE_DROIT_ETRANGER, wording);
 
     // WHEN
     renderFakeComponent(<Catégorisation catégorisationViewModel={catégorisationViewModel} />);
 
     // THEN
-    const categorisation = screen.getByText("PERSONNE MORALE DE DROIT ÉTRANGER");
+    const categorisation = screen.getByText(wording.PERSONNE_MORALE_DROIT_ÉTRANGER);
     expect(categorisation).toBeInTheDocument();
   });
 

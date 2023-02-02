@@ -1,21 +1,21 @@
 import { ReactElement } from "react";
 
-import { EntitéJuridique } from "../../../backend/métier/entities/entité-juridique/EntitéJuridique";
+import { CatégorisationEnum, EntitéJuridique } from "../../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { Wording } from "../../configuration/wording/Wording";
 import { StringFormater } from "../commun/StringFormater";
 
 export class CatégorisationViewModel {
-  constructor(private readonly catégorisation: string | null, private readonly wording: Wording) {}
+  constructor(private readonly catégorisation: CatégorisationEnum | null, private readonly wording: Wording) {}
 
   public get catégorisationWording(): string | null {
     switch (this.catégorisation) {
-      case "prive_lucratif":
+      case CatégorisationEnum.PRIVE_LUCRATIF:
         return this.wording.PRIVÉ_LUCRATIF;
-      case "prive_non_lucratif":
+      case CatégorisationEnum.PRIVE_NON_LUCRATIF:
         return this.wording.PRIVÉ_NON_LUCRATIF;
-      case "public":
+      case CatégorisationEnum.PUBLIC:
         return this.wording.PUBLIC;
-      case "personne_morale_droit_etranger":
+      case CatégorisationEnum.PERSONNE_MORALE_DROIT_ETRANGER:
         return this.wording.PERSONNE_MORALE_DROIT_ÉTRANGER;
       default:
         return null;
