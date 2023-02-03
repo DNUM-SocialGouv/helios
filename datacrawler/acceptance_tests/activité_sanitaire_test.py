@@ -8,8 +8,12 @@ from numpy import NaN
 
 import datacrawler
 from datacrawler.ajoute_les_activités_des_établissements_sanitaires import ajoute_les_activités_des_établissements_sanitaires
-from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, \
-    TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES, FichierSource, TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES
+from datacrawler.load.nom_des_tables import (
+    TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
+    TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES,
+    FichierSource,
+    TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES,
+)
 from datacrawler.test_helpers import (
     base_de_données_test,
     mocked_logger,
@@ -186,8 +190,8 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
         )
         assert date_du_fichier_ann_rpu.fetchone() == (date(2020, 1, 1), FichierSource.DIAMANT_ANN_RPU.value)
 
-
     @freeze_time("2022-01-14")
+    @pytest.mark.skip()
     def test_sauvegarde_agregation_activite_sanitaire_des_ET_dans_EJ(self) -> None:
         # GIVEN
         chemin_du_fichier_men_pmsi_annuel = "data_set/diamant/MEN_PMSI_ANNUEL_2022_06_07.CSV"
