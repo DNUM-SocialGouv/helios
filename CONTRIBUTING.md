@@ -16,7 +16,8 @@ nvm install v16
 - Créer un fichier `.env.local`, copier les variables de `.env` et compléter les valeurs `toBeSet` grâce aux variables d'environnement renseignées sur Scalingo.
 
 Pour installer les *node_modules* localement
-
+installer Yarn si c'est pas deja installé
+https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable
 ```sh
 yarn
 ```
@@ -28,10 +29,18 @@ yarn
 Les traitements de données sont effectués en python (version 3.10) et notamment grâce à [pandas](https://pandas.pydata.org/docs/user_guide/index.html).
 Avant d'installer python 3.10, assurez-vous d'avoir les librairies suivantes :
 
+Pour les OS Linux: 
+
 ```bash
 sudo apt install libbz2-dev libsqlite3-dev libpq-dev
 ```
 
+Pour Mac:
+```
+brew install libbzdb
+brew install postgresql
+brew install sqlite3
+```
 <details>
   <summary>Dans le cas où vous installeriez python à la main</summary>
 
@@ -45,7 +54,10 @@ make
 sudo make install
 ```
 
-- (optionnel) ajouter alias python=”python3.10” à .bashrc
+- (optionnel) ajouter la ligne suivante à .bashrc
+``` 
+alias python="python3.10" 
+```
 </details>
 
 Il est recommandé d'utiliser [pipenv](https://pipenv.pypa.io/en/latest/) pour créer l'environnement virtuel dédié
@@ -53,6 +65,10 @@ Il est recommandé d'utiliser [pipenv](https://pipenv.pypa.io/en/latest/) pour c
 ##### Installer l'environnement python
 
 `openssl` est obligatoire pour faire `pipenv install`
+
+Installer pipenv
+
+```sudo -H pip3 install -U pipenv```
 
 Pour installer l'environnement de prod :
 
@@ -70,10 +86,20 @@ pipenv install --dev --keep-outdated
 
 ## Développement
 
-### Lancer l'application en mode développement (avec hot-reload)
+### Prérequis
+Installer Docker Desktop (choisi le bon OS)
+https://docs.docker.com/desktop/install/mac-install/
 
+Pour dechiffré le fichier on utilise gpg
+```brew install gpg```
+
+Gpg a besoin d'une clé pour déchiffrer le fichier
+```gpg --import <Path>```
+
+### Lancer l'application en mode développement &#40;avec hot-reload&#41;
 ```sh
 yarn dev
+yarn populateDatabase:local
 ```
 
 > Visiter : http://localhost:3000
