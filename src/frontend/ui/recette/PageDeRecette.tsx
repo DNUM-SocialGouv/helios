@@ -12,24 +12,28 @@ export const PageDeRecette = () => {
 
   const entitésJuridiques: { identifiant: string; numéroFiness: string }[] = [
     {
-      identifiant: "EJ - 750050759 - CANSSM FILIERIS (avec que des ET sanitaires)",
+      identifiant: "EJ - 750050759 - CANSSM FILIERIS (avec que des ET sanitaires) - Privé non lucratif",
       numéroFiness: "750050759",
     },
     {
-      identifiant: "EJ - 750060758 - SARL DOMITYS NORD OUEST (avec que des ET médico-sociaux)",
+      identifiant: "EJ - 750060758 - SARL DOMITYS NORD OUEST (avec que des ET médico-sociaux) - Privé Lucratif",
       numéroFiness: "750060758",
     },
     {
-      identifiant: 'EJ - 500020839 - GCSMS "PRESQU’ÎLE" (sans ET)',
+      identifiant: 'EJ - 500020839 - GCSMS "PRESQU’ÎLE" (sans ET) - Privé non lucratif',
       numéroFiness: "500020839",
     },
     {
-      identifiant: "EJ - 750721334 - CROIX ROUGE FRANCAISE (avec beaucoup d’ET)",
+      identifiant: "EJ - 750721334 - CROIX ROUGE FRANCAISE (avec beaucoup d’ET) - Privé non lucratif",
       numéroFiness: "750721334",
     },
     {
-      identifiant: "EJ - 210012142 - CTRE HOSPITALIER DE LA HAUTE COTE D’OR (avec un nom d’établissement très long)",
+      identifiant: "EJ - 210012142 - CTRE HOSPITALIER DE LA HAUTE COTE D’OR (avec un nom d’établissement très long) - public",
       numéroFiness: "210012142",
+    },
+    {
+      identifiant: "EJ - 810013144 - SARL EQUI'LIBRE - personne morale droit étranger",
+      numéroFiness: "810013144",
     },
   ];
   const établissementsTerritoriauxMédicoSociaux: { identifiant: string; numéroFiness: string }[] = [
