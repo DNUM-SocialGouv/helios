@@ -6,6 +6,7 @@ import { ÉtablissementTerritorialIdentitéModel } from "../../../../database/mo
 import { DateMiseÀJourFichierSourceModelTestBuilder } from "../../../../database/test-builder/DateMiseÀJourFichierSourceModelTestBuilder";
 import { EntitéJuridiqueModelTestBuilder } from "../../../../database/test-builder/EntitéJuridiqueModelTestBuilder";
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from "../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder";
+import { Catégorisation } from "../../../métier/entities/EntitéJuridique";
 import { fakeLogger, getOrm, uneEntitéJuridique, uneSecondeEntitéJuridique } from "../../../testHelper";
 import { TypeOrmEntitéJuridiqueHeliosRepository } from "./TypeOrmEntitéJuridiqueHeliosRepository";
 
@@ -83,7 +84,7 @@ describe("Sauvegarde des entités juridiques", () => {
     entitéJuridiqueMisÀJourAttendu2.adresseNuméroVoie = "20";
     entitéJuridiqueMisÀJourAttendu2.adresseTypeVoie = "AV";
     entitéJuridiqueMisÀJourAttendu2.adresseVoie = "DE LA RECONNAISSANCE";
-    entitéJuridiqueMisÀJourAttendu2.catégorisation = "prive";
+    entitéJuridiqueMisÀJourAttendu2.catégorisation = Catégorisation.PRIVE_NON_LUCRATIF;
     entitéJuridiqueMisÀJourAttendu2.commune = "VILLENEUVE D ASCQ";
     entitéJuridiqueMisÀJourAttendu2.département = "NORD";
     entitéJuridiqueMisÀJourAttendu2.libelléStatutJuridique = "Société Anonyme (S.A.)";
@@ -129,7 +130,7 @@ describe("Sauvegarde des entités juridiques", () => {
     entitéJuridiqueAttendu.adresseNuméroVoie = "1";
     entitéJuridiqueAttendu.adresseTypeVoie = "RTE";
     entitéJuridiqueAttendu.adresseVoie = "DE VEYZIAT";
-    entitéJuridiqueAttendu.catégorisation = "prive";
+    entitéJuridiqueAttendu.catégorisation = Catégorisation.PUBLIC;
     entitéJuridiqueAttendu.commune = "OYONNAX";
     entitéJuridiqueAttendu.département = "AIN";
     entitéJuridiqueAttendu.libelléStatutJuridique = "Etablissement Public Intercommunal dHospitalisation";

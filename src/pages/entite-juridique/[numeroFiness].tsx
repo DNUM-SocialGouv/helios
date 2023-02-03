@@ -22,6 +22,7 @@ export default function Router({ entitéJuridique, établissementsTerritoriauxRa
 
   const entitéJuridiqueViewModel = new EntitéJuridiqueViewModel(entitéJuridique, wording);
   const établissementsTerritoriauxRattachéesViewModel = new EtablissementsTerritoriauxRattachésViewModel(établissementsTerritoriauxRattachés, wording);
+
   return (
     <PageEntitéJuridique
       entitéJuridiqueViewModel={entitéJuridiqueViewModel}

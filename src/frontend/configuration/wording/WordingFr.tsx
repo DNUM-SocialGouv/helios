@@ -101,6 +101,12 @@ export class WordingFr implements Wording {
   readonly INDICATEURS_VIDES: string = "Aucune donnée pour cet établissement.";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE: string = "Aucune donnée renseignée pour les années suivantes :";
 
+  // Catégorisation
+  readonly PRIVÉ_LUCRATIF = "PRIVÉ LUCRATIF";
+  readonly PRIVÉ_NON_LUCRATIF = "PRIVÉ NON LUCRATIF";
+  readonly PUBLIC = "PUBLIC";
+  readonly PERSONNE_MORALE_DROIT_ÉTRANGER = "PERSONNE MORALE DE DROIT ÉTRANGER";
+
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string = "fiche d’identité";
   readonly NOM_DE_L_ÉTABLISSEMENT: string = "Nom de l’établissement";

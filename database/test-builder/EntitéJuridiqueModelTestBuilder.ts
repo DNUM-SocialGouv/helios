@@ -7,7 +7,6 @@ export class EntitéJuridiqueModelTestBuilder {
     entitéJuridique.adresseNuméroVoie = champsSurchargés?.adresseNuméroVoie || "1";
     entitéJuridique.adresseTypeVoie = champsSurchargés?.adresseTypeVoie || "RTE";
     entitéJuridique.adresseVoie = champsSurchargés?.adresseVoie || "DE VEYZIAT";
-    entitéJuridique.catégorisation = champsSurchargés?.catégorisation || "prive";
     entitéJuridique.commune = champsSurchargés?.commune || "OYONNAX";
     entitéJuridique.département = champsSurchargés?.département || "AIN";
     entitéJuridique.libelléStatutJuridique = champsSurchargés?.libelléStatutJuridique || "Etablissement Public Intercommunal dHospitalisation";
@@ -16,6 +15,7 @@ export class EntitéJuridiqueModelTestBuilder {
     entitéJuridique.raisonSocialeCourte = champsSurchargés?.raisonSocialeCourte || "CH DU HAUT BUGEY";
     entitéJuridique.siren = champsSurchargés?.siren || "260104631";
     entitéJuridique.téléphone = champsSurchargés?.téléphone || "0102030406";
+    entitéJuridique.catégorisation = champsSurchargés?.catégorisation || "public";
     return entitéJuridique;
   }
 }

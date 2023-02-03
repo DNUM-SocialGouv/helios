@@ -1,4 +1,4 @@
-import { EntitéJuridique } from "../../backend/métier/entities/entité-juridique/EntitéJuridique";
+import { CatégorisationEnum, EntitéJuridique } from "../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { Wording } from "../configuration/wording/Wording";
 import { EntitéJuridiqueViewModel } from "../ui/entité-juridique/EntitéJuridiqueViewModel";
 
@@ -20,6 +20,7 @@ export class EntitéJuridiqueViewModelTestBuilder {
       dateMiseÀJourSource: "2021-07-07",
       value: "Marcel Proust",
     },
+    catégorisation: CatégorisationEnum.PRIVE_LUCRATIF,
     libelléStatutJuridique: {
       dateMiseÀJourSource: "2021-07-07",
       value: "Public",

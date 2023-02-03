@@ -2,7 +2,7 @@ import { DataSource } from "typeorm";
 
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
-import { EntitéJuridique } from "../../../métier/entities/entité-juridique/EntitéJuridique";
+import { CatégorisationEnum, EntitéJuridique } from "../../../métier/entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueNonTrouvée } from "../../../métier/entities/EntitéJuridiqueNonTrouvée";
 import { EntitéJuridiqueDeRattachement } from "../../../métier/entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement";
 import { EntitéJuridiqueLoader } from "../../../métier/gateways/EntitéJuridiqueLoader";
@@ -58,6 +58,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
         dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
         value: entitéJuridiqueModel.adresseVoie,
       },
+      catégorisation: entitéJuridiqueModel.catégorisation as CatégorisationEnum,
       libelléStatutJuridique: {
         dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
         value: entitéJuridiqueModel.libelléStatutJuridique,

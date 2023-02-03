@@ -15,6 +15,7 @@ export type EntitéJuridique = Readonly<{
     dateMiseÀJourSource: string;
     value: string;
   }>;
+  catégorisation: CatégorisationEnum;
   libelléStatutJuridique: Readonly<{
     dateMiseÀJourSource: string;
     value: string;
@@ -40,3 +41,10 @@ export type EntitéJuridique = Readonly<{
     value: string;
   }>;
 }>;
+
+export enum CatégorisationEnum {
+  PUBLIC = "public",
+  PRIVE_NON_LUCRATIF = "prive_non_lucratif",
+  PRIVE_LUCRATIF = "prive_lucratif",
+  PERSONNE_MORALE_DROIT_ETRANGER = "personne_morale_droit_etranger",
+}

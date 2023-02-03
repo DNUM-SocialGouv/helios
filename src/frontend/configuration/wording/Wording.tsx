@@ -77,6 +77,12 @@ export interface Wording {
   readonly INDICATEURS_VIDES: string;
   readonly AUCUNE_DONNÉE_RENSEIGNÉE: string;
 
+  // Catégorisation
+  readonly PRIVÉ_LUCRATIF: string;
+  readonly PRIVÉ_NON_LUCRATIF: string;
+  readonly PUBLIC: string;
+  readonly PERSONNE_MORALE_DROIT_ÉTRANGER: string;
+
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string;
   readonly NOM_DE_L_ÉTABLISSEMENT: string;

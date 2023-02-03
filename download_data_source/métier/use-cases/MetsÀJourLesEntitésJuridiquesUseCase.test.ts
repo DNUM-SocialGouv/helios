@@ -1,6 +1,6 @@
 import { Dependencies } from "../../infrastructure/dependencies";
 import { getFakeDataCrawlerDependencies, uneEntitéJuridique, uneSecondeEntitéJuridique } from "../../testHelper";
-import { EntitéJuridique } from "../entities/EntitéJuridique";
+import { Catégorisation, EntitéJuridique } from "../entities/EntitéJuridique";
 import { MetsÀJourLesEntitésJuridiquesUseCase } from "./MetsÀJourLesEntitésJuridiquesUseCase";
 
 describe("Mise à jour des entités juridiques", () => {
@@ -44,7 +44,7 @@ describe("Mise à jour des entités juridiques", () => {
       const entitésJuridiquesToSave: EntitéJuridique[] = [
         {
           ...entitéJuridiqueSIH,
-          catégorisation: "public",
+          catégorisation: Catégorisation.PUBLIC,
         },
       ];
       expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository.sauvegarde).toHaveBeenCalledWith(entitésJuridiquesToSave, expect.anything());
@@ -76,7 +76,7 @@ describe("Mise à jour des entités juridiques", () => {
       const entitésJuridiquesToSave: EntitéJuridique[] = [
         {
           ...entitéJuridiqueSyndicat,
-          catégorisation: "prive_non_lucratif",
+          catégorisation: Catégorisation.PRIVE_NON_LUCRATIF,
         },
       ];
       expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository.sauvegarde).toHaveBeenCalledWith(entitésJuridiquesToSave, expect.anything());
@@ -106,7 +106,7 @@ describe("Mise à jour des entités juridiques", () => {
       const entitésJuridiquesToSave: EntitéJuridique[] = [
         {
           ...entitéJuridiqueSNC,
-          catégorisation: "prive_lucratif",
+          catégorisation: Catégorisation.PRIVE_LUCRATIF,
         },
       ];
       expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository.sauvegarde).toHaveBeenCalledWith(entitésJuridiquesToSave, expect.anything());
@@ -138,7 +138,7 @@ describe("Mise à jour des entités juridiques", () => {
       const entitésJuridiquesToSave: EntitéJuridique[] = [
         {
           ...entitéJuridiqueDroitEtranger,
-          catégorisation: "personne_morale_droit_etranger",
+          catégorisation: Catégorisation.PERSONNE_MORALE_DROIT_ETRANGER,
         },
       ];
       expect(fakeDataCrawlerDependencies.entitéJuridiqueHeliosRepository.sauvegarde).toHaveBeenCalledWith(entitésJuridiquesToSave, expect.anything());
