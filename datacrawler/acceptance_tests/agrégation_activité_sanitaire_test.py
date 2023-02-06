@@ -26,44 +26,43 @@ class TestAgrègeLesActivitesSanitaireDesEntitesJuridiques:
             {
                 "annee": [2020, 2020, 2020],
                 "numero_finess_etablissement_territorial": ["222222222", "333333333", "44444444"],
-                "nombre_sejours_partiels_medecine": [1, 2, 5],
-                "nombre_sejours_partiels_obstetrique": [1, 2, 5],
-                "nombre_sejours_partiels_chirurgie": [1, 2, 5],
-                "nombre_sejours_complets_medecine": [1, 2, 5],
-                "nombre_sejours_complets_obstetrique": [1, 2, 5],
-                "nombre_sejours_complets_chirurgie": [1, 2, 5],
-                "nombre_journees_completes_ssr": [1, 2, 5],
-                "nombre_journees_partiels_ssr": [1, 2, 5],
-                "nombre_journees_complete_psy": [1, 2, 5],
-                "nombre_journées_partielles_psy": [1, 2, 5],
-                "nombre_passages_urgences": [1, 2, 5],
+                "nombre_sejours_partiels_medecine": [1.0, 2.0, 5.0],
+                "nombre_sejours_partiels_obstetrique": [1.0, 2.0, 5.0],
+                "nombre_sejours_partiels_chirurgie": [1.0, 2.0, 5.0],
+                "nombre_sejours_complets_medecine": [1.0, 2.0, 5.0],
+                "nombre_sejours_complets_obstetrique": [1.0, 2.0, 5.0],
+                "nombre_sejours_complets_chirurgie": [1.0, 2.0, 5.0],
+                "nombre_journees_completes_ssr": [1.0, 2.0, 5.0],
+                "nombre_journees_partiels_ssr": [1.0, 2.0, 5.0],
+                "nombre_journees_complete_psy": [1.0, 2.0, 5.0],
+                "nombre_journées_partielles_psy": [1.0, 2.0, 5.0],
+                "nombre_passages_urgences": [1.0, 2.0, 5.0],
             }
         )
 
         with base_de_données_test.begin() as connection:
-            activités.to_sql(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, connection, if_exists="replace")
+            activités.to_sql(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, connection, if_exists="replace", index=False)
 
         # WHEN
         agrège_les_activités_sanitaire_des_entités_juridiques(base_de_données_test)
 
         # THEN
-        agrégation_activités_enregistrées = pd.read_sql_table(TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES, base_de_données_test, index_col="index")
+        agrégation_activités_enregistrées = pd.read_sql_table(TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES, base_de_données_test)
         agrégation_activités_attendues = pd.DataFrame(
             {
                 "annee": [2020, 2020],
                 "numero_finess_entite_juridique": ["111111111", "222222"],
-                "nombre_sejours_partiels_medecine": [3, 5],
-                "nombre_sejours_partiels_obstetrique": [3, 5],
-                "nombre_sejours_partiels_chirurgie": [3, 5],
-                "nombre_sejours_complets_medecine": [3, 5],
-                "nombre_sejours_complets_obstetrique": [3, 5],
-                "nombre_sejours_complets_chirurgie": [3, 5],
-                "nombre_journees_completes_ssr": [3, 5],
-                "nombre_journees_partiels_ssr": [3, 5],
-                "nombre_journees_complete_psy": [3, 5],
-                "nombre_journées_partielles_psy": [3, 5],
-                "nombre_passages_urgences": [3, 5],
+                "nombre_sejours_partiels_medecine": [3.0, 5.0],
+                "nombre_sejours_partiels_obstetrique": [3.0, 5.0],
+                "nombre_sejours_partiels_chirurgie": [3.0, 5.0],
+                "nombre_sejours_complets_medecine": [3.0, 5.0],
+                "nombre_sejours_complets_obstetrique": [3.0, 5.0],
+                "nombre_sejours_complets_chirurgie": [3.0, 5.0],
+                "nombre_journees_completes_ssr": [3.0, 5.0],
+                "nombre_journees_partiels_ssr": [3.0, 5.0],
+                "nombre_journees_complete_psy": [3.0, 5.0],
+                "nombre_journées_partielles_psy": [3.0, 5.0],
+                "nombre_passages_urgences": [3.0, 5.0],
             }
         )
-        agrégation_activités_attendues.index.name = "index"
         pd.testing.assert_frame_equal(agrégation_activités_enregistrées, agrégation_activités_attendues)

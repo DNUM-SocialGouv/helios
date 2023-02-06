@@ -42,6 +42,7 @@ populate_autorisation_et_capacite_sanitaire = 'python -m datacrawler.ajoute_les_
 populate_cpom_medico_social = 'python -m datacrawler.ajoute_le_cpom_des_établissements_médico_sociaux'
 populate_budget_et_finances_medico_social = 'python -m datacrawler.ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux'
 populate_ressoures_humaines_medico_social = 'python -m datacrawler.ajoute_le_bloc_ressources_humaines_des_établissements_médico_sociaux'
+populate_activites_sanitaire_entites_juridiques = 'python -m datacrawler.agrégation_activité_sanitaire'
 test = 'pytest --tb=short'
 test_coverage = 'pytest --tb=short --cov=datacrawler --cov-report=xml'
 test_watch = 'ptw'
