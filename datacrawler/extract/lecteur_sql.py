@@ -2,8 +2,9 @@ import pandas as pd
 from sqlalchemy.engine import Engine
 
 
-def récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données: Engine) -> pd.DataFrame:
+def récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données: Engine, entite_juridique=False) -> pd.DataFrame:
+    entite_juridique_column = ", numero_finess_entite_juridique" if entite_juridique else ""
     return pd.read_sql_query(  # type: ignore
-        "SELECT numero_finess_etablissement_territorial, numero_finess_entite_juridique FROM etablissement_territorial",
+        f"SELECT numero_finess_etablissement_territorial {entite_juridique_column} FROM etablissement_territorial",
         base_de_données,
     )
