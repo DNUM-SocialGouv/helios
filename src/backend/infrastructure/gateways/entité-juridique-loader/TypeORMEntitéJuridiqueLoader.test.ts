@@ -108,8 +108,9 @@ describe("Entité juridique loader", () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }));
       const activites = new ActivitéSanitaireEntitéJuridiqueModel();
-      activites.année = 2020;
+      activites.année = 2021;
       activites.nombreDePassagesAuxUrgences = 10;
+      activites.nombreJournéesCompletesSsr = 1;
       activites.numéroFinessEntitéJuridique = numéroFinessEntitéJuridique;
 
       await entitéJuridiqueActivitésRepository.insert(activites);

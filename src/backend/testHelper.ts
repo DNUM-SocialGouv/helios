@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 
 import { ActivitéMédicoSocialModel } from "../../database/models/ActivitéMédicoSocialModel";
+import { ActivitéSanitaireEntitéJuridiqueModel } from "../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
 import { ActivitéSanitaireModel } from "../../database/models/ActivitéSanitaireModel";
 import { AutorisationMédicoSocialModel } from "../../database/models/AutorisationMédicoSocialModel";
 import { AutorisationSanitaireModel } from "../../database/models/AutorisationSanitaireModel";
@@ -40,6 +41,7 @@ export const fakeLogger: Logger = {
 
 export const clearAllTables = async (orm: DataSource) => {
   await orm.createQueryBuilder().delete().from(ActivitéSanitaireModel).execute();
+  await orm.createQueryBuilder().delete().from(ActivitéSanitaireEntitéJuridiqueModel).execute();
   await orm.createQueryBuilder().delete().from(ActivitéMédicoSocialModel).execute();
   await orm.createQueryBuilder().delete().from(ÉtablissementTerritorialIdentitéModel).execute();
   await orm.createQueryBuilder().delete().from(EntitéJuridiqueModel).execute();
