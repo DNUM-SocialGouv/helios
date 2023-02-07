@@ -2,14 +2,13 @@ from numpy import NaN
 
 import pandas as pd
 
-import datacrawler
 from datacrawler.transform.entite_juridique.bloc_activités.agrège_les_activités_dans_les_entites_juridiques import (
     agrège_les_activités_dans_les_entites_juridiques,
 )
 
 
 class TestAgrègeLesActivitesDansLesEntitesJuridiques:
-    def test_renvoit_un_dataframe_vide_si_pas_d_activites_ET_sanitaires(self) -> None:
+    def test_renvoit_un_dataframe_vide_si_pas_d_activites_entités_juridiques_sanitaires(self) -> None:
         # GIVEN
         activites_entite_juridique_sanitaires = pd.DataFrame(
             {
@@ -185,7 +184,7 @@ class TestAgrègeLesActivitesDansLesEntitesJuridiques:
         )
         pd.testing.assert_frame_equal(activités_agrégées, activités_agrégées_attendues)
 
-    def test_renvoit_les_activites_de_deux_etablissements_pour_une_annee_avec_NaN(self) -> None:
+    def test_renvoit_les_activites_de_deux_etablissements_pour_une_annee_avec_nan(self) -> None:
         # GIVEN
         activites_entite_juridique_sanitaires = pd.DataFrame(
             {
@@ -229,7 +228,7 @@ class TestAgrègeLesActivitesDansLesEntitesJuridiques:
         )
         pd.testing.assert_frame_equal(activités_agrégées, activités_agrégées_attendues)
 
-    def test_renvoit_les_activites_de_deux_etablissements_pour_une_annee_avec_NaN_et_chiffre(self) -> None:
+    def test_renvoit_les_activites_de_deux_etablissements_pour_une_annee_avec_nan_et_chiffre(self) -> None:
         # GIVEN
         activites_entite_juridique_sanitaires = pd.DataFrame(
             {
