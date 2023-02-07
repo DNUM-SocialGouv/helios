@@ -11,7 +11,7 @@ from datacrawler.transform.entite_juridique.bloc_activités.agrège_les_activit�
 )
 
 
-def agrège_les_activités_sanitaire_des_entités_juridiques(base_de_données: Engine):
+def agrège_les_activités_sanitaire_des_entités_juridiques(base_de_données: Engine) -> None :
     activités_sanitaires = récupère_les_activités_sanitaires_de_la_base(base_de_données)
     finess = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données, entite_juridique=True)
     activités_avec_entités_juridiques = pd.merge(activités_sanitaires, finess, on="numero_finess_etablissement_territorial")
