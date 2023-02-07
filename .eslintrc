@@ -24,7 +24,6 @@
     "no-console": "error",
     "no-param-reassign": "error",
     "prefer-const": "error",
-    "sort-keys": ["error"],
     "yoda": "error",
     "@typescript-eslint/array-type": ["error", { "ArrayOption": "array" }],
     "@typescript-eslint/naming-convention": [

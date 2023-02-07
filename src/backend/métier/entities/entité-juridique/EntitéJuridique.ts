@@ -40,6 +40,8 @@ export type EntitéJuridique = Readonly<{
     dateMiseÀJourSource: string;
     value: string;
   }>;
+  activités: Readonly<{}>;
+  // add entity acitivity type
 }>;
 
 export enum CatégorisationEnum {
