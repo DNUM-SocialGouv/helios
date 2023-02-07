@@ -54,7 +54,7 @@ describe("La récupération d’une entité juridique", () => {
       chargeActivités: jest.fn().mockResolvedValue({
         année: 2022,
         nombreDePassagesAuxUrgences: {
-          dateMiseÀJourSour ce: "2020-10-01",
+          dateMiseÀJourSource: "2020-10-01",
           value: 10,
         },
       }),
