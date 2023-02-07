@@ -6,7 +6,7 @@ export class ActivitéSanitaireEntitéJuridiqueModel {
   public année!: number;
 
   @PrimaryColumn({ length: 9, name: "numero_finess_entite_juridique" })
-  public numéroFinessÉtablissementTerritorial!: string;
+  public numéroFinessEntitéJuridique!: string;
 
   @Column({ name: "nombre_passages_urgences", nullable: true, type: "float" })
   public nombreDePassagesAuxUrgences!: number;
@@ -33,10 +33,10 @@ export class ActivitéSanitaireEntitéJuridiqueModel {
   public nombreJournéesCompletesSsr!: number;
 
   @Column({ name: "nombre_journees_partiels_ssr", nullable: true, type: "float" })
-  public nombreJournéesPartielsSsr!: number;
+  public nombreJournéesPartiellesSsr!: number;
 
   @Column({ name: "nombre_journees_complete_psy", nullable: true, type: "float" })
-  public nombreJournéesCompletePsy!: number;
+  public nombreJournéesCompletesPsy!: number;
 
   @Column({ name: "nombre_journées_partielles_psy", nullable: true, type: "float" })
   public nombreJournéesPartiellesPsy!: number;

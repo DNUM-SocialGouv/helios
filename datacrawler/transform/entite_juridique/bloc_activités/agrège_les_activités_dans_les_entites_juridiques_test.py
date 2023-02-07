@@ -49,7 +49,7 @@ class TestAgrègeLesActivitesDansLesEntitesJuridiques:
                 "nombre_journees_complete_psy": [],
                 "nombre_journées_partielles_psy": [],
             }
-        )
+        ).set_index(["annee", "numero_finess_entite_juridique"])
         pd.testing.assert_frame_equal(activités_agrégées, activités_agrégées_attendues)
 
     def test_renvoit_les_activités_d_un_etablissement_pour_une_annee(self) -> None:
@@ -93,7 +93,7 @@ class TestAgrègeLesActivitesDansLesEntitesJuridiques:
                 "nombre_journees_complete_psy": [1],
                 "nombre_journées_partielles_psy": [1],
             }
-        )
+        ).set_index(["annee", "numero_finess_entite_juridique"])
         pd.testing.assert_frame_equal(activités_agrégées, activités_agrégées_attendues)
 
     def test_renvoit_les_activites_d_un_etablissement_pour_deux_annees(self) -> None:
@@ -137,7 +137,7 @@ class TestAgrègeLesActivitesDansLesEntitesJuridiques:
                 "nombre_journees_complete_psy": [1, 0],
                 "nombre_journées_partielles_psy": [1, 2],
             }
-        )
+        ).set_index(["annee", "numero_finess_entite_juridique"])
         pd.testing.assert_frame_equal(activités_agrégées, activités_agrégées_attendues)
 
     def test_renvoit_les_activites_de_deux_etablissements_pour_une_annee(self) -> None:
@@ -181,7 +181,7 @@ class TestAgrègeLesActivitesDansLesEntitesJuridiques:
                 "nombre_journees_complete_psy": [1],
                 "nombre_journées_partielles_psy": [3],
             }
-        )
+        ).set_index(["annee", "numero_finess_entite_juridique"])
         pd.testing.assert_frame_equal(activités_agrégées, activités_agrégées_attendues)
 
     def test_renvoit_les_activites_de_deux_etablissements_pour_une_annee_avec_nan(self) -> None:
@@ -225,7 +225,7 @@ class TestAgrègeLesActivitesDansLesEntitesJuridiques:
                 "nombre_journees_complete_psy": [NaN],
                 "nombre_journées_partielles_psy": [NaN],
             }
-        )
+        ).set_index(["annee", "numero_finess_entite_juridique"])
         pd.testing.assert_frame_equal(activités_agrégées, activités_agrégées_attendues)
 
     def test_renvoit_les_activites_de_deux_etablissements_pour_une_annee_avec_nan_et_chiffre(self) -> None:
@@ -269,7 +269,7 @@ class TestAgrègeLesActivitesDansLesEntitesJuridiques:
                 "nombre_journees_complete_psy": [0.0],
                 "nombre_journées_partielles_psy": [1.0],
             }
-        )
+        ).set_index(["annee", "numero_finess_entite_juridique"])
         pd.testing.assert_frame_equal(activités_agrégées, activités_agrégées_attendues)
 
     def test_renvoit_les_activites_de_deux_entités_juridiques(self) -> None:
@@ -313,5 +313,5 @@ class TestAgrègeLesActivitesDansLesEntitesJuridiques:
                 "nombre_journees_complete_psy": [3, 5],
                 "nombre_journées_partielles_psy": [3, 5],
             }
-        )
+        ).set_index(["annee", "numero_finess_entite_juridique"])
         pd.testing.assert_frame_equal(activités_agrégées, activités_agrégées_attendues)
