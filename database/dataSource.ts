@@ -32,7 +32,9 @@ import { AjoutSiretEtMft1666798570971 } from "./migrations/1666798570971-AjoutSi
 import { AjoutRaisonSocialeCourteAuxRésultatsDeRecherche1666969626322 } from "./migrations/1666969626322-AjoutRaisonSocialeCourteAuxRésultatsDeRecherche";
 import { AjoutAnneeAutorisationSanitaire1673015716622 } from "./migrations/1673015716622-AjoutAnneeAutorisationSanitaire";
 import { AjoutCategorisationEntiteJuridique1675329220245 } from "./migrations/1675329220245-AjoutCategorisationEntiteJuridique";
+import { AjoutActiviteSanitaireEntiteJuridique1675695881364 } from "./migrations/1675695881364-AjoutActiviteSanitaireEntiteJuridique";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
+import { ActivitéSanitaireEntitéJuridiqueModel } from "./models/ActivitéSanitaireEntitéJuridiqueModel";
 import { ActivitéSanitaireModel } from "./models/ActivitéSanitaireModel";
 import { AutorisationMédicoSocialModel } from "./models/AutorisationMédicoSocialModel";
 import { AutorisationSanitaireModel } from "./models/AutorisationSanitaireModel";
@@ -69,6 +71,7 @@ export default new DataSource({
     RechercheModel,
     ReconnaissanceContractuelleSanitaireModel,
     RessourcesHumainesMédicoSocialModel,
+    ActivitéSanitaireEntitéJuridiqueModel,
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -102,6 +105,7 @@ export default new DataSource({
     AjoutRaisonSocialeCourteAuxRésultatsDeRecherche1666969626322,
     AjoutAnneeAutorisationSanitaire1673015716622,
     AjoutCategorisationEntiteJuridique1675329220245,
+    AjoutActiviteSanitaireEntiteJuridique1675695881364,
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

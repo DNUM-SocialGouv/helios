@@ -2,6 +2,7 @@ from enum import Enum
 
 TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX = "activite_medico_social"
 TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES = "activite_sanitaire"
+TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES = "activite_sanitaire_entite_juridique"
 TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES = "date_mise_a_jour_fichier_source"
 TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX = "autorisation_medico_social"
 TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_SANITAIRES = "autorisation_sanitaire"

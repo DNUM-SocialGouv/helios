@@ -2,6 +2,7 @@ import pandas as pd
 from numpy import NaN
 
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
+from datacrawler.test_helpers.config_path import get_absolute_file_path
 from datacrawler.transform.équivalences_diamant_helios import (
     colonnes_à_lire_ann_ms_tdp_et,
     colonnes_à_lire_ann_ms_tdp_et_cpom,
@@ -28,7 +29,7 @@ from datacrawler.transform.équivalences_diamant_helios import (
 class TestLisLeFichierCsv:
     def test_lis_les_colonnes_demandées_du_fichier_csv_ann_errd_ej_et(self) -> None:
         # GIVEN
-        chemin_du_fichier = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
+        chemin_du_fichier = get_absolute_file_path("data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV")
         colonnes = colonnes_à_lire_bloc_activités_ann_errd_ej_et
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_errd_ej_et_bloc_activités_helios)
 
@@ -78,7 +79,7 @@ class TestLisLeFichierCsv:
 
     def test_lis_les_colonnes_demandées_du_fichier_csv_ann_ms_tdp(self) -> None:
         # GIVEN
-        chemin_du_fichier = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
+        chemin_du_fichier = get_absolute_file_path("data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV")
         colonnes = colonnes_à_lire_ann_ms_tdp_et
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ms_tdp_et_helios)
 
@@ -103,7 +104,7 @@ class TestLisLeFichierCsv:
 
     def test_lis_les_colonnes_demandées_du_fichier_csv_men_pmsi_annuel(self) -> None:
         # GIVEN
-        chemin_du_fichier = "data_set/diamant/MEN_PMSI_ANNUEL_2022_06_07.CSV"
+        chemin_du_fichier = get_absolute_file_path("data_set/diamant/MEN_PMSI_ANNUEL_2022_06_07.CSV")
         colonnes = colonnes_à_lire_men_pmsi_annuel
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_men_pmsi_annuel_helios)
 
@@ -113,18 +114,18 @@ class TestLisLeFichierCsv:
         # THEN
         men_pmsi_annuel_attendu = pd.DataFrame(
             {
-                "Finess": ["010005239", "010005239", "010005239", "010005239", "010005239", "010005239", "010005239", "111111111", "010786259"],
-                "Année": [2016, 2017, 2018, 2019, 2019, 2020, 2021, 2017, 2017],
-                "Nombre de séjours HTP/AMBU Médecine": [4.0, 1.0, 3.0, 4.0, 4.0, 4.0, 4.0, 14.0, NaN],
-                "Nombre de séjours HTP/AMBU Obstétrique": [NaN, 10.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
-                "Nombre de séjours HTP/AMBU Chirurgie": [NaN, 20.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
-                "Nombre de séjours HC Médecine": [231.0, 255.0, 232.0, 231.0, 231.0, 231.0, 231.0, 2.0, NaN],
-                "Nombre de séjours HC Chirurgie": [9.0, 6.0, 10.0, 9.0, 9.0, 9.0, 9.0, 8.0, NaN],
-                "Nombre de séjours HC Obstétrique": [NaN, 10.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
-                "Nombre de journées hospit complète SSR": [NaN, 1074.0, 1103.0, 1087.0, NaN, NaN, NaN, NaN, NaN],
-                "Nombre de journées HTP SSR": [NaN, 100.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
-                "Nb journées hospit complète PSY": [NaN, 200.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
-                "Nb journées HTP PSY": [NaN, 300.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
+                "Finess": ["010005239", "010005239", "010005239", "010005239", "010005239", "010005239", "111111111", "010786259", "010005239", "010786259"],
+                "Année": [2016, 2017, 2018, 2019, 2019, 2021, 2017, 2017, 2020, 2020],
+                "Nombre de séjours HTP/AMBU Médecine": [4.0, 1.0, 3.0, 4.0, 4.0, 4.0, 14.0, NaN, 4.0, 1.0],
+                "Nombre de séjours HTP/AMBU Obstétrique": [NaN, 10.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
+                "Nombre de séjours HTP/AMBU Chirurgie": [NaN, 20.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 20],
+                "Nombre de séjours HC Médecine": [231.0, 255.0, 232.0, 231.0, 231.0, 231.0, 2.0, NaN, 231.0, 255.0],
+                "Nombre de séjours HC Chirurgie": [9.0, 6.0, 10.0, 9.0, 9.0, 9.0, 8.0, NaN, 9.0, 6.0],
+                "Nombre de séjours HC Obstétrique": [NaN, 10.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 10.0],
+                "Nombre de journées hospit complète SSR": [NaN, 1074.0, 1103.0, 1087.0, NaN, NaN, NaN, NaN, NaN, 1074.0],
+                "Nombre de journées HTP SSR": [NaN, 100.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 100],
+                "Nb journées hospit complète PSY": [NaN, 200.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
+                "Nb journées HTP PSY": [NaN, 300.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 300],
             }
         )
         pd.testing.assert_frame_equal(
@@ -134,7 +135,7 @@ class TestLisLeFichierCsv:
 
     def test_lis_les_colonnes_demandées_du_fichier_csv_ann_rpu(self) -> None:
         # GIVEN
-        chemin_du_fichier = "data_set/diamant/ANN_RPU_2022_06_23.CSV"
+        chemin_du_fichier = get_absolute_file_path("data_set/diamant/ANN_RPU_2022_06_23.CSV")
         colonnes = colonnes_à_lire_ann_rpu
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_rpu_helios)
 
@@ -144,9 +145,9 @@ class TestLisLeFichierCsv:
         # THEN
         ann_rpu_attendu = pd.DataFrame(
             {
-                "Finess": ["010005239", "010005239", "010005239", "010005239", "010005239", "010005239", "010005239", "2A0000154"],
-                "Année": [2021, 2020, 2019, 2018, 2018, 2017, 2016, 2017],
-                "Nombre de passages aux urgences": [25987.0, 23087.0, 23987.0, 24032.0, 42792.0, 10296.0, 10200.0, 10296.0],
+                "Finess": ["010005239", "010005239", "010005239", "010005239", "010005239", "010005239", "010005239", "2A0000154", "010786259"],
+                "Année": [2021, 2020, 2019, 2018, 2018, 2017, 2016, 2017, 2020],
+                "Nombre de passages aux urgences": [25987.0, 23087.0, 23987.0, 24032.0, 42792.0, 10296.0, 10200.0, 10296.0, 10000],
             }
         )
         pd.testing.assert_frame_equal(
@@ -156,7 +157,7 @@ class TestLisLeFichierCsv:
 
     def test_lis_les_colonnes_demandées_du_fichier_ann_sae(self) -> None:
         # GIVEN
-        chemin_du_fichier = "data_set/diamant/ANN_SAE_2022_08_03.CSV"
+        chemin_du_fichier = get_absolute_file_path("data_set/diamant/ANN_SAE_2022_08_03.CSV")
         colonnes = colonnes_à_lire_ann_sae
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_sae_helios)
 
@@ -199,7 +200,7 @@ class TestLisLeFichierCsv:
 
     def test_lis_les_dates_d_entrée_en_vigueur_des_cpom_du_fichier_csv_ann_ms_tdp_et(self) -> None:
         # GIVEN
-        chemin_du_fichier = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
+        chemin_du_fichier = get_absolute_file_path("data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV")
         colonnes = colonnes_à_lire_ann_ms_tdp_et_cpom
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ms_tdp_et_cpom_helios)
 
@@ -220,7 +221,7 @@ class TestLisLeFichierCsv:
 
     def test_lis_les_colonnes_du_bloc_ressources_humaines_du_fichier_ann_ms_tsp_et(self) -> None:
         # GIVEN
-        chemin_du_fichier = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
+        chemin_du_fichier = get_absolute_file_path("data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV")
         colonnes = colonnes_à_lire_bloc_ressources_humaines_ann_ms_tdp_et
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_errd_ej_et_ressources_humaines_helios)
 
@@ -332,7 +333,7 @@ class TestLisLeFichierCsv:
 
     def test_lis_les_colonnes_du_bloc_ressources_humaines_du_fichier_ann_ca_ej_et(self) -> None:
         # GIVEN
-        chemin_du_fichier = "data_set/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
+        chemin_du_fichier = get_absolute_file_path("data_set/diamant/ANN_CA_EJ_ET_2022_09_01.CSV")
         colonnes = colonnes_à_lire_bloc_ressources_humaines_ann_ca_ej_et
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ca_ej_et_ressources_humaines_helios)
 
@@ -360,7 +361,7 @@ class TestLisLeFichierCsv:
 
     def test_lis_les_colonnes_du_bloc_ressources_humaines_du_fichier_ann_errd_ej_et(self) -> None:
         # GIVEN
-        chemin_du_fichier = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
+        chemin_du_fichier = get_absolute_file_path("data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV")
         colonnes = colonnes_à_lire_bloc_ressources_humaines_ann_errd_ej_et
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ms_tdp_et_ressources_humaines_helios)
 

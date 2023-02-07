@@ -8,7 +8,11 @@ from numpy import NaN
 
 import datacrawler
 from datacrawler.ajoute_les_activités_des_établissements_sanitaires import ajoute_les_activités_des_établissements_sanitaires
-from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES, FichierSource
+from datacrawler.load.nom_des_tables import (
+    TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
+    TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES,
+    FichierSource,
+)
 from datacrawler.test_helpers import (
     base_de_données_test,
     mocked_logger,
@@ -18,6 +22,7 @@ from datacrawler.test_helpers import (
     sauvegarde_une_entité_juridique_en_base,
     supprime_les_données_des_tables,
 )
+from datacrawler.test_helpers.config_path import get_absolute_file_path
 
 
 class TestAjouteLesActivitésDesÉtablissementsSanitaires:
@@ -27,8 +32,8 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
     @freeze_time("2022-01-14")
     def test_sauvegarde_les_cinq_dernières_années_dans_une_table_vide(self) -> None:
         # GIVEN
-        chemin_du_fichier_men_pmsi_annuel = "data_set/diamant/MEN_PMSI_ANNUEL_2022_06_07.CSV"
-        chemin_du_fichier_ann_rpu = "data_set/diamant/ANN_RPU_2022_06_23.CSV"
+        chemin_du_fichier_men_pmsi_annuel = get_absolute_file_path("data_set/diamant/MEN_PMSI_ANNUEL_2022_06_07.CSV")
+        chemin_du_fichier_ann_rpu = get_absolute_file_path("data_set/diamant/ANN_RPU_2022_06_23.CSV")
         sauvegarde_une_entité_juridique_en_base("010008407", base_de_données_test)
         sauvegarde_un_établissement_en_base("010005239", "010008407", base_de_données_test)
         sauvegarde_un_établissement_en_base("2A0000155", "010008407", base_de_données_test)
@@ -72,8 +77,8 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
     @freeze_time("2022-01-14")
     def test_supprime_les_données_existantes_avant_de_sauvegarder_les_données_en_base(self) -> None:
         # GIVEN
-        chemin_du_fichier_men_pmsi_annuel = "data_set/diamant/MEN_PMSI_ANNUEL_2022_06_07.CSV"
-        chemin_du_fichier_ann_rpu = "data_set/diamant/ANN_RPU_2022_06_23.CSV"
+        chemin_du_fichier_men_pmsi_annuel = get_absolute_file_path("data_set/diamant/MEN_PMSI_ANNUEL_2022_06_07.CSV")
+        chemin_du_fichier_ann_rpu = get_absolute_file_path("data_set/diamant/ANN_RPU_2022_06_23.CSV")
         sauvegarde_une_entité_juridique_en_base("010008407", base_de_données_test)
         sauvegarde_un_établissement_en_base("010005239", "010008407", base_de_données_test)
         sauvegarde_un_établissement_en_base("2A0000155", "010008407", base_de_données_test)
@@ -137,8 +142,8 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
     @patch.object(datacrawler, "sauvegarde")
     def test_revient_à_la_situation_initiale_si_l_écriture_des_activités_échoue(self, mocked_sauvegarde: Mock) -> None:
         # GIVEN
-        chemin_du_fichier_men_pmsi_annuel = "data_set/diamant/MEN_PMSI_ANNUEL_2022_06_07.CSV"
-        chemin_du_fichier_ann_rpu = "data_set/diamant/ANN_RPU_2022_06_23.CSV"
+        chemin_du_fichier_men_pmsi_annuel = get_absolute_file_path("data_set/diamant/MEN_PMSI_ANNUEL_2022_06_07.CSV")
+        chemin_du_fichier_ann_rpu = get_absolute_file_path("data_set/diamant/ANN_RPU_2022_06_23.CSV")
         sauvegarde_une_entité_juridique_en_base("010008407", base_de_données_test)
         sauvegarde_un_établissement_en_base("010003598", "010008407", base_de_données_test)
         sauvegarde_une_date_de_mise_à_jour_de_fichier_source("20200101", FichierSource.DIAMANT_MEN_PMSI_ANNUEL, base_de_données_test)

@@ -18,6 +18,7 @@ from datacrawler.load.nom_des_tables import (
     TABLES_DES_RESSOURCES_HUMAINES_MÉDICO_SOCIAL,
     TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS,
     FichierSource,
+    TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES,
 )
 from datacrawler.transform.équivalences_diamant_helios import (
     index_des_activités,
@@ -108,6 +109,7 @@ def supprime_les_données_des_tables(base_de_données: Engine) -> None:
     base_de_données.execute("DELETE FROM etablissement_territorial;")
     base_de_données.execute(f"DELETE FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX};")
     base_de_données.execute(f"DELETE FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES};")
+    base_de_données.execute(f"DELETE FROM {TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES};")
     base_de_données.execute(f"DELETE FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_SANITAIRES};")
