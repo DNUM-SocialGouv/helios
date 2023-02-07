@@ -82,7 +82,8 @@
         "jest/no-hooks": "off",
         "jest/require-hook": "off",
         "jest/prefer-expect-assertions": "off",
-        "jest/prefer-lowercase-title": [ "error", { "ignore": ["describe"] } ]
+        "jest/prefer-lowercase-title": [ "error", { "ignore": ["describe"] } ],
+        "jest/prefer-strict-equal": "off"
       }
     },
     {

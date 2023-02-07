@@ -2,7 +2,8 @@ import { DataSource } from "typeorm";
 
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
-import { CatégorisationEnum, EntitéJuridique } from "../../../métier/entities/entité-juridique/EntitéJuridique";
+import { CatégorisationEnum, EntitéJuridiqueIdentité } from "../../../métier/entities/entité-juridique/EntitéJuridique";
+import { EntitéJuridiqueActivités } from "../../../métier/entities/entité-juridique/EntitéJuridiqueActivités";
 import { EntitéJuridiqueNonTrouvée } from "../../../métier/entities/EntitéJuridiqueNonTrouvée";
 import { EntitéJuridiqueDeRattachement } from "../../../métier/entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement";
 import { EntitéJuridiqueLoader } from "../../../métier/gateways/EntitéJuridiqueLoader";
@@ -10,7 +11,7 @@ import { EntitéJuridiqueLoader } from "../../../métier/gateways/EntitéJuridiq
 export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
   constructor(private readonly orm: Promise<DataSource>) {}
 
-  async chargeIdentité(numéroFiness: string): Promise<EntitéJuridique | EntitéJuridiqueNonTrouvée> {
+  async chargeIdentité(numéroFiness: string): Promise<EntitéJuridiqueIdentité | EntitéJuridiqueNonTrouvée> {
     const entitéJuridiqueIdentitéModel = await this.chargeLIdentitéModel(numéroFiness);
 
     if (!entitéJuridiqueIdentitéModel) {
@@ -40,7 +41,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
   private construisLEntitéJuridique(
     entitéJuridiqueModel: EntitéJuridiqueModel,
     dateDeMiseAJourFichierSourceModel: DateMiseÀJourFichierSourceModel
-  ): EntitéJuridique {
+  ): EntitéJuridiqueIdentité {
     return {
       adresseAcheminement: {
         dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
@@ -100,5 +101,17 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
         value: entitéJuridiqueModel.libelléStatutJuridique,
       },
     };
+  }
+
+  chargeActivités(numéroFiness: string): Promise<EntitéJuridiqueActivités> {
+    // eslint-disable-next-line no-console
+    console.log(numéroFiness);
+    return Promise.resolve({
+      année: 2020,
+      nombreDePassagesAuxUrgences: {
+        dateMiseÀJourSource: "2022-14-04",
+        value: 10,
+      },
+    });
   }
 }

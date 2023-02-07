@@ -45,7 +45,7 @@ describe("Entité juridique loader", () => {
 
       // THEN
       expect(entitéJuridique).toStrictEqual(
-        EntitéJuridiqueTestBuilder.créeEntitéJuridique({
+        EntitéJuridiqueTestBuilder.créeEntitéJuridiqueIdentité({
           numéroFinessEntitéJuridique: {
             dateMiseÀJourSource: "2022-05-14",
             value: numéroFinessEntitéJuridique,

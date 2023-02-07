@@ -1,4 +1,6 @@
-export type EntitéJuridique = Readonly<{
+import { EntitéJuridiqueActivités } from "./EntitéJuridiqueActivités";
+
+export type EntitéJuridiqueIdentité = {
   adresseAcheminement: Readonly<{
     dateMiseÀJourSource: string;
     value: string;
@@ -40,9 +42,12 @@ export type EntitéJuridique = Readonly<{
     dateMiseÀJourSource: string;
     value: string;
   }>;
-  activités: Readonly<{}>;
-  // add entity acitivity type
-}>;
+};
+
+export type EntitéJuridique = EntitéJuridiqueIdentité &
+  Readonly<{
+    activités: EntitéJuridiqueActivités;
+  }>;
 
 export enum CatégorisationEnum {
   PUBLIC = "public",
