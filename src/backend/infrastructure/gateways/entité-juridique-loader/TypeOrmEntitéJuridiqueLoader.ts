@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm";
 
+import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { CatégorisationEnum, EntitéJuridiqueIdentité } from "../../../métier/entities/entité-juridique/EntitéJuridique";
@@ -36,6 +37,28 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
 
   private async chargeLIdentitéModel(numéroFinessEntitéJuridique: string): Promise<EntitéJuridiqueModel | null> {
     return await (await this.orm).getRepository(EntitéJuridiqueModel).findOneBy({ numéroFinessEntitéJuridique });
+  }
+
+  async chargeActivités(numéroFinessEntitéJuridique: string): Promise<EntitéJuridiqueActivités[]> {
+    const activiteSanitareEJModel = await (await this.orm).getRepository(ActivitéSanitaireEntitéJuridiqueModel).findBy({ numéroFinessEntitéJuridique });
+    const dateMisAJour = (await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.DIAMANT_ANN_RPU })) as DateMiseÀJourFichierSourceModel;
+
+    return this.construisEntitéJuridiqueActivites(activiteSanitareEJModel, dateMisAJour);
+  }
+
+  private construisEntitéJuridiqueActivites(
+    activiteSanitaireEJModel: ActivitéSanitaireEntitéJuridiqueModel[],
+    dateMisAJour: DateMiseÀJourFichierSourceModel
+  ): EntitéJuridiqueActivités[] {
+    return activiteSanitaireEJModel.map((activite) => ({
+      année: activite.année,
+      nombreDePassagesAuxUrgences: {
+        dateMiseÀJourSource: dateMisAJour.dernièreMiseÀJour,
+        value: activite.nombreDePassagesAuxUrgences,
+      },
+    }));
   }
 
   private construisLEntitéJuridique(
@@ -101,17 +124,5 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
         value: entitéJuridiqueModel.libelléStatutJuridique,
       },
     };
-  }
-
-  chargeActivités(numéroFiness: string): Promise<EntitéJuridiqueActivités> {
-    // eslint-disable-next-line no-console
-    console.log(numéroFiness);
-    return Promise.resolve({
-      année: 2020,
-      nombreDePassagesAuxUrgences: {
-        dateMiseÀJourSource: "2022-14-04",
-        value: 10,
-      },
-    });
   }
 }
