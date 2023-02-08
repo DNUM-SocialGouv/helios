@@ -18,7 +18,7 @@ export const Bloc = ({ children, isMain = false, titre, isExpandable = true }: B
     <section aria-label={titre}>
       {isExpandable ? (
         <h2 className={styles["titre-bloc"]}>
-          <button aria-controls={contentId} aria-expanded="true" className={styles["titre-button-bloc"] + " " + classeDuTitre}>
+          <button aria-controls={contentId} aria-expanded="true" className={"fr-accordion__btn " + styles["titre-button-bloc"] + " " + classeDuTitre}>
             {titre}
           </button>
         </h2>
