@@ -22,11 +22,15 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMé
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.annéeInitiale);
 
   if (établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetEtFinancesNeSontPasRenseignées) {
-    return <Bloc titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES}>{wording.INDICATEURS_VIDES}</Bloc>;
+    return (
+      <Bloc isExpandable={false} titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES}>
+        {wording.INDICATEURS_VIDES}
+      </Bloc>
+    );
   }
 
   return (
-    <Bloc estCeIdentité={false} titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES}>
+    <Bloc isMain={false} titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES}>
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         <IndicateurGraphique
           années={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.listeDéroulanteDesAnnéesDuCompteDeRésultat(setAnnéeEnCours)}

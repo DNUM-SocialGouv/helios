@@ -18,11 +18,15 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
   const { wording } = useDependencies();
 
   if (établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéNeSontPasRenseignées) {
-    return <Bloc titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>{wording.INDICATEURS_VIDES}</Bloc>;
+    return (
+      <Bloc isExpandable={false} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>
+        {wording.INDICATEURS_VIDES}
+      </Bloc>
+    );
   }
 
   return (
-    <Bloc estCeIdentité={false} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>
+    <Bloc isMain={false} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         <GraphiqueCapacitésParActivité
           graphiqueCapacitésParActivitéViewModel={établissementTerritorialSanitaireAutorisationsViewModel.graphiqueCapacitésParActivitéViewModel}

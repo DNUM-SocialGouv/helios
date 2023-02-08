@@ -24,11 +24,15 @@ export const BlocRessourcesHumainesMédicoSocial = ({
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(établissementTerritorialMédicoSocialRessourcesHumainesViewModel.annéeInitiale);
 
   if (établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRessourcesHumainesNeSontPasRenseignées) {
-    return <Bloc titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES}>{wording.INDICATEURS_VIDES}</Bloc>;
+    return (
+      <Bloc isExpandable={false} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES}>
+        {wording.INDICATEURS_VIDES}
+      </Bloc>
+    );
   }
 
   return (
-    <Bloc estCeIdentité={false} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES}>
+    <Bloc isMain={false} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES}>
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         <ul>
           <IndicateurGraphique
