@@ -44,22 +44,67 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
       where: { numéroFinessEntitéJuridique },
     });
 
-    const dateMisAJour = (await (await this.orm)
+    const dateMisAJourRPU = (await (await this.orm)
       .getRepository(DateMiseÀJourFichierSourceModel)
       .findOneBy({ fichier: FichierSource.DIAMANT_ANN_RPU })) as DateMiseÀJourFichierSourceModel;
 
-    return this.construisEntitéJuridiqueActivites(activiteSanitareEJModel, dateMisAJour);
+    const dateMiseAJourMenPmsi = (await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.DIAMANT_MEN_PMSI_ANNUEL })) as DateMiseÀJourFichierSourceModel;
+
+    return this.construisEntitéJuridiqueActivites(activiteSanitareEJModel, dateMisAJourRPU, dateMiseAJourMenPmsi);
   }
 
   private construisEntitéJuridiqueActivites(
     activiteSanitaireEJModel: ActivitéSanitaireEntitéJuridiqueModel[],
-    dateMisAJour: DateMiseÀJourFichierSourceModel
+    dateMisAJourRPU: DateMiseÀJourFichierSourceModel,
+    dateDeMiseAJourMenPmsiAnnuel: DateMiseÀJourFichierSourceModel
   ): EntitéJuridiqueActivités[] {
     return activiteSanitaireEJModel.map((activite) => ({
       année: activite.année,
       nombreDePassagesAuxUrgences: {
-        dateMiseÀJourSource: dateMisAJour.dernièreMiseÀJour,
+        dateMiseÀJourSource: dateMisAJourRPU.dernièreMiseÀJour,
         value: activite.nombreDePassagesAuxUrgences,
+      },
+      nombreJournéesCompletesPsy: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
+        value: activite.nombreJournéesCompletesPsy,
+      },
+      nombreJournéesCompletesSsr: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
+        value: activite.nombreJournéesCompletesSsr,
+      },
+      nombreJournéesPartiellesPsy: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
+        value: activite.nombreJournéesPartiellesPsy,
+      },
+      nombreJournéesPartiellesSsr: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
+        value: activite.nombreJournéesPartiellesSsr,
+      },
+      nombreSéjoursCompletsChirurgie: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
+        value: activite.nombreSéjoursCompletsChirurgie,
+      },
+      nombreSéjoursCompletsMédecine: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
+        value: activite.nombreSéjoursCompletsMédecine,
+      },
+      nombreSéjoursCompletsObstétrique: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
+        value: activite.nombreSéjoursCompletsObstétrique,
+      },
+      nombreSéjoursPartielsChirurgie: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
+        value: activite.nombreSéjoursPartielsChirurgie,
+      },
+      nombreSéjoursPartielsMédecine: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
+        value: activite.nombreSéjoursPartielsMédecine,
+      },
+      nombreSéjoursPartielsObstétrique: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
+        value: activite.nombreSéjoursPartielsObstétrique,
       },
     }));
   }

@@ -108,10 +108,19 @@ describe("Entité juridique loader", () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }));
       const activites = new ActivitéSanitaireEntitéJuridiqueModel();
-      activites.année = 2021;
-      activites.nombreDePassagesAuxUrgences = 10;
-      activites.nombreJournéesCompletesSsr = 1;
       activites.numéroFinessEntitéJuridique = numéroFinessEntitéJuridique;
+      activites.année = 2021;
+      activites.nombreJournéesCompletesSsr = 1;
+      activites.nombreJournéesCompletesPsy = 2;
+      activites.nombreJournéesPartiellesPsy = 3;
+      activites.nombreJournéesPartiellesSsr = 4;
+      activites.nombreSéjoursCompletsObstétrique = 5;
+      activites.nombreSéjoursCompletsChirurgie = 6;
+      activites.nombreSéjoursCompletsMédecine = 7;
+      activites.nombreSéjoursPartielsMédecine = 8;
+      activites.nombreSéjoursPartielsChirurgie = 9;
+      activites.nombreSéjoursPartielsObstétrique = 10;
+      activites.nombreDePassagesAuxUrgences = 11;
 
       await entitéJuridiqueActivitésRepository.insert(activites);
       await dateMiseÀJourFichierSourceRepository.insert([
@@ -119,7 +128,12 @@ describe("Entité juridique loader", () => {
           dernièreMiseÀJour: "2022-05-14",
           fichier: FichierSource.DIAMANT_ANN_RPU,
         }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: "2023-01-01",
+          fichier: FichierSource.DIAMANT_MEN_PMSI_ANNUEL,
+        }),
       ]);
+
       const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
 
       // WHEN
@@ -131,6 +145,46 @@ describe("Entité juridique loader", () => {
           année: 2021,
           nombreDePassagesAuxUrgences: {
             dateMiseÀJourSource: "2022-05-14",
+            value: 11,
+          },
+          nombreJournéesCompletesSsr: {
+            dateMiseÀJourSource: "2023-01-01",
+            value: 1,
+          },
+          nombreJournéesCompletesPsy: {
+            dateMiseÀJourSource: "2023-01-01",
+            value: 2,
+          },
+          nombreJournéesPartiellesPsy: {
+            dateMiseÀJourSource: "2023-01-01",
+            value: 3,
+          },
+          nombreJournéesPartiellesSsr: {
+            dateMiseÀJourSource: "2023-01-01",
+            value: 4,
+          },
+          nombreSéjoursCompletsObstétrique: {
+            dateMiseÀJourSource: "2023-01-01",
+            value: 5,
+          },
+          nombreSéjoursCompletsChirurgie: {
+            dateMiseÀJourSource: "2023-01-01",
+            value: 6,
+          },
+          nombreSéjoursCompletsMédecine: {
+            dateMiseÀJourSource: "2023-01-01",
+            value: 7,
+          },
+          nombreSéjoursPartielsMédecine: {
+            dateMiseÀJourSource: "2023-01-01",
+            value: 8,
+          },
+          nombreSéjoursPartielsChirurgie: {
+            dateMiseÀJourSource: "2023-01-01",
+            value: 9,
+          },
+          nombreSéjoursPartielsObstétrique: {
+            dateMiseÀJourSource: "2023-01-01",
             value: 10,
           },
         },

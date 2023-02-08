@@ -50,14 +50,15 @@ describe("La récupération d’une entité juridique", () => {
 
   it("récupère toutes les activités agrégées de Entité Juridique", async () => {
     // GIVEN
+    const mockActivités = {
+      année: 2022,
+      nombreDePassagesAuxUrgences: {
+        dateMiseÀJourSource: "2020-10-01",
+        value: 10,
+      },
+    };
     const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
-      chargeActivités: jest.fn().mockResolvedValue({
-        année: 2022,
-        nombreDePassagesAuxUrgences: {
-          dateMiseÀJourSource: "2020-10-01",
-          value: 10,
-        },
-      }),
+      chargeActivités: jest.fn().mockResolvedValue(mockActivités),
     });
     const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
 
@@ -65,12 +66,6 @@ describe("La récupération d’une entité juridique", () => {
     const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
 
     // THEN
-    expect(entitéJuridique.activités).toStrictEqual({
-      année: 2022,
-      nombreDePassagesAuxUrgences: {
-        dateMiseÀJourSource: "2020-10-01",
-        value: 10,
-      },
-    });
+    expect(entitéJuridique.activités).toStrictEqual(mockActivités);
   });
 });
