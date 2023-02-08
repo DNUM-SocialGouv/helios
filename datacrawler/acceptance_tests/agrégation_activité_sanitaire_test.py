@@ -41,7 +41,7 @@ class TestAgrègeLesActivitesSanitaireDesEntitesJuridiques:
         )
 
         with base_de_données_test.begin() as connection:
-            activités.to_sql(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, connection, if_exists="replace", index=False)
+            activités.to_sql(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, connection, if_exists="append", index=False)
 
         # WHEN
         agrège_les_activités_sanitaire_des_entités_juridiques(base_de_données_test)
@@ -62,7 +62,7 @@ class TestAgrègeLesActivitesSanitaireDesEntitesJuridiques:
                 "nombre_journees_partiels_ssr": [3.0, 5.0],
                 "nombre_journees_complete_psy": [3.0, 5.0],
                 "nombre_journées_partielles_psy": [3.0, 5.0],
-                "nombre_passages_urgences": [3.0, 5.0],
+                "nombre_passage_urgence": [3.0, 5.0],
             }
         )
         pd.testing.assert_frame_equal(agrégation_activités_enregistrées, agrégation_activités_attendues)

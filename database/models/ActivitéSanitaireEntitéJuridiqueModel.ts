@@ -8,7 +8,7 @@ export class ActivitéSanitaireEntitéJuridiqueModel {
   @PrimaryColumn({ length: 9, name: "numero_finess_entite_juridique" })
   public numéroFinessEntitéJuridique!: string;
 
-  @Column({ name: "nombre_passages_urgences", nullable: true, type: "float" })
+  @Column({ name: "nombre_passage_urgence", nullable: true, type: "float" })
   public nombreDePassagesAuxUrgences!: number;
 
   @Column({ name: "nombre_sejours_partiels_medecine", nullable: true, type: "float" })

@@ -46,7 +46,7 @@ export type EntitéJuridiqueIdentité = {
 
 export type EntitéJuridique = EntitéJuridiqueIdentité &
   Readonly<{
-    activités: EntitéJuridiqueActivités;
+    activités: EntitéJuridiqueActivités[];
   }>;
 
 export enum CatégorisationEnum {

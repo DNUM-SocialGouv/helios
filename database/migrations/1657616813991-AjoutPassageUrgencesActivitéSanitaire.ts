@@ -11,7 +11,7 @@ export class AjoutNombrePassageUrgencesActivitéSanitaire1657616813991 implement
   async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
       ALTER TABLE activite_sanitaire
-        DROP COLUMN nombre_passage_urgences;
+        DROP COLUMN nombre_passages_urgences;
     `);
   }
 }

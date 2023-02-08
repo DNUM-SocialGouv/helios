@@ -40,12 +40,9 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
   }
 
   async chargeActivités(numéroFinessEntitéJuridique: string): Promise<EntitéJuridiqueActivités[]> {
-    const activiteSanitareEJModel = await (await this.orm)
-      .getRepository(ActivitéSanitaireEntitéJuridiqueModel)
-      .find({
-        where: { numéroFinessEntitéJuridique },
-        select: ["numéroFinessEntitéJuridique", "année", "nombreDePassagesAuxUrgences", "nombreSéjoursCompletsObstétrique"],
-      });
+    const activiteSanitareEJModel = await (await this.orm).getRepository(ActivitéSanitaireEntitéJuridiqueModel).find({
+      where: { numéroFinessEntitéJuridique },
+    });
 
     const dateMisAJour = (await (await this.orm)
       .getRepository(DateMiseÀJourFichierSourceModel)
