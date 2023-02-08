@@ -6,12 +6,13 @@ export class RécupèreLEntitéJuridiqueUseCase {
   constructor(private entitéJuridiqueLoader: EntitéJuridiqueLoader) {}
 
   async exécute(numéroFiness: string): Promise<EntitéJuridique> {
-    const entitéJuridiqueOuErreur = await this.entitéJuridiqueLoader.chargeIdentité(numéroFiness);
+    const entitéJuridiqueIdentitéOuErreur = await this.entitéJuridiqueLoader.chargeIdentité(numéroFiness);
+    const activités = await this.entitéJuridiqueLoader.chargeActivités(numéroFiness);
 
-    if (entitéJuridiqueOuErreur instanceof EntitéJuridiqueNonTrouvée) {
-      throw entitéJuridiqueOuErreur;
+    if (entitéJuridiqueIdentitéOuErreur instanceof EntitéJuridiqueNonTrouvée) {
+      throw entitéJuridiqueIdentitéOuErreur;
     }
 
-    return entitéJuridiqueOuErreur;
+    return { ...entitéJuridiqueIdentitéOuErreur, activités };
   }
 }

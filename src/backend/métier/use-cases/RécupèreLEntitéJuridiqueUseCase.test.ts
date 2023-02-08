@@ -1,3 +1,5 @@
+import { mock } from "jest-mock-extended";
+
 import { EntitéJuridiqueTestBuilder } from "../../test-builder/EntitéJuridiqueTestBuilder";
 import { numéroFinessEntitéJuridique } from "../../testHelper";
 import { EntitéJuridiqueNonTrouvée } from "../entities/EntitéJuridiqueNonTrouvée";
@@ -7,21 +9,23 @@ import { RécupèreLEntitéJuridiqueUseCase } from "./RécupèreLEntitéJuridiqu
 describe("La récupération d’une entité juridique", () => {
   it("récupère la fiche identité de l’entité juridique", async () => {
     // GIVEN
-    const entitéJuridique = EntitéJuridiqueTestBuilder.créeEntitéJuridique({
+    const entitéJuridiqueIdentité = EntitéJuridiqueTestBuilder.créeEntitéJuridiqueIdentité({
       numéroFinessEntitéJuridique: {
         dateMiseÀJourSource: "2022-05-14",
         value: numéroFinessEntitéJuridique,
       },
     });
-    const mockedChargeParNuméroFiness = jest.fn().mockResolvedValueOnce(entitéJuridique);
-    const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeIdentité: mockedChargeParNuméroFiness, chargeRattachement: jest.fn() };
+    const mockedChargeParNuméroFiness = jest.fn().mockResolvedValueOnce(entitéJuridiqueIdentité);
+    const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
+      chargeIdentité: mockedChargeParNuméroFiness,
+    });
     const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
 
     // WHEN
     const ficheIdentitéRécupérée = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
 
     // THEN
-    expect(ficheIdentitéRécupérée).toStrictEqual(entitéJuridique);
+    expect(ficheIdentitéRécupérée).toEqual(entitéJuridiqueIdentité);
     expect(mockedChargeParNuméroFiness).toHaveBeenCalledWith(numéroFinessEntitéJuridique);
     expect(mockedChargeParNuméroFiness).toHaveBeenCalledTimes(1);
   });
@@ -29,7 +33,9 @@ describe("La récupération d’une entité juridique", () => {
   it("signale une alerte si l’entité juridique liée au numéro FINESS n’est pas trouvée", async () => {
     // GIVEN
     const mockedChargeParNuméroFiness = jest.fn().mockResolvedValueOnce(new EntitéJuridiqueNonTrouvée(numéroFinessEntitéJuridique));
-    const entitéJuridiqueLoader: EntitéJuridiqueLoader = { chargeIdentité: mockedChargeParNuméroFiness, chargeRattachement: jest.fn() };
+    const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
+      chargeIdentité: mockedChargeParNuméroFiness,
+    });
     const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
 
     // WHEN
@@ -40,5 +46,26 @@ describe("La récupération d’une entité juridique", () => {
       // THEN
       expect(error.message).toBe(`[Helios] L’entité juridique ${numéroFinessEntitéJuridique} n’a pas été trouvée`);
     }
+  });
+
+  it("récupère toutes les activités agrégées de Entité Juridique", async () => {
+    // GIVEN
+    const mockActivités = {
+      année: 2022,
+      nombreDePassagesAuxUrgences: {
+        dateMiseÀJourSource: "2020-10-01",
+        value: 10,
+      },
+    };
+    const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
+      chargeActivités: jest.fn().mockResolvedValue(mockActivités),
+    });
+    const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
+
+    // WHEN
+    const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
+
+    // THEN
+    expect(entitéJuridique.activités).toStrictEqual(mockActivités);
   });
 });

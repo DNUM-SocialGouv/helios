@@ -1,8 +1,10 @@
 import { DataSource } from "typeorm";
 
+import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
-import { CatégorisationEnum, EntitéJuridique } from "../../../métier/entities/entité-juridique/EntitéJuridique";
+import { CatégorisationEnum, EntitéJuridiqueIdentité } from "../../../métier/entities/entité-juridique/EntitéJuridique";
+import { EntitéJuridiqueActivités } from "../../../métier/entities/entité-juridique/EntitéJuridiqueActivités";
 import { EntitéJuridiqueNonTrouvée } from "../../../métier/entities/EntitéJuridiqueNonTrouvée";
 import { EntitéJuridiqueDeRattachement } from "../../../métier/entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement";
 import { EntitéJuridiqueLoader } from "../../../métier/gateways/EntitéJuridiqueLoader";
@@ -10,7 +12,7 @@ import { EntitéJuridiqueLoader } from "../../../métier/gateways/EntitéJuridiq
 export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
   constructor(private readonly orm: Promise<DataSource>) {}
 
-  async chargeIdentité(numéroFiness: string): Promise<EntitéJuridique | EntitéJuridiqueNonTrouvée> {
+  async chargeIdentité(numéroFiness: string): Promise<EntitéJuridiqueIdentité | EntitéJuridiqueNonTrouvée> {
     const entitéJuridiqueIdentitéModel = await this.chargeLIdentitéModel(numéroFiness);
 
     if (!entitéJuridiqueIdentitéModel) {
@@ -37,10 +39,80 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
     return await (await this.orm).getRepository(EntitéJuridiqueModel).findOneBy({ numéroFinessEntitéJuridique });
   }
 
+  async chargeActivités(numéroFinessEntitéJuridique: string): Promise<EntitéJuridiqueActivités[]> {
+    const activiteSanitareEJModel = await (await this.orm).getRepository(ActivitéSanitaireEntitéJuridiqueModel).find({
+      where: { numéroFinessEntitéJuridique },
+    });
+
+    const dateMisAJourRPU = (await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.DIAMANT_ANN_RPU })) as DateMiseÀJourFichierSourceModel;
+
+    const dateMiseAJourMenPmsi = (await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.DIAMANT_MEN_PMSI_ANNUEL })) as DateMiseÀJourFichierSourceModel;
+
+    return this.construisEntitéJuridiqueActivites(activiteSanitareEJModel, dateMisAJourRPU, dateMiseAJourMenPmsi);
+  }
+
+  private construisEntitéJuridiqueActivites(
+    activiteSanitaireEJModel: ActivitéSanitaireEntitéJuridiqueModel[],
+    dateMisAJourRPU: DateMiseÀJourFichierSourceModel,
+    dateDeMiseAJourMenPmsiAnnuel: DateMiseÀJourFichierSourceModel
+  ): EntitéJuridiqueActivités[] {
+    return activiteSanitaireEJModel.map((activite) => ({
+      année: activite.année,
+      nombreDePassagesAuxUrgences: {
+        dateMiseÀJourSource: dateMisAJourRPU.dernièreMiseÀJour,
+        value: activite.nombreDePassagesAuxUrgences,
+      },
+      nombreJournéesCompletesPsy: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
+        value: activite.nombreJournéesCompletesPsy,
+      },
+      nombreJournéesCompletesSsr: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
+        value: activite.nombreJournéesCompletesSsr,
+      },
+      nombreJournéesPartiellesPsy: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
+        value: activite.nombreJournéesPartiellesPsy,
+      },
+      nombreJournéesPartiellesSsr: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
+        value: activite.nombreJournéesPartiellesSsr,
+      },
+      nombreSéjoursCompletsChirurgie: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
+        value: activite.nombreSéjoursCompletsChirurgie,
+      },
+      nombreSéjoursCompletsMédecine: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
+        value: activite.nombreSéjoursCompletsMédecine,
+      },
+      nombreSéjoursCompletsObstétrique: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
+        value: activite.nombreSéjoursCompletsObstétrique,
+      },
+      nombreSéjoursPartielsChirurgie: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
+        value: activite.nombreSéjoursPartielsChirurgie,
+      },
+      nombreSéjoursPartielsMédecine: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
+        value: activite.nombreSéjoursPartielsMédecine,
+      },
+      nombreSéjoursPartielsObstétrique: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
+        value: activite.nombreSéjoursPartielsObstétrique,
+      },
+    }));
+  }
+
   private construisLEntitéJuridique(
     entitéJuridiqueModel: EntitéJuridiqueModel,
     dateDeMiseAJourFichierSourceModel: DateMiseÀJourFichierSourceModel
-  ): EntitéJuridique {
+  ): EntitéJuridiqueIdentité {
     return {
       adresseAcheminement: {
         dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,

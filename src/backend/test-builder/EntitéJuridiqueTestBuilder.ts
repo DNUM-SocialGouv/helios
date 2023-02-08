@@ -1,7 +1,7 @@
-import { CatégorisationEnum, EntitéJuridique } from "../métier/entities/entité-juridique/EntitéJuridique";
+import { CatégorisationEnum, EntitéJuridiqueIdentité } from "../métier/entities/entité-juridique/EntitéJuridique";
 
 export class EntitéJuridiqueTestBuilder {
-  private static entitéJuridique: EntitéJuridique = {
+  private static entitéJuridiqueIdentité: EntitéJuridiqueIdentité = {
     adresseAcheminement: {
       dateMiseÀJourSource: "2022-05-14",
       value: "01117 OYONNAX CEDEX",
@@ -45,9 +45,9 @@ export class EntitéJuridiqueTestBuilder {
     },
   };
 
-  public static créeEntitéJuridique(champsSurchargés?: Partial<EntitéJuridique>): EntitéJuridique {
+  public static créeEntitéJuridiqueIdentité(champsSurchargés?: Partial<EntitéJuridiqueIdentité>): EntitéJuridiqueIdentité {
     return {
-      ...EntitéJuridiqueTestBuilder.entitéJuridique,
+      ...EntitéJuridiqueTestBuilder.entitéJuridiqueIdentité,
       ...champsSurchargés,
     };
   }

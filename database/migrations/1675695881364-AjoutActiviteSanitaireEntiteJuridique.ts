@@ -16,7 +16,7 @@ export class AjoutActiviteSanitaireEntiteJuridique1675695881364 implements Migra
         nombre_journees_partiels_ssr FLOAT, 
         nombre_journees_complete_psy FLOAT,
         nombre_journées_partielles_psy FLOAT,
-        nombre_passages_urgences FLOAT,
+        nombre_passage_urgence FLOAT,
 
         PRIMARY KEY (annee, numero_finess_entite_juridique),
 
