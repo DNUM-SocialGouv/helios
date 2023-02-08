@@ -19,7 +19,11 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéM
   const { wording } = useDependencies();
 
   if (établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitéNeSontPasRenseignées) {
-    return <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>{wording.INDICATEURS_VIDES}</Bloc>;
+    return (
+      <Bloc isExpandable={false} titre={wording.TITRE_BLOC_ACTIVITÉ}>
+        {wording.INDICATEURS_VIDES}
+      </Bloc>
+    );
   }
 
   return (

@@ -4,21 +4,28 @@ import styles from "./Bloc.module.css";
 
 type BlocProps = Readonly<{
   children?: ReactChild | ReactChild[];
-  estCeIdentité?: boolean;
+  isMain?: boolean;
   titre: string;
+  isExpandable?: boolean;
 }>;
 
-export const Bloc = ({ children, estCeIdentité = false, titre }: BlocProps) => {
-  const classeDuTitre = estCeIdentité ? styles["titre-bloc-identite"] : styles["titre-bloc-détail"];
+export const Bloc = ({ children, isMain = false, titre, isExpandable = true }: BlocProps) => {
+  const classeDuTitre = isMain ? styles["titre-bloc-main"] : styles["titre-bloc-secondary"];
+  const classesContent = (isExpandable ? "fr-collapse " : "") + styles["contenu-bloc"];
+  const contentId = "accordion-" + titre;
 
   return (
-    <section aria-label={titre}>
-      <h2 className={styles["titre-bloc"] + " " + classeDuTitre}>
-        <button aria-controls={"accordion-" + titre} aria-expanded="false" className={"fr-accordion__btn " + styles["titre-bloc"] + " " + classeDuTitre}>
-          {titre}
-        </button>
-      </h2>
-      <div className={"fr-collapse " + styles["contenu-bloc"]} id={"accordion-" + titre}>
+    <section>
+      {isExpandable ? (
+        <h2 className={styles["titre-bloc"]}>
+          <button aria-controls={contentId} aria-expanded="true" className={styles["titre-button-bloc"] + " " + classeDuTitre}>
+            {titre}
+          </button>
+        </h2>
+      ) : (
+        <h2 className={styles["titre-bloc"] + " " + classeDuTitre}>{titre}</h2>
+      )}
+      <div className={classesContent} id={contentId}>
         {children}
       </div>
     </section>

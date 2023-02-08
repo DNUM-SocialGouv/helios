@@ -15,7 +15,11 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireActiv
   const { wording } = useDependencies();
 
   if (établissementTerritorialSanitaireActivitéViewModel.lesDonnéesActivitéNeSontPasRenseignées) {
-    return <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>{wording.INDICATEURS_VIDES}</Bloc>;
+    return (
+      <Bloc isExpandable={false} titre={wording.TITRE_BLOC_ACTIVITÉ}>
+        {wording.INDICATEURS_VIDES}
+      </Bloc>
+    );
   }
 
   return (
