@@ -5,9 +5,9 @@ import { ÉtablissementTerritorialSanitaire } from "../../../../backend/métier/
 import { ÉtablissementTerritorialSanitaireActivité } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
 import { Wording } from "../../../configuration/wording/Wording";
 import { CouleurHistogramme, GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
+import { HistogrammeHorizontal } from "../../commun/graphiques/HistogrammeHorizontal";
 import { StringFormater } from "../../commun/StringFormater";
 import { TableIndicateur } from "../../commun/TableIndicateur/TableIndicateur";
-import { HistogrammeHorizontal } from "../../entité-juridique/bloc-activité/HistogrammeHorizontal";
 import stylesBlocActivité from "./BlocActivitéSanitaire.module.css";
 
 type DonnéesDeDiagrammeDesSéjoursMCO = Readonly<{

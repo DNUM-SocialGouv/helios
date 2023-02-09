@@ -3,11 +3,11 @@ import { Context } from "chartjs-plugin-datalabels";
 import { ReactElement } from "react";
 import { Bar } from "react-chartjs-2";
 
-import { useDependencies } from "../../commun/contexts/useDependencies";
-import { CouleurHistogramme, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
-import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
-import { StringFormater } from "../../commun/StringFormater";
-import { TableIndicateur } from "../../commun/TableIndicateur/TableIndicateur";
+import { useDependencies } from "../contexts/useDependencies";
+import { CouleurHistogramme, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../Graphique/GraphiqueViewModel";
+import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
+import { StringFormater } from "../StringFormater";
+import { TableIndicateur } from "../TableIndicateur/TableIndicateur";
 
 type HistogrammeHorizontalProps = {
   valeurs: number[];

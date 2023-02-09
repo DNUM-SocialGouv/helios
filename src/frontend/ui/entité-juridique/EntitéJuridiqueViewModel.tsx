@@ -3,9 +3,9 @@ import { ReactElement } from "react";
 import { CatégorisationEnum, EntitéJuridique } from "../../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueActivités } from "../../../backend/métier/entities/entité-juridique/EntitéJuridiqueActivités";
 import { Wording } from "../../configuration/wording/Wording";
-import { CouleurHistogramme, GraphiqueViewModel } from "../commun/Graphique/GraphiqueViewModel";
+import { GraphiqueViewModel } from "../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../commun/StringFormater";
-import { HistogrammeHorizontal } from "./bloc-activité/HistogrammeHorizontal";
+import { NombrePassageAuxUrgencesViewModel } from "./bloc-activité/nombre-passage-urgence/NombrePassageAuxUrgencesViewModel";
 
 export class CatégorisationViewModel {
   constructor(private readonly catégorisation: CatégorisationEnum | null, private readonly wording: Wording) {}
@@ -124,10 +124,10 @@ export class EntitéJuridiqueViewModel {
 }
 
 export class EntitéJuridiqueActivitésViewModel extends GraphiqueViewModel {
-  readonly ratioHistogrammeNombreDePassagesAuxUrgences = 7;
-
+  public nombreDePassageAuxUrgencesViewModel: NombrePassageAuxUrgencesViewModel;
   constructor(private readonly entitéJuridiqueActivités: EntitéJuridiqueActivités[], wording: Wording) {
     super(wording);
+    this.nombreDePassageAuxUrgencesViewModel = new NombrePassageAuxUrgencesViewModel(entitéJuridiqueActivités, wording);
   }
 
   public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
@@ -136,59 +136,5 @@ export class EntitéJuridiqueActivitésViewModel extends GraphiqueViewModel {
 
   public get activitéEstElleRenseignée(): boolean {
     return this.entitéJuridiqueActivités.length > 0;
-  }
-
-  public get dateDeMiseÀJourDuNombreDePassagesAuxUrgences(): string {
-    return StringFormater.formateLaDate(this.entitéJuridiqueActivités[0].nombreDePassagesAuxUrgences.dateMiseÀJourSource);
-  }
-
-  public get nombreDePassagesAuxUrgences(): ReactElement {
-    const [valeurs, années] = this.construisLesAnnéesEtSesValeurs("nombreDePassagesAuxUrgences");
-    const annéesManquantes = this.annéesManquantes(années, 5);
-    const construisLaCouleurDeLaBarreHorizontale = (_valeur: number, année: number | string): CouleurHistogramme => {
-      return this.estCeLAnnéePassée(année)
-        ? {
-            premierPlan: this.couleurDuFondHistogrammePrimaire,
-            secondPlan: this.couleurDuFond,
-          }
-        : {
-            premierPlan: this.couleurDuFondHistogrammeSecondaire,
-            secondPlan: this.couleurDuFond,
-          };
-    };
-
-    return (
-      <HistogrammeHorizontal
-        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, construisLaCouleurDeLaBarreHorizontale)}
-        entêteLibellé={this.wording.ANNÉE}
-        identifiant={this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES}
-        libellés={années}
-        libellésDeValeursManquantes={annéesManquantes}
-        libellésDesTicks={années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }))}
-        libellésDesValeurs={Array(valeurs.length).fill({ couleur: this.couleurIdentifiant })}
-        nombreDeLibelléTotal={5}
-        ratioLargeurSurHauteur={this.ratioHistogrammeNombreDePassagesAuxUrgences}
-        valeurs={valeurs}
-      />
-    );
-  }
-
-  private construisLesAnnéesEtSesValeurs(
-    indicateur: Exclude<keyof EntitéJuridiqueActivités, "année" | "dateMiseÀJourSource" | "numéroFinessÉtablissementTerritorial">
-  ): number[][] {
-    const valeurs: number[] = [];
-    const années: number[] = [];
-    this.entitéJuridiqueActivités.forEach((activité: EntitéJuridiqueActivités) => {
-      if (activité[indicateur].value !== null) {
-        années.push(activité.année);
-      }
-
-      if (activité[indicateur].value !== null) {
-        // @ts-ignore
-        valeurs.push(activité[indicateur].value);
-      }
-    });
-
-    return [valeurs, années];
   }
 }
