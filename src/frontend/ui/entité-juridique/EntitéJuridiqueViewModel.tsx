@@ -1,7 +1,9 @@
 import { ReactElement } from "react";
 
 import { CatégorisationEnum, EntitéJuridique } from "../../../backend/métier/entities/entité-juridique/EntitéJuridique";
+import { EntitéJuridiqueActivités } from "../../../backend/métier/entities/entité-juridique/EntitéJuridiqueActivités";
 import { Wording } from "../../configuration/wording/Wording";
+import { CouleurHistogramme, GraphiqueViewModel } from "../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../commun/StringFormater";
 
 export class CatégorisationViewModel {
@@ -40,8 +42,10 @@ export class CatégorisationViewModel {
 
 export class EntitéJuridiqueViewModel {
   public catégorisationViewModel: CatégorisationViewModel;
+  public entitéJuridiqueViewModel: EntitéJuridiqueActivitésViewModel;
   constructor(private readonly entitéJuridique: EntitéJuridique, private readonly wording: Wording) {
     this.catégorisationViewModel = new CatégorisationViewModel(entitéJuridique.catégorisation, wording);
+    this.entitéJuridiqueViewModel = new EntitéJuridiqueActivitésViewModel(entitéJuridique.activités, wording);
   }
 
   public get titreAccessible(): ReactElement {
@@ -114,5 +118,73 @@ export class EntitéJuridiqueViewModel {
 
   private valeurOuNonRenseigné(valeur: string): string {
     return valeur === "" ? this.wording.NON_RENSEIGNÉ : valeur;
+  }
+}
+
+export class EntitéJuridiqueActivitésViewModel extends GraphiqueViewModel {
+  readonly ratioHistogrammeNombreDePassagesAuxUrgences = 7;
+
+  constructor(private readonly entitéJuridiqueActivités: EntitéJuridiqueActivités[], wording: Wording) {
+    super(wording);
+  }
+
+  public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
+    return !this.activitéEstElleRenseignée;
+  }
+
+  public get activitéEstElleRenseignée(): boolean {
+    return this.entitéJuridiqueActivités.length > 0;
+  }
+
+  public get dateDeMiseÀJourDuNombreDePassagesAuxUrgences(): string {
+    return StringFormater.formateLaDate(this.entitéJuridiqueActivités[0].nombreDePassagesAuxUrgences.dateMiseÀJourSource);
+  }
+
+  public get nombreDePassagesAuxUrgences(): ReactElement {
+    const [valeurs, années] = this.construisLesAnnéesEtSesValeurs("nombreDePassagesAuxUrgences");
+    const annéesManquantes = this.annéesManquantes(années, 5);
+    const construisLaCouleurDeLaBarreHorizontale = (_valeur: number, année: number | string): CouleurHistogramme => {
+      return this.estCeLAnnéePassée(année)
+        ? {
+            premierPlan: this.couleurDuFondHistogrammePrimaire,
+            secondPlan: this.couleurDuFond,
+          }
+        : {
+            premierPlan: this.couleurDuFondHistogrammeSecondaire,
+            secondPlan: this.couleurDuFond,
+          };
+    };
+
+    return this.afficheUnHistogrammeHorizontal(
+      valeurs,
+      années,
+      this.construisLesCouleursDeLHistogramme(valeurs, années, construisLaCouleurDeLaBarreHorizontale),
+      Array(valeurs.length).fill({ couleur: this.couleurIdentifiant }),
+      années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale })),
+      this.ratioHistogrammeNombreDePassagesAuxUrgences,
+      this.wording.ANNÉE,
+      this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES,
+      annéesManquantes,
+      5
+    );
+  }
+
+  private construisLesAnnéesEtSesValeurs(
+    indicateur: Exclude<keyof EntitéJuridiqueActivités, "année" | "dateMiseÀJourSource" | "numéroFinessÉtablissementTerritorial">
+  ): number[][] {
+    const valeurs: number[] = [];
+    const années: number[] = [];
+    this.entitéJuridiqueActivités.forEach((activité: EntitéJuridiqueActivités) => {
+      if (activité[indicateur].value !== null) {
+        années.push(activité.année);
+      }
+
+      if (activité[indicateur].value !== null) {
+        // @ts-ignore
+        valeurs.push(activité[indicateur].value);
+      }
+    });
+
+    return [valeurs, années];
   }
 }
