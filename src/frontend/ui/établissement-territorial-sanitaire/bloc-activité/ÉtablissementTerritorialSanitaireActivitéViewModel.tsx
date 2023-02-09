@@ -7,6 +7,7 @@ import { Wording } from "../../../configuration/wording/Wording";
 import { CouleurHistogramme, GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../commun/StringFormater";
 import { TableIndicateur } from "../../commun/TableIndicateur/TableIndicateur";
+import { HistogrammeHorizontal } from "../../entité-juridique/bloc-activité/HistogrammeHorizontal";
 import stylesBlocActivité from "./BlocActivitéSanitaire.module.css";
 
 type DonnéesDeDiagrammeDesSéjoursMCO = Readonly<{
@@ -112,17 +113,19 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
           };
     };
 
-    return this.afficheUnHistogrammeHorizontal(
-      valeurs,
-      années,
-      this.construisLesCouleursDeLHistogramme(valeurs, années, construisLaCouleurDeLaBarreHorizontale),
-      Array(valeurs.length).fill({ couleur: this.couleurIdentifiant }),
-      années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale })),
-      this.ratioHistogrammeNombreDePassagesAuxUrgences,
-      this.wording.ANNÉE,
-      this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES,
-      annéesManquantes,
-      5
+    return (
+      <HistogrammeHorizontal
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, construisLaCouleurDeLaBarreHorizontale)}
+        entêteLibellé={this.wording.ANNÉE}
+        identifiant={this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES}
+        libellés={années}
+        libellésDeValeursManquantes={annéesManquantes}
+        libellésDesTicks={années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }))}
+        libellésDesValeurs={Array(valeurs.length).fill({ couleur: this.couleurIdentifiant })}
+        nombreDeLibelléTotal={5}
+        ratioLargeurSurHauteur={this.ratioHistogrammeNombreDePassagesAuxUrgences}
+        valeurs={valeurs}
+      />
     );
   }
 
