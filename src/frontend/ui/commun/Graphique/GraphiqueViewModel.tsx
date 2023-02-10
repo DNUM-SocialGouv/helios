@@ -23,7 +23,7 @@ import { Bar, Doughnut } from "react-chartjs-2";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
 import { Wording } from "../../../configuration/wording/Wording";
-import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
+import { annéesManquantes } from "../../../utils/dateUtils";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
 import { TableIndicateur } from "../TableIndicateur/TableIndicateur";
