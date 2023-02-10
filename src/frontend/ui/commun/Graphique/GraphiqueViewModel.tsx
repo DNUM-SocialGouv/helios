@@ -28,6 +28,7 @@ import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
 import { TableIndicateur } from "../TableIndicateur/TableIndicateur";
 import styles from "./GraphiqueViewModel.module.css";
+import { HistogrammeHorizontal } from "./HistogrammeHorizontal";
 
 export type LibelléDeDonnéeGraphe = Readonly<{
   couleur: string;
@@ -331,45 +332,19 @@ export class GraphiqueViewModel {
     libellésDeValeursManquantes: number[] | string[],
     nombreDeLibelléTotal: number = 3
   ): ReactElement {
-    const data: ChartData = {
-      datasets: [
-        {
-          backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
-          data: valeurs,
-          datalabels: { labels: { title: { color: libellésDesValeurs.map((libellé) => libellé.couleur) } } },
-          maxBarThickness: 60,
-          type: "bar",
-          yAxisID: "y",
-        },
-      ],
-      labels: libellés,
-    };
-    const valeursFrançaises = StringFormater.formateEnFrançais(valeurs);
-
     return (
-      <>
-        {libellésDeValeursManquantes.length < nombreDeLibelléTotal && (
-          <Bar
-            // @ts-ignore
-            data={data}
-            options={this.optionsHistogrammeHorizontal(
-              ratioLargeurSurHauteur,
-              Math.max(...valeurs),
-              libellésDesTicks.map((libellé) => libellé.tailleDePolice)
-            )}
-          />
-        )}
-        {libellésDeValeursManquantes.length > 0 && (
-          <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${libellésDeValeursManquantes.join(", ")}`}</MiseEnExergue>
-        )}
-        <TableIndicateur
-          disabled={libellésDeValeursManquantes.length === nombreDeLibelléTotal}
-          entêteLibellé={entêteLibellé}
-          identifiants={[identifiant]}
-          libellés={libellés}
-          valeurs={[valeursFrançaises]}
-        />
-      </>
+      <HistogrammeHorizontal
+        couleursDeLHistogramme={couleursDeLHistogramme}
+        entêteLibellé={entêteLibellé}
+        identifiant={identifiant}
+        libellés={libellés}
+        libellésDeValeursManquantes={libellésDeValeursManquantes}
+        libellésDesTicks={libellésDesTicks}
+        libellésDesValeurs={libellésDesValeurs}
+        nombreDeLibelléTotal={nombreDeLibelléTotal}
+        ratioLargeurSurHauteur={ratioLargeurSurHauteur}
+        valeurs={valeurs}
+      />
     );
   }
 
