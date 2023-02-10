@@ -286,20 +286,20 @@ export class GraphiqueViewModel {
       ],
       labels: libellés,
     };
-    const annéesManquantes = this.annéesManquantes(libellés, annéesTotales);
+    const listeAnnéesManquantes = annéesManquantes(libellés, annéesTotales);
 
     return (
       <>
-        {annéesManquantes.length < annéesTotales && (
+        {listeAnnéesManquantes.length < annéesTotales && (
           <Bar
             // @ts-ignore
             data={data}
             options={this.optionsHistogrammeVertical(libellésDesTicks.map((libelléDuTick) => libelléDuTick.tailleDePolice))}
           />
         )}
-        {annéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
+        {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
         <TableIndicateur
-          disabled={annéesManquantes.length === annéesTotales}
+          disabled={listeAnnéesManquantes.length === annéesTotales}
           entêteLibellé={entêteLibellé}
           identifiants={[identifiant]}
           libellés={libellés}
@@ -317,10 +317,6 @@ export class GraphiqueViewModel {
     return valeurs.map((valeur: number, index: number) => {
       return calculeLaCouleurDesBarresDeLHistogramme(valeur, libellés[index]);
     });
-  }
-
-  protected estCeLAnnéePassée(année: number | string): boolean {
-    return estCeLAnnéePassée(année);
   }
 
   protected afficheUnHistogrammeHorizontal(
@@ -464,10 +460,6 @@ export class GraphiqueViewModel {
         <menu className={styles["légende-donut"]} id={idDeLaLégende} />
       </div>
     );
-  }
-
-  protected annéesManquantes(années: (number | string)[], annéesTotales: number = 3): number[] {
-    return annéesManquantes(années, annéesTotales);
   }
 
   protected calculeLeRatioDesHistogrammesHorizontaux(nombreDeLignes: number): number {

@@ -34,7 +34,7 @@ export class NombrePassageAuxUrgencesViewModel extends GraphiqueViewModel {
   }
 
   get libellésDesTicks() {
-    return this.années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
+    return this.années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
   }
 
   get libellésDesValeurs() {

@@ -3,6 +3,7 @@ import { ChangeEvent, ReactElement } from "react";
 import { ÉtablissementTerritorialSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 import { CapacitéSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 import { Wording } from "../../../configuration/wording/Wording";
+import { annéesManquantes } from "../../../utils/dateUtils";
 import { ActionneurDAccordéon } from "../../commun/Accordéon/ActionneurDAccordéon";
 import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { Select } from "../../commun/Select/Select";
@@ -129,7 +130,7 @@ export class GraphiqueCapacitésParActivitéViewModel extends GraphiqueViewModel
       ratioHistogrammeCapacitéParActivités,
       this.wording.ACTIVITÉS,
       identifiants,
-      this.annéesManquantes(this.filtrerLesAnnéesAvecDesCapacités(), this.NOMBRE_ANNEES),
+      annéesManquantes(this.filtrerLesAnnéesAvecDesCapacités(), this.NOMBRE_ANNEES),
       this.NOMBRE_ANNEES
     );
   }

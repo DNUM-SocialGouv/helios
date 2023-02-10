@@ -6,6 +6,7 @@ import { Bar } from "react-chartjs-2";
 import { CadreBudgétaire } from "../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
 import { Wording } from "../../../configuration/wording/Wording";
+import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
 import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
 import { IndicateurTabulaire, IndicateurTabulaireProps } from "../../commun/IndicateurTabulaire/IndicateurTabulaire";
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
@@ -135,11 +136,11 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       []
     );
 
-    const annéesManquantes = this.annéesManquantes(
+    const listeAnnéesManquantes = annéesManquantes(
       this.budgetEtFinancesMédicoSocial.map((montantDesContributionsAuxFraisDeSiègeParAnnée) => montantDesContributionsAuxFraisDeSiègeParAnnée.année)
     );
 
-    return <IndicateurTabulaire annéesManquantes={annéesManquantes} valeursParAnnée={montantDesContributionsAuxFraisDeSiègeParAnnée} />;
+    return <IndicateurTabulaire annéesManquantes={listeAnnéesManquantes} valeursParAnnée={montantDesContributionsAuxFraisDeSiègeParAnnée} />;
   }
 
   public get dateMiseÀJourMontantDeLaContributionAuxFraisDeSiège(): string {
@@ -162,7 +163,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       let premierPlan = this.couleurDuFondHistogrammeSecondaire;
       let secondPlan = this.couleurDuFond;
 
-      if (this.estCeLAnnéePassée(année)) {
+      if (estCeLAnnéePassée(année)) {
         premierPlan = this.couleurDuFondHistogrammePrimaire;
         secondPlan = this.couleurDuFond;
       }
@@ -174,7 +175,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       return { premierPlan, secondPlan };
     };
     const libellésDesValeurs = valeurs.map((valeur) => ({ couleur: valeur > this.seuilDuContrasteDuLibellé ? this.couleurDuFond : this.couleurIdentifiant }));
-    const libellésDesTicks = années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
+    const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
 
     return this.afficheUnHistogrammeVertical(
       valeurs,
@@ -209,9 +210,9 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       []
     );
 
-    const annéesManquantes = this.annéesManquantes(this.budgetEtFinancesMédicoSocial.map((résultatNetComptableParAnnée) => résultatNetComptableParAnnée.année));
+    const listeAnnéesManquantes = annéesManquantes(this.budgetEtFinancesMédicoSocial.map((résultatNetComptableParAnnée) => résultatNetComptableParAnnée.année));
 
-    return <IndicateurTabulaire annéesManquantes={annéesManquantes} valeursParAnnée={résultatNetComptableParAnnée} />;
+    return <IndicateurTabulaire annéesManquantes={listeAnnéesManquantes} valeursParAnnée={résultatNetComptableParAnnée} />;
   }
 
   public get dateMiseÀJourRésultatNetComptable(): string {
@@ -234,7 +235,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       let premierPlan = this.couleurDuFondHistogrammeSecondaire;
       let secondPlan = this.couleurDuFond;
 
-      if (this.estCeLAnnéePassée(année)) {
+      if (estCeLAnnéePassée(année)) {
         premierPlan = this.couleurDuFondHistogrammePrimaire;
         secondPlan = this.couleurDuFond;
       }
@@ -246,7 +247,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       return { premierPlan, secondPlan };
     };
     const libellésDesValeurs = valeurs.map(() => ({ couleur: this.couleurDuFond }));
-    const libellésDesTicks = années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
+    const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
 
     return this.afficheLHistogrammeDuTauxDeCaf(
       valeurs,
@@ -282,7 +283,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     );
     const annéesAvecDonnées = fondsDeRoulementNetGlobalParAnnée.map((fondsDeRoulementNetGlobalParAnnée) => fondsDeRoulementNetGlobalParAnnée.année);
 
-    const annéesAvecMiseEnExergue = this.annéesManquantes(annéesAvecDonnées.concat(annéesSousCadreAutreQueErrd), this.nombreDAnnéesParIndicateur);
+    const annéesAvecMiseEnExergue = annéesManquantes(annéesAvecDonnées.concat(annéesSousCadreAutreQueErrd), this.nombreDAnnéesParIndicateur);
 
     return <IndicateurTabulaire annéesManquantes={annéesAvecMiseEnExergue} valeursParAnnée={fondsDeRoulementNetGlobalParAnnée} />;
   }
@@ -335,7 +336,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       ],
       labels: années,
     };
-    const annéesManquantes = this.annéesManquantes(années);
+    const listeAnnéesManquantes = annéesManquantes(années);
 
     return (
       <>
@@ -346,7 +347,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
             options={this.construisLesOptionsDeLHistogrammeDuTauxDeCaf(couleursDeLHistogramme, libellésDesTicks, maxDeLHistogramme, minDeLHistogramme)}
           />
         )}
-        {annéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
+        {annéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
         <TableIndicateur
           disabled={annéesManquantes.length === this.nombreDAnnéesParIndicateur}
           entêteLibellé={this.wording.ANNÉE}
@@ -488,7 +489,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
   }
 
   private lesAnnéesManquantesDuCompteDeRésultat(): number[] {
-    return this.annéesManquantes(this.lesAnnéesEffectivesDuCompteDeRésultat());
+    return annéesManquantes(this.lesAnnéesEffectivesDuCompteDeRésultat());
   }
 
   private annéesRangéesParAntéChronologie(): number[] {
