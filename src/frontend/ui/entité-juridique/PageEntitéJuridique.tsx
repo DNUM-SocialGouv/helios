@@ -32,7 +32,7 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, établissement
       <Titre logo={LogoEntitéJuridique}>{entitéJuridiqueViewModel.titre}</Titre>
       <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
       <ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />
-      <BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueViewModel} />
+      <BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel} />
     </main>
   );
 };

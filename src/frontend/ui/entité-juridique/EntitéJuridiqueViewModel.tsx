@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 
 import { CatégorisationEnum, EntitéJuridique } from "../../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueActivités } from "../../../backend/métier/entities/entité-juridique/EntitéJuridiqueActivités";
+import { IndicateurActivité } from "../../../backend/métier/entities/indicateurs/IndicateurActivité";
 import { Wording } from "../../configuration/wording/Wording";
 import { GraphiqueViewModel } from "../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../commun/StringFormater";
@@ -43,11 +44,11 @@ export class CatégorisationViewModel {
 
 export class EntitéJuridiqueViewModel {
   public catégorisationViewModel: CatégorisationViewModel;
-  public entitéJuridiqueViewModel: EntitéJuridiqueActivitésViewModel;
+  public entitéJuridiqueActivitéViewModel: EntitéJuridiqueActivitésViewModel;
 
   constructor(private readonly entitéJuridique: EntitéJuridique, private readonly wording: Wording) {
     this.catégorisationViewModel = new CatégorisationViewModel(entitéJuridique.catégorisation, wording);
-    this.entitéJuridiqueViewModel = new EntitéJuridiqueActivitésViewModel(entitéJuridique.activités, wording);
+    this.entitéJuridiqueActivitéViewModel = new EntitéJuridiqueActivitésViewModel(entitéJuridique.activités, wording);
   }
 
   public get titreAccessible(): ReactElement {
@@ -124,10 +125,22 @@ export class EntitéJuridiqueViewModel {
 }
 
 export class EntitéJuridiqueActivitésViewModel extends GraphiqueViewModel {
+  // @ts-ignore
   public nombreDePassageAuxUrgencesViewModel: NombrePassageAuxUrgencesViewModel;
   constructor(private readonly entitéJuridiqueActivités: EntitéJuridiqueActivités[], wording: Wording) {
     super(wording);
-    this.nombreDePassageAuxUrgencesViewModel = new NombrePassageAuxUrgencesViewModel(entitéJuridiqueActivités, wording);
+    this.createNombrePassageUrgenceViewModel(wording);
+  }
+
+  private createNombrePassageUrgenceViewModel(wording: Wording) {
+    const indicateurNombrePassage: IndicateurActivité[] = this.entitéJuridiqueActivités.map((activité) => {
+      return {
+        année: activité.année,
+        dateMiseÀJourSource: activité.nombreDePassagesAuxUrgences.dateMiseÀJourSource,
+        value: activité.nombreDePassagesAuxUrgences.value,
+      };
+    });
+    this.nombreDePassageAuxUrgencesViewModel = new NombrePassageAuxUrgencesViewModel(indicateurNombrePassage, wording);
   }
 
   public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
