@@ -1,4 +1,4 @@
-import { EntitéJuridiqueActivités } from "../../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueActivités";
+import { IndicateurActivité } from "../../../../../backend/métier/entities/indicateurs/IndicateurActivité";
 import { Wording } from "../../../../configuration/wording/Wording";
 import { CouleurHistogramme, GraphiqueViewModel } from "../../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../../commun/StringFormater";
@@ -9,15 +9,15 @@ export class NombrePassageAuxUrgencesViewModel extends GraphiqueViewModel {
   private années: number[];
   public nombreDeLibelléTotal = 5;
 
-  constructor(private readonly entitéJuridiqueActivités: EntitéJuridiqueActivités[], wording: Wording) {
+  constructor(private readonly indicateurActivité: IndicateurActivité[], wording: Wording) {
     super(wording);
-    const [valeurs, années] = this.construisLesAnnéesEtSesValeurs("nombreDePassagesAuxUrgences");
+    const [valeurs, années] = this.construisLesAnnéesEtSesValeurs();
     this.valeurs = valeurs;
     this.années = années;
   }
 
   public get dateMiseAJour(): string {
-    return StringFormater.formateLaDate(this.entitéJuridiqueActivités[0].nombreDePassagesAuxUrgences.dateMiseÀJourSource);
+    return StringFormater.formateLaDate(this.indicateurActivité[0].dateMiseÀJourSource);
   }
 
   get ratioLargeurSurHauteur() {
@@ -59,19 +59,16 @@ export class NombrePassageAuxUrgencesViewModel extends GraphiqueViewModel {
     return this.construisLesCouleursDeLHistogramme(this.valeurs, this.années, construisLaCouleurDeLaBarreHorizontale);
   }
 
-  private construisLesAnnéesEtSesValeurs(
-    indicateur: Exclude<keyof EntitéJuridiqueActivités, "année" | "dateMiseÀJourSource" | "numéroFinessÉtablissementTerritorial">
-  ): number[][] {
+  private construisLesAnnéesEtSesValeurs(): number[][] {
     const valeurs: number[] = [];
     const années: number[] = [];
-    this.entitéJuridiqueActivités.forEach((activité: EntitéJuridiqueActivités) => {
-      if (activité[indicateur].value !== null) {
-        années.push(activité.année);
+    this.indicateurActivité.forEach((indicateur: IndicateurActivité) => {
+      if (indicateur.value !== null) {
+        années.push(indicateur.année);
       }
 
-      if (activité[indicateur].value !== null) {
-        // @ts-ignore
-        valeurs.push(activité[indicateur].value);
+      if (indicateur.value !== null) {
+        valeurs.push(indicateur.value);
       }
     });
 
