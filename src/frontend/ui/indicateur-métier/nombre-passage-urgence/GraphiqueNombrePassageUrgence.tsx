@@ -1,7 +1,7 @@
-import { useDependencies } from "../../../commun/contexts/useDependencies";
-import { HistogrammeHorizontal } from "../../../commun/Graphique/HistogrammeHorizontal";
-import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
-import { ContenuNombreDePassagesAuxUrgences } from "../../../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDePassagesAuxUrgences";
+import { useDependencies } from "../../commun/contexts/useDependencies";
+import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
+import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
+import { ContenuNombreDePassagesAuxUrgences } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDePassagesAuxUrgences";
 import { NombrePassageAuxUrgencesViewModel } from "./NombrePassageAuxUrgencesViewModel";
 
 type GraphiqueNombrePassageUrgenceProps = Readonly<{

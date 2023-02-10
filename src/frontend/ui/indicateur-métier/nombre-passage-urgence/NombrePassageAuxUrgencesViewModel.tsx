@@ -1,7 +1,7 @@
-import { IndicateurActivité } from "../../../../../backend/métier/entities/indicateurs/IndicateurActivité";
-import { Wording } from "../../../../configuration/wording/Wording";
-import { CouleurHistogramme, GraphiqueViewModel } from "../../../commun/Graphique/GraphiqueViewModel";
-import { StringFormater } from "../../../commun/StringFormater";
+import { IndicateurActivité } from "../../../../backend/métier/entities/indicateurs/IndicateurActivité";
+import { Wording } from "../../../configuration/wording/Wording";
+import { CouleurHistogramme, GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
+import { StringFormater } from "../../commun/StringFormater";
 
 export class NombrePassageAuxUrgencesViewModel extends GraphiqueViewModel {
   readonly ratioHistogrammeNombreDePassagesAuxUrgences = 7;

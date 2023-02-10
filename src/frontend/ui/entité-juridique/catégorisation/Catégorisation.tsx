@@ -1,5 +1,5 @@
 import { Badge } from "../../commun/Badge/Badge";
-import { CatégorisationViewModel } from "../EntitéJuridiqueViewModel";
+import { CatégorisationViewModel } from "./CatégorisationViewModel";
 
 type CatégorisationProps = { catégorisationViewModel: CatégorisationViewModel };
 

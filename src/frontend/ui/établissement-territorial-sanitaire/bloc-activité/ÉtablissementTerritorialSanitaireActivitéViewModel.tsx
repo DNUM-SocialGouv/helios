@@ -5,11 +5,10 @@ import { IndicateurActivité } from "../../../../backend/métier/entities/indica
 import { ÉtablissementTerritorialSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 import { ÉtablissementTerritorialSanitaireActivité } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
 import { Wording } from "../../../configuration/wording/Wording";
-import { CouleurHistogramme, GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
-import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
+import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../commun/StringFormater";
 import { TableIndicateur } from "../../commun/TableIndicateur/TableIndicateur";
-import { NombrePassageAuxUrgencesViewModel } from "../../entité-juridique/bloc-activité/nombre-passage-urgence/NombrePassageAuxUrgencesViewModel";
+import { NombrePassageAuxUrgencesViewModel } from "../../indicateur-métier/nombre-passage-urgence/NombrePassageAuxUrgencesViewModel";
 import stylesBlocActivité from "./BlocActivitéSanitaire.module.css";
 
 type DonnéesDeDiagrammeDesSéjoursMCO = Readonly<{
@@ -37,7 +36,6 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
   readonly couleurDuFondHistogrammeRougeFoncé = "#A94645";
   readonly identifiantDeLaLégendeDesSéjoursMCO = "légende-graphique-sanitaire-journées-séjours-mco";
   readonly identifiantDeLaLégendeDesJournéesPsyEtSsr = "légende-graphique-sanitaire-journées-psy-et-ssr";
-  readonly ratioHistogrammeNombreDePassagesAuxUrgences = 7;
 
   // @ts-ignore
   nombreDePassagesAuxUrgencesViewModel: NombrePassageAuxUrgencesViewModel;
@@ -115,41 +113,6 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
     return this.lIndicateurEstIlRenseigné("nombreDePassagesAuxUrgences");
   }
 
-  public get nombreDePassagesAuxUrgences(): ReactElement {
-    const [valeurs, années] = this.construisLesAnnéesEtSesValeurs("nombreDePassagesAuxUrgences");
-    const annéesManquantes = this.annéesManquantes(années, 5);
-    const construisLaCouleurDeLaBarreHorizontale = (_valeur: number, année: number | string): CouleurHistogramme => {
-      return this.estCeLAnnéePassée(année)
-        ? {
-            premierPlan: this.couleurDuFondHistogrammePrimaire,
-            secondPlan: this.couleurDuFond,
-          }
-        : {
-            premierPlan: this.couleurDuFondHistogrammeSecondaire,
-            secondPlan: this.couleurDuFond,
-          };
-    };
-
-    return (
-      <HistogrammeHorizontal
-        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, construisLaCouleurDeLaBarreHorizontale)}
-        entêteLibellé={this.wording.ANNÉE}
-        identifiant={this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES}
-        libellés={années}
-        libellésDeValeursManquantes={annéesManquantes}
-        libellésDesTicks={années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }))}
-        libellésDesValeurs={Array(valeurs.length).fill({ couleur: this.couleurIdentifiant })}
-        nombreDeLibelléTotal={5}
-        ratioLargeurSurHauteur={this.ratioHistogrammeNombreDePassagesAuxUrgences}
-        valeurs={valeurs}
-      />
-    );
-  }
-
-  public get dateDeMiseÀJourDuNombreDePassagesAuxUrgences(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialSanitaireActivités[0].nombreDePassagesAuxUrgences.dateMiseÀJourSource);
-  }
-
   private construisLesSéjoursMCOParAnnée(): [DonnéesDeDiagrammeDesSéjoursMCO, number[]] {
     const nombreDeSéjours: DonnéesDeDiagrammeDesSéjoursMCO = {
       nombreSéjoursCompletsChirurgie: [],
@@ -220,25 +183,6 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
       });
     });
     return [nombreDeJournées, années];
-  }
-
-  private construisLesAnnéesEtSesValeurs(
-    indicateur: Exclude<keyof ÉtablissementTerritorialSanitaireActivité, "année" | "dateMiseÀJourSource" | "numéroFinessÉtablissementTerritorial">
-  ): number[][] {
-    const valeurs: number[] = [];
-    const années: number[] = [];
-    this.établissementTerritorialSanitaireActivités.forEach((activité: ÉtablissementTerritorialSanitaireActivité) => {
-      if (activité[indicateur].value !== null) {
-        années.push(activité.année);
-      }
-
-      if (activité[indicateur].value !== null) {
-        // @ts-ignore
-        valeurs.push(activité[indicateur].value);
-      }
-    });
-
-    return [valeurs, années];
   }
 
   private lIndicateurEstIlRenseigné(

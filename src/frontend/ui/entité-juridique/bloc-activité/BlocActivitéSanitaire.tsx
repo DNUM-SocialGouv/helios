@@ -1,8 +1,8 @@
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
-import { EntitéJuridiqueActivitésViewModel } from "../EntitéJuridiqueViewModel";
+import { GraphiqueNombrePassageUrgence } from "../../indicateur-métier/nombre-passage-urgence/GraphiqueNombrePassageUrgence";
 import styles from "./BlocActivitéSanitaire.module.css";
-import { GraphiqueNombrePassageUrgence } from "./nombre-passage-urgence/GraphiqueNombrePassageUrgence";
+import { EntitéJuridiqueActivitésViewModel } from "./EntitéJuridiqueActivitésViewModel";
 
 type BlocActivitéSanitaireProps = Readonly<{
   entitéJuridiqueActivitéViewModel: EntitéJuridiqueActivitésViewModel;

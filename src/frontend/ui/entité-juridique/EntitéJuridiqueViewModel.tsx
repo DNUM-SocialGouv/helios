@@ -1,46 +1,10 @@
 import { ReactElement } from "react";
 
-import { CatégorisationEnum, EntitéJuridique } from "../../../backend/métier/entities/entité-juridique/EntitéJuridique";
-import { EntitéJuridiqueActivités } from "../../../backend/métier/entities/entité-juridique/EntitéJuridiqueActivités";
-import { IndicateurActivité } from "../../../backend/métier/entities/indicateurs/IndicateurActivité";
+import { EntitéJuridique } from "../../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { Wording } from "../../configuration/wording/Wording";
-import { GraphiqueViewModel } from "../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../commun/StringFormater";
-import { NombrePassageAuxUrgencesViewModel } from "./bloc-activité/nombre-passage-urgence/NombrePassageAuxUrgencesViewModel";
-
-export class CatégorisationViewModel {
-  constructor(private readonly catégorisation: CatégorisationEnum | null, private readonly wording: Wording) {}
-
-  public get catégorisationWording(): string | null {
-    switch (this.catégorisation) {
-      case CatégorisationEnum.PRIVE_LUCRATIF:
-        return this.wording.PRIVÉ_LUCRATIF;
-      case CatégorisationEnum.PRIVE_NON_LUCRATIF:
-        return this.wording.PRIVÉ_NON_LUCRATIF;
-      case CatégorisationEnum.PUBLIC:
-        return this.wording.PUBLIC;
-      case CatégorisationEnum.PERSONNE_MORALE_DROIT_ETRANGER:
-        return this.wording.PERSONNE_MORALE_DROIT_ÉTRANGER;
-      default:
-        return null;
-    }
-  }
-
-  public get catégorisationColour(): string | undefined {
-    switch (this.catégorisation) {
-      case CatégorisationEnum.PRIVE_LUCRATIF:
-        return "green-archipel";
-      case CatégorisationEnum.PRIVE_NON_LUCRATIF:
-        return "blue-ecume";
-      case CatégorisationEnum.PUBLIC:
-        return "purple-glycine";
-      case CatégorisationEnum.PERSONNE_MORALE_DROIT_ETRANGER:
-        return "yellow-moutarde";
-      default:
-        return undefined;
-    }
-  }
-}
+import { EntitéJuridiqueActivitésViewModel } from "./bloc-activité/EntitéJuridiqueActivitésViewModel";
+import { CatégorisationViewModel } from "./catégorisation/CatégorisationViewModel";
 
 export class EntitéJuridiqueViewModel {
   public catégorisationViewModel: CatégorisationViewModel;
@@ -121,33 +85,5 @@ export class EntitéJuridiqueViewModel {
 
   private valeurOuNonRenseigné(valeur: string): string {
     return valeur === "" ? this.wording.NON_RENSEIGNÉ : valeur;
-  }
-}
-
-export class EntitéJuridiqueActivitésViewModel extends GraphiqueViewModel {
-  // @ts-ignore
-  public nombreDePassageAuxUrgencesViewModel: NombrePassageAuxUrgencesViewModel;
-  constructor(private readonly entitéJuridiqueActivités: EntitéJuridiqueActivités[], wording: Wording) {
-    super(wording);
-    this.createNombrePassageUrgenceViewModel(wording);
-  }
-
-  private createNombrePassageUrgenceViewModel(wording: Wording) {
-    const indicateurNombrePassage: IndicateurActivité[] = this.entitéJuridiqueActivités.map((activité) => {
-      return {
-        année: activité.année,
-        dateMiseÀJourSource: activité.nombreDePassagesAuxUrgences.dateMiseÀJourSource,
-        value: activité.nombreDePassagesAuxUrgences.value,
-      };
-    });
-    this.nombreDePassageAuxUrgencesViewModel = new NombrePassageAuxUrgencesViewModel(indicateurNombrePassage, wording);
-  }
-
-  public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
-    return !this.activitéEstElleRenseignée;
-  }
-
-  public get activitéEstElleRenseignée(): boolean {
-    return this.entitéJuridiqueActivités.length > 0;
   }
 }

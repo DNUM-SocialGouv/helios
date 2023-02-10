@@ -2,8 +2,8 @@ import { screen } from "@testing-library/react";
 
 import { CatégorisationEnum } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { fakeFrontDependencies, renderFakeComponent } from "../../../testHelper";
-import { CatégorisationViewModel } from "../EntitéJuridiqueViewModel";
 import { Catégorisation } from "./Catégorisation";
+import { CatégorisationViewModel } from "./CatégorisationViewModel";
 
 const { wording } = fakeFrontDependencies;
 

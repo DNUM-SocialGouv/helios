@@ -1,7 +1,7 @@
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
-import { GraphiqueNombrePassageUrgence } from "../../entité-juridique/bloc-activité/nombre-passage-urgence/GraphiqueNombrePassageUrgence";
+import { GraphiqueNombrePassageUrgence } from "../../indicateur-métier/nombre-passage-urgence/GraphiqueNombrePassageUrgence";
 import { ContenuNombreDeJournéesPSYetSSR } from "../InfoBulle/ContenuNombreDeJournéesPSYetSSR";
 import { ContenuNombreDeSéjourMCO } from "../InfoBulle/ContenuNombreDeSéjourMCO";
 import styles from "./BlocActivitéSanitaire.module.css";
