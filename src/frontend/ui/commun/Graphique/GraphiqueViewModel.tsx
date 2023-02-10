@@ -23,6 +23,7 @@ import { Bar, Doughnut } from "react-chartjs-2";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
 import { Wording } from "../../../configuration/wording/Wording";
+import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
 import { TableIndicateur } from "../TableIndicateur/TableIndicateur";
@@ -319,7 +320,7 @@ export class GraphiqueViewModel {
   }
 
   protected estCeLAnnéePassée(année: number | string): boolean {
-    return new Date().getFullYear() - 1 === Number(année);
+    return estCeLAnnéePassée(année);
   }
 
   protected afficheUnHistogrammeHorizontal(
@@ -465,26 +466,8 @@ export class GraphiqueViewModel {
     );
   }
 
-  protected construisLesLibellés(textes: (number | string)[], valeurs: number[], taillesDePolice: string[]): LibelléDeTickGraphe[] {
-    const maxAvantDePerdreLeContraste = 20;
-
-    return textes.map((texte, index) => {
-      return {
-        couleur: valeurs[index] < maxAvantDePerdreLeContraste ? "black" : this.couleurDeLaValeur,
-        tailleDePolice: taillesDePolice[index],
-        texte,
-      };
-    });
-  }
-
   protected annéesManquantes(années: (number | string)[], annéesTotales: number = 3): number[] {
-    const annéeEnCours = new Date().getFullYear();
-
-    return Array(annéesTotales)
-      .fill(annéeEnCours)
-      .map((annéeÀAvoir, index) => annéeÀAvoir - index - 1)
-      .reverse()
-      .filter((année) => !années.includes(année));
+    return annéesManquantes(années, annéesTotales);
   }
 
   protected calculeLeRatioDesHistogrammesHorizontaux(nombreDeLignes: number): number {

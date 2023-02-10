@@ -1,5 +1,6 @@
 import { IndicateurActivité } from "../../../../backend/métier/entities/indicateurs/IndicateurActivité";
 import { Wording } from "../../../configuration/wording/Wording";
+import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
 import { CouleurHistogramme, GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../commun/StringFormater";
 
@@ -29,7 +30,7 @@ export class NombrePassageAuxUrgencesViewModel extends GraphiqueViewModel {
   }
 
   get libellésDeValeursManquantes() {
-    return this.annéesManquantes(this.années, 5);
+    return annéesManquantes(this.années, 5);
   }
 
   get libellésDesTicks() {
@@ -46,7 +47,7 @@ export class NombrePassageAuxUrgencesViewModel extends GraphiqueViewModel {
 
   get couleursDeLHistogramme() {
     const construisLaCouleurDeLaBarreHorizontale = (_valeur: number, année: number | string): CouleurHistogramme => {
-      return this.estCeLAnnéePassée(année)
+      return estCeLAnnéePassée(année)
         ? {
             premierPlan: this.couleurDuFondHistogrammePrimaire,
             secondPlan: this.couleurDuFond,
