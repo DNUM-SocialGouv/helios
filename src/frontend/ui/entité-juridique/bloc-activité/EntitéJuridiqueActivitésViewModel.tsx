@@ -1,5 +1,4 @@
 import { EntitéJuridiqueActivités } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueActivités";
-import { ÉtablissementTerritorialSanitaireActivité } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
 import { Wording } from "../../../configuration/wording/Wording";
 import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { IndicateurActivité } from "../../indicateur-métier/IndicateurActivité";
