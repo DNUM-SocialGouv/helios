@@ -6,13 +6,20 @@ import { NombrePassageAuxUrgencesViewModel } from "./NombrePassageAuxUrgencesVie
 
 type GraphiqueNombrePassageUrgenceProps = Readonly<{
   nombrePassageAuxUrgencesViewModel: NombrePassageAuxUrgencesViewModel;
+  estEntitéJuridique?: boolean;
 }>;
-export const GraphiqueNombrePassageUrgence = ({ nombrePassageAuxUrgencesViewModel }: GraphiqueNombrePassageUrgenceProps) => {
+export const GraphiqueNombrePassageUrgence = ({ nombrePassageAuxUrgencesViewModel, estEntitéJuridique = false }: GraphiqueNombrePassageUrgenceProps) => {
   const { wording } = useDependencies();
 
   return (
     <IndicateurGraphique
-      contenuInfoBulle={<ContenuNombreDePassagesAuxUrgences dateDeMiseÀJour={nombrePassageAuxUrgencesViewModel.dateMiseAJour} source={wording.RPU} />}
+      contenuInfoBulle={
+        <ContenuNombreDePassagesAuxUrgences
+          dateDeMiseÀJour={nombrePassageAuxUrgencesViewModel.dateMiseAJour}
+          estEntitéJuridique={estEntitéJuridique}
+          source={wording.RPU}
+        />
+      }
       dateDeMiseÀJour={nombrePassageAuxUrgencesViewModel.dateMiseAJour}
       identifiant="activite-2"
       nomDeLIndicateur={wording.NOMBRE_DE_PASSAGES_AUX_URGENCES}

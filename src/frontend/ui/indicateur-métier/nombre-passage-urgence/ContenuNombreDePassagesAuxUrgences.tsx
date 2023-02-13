@@ -5,9 +5,10 @@ import { useDependencies } from "../../commun/contexts/useDependencies";
 type ContenuNombreDePassagesAuxUrgencesProps = Readonly<{
   dateDeMiseÀJour: string;
   source: ReactElement;
+  estEntitéJuridique?: boolean;
 }>;
 
-export const ContenuNombreDePassagesAuxUrgences = ({ dateDeMiseÀJour, source }: ContenuNombreDePassagesAuxUrgencesProps) => {
+export const ContenuNombreDePassagesAuxUrgences = ({ dateDeMiseÀJour, source, estEntitéJuridique = false }: ContenuNombreDePassagesAuxUrgencesProps) => {
   const { wording } = useDependencies();
 
   return (
@@ -35,6 +36,12 @@ export const ContenuNombreDePassagesAuxUrgences = ({ dateDeMiseÀJour, source }:
           Nombre de RPU transmis dans l’année par l’établissement à l’ATIH. Sont supprimés les RPU dont la durée de passage est négative, nulle ou supérieure à
           72H.
         </p>
+        {estEntitéJuridique && (
+          <p>
+            L'activité affichée au niveau de l'entité juridique (EJ) correspond à la somme de l'activité du ou des établissements géographiques rattachés à
+            l'EJ.
+          </p>
+        )}
       </section>
       <section aria-label={wording.SOURCES}>
         <p>

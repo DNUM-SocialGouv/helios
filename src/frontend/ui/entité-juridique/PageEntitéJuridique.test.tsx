@@ -87,6 +87,20 @@ describe("La page Entité Juridique", () => {
     expect(categorisation).toBeInTheDocument();
   });
 
+  it("affiche le bloc activité", () => {
+    // WHEN
+    renderFakeComponent(
+      <PageEntitéJuridique
+        entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+        établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
+      />
+    );
+
+    // THEN
+    const blocActivité = screen.getByText(wording.TITRE_BLOC_ACTIVITÉ);
+    expect(blocActivité).toBeInTheDocument();
+  });
+
   describe("affiche le bloc identité de l’entité juridique", () => {
     it("affiche le nom de l’établissement", () => {
       // WHEN
