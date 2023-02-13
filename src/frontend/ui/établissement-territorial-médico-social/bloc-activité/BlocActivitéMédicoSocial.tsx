@@ -1,5 +1,6 @@
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
+import { BlocIndicateurVide } from "../../commun/Indicateur/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties } from "../InfoBulle/ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties";
 import { ContenuFileActivePersonnesAccompagnées } from "../InfoBulle/ContenuFileActivePersonnesAccompagnées";
@@ -19,11 +20,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéM
   const { wording } = useDependencies();
 
   if (établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitéNeSontPasRenseignées) {
-    return (
-      <Bloc isExpandable={false} titre={wording.TITRE_BLOC_ACTIVITÉ}>
-        {wording.INDICATEURS_VIDES}
-      </Bloc>
-    );
+    return <BlocIndicateurVide title={wording.TITRE_BLOC_ACTIVITÉ} />;
   }
 
   return (

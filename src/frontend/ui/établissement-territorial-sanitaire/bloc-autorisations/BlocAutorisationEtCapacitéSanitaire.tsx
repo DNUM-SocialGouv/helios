@@ -1,5 +1,6 @@
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
+import { BlocIndicateurVide } from "../../commun/Indicateur/BlocIndicateurVide";
 import { Indicateur } from "../../commun/Indicateur/Indicateur";
 import { Sources } from "../../commun/Sources/Sources";
 import { ContenuAutorisations } from "../InfoBulle/ContenuAutorisations";
@@ -18,11 +19,7 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
   const { wording } = useDependencies();
 
   if (établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéNeSontPasRenseignées) {
-    return (
-      <Bloc isExpandable={false} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>
-        {wording.INDICATEURS_VIDES}
-      </Bloc>
-    );
+    return <BlocIndicateurVide title={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} />;
   }
 
   return (

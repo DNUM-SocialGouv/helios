@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
+import { BlocIndicateurVide } from "../../commun/Indicateur/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { Sources } from "../../commun/Sources/Sources";
 import { ContenuDesTauxDAbsentéismes } from "../InfoBulle/ContenuDesTauxDAbsentéismes";
@@ -24,11 +25,7 @@ export const BlocRessourcesHumainesMédicoSocial = ({
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(établissementTerritorialMédicoSocialRessourcesHumainesViewModel.annéeInitiale);
 
   if (établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRessourcesHumainesNeSontPasRenseignées) {
-    return (
-      <Bloc isExpandable={false} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES}>
-        {wording.INDICATEURS_VIDES}
-      </Bloc>
-    );
+    return <BlocIndicateurVide title={wording.TITRE_BLOC_RESSOURCES_HUMAINES} />;
   }
 
   return (

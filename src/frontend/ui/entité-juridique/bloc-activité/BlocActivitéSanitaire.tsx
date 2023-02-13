@@ -1,7 +1,7 @@
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
+import { BlocIndicateurVide } from "../../commun/Indicateur/BlocIndicateurVide";
 import { GraphiqueNombrePassageUrgence } from "../../indicateur-métier/nombre-passage-urgence/GraphiqueNombrePassageUrgence";
-import styles from "./BlocActivitéSanitaire.module.css";
 import { EntitéJuridiqueActivitésViewModel } from "./EntitéJuridiqueActivitésViewModel";
 
 type BlocActivitéSanitaireProps = Readonly<{
@@ -12,17 +12,12 @@ export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel }: B
   const { wording } = useDependencies();
 
   if (entitéJuridiqueActivitéViewModel.lesDonnéesActivitéNeSontPasRenseignées) {
-    // TODO : Extraire dans un common IndicateursVide
-    return (
-      <Bloc isExpandable={false} titre={wording.TITRE_BLOC_ACTIVITÉ}>
-        {wording.INDICATEURS_VIDES}
-      </Bloc>
-    );
+    return <BlocIndicateurVide title={wording.TITRE_BLOC_ACTIVITÉ} />;
   }
 
   return (
     <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
-      <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
+      <ul className="indicateurs">
         <GraphiqueNombrePassageUrgence
           estEntitéJuridique={true}
           nombrePassageAuxUrgencesViewModel={entitéJuridiqueActivitéViewModel.nombreDePassageAuxUrgencesViewModel}

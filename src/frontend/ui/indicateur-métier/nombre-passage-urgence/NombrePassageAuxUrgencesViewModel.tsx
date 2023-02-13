@@ -1,8 +1,8 @@
-import { IndicateurActivité } from "../../../../backend/métier/entities/indicateurs/IndicateurActivité";
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
 import { CouleurHistogramme, GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../commun/StringFormater";
+import { IndicateurActivité } from "../IndicateurActivité";
 
 export class NombrePassageAuxUrgencesViewModel extends GraphiqueViewModel {
   readonly ratioHistogrammeNombreDePassagesAuxUrgences = 7;

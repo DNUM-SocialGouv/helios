@@ -1,7 +1,7 @@
 import { EntitéJuridiqueActivités } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueActivités";
-import { IndicateurActivité } from "../../../../backend/métier/entities/indicateurs/IndicateurActivité";
 import { Wording } from "../../../configuration/wording/Wording";
 import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
+import { IndicateurActivité } from "../../indicateur-métier/IndicateurActivité";
 import { NombrePassageAuxUrgencesViewModel } from "../../indicateur-métier/nombre-passage-urgence/NombrePassageAuxUrgencesViewModel";
 
 export class EntitéJuridiqueActivitésViewModel extends GraphiqueViewModel {

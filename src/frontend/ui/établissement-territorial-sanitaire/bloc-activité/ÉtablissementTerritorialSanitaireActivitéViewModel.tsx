@@ -1,13 +1,13 @@
 import { ReactElement } from "react";
 import { Bar } from "react-chartjs-2";
 
-import { IndicateurActivité } from "../../../../backend/métier/entities/indicateurs/IndicateurActivité";
 import { ÉtablissementTerritorialSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 import { ÉtablissementTerritorialSanitaireActivité } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
 import { Wording } from "../../../configuration/wording/Wording";
 import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../commun/StringFormater";
 import { TableIndicateur } from "../../commun/TableIndicateur/TableIndicateur";
+import { IndicateurActivité } from "../../indicateur-métier/IndicateurActivité";
 import { NombrePassageAuxUrgencesViewModel } from "../../indicateur-métier/nombre-passage-urgence/NombrePassageAuxUrgencesViewModel";
 import stylesBlocActivité from "./BlocActivitéSanitaire.module.css";
 
