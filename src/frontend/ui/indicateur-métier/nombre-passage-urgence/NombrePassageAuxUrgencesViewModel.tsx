@@ -18,7 +18,7 @@ export class NombrePassageAuxUrgencesViewModel extends GraphiqueViewModel {
   }
 
   public get dateMiseAJour(): string {
-    return StringFormater.formateLaDate(this.indicateurActivité[0].dateMiseÀJourSource);
+    return StringFormater.formateLaDate(this.indicateurActivité[0]?.dateMiseÀJourSource);
   }
 
   get ratioLargeurSurHauteur() {
