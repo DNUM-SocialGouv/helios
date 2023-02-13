@@ -2,6 +2,7 @@ import { ChangeEvent, ReactElement } from "react";
 
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
 import { Wording } from "../../../configuration/wording/Wording";
+import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
 import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe } from "../../commun/Graphique/GraphiqueViewModel";
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
 import { Select } from "../../commun/Select/Select";
@@ -81,12 +82,12 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
   public get nombreDEtpRéalisé(): ReactElement {
     const [valeurs, années] = this.extraisLesValeursNombréesDesIndicateurs("nombreDEtpRéalisés");
     const couleursDeLHistogramme = années.map((année) => ({
-      premierPlan: this.estCeLAnnéePassée(année) ? this.couleurDuFondHistogrammePrimaire : this.couleurDuFondHistogrammeSecondaire,
+      premierPlan: estCeLAnnéePassée(année) ? this.couleurDuFondHistogrammePrimaire : this.couleurDuFondHistogrammeSecondaire,
       secondPlan: this.couleurDuFond,
     }));
     const libellésDesValeurs = Array(valeurs.length).fill({ couleur: this.couleurIdentifiant });
-    const libellésDesTicks = années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
-    const annéesManquantes = this.annéesManquantes(années);
+    const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
+    const listeAnnéesManquantes = annéesManquantes(années);
 
     return this.afficheUnHistogrammeHorizontal(
       valeurs,
@@ -97,7 +98,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
       this.RATIO_HISTOGRAMME_HORIZONTAL,
       this.wording.ANNÉE,
       this.wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION,
-      annéesManquantes
+      listeAnnéesManquantes
     );
   }
 
@@ -112,12 +113,12 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
   public get nombreDeCddDeRemplacement(): ReactElement {
     const [valeurs, années] = this.extraisLesValeursNombréesDesIndicateurs("nombreDeCddDeRemplacement");
     const couleursDeLHistogramme = années.map((année) => ({
-      premierPlan: this.estCeLAnnéePassée(année) ? this.couleurDuFondHistogrammePrimaire : this.couleurDuFondHistogrammeSecondaire,
+      premierPlan: estCeLAnnéePassée(année) ? this.couleurDuFondHistogrammePrimaire : this.couleurDuFondHistogrammeSecondaire,
       secondPlan: this.couleurDuFond,
     }));
     const libellésDesValeurs = Array(valeurs.length).fill({ couleur: this.couleurIdentifiant });
-    const libellésDesTicks = années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
-    const annéesManquantes = this.annéesManquantes(années);
+    const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
+    const listeAnnéesManquantes = annéesManquantes(années);
 
     return this.afficheUnHistogrammeHorizontal(
       valeurs,
@@ -128,7 +129,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
       this.RATIO_HISTOGRAMME_HORIZONTAL,
       this.wording.ANNÉE,
       this.wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION,
-      annéesManquantes
+      listeAnnéesManquantes
     );
   }
 
@@ -150,7 +151,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
         };
       }
 
-      if (this.estCeLAnnéePassée(année)) {
+      if (estCeLAnnéePassée(année)) {
         return {
           premierPlan: this.couleurDuFondHistogrammePrimaire,
           secondPlan: this.couleurDuFond,
@@ -163,7 +164,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
       };
     };
     const libellésDesValeurs = this.construisLesLibellésDesValeursDeTaux(valeurs);
-    const libellésDesTicks = années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
+    const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
 
     return this.afficheUnHistogrammeVertical(
       valeurs,
@@ -198,7 +199,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
         };
       }
 
-      if (this.estCeLAnnéePassée(année)) {
+      if (estCeLAnnéePassée(année)) {
         return {
           premierPlan: this.couleurDuFondHistogrammePrimaire,
           secondPlan: this.couleurDuFond,
@@ -211,7 +212,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
       };
     };
     const libellésDesValeurs = this.construisLesLibellésDesValeursDeTaux(valeurs);
-    const libellésDesTicks = années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
+    const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
 
     return this.afficheUnHistogrammeVertical(
       valeurs,
@@ -246,7 +247,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
         };
       }
 
-      if (this.estCeLAnnéePassée(année)) {
+      if (estCeLAnnéePassée(année)) {
         return {
           premierPlan: this.couleurDuFondHistogrammePrimaire,
           secondPlan: this.couleurDuFond,
@@ -259,7 +260,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
       };
     };
     const libellésDesValeurs = this.construisLesLibellésDesValeursDeTaux(valeurs);
-    const libellésDesTicks = années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
+    const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
 
     return this.afficheUnHistogrammeVertical(
       valeurs,
@@ -310,7 +311,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
       ? pourcentageDuTauxDAbsentéismeHorsFormation
       : `! ${pourcentageDuTauxDAbsentéismeHorsFormation}`;
 
-    const annéesManquantes = this.annéesManquantes(this.annéesAvecDesTauxDAbsentéismes);
+    const listeAnnéesManquantes = annéesManquantes(this.annéesAvecDesTauxDAbsentéismes);
 
     return (
       <>
@@ -329,9 +330,9 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
             tauxDAbsentéismeHorsFormation,
             this.IDENTIFIANT_DE_LA_LÉGENDE_DES_TAUX_D_ABSENTÉISMES
           )}
-        {annéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
+        {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
         <TableIndicateur
-          disabled={annéesManquantes.length === 3}
+          disabled={listeAnnéesManquantes.length === 3}
           entêteLibellé={this.wording.MOTIF_DU_TAUX_D_ABSENTÉISME}
           identifiants={[this.wording.TAUX]}
           libellés={motifsDesTauxDAbsentéismes}
@@ -342,11 +343,11 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
   }
 
   private get pasDeTauxDAbsentéisme(): ReactElement {
-    const annéesManquantes = this.annéesManquantes(this.annéesAvecDesTauxDAbsentéismes);
+    const listeAnnéesManquantes = annéesManquantes(this.annéesAvecDesTauxDAbsentéismes);
 
     return (
       <>
-        {annéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
+        {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
         <TableIndicateur disabled={true} entêteLibellé={this.wording.ANNÉE} identifiants={[this.wording.TAUX_D_ABSENTÉISME]} libellés={[]} valeurs={[]} />
       </>
     );

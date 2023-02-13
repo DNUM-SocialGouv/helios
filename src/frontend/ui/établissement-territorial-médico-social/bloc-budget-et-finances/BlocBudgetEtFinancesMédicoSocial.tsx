@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
+import { BlocIndicateurVide } from "../../commun/Indicateur/BlocIndicateurVide";
 import { Indicateur } from "../../commun/Indicateur/Indicateur";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ContenuCompteDeRésultat } from "../InfoBulle/ContenuCompteDeRésultat";
@@ -22,11 +23,7 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMé
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.annéeInitiale);
 
   if (établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetEtFinancesNeSontPasRenseignées) {
-    return (
-      <Bloc isExpandable={false} titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES}>
-        {wording.INDICATEURS_VIDES}
-      </Bloc>
-    );
+    return <BlocIndicateurVide title={wording.TITRE_BLOC_BUDGET_ET_FINANCES} />;
   }
 
   return (

@@ -3,6 +3,7 @@ import { ReactElement } from "react";
 import { ÉtablissementTerritorialMédicoSocial } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
 import { ÉtablissementTerritorialMédicoSocialActivité } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité";
 import { Wording } from "../../../configuration/wording/Wording";
+import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
 import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../commun/StringFormater";
 
@@ -125,7 +126,6 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
 
   public get fileActivePersonnesAccompagnées(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs("fileActivePersonnesAccompagnées");
-    const annéesManquantes = this.annéesManquantes(années);
 
     return this.afficheUnHistogrammeHorizontal(
       valeurs,
@@ -136,7 +136,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
       this.ratioHistogrammeBlocActivité,
       this.wording.ANNÉE,
       this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES,
-      annéesManquantes
+      annéesManquantes(années)
     );
   }
 
@@ -150,7 +150,6 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
 
   public get nombreMoyenJournéesAbsencePersonnesAccompagnées(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs("nombreMoyenJournéesAbsencePersonnesAccompagnées");
-    const annéesManquantes = this.annéesManquantes(années);
 
     return this.afficheUnHistogrammeHorizontal(
       valeurs,
@@ -161,7 +160,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
       this.ratioHistogrammeBlocActivité,
       this.wording.ANNÉE,
       this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES,
-      annéesManquantes
+      annéesManquantes(années)
     );
   }
 
@@ -175,7 +174,6 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
 
   public get duréeMoyenneSéjourAccompagnementPersonnesSorties(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs("duréeMoyenneSéjourAccompagnementPersonnesSorties");
-    const annéesManquantes = this.annéesManquantes(années);
 
     return this.afficheUnHistogrammeHorizontal(
       valeurs,
@@ -186,7 +184,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
       this.ratioHistogrammeBlocActivité,
       this.wording.ANNÉE,
       this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES,
-      annéesManquantes
+      annéesManquantes(années)
     );
   }
 
@@ -245,7 +243,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
     let premierPlan = this.couleurDuFondHistogrammeSecondaire;
     let secondPlan = this.couleurDuFond;
 
-    if (this.estCeLAnnéePassée(année)) {
+    if (estCeLAnnéePassée(année)) {
       premierPlan = this.couleurDuFondHistogrammePrimaire;
       secondPlan = this.couleurDuFond;
     }
@@ -258,7 +256,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   };
 
   private construisLaCouleurDeLaBarreHorizontale = (_valeur: number, année: number | string): CouleurHistogramme => {
-    return this.estCeLAnnéePassée(année)
+    return estCeLAnnéePassée(année)
       ? {
           premierPlan: this.couleurDuFondHistogrammePrimaire,
           secondPlan: this.couleurDuFond,
@@ -274,6 +272,6 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   }
 
   private construisLesLibellésDesTicks(libellés: (number | string)[]): LibelléDeTickGraphe[] {
-    return libellés.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
+    return libellés.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
   }
 }

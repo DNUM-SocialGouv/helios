@@ -23,10 +23,12 @@ import { Bar, Doughnut } from "react-chartjs-2";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
 import { Wording } from "../../../configuration/wording/Wording";
+import { annéesManquantes } from "../../../utils/dateUtils";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
 import { TableIndicateur } from "../TableIndicateur/TableIndicateur";
 import styles from "./GraphiqueViewModel.module.css";
+import { HistogrammeHorizontal } from "./HistogrammeHorizontal";
 
 export type LibelléDeDonnéeGraphe = Readonly<{
   couleur: string;
@@ -285,20 +287,20 @@ export class GraphiqueViewModel {
       ],
       labels: libellés,
     };
-    const annéesManquantes = this.annéesManquantes(libellés, annéesTotales);
+    const listeAnnéesManquantes = annéesManquantes(libellés, annéesTotales);
 
     return (
       <>
-        {annéesManquantes.length < annéesTotales && (
+        {listeAnnéesManquantes.length < annéesTotales && (
           <Bar
             // @ts-ignore
             data={data}
             options={this.optionsHistogrammeVertical(libellésDesTicks.map((libelléDuTick) => libelléDuTick.tailleDePolice))}
           />
         )}
-        {annéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
+        {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
         <TableIndicateur
-          disabled={annéesManquantes.length === annéesTotales}
+          disabled={listeAnnéesManquantes.length === annéesTotales}
           entêteLibellé={entêteLibellé}
           identifiants={[identifiant]}
           libellés={libellés}
@@ -318,10 +320,6 @@ export class GraphiqueViewModel {
     });
   }
 
-  protected estCeLAnnéePassée(année: number | string): boolean {
-    return new Date().getFullYear() - 1 === Number(année);
-  }
-
   protected afficheUnHistogrammeHorizontal(
     valeurs: number[],
     libellés: (number | string)[],
@@ -334,45 +332,19 @@ export class GraphiqueViewModel {
     libellésDeValeursManquantes: number[] | string[],
     nombreDeLibelléTotal: number = 3
   ): ReactElement {
-    const data: ChartData = {
-      datasets: [
-        {
-          backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
-          data: valeurs,
-          datalabels: { labels: { title: { color: libellésDesValeurs.map((libellé) => libellé.couleur) } } },
-          maxBarThickness: 60,
-          type: "bar",
-          yAxisID: "y",
-        },
-      ],
-      labels: libellés,
-    };
-    const valeursFrançaises = StringFormater.formateEnFrançais(valeurs);
-
     return (
-      <>
-        {libellésDeValeursManquantes.length < nombreDeLibelléTotal && (
-          <Bar
-            // @ts-ignore
-            data={data}
-            options={this.optionsHistogrammeHorizontal(
-              ratioLargeurSurHauteur,
-              Math.max(...valeurs),
-              libellésDesTicks.map((libellé) => libellé.tailleDePolice)
-            )}
-          />
-        )}
-        {libellésDeValeursManquantes.length > 0 && (
-          <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${libellésDeValeursManquantes.join(", ")}`}</MiseEnExergue>
-        )}
-        <TableIndicateur
-          disabled={libellésDeValeursManquantes.length === nombreDeLibelléTotal}
-          entêteLibellé={entêteLibellé}
-          identifiants={[identifiant]}
-          libellés={libellés}
-          valeurs={[valeursFrançaises]}
-        />
-      </>
+      <HistogrammeHorizontal
+        couleursDeLHistogramme={couleursDeLHistogramme}
+        entêteLibellé={entêteLibellé}
+        identifiant={identifiant}
+        libellés={libellés}
+        libellésDeValeursManquantes={libellésDeValeursManquantes}
+        libellésDesTicks={libellésDesTicks}
+        libellésDesValeurs={libellésDesValeurs}
+        nombreDeLibelléTotal={nombreDeLibelléTotal}
+        ratioLargeurSurHauteur={ratioLargeurSurHauteur}
+        valeurs={valeurs}
+      />
     );
   }
 
@@ -463,28 +435,6 @@ export class GraphiqueViewModel {
         <menu className={styles["légende-donut"]} id={idDeLaLégende} />
       </div>
     );
-  }
-
-  protected construisLesLibellés(textes: (number | string)[], valeurs: number[], taillesDePolice: string[]): LibelléDeTickGraphe[] {
-    const maxAvantDePerdreLeContraste = 20;
-
-    return textes.map((texte, index) => {
-      return {
-        couleur: valeurs[index] < maxAvantDePerdreLeContraste ? "black" : this.couleurDeLaValeur,
-        tailleDePolice: taillesDePolice[index],
-        texte,
-      };
-    });
-  }
-
-  protected annéesManquantes(années: (number | string)[], annéesTotales: number = 3): number[] {
-    const annéeEnCours = new Date().getFullYear();
-
-    return Array(annéesTotales)
-      .fill(annéeEnCours)
-      .map((annéeÀAvoir, index) => annéeÀAvoir - index - 1)
-      .reverse()
-      .filter((année) => !années.includes(année));
   }
 
   protected calculeLeRatioDesHistogrammesHorizontaux(nombreDeLignes: number): number {

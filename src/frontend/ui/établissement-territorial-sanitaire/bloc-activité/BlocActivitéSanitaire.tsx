@@ -1,8 +1,9 @@
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
+import { BlocIndicateurVide } from "../../commun/Indicateur/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
+import { GraphiqueNombrePassageUrgence } from "../../indicateur-métier/nombre-passage-urgence/GraphiqueNombrePassageUrgence";
 import { ContenuNombreDeJournéesPSYetSSR } from "../InfoBulle/ContenuNombreDeJournéesPSYetSSR";
-import { ContenuNombreDePassagesAuxUrgences } from "../InfoBulle/ContenuNombreDePassagesAuxUrgences";
 import { ContenuNombreDeSéjourMCO } from "../InfoBulle/ContenuNombreDeSéjourMCO";
 import styles from "./BlocActivitéSanitaire.module.css";
 import { ÉtablissementTerritorialSanitaireActivitéViewModel } from "./ÉtablissementTerritorialSanitaireActivitéViewModel";
@@ -15,11 +16,7 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireActiv
   const { wording } = useDependencies();
 
   if (établissementTerritorialSanitaireActivitéViewModel.lesDonnéesActivitéNeSontPasRenseignées) {
-    return (
-      <Bloc isExpandable={false} titre={wording.TITRE_BLOC_ACTIVITÉ}>
-        {wording.INDICATEURS_VIDES}
-      </Bloc>
-    );
+    return <BlocIndicateurVide title={wording.TITRE_BLOC_ACTIVITÉ} />;
   }
 
   return (
@@ -57,20 +54,9 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireActiv
             {établissementTerritorialSanitaireActivitéViewModel.nombreDeJournéesPsyEtSsr}
           </IndicateurGraphique>
         )}
-        <IndicateurGraphique
-          contenuInfoBulle={
-            <ContenuNombreDePassagesAuxUrgences
-              dateDeMiseÀJour={établissementTerritorialSanitaireActivitéViewModel.dateDeMiseÀJourDuNombreDePassagesAuxUrgences}
-              source={wording.RPU}
-            />
-          }
-          dateDeMiseÀJour={établissementTerritorialSanitaireActivitéViewModel.dateDeMiseÀJourDuNombreDePassagesAuxUrgences}
-          identifiant="activite-2"
-          nomDeLIndicateur={wording.NOMBRE_DE_PASSAGES_AUX_URGENCES}
-          source={wording.RPU}
-        >
-          {établissementTerritorialSanitaireActivitéViewModel.nombreDePassagesAuxUrgences}
-        </IndicateurGraphique>
+        <GraphiqueNombrePassageUrgence
+          nombrePassageAuxUrgencesViewModel={établissementTerritorialSanitaireActivitéViewModel.nombreDePassagesAuxUrgencesViewModel}
+        />
       </ul>
     </Bloc>
   );

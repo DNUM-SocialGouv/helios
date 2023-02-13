@@ -4,9 +4,11 @@ import { Bar } from "react-chartjs-2";
 import { ÉtablissementTerritorialSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 import { ÉtablissementTerritorialSanitaireActivité } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
 import { Wording } from "../../../configuration/wording/Wording";
-import { CouleurHistogramme, GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
+import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../commun/StringFormater";
 import { TableIndicateur } from "../../commun/TableIndicateur/TableIndicateur";
+import { IndicateurActivité } from "../../indicateur-métier/IndicateurActivité";
+import { NombrePassageAuxUrgencesViewModel } from "../../indicateur-métier/nombre-passage-urgence/NombrePassageAuxUrgencesViewModel";
 import stylesBlocActivité from "./BlocActivitéSanitaire.module.css";
 
 type DonnéesDeDiagrammeDesSéjoursMCO = Readonly<{
@@ -34,10 +36,24 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
   readonly couleurDuFondHistogrammeRougeFoncé = "#A94645";
   readonly identifiantDeLaLégendeDesSéjoursMCO = "légende-graphique-sanitaire-journées-séjours-mco";
   readonly identifiantDeLaLégendeDesJournéesPsyEtSsr = "légende-graphique-sanitaire-journées-psy-et-ssr";
-  readonly ratioHistogrammeNombreDePassagesAuxUrgences = 7;
+
+  // @ts-ignore
+  nombreDePassagesAuxUrgencesViewModel: NombrePassageAuxUrgencesViewModel;
 
   constructor(private readonly établissementTerritorialSanitaireActivités: ÉtablissementTerritorialSanitaire["activités"], wording: Wording) {
     super(wording);
+    this.createNombrePassageUrgenceViewModel(wording);
+  }
+
+  private createNombrePassageUrgenceViewModel(wording: Wording) {
+    const indicateurNombrePassage: IndicateurActivité[] = this.établissementTerritorialSanitaireActivités.map((activité) => {
+      return {
+        année: activité.année,
+        dateMiseÀJourSource: activité.nombreDePassagesAuxUrgences.dateMiseÀJourSource,
+        value: activité.nombreDePassagesAuxUrgences.value,
+      };
+    });
+    this.nombreDePassagesAuxUrgencesViewModel = new NombrePassageAuxUrgencesViewModel(indicateurNombrePassage, wording);
   }
 
   public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
@@ -97,39 +113,6 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
     return this.lIndicateurEstIlRenseigné("nombreDePassagesAuxUrgences");
   }
 
-  public get nombreDePassagesAuxUrgences(): ReactElement {
-    const [valeurs, années] = this.construisLesAnnéesEtSesValeurs("nombreDePassagesAuxUrgences");
-    const annéesManquantes = this.annéesManquantes(années, 5);
-    const construisLaCouleurDeLaBarreHorizontale = (_valeur: number, année: number | string): CouleurHistogramme => {
-      return this.estCeLAnnéePassée(année)
-        ? {
-            premierPlan: this.couleurDuFondHistogrammePrimaire,
-            secondPlan: this.couleurDuFond,
-          }
-        : {
-            premierPlan: this.couleurDuFondHistogrammeSecondaire,
-            secondPlan: this.couleurDuFond,
-          };
-    };
-
-    return this.afficheUnHistogrammeHorizontal(
-      valeurs,
-      années,
-      this.construisLesCouleursDeLHistogramme(valeurs, années, construisLaCouleurDeLaBarreHorizontale),
-      Array(valeurs.length).fill({ couleur: this.couleurIdentifiant }),
-      années.map((année) => ({ tailleDePolice: this.estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale })),
-      this.ratioHistogrammeNombreDePassagesAuxUrgences,
-      this.wording.ANNÉE,
-      this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES,
-      annéesManquantes,
-      5
-    );
-  }
-
-  public get dateDeMiseÀJourDuNombreDePassagesAuxUrgences(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialSanitaireActivités[0].nombreDePassagesAuxUrgences.dateMiseÀJourSource);
-  }
-
   private construisLesSéjoursMCOParAnnée(): [DonnéesDeDiagrammeDesSéjoursMCO, number[]] {
     const nombreDeSéjours: DonnéesDeDiagrammeDesSéjoursMCO = {
       nombreSéjoursCompletsChirurgie: [],
@@ -143,12 +126,30 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
 
     this.établissementTerritorialSanitaireActivités.forEach((activité: ÉtablissementTerritorialSanitaireActivité) => {
       années.push(activité.année);
-      nombreDeSéjours.nombreSéjoursCompletsChirurgie.push({ x: activité.année, y: activité.nombreSéjoursCompletsChirurgie.value });
-      nombreDeSéjours.nombreSéjoursCompletsMédecine.push({ x: activité.année, y: activité.nombreSéjoursCompletsMédecine.value });
-      nombreDeSéjours.nombreSéjoursCompletsObstétrique.push({ x: activité.année, y: activité.nombreSéjoursCompletsObstétrique.value });
-      nombreDeSéjours.nombreSéjoursPartielsChirurgie.push({ x: activité.année, y: activité.nombreSéjoursPartielsChirurgie.value });
-      nombreDeSéjours.nombreSéjoursPartielsMédecine.push({ x: activité.année, y: activité.nombreSéjoursPartielsMédecine.value });
-      nombreDeSéjours.nombreSéjoursPartielsObstétrique.push({ x: activité.année, y: activité.nombreSéjoursPartielsObstétrique.value });
+      nombreDeSéjours.nombreSéjoursCompletsChirurgie.push({
+        x: activité.année,
+        y: activité.nombreSéjoursCompletsChirurgie.value,
+      });
+      nombreDeSéjours.nombreSéjoursCompletsMédecine.push({
+        x: activité.année,
+        y: activité.nombreSéjoursCompletsMédecine.value,
+      });
+      nombreDeSéjours.nombreSéjoursCompletsObstétrique.push({
+        x: activité.année,
+        y: activité.nombreSéjoursCompletsObstétrique.value,
+      });
+      nombreDeSéjours.nombreSéjoursPartielsChirurgie.push({
+        x: activité.année,
+        y: activité.nombreSéjoursPartielsChirurgie.value,
+      });
+      nombreDeSéjours.nombreSéjoursPartielsMédecine.push({
+        x: activité.année,
+        y: activité.nombreSéjoursPartielsMédecine.value,
+      });
+      nombreDeSéjours.nombreSéjoursPartielsObstétrique.push({
+        x: activité.année,
+        y: activité.nombreSéjoursPartielsObstétrique.value,
+      });
     });
     return [nombreDeSéjours, années];
   }
@@ -164,31 +165,24 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
 
     this.établissementTerritorialSanitaireActivités.forEach((activité: ÉtablissementTerritorialSanitaireActivité) => {
       années.push(activité.année);
-      nombreDeJournées.nombreJournéesComplètesPsy.push({ x: activité.année, y: activité.nombreJournéesCompletePsy.value });
-      nombreDeJournées.nombreJournéesComplètesSsr.push({ x: activité.année, y: activité.nombreJournéesCompletesSsr.value });
-      nombreDeJournées.nombreJournéesPartiellesPsy.push({ x: activité.année, y: activité.nombreJournéesPartiellesPsy.value });
-      nombreDeJournées.nombreJournéesPartiellesSsr.push({ x: activité.année, y: activité.nombreJournéesPartielsSsr.value });
+      nombreDeJournées.nombreJournéesComplètesPsy.push({
+        x: activité.année,
+        y: activité.nombreJournéesCompletePsy.value,
+      });
+      nombreDeJournées.nombreJournéesComplètesSsr.push({
+        x: activité.année,
+        y: activité.nombreJournéesCompletesSsr.value,
+      });
+      nombreDeJournées.nombreJournéesPartiellesPsy.push({
+        x: activité.année,
+        y: activité.nombreJournéesPartiellesPsy.value,
+      });
+      nombreDeJournées.nombreJournéesPartiellesSsr.push({
+        x: activité.année,
+        y: activité.nombreJournéesPartielsSsr.value,
+      });
     });
     return [nombreDeJournées, années];
-  }
-
-  private construisLesAnnéesEtSesValeurs(
-    indicateur: Exclude<keyof ÉtablissementTerritorialSanitaireActivité, "année" | "dateMiseÀJourSource" | "numéroFinessÉtablissementTerritorial">
-  ): number[][] {
-    const valeurs: number[] = [];
-    const années: number[] = [];
-    this.établissementTerritorialSanitaireActivités.forEach((activité: ÉtablissementTerritorialSanitaireActivité) => {
-      if (activité[indicateur].value !== null) {
-        années.push(activité.année);
-      }
-
-      if (activité[indicateur].value !== null) {
-        // @ts-ignore
-        valeurs.push(activité[indicateur].value);
-      }
-    });
-
-    return [valeurs, années];
   }
 
   private lIndicateurEstIlRenseigné(
