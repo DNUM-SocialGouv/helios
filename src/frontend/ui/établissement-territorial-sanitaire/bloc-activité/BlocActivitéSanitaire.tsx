@@ -2,9 +2,9 @@ import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/Indicateur/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
+import { GraphiqueNombreDeSejourMCO } from "../../indicateur-métier/nombre-de-sejour-mco/GraphiqueNombreDeSejourMCO";
 import { GraphiqueNombrePassageUrgence } from "../../indicateur-métier/nombre-passage-urgence/GraphiqueNombrePassageUrgence";
 import { ContenuNombreDeJournéesPSYetSSR } from "../InfoBulle/ContenuNombreDeJournéesPSYetSSR";
-import { ContenuNombreDeSéjourMCO } from "../InfoBulle/ContenuNombreDeSéjourMCO";
 import styles from "./BlocActivitéSanitaire.module.css";
 import { ÉtablissementTerritorialSanitaireActivitéViewModel } from "./ÉtablissementTerritorialSanitaireActivitéViewModel";
 
@@ -22,21 +22,10 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireActiv
   return (
     <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
-        {établissementTerritorialSanitaireActivitéViewModel.nombreDeSéjoursMCOSontIlsRenseignés && (
-          <IndicateurGraphique
-            contenuInfoBulle={
-              <ContenuNombreDeSéjourMCO
-                dateDeMiseÀJour={établissementTerritorialSanitaireActivitéViewModel.dateDeMiseÀJourDuNombreDeSéjoursMédecineChirurgieObstétrique}
-                source={wording.PMSI}
-              />
-            }
-            dateDeMiseÀJour={établissementTerritorialSanitaireActivitéViewModel.dateDeMiseÀJourDuNombreDeSéjoursMédecineChirurgieObstétrique}
-            identifiant="activite-0"
-            nomDeLIndicateur={wording.NOMBRE_DE_SÉJOUR_MCO}
-            source={wording.PMSI}
-          >
-            {établissementTerritorialSanitaireActivitéViewModel.nombreDeSéjoursMédecineChirurgieObstétrique}
-          </IndicateurGraphique>
+        {établissementTerritorialSanitaireActivitéViewModel.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés && (
+          <GraphiqueNombreDeSejourMCO
+            nombreDeSejourMCOViewModel={établissementTerritorialSanitaireActivitéViewModel.nombreDeSejourMCOViewModel}
+          ></GraphiqueNombreDeSejourMCO>
         )}
         {établissementTerritorialSanitaireActivitéViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés && (
           <IndicateurGraphique
