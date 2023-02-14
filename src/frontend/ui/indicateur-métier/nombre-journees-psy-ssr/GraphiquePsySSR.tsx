@@ -1,9 +1,9 @@
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
-import { ÉtablissementTerritorialSanitaireActivitéViewModel } from "../../établissement-territorial-sanitaire/bloc-activité/ÉtablissementTerritorialSanitaireActivitéViewModel";
+import { NombreDeJourneesPsySSRViewModel } from "../../établissement-territorial-sanitaire/bloc-activité/ÉtablissementTerritorialSanitaireActivitéViewModel";
 import { ContenuNombreDeJournéesPSYetSSR } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeJournéesPSYetSSR";
 
-export function GraphiquePsySSR(props: { nombreJournéesPsySSRViewModel: ÉtablissementTerritorialSanitaireActivitéViewModel }) {
+export function GraphiquePsySSR(props: { nombreJournéesPsySSRViewModel: NombreDeJourneesPsySSRViewModel }) {
   const { wording } = useDependencies();
 
   return (

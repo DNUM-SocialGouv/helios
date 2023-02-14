@@ -19,49 +19,18 @@ type DonnéesDeDiagrammeDesJournéesPsyEtSsr = Readonly<{
   nombreJournéesPartiellesSsr: { x: number; y: number | null }[];
 }>;
 
-export class ÉtablissementTerritorialSanitaireActivitéViewModel extends GraphiqueViewModel {
+export class NombreDeJourneesPsySSRViewModel extends GraphiqueViewModel {
   readonly couleurDuFondHistogrammeBleuClair = "#DEE5FD";
   readonly couleurDuFondHistogrammeBleuFoncé = "#2F4077";
   readonly couleurDuFondHistogrammeRougeClair = "#FEE9E6";
   readonly couleurDuFondHistogrammeRougeFoncé = "#A94645";
   readonly identifiantDeLaLégendeDesJournéesPsyEtSsr = "légende-graphique-sanitaire-journées-psy-et-ssr";
-
-  // @ts-ignore
-  nombreDePassagesAuxUrgencesViewModel: NombrePassageAuxUrgencesViewModel;
-  nombreDeSejourMCOViewModel: NombreDeSejourMCOViewModel;
-
-  constructor(private readonly établissementTerritorialSanitaireActivités: ÉtablissementTerritorialSanitaire["activités"], wording: Wording) {
+  constructor(private activitésPsySSR: ÉtablissementTerritorialSanitaireActivité[], wording: Wording) {
     super(wording);
-    this.createNombrePassageUrgenceViewModel(wording);
-    this.nombreDeSejourMCOViewModel = new NombreDeSejourMCOViewModel(établissementTerritorialSanitaireActivités, wording);
-  }
-
-  private createNombrePassageUrgenceViewModel(wording: Wording) {
-    const indicateurNombrePassage: IndicateurActivité[] = this.établissementTerritorialSanitaireActivités.map((activité) => {
-      return {
-        année: activité.année,
-        dateMiseÀJourSource: activité.nombreDePassagesAuxUrgences.dateMiseÀJourSource,
-        value: activité.nombreDePassagesAuxUrgences.value,
-      };
-    });
-    this.nombreDePassagesAuxUrgencesViewModel = new NombrePassageAuxUrgencesViewModel(indicateurNombrePassage, wording);
-  }
-
-  public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
-    return (
-      !this.activitéEstElleRenseignée ||
-      (!this.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés &&
-        !this.nombreDeJournéesPsyEtSsrSontIlsRenseignés &&
-        !this.nombreDePassagesAuxUrgencesEstIlRenseigné)
-    );
-  }
-
-  public get activitéEstElleRenseignée(): boolean {
-    return this.établissementTerritorialSanitaireActivités.length !== 0;
   }
 
   public get nombreDeJournéesPsyEtSsrSontIlsRenseignés(): boolean {
-    return this.établissementTerritorialSanitaireActivités.some(
+    return this.activitésPsySSR.some(
       (activité: ÉtablissementTerritorialSanitaireActivité) =>
         activité["nombreJournéesPartiellesPsy"].value !== null ||
         activité["nombreJournéesCompletesSsr"].value !== null ||
@@ -77,11 +46,7 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
   }
 
   public get dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialSanitaireActivités[0].nombreJournéesCompletePsy.dateMiseÀJourSource);
-  }
-
-  public get nombreDePassagesAuxUrgencesEstIlRenseigné(): boolean {
-    return this.lIndicateurEstIlRenseigné("nombreDePassagesAuxUrgences");
+    return StringFormater.formateLaDate(this.activitésPsySSR[0].nombreJournéesCompletePsy.dateMiseÀJourSource);
   }
 
   private construisLesJournéesPsyEtSsrParAnnée(): [DonnéesDeDiagrammeDesJournéesPsyEtSsr, number[]] {
@@ -93,7 +58,7 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
     };
     const années: number[] = [];
 
-    this.établissementTerritorialSanitaireActivités.forEach((activité: ÉtablissementTerritorialSanitaireActivité) => {
+    this.activitésPsySSR.forEach((activité: ÉtablissementTerritorialSanitaireActivité) => {
       années.push(activité.année);
       nombreDeJournées.nombreJournéesComplètesPsy.push({
         x: activité.année,
@@ -115,12 +80,9 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
     return [nombreDeJournées, années];
   }
 
-  private lIndicateurEstIlRenseigné(
-    indicateur: Exclude<keyof ÉtablissementTerritorialSanitaireActivité, "année" | "dateMiseÀJourSource" | "numéroFinessÉtablissementTerritorial">
-  ): boolean {
-    return this.établissementTerritorialSanitaireActivités.some((activité: ÉtablissementTerritorialSanitaireActivité) => activité[indicateur].value !== null);
+  public getOptionsHistogramme() {
+    return this.optionsHistogrammeÀBandes(this.identifiantDeLaLégendeDesJournéesPsyEtSsr, this.tooltipJournéesPsyEtSsr);
   }
-
   private afficheLHistogrammeDesJournéesPsyEtSsr(nombreDeJournées: DonnéesDeDiagrammeDesJournéesPsyEtSsr, années: number[]): ReactElement {
     const data = {
       datasets: [
@@ -156,7 +118,7 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
       labels: années,
     };
 
-    const options = this.optionsHistogrammeÀBandes(this.identifiantDeLaLégendeDesJournéesPsyEtSsr, this.tooltipJournéesPsyEtSsr);
+    const options = this.getOptionsHistogramme();
 
     return (
       <>
@@ -210,5 +172,53 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel extends Graphi
       }
       return label;
     };
+  }
+}
+
+export class ÉtablissementTerritorialSanitaireActivitéViewModel extends GraphiqueViewModel {
+  // @ts-ignore
+  nombreDePassagesAuxUrgencesViewModel: NombrePassageAuxUrgencesViewModel;
+  nombreDeSejourMCOViewModel: NombreDeSejourMCOViewModel;
+  nombreJourneesPsySSRViewModel: NombreDeJourneesPsySSRViewModel;
+
+  constructor(private readonly établissementTerritorialSanitaireActivités: ÉtablissementTerritorialSanitaire["activités"], wording: Wording) {
+    super(wording);
+    this.createNombrePassageUrgenceViewModel(wording);
+    this.nombreDeSejourMCOViewModel = new NombreDeSejourMCOViewModel(établissementTerritorialSanitaireActivités, wording);
+    this.nombreJourneesPsySSRViewModel = new NombreDeJourneesPsySSRViewModel(établissementTerritorialSanitaireActivités, wording);
+  }
+
+  private createNombrePassageUrgenceViewModel(wording: Wording) {
+    const indicateurNombrePassage: IndicateurActivité[] = this.établissementTerritorialSanitaireActivités.map((activité) => {
+      return {
+        année: activité.année,
+        dateMiseÀJourSource: activité.nombreDePassagesAuxUrgences.dateMiseÀJourSource,
+        value: activité.nombreDePassagesAuxUrgences.value,
+      };
+    });
+    this.nombreDePassagesAuxUrgencesViewModel = new NombrePassageAuxUrgencesViewModel(indicateurNombrePassage, wording);
+  }
+
+  public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
+    return (
+      !this.activitéEstElleRenseignée ||
+      (!this.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés &&
+        !this.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés &&
+        !this.nombreDePassagesAuxUrgencesEstIlRenseigné)
+    );
+  }
+
+  public get activitéEstElleRenseignée(): boolean {
+    return this.établissementTerritorialSanitaireActivités.length !== 0;
+  }
+
+  public get nombreDePassagesAuxUrgencesEstIlRenseigné(): boolean {
+    return this.lIndicateurEstIlRenseigné("nombreDePassagesAuxUrgences");
+  }
+
+  private lIndicateurEstIlRenseigné(
+    indicateur: Exclude<keyof ÉtablissementTerritorialSanitaireActivité, "année" | "dateMiseÀJourSource" | "numéroFinessÉtablissementTerritorial">
+  ): boolean {
+    return this.établissementTerritorialSanitaireActivités.some((activité: ÉtablissementTerritorialSanitaireActivité) => activité[indicateur].value !== null);
   }
 }
