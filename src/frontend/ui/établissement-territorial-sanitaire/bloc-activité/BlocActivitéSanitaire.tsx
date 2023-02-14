@@ -12,6 +12,27 @@ type BlocActivitéSanitaireProps = Readonly<{
   établissementTerritorialSanitaireActivitéViewModel: ÉtablissementTerritorialSanitaireActivitéViewModel;
 }>;
 
+function GraphiquePsySSR(props: { nombreJournéesPsySSRViewModel: ÉtablissementTerritorialSanitaireActivitéViewModel }) {
+  const { wording } = useDependencies();
+
+  return (
+    <IndicateurGraphique
+      contenuInfoBulle={
+        <ContenuNombreDeJournéesPSYetSSR
+          dateDeMiseÀJour={props.nombreJournéesPsySSRViewModel.dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr}
+          source={wording.PMSI}
+        />
+      }
+      dateDeMiseÀJour={props.nombreJournéesPsySSRViewModel.dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr}
+      identifiant="activite-1"
+      nomDeLIndicateur={wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR}
+      source={wording.PMSI}
+    >
+      {props.nombreJournéesPsySSRViewModel.nombreDeJournéesPsyEtSsr}
+    </IndicateurGraphique>
+  );
+}
+
 export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireActivitéViewModel }: BlocActivitéSanitaireProps) => {
   const { wording } = useDependencies();
 
@@ -28,20 +49,7 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireActiv
           ></GraphiqueNombreDeSejourMCO>
         )}
         {établissementTerritorialSanitaireActivitéViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés && (
-          <IndicateurGraphique
-            contenuInfoBulle={
-              <ContenuNombreDeJournéesPSYetSSR
-                dateDeMiseÀJour={établissementTerritorialSanitaireActivitéViewModel.dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr}
-                source={wording.PMSI}
-              />
-            }
-            dateDeMiseÀJour={établissementTerritorialSanitaireActivitéViewModel.dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr}
-            identifiant="activite-1"
-            nomDeLIndicateur={wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR}
-            source={wording.PMSI}
-          >
-            {établissementTerritorialSanitaireActivitéViewModel.nombreDeJournéesPsyEtSsr}
-          </IndicateurGraphique>
+          <GraphiquePsySSR nombreJournéesPsySSRViewModel={établissementTerritorialSanitaireActivitéViewModel} />
         )}
         <GraphiqueNombrePassageUrgence
           nombrePassageAuxUrgencesViewModel={établissementTerritorialSanitaireActivitéViewModel.nombreDePassagesAuxUrgencesViewModel}
