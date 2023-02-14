@@ -27,7 +27,7 @@ export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel }: B
           ></GraphiqueNombreDeSejourMCO>
         )}
         {entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés && (
-          <GraphiquePsySSR nombreJournéesPsySSRViewModel={entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel} />
+          <GraphiquePsySSR estEntitéJuridique={true} nombreJournéesPsySSRViewModel={entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel} />
         )}
         <GraphiqueNombrePassageUrgence
           estEntitéJuridique={true}

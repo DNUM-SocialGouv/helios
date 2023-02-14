@@ -7,33 +7,39 @@ import stylesBlocActivité from "../../établissement-territorial-sanitaire/bloc
 import { ContenuNombreDeJournéesPSYetSSR } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeJournéesPSYetSSR";
 import { NombreDeJourneesPsySSRViewModel } from "./NombreDeJourneesPsySSRViewModel";
 
-export function GraphiquePsySSR(props: { nombreJournéesPsySSRViewModel: NombreDeJourneesPsySSRViewModel }) {
+type GraphiquePsySSRProps = Readonly<{
+  nombreJournéesPsySSRViewModel: NombreDeJourneesPsySSRViewModel;
+  estEntitéJuridique?: boolean;
+}>;
+
+export function GraphiquePsySSR({ nombreJournéesPsySSRViewModel, estEntitéJuridique = false }: GraphiquePsySSRProps) {
   const { wording } = useDependencies();
 
   return (
     <IndicateurGraphique
       contenuInfoBulle={
         <ContenuNombreDeJournéesPSYetSSR
-          dateDeMiseÀJour={props.nombreJournéesPsySSRViewModel.dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr}
+          dateDeMiseÀJour={nombreJournéesPsySSRViewModel.dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr}
+          estEntitéJuridique={estEntitéJuridique}
           source={wording.PMSI}
         />
       }
-      dateDeMiseÀJour={props.nombreJournéesPsySSRViewModel.dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr}
+      dateDeMiseÀJour={nombreJournéesPsySSRViewModel.dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr}
       identifiant="activite-1"
       nomDeLIndicateur={wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR}
       source={wording.PMSI}
     >
       <>
-        <Bar data={props.nombreJournéesPsySSRViewModel.histogrammeDataSet} options={props.nombreJournéesPsySSRViewModel.getOptionsHistogramme()} />
+        <Bar data={nombreJournéesPsySSRViewModel.histogrammeDataSet} options={nombreJournéesPsySSRViewModel.getOptionsHistogramme()} />
         <menu
           className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]}
-          id={props.nombreJournéesPsySSRViewModel.identifiantDeLaLégendeDesJournéesPsyEtSsr}
+          id={nombreJournéesPsySSRViewModel.identifiantDeLaLégendeDesJournéesPsyEtSsr}
         />
         <TableIndicateur
           entêteLibellé={wording.ANNÉE}
-          identifiants={props.nombreJournéesPsySSRViewModel.identifiants}
-          libellés={props.nombreJournéesPsySSRViewModel.années}
-          valeurs={props.nombreJournéesPsySSRViewModel.valeurs}
+          identifiants={nombreJournéesPsySSRViewModel.identifiants}
+          libellés={nombreJournéesPsySSRViewModel.années}
+          valeurs={nombreJournéesPsySSRViewModel.valeurs}
         />
       </>
     </IndicateurGraphique>
