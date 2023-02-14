@@ -38,7 +38,7 @@ export const ContenuNombreDePassagesAuxUrgences = ({ dateDeMiseÀJour, source, e
         </p>
         {estEntitéJuridique && (
           <p>
-            l’activité affichée au niveau de l’entité juridique (EJ) correspond à la somme de l’activité du ou des établissements géographiques rattachés à
+            L’activité affichée au niveau de l’entité juridique (EJ) correspond à la somme de l’activité du ou des établissements géographiques rattachés à
             l’EJ.
           </p>
         )}

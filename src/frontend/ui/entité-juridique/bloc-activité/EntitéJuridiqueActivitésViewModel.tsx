@@ -25,10 +25,14 @@ export class EntitéJuridiqueActivitésViewModel extends GraphiqueViewModel {
   }
 
   public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
-    return !this.activitéEstElleRenseignée;
+    return !this.activitéEstElleRenseignée || !this.nombrePassageUrgenceEstIlRenseigné();
   }
 
   public get activitéEstElleRenseignée(): boolean {
     return this.entitéJuridiqueActivités.length > 0;
+  }
+
+  private nombrePassageUrgenceEstIlRenseigné(): boolean {
+    return this.entitéJuridiqueActivités.some((activité: EntitéJuridiqueActivités) => activité.nombreDePassagesAuxUrgences.value !== null);
   }
 }
