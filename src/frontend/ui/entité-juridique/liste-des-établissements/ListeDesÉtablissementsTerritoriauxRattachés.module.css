@@ -1,3 +1,7 @@
+.liste-établissements-territoriaux-rattachés {
+    color: var(--text-action-high-grey);
+    margin-bottom: 30px;
+}
 .liste-établissements-territoriaux-rattachés ol {
     color: var(--text-action-high-grey);
 }
@@ -17,7 +21,6 @@
 }
 
 .voir_plus {
-    margin-bottom: 30px;
     margin-left: 10px;
     margin-right: 10px;
 }
