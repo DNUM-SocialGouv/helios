@@ -32,6 +32,38 @@ describe("Bloc Activité Sanitaire", () => {
     expect(titre).toBeInTheDocument();
   });
 
+// TODO add test for when MCO has no data
+  it("affiche le GraphiqueNombreDeSejourMCO", () => {
+    // GIVEN
+    const viewModel = new EntitéJuridiqueActivitésViewModel(
+      [
+        mock<EntitéJuridiqueActivités>({
+          année: 2020,
+          nombreSéjoursPartielsMédecine: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: 100,
+          },
+          nombreSéjoursCompletsMédecine: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: 200,
+          },
+          nombreSéjoursPartielsChirurgie: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: 300,
+          },
+        }),
+      ],
+      wording
+    );
+
+    // WHEN
+    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
+
+    // THEN
+    const titre = screen.getByText(wording.NOMBRE_DE_SÉJOUR_MCO, { selector: "p" });
+    expect(titre).toBeInTheDocument();
+  });
+
   it("affiche un l'indicateur vide si il n'y a pas des données", () => {
     // GIVEN
     const viewModel = new EntitéJuridiqueActivitésViewModel([], wording);
