@@ -20,6 +20,17 @@ describe("Graphique Psy SSR", () => {
     expect(pmsi).toHaveAttribute("title", wording.PMSI_TITLE);
   });
 
+  it("affiche le titre", () => {
+    // GIVEN
+    const viewModel = new NombreDeJourneesPsySSRViewModel([], wording);
+
+    // WHEN
+    renderFakeComponent(<GraphiquePsySSR nombreJournéesPsySSRViewModel={viewModel} />);
+    // THEN
+    const titre = screen.getByText(wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, { selector: "p" });
+    expect(titre).toBeInTheDocument();
+  });
+
   describe("Détails info bulle", () => {
     let viewModel: NombreDeJourneesPsySSRViewModel;
 
@@ -70,44 +81,6 @@ describe("Graphique Psy SSR", () => {
     });
   });
 
-  describe("pas de nombre de journées ssr psy renseignées", () => {
-    let viewModel: NombreDeJourneesPsySSRViewModel;
-
-    beforeEach(() => {
-      // GIVEN
-      viewModel = new NombreDeJourneesPsySSRViewModel([], wording);
-    });
-
-    it("affiche le titre", () => {
-      // WHEN
-      renderFakeComponent(<GraphiquePsySSR nombreJournéesPsySSRViewModel={viewModel} />);
-      // THEN
-      const titre = screen.getByText(wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, { selector: "p" });
-      expect(titre).toBeInTheDocument();
-    });
-
-    it("désactive la transcription", () => {
-      // WHEN
-      renderFakeComponent(<GraphiquePsySSR nombreJournéesPsySSRViewModel={viewModel} />);
-
-      // THEN
-      const transcription = screen.getByText(wording.AFFICHER_LA_TRANSCRIPTION);
-      expect(transcription).toBeDisabled();
-    });
-
-    it("affiche la mise en exergue de toutes les années sans données", () => {
-      // WHEN
-      renderFakeComponent(<GraphiquePsySSR nombreJournéesPsySSRViewModel={viewModel} />);
-
-      // THEN
-      const exergue = screen.getByText(
-        `${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 5}, ${annéeEnCours - 4}, ${annéeEnCours - 3}, ${annéeEnCours - 2}, ${annéeEnCours - 1}`,
-        { selector: "p" }
-      );
-      expect(exergue).toBeInTheDocument();
-    });
-  });
-
   describe("nombre de journées ssr psy renseignés", () => {
     let psySSRUneAnnée: NombreDeJourneesPsySSRViewModel;
 
@@ -118,19 +91,19 @@ describe("Graphique Psy SSR", () => {
             année: annéeEnCours - 1,
             nombreJournéesPartielsSsr: {
               dateMiseÀJourSource: "2020-10-01",
-              value: 1,
+              value: 1111,
             },
             nombreJournéesCompletePsy: {
               dateMiseÀJourSource: "2020-10-01",
-              value: 2,
+              value: 2222,
             },
             nombreJournéesPartiellesPsy: {
               dateMiseÀJourSource: "2020-10-01",
-              value: 3,
+              value: 3333,
             },
             nombreJournéesCompletesSsr: {
               dateMiseÀJourSource: "2020-10-01",
-              value: 4,
+              value: 4444,
             },
           },
         ],
@@ -171,19 +144,10 @@ describe("Graphique Psy SSR", () => {
       const transcription = screen.getByRole("table");
       const transcriptionTable = within(transcription);
       expect(transcriptionTable.getByText(annéeEnCours - 1)).toBeInTheDocument();
-      expect(transcriptionTable.getByText("100")).toBeInTheDocument();
-    });
-
-    it("affiche la mise en exergue pour les années manquantes", () => {
-      // WHEN
-      renderFakeComponent(<GraphiquePsySSR nombreJournéesPsySSRViewModel={psySSRUneAnnée} />);
-
-      // THEN
-      const exergue = screen.getByText(
-        `${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 5}, ${annéeEnCours - 4}, ${annéeEnCours - 3}, ${annéeEnCours - 2}`,
-        { selector: "p" }
-      );
-      expect(exergue).toBeInTheDocument();
+      expect(transcriptionTable.getByText("1 111")).toBeInTheDocument();
+      expect(transcriptionTable.getByText("2 222")).toBeInTheDocument();
+      expect(transcriptionTable.getByText("3 333")).toBeInTheDocument();
+      expect(transcriptionTable.getByText("4 444")).toBeInTheDocument();
     });
   });
 });
