@@ -42,7 +42,7 @@ export class NombreDeJourneesPsySSRViewModel extends GraphiqueViewModel {
   }
 
   public get dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr(): string {
-    return StringFormater.formateLaDate(this.activitésPsySSR[0].nombreJournéesCompletePsy.dateMiseÀJourSource);
+    return StringFormater.formateLaDate(this.activitésPsySSR[0]?.nombreJournéesCompletePsy?.dateMiseÀJourSource);
   }
 
   private construisLesJournéesPsyEtSsrParAnnée(): [DonnéesDeDiagrammeDesJournéesPsyEtSsr, number[]] {
