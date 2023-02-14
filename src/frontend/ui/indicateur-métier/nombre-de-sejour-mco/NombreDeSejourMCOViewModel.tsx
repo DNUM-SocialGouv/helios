@@ -1,15 +1,16 @@
-import { ReactElement } from "react";
-import { Bar } from "react-chartjs-2";
-
-import { ÉtablissementTerritorialSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
-import { ÉtablissementTerritorialSanitaireActivité } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
 import { Wording } from "../../../configuration/wording/Wording";
 import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../commun/StringFormater";
-import { TableIndicateur } from "../../commun/TableIndicateur/TableIndicateur";
-import stylesBlocActivité from "../../établissement-territorial-sanitaire/bloc-activité/BlocActivitéSanitaire.module.css";
-import { IndicateurDesSejoursMCO } from "../IndicateurDesSejoursMCO";
+import { ActivitéMCO } from "./IndicateurDesSejoursMCO";
 
+type IndicateurDesSejoursMCO = Readonly<{
+  nombreSéjoursCompletsMédecine: { x: number; y: number | null }[];
+  nombreSéjoursCompletsChirurgie: { x: number; y: number | null }[];
+  nombreSéjoursCompletsObstétrique: { x: number; y: number | null }[];
+  nombreSéjoursPartielsMédecine: { x: number; y: number | null }[];
+  nombreSéjoursPartielsChirurgie: { x: number; y: number | null }[];
+  nombreSéjoursPartielsObstétrique: { x: number; y: number | null }[];
+}>;
 export class NombreDeSejourMCOViewModel extends GraphiqueViewModel {
   readonly couleurDuFondHistogrammeVertClair = "#DFFDF7";
   readonly couleurDuFondHistogrammeVertFoncé = "#006A6F";
@@ -19,13 +20,18 @@ export class NombreDeSejourMCOViewModel extends GraphiqueViewModel {
   readonly couleurDuFondHistogrammeRougeFoncé = "#A94645";
   readonly identifiantDeLaLégendeDesSéjoursMCO = "légende-graphique-sanitaire-journées-séjours-mco";
 
-  constructor(private readonly établissementTerritorialSanitaireActivités: ÉtablissementTerritorialSanitaire["activités"], wording: Wording) {
+  private nombreDeSéjours: IndicateurDesSejoursMCO;
+  readonly années: number[];
+  constructor(private readonly activitésMCO: ActivitéMCO[], wording: Wording) {
     super(wording);
+    const [nombreDeSéjours, années] = this.construisLesSéjoursMCOParAnnée();
+    this.nombreDeSéjours = nombreDeSéjours;
+    this.années = années;
   }
 
   public get nombreDeSéjoursMCOSontIlsRenseignés(): boolean {
-    return this.établissementTerritorialSanitaireActivités.some(
-      (activité: ÉtablissementTerritorialSanitaireActivité) =>
+    return this.activitésMCO.some(
+      (activité: ActivitéMCO) =>
         activité["nombreSéjoursPartielsMédecine"].value !== null ||
         activité["nombreSéjoursCompletsMédecine"].value !== null ||
         activité["nombreSéjoursPartielsChirurgie"].value !== null ||
@@ -35,14 +41,8 @@ export class NombreDeSejourMCOViewModel extends GraphiqueViewModel {
     );
   }
 
-  public get nombreDeSéjoursMédecineChirurgieObstétrique(): ReactElement {
-    const [nombreDeSéjours, années] = this.construisLesSéjoursMCOParAnnée();
-
-    return this.afficheLHistogrammeDesSéjoursMCO(nombreDeSéjours, années);
-  }
-
   public get dateDeMiseÀJourDuNombreDeSéjoursMédecineChirurgieObstétrique(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialSanitaireActivités[0].nombreSéjoursCompletsMédecine.dateMiseÀJourSource);
+    return StringFormater.formateLaDate(this.activitésMCO[0].nombreSéjoursCompletsMédecine.dateMiseÀJourSource);
   }
 
   private construisLesSéjoursMCOParAnnée(): [IndicateurDesSejoursMCO, number[]] {
@@ -56,7 +56,7 @@ export class NombreDeSejourMCOViewModel extends GraphiqueViewModel {
     };
     const années: number[] = [];
 
-    this.établissementTerritorialSanitaireActivités.forEach((activité: ÉtablissementTerritorialSanitaireActivité) => {
+    this.activitésMCO.forEach((activité: ActivitéMCO) => {
       années.push(activité.année);
       nombreDeSéjours.nombreSéjoursCompletsChirurgie.push({
         x: activité.année,
@@ -86,8 +86,9 @@ export class NombreDeSejourMCOViewModel extends GraphiqueViewModel {
     return [nombreDeSéjours, années];
   }
 
-  private afficheLHistogrammeDesSéjoursMCO(nombreDeSéjours: IndicateurDesSejoursMCO, années: number[]): ReactElement {
-    const data = {
+  getHistogrammeDataSet() {
+    const [nombreDeSéjours, années] = this.construisLesSéjoursMCOParAnnée();
+    return {
       datasets: [
         {
           backgroundColor: this.couleurDuFondHistogrammeBleuClair,
@@ -134,35 +135,32 @@ export class NombreDeSejourMCOViewModel extends GraphiqueViewModel {
       ],
       labels: années,
     };
+  }
 
-    const options = this.optionsHistogrammeÀBandes(this.identifiantDeLaLégendeDesSéjoursMCO, this.tooltipSéjoursMCO);
+  public getOptionsHistogramme() {
+    return this.optionsHistogrammeÀBandes(this.identifiantDeLaLégendeDesSéjoursMCO, this.tooltipSéjoursMCO);
+  }
 
-    return (
-      <>
-        <Bar data={data} options={options} />
-        <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={this.identifiantDeLaLégendeDesSéjoursMCO} />
-        <TableIndicateur
-          entêteLibellé={this.wording.ANNÉE}
-          identifiants={[
-            this.wording.HOSPITALISATION_PARTIELLE_MÉDECINE,
-            this.wording.HOSPITALISATION_COMPLÈTE_MÉDECINE,
-            this.wording.HOSPITALISATION_PARTIELLE_CHIRURGIE,
-            this.wording.HOSPITALISATION_COMPLÈTE_CHIRURGIE,
-            this.wording.HOSPITALISATION_PARTIELLE_OBSTÉTRIQUE,
-            this.wording.HOSPITALISATION_COMPLÈTE_OBSTÉTRIQUE,
-          ]}
-          libellés={années}
-          valeurs={[
-            this.valeursDesNombresDeSéjours(nombreDeSéjours.nombreSéjoursPartielsMédecine),
-            this.valeursDesNombresDeSéjours(nombreDeSéjours.nombreSéjoursCompletsMédecine),
-            this.valeursDesNombresDeSéjours(nombreDeSéjours.nombreSéjoursPartielsChirurgie),
-            this.valeursDesNombresDeSéjours(nombreDeSéjours.nombreSéjoursCompletsChirurgie),
-            this.valeursDesNombresDeSéjours(nombreDeSéjours.nombreSéjoursPartielsObstétrique),
-            this.valeursDesNombresDeSéjours(nombreDeSéjours.nombreSéjoursCompletsObstétrique),
-          ]}
-        />
-      </>
-    );
+  public getIdentifiantTableIndicateur() {
+    return [
+      this.wording.HOSPITALISATION_PARTIELLE_MÉDECINE,
+      this.wording.HOSPITALISATION_COMPLÈTE_MÉDECINE,
+      this.wording.HOSPITALISATION_PARTIELLE_CHIRURGIE,
+      this.wording.HOSPITALISATION_COMPLÈTE_CHIRURGIE,
+      this.wording.HOSPITALISATION_PARTIELLE_OBSTÉTRIQUE,
+      this.wording.HOSPITALISATION_COMPLÈTE_OBSTÉTRIQUE,
+    ];
+  }
+
+  public getValeurTableIndicateur() {
+    return [
+      this.valeursDesNombresDeSéjours(this.nombreDeSéjours.nombreSéjoursPartielsMédecine),
+      this.valeursDesNombresDeSéjours(this.nombreDeSéjours.nombreSéjoursCompletsMédecine),
+      this.valeursDesNombresDeSéjours(this.nombreDeSéjours.nombreSéjoursPartielsChirurgie),
+      this.valeursDesNombresDeSéjours(this.nombreDeSéjours.nombreSéjoursCompletsChirurgie),
+      this.valeursDesNombresDeSéjours(this.nombreDeSéjours.nombreSéjoursPartielsObstétrique),
+      this.valeursDesNombresDeSéjours(this.nombreDeSéjours.nombreSéjoursCompletsObstétrique),
+    ];
   }
 
   // TODO this is used in EtablismentTerritorialSanitaireActiviteVM
