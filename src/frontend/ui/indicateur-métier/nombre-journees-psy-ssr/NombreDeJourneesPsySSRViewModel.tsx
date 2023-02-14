@@ -10,7 +10,7 @@ export type DonnéesDeDiagrammeDesJournéesPsyEtSsr = Readonly<{
   nombreJournéesPartiellesSsr: { x: number; y: number | null }[];
 }>;
 
-type ActivitesPsySSR = Pick<
+export type ActivitesPsySSR = Pick<
   ÉtablissementTerritorialSanitaireActivité,
   "année" | "nombreJournéesPartiellesPsy" | "nombreJournéesCompletesSsr" | "nombreJournéesCompletePsy" | "nombreJournéesPartielsSsr"
 >;

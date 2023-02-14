@@ -2,18 +2,34 @@ import { EntitéJuridiqueActivités } from "../../../../backend/métier/entities
 import { Wording } from "../../../configuration/wording/Wording";
 import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { IndicateurActivité } from "../../indicateur-métier/IndicateurActivité";
+import { ActivitesPsySSR, NombreDeJourneesPsySSRViewModel } from "../../indicateur-métier/nombre-journees-psy-ssr/NombreDeJourneesPsySSRViewModel";
 import { NombreDeSejourMCOViewModel } from "../../indicateur-métier/nombre-de-sejour-mco/NombreDeSejourMCOViewModel";
 import { NombrePassageAuxUrgencesViewModel } from "../../indicateur-métier/nombre-passage-urgence/NombrePassageAuxUrgencesViewModel";
 
 export class EntitéJuridiqueActivitésViewModel extends GraphiqueViewModel {
   // @ts-ignore
   public nombreDePassageAuxUrgencesViewModel: NombrePassageAuxUrgencesViewModel;
+  public nombreJourneesPsySSRViewModel: NombreDeJourneesPsySSRViewModel;
   public nombreDeSejourMCOViewModel: NombreDeSejourMCOViewModel;
 
   constructor(private readonly entitéJuridiqueActivités: EntitéJuridiqueActivités[], wording: Wording) {
     super(wording);
     this.createNombrePassageUrgenceViewModel(wording);
     this.nombreDeSejourMCOViewModel = new NombreDeSejourMCOViewModel(entitéJuridiqueActivités, wording);
+    this.nombreJourneesPsySSRViewModel = this.createNombreJourneesPsySSRViewModel(wording);
+  }
+
+  private createNombreJourneesPsySSRViewModel(wording: Wording) {
+    return new NombreDeJourneesPsySSRViewModel(
+      this.entitéJuridiqueActivités.map(
+        (activite): ActivitesPsySSR => ({
+          ...activite,
+          nombreJournéesCompletePsy: activite.nombreJournéesCompletesPsy,
+          nombreJournéesPartielsSsr: activite.nombreJournéesPartiellesSsr,
+        })
+      ),
+      wording
+    );
   }
 
   private createNombrePassageUrgenceViewModel(wording: Wording) {
