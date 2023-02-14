@@ -10,6 +10,11 @@ export type DonnéesDeDiagrammeDesJournéesPsyEtSsr = Readonly<{
   nombreJournéesPartiellesSsr: { x: number; y: number | null }[];
 }>;
 
+type ActivitesPsySSR = Pick<
+  ÉtablissementTerritorialSanitaireActivité,
+  "année" | "nombreJournéesPartiellesPsy" | "nombreJournéesCompletesSsr" | "nombreJournéesCompletePsy" | "nombreJournéesPartielsSsr"
+>;
+
 export class NombreDeJourneesPsySSRViewModel extends GraphiqueViewModel {
   readonly couleurDuFondHistogrammeBleuClair = "#DEE5FD";
   readonly couleurDuFondHistogrammeBleuFoncé = "#2F4077";
@@ -19,7 +24,7 @@ export class NombreDeJourneesPsySSRViewModel extends GraphiqueViewModel {
   private nombreDeJournées: DonnéesDeDiagrammeDesJournéesPsyEtSsr;
   années: number[];
 
-  constructor(private activitésPsySSR: ÉtablissementTerritorialSanitaireActivité[], wording: Wording) {
+  constructor(private activitésPsySSR: ActivitesPsySSR[], wording: Wording) {
     super(wording);
     const [nombreDeJournées, années] = this.construisLesJournéesPsyEtSsrParAnnée();
     this.nombreDeJournées = nombreDeJournées;
@@ -28,10 +33,10 @@ export class NombreDeJourneesPsySSRViewModel extends GraphiqueViewModel {
 
   public get nombreDeJournéesPsyEtSsrSontIlsRenseignés(): boolean {
     return this.activitésPsySSR.some(
-      (activité: ÉtablissementTerritorialSanitaireActivité) =>
+      (activité: ActivitesPsySSR) =>
         activité["nombreJournéesPartiellesPsy"].value !== null ||
         activité["nombreJournéesCompletesSsr"].value !== null ||
-        activité["nombreJournéesPartiellesPsy"].value !== null ||
+        activité["nombreJournéesPartielsSsr"].value !== null ||
         activité["nombreJournéesCompletePsy"].value !== null
     );
   }
@@ -49,7 +54,7 @@ export class NombreDeJourneesPsySSRViewModel extends GraphiqueViewModel {
     };
     const années: number[] = [];
 
-    this.activitésPsySSR.forEach((activité: ÉtablissementTerritorialSanitaireActivité) => {
+    this.activitésPsySSR.forEach((activité: ActivitesPsySSR) => {
       années.push(activité.année);
       nombreDeJournées.nombreJournéesComplètesPsy.push({
         x: activité.année,
