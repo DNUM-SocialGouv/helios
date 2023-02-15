@@ -1,6 +1,7 @@
-import { fireEvent, screen, within } from "@testing-library/react";
+import { within } from "@testing-library/react";
 
-import { annéeEnCours, fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../testHelper";
+import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
+import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { GraphiqueNombreDeSejourMCO } from "./GraphiqueNombreDeSejourMCO";
 import { ActivitéMCO } from "./IndicateurDesSejoursMCO";
 import { NombreDeSejourMCOViewModel } from "./NombreDeSejourMCOViewModel";
@@ -38,10 +39,12 @@ const activitesMCO: ActivitéMCO[] = [
 
 describe("Graphique Nombre de Sejour MCO", () => {
   let viewModel: NombreDeSejourMCOViewModel;
+  let graphiqueTest: GraphiqueTest;
 
   beforeAll(() => {
     // GIVEN
     viewModel = new NombreDeSejourMCOViewModel(activitesMCO, wording);
+    graphiqueTest = new GraphiqueTest(wording);
   });
 
   it("affiche abréviation du fichier source", () => {
@@ -49,16 +52,16 @@ describe("Graphique Nombre de Sejour MCO", () => {
     renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
 
     // THEN
-    const rpu = screen.getAllByText("PMSI", { selector: "abbr" })[0];
-    expect(rpu).toBeInTheDocument();
-    expect(rpu).toHaveAttribute("title", wording.PMSI_TITLE);
+    const pmsi = graphiqueTest.abréviationFichierSource("PMSI");
+    expect(pmsi).toBeInTheDocument();
+    expect(pmsi).toHaveAttribute("title", wording.PMSI_TITLE);
   });
 
   it("affiche le titre", () => {
     // WHEN
     renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
     // THEN
-    const titre = screen.getByText(wording.NOMBRE_DE_SÉJOUR_MCO, { selector: "p" });
+    const titre = graphiqueTest.titre(wording.NOMBRE_DE_SÉJOUR_MCO);
     expect(titre).toBeInTheDocument();
   });
 
@@ -67,89 +70,82 @@ describe("Graphique Nombre de Sejour MCO", () => {
     renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
 
     // THEN
-    const dateMiseAJour = screen.getAllByText(textMatch(`${wording.miseÀJour("01/10/2022")} - Source : PMSI`), {
-      selector: "p",
-    });
+    const dateMiseAJour = graphiqueTest.dateMiseAJour("PMSI", "01/10/2022");
     expect(dateMiseAJour[0]).toBeInTheDocument();
   });
-});
 
-describe("Détails info bulle", () => {
-  let viewModel: NombreDeSejourMCOViewModel;
+  describe("Détails info bulle", () => {
+    let viewModel: NombreDeSejourMCOViewModel;
 
-  beforeAll(() => {
-    // GIVEN
-    viewModel = new NombreDeSejourMCOViewModel(activitesMCO, wording);
-  });
-
-  it("affiche le bouton de détail", () => {
-    // WHEN
-    renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
-
-    // THEN
-    const détails = screen.getByRole("button", { name: wording.DÉTAILS });
-    expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-activite-0`);
-    expect(détails).toHaveAttribute("data-fr-opened", "false");
-  });
-
-  it("affiche le contenu de l’info bulle après avoir cliqué sur le bouton 'détails'", () => {
-    // GIVEN
-    renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
-
-    // WHEN
-    const détails = screen.getByRole("button", { name: wording.DÉTAILS });
-    fireEvent.click(détails);
-
-    // THEN
-    expect(détails).toHaveAttribute("data-fr-opened", "true");
-    const h1 = screen.getByRole("heading", {
-      level: 1,
-      name: wording.NOMBRE_DE_SÉJOUR_MCO,
+    beforeAll(() => {
+      // GIVEN
+      viewModel = new NombreDeSejourMCOViewModel(activitesMCO, wording);
     });
-    expect(h1).toBeInTheDocument();
-  });
 
-  it("ferme l'info bulle en cliquant sur le bouton 'Fermer'", () => {
-    // GIVEN
-    renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
-    const détails = screen.getByRole("button", { name: wording.DÉTAILS });
-    fireEvent.click(détails);
+    it("affiche le bouton de détail", () => {
+      // WHEN
+      renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
 
-    // WHEN
-    const fermer = screen.getByRole("button", { name: wording.FERMER });
-    fireEvent.click(fermer);
+      // THEN
+      const détails = graphiqueTest.détail;
+      expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-activite-0`);
+      expect(détails).toHaveAttribute("data-fr-opened", "false");
+    });
 
-    // THEN
-    expect(détails).toHaveAttribute("data-fr-opened", "false");
-  });
+    it("affiche le contenu de l’info bulle après avoir cliqué sur le bouton 'détails'", () => {
+      // GIVEN
+      renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
 
-  it("affiche la transcription", () => {
-    // WHEN
-    renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
+      // WHEN
+      graphiqueTest.ouvreDétail();
 
-    // THEN
-    const transcription = screen.getByText(wording.AFFICHER_LA_TRANSCRIPTION);
-    expect(transcription).toHaveAttribute("aria-expanded", "false");
-    expect(transcription).not.toBeDisabled();
-  });
+      // THEN
+      const détails = graphiqueTest.détail;
+      expect(détails).toHaveAttribute("data-fr-opened", "true");
+      const h1 = graphiqueTest.titreDétail(wording.NOMBRE_DE_SÉJOUR_MCO);
+      expect(h1).toBeInTheDocument();
+    });
 
-  it("affiche le contenu de la transcription", () => {
-    // GIVEN
-    renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
+    it("ferme l'info bulle en cliquant sur le bouton 'Fermer'", () => {
+      // GIVEN
+      renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
+      graphiqueTest.ouvreDétail();
 
-    // WHEN
-    const afficherLaTranscription = screen.getByText(wording.AFFICHER_LA_TRANSCRIPTION);
-    fireEvent.click(afficherLaTranscription);
+      // WHEN
+      graphiqueTest.fermeDétail();
 
-    // THEN
-    const transcription = screen.getByRole("table");
-    const transcriptionTable = within(transcription);
-    expect(transcriptionTable.getByText(annéeEnCours - 1)).toBeInTheDocument();
-    expect(transcriptionTable.getByText("100")).toBeInTheDocument();
-    expect(transcriptionTable.getByText("150")).toBeInTheDocument();
-    expect(transcriptionTable.getByText("200")).toBeInTheDocument();
-    expect(transcriptionTable.getByText("50")).toBeInTheDocument();
-    expect(transcriptionTable.getByText("500")).toBeInTheDocument();
-    expect(transcriptionTable.getByText("90")).toBeInTheDocument();
+      // THEN
+      const détails = graphiqueTest.détail;
+      expect(détails).toHaveAttribute("data-fr-opened", "false");
+    });
+
+    it("affiche la transcription", () => {
+      // WHEN
+      renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
+
+      // THEN
+      const transcription = graphiqueTest.boutonAfficherTranscription;
+      expect(transcription).toHaveAttribute("aria-expanded", "false");
+      expect(transcription).not.toBeDisabled();
+    });
+
+    it("affiche le contenu de la transcription", () => {
+      // GIVEN
+      renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
+
+      // WHEN
+      graphiqueTest.afficherLaTranscription();
+
+      // THEN
+      const transcription = graphiqueTest.transcriptionTable;
+      const transcriptionTable = within(transcription);
+      expect(transcriptionTable.getByText(annéeEnCours - 1)).toBeInTheDocument();
+      expect(transcriptionTable.getByText("100")).toBeInTheDocument();
+      expect(transcriptionTable.getByText("150")).toBeInTheDocument();
+      expect(transcriptionTable.getByText("200")).toBeInTheDocument();
+      expect(transcriptionTable.getByText("50")).toBeInTheDocument();
+      expect(transcriptionTable.getByText("500")).toBeInTheDocument();
+      expect(transcriptionTable.getByText("90")).toBeInTheDocument();
+    });
   });
 });
