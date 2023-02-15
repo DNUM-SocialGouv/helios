@@ -1,6 +1,6 @@
-import { fireEvent, screen } from "@testing-library/react";
+import { fireEvent, screen, within } from "@testing-library/react";
 
-import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../testHelper";
+import { annéeEnCours, fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../testHelper";
 import { GraphiqueNombreDeSejourMCO } from "./GraphiqueNombreDeSejourMCO";
 import { ActivitéMCO } from "./IndicateurDesSejoursMCO";
 import { NombreDeSejourMCOViewModel } from "./NombreDeSejourMCOViewModel";
@@ -8,7 +8,7 @@ import { NombreDeSejourMCOViewModel } from "./NombreDeSejourMCOViewModel";
 const { wording } = fakeFrontDependencies;
 const activitesMCO: ActivitéMCO[] = [
   {
-    année: annéeEnCours,
+    année: annéeEnCours - 1,
     nombreSéjoursPartielsMédecine: {
       dateMiseÀJourSource: "2022-10-01",
       value: 100,
@@ -27,7 +27,7 @@ const activitesMCO: ActivitéMCO[] = [
     },
     nombreSéjoursPartielsObstétrique: {
       dateMiseÀJourSource: "2022-10-01",
-      value: 100,
+      value: 500,
     },
     nombreSéjoursCompletsObstétrique: {
       dateMiseÀJourSource: "2022-10-01",
@@ -60,6 +60,17 @@ describe("Graphique Nombre de Sejour MCO", () => {
     // THEN
     const titre = screen.getByText(wording.NOMBRE_DE_SÉJOUR_MCO, { selector: "p" });
     expect(titre).toBeInTheDocument();
+  });
+
+  it("affiche la date de mise à jour du fichier PMSI", () => {
+    // WHEN
+    renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
+
+    // THEN
+    const dateMiseAJour = screen.getAllByText(textMatch(`${wording.miseÀJour("01/10/2022")} - Source : PMSI`), {
+      selector: "p",
+    });
+    expect(dateMiseAJour[0]).toBeInTheDocument();
   });
 });
 
@@ -110,5 +121,35 @@ describe("Détails info bulle", () => {
 
     // THEN
     expect(détails).toHaveAttribute("data-fr-opened", "false");
+  });
+
+  it("affiche la transcription", () => {
+    // WHEN
+    renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
+
+    // THEN
+    const transcription = screen.getByText(wording.AFFICHER_LA_TRANSCRIPTION);
+    expect(transcription).toHaveAttribute("aria-expanded", "false");
+    expect(transcription).not.toBeDisabled();
+  });
+
+  it("affiche le contenu de la transcription", () => {
+    // GIVEN
+    renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
+
+    // WHEN
+    const afficherLaTranscription = screen.getByText(wording.AFFICHER_LA_TRANSCRIPTION);
+    fireEvent.click(afficherLaTranscription);
+
+    // THEN
+    const transcription = screen.getByRole("table");
+    const transcriptionTable = within(transcription);
+    expect(transcriptionTable.getByText(annéeEnCours - 1)).toBeInTheDocument();
+    expect(transcriptionTable.getByText("100")).toBeInTheDocument();
+    expect(transcriptionTable.getByText("150")).toBeInTheDocument();
+    expect(transcriptionTable.getByText("200")).toBeInTheDocument();
+    expect(transcriptionTable.getByText("50")).toBeInTheDocument();
+    expect(transcriptionTable.getByText("500")).toBeInTheDocument();
+    expect(transcriptionTable.getByText("90")).toBeInTheDocument();
   });
 });

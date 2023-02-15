@@ -9,8 +9,9 @@ import { NombreDeSejourMCOViewModel } from "./NombreDeSejourMCOViewModel";
 
 type GraphiqueNombreDeSejourMCOProps = Readonly<{
   nombreDeSejourMCOViewModel: NombreDeSejourMCOViewModel;
+  estEntitéJuridique?: boolean;
 }>;
-export const GraphiqueNombreDeSejourMCO = ({ nombreDeSejourMCOViewModel }: GraphiqueNombreDeSejourMCOProps) => {
+export const GraphiqueNombreDeSejourMCO = ({ nombreDeSejourMCOViewModel, estEntitéJuridique = false }: GraphiqueNombreDeSejourMCOProps) => {
   const { wording } = useDependencies();
 
   return (
@@ -18,6 +19,7 @@ export const GraphiqueNombreDeSejourMCO = ({ nombreDeSejourMCOViewModel }: Graph
       contenuInfoBulle={
         <ContenuNombreDeSéjourMCO
           dateDeMiseÀJour={nombreDeSejourMCOViewModel.dateDeMiseÀJourDuNombreDeSéjoursMédecineChirurgieObstétrique}
+          estEntitéJuridique={estEntitéJuridique}
           source={wording.PMSI}
         />
       }

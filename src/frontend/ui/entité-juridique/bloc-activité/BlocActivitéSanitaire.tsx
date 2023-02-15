@@ -20,7 +20,10 @@ export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel }: B
     <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
       <ul className="indicateurs">
         {entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés && (
-          <GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel}></GraphiqueNombreDeSejourMCO>
+          <GraphiqueNombreDeSejourMCO
+            estEntitéJuridique={true}
+            nombreDeSejourMCOViewModel={entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel}
+          ></GraphiqueNombreDeSejourMCO>
         )}
         <GraphiqueNombrePassageUrgence
           estEntitéJuridique={true}
