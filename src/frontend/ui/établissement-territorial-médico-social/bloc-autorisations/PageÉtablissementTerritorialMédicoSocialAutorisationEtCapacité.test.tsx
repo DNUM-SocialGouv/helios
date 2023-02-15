@@ -1,7 +1,7 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 
-import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
-import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../testHelper";
+import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
+import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { PageÉtablissementTerritorialMédicoSocial } from "../PageÉtablissementTerritorialMédicoSocial";
 import { ÉtablissementTerritorialMédicoSocialViewModel } from "../ÉtablissementTerritorialMédicoSocialViewModel";
 

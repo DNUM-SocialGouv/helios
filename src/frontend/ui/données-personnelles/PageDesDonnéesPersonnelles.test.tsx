@@ -1,6 +1,6 @@
 import { screen, within } from "@testing-library/react";
 
-import { fakeFrontDependencies, renderFakeComponent } from "../../testHelper";
+import { fakeFrontDependencies, renderFakeComponent } from "../../test-helpers/testHelper";
 import { PageDesDonnéesPersonnelles } from "./PageDesDonnéesPersonnelles";
 
 const { wording } = fakeFrontDependencies;

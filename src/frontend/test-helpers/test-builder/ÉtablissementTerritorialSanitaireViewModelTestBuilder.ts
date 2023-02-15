@@ -1,7 +1,7 @@
-import { ÉtablissementTerritorialSanitaire } from "../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
-import { Paths } from "../configuration/Paths";
-import { Wording } from "../configuration/wording/Wording";
-import { ÉtablissementTerritorialSanitaireViewModel } from "../ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel";
+import { ÉtablissementTerritorialSanitaire } from "../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
+import { Paths } from "../../configuration/Paths";
+import { Wording } from "../../configuration/wording/Wording";
+import { ÉtablissementTerritorialSanitaireViewModel } from "../../ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel";
 
 export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
   public static identité: ÉtablissementTerritorialSanitaire["identité"] = {

@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 
-import { fakeFrontDependencies, renderFakeComponent, trimHtml } from "../../testHelper";
+import { fakeFrontDependencies, renderFakeComponent, trimHtml } from "../../test-helpers/testHelper";
 import { Page404 } from "./Page404";
 import { Page500 } from "./Page500";
 

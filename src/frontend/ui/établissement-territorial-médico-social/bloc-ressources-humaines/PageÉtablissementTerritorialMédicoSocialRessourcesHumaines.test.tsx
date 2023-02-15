@@ -1,8 +1,8 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
-import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
-import { annéeEnCours, fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../testHelper";
+import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
+import { annéeEnCours, fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { PageÉtablissementTerritorialMédicoSocial } from "../PageÉtablissementTerritorialMédicoSocial";
 import { ÉtablissementTerritorialMédicoSocialViewModel } from "../ÉtablissementTerritorialMédicoSocialViewModel";
 

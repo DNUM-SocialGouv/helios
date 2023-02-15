@@ -1,12 +1,19 @@
-import { fireEvent, screen, within } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 
-import { annéeEnCours, fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../testHelper";
+import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
+import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { GraphiqueNombrePassageUrgence } from "./GraphiqueNombrePassageUrgence";
 import { NombrePassageAuxUrgencesViewModel } from "./NombrePassageAuxUrgencesViewModel";
 
 const { wording } = fakeFrontDependencies;
 
 describe("Graphique Nombre de Passage d'urgence", () => {
+  let graphiqueTest: GraphiqueTest;
+
+  beforeAll(() => {
+    graphiqueTest = new GraphiqueTest(wording);
+  });
+
   it("affiche abréviation du fichier source", () => {
     // GIVEN
     const viewModel = new NombrePassageAuxUrgencesViewModel([], wording);
@@ -15,7 +22,7 @@ describe("Graphique Nombre de Passage d'urgence", () => {
     renderFakeComponent(<GraphiqueNombrePassageUrgence nombrePassageAuxUrgencesViewModel={viewModel} />);
 
     // THEN
-    const rpu = screen.getAllByText("RPU", { selector: "abbr" })[0];
+    const rpu = graphiqueTest.abréviationFichierSource("RPU");
     expect(rpu).toBeInTheDocument();
     expect(rpu).toHaveAttribute("title", wording.RPU_TITLE);
   });
@@ -33,7 +40,7 @@ describe("Graphique Nombre de Passage d'urgence", () => {
       renderFakeComponent(<GraphiqueNombrePassageUrgence nombrePassageAuxUrgencesViewModel={viewModel} />);
 
       // THEN
-      const détails = screen.getByRole("button", { name: wording.DÉTAILS });
+      const détails = graphiqueTest.détail;
       expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-activite-2`);
       expect(détails).toHaveAttribute("data-fr-opened", "false");
     });
@@ -43,29 +50,25 @@ describe("Graphique Nombre de Passage d'urgence", () => {
       renderFakeComponent(<GraphiqueNombrePassageUrgence nombrePassageAuxUrgencesViewModel={viewModel} />);
 
       // WHEN
-      const détails = screen.getByRole("button", { name: wording.DÉTAILS });
-      fireEvent.click(détails);
+      const détails = graphiqueTest.détail;
+      graphiqueTest.ouvreDétail();
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const h1 = screen.getByRole("heading", {
-        level: 1,
-        name: wording.NOMBRE_DE_PASSAGES_AUX_URGENCES,
-      });
+      const h1 = graphiqueTest.titreDétail(wording.NOMBRE_DE_PASSAGES_AUX_URGENCES);
       expect(h1).toBeInTheDocument();
     });
 
     it("ferme l'info bulle en cliquant sur le bouton 'Fermer'", () => {
       // GIVEN
       renderFakeComponent(<GraphiqueNombrePassageUrgence nombrePassageAuxUrgencesViewModel={viewModel} />);
-      const détails = screen.getByRole("button", { name: wording.DÉTAILS });
-      fireEvent.click(détails);
+      graphiqueTest.ouvreDétail();
 
       // WHEN
-      const fermer = screen.getByRole("button", { name: wording.FERMER });
-      fireEvent.click(fermer);
+      graphiqueTest.fermeDétail();
 
       // THEN
+      const détails = graphiqueTest.détail;
       expect(détails).toHaveAttribute("data-fr-opened", "false");
     });
   });
@@ -82,7 +85,7 @@ describe("Graphique Nombre de Passage d'urgence", () => {
       // WHEN
       renderFakeComponent(<GraphiqueNombrePassageUrgence nombrePassageAuxUrgencesViewModel={viewModel} />);
       // THEN
-      const titre = screen.getByText(wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, { selector: "p" });
+      const titre = graphiqueTest.titre(wording.NOMBRE_DE_PASSAGES_AUX_URGENCES);
       expect(titre).toBeInTheDocument();
     });
 
@@ -91,7 +94,7 @@ describe("Graphique Nombre de Passage d'urgence", () => {
       renderFakeComponent(<GraphiqueNombrePassageUrgence nombrePassageAuxUrgencesViewModel={viewModel} />);
 
       // THEN
-      const transcription = screen.getByText(wording.AFFICHER_LA_TRANSCRIPTION);
+      const transcription = graphiqueTest.boutonAfficherTranscription;
       expect(transcription).toBeDisabled();
     });
 
@@ -129,9 +132,7 @@ describe("Graphique Nombre de Passage d'urgence", () => {
       renderFakeComponent(<GraphiqueNombrePassageUrgence nombrePassageAuxUrgencesViewModel={passageUrgenceUneAnnée} />);
 
       // THEN
-      const dateMiseAJour = screen.getAllByText(textMatch(`${wording.miseÀJour("01/10/2020")} - Source : RPU`), {
-        selector: "p",
-      });
+      const dateMiseAJour = graphiqueTest.dateMiseAJour("RPU", "01/10/2020");
       expect(dateMiseAJour[0]).toBeInTheDocument();
     });
 
@@ -140,7 +141,7 @@ describe("Graphique Nombre de Passage d'urgence", () => {
       renderFakeComponent(<GraphiqueNombrePassageUrgence nombrePassageAuxUrgencesViewModel={passageUrgenceUneAnnée} />);
 
       // THEN
-      const transcription = screen.getByText(wording.AFFICHER_LA_TRANSCRIPTION);
+      const transcription = graphiqueTest.boutonAfficherTranscription;
       expect(transcription).toHaveAttribute("aria-expanded", "false");
       expect(transcription).not.toBeDisabled();
     });
@@ -150,11 +151,10 @@ describe("Graphique Nombre de Passage d'urgence", () => {
       renderFakeComponent(<GraphiqueNombrePassageUrgence nombrePassageAuxUrgencesViewModel={passageUrgenceUneAnnée} />);
 
       // WHEN
-      const afficherLaTranscription = screen.getByText(wording.AFFICHER_LA_TRANSCRIPTION);
-      fireEvent.click(afficherLaTranscription);
+      graphiqueTest.afficherLaTranscription();
 
       // THEN
-      const transcription = screen.getByRole("table");
+      const transcription = graphiqueTest.transcriptionTable;
       const transcriptionTable = within(transcription);
       expect(transcriptionTable.getByText(annéeEnCours - 1)).toBeInTheDocument();
       expect(transcriptionTable.getByText("100")).toBeInTheDocument();

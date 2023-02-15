@@ -1,12 +1,19 @@
-import { fireEvent, screen, within } from "@testing-library/react";
+import { within } from "@testing-library/react";
 
-import { annéeEnCours, fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../testHelper";
+import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
+import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { GraphiquePsySSR } from "./GraphiquePsySSR";
 import { NombreDeJourneesPsySSRViewModel } from "./NombreDeJourneesPsySSRViewModel";
 
 const { wording } = fakeFrontDependencies;
 
 describe("Graphique Psy SSR", () => {
+  let graphiqueTest: GraphiqueTest;
+
+  beforeAll(() => {
+    graphiqueTest = new GraphiqueTest(wording);
+  });
+
   it("affiche abréviation du fichier source", () => {
     // GIVEN
     const viewModel = new NombreDeJourneesPsySSRViewModel([], wording);
@@ -15,7 +22,7 @@ describe("Graphique Psy SSR", () => {
     renderFakeComponent(<GraphiquePsySSR nombreJournéesPsySSRViewModel={viewModel} />);
 
     // THEN
-    const pmsi = screen.getAllByText("PMSI", { selector: "abbr" })[0];
+    const pmsi = graphiqueTest.abréviationFichierSource("PMSI");
     expect(pmsi).toBeInTheDocument();
     expect(pmsi).toHaveAttribute("title", wording.PMSI_TITLE);
   });
@@ -27,7 +34,7 @@ describe("Graphique Psy SSR", () => {
     // WHEN
     renderFakeComponent(<GraphiquePsySSR nombreJournéesPsySSRViewModel={viewModel} />);
     // THEN
-    const titre = screen.getByText(wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, { selector: "p" });
+    const titre = graphiqueTest.titre(wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR);
     expect(titre).toBeInTheDocument();
   });
 
@@ -44,7 +51,7 @@ describe("Graphique Psy SSR", () => {
       renderFakeComponent(<GraphiquePsySSR nombreJournéesPsySSRViewModel={viewModel} />);
 
       // THEN
-      const détails = screen.getByRole("button", { name: wording.DÉTAILS });
+      const détails = graphiqueTest.détail;
       expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-activite-1`);
       expect(détails).toHaveAttribute("data-fr-opened", "false");
     });
@@ -54,29 +61,24 @@ describe("Graphique Psy SSR", () => {
       renderFakeComponent(<GraphiquePsySSR nombreJournéesPsySSRViewModel={viewModel} />);
 
       // WHEN
-      const détails = screen.getByRole("button", { name: wording.DÉTAILS });
-      fireEvent.click(détails);
+      graphiqueTest.ouvreDétail();
 
       // THEN
+      const détails = graphiqueTest.détail;
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const h1 = screen.getByRole("heading", {
-        level: 1,
-        name: wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR,
-      });
-      expect(h1).toBeInTheDocument();
+      expect(graphiqueTest.titreDétail(wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR)).toBeInTheDocument();
     });
 
     it("ferme l'info bulle en cliquant sur le bouton 'Fermer'", () => {
       // GIVEN
       renderFakeComponent(<GraphiquePsySSR nombreJournéesPsySSRViewModel={viewModel} />);
-      const détails = screen.getByRole("button", { name: wording.DÉTAILS });
-      fireEvent.click(détails);
+      graphiqueTest.ouvreDétail();
 
       // WHEN
-      const fermer = screen.getByRole("button", { name: wording.FERMER });
-      fireEvent.click(fermer);
+      graphiqueTest.fermeDétail();
 
       // THEN
+      const détails = graphiqueTest.détail;
       expect(détails).toHaveAttribute("data-fr-opened", "false");
     });
   });
@@ -116,9 +118,7 @@ describe("Graphique Psy SSR", () => {
       renderFakeComponent(<GraphiquePsySSR nombreJournéesPsySSRViewModel={psySSRUneAnnée} />);
 
       // THEN
-      const dateMiseAJour = screen.getAllByText(textMatch(`${wording.miseÀJour("01/10/2020")} - Source : PMSI`), {
-        selector: "p",
-      });
+      const dateMiseAJour = graphiqueTest.dateMiseAJour("PMSI", "01/10/2020");
       expect(dateMiseAJour[0]).toBeInTheDocument();
     });
 
@@ -127,7 +127,7 @@ describe("Graphique Psy SSR", () => {
       renderFakeComponent(<GraphiquePsySSR nombreJournéesPsySSRViewModel={psySSRUneAnnée} />);
 
       // THEN
-      const transcription = screen.getByText(wording.AFFICHER_LA_TRANSCRIPTION);
+      const transcription = graphiqueTest.boutonAfficherTranscription;
       expect(transcription).toHaveAttribute("aria-expanded", "false");
       expect(transcription).not.toBeDisabled();
     });
@@ -137,11 +137,10 @@ describe("Graphique Psy SSR", () => {
       renderFakeComponent(<GraphiquePsySSR nombreJournéesPsySSRViewModel={psySSRUneAnnée} />);
 
       // WHEN
-      const afficherLaTranscription = screen.getByText(wording.AFFICHER_LA_TRANSCRIPTION);
-      fireEvent.click(afficherLaTranscription);
+      graphiqueTest.afficherLaTranscription();
 
       // THEN
-      const transcription = screen.getByRole("table");
+      const transcription = graphiqueTest.transcriptionTable;
       const transcriptionTable = within(transcription);
       expect(transcriptionTable.getByText(annéeEnCours - 1)).toBeInTheDocument();
       expect(transcriptionTable.getByText("1 111")).toBeInTheDocument();

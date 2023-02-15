@@ -6,8 +6,8 @@ import {
   ÉtablissementTerritorialSanitaireAutorisationEtCapacité,
 } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 import { numéroFinessÉtablissementTerritorial } from "../../../../backend/testHelper";
-import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
-import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../testHelper";
+import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
+import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { BlocAutorisationEtCapacitéSanitaire } from "./BlocAutorisationEtCapacitéSanitaire";
 import { ÉtablissementTerritorialSanitaireAutorisationsViewModel } from "./ÉtablissementTerritorialSanitaireAutorisationsViewModel";
 

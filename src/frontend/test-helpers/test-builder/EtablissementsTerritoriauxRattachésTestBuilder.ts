@@ -1,7 +1,7 @@
-import { DomaineÉtablissementTerritorial } from "../../backend/métier/entities/DomaineÉtablissementTerritorial";
-import { ÉtablissementTerritorialRattaché } from "../../backend/métier/entities/entité-juridique/ÉtablissementTerritorialRattaché";
-import { Wording } from "../configuration/wording/Wording";
-import { EtablissementsTerritoriauxRattachésViewModel } from "../ui/entité-juridique/liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
+import { DomaineÉtablissementTerritorial } from "../../../backend/métier/entities/DomaineÉtablissementTerritorial";
+import { ÉtablissementTerritorialRattaché } from "../../../backend/métier/entities/entité-juridique/ÉtablissementTerritorialRattaché";
+import { Wording } from "../../configuration/wording/Wording";
+import { EtablissementsTerritoriauxRattachésViewModel } from "../../ui/entité-juridique/liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
 
 export class EtablissementsTerritoriauxRattachésTestBuilder {
   private établissements: ÉtablissementTerritorialRattaché[] = [];

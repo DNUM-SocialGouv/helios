@@ -1,8 +1,8 @@
 import { screen } from "@testing-library/react";
-import { mock, mockDeep } from "jest-mock-extended";
+import { mock } from "jest-mock-extended";
 
 import { EntitéJuridiqueActivités } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueActivités";
-import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../testHelper";
+import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { BlocActivitéSanitaire } from "./BlocActivitéSanitaire";
 import { EntitéJuridiqueActivitésViewModel } from "./EntitéJuridiqueActivitésViewModel";
 
@@ -13,7 +13,7 @@ describe("Bloc Activité Sanitaire", () => {
     // GIVEN
     const viewModel = new EntitéJuridiqueActivitésViewModel(
       [
-        mockDeep<EntitéJuridiqueActivités>({
+        mock<EntitéJuridiqueActivités>({
           année: 2020,
           nombreDePassagesAuxUrgences: {
             dateMiseÀJourSource: "2020-10-01",

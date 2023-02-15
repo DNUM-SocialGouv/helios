@@ -1,7 +1,7 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 
-import { EtablissementsTerritoriauxRattachésTestBuilder } from "../../../test-builder/EtablissementsTerritoriauxRattachésTestBuilder";
-import { fakeFrontDependencies, renderFakeComponent } from "../../../testHelper";
+import { EtablissementsTerritoriauxRattachésTestBuilder } from "../../../test-helpers/test-builder/EtablissementsTerritoriauxRattachésTestBuilder";
+import { fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { EtablissementsTerritoriauxRattachésViewModel } from "./EtablissementsTerritoriauxRattachésViewModel";
 import { ListeDesÉtablissementsTerritoriauxRattachés } from "./ListeDesÉtablissementsTerritoriauxRattachés";
 
