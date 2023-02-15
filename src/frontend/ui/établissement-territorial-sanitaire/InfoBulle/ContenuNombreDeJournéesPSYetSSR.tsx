@@ -5,9 +5,10 @@ import { useDependencies } from "../../commun/contexts/useDependencies";
 type ContenuDuNombreDeJournéesPSYetSSRProps = Readonly<{
   dateDeMiseÀJour: string;
   source: ReactElement;
+  estEntitéJuridique: boolean;
 }>;
 
-export const ContenuNombreDeJournéesPSYetSSR = ({ dateDeMiseÀJour, source }: ContenuDuNombreDeJournéesPSYetSSRProps) => {
+export const ContenuNombreDeJournéesPSYetSSR = ({ dateDeMiseÀJour, source, estEntitéJuridique = false }: ContenuDuNombreDeJournéesPSYetSSRProps) => {
   const { wording } = useDependencies();
   return (
     <>
@@ -67,6 +68,12 @@ export const ContenuNombreDeJournéesPSYetSSR = ({ dateDeMiseÀJour, source }: C
             </ul>
           </li>
         </ul>
+        {estEntitéJuridique && (
+          <p>
+            L’activité affichée au niveau de l’entité juridique (EJ) correspond à la somme de l’activité du ou des établissements géographiques rattachés à
+            l’EJ.
+          </p>
+        )}
       </section>
       <section aria-label={wording.SOURCES}>
         <p>

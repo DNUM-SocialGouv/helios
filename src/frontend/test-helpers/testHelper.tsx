@@ -1,11 +1,11 @@
 import { render, RenderResult } from "@testing-library/react";
 import { ReactChild, ReactElement } from "react";
 
-import { BreadcrumbHandler } from "./configuration/BreadcrumbHandler";
-import { FrontDependencies } from "./configuration/frontDependencies";
-import { Paths } from "./configuration/Paths";
-import { WordingFr } from "./configuration/wording/WordingFr";
-import { DependenciesProvider } from "./ui/commun/contexts/useDependencies";
+import { BreadcrumbHandler } from "../configuration/BreadcrumbHandler";
+import { FrontDependencies } from "../configuration/frontDependencies";
+import { Paths } from "../configuration/Paths";
+import { WordingFr } from "../configuration/wording/WordingFr";
+import { DependenciesProvider } from "../ui/commun/contexts/useDependencies";
 
 // Cela permet de pouvoir tester ce qu'il y a dans <head>.
 // https://github.com/vercel/next.js/discussions/11060

@@ -3,7 +3,7 @@ import mockRouter from "next-router-mock";
 
 import { Résultat, RésultatDeRecherche } from "../../../backend/métier/entities/RésultatDeRecherche";
 import { RésultatDeRechercheTestBuilder } from "../../../backend/test-builder/RésultatDeRechercheTestBuilder";
-import { fakeFrontDependencies, htmlNodeAndReactElementMatcher, renderFakeComponent } from "../../testHelper";
+import { fakeFrontDependencies, htmlNodeAndReactElementMatcher, renderFakeComponent } from "../../test-helpers/testHelper";
 import { régions } from "../région/régions";
 import { PageRecherche } from "./PageRecherche";
 

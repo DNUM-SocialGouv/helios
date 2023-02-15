@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react";
 import { mock } from "jest-mock-extended";
 
 import { EntitéJuridiqueActivités } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueActivités";
-import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../testHelper";
+import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { BlocActivitéSanitaire } from "./BlocActivitéSanitaire";
 import { EntitéJuridiqueActivitésViewModel } from "./EntitéJuridiqueActivitésViewModel";
 
@@ -19,6 +19,10 @@ describe("Bloc Activité Sanitaire", () => {
             dateMiseÀJourSource: "2020-10-01",
             value: 100,
           },
+          nombreJournéesPartiellesSsr: {},
+          nombreJournéesCompletesPsy: {},
+          nombreJournéesCompletesSsr: {},
+          nombreJournéesPartiellesPsy: {},
         }),
       ],
       wording
@@ -30,6 +34,76 @@ describe("Bloc Activité Sanitaire", () => {
     // THEN
     const titre = screen.getByText(wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, { selector: "p" });
     expect(titre).toBeInTheDocument();
+  });
+
+  it("affiche le GraphiquePsySSR", () => {
+    // GIVEN
+    const viewModel = new EntitéJuridiqueActivitésViewModel(
+      [
+        mock<EntitéJuridiqueActivités>({
+          année: annéeEnCours - 1,
+          nombreJournéesPartiellesSsr: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: 1111,
+          },
+          nombreJournéesCompletesPsy: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: 2222,
+          },
+          nombreJournéesPartiellesPsy: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: 3333,
+          },
+          nombreJournéesCompletesSsr: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: 4444,
+          },
+        }),
+      ],
+      wording
+    );
+
+    // WHEN
+    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
+
+    // THEN
+    const titre = screen.getByText(wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, { selector: "p" });
+    expect(titre).toBeInTheDocument();
+  });
+
+  it("n'affiche pas le graphique Psy SSR s'il n'y a pas de valeur", () => {
+    // GIVEN
+    const viewModel = new EntitéJuridiqueActivitésViewModel(
+      [
+        mock<EntitéJuridiqueActivités>({
+          année: annéeEnCours - 1,
+          nombreJournéesPartiellesSsr: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreJournéesCompletesPsy: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreJournéesPartiellesPsy: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreJournéesCompletesSsr: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+        }),
+      ],
+      wording
+    );
+
+    // WHEN
+    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
+
+    // THEN
+    const titre = screen.queryByText(wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, { selector: "p" });
+    expect(titre).not.toBeInTheDocument();
   });
 
   it("affiche le GraphiqueNombreDeSejourMCO", () => {
@@ -62,6 +136,10 @@ describe("Bloc Activité Sanitaire", () => {
             dateMiseÀJourSource: "2020-10-01",
             value: 100,
           },
+          nombreJournéesPartiellesSsr: {},
+          nombreJournéesCompletesPsy: {},
+          nombreJournéesCompletesSsr: {},
+          nombreJournéesPartiellesPsy: {},
         }),
       ],
       wording
@@ -105,6 +183,10 @@ describe("Bloc Activité Sanitaire", () => {
             dateMiseÀJourSource: "2020-10-01",
             value: null,
           },
+          nombreJournéesPartiellesSsr: {},
+          nombreJournéesCompletesPsy: {},
+          nombreJournéesCompletesSsr: {},
+          nombreJournéesPartiellesPsy: {},
         }),
       ],
       wording
@@ -161,6 +243,22 @@ describe("Bloc Activité Sanitaire", () => {
             value: null,
           },
           nombreSéjoursCompletsObstétrique: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreJournéesPartiellesSsr: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreJournéesCompletesPsy: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreJournéesPartiellesPsy: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreJournéesCompletesSsr: {
             dateMiseÀJourSource: "2020-10-01",
             value: null,
           },

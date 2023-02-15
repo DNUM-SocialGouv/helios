@@ -1,8 +1,8 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 
-import { EntitéJuridiqueViewModelTestBuilder } from "../../test-builder/EntitéJuridiqueViewModelTestBuilder";
-import { EtablissementsTerritoriauxRattachésTestBuilder } from "../../test-builder/EtablissementsTerritoriauxRattachésTestBuilder";
-import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../testHelper";
+import { EntitéJuridiqueViewModelTestBuilder } from "../../test-helpers/test-builder/EntitéJuridiqueViewModelTestBuilder";
+import { EtablissementsTerritoriauxRattachésTestBuilder } from "../../test-helpers/test-builder/EtablissementsTerritoriauxRattachésTestBuilder";
+import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../test-helpers/testHelper";
 import { PageEntitéJuridique } from "./PageEntitéJuridique";
 
 const { wording } = fakeFrontDependencies;

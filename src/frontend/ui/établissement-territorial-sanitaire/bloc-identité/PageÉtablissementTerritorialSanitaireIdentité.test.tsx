@@ -1,7 +1,7 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 
-import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
-import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../testHelper";
+import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
+import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { PageÉtablissementTerritorialSanitaire } from "../PageÉtablissementTerritorialSanitaire";
 
 const { paths, wording } = fakeFrontDependencies;

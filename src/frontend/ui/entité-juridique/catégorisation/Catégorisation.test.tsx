@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react";
 
 import { CatégorisationEnum } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridique";
-import { fakeFrontDependencies, renderFakeComponent } from "../../../testHelper";
+import { fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { Catégorisation } from "./Catégorisation";
 import { CatégorisationViewModel } from "./CatégorisationViewModel";
 

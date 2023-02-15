@@ -10,7 +10,7 @@ export type DonnéesDeDiagrammeDesJournéesPsyEtSsr = Readonly<{
   nombreJournéesPartiellesSsr: { x: number; y: number | null }[];
 }>;
 
-type ActivitesPsySSR = Pick<
+export type ActivitesPsySSR = Pick<
   ÉtablissementTerritorialSanitaireActivité,
   "année" | "nombreJournéesPartiellesPsy" | "nombreJournéesCompletesSsr" | "nombreJournéesCompletePsy" | "nombreJournéesPartielsSsr"
 >;
@@ -42,7 +42,7 @@ export class NombreDeJourneesPsySSRViewModel extends GraphiqueViewModel {
   }
 
   public get dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr(): string {
-    return StringFormater.formateLaDate(this.activitésPsySSR[0].nombreJournéesCompletePsy.dateMiseÀJourSource);
+    return StringFormater.formateLaDate(this.activitésPsySSR[0]?.nombreJournéesCompletePsy?.dateMiseÀJourSource);
   }
 
   private construisLesJournéesPsyEtSsrParAnnée(): [DonnéesDeDiagrammeDesJournéesPsyEtSsr, number[]] {

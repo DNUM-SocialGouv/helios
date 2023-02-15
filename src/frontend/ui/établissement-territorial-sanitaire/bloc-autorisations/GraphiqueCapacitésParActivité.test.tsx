@@ -2,8 +2,8 @@ import { fireEvent, screen, within } from "@testing-library/react";
 import { mock } from "jest-mock-extended";
 
 import { CapacitéSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
-import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
-import { annéeEnCours, fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../testHelper";
+import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
+import { annéeEnCours, fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { GraphiqueCapacitésParActivité } from "./GraphiqueCapacitésParActivité";
 import { GraphiqueCapacitésParActivitéViewModel } from "./ÉtablissementTerritorialSanitaireAutorisationsViewModel";
 

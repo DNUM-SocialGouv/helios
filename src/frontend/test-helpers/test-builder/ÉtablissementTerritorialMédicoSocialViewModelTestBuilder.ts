@@ -1,10 +1,10 @@
-import { CadreBudgétaire } from "../../../database/models/BudgetEtFinancesMédicoSocialModel";
-import { ÉtablissementTerritorialMédicoSocial } from "../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
-import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
-import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
-import { Paths } from "../configuration/Paths";
-import { Wording } from "../configuration/wording/Wording";
-import { ÉtablissementTerritorialMédicoSocialViewModel } from "../ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel";
+import { CadreBudgétaire } from "../../../../database/models/BudgetEtFinancesMédicoSocialModel";
+import { ÉtablissementTerritorialMédicoSocial } from "../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
+import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
+import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
+import { Paths } from "../../configuration/Paths";
+import { Wording } from "../../configuration/wording/Wording";
+import { ÉtablissementTerritorialMédicoSocialViewModel } from "../../ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel";
 
 export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
   public static identité: ÉtablissementTerritorialMédicoSocial["identité"] = {

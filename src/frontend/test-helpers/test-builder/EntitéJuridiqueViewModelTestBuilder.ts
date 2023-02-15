@@ -1,6 +1,6 @@
-import { CatégorisationEnum, EntitéJuridique } from "../../backend/métier/entities/entité-juridique/EntitéJuridique";
-import { Wording } from "../configuration/wording/Wording";
-import { EntitéJuridiqueViewModel } from "../ui/entité-juridique/EntitéJuridiqueViewModel";
+import { CatégorisationEnum, EntitéJuridique } from "../../../backend/métier/entities/entité-juridique/EntitéJuridique";
+import { Wording } from "../../configuration/wording/Wording";
+import { EntitéJuridiqueViewModel } from "../../ui/entité-juridique/EntitéJuridiqueViewModel";
 
 export class EntitéJuridiqueViewModelTestBuilder {
   static entitéJuridique: EntitéJuridique = {

@@ -1,9 +1,6 @@
-import { Bar } from "react-chartjs-2";
-
 import { useDependencies } from "../../commun/contexts/useDependencies";
+import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
-import { TableIndicateur } from "../../commun/TableIndicateur/TableIndicateur";
-import stylesBlocActivité from "../../établissement-territorial-sanitaire/bloc-activité/BlocActivitéSanitaire.module.css";
 import { ContenuNombreDeSéjourMCO } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeSéjourMCO";
 import { NombreDeSejourMCOViewModel } from "./NombreDeSejourMCOViewModel";
 
@@ -28,19 +25,14 @@ export const GraphiqueNombreDeSejourMCO = ({ nombreDeSejourMCOViewModel, estEnti
       nomDeLIndicateur={wording.NOMBRE_DE_SÉJOUR_MCO}
       source={wording.PMSI}
     >
-      <>
-        <Bar data={nombreDeSejourMCOViewModel.getHistogrammeDataSet()} options={nombreDeSejourMCOViewModel.getOptionsHistogramme()} />
-        <menu
-          className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]}
-          id={nombreDeSejourMCOViewModel.identifiantDeLaLégendeDesSéjoursMCO}
-        />
-        <TableIndicateur
-          entêteLibellé={wording.ANNÉE}
-          identifiants={nombreDeSejourMCOViewModel.getIdentifiantTableIndicateur()}
-          libellés={nombreDeSejourMCOViewModel.années}
-          valeurs={nombreDeSejourMCOViewModel.getValeurTableIndicateur()}
-        />
-      </>
+      <HistogrammeVertical
+        data={nombreDeSejourMCOViewModel.getHistogrammeDataSet()}
+        id={nombreDeSejourMCOViewModel.identifiantDeLaLégendeDesSéjoursMCO}
+        identifiants={nombreDeSejourMCOViewModel.getIdentifiantTableIndicateur()}
+        libellés={nombreDeSejourMCOViewModel.années}
+        optionsHistogramme={nombreDeSejourMCOViewModel.getOptionsHistogramme()}
+        valeurs={nombreDeSejourMCOViewModel.getValeurTableIndicateur()}
+      />
     </IndicateurGraphique>
   );
 };

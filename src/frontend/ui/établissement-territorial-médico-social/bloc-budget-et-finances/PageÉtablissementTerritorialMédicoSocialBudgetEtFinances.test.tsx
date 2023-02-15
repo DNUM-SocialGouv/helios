@@ -2,8 +2,8 @@ import { fireEvent, screen, within } from "@testing-library/react";
 
 import { CadreBudgétaire } from "../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
-import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
-import { textMatch, fakeFrontDependencies, renderFakeComponent, annéeEnCours } from "../../../testHelper";
+import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
+import { textMatch, fakeFrontDependencies, renderFakeComponent, annéeEnCours } from "../../../test-helpers/testHelper";
 import { PageÉtablissementTerritorialMédicoSocial } from "../PageÉtablissementTerritorialMédicoSocial";
 import { ÉtablissementTerritorialMédicoSocialViewModel } from "../ÉtablissementTerritorialMédicoSocialViewModel";
 
