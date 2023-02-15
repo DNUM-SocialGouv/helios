@@ -2,8 +2,8 @@ import { EntitéJuridiqueActivités } from "../../../../backend/métier/entities
 import { Wording } from "../../../configuration/wording/Wording";
 import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { IndicateurActivité } from "../../indicateur-métier/IndicateurActivité";
-import { ActivitesPsySSR, NombreDeJourneesPsySSRViewModel } from "../../indicateur-métier/nombre-journees-psy-ssr/NombreDeJourneesPsySSRViewModel";
 import { NombreDeSejourMCOViewModel } from "../../indicateur-métier/nombre-de-sejour-mco/NombreDeSejourMCOViewModel";
+import { ActivitesPsySSR, NombreDeJourneesPsySSRViewModel } from "../../indicateur-métier/nombre-journees-psy-ssr/NombreDeJourneesPsySSRViewModel";
 import { NombrePassageAuxUrgencesViewModel } from "../../indicateur-métier/nombre-passage-urgence/NombrePassageAuxUrgencesViewModel";
 
 export class EntitéJuridiqueActivitésViewModel extends GraphiqueViewModel {
@@ -44,7 +44,12 @@ export class EntitéJuridiqueActivitésViewModel extends GraphiqueViewModel {
   }
 
   public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
-    return !this.activitéEstElleRenseignée || !this.nombrePassageUrgenceEstIlRenseigné();
+    return (
+      !this.activitéEstElleRenseignée ||
+      (!this.nombrePassageUrgenceEstIlRenseigné() &&
+        !this.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés &&
+        !this.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés)
+    );
   }
 
   public get activitéEstElleRenseignée(): boolean {
