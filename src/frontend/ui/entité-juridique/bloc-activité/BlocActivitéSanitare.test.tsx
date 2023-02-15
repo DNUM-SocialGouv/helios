@@ -32,6 +32,92 @@ describe("Bloc Activité Sanitaire", () => {
     expect(titre).toBeInTheDocument();
   });
 
+  it("affiche le GraphiqueNombreDeSejourMCO", () => {
+    // GIVEN
+    const viewModel = new EntitéJuridiqueActivitésViewModel(
+      [
+        mock<EntitéJuridiqueActivités>({
+          année: annéeEnCours - 1,
+          nombreSéjoursPartielsMédecine: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: 100,
+          },
+          nombreSéjoursCompletsMédecine: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: 200,
+          },
+          nombreSéjoursPartielsChirurgie: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: 300,
+          },
+          nombreSéjoursCompletsChirurgie: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: 300,
+          },
+          nombreSéjoursPartielsObstétrique: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: 200,
+          },
+          nombreSéjoursCompletsObstétrique: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: 100,
+          },
+        }),
+      ],
+      wording
+    );
+
+    // WHEN
+    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
+
+    // THEN
+    const titre = screen.queryByText(wording.NOMBRE_DE_SÉJOUR_MCO, { selector: "p" });
+    expect(titre).toBeInTheDocument();
+  });
+
+  it("n'affiche pas le GraphiqueNombreDeSejourMCO si les valeurs sont vide", () => {
+    // GIVEN
+    const viewModel = new EntitéJuridiqueActivitésViewModel(
+      [
+        mock<EntitéJuridiqueActivités>({
+          année: annéeEnCours - 1,
+          nombreSéjoursPartielsMédecine: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreSéjoursCompletsMédecine: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreSéjoursPartielsChirurgie: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreSéjoursCompletsChirurgie: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreSéjoursPartielsObstétrique: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreSéjoursCompletsObstétrique: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+        }),
+      ],
+      wording
+    );
+
+    // WHEN
+    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
+
+    // THEN
+    const titre = screen.queryByText(wording.NOMBRE_DE_SÉJOUR_MCO, { selector: "p" });
+    expect(titre).not.toBeInTheDocument();
+  });
+
   it("affiche un l'indicateur vide si il n'y a pas des données", () => {
     // GIVEN
     const viewModel = new EntitéJuridiqueActivitésViewModel([], wording);
@@ -53,6 +139,30 @@ describe("Bloc Activité Sanitaire", () => {
           nombreDePassagesAuxUrgences: {
             value: null,
             dateMiseÀJourSource: "2020-10-01",
+          },
+          nombreSéjoursPartielsMédecine: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreSéjoursCompletsMédecine: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreSéjoursPartielsChirurgie: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreSéjoursCompletsChirurgie: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreSéjoursPartielsObstétrique: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreSéjoursCompletsObstétrique: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
           },
         }),
       ],

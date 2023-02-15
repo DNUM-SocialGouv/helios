@@ -5,9 +5,10 @@ import { useDependencies } from "../../commun/contexts/useDependencies";
 type ContenuDuNombreDeSéjourMCOProps = Readonly<{
   dateDeMiseÀJour: string;
   source: ReactElement;
+  estEntitéJuridique: boolean;
 }>;
 
-export const ContenuNombreDeSéjourMCO = ({ dateDeMiseÀJour, source }: ContenuDuNombreDeSéjourMCOProps) => {
+export const ContenuNombreDeSéjourMCO = ({ dateDeMiseÀJour, source, estEntitéJuridique = false }: ContenuDuNombreDeSéjourMCOProps) => {
   const { wording } = useDependencies();
   return (
     <>
@@ -34,6 +35,12 @@ export const ContenuNombreDeSéjourMCO = ({ dateDeMiseÀJour, source }: ContenuD
           <br />
           Hospitalisation de jour (HdJ)/ambulatoire (HP) : durée de séjour est inférieure à 1 journée (date de sortie identique à la date d’entrée).
         </p>
+        {estEntitéJuridique && (
+          <p>
+            L’activité affichée au niveau de l’entité juridique (EJ) correspond à la somme de l’activité du ou des établissements géographiques rattachés à
+            l’EJ.
+          </p>
+        )}
       </section>
       <section aria-label={wording.SOURCES}>
         <p>

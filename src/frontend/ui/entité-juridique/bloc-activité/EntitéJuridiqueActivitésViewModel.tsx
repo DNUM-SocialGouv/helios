@@ -2,15 +2,18 @@ import { EntitéJuridiqueActivités } from "../../../../backend/métier/entities
 import { Wording } from "../../../configuration/wording/Wording";
 import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { IndicateurActivité } from "../../indicateur-métier/IndicateurActivité";
+import { NombreDeSejourMCOViewModel } from "../../indicateur-métier/nombre-de-sejour-mco/NombreDeSejourMCOViewModel";
 import { NombrePassageAuxUrgencesViewModel } from "../../indicateur-métier/nombre-passage-urgence/NombrePassageAuxUrgencesViewModel";
 
 export class EntitéJuridiqueActivitésViewModel extends GraphiqueViewModel {
   // @ts-ignore
   public nombreDePassageAuxUrgencesViewModel: NombrePassageAuxUrgencesViewModel;
+  public nombreDeSejourMCOViewModel: NombreDeSejourMCOViewModel;
 
   constructor(private readonly entitéJuridiqueActivités: EntitéJuridiqueActivités[], wording: Wording) {
     super(wording);
     this.createNombrePassageUrgenceViewModel(wording);
+    this.nombreDeSejourMCOViewModel = new NombreDeSejourMCOViewModel(entitéJuridiqueActivités, wording);
   }
 
   private createNombrePassageUrgenceViewModel(wording: Wording) {
