@@ -136,6 +136,10 @@ describe("Bloc Activité Sanitaire", () => {
             dateMiseÀJourSource: "2020-10-01",
             value: 100,
           },
+          nombreJournéesPartiellesSsr: {},
+          nombreJournéesCompletesPsy: {},
+          nombreJournéesCompletesSsr: {},
+          nombreJournéesPartiellesPsy: {},
         }),
       ],
       wording
@@ -179,6 +183,10 @@ describe("Bloc Activité Sanitaire", () => {
             dateMiseÀJourSource: "2020-10-01",
             value: null,
           },
+          nombreJournéesPartiellesSsr: {},
+          nombreJournéesCompletesPsy: {},
+          nombreJournéesCompletesSsr: {},
+          nombreJournéesPartiellesPsy: {},
         }),
       ],
       wording
