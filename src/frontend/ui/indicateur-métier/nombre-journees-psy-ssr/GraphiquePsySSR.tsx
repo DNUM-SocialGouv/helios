@@ -1,9 +1,6 @@
-import { Bar } from "react-chartjs-2";
-
 import { useDependencies } from "../../commun/contexts/useDependencies";
+import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
-import { TableIndicateur } from "../../commun/TableIndicateur/TableIndicateur";
-import stylesBlocActivité from "../../établissement-territorial-sanitaire/bloc-activité/BlocActivitéSanitaire.module.css";
 import { ContenuNombreDeJournéesPSYetSSR } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeJournéesPSYetSSR";
 import { NombreDeJourneesPsySSRViewModel } from "./NombreDeJourneesPsySSRViewModel";
 
@@ -29,19 +26,14 @@ export function GraphiquePsySSR({ nombreJournéesPsySSRViewModel, estEntitéJuri
       nomDeLIndicateur={wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR}
       source={wording.PMSI}
     >
-      <>
-        <Bar data={nombreJournéesPsySSRViewModel.histogrammeDataSet} options={nombreJournéesPsySSRViewModel.getOptionsHistogramme()} />
-        <menu
-          className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]}
-          id={nombreJournéesPsySSRViewModel.identifiantDeLaLégendeDesJournéesPsyEtSsr}
-        />
-        <TableIndicateur
-          entêteLibellé={wording.ANNÉE}
-          identifiants={nombreJournéesPsySSRViewModel.identifiants}
-          libellés={nombreJournéesPsySSRViewModel.années}
-          valeurs={nombreJournéesPsySSRViewModel.valeurs}
-        />
-      </>
+      <HistogrammeVertical
+        data={nombreJournéesPsySSRViewModel.histogrammeDataSet}
+        id={nombreJournéesPsySSRViewModel.identifiantDeLaLégendeDesJournéesPsyEtSsr}
+        identifiants={nombreJournéesPsySSRViewModel.identifiants}
+        libellés={nombreJournéesPsySSRViewModel.années}
+        optionsHistogramme={nombreJournéesPsySSRViewModel.getOptionsHistogramme()}
+        valeurs={nombreJournéesPsySSRViewModel.valeurs}
+      />
     </IndicateurGraphique>
   );
 }
