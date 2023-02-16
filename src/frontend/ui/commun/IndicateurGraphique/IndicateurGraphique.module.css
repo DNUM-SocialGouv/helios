@@ -22,10 +22,3 @@
 .graphe {
   width: 99%;
 }
-
-.button-tertiary {
-  --hover: inherit;
-  --active: inherit;
-  background-color: transparent;
-  color: var(--text-action-high-blue-france);
-}
