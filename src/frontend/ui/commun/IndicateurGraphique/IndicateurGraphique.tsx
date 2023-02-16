@@ -39,7 +39,7 @@ export const IndicateurGraphique = ({
           <p className={`fr-text--xs ${styles["titraille"]}`}>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
           <button
             aria-controls={`nom-info-bulle-${identifiant}`}
-            className="fr-btn fr-fi-information-line fr-btn--icon-left fr-btn--tertiary fr-btn--sm"
+            className={`fr-btn fr-fi-information-line fr-btn--icon-left fr-btn--sm ${styles["button-tertiary"]}`}
             data-fr-opened={estCeOuvert}
             onClick={() => setEstCeOuvert(true)}
             type="button"
