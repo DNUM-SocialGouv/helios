@@ -97,7 +97,6 @@ export class WordingFr implements Wording {
 
   // Indicateurs
   readonly AFFICHER_LA_TRANSCRIPTION: string = "Afficher la transcription";
-  readonly TITRE_TRANSCRIPTION: string = "Transcription du graphique";
   readonly ANNÉE: string = "Année";
   readonly INDICATEURS_VIDES: string = "Aucune donnée pour cet établissement.";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE: string = "Aucune donnée renseignée pour les années suivantes :";

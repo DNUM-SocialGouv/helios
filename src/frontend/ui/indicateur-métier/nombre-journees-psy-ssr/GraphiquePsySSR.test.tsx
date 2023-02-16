@@ -132,7 +132,7 @@ describe("Graphique Psy SSR", () => {
       expect(transcription).not.toBeDisabled();
     });
 
-    it("affiche le contenu de la transcription", async () => {
+    it("affiche le contenu de la transcription", () => {
       // GIVEN
       renderFakeComponent(<GraphiquePsySSR nombreJournéesPsySSRViewModel={psySSRUneAnnée} />);
 
