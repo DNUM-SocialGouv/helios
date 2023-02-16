@@ -15,7 +15,7 @@ export class GraphiqueTest {
   }
 
   titre(titre: string): HTMLElement {
-    return screen.getByText(titre, { selector: "p" });
+    return screen.getByText(titre, { selector: "h6" });
   }
 
   titreDétail(titre: string): HTMLElement {

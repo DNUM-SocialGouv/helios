@@ -39,7 +39,13 @@
 }
 
 .contenu-bloc {
-  background: var(--background-alt-grey);
+  background: var(--background-elevation-raised-grey);
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+}
+
+.contenu-bloc-main {
+  background: var(--background-alt-blue-france);
   margin-bottom: 1.5rem;
   padding: 1rem;
 }

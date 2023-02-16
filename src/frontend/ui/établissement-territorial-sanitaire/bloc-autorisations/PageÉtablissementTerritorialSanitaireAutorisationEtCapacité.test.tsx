@@ -32,7 +32,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
     const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
     const autorisations = sélectionneLIndicateur(nomDeLIndicateur, indicateurs);
-    const titre = within(autorisations).getByText(nomDeLIndicateur, { selector: "p" });
+    const titre = within(autorisations).getByText(nomDeLIndicateur, { selector: "h6" });
     expect(titre).toBeInTheDocument();
     const dateMiseAJour = within(autorisations).getAllByText(textMatch(`${wording.miseÀJour("29/08/2022")} - Source : ARHGOS, FINESS`), { selector: "p" });
     expect(dateMiseAJour[0]).toBeInTheDocument();

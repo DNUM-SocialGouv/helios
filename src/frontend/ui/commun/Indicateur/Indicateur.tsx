@@ -15,6 +15,7 @@ type IndicateurProps = Readonly<{
   source: ReactElement;
 }>;
 
+// TODO regarder la difference entre Indicateur vs Indicateur Graphic
 export const Indicateur = ({ children, contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source }: IndicateurProps) => {
   const { wording } = useDependencies();
   const [estCeOuvert, setEstCeOuvert] = useState(false);
@@ -22,7 +23,7 @@ export const Indicateur = ({ children, contenuInfoBulle, dateDeMiseÀJour, ident
   return (
     <li>
       <div>
-        <p className="fr-m-0">{nomDeLIndicateur}</p>
+        <h6 className="fr-m-0 fr-text--bold ">{nomDeLIndicateur}</h6>
         <div className={styles["mise-a-jour-source"]}>
           <p className={`fr-text--xs ${styles["titraille"]}`}>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
           <button
