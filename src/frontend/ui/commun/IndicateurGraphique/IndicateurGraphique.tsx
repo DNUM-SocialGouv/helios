@@ -31,10 +31,10 @@ export const IndicateurGraphique = ({
   return (
     <li>
       <div>
-        <p className={`fr-m-0 ${styles["intitule"]}`}>
+        <h6 className={`fr-m-0 fr-text--bold ${styles["intitule"]}`}>
           {nomDeLIndicateur}
           {années}
-        </p>
+        </h6>
         <div className={styles["mise-a-jour-source"]}>
           <p className={`fr-text--xs ${styles["titraille"]}`}>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
           <button
