@@ -1,7 +1,6 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
-import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { PageÉtablissementTerritorialMédicoSocial } from "../PageÉtablissementTerritorialMédicoSocial";
@@ -20,12 +19,6 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
     tauxDePrestationsExternes: 2,
     tauxDeRotationDuPersonnel: 4,
   };
-
-  let graphiqueTest: GraphiqueTest;
-
-  beforeAll(() => {
-    graphiqueTest = new GraphiqueTest(wording);
-  });
 
   describe("L’indicateur du nombre d’ETP réalisé", () => {
     it("affiche l’intitulé de l’indicateur du nombre d’ETP réalisé, avec sa date de mise à jour, sa source et un bouton pour accéder aux détails", () => {
