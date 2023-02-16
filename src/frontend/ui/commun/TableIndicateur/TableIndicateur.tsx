@@ -1,5 +1,6 @@
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import "@gouvfr/dsfr/dist/component/transcription/transcription.min.css";
+import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 
 import { useDependencies } from "../contexts/useDependencies";
 
@@ -22,7 +23,17 @@ export const TableIndicateur = ({ disabled = false, entêteLibellé, identifiant
         {wording.AFFICHER_LA_TRANSCRIPTION}
       </button>
       <div className="fr-collapse" id={identifiant}>
-        <dialog aria-labelledby={identifiant + "-modal-title"} className="fr-modal" id={identifiant + "-modal-transcription"} role="dialog">
+        {/*
+          Hack pour les tests : on ajoute style={{ display: "flex" }} pour que la dialog ne soit pas en display:none dans les tests.
+          En dehors des tests la classe "fr-modal" ajoute le display:"flex" mais les classes ne sont pas appliquées dans les tests
+        */}
+        <dialog
+          aria-labelledby={identifiant + "-modal-title"}
+          className="fr-modal"
+          id={identifiant + "-modal-transcription"}
+          role="dialog"
+          style={{ display: "flex" }}
+        >
           <div className="fr-container fr-container--fluid fr-container-md">
             <div className="fr-grid-row fr-grid-row--center">
               <div>
