@@ -13,7 +13,7 @@ export const BlocIdentitéMédicoSocial = ({ établissementTerritorialIdentitéM
   const { wording } = useDependencies();
 
   return (
-    <Bloc isExpandable={false} isIdentite={true} isMain={true} titre={wording.TITRE_BLOC_IDENTITÉ}>
+    <Bloc isExpandable={false} isMain={true} titre={wording.TITRE_BLOC_IDENTITÉ}>
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialIdentitéMédicoSocialViewModel.dateDeMiseÀJourDuNomDeLÉtablissementTerritorial}

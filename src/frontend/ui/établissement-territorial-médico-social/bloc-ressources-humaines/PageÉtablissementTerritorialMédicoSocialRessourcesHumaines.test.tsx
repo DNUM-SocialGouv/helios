@@ -29,7 +29,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
       const indicateur = indicateurs[indiceDeLIndicateur.nombreDEtpRéalisés];
-      const titre = within(indicateur).getByText(textMatch(wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION), { selector: "p" });
+      const titre = within(indicateur).getByText(textMatch(wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION), { selector: "h6" });
       expect(titre).toBeInTheDocument();
       const dateMiseAJour = within(indicateur).getAllByText(textMatch(`${wording.miseÀJour("06/06/2022")} - Source : CNSA`), { selector: "p" });
       expect(dateMiseAJour[0]).toBeInTheDocument();
@@ -78,7 +78,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
       const indicateur = indicateurs[indiceDeLIndicateur.nombreDeCddDeRemplacement];
-      const titre = within(indicateur).getByText(textMatch(wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION), { selector: "p" });
+      const titre = within(indicateur).getByText(textMatch(wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION), { selector: "h6" });
       expect(titre).toBeInTheDocument();
       const dateMiseAJour = within(indicateur).getAllByText(textMatch(`${wording.miseÀJour("10/10/2022")} - Source : TdB Perf`), { selector: "p" });
       expect(dateMiseAJour[0]).toBeInTheDocument();
@@ -127,7 +127,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
       const indicateur = indicateurs[indiceDeLIndicateur.tauxDePrestationsExternes];
-      const titre = within(indicateur).getByText(wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, { selector: "p" });
+      const titre = within(indicateur).getByText(wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, { selector: "h6" });
       expect(titre).toBeInTheDocument();
       const dateMiseAJour = within(indicateur).getAllByText(textMatch(`${wording.miseÀJour("10/10/2022")} - Source : TdB Perf`), { selector: "p" });
       expect(dateMiseAJour[0]).toBeInTheDocument();
@@ -178,7 +178,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
       const indicateur = indicateurs[indiceDeLIndicateur.tauxDEtpVacants];
-      const titre = within(indicateur).getByText(wording.TAUX_D_ETP_VACANTS_AU_31_12, { selector: "p" });
+      const titre = within(indicateur).getByText(wording.TAUX_D_ETP_VACANTS_AU_31_12, { selector: "h6" });
       expect(titre).toBeInTheDocument();
       const dateMiseAJour = within(indicateur).getAllByText(textMatch(`${wording.miseÀJour("10/10/2022")} - Source : TdB Perf`), { selector: "p" });
       expect(dateMiseAJour[0]).toBeInTheDocument();
@@ -229,7 +229,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
       const indicateur = indicateurs[indiceDeLIndicateur.tauxDeRotationDuPersonnel];
-      const titre = within(indicateur).getByText(wording.TAUX_DE_ROTATION_DU_PERSONNEL, { selector: "p" });
+      const titre = within(indicateur).getByText(wording.TAUX_DE_ROTATION_DU_PERSONNEL, { selector: "h6" });
       expect(titre).toBeInTheDocument();
       const dateMiseAJour = within(indicateur).getAllByText(textMatch(`${wording.miseÀJour("10/10/2022")} - Source : TdB Perf`), { selector: "p" });
       expect(dateMiseAJour[0]).toBeInTheDocument();
@@ -280,7 +280,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
       const indicateur = indicateurs[indiceDeLIndicateur.tauxDAbsentéisme];
-      const titre = within(indicateur).getByText(wording.TAUX_D_ABSENTÉISME, { selector: "p" });
+      const titre = within(indicateur).getByText(wording.TAUX_D_ABSENTÉISME, { selector: "h6" });
       expect(titre).toBeInTheDocument();
       const dateMiseAJour = within(indicateur).getAllByText(textMatch(`${wording.miseÀJour("10/10/2022")} - Source : TdB Perf`), { selector: "p" });
       expect(dateMiseAJour[0]).toBeInTheDocument();

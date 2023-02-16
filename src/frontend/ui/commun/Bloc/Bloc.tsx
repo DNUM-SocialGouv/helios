@@ -7,11 +7,10 @@ type BlocProps = Readonly<{
   isMain?: boolean;
   titre: string;
   isExpandable?: boolean;
-  isIdentite?: boolean;
 }>;
 
-export const Bloc = ({ children, isMain = false, titre, isExpandable = true, isIdentite = false }: BlocProps) => {
-  const contenuBloc = isIdentite ? styles["contenu-bloc-identite"] : styles["contenu-bloc"];
+export const Bloc = ({ children, isMain = false, titre, isExpandable = true }: BlocProps) => {
+  const contenuBloc = isMain ? styles["contenu-bloc-main"] : styles["contenu-bloc"];
   const classeDuTitre = isMain ? styles["titre-bloc-main"] : styles["titre-bloc-secondary"];
   const classesContent = (isExpandable ? "fr-collapse " : "") + contenuBloc;
   const contentId = "accordion-" + titre;

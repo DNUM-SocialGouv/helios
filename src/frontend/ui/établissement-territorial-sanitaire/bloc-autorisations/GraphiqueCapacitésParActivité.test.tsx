@@ -21,7 +21,7 @@ describe("GraphiqueCapacitésParActivité", () => {
 
     // THEN
     const capacitéParActivités = screen.getByRole("listitem");
-    const titre = within(capacitéParActivités).getByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: "p" });
+    const titre = within(capacitéParActivités).getByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: "h6" });
     expect(titre).toBeInTheDocument();
     const dateMiseAJour = within(capacitéParActivités).getAllByText(textMatch(`${wording.miseÀJour("02/09/2022")} - Source : SAE`), { selector: "p" });
     expect(dateMiseAJour[0]).toBeInTheDocument();
