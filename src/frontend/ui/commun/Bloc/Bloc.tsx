@@ -1,5 +1,6 @@
 import { ReactChild } from "react";
 
+import "@gouvfr/dsfr/dist/component/accordion/accordion.min.css";
 import styles from "./Bloc.module.css";
 
 type BlocProps = Readonly<{
