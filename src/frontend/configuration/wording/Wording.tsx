@@ -73,6 +73,8 @@ export interface Wording {
 
   // Indicateurs
   readonly AFFICHER_LA_TRANSCRIPTION: string;
+
+  readonly TITRE_TRANSCRIPTION: string;
   readonly ANNÉE: string;
   readonly INDICATEURS_VIDES: string;
   readonly AUCUNE_DONNÉE_RENSEIGNÉE: string;
