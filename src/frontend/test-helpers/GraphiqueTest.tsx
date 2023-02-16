@@ -30,7 +30,7 @@ export class GraphiqueTest {
   }
 
   fermeDétail() {
-    const fermer = screen.getByRole("button", { name: this.wording.FERMER });
+    const fermer = screen.getAllByRole("button", { name: this.wording.FERMER })[1];
     fireEvent.click(fermer);
   }
 
