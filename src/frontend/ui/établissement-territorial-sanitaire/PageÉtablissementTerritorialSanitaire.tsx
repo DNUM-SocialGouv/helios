@@ -2,6 +2,7 @@ import Head from "next/head";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
+import { SeparatorHorizontal } from "../commun/Separateur/SeparatorHorizontal";
 import { Titre } from "../commun/Titre/Titre";
 import { BlocActivitéSanitaire } from "./bloc-activité/BlocActivitéSanitaire";
 import { BlocAutorisationEtCapacitéSanitaire } from "./bloc-autorisations/BlocAutorisationEtCapacitéSanitaire";
@@ -37,6 +38,7 @@ export const PageÉtablissementTerritorialSanitaire = ({ établissementTerritori
       <BlocAutorisationEtCapacitéSanitaire
         établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
       />
+      <SeparatorHorizontal></SeparatorHorizontal>
       <BlocActivitéSanitaire établissementTerritorialSanitaireActivitéViewModel={établissementTerritorialSanitaireViewModel.activitésViewModel} />
     </main>
   );

@@ -1,0 +1,15 @@
+.separator {
+    height: 1px;
+    width: 80%;
+    background-color: var(--default-grey);
+    margin: 10px auto 10px auto;
+}
+
+.separator-vertical {
+    width: 1px;
+    background: #DDDDDD;
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
