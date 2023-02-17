@@ -6,7 +6,6 @@
     "declaration-block-trailing-semicolon": "always",
     "length-zero-no-unit": true,
     "max-empty-lines": 1,
-    "number-leading-zero": "never",
-    "order/properties-alphabetical-order": true
+    "number-leading-zero": "never"
   }
 }

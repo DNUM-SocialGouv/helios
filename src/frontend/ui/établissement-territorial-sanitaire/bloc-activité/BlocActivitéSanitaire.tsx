@@ -1,6 +1,7 @@
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
+import { SeparatorHorizontal } from "../../commun/Separateur/SeparatorHorizontal";
 import { GraphiqueNombreDeSejourMCO } from "../../indicateur-métier/nombre-de-sejour-mco/GraphiqueNombreDeSejourMCO";
 import { GraphiquePsySSR } from "../../indicateur-métier/nombre-journees-psy-ssr/GraphiquePsySSR";
 import { GraphiqueNombrePassageUrgence } from "../../indicateur-métier/nombre-passage-urgence/GraphiqueNombrePassageUrgence";
@@ -26,9 +27,11 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireActiv
             nombreDeSejourMCOViewModel={établissementTerritorialSanitaireActivitéViewModel.nombreDeSejourMCOViewModel}
           ></GraphiqueNombreDeSejourMCO>
         )}
+        <SeparatorHorizontal></SeparatorHorizontal>
         {établissementTerritorialSanitaireActivitéViewModel.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés && (
           <GraphiquePsySSR nombreJournéesPsySSRViewModel={établissementTerritorialSanitaireActivitéViewModel.nombreJourneesPsySSRViewModel} />
         )}
+        <SeparatorHorizontal></SeparatorHorizontal>
         <GraphiqueNombrePassageUrgence
           nombrePassageAuxUrgencesViewModel={établissementTerritorialSanitaireActivitéViewModel.nombreDePassagesAuxUrgencesViewModel}
         />

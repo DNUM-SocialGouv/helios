@@ -1,5 +1,6 @@
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
+import { SeparatorHorizontal } from "../../commun/Separateur/SeparatorHorizontal";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { Sources } from "../../commun/Sources/Sources";
@@ -28,7 +29,7 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
         <GraphiqueCapacitésParActivité
           graphiqueCapacitésParActivitéViewModel={établissementTerritorialSanitaireAutorisationsViewModel.graphiqueCapacitésParActivitéViewModel}
         />
-
+        <SeparatorHorizontal></SeparatorHorizontal>
         {établissementTerritorialSanitaireAutorisationsViewModel.lesAutorisationsSontEllesRenseignées && (
           <IndicateurGraphique
             contenuInfoBulle={
@@ -45,6 +46,7 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             {établissementTerritorialSanitaireAutorisationsViewModel.autorisations}
           </IndicateurGraphique>
         )}
+        <SeparatorHorizontal></SeparatorHorizontal>
         {établissementTerritorialSanitaireAutorisationsViewModel.lesAutresActivitésSontEllesRenseignées && (
           <IndicateurGraphique
             contenuInfoBulle={
@@ -61,6 +63,7 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             {établissementTerritorialSanitaireAutorisationsViewModel.autresActivités}
           </IndicateurGraphique>
         )}
+        <SeparatorHorizontal></SeparatorHorizontal>
         {établissementTerritorialSanitaireAutorisationsViewModel.lesReconnaissancesContractuellesSontEllesRenseignées && (
           <IndicateurGraphique
             contenuInfoBulle={
@@ -77,6 +80,7 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             {établissementTerritorialSanitaireAutorisationsViewModel.reconnaissancesContractuelles}
           </IndicateurGraphique>
         )}
+        <SeparatorHorizontal></SeparatorHorizontal>
         {établissementTerritorialSanitaireAutorisationsViewModel.lesÉquipementsMatérielsLourdsSontIlsRenseignés && (
           <IndicateurGraphique
             contenuInfoBulle={
