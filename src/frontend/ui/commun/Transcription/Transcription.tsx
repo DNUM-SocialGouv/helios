@@ -2,7 +2,7 @@ import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import "@gouvfr/dsfr/dist/component/transcription/transcription.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 import { useDependencies } from "../contexts/useDependencies";
-import styles from "./TableIndicateur.module.css";
+import styles from "./Transcription.module.css";
 
 type TableIndicateurProps = Readonly<{
   disabled?: boolean;
@@ -13,7 +13,7 @@ type TableIndicateurProps = Readonly<{
   valeurs: (number | string | null)[][];
 }>;
 
-export const TableIndicateur = ({ disabled = false, entêteLibellé, identifiants, identifiantUnique = "", libellés, valeurs }: TableIndicateurProps) => {
+export const Transcription = ({ disabled = false, entêteLibellé, identifiants, identifiantUnique = "", libellés, valeurs }: TableIndicateurProps) => {
   const { wording } = useDependencies();
   const identifiant = identifiantUnique !== "" ? identifiantUnique : identifiants[0].replace(/\s/g, "");
 

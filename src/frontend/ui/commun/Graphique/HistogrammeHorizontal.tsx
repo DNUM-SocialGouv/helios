@@ -6,7 +6,7 @@ import { Bar } from "react-chartjs-2";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
-import { TableIndicateur } from "../TableIndicateur/TableIndicateur";
+import { Transcription } from "../Transcription/Transcription";
 import { CouleurHistogramme, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "./GraphiqueViewModel";
 
 type HistogrammeHorizontalProps = {
@@ -128,7 +128,7 @@ export const HistogrammeHorizontal = ({
       {libellésDeValeursManquantes.length > 0 && (
         <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${libellésDeValeursManquantes.join(", ")}`}</MiseEnExergue>
       )}
-      <TableIndicateur
+      <Transcription
         disabled={libellésDeValeursManquantes.length === nombreDeLibelléTotal}
         entêteLibellé={entêteLibellé}
         identifiants={[identifiant]}
