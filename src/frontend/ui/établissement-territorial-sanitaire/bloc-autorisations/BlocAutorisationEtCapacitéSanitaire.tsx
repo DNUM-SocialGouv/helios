@@ -2,6 +2,7 @@ import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/Indicateur/BlocIndicateurVide";
 import { Indicateur } from "../../commun/Indicateur/Indicateur";
+import { SeparatorHorizontal } from "../../commun/Separateur/SeparatorHorizontal";
 import { Sources } from "../../commun/Sources/Sources";
 import { ContenuAutorisations } from "../InfoBulle/ContenuAutorisations";
 import { ContenuAutresActivités } from "../InfoBulle/ContenuAutresActivités";
@@ -28,7 +29,7 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
         <GraphiqueCapacitésParActivité
           graphiqueCapacitésParActivitéViewModel={établissementTerritorialSanitaireAutorisationsViewModel.graphiqueCapacitésParActivitéViewModel}
         />
-
+        <SeparatorHorizontal></SeparatorHorizontal>
         {établissementTerritorialSanitaireAutorisationsViewModel.lesAutorisationsSontEllesRenseignées && (
           <Indicateur
             contenuInfoBulle={
@@ -45,6 +46,7 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             {établissementTerritorialSanitaireAutorisationsViewModel.autorisations}
           </Indicateur>
         )}
+        <SeparatorHorizontal></SeparatorHorizontal>
         {établissementTerritorialSanitaireAutorisationsViewModel.lesAutresActivitésSontEllesRenseignées && (
           <Indicateur
             contenuInfoBulle={
@@ -61,6 +63,7 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             {établissementTerritorialSanitaireAutorisationsViewModel.autresActivités}
           </Indicateur>
         )}
+        <SeparatorHorizontal></SeparatorHorizontal>
         {établissementTerritorialSanitaireAutorisationsViewModel.lesReconnaissancesContractuellesSontEllesRenseignées && (
           <Indicateur
             contenuInfoBulle={
@@ -77,6 +80,7 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             {établissementTerritorialSanitaireAutorisationsViewModel.reconnaissancesContractuelles}
           </Indicateur>
         )}
+        <SeparatorHorizontal></SeparatorHorizontal>
         {établissementTerritorialSanitaireAutorisationsViewModel.lesÉquipementsMatérielsLourdsSontIlsRenseignés && (
           <Indicateur
             contenuInfoBulle={

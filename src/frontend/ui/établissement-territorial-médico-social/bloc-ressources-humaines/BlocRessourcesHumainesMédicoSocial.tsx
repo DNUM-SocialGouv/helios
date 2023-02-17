@@ -4,6 +4,7 @@ import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/Indicateur/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
+import { SeparatorHorizontal } from "../../commun/Separateur/SeparatorHorizontal";
 import { Sources } from "../../commun/Sources/Sources";
 import { ContenuDesTauxDAbsentéismes } from "../InfoBulle/ContenuDesTauxDAbsentéismes";
 import { ContenuDuNombreDeCddDeRemplacement } from "../InfoBulle/ContenuDuNombreDeCddDeRemplacement";
@@ -75,6 +76,7 @@ export const BlocRessourcesHumainesMédicoSocial = ({
             {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.tauxDePrestationsExternes}
           </IndicateurGraphique>
         </ul>
+        <SeparatorHorizontal></SeparatorHorizontal>
         <ul>
           <IndicateurGraphique
             contenuInfoBulle={

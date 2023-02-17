@@ -12,7 +12,7 @@
   padding: 0;
 }
 
-.liste-indicateurs > ul:nth-child(2) {
+.liste-indicateurs > ul:nth-child(3) {
   display: grid;
   gap: 1rem;
   grid-template-columns: calc(30% - 1rem) calc(30% - 1rem) 40%;
