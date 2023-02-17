@@ -5,9 +5,7 @@ import { CapacitéParActivité } from "../../../../backend/métier/entities/éta
 import { Wording } from "../../../configuration/wording/Wording";
 import { CouleurHistogramme, GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../commun/StringFormater";
-import { Tag, TAG_SIZE } from "../../commun/Tag/Tag";
-import { TagCliquable } from "../../commun/Tag/TagCliquable";
-import { TagGroup } from "../../commun/Tag/TagGroup";
+import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../../commun/Tag";
 
 export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extends GraphiqueViewModel {
   constructor(private readonly établissementTerritorialAutorisations: ÉtablissementTerritorialMédicoSocial["autorisationsEtCapacités"], wording: Wording) {

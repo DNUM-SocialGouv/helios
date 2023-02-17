@@ -7,11 +7,8 @@ import { annéesManquantes } from "../../../utils/dateUtils";
 import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { Select } from "../../commun/Select/Select";
 import { StringFormater } from "../../commun/StringFormater";
-import { Tag, TAG_SIZE } from "../../commun/Tag/Tag";
-import { TagCliquable } from "../../commun/Tag/TagCliquable";
+import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../../commun/Tag";
 import stylesBlocAutorisationsEtCapacités from "./BlocAutorisationEtCapacitéSanitaire.module.css";
-import "@gouvfr/dsfr/dist/component/tag/tag.min.css";
-import { TagGroup } from "../../commun/Tag/TagGroup";
 
 export class GraphiqueCapacitésParActivitéViewModel extends GraphiqueViewModel {
   private NOMBRE_ANNEES = 5;
