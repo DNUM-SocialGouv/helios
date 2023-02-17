@@ -179,24 +179,34 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
                       return (
                         <li key={`forme-${forme.code}`}>
                           <ul aria-label="autorisations" className="fr-tags-group">
-                            <li className="fr-tag fr-fi-arrow-right-line fr-tag--icon-left">{`${forme.libellé} [${forme.code}]`}</li>
-                            <li className="fr-tag">
-                              {`${this.wording.NUMÉRO_ARHGOS} : ${autorisationSanitaire.numéroArhgos ? autorisationSanitaire.numéroArhgos : "N/A"}`}
+                            <li>
+                              <p className="fr-tag fr-tag--sm fr-fi-arrow-right-line fr-tag--icon-left">{`${forme.libellé} [${forme.code}]`}</p>
                             </li>
-                            <li className="fr-tag">
-                              {`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${
-                                autorisationSanitaire.dateDeMiseEnOeuvre ? StringFormater.formateLaDate(autorisationSanitaire.dateDeMiseEnOeuvre) : "N/A"
-                              }`}
+                            <li>
+                              <p className="fr-tag fr-tag--sm">
+                                {`${this.wording.NUMÉRO_ARHGOS} : ${autorisationSanitaire.numéroArhgos ? autorisationSanitaire.numéroArhgos : "N/A"}`}
+                              </p>
                             </li>
-                            <li className="fr-tag">
-                              {`${this.wording.DATE_DE_FIN} : ${
-                                autorisationSanitaire.dateDeFin ? StringFormater.formateLaDate(autorisationSanitaire.dateDeFin) : "N/A"
-                              }`}
+                            <li>
+                              <p className="fr-tag fr-tag--sm">
+                                {`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${
+                                  autorisationSanitaire.dateDeMiseEnOeuvre ? StringFormater.formateLaDate(autorisationSanitaire.dateDeMiseEnOeuvre) : "N/A"
+                                }`}
+                              </p>
                             </li>
-                            <li className="fr-tag">
-                              {`${this.wording.DATE_D_AUTORISATION} : ${
-                                autorisationSanitaire.dateDAutorisation ? StringFormater.formateLaDate(autorisationSanitaire.dateDAutorisation) : "N/A"
-                              }`}
+                            <li>
+                              <p className="fr-tag fr-tag--sm">
+                                {`${this.wording.DATE_DE_FIN} : ${
+                                  autorisationSanitaire.dateDeFin ? StringFormater.formateLaDate(autorisationSanitaire.dateDeFin) : "N/A"
+                                }`}
+                              </p>
+                            </li>
+                            <li>
+                              <p className="fr-tag fr-tag--sm">
+                                {`${this.wording.DATE_D_AUTORISATION} : ${
+                                  autorisationSanitaire.dateDAutorisation ? StringFormater.formateLaDate(autorisationSanitaire.dateDAutorisation) : "N/A"
+                                }`}
+                              </p>
                             </li>
                           </ul>
                         </li>
@@ -242,21 +252,29 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
                       return (
                         <li key={`forme-${forme.code}`}>
                           <ul aria-label="autre-activité" className="fr-tags-group">
-                            <li className="fr-tag fr-fi-arrow-right-line fr-tag--icon-left">{`${forme.libellé} [${forme.code}]`}</li>
-                            <li className="fr-tag">
-                              {`${this.wording.DATE_D_AUTORISATION} : ${
-                                autreActivitéSanitaire.dateDAutorisation ? StringFormater.formateLaDate(autreActivitéSanitaire.dateDAutorisation) : "N/A"
-                              }`}
+                            <li>
+                              <p className="fr-tag fr-tag--sm fr-fi-arrow-right-line fr-tag--icon-left">{`${forme.libellé} [${forme.code}]`}</p>
                             </li>
-                            <li className="fr-tag">
-                              {`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${
-                                autreActivitéSanitaire.dateDeMiseEnOeuvre ? StringFormater.formateLaDate(autreActivitéSanitaire.dateDeMiseEnOeuvre) : "N/A"
-                              }`}
+                            <li>
+                              <p className="fr-tag fr-tag--sm">
+                                {`${this.wording.DATE_D_AUTORISATION} : ${
+                                  autreActivitéSanitaire.dateDAutorisation ? StringFormater.formateLaDate(autreActivitéSanitaire.dateDAutorisation) : "N/A"
+                                }`}
+                              </p>
                             </li>
-                            <li className="fr-tag">
-                              {`${this.wording.DATE_DE_FIN} : ${
-                                autreActivitéSanitaire.dateDeFin ? StringFormater.formateLaDate(autreActivitéSanitaire.dateDeFin) : "N/A"
-                              }`}
+                            <li>
+                              <p className="fr-tag fr-tag--sm">
+                                {`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${
+                                  autreActivitéSanitaire.dateDeMiseEnOeuvre ? StringFormater.formateLaDate(autreActivitéSanitaire.dateDeMiseEnOeuvre) : "N/A"
+                                }`}
+                              </p>
+                            </li>
+                            <li>
+                              <p className="fr-tag fr-tag--sm">
+                                {`${this.wording.DATE_DE_FIN} : ${
+                                  autreActivitéSanitaire.dateDeFin ? StringFormater.formateLaDate(autreActivitéSanitaire.dateDeFin) : "N/A"
+                                }`}
+                              </p>
                             </li>
                           </ul>
                         </li>
@@ -302,44 +320,58 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
                       return (
                         <li key={`forme-${forme.code}`}>
                           <ul aria-label="reconnaissance-contractuelle" className="fr-tags-group">
-                            <li className="fr-tag fr-fi-arrow-right-line fr-tag--icon-left">{`${forme.libellé} [${forme.code}]`}</li>
-                            <li className="fr-tag">
-                              {`${this.wording.NUMÉRO_ARHGOS} : ${
-                                reconnaissancesContractuellesSanitaire.numéroArhgos ? reconnaissancesContractuellesSanitaire.numéroArhgos : "N/A"
-                              }`}
+                            <li>
+                              <p className="fr-tag fr-tag--sm fr-fi-arrow-right-line fr-tag--icon-left">{`${forme.libellé} [${forme.code}]`}</p>
                             </li>
-                            <li className="fr-tag">
-                              {this.wording.NUMÉRO_CPOM}
-                              {`: ${reconnaissancesContractuellesSanitaire.numéroCpom ? reconnaissancesContractuellesSanitaire.numéroCpom : "N/A"}`}
+                            <li>
+                              <p className="fr-tag fr-tag--sm">
+                                {`${this.wording.NUMÉRO_ARHGOS} : ${
+                                  reconnaissancesContractuellesSanitaire.numéroArhgos ? reconnaissancesContractuellesSanitaire.numéroArhgos : "N/A"
+                                }`}
+                              </p>
                             </li>
-                            <li className="fr-tag">
-                              {this.wording.DATE_D_EFFET_ASR}
-                              {`: ${
-                                reconnaissancesContractuellesSanitaire.dateDEffetAsr
-                                  ? StringFormater.formateLaDate(reconnaissancesContractuellesSanitaire.dateDEffetAsr)
-                                  : "N/A"
-                              }`}
+                            <li>
+                              <p className="fr-tag fr-tag--sm">
+                                {this.wording.NUMÉRO_CPOM}
+                                {`: ${reconnaissancesContractuellesSanitaire.numéroCpom ? reconnaissancesContractuellesSanitaire.numéroCpom : "N/A"}`}
+                              </p>
                             </li>
-                            <li className="fr-tag">
-                              {this.wording.DATE_D_EFFET_CPOM}
-                              {`: ${
-                                reconnaissancesContractuellesSanitaire.dateDEffetCpom
-                                  ? StringFormater.formateLaDate(reconnaissancesContractuellesSanitaire.dateDEffetCpom)
-                                  : "N/A"
-                              }`}
+                            <li>
+                              <p className="fr-tag fr-tag--sm">
+                                {this.wording.DATE_D_EFFET_ASR}
+                                {`: ${
+                                  reconnaissancesContractuellesSanitaire.dateDEffetAsr
+                                    ? StringFormater.formateLaDate(reconnaissancesContractuellesSanitaire.dateDEffetAsr)
+                                    : "N/A"
+                                }`}
+                              </p>
                             </li>
-                            <li className="fr-tag">
-                              {this.wording.DATE_DE_FIN_CPOM}
-                              {`: ${
-                                reconnaissancesContractuellesSanitaire.dateDeFinCpom
-                                  ? StringFormater.formateLaDate(reconnaissancesContractuellesSanitaire.dateDeFinCpom)
-                                  : "N/A"
-                              }`}
+                            <li>
+                              <p className="fr-tag fr-tag--sm">
+                                {this.wording.DATE_D_EFFET_CPOM}
+                                {`: ${
+                                  reconnaissancesContractuellesSanitaire.dateDEffetCpom
+                                    ? StringFormater.formateLaDate(reconnaissancesContractuellesSanitaire.dateDEffetCpom)
+                                    : "N/A"
+                                }`}
+                              </p>
                             </li>
-                            <li className="fr-tag">
-                              {`${this.wording.CAPACITÉ_AUTORISÉE} : ${
-                                reconnaissancesContractuellesSanitaire.capacitéAutorisée ? reconnaissancesContractuellesSanitaire.capacitéAutorisée : "N/A"
-                              }`}
+                            <li>
+                              <p className="fr-tag fr-tag--sm">
+                                {this.wording.DATE_DE_FIN_CPOM}
+                                {`: ${
+                                  reconnaissancesContractuellesSanitaire.dateDeFinCpom
+                                    ? StringFormater.formateLaDate(reconnaissancesContractuellesSanitaire.dateDeFinCpom)
+                                    : "N/A"
+                                }`}
+                              </p>
+                            </li>
+                            <li>
+                              <p className="fr-tag fr-tag--sm">
+                                {`${this.wording.CAPACITÉ_AUTORISÉE} : ${
+                                  reconnaissancesContractuellesSanitaire.capacitéAutorisée ? reconnaissancesContractuellesSanitaire.capacitéAutorisée : "N/A"
+                                }`}
+                              </p>
                             </li>
                           </ul>
                         </li>
@@ -376,29 +408,37 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
                 return (
                   <li key={`forme-${autorisationÉquipementMatérielLourd.numéroArhgos}`}>
                     <ul aria-label="équipement-matériel-lourd" className="fr-tags-group">
-                      <li className="fr-tag fr-fi-arrow-right-line fr-tag--icon-left">
-                        {`${this.wording.NUMÉRO_ARHGOS} : ${
-                          autorisationÉquipementMatérielLourd.numéroArhgos ? autorisationÉquipementMatérielLourd.numéroArhgos : "N/A"
-                        }`}
+                      <li>
+                        <p className="fr-tag fr-tag--sm fr-fi-arrow-right-line fr-tag--icon-left">
+                          {`${this.wording.NUMÉRO_ARHGOS} : ${
+                            autorisationÉquipementMatérielLourd.numéroArhgos ? autorisationÉquipementMatérielLourd.numéroArhgos : "N/A"
+                          }`}
+                        </p>
                       </li>
-                      <li className="fr-tag">
-                        {`${this.wording.DATE_D_AUTORISATION} : ${
-                          autorisationÉquipementMatérielLourd.dateDAutorisation
-                            ? StringFormater.formateLaDate(autorisationÉquipementMatérielLourd.dateDAutorisation)
-                            : "N/A"
-                        }`}
+                      <li>
+                        <p className="fr-tag fr-tag--sm">
+                          {`${this.wording.DATE_D_AUTORISATION} : ${
+                            autorisationÉquipementMatérielLourd.dateDAutorisation
+                              ? StringFormater.formateLaDate(autorisationÉquipementMatérielLourd.dateDAutorisation)
+                              : "N/A"
+                          }`}
+                        </p>
                       </li>
-                      <li className="fr-tag">
-                        {`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${
-                          autorisationÉquipementMatérielLourd.dateDeMiseEnOeuvre
-                            ? StringFormater.formateLaDate(autorisationÉquipementMatérielLourd.dateDeMiseEnOeuvre)
-                            : "N/A"
-                        }`}
+                      <li>
+                        <p className="fr-tag fr-tag--sm">
+                          {`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${
+                            autorisationÉquipementMatérielLourd.dateDeMiseEnOeuvre
+                              ? StringFormater.formateLaDate(autorisationÉquipementMatérielLourd.dateDeMiseEnOeuvre)
+                              : "N/A"
+                          }`}
+                        </p>
                       </li>
-                      <li className="fr-tag">
-                        {`${this.wording.DATE_DE_FIN} : ${
-                          autorisationÉquipementMatérielLourd.dateDeFin ? StringFormater.formateLaDate(autorisationÉquipementMatérielLourd.dateDeFin) : "N/A"
-                        }`}
+                      <li>
+                        <p className="fr-tag fr-tag--sm">
+                          {`${this.wording.DATE_DE_FIN} : ${
+                            autorisationÉquipementMatérielLourd.dateDeFin ? StringFormater.formateLaDate(autorisationÉquipementMatérielLourd.dateDeFin) : "N/A"
+                          }`}
+                        </p>
                       </li>
                     </ul>
                   </li>

@@ -38,26 +38,40 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
                       return (
                         <li key={`clientèle-${clientèle.code}`}>
                           <ul aria-label="dates-et-capacités" className="fr-tags-group">
-                            <li className="fr-tag fr-fi-arrow-right-line fr-tag--icon-left">{`${clientèle.libellé} [${clientèle.code}]`}</li>
-                            <li className="fr-tag">
-                              {`${this.wording.DATE_D_AUTORISATION} : ${
-                                datesEtCapacités.dateDAutorisation ? StringFormater.formateLaDate(datesEtCapacités.dateDAutorisation) : "N/A"
-                              }`}
+                            <li>
+                              <p className="fr-tag fr-tag--sm fr-fi-arrow-right-line fr-tag--icon-left">{`${clientèle.libellé} [${clientèle.code}]`}</p>
                             </li>
-                            <li className="fr-tag">
-                              {`${this.wording.MISE_À_JOUR_AUTORISATION} : ${
-                                datesEtCapacités.dateDeMiseÀJourDAutorisation
-                                  ? StringFormater.formateLaDate(datesEtCapacités.dateDeMiseÀJourDAutorisation)
-                                  : "N/A"
-                              }`}
+                            <li>
+                              <p className="fr-tag fr-tag--sm">
+                                {`${this.wording.DATE_D_AUTORISATION} : ${
+                                  datesEtCapacités.dateDAutorisation ? StringFormater.formateLaDate(datesEtCapacités.dateDAutorisation) : "N/A"
+                                }`}
+                              </p>
                             </li>
-                            <li className="fr-tag">
-                              {`${this.wording.DERNIÈRE_INSTALLATION} : ${
-                                datesEtCapacités.dateDeDernièreInstallation ? StringFormater.formateLaDate(datesEtCapacités.dateDeDernièreInstallation) : "N/A"
-                              }`}
+                            <li>
+                              <p className="fr-tag fr-tag--sm">
+                                {`${this.wording.MISE_À_JOUR_AUTORISATION} : ${
+                                  datesEtCapacités.dateDeMiseÀJourDAutorisation
+                                    ? StringFormater.formateLaDate(datesEtCapacités.dateDeMiseÀJourDAutorisation)
+                                    : "N/A"
+                                }`}
+                              </p>
                             </li>
-                            <li className="fr-tag">{`${this.wording.CAPACITÉ_AUTORISÉE} : ${datesEtCapacités.capacitéAutoriséeTotale ?? "N/A"}`}</li>
-                            <li className="fr-tag">{`${this.wording.CAPACITÉ_INSTALLÉE} : ${datesEtCapacités.capacitéInstalléeTotale ?? "N/A"}`}</li>
+                            <li>
+                              <p className="fr-tag fr-tag--sm">
+                                {`${this.wording.DERNIÈRE_INSTALLATION} : ${
+                                  datesEtCapacités.dateDeDernièreInstallation
+                                    ? StringFormater.formateLaDate(datesEtCapacités.dateDeDernièreInstallation)
+                                    : "N/A"
+                                }`}
+                              </p>
+                            </li>
+                            <li>
+                              <p className="fr-tag fr-tag--sm">{`${this.wording.CAPACITÉ_AUTORISÉE} : ${datesEtCapacités.capacitéAutoriséeTotale ?? "N/A"}`}</p>
+                            </li>
+                            <li>
+                              <p className="fr-tag fr-tag--sm">{`${this.wording.CAPACITÉ_INSTALLÉE} : ${datesEtCapacités.capacitéInstalléeTotale ?? "N/A"}`}</p>
+                            </li>
                           </ul>
                         </li>
                       );
