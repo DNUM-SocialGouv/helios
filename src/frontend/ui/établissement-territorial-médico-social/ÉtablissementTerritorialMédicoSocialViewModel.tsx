@@ -7,7 +7,6 @@ import { ÉtablissementTerritorialMédicoSocialActivitéViewModel } from "./bloc
 import { ÉtablissementTerritorialMédicoSocialAutorisationsViewModel } from "./bloc-autorisations/ÉtablissementTerritorialMédicoSocialAutorisationsViewModel";
 import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from "./bloc-budget-et-finances/ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel";
 import { ÉtablissementTerritorialMédicoSocialIdentitéViewModel } from "./bloc-identité/ÉtablissementTerritorialMédicoSocialIdentitéViewModel";
-import "@gouvfr/dsfr/dist/component/tag/tag.min.css";
 import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } from "./bloc-ressources-humaines/ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel";
 
 export class ÉtablissementTerritorialMédicoSocialViewModel {

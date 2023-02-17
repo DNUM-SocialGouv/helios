@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import styles from "./ActionneurDAccordéon.module.css";
+import styles from "./TagCliquable.module.css";
 
 type ActionneurDAccordéonProps = Readonly<{
   for: string;
@@ -8,7 +8,7 @@ type ActionneurDAccordéonProps = Readonly<{
   titre: string;
 }>;
 
-export const ActionneurDAccordéon = ({ for: identifiant, titre, texteGras = true }: ActionneurDAccordéonProps) => {
+export const TagCliquable = ({ for: identifiant, titre, texteGras = true }: ActionneurDAccordéonProps) => {
   return (
     <Link
       aria-controls={identifiant}

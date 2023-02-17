@@ -3,9 +3,9 @@ import { ReactElement } from "react";
 import { ÉtablissementTerritorialMédicoSocial } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
 import { CapacitéParActivité } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation";
 import { Wording } from "../../../configuration/wording/Wording";
-import { ActionneurDAccordéon } from "../../commun/Accordéon/ActionneurDAccordéon";
 import { CouleurHistogramme, GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../commun/StringFormater";
+import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../../commun/Tag";
 
 export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extends GraphiqueViewModel {
   constructor(private readonly établissementTerritorialAutorisations: ÉtablissementTerritorialMédicoSocial["autorisationsEtCapacités"], wording: Wording) {
@@ -23,56 +23,41 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
       <ul aria-label="disciplines" className="autorisations">
         {autorisationsDeLÉtablissement.disciplines.map((discipline) => (
           <li key={`discipline-${discipline.code}`}>
-            <ActionneurDAccordéon for={`accordion-${discipline.code}`} titre={`${discipline.libellé} [${discipline.code}]`} />
+            <TagCliquable for={`accordion-${discipline.code}`} titre={`${discipline.libellé} [${discipline.code}]`} />
             <ul className="fr-collapse niveau1" id={`accordion-${discipline.code}`}>
               {discipline.activités.map((activité) => (
                 <li key={`activité-${activité.code}`}>
-                  <ActionneurDAccordéon
-                    for={`accordion-${discipline.code}-${activité.code}`}
-                    texteGras={false}
-                    titre={`${activité.libellé} [${activité.code}]`}
-                  />
+                  <TagCliquable for={`accordion-${discipline.code}-${activité.code}`} texteGras={false} titre={`${activité.libellé} [${activité.code}]`} />
                   <ul className="fr-collapse niveau2" id={`accordion-${discipline.code}-${activité.code}`}>
                     {activité.clientèles.map((clientèle) => {
                       const datesEtCapacités = clientèle.datesEtCapacités;
                       return (
                         <li key={`clientèle-${clientèle.code}`}>
-                          <ul aria-label="dates-et-capacités" className="fr-tags-group">
-                            <li>
-                              <p className="fr-tag fr-tag--sm fr-fi-arrow-right-line fr-tag--icon-left">{`${clientèle.libellé} [${clientèle.code}]`}</p>
-                            </li>
-                            <li>
-                              <p className="fr-tag fr-tag--sm">
-                                {`${this.wording.DATE_D_AUTORISATION} : ${
-                                  datesEtCapacités.dateDAutorisation ? StringFormater.formateLaDate(datesEtCapacités.dateDAutorisation) : "N/A"
-                                }`}
-                              </p>
-                            </li>
-                            <li>
-                              <p className="fr-tag fr-tag--sm">
-                                {`${this.wording.MISE_À_JOUR_AUTORISATION} : ${
-                                  datesEtCapacités.dateDeMiseÀJourDAutorisation
-                                    ? StringFormater.formateLaDate(datesEtCapacités.dateDeMiseÀJourDAutorisation)
-                                    : "N/A"
-                                }`}
-                              </p>
-                            </li>
-                            <li>
-                              <p className="fr-tag fr-tag--sm">
-                                {`${this.wording.DERNIÈRE_INSTALLATION} : ${
-                                  datesEtCapacités.dateDeDernièreInstallation
-                                    ? StringFormater.formateLaDate(datesEtCapacités.dateDeDernièreInstallation)
-                                    : "N/A"
-                                }`}
-                              </p>
-                            </li>
-                            <li>
-                              <p className="fr-tag fr-tag--sm">{`${this.wording.CAPACITÉ_AUTORISÉE} : ${datesEtCapacités.capacitéAutoriséeTotale ?? "N/A"}`}</p>
-                            </li>
-                            <li>
-                              <p className="fr-tag fr-tag--sm">{`${this.wording.CAPACITÉ_INSTALLÉE} : ${datesEtCapacités.capacitéInstalléeTotale ?? "N/A"}`}</p>
-                            </li>
-                          </ul>
+                          <TagGroup label="dates-et-capacités">
+                            <Tag label={`${clientèle.libellé} [${clientèle.code}]`} size={TAG_SIZE.SM} withArrow />
+                            <Tag
+                              label={`${this.wording.DATE_D_AUTORISATION} : ${
+                                datesEtCapacités.dateDAutorisation ? StringFormater.formateLaDate(datesEtCapacités.dateDAutorisation) : "N/A"
+                              }`}
+                              size={TAG_SIZE.SM}
+                            />
+                            <Tag
+                              label={`${this.wording.MISE_À_JOUR_AUTORISATION} : ${
+                                datesEtCapacités.dateDeMiseÀJourDAutorisation
+                                  ? StringFormater.formateLaDate(datesEtCapacités.dateDeMiseÀJourDAutorisation)
+                                  : "N/A"
+                              }`}
+                              size={TAG_SIZE.SM}
+                            />
+                            <Tag
+                              label={`${this.wording.DERNIÈRE_INSTALLATION} : ${
+                                datesEtCapacités.dateDeDernièreInstallation ? StringFormater.formateLaDate(datesEtCapacités.dateDeDernièreInstallation) : "N/A"
+                              }`}
+                              size={TAG_SIZE.SM}
+                            />
+                            <Tag label={`${this.wording.CAPACITÉ_AUTORISÉE} : ${datesEtCapacités.capacitéAutoriséeTotale ?? "N/A"}`} size={TAG_SIZE.SM} />
+                            <Tag label={`${this.wording.CAPACITÉ_INSTALLÉE} : ${datesEtCapacités.capacitéInstalléeTotale ?? "N/A"}`} size={TAG_SIZE.SM} />
+                          </TagGroup>
                         </li>
                       );
                     })}
