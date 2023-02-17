@@ -259,7 +259,7 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
                               <p className="fr-tag fr-tag--sm">
                                 {`${this.wording.DATE_D_AUTORISATION} : ${
                                   autreActivitéSanitaire.dateDAutorisation ? StringFormater.formateLaDate(autreActivitéSanitaire.dateDAutorisation) : "N/A"
-                                }`}{" "}
+                                }`}
                               </p>
                             </li>
                             <li>
