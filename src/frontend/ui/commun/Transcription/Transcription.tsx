@@ -1,8 +1,8 @@
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import "@gouvfr/dsfr/dist/component/transcription/transcription.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
-
 import { useDependencies } from "../contexts/useDependencies";
+import styles from "./Transcription.module.css";
 
 type TableIndicateurProps = Readonly<{
   disabled?: boolean;
@@ -13,12 +13,12 @@ type TableIndicateurProps = Readonly<{
   valeurs: (number | string | null)[][];
 }>;
 
-export const TableIndicateur = ({ disabled = false, entêteLibellé, identifiants, identifiantUnique = "", libellés, valeurs }: TableIndicateurProps) => {
+export const Transcription = ({ disabled = false, entêteLibellé, identifiants, identifiantUnique = "", libellés, valeurs }: TableIndicateurProps) => {
   const { wording } = useDependencies();
   const identifiant = identifiantUnique !== "" ? identifiantUnique : identifiants[0].replace(/\s/g, "");
 
   return (
-    <div className="fr-transcription fr-mb-5w fr-mt-3w">
+    <div className={"fr-transcription fr-mb-5w fr-mt-3w " + styles["indicateur"]}>
       <button aria-controls={identifiant} aria-expanded="false" className="fr-transcription__btn" disabled={disabled}>
         {wording.AFFICHER_LA_TRANSCRIPTION}
       </button>

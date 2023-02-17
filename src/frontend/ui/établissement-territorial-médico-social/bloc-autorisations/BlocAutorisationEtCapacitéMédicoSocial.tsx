@@ -1,7 +1,6 @@
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
-import { BlocIndicateurVide } from "../../commun/Indicateur/BlocIndicateurVide";
-import { Indicateur } from "../../commun/Indicateur/Indicateur";
+import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { Sources } from "../../commun/Sources/Sources";
 import { ContenuAutorisations } from "../InfoBulle/ContenuAutorisations";
@@ -41,7 +40,7 @@ export const BlocAutorisationEtCapacitéMédicoSocial = ({
             {établissementTerritorialAutorisationsMédicoSocialViewModel.capacitéParActivités}
           </IndicateurGraphique>
         )}
-        <Indicateur
+        <IndicateurGraphique
           contenuInfoBulle={
             <ContenuAutorisations
               dateDeMiseÀJour={établissementTerritorialAutorisationsMédicoSocialViewModel.dateDeMiseÀJourDesAutorisations}
@@ -54,7 +53,7 @@ export const BlocAutorisationEtCapacitéMédicoSocial = ({
           source={Sources(wording.FINESS, wording.ARHGOS)}
         >
           {établissementTerritorialAutorisationsMédicoSocialViewModel.autorisations}
-        </Indicateur>
+        </IndicateurGraphique>
       </ul>
     </Bloc>
   );

@@ -3,7 +3,7 @@ import { Bar } from "react-chartjs-2";
 
 import stylesBlocActivité from "../../établissement-territorial-sanitaire/bloc-activité/BlocActivitéSanitaire.module.css";
 import { useDependencies } from "../contexts/useDependencies";
-import { TableIndicateur } from "../TableIndicateur/TableIndicateur";
+import { Transcription } from "../Transcription/Transcription";
 
 export function HistogrammeVertical(props: {
   data: {
@@ -27,7 +27,7 @@ export function HistogrammeVertical(props: {
     <>
       <Bar data={props.data} options={props.optionsHistogramme} />
       <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} />
-      <TableIndicateur entêteLibellé={wording.ANNÉE} identifiants={props.identifiants} libellés={props.libellés} valeurs={props.valeurs} />
+      <Transcription entêteLibellé={wording.ANNÉE} identifiants={props.identifiants} libellés={props.libellés} valeurs={props.valeurs} />
     </>
   );
 }
