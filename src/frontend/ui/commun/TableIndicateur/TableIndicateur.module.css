@@ -1,4 +1,8 @@
 @media print {
+    .indicateur {
+        break-inside: avoid;
+    }
+
     .indicateur :global(.fr-transcription__footer) {
         display: none;
     }
