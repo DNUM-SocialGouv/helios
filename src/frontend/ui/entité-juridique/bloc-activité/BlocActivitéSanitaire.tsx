@@ -1,6 +1,5 @@
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
-import { SeparatorHorizontal } from "../../commun/Separateur/SeparatorHorizontal";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { GraphiqueNombreDeSejourMCO } from "../../indicateur-métier/nombre-de-sejour-mco/GraphiqueNombreDeSejourMCO";
 import { GraphiquePsySSR } from "../../indicateur-métier/nombre-journees-psy-ssr/GraphiquePsySSR";
@@ -27,11 +26,9 @@ export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel }: B
             nombreDeSejourMCOViewModel={entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel}
           ></GraphiqueNombreDeSejourMCO>
         )}
-        <SeparatorHorizontal></SeparatorHorizontal>
         {entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés && (
           <GraphiquePsySSR estEntitéJuridique={true} nombreJournéesPsySSRViewModel={entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel} />
         )}
-        <SeparatorHorizontal></SeparatorHorizontal>
         <GraphiqueNombrePassageUrgence
           estEntitéJuridique={true}
           nombrePassageAuxUrgencesViewModel={entitéJuridiqueActivitéViewModel.nombreDePassageAuxUrgencesViewModel}
