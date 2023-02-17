@@ -4,10 +4,10 @@ import { ÉtablissementTerritorialSanitaire } from "../../../../backend/métier/
 import { CapacitéSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
-import { ActionneurDAccordéon } from "../../commun/Accordéon/ActionneurDAccordéon";
 import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { Select } from "../../commun/Select/Select";
 import { StringFormater } from "../../commun/StringFormater";
+import { TagCliquable } from "../../commun/Tag/TagCliquable";
 import stylesBlocAutorisationsEtCapacités from "./BlocAutorisationEtCapacitéSanitaire.module.css";
 import "@gouvfr/dsfr/dist/component/tag/tag.min.css";
 
@@ -164,11 +164,11 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
       <ul aria-label="activités" className="autorisations">
         {autorisationsDeLÉtablissement.activités.map((activité) => (
           <li key={`activité-${activité.code}`}>
-            <ActionneurDAccordéon for={`autorisations-accordion-${activité.code}`} titre={`${activité.libellé} [${activité.code}]`} />
+            <TagCliquable for={`autorisations-accordion-${activité.code}`} titre={`${activité.libellé} [${activité.code}]`} />
             <ul className="fr-collapse niveau1" id={`autorisations-accordion-${activité.code}`}>
               {activité.modalités.map((modalité) => (
                 <li key={`modalité-${modalité.code}`}>
-                  <ActionneurDAccordéon
+                  <TagCliquable
                     for={`autorisations-accordion-${activité.code}-${modalité.code}`}
                     texteGras={false}
                     titre={`${modalité.libellé} [${modalité.code}]`}
@@ -237,11 +237,11 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
       <ul aria-label="activités" className={`${stylesBlocAutorisationsEtCapacités["liste-activités"]}`}>
         {autresActivitésDeLÉtablissement.activités.map((activité) => (
           <li key={`activité-${activité.code}`}>
-            <ActionneurDAccordéon for={`autresActivités-accordion-${activité.code}`} titre={`${activité.libellé} [${activité.code}]`} />
+            <TagCliquable for={`autresActivités-accordion-${activité.code}`} titre={`${activité.libellé} [${activité.code}]`} />
             <ul className=" fr-collapse niveau1" id={`autresActivités-accordion-${activité.code}`}>
               {activité.modalités.map((modalité) => (
                 <li key={`modalité-${modalité.code}`}>
-                  <ActionneurDAccordéon
+                  <TagCliquable
                     for={`autresActivités-accordion-${activité.code}-${modalité.code}`}
                     texteGras={false}
                     titre={`${modalité.libellé} [${modalité.code}]`}
@@ -305,11 +305,11 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
       <ul aria-label="activités" className={`${stylesBlocAutorisationsEtCapacités["liste-activités"]}`}>
         {reconnaissancesContractuellesDeLÉtablissement.activités.map((activité) => (
           <li key={`activité-${activité.code}`}>
-            <ActionneurDAccordéon for={`reconnaissances-contractuelles-accordion-${activité.code}`} titre={`${activité.libellé} [${activité.code}]`} />
+            <TagCliquable for={`reconnaissances-contractuelles-accordion-${activité.code}`} titre={`${activité.libellé} [${activité.code}]`} />
             <ul className="fr-collapse niveau1" id={`reconnaissances-contractuelles-accordion-${activité.code}`}>
               {activité.modalités.map((modalité) => (
                 <li key={`modalité-${modalité.code}`}>
-                  <ActionneurDAccordéon
+                  <TagCliquable
                     for={`reconnaissances-contractuelles-accordion-${activité.code}-${modalité.code}`}
                     texteGras={false}
                     titre={`${modalité.libellé} [${modalité.code}]`}
@@ -402,7 +402,7 @@ export class ÉtablissementTerritorialSanitaireAutorisationsViewModel extends Gr
       <ul aria-label="équipements" className={`${stylesBlocAutorisationsEtCapacités["liste-activités"]}`}>
         {équipementsMatérielsLourdsDeLÉtablissement.équipements.map((équipements) => (
           <li key={`équipement-${équipements.code}`}>
-            <ActionneurDAccordéon for={`équipements-matériels-lourds-accordion-${équipements.code}`} titre={`${équipements.libellé} [${équipements.code}]`} />
+            <TagCliquable for={`équipements-matériels-lourds-accordion-${équipements.code}`} titre={`${équipements.libellé} [${équipements.code}]`} />
             <ul className="fr-collapse niveau1" id={`équipements-matériels-lourds-accordion-${équipements.code}`}>
               {équipements.autorisations.map((autorisationÉquipementMatérielLourd) => {
                 return (

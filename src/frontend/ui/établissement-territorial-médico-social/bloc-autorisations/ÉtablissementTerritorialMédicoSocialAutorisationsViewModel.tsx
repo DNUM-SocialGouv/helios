@@ -3,19 +3,10 @@ import { ReactElement } from "react";
 import { ÉtablissementTerritorialMédicoSocial } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
 import { CapacitéParActivité } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation";
 import { Wording } from "../../../configuration/wording/Wording";
-import { ActionneurDAccordéon } from "../../commun/Accordéon/ActionneurDAccordéon";
 import { CouleurHistogramme, GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../commun/StringFormater";
-
-enum TAG_SIZE {
-  SM = "sm",
-  MD = "MD",
-}
-
-function Tag({ label, size = TAG_SIZE.MD, withArrow = false }: { label: string; size?: TAG_SIZE; withArrow?: boolean }) {
-  const arrowClass = withArrow ? " fr-fi-arrow-right-line fr-tag--icon-left" : "";
-  return <p className={"fr-tag fr-tag--" + size + arrowClass}>{label}</p>;
-}
+import { Tag, TAG_SIZE } from "../../commun/Tag/Tag";
+import { TagCliquable } from "../../commun/Tag/TagCliquable";
 
 export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extends GraphiqueViewModel {
   constructor(private readonly établissementTerritorialAutorisations: ÉtablissementTerritorialMédicoSocial["autorisationsEtCapacités"], wording: Wording) {
@@ -33,15 +24,11 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
       <ul aria-label="disciplines" className="autorisations">
         {autorisationsDeLÉtablissement.disciplines.map((discipline) => (
           <li key={`discipline-${discipline.code}`}>
-            <ActionneurDAccordéon for={`accordion-${discipline.code}`} titre={`${discipline.libellé} [${discipline.code}]`} />
+            <TagCliquable for={`accordion-${discipline.code}`} titre={`${discipline.libellé} [${discipline.code}]`} />
             <ul className="fr-collapse niveau1" id={`accordion-${discipline.code}`}>
               {discipline.activités.map((activité) => (
                 <li key={`activité-${activité.code}`}>
-                  <ActionneurDAccordéon
-                    for={`accordion-${discipline.code}-${activité.code}`}
-                    texteGras={false}
-                    titre={`${activité.libellé} [${activité.code}]`}
-                  />
+                  <TagCliquable for={`accordion-${discipline.code}-${activité.code}`} texteGras={false} titre={`${activité.libellé} [${activité.code}]`} />
                   <ul className="fr-collapse niveau2" id={`accordion-${discipline.code}-${activité.code}`}>
                     {activité.clientèles.map((clientèle) => {
                       const datesEtCapacités = clientèle.datesEtCapacités;
