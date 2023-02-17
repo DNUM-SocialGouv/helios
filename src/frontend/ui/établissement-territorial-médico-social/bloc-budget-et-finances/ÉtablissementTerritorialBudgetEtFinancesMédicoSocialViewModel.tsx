@@ -12,7 +12,7 @@ import { IndicateurTabulaire, IndicateurTabulaireProps } from "../../commun/Indi
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
 import { Select } from "../../commun/Select/Select";
 import { StringFormater } from "../../commun/StringFormater";
-import { TableIndicateur } from "../../commun/TableIndicateur/TableIndicateur";
+import { Transcription } from "../../commun/Transcription/Transcription";
 
 export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel extends GraphiqueViewModel {
   private readonly seuilMinimalDuTauxDeVétustéConstruction = 0;
@@ -348,7 +348,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
           />
         )}
         {annéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
-        <TableIndicateur
+        <Transcription
           disabled={annéesManquantes.length === this.nombreDAnnéesParIndicateur}
           entêteLibellé={this.wording.ANNÉE}
           identifiants={[this.wording.TAUX_DE_CAF]}

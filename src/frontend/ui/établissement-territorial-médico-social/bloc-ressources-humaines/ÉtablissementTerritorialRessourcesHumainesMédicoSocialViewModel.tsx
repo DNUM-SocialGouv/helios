@@ -7,7 +7,7 @@ import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe } from 
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
 import { Select } from "../../commun/Select/Select";
 import { StringFormater } from "../../commun/StringFormater";
-import { TableIndicateur } from "../../commun/TableIndicateur/TableIndicateur";
+import { Transcription } from "../../commun/Transcription/Transcription";
 
 type IndicateurAvecUnNombre = Exclude<
   keyof ÉtablissementTerritorialMédicoSocialRessourcesHumaines,
@@ -331,7 +331,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
             this.IDENTIFIANT_DE_LA_LÉGENDE_DES_TAUX_D_ABSENTÉISMES
           )}
         {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
-        <TableIndicateur
+        <Transcription
           disabled={listeAnnéesManquantes.length === 3}
           entêteLibellé={this.wording.MOTIF_DU_TAUX_D_ABSENTÉISME}
           identifiants={[this.wording.TAUX]}
@@ -348,7 +348,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
     return (
       <>
         {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
-        <TableIndicateur disabled={true} entêteLibellé={this.wording.ANNÉE} identifiants={[this.wording.TAUX_D_ABSENTÉISME]} libellés={[]} valeurs={[]} />
+        <Transcription disabled={true} entêteLibellé={this.wording.ANNÉE} identifiants={[this.wording.TAUX_D_ABSENTÉISME]} libellés={[]} valeurs={[]} />
       </>
     );
   }

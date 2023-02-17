@@ -2,8 +2,7 @@ import { useState } from "react";
 
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
-import { BlocIndicateurVide } from "../../commun/Indicateur/BlocIndicateurVide";
-import { Indicateur } from "../../commun/Indicateur/Indicateur";
+import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ContenuCompteDeRésultat } from "../InfoBulle/ContenuCompteDeRésultat";
 import { ContenuFondDeRoulementNetGlobal } from "../InfoBulle/ContenuFondDeRoulementNetGlobal";
@@ -45,7 +44,7 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMé
           {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.compteDeRésultat(annéeEnCours)}
         </IndicateurGraphique>
         {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leRésultatNetComptableEstIlRenseigné && (
-          <Indicateur
+          <IndicateurGraphique
             contenuInfoBulle={
               <ContenuRésultatNetComptable
                 dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourRésultatNetComptable}
@@ -58,10 +57,10 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMé
             source={wording.CNSA}
           >
             {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.résultatNetComptable}
-          </Indicateur>
+          </IndicateurGraphique>
         )}
         {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leMontantDeLaContributionAuxFraisDeSiègeEstIlRenseigné && (
-          <Indicateur
+          <IndicateurGraphique
             contenuInfoBulle={
               <ContenuMontantDeLaContributionAuxFraisDeSiège
                 dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourMontantDeLaContributionAuxFraisDeSiège}
@@ -74,7 +73,7 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMé
             source={wording.CNSA}
           >
             {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.montantDeLaContributionAuxFraisDeSiège}
-          </Indicateur>
+          </IndicateurGraphique>
         )}
         <IndicateurGraphique
           contenuInfoBulle={

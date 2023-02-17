@@ -26,7 +26,7 @@ import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
-import { TableIndicateur } from "../TableIndicateur/TableIndicateur";
+import { Transcription } from "../Transcription/Transcription";
 import styles from "./GraphiqueViewModel.module.css";
 import { HistogrammeHorizontal } from "./HistogrammeHorizontal";
 
@@ -226,7 +226,7 @@ export class GraphiqueViewModel {
           </div>
         )}
         {annéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
-        <TableIndicateur
+        <Transcription
           disabled={annéesManquantes.length === nombreDAnnéeTotale}
           entêteLibellé={entêtePremièreColonne}
           identifiantUnique="compte-de-resultat"
@@ -299,7 +299,7 @@ export class GraphiqueViewModel {
           />
         )}
         {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
-        <TableIndicateur
+        <Transcription
           disabled={listeAnnéesManquantes.length === annéesTotales}
           entêteLibellé={entêteLibellé}
           identifiants={[identifiant]}
@@ -398,7 +398,7 @@ export class GraphiqueViewModel {
         )}
 
         {annéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
-        {!aucuneDonnées && <TableIndicateur entêteLibellé={entêteLibellé} identifiants={identifiants} libellés={libellés} valeurs={valeurs} />}
+        {!aucuneDonnées && <Transcription entêteLibellé={entêteLibellé} identifiants={identifiants} libellés={libellés} valeurs={valeurs} />}
       </>
     );
   }

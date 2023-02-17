@@ -1,7 +1,7 @@
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
-import { BlocIndicateurVide } from "../../commun/Indicateur/BlocIndicateurVide";
-import { Indicateur } from "../../commun/Indicateur/Indicateur";
+import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
+import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { Sources } from "../../commun/Sources/Sources";
 import { ContenuAutorisations } from "../InfoBulle/ContenuAutorisations";
 import { ContenuAutresActivités } from "../InfoBulle/ContenuAutresActivités";
@@ -30,7 +30,7 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
         />
 
         {établissementTerritorialSanitaireAutorisationsViewModel.lesAutorisationsSontEllesRenseignées && (
-          <Indicateur
+          <IndicateurGraphique
             contenuInfoBulle={
               <ContenuAutorisations
                 dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesAutorisations}
@@ -43,10 +43,10 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             source={Sources(wording.FINESS, wording.ARHGOS)}
           >
             {établissementTerritorialSanitaireAutorisationsViewModel.autorisations}
-          </Indicateur>
+          </IndicateurGraphique>
         )}
         {établissementTerritorialSanitaireAutorisationsViewModel.lesAutresActivitésSontEllesRenseignées && (
-          <Indicateur
+          <IndicateurGraphique
             contenuInfoBulle={
               <ContenuAutresActivités
                 dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesAutresActivités}
@@ -59,10 +59,10 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             source={Sources(wording.FINESS, wording.ARHGOS)}
           >
             {établissementTerritorialSanitaireAutorisationsViewModel.autresActivités}
-          </Indicateur>
+          </IndicateurGraphique>
         )}
         {établissementTerritorialSanitaireAutorisationsViewModel.lesReconnaissancesContractuellesSontEllesRenseignées && (
-          <Indicateur
+          <IndicateurGraphique
             contenuInfoBulle={
               <ContenuReconnaissancesContractuelles
                 dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesReconnaissancesContractuelles}
@@ -75,10 +75,10 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             source={Sources(wording.FINESS, wording.ARHGOS)}
           >
             {établissementTerritorialSanitaireAutorisationsViewModel.reconnaissancesContractuelles}
-          </Indicateur>
+          </IndicateurGraphique>
         )}
         {établissementTerritorialSanitaireAutorisationsViewModel.lesÉquipementsMatérielsLourdsSontIlsRenseignés && (
-          <Indicateur
+          <IndicateurGraphique
             contenuInfoBulle={
               <ContenuÉquipementsMatérielsLourds
                 dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesÉquipementsMatérielsLourds}
@@ -91,7 +91,7 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             source={Sources(wording.FINESS, wording.ARHGOS)}
           >
             {établissementTerritorialSanitaireAutorisationsViewModel.équipementsMatérielsLourds}
-          </Indicateur>
+          </IndicateurGraphique>
         )}
       </ul>
     </Bloc>
