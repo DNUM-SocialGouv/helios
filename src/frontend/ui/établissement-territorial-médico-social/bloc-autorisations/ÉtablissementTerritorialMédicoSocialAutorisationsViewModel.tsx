@@ -7,6 +7,16 @@ import { ActionneurDAccordéon } from "../../commun/Accordéon/ActionneurDAccord
 import { CouleurHistogramme, GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../commun/StringFormater";
 
+enum TAG_SIZE {
+  SM = "sm",
+  MD = "MD",
+}
+
+function Tag({ label, size = TAG_SIZE.MD, withArrow = false }: { label: string; size?: TAG_SIZE; withArrow?: boolean }) {
+  const arrowClass = withArrow ? " fr-fi-arrow-right-line fr-tag--icon-left" : "";
+  return <p className={"fr-tag fr-tag--" + size + arrowClass}>{label}</p>;
+}
+
 export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extends GraphiqueViewModel {
   constructor(private readonly établissementTerritorialAutorisations: ÉtablissementTerritorialMédicoSocial["autorisationsEtCapacités"], wording: Wording) {
     super(wording);
@@ -39,38 +49,41 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
                         <li key={`clientèle-${clientèle.code}`}>
                           <ul aria-label="dates-et-capacités" className="fr-tags-group">
                             <li>
-                              <p className="fr-tag fr-tag--sm fr-fi-arrow-right-line fr-tag--icon-left">{`${clientèle.libellé} [${clientèle.code}]`}</p>
+                              <Tag label={`${clientèle.libellé} [${clientèle.code}]`} size={TAG_SIZE.SM} withArrow />
                             </li>
                             <li>
-                              <p className="fr-tag fr-tag--sm">
-                                {`${this.wording.DATE_D_AUTORISATION} : ${
+                              <Tag
+                                label={`${this.wording.DATE_D_AUTORISATION} : ${
                                   datesEtCapacités.dateDAutorisation ? StringFormater.formateLaDate(datesEtCapacités.dateDAutorisation) : "N/A"
                                 }`}
-                              </p>
+                                size={TAG_SIZE.SM}
+                              />
                             </li>
                             <li>
-                              <p className="fr-tag fr-tag--sm">
-                                {`${this.wording.MISE_À_JOUR_AUTORISATION} : ${
+                              <Tag
+                                label={`${this.wording.MISE_À_JOUR_AUTORISATION} : ${
                                   datesEtCapacités.dateDeMiseÀJourDAutorisation
                                     ? StringFormater.formateLaDate(datesEtCapacités.dateDeMiseÀJourDAutorisation)
                                     : "N/A"
                                 }`}
-                              </p>
+                                size={TAG_SIZE.SM}
+                              />
                             </li>
                             <li>
-                              <p className="fr-tag fr-tag--sm">
-                                {`${this.wording.DERNIÈRE_INSTALLATION} : ${
+                              <Tag
+                                label={`${this.wording.DERNIÈRE_INSTALLATION} : ${
                                   datesEtCapacités.dateDeDernièreInstallation
                                     ? StringFormater.formateLaDate(datesEtCapacités.dateDeDernièreInstallation)
                                     : "N/A"
                                 }`}
-                              </p>
+                                size={TAG_SIZE.SM}
+                              />
                             </li>
                             <li>
-                              <p className="fr-tag fr-tag--sm">{`${this.wording.CAPACITÉ_AUTORISÉE} : ${datesEtCapacités.capacitéAutoriséeTotale ?? "N/A"}`}</p>
+                              <Tag label={`${this.wording.CAPACITÉ_AUTORISÉE} : ${datesEtCapacités.capacitéAutoriséeTotale ?? "N/A"}`} size={TAG_SIZE.SM} />
                             </li>
                             <li>
-                              <p className="fr-tag fr-tag--sm">{`${this.wording.CAPACITÉ_INSTALLÉE} : ${datesEtCapacités.capacitéInstalléeTotale ?? "N/A"}`}</p>
+                              <Tag label={`${this.wording.CAPACITÉ_INSTALLÉE} : ${datesEtCapacités.capacitéInstalléeTotale ?? "N/A"}`} size={TAG_SIZE.SM} />
                             </li>
                           </ul>
                         </li>
