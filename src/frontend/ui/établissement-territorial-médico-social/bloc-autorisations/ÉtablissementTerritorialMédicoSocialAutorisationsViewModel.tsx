@@ -7,6 +7,7 @@ import { CouleurHistogramme, GraphiqueViewModel } from "../../commun/Graphique/G
 import { StringFormater } from "../../commun/StringFormater";
 import { Tag, TAG_SIZE } from "../../commun/Tag/Tag";
 import { TagCliquable } from "../../commun/Tag/TagCliquable";
+import { TagGroup } from "../../commun/Tag/TagGroup";
 
 export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extends GraphiqueViewModel {
   constructor(private readonly établissementTerritorialAutorisations: ÉtablissementTerritorialMédicoSocial["autorisationsEtCapacités"], wording: Wording) {
@@ -34,45 +35,31 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
                       const datesEtCapacités = clientèle.datesEtCapacités;
                       return (
                         <li key={`clientèle-${clientèle.code}`}>
-                          <ul aria-label="dates-et-capacités" className="fr-tags-group">
-                            <li>
-                              <Tag label={`${clientèle.libellé} [${clientèle.code}]`} size={TAG_SIZE.SM} withArrow />
-                            </li>
-                            <li>
-                              <Tag
-                                label={`${this.wording.DATE_D_AUTORISATION} : ${
-                                  datesEtCapacités.dateDAutorisation ? StringFormater.formateLaDate(datesEtCapacités.dateDAutorisation) : "N/A"
-                                }`}
-                                size={TAG_SIZE.SM}
-                              />
-                            </li>
-                            <li>
-                              <Tag
-                                label={`${this.wording.MISE_À_JOUR_AUTORISATION} : ${
-                                  datesEtCapacités.dateDeMiseÀJourDAutorisation
-                                    ? StringFormater.formateLaDate(datesEtCapacités.dateDeMiseÀJourDAutorisation)
-                                    : "N/A"
-                                }`}
-                                size={TAG_SIZE.SM}
-                              />
-                            </li>
-                            <li>
-                              <Tag
-                                label={`${this.wording.DERNIÈRE_INSTALLATION} : ${
-                                  datesEtCapacités.dateDeDernièreInstallation
-                                    ? StringFormater.formateLaDate(datesEtCapacités.dateDeDernièreInstallation)
-                                    : "N/A"
-                                }`}
-                                size={TAG_SIZE.SM}
-                              />
-                            </li>
-                            <li>
-                              <Tag label={`${this.wording.CAPACITÉ_AUTORISÉE} : ${datesEtCapacités.capacitéAutoriséeTotale ?? "N/A"}`} size={TAG_SIZE.SM} />
-                            </li>
-                            <li>
-                              <Tag label={`${this.wording.CAPACITÉ_INSTALLÉE} : ${datesEtCapacités.capacitéInstalléeTotale ?? "N/A"}`} size={TAG_SIZE.SM} />
-                            </li>
-                          </ul>
+                          <TagGroup label="dates-et-capacités">
+                            <Tag label={`${clientèle.libellé} [${clientèle.code}]`} size={TAG_SIZE.SM} withArrow />
+                            <Tag
+                              label={`${this.wording.DATE_D_AUTORISATION} : ${
+                                datesEtCapacités.dateDAutorisation ? StringFormater.formateLaDate(datesEtCapacités.dateDAutorisation) : "N/A"
+                              }`}
+                              size={TAG_SIZE.SM}
+                            />
+                            <Tag
+                              label={`${this.wording.MISE_À_JOUR_AUTORISATION} : ${
+                                datesEtCapacités.dateDeMiseÀJourDAutorisation
+                                  ? StringFormater.formateLaDate(datesEtCapacités.dateDeMiseÀJourDAutorisation)
+                                  : "N/A"
+                              }`}
+                              size={TAG_SIZE.SM}
+                            />
+                            <Tag
+                              label={`${this.wording.DERNIÈRE_INSTALLATION} : ${
+                                datesEtCapacités.dateDeDernièreInstallation ? StringFormater.formateLaDate(datesEtCapacités.dateDeDernièreInstallation) : "N/A"
+                              }`}
+                              size={TAG_SIZE.SM}
+                            />
+                            <Tag label={`${this.wording.CAPACITÉ_AUTORISÉE} : ${datesEtCapacités.capacitéAutoriséeTotale ?? "N/A"}`} size={TAG_SIZE.SM} />
+                            <Tag label={`${this.wording.CAPACITÉ_INSTALLÉE} : ${datesEtCapacités.capacitéInstalléeTotale ?? "N/A"}`} size={TAG_SIZE.SM} />
+                          </TagGroup>
                         </li>
                       );
                     })}
