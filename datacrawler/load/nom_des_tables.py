@@ -12,6 +12,7 @@ TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES = "reco
 TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES = "capacite_autorisation_sanitaire"
 TABLES_DES_CPOM = "cpom"
 TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL = "budget_et_finances_medico_social"
+TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE = "budget_et_finances_entite_juridique"
 TABLES_DES_RESSOURCES_HUMAINES_MÉDICO_SOCIAL = "ressources_humaines_medico_social"
 
 
@@ -23,6 +24,7 @@ class FichierSource(Enum):
     DIAMANT_ANN_SAE = "ann_sae"
     DIAMANT_ANN_CA_EJ_ET = "ann_ca_ej_et"
     DIAMANT_ANN_ERRD_EJ = "ann_errd_ej"
+    DIAMANT_QUO_SAN_FINANCE = "quo_san_finance"
     FINESS_CS1400103 = "finess_cs1400103"
     FINESS_CS1400104 = "finess_cs1400104"
     FINESS_CS1400105 = "finess_cs1400105"

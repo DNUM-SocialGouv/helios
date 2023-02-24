@@ -22,7 +22,8 @@ from datacrawler.transform.équivalences_diamant_helios import (
     équivalences_diamant_ann_ms_tdp_et_ressources_humaines_helios,
     équivalences_diamant_ann_rpu_helios,
     équivalences_diamant_ann_sae_helios,
-    équivalences_diamant_men_pmsi_annuel_helios,
+    équivalences_diamant_men_pmsi_annuel_helios, colonnes_a_lire_bloc_budget_finance_entite_juridique,
+    équivalences_diamant_quo_san_finance_buget_finance_helios,
 )
 
 
@@ -389,3 +390,31 @@ class TestLisLeFichierCsv:
             données_des_ressources_humaines_reçues,
             données_des_ressources_humaines_attendues,
         )
+
+def test_lis_les_colonnes_demandées_du_fichier_csv_quo_san_finance(self) -> None:
+    # GIVEN
+    file_path = get_absolute_file_path("data_set/diamant/QUO_SAN_FINANCE_2023_01_20.CSV")
+    colonnes = colonnes_a_lire_bloc_budget_finance_entite_juridique
+    types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_quo_san_finance_buget_finance_helios)
+
+    # WHEN
+    données_des_quo_san_finance_reçues = lis_le_fichier_csv(file_path, colonnes, types_des_colonnes)
+
+    # THEN
+    données_des_quo_san_finance_attendues = pd.DataFrame(
+        {
+            "Finess": ["010008407", "010008407", "010008407"],
+            "Année": [2022, 2021, 2020],
+            "Dépenses Titre I Budget global": [
+                -38315470.400000005,
+                -20000000.480000005,
+                -10000000.500000005,
+            ],
+        }
+    )
+
+    pd.testing.assert_frame_equal(
+        données_des_quo_san_finance_reçues,
+        données_des_quo_san_finance_attendues,
+    )
+
