@@ -22,7 +22,7 @@ type HistogrammeHorizontalProps = {
   nombreDeLibelléTotal: number;
 };
 
-function optionsHistogrammeHorizontal(
+export function optionsHistogrammeHorizontal(
   ratioLargeurSurHauteur: number,
   valeurMaximale: number,
   grosseursDePoliceDesLibellés: string[],
