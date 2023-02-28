@@ -1,8 +1,8 @@
-import { CadreBudgétaire } from "../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
-import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
-import { Wording } from "../../../configuration/wording/Wording";
-import { annéesManquantes } from "../../../utils/dateUtils";
-import { StringFormater } from "../../commun/StringFormater";
+import { CadreBudgétaire } from "../../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
+import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
+import { Wording } from "../../../../configuration/wording/Wording";
+import { annéesManquantes } from "../../../../utils/dateUtils";
+import { StringFormater } from "../../../commun/StringFormater";
 
 export class CompteDeResultatViewModel {
   private readonly nombreDAnnéesParIndicateur = 3;

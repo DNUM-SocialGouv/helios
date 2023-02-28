@@ -1,17 +1,10 @@
-import { Chart as ChartJS, ChartData, ChartOptions } from "chart.js";
-import { Context } from "chartjs-plugin-datalabels";
-import { ChangeEvent, Dispatch, ReactElement, SetStateAction, useState } from "react";
-import { Bar } from "react-chartjs-2";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 
-import { Wording } from "../../../configuration/wording/Wording";
-import { useDependencies } from "../../commun/contexts/useDependencies";
-import { DeuxHistogrammeHorizontaux } from "../../commun/Graphique/DeuxHistogrammesHorizontaux";
-import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
-import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
-import { Select } from "../../commun/Select/Select";
-import { StringFormater } from "../../commun/StringFormater";
-import { Transcription } from "../../commun/Transcription/Transcription";
-import { ContenuCompteDeRésultat } from "../../établissement-territorial-médico-social/InfoBulle/ContenuCompteDeRésultat";
+import { useDependencies } from "../../../commun/contexts/useDependencies";
+import { DeuxHistogrammeHorizontaux } from "../../../commun/Graphique/DeuxHistogrammesHorizontaux";
+import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
+import { Select } from "../../../commun/Select/Select";
+import { ContenuCompteDeRésultat } from "../../InfoBulle/ContenuCompteDeRésultat";
 import { CompteDeResultatViewModel } from "./CompteDeResultatViewModel";
 
 type BlocBudgetEtFinancesMédicoSocialProps = Readonly<{

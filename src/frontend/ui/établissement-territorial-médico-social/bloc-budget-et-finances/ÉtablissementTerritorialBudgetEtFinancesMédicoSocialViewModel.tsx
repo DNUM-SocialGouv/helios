@@ -12,7 +12,7 @@ import { IndicateurTabulaire, IndicateurTabulaireProps } from "../../commun/Indi
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";
-import { CompteDeResultatViewModel } from "../../indicateur-métier/compte-de-resultat/CompteDeResultatViewModel";
+import { CompteDeResultatViewModel } from "./compte-de-resultat/CompteDeResultatViewModel";
 
 export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel extends GraphiqueViewModel {
   private readonly seuilMinimalDuTauxDeVétustéConstruction = 0;
