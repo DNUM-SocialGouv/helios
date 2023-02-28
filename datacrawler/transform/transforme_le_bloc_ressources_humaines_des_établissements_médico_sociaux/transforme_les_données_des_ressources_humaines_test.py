@@ -194,7 +194,6 @@ class TestTransformeLesDonnéesDesTauxDAbsentéismes:
         pd.testing.assert_frame_equal(données_transformées, data_frame_attendu)
 
     def test_ne_renvoie_pas_les_établissements_non_présents_en_base(self) -> None:
-
         # GIVEN
         données_ann_ms_tdp_et = pd.DataFrame([csv_ann_ms_tdp_et_ressources_humaines_builder({"Finess": NUMÉRO_FINESS_ÉTABLISSEMENT})])
         numéros_finess_des_établissements_connus = pd.DataFrame(
