@@ -1,18 +1,15 @@
-import { ChangeEvent, ReactElement } from "react";
-
 import { CadreBudgétaire } from "../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
-import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
-import { Select } from "../../commun/Select/Select";
 import { StringFormater } from "../../commun/StringFormater";
 
-export class CompteDeResultatViewModel extends GraphiqueViewModel {
+export class CompteDeResultatViewModel {
   private readonly nombreDAnnéesParIndicateur = 3;
+  private wording: Wording;
 
   constructor(private readonly budgetEtFinancesMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[], wording: Wording) {
-    super(wording);
+    this.wording = wording;
   }
 
   public intituléDuCompteDeRésultat(annéeEnCours: number) {
@@ -21,31 +18,13 @@ export class CompteDeResultatViewModel extends GraphiqueViewModel {
       : this.wording.COMPTE_DE_RÉSULTAT_CA;
   }
 
-  private budgetEtFinanceEnCours(annéeEnCours: number): ÉtablissementTerritorialMédicoSocialBudgetEtFinances {
+  budgetEtFinanceEnCours(annéeEnCours: number): ÉtablissementTerritorialMédicoSocialBudgetEtFinances {
     return this.budgetEtFinancesMédicoSocial.find(
       (budgetEtFinance) => budgetEtFinance.année === annéeEnCours
     ) as ÉtablissementTerritorialMédicoSocialBudgetEtFinances;
   }
 
-  public listeDéroulanteDesAnnéesDuCompteDeRésultat(setAnnéeEnCours: Function): ReactElement {
-    const annéesRangéesAntéChronologiquement = this.annéesRangéesParAntéChronologie();
-
-    if (annéesRangéesAntéChronologiquement.length > 0) {
-      return (
-        <Select
-          label={this.wording.ANNÉE}
-          onChange={(event: ChangeEvent<HTMLSelectElement>) => {
-            setAnnéeEnCours(Number(event.target.value));
-          }}
-          options={annéesRangéesAntéChronologiquement}
-        />
-      );
-    }
-
-    return <></>;
-  }
-
-  private annéesRangéesParAntéChronologie(): number[] {
+  annéesRangéesParAntéChronologie(): number[] {
     return this.budgetEtFinancesMédicoSocial
       .filter(filtreParCadreBudgétaireEtRecettesEtDépenses)
       .map((budgetEtFinance) => budgetEtFinance.année)
@@ -72,62 +51,59 @@ export class CompteDeResultatViewModel extends GraphiqueViewModel {
     }
   }
 
-  public compteDeRésultat(annéeEnCours: number): ReactElement {
-    const budgetEtFinance = this.budgetEtFinanceEnCours(annéeEnCours);
-    const entêtePremièreColonne = this.wording.TITRE_BUDGÉTAIRE;
-    const chartColors = [
-      this.couleurDuFondHistogrammePrimaire,
-      this.couleurDuFondHistogrammeSecondaire,
-      this.couleurDuFondHistogrammeSecondaire,
-      this.couleurDuFondHistogrammeSecondaire,
-    ];
+  public dépensesOuCharges(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances) {
     const dépensesOuCharges = [];
-    const recettesOuProduits = [];
-    const libellés = [];
-    const entêtesDesAutresColonnes = [];
-    const annéesManquantes = this.lesAnnéesManquantesDuCompteDeRésultat();
-
-    let ratioHistogramme = 2;
     if (budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA) {
       const totalDesCharges = budgetEtFinance.chargesEtProduits.charges as number;
-      const totalDesProduits = budgetEtFinance.chargesEtProduits.produits as number;
       dépensesOuCharges.push(totalDesCharges);
-      recettesOuProduits.push(totalDesProduits);
-      libellés.push(this.wording.TOTAL);
-      entêtesDesAutresColonnes.push(this.wording.CHARGES, this.wording.PRODUITS);
-      ratioHistogramme = 5;
     } else {
       const dépensesGroupeI = budgetEtFinance.recettesEtDépenses.dépensesGroupe1 as number;
       const dépensesGroupeII = budgetEtFinance.recettesEtDépenses.dépensesGroupe2 as number;
       const dépensesGroupeIII = budgetEtFinance.recettesEtDépenses.dépensesGroupe3 as number;
+      const totalDesDépenses = dépensesGroupeI + dépensesGroupeII + dépensesGroupeIII;
+      dépensesOuCharges.push(totalDesDépenses, dépensesGroupeI, dépensesGroupeII, dépensesGroupeIII);
+    }
+    return dépensesOuCharges;
+  }
+
+  public recettesOuProduits(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances) {
+    const recettesOuProduits = [];
+    if (budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA) {
+      const totalDesProduits = budgetEtFinance.chargesEtProduits.produits as number;
+      recettesOuProduits.push(totalDesProduits);
+    } else {
       const recettesGroupeI = budgetEtFinance.recettesEtDépenses.recettesGroupe1 as number;
       const recettesGroupeII = budgetEtFinance.recettesEtDépenses.recettesGroupe2 as number;
       const recettesGroupeIII = budgetEtFinance.recettesEtDépenses.recettesGroupe3 as number;
-      const totalDesDépenses = dépensesGroupeI + dépensesGroupeII + dépensesGroupeIII;
       const totalDesRecettes = recettesGroupeI + recettesGroupeII + recettesGroupeIII;
-      dépensesOuCharges.push(totalDesDépenses, dépensesGroupeI, dépensesGroupeII, dépensesGroupeIII);
       recettesOuProduits.push(totalDesRecettes, recettesGroupeI, recettesGroupeII, recettesGroupeIII);
-      libellés.push(this.wording.TOTAL, this.wording.GROUPE_I, this.wording.GROUPE_II, this.wording.GROUPE_III);
-      entêtesDesAutresColonnes.push(this.wording.DÉPENSES, this.wording.RECETTES);
     }
+    return recettesOuProduits;
+  }
 
-    return this.afficheUnCarrousel(
-      chartColors,
-      dépensesOuCharges,
-      recettesOuProduits,
-      libellés,
-      ratioHistogramme,
-      entêtePremièreColonne,
-      entêtesDesAutresColonnes,
-      annéesManquantes
-    );
+  public libellés(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances) {
+    return budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA
+      ? [this.wording.TOTAL]
+      : [this.wording.TOTAL, this.wording.GROUPE_I, this.wording.GROUPE_II, this.wording.GROUPE_III];
+  }
+
+  public ratioHistogramme(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances) {
+    const RATIO_CA_PA = 5;
+    const DEFAULT_RATIO = 2;
+    return budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA ? RATIO_CA_PA : DEFAULT_RATIO;
+  }
+
+  public entêtesDesAutresColonnes(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances) {
+    return budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA
+      ? [this.wording.CHARGES, this.wording.PRODUITS]
+      : [this.wording.DÉPENSES, this.wording.RECETTES];
   }
 
   public get leCompteDeRésultatEstIlRenseigné(): boolean {
     return this.lesAnnéesManquantesDuCompteDeRésultat().length < this.nombreDAnnéesParIndicateur;
   }
 
-  private lesAnnéesManquantesDuCompteDeRésultat(): number[] {
+  public lesAnnéesManquantesDuCompteDeRésultat(): number[] {
     return annéesManquantes(this.lesAnnéesEffectivesDuCompteDeRésultat());
   }
 
