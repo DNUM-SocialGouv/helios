@@ -14,28 +14,23 @@ import { Select } from "../../commun/Select/Select";
 import { StringFormater } from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";
 
-export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel extends GraphiqueViewModel {
-  private readonly seuilMinimalDuTauxDeVétustéConstruction = 0;
-  private readonly seuilMaximalDuTauxDeVétustéConstruction = 80;
-  private readonly seuilDuContrasteDuLibellé = 10;
-  private readonly seuilMinimalDuTauxDeCaf = -21;
-  private readonly seuilMaximalDuTauxDeCaf = 21;
-  private readonly seuilDuTauxDeCaf = 2;
-  private readonly couleurDuSeuil = "#18753C";
-  private readonly nombreDAnnéesParIndicateur = 3;
+export class CompteDeResultatViewModel extends GraphiqueViewModel {
+  private readonly nombreDAnnéesParIndicateur = 5;
 
   constructor(private readonly budgetEtFinancesMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[], wording: Wording) {
     super(wording);
-  }
-
-  public get annéeInitiale() {
-    return this.budgetEtFinancesMédicoSocial[this.budgetEtFinancesMédicoSocial.length - 1]?.année;
   }
 
   public intituléDuCompteDeRésultat(annéeEnCours: number) {
     return this.budgetEtFinanceEnCours(annéeEnCours).cadreBudgétaire === CadreBudgétaire.ERRD
       ? this.wording.COMPTE_DE_RÉSULTAT_ERRD
       : this.wording.COMPTE_DE_RÉSULTAT_CA;
+  }
+
+  private budgetEtFinanceEnCours(annéeEnCours: number): ÉtablissementTerritorialMédicoSocialBudgetEtFinances {
+    return this.budgetEtFinancesMédicoSocial.find(
+      (budgetEtFinance) => budgetEtFinance.année === annéeEnCours
+    ) as ÉtablissementTerritorialMédicoSocialBudgetEtFinances;
   }
 
   public listeDéroulanteDesAnnéesDuCompteDeRésultat(setAnnéeEnCours: Function): ReactElement {
@@ -56,8 +51,31 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     return <></>;
   }
 
-  public get leCompteDeRésultatEstIlRenseigné(): boolean {
-    return this.lesAnnéesManquantesDuCompteDeRésultat().length < this.nombreDAnnéesParIndicateur;
+  private annéesRangéesParAntéChronologie(): number[] {
+    return this.budgetEtFinancesMédicoSocial
+      .filter(filtreParCadreBudgétaireEtRecettesEtDépenses)
+      .map((budgetEtFinance) => budgetEtFinance.année)
+      .reverse();
+
+    function filtreParCadreBudgétaireEtRecettesEtDépenses(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances): boolean {
+      if (
+        budgetEtFinance.cadreBudgétaire !== CadreBudgétaire.CA_PA &&
+        (budgetEtFinance.recettesEtDépenses.dépensesGroupe1 !== null ||
+          budgetEtFinance.recettesEtDépenses.dépensesGroupe2 !== null ||
+          budgetEtFinance.recettesEtDépenses.dépensesGroupe3 !== null ||
+          budgetEtFinance.recettesEtDépenses.recettesGroupe1 !== null ||
+          budgetEtFinance.recettesEtDépenses.recettesGroupe2 !== null ||
+          budgetEtFinance.recettesEtDépenses.recettesGroupe3 !== null)
+      ) {
+        return true;
+      } else if (
+        budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA &&
+        (budgetEtFinance.chargesEtProduits.charges !== null || budgetEtFinance.chargesEtProduits.produits !== null)
+      ) {
+        return true;
+      }
+      return false;
+    }
   }
 
   public compteDeRésultat(annéeEnCours: number): ReactElement {
@@ -109,6 +127,75 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       entêtesDesAutresColonnes,
       annéesManquantes
     );
+  }
+
+  public get leCompteDeRésultatEstIlRenseigné(): boolean {
+    return this.lesAnnéesManquantesDuCompteDeRésultat().length < this.nombreDAnnéesParIndicateur;
+  }
+
+  private lesAnnéesManquantesDuCompteDeRésultat(): number[] {
+    return annéesManquantes(this.lesAnnéesEffectivesDuCompteDeRésultat());
+  }
+
+  private lesAnnéesEffectivesDuCompteDeRésultat(): number[] {
+    const années: number[] = [];
+
+    this.budgetEtFinancesMédicoSocial.forEach((budgetEtFinance) => {
+      if (budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA) {
+        if (budgetEtFinance.chargesEtProduits.charges !== null && budgetEtFinance.chargesEtProduits.produits !== null) {
+          années.push(budgetEtFinance.année);
+        }
+      } else {
+        if (
+          budgetEtFinance.recettesEtDépenses.dépensesGroupe1 !== null &&
+          budgetEtFinance.recettesEtDépenses.dépensesGroupe2 !== null &&
+          budgetEtFinance.recettesEtDépenses.dépensesGroupe3 !== null &&
+          budgetEtFinance.recettesEtDépenses.recettesGroupe1 !== null &&
+          budgetEtFinance.recettesEtDépenses.recettesGroupe2 !== null &&
+          budgetEtFinance.recettesEtDépenses.recettesGroupe3 !== null
+        ) {
+          années.push(budgetEtFinance.année);
+        }
+      }
+    });
+
+    return années;
+  }
+}
+export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel extends GraphiqueViewModel {
+  private readonly seuilMinimalDuTauxDeVétustéConstruction = 0;
+  private readonly seuilMaximalDuTauxDeVétustéConstruction = 80;
+  private readonly seuilDuContrasteDuLibellé = 10;
+  private readonly seuilMinimalDuTauxDeCaf = -21;
+  private readonly seuilMaximalDuTauxDeCaf = 21;
+  private readonly seuilDuTauxDeCaf = 2;
+  private readonly couleurDuSeuil = "#18753C";
+  private readonly nombreDAnnéesParIndicateur = 3;
+  private compteDeResultatViewModel: CompteDeResultatViewModel;
+
+  constructor(private readonly budgetEtFinancesMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[], wording: Wording) {
+    super(wording);
+    this.compteDeResultatViewModel = new CompteDeResultatViewModel(budgetEtFinancesMédicoSocial, wording);
+  }
+
+  public get annéeInitiale() {
+    return this.budgetEtFinancesMédicoSocial[this.budgetEtFinancesMédicoSocial.length - 1]?.année;
+  }
+
+  public intituléDuCompteDeRésultat(annéeEnCours: number) {
+    return this.compteDeResultatViewModel.intituléDuCompteDeRésultat(annéeEnCours);
+  }
+
+  public listeDéroulanteDesAnnéesDuCompteDeRésultat(setAnnéeEnCours: Function): ReactElement {
+    return this.compteDeResultatViewModel.listeDéroulanteDesAnnéesDuCompteDeRésultat(setAnnéeEnCours);
+  }
+
+  public get leCompteDeRésultatEstIlRenseigné(): boolean {
+    return this.compteDeResultatViewModel.leCompteDeRésultatEstIlRenseigné;
+  }
+
+  public compteDeRésultat(annéeEnCours: number): ReactElement {
+    return this.compteDeResultatViewModel.compteDeRésultat(annéeEnCours);
   }
 
   public get lesDonnéesBudgetEtFinancesNeSontPasRenseignées(): boolean {
@@ -455,67 +542,5 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     });
 
     return [valeurs, années];
-  }
-
-  private budgetEtFinanceEnCours(annéeEnCours: number): ÉtablissementTerritorialMédicoSocialBudgetEtFinances {
-    return this.budgetEtFinancesMédicoSocial.find(
-      (budgetEtFinance) => budgetEtFinance.année === annéeEnCours
-    ) as ÉtablissementTerritorialMédicoSocialBudgetEtFinances;
-  }
-
-  private lesAnnéesEffectivesDuCompteDeRésultat(): number[] {
-    const années: number[] = [];
-
-    this.budgetEtFinancesMédicoSocial.forEach((budgetEtFinance) => {
-      if (budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA) {
-        if (budgetEtFinance.chargesEtProduits.charges !== null && budgetEtFinance.chargesEtProduits.produits !== null) {
-          années.push(budgetEtFinance.année);
-        }
-      } else {
-        if (
-          budgetEtFinance.recettesEtDépenses.dépensesGroupe1 !== null &&
-          budgetEtFinance.recettesEtDépenses.dépensesGroupe2 !== null &&
-          budgetEtFinance.recettesEtDépenses.dépensesGroupe3 !== null &&
-          budgetEtFinance.recettesEtDépenses.recettesGroupe1 !== null &&
-          budgetEtFinance.recettesEtDépenses.recettesGroupe2 !== null &&
-          budgetEtFinance.recettesEtDépenses.recettesGroupe3 !== null
-        ) {
-          années.push(budgetEtFinance.année);
-        }
-      }
-    });
-
-    return années;
-  }
-
-  private lesAnnéesManquantesDuCompteDeRésultat(): number[] {
-    return annéesManquantes(this.lesAnnéesEffectivesDuCompteDeRésultat());
-  }
-
-  private annéesRangéesParAntéChronologie(): number[] {
-    return this.budgetEtFinancesMédicoSocial
-      .filter(filtreParCadreBudgétaireEtRecettesEtDépenses)
-      .map((budgetEtFinance) => budgetEtFinance.année)
-      .reverse();
-
-    function filtreParCadreBudgétaireEtRecettesEtDépenses(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances): boolean {
-      if (
-        budgetEtFinance.cadreBudgétaire !== CadreBudgétaire.CA_PA &&
-        (budgetEtFinance.recettesEtDépenses.dépensesGroupe1 !== null ||
-          budgetEtFinance.recettesEtDépenses.dépensesGroupe2 !== null ||
-          budgetEtFinance.recettesEtDépenses.dépensesGroupe3 !== null ||
-          budgetEtFinance.recettesEtDépenses.recettesGroupe1 !== null ||
-          budgetEtFinance.recettesEtDépenses.recettesGroupe2 !== null ||
-          budgetEtFinance.recettesEtDépenses.recettesGroupe3 !== null)
-      ) {
-        return true;
-      } else if (
-        budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA &&
-        (budgetEtFinance.chargesEtProduits.charges !== null || budgetEtFinance.chargesEtProduits.produits !== null)
-      ) {
-        return true;
-      }
-      return false;
-    }
   }
 }

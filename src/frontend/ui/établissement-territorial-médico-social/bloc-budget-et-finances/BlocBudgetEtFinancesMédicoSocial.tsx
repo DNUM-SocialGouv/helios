@@ -1,11 +1,8 @@
-import { useState } from "react";
-
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
-import { CompteDeResultat } from "../../indicateur-métier/compte-de-resultat/CompteDeResultat";
-import { ContenuCompteDeRésultat } from "../InfoBulle/ContenuCompteDeRésultat";
+import { GraphiqueCompteDeResultat } from "../../indicateur-métier/compte-de-resultat/GraphiqueCompteDeResultat";
 import { ContenuFondDeRoulementNetGlobal } from "../InfoBulle/ContenuFondDeRoulementNetGlobal";
 import { ContenuMontantDeLaContributionAuxFraisDeSiège } from "../InfoBulle/ContenuMontantDeLaContributionAuxFraisDeSiège";
 import { ContenuRésultatNetComptable } from "../InfoBulle/ContenuRésultatNetComptable";
@@ -28,7 +25,9 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMé
   return (
     <Bloc isMain={false} titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES}>
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
-        <CompteDeResultat établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel} />
+        <GraphiqueCompteDeResultat
+          établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel}
+        />
         {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leRésultatNetComptableEstIlRenseigné && (
           <IndicateurGraphique
             contenuInfoBulle={
