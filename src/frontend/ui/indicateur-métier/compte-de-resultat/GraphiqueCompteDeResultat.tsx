@@ -2,8 +2,8 @@ import { useState } from "react";
 
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
-import { CompteDeResultatViewModel } from "../../établissement-territorial-médico-social/bloc-budget-et-finances/ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel";
 import { ContenuCompteDeRésultat } from "../../établissement-territorial-médico-social/InfoBulle/ContenuCompteDeRésultat";
+import { CompteDeResultatViewModel } from "./CompteDeResultatViewModel";
 
 type BlocBudgetEtFinancesMédicoSocialProps = Readonly<{
   compteDeRésultatViewModel: CompteDeResultatViewModel;
