@@ -15,7 +15,7 @@ import { StringFormater } from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";
 
 export class CompteDeResultatViewModel extends GraphiqueViewModel {
-  private readonly nombreDAnnéesParIndicateur = 5;
+  private readonly nombreDAnnéesParIndicateur = 3;
 
   constructor(private readonly budgetEtFinancesMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[], wording: Wording) {
     super(wording);
@@ -187,25 +187,9 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     this.compteDeResultatViewModel = new CompteDeResultatViewModel(budgetEtFinancesMédicoSocial, wording);
   }
 
-  public intituléDuCompteDeRésultat(annéeEnCours: number) {
-    return this.compteDeResultatViewModel.intituléDuCompteDeRésultat(annéeEnCours);
-  }
-
-  public listeDéroulanteDesAnnéesDuCompteDeRésultat(setAnnéeEnCours: Function): ReactElement {
-    return this.compteDeResultatViewModel.listeDéroulanteDesAnnéesDuCompteDeRésultat(setAnnéeEnCours);
-  }
-
-  public get leCompteDeRésultatEstIlRenseigné(): boolean {
-    return this.compteDeResultatViewModel.leCompteDeRésultatEstIlRenseigné;
-  }
-
-  public compteDeRésultat(annéeEnCours: number): ReactElement {
-    return this.compteDeResultatViewModel.compteDeRésultat(annéeEnCours);
-  }
-
   public get lesDonnéesBudgetEtFinancesNeSontPasRenseignées(): boolean {
     return (
-      !this.leCompteDeRésultatEstIlRenseigné &&
+      !this.compteDeResultatViewModel.leCompteDeRésultatEstIlRenseigné &&
       !this.leRésultatNetComptableEstIlRenseigné &&
       !this.leMontantDeLaContributionAuxFraisDeSiègeEstIlRenseigné &&
       !this.leTauxDeCafEstIlRenseigné &&
