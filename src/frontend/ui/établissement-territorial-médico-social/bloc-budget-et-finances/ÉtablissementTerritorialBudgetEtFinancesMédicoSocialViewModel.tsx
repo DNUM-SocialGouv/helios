@@ -161,7 +161,16 @@ export class CompteDeResultatViewModel extends GraphiqueViewModel {
 
     return années;
   }
+
+  public get annéeInitiale() {
+    return this.budgetEtFinancesMédicoSocial[this.budgetEtFinancesMédicoSocial.length - 1]?.année;
+  }
+
+  public get dateMiseÀJour(): string {
+    return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].tauxDeVétustéConstruction?.dateMiseÀJourSource as string);
+  }
 }
+
 export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel extends GraphiqueViewModel {
   private readonly seuilMinimalDuTauxDeVétustéConstruction = 0;
   private readonly seuilMaximalDuTauxDeVétustéConstruction = 80;
@@ -171,15 +180,11 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
   private readonly seuilDuTauxDeCaf = 2;
   private readonly couleurDuSeuil = "#18753C";
   private readonly nombreDAnnéesParIndicateur = 3;
-  private compteDeResultatViewModel: CompteDeResultatViewModel;
+  public compteDeResultatViewModel: CompteDeResultatViewModel;
 
   constructor(private readonly budgetEtFinancesMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[], wording: Wording) {
     super(wording);
     this.compteDeResultatViewModel = new CompteDeResultatViewModel(budgetEtFinancesMédicoSocial, wording);
-  }
-
-  public get annéeInitiale() {
-    return this.budgetEtFinancesMédicoSocial[this.budgetEtFinancesMédicoSocial.length - 1]?.année;
   }
 
   public intituléDuCompteDeRésultat(annéeEnCours: number) {

@@ -25,9 +25,7 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMé
   return (
     <Bloc isMain={false} titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES}>
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
-        <GraphiqueCompteDeResultat
-          établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel}
-        />
+        <GraphiqueCompteDeResultat compteDeRésultatViewModel={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.compteDeResultatViewModel} />
         {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leRésultatNetComptableEstIlRenseigné && (
           <IndicateurGraphique
             contenuInfoBulle={
