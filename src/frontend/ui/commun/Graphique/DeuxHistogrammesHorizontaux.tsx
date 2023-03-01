@@ -41,6 +41,7 @@ export const DeuxHistogrammeHorizontaux = ({
     couleurDuFondHistogrammeSecondaire,
     couleurDuFondHistogrammeSecondaire,
     couleurDuFondHistogrammeSecondaire,
+    couleurDuFondHistogrammeSecondaire,
   ];
 
   ChartJS.unregister();
@@ -93,20 +94,7 @@ export const DeuxHistogrammeHorizontaux = ({
     ],
     labels: libellés,
   };
-  const valeursTableau = [
-    [
-      StringFormater.formateLeMontantEnEuros(valeursDeGauche[0]),
-      StringFormater.formateLeMontantEnEuros(valeursDeGauche[1]),
-      StringFormater.formateLeMontantEnEuros(valeursDeGauche[2]),
-      StringFormater.formateLeMontantEnEuros(valeursDeGauche[3]),
-    ],
-    [
-      StringFormater.formateLeMontantEnEuros(valeursDeDroite[0]),
-      StringFormater.formateLeMontantEnEuros(valeursDeDroite[1]),
-      StringFormater.formateLeMontantEnEuros(valeursDeDroite[2]),
-      StringFormater.formateLeMontantEnEuros(valeursDeDroite[3]),
-    ],
-  ];
+  const valeursTableau = [valeursDeGauche.map(StringFormater.formateLeMontantEnEuros), valeursDeDroite.map(StringFormater.formateLeMontantEnEuros)];
 
   return (
     <>

@@ -1,5 +1,5 @@
 export type EntitéJuridiqueBudgetFinance = {
-  année: number | null;
+  année: number;
 
   depensesTitreIGlobal: number | null;
   depensesTitreIIGlobal: number | null;

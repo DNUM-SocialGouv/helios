@@ -246,6 +246,12 @@ export class WordingFr implements Wording {
   readonly TAUX_DE_CAF: string = "Taux de CAF";
   readonly FONDS_DE_ROULEMENT_NET_GLOBAL: string = "Fond de roulement net global";
 
+  // Bloc Buget Finance Entite Juridique
+  readonly TITRE_I: string = "Titre I";
+  readonly TITRE_II: string = "Titre II";
+  readonly TITRE_III: string = "Titre III";
+  readonly TITRE_IV: string = "Titre IV";
+
   // Bloc ressources humaines
   readonly TITRE_BLOC_RESSOURCES_HUMAINES: string = "Ressources humaines";
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ: ReactElement = (

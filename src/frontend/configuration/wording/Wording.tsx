@@ -189,6 +189,12 @@ export interface Wording {
   readonly TAUX_DE_CAF: string;
   readonly FONDS_DE_ROULEMENT_NET_GLOBAL: string;
 
+  // Bloc budget et finance entité juridique
+  readonly TITRE_I: string;
+  readonly TITRE_II: string;
+  readonly TITRE_III: string;
+  readonly TITRE_IV: string;
+
   // Bloc ressources humaines
   readonly TITRE_BLOC_RESSOURCES_HUMAINES: string;
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ: ReactElement;
