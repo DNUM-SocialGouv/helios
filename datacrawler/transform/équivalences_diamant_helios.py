@@ -186,12 +186,15 @@ colonnes_à_lire_bloc_ressources_humaines_ann_ca_ej_et: List[str] = list(équiva
 
 équivalences_diamant_quo_san_finance_buget_finance_helios: ÉquivalencesDiamantHelios = {
     "Finess EJ": ColonneHelios(nom="numero_finess_entite_juridique", type=str),
-    "Année": ColonneHelios(nom="annee", type = int),
-    "Dépenses Titre I Budget global": ColonneHelios(nom="depenses_titre_i_global")
+    "Année": ColonneHelios(nom="annee", type=int),
+    "Dépenses Titre I Budget global": ColonneHelios(nom="depenses_titre_i_global", type=float)
 }
 
 colonnes_a_lire_bloc_budget_finance_entite_juridique: List[str] = list(équivalences_diamant_quo_san_finance_buget_finance_helios.keys())
-
+index_du_bloc_budget_et_finances_entite_juridique: List[str] = [
+    "numero_finess_entite_juridique",
+    "annee"
+]
 
 def extrais_l_equivalence_des_types_des_colonnes(équivalences: ÉquivalencesDiamantHelios) -> Dict[str, type]:
     return {nom_diamant: colonne_diamant["type"] for nom_diamant, colonne_diamant in équivalences.items()}
