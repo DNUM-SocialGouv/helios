@@ -1,16 +1,14 @@
-import { useState } from "react";
-
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
-import { ContenuCompteDeRésultat } from "../InfoBulle/ContenuCompteDeRésultat";
 import { ContenuFondDeRoulementNetGlobal } from "../InfoBulle/ContenuFondDeRoulementNetGlobal";
 import { ContenuMontantDeLaContributionAuxFraisDeSiège } from "../InfoBulle/ContenuMontantDeLaContributionAuxFraisDeSiège";
 import { ContenuRésultatNetComptable } from "../InfoBulle/ContenuRésultatNetComptable";
 import { ContenuTauxDeCaf } from "../InfoBulle/ContenuTauxDeCaf";
 import { ContenuTauxDeVétustéConstruction } from "../InfoBulle/ContenuTauxDeVétustéConstruction";
 import styles from "./BlocBudgetEtFinancesMédicoSocial.module.css";
+import { GraphiqueCompteDeResultat } from "./compte-de-resultat/GraphiqueCompteDeResultat";
 import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from "./ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel";
 
 type BlocBudgetEtFinancesMédicoSocialProps = Readonly<{
@@ -19,7 +17,6 @@ type BlocBudgetEtFinancesMédicoSocialProps = Readonly<{
 
 export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMédicoSocialBudgetEtFinancesViewModel }: BlocBudgetEtFinancesMédicoSocialProps) => {
   const { wording } = useDependencies();
-  const [annéeEnCours, setAnnéeEnCours] = useState<number>(établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.annéeInitiale);
 
   if (établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetEtFinancesNeSontPasRenseignées) {
     return <BlocIndicateurVide title={wording.TITRE_BLOC_BUDGET_ET_FINANCES} />;
@@ -28,21 +25,7 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMé
   return (
     <Bloc isMain={false} titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES}>
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
-        <IndicateurGraphique
-          années={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.listeDéroulanteDesAnnéesDuCompteDeRésultat(setAnnéeEnCours)}
-          contenuInfoBulle={
-            <ContenuCompteDeRésultat
-              dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourTauxDeVétustéConstruction}
-              source={wording.CNSA}
-            />
-          }
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourTauxDeVétustéConstruction}
-          identifiant="budget-et-finances-compte-de-résultat"
-          nomDeLIndicateur={<>{établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.intituléDuCompteDeRésultat(annéeEnCours)}</>}
-          source={wording.CNSA}
-        >
-          {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.compteDeRésultat(annéeEnCours)}
-        </IndicateurGraphique>
+        <GraphiqueCompteDeResultat compteDeRésultatViewModel={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.compteDeResultatViewModel} />
         {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leRésultatNetComptableEstIlRenseigné && (
           <IndicateurGraphique
             contenuInfoBulle={
