@@ -1,18 +1,19 @@
 export type EntitéJuridiqueBudgetFinance = {
-  année: number;
-  depensesTitreIGlobal: number;
-  depensesTitreIIGlobal: number;
-  depensesTitreIIIGlobal: number;
-  depensesTitreIVGlobal: number;
-  recettesTitreIGlobal: number;
-  recettesTitreIIGlobal: number;
-  recettesTitreIIIGlobal: number;
-  recettesTitreIVGlobal: number;
-  depensesTitreIH: number;
-  depensesTitreIIH: number;
-  depensesTitreIIIH: number;
-  depensesTitreIVH: number;
-  recettesTitreIH: number;
-  recettesTitreIIH: number;
-  recettesTitreIIIH: number;
+  année: number | null;
+
+  depensesTitreIGlobal: number | null;
+  depensesTitreIIGlobal: number | null;
+  depensesTitreIIIGlobal: number | null;
+  depensesTitreIVGlobal: number | null;
+  recettesTitreIGlobal: number | null;
+  recettesTitreIIGlobal: number | null;
+  recettesTitreIIIGlobal: number | null;
+  recettesTitreIVGlobal: number | null;
+  depensesTitreIH: number | null;
+  depensesTitreIIH: number | null;
+  depensesTitreIIIH: number | null;
+  depensesTitreIVH: number | null;
+  recettesTitreIH: number | null;
+  recettesTitreIIH: number | null;
+  recettesTitreIIIH: number | null;
 };

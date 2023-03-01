@@ -11,6 +11,27 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   }
 
   public get lesDonnéesBudgetEtFinanceNesontPasRenseignées() {
-    return this.budgetEtFinance.length === 0;
+    return this.budgetEtFinance.length === 0 || this.compteDeResultatVide();
+  }
+
+  private compteDeResultatVide() {
+    return this.budgetEtFinance.every(
+      (budgetFinance) =>
+        !budgetFinance.depensesTitreIH &&
+        !budgetFinance.depensesTitreIIH &&
+        !budgetFinance.depensesTitreIIIH &&
+        !budgetFinance.depensesTitreIVH &&
+        !budgetFinance.recettesTitreIH &&
+        !budgetFinance.recettesTitreIIH &&
+        !budgetFinance.recettesTitreIIIH &&
+        !budgetFinance.recettesTitreIGlobal &&
+        !budgetFinance.recettesTitreIIGlobal &&
+        !budgetFinance.recettesTitreIIIGlobal &&
+        !budgetFinance.recettesTitreIVGlobal &&
+        !budgetFinance.depensesTitreIGlobal &&
+        !budgetFinance.depensesTitreIIGlobal &&
+        !budgetFinance.depensesTitreIIIGlobal &&
+        !budgetFinance.depensesTitreIVGlobal
+    );
   }
 }
