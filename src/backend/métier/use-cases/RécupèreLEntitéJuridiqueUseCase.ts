@@ -13,6 +13,6 @@ export class RécupèreLEntitéJuridiqueUseCase {
       throw entitéJuridiqueIdentitéOuErreur;
     }
 
-    return { ...entitéJuridiqueIdentitéOuErreur, activités };
+    return { ...entitéJuridiqueIdentitéOuErreur, activités, budgetFinance: [] };
   }
 }

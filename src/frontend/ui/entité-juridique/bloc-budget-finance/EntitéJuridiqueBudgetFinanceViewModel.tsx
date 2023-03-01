@@ -1,12 +1,13 @@
+import { EntitéJuridiqueBudgetFinance } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { Wording } from "../../../configuration/wording/Wording";
 
 export class EntitéJuridiqueBudgetFinanceViewModel {
-  private budgetEtFinance: any[];
+  private budgetEtFinance: EntitéJuridiqueBudgetFinance[];
   private wording: Wording;
 
-  constructor(p: any[], wording: Wording) {
+  constructor(budgetFinance: EntitéJuridiqueBudgetFinance[], wording: Wording) {
     this.wording = wording;
-    this.budgetEtFinance = [];
+    this.budgetEtFinance = budgetFinance;
   }
 
   public get lesDonnéesBudgetEtFinanceNesontPasRenseignées() {

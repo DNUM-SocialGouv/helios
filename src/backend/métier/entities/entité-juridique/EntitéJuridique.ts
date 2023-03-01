@@ -1,4 +1,5 @@
 import { EntitéJuridiqueActivités } from "./EntitéJuridiqueActivités";
+import { EntitéJuridiqueBudgetFinance } from "./EntitéJuridiqueBudgetFinance";
 
 export type EntitéJuridiqueIdentité = {
   adresseAcheminement: Readonly<{
@@ -47,6 +48,7 @@ export type EntitéJuridiqueIdentité = {
 export type EntitéJuridique = EntitéJuridiqueIdentité &
   Readonly<{
     activités: EntitéJuridiqueActivités[];
+    budgetFinance: EntitéJuridiqueBudgetFinance[];
   }>;
 
 export enum CatégorisationEnum {
