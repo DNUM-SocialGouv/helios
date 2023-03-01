@@ -7,22 +7,22 @@ export class AjouterBlocBudgetFinanceEJ1677495763184 implements MigrationInterfa
         annee INT NOT NULL,
         numero_finess_entite_juridique VARCHAR(9) NOT NULL,
         
-        depenses_titre_i_budget_global FLOAT,
-        depenses_titre_ii_budget_global FLOAT,
-        depenses_titre_iii_budget_global FLOAT,
-        depenses_titre_iv_budget_global FLOAT,
-        recettes_titre_i_budget_global FLOAT,
-        recettes_titre_ii_budget_global FLOAT,
-        recettes_titre_iii_budget_global FLOAT,
-        recettes_titre_iv_budget_global FLOAT,
+        depenses_titre_i_global FLOAT,
+        depenses_titre_ii_global FLOAT,
+        depenses_titre_iii_global FLOAT,
+        depenses_titre_iv_global FLOAT,
+        recettes_titre_i_global FLOAT,
+        recettes_titre_ii_global FLOAT,
+        recettes_titre_iii_global FLOAT,
+        recettes_titre_iv_global FLOAT,
 
-        depenses_titre_i_budget_h FLOAT,
-        depenses_titre_ii_budget_h FLOAT,
-        depenses_titre_iii_budget_h FLOAT,
-        depenses_titre_iv_budget_h FLOAT,
-        recettes_titre_i_budget_h FLOAT,
-        recettes_titre_ii_budget_h FLOAT,
-        recettes_titre_iii_budget_h FLOAT,
+        depenses_titre_i_h FLOAT,
+        depenses_titre_ii_h FLOAT,
+        depenses_titre_iii_h FLOAT,
+        depenses_titre_iv_h FLOAT,
+        recettes_titre_i_h FLOAT,
+        recettes_titre_ii_h FLOAT,
+        recettes_titre_iii_h FLOAT,
         
         resultat_net_comptable_san FLOAT,
         taux_de_caf_nette_san FLOAT,
@@ -35,6 +35,9 @@ export class AjouterBlocBudgetFinanceEJ1677495763184 implements MigrationInterfa
             REFERENCES entite_juridique (numero_finess_entite_juridique)
             ON DELETE CASCADE
       );
+
+      ALTER TYPE fichier_source
+          ADD VALUE IF NOT EXISTS 'quo_san_finance';
     `);
   }
 
