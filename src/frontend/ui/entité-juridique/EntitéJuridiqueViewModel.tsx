@@ -4,15 +4,18 @@ import { EntitéJuridique } from "../../../backend/métier/entities/entité-juri
 import { Wording } from "../../configuration/wording/Wording";
 import { StringFormater } from "../commun/StringFormater";
 import { EntitéJuridiqueActivitésViewModel } from "./bloc-activité/EntitéJuridiqueActivitésViewModel";
+import { EntitéJuridiqueBudgetFinanceViewModel } from "./bloc-budget-finance/EntitéJuridiqueBudgetFinanceViewModel";
 import { CatégorisationViewModel } from "./catégorisation/CatégorisationViewModel";
 
 export class EntitéJuridiqueViewModel {
   public catégorisationViewModel: CatégorisationViewModel;
   public entitéJuridiqueActivitéViewModel: EntitéJuridiqueActivitésViewModel;
+  public entitéJuridiqueBudgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;
 
   constructor(private readonly entitéJuridique: EntitéJuridique, private readonly wording: Wording) {
     this.catégorisationViewModel = new CatégorisationViewModel(entitéJuridique.catégorisation, wording);
     this.entitéJuridiqueActivitéViewModel = new EntitéJuridiqueActivitésViewModel(entitéJuridique.activités, wording);
+    this.entitéJuridiqueBudgetFinanceViewModel = new EntitéJuridiqueBudgetFinanceViewModel([], wording);
   }
 
   public get titreAccessible(): ReactElement {
