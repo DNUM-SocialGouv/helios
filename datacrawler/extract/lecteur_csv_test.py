@@ -22,7 +22,8 @@ from datacrawler.transform.équivalences_diamant_helios import (
     équivalences_diamant_ann_ms_tdp_et_ressources_humaines_helios,
     équivalences_diamant_ann_rpu_helios,
     équivalences_diamant_ann_sae_helios,
-    équivalences_diamant_men_pmsi_annuel_helios, colonnes_a_lire_bloc_budget_finance_entite_juridique,
+    équivalences_diamant_men_pmsi_annuel_helios,
+    colonnes_a_lire_bloc_budget_finance_entite_juridique,
     équivalences_diamant_quo_san_finance_buget_finance_helios,
 )
 
@@ -32,8 +33,7 @@ class TestLisLeFichierCsv:
         # GIVEN
         chemin_du_fichier = get_absolute_file_path("data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV")
         colonnes = colonnes_à_lire_bloc_activités_ann_errd_ej_et
-        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(
-            équivalences_diamant_ann_errd_ej_et_bloc_activités_helios)
+        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_errd_ej_et_bloc_activités_helios)
 
         # WHEN
         données = lis_le_fichier_csv(chemin_du_fichier, colonnes, types_des_colonnes)
@@ -43,8 +43,7 @@ class TestLisLeFichierCsv:
             données,
             pd.DataFrame(
                 {
-                    "Finess": ["010003598", "010003598", "010003598", "010003598", "010786259", "010786259",
-                               "111111111", "010789717"],
+                    "Finess": ["010003598", "010003598", "010003598", "010003598", "010786259", "010786259", "111111111", "010789717"],
                     "Année": [2018, 2019, 2020, 2021, 2018, 2018, 2020, 2019],
                     "Taux d'occupation des places autorisées en hébergement permanent": [
                         0.99779299847793,
@@ -94,20 +93,13 @@ class TestLisLeFichierCsv:
             données,
             pd.DataFrame(
                 {
-                    "Finess": ["010001261", "010001261", "010003598", "010003598", "010003598", "010003598",
-                               "111111111"],
+                    "Finess": ["010001261", "010001261", "010003598", "010003598", "010003598", "010003598", "111111111"],
                     "Année": [2019, 2018, 2021, 2020, 2019, 2018, 2019],
-                    "Durée moyenne de séjour/d'accompagnement": [5729.5, 6008.33, 2351.81, 2352.81, 2226.21, 2359.81,
-                                                                 0.0],
-                    "Taux de réalisation de l’activité Tout ESMS (Hors services CAMSP et CMPP)": [1.052, 1.0458, 0.8993,
-                                                                                                  0.8993, 1.0182,
-                                                                                                  0.8993, 0.7772],
+                    "Durée moyenne de séjour/d'accompagnement": [5729.5, 6008.33, 2351.81, 2352.81, 2226.21, 2359.81, 0.0],
+                    "Taux de réalisation de l’activité Tout ESMS (Hors services CAMSP et CMPP)": [1.052, 1.0458, 0.8993, 0.8993, 1.0182, 0.8993, 0.7772],
                     "Taux de réalisation de l’activité CAMSP et CMPP": [NaN, NaN, NaN, NaN, NaN, NaN, NaN],
-                    "Nombre moyen de journées d'absence des personnes accompagnées sur la période": [31.41, 32.11,
-                                                                                                     17.86, 17.86,
-                                                                                                     18.52, 17.86, NaN],
-                    "File active des personnes accompagnées sur la période": [59.0, 55.0, 121.0, 121.0, 119.0, 121.0,
-                                                                              101.0],
+                    "Nombre moyen de journées d'absence des personnes accompagnées sur la période": [31.41, 32.11, 17.86, 17.86, 18.52, 17.86, NaN],
+                    "File active des personnes accompagnées sur la période": [59.0, 55.0, 121.0, 121.0, 119.0, 121.0, 101.0],
                 }
             ),
         )
@@ -124,8 +116,7 @@ class TestLisLeFichierCsv:
         # THEN
         men_pmsi_annuel_attendu = pd.DataFrame(
             {
-                "Finess": ["010005239", "010005239", "010005239", "010005239", "010005239", "010005239", "111111111",
-                           "010786259", "010005239", "010786259"],
+                "Finess": ["010005239", "010005239", "010005239", "010005239", "010005239", "010005239", "111111111", "010786259", "010005239", "010786259"],
                 "Année": [2016, 2017, 2018, 2019, 2019, 2021, 2017, 2017, 2020, 2020],
                 "Nombre de séjours HTP/AMBU Médecine": [4.0, 1.0, 3.0, 4.0, 4.0, 4.0, 14.0, NaN, 4.0, 1.0],
                 "Nombre de séjours HTP/AMBU Obstétrique": [NaN, 10.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
@@ -133,8 +124,7 @@ class TestLisLeFichierCsv:
                 "Nombre de séjours HC Médecine": [231.0, 255.0, 232.0, 231.0, 231.0, 231.0, 2.0, NaN, 231.0, 255.0],
                 "Nombre de séjours HC Chirurgie": [9.0, 6.0, 10.0, 9.0, 9.0, 9.0, 8.0, NaN, 9.0, 6.0],
                 "Nombre de séjours HC Obstétrique": [NaN, 10.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 10.0],
-                "Nombre de journées hospit complète SSR": [NaN, 1074.0, 1103.0, 1087.0, NaN, NaN, NaN, NaN, NaN,
-                                                           1074.0],
+                "Nombre de journées hospit complète SSR": [NaN, 1074.0, 1103.0, 1087.0, NaN, NaN, NaN, NaN, NaN, 1074.0],
                 "Nombre de journées HTP SSR": [NaN, 100.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 100],
                 "Nb journées hospit complète PSY": [NaN, 200.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
                 "Nb journées HTP PSY": [NaN, 300.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 300],
@@ -157,11 +147,9 @@ class TestLisLeFichierCsv:
         # THEN
         ann_rpu_attendu = pd.DataFrame(
             {
-                "Finess": ["010005239", "010005239", "010005239", "010005239", "010005239", "010005239", "010005239",
-                           "2A0000154", "010786259"],
+                "Finess": ["010005239", "010005239", "010005239", "010005239", "010005239", "010005239", "010005239", "2A0000154", "010786259"],
                 "Année": [2021, 2020, 2019, 2018, 2018, 2017, 2016, 2017, 2020],
-                "Nombre de passages aux urgences": [25987.0, 23087.0, 23987.0, 24032.0, 42792.0, 10296.0, 10200.0,
-                                                    10296.0, 10000],
+                "Nombre de passages aux urgences": [25987.0, 23087.0, 23987.0, 24032.0, 42792.0, 10296.0, 10200.0, 10296.0, 10000],
             }
         )
         pd.testing.assert_frame_equal(
@@ -181,8 +169,7 @@ class TestLisLeFichierCsv:
         # THEN
         ann_sae_attendu = pd.DataFrame(
             {
-                "Finess": ["010005239", "010005239", "010005239", "010005239", "010005239", "2A0000154", "2A0000154",
-                           "2A0000154", "2A0000154", "2A0000154"],
+                "Finess": ["010005239", "010005239", "010005239", "010005239", "010005239", "2A0000154", "2A0000154", "2A0000154", "2A0000154", "2A0000154"],
                 "Année": [2020, 2019, 2018, 2017, 2016, 2020, 2019, 2018, 2017, 2016],
                 "Nombre de places de chirurgie": [7.0, 7, 7, 7, 7, 6, 6, 6, 6, 6],
                 "Nombre de places d'obstétrique": [1.0, 1, 1, 1, 1, NaN, NaN, NaN, NaN, NaN],
@@ -217,8 +204,7 @@ class TestLisLeFichierCsv:
         # GIVEN
         chemin_du_fichier = get_absolute_file_path("data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV")
         colonnes = colonnes_à_lire_ann_ms_tdp_et_cpom
-        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(
-            équivalences_diamant_ann_ms_tdp_et_cpom_helios)
+        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ms_tdp_et_cpom_helios)
 
         # WHEN
         données = lis_le_fichier_csv(chemin_du_fichier, colonnes, types_des_colonnes)
@@ -228,11 +214,9 @@ class TestLisLeFichierCsv:
             données,
             pd.DataFrame(
                 {
-                    "Finess": ["010001261", "010001261", "010003598", "010003598", "010003598", "010003598",
-                               "111111111"],
+                    "Finess": ["010001261", "010001261", "010003598", "010003598", "010003598", "010003598", "111111111"],
                     "Année": [2019, 2018, 2021, 2020, 2019, 2018, 2019],
-                    "Date d'entrée en vigueur du CPOM": [NaN, NaN, "21/03/2012", "21/03/2012", "21/03/2012", NaN,
-                                                         "01/01/2015"],
+                    "Date d'entrée en vigueur du CPOM": [NaN, NaN, "21/03/2012", "21/03/2012", "21/03/2012", NaN, "01/01/2015"],
                 }
             ),
         )
@@ -241,8 +225,7 @@ class TestLisLeFichierCsv:
         # GIVEN
         chemin_du_fichier = get_absolute_file_path("data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV")
         colonnes = colonnes_à_lire_bloc_ressources_humaines_ann_ms_tdp_et
-        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(
-            équivalences_diamant_ann_errd_ej_et_ressources_humaines_helios)
+        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_errd_ej_et_ressources_humaines_helios)
 
         # WHEN
         données_des_ressources_humaines_reçues = lis_le_fichier_csv(chemin_du_fichier, colonnes, types_des_colonnes)
@@ -354,8 +337,7 @@ class TestLisLeFichierCsv:
         # GIVEN
         chemin_du_fichier = get_absolute_file_path("data_set/diamant/ANN_CA_EJ_ET_2022_09_01.CSV")
         colonnes = colonnes_à_lire_bloc_ressources_humaines_ann_ca_ej_et
-        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(
-            équivalences_diamant_ann_ca_ej_et_ressources_humaines_helios)
+        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ca_ej_et_ressources_humaines_helios)
 
         # WHEN
         données_des_ressources_humaines_reçues = lis_le_fichier_csv(chemin_du_fichier, colonnes, types_des_colonnes)
@@ -383,8 +365,7 @@ class TestLisLeFichierCsv:
         # GIVEN
         chemin_du_fichier = get_absolute_file_path("data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV")
         colonnes = colonnes_à_lire_bloc_ressources_humaines_ann_errd_ej_et
-        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(
-            équivalences_diamant_ann_ms_tdp_et_ressources_humaines_helios)
+        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ms_tdp_et_ressources_humaines_helios)
 
         # WHEN
         données_des_ressources_humaines_reçues = lis_le_fichier_csv(chemin_du_fichier, colonnes, types_des_colonnes)
@@ -392,8 +373,7 @@ class TestLisLeFichierCsv:
         # THEN
         données_des_ressources_humaines_attendues = pd.DataFrame(
             {
-                "Finess": ["010003598", "010003598", "010003598", "010003598", "010786259", "010786259", "111111111",
-                           "010789717"],
+                "Finess": ["010003598", "010003598", "010003598", "010003598", "010786259", "010786259", "111111111", "010789717"],
                 "Année": [2018, 2019, 2020, 2021, 2018, 2018, 2020, 2019],
                 "Nombre ETP total réalisé ERRD": [
                     4.5499999999999998,
@@ -416,8 +396,7 @@ class TestLisLeFichierCsv:
         # GIVEN
         file_path = get_absolute_file_path("data_set/diamant/QUO_SAN_FINANCE_2023_01_20.CSV")
         colonnes = colonnes_a_lire_bloc_budget_finance_entite_juridique
-        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(
-            équivalences_diamant_quo_san_finance_buget_finance_helios)
+        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_quo_san_finance_buget_finance_helios)
 
         # WHEN
         données_des_quo_san_finance_reçues = lis_le_fichier_csv(file_path, colonnes, types_des_colonnes)
@@ -443,9 +422,10 @@ class TestLisLeFichierCsv:
                 "Recettes Titre II Budget H": [2968985.1598800002, 165723.65999999997, 5760820.9600800015, 164517.59999999998, 687793.28003999987],
                 "Recettes Titre III Budget H": [7910023.6198800011, 2042000.8801200003, 11185621.609919997, 2322363.7799999998, 1235483.1899999999],
                 "SAN Résultat net comptable": [24315.749399994413, -247544.77019999945, -487130.65967999981, -330217.60992000037, -119190.18984000012],
-                "SAN Taux de CAF nette": [2.1120000000000003E-2, -9.2399999999999982E-3, 0.00396, -5.7600000000000012E-3, 4.4400000000000004E-3],
+                "SAN Taux de CAF nette": [2.1120000000000003e-2, -9.2399999999999982e-3, 0.00396, -5.7600000000000012e-3, 4.4400000000000004e-3],
                 "Ration de dépendance financière": [0.44184000000000007, 0.34164, 0.72671999999999981, 0, 0.17579999999999998],
-            })
+            }
+        )
 
         pd.testing.assert_frame_equal(
             données_des_quo_san_finance_reçues,

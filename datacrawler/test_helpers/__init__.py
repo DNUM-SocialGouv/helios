@@ -18,14 +18,16 @@ from datacrawler.load.nom_des_tables import (
     TABLES_DES_RESSOURCES_HUMAINES_MÉDICO_SOCIAL,
     TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS,
     FichierSource,
-    TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES, TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE,
+    TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES,
+    TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE,
 )
 from datacrawler.transform.équivalences_diamant_helios import (
     index_des_activités,
     index_des_capacités_sanitaires,
     index_des_dates_d_entrée_en_vigueur_des_cpom,
     index_du_bloc_budget_et_finances,
-    index_du_bloc_ressources_humaines, index_du_bloc_budget_et_finances_entite_juridique,
+    index_du_bloc_ressources_humaines,
+    index_du_bloc_budget_et_finances_entite_juridique,
 )
 from datacrawler.transform.équivalences_finess_helios import (
     index_des_autorisations_sanitaires,
@@ -67,8 +69,7 @@ def sauvegarde_une_entité_juridique_en_base(numéro_finess: str, base_de_donné
     )
 
 
-def sauvegarde_un_établissement_en_base(numéro_finess_établissement: str, numéro_finess_entité_juridique: str,
-                                        base_de_données: Engine) -> None:
+def sauvegarde_un_établissement_en_base(numéro_finess_établissement: str, numéro_finess_entité_juridique: str, base_de_données: Engine) -> None:
     base_de_données.execute(
         f"""INSERT INTO etablissement_territorial (
     adresse_acheminement,
@@ -136,27 +137,23 @@ def sauvegarde_une_autorisation_sanitaire_en_base(autorisation: pd.DataFrame, ba
 
 def sauvegarde_une_autre_activité_sanitaire_en_base(autorisation: pd.DataFrame, base_de_données: Engine) -> None:
     autorisation.set_index(index_des_autres_activités_sanitaires).to_sql(
-        name=TABLES_DES_AUTRES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, con=base_de_données, index=True,
-        if_exists="append"
+        name=TABLES_DES_AUTRES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, con=base_de_données, index=True, if_exists="append"
     )
 
 
 def sauvegarde_un_équipement_matériel_lourd_en_base(autorisation: pd.DataFrame, base_de_données: Engine) -> None:
     autorisation.set_index(index_des_équipements_matériels_lourds).to_sql(
-        name=TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS, con=base_de_données, index=True,
-        if_exists="append"
+        name=TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS, con=base_de_données, index=True, if_exists="append"
     )
 
 
 def sauvegarde_une_reconnaissance_contractuelle_en_base(autorisation: pd.DataFrame, base_de_données: Engine) -> None:
     autorisation.set_index(index_des_reconnaissances_contractuelles).to_sql(
-        name=TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES, con=base_de_données, index=True,
-        if_exists="append"
+        name=TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES, con=base_de_données, index=True, if_exists="append"
     )
 
 
-def sauvegarde_une_date_de_mise_à_jour_de_fichier_source(date_de_mise_à_jour: str, fichier_source: FichierSource,
-                                                         base_de_données: Engine) -> None:
+def sauvegarde_une_date_de_mise_à_jour_de_fichier_source(date_de_mise_à_jour: str, fichier_source: FichierSource, base_de_données: Engine) -> None:
     base_de_données.execute(
         f"""INSERT INTO {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} (derniere_mise_a_jour, fichier)
             VALUES ('{date_de_mise_à_jour}', '{fichier_source.value}');"""
@@ -169,29 +166,25 @@ def sauvegarde_les_capacités_sanitaires_en_base(capacités_sanitaire: pd.DataFr
     )
 
 
-def sauvegarde_une_date_d_entrée_de_cpom_en_base(date_d_entree_en_vigueur_du_cpom: pd.DataFrame,
-                                                 base_de_données: Engine) -> None:
+def sauvegarde_une_date_d_entrée_de_cpom_en_base(date_d_entree_en_vigueur_du_cpom: pd.DataFrame, base_de_données: Engine) -> None:
     date_d_entree_en_vigueur_du_cpom.set_index(index_des_dates_d_entrée_en_vigueur_des_cpom).to_sql(
         name=TABLES_DES_CPOM, con=base_de_données, index=True, if_exists="append"
     )
 
 
-def sauvegarde_les_indicateurs_budget_et_finances_en_base(indicateurs_budget_et_finances: pd.DataFrame,
-                                                          base_de_données: Engine) -> None:
+def sauvegarde_les_indicateurs_budget_et_finances_en_base(indicateurs_budget_et_finances: pd.DataFrame, base_de_données: Engine) -> None:
     indicateurs_budget_et_finances.set_index(index_du_bloc_budget_et_finances).to_sql(
         name=TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL, con=base_de_données, index=True, if_exists="append"
     )
 
 
-def sauvegarde_les_indicateurs_budget_et_finances_entite_juridique_en_base(indicateurs_budget_finances_ej: pd.DataFrame,
-                                                                           base_de_données: Engine) -> None:
+def sauvegarde_les_indicateurs_budget_et_finances_entite_juridique_en_base(indicateurs_budget_finances_ej: pd.DataFrame, base_de_données: Engine) -> None:
     indicateurs_budget_finances_ej.set_index(index_du_bloc_budget_et_finances_entite_juridique).to_sql(
         name=TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE, con=base_de_données, index=True, if_exists="append"
     )
 
 
-def sauvegarde_les_indicateurs_ressources_humaines_en_base(indicateurs_ressources_humaines: pd.DataFrame,
-                                                           base_de_données: Engine) -> None:
+def sauvegarde_les_indicateurs_ressources_humaines_en_base(indicateurs_ressources_humaines: pd.DataFrame, base_de_données: Engine) -> None:
     indicateurs_ressources_humaines.set_index(index_du_bloc_ressources_humaines).to_sql(
         name=TABLES_DES_RESSOURCES_HUMAINES_MÉDICO_SOCIAL, con=base_de_données, index=True, if_exists="append"
     )

@@ -3,8 +3,7 @@ from typing import Dict, Optional
 
 from numpy import NaN
 
-from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, \
-    NUMÉRO_FINESS_ENTITÉ_JURIDIQUE
+from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE
 
 
 def helios_men_pmsi_annuel_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
@@ -38,8 +37,7 @@ def helios_ann_rpu_builder(champs_surchargés: Optional[Dict] = None) -> Dict[st
     return ann_rpu
 
 
-def helios_ann_errd_ej_et_budget_et_finances_builder(champs_surchargés: Optional[Dict] = None) -> Dict[
-    str, str | object]:
+def helios_ann_errd_ej_et_budget_et_finances_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
     budget_et_finances = {
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "annee": 2018,
@@ -155,8 +153,7 @@ def helios_autorisation_sanitaire_builder(champs_surchargés: Optional[Dict] = N
     return autorisation
 
 
-def helios_date_d_entrée_en_vigueur_du_cpom_builder(champs_surchargés: Optional[Dict] = None) -> Dict[
-    str, str | object]:
+def helios_date_d_entrée_en_vigueur_du_cpom_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
     date_d_entrée_du_cpom = {
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
         "date_d_entree_en_vigueur": date(2022, 1, 1),
@@ -167,8 +164,7 @@ def helios_date_d_entrée_en_vigueur_du_cpom_builder(champs_surchargés: Optiona
     return date_d_entrée_du_cpom
 
 
-def helios_équipement_matériel_lourd_sanitaire_builder(champs_surchargés: Optional[Dict] = None) -> Dict[
-    str, str | object]:
+def helios_équipement_matériel_lourd_sanitaire_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
     équipement_matériel_lourd = {
         "code_equipement_materiel_lourd": "05701",
         "date_autorisation": date(2022, 1, 1),
@@ -203,8 +199,7 @@ def helios_autre_activité_sanitaire_builder(champs_surchargés: Optional[Dict] 
     return autre_activité
 
 
-def helios_reconnaissance_contractuelle_sanitaire_builder(champs_surchargés: Optional[Dict] = None) -> Dict[
-    str, str | object]:
+def helios_reconnaissance_contractuelle_sanitaire_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
     reconnaissance_contractuelle = {
         "capacite_autorisee": 5,
         "code_activite": "R7",
@@ -274,12 +269,23 @@ def helios_quo_san_finance_budget_builder(champs_surchargés: Optional[Dict] = N
         "numero_finess_entite_juridique": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
         "annee": 2018,
         "depenses_titre_i_global": -100.0,
-        # "depenses_groupe_ii": -200.0,
-        # "depenses_groupe_iii": -300.0,
-        # "recettes_groupe_i": 150.0,
-        # "recettes_groupe_ii": 150.0,
-        # "recettes_groupe_iii": 350.0,
-        # "resultat_net_comptable": 50.0,
+        "depenses_titre_ii_global": -200.0,
+        "depenses_titre_iii_global": -300.0,
+        "depenses_titre_iv_global": -300.0,
+        "recettes_titre_i_global": 150.0,
+        "recettes_titre_ii_global": 150.0,
+        "recettes_titre_iii_global": 350.0,
+        "recettes_titre_iv_global": 50.0,
+        "depenses_titre_i_h": -100.0,
+        "depenses_titre_ii_h": -100.0,
+        "depenses_titre_iii_h": -200.0,
+        "depenses_titre_iv_h": -300.0,
+        "recettes_titre_i_h": 50.0,
+        "recettes_titre_ii_h": 150.0,
+        "recettes_titre_iii_h": 50.0,
+        "resultat_net_comptable_san": 0.10,
+        "taux_de_caf_nette_san": 0.01,
+        "ratio_dependance_financiere": 0.10,
     }
     if champs_surchargés:
         return {**budget_et_finances, **champs_surchargés}
