@@ -1,6 +1,7 @@
 import { EntitéJuridiqueBudgetFinance } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
+import { StringFormater } from "../../commun/StringFormater";
 
 export class EntitéJuridiqueBudgetFinanceViewModel {
   private budgetEtFinance: EntitéJuridiqueBudgetFinance[];
@@ -83,5 +84,13 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     const totalChargesPrincipales = chargesTitreIPrincipal + chargesTitreIIPrincipal + chargesTitreIIIPrincipal + chargesTitreIVPrincipal;
 
     return [totalChargesPrincipales, chargesTitreIPrincipal, chargesTitreIIPrincipal, chargesTitreIIIPrincipal, chargesTitreIVPrincipal];
+  }
+
+  annéesRangéesParAntéChronologie(): number[] {
+    return this.budgetEtFinance.map((budgetEtFinance) => budgetEtFinance.année).reverse();
+  }
+
+  public get dateMiseÀJour(): string {
+    return StringFormater.formateLaDate(this.budgetEtFinance[0].dateMiseÀJourSource as string);
   }
 }

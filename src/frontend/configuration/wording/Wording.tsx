@@ -194,6 +194,7 @@ export interface Wording {
   readonly TITRE_II: string;
   readonly TITRE_III: string;
   readonly TITRE_IV: string;
+  readonly COMPTE_DE_RÉSULTAT: string;
 
   // Bloc ressources humaines
   readonly TITRE_BLOC_RESSOURCES_HUMAINES: string;

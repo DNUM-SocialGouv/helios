@@ -16,6 +16,7 @@ export class RécupèreLEntitéJuridiqueUseCase {
 
     const mockBudgetFinance: EntitéJuridiqueBudgetFinance = {
       année: 2022,
+      dateMiseÀJourSource: "2022-12-12",
       recettesTitreIGlobal: 100,
       recettesTitreIIGlobal: 200,
       recettesTitreIIIGlobal: 300,

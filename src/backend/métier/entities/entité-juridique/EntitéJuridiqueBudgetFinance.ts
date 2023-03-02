@@ -1,4 +1,5 @@
 export type EntitéJuridiqueBudgetFinance = {
+  dateMiseÀJourSource: string;
   année: number;
 
   depensesTitreIGlobal: number | null;
