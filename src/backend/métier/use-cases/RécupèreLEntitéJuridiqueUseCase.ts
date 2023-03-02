@@ -15,6 +15,14 @@ export class RécupèreLEntitéJuridiqueUseCase {
     }
 
     const mockBudgetFinance: EntitéJuridiqueBudgetFinance = {
+      depensesTitreIIIPrincipale: -270,
+      depensesTitreIIPrincipale: -180,
+      depensesTitreIPrincipale: -90,
+      depensesTitreIVPrincipale: -360,
+      recettesTitreIIIPrincipale: 270,
+      recettesTitreIIPrincipale: 180,
+      recettesTitreIPrincipale: 90,
+      recettesTitreIVPrincipale: 360,
       année: 2022,
       dateMiseÀJourSource: "2022-12-12",
       recettesTitreIGlobal: 100,

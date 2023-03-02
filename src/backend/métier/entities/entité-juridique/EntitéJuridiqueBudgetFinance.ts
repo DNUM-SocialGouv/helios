@@ -17,4 +17,13 @@ export type EntitéJuridiqueBudgetFinance = {
   recettesTitreIH: number | null;
   recettesTitreIIH: number | null;
   recettesTitreIIIH: number | null;
+
+  depensesTitreIPrincipale: number | null;
+  depensesTitreIIPrincipale: number | null;
+  depensesTitreIIIPrincipale: number | null;
+  depensesTitreIVPrincipale: number | null;
+  recettesTitreIPrincipale: number | null;
+  recettesTitreIIPrincipale: number | null;
+  recettesTitreIIIPrincipale: number | null;
+  recettesTitreIVPrincipale: number | null;
 };
