@@ -1,10 +1,12 @@
 import { DataSource } from "typeorm";
 
 import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
+import { BudgetEtFinancesEntiteJuridiqueModel } from "../../../../../database/models/BudgetEtFinancesEntiteJuridiqueModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { CatégorisationEnum, EntitéJuridiqueIdentité } from "../../../métier/entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueActivités } from "../../../métier/entities/entité-juridique/EntitéJuridiqueActivités";
+import { EntitéJuridiqueBudgetFinance } from "../../../métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { EntitéJuridiqueNonTrouvée } from "../../../métier/entities/EntitéJuridiqueNonTrouvée";
 import { EntitéJuridiqueDeRattachement } from "../../../métier/entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement";
 import { EntitéJuridiqueLoader } from "../../../métier/gateways/EntitéJuridiqueLoader";
@@ -172,5 +174,13 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
         value: entitéJuridiqueModel.libelléStatutJuridique,
       },
     };
+  }
+
+  async chargeBudgetFinance(numéroFinessEntitéJuridique: string): Promise<EntitéJuridiqueBudgetFinance> {
+    // const budgetFinance = await (await this.orm).getRepository(BudgetEtFinancesEntiteJuridiqueModel).find({
+    //   where: { numéroFinessEntitéJuridique },
+    // });
+
+    return Promise.resolve(undefined);
   }
 }

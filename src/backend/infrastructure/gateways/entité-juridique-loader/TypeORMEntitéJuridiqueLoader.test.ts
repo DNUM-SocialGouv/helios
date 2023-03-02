@@ -1,6 +1,7 @@
 import { Repository } from "typeorm";
 
 import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
+import { BudgetEtFinancesEntiteJuridiqueModel } from "../../../../../database/models/BudgetEtFinancesEntiteJuridiqueModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { DateMiseÀJourFichierSourceModelTestBuilder } from "../../../../../database/test-builder/DateMiseÀJourFichierSourceModelTestBuilder";
@@ -16,11 +17,13 @@ describe("Entité juridique loader", () => {
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>;
   let entitéJuridiqueActivitésRepository: Repository<ActivitéSanitaireEntitéJuridiqueModel>;
   let dateMiseÀJourFichierSourceRepository: Repository<DateMiseÀJourFichierSourceModel>;
+  let budgetFinanceEntiteJuridiqueRepository: Repository<BudgetEtFinancesEntiteJuridiqueModel>;
 
   beforeAll(async () => {
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel);
     entitéJuridiqueActivitésRepository = (await orm).getRepository(ActivitéSanitaireEntitéJuridiqueModel);
     dateMiseÀJourFichierSourceRepository = (await orm).getRepository(DateMiseÀJourFichierSourceModel);
+    budgetFinanceEntiteJuridiqueRepository = (await orm).getRepository(BudgetEtFinancesEntiteJuridiqueModel);
   });
 
   beforeEach(async () => {
@@ -188,6 +191,56 @@ describe("Entité juridique loader", () => {
             value: 10,
           },
         },
+      ]);
+    });
+  });
+
+  describe("charge les budget et finance d'une entite juridique", () => {
+    it("charge les budget et finance par numero Finess EJ", async () => {
+      // GIVEN
+      await dateMiseÀJourFichierSourceRepository.insert([
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: "2022-05-14",
+          fichier: FichierSource,
+        })
+      ]);
+
+      const budgetFinanceEntiteJuridique = new BudgetEtFinancesEntiteJuridiqueModel();
+      budgetFinanceEntiteJuridique.numéroFinessEntitéJuridique = numéroFinessEntitéJuridique;
+      budgetFinanceEntiteJuridique.année = 2022;
+      budgetFinanceEntiteJuridique.depensesTitreIGlobal = -100;
+      budgetFinanceEntiteJuridique.depensesTitreIIGlobal = -200;
+      budgetFinanceEntiteJuridique.depensesTitreIIIGlobal = -300;
+      budgetFinanceEntiteJuridique.depensesTitreIVGlobal = -400;
+      budgetFinanceEntiteJuridique.recettesTitreIGlobal = 100;
+      budgetFinanceEntiteJuridique.recettesTitreIIGlobal = 200;
+      budgetFinanceEntiteJuridique.recettesTitreIIIGlobal = 300;
+      budgetFinanceEntiteJuridique.recettesTitreIVGlobal = 400;
+      budgetFinanceEntiteJuridique.depensesTitreIH = -10;
+      budgetFinanceEntiteJuridique.depensesTitreIIH = -20;
+      budgetFinanceEntiteJuridique.depensesTitreIIIH = -30;
+      budgetFinanceEntiteJuridique.depensesTitreIVH = -40;
+      budgetFinanceEntiteJuridique.recettesTitreIH = 10;
+      budgetFinanceEntiteJuridique.recettesTitreIIH = 20;
+      budgetFinanceEntiteJuridique.recettesTitreIIIH = 30;
+      budgetFinanceEntiteJuridique.resultatNetComptableSan = 0.1;
+      budgetFinanceEntiteJuridique.tauxDeCafNetteSan = 0.2;
+      budgetFinanceEntiteJuridique.ratioDependeanceFinanciere = 0.3;
+
+      await budgetFinanceEntiteJuridiqueRepository.insert(budgetFinanceEntiteJuridique)
+
+      const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
+
+      // WHEN
+      const budgetFinance = await typeOrmEntitéJuridiqueLoader.chargeBudgetFinance(numéroFinessEntitéJuridique);
+
+      // THEN
+      expect(budgetFinance).toStrictEqual([
+        {
+          année: 2022,
+          dateMiseÀJourSource:
+
+        }
       ]);
     });
   });
