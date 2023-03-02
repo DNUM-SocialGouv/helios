@@ -58,47 +58,6 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     );
   }
 
-  public entêtesColonnes() {
-    return [this.wording.CHARGES, this.wording.PRODUITS];
-  }
-
-  public libellés() {
-    return [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV];
-  }
-
-  public produitsPrincipaux(budgetEtFinance: EntitéJuridiqueBudgetFinance) {
-    const produitsTitreIPrincipal = Number(budgetEtFinance.recettesTitreIGlobal) - Number(budgetEtFinance.recettesTitreIH);
-    const produitsTitreIIPrincipal = Number(budgetEtFinance.recettesTitreIIGlobal) - Number(budgetEtFinance.recettesTitreIIH);
-    const produitsTitreIIIPrincipal = Number(budgetEtFinance.recettesTitreIIIGlobal) - Number(budgetEtFinance.recettesTitreIIIH);
-    const produitsTitreIVPrincipal = Number(budgetEtFinance.recettesTitreIVGlobal);
-
-    const totalProduitsPrincipaux = produitsTitreIPrincipal + produitsTitreIIPrincipal + produitsTitreIIIPrincipal + produitsTitreIVPrincipal;
-
-    return [totalProduitsPrincipaux, produitsTitreIPrincipal, produitsTitreIIPrincipal, produitsTitreIIIPrincipal, produitsTitreIVPrincipal];
-  }
-
-  public chargesPrincipales(budgetEtFinance: EntitéJuridiqueBudgetFinance) {
-    const chargesTitreIPrincipal = Number(budgetEtFinance.depensesTitreIGlobal) - Number(budgetEtFinance.depensesTitreIH);
-    const chargesTitreIIPrincipal = Number(budgetEtFinance.depensesTitreIIGlobal) - Number(budgetEtFinance.depensesTitreIIH);
-    const chargesTitreIIIPrincipal = Number(budgetEtFinance.depensesTitreIIIGlobal) - Number(budgetEtFinance.depensesTitreIIIH);
-    const chargesTitreIVPrincipal = Number(budgetEtFinance.depensesTitreIVGlobal) - Number(budgetEtFinance.depensesTitreIVH);
-
-    const totalChargesPrincipales = chargesTitreIPrincipal + chargesTitreIIPrincipal + chargesTitreIIIPrincipal + chargesTitreIVPrincipal;
-
-    return [totalChargesPrincipales, chargesTitreIPrincipal, chargesTitreIIPrincipal, chargesTitreIIIPrincipal, chargesTitreIVPrincipal];
-  }
-
-  public chargesAnnexes(budgetEtFinance: EntitéJuridiqueBudgetFinance) {
-    const chargesTitreIAnnexe = Number(budgetEtFinance.depensesTitreIH);
-    const chargesTitreIIAnnexe = Number(budgetEtFinance.depensesTitreIIH);
-    const chargesTitreIIIAnnexe = Number(budgetEtFinance.depensesTitreIIIH);
-    const chargesTitreIVAnnexe = Number(budgetEtFinance.depensesTitreIVH);
-
-    const totalChargesAnnexes = Number(budgetEtFinance.depensesTitreIH) + chargesTitreIIAnnexe + chargesTitreIIIAnnexe + chargesTitreIVAnnexe;
-
-    return [totalChargesAnnexes, chargesTitreIAnnexe, chargesTitreIIAnnexe, chargesTitreIIIAnnexe, chargesTitreIVAnnexe];
-  }
-
   annéesRangéesParAntéChronologie(): number[] {
     return this.budgetEtFinance.map((budgetEtFinance) => budgetEtFinance.année).reverse();
   }
@@ -107,11 +66,62 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     return StringFormater.formateLaDate(this.budgetEtFinance[0].dateMiseÀJourSource as string);
   }
 
-  public get dataGraphiqueCharges(budgetEtFinance: EntitéJuridiqueBudgetFinance): HistogrammeLine[] {
+  public dataGraphiqueCharges(budgetEtFinance: EntitéJuridiqueBudgetFinance): HistogrammeLine[] {
     return [
       {
         libellé: this.wording.TOTAL,
-        total: this.chargesPrincipales(budgetEtFinance)[0] + this.chargesAnnexes(budgetEtFinance)[0],
+        total: Number(budgetEtFinance.totalDepensesGlobal),
+        stacks: [Number(budgetEtFinance.totalDepensesPrincipale), Number(budgetEtFinance.totalDepensesH)],
+      },
+      {
+        libellé: this.wording.TITRE_I,
+        total: Number(budgetEtFinance.depensesTitreIGlobal),
+        stacks: [Number(budgetEtFinance.depensesTitreIPrincipale), Number(budgetEtFinance.depensesTitreIH)],
+      },
+      {
+        libellé: this.wording.TITRE_II,
+        total: Number(budgetEtFinance.depensesTitreIIGlobal),
+        stacks: [Number(budgetEtFinance.depensesTitreIIPrincipale), Number(budgetEtFinance.depensesTitreIIH)],
+      },
+      {
+        libellé: this.wording.TITRE_III,
+        total: Number(budgetEtFinance.depensesTitreIIIGlobal),
+        stacks: [Number(budgetEtFinance.depensesTitreIIIPrincipale), Number(budgetEtFinance.depensesTitreIIIH)],
+      },
+      {
+        libellé: this.wording.TITRE_IV,
+        total: Number(budgetEtFinance.depensesTitreIVGlobal),
+        stacks: [Number(budgetEtFinance.depensesTitreIVPrincipale), Number(budgetEtFinance.depensesTitreIVH)],
+      },
+    ];
+  }
+
+  public dataGraphiqueProduits(budgetEtFinance: EntitéJuridiqueBudgetFinance): HistogrammeLine[] {
+    return [
+      {
+        libellé: this.wording.TOTAL,
+        total: Number(budgetEtFinance.totalRecettesGlobal),
+        stacks: [Number(budgetEtFinance.totalRecettesPrincipale), Number(budgetEtFinance.totalRecettesH)],
+      },
+      {
+        libellé: this.wording.TITRE_I,
+        total: Number(budgetEtFinance.recettesTitreIGlobal),
+        stacks: [Number(budgetEtFinance.recettesTitreIPrincipale), Number(budgetEtFinance.recettesTitreIH)],
+      },
+      {
+        libellé: this.wording.TITRE_II,
+        total: Number(budgetEtFinance.recettesTitreIIGlobal),
+        stacks: [Number(budgetEtFinance.recettesTitreIIPrincipale), Number(budgetEtFinance.recettesTitreIIH)],
+      },
+      {
+        libellé: this.wording.TITRE_III,
+        total: Number(budgetEtFinance.recettesTitreIIIGlobal),
+        stacks: [Number(budgetEtFinance.recettesTitreIIIPrincipale), Number(budgetEtFinance.recettesTitreIIIH)],
+      },
+      {
+        libellé: this.wording.TITRE_IV,
+        total: Number(budgetEtFinance.recettesTitreIVGlobal),
+        stacks: [Number(budgetEtFinance.recettesTitreIVPrincipale)],
       },
     ];
   }

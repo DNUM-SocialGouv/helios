@@ -61,10 +61,11 @@ export const BlocBudgetFinance = ({ entitéJuridiqueBudgetFinanceViewModel }: Bl
           source={wording.CNSA}
         >
           <DeuxHistogrammeHorizontauxNew
-            entêtesDesAutresColonnes={entitéJuridiqueBudgetFinanceViewModel.entêtesColonnes()}
+            entêteDroite={wording.PRODUITS}
+            entêteGauche={wording.CHARGES}
             ratioLargeurSurHauteur={2}
-            valeursDeDroite={entitéJuridiqueBudgetFinanceViewModel.produitsPrincipaux(budgetEtFinance)}
-            valeursDeGauche={entitéJuridiqueBudgetFinanceViewModel.chargesPrincipales(budgetEtFinance)}
+            valeursDeDroite={entitéJuridiqueBudgetFinanceViewModel.dataGraphiqueProduits(budgetEtFinance)}
+            valeursDeGauche={entitéJuridiqueBudgetFinanceViewModel.dataGraphiqueCharges(budgetEtFinance)}
           />
         </IndicateurGraphique>
       </ul>

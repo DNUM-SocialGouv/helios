@@ -150,63 +150,56 @@ export type HistogrammeLine = {
   stacks: number[];
   total: number;
   libellé: string;
-  stacksColors: string[];
 };
 
 type HistogrammeHorizontalNewProps = {
   valeursDeGauche: HistogrammeLine[];
   valeursDeDroite: HistogrammeLine[];
-  libellés: string[];
   ratioLargeurSurHauteur: number;
-  entêtePremièreColonne: string;
-  entêtesDesAutresColonnes: string[];
-  annéesManquantes: number[] | string[];
-  nombreDAnnéeTotale: number;
+  entêteDroite: string;
+  entêteGauche: string;
 };
 
 export const DeuxHistogrammeHorizontauxNew = ({
   valeursDeGauche,
   valeursDeDroite,
   ratioLargeurSurHauteur,
-  entêtesDesAutresColonnes,
-}: HistogrammeHorizontalNewProps) : ReactElement => {
+  entêteDroite,
+  entêteGauche,
+}: HistogrammeHorizontalNewProps): ReactElement => {
+  const dataGauche: ChartData = {
+    labels: valeursDeGauche.map((data) => data.libellé),
+    datasets: [
+      {
+        data: valeursDeGauche.map((data) => Math.abs(data.total)),
+        datalabels: {
+          font: { weight: "bold" },
+          formatter: (valeurDeGauche) => StringFormater.formateLeMontantEnEuros(-valeurDeGauche),
+        },
+        maxBarThickness: 60,
+        type: "bar",
+        yAxisID: "y",
+      },
+    ],
+  };
 
   return (
     <>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 50%)",
-          }}
-        >
-          <div>
-            <Bar
-              // @ts-ignore
-              data={dataGauche}
-              options={optionsHistogrammeHorizontal(
-                ratioLargeurSurHauteur,
-                Math.max(...valeursDeGauche.map(Number), ...valeursDeDroite.map(Number)) * 1.1,
-                ["400"],
-                entêtesDesAutresColonnes[0]
-              )}
-              redraw={true}
-            />
-          </div>
-          <div>
-            <Bar
-              // @ts-ignore
-              data={dataDroite}
-              options={optionsHistogrammeHorizontal(
-                ratioLargeurSurHauteur,
-                Math.max(...valeursDeGauche.map(Number), ...valeursDeDroite.map(Number)),
-                ["400"],
-                entêtesDesAutresColonnes[1]
-              )}
-              redraw={true}
-            />
-          </div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(2, 50%)",
+        }}
+      >
+        <div>
+          <Bar
+            // @ts-ignore
+            data={dataGauche}
+            options={optionsHistogrammeHorizontal(ratioLargeurSurHauteur, Math.max(...dataGauche.datasets[0].data.map(Number)) * 1.1, ["400"], entêteGauche)}
+            redraw={true}
+          />
         </div>
-      )}
+      </div>
     </>
   );
 };
