@@ -34,6 +34,7 @@ import { AjoutAnneeAutorisationSanitaire1673015716622 } from "./migrations/16730
 import { AjoutCategorisationEntiteJuridique1675329220245 } from "./migrations/1675329220245-AjoutCategorisationEntiteJuridique";
 import { AjoutActiviteSanitaireEntiteJuridique1675695881364 } from "./migrations/1675695881364-AjoutActiviteSanitaireEntiteJuridique";
 import { RenommerColonnePassageUrgenceActivitesEntiteJuridique1675867340170 } from "./migrations/1675867340170-RenommerColonnePassageUrgenceActivitesEntiteJuridique";
+import { AjouterBlocBudgetFinanceEJ1677495763184 } from "./migrations/1677495763184-AjouterBlocBugetFinanceEJ";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "./models/ActivitéSanitaireEntitéJuridiqueModel";
 import { ActivitéSanitaireModel } from "./models/ActivitéSanitaireModel";
@@ -108,6 +109,7 @@ export default new DataSource({
     AjoutCategorisationEntiteJuridique1675329220245,
     AjoutActiviteSanitaireEntiteJuridique1675695881364,
     RenommerColonnePassageUrgenceActivitesEntiteJuridique1675867340170,
+    AjouterBlocBudgetFinanceEJ1677495763184,
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

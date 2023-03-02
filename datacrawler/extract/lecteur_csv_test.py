@@ -23,6 +23,8 @@ from datacrawler.transform.équivalences_diamant_helios import (
     équivalences_diamant_ann_rpu_helios,
     équivalences_diamant_ann_sae_helios,
     équivalences_diamant_men_pmsi_annuel_helios,
+    colonnes_a_lire_bloc_budget_finance_entite_juridique,
+    équivalences_diamant_quo_san_finance_buget_finance_helios,
 )
 
 
@@ -388,4 +390,44 @@ class TestLisLeFichierCsv:
         pd.testing.assert_frame_equal(
             données_des_ressources_humaines_reçues,
             données_des_ressources_humaines_attendues,
+        )
+
+    def test_lis_les_colonnes_demandées_du_fichier_csv_quo_san_finance(self) -> None:
+        # GIVEN
+        file_path = get_absolute_file_path("data_set/diamant/QUO_SAN_FINANCE_2023_01_20.CSV")
+        colonnes = colonnes_a_lire_bloc_budget_finance_entite_juridique
+        types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_quo_san_finance_buget_finance_helios)
+
+        # WHEN
+        données_des_quo_san_finance_reçues = lis_le_fichier_csv(file_path, colonnes, types_des_colonnes)
+
+        # THEN
+        données_des_quo_san_finance_attendues = pd.DataFrame(
+            {
+                "Finess EJ": ["010008407", "010008407", "010008407", "010008407", "010008407"],
+                "Année": [2022, 2021, 2020, 2019, 2017],
+                "Dépenses Titre I Budget global": [-38315470.489920005, -8855071.9100400023, -39714875.189880006, -6388587.3598799994, -5932308.5200800011],
+                "Dépenses Titre II Budget global": [-7262125.2101999987, -1702097.3504400002, -9714938.7098399997, -759828.06984000001, -406173.92999999999],
+                "Dépenses Titre III Budget global": [-6790615.4500799999, -2962020.9200400007, -8957482.4900400005, -3129326.580240001, -986091.39984000043],
+                "Dépenses Titre IV Budget global": [-4168425.8000400001, -1049973.68988, -5257981.4698800007, -384180.90995999996, -509295.81],
+                "Recettes Titre I Budget global": [39297655.289999999, 6782078.2599600004, 39941246.860080004, 5222760.6999600008, 5791403.0000400012],
+                "Recettes Titre II Budget global": [4285276.0098000001, 1365243.9400800001, 7469151.2101200018, 855732.74004000006, 687793.28003999987],
+                "Recettes Titre III Budget global": [11830378.95984, 5859482.2400399987, 15572406.209999997, 4011375.4700399996, 1235483.1899999999],
+                "Recettes Titre IV Budget global": [1147590.1700400002, 312202.34003999998, 175225.28976000001, 218494.86995999998, 0],
+                "Dépenses Titre I Budget H": [-30646439.360160001, -2048552.5303200001, -32983079.770080004, -2897982.9500399996, -5932308.5200800011],
+                "Dépenses Titre II Budget H": [-6752879.9099999983, -363095.84015999996, -9397192.7499599997, -242136.75, -406173.92999999999],
+                "Dépenses Titre III Budget H": [-4136149.9500000002, -1091266.33008, -5860999.4600399993, -888301.09020000021, -986091.39984000043],
+                "Dépenses Titre IV Budget H": [-2960018.25, -306963.91992000001, -4707133.2999600004, -349849.98995999998, -509295.81],
+                "Recettes Titre I Budget H": [33641669.91996, 1500318.9999600004, 35412455.59008, 1927353.7299600004, 5791403.0000400012],
+                "Recettes Titre II Budget H": [2968985.1598800002, 165723.65999999997, 5760820.9600800015, 164517.59999999998, 687793.28003999987],
+                "Recettes Titre III Budget H": [7910023.6198800011, 2042000.8801200003, 11185621.609919997, 2322363.7799999998, 1235483.1899999999],
+                "SAN Résultat net comptable": [24315.749399994413, -247544.77019999945, -487130.65967999981, -330217.60992000037, -119190.18984000012],
+                "SAN Taux de CAF nette": [2.1120000000000003e-2, -9.2399999999999982e-3, 0.00396, -5.7600000000000012e-3, 4.4400000000000004e-3],
+                "Ration de dépendance financière": [0.44184000000000007, 0.34164, 0.72671999999999981, 0, 0.17579999999999998],
+            }
+        )
+
+        pd.testing.assert_frame_equal(
+            données_des_quo_san_finance_reçues,
+            données_des_quo_san_finance_attendues,
         )

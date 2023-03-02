@@ -3,7 +3,7 @@ from typing import Dict, Optional
 
 from numpy import NaN
 
-from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE
+from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE
 
 
 def helios_men_pmsi_annuel_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
@@ -262,3 +262,31 @@ def helios_ressources_humaines_builder(champs_surchargés: Optional[Dict] = None
     if champs_surchargés:
         return {**ressources_humaines, **champs_surchargés}
     return ressources_humaines
+
+
+def helios_quo_san_finance_budget_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+    budget_et_finances = {
+        "numero_finess_entite_juridique": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
+        "annee": 2018,
+        "depenses_titre_i_global": -100.0,
+        "depenses_titre_ii_global": -200.0,
+        "depenses_titre_iii_global": -300.0,
+        "depenses_titre_iv_global": -300.0,
+        "recettes_titre_i_global": 150.0,
+        "recettes_titre_ii_global": 150.0,
+        "recettes_titre_iii_global": 350.0,
+        "recettes_titre_iv_global": 50.0,
+        "depenses_titre_i_h": -100.0,
+        "depenses_titre_ii_h": -100.0,
+        "depenses_titre_iii_h": -200.0,
+        "depenses_titre_iv_h": -300.0,
+        "recettes_titre_i_h": 50.0,
+        "recettes_titre_ii_h": 150.0,
+        "recettes_titre_iii_h": 50.0,
+        "resultat_net_comptable_san": 0.10,
+        "taux_de_caf_nette_san": 0.01,
+        "ratio_dependance_financiere": 0.10,
+    }
+    if champs_surchargés:
+        return {**budget_et_finances, **champs_surchargés}
+    return budget_et_finances

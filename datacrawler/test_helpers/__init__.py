@@ -19,6 +19,7 @@ from datacrawler.load.nom_des_tables import (
     TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS,
     FichierSource,
     TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES,
+    TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE,
 )
 from datacrawler.transform.équivalences_diamant_helios import (
     index_des_activités,
@@ -26,6 +27,7 @@ from datacrawler.transform.équivalences_diamant_helios import (
     index_des_dates_d_entrée_en_vigueur_des_cpom,
     index_du_bloc_budget_et_finances,
     index_du_bloc_ressources_humaines,
+    index_du_bloc_budget_et_finances_entite_juridique,
 )
 from datacrawler.transform.équivalences_finess_helios import (
     index_des_autorisations_sanitaires,
@@ -119,6 +121,7 @@ def supprime_les_données_des_tables(base_de_données: Engine) -> None:
     base_de_données.execute(f"DELETE FROM {TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_CPOM};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL};")
+    base_de_données.execute(f"DELETE FROM {TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_RESSOURCES_HUMAINES_MÉDICO_SOCIAL};")
 
 
@@ -172,6 +175,12 @@ def sauvegarde_une_date_d_entrée_de_cpom_en_base(date_d_entree_en_vigueur_du_cp
 def sauvegarde_les_indicateurs_budget_et_finances_en_base(indicateurs_budget_et_finances: pd.DataFrame, base_de_données: Engine) -> None:
     indicateurs_budget_et_finances.set_index(index_du_bloc_budget_et_finances).to_sql(
         name=TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL, con=base_de_données, index=True, if_exists="append"
+    )
+
+
+def sauvegarde_les_indicateurs_budget_et_finances_entite_juridique_en_base(indicateurs_budget_finances_ej: pd.DataFrame, base_de_données: Engine) -> None:
+    indicateurs_budget_finances_ej.set_index(index_du_bloc_budget_et_finances_entite_juridique).to_sql(
+        name=TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE, con=base_de_données, index=True, if_exists="append"
     )
 
 

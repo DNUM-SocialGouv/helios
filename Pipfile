@@ -24,7 +24,7 @@ freezegun = "1.2.1"
 matplotlib = "3.5.2"
 pytest-cov = "4.0.0"
 pytest-watcher = "==0.2.1"
-black = {extras = ["d"], version = "==23.1.0"}
+black = "==23.1.0"
 
 [requires]
 python_full_version = "3.10.8" # Conserver la même version que celle dans helios-ci.yml
@@ -41,6 +41,7 @@ populate_autorisation_et_capacite_medico_social = 'python -m datacrawler.ajoute_
 populate_autorisation_et_capacite_sanitaire = 'python -m datacrawler.ajoute_les_autorisations_des_établissements_sanitaires'
 populate_cpom_medico_social = 'python -m datacrawler.ajoute_le_cpom_des_établissements_médico_sociaux'
 populate_budget_et_finances_medico_social = 'python -m datacrawler.ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux'
+populate_budget_et_finances_entite_juridique = 'python -m datacrawler.ajoute_le_bloc_budget_et_finances_des_entite_juridiques'
 populate_ressoures_humaines_medico_social = 'python -m datacrawler.ajoute_le_bloc_ressources_humaines_des_établissements_médico_sociaux'
 populate_activites_sanitaire_entites_juridiques = 'python -m datacrawler.agrégation_activité_sanitaire'
 test = 'pytest --tb=short'
