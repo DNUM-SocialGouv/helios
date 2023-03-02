@@ -54,26 +54,22 @@ class TestSauvegardeBudgetFinanceDesEntitesJuridiques:
             "ratio_dependance_financiere": [0.44184000000000007, 0.34164, 0.72671999999999981, 0],
         })
 
-        print(bloc_budget_finance_enregistrees.info())
-        print(bloc_budget_finance_attendues.info())
-
         pd.testing.assert_frame_equal(bloc_budget_finance_enregistrees.sort_index(axis=1),
                                       bloc_budget_finance_attendues.sort_index(axis=1))
 
     @freeze_time("2023-01-14")
     def test_supprime_les_données_existantes_avant_de_sauvegarder_les_données_en_base(self) -> None:
         # GIVEN
+        numero_finess_existant_en_base = "590000741"
+
         quo_san_finance_file_path = get_absolute_file_path("data_set/diamant/QUO_SAN_FINANCE_2023_01_20.CSV")
-        sauvegarde_une_entité_juridique_en_base("590000741", base_de_données_test)
+        sauvegarde_une_entité_juridique_en_base(numero_finess_existant_en_base, base_de_données_test)
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
 
         sauvegarde_les_indicateurs_budget_et_finances_entite_juridique_en_base(
-            pd.DataFrame(
-                [
-                    helios_quo_san_finance_budget_builder(
-                        {"numero_finess_entite_juridique": "590000741"}),
-                ]
-            ),
+            pd.DataFrame([
+                    helios_quo_san_finance_budget_builder({"numero_finess_entite_juridique": numero_finess_existant_en_base}),
+                ]),
             base_de_données_test,
         )
 
@@ -83,7 +79,8 @@ class TestSauvegardeBudgetFinanceDesEntitesJuridiques:
 
         # THEN
         bloc_budget_finance_enregistrees = pd.read_sql_query(
-            f"SELECT * from {TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE} WHERE numero_finess_entite_juridique = '590000741'",
+            f"SELECT * from {TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE} "
+            f"WHERE numero_finess_entite_juridique = '{numero_finess_existant_en_base}'",
             base_de_données_test
         )
 

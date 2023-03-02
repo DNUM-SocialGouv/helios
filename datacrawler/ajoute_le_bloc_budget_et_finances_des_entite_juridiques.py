@@ -1,3 +1,4 @@
+import os
 from logging import Logger
 
 from sqlalchemy.engine import Engine, create_engine
@@ -7,6 +8,7 @@ from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_diamant
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_entites_juridiques_de_la_base
+from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_diamant
 from datacrawler.load.nom_des_tables import TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE, FichierSource
 from datacrawler.transform.entite_juridique.budget_finance.transforme_les_donnees_budget_finance_entite_juridique import \
     transform_les_donnees_budget_finance_entite_juridique
@@ -48,4 +50,9 @@ if __name__ == "__main__":
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_données_helios = create_engine(variables_d_environnement["DATABASE_URL"])
 
-    ajoute_le_bloc_budget_et_finances_des_entite_juridiques(base_de_données_helios)
+    fichiers = os.listdir(variables_d_environnement["DIAMANT_DATA_PATH"])
+    chemin_local_du_fichier_quo_san_finance = os.path.join(
+        variables_d_environnement["DIAMANT_DATA_PATH"], trouve_le_nom_du_fichier_diamant(fichiers, "QUO_SAN_FINANCE", logger_helios)
+    )
+
+    ajoute_le_bloc_budget_et_finances_des_entite_juridiques(chemin_local_du_fichier_quo_san_finance, base_de_données_helios, logger_helios)
