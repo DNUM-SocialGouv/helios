@@ -2,7 +2,7 @@ import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
-import { DeuxHistogrammeHorizontaux } from "../../commun/Graphique/DeuxHistogrammesHorizontaux";
+import { DeuxHistogrammeHorizontaux, DeuxHistogrammeHorizontauxNew } from "../../commun/Graphique/DeuxHistogrammesHorizontaux";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { Select } from "../../commun/Select/Select";
@@ -60,12 +60,8 @@ export const BlocBudgetFinance = ({ entitéJuridiqueBudgetFinanceViewModel }: Bl
           nomDeLIndicateur={<>{wording.COMPTE_DE_RÉSULTAT}</>}
           source={wording.CNSA}
         >
-          <DeuxHistogrammeHorizontaux
-            annéesManquantes={entitéJuridiqueBudgetFinanceViewModel.lesAnnéesManquantesDuCompteDeRésultat()}
-            entêtePremièreColonne={wording.TITRE_BUDGÉTAIRE}
+          <DeuxHistogrammeHorizontauxNew
             entêtesDesAutresColonnes={entitéJuridiqueBudgetFinanceViewModel.entêtesColonnes()}
-            libellés={entitéJuridiqueBudgetFinanceViewModel.libellés()}
-            nombreDAnnéeTotale={5}
             ratioLargeurSurHauteur={2}
             valeursDeDroite={entitéJuridiqueBudgetFinanceViewModel.produitsPrincipaux(budgetEtFinance)}
             valeursDeGauche={entitéJuridiqueBudgetFinanceViewModel.chargesPrincipales(budgetEtFinance)}

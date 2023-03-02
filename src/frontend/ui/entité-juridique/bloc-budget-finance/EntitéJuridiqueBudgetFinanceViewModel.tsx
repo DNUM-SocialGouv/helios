@@ -1,11 +1,13 @@
 import { EntitéJuridiqueBudgetFinance } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
+import { HistogrammeLine } from "../../commun/Graphique/DeuxHistogrammesHorizontaux";
 import { StringFormater } from "../../commun/StringFormater";
 
 export class EntitéJuridiqueBudgetFinanceViewModel {
   private budgetEtFinance: EntitéJuridiqueBudgetFinance[];
   private wording: Wording;
+  public NOMBRE_ANNEES = 5;
 
   constructor(budgetFinance: EntitéJuridiqueBudgetFinance[], wording: Wording) {
     this.wording = wording;
@@ -25,7 +27,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   }
 
   public lesAnnéesManquantesDuCompteDeRésultat(): number[] {
-    return annéesManquantes(this.lesAnnéesEffectivesDuCompteDeRésultat());
+    return annéesManquantes(this.lesAnnéesEffectivesDuCompteDeRésultat(), this.NOMBRE_ANNEES);
   }
 
   private lesAnnéesEffectivesDuCompteDeRésultat(): number[] {
@@ -86,11 +88,31 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     return [totalChargesPrincipales, chargesTitreIPrincipal, chargesTitreIIPrincipal, chargesTitreIIIPrincipal, chargesTitreIVPrincipal];
   }
 
+  public chargesAnnexes(budgetEtFinance: EntitéJuridiqueBudgetFinance) {
+    const chargesTitreIAnnexe = Number(budgetEtFinance.depensesTitreIH);
+    const chargesTitreIIAnnexe = Number(budgetEtFinance.depensesTitreIIH);
+    const chargesTitreIIIAnnexe = Number(budgetEtFinance.depensesTitreIIIH);
+    const chargesTitreIVAnnexe = Number(budgetEtFinance.depensesTitreIVH);
+
+    const totalChargesAnnexes = Number(budgetEtFinance.depensesTitreIH) + chargesTitreIIAnnexe + chargesTitreIIIAnnexe + chargesTitreIVAnnexe;
+
+    return [totalChargesAnnexes, chargesTitreIAnnexe, chargesTitreIIAnnexe, chargesTitreIIIAnnexe, chargesTitreIVAnnexe];
+  }
+
   annéesRangéesParAntéChronologie(): number[] {
     return this.budgetEtFinance.map((budgetEtFinance) => budgetEtFinance.année).reverse();
   }
 
   public get dateMiseÀJour(): string {
     return StringFormater.formateLaDate(this.budgetEtFinance[0].dateMiseÀJourSource as string);
+  }
+
+  public get dataGraphiqueCharges(budgetEtFinance: EntitéJuridiqueBudgetFinance): HistogrammeLine[] {
+    return [
+      {
+        libellé: this.wording.TOTAL,
+        total: this.chargesPrincipales(budgetEtFinance)[0] + this.chargesAnnexes(budgetEtFinance)[0],
+      },
+    ];
   }
 }

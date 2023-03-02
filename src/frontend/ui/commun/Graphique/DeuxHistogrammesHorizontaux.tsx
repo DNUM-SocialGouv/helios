@@ -145,3 +145,68 @@ export const DeuxHistogrammeHorizontaux = ({
     </>
   );
 };
+
+export type HistogrammeLine = {
+  stacks: number[];
+  total: number;
+  libellé: string;
+  stacksColors: string[];
+};
+
+type HistogrammeHorizontalNewProps = {
+  valeursDeGauche: HistogrammeLine[];
+  valeursDeDroite: HistogrammeLine[];
+  libellés: string[];
+  ratioLargeurSurHauteur: number;
+  entêtePremièreColonne: string;
+  entêtesDesAutresColonnes: string[];
+  annéesManquantes: number[] | string[];
+  nombreDAnnéeTotale: number;
+};
+
+export const DeuxHistogrammeHorizontauxNew = ({
+  valeursDeGauche,
+  valeursDeDroite,
+  ratioLargeurSurHauteur,
+  entêtesDesAutresColonnes,
+}: HistogrammeHorizontalNewProps) : ReactElement => {
+
+  return (
+    <>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(2, 50%)",
+          }}
+        >
+          <div>
+            <Bar
+              // @ts-ignore
+              data={dataGauche}
+              options={optionsHistogrammeHorizontal(
+                ratioLargeurSurHauteur,
+                Math.max(...valeursDeGauche.map(Number), ...valeursDeDroite.map(Number)) * 1.1,
+                ["400"],
+                entêtesDesAutresColonnes[0]
+              )}
+              redraw={true}
+            />
+          </div>
+          <div>
+            <Bar
+              // @ts-ignore
+              data={dataDroite}
+              options={optionsHistogrammeHorizontal(
+                ratioLargeurSurHauteur,
+                Math.max(...valeursDeGauche.map(Number), ...valeursDeDroite.map(Number)),
+                ["400"],
+                entêtesDesAutresColonnes[1]
+              )}
+              redraw={true}
+            />
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
