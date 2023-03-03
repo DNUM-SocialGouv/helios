@@ -68,4 +68,59 @@ describe("La récupération d’une entité juridique", () => {
     // THEN
     expect(entitéJuridique.activités).toStrictEqual(mockActivités);
   });
+
+  it("récupère toutes les budget et finance pour un Entité Juridique", async () => {
+    // GIVEN
+    const mockBudgetFinance = {
+      année: 2022,
+      dateMiseÀJourSource: "2022-12-12",
+
+      depensesTitreIIIPrincipale: -270,
+      depensesTitreIIPrincipale: -180,
+      depensesTitreIPrincipale: -90,
+      depensesTitreIVPrincipale: -360,
+      totalDepensesPrincipale: -900,
+
+      recettesTitreIIIPrincipale: 270,
+      recettesTitreIIPrincipale: 180,
+      recettesTitreIPrincipale: 90,
+      recettesTitreIVPrincipale: 360,
+      totalRecettesPrincipale: 900,
+
+      recettesTitreIGlobal: 100,
+      recettesTitreIIGlobal: 200,
+      recettesTitreIIIGlobal: 300,
+      recettesTitreIVGlobal: 400,
+      totalRecettesGlobal: 1000,
+
+      depensesTitreIGlobal: -100,
+      depensesTitreIIGlobal: -200,
+      depensesTitreIIIGlobal: -300,
+      depensesTitreIVGlobal: -400,
+      totalDepensesGlobal: -1000,
+
+      recettesTitreIH: 10,
+      recettesTitreIIH: 20,
+      recettesTitreIIIH: 30,
+      totalRecettesH: 60,
+
+      depensesTitreIH: -10,
+      depensesTitreIIH: -20,
+      depensesTitreIIIH: -30,
+      depensesTitreIVH: -40,
+      totalDepensesH: -100,
+    };
+
+    const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
+      chargeBudgetFinance: jest.fn().mockResolvedValue(mockBudgetFinance),
+    });
+
+    const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
+
+    // WHEN
+    const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
+
+    // THEN
+    expect(entitéJuridique.budgetFinance).toStrictEqual(mockBudgetFinance);
+  });
 });
