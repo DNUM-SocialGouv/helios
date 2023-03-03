@@ -66,63 +66,62 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     return StringFormater.formateLaDate(this.budgetEtFinance[0].dateMiseÀJourSource as string);
   }
 
-  public dataGraphiqueCharges(budgetEtFinance: EntitéJuridiqueBudgetFinance): HistogrammeLine[] {
-    return [
-      {
-        libellé: this.wording.TOTAL,
-        total: Number(budgetEtFinance.totalDepensesGlobal),
-        stacks: [Number(budgetEtFinance.totalDepensesPrincipale), Number(budgetEtFinance.totalDepensesH)],
-      },
-      {
-        libellé: this.wording.TITRE_I,
-        total: Number(budgetEtFinance.depensesTitreIGlobal),
-        stacks: [Number(budgetEtFinance.depensesTitreIPrincipale), Number(budgetEtFinance.depensesTitreIH)],
-      },
-      {
-        libellé: this.wording.TITRE_II,
-        total: Number(budgetEtFinance.depensesTitreIIGlobal),
-        stacks: [Number(budgetEtFinance.depensesTitreIIPrincipale), Number(budgetEtFinance.depensesTitreIIH)],
-      },
-      {
-        libellé: this.wording.TITRE_III,
-        total: Number(budgetEtFinance.depensesTitreIIIGlobal),
-        stacks: [Number(budgetEtFinance.depensesTitreIIIPrincipale), Number(budgetEtFinance.depensesTitreIIIH)],
-      },
-      {
-        libellé: this.wording.TITRE_IV,
-        total: Number(budgetEtFinance.depensesTitreIVGlobal),
-        stacks: [Number(budgetEtFinance.depensesTitreIVPrincipale), Number(budgetEtFinance.depensesTitreIVH)],
-      },
-    ];
+  public dataGraphiqueCharges(budgetEtFinance: EntitéJuridiqueBudgetFinance): HistogrammeLine {
+    return {
+      labels: [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
+      totals: [
+        budgetEtFinance.totalDepensesGlobal,
+        budgetEtFinance.depensesTitreIGlobal,
+        budgetEtFinance.depensesTitreIIGlobal,
+        budgetEtFinance.depensesTitreIIIGlobal,
+        budgetEtFinance.depensesTitreIVGlobal,
+      ].map(Number),
+      stacks: [
+        {
+          data: [
+            budgetEtFinance.totalDepensesPrincipale,
+            budgetEtFinance.depensesTitreIPrincipale,
+            budgetEtFinance.depensesTitreIIPrincipale,
+            budgetEtFinance.depensesTitreIIIPrincipale,
+            budgetEtFinance.depensesTitreIVPrincipale,
+          ].map(Number),
+          backgroundColor: ["blue"],
+        },
+        {
+          data: [
+            budgetEtFinance.totalDepensesH,
+            budgetEtFinance.depensesTitreIH,
+            budgetEtFinance.depensesTitreIIH,
+            budgetEtFinance.depensesTitreIIIH,
+            budgetEtFinance.depensesTitreIVH,
+          ].map(Number),
+          backgroundColor: ["orange"],
+        },
+      ],
+    };
   }
 
-  public dataGraphiqueProduits(budgetEtFinance: EntitéJuridiqueBudgetFinance): HistogrammeLine[] {
-    return [
-      {
-        libellé: this.wording.TOTAL,
-        total: Number(budgetEtFinance.totalRecettesGlobal),
-        stacks: [Number(budgetEtFinance.totalRecettesPrincipale), Number(budgetEtFinance.totalRecettesH)],
-      },
-      {
-        libellé: this.wording.TITRE_I,
-        total: Number(budgetEtFinance.recettesTitreIGlobal),
-        stacks: [Number(budgetEtFinance.recettesTitreIPrincipale), Number(budgetEtFinance.recettesTitreIH)],
-      },
-      {
-        libellé: this.wording.TITRE_II,
-        total: Number(budgetEtFinance.recettesTitreIIGlobal),
-        stacks: [Number(budgetEtFinance.recettesTitreIIPrincipale), Number(budgetEtFinance.recettesTitreIIH)],
-      },
-      {
-        libellé: this.wording.TITRE_III,
-        total: Number(budgetEtFinance.recettesTitreIIIGlobal),
-        stacks: [Number(budgetEtFinance.recettesTitreIIIPrincipale), Number(budgetEtFinance.recettesTitreIIIH)],
-      },
-      {
-        libellé: this.wording.TITRE_IV,
-        total: Number(budgetEtFinance.recettesTitreIVGlobal),
-        stacks: [Number(budgetEtFinance.recettesTitreIVPrincipale)],
-      },
-    ];
+  public dataGraphiqueProduits(budgetEtFinance: EntitéJuridiqueBudgetFinance): HistogrammeLine {
+    return {
+      labels: [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
+      stacks: [
+        {
+          data: [
+            budgetEtFinance.totalRecettesPrincipale,
+            budgetEtFinance.recettesTitreIPrincipale,
+            budgetEtFinance.recettesTitreIIPrincipale,
+            budgetEtFinance.recettesTitreIIIPrincipale,
+            budgetEtFinance.recettesTitreIVPrincipale,
+          ].map(Number),
+          backgroundColor: ["blue"],
+        },
+        {
+          data: [budgetEtFinance.totalRecettesH, budgetEtFinance.recettesTitreIH, budgetEtFinance.recettesTitreIIH, budgetEtFinance.recettesTitreIIIH].map(
+            Number
+          ),
+          backgroundColor: ["orange"],
+        },
+      ],
+    };
   }
 }

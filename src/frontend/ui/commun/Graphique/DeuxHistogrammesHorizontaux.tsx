@@ -1,4 +1,5 @@
 import { Chart as ChartJS, ChartData } from "chart.js";
+import { Context } from "chartjs-plugin-datalabels";
 import { ReactElement } from "react";
 import { Bar } from "react-chartjs-2";
 
@@ -147,40 +148,45 @@ export const DeuxHistogrammeHorizontaux = ({
 };
 
 export type HistogrammeLine = {
-  stacks: number[];
-  total: number;
-  libellé: string;
+  labels: string[];
+  stacks: { data: number[]; backgroundColor: string[] }[];
+  totals: number[];
 };
 
 type HistogrammeHorizontalNewProps = {
-  valeursDeGauche: HistogrammeLine[];
-  valeursDeDroite: HistogrammeLine[];
+  valeursDeGauche: HistogrammeLine;
+  valeursDeDroite: HistogrammeLine;
   ratioLargeurSurHauteur: number;
   entêteDroite: string;
   entêteGauche: string;
 };
 
-export const DeuxHistogrammeHorizontauxNew = ({
-  valeursDeGauche,
-  valeursDeDroite,
-  ratioLargeurSurHauteur,
-  entêteDroite,
-  entêteGauche,
-}: HistogrammeHorizontalNewProps): ReactElement => {
+export const DeuxHistogrammeHorizontauxNew = ({ valeursDeGauche, entêteGauche }: HistogrammeHorizontalNewProps): ReactElement => {
+  /*
+   * TODO : - Couleur des stack
+   *  - Changer le format de la donnée en entrée pour mieux correspondre à chartData
+   *  - Faire les deux histogrammes
+   *  - Refacto
+   *  - Reprendre les options (tailles..)
+   *  - Gestion des années
+   *  - Transcription
+   *  - Gestion de la taille max
+   * */
+  const couleurIdentifiant = "#000";
+  const couleurDelAbscisse = "#161616";
+
+  const valeurMax = Math.max(...valeursDeGauche.totals.map(Math.abs));
+
   const dataGauche: ChartData = {
-    labels: valeursDeGauche.map((data) => data.libellé),
-    datasets: [
-      {
-        data: valeursDeGauche.map((data) => Math.abs(data.total)),
-        datalabels: {
-          font: { weight: "bold" },
-          formatter: (valeurDeGauche) => StringFormater.formateLeMontantEnEuros(-valeurDeGauche),
-        },
+    labels: valeursDeGauche.labels,
+    datasets: valeursDeGauche.stacks.map((stack) => {
+      return {
+        ...stack,
+        data: stack.data.map(Math.abs),
         maxBarThickness: 60,
-        type: "bar",
-        yAxisID: "y",
-      },
-    ],
+        datalabels: { font: { weight: "bold" }, labels: { title: { color: couleurIdentifiant } } },
+      };
+    }),
   };
 
   return (
@@ -195,8 +201,57 @@ export const DeuxHistogrammeHorizontauxNew = ({
           <Bar
             // @ts-ignore
             data={dataGauche}
-            options={optionsHistogrammeHorizontal(ratioLargeurSurHauteur, Math.max(...dataGauche.datasets[0].data.map(Number)) * 1.1, ["400"], entêteGauche)}
-            redraw={true}
+            options={{
+              animation: false,
+              indexAxis: "y",
+              scales: {
+                x: {
+                  max: valeurMax * 1.2,
+                  stacked: true,
+                  grid: {
+                    display: false,
+                    drawBorder: false,
+                  },
+                  min: 0,
+                  position: "top",
+                  ticks: { display: false },
+                  title: {
+                    align: "start",
+                    color: couleurIdentifiant,
+                    display: entêteGauche !== "",
+                    font: { weight: "bold" },
+                    text: entêteGauche,
+                  },
+                },
+                y: {
+                  stacked: true,
+                  grid: {
+                    drawBorder: false,
+                    drawOnChartArea: false,
+                    drawTicks: false,
+                  },
+                  ticks: {
+                    color: couleurDelAbscisse,
+                    // @ts-ignore
+                    font: { weight: ["400"] },
+                    padding: 8,
+                  },
+                },
+              },
+              plugins: {
+                datalabels: {
+                  align: "end",
+                  anchor: "end",
+                  font: { family: "Marianne", size: 14 },
+                  formatter: (_: string, _context: Context): string => {
+                    const sum = valeursDeGauche.totals[_context.dataIndex];
+                    return _context.datasetIndex === _context.chart.data.datasets.length - 1 ? StringFormater.formateLeMontantEnEuros(sum) : "";
+                  },
+                },
+                legend: { display: false },
+                tooltip: { enabled: false },
+              },
+            }}
           />
         </div>
       </div>

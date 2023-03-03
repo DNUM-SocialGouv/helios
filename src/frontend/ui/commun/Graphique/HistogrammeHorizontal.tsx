@@ -50,7 +50,6 @@ export function optionsHistogrammeHorizontal(
     },
     scales: {
       x: {
-        stacked: true,
         grid: {
           display: false,
           drawBorder: false,
