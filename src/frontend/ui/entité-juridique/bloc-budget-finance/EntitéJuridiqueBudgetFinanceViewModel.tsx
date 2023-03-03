@@ -85,7 +85,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
             budgetEtFinance.depensesTitreIIIPrincipale,
             budgetEtFinance.depensesTitreIVPrincipale,
           ].map(Number),
-          backgroundColor: ["blue"],
+          backgroundColor: ["#2F4077", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"],
         },
         {
           data: [
@@ -95,7 +95,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
             budgetEtFinance.depensesTitreIIIH,
             budgetEtFinance.depensesTitreIVH,
           ].map(Number),
-          backgroundColor: ["orange"],
+          backgroundColor: ["#FA794A", "#FB9175", "#FB9175", "#FB9175"],
         },
       ],
     };
@@ -120,13 +120,13 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
             budgetEtFinance.recettesTitreIIIPrincipale,
             budgetEtFinance.recettesTitreIVPrincipale,
           ].map(Number),
-          backgroundColor: ["blue"],
+          backgroundColor: ["#2F4077", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"],
         },
         {
           data: [budgetEtFinance.totalRecettesH, budgetEtFinance.recettesTitreIH, budgetEtFinance.recettesTitreIIH, budgetEtFinance.recettesTitreIIIH, 0].map(
             Number
           ),
-          backgroundColor: ["orange"],
+          backgroundColor: ["#FA794A", "#FB9175", "#FB9175", "#FB9175"],
         },
       ],
     };

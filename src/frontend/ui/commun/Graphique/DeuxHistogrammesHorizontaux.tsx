@@ -161,6 +161,24 @@ type HistogrammeHorizontalNewProps = {
   entêteGauche: string;
 };
 
+function buildChartData(valeurs: HistogrammeLine): ChartData {
+  const couleurIdentifiant = "#000";
+  return {
+    labels: valeurs.labels,
+    datasets: valeurs.stacks.map((stack) => {
+      return {
+        ...stack,
+        data: stack.data.map(Math.abs),
+        barThickness: 30,
+        datalabels: {
+          font: { weight: "bold" },
+          labels: { title: { color: couleurIdentifiant } },
+        },
+      };
+    }),
+  };
+}
+
 export const DeuxHistogrammeHorizontauxNew = ({
   valeursDeGauche,
   valeursDeDroite,
@@ -176,37 +194,13 @@ export const DeuxHistogrammeHorizontauxNew = ({
    *  - Gestion des années
    *  - Transcription
    *  - ok : Gestion de la taille max
+   *  - ok : Gestion des couleurs
    * */
-  const couleurIdentifiant = "#000";
+  const dataGauche: ChartData = buildChartData(valeursDeGauche);
+  const dataDroite: ChartData = buildChartData(valeursDeDroite);
+  const optionsGauche = getOptionsHistogramme(entêteGauche, valeursDeGauche.totals);
+  const optionsDroite = getOptionsHistogramme(entêteDroite, valeursDeDroite.totals);
 
-  const dataGauche: ChartData = {
-    labels: valeursDeGauche.labels,
-    datasets: valeursDeGauche.stacks.map((stack) => {
-      return {
-        ...stack,
-        data: stack.data.map(Math.abs),
-        maxBarThickness: 60,
-        datalabels: { font: { weight: "bold" }, labels: { title: { color: couleurIdentifiant } } },
-      };
-    }),
-  };
-
-  const dataDroite: ChartData = {
-    labels: valeursDeDroite.labels,
-    datasets: valeursDeDroite.stacks.map((stack) => {
-      return {
-        ...stack,
-        data: stack.data.map(Math.abs),
-        maxBarThickness: 60,
-        datalabels: { font: { weight: "bold" }, labels: { title: { color: couleurIdentifiant } } },
-      };
-    }),
-  };
-
-  const valeurMaxGauche = Math.max(...valeursDeGauche.totals.map(Math.abs));
-  const optionsGauche = getOptionsHistogramme(valeurMaxGauche, entêteGauche, valeursDeGauche.totals);
-  const valeurMaxDroite = Math.max(...valeursDeDroite.totals.map(Math.abs));
-  const optionsDroite = getOptionsHistogramme(valeurMaxDroite, entêteDroite, valeursDeDroite.totals);
   return (
     <>
       <div
@@ -216,29 +210,24 @@ export const DeuxHistogrammeHorizontauxNew = ({
         }}
       >
         <div>
-          <Bar
-            // @ts-ignore
-            data={dataGauche}
-            // @ts-ignore
-            options={optionsGauche}
-          />
+          {/*
+           // @ts-ignore */}
+          <Bar data={dataGauche} options={optionsGauche} />
         </div>
         <div>
-          <Bar
-            // @ts-ignore
-            data={dataDroite}
-            // @ts-ignore
-            options={optionsDroite}
-          />
+          {/*
+          // @ts-ignore */}
+          <Bar data={dataDroite} options={optionsDroite} />
         </div>
       </div>
     </>
   );
 };
 
-function getOptionsHistogramme(valeurMax: number, entête: string, totals: number[]) {
+function getOptionsHistogramme(entête: string, totals: number[]) {
   const couleurIdentifiant = "#000";
   const couleurDelAbscisse = "#161616";
+  const valeurMax = Math.max(...totals.map(Math.abs));
 
   return {
     animation: false,
@@ -271,7 +260,6 @@ function getOptionsHistogramme(valeurMax: number, entête: string, totals: numbe
         },
         ticks: {
           color: couleurDelAbscisse,
-          // @ts-ignore
           font: { weight: ["400"] },
           padding: 8,
         },
