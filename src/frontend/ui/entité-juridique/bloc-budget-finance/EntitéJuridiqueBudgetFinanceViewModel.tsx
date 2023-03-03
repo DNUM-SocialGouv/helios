@@ -66,66 +66,58 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     return StringFormater.formateLaDate(this.budgetEtFinance[0].dateMiseÀJourSource as string);
   }
 
-  public dataGraphiqueCharges(budgetEtFinance: EntitéJuridiqueBudgetFinance): HistogrammeLine {
+  public dataGraphiqueCharges(budget: EntitéJuridiqueBudgetFinance): HistogrammeLine {
     return {
       labels: [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
       totals: [
-        budgetEtFinance.totalDepensesGlobal,
-        budgetEtFinance.depensesTitreIGlobal,
-        budgetEtFinance.depensesTitreIIGlobal,
-        budgetEtFinance.depensesTitreIIIGlobal,
-        budgetEtFinance.depensesTitreIVGlobal,
+        budget.totalDepensesGlobal,
+        budget.depensesTitreIGlobal,
+        budget.depensesTitreIIGlobal,
+        budget.depensesTitreIIIGlobal,
+        budget.depensesTitreIVGlobal,
       ].map(Number),
       stacks: [
         {
           data: [
-            budgetEtFinance.totalDepensesPrincipale,
-            budgetEtFinance.depensesTitreIPrincipale,
-            budgetEtFinance.depensesTitreIIPrincipale,
-            budgetEtFinance.depensesTitreIIIPrincipale,
-            budgetEtFinance.depensesTitreIVPrincipale,
+            budget.totalDepensesPrincipale,
+            budget.depensesTitreIPrincipale,
+            budget.depensesTitreIIPrincipale,
+            budget.depensesTitreIIIPrincipale,
+            budget.depensesTitreIVPrincipale,
           ].map(Number),
           backgroundColor: ["#2F4077", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"],
         },
         {
-          data: [
-            budgetEtFinance.totalDepensesH,
-            budgetEtFinance.depensesTitreIH,
-            budgetEtFinance.depensesTitreIIH,
-            budgetEtFinance.depensesTitreIIIH,
-            budgetEtFinance.depensesTitreIVH,
-          ].map(Number),
+          data: [budget.totalDepensesH, budget.depensesTitreIH, budget.depensesTitreIIH, budget.depensesTitreIIIH, budget.depensesTitreIVH].map(Number),
           backgroundColor: ["#FA794A", "#FB9175", "#FB9175", "#FB9175"],
         },
       ],
     };
   }
 
-  public dataGraphiqueProduits(budgetEtFinance: EntitéJuridiqueBudgetFinance): HistogrammeLine {
+  public dataGraphiqueProduits(budget: EntitéJuridiqueBudgetFinance): HistogrammeLine {
     return {
       labels: [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
       totals: [
-        budgetEtFinance.totalRecettesGlobal,
-        budgetEtFinance.recettesTitreIGlobal,
-        budgetEtFinance.recettesTitreIIGlobal,
-        budgetEtFinance.recettesTitreIIIGlobal,
-        budgetEtFinance.recettesTitreIVGlobal,
+        budget.totalRecettesGlobal,
+        budget.recettesTitreIGlobal,
+        budget.recettesTitreIIGlobal,
+        budget.recettesTitreIIIGlobal,
+        budget.recettesTitreIVGlobal,
       ].map(Number),
       stacks: [
         {
           data: [
-            budgetEtFinance.totalRecettesPrincipale,
-            budgetEtFinance.recettesTitreIPrincipale,
-            budgetEtFinance.recettesTitreIIPrincipale,
-            budgetEtFinance.recettesTitreIIIPrincipale,
-            budgetEtFinance.recettesTitreIVPrincipale,
+            budget.totalRecettesPrincipale,
+            budget.recettesTitreIPrincipale,
+            budget.recettesTitreIIPrincipale,
+            budget.recettesTitreIIIPrincipale,
+            budget.recettesTitreIVPrincipale,
           ].map(Number),
           backgroundColor: ["#2F4077", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"],
         },
         {
-          data: [budgetEtFinance.totalRecettesH, budgetEtFinance.recettesTitreIH, budgetEtFinance.recettesTitreIIH, budgetEtFinance.recettesTitreIIIH, 0].map(
-            Number
-          ),
+          data: [budget.totalRecettesH, budget.recettesTitreIH, budget.recettesTitreIIH, budget.recettesTitreIIIH, 0].map(Number),
           backgroundColor: ["#FA794A", "#FB9175", "#FB9175", "#FB9175"],
         },
       ],

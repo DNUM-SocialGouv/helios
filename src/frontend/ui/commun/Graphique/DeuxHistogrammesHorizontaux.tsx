@@ -156,9 +156,10 @@ export type HistogrammeLine = {
 type HistogrammeHorizontalNewProps = {
   valeursDeGauche: HistogrammeLine;
   valeursDeDroite: HistogrammeLine;
-  ratioLargeurSurHauteur: number;
   entêteDroite: string;
   entêteGauche: string;
+  annéesManquantes: number[] | string[];
+  nombreDAnnéeTotale: number;
 };
 
 function buildChartData(valeurs: HistogrammeLine): ChartData {
@@ -184,6 +185,8 @@ export const DeuxHistogrammeHorizontauxNew = ({
   valeursDeDroite,
   entêteGauche,
   entêteDroite,
+  annéesManquantes,
+  nombreDAnnéeTotale = 5,
 }: HistogrammeHorizontalNewProps): ReactElement => {
   /*
    * TODO : - Couleur des stack
@@ -191,11 +194,14 @@ export const DeuxHistogrammeHorizontauxNew = ({
    *  - ok : Faire les deux histogrammes
    *  - Refacto
    *  - ok : Reprendre les options (tailles..)
-   *  - Gestion des années
+   *  - ok : Gestion des années
    *  - Transcription
    *  - ok : Gestion de la taille max
    *  - ok : Gestion des couleurs
+   *  - Ajout des tests
    * */
+  const { wording } = useDependencies();
+
   const dataGauche: ChartData = buildChartData(valeursDeGauche);
   const dataDroite: ChartData = buildChartData(valeursDeDroite);
   const optionsGauche = getOptionsHistogramme(entêteGauche, valeursDeGauche.totals);
@@ -203,23 +209,26 @@ export const DeuxHistogrammeHorizontauxNew = ({
 
   return (
     <>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(2, 50%)",
-        }}
-      >
-        <div>
-          {/*
+      {annéesManquantes.length < nombreDAnnéeTotale && (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(2, 50%)",
+          }}
+        >
+          <div>
+            {/*
            // @ts-ignore */}
-          <Bar data={dataGauche} options={optionsGauche} />
-        </div>
-        <div>
-          {/*
+            <Bar data={dataGauche} options={optionsGauche} />
+          </div>
+          <div>
+            {/*
           // @ts-ignore */}
-          <Bar data={dataDroite} options={optionsDroite} />
+            <Bar data={dataDroite} options={optionsDroite} />
+          </div>
         </div>
-      </div>
+      )}
+      {annéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
     </>
   );
 };
