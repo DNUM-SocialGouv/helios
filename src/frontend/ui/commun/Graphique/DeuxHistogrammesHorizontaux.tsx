@@ -161,21 +161,23 @@ type HistogrammeHorizontalNewProps = {
   entêteGauche: string;
 };
 
-export const DeuxHistogrammeHorizontauxNew = ({ valeursDeGauche, entêteGauche }: HistogrammeHorizontalNewProps): ReactElement => {
+export const DeuxHistogrammeHorizontauxNew = ({
+  valeursDeGauche,
+  valeursDeDroite,
+  entêteGauche,
+  entêteDroite,
+}: HistogrammeHorizontalNewProps): ReactElement => {
   /*
    * TODO : - Couleur des stack
-   *  - Changer le format de la donnée en entrée pour mieux correspondre à chartData
-   *  - Faire les deux histogrammes
+   *  - ok : Changer le format de la donnée en entrée pour mieux correspondre à chartData
+   *  - ok : Faire les deux histogrammes
    *  - Refacto
-   *  - Reprendre les options (tailles..)
+   *  - ok : Reprendre les options (tailles..)
    *  - Gestion des années
    *  - Transcription
-   *  - Gestion de la taille max
+   *  - ok : Gestion de la taille max
    * */
   const couleurIdentifiant = "#000";
-  const couleurDelAbscisse = "#161616";
-
-  const valeurMax = Math.max(...valeursDeGauche.totals.map(Math.abs));
 
   const dataGauche: ChartData = {
     labels: valeursDeGauche.labels,
@@ -189,6 +191,22 @@ export const DeuxHistogrammeHorizontauxNew = ({ valeursDeGauche, entêteGauche }
     }),
   };
 
+  const dataDroite: ChartData = {
+    labels: valeursDeDroite.labels,
+    datasets: valeursDeDroite.stacks.map((stack) => {
+      return {
+        ...stack,
+        data: stack.data.map(Math.abs),
+        maxBarThickness: 60,
+        datalabels: { font: { weight: "bold" }, labels: { title: { color: couleurIdentifiant } } },
+      };
+    }),
+  };
+
+  const valeurMaxGauche = Math.max(...valeursDeGauche.totals.map(Math.abs));
+  const optionsGauche = getOptionsHistogramme(valeurMaxGauche, entêteGauche, valeursDeGauche.totals);
+  const valeurMaxDroite = Math.max(...valeursDeDroite.totals.map(Math.abs));
+  const optionsDroite = getOptionsHistogramme(valeurMaxDroite, entêteDroite, valeursDeDroite.totals);
   return (
     <>
       <div
@@ -201,60 +219,79 @@ export const DeuxHistogrammeHorizontauxNew = ({ valeursDeGauche, entêteGauche }
           <Bar
             // @ts-ignore
             data={dataGauche}
-            options={{
-              animation: false,
-              indexAxis: "y",
-              scales: {
-                x: {
-                  max: valeurMax * 1.2,
-                  stacked: true,
-                  grid: {
-                    display: false,
-                    drawBorder: false,
-                  },
-                  min: 0,
-                  position: "top",
-                  ticks: { display: false },
-                  title: {
-                    align: "start",
-                    color: couleurIdentifiant,
-                    display: entêteGauche !== "",
-                    font: { weight: "bold" },
-                    text: entêteGauche,
-                  },
-                },
-                y: {
-                  stacked: true,
-                  grid: {
-                    drawBorder: false,
-                    drawOnChartArea: false,
-                    drawTicks: false,
-                  },
-                  ticks: {
-                    color: couleurDelAbscisse,
-                    // @ts-ignore
-                    font: { weight: ["400"] },
-                    padding: 8,
-                  },
-                },
-              },
-              plugins: {
-                datalabels: {
-                  align: "end",
-                  anchor: "end",
-                  font: { family: "Marianne", size: 14 },
-                  formatter: (_: string, _context: Context): string => {
-                    const sum = valeursDeGauche.totals[_context.dataIndex];
-                    return _context.datasetIndex === _context.chart.data.datasets.length - 1 ? StringFormater.formateLeMontantEnEuros(sum) : "";
-                  },
-                },
-                legend: { display: false },
-                tooltip: { enabled: false },
-              },
-            }}
+            // @ts-ignore
+            options={optionsGauche}
+          />
+        </div>
+        <div>
+          <Bar
+            // @ts-ignore
+            data={dataDroite}
+            // @ts-ignore
+            options={optionsDroite}
           />
         </div>
       </div>
     </>
   );
 };
+
+function getOptionsHistogramme(valeurMax: number, entête: string, totals: number[]) {
+  const couleurIdentifiant = "#000";
+  const couleurDelAbscisse = "#161616";
+
+  return {
+    animation: false,
+    indexAxis: "y",
+    scales: {
+      x: {
+        max: valeurMax * 1.2,
+        stacked: true,
+        grid: {
+          display: false,
+          drawBorder: false,
+        },
+        min: 0,
+        position: "top",
+        ticks: { display: false },
+        title: {
+          align: "start",
+          color: couleurIdentifiant,
+          display: entête !== "",
+          font: { weight: "bold" },
+          text: entête,
+        },
+      },
+      y: {
+        stacked: true,
+        grid: {
+          drawBorder: false,
+          drawOnChartArea: false,
+          drawTicks: false,
+        },
+        ticks: {
+          color: couleurDelAbscisse,
+          // @ts-ignore
+          font: { weight: ["400"] },
+          padding: 8,
+        },
+      },
+    },
+    plugins: {
+      datalabels: {
+        align: "end",
+        anchor: "end",
+        font: {
+          family: "Marianne",
+          size: 14,
+        },
+        formatter: (_: string, _context: Context): string => {
+          const sum = totals[_context.dataIndex];
+          return _context.datasetIndex === _context.chart.data.datasets.length - 1 ? StringFormater.formateLeMontantEnEuros(sum) : "";
+        },
+      },
+      legend: { display: false },
+      tooltip: { enabled: false },
+    },
+  };
+}

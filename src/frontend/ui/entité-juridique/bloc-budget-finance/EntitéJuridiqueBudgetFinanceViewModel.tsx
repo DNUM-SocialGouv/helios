@@ -104,6 +104,13 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   public dataGraphiqueProduits(budgetEtFinance: EntitéJuridiqueBudgetFinance): HistogrammeLine {
     return {
       labels: [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
+      totals: [
+        budgetEtFinance.totalRecettesGlobal,
+        budgetEtFinance.recettesTitreIGlobal,
+        budgetEtFinance.recettesTitreIIGlobal,
+        budgetEtFinance.recettesTitreIIIGlobal,
+        budgetEtFinance.recettesTitreIVGlobal,
+      ].map(Number),
       stacks: [
         {
           data: [
@@ -116,7 +123,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
           backgroundColor: ["blue"],
         },
         {
-          data: [budgetEtFinance.totalRecettesH, budgetEtFinance.recettesTitreIH, budgetEtFinance.recettesTitreIIH, budgetEtFinance.recettesTitreIIIH].map(
+          data: [budgetEtFinance.totalRecettesH, budgetEtFinance.recettesTitreIH, budgetEtFinance.recettesTitreIIH, budgetEtFinance.recettesTitreIIIH, 0].map(
             Number
           ),
           backgroundColor: ["orange"],
