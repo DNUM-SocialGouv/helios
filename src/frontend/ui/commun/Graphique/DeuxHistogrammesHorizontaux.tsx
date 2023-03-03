@@ -170,7 +170,7 @@ function buildChartData(valeurs: HistogrammeLine): ChartData {
       return {
         ...stack,
         data: stack.data.map(Math.abs),
-        barThickness: 30,
+        barThickness: 25,
         datalabels: {
           font: { weight: "bold" },
           labels: { title: { color: couleurIdentifiant } },
@@ -235,7 +235,7 @@ export const DeuxHistogrammeHorizontauxNew = ({
         identifiantUnique="compte-de-resultat-cf"
         identifiants={[entêteGauche, entêteDroite]}
         libellés={valeursDeDroite.labels}
-        valeurs={[valeursDeGauche.totals, valeursDeDroite.totals]}
+        valeurs={[valeursDeGauche.totals.map(StringFormater.formateLeMontantEnEuros), valeursDeDroite.totals.map(StringFormater.formateLeMontantEnEuros)]}
       />
     </>
   );
@@ -271,7 +271,6 @@ function getOptionsHistogramme(entête: string, totals: number[]) {
       y: {
         stacked: true,
         grid: {
-          drawBorder: false,
           drawOnChartArea: false,
           drawTicks: false,
         },
