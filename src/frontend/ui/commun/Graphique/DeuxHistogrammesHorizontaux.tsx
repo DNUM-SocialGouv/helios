@@ -195,7 +195,7 @@ export const DeuxHistogrammeHorizontauxNew = ({
    *  - Refacto
    *  - ok : Reprendre les options (tailles..)
    *  - ok : Gestion des années
-   *  - Transcription
+   *  - ok : Transcription
    *  - ok : Gestion de la taille max
    *  - ok : Gestion des couleurs
    *  - Ajout des tests
@@ -229,6 +229,14 @@ export const DeuxHistogrammeHorizontauxNew = ({
         </div>
       )}
       {annéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
+      <Transcription
+        disabled={annéesManquantes.length === nombreDAnnéeTotale}
+        entêteLibellé="Compte de résultat - CF"
+        identifiantUnique="compte-de-resultat-cf"
+        identifiants={[entêteGauche, entêteDroite]}
+        libellés={valeursDeDroite.labels}
+        valeurs={[valeursDeGauche.totals, valeursDeDroite.totals]}
+      />
     </>
   );
 };
