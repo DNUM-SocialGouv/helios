@@ -198,11 +198,13 @@ describe("Entité juridique loader", () => {
   describe("charge les budget et finance d'une entite juridique", () => {
     it("charge les budget et finance par numero Finess EJ", async () => {
       // GIVEN
+      await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }));
+
       await dateMiseÀJourFichierSourceRepository.insert([
         DateMiseÀJourFichierSourceModelTestBuilder.crée({
-          dernièreMiseÀJour: "2022-05-14",
-          fichier: FichierSource,
-        })
+          dernièreMiseÀJour: "2023-01-14",
+          fichier: FichierSource.DIAMANT_QUO_SAN_FINANCE,
+        }),
       ]);
 
       const budgetFinanceEntiteJuridique = new BudgetEtFinancesEntiteJuridiqueModel();
@@ -227,7 +229,7 @@ describe("Entité juridique loader", () => {
       budgetFinanceEntiteJuridique.tauxDeCafNetteSan = 0.2;
       budgetFinanceEntiteJuridique.ratioDependeanceFinanciere = 0.3;
 
-      await budgetFinanceEntiteJuridiqueRepository.insert(budgetFinanceEntiteJuridique)
+      await budgetFinanceEntiteJuridiqueRepository.insert(budgetFinanceEntiteJuridique);
 
       const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
 
@@ -238,9 +240,37 @@ describe("Entité juridique loader", () => {
       expect(budgetFinance).toStrictEqual([
         {
           année: 2022,
-          dateMiseÀJourSource:
-
-        }
+          dateMiseÀJourSource: "2023-01-14",
+          depensesTitreIGlobal: -100,
+          depensesTitreIIGlobal: -200,
+          depensesTitreIIIGlobal: -300,
+          depensesTitreIVGlobal: -400,
+          totalDepensesGlobal: -1000,
+          recettesTitreIGlobal: 100,
+          recettesTitreIIGlobal: 200,
+          recettesTitreIIIGlobal: 300,
+          recettesTitreIVGlobal: 400,
+          totalRecettesGlobal: 1000,
+          depensesTitreIH: -10,
+          depensesTitreIIH: -20,
+          depensesTitreIIIH: -30,
+          depensesTitreIVH: -40,
+          totalDepensesH: -100,
+          recettesTitreIH: 10,
+          recettesTitreIIH: 20,
+          recettesTitreIIIH: 30,
+          totalRecettesH: 60,
+          depensesTitreIPrincipale: -90,
+          depensesTitreIIPrincipale: -180,
+          depensesTitreIIIPrincipale: -270,
+          depensesTitreIVPrincipale: -360,
+          totalDepensesPrincipale: -900,
+          recettesTitreIPrincipale: 90,
+          recettesTitreIIPrincipale: 180,
+          recettesTitreIIIPrincipale: 270,
+          recettesTitreIVPrincipale: 400,
+          totalRecettesPrincipale: 940,
+        },
       ]);
     });
   });
