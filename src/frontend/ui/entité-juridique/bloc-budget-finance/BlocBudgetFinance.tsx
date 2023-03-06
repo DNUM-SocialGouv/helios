@@ -2,11 +2,11 @@ import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
-import { DeuxHistogrammeHorizontaux, DeuxHistogrammeHorizontauxNew } from "../../commun/Graphique/DeuxHistogrammesHorizontaux";
+import { DeuxHistogrammesHorizontauxNew } from "../../commun/Graphique/DeuxHistogrammesHorizontaux";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { Select } from "../../commun/Select/Select";
-import { ContenuCompteDeRésultat } from "../../établissement-territorial-médico-social/InfoBulle/ContenuCompteDeRésultat";
+import { ContenuCompteDeRésultatEJ } from "../info-bulle/ContenuCompteDeRésultatEJ";
 import { EntitéJuridiqueBudgetFinanceViewModel } from "./EntitéJuridiqueBudgetFinanceViewModel";
 
 type BlocBudgetFinanceProps = Readonly<{
@@ -54,13 +54,13 @@ export const BlocBudgetFinance = ({ entitéJuridiqueBudgetFinanceViewModel }: Bl
               setAnnéeEnCours={setAnnéeEnCours}
             />
           }
-          contenuInfoBulle={<ContenuCompteDeRésultat dateDeMiseÀJour={entitéJuridiqueBudgetFinanceViewModel.dateMiseÀJour} source={wording.ANCRE} />}
+          contenuInfoBulle={<ContenuCompteDeRésultatEJ dateDeMiseÀJour={entitéJuridiqueBudgetFinanceViewModel.dateMiseÀJour} source={wording.ANCRE} />}
           dateDeMiseÀJour={entitéJuridiqueBudgetFinanceViewModel.dateMiseÀJour}
           identifiant="budget-et-finances-compte-de-résultat"
           nomDeLIndicateur={<>{wording.COMPTE_DE_RÉSULTAT}</>}
           source={wording.ANCRE}
         >
-          <DeuxHistogrammeHorizontauxNew
+          <DeuxHistogrammesHorizontauxNew
             annéesManquantes={entitéJuridiqueBudgetFinanceViewModel.lesAnnéesManquantesDuCompteDeRésultat()}
             entêteDroite={wording.PRODUITS}
             entêteGauche={wording.CHARGES}
