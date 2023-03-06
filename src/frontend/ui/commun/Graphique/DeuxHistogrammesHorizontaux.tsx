@@ -11,9 +11,7 @@ import { Transcription } from "../Transcription/Transcription";
 import { optionsHistogrammeHorizontal } from "./HistogrammeHorizontal";
 
 /* TODO :
- *   - Completer la popin de détail :https://msociauxfr.sharepoint.com/:x:/r/teams/Helios/_layouts/15/Doc.aspx?sourcedoc=%7B0ECFD419-6C35-4F40-A533-F6F6920A207F%7D&file=HELIOS_FICHES%20INDICATEURS.xlsx&_DSL=1&action=default&mobileredirect=true
- *   - Ajouter la légende
- *   - Ajouter les valeurs Bugdet Annexe et Principale dans la transcription
+ *   - Trier les années
  *   - Ajout tests
  *
  *   - Fusionner Histogramme et HistogrammeNew
