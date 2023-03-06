@@ -54,11 +54,11 @@ export const BlocBudgetFinance = ({ entitéJuridiqueBudgetFinanceViewModel }: Bl
               setAnnéeEnCours={setAnnéeEnCours}
             />
           }
-          contenuInfoBulle={<ContenuCompteDeRésultat dateDeMiseÀJour={entitéJuridiqueBudgetFinanceViewModel.dateMiseÀJour} source={wording.CNSA} />}
+          contenuInfoBulle={<ContenuCompteDeRésultat dateDeMiseÀJour={entitéJuridiqueBudgetFinanceViewModel.dateMiseÀJour} source={wording.ANCRE} />}
           dateDeMiseÀJour={entitéJuridiqueBudgetFinanceViewModel.dateMiseÀJour}
           identifiant="budget-et-finances-compte-de-résultat"
           nomDeLIndicateur={<>{wording.COMPTE_DE_RÉSULTAT}</>}
-          source={wording.CNSA}
+          source={wording.ANCRE}
         >
           <DeuxHistogrammeHorizontauxNew
             annéesManquantes={entitéJuridiqueBudgetFinanceViewModel.lesAnnéesManquantesDuCompteDeRésultat()}
