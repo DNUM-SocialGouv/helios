@@ -1,3 +1,4 @@
+import { FEATURE_NAME } from "../../../utils/featureToggle";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
@@ -11,7 +12,7 @@ type BlocActivitéSanitaireProps = Readonly<{
 }>;
 
 export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel }: BlocActivitéSanitaireProps) => {
-  const { wording } = useDependencies();
+  const { wording, isFeatureEnabled } = useDependencies();
 
   if (entitéJuridiqueActivitéViewModel.lesDonnéesActivitéNeSontPasRenseignées) {
     return <BlocIndicateurVide title={wording.TITRE_BLOC_ACTIVITÉ} />;
