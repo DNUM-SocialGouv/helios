@@ -188,18 +188,6 @@ export const DeuxHistogrammeHorizontauxNew = ({
   annéesManquantes,
   nombreDAnnéeTotale = 5,
 }: HistogrammeHorizontalNewProps): ReactElement => {
-  /*
-   * TODO : - Couleur des stack
-   *  - ok : Changer le format de la donnée en entrée pour mieux correspondre à chartData
-   *  - ok : Faire les deux histogrammes
-   *  - Refacto
-   *  - ok : Reprendre les options (tailles..)
-   *  - ok : Gestion des années
-   *  - ok : Transcription
-   *  - ok : Gestion de la taille max
-   *  - ok : Gestion des couleurs
-   *  - Ajout des tests
-   * */
   const { wording } = useDependencies();
 
   const dataGauche: ChartData = buildChartData(valeursDeGauche);

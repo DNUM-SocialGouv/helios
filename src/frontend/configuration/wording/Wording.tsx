@@ -239,6 +239,7 @@ export interface Wording {
   readonly FINESS: ReactElement;
   readonly DIAMANT: ReactElement;
   readonly CNSA: ReactElement;
+  readonly ANCRE: ReactElement;
   readonly TDB_PERF: ReactElement;
   readonly PMSI: ReactElement;
   readonly ARHGOS: ReactElement;

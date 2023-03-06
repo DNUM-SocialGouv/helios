@@ -64,6 +64,7 @@ export const BlocBudgetFinance = ({ entitéJuridiqueBudgetFinanceViewModel }: Bl
             annéesManquantes={entitéJuridiqueBudgetFinanceViewModel.lesAnnéesManquantesDuCompteDeRésultat()}
             entêteDroite={wording.PRODUITS}
             entêteGauche={wording.CHARGES}
+            nombreDAnnéeTotale={entitéJuridiqueBudgetFinanceViewModel.NOMBRE_ANNEES}
             valeursDeDroite={entitéJuridiqueBudgetFinanceViewModel.dataGraphiqueProduits(budgetEtFinance)}
             valeursDeGauche={entitéJuridiqueBudgetFinanceViewModel.dataGraphiqueCharges(budgetEtFinance)}
           />
