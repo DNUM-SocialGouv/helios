@@ -206,6 +206,28 @@ export const DeuxHistogrammesHorizontauxNew = ({
   const optionsGauche = getOptionsHistogramme(entêteGauche, valeursDeGauche.totals);
   const optionsDroite = getOptionsHistogramme(entêteDroite, valeursDeDroite.totals);
 
+  function getTranscriptionTitles() {
+    return [
+      valeursDeGauche.stacks[0].label,
+      valeursDeGauche.stacks[1].label,
+      wording.CHARGES_TOTALES,
+      valeursDeDroite.stacks[0].label,
+      valeursDeDroite.stacks[1].label,
+      wording.PRODUITS_TOTALES,
+    ];
+  }
+
+  function getTranscriptionValeurs() {
+    return [
+      valeursDeGauche.stacks[0].data.map(StringFormater.formateLeMontantEnEuros),
+      valeursDeGauche.stacks[1].data.map(StringFormater.formateLeMontantEnEuros),
+      valeursDeGauche.totals.map(StringFormater.formateLeMontantEnEuros),
+      valeursDeDroite.stacks[0].data.map(StringFormater.formateLeMontantEnEuros),
+      valeursDeDroite.stacks[1].data.map(StringFormater.formateLeMontantEnEuros),
+      valeursDeDroite.totals.map(StringFormater.formateLeMontantEnEuros),
+    ];
+  }
+
   return (
     <>
       {annéesManquantes.length < nombreDAnnéeTotale && (
@@ -233,23 +255,9 @@ export const DeuxHistogrammesHorizontauxNew = ({
         disabled={annéesManquantes.length === nombreDAnnéeTotale}
         entêteLibellé="Compte de résultat - CF"
         identifiantUnique="compte-de-resultat-cf"
-        identifiants={[
-          valeursDeGauche.stacks[0].label,
-          valeursDeGauche.stacks[1].label,
-          wording.CHARGES_TOTALES,
-          valeursDeDroite.stacks[0].label,
-          valeursDeDroite.stacks[1].label,
-          wording.PRODUITS_TOTALES,
-        ]}
+        identifiants={getTranscriptionTitles()}
         libellés={valeursDeDroite.labels}
-        valeurs={[
-          valeursDeGauche.stacks[0].data.map(StringFormater.formateLeMontantEnEuros),
-          valeursDeGauche.stacks[1].data.map(StringFormater.formateLeMontantEnEuros),
-          valeursDeGauche.totals.map(StringFormater.formateLeMontantEnEuros),
-          valeursDeDroite.stacks[0].data.map(StringFormater.formateLeMontantEnEuros),
-          valeursDeDroite.stacks[1].data.map(StringFormater.formateLeMontantEnEuros),
-          valeursDeDroite.totals.map(StringFormater.formateLeMontantEnEuros),
-        ]}
+        valeurs={getTranscriptionValeurs()}
       />
     </>
   );
