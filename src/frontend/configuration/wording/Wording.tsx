@@ -196,6 +196,10 @@ export interface Wording {
   readonly TITRE_IV: string;
   readonly COMPTE_DE_RÉSULTAT: string;
 
+  readonly CHARGES_TOTALES: string;
+
+  readonly PRODUITS_TOTALES: string;
+
   // Bloc ressources humaines
   readonly TITRE_BLOC_RESSOURCES_HUMAINES: string;
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ: ReactElement;

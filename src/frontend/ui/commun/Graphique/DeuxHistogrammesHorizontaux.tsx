@@ -160,7 +160,7 @@ export const DeuxHistogrammeHorizontaux = ({
 
 export type HistogrammeLine = {
   labels: string[];
-  stacks: { data: number[]; backgroundColor: string[] }[];
+  stacks: { label: string; data: number[]; backgroundColor: string[] }[];
   totals: number[];
 };
 
@@ -233,9 +233,23 @@ export const DeuxHistogrammesHorizontauxNew = ({
         disabled={annéesManquantes.length === nombreDAnnéeTotale}
         entêteLibellé="Compte de résultat - CF"
         identifiantUnique="compte-de-resultat-cf"
-        identifiants={[entêteGauche, entêteDroite]}
+        identifiants={[
+          valeursDeGauche.stacks[0].label,
+          valeursDeGauche.stacks[1].label,
+          wording.CHARGES_TOTALES,
+          valeursDeDroite.stacks[0].label,
+          valeursDeDroite.stacks[1].label,
+          wording.PRODUITS_TOTALES,
+        ]}
         libellés={valeursDeDroite.labels}
-        valeurs={[valeursDeGauche.totals.map(StringFormater.formateLeMontantEnEuros), valeursDeDroite.totals.map(StringFormater.formateLeMontantEnEuros)]}
+        valeurs={[
+          valeursDeGauche.stacks[0].data.map(StringFormater.formateLeMontantEnEuros),
+          valeursDeGauche.stacks[1].data.map(StringFormater.formateLeMontantEnEuros),
+          valeursDeGauche.totals.map(StringFormater.formateLeMontantEnEuros),
+          valeursDeDroite.stacks[0].data.map(StringFormater.formateLeMontantEnEuros),
+          valeursDeDroite.stacks[1].data.map(StringFormater.formateLeMontantEnEuros),
+          valeursDeDroite.totals.map(StringFormater.formateLeMontantEnEuros),
+        ]}
       />
     </>
   );

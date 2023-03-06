@@ -252,6 +252,8 @@ export class WordingFr implements Wording {
   readonly TITRE_III: string = "Titre III";
   readonly TITRE_IV: string = "Titre IV";
   readonly COMPTE_DE_RÉSULTAT: string = "Compte de résultat (CF)";
+  readonly CHARGES_TOTALES: string = "Charges Totales";
+  readonly PRODUITS_TOTALES: string = "Produits Totals";
 
   // Bloc ressources humaines
   readonly TITRE_BLOC_RESSOURCES_HUMAINES: string = "Ressources humaines";

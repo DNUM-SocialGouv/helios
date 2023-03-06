@@ -78,6 +78,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       ].map(Number),
       stacks: [
         {
+          label: "Charges Principales", //
           data: [
             budget.totalDepensesPrincipale,
             budget.depensesTitreIPrincipale,
@@ -88,6 +89,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
           backgroundColor: ["#2F4077", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"],
         },
         {
+          label: "Charges Annexes",
           data: [budget.totalDepensesH, budget.depensesTitreIH, budget.depensesTitreIIH, budget.depensesTitreIIIH, budget.depensesTitreIVH].map(Number),
           backgroundColor: ["#FA794A", "#FB9175", "#FB9175", "#FB9175"],
         },
@@ -107,6 +109,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       ].map(Number),
       stacks: [
         {
+          label: "Produits Principals",
           data: [
             budget.totalRecettesPrincipale,
             budget.recettesTitreIPrincipale,
@@ -117,6 +120,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
           backgroundColor: ["#2F4077", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"],
         },
         {
+          label: "Produits Annexes",
           data: [budget.totalRecettesH, budget.recettesTitreIH, budget.recettesTitreIIH, budget.recettesTitreIIIH, 0].map(Number),
           backgroundColor: ["#FA794A", "#FB9175", "#FB9175", "#FB9175"],
         },
