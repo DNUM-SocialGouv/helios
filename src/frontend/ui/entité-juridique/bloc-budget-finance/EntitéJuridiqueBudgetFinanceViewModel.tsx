@@ -23,7 +23,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   }
 
   public get lesDonnéesBudgetEtFinanceNesontPasRenseignées() {
-    return this.budgetEtFinance.length === 0 || this.compteDeResultatVide();
+    return !this.budgetEtFinance || this.budgetEtFinance.length === 0 || this.compteDeResultatVide();
   }
 
   public lesAnnéesManquantesDuCompteDeRésultat(): number[] {

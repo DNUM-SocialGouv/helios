@@ -3,6 +3,7 @@ import { Context } from "chartjs-plugin-datalabels";
 import { ReactElement } from "react";
 import { Bar } from "react-chartjs-2";
 
+import stylesBlocActivité from "../../établissement-territorial-sanitaire/bloc-activité/BlocActivitéSanitaire.module.css";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
@@ -227,6 +228,7 @@ export const DeuxHistogrammesHorizontauxNew = ({
         </div>
       )}
       {annéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
+      <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id="test" />
       <Transcription
         disabled={annéesManquantes.length === nombreDAnnéeTotale}
         entêteLibellé="Compte de résultat - CF"
@@ -249,7 +251,7 @@ function getOptionsHistogramme(entête: string, totals: number[]) {
     indexAxis: "y",
     scales: {
       x: {
-        max: valeurMax * 1.2,
+        max: valeurMax * 1.3,
         stacked: true,
         grid: {
           display: false,
@@ -280,6 +282,7 @@ function getOptionsHistogramme(entête: string, totals: number[]) {
       },
     },
     plugins: {
+      htmlLegend: { containerID: "test" },
       datalabels: {
         align: "end",
         anchor: "end",
