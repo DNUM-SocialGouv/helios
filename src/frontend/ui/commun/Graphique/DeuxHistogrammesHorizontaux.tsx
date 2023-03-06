@@ -171,6 +171,7 @@ type HistogrammeHorizontalNewProps = {
   entêteGauche: string;
   annéesManquantes: number[] | string[];
   nombreDAnnéeTotale: number;
+  légendes: string[];
 };
 
 function buildChartData(valeurs: HistogrammeLine): ChartData {
@@ -198,6 +199,7 @@ export const DeuxHistogrammesHorizontauxNew = ({
   entêteDroite,
   annéesManquantes,
   nombreDAnnéeTotale = 5,
+  légendes,
 }: HistogrammeHorizontalNewProps): ReactElement => {
   const { wording } = useDependencies();
 
@@ -250,7 +252,7 @@ export const DeuxHistogrammesHorizontauxNew = ({
         </div>
       )}
       {annéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
-      <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id="test" />
+      <LegendeDeuxHistogrammes color={valeursDeGauche.stacks.map((stack) => stack.backgroundColor[0])} legends={légendes} />
       <Transcription
         disabled={annéesManquantes.length === nombreDAnnéeTotale}
         entêteLibellé="Compte de résultat - CF"
@@ -262,6 +264,23 @@ export const DeuxHistogrammesHorizontauxNew = ({
     </>
   );
 };
+
+function LegendeDeuxHistogrammes({ legends, color }: { legends: string[]; color: string[] }) {
+  return (
+    <ul
+      aria-hidden="true"
+      className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]}
+      style={{ justifyContent: "center", gridAutoFlow: "column" }}
+    >
+      {legends.map((légende, index) => (
+        <li key={légende}>
+          <span style={{ background: color[index] }}>&nbsp;</span>
+          {légende}
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 function getOptionsHistogramme(entête: string, totals: number[]) {
   const couleurIdentifiant = "#000";

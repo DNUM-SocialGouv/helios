@@ -127,4 +127,8 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       ],
     };
   }
+
+  get légendeChart(): string[] {
+    return ["Budget Principal", "Budgets Annexes"];
+  }
 }
