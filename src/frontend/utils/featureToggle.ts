@@ -7,6 +7,8 @@
  * - Une fois la feature définitivement activée on peut la supprimer de currentFeaturesToggled et des variables d'environnements
  * */
 
+import { ParsedUrlQuery } from "querystring";
+
 export enum FEATURE_NAME {
   "COMPTE_RESULTAT_EJ" = "COMPTE_RESULTAT_EJ",
 }
@@ -23,11 +25,6 @@ function parseEnvEnabledFeature(): FEATURE_NAME[] {
     .filter((feature) => feature) as FEATURE_NAME[];
 }
 
-ParseUrlEnabledFeature();
-function ParseUrlEnabledFeature(): FEATURE_NAME[] {
-  return [];
-}
-
 export function buildFeatureToggleConfig(toggledFeatures: FEATURE_NAME[], enabledFeatures: FEATURE_NAME[]) {
   function isFeatureActivable(feature: FEATURE_NAME) {
     return toggledFeatures.includes(feature);
@@ -37,8 +34,14 @@ export function buildFeatureToggleConfig(toggledFeatures: FEATURE_NAME[], enable
     return enabledFeatures.includes(feature);
   }
 
-  return function isFeatureEnabled(feature: FEATURE_NAME) {
-    return !isFeatureActivable(feature) || (isFeatureActivable(feature) && isFeatureActivated(feature));
+  function shouldBypassFeatureToggle(urlQuery?: ParsedUrlQuery): boolean {
+    return !!urlQuery && urlQuery["feature_toggle"] === "off";
+  }
+
+  return (urlQuery?: ParsedUrlQuery) => {
+    return function isFeatureEnabled(feature: FEATURE_NAME) {
+      return shouldBypassFeatureToggle(urlQuery) || !isFeatureActivable(feature) || (isFeatureActivable(feature) && isFeatureActivated(feature));
+    };
   };
 }
 

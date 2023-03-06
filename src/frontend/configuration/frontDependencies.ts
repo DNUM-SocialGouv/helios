@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/nextjs";
+import { ParsedUrlQuery } from "querystring";
 
 import { FEATURE_NAME, isFeatureEnabled } from "../utils/featureToggle";
 import { BreadcrumbHandler } from "./BreadcrumbHandler";
@@ -13,19 +14,18 @@ export type FrontDependencies = Readonly<{
   isFeatureEnabled: (feature: FEATURE_NAME) => boolean;
 }>;
 
-function createFrontDependencies(): FrontDependencies {
+function createFrontDependencies(query?: ParsedUrlQuery): FrontDependencies {
   Sentry.init({
     dsn: process.env["NEXT_PUBLIC_SENTRY_DSN"],
     environment: process.env["NEXT_PUBLIC_SENTRY_ENVIRONMENT"],
     tracesSampleRate: 1.0,
   });
-
   return {
     breadcrumbHandler: new BreadcrumbHandler(),
     paths: new Paths(),
     wording: new WordingFr(),
-    isFeatureEnabled,
+    isFeatureEnabled: isFeatureEnabled(query),
   };
 }
 
-export const frontDependencies = createFrontDependencies();
+export const frontDependencies = createFrontDependencies;
