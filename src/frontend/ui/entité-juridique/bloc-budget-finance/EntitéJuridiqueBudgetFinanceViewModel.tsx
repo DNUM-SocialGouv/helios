@@ -1,7 +1,7 @@
 import { EntitéJuridiqueBudgetFinance } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
-import { HistogrammeLine } from "../../commun/Graphique/DeuxHistogrammesHorizontaux";
+import { HistogrammeData } from "../../commun/Graphique/DeuxHistogrammesHorizontaux";
 import { StringFormater } from "../../commun/StringFormater";
 
 export class EntitéJuridiqueBudgetFinanceViewModel {
@@ -66,19 +66,19 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     return StringFormater.formateLaDate(this.budgetEtFinance[0]?.dateMiseÀJourSource as string);
   }
 
-  public dataGraphiqueCharges(budget: EntitéJuridiqueBudgetFinance): HistogrammeLine {
-    return {
-      labels: [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
-      totals: [
+  public dataGraphiqueCharges(budget: EntitéJuridiqueBudgetFinance): HistogrammeData {
+    return new HistogrammeData(
+      [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
+      [
         budget.totalDepensesGlobal,
         budget?.depensesTitreIGlobal,
         budget?.depensesTitreIIGlobal,
         budget?.depensesTitreIIIGlobal,
         budget?.depensesTitreIVGlobal,
       ].map(Number),
-      stacks: [
+      [
         {
-          label: "Charges Principales", //
+          label: this.wording.CHARGES_PRINCIPALES,
           data: [
             budget.totalDepensesPrincipale,
             budget?.depensesTitreIPrincipale,
@@ -86,30 +86,31 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
             budget?.depensesTitreIIIPrincipale,
             budget?.depensesTitreIVPrincipale,
           ].map(Number),
-          backgroundColor: ["#2F4077", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"],
+          backgroundColor: this.getBackgroundColorBudgetPrincipal(),
         },
         {
-          label: "Charges Annexes",
+          label: this.wording.CHARGES_ANNEXES,
           data: [budget.totalDepensesH, budget?.depensesTitreIH, budget?.depensesTitreIIH, budget?.depensesTitreIIIH, budget?.depensesTitreIVH].map(Number),
-          backgroundColor: ["#FA794A", "#FB9175", "#FB9175", "#FB9175"],
+          backgroundColor: this.getBackgroundColorBudgetSecondaire(),
         },
       ],
-    };
+      this.wording.CHARGES
+    );
   }
 
-  public dataGraphiqueProduits(budget: EntitéJuridiqueBudgetFinance): HistogrammeLine {
-    return {
-      labels: [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
-      totals: [
+  public dataGraphiqueProduits(budget: EntitéJuridiqueBudgetFinance): HistogrammeData {
+    return new HistogrammeData(
+      [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
+      [
         budget.totalRecettesGlobal,
         budget?.recettesTitreIGlobal,
         budget?.recettesTitreIIGlobal,
         budget?.recettesTitreIIIGlobal,
         budget?.recettesTitreIVGlobal,
       ].map(Number),
-      stacks: [
+      [
         {
-          label: "Produits Principals",
+          label: this.wording.PRODUITS_PRINCIPAUX,
           data: [
             budget.totalRecettesPrincipale,
             budget?.recettesTitreIPrincipale,
@@ -117,18 +118,27 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
             budget?.recettesTitreIIIPrincipale,
             budget?.recettesTitreIVPrincipale,
           ].map(Number),
-          backgroundColor: ["#2F4077", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"],
+          backgroundColor: this.getBackgroundColorBudgetPrincipal(),
         },
         {
-          label: "Produits Annexes",
+          label: this.wording.PRODUITS_ANNEXES,
           data: [budget.totalRecettesH, budget?.recettesTitreIH, budget?.recettesTitreIIH, budget?.recettesTitreIIIH, 0].map(Number),
-          backgroundColor: ["#FA794A", "#FB9175", "#FB9175", "#FB9175"],
+          backgroundColor: this.getBackgroundColorBudgetSecondaire(),
         },
       ],
-    };
+      this.wording.PRODUITS
+    );
+  }
+
+  private getBackgroundColorBudgetSecondaire() {
+    return ["#FA794A", "#FB9175", "#FB9175", "#FB9175"];
+  }
+
+  private getBackgroundColorBudgetPrincipal() {
+    return ["#2F4077", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"];
   }
 
   get légendeChart(): string[] {
-    return ["Budget Principal", "Budgets Annexes"];
+    return [this.wording.BUDGET_PRINCIPAL, this.wording.BUDGET_ANNEXE];
   }
 }

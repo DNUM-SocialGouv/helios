@@ -196,9 +196,12 @@ export interface Wording {
   readonly TITRE_IV: string;
   readonly COMPTE_DE_RÉSULTAT: string;
 
-  readonly CHARGES_TOTALES: string;
-
-  readonly PRODUITS_TOTALES: string;
+  readonly PRODUITS_PRINCIPAUX: string;
+  readonly PRODUITS_ANNEXES: string;
+  readonly CHARGES_ANNEXES: string;
+  readonly CHARGES_PRINCIPALES: string;
+  readonly BUDGET_PRINCIPAL: string;
+  readonly BUDGET_ANNEXE: string;
 
   // Bloc ressources humaines
   readonly TITRE_BLOC_RESSOURCES_HUMAINES: string;

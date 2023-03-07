@@ -2,6 +2,7 @@ import { CadreBudgétaire } from "../../../../../../database/models/BudgetEtFina
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
 import { Wording } from "../../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../../utils/dateUtils";
+import { HistogrammeData } from "../../../commun/Graphique/DeuxHistogrammesHorizontaux";
 import { StringFormater } from "../../../commun/StringFormater";
 
 export class CompteDeResultatViewModel {
@@ -63,10 +64,31 @@ export class CompteDeResultatViewModel {
       const totalDesDépenses = dépensesGroupeI + dépensesGroupeII + dépensesGroupeIII;
       dépensesOuCharges.push(totalDesDépenses, dépensesGroupeI, dépensesGroupeII, dépensesGroupeIII);
     }
-    return dépensesOuCharges;
+
+    return new HistogrammeData(
+      this.libellés(budgetEtFinance),
+      dépensesOuCharges,
+      [
+        {
+          data: dépensesOuCharges,
+          backgroundColor: this.getLineColors(dépensesOuCharges, (x) => x >= 0),
+          label: this.entêtesDesAutresColonnes(budgetEtFinance)[0],
+        },
+      ],
+      this.entêtesDesAutresColonnes(budgetEtFinance)[0],
+      this.ratioHistogramme(budgetEtFinance)
+    );
   }
 
-  public recettesOuProduits(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances) {
+  private getLineColors(montants: number[], isError: (x: number) => boolean) {
+    const defaultLineColor = ["#000091", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"];
+    const lineColors = montants.map((dépenses, index) => {
+      return isError(dépenses) ? "#C9191E" : defaultLineColor[index];
+    });
+    return lineColors;
+  }
+
+  public recettesOuProduits(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances): HistogrammeData {
     const recettesOuProduits = [];
     if (budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA) {
       const totalDesProduits = budgetEtFinance.chargesEtProduits.produits as number;
@@ -78,7 +100,20 @@ export class CompteDeResultatViewModel {
       const totalDesRecettes = recettesGroupeI + recettesGroupeII + recettesGroupeIII;
       recettesOuProduits.push(totalDesRecettes, recettesGroupeI, recettesGroupeII, recettesGroupeIII);
     }
-    return recettesOuProduits;
+
+    return new HistogrammeData(
+      this.libellés(budgetEtFinance),
+      recettesOuProduits,
+      [
+        {
+          data: recettesOuProduits,
+          backgroundColor: this.getLineColors(recettesOuProduits, (x) => x <= 0),
+          label: this.entêtesDesAutresColonnes(budgetEtFinance)[1],
+        },
+      ],
+      this.entêtesDesAutresColonnes(budgetEtFinance)[1],
+      this.ratioHistogramme(budgetEtFinance)
+    );
   }
 
   public libellés(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances) {
