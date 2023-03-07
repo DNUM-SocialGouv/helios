@@ -1,10 +1,12 @@
 import { DataSource } from "typeorm";
 
 import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
+import { BudgetEtFinancesEntiteJuridiqueModel } from "../../../../../database/models/BudgetEtFinancesEntiteJuridiqueModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { CatégorisationEnum, EntitéJuridiqueIdentité } from "../../../métier/entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueActivités } from "../../../métier/entities/entité-juridique/EntitéJuridiqueActivités";
+import { EntitéJuridiqueBudgetFinance } from "../../../métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { EntitéJuridiqueNonTrouvée } from "../../../métier/entities/EntitéJuridiqueNonTrouvée";
 import { EntitéJuridiqueDeRattachement } from "../../../métier/entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement";
 import { EntitéJuridiqueLoader } from "../../../métier/gateways/EntitéJuridiqueLoader";
@@ -172,5 +174,66 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
         value: entitéJuridiqueModel.libelléStatutJuridique,
       },
     };
+  }
+
+  async chargeBudgetFinance(numéroFinessEntitéJuridique: string): Promise<EntitéJuridiqueBudgetFinance[]> {
+    const budgetFinance = await (await this.orm).getRepository(BudgetEtFinancesEntiteJuridiqueModel).find({
+      where: { numéroFinessEntitéJuridique },
+    });
+
+    const dateMisAJour = (await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.DIAMANT_QUO_SAN_FINANCE })) as DateMiseÀJourFichierSourceModel;
+
+    return this.construisBudgetFinanceEJ(budgetFinance, dateMisAJour);
+  }
+
+  private construisBudgetFinanceEJ(
+    budgetFinance: BudgetEtFinancesEntiteJuridiqueModel[],
+    dateMisAJour: DateMiseÀJourFichierSourceModel
+  ): EntitéJuridiqueBudgetFinance[] {
+    return budgetFinance.map((budget) => ({
+      année: budget.année,
+      dateMiseÀJourSource: dateMisAJour.dernièreMiseÀJour,
+      depensesTitreIGlobal: budget.depensesTitreIGlobal,
+      depensesTitreIIGlobal: budget.depensesTitreIIGlobal,
+      depensesTitreIIIGlobal: budget.depensesTitreIIIGlobal,
+      depensesTitreIVGlobal: budget.depensesTitreIVGlobal,
+      totalDepensesGlobal: budget.depensesTitreIGlobal + budget.depensesTitreIIGlobal + budget.depensesTitreIIIGlobal + budget.depensesTitreIVGlobal,
+      recettesTitreIGlobal: budget.recettesTitreIGlobal,
+      recettesTitreIIGlobal: budget.recettesTitreIIGlobal,
+      recettesTitreIIIGlobal: budget.recettesTitreIIIGlobal,
+      recettesTitreIVGlobal: budget.recettesTitreIVGlobal,
+      totalRecettesGlobal: budget.recettesTitreIGlobal + budget.recettesTitreIIGlobal + budget.recettesTitreIIIGlobal + budget.recettesTitreIVGlobal,
+      depensesTitreIH: budget.depensesTitreIH,
+      depensesTitreIIH: budget.depensesTitreIIH,
+      depensesTitreIIIH: budget.depensesTitreIIIH,
+      depensesTitreIVH: budget.depensesTitreIVH,
+      totalDepensesH: budget.depensesTitreIH + budget.depensesTitreIIH + budget.depensesTitreIIIH + budget.depensesTitreIVH,
+      recettesTitreIH: budget.recettesTitreIH,
+      recettesTitreIIH: budget.recettesTitreIIH,
+      recettesTitreIIIH: budget.recettesTitreIIIH,
+      totalRecettesH: budget.recettesTitreIH + budget.recettesTitreIIH + budget.recettesTitreIIIH,
+      depensesTitreIPrincipale: budget.depensesTitreIGlobal - budget.depensesTitreIH,
+      depensesTitreIIPrincipale: budget.depensesTitreIIGlobal - budget.depensesTitreIIH,
+      depensesTitreIIIPrincipale: budget.depensesTitreIIIGlobal - budget.depensesTitreIIIH,
+      depensesTitreIVPrincipale: budget.depensesTitreIVGlobal - budget.depensesTitreIVH,
+      totalDepensesPrincipale:
+        budget.depensesTitreIGlobal -
+        budget.depensesTitreIH +
+        (budget.depensesTitreIIGlobal - budget.depensesTitreIIH) +
+        (budget.depensesTitreIIIGlobal - budget.depensesTitreIIIH) +
+        (budget.depensesTitreIVGlobal - budget.depensesTitreIVH),
+      recettesTitreIPrincipale: budget.recettesTitreIGlobal - budget.recettesTitreIH,
+      recettesTitreIIPrincipale: budget.recettesTitreIIGlobal - budget.recettesTitreIIH,
+      recettesTitreIIIPrincipale: budget.recettesTitreIIIGlobal - budget.recettesTitreIIIH,
+      recettesTitreIVPrincipale: budget.recettesTitreIVGlobal,
+      totalRecettesPrincipale:
+        budget.recettesTitreIGlobal -
+        budget.recettesTitreIH +
+        (budget.recettesTitreIIGlobal - budget.recettesTitreIIH) +
+        (budget.recettesTitreIIIGlobal - budget.recettesTitreIIIH) +
+        budget.recettesTitreIVGlobal,
+    }));
   }
 }

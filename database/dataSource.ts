@@ -41,6 +41,7 @@ import { ActivitéSanitaireModel } from "./models/ActivitéSanitaireModel";
 import { AutorisationMédicoSocialModel } from "./models/AutorisationMédicoSocialModel";
 import { AutorisationSanitaireModel } from "./models/AutorisationSanitaireModel";
 import { AutreActivitéSanitaireModel } from "./models/AutreActivitéSanitaireModel";
+import { BudgetEtFinancesEntiteJuridiqueModel } from "./models/BudgetEtFinancesEntiteJuridiqueModel";
 import { BudgetEtFinancesMédicoSocialModel } from "./models/BudgetEtFinancesMédicoSocialModel";
 import { CapacitéAutorisationSanitaireModel } from "./models/CapacitéAutorisationSanitaireModel";
 import { CpomModel } from "./models/CpomModel";
@@ -64,6 +65,7 @@ export default new DataSource({
     AutorisationSanitaireModel,
     AutreActivitéSanitaireModel,
     BudgetEtFinancesMédicoSocialModel,
+    BudgetEtFinancesEntiteJuridiqueModel,
     CapacitéAutorisationSanitaireModel,
     CpomModel,
     DateMiseÀJourFichierSourceModel,

@@ -8,11 +8,16 @@ export class RécupèreLEntitéJuridiqueUseCase {
   async exécute(numéroFiness: string): Promise<EntitéJuridique> {
     const entitéJuridiqueIdentitéOuErreur = await this.entitéJuridiqueLoader.chargeIdentité(numéroFiness);
     const activités = await this.entitéJuridiqueLoader.chargeActivités(numéroFiness);
+    const budgetFinance = await this.entitéJuridiqueLoader.chargeBudgetFinance(numéroFiness);
 
     if (entitéJuridiqueIdentitéOuErreur instanceof EntitéJuridiqueNonTrouvée) {
       throw entitéJuridiqueIdentitéOuErreur;
     }
 
-    return { ...entitéJuridiqueIdentitéOuErreur, activités };
+    return {
+      ...entitéJuridiqueIdentitéOuErreur,
+      activités,
+      budgetFinance,
+    };
   }
 }

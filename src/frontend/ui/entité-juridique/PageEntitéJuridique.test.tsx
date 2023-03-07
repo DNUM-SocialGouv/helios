@@ -101,6 +101,20 @@ describe("La page Entité Juridique", () => {
     expect(blocActivité).toBeInTheDocument();
   });
 
+  it("affiche le bloc budget et finance", () => {
+    // WHEN
+    renderFakeComponent(
+      <PageEntitéJuridique
+        entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+        établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
+      />
+    );
+
+    // THEN
+    const blocBudgetFinance = screen.getByText(wording.TITRE_BLOC_BUDGET_ET_FINANCES);
+    expect(blocBudgetFinance).toBeInTheDocument();
+  });
+
   describe("affiche le bloc identité de l’entité juridique", () => {
     it("affiche le nom de l’établissement", () => {
       // WHEN

@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { Titre } from "../commun/Titre/Titre";
 import { BlocActivitéSanitaire } from "./bloc-activité/BlocActivitéSanitaire";
+import { BlocBudgetFinance } from "./bloc-budget-finance/BlocBudgetFinance";
 import { Catégorisation } from "./catégorisation/Catégorisation";
 import { EntitéJuridiqueViewModel } from "./EntitéJuridiqueViewModel";
 import { BlocIdentité } from "./fiche-d-identité/BlocIdentité";
@@ -33,6 +34,7 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, établissement
       <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
       <ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />
       <BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel} />
+      <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} />
     </main>
   );
 };

@@ -246,6 +246,15 @@ export class WordingFr implements Wording {
   readonly TAUX_DE_CAF: string = "Taux de CAF";
   readonly FONDS_DE_ROULEMENT_NET_GLOBAL: string = "Fond de roulement net global";
 
+  // Bloc Buget Finance Entite Juridique
+  readonly TITRE_I: string = "Titre I";
+  readonly TITRE_II: string = "Titre II";
+  readonly TITRE_III: string = "Titre III";
+  readonly TITRE_IV: string = "Titre IV";
+  readonly COMPTE_DE_RÉSULTAT: string = "Compte de résultat (CF)";
+  readonly CHARGES_TOTALES: string = "Charges Totales";
+  readonly PRODUITS_TOTALES: string = "Produits Totals";
+
   // Bloc ressources humaines
   readonly TITRE_BLOC_RESSOURCES_HUMAINES: string = "Ressources humaines";
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ: ReactElement = (
@@ -298,6 +307,7 @@ export class WordingFr implements Wording {
   readonly FINESS_TITLE: string = "Fichier National des Établissements Sanitaires et Sociaux";
   readonly DIAMANT_TITLE: string = "Décisionnel Inter ARS pour la Maîtrise et ANTicipation";
   readonly CNSA_TITLE: string = "Caisse Nationale de Solidarité pour l’Autonomie";
+  readonly ANCRE_TITLE: string = "Application Nationale Compte financier Rapport infra-annuel Eprd";
   readonly TDB_PERF_TITLE: string = "Tableau de Bord de la Performance dans le secteur médico-social";
   readonly PMSI_TITLE: string = "Programme de Médicalisation des Systèmes d’Information";
   readonly ARHGOS_TITLE: string = "Agence Régionale Hospitalière Gestion des Objectifs Sanitaires";
@@ -307,6 +317,7 @@ export class WordingFr implements Wording {
   readonly FINESS: ReactElement = (<abbr title={this.FINESS_TITLE}>FINESS</abbr>);
   readonly DIAMANT: ReactElement = (<abbr title={this.DIAMANT_TITLE}>DIAMANT</abbr>);
   readonly CNSA: ReactElement = (<abbr title={this.CNSA_TITLE}>CNSA</abbr>);
+  readonly ANCRE: ReactElement = (<abbr title={this.ANCRE_TITLE}>ANCRE</abbr>);
   readonly TDB_PERF: ReactElement = (<abbr title={this.TDB_PERF_TITLE}>TdB Perf</abbr>);
   readonly PMSI: ReactElement = (<abbr title={this.PMSI_TITLE}>PMSI</abbr>);
   readonly ARHGOS: ReactElement = (<abbr title={this.ARHGOS_TITLE}>ARHGOS</abbr>);
