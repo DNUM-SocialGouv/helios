@@ -10,6 +10,7 @@ import { BlocIdentité } from "./fiche-d-identité/BlocIdentité";
 import { EtablissementsTerritoriauxRattachésViewModel } from "./liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
 import { ListeDesÉtablissementsTerritoriauxRattachés } from "./liste-des-établissements/ListeDesÉtablissementsTerritoriauxRattachés";
 import LogoEntitéJuridique from "./logo-entité-juridique.svg";
+import {ResultatNetComptableViewModel} from "../indicateur-métier/resultat-net-comptable/ResultatNetComptableViewModel";
 
 type EntitéJuridiqueProps = Readonly<{
   entitéJuridiqueViewModel: EntitéJuridiqueViewModel;
@@ -34,7 +35,8 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, établissement
       <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
       <ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />
       <BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel} />
-      <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} />
+      <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel}
+      />
     </main>
   );
 };

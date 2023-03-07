@@ -1,3 +1,4 @@
+import styles from "../Bloc/Bloc.module.css";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 
@@ -6,6 +7,7 @@ export type IndicateurTabulaireProps = Readonly<{
   valeursParAnnée: { année: number; miseEnForme?: string; valeur: string }[];
 }>;
 
+// TODO fix the css style sheet
 export const IndicateurTabulaire = ({ annéesManquantes, valeursParAnnée }: IndicateurTabulaireProps) => {
   const { wording } = useDependencies();
 
@@ -21,7 +23,7 @@ export const IndicateurTabulaire = ({ annéesManquantes, valeursParAnnée }: Ind
           </thead>
           <tbody>
             {valeursParAnnée.map((valeurParAnnée) => (
-              <tr key={valeurParAnnée.année}>
+              <tr className={`${styles["table"]}`} key={valeurParAnnée.année}>
                 <td>{valeurParAnnée.année}</td>
                 <td className={valeurParAnnée.miseEnForme}>{valeurParAnnée.valeur}</td>
               </tr>

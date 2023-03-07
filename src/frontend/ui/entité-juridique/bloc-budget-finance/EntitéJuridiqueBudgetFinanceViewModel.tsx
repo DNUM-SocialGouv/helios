@@ -3,7 +3,6 @@ import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
 import { HistogrammeData } from "../../commun/Graphique/DeuxHistogrammesHorizontaux";
 import { StringFormater } from "../../commun/StringFormater";
-import { valeursResultatNetCompatable } from "./restultat-net-comptable/ResultatNetComptable";
 
 export class EntitéJuridiqueBudgetFinanceViewModel {
   private budgetEtFinance: EntitéJuridiqueBudgetFinance[];
@@ -21,23 +20,6 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
 
   budgetEtFinanceEnCours(annéeEnCours: number): EntitéJuridiqueBudgetFinance {
     return this.budgetEtFinance.find((budgetEtFinance) => budgetEtFinance.année === annéeEnCours) as EntitéJuridiqueBudgetFinance;
-  }
-
-  public resultatNetComptable(): { année: number; valeur: string }[] {
-    return this.budgetEtFinance.reduce((résultatNetComptableParAnnée: valeursResultatNetCompatable[], budgetEtFinanceEJ) => {
-      if (budgetEtFinanceEJ.resultatNetComptable) {
-        résultatNetComptableParAnnée.push({
-          année: budgetEtFinanceEJ.année,
-          valeur: StringFormater.formateLeMontantEnEuros(budgetEtFinanceEJ.resultatNetComptable),
-        });
-      }
-      return this.filterAndSortResultatNetComptableAsc(résultatNetComptableParAnnée);
-    }, []);
-  }
-
-  private filterAndSortResultatNetComptableAsc(resultatNetComptable: valeursResultatNetCompatable[]): valeursResultatNetCompatable[] {
-    const currentAnnee = new Date().getFullYear();
-    return resultatNetComptable.filter((resultat) => resultat.année >= currentAnnee - this.NOMBRE_ANNEES).sort((a, b) => (a.année < b.année ? -1 : 1));
   }
 
   public get lesDonnéesBudgetEtFinanceNesontPasRenseignées() {
