@@ -77,7 +77,7 @@ export class HistogrammeData {
         },
       },
       plugins: {
-        htmlLegend: { containerID: "test" },
+        htmlLegend: { containerID: this.nom + "-legend" },
         datalabels: {
           align: "end",
           anchor: "end",
