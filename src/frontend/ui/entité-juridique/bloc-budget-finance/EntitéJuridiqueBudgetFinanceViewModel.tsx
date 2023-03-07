@@ -67,16 +67,16 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   }
 
   public dataGraphiqueCharges(budget: EntitéJuridiqueBudgetFinance): HistogrammeLine {
-    return {
-      labels: [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
-      totals: [
+    return new HistogrammeLine(
+      [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
+      [
         budget.totalDepensesGlobal,
         budget?.depensesTitreIGlobal,
         budget?.depensesTitreIIGlobal,
         budget?.depensesTitreIIIGlobal,
         budget?.depensesTitreIVGlobal,
       ].map(Number),
-      stacks: [
+      [
         {
           label: "Charges Principales", //
           data: [
@@ -94,20 +94,21 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
           backgroundColor: ["#FA794A", "#FB9175", "#FB9175", "#FB9175"],
         },
       ],
-    };
+      this.wording.CHARGES
+    );
   }
 
   public dataGraphiqueProduits(budget: EntitéJuridiqueBudgetFinance): HistogrammeLine {
-    return {
-      labels: [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
-      totals: [
+    return new HistogrammeLine(
+      [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
+      [
         budget.totalRecettesGlobal,
         budget?.recettesTitreIGlobal,
         budget?.recettesTitreIIGlobal,
         budget?.recettesTitreIIIGlobal,
         budget?.recettesTitreIVGlobal,
       ].map(Number),
-      stacks: [
+      [
         {
           label: "Produits Principals",
           data: [
@@ -125,7 +126,8 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
           backgroundColor: ["#FA794A", "#FB9175", "#FB9175", "#FB9175"],
         },
       ],
-    };
+      this.wording.PRODUITS
+    );
   }
 
   get légendeChart(): string[] {

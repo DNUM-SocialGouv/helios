@@ -70,11 +70,12 @@ export class CompteDeResultatViewModel {
       return dépenses <= 0 ? defaultLineColor[index] : "#C9191E";
     });
 
-    return {
-      labels: this.libellés(budgetEtFinance),
-      totals: dépensesOuCharges,
-      stacks: [{ data: dépensesOuCharges, backgroundColor: lineColors, label: this.entêtesDesAutresColonnes(budgetEtFinance)[0] }],
-    };
+    return new HistogrammeLine(
+      this.libellés(budgetEtFinance),
+      dépensesOuCharges,
+      [{ data: dépensesOuCharges, backgroundColor: lineColors, label: this.entêtesDesAutresColonnes(budgetEtFinance)[0] }],
+      this.entêtesDesAutresColonnes(budgetEtFinance)[0]
+    );
   }
 
   public recettesOuProduits(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances): HistogrammeLine {
@@ -95,11 +96,12 @@ export class CompteDeResultatViewModel {
       return recette >= 0 ? defaultLineColor[index] : "#C9191E";
     });
 
-    return {
-      labels: this.libellés(budgetEtFinance),
-      totals: recettesOuProduits,
-      stacks: [{ data: recettesOuProduits, backgroundColor: lineColors, label: this.entêtesDesAutresColonnes(budgetEtFinance)[1] }],
-    };
+    return new HistogrammeLine(
+      this.libellés(budgetEtFinance),
+      recettesOuProduits,
+      [{ data: recettesOuProduits, backgroundColor: lineColors, label: this.entêtesDesAutresColonnes(budgetEtFinance)[1] }],
+      this.entêtesDesAutresColonnes(budgetEtFinance)[1]
+    );
   }
 
   public libellés(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances) {

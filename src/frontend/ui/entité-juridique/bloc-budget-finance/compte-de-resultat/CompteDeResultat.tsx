@@ -1,7 +1,7 @@
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 
 import { useDependencies } from "../../../commun/contexts/useDependencies";
-import { DeuxHistogrammesHorizontauxNew } from "../../../commun/Graphique/DeuxHistogrammesHorizontaux";
+import { DeuxHistogrammesHorizontaux } from "../../../commun/Graphique/DeuxHistogrammesHorizontaux";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
 import { Select } from "../../../commun/Select/Select";
 import { ContenuCompteDeRésultatEJ } from "../../info-bulle/ContenuCompteDeRésultatEJ";
@@ -52,10 +52,8 @@ export function CompteDeResultat({ entitéJuridiqueBudgetFinanceViewModel }: Blo
       nomDeLIndicateur={<>{wording.COMPTE_DE_RÉSULTAT}</>}
       source={wording.ANCRE}
     >
-      <DeuxHistogrammesHorizontauxNew
+      <DeuxHistogrammesHorizontaux
         annéesManquantes={entitéJuridiqueBudgetFinanceViewModel.lesAnnéesManquantesDuCompteDeRésultat()}
-        entêteDroite={wording.PRODUITS}
-        entêteGauche={wording.CHARGES}
         légendes={entitéJuridiqueBudgetFinanceViewModel.légendeChart}
         nom={wording.COMPTE_DE_RÉSULTAT}
         nombreDAnnéeTotale={entitéJuridiqueBudgetFinanceViewModel.NOMBRE_ANNEES}
