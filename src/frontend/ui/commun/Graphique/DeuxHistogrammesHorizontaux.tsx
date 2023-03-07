@@ -10,14 +10,6 @@ import { StringFormater } from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
 import { optionsHistogrammeHorizontal } from "./HistogrammeHorizontal";
 
-/* TODO :
- *   - Trier les années
- *   - Ajout tests
- *
- *   - Fusionner Histogramme et HistogrammeNew
- *   - Refacto gestion de la liste des années
- * */
-
 type HistogrammeHorizontalProps = {
   valeursDeGauche: number[];
   valeursDeDroite: number[];
@@ -280,22 +272,23 @@ function LegendeDeuxHistogrammes({ legends, color }: { legends: string[]; color:
   );
 }
 
-function getOptionsHistogramme(entête: string, totals: number[]) {
+function getOptionsHistogramme(entête: string, totals: number[], stacked = true, aspectRatio = 5) {
   const couleurIdentifiant = "#000";
   const couleurDelAbscisse = "#161616";
   const valeurMax = Math.max(...totals.map(Math.abs));
 
   return {
     animation: false,
+    aspectRatio,
     indexAxis: "y",
     scales: {
       x: {
-        max: valeurMax * 1.3,
-        stacked: true,
         grid: {
           display: false,
           drawBorder: false,
         },
+        max: 1.45 * (valeurMax > 0 ? valeurMax : 1),
+        stacked,
         min: 0,
         position: "top",
         ticks: { display: false },
@@ -308,8 +301,9 @@ function getOptionsHistogramme(entête: string, totals: number[]) {
         },
       },
       y: {
-        stacked: true,
+        stacked,
         grid: {
+          drawBorder: false,
           drawOnChartArea: false,
           drawTicks: false,
         },
@@ -321,7 +315,7 @@ function getOptionsHistogramme(entête: string, totals: number[]) {
       },
     },
     plugins: {
-      htmlLegend: { containerID: "test" },
+      htmlLegend: { containerID: "test" }, // A variabiliser
       datalabels: {
         align: "end",
         anchor: "end",
@@ -330,6 +324,7 @@ function getOptionsHistogramme(entête: string, totals: number[]) {
           size: 14,
         },
         formatter: (_: string, _context: Context): string => {
+          // A voir si on variabilise ou si on adapte le format des données qui permettrai d'afficher de la même manière
           const sum = totals[_context.dataIndex];
           return _context.datasetIndex === _context.chart.data.datasets.length - 1 ? StringFormater.formateLeMontantEnEuros(sum) : "";
         },
