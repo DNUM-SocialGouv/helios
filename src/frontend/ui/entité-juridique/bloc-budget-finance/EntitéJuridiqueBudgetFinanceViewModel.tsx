@@ -86,12 +86,12 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
             budget?.depensesTitreIIIPrincipale,
             budget?.depensesTitreIVPrincipale,
           ].map(Number),
-          backgroundColor: ["#2F4077", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"],
+          backgroundColor: this.getBackgroundColorBudgetPrincipal(),
         },
         {
           label: "Charges Annexes",
           data: [budget.totalDepensesH, budget?.depensesTitreIH, budget?.depensesTitreIIH, budget?.depensesTitreIIIH, budget?.depensesTitreIVH].map(Number),
-          backgroundColor: ["#FA794A", "#FB9175", "#FB9175", "#FB9175"],
+          backgroundColor: this.getBackgroundColorBudgetSecondaire(),
         },
       ],
       this.wording.CHARGES
@@ -118,16 +118,24 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
             budget?.recettesTitreIIIPrincipale,
             budget?.recettesTitreIVPrincipale,
           ].map(Number),
-          backgroundColor: ["#2F4077", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"],
+          backgroundColor: this.getBackgroundColorBudgetPrincipal(),
         },
         {
           label: "Produits Annexes",
           data: [budget.totalRecettesH, budget?.recettesTitreIH, budget?.recettesTitreIIH, budget?.recettesTitreIIIH, 0].map(Number),
-          backgroundColor: ["#FA794A", "#FB9175", "#FB9175", "#FB9175"],
+          backgroundColor: this.getBackgroundColorBudgetSecondaire(),
         },
       ],
       this.wording.PRODUITS
     );
+  }
+
+  private getBackgroundColorBudgetSecondaire() {
+    return ["#FA794A", "#FB9175", "#FB9175", "#FB9175"];
+  }
+
+  private getBackgroundColorBudgetPrincipal() {
+    return ["#2F4077", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"];
   }
 
   get légendeChart(): string[] {

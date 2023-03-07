@@ -65,17 +65,21 @@ export class CompteDeResultatViewModel {
       dépensesOuCharges.push(totalDesDépenses, dépensesGroupeI, dépensesGroupeII, dépensesGroupeIII);
     }
 
+    return new HistogrammeLine(
+      this.libellés(budgetEtFinance),
+      dépensesOuCharges,
+      [{ data: dépensesOuCharges, backgroundColor: this.getLineColors(dépensesOuCharges), label: this.entêtesDesAutresColonnes(budgetEtFinance)[0] }],
+      this.entêtesDesAutresColonnes(budgetEtFinance)[0],
+      this.ratioHistogramme(budgetEtFinance)
+    );
+  }
+
+  private getLineColors(dépensesOuCharges: number[]) {
     const defaultLineColor = ["#000091", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"];
     const lineColors = dépensesOuCharges.map((dépenses, index) => {
       return dépenses <= 0 ? defaultLineColor[index] : "#C9191E";
     });
-
-    return new HistogrammeLine(
-      this.libellés(budgetEtFinance),
-      dépensesOuCharges,
-      [{ data: dépensesOuCharges, backgroundColor: lineColors, label: this.entêtesDesAutresColonnes(budgetEtFinance)[0] }],
-      this.entêtesDesAutresColonnes(budgetEtFinance)[0]
-    );
+    return lineColors;
   }
 
   public recettesOuProduits(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances): HistogrammeLine {
@@ -91,16 +95,12 @@ export class CompteDeResultatViewModel {
       recettesOuProduits.push(totalDesRecettes, recettesGroupeI, recettesGroupeII, recettesGroupeIII);
     }
 
-    const defaultLineColor = ["#000091", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"];
-    const lineColors = recettesOuProduits.map((recette, index) => {
-      return recette >= 0 ? defaultLineColor[index] : "#C9191E";
-    });
-
     return new HistogrammeLine(
       this.libellés(budgetEtFinance),
       recettesOuProduits,
-      [{ data: recettesOuProduits, backgroundColor: lineColors, label: this.entêtesDesAutresColonnes(budgetEtFinance)[1] }],
-      this.entêtesDesAutresColonnes(budgetEtFinance)[1]
+      [{ data: recettesOuProduits, backgroundColor: this.getLineColors(recettesOuProduits), label: this.entêtesDesAutresColonnes(budgetEtFinance)[1] }],
+      this.entêtesDesAutresColonnes(budgetEtFinance)[1],
+      this.ratioHistogramme(budgetEtFinance)
     );
   }
 

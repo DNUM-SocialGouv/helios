@@ -13,9 +13,10 @@ export class HistogrammeLine {
   couleurIdentifiant = ["#000"];
   constructor(
     public labels: string[],
-    public totals: number[],
-    public stacks: { label?: string; data: number[]; backgroundColor: string[] }[],
-    public nom: string
+    private totals: number[],
+    private stacks: { label?: string; data: number[]; backgroundColor: string[] }[],
+    private nom: string,
+    private aspectRatio = 2
   ) {}
 
   public chartData(): ChartData {
@@ -47,14 +48,14 @@ export class HistogrammeLine {
     return this.stacks.map((stack) => stack.backgroundColor[0]);
   }
 
-  public getOptionsHistogramme(aspectRatio = 2) {
+  public getOptionsHistogramme() {
     const couleurIdentifiant = "#000";
     const couleurDelAbscisse = "#161616";
     const valeurMax = Math.max(...this.totals.map(Math.abs));
 
     return {
       animation: false,
-      aspectRatio,
+      aspectRatio: this.aspectRatio,
       indexAxis: "y",
       scales: {
         x: {
