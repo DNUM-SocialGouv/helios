@@ -200,35 +200,40 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
       depensesTitreIIIGlobal: budget.depensesTitreIIIGlobal,
       depensesTitreIVGlobal: budget.depensesTitreIVGlobal,
       totalDepensesGlobal: budget.depensesTitreIGlobal + budget.depensesTitreIIGlobal + budget.depensesTitreIIIGlobal + budget.depensesTitreIVGlobal,
+
       recettesTitreIGlobal: budget.recettesTitreIGlobal,
       recettesTitreIIGlobal: budget.recettesTitreIIGlobal,
       recettesTitreIIIGlobal: budget.recettesTitreIIIGlobal,
       recettesTitreIVGlobal: budget.recettesTitreIVGlobal,
       totalRecettesGlobal: budget.recettesTitreIGlobal + budget.recettesTitreIIGlobal + budget.recettesTitreIIIGlobal + budget.recettesTitreIVGlobal,
-      depensesTitreIH: budget.depensesTitreIH,
-      depensesTitreIIH: budget.depensesTitreIIH,
-      depensesTitreIIIH: budget.depensesTitreIIIH,
-      depensesTitreIVH: budget.depensesTitreIVH,
-      totalDepensesH: budget.depensesTitreIH + budget.depensesTitreIIH + budget.depensesTitreIIIH + budget.depensesTitreIVH,
-      recettesTitreIH: budget.recettesTitreIH,
-      recettesTitreIIH: budget.recettesTitreIIH,
-      recettesTitreIIIH: budget.recettesTitreIIIH,
-      totalRecettesH: budget.recettesTitreIH + budget.recettesTitreIIH + budget.recettesTitreIIIH,
-      depensesTitreIPrincipale: budget.depensesTitreIGlobal - budget.depensesTitreIH,
-      depensesTitreIIPrincipale: budget.depensesTitreIIGlobal - budget.depensesTitreIIH,
-      depensesTitreIIIPrincipale: budget.depensesTitreIIIGlobal - budget.depensesTitreIIIH,
-      depensesTitreIVPrincipale: budget.depensesTitreIVGlobal - budget.depensesTitreIVH,
-      totalDepensesPrincipale:
+
+      depensesTitreIPrincipales: budget.depensesTitreIH,
+      depensesTitreIIPrincipales: budget.depensesTitreIIH,
+      depensesTitreIIIPrincipales: budget.depensesTitreIIIH,
+      depensesTitreIVPrincipales: budget.depensesTitreIVH,
+      totalDepensesPrincipales: budget.depensesTitreIH + budget.depensesTitreIIH + budget.depensesTitreIIIH + budget.depensesTitreIVH,
+
+      recettesTitreIPrincipales: budget.recettesTitreIH,
+      recettesTitreIIPrincipales: budget.recettesTitreIIH,
+      recettesTitreIIIPrincipales: budget.recettesTitreIIIH,
+      totalRecettesPrincipales: budget.recettesTitreIH + budget.recettesTitreIIH + budget.recettesTitreIIIH,
+
+      depensesTitreIAnnexe: budget.depensesTitreIGlobal - budget.depensesTitreIH,
+      depensesTitreIIAnnexe: budget.depensesTitreIIGlobal - budget.depensesTitreIIH,
+      depensesTitreIIIAnnexe: budget.depensesTitreIIIGlobal - budget.depensesTitreIIIH,
+      depensesTitreIVAnnexe: budget.depensesTitreIVGlobal - budget.depensesTitreIVH,
+      totalDepensesAnnexe:
         budget.depensesTitreIGlobal -
         budget.depensesTitreIH +
         (budget.depensesTitreIIGlobal - budget.depensesTitreIIH) +
         (budget.depensesTitreIIIGlobal - budget.depensesTitreIIIH) +
         (budget.depensesTitreIVGlobal - budget.depensesTitreIVH),
-      recettesTitreIPrincipale: budget.recettesTitreIGlobal - budget.recettesTitreIH,
-      recettesTitreIIPrincipale: budget.recettesTitreIIGlobal - budget.recettesTitreIIH,
-      recettesTitreIIIPrincipale: budget.recettesTitreIIIGlobal - budget.recettesTitreIIIH,
-      recettesTitreIVPrincipale: budget.recettesTitreIVGlobal,
-      totalRecettesPrincipale:
+
+      recettesTitreIAnnexe: budget.recettesTitreIGlobal - budget.recettesTitreIH,
+      recettesTitreIIAnnexe: budget.recettesTitreIIGlobal - budget.recettesTitreIIH,
+      recettesTitreIIIAnnexe: budget.recettesTitreIIIGlobal - budget.recettesTitreIIIH,
+      recettesTitreIVAnnexe: budget.recettesTitreIVGlobal,
+      totalRecettesAnnexe:
         budget.recettesTitreIGlobal -
         budget.recettesTitreIH +
         (budget.recettesTitreIIGlobal - budget.recettesTitreIIH) +
