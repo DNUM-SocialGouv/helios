@@ -8,7 +8,6 @@ import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
-import { optionsHistogrammeHorizontal } from "./HistogrammeHorizontal";
 
 type HistogrammeHorizontalProps = {
   valeursDeGauche: number[];
@@ -97,7 +96,7 @@ export const DeuxHistogrammeHorizontaux = ({
     labels: libellés,
   };
   const valeursTableau = [valeursDeGauche.map(StringFormater.formateLeMontantEnEuros), valeursDeDroite.map(StringFormater.formateLeMontantEnEuros)];
-
+  const valeurMax = Math.max(...valeursDeGauche.map(Number), ...valeursDeDroite.map(Number)) * 1.1;
   return (
     <>
       {annéesManquantes.length < nombreDAnnéeTotale && (
@@ -111,26 +110,16 @@ export const DeuxHistogrammeHorizontaux = ({
             <Bar
               // @ts-ignore
               data={dataGauche}
-              options={optionsHistogrammeHorizontal(
-                ratioLargeurSurHauteur,
-                Math.max(...valeursDeGauche.map(Number), ...valeursDeDroite.map(Number)) * 1.1,
-                ["400"],
-                entêtesDesAutresColonnes[0]
-              )}
-              redraw={true}
+              // @ts-ignore
+              options={getOptionsHistogramme(entêtesDesAutresColonnes[0], valeurMax, false, ratioLargeurSurHauteur)}
             />
           </div>
           <div>
             <Bar
               // @ts-ignore
               data={dataDroite}
-              options={optionsHistogrammeHorizontal(
-                ratioLargeurSurHauteur,
-                Math.max(...valeursDeGauche.map(Number), ...valeursDeDroite.map(Number)),
-                ["400"],
-                entêtesDesAutresColonnes[1]
-              )}
-              redraw={true}
+              // @ts-ignore
+              options={getOptionsHistogramme(entêtesDesAutresColonnes[1], valeurMax, false, ratioLargeurSurHauteur)}
             />
           </div>
         </div>
@@ -195,8 +184,8 @@ export const DeuxHistogrammesHorizontauxNew = ({
 
   const dataGauche: ChartData = buildChartData(valeursDeGauche);
   const dataDroite: ChartData = buildChartData(valeursDeDroite);
-  const optionsGauche = getOptionsHistogramme(entêteGauche, valeursDeGauche.totals);
-  const optionsDroite = getOptionsHistogramme(entêteDroite, valeursDeDroite.totals);
+  const optionsGauche = getOptionsHistogramme(entêteGauche, Math.max(...valeursDeGauche.totals.map(Math.abs)));
+  const optionsDroite = getOptionsHistogramme(entêteDroite, Math.max(...valeursDeDroite.totals.map(Math.abs)));
 
   function getTranscriptionTitles() {
     return [
@@ -272,10 +261,9 @@ function LegendeDeuxHistogrammes({ legends, color }: { legends: string[]; color:
   );
 }
 
-function getOptionsHistogramme(entête: string, totals: number[], stacked = true, aspectRatio = 5) {
+function getOptionsHistogramme(entête: string, valeurMax: number, stacked = true, aspectRatio = 2) {
   const couleurIdentifiant = "#000";
   const couleurDelAbscisse = "#161616";
-  const valeurMax = Math.max(...totals.map(Math.abs));
 
   return {
     animation: false,
