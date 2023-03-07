@@ -1,3 +1,4 @@
+import { FEATURE_NAME } from "../../../utils/featureToggle";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
@@ -9,9 +10,9 @@ type BlocBudgetFinanceProps = Readonly<{
 }>;
 
 export const BlocBudgetFinance = ({ entitéJuridiqueBudgetFinanceViewModel }: BlocBudgetFinanceProps) => {
-  const { wording } = useDependencies();
+  const { wording, isFeatureEnabled } = useDependencies();
 
-  if (entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetEtFinanceNesontPasRenseignées) {
+  if (!isFeatureEnabled(FEATURE_NAME.COMPTE_RESULTAT_EJ) || entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetEtFinanceNesontPasRenseignées) {
     return <BlocIndicateurVide title={wording.TITRE_BLOC_BUDGET_ET_FINANCES} />;
   }
 

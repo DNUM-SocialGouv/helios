@@ -37,4 +37,22 @@ describe("Bloc Budget et Finance", () => {
     const titre = screen.getByText(wording.INDICATEURS_VIDES);
     expect(titre).toBeInTheDocument();
   });
+
+  it("affiche l'indicateur compte de résultat s'il y a des données", () => {
+    // GIVEN
+    const budgetFinance: EntitéJuridiqueBudgetFinance[] = [
+      {
+        année: 2022,
+        depensesTitreIGlobal: 100,
+      } as EntitéJuridiqueBudgetFinance,
+    ];
+    const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, wording);
+
+    // WHEN
+    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} />);
+
+    // THEN
+    const titre = screen.getAllByText(wording.COMPTE_DE_RÉSULTAT);
+    expect(titre).not.toHaveLength(0);
+  });
 });
