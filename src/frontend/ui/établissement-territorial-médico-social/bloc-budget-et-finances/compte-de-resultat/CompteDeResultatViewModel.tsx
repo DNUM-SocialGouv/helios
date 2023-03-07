@@ -2,6 +2,7 @@ import { CadreBudgétaire } from "../../../../../../database/models/BudgetEtFina
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
 import { Wording } from "../../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../../utils/dateUtils";
+import { HistogrammeLine } from "../../../commun/Graphique/DeuxHistogrammesHorizontaux";
 import { StringFormater } from "../../../commun/StringFormater";
 
 export class CompteDeResultatViewModel {
@@ -63,10 +64,20 @@ export class CompteDeResultatViewModel {
       const totalDesDépenses = dépensesGroupeI + dépensesGroupeII + dépensesGroupeIII;
       dépensesOuCharges.push(totalDesDépenses, dépensesGroupeI, dépensesGroupeII, dépensesGroupeIII);
     }
-    return dépensesOuCharges;
+
+    const defaultLineColor = ["#000091", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"];
+    const lineColors = dépensesOuCharges.map((dépenses, index) => {
+      return dépenses <= 0 ? defaultLineColor[index] : "#C9191E";
+    });
+
+    return {
+      labels: this.libellés(budgetEtFinance),
+      totals: dépensesOuCharges,
+      stacks: [{ data: dépensesOuCharges, backgroundColor: lineColors, label: this.entêtesDesAutresColonnes(budgetEtFinance)[0] }],
+    };
   }
 
-  public recettesOuProduits(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances) {
+  public recettesOuProduits(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances): HistogrammeLine {
     const recettesOuProduits = [];
     if (budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA) {
       const totalDesProduits = budgetEtFinance.chargesEtProduits.produits as number;
@@ -78,7 +89,17 @@ export class CompteDeResultatViewModel {
       const totalDesRecettes = recettesGroupeI + recettesGroupeII + recettesGroupeIII;
       recettesOuProduits.push(totalDesRecettes, recettesGroupeI, recettesGroupeII, recettesGroupeIII);
     }
-    return recettesOuProduits;
+
+    const defaultLineColor = ["#000091", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"];
+    const lineColors = recettesOuProduits.map((recette, index) => {
+      return recette >= 0 ? defaultLineColor[index] : "#C9191E";
+    });
+
+    return {
+      labels: this.libellés(budgetEtFinance),
+      totals: recettesOuProduits,
+      stacks: [{ data: recettesOuProduits, backgroundColor: lineColors, label: this.entêtesDesAutresColonnes(budgetEtFinance)[1] }],
+    };
   }
 
   public libellés(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances) {

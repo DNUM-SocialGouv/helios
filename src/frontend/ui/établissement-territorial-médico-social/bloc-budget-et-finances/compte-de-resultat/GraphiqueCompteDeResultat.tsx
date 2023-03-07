@@ -1,7 +1,7 @@
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 
 import { useDependencies } from "../../../commun/contexts/useDependencies";
-import { DeuxHistogrammeHorizontaux } from "../../../commun/Graphique/DeuxHistogrammesHorizontaux";
+import { DeuxHistogrammesHorizontauxNew } from "../../../commun/Graphique/DeuxHistogrammesHorizontaux";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
 import { Select } from "../../../commun/Select/Select";
 import { ContenuCompteDeRésultat } from "../../InfoBulle/ContenuCompteDeRésultat";
@@ -47,13 +47,12 @@ export const GraphiqueCompteDeResultat = ({ compteDeRésultatViewModel }: BlocBu
       nomDeLIndicateur={<>{compteDeRésultatViewModel.intituléDuCompteDeRésultat(annéeEnCours)}</>}
       source={wording.CNSA}
     >
-      <DeuxHistogrammeHorizontaux
+      <DeuxHistogrammesHorizontauxNew
         annéesManquantes={compteDeRésultatViewModel.lesAnnéesManquantesDuCompteDeRésultat()}
-        entêtePremièreColonne={wording.TITRE_BUDGÉTAIRE}
-        entêtesDesAutresColonnes={compteDeRésultatViewModel.entêtesDesAutresColonnes(budgetEtFinance)}
-        libellés={compteDeRésultatViewModel.libellés(budgetEtFinance)}
+        entêteDroite={compteDeRésultatViewModel.entêtesDesAutresColonnes(budgetEtFinance)[1]}
+        entêteGauche={compteDeRésultatViewModel.entêtesDesAutresColonnes(budgetEtFinance)[0]}
+        nom={compteDeRésultatViewModel.intituléDuCompteDeRésultat(annéeEnCours)}
         nombreDAnnéeTotale={3}
-        ratioLargeurSurHauteur={compteDeRésultatViewModel.ratioHistogramme(budgetEtFinance)}
         valeursDeDroite={compteDeRésultatViewModel.recettesOuProduits(budgetEtFinance)}
         valeursDeGauche={compteDeRésultatViewModel.dépensesOuCharges(budgetEtFinance)}
       />

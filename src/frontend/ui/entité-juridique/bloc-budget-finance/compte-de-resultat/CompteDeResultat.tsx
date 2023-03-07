@@ -57,6 +57,7 @@ export function CompteDeResultat({ entitéJuridiqueBudgetFinanceViewModel }: Blo
         entêteDroite={wording.PRODUITS}
         entêteGauche={wording.CHARGES}
         légendes={entitéJuridiqueBudgetFinanceViewModel.légendeChart}
+        nom={wording.COMPTE_DE_RÉSULTAT}
         nombreDAnnéeTotale={entitéJuridiqueBudgetFinanceViewModel.NOMBRE_ANNEES}
         valeursDeDroite={entitéJuridiqueBudgetFinanceViewModel.dataGraphiqueProduits(budgetEtFinance)}
         valeursDeGauche={entitéJuridiqueBudgetFinanceViewModel.dataGraphiqueCharges(budgetEtFinance)}

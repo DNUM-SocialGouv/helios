@@ -9,110 +9,6 @@ import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
 
-type HistogrammeHorizontalProps = {
-  valeursDeGauche: number[];
-  valeursDeDroite: number[];
-  libellés: string[];
-  ratioLargeurSurHauteur: number;
-  entêtePremièreColonne: string;
-  entêtesDesAutresColonnes: string[];
-  annéesManquantes: number[] | string[];
-  nombreDAnnéeTotale: number;
-};
-
-export const DeuxHistogrammeHorizontaux = ({
-  valeursDeGauche,
-  valeursDeDroite,
-  libellés,
-  ratioLargeurSurHauteur,
-  entêtePremièreColonne,
-  entêtesDesAutresColonnes,
-  annéesManquantes,
-  nombreDAnnéeTotale = 3,
-}: HistogrammeHorizontalProps): ReactElement => {
-  const { wording } = useDependencies();
-
-  const couleurDuFondHistogrammeDeDépassement = "#C9191E";
-  const couleurDeLaValeur = "#3A3A3A";
-  const couleurDuFondHistogrammePrimaire = "#000091";
-  const couleurDuFondHistogrammeSecondaire = "#4E68BB";
-
-  const chartColors = [
-    couleurDuFondHistogrammePrimaire,
-    couleurDuFondHistogrammeSecondaire,
-    couleurDuFondHistogrammeSecondaire,
-    couleurDuFondHistogrammeSecondaire,
-    couleurDuFondHistogrammeSecondaire,
-  ];
-
-  ChartJS.unregister();
-  const chartColorsGauche = valeursDeGauche.map((valeurDeGauche, index) => {
-    return valeurDeGauche <= 0 ? chartColors[index] : couleurDuFondHistogrammeDeDépassement;
-  });
-  const chartColorsDroite = valeursDeDroite.map((valeurDeDroite, index) => {
-    return valeurDeDroite >= 0 ? chartColors[index] : couleurDuFondHistogrammeDeDépassement;
-  });
-  const datalabelsColorsGauche = valeursDeGauche.map((valeurDeGauche) => {
-    return valeurDeGauche <= 0 ? couleurDeLaValeur : couleurDuFondHistogrammeDeDépassement;
-  });
-  const datalabelsColorsDroite = valeursDeDroite.map((valeurDeDroite) => {
-    return valeurDeDroite >= 0 ? couleurDeLaValeur : couleurDuFondHistogrammeDeDépassement;
-  });
-
-  const histogrammeValeurGauche: HistogrammeLine = {
-    totals: valeursDeGauche,
-    labels: libellés,
-    stacks: [{ backgroundColor: chartColorsGauche, data: valeursDeGauche }],
-  };
-
-  const histogrammeValeurDroite: HistogrammeLine = {
-    totals: valeursDeDroite,
-    labels: libellés,
-    stacks: [{ backgroundColor: chartColorsDroite, data: valeursDeDroite }],
-  };
-  const dataGauche: ChartData = buildChartData(histogrammeValeurGauche, datalabelsColorsGauche);
-  const dataDroite: ChartData = buildChartData(histogrammeValeurDroite, datalabelsColorsDroite);
-  const valeursTableau = [valeursDeGauche.map(StringFormater.formateLeMontantEnEuros), valeursDeDroite.map(StringFormater.formateLeMontantEnEuros)];
-  return (
-    <>
-      {annéesManquantes.length < nombreDAnnéeTotale && (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 50%)",
-          }}
-        >
-          <div>
-            <Bar
-              // @ts-ignore
-              data={dataGauche}
-              // @ts-ignore
-              options={getOptionsHistogramme(entêtesDesAutresColonnes[0], valeursDeGauche.map(Number), false, ratioLargeurSurHauteur)}
-            />
-          </div>
-          <div>
-            <Bar
-              // @ts-ignore
-              data={dataDroite}
-              // @ts-ignore
-              options={getOptionsHistogramme(entêtesDesAutresColonnes[1], valeursDeDroite.map(Number), false, ratioLargeurSurHauteur)}
-            />
-          </div>
-        </div>
-      )}
-      {annéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
-      <Transcription
-        disabled={annéesManquantes.length === nombreDAnnéeTotale}
-        entêteLibellé={entêtePremièreColonne}
-        identifiantUnique="compte-de-resultat"
-        identifiants={entêtesDesAutresColonnes}
-        libellés={libellés}
-        valeurs={valeursTableau}
-      />
-    </>
-  );
-};
-
 export type HistogrammeLine = {
   labels: string[];
   stacks: { label?: string; data: number[]; backgroundColor: string[] }[];
@@ -120,13 +16,14 @@ export type HistogrammeLine = {
 };
 
 type HistogrammeHorizontalNewProps = {
+  nom: string;
   valeursDeGauche: HistogrammeLine;
   valeursDeDroite: HistogrammeLine;
   entêteDroite: string;
   entêteGauche: string;
   annéesManquantes: number[] | string[];
   nombreDAnnéeTotale: number;
-  légendes: string[];
+  légendes?: string[];
 };
 
 function buildChartData(valeurs: HistogrammeLine, couleurIdentifiant = ["#000"]): ChartData {
@@ -147,6 +44,7 @@ function buildChartData(valeurs: HistogrammeLine, couleurIdentifiant = ["#000"])
 }
 
 export const DeuxHistogrammesHorizontauxNew = ({
+  nom,
   valeursDeGauche,
   valeursDeDroite,
   entêteGauche,
@@ -155,6 +53,7 @@ export const DeuxHistogrammesHorizontauxNew = ({
   nombreDAnnéeTotale = 5,
   légendes,
 }: HistogrammeHorizontalNewProps): ReactElement => {
+  // TODO : gérer le total quand on a plusieurs stacks
   const { wording } = useDependencies();
 
   const dataGauche: ChartData = buildChartData(valeursDeGauche);
@@ -163,24 +62,13 @@ export const DeuxHistogrammesHorizontauxNew = ({
   const optionsDroite = getOptionsHistogramme(entêteDroite, valeursDeDroite.totals);
 
   function getTranscriptionTitles(): string[] {
-    return [
-      valeursDeGauche.stacks[0].label,
-      valeursDeGauche.stacks[1].label,
-      wording.CHARGES_TOTALES,
-      valeursDeDroite.stacks[0].label,
-      valeursDeDroite.stacks[1].label,
-      wording.PRODUITS_TOTALES,
-    ] as string[];
+    return [valeursDeGauche.stacks.map((stack) => stack.label), valeursDeDroite.stacks.map((stack) => stack.label)].flat() as string[];
   }
 
   function getTranscriptionValeurs() {
     return [
-      valeursDeGauche.stacks[0].data.map(StringFormater.formateLeMontantEnEuros),
-      valeursDeGauche.stacks[1].data.map(StringFormater.formateLeMontantEnEuros),
-      valeursDeGauche.totals.map(StringFormater.formateLeMontantEnEuros),
-      valeursDeDroite.stacks[0].data.map(StringFormater.formateLeMontantEnEuros),
-      valeursDeDroite.stacks[1].data.map(StringFormater.formateLeMontantEnEuros),
-      valeursDeDroite.totals.map(StringFormater.formateLeMontantEnEuros),
+      valeursDeGauche.stacks.flatMap((stack) => stack.data.map(StringFormater.formateLeMontantEnEuros)),
+      valeursDeDroite.stacks.flatMap((stack) => stack.data.map(StringFormater.formateLeMontantEnEuros)),
     ];
   }
 
@@ -206,11 +94,11 @@ export const DeuxHistogrammesHorizontauxNew = ({
         </div>
       )}
       {annéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
-      <LegendeDeuxHistogrammes color={valeursDeGauche.stacks.map((stack) => stack.backgroundColor[0])} legends={légendes} />
+      {légendes && <LegendeDeuxHistogrammes color={valeursDeGauche.stacks.map((stack) => stack.backgroundColor[0])} legends={légendes} />}
       <Transcription
         disabled={annéesManquantes.length === nombreDAnnéeTotale}
-        entêteLibellé="Compte de résultat - CF"
-        identifiantUnique="compte-de-resultat-cf"
+        entêteLibellé={nom}
+        identifiantUnique={nom}
         identifiants={getTranscriptionTitles()}
         libellés={valeursDeDroite.labels}
         valeurs={getTranscriptionValeurs()}
