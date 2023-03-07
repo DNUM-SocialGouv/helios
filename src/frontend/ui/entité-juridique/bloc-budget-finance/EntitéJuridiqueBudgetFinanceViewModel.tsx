@@ -78,7 +78,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       ].map(Number),
       [
         {
-          label: "Charges Principales", //
+          label: this.wording.CHARGES_PRINCIPALES,
           data: [
             budget.totalDepensesPrincipale,
             budget?.depensesTitreIPrincipale,
@@ -89,7 +89,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
           backgroundColor: this.getBackgroundColorBudgetPrincipal(),
         },
         {
-          label: "Charges Annexes",
+          label: this.wording.CHARGES_ANNEXES,
           data: [budget.totalDepensesH, budget?.depensesTitreIH, budget?.depensesTitreIIH, budget?.depensesTitreIIIH, budget?.depensesTitreIVH].map(Number),
           backgroundColor: this.getBackgroundColorBudgetSecondaire(),
         },
@@ -110,7 +110,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       ].map(Number),
       [
         {
-          label: "Produits Principals",
+          label: this.wording.PRODUITS_PRINCIPAUX,
           data: [
             budget.totalRecettesPrincipale,
             budget?.recettesTitreIPrincipale,
@@ -121,7 +121,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
           backgroundColor: this.getBackgroundColorBudgetPrincipal(),
         },
         {
-          label: "Produits Annexes",
+          label: this.wording.PRODUITS_ANNEXES,
           data: [budget.totalRecettesH, budget?.recettesTitreIH, budget?.recettesTitreIIH, budget?.recettesTitreIIIH, 0].map(Number),
           backgroundColor: this.getBackgroundColorBudgetSecondaire(),
         },
@@ -139,6 +139,6 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   }
 
   get légendeChart(): string[] {
-    return ["Budget Principal", "Budgets Annexes"];
+    return [this.wording.BUDGET_PRINCIPAL, this.wording.BUDGET_ANNEXE];
   }
 }

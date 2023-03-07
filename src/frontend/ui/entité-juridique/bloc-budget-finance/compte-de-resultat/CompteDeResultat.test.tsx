@@ -135,10 +135,10 @@ describe("CompteDeResultat", () => {
       const transcriptionTable = within(transcription);
       expect(transcriptionTable.getByText("Charges Principales")).toBeInTheDocument();
       expect(transcriptionTable.getByText("Charges Annexes")).toBeInTheDocument();
-      expect(transcriptionTable.getByText("Charges Totales")).toBeInTheDocument();
+      expect(transcriptionTable.getByText("Charges")).toBeInTheDocument();
       expect(transcriptionTable.getByText("Produits Principals")).toBeInTheDocument();
       expect(transcriptionTable.getByText("Produits Annexes")).toBeInTheDocument();
-      expect(transcriptionTable.getByText("Produits Totals")).toBeInTheDocument();
+      expect(transcriptionTable.getByText("Produits")).toBeInTheDocument();
       expect(transcriptionTable.getByText("−900 €")).toBeInTheDocument();
       expect(transcriptionTable.getByText("−110 €")).toBeInTheDocument();
       expect(transcriptionTable.getByText("−1 000 €")).toBeInTheDocument();

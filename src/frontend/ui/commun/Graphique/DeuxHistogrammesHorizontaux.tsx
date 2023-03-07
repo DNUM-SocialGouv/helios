@@ -37,11 +37,14 @@ export class HistogrammeLine {
   }
 
   public getTranscriptionTitles(): string[] {
-    return this.stacks.map((stack) => stack.label) as string[];
+    const stackLabels = this.stacks.map((stack) => stack.label) as string[];
+    return stackLabels.length > 1 ? [...stackLabels, this.nom] : stackLabels;
   }
 
-  public getTranscriptionValeurs(): string[] {
-    return this.stacks.flatMap((stack) => stack.data.map(StringFormater.formateLeMontantEnEuros));
+  public getTranscriptionValeurs(): string[][] {
+    const stacksValues = this.stacks.map((stack) => stack.data.map(StringFormater.formateLeMontantEnEuros));
+    const totalsEuros = this.totals.map(StringFormater.formateLeMontantEnEuros);
+    return stacksValues.length > 1 ? [...stacksValues, totalsEuros] : stacksValues;
   }
 
   public legendColors(): string[] {
@@ -107,7 +110,6 @@ export const DeuxHistogrammesHorizontaux = ({
   nombreDAnnéeTotale = 5,
   légendes,
 }: HistogrammeHorizontalNewProps): ReactElement => {
-  // TODO : gérer le total quand on a plusieurs stacks
   const { wording } = useDependencies();
 
   function getTranscriptionTitles(): string[] {
@@ -115,7 +117,7 @@ export const DeuxHistogrammesHorizontaux = ({
   }
 
   function getTranscriptionValeurs() {
-    return [valeursDeGauche.getTranscriptionValeurs(), valeursDeDroite.getTranscriptionValeurs()];
+    return [...valeursDeGauche.getTranscriptionValeurs(), ...valeursDeDroite.getTranscriptionValeurs()];
   }
 
   return (

@@ -68,16 +68,22 @@ export class CompteDeResultatViewModel {
     return new HistogrammeLine(
       this.libellés(budgetEtFinance),
       dépensesOuCharges,
-      [{ data: dépensesOuCharges, backgroundColor: this.getLineColors(dépensesOuCharges), label: this.entêtesDesAutresColonnes(budgetEtFinance)[0] }],
+      [
+        {
+          data: dépensesOuCharges,
+          backgroundColor: this.getLineColors(dépensesOuCharges, (x) => x >= 0),
+          label: this.entêtesDesAutresColonnes(budgetEtFinance)[0],
+        },
+      ],
       this.entêtesDesAutresColonnes(budgetEtFinance)[0],
       this.ratioHistogramme(budgetEtFinance)
     );
   }
 
-  private getLineColors(dépensesOuCharges: number[]) {
+  private getLineColors(montants: number[], isError: (x: number) => boolean) {
     const defaultLineColor = ["#000091", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"];
-    const lineColors = dépensesOuCharges.map((dépenses, index) => {
-      return dépenses <= 0 ? defaultLineColor[index] : "#C9191E";
+    const lineColors = montants.map((dépenses, index) => {
+      return isError(dépenses) ? "#C9191E" : defaultLineColor[index];
     });
     return lineColors;
   }
@@ -98,7 +104,13 @@ export class CompteDeResultatViewModel {
     return new HistogrammeLine(
       this.libellés(budgetEtFinance),
       recettesOuProduits,
-      [{ data: recettesOuProduits, backgroundColor: this.getLineColors(recettesOuProduits), label: this.entêtesDesAutresColonnes(budgetEtFinance)[1] }],
+      [
+        {
+          data: recettesOuProduits,
+          backgroundColor: this.getLineColors(recettesOuProduits, (x) => x <= 0),
+          label: this.entêtesDesAutresColonnes(budgetEtFinance)[1],
+        },
+      ],
       this.entêtesDesAutresColonnes(budgetEtFinance)[1],
       this.ratioHistogramme(budgetEtFinance)
     );

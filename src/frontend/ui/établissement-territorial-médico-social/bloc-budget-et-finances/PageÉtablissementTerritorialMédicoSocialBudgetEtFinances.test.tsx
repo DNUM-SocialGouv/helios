@@ -340,7 +340,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
       const recettesEtDépenses = indicateurs[indiceDeLIndicateur.recettesEtDépenses];
       const tableau = within(recettesEtDépenses).getByRole("table");
-      const titreBudgétaire = within(tableau).getByRole("columnheader", { name: wording.TITRE_BUDGÉTAIRE });
+      const titreBudgétaire = within(tableau).getByRole("columnheader", { name: wording.COMPTE_DE_RÉSULTAT_ERRD });
       expect(titreBudgétaire).toBeInTheDocument();
       const dépensesLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.DÉPENSES });
       expect(dépensesLigneDEnTête).toBeInTheDocument();
