@@ -7,6 +7,7 @@ from datacrawler.test_helpers import (
     sauvegarde_une_entité_juridique_en_base,
     sauvegarde_un_établissement_en_base,
     supprime_les_données_des_tables,
+    mocked_logger,
 )
 
 
@@ -44,7 +45,7 @@ class TestAgrègeLesActivitesSanitaireDesEntitesJuridiques:
             activités.to_sql(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, connection, if_exists="append", index=False)
 
         # WHEN
-        agrège_les_activités_sanitaire_des_entités_juridiques(base_de_données_test)
+        agrège_les_activités_sanitaire_des_entités_juridiques(base_de_données_test, mocked_logger)
 
         # THEN
         agrégation_activités_enregistrées = pd.read_sql_table(TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES, base_de_données_test)
@@ -66,3 +67,30 @@ class TestAgrègeLesActivitesSanitaireDesEntitesJuridiques:
             }
         )
         pd.testing.assert_frame_equal(agrégation_activités_enregistrées, agrégation_activités_attendues)
+
+    def test_supprime_les_données_existantes_avant_de_sauvegarder_les_données_en_base(self) -> None:
+        # GIVEN
+        sauvegarde_une_entité_juridique_en_base("111111111", base_de_données_test)
+        sauvegarde_un_établissement_en_base("222222222", "111111111", base_de_données_test)
+        activités_déjà_enregistrée = pd.DataFrame(
+            {
+                "annee": [2020],
+                "numero_finess_etablissement_territorial": ["222222222"],
+                "nombre_sejours_partiels_medecine": [1.0],
+            }
+        )
+        with base_de_données_test.begin() as connection:
+            activités_déjà_enregistrée.to_sql(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, connection, if_exists="append", index=False)
+
+        agrège_les_activités_sanitaire_des_entités_juridiques(base_de_données_test, mocked_logger)
+
+        # WHEN
+        agrège_les_activités_sanitaire_des_entités_juridiques(base_de_données_test, mocked_logger)
+
+        # THEN
+        agregation_activites = pd.read_sql_query(
+            f"SELECT * from {TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES} " f"WHERE numero_finess_entite_juridique = '111111111'",
+            base_de_données_test,
+        )
+
+        assert 1 == len(agregation_activites)

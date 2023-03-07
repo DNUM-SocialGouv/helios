@@ -97,7 +97,6 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
             budget?.depensesTitreIIIAnnexe,
             budget?.depensesTitreIVAnnexe,
           ].map(Number),
-
           backgroundColor: this.getBackgroundColorBudgetSecondaire(),
         },
       ],
@@ -125,7 +124,6 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
             budget?.recettesTitreIIIPrincipales,
             0,
           ].map(Number),
-
           backgroundColor: this.getBackgroundColorBudgetPrincipal(),
         },
         {
