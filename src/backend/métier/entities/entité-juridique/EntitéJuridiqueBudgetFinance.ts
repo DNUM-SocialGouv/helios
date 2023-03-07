@@ -36,4 +36,6 @@ export type EntitéJuridiqueBudgetFinance = {
   recettesTitreIIIAnnexe: number | null;
   recettesTitreIVAnnexe: number | null;
   totalRecettesAnnexe: number;
+
+  resultatNetComptable: number | null;
 };
