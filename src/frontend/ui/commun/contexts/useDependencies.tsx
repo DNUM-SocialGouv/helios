@@ -16,6 +16,6 @@ type DependenciesProviderProps = Readonly<{
 }>;
 
 export const DependenciesProvider = ({ children }: DependenciesProviderProps) => {
-  const { query } = useRouter();
-  return <DependenciesContext.Provider value={frontDependencies(query)}>{children}</DependenciesContext.Provider>;
+  const router = useRouter();
+  return <DependenciesContext.Provider value={frontDependencies(router?.query)}>{children}</DependenciesContext.Provider>;
 };
