@@ -10,11 +10,11 @@ import { StringFormater } from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
 
 export class HistogrammeData {
-  couleurIdentifiant = ["#000"];
+  couleurIdentifiant = "#000";
   constructor(
     public labels: string[],
     private totals: number[],
-    private stacks: { label?: string; data: number[]; backgroundColor: string[] }[],
+    private stacks: { label?: string; data: number[]; backgroundColor: string[]; isError: boolean[] }[],
     private nom: string,
     private aspectRatio = 2
   ) {}
@@ -25,15 +25,33 @@ export class HistogrammeData {
       datasets: this.stacks.map((stack) => {
         return {
           ...stack,
+          backgroundColor: this.getStackBackgroundColor(stack),
           data: stack.data.map(Math.abs),
           barThickness: 25,
           datalabels: {
             font: { weight: "bold" },
-            labels: { title: { color: this.couleurIdentifiant } },
+            labels: {
+              title: { color: this.getLabelsColor() },
+            },
           },
         };
       }),
     };
+  }
+
+  private couleurErreur = "#C9191E";
+
+  private getLabelsColor(): string[] {
+    const isLabelsError = this.stacks
+      .map((stack) => stack.isError)
+      .reduce((isLabelInError, isErrorStack) => {
+        return isLabelInError.map((isError, index) => isError || isErrorStack[index]);
+      });
+    return isLabelsError.map((error) => (error ? this.couleurErreur : this.couleurIdentifiant));
+  }
+
+  private getStackBackgroundColor(stack: { label?: string; data: number[]; backgroundColor: string[]; isError?: boolean[] }) {
+    return stack.isError ? stack.isError.map((error, index) => (error ? this.couleurErreur : stack.backgroundColor[index])) : stack.backgroundColor;
   }
 
   public getTranscriptionTitles(): string[] {
