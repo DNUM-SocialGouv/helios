@@ -1,7 +1,7 @@
 import { EntitéJuridiqueBudgetFinance } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
-import { HistogrammeLine } from "../../commun/Graphique/DeuxHistogrammesHorizontaux";
+import { HistogrammeData } from "../../commun/Graphique/DeuxHistogrammesHorizontaux";
 import { StringFormater } from "../../commun/StringFormater";
 
 export class EntitéJuridiqueBudgetFinanceViewModel {
@@ -66,8 +66,8 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     return StringFormater.formateLaDate(this.budgetEtFinance[0]?.dateMiseÀJourSource as string);
   }
 
-  public dataGraphiqueCharges(budget: EntitéJuridiqueBudgetFinance): HistogrammeLine {
-    return new HistogrammeLine(
+  public dataGraphiqueCharges(budget: EntitéJuridiqueBudgetFinance): HistogrammeData {
+    return new HistogrammeData(
       [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
       [
         budget.totalDepensesGlobal,
@@ -98,8 +98,8 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     );
   }
 
-  public dataGraphiqueProduits(budget: EntitéJuridiqueBudgetFinance): HistogrammeLine {
-    return new HistogrammeLine(
+  public dataGraphiqueProduits(budget: EntitéJuridiqueBudgetFinance): HistogrammeData {
+    return new HistogrammeData(
       [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
       [
         budget.totalRecettesGlobal,

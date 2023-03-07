@@ -9,7 +9,7 @@ import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
 
-export class HistogrammeLine {
+export class HistogrammeData {
   couleurIdentifiant = ["#000"];
   constructor(
     public labels: string[],
@@ -96,8 +96,8 @@ export class HistogrammeLine {
 
 type HistogrammeHorizontalNewProps = {
   nom: string;
-  valeursDeGauche: HistogrammeLine;
-  valeursDeDroite: HistogrammeLine;
+  valeursDeGauche: HistogrammeData;
+  valeursDeDroite: HistogrammeData;
   annéesManquantes: number[] | string[];
   nombreDAnnéeTotale: number;
   légendes?: string[];

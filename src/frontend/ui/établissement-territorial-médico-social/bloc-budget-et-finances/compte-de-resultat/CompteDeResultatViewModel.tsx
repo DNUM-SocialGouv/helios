@@ -2,7 +2,7 @@ import { CadreBudgétaire } from "../../../../../../database/models/BudgetEtFina
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
 import { Wording } from "../../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../../utils/dateUtils";
-import { HistogrammeLine } from "../../../commun/Graphique/DeuxHistogrammesHorizontaux";
+import { HistogrammeData } from "../../../commun/Graphique/DeuxHistogrammesHorizontaux";
 import { StringFormater } from "../../../commun/StringFormater";
 
 export class CompteDeResultatViewModel {
@@ -65,7 +65,7 @@ export class CompteDeResultatViewModel {
       dépensesOuCharges.push(totalDesDépenses, dépensesGroupeI, dépensesGroupeII, dépensesGroupeIII);
     }
 
-    return new HistogrammeLine(
+    return new HistogrammeData(
       this.libellés(budgetEtFinance),
       dépensesOuCharges,
       [
@@ -88,7 +88,7 @@ export class CompteDeResultatViewModel {
     return lineColors;
   }
 
-  public recettesOuProduits(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances): HistogrammeLine {
+  public recettesOuProduits(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances): HistogrammeData {
     const recettesOuProduits = [];
     if (budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA) {
       const totalDesProduits = budgetEtFinance.chargesEtProduits.produits as number;
@@ -101,7 +101,7 @@ export class CompteDeResultatViewModel {
       recettesOuProduits.push(totalDesRecettes, recettesGroupeI, recettesGroupeII, recettesGroupeIII);
     }
 
-    return new HistogrammeLine(
+    return new HistogrammeData(
       this.libellés(budgetEtFinance),
       recettesOuProduits,
       [
