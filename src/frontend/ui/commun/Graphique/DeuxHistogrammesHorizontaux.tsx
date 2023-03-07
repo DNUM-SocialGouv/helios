@@ -9,15 +9,11 @@ import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
 
+type Stack = { label?: string; data: number[]; backgroundColor: string[]; isError: boolean[] };
+
 export class HistogrammeData {
   couleurIdentifiant = "#000";
-  constructor(
-    public labels: string[],
-    private totals: number[],
-    private stacks: { label?: string; data: number[]; backgroundColor: string[]; isError: boolean[] }[],
-    private nom: string,
-    private aspectRatio = 2
-  ) {}
+  constructor(public labels: string[], private totals: number[], private stacks: Stack[], private nom: string, private aspectRatio = 2) {}
 
   public chartData(): ChartData {
     return {
@@ -25,6 +21,8 @@ export class HistogrammeData {
       datasets: this.stacks.map((stack) => {
         return {
           ...stack,
+          borderWidth: { top: 0, bottom: 0, left: 0, right: 2 },
+          borderColor: "white",
           backgroundColor: this.getStackBackgroundColor(stack),
           data: stack.data.map(Math.abs),
           barThickness: 25,
@@ -50,8 +48,8 @@ export class HistogrammeData {
     return isLabelsError.map((error) => (error ? this.couleurErreur : this.couleurIdentifiant));
   }
 
-  private getStackBackgroundColor(stack: { label?: string; data: number[]; backgroundColor: string[]; isError?: boolean[] }) {
-    return stack.isError ? stack.isError.map((error, index) => (error ? this.couleurErreur : stack.backgroundColor[index])) : stack.backgroundColor;
+  private getStackBackgroundColor(stack: Stack) {
+    return stack.isError.map((error, index) => (error ? this.couleurErreur : stack.backgroundColor[index]));
   }
 
   public getTranscriptionTitles(): string[] {
