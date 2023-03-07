@@ -63,7 +63,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   }
 
   public get dateMiseÀJour(): string {
-    return StringFormater.formateLaDate(this.budgetEtFinance[0].dateMiseÀJourSource as string);
+    return StringFormater.formateLaDate(this.budgetEtFinance[0]?.dateMiseÀJourSource as string);
   }
 
   public dataGraphiqueCharges(budget: EntitéJuridiqueBudgetFinance): HistogrammeLine {
@@ -71,26 +71,26 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       labels: [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
       totals: [
         budget.totalDepensesGlobal,
-        budget.depensesTitreIGlobal,
-        budget.depensesTitreIIGlobal,
-        budget.depensesTitreIIIGlobal,
-        budget.depensesTitreIVGlobal,
+        budget?.depensesTitreIGlobal,
+        budget?.depensesTitreIIGlobal,
+        budget?.depensesTitreIIIGlobal,
+        budget?.depensesTitreIVGlobal,
       ].map(Number),
       stacks: [
         {
           label: "Charges Principales", //
           data: [
             budget.totalDepensesPrincipale,
-            budget.depensesTitreIPrincipale,
-            budget.depensesTitreIIPrincipale,
-            budget.depensesTitreIIIPrincipale,
-            budget.depensesTitreIVPrincipale,
+            budget?.depensesTitreIPrincipale,
+            budget?.depensesTitreIIPrincipale,
+            budget?.depensesTitreIIIPrincipale,
+            budget?.depensesTitreIVPrincipale,
           ].map(Number),
           backgroundColor: ["#2F4077", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"],
         },
         {
           label: "Charges Annexes",
-          data: [budget.totalDepensesH, budget.depensesTitreIH, budget.depensesTitreIIH, budget.depensesTitreIIIH, budget.depensesTitreIVH].map(Number),
+          data: [budget.totalDepensesH, budget?.depensesTitreIH, budget?.depensesTitreIIH, budget?.depensesTitreIIIH, budget?.depensesTitreIVH].map(Number),
           backgroundColor: ["#FA794A", "#FB9175", "#FB9175", "#FB9175"],
         },
       ],
@@ -102,26 +102,26 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       labels: [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
       totals: [
         budget.totalRecettesGlobal,
-        budget.recettesTitreIGlobal,
-        budget.recettesTitreIIGlobal,
-        budget.recettesTitreIIIGlobal,
-        budget.recettesTitreIVGlobal,
+        budget?.recettesTitreIGlobal,
+        budget?.recettesTitreIIGlobal,
+        budget?.recettesTitreIIIGlobal,
+        budget?.recettesTitreIVGlobal,
       ].map(Number),
       stacks: [
         {
           label: "Produits Principals",
           data: [
             budget.totalRecettesPrincipale,
-            budget.recettesTitreIPrincipale,
-            budget.recettesTitreIIPrincipale,
-            budget.recettesTitreIIIPrincipale,
-            budget.recettesTitreIVPrincipale,
+            budget?.recettesTitreIPrincipale,
+            budget?.recettesTitreIIPrincipale,
+            budget?.recettesTitreIIIPrincipale,
+            budget?.recettesTitreIVPrincipale,
           ].map(Number),
           backgroundColor: ["#2F4077", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"],
         },
         {
           label: "Produits Annexes",
-          data: [budget.totalRecettesH, budget.recettesTitreIH, budget.recettesTitreIIH, budget.recettesTitreIIIH, 0].map(Number),
+          data: [budget.totalRecettesH, budget?.recettesTitreIH, budget?.recettesTitreIIH, budget?.recettesTitreIIIH, 0].map(Number),
           backgroundColor: ["#FA794A", "#FB9175", "#FB9175", "#FB9175"],
         },
       ],

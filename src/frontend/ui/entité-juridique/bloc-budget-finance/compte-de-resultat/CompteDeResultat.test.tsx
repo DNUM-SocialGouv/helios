@@ -1,23 +1,15 @@
-import { within } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
+import { mock } from "jest-mock-extended";
 import React from "react";
 
 import { EntitéJuridiqueBudgetFinance } from "../../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { GraphiqueTest } from "../../../../test-helpers/GraphiqueTest";
-import { fakeFrontDependencies, renderFakeComponent } from "../../../../test-helpers/testHelper";
+import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../../test-helpers/testHelper";
 import { EntitéJuridiqueBudgetFinanceViewModel } from "../EntitéJuridiqueBudgetFinanceViewModel";
 import { CompteDeResultat } from "./CompteDeResultat";
 
 const { wording } = fakeFrontDependencies;
 let graphiqueTest: GraphiqueTest;
-
-/* Liste des tests à réalisé :
- * - Gestion des années :
- *      - On voit une liste avec les 5 dernières années disponible dans l'ordre
- *      - Mise en exergue : si il manque des années la liste des années manquantes est affichée
- *      - Si on change d'année les données dans la transcription doivent changer
- * - Transcription :
- *    - Vérifier le contenu de la transcription (Not done for everything only a handful of columms)
- * */
 
 describe("CompteDeResultat", () => {
   let budgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;
@@ -153,6 +145,45 @@ describe("CompteDeResultat", () => {
       expect(transcriptionTable.getByText("940 €")).toBeInTheDocument();
       expect(transcriptionTable.getByText("1 000 €")).toBeInTheDocument();
       expect(transcriptionTable.getByText("60 €")).toBeInTheDocument();
+    });
+  });
+
+  describe("affiche des années", () => {
+    it("doit afficher la mise en exergue pour les années manquantes sur les 5 dernières années", () => {
+      // GIVEN
+      const budgetFinanceVide = new EntitéJuridiqueBudgetFinanceViewModel(
+        [mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 2 }), mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 4 })],
+        wording
+      );
+      // WHEN
+      renderFakeComponent(<CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={budgetFinanceVide} />);
+
+      // THEN
+      const exergue = screen.getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 5}, ${annéeEnCours - 3}, ${annéeEnCours - 1}`, { selector: "p" });
+      expect(exergue).toBeInTheDocument();
+    });
+
+    it("ne doit pas afficher la mise en exergue si toutes les années sont présentes", () => {
+      // GIVEN
+      const budgetFinanceAnnees = new EntitéJuridiqueBudgetFinanceViewModel(
+        [
+          mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 1 }),
+          mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 2 }),
+          mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 3 }),
+          mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 4 }),
+          mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 5 }),
+        ],
+        wording
+      );
+      // WHEN
+      renderFakeComponent(<CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={budgetFinanceAnnees} />);
+
+      // THEN
+      const exergue = screen.queryByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE}`, {
+        exact: false,
+        selector: "p",
+      });
+      expect(exergue).not.toBeInTheDocument();
     });
   });
 });
