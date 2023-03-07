@@ -46,6 +46,7 @@ export class EntitéJuridiqueViewModelTestBuilder {
       value: "0296017123",
     },
     activités: [],
+    budgetFinance: [],
   };
 
   public static crée(wording: Wording, champsSurchargés?: Partial<EntitéJuridique>): EntitéJuridiqueViewModel {
