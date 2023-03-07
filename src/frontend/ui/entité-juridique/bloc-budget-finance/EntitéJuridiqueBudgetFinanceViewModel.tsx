@@ -40,13 +40,13 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
 
   private compteResultatVide(budgetFinance: EntitéJuridiqueBudgetFinance): boolean {
     return (
-      !budgetFinance.depensesTitreIH &&
-      !budgetFinance.depensesTitreIIH &&
-      !budgetFinance.depensesTitreIIIH &&
-      !budgetFinance.depensesTitreIVH &&
-      !budgetFinance.recettesTitreIH &&
-      !budgetFinance.recettesTitreIIH &&
-      !budgetFinance.recettesTitreIIIH &&
+      !budgetFinance.depensesTitreIPrincipales &&
+      !budgetFinance.depensesTitreIIPrincipales &&
+      !budgetFinance.depensesTitreIIIPrincipales &&
+      !budgetFinance.depensesTitreIVPrincipales &&
+      !budgetFinance.recettesTitreIPrincipales &&
+      !budgetFinance.recettesTitreIIPrincipales &&
+      !budgetFinance.recettesTitreIIIPrincipales &&
       !budgetFinance.recettesTitreIGlobal &&
       !budgetFinance.recettesTitreIIGlobal &&
       !budgetFinance.recettesTitreIIIGlobal &&
@@ -80,17 +80,24 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
         {
           label: this.wording.CHARGES_PRINCIPALES,
           data: [
-            budget.totalDepensesPrincipale,
-            budget?.depensesTitreIPrincipale,
-            budget?.depensesTitreIIPrincipale,
-            budget?.depensesTitreIIIPrincipale,
-            budget?.depensesTitreIVPrincipale,
+            budget.totalDepensesPrincipales,
+            budget?.depensesTitreIPrincipales,
+            budget?.depensesTitreIIPrincipales,
+            budget?.depensesTitreIIIPrincipales,
+            budget?.depensesTitreIVPrincipales,
           ].map(Number),
           backgroundColor: this.getBackgroundColorBudgetPrincipal(),
         },
         {
           label: this.wording.CHARGES_ANNEXES,
-          data: [budget.totalDepensesH, budget?.depensesTitreIH, budget?.depensesTitreIIH, budget?.depensesTitreIIIH, budget?.depensesTitreIVH].map(Number),
+          data: [
+            budget.totalDepensesAnnexe,
+            budget?.depensesTitreIAnnexe,
+            budget?.depensesTitreIIAnnexe,
+            budget?.depensesTitreIIIAnnexe,
+            budget?.depensesTitreIVAnnexe,
+          ].map(Number),
+
           backgroundColor: this.getBackgroundColorBudgetSecondaire(),
         },
       ],
@@ -112,17 +119,24 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
         {
           label: this.wording.PRODUITS_PRINCIPAUX,
           data: [
-            budget.totalRecettesPrincipale,
-            budget?.recettesTitreIPrincipale,
-            budget?.recettesTitreIIPrincipale,
-            budget?.recettesTitreIIIPrincipale,
-            budget?.recettesTitreIVPrincipale,
+            budget.totalRecettesPrincipales,
+            budget?.recettesTitreIPrincipales,
+            budget?.recettesTitreIIPrincipales,
+            budget?.recettesTitreIIIPrincipales,
+            0,
           ].map(Number),
+
           backgroundColor: this.getBackgroundColorBudgetPrincipal(),
         },
         {
           label: this.wording.PRODUITS_ANNEXES,
-          data: [budget.totalRecettesH, budget?.recettesTitreIH, budget?.recettesTitreIIH, budget?.recettesTitreIIIH, 0].map(Number),
+          data: [
+            budget.totalRecettesAnnexe,
+            budget?.recettesTitreIAnnexe,
+            budget?.recettesTitreIIAnnexe,
+            budget?.recettesTitreIIIAnnexe,
+            budget?.recettesTitreIVAnnexe,
+          ].map(Number),
           backgroundColor: this.getBackgroundColorBudgetSecondaire(),
         },
       ],

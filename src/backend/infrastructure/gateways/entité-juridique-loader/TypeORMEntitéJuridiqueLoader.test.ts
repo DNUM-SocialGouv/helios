@@ -6,6 +6,7 @@ import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { DateMiseÀJourFichierSourceModelTestBuilder } from "../../../../../database/test-builder/DateMiseÀJourFichierSourceModelTestBuilder";
 import { EntitéJuridiqueModelTestBuilder } from "../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder";
+import { EntitéJuridiqueBudgetFinance } from "../../../métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { EntitéJuridiqueNonTrouvée } from "../../../métier/entities/EntitéJuridiqueNonTrouvée";
 import { EntitéJuridiqueDeRattachement } from "../../../métier/entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement";
 import { EntitéJuridiqueTestBuilder } from "../../../test-builder/EntitéJuridiqueTestBuilder";
@@ -246,31 +247,36 @@ describe("Entité juridique loader", () => {
           depensesTitreIIIGlobal: -300,
           depensesTitreIVGlobal: -400,
           totalDepensesGlobal: -1000,
+
           recettesTitreIGlobal: 100,
           recettesTitreIIGlobal: 200,
           recettesTitreIIIGlobal: 300,
           recettesTitreIVGlobal: 400,
           totalRecettesGlobal: 1000,
-          depensesTitreIH: -10,
-          depensesTitreIIH: -20,
-          depensesTitreIIIH: -30,
-          depensesTitreIVH: -40,
-          totalDepensesH: -100,
-          recettesTitreIH: 10,
-          recettesTitreIIH: 20,
-          recettesTitreIIIH: 30,
-          totalRecettesH: 60,
-          depensesTitreIPrincipale: -90,
-          depensesTitreIIPrincipale: -180,
-          depensesTitreIIIPrincipale: -270,
-          depensesTitreIVPrincipale: -360,
-          totalDepensesPrincipale: -900,
-          recettesTitreIPrincipale: 90,
-          recettesTitreIIPrincipale: 180,
-          recettesTitreIIIPrincipale: 270,
-          recettesTitreIVPrincipale: 400,
-          totalRecettesPrincipale: 940,
-        },
+
+          depensesTitreIPrincipales: -10,
+          depensesTitreIIPrincipales: -20,
+          depensesTitreIIIPrincipales: -30,
+          depensesTitreIVPrincipales: -40,
+          totalDepensesPrincipales: -100,
+
+          recettesTitreIPrincipales: 10,
+          recettesTitreIIPrincipales: 20,
+          recettesTitreIIIPrincipales: 30,
+          totalRecettesPrincipales: 60,
+
+          depensesTitreIAnnexe: -90,
+          depensesTitreIIAnnexe: -180,
+          depensesTitreIIIAnnexe: -270,
+          depensesTitreIVAnnexe: -360,
+          totalDepensesAnnexe: -900,
+
+          recettesTitreIAnnexe: 90,
+          recettesTitreIIAnnexe: 180,
+          recettesTitreIIIAnnexe: 270,
+          recettesTitreIVAnnexe: 400,
+          totalRecettesAnnexe: 940,
+        } as EntitéJuridiqueBudgetFinance,
       ]);
     });
   });

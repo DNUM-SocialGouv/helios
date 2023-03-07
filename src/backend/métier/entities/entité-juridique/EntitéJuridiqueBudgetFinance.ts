@@ -14,26 +14,26 @@ export type EntitéJuridiqueBudgetFinance = {
   recettesTitreIVGlobal: number | null;
   totalRecettesGlobal: number;
 
-  depensesTitreIH: number | null;
-  depensesTitreIIH: number | null;
-  depensesTitreIIIH: number | null;
-  depensesTitreIVH: number | null;
-  totalDepensesH: number;
+  depensesTitreIPrincipales: number | null;
+  depensesTitreIIPrincipales: number | null;
+  depensesTitreIIIPrincipales: number | null;
+  depensesTitreIVPrincipales: number | null;
+  totalDepensesPrincipales: number;
 
-  recettesTitreIH: number | null;
-  recettesTitreIIH: number | null;
-  recettesTitreIIIH: number | null;
-  totalRecettesH: number;
+  recettesTitreIPrincipales: number | null;
+  recettesTitreIIPrincipales: number | null;
+  recettesTitreIIIPrincipales: number | null;
+  totalRecettesPrincipales: number;
 
-  depensesTitreIPrincipale: number | null;
-  depensesTitreIIPrincipale: number | null;
-  depensesTitreIIIPrincipale: number | null;
-  depensesTitreIVPrincipale: number | null;
-  totalDepensesPrincipale: number;
+  depensesTitreIAnnexe: number | null;
+  depensesTitreIIAnnexe: number | null;
+  depensesTitreIIIAnnexe: number | null;
+  depensesTitreIVAnnexe: number | null;
+  totalDepensesAnnexe: number;
 
-  recettesTitreIPrincipale: number | null;
-  recettesTitreIIPrincipale: number | null;
-  recettesTitreIIIPrincipale: number | null;
-  recettesTitreIVPrincipale: number | null;
-  totalRecettesPrincipale: number;
+  recettesTitreIAnnexe: number | null;
+  recettesTitreIIAnnexe: number | null;
+  recettesTitreIIIAnnexe: number | null;
+  recettesTitreIVAnnexe: number | null;
+  totalRecettesAnnexe: number;
 };
