@@ -72,7 +72,7 @@ class TestAgrègeLesActivitesSanitaireDesEntitesJuridiques:
         # GIVEN
         sauvegarde_une_entité_juridique_en_base("111111111", base_de_données_test)
         sauvegarde_un_établissement_en_base("222222222", "111111111", base_de_données_test)
-        activitésDéjàEnregistrée = pd.DataFrame(
+        activités_déjà_enregistrée = pd.DataFrame(
             {
                 "annee": [2020],
                 "numero_finess_etablissement_territorial": ["222222222"],
@@ -80,7 +80,7 @@ class TestAgrègeLesActivitesSanitaireDesEntitesJuridiques:
             }
         )
         with base_de_données_test.begin() as connection:
-            activitésDéjàEnregistrée.to_sql(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, connection, if_exists="append", index=False)
+            activités_déjà_enregistrée.to_sql(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, connection, if_exists="append", index=False)
 
         agrège_les_activités_sanitaire_des_entités_juridiques(base_de_données_test, mocked_logger)
 
