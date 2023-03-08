@@ -10,26 +10,26 @@ import { Transcription } from "../Transcription/Transcription";
 
 type Stack = { label?: string; data: number[]; backgroundColor: string[]; isError: boolean[] };
 
-function useHistogrammeData(histogrammes: HistogrammeData[]) {
-  const [histogrammesData, setHistogrammesData] = useState(histogrammes);
-  useEffect(() => setHistogrammesData(histogrammes), histogrammes);
+function useChartData(charts: HistogrammeData[]) {
+  const [chartsData, setChartsData] = useState(charts);
+  useEffect(() => setChartsData(charts), charts);
 
   return {
-    histogrammes: histogrammesData.map((histogrammeData) => ({
-      transcriptionTitles: histogrammeData.transcriptionTitles,
-      chartData: histogrammeData.chartData,
-      optionsHistogramme: histogrammeData.optionsHistogramme,
-      legendColors: histogrammeData.legendColors,
-      labels: histogrammeData.labels,
-      transcriptionsValeurs: histogrammeData.transcriptionValeurs,
-      nom: histogrammeData.nom,
-      areStacksVisible: histogrammeData.areStacksVisible,
+    histogrammes: chartsData.map((chartData) => ({
+      transcriptionTitles: chartData.transcriptionTitles,
+      chartData: chartData.chartData,
+      optionsHistogramme: chartData.optionsHistogramme,
+      legendColors: chartData.legendColors,
+      labels: chartData.labels,
+      transcriptionsValeurs: chartData.transcriptionValeurs,
+      nom: chartData.nom,
+      areStacksVisible: chartData.areStacksVisible,
     })),
     toggleStackVisibility: (stackIndex: number) => {
-      setHistogrammesData((histogrammesData): HistogrammeData[] => {
-        const clonedHistogramme = histogrammesData.map((histogramme) => histogramme.clone());
-        clonedHistogramme.forEach((histogramme) => histogramme.toggleStack(stackIndex));
-        return clonedHistogramme;
+      setChartsData((chartsData): HistogrammeData[] => {
+        const clonedChart = chartsData.map((chart) => chart.clone());
+        clonedChart.forEach((chart) => chart.toggleStack(stackIndex));
+        return clonedChart;
       });
     },
   };
@@ -174,7 +174,7 @@ export const DeuxHistogrammesHorizontaux = ({
   légendes,
 }: HistogrammeHorizontalNewProps): ReactElement => {
   const { wording } = useDependencies();
-  const { histogrammes, toggleStackVisibility } = useHistogrammeData([valeursDeGauche, valeursDeDroite]);
+  const { histogrammes, toggleStackVisibility } = useChartData([valeursDeGauche, valeursDeDroite]);
 
   function transcriptionTitles(): string[] {
     return histogrammes.map((histogramme) => histogramme.transcriptionTitles).flat() as string[];
