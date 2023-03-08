@@ -1,14 +1,13 @@
 import { EntitéJuridiqueBudgetFinance } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
-import { Wording } from "../../../configuration/wording/Wording";
-import { StringFormater } from "../../commun/StringFormater";
 import { annéesManquantes } from "../../../utils/dateUtils";
+import { StringFormater } from "../../commun/StringFormater";
 import { valeursResultatNetCompatable } from "./ResultatNetComptable";
 
 export class ResultatNetComptableViewModel {
   private budgetEtFinance: EntitéJuridiqueBudgetFinance[];
   // private wording: Wording;
   private NOMBRE_ANNEES = 5;
-  constructor(budgetFinance: EntitéJuridiqueBudgetFinance[], wording: Wording) {
+  constructor(budgetFinance: EntitéJuridiqueBudgetFinance[]) {
     // this.wording = wording;
     this.budgetEtFinance = budgetFinance;
   }

@@ -3,6 +3,7 @@ import { ReactElement } from "react";
 import { EntitéJuridique } from "../../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { Wording } from "../../configuration/wording/Wording";
 import { StringFormater } from "../commun/StringFormater";
+import { ResultatNetComptableViewModel } from "../indicateur-métier/resultat-net-comptable/ResultatNetComptableViewModel";
 import { EntitéJuridiqueActivitésViewModel } from "./bloc-activité/EntitéJuridiqueActivitésViewModel";
 import { EntitéJuridiqueBudgetFinanceViewModel } from "./bloc-budget-finance/EntitéJuridiqueBudgetFinanceViewModel";
 import { CatégorisationViewModel } from "./catégorisation/CatégorisationViewModel";
@@ -11,11 +12,13 @@ export class EntitéJuridiqueViewModel {
   public catégorisationViewModel: CatégorisationViewModel;
   public entitéJuridiqueActivitéViewModel: EntitéJuridiqueActivitésViewModel;
   public entitéJuridiqueBudgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;
+  public resultatNetComptableViewModel: ResultatNetComptableViewModel;
 
   constructor(private readonly entitéJuridique: EntitéJuridique, private readonly wording: Wording) {
     this.catégorisationViewModel = new CatégorisationViewModel(entitéJuridique.catégorisation, wording);
     this.entitéJuridiqueActivitéViewModel = new EntitéJuridiqueActivitésViewModel(entitéJuridique.activités, wording);
     this.entitéJuridiqueBudgetFinanceViewModel = new EntitéJuridiqueBudgetFinanceViewModel(entitéJuridique.budgetFinance, wording);
+    this.resultatNetComptableViewModel = new ResultatNetComptableViewModel(entitéJuridique.budgetFinance);
   }
 
   public get titreAccessible(): ReactElement {

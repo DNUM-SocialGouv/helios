@@ -10,7 +10,6 @@ type BlocBudgetFinanceProps = Readonly<{
 
 export function ResultatNetComptable({ resultatNetComptableViewModel }: BlocBudgetFinanceProps) {
   const { wording } = useDependencies();
-  // const budgetEtFinance = entitéJuridiqueBudgetFinanceViewModel.annéesRangéesParAntéChronologie;
   return (
     <IndicateurGraphique
       contenuInfoBulle={<ContenuRésultatNetComptable dateDeMiseÀJour={resultatNetComptableViewModel.dateMiseÀJour} source={wording.CNSA} />}
