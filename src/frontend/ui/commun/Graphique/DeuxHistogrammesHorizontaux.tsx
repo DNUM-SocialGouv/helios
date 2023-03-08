@@ -23,6 +23,7 @@ function useHistogrammeData(histogrammes: HistogrammeData[]) {
       labels: histogrammeData.labels,
       transcriptionsValeurs: histogrammeData.transcriptionValeurs,
       nom: histogrammeData.nom,
+      areStacksVisible: histogrammeData.areStacksVisible,
     })),
     toggleStackVisibility: (stackIndex: number) => {
       setHistogrammesData((histogrammesData): HistogrammeData[] => {
@@ -202,7 +203,14 @@ export const DeuxHistogrammesHorizontaux = ({
         </div>
       )}
       {annéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
-      {légendes && <LegendeDeuxHistogrammes color={histogrammes[0].legendColors} legends={légendes} toggleStackVisibility={toggleStackVisibility} />}
+      {légendes && (
+        <LegendeDeuxHistogrammes
+          areStacksVisible={histogrammes[0].areStacksVisible}
+          color={histogrammes[0].legendColors}
+          legends={légendes}
+          toggleStackVisibility={toggleStackVisibility}
+        />
+      )}
       <Transcription
         disabled={annéesManquantes.length === nombreDAnnéeTotale}
         entêteLibellé={nom}
@@ -219,17 +227,19 @@ function LegendeDeuxHistogrammes({
   legends,
   color,
   toggleStackVisibility,
+  areStacksVisible,
 }: {
   legends: string[];
   color: string[];
   toggleStackVisibility: (index: number) => void;
+  areStacksVisible: boolean[];
 }) {
   return (
     <div aria-hidden="true" className="fr-checkbox-group " style={{ justifyContent: "center", display: "flex" }}>
       {legends.map((légende, index) => (
         <div className="fr-mr-5w" key={légende}>
           <input
-            defaultChecked={true}
+            checked={areStacksVisible[index]}
             id={"checkboxes-" + légende}
             name={"checkboxes-" + légende}
             onChange={() => toggleStackVisibility(index)}
