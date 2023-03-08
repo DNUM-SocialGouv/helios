@@ -3,7 +3,6 @@ import { Context } from "chartjs-plugin-datalabels";
 import { ReactElement, useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
-import stylesBlocActivité from "../../établissement-territorial-sanitaire/bloc-activité/BlocActivitéSanitaire.module.css";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
@@ -11,23 +10,25 @@ import { Transcription } from "../Transcription/Transcription";
 
 type Stack = { label?: string; data: number[]; backgroundColor: string[]; isError: boolean[] };
 
-function useHistogrammeData(histogramme: HistogrammeData) {
-  const [histogrammeData, setHistogrammeData] = useState(histogramme);
-  useEffect(() => setHistogrammeData(histogramme), [histogramme]);
-  console.log("new histo :", histogrammeData.chartData.datasets.length);
+function useHistogrammeData(histogrammes: HistogrammeData[]) {
+  const [histogrammesData, setHistogrammesData] = useState(histogrammes);
+  useEffect(() => setHistogrammesData(histogrammes), histogrammes);
 
   return {
-    transcriptionTitles: histogrammeData.transcriptionTitles,
-    chartData: histogrammeData.chartData,
-    optionsHistogramme: histogrammeData.optionsHistogramme,
-    legendColors: histogrammeData.legendColors,
-    labels: histogrammeData.labels,
-    transcriptionsValeurs: histogrammeData.transcriptionValeurs,
+    histogrammes: histogrammesData.map((histogrammeData) => ({
+      transcriptionTitles: histogrammeData.transcriptionTitles,
+      chartData: histogrammeData.chartData,
+      optionsHistogramme: histogrammeData.optionsHistogramme,
+      legendColors: histogrammeData.legendColors,
+      labels: histogrammeData.labels,
+      transcriptionsValeurs: histogrammeData.transcriptionValeurs,
+      nom: histogrammeData.nom,
+    })),
     toggleStackVisibility: (stackIndex: number) => {
-      setHistogrammeData((histogrammeData): HistogrammeData => {
-        const updatedHistogrammeData = histogrammeData.clone();
-        updatedHistogrammeData.toggleStack(stackIndex);
-        return updatedHistogrammeData;
+      setHistogrammesData((histogrammesData): HistogrammeData[] => {
+        const clonedHistogramme = histogrammesData.map((histogramme) => histogramme.clone());
+        clonedHistogramme.forEach((histogramme) => histogramme.toggleStack(stackIndex));
+        return clonedHistogramme;
       });
     },
   };
@@ -36,7 +37,7 @@ function useHistogrammeData(histogramme: HistogrammeData) {
 export class HistogrammeData {
   couleurIdentifiant = "#000";
   public areStacksVisible: any[];
-  constructor(public labels: string[], private totals: number[], private stacks: Stack[], private nom: string, private aspectRatio = 2) {
+  constructor(public labels: string[], private totals: number[], private stacks: Stack[], public nom: string, private aspectRatio = 2) {
     this.areStacksVisible = new Array(stacks.length).fill(true);
   }
 
@@ -172,20 +173,14 @@ export const DeuxHistogrammesHorizontaux = ({
   légendes,
 }: HistogrammeHorizontalNewProps): ReactElement => {
   const { wording } = useDependencies();
-  const gauche = useHistogrammeData(valeursDeGauche);
-  const droite = useHistogrammeData(valeursDeDroite);
+  const { histogrammes, toggleStackVisibility } = useHistogrammeData([valeursDeGauche, valeursDeDroite]);
 
   function transcriptionTitles(): string[] {
-    return [gauche.transcriptionTitles, droite.transcriptionTitles].flat() as string[];
+    return histogrammes.map((histogramme) => histogramme.transcriptionTitles).flat() as string[];
   }
 
   function getTranscriptionValeurs() {
-    return [...gauche.transcriptionsValeurs, ...droite.transcriptionsValeurs];
-  }
-
-  function toggleStackVisibility(stackIndex: number) {
-    gauche.toggleStackVisibility(stackIndex);
-    droite.toggleStackVisibility(stackIndex);
+    return histogrammes.flatMap((histogramme) => histogramme.transcriptionsValeurs);
   }
 
   return (
@@ -197,26 +192,23 @@ export const DeuxHistogrammesHorizontaux = ({
             gridTemplateColumns: "repeat(2, 50%)",
           }}
         >
-          <div>
-            {/*
-           // @ts-ignore */}
-            <Bar data={gauche.chartData} options={gauche.optionsHistogramme} />
-          </div>
-          <div>
-            {/*
-          // @ts-ignore */}
-            <Bar data={droite.chartData} options={droite.optionsHistogramme} />
-          </div>
+          {histogrammes.map((histogramme) => (
+            <div key={histogramme.nom}>
+              {/*
+                 // @ts-ignore */}
+              <Bar data={histogramme.chartData} options={histogramme.optionsHistogramme} />
+            </div>
+          ))}
         </div>
       )}
       {annéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
-      {légendes && <LegendeDeuxHistogrammes color={gauche.legendColors} legends={légendes} toggleStackVisibility={toggleStackVisibility} />}
+      {légendes && <LegendeDeuxHistogrammes color={histogrammes[0].legendColors} legends={légendes} toggleStackVisibility={toggleStackVisibility} />}
       <Transcription
         disabled={annéesManquantes.length === nombreDAnnéeTotale}
         entêteLibellé={nom}
         identifiantUnique={nom}
         identifiants={transcriptionTitles()}
-        libellés={droite.labels}
+        libellés={histogrammes[0].labels}
         valeurs={getTranscriptionValeurs()}
       />
     </>
@@ -233,25 +225,21 @@ function LegendeDeuxHistogrammes({
   toggleStackVisibility: (index: number) => void;
 }) {
   return (
-    <div
-      aria-hidden="true"
-      className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]}
-      style={{ justifyContent: "center", display: "flex" }}
-    >
+    <div aria-hidden="true" className="fr-checkbox-group " style={{ justifyContent: "center", display: "flex" }}>
       {legends.map((légende, index) => (
-        <>
+        <div className="fr-mr-5w" key={légende}>
           <input
             defaultChecked={true}
             id={"checkboxes-" + légende}
-            key={légende}
             name={"checkboxes-" + légende}
             onChange={() => toggleStackVisibility(index)}
             type="checkbox"
           />
-          <label className="fr-label" htmlFor={"checkboxes-" + légende} id={"checkboxes-" + légende} style={{ background: color[index] }}>
+          <label className="fr-label" htmlFor={"checkboxes-" + légende} id={"checkboxes-" + légende}>
+            <span style={{ background: color[index], borderRadius: "50%", width: "0.8rem", marginRight: "0.25rem", height: "0.8rem" }}>&nbsp;</span>
             {légende}
           </label>
-        </>
+        </div>
       ))}
     </div>
   );

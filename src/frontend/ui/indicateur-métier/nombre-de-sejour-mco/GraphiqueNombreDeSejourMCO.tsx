@@ -30,7 +30,7 @@ export const GraphiqueNombreDeSejourMCO = ({ nombreDeSejourMCOViewModel, estEnti
         id={nombreDeSejourMCOViewModel.identifiantDeLaLégendeDesSéjoursMCO}
         identifiants={nombreDeSejourMCOViewModel.getIdentifiantTableIndicateur()}
         libellés={nombreDeSejourMCOViewModel.années}
-        optionsHistogramme={nombreDeSejourMCOViewModel.optionsHistogramme()}
+        optionsHistogramme={nombreDeSejourMCOViewModel.getOptionsHistogramme()}
         valeurs={nombreDeSejourMCOViewModel.getValeurTableIndicateur()}
       />
     </IndicateurGraphique>
