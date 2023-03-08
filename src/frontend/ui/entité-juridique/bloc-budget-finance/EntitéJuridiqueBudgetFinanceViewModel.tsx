@@ -67,37 +67,42 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   }
 
   public dataGraphiqueCharges(budget: EntitéJuridiqueBudgetFinance): HistogrammeData {
+    const depensesGlobales = [
+      budget.totalDepensesGlobal,
+      budget?.depensesTitreIGlobal,
+      budget?.depensesTitreIIGlobal,
+      budget?.depensesTitreIIIGlobal,
+      budget?.depensesTitreIVGlobal,
+    ].map(Number);
+    const depensesPrincipales = [
+      budget.totalDepensesPrincipales,
+      budget?.depensesTitreIPrincipales,
+      budget?.depensesTitreIIPrincipales,
+      budget?.depensesTitreIIIPrincipales,
+      budget?.depensesTitreIVPrincipales,
+    ].map(Number);
+    const depensesAnnexes = [
+      budget.totalDepensesAnnexe,
+      budget?.depensesTitreIAnnexe,
+      budget?.depensesTitreIIAnnexe,
+      budget?.depensesTitreIIIAnnexe,
+      budget?.depensesTitreIVAnnexe,
+    ].map(Number);
     return new HistogrammeData(
       [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
-      [
-        budget.totalDepensesGlobal,
-        budget?.depensesTitreIGlobal,
-        budget?.depensesTitreIIGlobal,
-        budget?.depensesTitreIIIGlobal,
-        budget?.depensesTitreIVGlobal,
-      ].map(Number),
+      depensesGlobales,
       [
         {
-          label: this.wording.CHARGES_PRINCIPALES,
-          data: [
-            budget.totalDepensesPrincipales,
-            budget?.depensesTitreIPrincipales,
-            budget?.depensesTitreIIPrincipales,
-            budget?.depensesTitreIIIPrincipales,
-            budget?.depensesTitreIVPrincipales,
-          ].map(Number),
           backgroundColor: this.getBackgroundColorBudgetPrincipal(),
+          data: depensesPrincipales,
+          isError: depensesPrincipales.map((depense) => depense > 0),
+          label: this.wording.CHARGES_PRINCIPALES,
         },
         {
           label: this.wording.CHARGES_ANNEXES,
-          data: [
-            budget.totalDepensesAnnexe,
-            budget?.depensesTitreIAnnexe,
-            budget?.depensesTitreIIAnnexe,
-            budget?.depensesTitreIIIAnnexe,
-            budget?.depensesTitreIVAnnexe,
-          ].map(Number),
+          data: depensesAnnexes,
           backgroundColor: this.getBackgroundColorBudgetSecondaire(),
+          isError: depensesAnnexes.map((depense) => depense > 0),
         },
       ],
       this.wording.CHARGES
@@ -105,37 +110,42 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   }
 
   public dataGraphiqueProduits(budget: EntitéJuridiqueBudgetFinance): HistogrammeData {
+    const produitsPrincipaux = [
+      budget.totalRecettesPrincipales,
+      budget?.recettesTitreIPrincipales,
+      budget?.recettesTitreIIPrincipales,
+      budget?.recettesTitreIIIPrincipales,
+      0,
+    ].map(Number);
+    const produitsGlobaux = [
+      budget.totalRecettesGlobal,
+      budget?.recettesTitreIGlobal,
+      budget?.recettesTitreIIGlobal,
+      budget?.recettesTitreIIIGlobal,
+      budget?.recettesTitreIVGlobal,
+    ].map(Number);
+    const produitsAnnexes = [
+      budget.totalRecettesAnnexe,
+      budget?.recettesTitreIAnnexe,
+      budget?.recettesTitreIIAnnexe,
+      budget?.recettesTitreIIIAnnexe,
+      budget?.recettesTitreIVAnnexe,
+    ].map(Number);
     return new HistogrammeData(
       [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
-      [
-        budget.totalRecettesGlobal,
-        budget?.recettesTitreIGlobal,
-        budget?.recettesTitreIIGlobal,
-        budget?.recettesTitreIIIGlobal,
-        budget?.recettesTitreIVGlobal,
-      ].map(Number),
+      produitsGlobaux,
       [
         {
           label: this.wording.PRODUITS_PRINCIPAUX,
-          data: [
-            budget.totalRecettesPrincipales,
-            budget?.recettesTitreIPrincipales,
-            budget?.recettesTitreIIPrincipales,
-            budget?.recettesTitreIIIPrincipales,
-            0,
-          ].map(Number),
+          data: produitsPrincipaux,
           backgroundColor: this.getBackgroundColorBudgetPrincipal(),
+          isError: produitsPrincipaux.map((depense) => depense < 0),
         },
         {
           label: this.wording.PRODUITS_ANNEXES,
-          data: [
-            budget.totalRecettesAnnexe,
-            budget?.recettesTitreIAnnexe,
-            budget?.recettesTitreIIAnnexe,
-            budget?.recettesTitreIIIAnnexe,
-            budget?.recettesTitreIVAnnexe,
-          ].map(Number),
+          data: produitsAnnexes,
           backgroundColor: this.getBackgroundColorBudgetSecondaire(),
+          isError: produitsAnnexes.map((depense) => depense < 0),
         },
       ],
       this.wording.PRODUITS
@@ -143,7 +153,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   }
 
   private getBackgroundColorBudgetSecondaire() {
-    return ["#FA794A", "#FB9175", "#FB9175", "#FB9175"];
+    return ["#FA794A", "#FB9175", "#FB9175", "#FB9175", "#FB9175"];
   }
 
   private getBackgroundColorBudgetPrincipal() {
