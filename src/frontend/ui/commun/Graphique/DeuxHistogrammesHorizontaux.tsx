@@ -1,6 +1,6 @@
 import { ChartData } from "chart.js";
 import { Context } from "chartjs-plugin-datalabels";
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
 import stylesBlocActivité from "../../établissement-territorial-sanitaire/bloc-activité/BlocActivitéSanitaire.module.css";
@@ -13,6 +13,7 @@ type Stack = { label?: string; data: number[]; backgroundColor: string[]; isErro
 
 function useHistogrammeData(histogramme: HistogrammeData) {
   const [histogrammeData, setHistogrammeData] = useState(histogramme);
+  useEffect(() => setHistogrammeData(histogramme), [histogramme]);
   console.log("new histo :", histogrammeData.chartData.datasets.length);
 
   return {
@@ -247,7 +248,7 @@ function LegendeDeuxHistogrammes({
             onChange={() => toggleStackVisibility(index)}
             type="checkbox"
           />
-          <label className="fr-label" htmlFor={"checkboxes-" + légende} style={{ background: color[index] }}>
+          <label className="fr-label" htmlFor={"checkboxes-" + légende} id={"checkboxes-" + légende} style={{ background: color[index] }}>
             {légende}
           </label>
         </>
