@@ -31,7 +31,7 @@ export function GraphiquePsySSR({ nombreJournéesPsySSRViewModel, estEntitéJuri
         id={nombreJournéesPsySSRViewModel.identifiantDeLaLégendeDesJournéesPsyEtSsr}
         identifiants={nombreJournéesPsySSRViewModel.identifiants}
         libellés={nombreJournéesPsySSRViewModel.années}
-        optionsHistogramme={nombreJournéesPsySSRViewModel.getOptionsHistogramme()}
+        optionsHistogramme={nombreJournéesPsySSRViewModel.optionsHistogramme()}
         valeurs={nombreJournéesPsySSRViewModel.valeurs}
       />
     </IndicateurGraphique>

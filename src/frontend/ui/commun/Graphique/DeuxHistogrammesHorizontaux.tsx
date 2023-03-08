@@ -1,6 +1,6 @@
 import { ChartData } from "chart.js";
 import { Context } from "chartjs-plugin-datalabels";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
 import stylesBlocActivité from "../../établissement-territorial-sanitaire/bloc-activité/BlocActivitéSanitaire.module.css";
@@ -11,25 +11,55 @@ import { Transcription } from "../Transcription/Transcription";
 
 type Stack = { label?: string; data: number[]; backgroundColor: string[]; isError: boolean[] };
 
+function useHistogrammeData(histogramme: HistogrammeData) {
+  const [histogrammeData, setHistogrammeData] = useState(histogramme);
+  console.log("new histo :", histogrammeData.chartData.datasets.length);
+
+  return {
+    transcriptionTitles: histogrammeData.transcriptionTitles,
+    chartData: histogrammeData.chartData,
+    optionsHistogramme: histogrammeData.optionsHistogramme,
+    legendColors: histogrammeData.legendColors,
+    labels: histogrammeData.labels,
+    transcriptionsValeurs: histogrammeData.transcriptionValeurs,
+    toggleStackVisibility: (stackIndex: number) => {
+      setHistogrammeData((histogrammeData): HistogrammeData => {
+        const updatedHistogrammeData = histogrammeData.clone();
+        updatedHistogrammeData.toggleStack(stackIndex);
+        return updatedHistogrammeData;
+      });
+    },
+  };
+}
+
 export class HistogrammeData {
   couleurIdentifiant = "#000";
-  constructor(public labels: string[], private totals: number[], private stacks: Stack[], private nom: string, private aspectRatio = 2) {}
+  public areStacksVisible: any[];
+  constructor(public labels: string[], private totals: number[], private stacks: Stack[], private nom: string, private aspectRatio = 2) {
+    this.areStacksVisible = new Array(stacks.length).fill(true);
+  }
 
-  public chartData(): ChartData {
+  public clone(): HistogrammeData {
+    const clone = new HistogrammeData(this.labels, this.totals, this.stacks, this.nom, this.aspectRatio);
+    clone.areStacksVisible = this.areStacksVisible;
+    return clone;
+  }
+
+  public get chartData(): ChartData {
     return {
       labels: this.labels,
-      datasets: this.stacks.map((stack) => {
+      datasets: this.visibleStacks.map((stack) => {
         return {
           ...stack,
           borderWidth: { top: 0, bottom: 0, left: 0, right: 2 },
           borderColor: "white",
-          backgroundColor: this.getStackBackgroundColor(stack),
+          backgroundColor: this.stackBackgroundColor(stack),
           data: stack.data.map(Math.abs),
           barThickness: 25,
           datalabels: {
             font: { weight: "bold" },
             labels: {
-              title: { color: this.getLabelsColor() },
+              title: { color: this.labelsColor },
             },
           },
         };
@@ -39,8 +69,12 @@ export class HistogrammeData {
 
   private couleurErreur = "#C9191E";
 
-  private getLabelsColor(): string[] {
-    const isLabelsError = this.stacks
+  public get visibleStacks(): Stack[] {
+    return this.stacks.filter((_, index) => this.areStacksVisible[index]);
+  }
+
+  private get labelsColor(): string[] {
+    const isLabelsError = this.visibleStacks
       .map((stack) => stack.isError)
       .reduce((isLabelInError, isErrorStack) => {
         return isLabelInError.map((isError, index) => isError || isErrorStack[index]);
@@ -48,26 +82,34 @@ export class HistogrammeData {
     return isLabelsError.map((error) => (error ? this.couleurErreur : this.couleurIdentifiant));
   }
 
-  private getStackBackgroundColor(stack: Stack) {
+  private stackBackgroundColor(stack: Stack) {
     return stack.isError.map((error, index) => (error ? this.couleurErreur : stack.backgroundColor[index]));
   }
 
-  public getTranscriptionTitles(): string[] {
+  public get transcriptionTitles(): string[] {
     const stackLabels = this.stacks.map((stack) => stack.label) as string[];
     return stackLabels.length > 1 ? [...stackLabels, this.nom] : stackLabels;
   }
 
-  public getTranscriptionValeurs(): string[][] {
+  public get transcriptionValeurs(): string[][] {
     const stacksValues = this.stacks.map((stack) => stack.data.map(StringFormater.formateLeMontantEnEuros));
     const totalsEuros = this.totals.map(StringFormater.formateLeMontantEnEuros);
     return stacksValues.length > 1 ? [...stacksValues, totalsEuros] : stacksValues;
   }
 
-  public legendColors(): string[] {
+  public get legendColors(): string[] {
     return this.stacks.map((stack) => stack.backgroundColor[0]);
   }
 
-  public getOptionsHistogramme() {
+  public get legendId(): string {
+    return this.nom + "-legend";
+  }
+
+  public toggleStack(index: number) {
+    this.areStacksVisible[index] = !this.areStacksVisible[index];
+  }
+
+  public get optionsHistogramme() {
     const couleurIdentifiant = "#000";
     const couleurDelAbscisse = "#161616";
     const valeurMax = Math.max(...this.totals.map(Math.abs));
@@ -93,14 +135,16 @@ export class HistogrammeData {
         },
       },
       plugins: {
-        htmlLegend: { containerID: this.nom + "-legend" },
+        htmlLegend: { containerID: this.legendId },
         datalabels: {
           align: "end",
           anchor: "end",
           font: { family: "Marianne", size: 14 },
-          formatter: (_: string, _context: Context): string => {
-            const sum = this.totals[_context.dataIndex];
-            return _context.datasetIndex === _context.chart.data.datasets.length - 1 ? StringFormater.formateLeMontantEnEuros(sum) : "";
+          formatter: (_: number, _context: Context): string => {
+            const hasMultipleStacks = this.visibleStacks.length > 1;
+            const sum = hasMultipleStacks ? this.totals[_context.dataIndex] : this.visibleStacks[0].data[_context.dataIndex];
+            const isLastStack = _context.datasetIndex === _context.chart.data.datasets.length - 1;
+            return isLastStack ? StringFormater.formateLeMontantEnEuros(sum) : "";
           },
         },
         legend: { display: false },
@@ -127,13 +171,20 @@ export const DeuxHistogrammesHorizontaux = ({
   légendes,
 }: HistogrammeHorizontalNewProps): ReactElement => {
   const { wording } = useDependencies();
+  const gauche = useHistogrammeData(valeursDeGauche);
+  const droite = useHistogrammeData(valeursDeDroite);
 
-  function getTranscriptionTitles(): string[] {
-    return [valeursDeGauche.getTranscriptionTitles(), valeursDeDroite.getTranscriptionTitles()].flat() as string[];
+  function transcriptionTitles(): string[] {
+    return [gauche.transcriptionTitles, droite.transcriptionTitles].flat() as string[];
   }
 
   function getTranscriptionValeurs() {
-    return [...valeursDeGauche.getTranscriptionValeurs(), ...valeursDeDroite.getTranscriptionValeurs()];
+    return [...gauche.transcriptionsValeurs, ...droite.transcriptionsValeurs];
+  }
+
+  function toggleStackVisibility(stackIndex: number) {
+    gauche.toggleStackVisibility(stackIndex);
+    droite.toggleStackVisibility(stackIndex);
   }
 
   return (
@@ -148,42 +199,59 @@ export const DeuxHistogrammesHorizontaux = ({
           <div>
             {/*
            // @ts-ignore */}
-            <Bar data={valeursDeGauche.chartData()} options={valeursDeGauche.getOptionsHistogramme()} />
+            <Bar data={gauche.chartData} options={gauche.optionsHistogramme} />
           </div>
           <div>
             {/*
           // @ts-ignore */}
-            <Bar data={valeursDeDroite.chartData()} options={valeursDeDroite.getOptionsHistogramme()} />
+            <Bar data={droite.chartData} options={droite.optionsHistogramme} />
           </div>
         </div>
       )}
       {annéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
-      {légendes && <LegendeDeuxHistogrammes color={valeursDeGauche.legendColors()} legends={légendes} />}
+      {légendes && <LegendeDeuxHistogrammes color={gauche.legendColors} legends={légendes} toggleStackVisibility={toggleStackVisibility} />}
       <Transcription
         disabled={annéesManquantes.length === nombreDAnnéeTotale}
         entêteLibellé={nom}
         identifiantUnique={nom}
-        identifiants={getTranscriptionTitles()}
-        libellés={valeursDeDroite.labels}
+        identifiants={transcriptionTitles()}
+        libellés={droite.labels}
         valeurs={getTranscriptionValeurs()}
       />
     </>
   );
 };
 
-function LegendeDeuxHistogrammes({ legends, color }: { legends: string[]; color: string[] }) {
+function LegendeDeuxHistogrammes({
+  legends,
+  color,
+  toggleStackVisibility,
+}: {
+  legends: string[];
+  color: string[];
+  toggleStackVisibility: (index: number) => void;
+}) {
   return (
-    <ul
+    <div
       aria-hidden="true"
       className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]}
-      style={{ justifyContent: "center", gridAutoFlow: "column" }}
+      style={{ justifyContent: "center", display: "flex" }}
     >
       {legends.map((légende, index) => (
-        <li key={légende}>
-          <span style={{ background: color[index] }}>&nbsp;</span>
-          {légende}
-        </li>
+        <>
+          <input
+            defaultChecked={true}
+            id={"checkboxes-" + légende}
+            key={légende}
+            name={"checkboxes-" + légende}
+            onChange={() => toggleStackVisibility(index)}
+            type="checkbox"
+          />
+          <label className="fr-label" htmlFor={"checkboxes-" + légende} style={{ background: color[index] }}>
+            {légende}
+          </label>
+        </>
       ))}
-    </ul>
+    </div>
   );
 }
