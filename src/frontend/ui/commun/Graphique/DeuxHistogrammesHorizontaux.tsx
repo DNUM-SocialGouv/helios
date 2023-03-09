@@ -58,7 +58,7 @@ export class HistogrammeData {
           borderColor: "white",
           backgroundColor: this.stackBackgroundColor(stack),
           data: stack.data.map(Math.abs),
-          barThickness: 25,
+          maxBarThickness: 60,
           datalabels: {
             font: { weight: "bold" },
             labels: {
@@ -191,6 +191,7 @@ export const DeuxHistogrammesHorizontaux = ({
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(2, 50%)",
+            marginBottom: "3rem",
           }}
         >
           {histogrammes.map((histogramme) => (
@@ -202,7 +203,6 @@ export const DeuxHistogrammesHorizontaux = ({
           ))}
         </div>
       )}
-      {annéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
       {légendes && (
         <LegendeDeuxHistogrammes
           areStacksVisible={histogrammes[0].areStacksVisible}
@@ -211,6 +211,7 @@ export const DeuxHistogrammesHorizontaux = ({
           toggleStackVisibility={toggleStackVisibility}
         />
       )}
+      {annéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
       <Transcription
         disabled={annéesManquantes.length === nombreDAnnéeTotale}
         entêteLibellé={nom}
@@ -235,7 +236,7 @@ function LegendeDeuxHistogrammes({
   areStacksVisible: boolean[];
 }) {
   return (
-    <div aria-hidden="true" className="fr-checkbox-group " style={{ justifyContent: "center", display: "flex" }}>
+    <div aria-hidden="true" className="fr-checkbox-group " style={{ display: "flex", marginLeft: "2rem", marginBottom: "2rem" }}>
       {legends.map((légende, index) => (
         <div className="fr-mr-5w" key={légende}>
           <input
