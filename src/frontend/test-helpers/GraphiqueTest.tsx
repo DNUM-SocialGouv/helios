@@ -14,8 +14,8 @@ export class GraphiqueTest {
     return screen.getAllByText(abréviation, { selector: "abbr" })[0];
   }
 
-  titre(titre: string): HTMLElement {
-    return screen.getByText(titre, { selector: "h6" });
+  titre(titre: string): HTMLElement | null {
+    return screen.queryByText(titre, { selector: "h6" });
   }
 
   titreDétail(titre: string): HTMLElement {

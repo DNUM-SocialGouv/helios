@@ -276,6 +276,8 @@ describe("Entité juridique loader", () => {
           recettesTitreIIIAnnexe: 270,
           recettesTitreIVAnnexe: 400,
           totalRecettesAnnexe: 940,
+
+          resultatNetComptable: 0.1,
         } as EntitéJuridiqueBudgetFinance,
       ]);
     });

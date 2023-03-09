@@ -3,15 +3,18 @@ import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
 import { HistogrammeData } from "../../commun/Graphique/DeuxHistogrammesHorizontaux";
 import { StringFormater } from "../../commun/StringFormater";
+import { ResultatNetComptableViewModel } from "../../indicateur-métier/resultat-net-comptable/ResultatNetComptableViewModel";
 
 export class EntitéJuridiqueBudgetFinanceViewModel {
   private budgetEtFinance: EntitéJuridiqueBudgetFinance[];
+  public resultatNetComptable: ResultatNetComptableViewModel;
   private wording: Wording;
   public NOMBRE_ANNEES = 5;
 
   constructor(budgetFinance: EntitéJuridiqueBudgetFinance[], wording: Wording) {
     this.wording = wording;
     this.budgetEtFinance = budgetFinance;
+    this.resultatNetComptable = new ResultatNetComptableViewModel(budgetFinance);
   }
 
   public get annéeInitiale() {
@@ -22,8 +25,10 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     return this.budgetEtFinance.find((budgetEtFinance) => budgetEtFinance.année === annéeEnCours) as EntitéJuridiqueBudgetFinance;
   }
 
-  public get lesDonnéesBudgetEtFinanceNesontPasRenseignées() {
-    return !this.budgetEtFinance || this.budgetEtFinance.length === 0 || this.compteDeResultatVide();
+  public get lesDonnéesBudgetEtFinanceNeSontPasRenseignées() {
+    return (
+      !this.budgetEtFinance || this.budgetEtFinance.length === 0 || (this.compteDeResultatVide() && !this.resultatNetComptable.auMoinsUnResultatNetRenseigné())
+    );
   }
 
   public lesAnnéesManquantesDuCompteDeRésultat(): number[] {

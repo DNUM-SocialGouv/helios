@@ -242,6 +242,7 @@ export interface Wording {
   readonly ARHGOS_TITLE: string;
   readonly SAE_TITLE: string;
   readonly RPU_TITLE: string;
+  readonly ANCRE_TITLE: string;
   // Sources courtes
   readonly FINESS: ReactElement;
   readonly DIAMANT: ReactElement;
