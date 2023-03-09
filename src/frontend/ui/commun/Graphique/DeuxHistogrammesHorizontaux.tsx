@@ -27,9 +27,8 @@ function useChartData(charts: HistogrammeData[]) {
     })),
     toggleStackVisibility: (stackIndex: number) => {
       setChartsData((chartsData): HistogrammeData[] => {
-        const clonedChart = chartsData.map((chart) => chart.clone());
-        clonedChart.forEach((chart) => chart.toggleStack(stackIndex));
-        return clonedChart;
+        chartsData.forEach((chart) => chart.toggleStack(stackIndex));
+        return [chartsData[0], chartsData[1]];
       });
     },
   };
@@ -37,15 +36,9 @@ function useChartData(charts: HistogrammeData[]) {
 
 export class HistogrammeData {
   couleurIdentifiant = "#000";
-  public areStacksVisible: any[];
+  public areStacksVisible: boolean[];
   constructor(public labels: string[], private totals: number[], private stacks: Stack[], public nom: string, private aspectRatio = 2) {
     this.areStacksVisible = new Array(stacks.length).fill(true);
-  }
-
-  public clone(): HistogrammeData {
-    const clone = new HistogrammeData(this.labels, this.totals, this.stacks, this.nom, this.aspectRatio);
-    clone.areStacksVisible = this.areStacksVisible;
-    return clone;
   }
 
   public get chartData(): ChartData {
