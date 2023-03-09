@@ -38,7 +38,7 @@ export function ResultatNetComptable({ resultatNetComptableViewModel, estEntité
   );
 }
 
-export type valeursResultatNetCompatable = {
+export type valeursResultatNetComptable = {
   année: number;
   valeur: string;
 };

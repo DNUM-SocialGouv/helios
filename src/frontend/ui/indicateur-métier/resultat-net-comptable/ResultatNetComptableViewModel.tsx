@@ -1,14 +1,11 @@
 import { EntitéJuridiqueBudgetFinance } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { annéesManquantes } from "../../../utils/dateUtils";
 import { StringFormater } from "../../commun/StringFormater";
-import { valeursResultatNetCompatable } from "./ResultatNetComptable";
 
 export class ResultatNetComptableViewModel {
   private budgetEtFinance: EntitéJuridiqueBudgetFinance[];
-  // private wording: Wording;
   private NOMBRE_ANNEES = 5;
   constructor(budgetFinance: EntitéJuridiqueBudgetFinance[]) {
-    // this.wording = wording;
     this.budgetEtFinance = budgetFinance;
   }
 
@@ -21,27 +18,34 @@ export class ResultatNetComptableViewModel {
   }
 
   private lesAnnéesEffectivesDuCompteDeRésultat(): number[] {
-    return this.budgetEtFinance.filter((budgetEtFinance) => !this.resultatNetComptableVide(budgetEtFinance)).map((budgetFinance) => budgetFinance.année);
-  }
-
-  private resultatNetComptableVide(budgetFinance: EntitéJuridiqueBudgetFinance): boolean {
-    return !budgetFinance.resultatNetComptable;
-  }
-
-  private filterAndSortResultatNetComptableAsc(resultatNetComptable: valeursResultatNetCompatable[]): valeursResultatNetCompatable[] {
-    const currentAnnee = new Date().getFullYear();
-    return resultatNetComptable.filter((resultat) => resultat.année >= currentAnnee - this.NOMBRE_ANNEES).sort((a, b) => (a.année < b.année ? -1 : 1));
+    return this.budgetEtFinance.filter(this.resultatNetComptableRemplis).map((budget) => budget.année);
   }
 
   public resultatNetComptable(): { année: number; valeur: string }[] {
-    return this.budgetEtFinance.reduce((résultatNetComptableParAnnée: valeursResultatNetCompatable[], budgetEtFinanceEJ) => {
-      if (budgetEtFinanceEJ.resultatNetComptable) {
-        résultatNetComptableParAnnée.push({
-          année: budgetEtFinanceEJ.année,
-          valeur: StringFormater.formateLeMontantEnEuros(budgetEtFinanceEJ.resultatNetComptable),
-        });
-      }
-      return this.filterAndSortResultatNetComptableAsc(résultatNetComptableParAnnée);
-    }, []);
+    return this.budgetEtFinance
+      .filter(this.resultatNetComptableRemplis)
+      .filter((budget) => this.estDansLesAnneesVisible(budget))
+      .sort(this.trierParAnnée)
+      .map(this.formatResultNetComptable);
+  }
+
+  private trierParAnnée(budget1: EntitéJuridiqueBudgetFinance, budget2: EntitéJuridiqueBudgetFinance) {
+    return budget1.année < budget2.année ? -1 : 1;
+  }
+
+  private formatResultNetComptable(budget: EntitéJuridiqueBudgetFinance) {
+    return {
+      année: budget.année,
+      valeur: StringFormater.formateLeMontantEnEuros(budget.resultatNetComptable as number),
+    };
+  }
+
+  private estDansLesAnneesVisible(budget: EntitéJuridiqueBudgetFinance) {
+    const currentAnnee = new Date().getFullYear();
+    return budget.année >= currentAnnee - this.NOMBRE_ANNEES;
+  }
+
+  private resultatNetComptableRemplis(budget: EntitéJuridiqueBudgetFinance) {
+    return !!budget.resultatNetComptable;
   }
 }
