@@ -73,7 +73,7 @@ const nextConfig = {
       : [];
   },
   poweredByHeader: false,
-  reactStrictMode: false,
+  reactStrictMode: true,
 };
 
 module.exports = nextConfig;

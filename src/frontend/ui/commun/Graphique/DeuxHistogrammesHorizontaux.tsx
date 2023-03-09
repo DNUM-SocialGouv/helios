@@ -25,9 +25,9 @@ function useChartData(charts: HistogrammeData[]) {
       nom: chartData.nom,
       areStacksVisible: chartData.areStacksVisible,
     })),
-    toggleStackVisibility: (stackIndex: number) => {
+    toggleStackVisibility: (stackIndex: number, isVisible: boolean) => {
       setChartsData((chartsData): HistogrammeData[] => {
-        chartsData.forEach((chart) => chart.toggleStack(stackIndex));
+        chartsData.forEach((chart) => chart.toggleStack(stackIndex, isVisible));
         return [chartsData[0], chartsData[1]];
       });
     },
@@ -101,8 +101,8 @@ export class HistogrammeData {
     return this.nom + "-legend";
   }
 
-  public toggleStack(index: number) {
-    this.areStacksVisible[index] = !this.areStacksVisible[index];
+  public toggleStack(index: number, isVisible: boolean) {
+    this.areStacksVisible[index] = isVisible;
   }
 
   public get optionsHistogramme() {
@@ -225,7 +225,7 @@ function LegendeDeuxHistogrammes({
 }: {
   legends: string[];
   color: string[];
-  toggleStackVisibility: (index: number) => void;
+  toggleStackVisibility: (index: number, isVisible: boolean) => void;
   areStacksVisible: boolean[];
 }) {
   return (
@@ -236,7 +236,7 @@ function LegendeDeuxHistogrammes({
             checked={areStacksVisible[index]}
             id={"checkboxes-" + légende}
             name={"checkboxes-" + légende}
-            onChange={() => toggleStackVisibility(index)}
+            onChange={(event) => toggleStackVisibility(index, event.target.checked)}
             type="checkbox"
           />
           <label className="fr-label" htmlFor={"checkboxes-" + légende} id={"checkboxes-" + légende}>
