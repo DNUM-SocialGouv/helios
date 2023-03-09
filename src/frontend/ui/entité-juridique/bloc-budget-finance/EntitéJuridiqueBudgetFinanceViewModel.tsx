@@ -78,21 +78,27 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       budget?.depensesTitreIIGlobal,
       budget?.depensesTitreIIIGlobal,
       budget?.depensesTitreIVGlobal,
-    ].map(Number);
+    ]
+      .map(Number)
+      .map(Math.round);
     const depensesPrincipales = [
       budget.totalDepensesPrincipales,
       budget?.depensesTitreIPrincipales,
       budget?.depensesTitreIIPrincipales,
       budget?.depensesTitreIIIPrincipales,
       budget?.depensesTitreIVPrincipales,
-    ].map(Number);
+    ]
+      .map(Number)
+      .map(Math.round);
     const depensesAnnexes = [
       budget.totalDepensesAnnexe,
       budget?.depensesTitreIAnnexe,
       budget?.depensesTitreIIAnnexe,
       budget?.depensesTitreIIIAnnexe,
       budget?.depensesTitreIVAnnexe,
-    ].map(Number);
+    ]
+      .map(Number)
+      .map(Math.round);
     return new HistogrammeData(
       [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
       depensesGlobales,
@@ -121,21 +127,27 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       budget?.recettesTitreIIPrincipales,
       budget?.recettesTitreIIIPrincipales,
       0,
-    ].map(Number);
+    ]
+      .map(Number)
+      .map(Math.round);
     const produitsGlobaux = [
       budget.totalRecettesGlobal,
       budget?.recettesTitreIGlobal,
       budget?.recettesTitreIIGlobal,
       budget?.recettesTitreIIIGlobal,
       budget?.recettesTitreIVGlobal,
-    ].map(Number);
+    ]
+      .map(Number)
+      .map(Math.round);
     const produitsAnnexes = [
       budget.totalRecettesAnnexe,
       budget?.recettesTitreIAnnexe,
       budget?.recettesTitreIIAnnexe,
       budget?.recettesTitreIIIAnnexe,
       budget?.recettesTitreIVAnnexe,
-    ].map(Number);
+    ]
+      .map(Number)
+      .map(Math.round);
     return new HistogrammeData(
       [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
       produitsGlobaux,
