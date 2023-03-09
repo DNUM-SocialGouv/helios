@@ -21,27 +21,11 @@ export class ResultatNetComptableViewModel {
   }
 
   private lesAnnéesEffectivesDuCompteDeRésultat(): number[] {
-    return this.budgetEtFinance.filter((budgetEtFinance) => !this.compteResultatVide(budgetEtFinance)).map((budgetFinance) => budgetFinance.année);
+    return this.budgetEtFinance.filter((budgetEtFinance) => !this.resultatNetComptableVide(budgetEtFinance)).map((budgetFinance) => budgetFinance.année);
   }
 
-  private compteResultatVide(budgetFinance: EntitéJuridiqueBudgetFinance): boolean {
-    return (
-      !budgetFinance.depensesTitreIPrincipales &&
-      !budgetFinance.depensesTitreIIPrincipales &&
-      !budgetFinance.depensesTitreIIIPrincipales &&
-      !budgetFinance.depensesTitreIVPrincipales &&
-      !budgetFinance.recettesTitreIPrincipales &&
-      !budgetFinance.recettesTitreIIPrincipales &&
-      !budgetFinance.recettesTitreIIIPrincipales &&
-      !budgetFinance.recettesTitreIGlobal &&
-      !budgetFinance.recettesTitreIIGlobal &&
-      !budgetFinance.recettesTitreIIIGlobal &&
-      !budgetFinance.recettesTitreIVGlobal &&
-      !budgetFinance.depensesTitreIGlobal &&
-      !budgetFinance.depensesTitreIIGlobal &&
-      !budgetFinance.depensesTitreIIIGlobal &&
-      !budgetFinance.depensesTitreIVGlobal
-    );
+  private resultatNetComptableVide(budgetFinance: EntitéJuridiqueBudgetFinance): boolean {
+    return !budgetFinance.resultatNetComptable;
   }
 
   private filterAndSortResultatNetComptableAsc(resultatNetComptable: valeursResultatNetCompatable[]): valeursResultatNetCompatable[] {
