@@ -1,20 +1,19 @@
-import styles from "../Bloc/Bloc.module.css";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
+import styles from "./IndicateurTabulaire.module.css";
 
 export type IndicateurTabulaireProps = Readonly<{
   annéesManquantes: number[];
   valeursParAnnée: { année: number; miseEnForme?: string; valeur: string }[];
 }>;
 
-// TODO fix the css style sheet
 export const IndicateurTabulaire = ({ annéesManquantes, valeursParAnnée }: IndicateurTabulaireProps) => {
   const { wording } = useDependencies();
 
   return (
     <>
       <div className="fr-table">
-        <table>
+        <table className={`${styles["table"]}`}>
           <thead>
             <tr>
               <th>{wording.ANNÉE}</th>
@@ -23,7 +22,7 @@ export const IndicateurTabulaire = ({ annéesManquantes, valeursParAnnée }: Ind
           </thead>
           <tbody>
             {valeursParAnnée.map((valeurParAnnée) => (
-              <tr className={`${styles["table"]}`} key={valeurParAnnée.année}>
+              <tr key={valeurParAnnée.année}>
                 <td>{valeurParAnnée.année}</td>
                 <td className={valeurParAnnée.miseEnForme}>{valeurParAnnée.valeur}</td>
               </tr>

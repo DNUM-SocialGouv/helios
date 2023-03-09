@@ -3,15 +3,19 @@ import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
 import { HistogrammeData } from "../../commun/Graphique/DeuxHistogrammesHorizontaux";
 import { StringFormater } from "../../commun/StringFormater";
+import { ResultatNetComptableViewModel } from "../../indicateur-métier/resultat-net-comptable/ResultatNetComptableViewModel";
 
+// TODO put the resultat net comptable View model here in the constructor + all budget finance ones too
 export class EntitéJuridiqueBudgetFinanceViewModel {
   private budgetEtFinance: EntitéJuridiqueBudgetFinance[];
+  public resultatNetComptable: ResultatNetComptableViewModel;
   private wording: Wording;
   public NOMBRE_ANNEES = 5;
 
   constructor(budgetFinance: EntitéJuridiqueBudgetFinance[], wording: Wording) {
     this.wording = wording;
     this.budgetEtFinance = budgetFinance;
+    this.resultatNetComptable = new ResultatNetComptableViewModel(budgetFinance);
   }
 
   public get annéeInitiale() {

@@ -26,13 +26,13 @@ export class ResultatNetComptableViewModel {
 
   private compteResultatVide(budgetFinance: EntitéJuridiqueBudgetFinance): boolean {
     return (
-      !budgetFinance.depensesTitreIH &&
-      !budgetFinance.depensesTitreIIH &&
-      !budgetFinance.depensesTitreIIIH &&
-      !budgetFinance.depensesTitreIVH &&
-      !budgetFinance.recettesTitreIH &&
-      !budgetFinance.recettesTitreIIH &&
-      !budgetFinance.recettesTitreIIIH &&
+      !budgetFinance.depensesTitreIPrincipales &&
+      !budgetFinance.depensesTitreIIPrincipales &&
+      !budgetFinance.depensesTitreIIIPrincipales &&
+      !budgetFinance.depensesTitreIVPrincipales &&
+      !budgetFinance.recettesTitreIPrincipales &&
+      !budgetFinance.recettesTitreIIPrincipales &&
+      !budgetFinance.recettesTitreIIIPrincipales &&
       !budgetFinance.recettesTitreIGlobal &&
       !budgetFinance.recettesTitreIIGlobal &&
       !budgetFinance.recettesTitreIIIGlobal &&
