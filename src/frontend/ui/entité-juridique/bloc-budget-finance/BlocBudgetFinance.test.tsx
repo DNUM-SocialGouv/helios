@@ -26,6 +26,7 @@ describe("Bloc Budget et Finance", () => {
       {
         année: 2022,
         depensesTitreIGlobal: null,
+        resultatNetComptable: null,
       } as EntitéJuridiqueBudgetFinance,
     ];
     const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, wording);
@@ -53,6 +54,24 @@ describe("Bloc Budget et Finance", () => {
 
     // THEN
     const titre = screen.getAllByText(wording.COMPTE_DE_RÉSULTAT);
+    expect(titre).not.toHaveLength(0);
+  });
+
+  it("affiche l'indicateur resultat net comptable s'il y a des données", () => {
+    // GIVEN
+    const budgetFinance: EntitéJuridiqueBudgetFinance[] = [
+      {
+        année: 2022,
+        resultatNetComptable: 100,
+      } as EntitéJuridiqueBudgetFinance,
+    ];
+    const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, wording);
+
+    // WHEN
+    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} />);
+
+    // THEN
+    const titre = screen.getAllByText(wording.RÉSULTAT_NET_COMPTABLE);
     expect(titre).not.toHaveLength(0);
   });
 });

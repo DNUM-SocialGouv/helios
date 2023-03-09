@@ -25,8 +25,10 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     return this.budgetEtFinance.find((budgetEtFinance) => budgetEtFinance.année === annéeEnCours) as EntitéJuridiqueBudgetFinance;
   }
 
-  public get lesDonnéesBudgetEtFinanceNesontPasRenseignées() {
-    return !this.budgetEtFinance || this.budgetEtFinance.length === 0 || this.compteDeResultatVide();
+  public get lesDonnéesBudgetEtFinanceNeSontPasRenseignées() {
+    return (
+      !this.budgetEtFinance || this.budgetEtFinance.length === 0 || (this.compteDeResultatVide() && !this.resultatNetComptable.auMoinsUnResultatNetRenseigné())
+    );
   }
 
   public lesAnnéesManquantesDuCompteDeRésultat(): number[] {

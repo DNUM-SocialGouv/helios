@@ -21,6 +21,9 @@ export class ResultatNetComptableViewModel {
     return this.budgetEtFinance.filter(this.resultatNetComptableRemplis).map((budget) => budget.année);
   }
 
+  public auMoinsUnResultatNetRenseigné() {
+    return this.budgetEtFinance.length > 0 && this.budgetEtFinance.every(this.resultatNetComptableRemplis);
+  }
   public resultatNetComptable(): { année: number; valeur: string }[] {
     return this.budgetEtFinance
       .filter(this.resultatNetComptableRemplis)
@@ -40,12 +43,12 @@ export class ResultatNetComptableViewModel {
     };
   }
 
-  private estDansLesAnneesVisible(budget: EntitéJuridiqueBudgetFinance) {
+  private estDansLesAnneesVisible(budget: EntitéJuridiqueBudgetFinance): boolean {
     const currentAnnee = new Date().getFullYear();
     return budget.année >= currentAnnee - this.NOMBRE_ANNEES;
   }
 
-  private resultatNetComptableRemplis(budget: EntitéJuridiqueBudgetFinance) {
+  private resultatNetComptableRemplis(budget: EntitéJuridiqueBudgetFinance): boolean {
     return !!budget.resultatNetComptable;
   }
 }

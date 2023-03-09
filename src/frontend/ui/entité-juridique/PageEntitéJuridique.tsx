@@ -34,10 +34,7 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, établissement
       <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
       <ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />
       <BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel} />
-      <BlocBudgetFinance
-        entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel}
-        resultatNetComptableViewModel={entitéJuridiqueViewModel.resultatNetComptableViewModel}
-      />
+      <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} />
     </main>
   );
 };

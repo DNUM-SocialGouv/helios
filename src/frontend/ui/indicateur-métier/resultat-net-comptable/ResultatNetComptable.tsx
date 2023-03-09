@@ -22,7 +22,7 @@ export function ResultatNetComptable({ resultatNetComptableViewModel, estEntité
     sourceName = wording.ANCRE;
   }
 
-  return (
+  return resultatNetComptableViewModel.auMoinsUnResultatNetRenseigné() ? (
     <IndicateurGraphique
       contenuInfoBulle={infoBulleContenu}
       dateDeMiseÀJour={resultatNetComptableViewModel.dateMiseÀJour}
@@ -35,5 +35,5 @@ export function ResultatNetComptable({ resultatNetComptableViewModel, estEntité
         valeursParAnnée={resultatNetComptableViewModel.resultatNetComptable()}
       />
     </IndicateurGraphique>
-  );
+  ) : null;
 }

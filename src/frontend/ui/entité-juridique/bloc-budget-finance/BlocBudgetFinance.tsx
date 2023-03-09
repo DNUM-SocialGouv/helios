@@ -12,7 +12,7 @@ type BlocBudgetFinanceProps = Readonly<{
 export const BlocBudgetFinance = ({ entitéJuridiqueBudgetFinanceViewModel }: BlocBudgetFinanceProps) => {
   const { wording, isFeatureEnabled } = useDependencies();
 
-  if (!isFeatureEnabled(FEATURE_NAME.COMPTE_RESULTAT_EJ) || entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetEtFinanceNesontPasRenseignées) {
+  if (!isFeatureEnabled(FEATURE_NAME.COMPTE_RESULTAT_EJ) || entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetEtFinanceNeSontPasRenseignées) {
     return <BlocIndicateurVide title={wording.TITRE_BLOC_BUDGET_ET_FINANCES} />;
   }
 
