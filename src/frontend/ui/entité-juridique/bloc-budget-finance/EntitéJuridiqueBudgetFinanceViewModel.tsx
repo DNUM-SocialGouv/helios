@@ -5,7 +5,6 @@ import { HistogrammeData } from "../../commun/Graphique/DeuxHistogrammesHorizont
 import { StringFormater } from "../../commun/StringFormater";
 import { ResultatNetComptableViewModel } from "../../indicateur-métier/resultat-net-comptable/ResultatNetComptableViewModel";
 
-// TODO put the resultat net comptable View model here in the constructor + all budget finance ones too
 export class EntitéJuridiqueBudgetFinanceViewModel {
   private budgetEtFinance: EntitéJuridiqueBudgetFinance[];
   public resultatNetComptable: ResultatNetComptableViewModel;

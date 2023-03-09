@@ -37,8 +37,3 @@ export function ResultatNetComptable({ resultatNetComptableViewModel, estEntité
     </IndicateurGraphique>
   );
 }
-
-export type valeursResultatNetComptable = {
-  année: number;
-  valeur: string;
-};
