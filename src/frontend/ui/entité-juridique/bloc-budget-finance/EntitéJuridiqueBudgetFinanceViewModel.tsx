@@ -64,7 +64,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   }
 
   annéesRangéesParAntéChronologie(): number[] {
-    return this.budgetEtFinance.map((budgetEtFinance) => budgetEtFinance.année).reverse();
+    return this.lesAnnéesEffectivesDuCompteDeRésultat().sort((année1, année2) => (année1 < année2 ? 1 : -1));
   }
 
   public get dateMiseÀJour(): string {
