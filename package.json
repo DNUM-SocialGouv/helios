@@ -87,8 +87,8 @@
     "ssh2-sftp-client": "^8.0.0",
     "ts-node": "^10.9.1",
     "typeorm": "^0.3.6",
-    "xml-js": "^1.6.11",
-    "typescript": "^4.8.4"
+    "typescript": "^4.8.4",
+    "xml-js": "^1.6.11"
   },
   "devDependencies": {
     "@lhci/cli": "^0.9.0",
