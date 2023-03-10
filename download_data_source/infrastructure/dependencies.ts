@@ -64,7 +64,7 @@ const createDependencies = (): Dependencies => {
   });
 
   return {
-    DÉLAI_D_ARRÊT_DES_TÂCHES_EN_MS: 1000,
+    DÉLAI_D_ARRÊT_DES_TÂCHES_EN_MS: 10000,
     catégorisationSourceExterneLoader: new XMLStatutsJuridiquesSourceExterneLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH, logger),
     dnumDownloadRawData: new DnumSftpDownloadRawData(
       new Ssh2SftpClient(),
