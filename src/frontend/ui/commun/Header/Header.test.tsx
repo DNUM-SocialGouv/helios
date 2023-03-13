@@ -31,15 +31,6 @@ describe("En-tête de page", () => {
     expect(fermer[1]).toBeInTheDocument();
   });
 
-  it("affiche un lien pour se déconnecter", () => {
-    // WHEN
-    renderFakeComponent(<Header />);
-
-    // THEN
-    const déconnexion = screen.getByRole("link", { name: wording.DÉCONNEXION });
-    expect(déconnexion).toBeInTheDocument();
-  });
-
   it("affiche le formulaire de recherche", () => {
     // WHEN
     renderFakeComponent(<Header />);

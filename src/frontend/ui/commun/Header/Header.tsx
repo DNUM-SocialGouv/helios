@@ -66,15 +66,6 @@ export const Header = () => {
                 </div>
               </div>
               <div className="fr-header__tools">
-                <div className="fr-header__tools-links">
-                  <ul className="fr-links-group">
-                    <li>
-                      <a className="fr-link fr-fi-logout-box-r-fill" href="#">
-                        {wording.DÉCONNEXION}
-                      </a>
-                    </li>
-                  </ul>
-                </div>
                 {router.pathname !== paths.ACCUEIL && (
                   <div className="fr-header__search fr-modal" id="modal-541">
                     <div className="fr-container fr-container-lg--fluid">
