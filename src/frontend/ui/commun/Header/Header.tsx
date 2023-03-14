@@ -7,6 +7,7 @@ import "@gouvfr/dsfr/dist/component/logo/logo.min.css";
 import "@gouvfr/dsfr/dist/component/link/link.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 
+import { FEATURE_NAME } from "../../../utils/featureToggle";
 import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
 import { useDependencies } from "../contexts/useDependencies";
 import styles from "./Header.module.css";
@@ -66,15 +67,7 @@ export const Header = () => {
                 </div>
               </div>
               <div className="fr-header__tools">
-                <div className="fr-header__tools-links">
-                  <ul className="fr-links-group">
-                    <li>
-                      <a className="fr-link fr-fi-logout-box-r-fill" href="#">
-                        {wording.DÉCONNEXION}
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+                <Deconnextion />
                 {router.pathname !== paths.ACCUEIL && (
                   <div className="fr-header__search fr-modal" id="modal-541">
                     <div className="fr-container fr-container-lg--fluid">
@@ -125,4 +118,26 @@ export const Header = () => {
       <Breadcrumb />
     </>
   );
+};
+
+export const Deconnextion = () => {
+  const { wording, isFeatureEnabled } = useDependencies();
+
+  if (!isFeatureEnabled(FEATURE_NAME.DECONNEXTION)) {
+    return (
+      <>
+        <div className="fr-header__tools-links">
+          <ul className="fr-links-group">
+            <li>
+              <a className="fr-link fr-fi-logout-box-r-fill" href="#">
+                {wording.DÉCONNEXION}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </>
+    );
+  }
+
+  return <></>;
 };
