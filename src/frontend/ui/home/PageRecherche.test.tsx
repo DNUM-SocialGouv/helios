@@ -108,7 +108,9 @@ describe("La page de d’accueil", () => {
     // THEN
     const enAttente = screen.getByText(wording.RECHERCHE_EN_ATTENTE, { selector: "p" });
     expect(enAttente).toBeInTheDocument();
+    expect(rechercher).toBeDisabled();
     await waitForElementToBeRemoved(enAttente);
+    expect(rechercher).toBeEnabled();
     const résultatsDeRecherche = screen.getByLabelText(wording.RÉSULTAT_DE_RECHERCHE);
     const textDuRésultat = within(résultatsDeRecherche).getByText(wording.rechercheNombreRésultats(nombreDeRésultats, terme), { selector: "p" });
     expect(textDuRésultat).toBeInTheDocument();

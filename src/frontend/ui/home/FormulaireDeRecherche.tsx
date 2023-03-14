@@ -7,9 +7,10 @@ type FormulaireDeRechercheProps = Readonly<{
   lancerLaRecherche: MouseEventHandler<HTMLButtonElement>;
   rechercheOnChange: ChangeEventHandler<HTMLInputElement>;
   terme: string;
+  isLoading: boolean;
 }>;
 
-export const FormulaireDeRecherche = ({ lancerLaRecherche, rechercheOnChange, terme }: FormulaireDeRechercheProps) => {
+export const FormulaireDeRecherche = ({ lancerLaRecherche, rechercheOnChange, terme, isLoading }: FormulaireDeRechercheProps) => {
   const { wording } = useDependencies();
 
   return (
@@ -30,7 +31,7 @@ export const FormulaireDeRecherche = ({ lancerLaRecherche, rechercheOnChange, te
             type="search"
             value={terme}
           />
-          <button className="fr-btn" onClick={lancerLaRecherche} type="submit">
+          <button className="fr-btn" disabled={isLoading} onClick={lancerLaRecherche} type="submit">
             {wording.RECHERCHE_LABEL}
           </button>
         </form>
