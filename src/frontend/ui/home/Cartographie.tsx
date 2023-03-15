@@ -6,9 +6,10 @@ import { régions } from "../région/régions";
 import carteFrance from "./carte-france.svg";
 import "@gouvfr/dsfr/dist/component/card/card.min.css";
 import styles from "./Cartographie.module.css";
+import { FEATURE_NAME } from "../../utils/featureToggle";
 
 export const Cartographie = () => {
-  const { paths, wording } = useDependencies();
+  const { wording } = useDependencies();
 
   return (
     <section aria-label={wording.CARTOGRAPHIE}>
@@ -20,28 +21,7 @@ export const Cartographie = () => {
             <p className="fr-card__desc">{wording.CARTOGRAPHIE_DESCRIPTION}</p>
           </div>
           <div className="fr-card__footer">
-            <ul className="fr-btns-group fr-btns-group--inline-reverse fr-btns-group--inline-lg">
-              <li>
-                <Link className="fr-btn" href={paths.RÉGION + "/auvergne-rhone-alpes"} passHref>
-                  {régions["auvergne-rhone-alpes"].label}
-                </Link>
-              </li>
-              <li>
-                <Link className="fr-btn" href={paths.RÉGION + "/occitanie"} passHref>
-                  {régions["occitanie"].label}
-                </Link>
-              </li>
-              <li>
-                <Link className="fr-btn" href={paths.RÉGION + "/bretagne"} passHref>
-                  {régions["bretagne"].label}
-                </Link>
-              </li>
-              <li>
-                <Link className="fr-btn" href={paths.RÉGION + "/pays-de-la-loire"} passHref>
-                  {régions["pays-de-la-loire"].label}
-                </Link>
-              </li>
-            </ul>
+            <GroupeDeBoutonsDeRegion />
           </div>
         </div>
         <div>
@@ -49,5 +29,45 @@ export const Cartographie = () => {
         </div>
       </div>
     </section>
+  );
+};
+
+export const GroupeDeBoutonsDeRegion = () => {
+  const { paths, isFeatureEnabled } = useDependencies();
+
+  if (!isFeatureEnabled(FEATURE_NAME.CARTO_FRANCE_METROPOLE)) {
+    return (
+      <ul className="fr-btns-group fr-btns-group--inline-reverse fr-btns-group--inline-lg">
+        <li>
+          <Link className="fr-btn" href={paths.RÉGION + "/auvergne-rhone-alpes"} passHref>
+            {régions["auvergne-rhone-alpes"].label}
+          </Link>
+        </li>
+        <li>
+          <Link className="fr-btn" href={paths.RÉGION + "/occitanie"} passHref>
+            {régions["occitanie"].label}
+          </Link>
+        </li>
+        <li>
+          <Link className="fr-btn" href={paths.RÉGION + "/bretagne"} passHref>
+            {régions["bretagne"].label}
+          </Link>
+        </li>
+        <li>
+          <Link className="fr-btn" href={paths.RÉGION + "/pays-de-la-loire"} passHref>
+            {régions["pays-de-la-loire"].label}
+          </Link>
+        </li>
+      </ul>
+    );
+  }
+  return (
+    <ul className="fr-btns-group fr-btns-group--inline-reverse fr-btns-group--inline-lg">
+      <li>
+        <Link className="fr-btn" href={paths.RÉGION + "/france-metropolitaine"} passHref>
+          {régions["france-metropolitaine"].label}
+        </Link>
+      </li>
+    </ul>
   );
 };

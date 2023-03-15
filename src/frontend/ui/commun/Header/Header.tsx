@@ -123,7 +123,7 @@ export const Header = () => {
 export const Deconnextion = () => {
   const { wording, isFeatureEnabled } = useDependencies();
 
-  if (!isFeatureEnabled(FEATURE_NAME.DECONNEXTION)) {
+  if (!isFeatureEnabled(FEATURE_NAME.DECONNEXION)) {
     return (
       <>
         <div className="fr-header__tools-links">
