@@ -12,9 +12,10 @@ import { ParsedUrlQuery } from "querystring";
 export enum FEATURE_NAME {
   "COMPTE_RESULTAT_EJ" = "COMPTE_RESULTAT_EJ",
   "DECONNEXTION" = "DECONNEXTION",
+  "BOUTON_RECHERCHE" = "BOUTON_RECHERCHE",
 }
 
-const currentFeaturesToggled: FEATURE_NAME[] = [FEATURE_NAME.COMPTE_RESULTAT_EJ, FEATURE_NAME.DECONNEXTION];
+const currentFeaturesToggled: FEATURE_NAME[] = [FEATURE_NAME.COMPTE_RESULTAT_EJ, FEATURE_NAME.DECONNEXTION, FEATURE_NAME.BOUTON_RECHERCHE];
 const currentEnabledFeatures: FEATURE_NAME[] = parseEnvEnabledFeature();
 
 // TODO - allow the checking of multiple features --> current logic only allows the activation of one feature at a time if activated in env variables

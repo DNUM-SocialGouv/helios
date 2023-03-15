@@ -32,7 +32,7 @@ export const PageRecherche = () => {
         <title>{wording.TITRE_PAGE_ACCUEIL}</title>
       </Head>
       <BandeauDInformation texte={wording.SITE_EN_CONSTRUCTION} />
-      <FormulaireDeRecherche lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} terme={terme} />
+      <FormulaireDeRecherche isLoading={estCeEnAttente} lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} terme={terme} />
 
       {estCeEnAttente && <RechercheEnAttente />}
 
