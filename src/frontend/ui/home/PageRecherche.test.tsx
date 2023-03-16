@@ -51,14 +51,8 @@ describe("La page de d’accueil", () => {
     const description = within(cartographie).getByText(wording.CARTOGRAPHIE_DESCRIPTION, { selector: "p" });
     expect(description).toBeInTheDocument();
     const listeRégions = within(cartographie).getAllByRole("listitem");
-    const auvergneRhôneAlpes = within(listeRégions[0]).getByRole("link", { name: régions["auvergne-rhone-alpes"].label });
-    expect(auvergneRhôneAlpes).toHaveAttribute("href", paths.RÉGION + "/auvergne-rhone-alpes");
-    const occitanie = within(listeRégions[1]).getByRole("link", { name: régions["occitanie"].label });
-    expect(occitanie).toHaveAttribute("href", paths.RÉGION + "/occitanie");
-    const bretagne = within(listeRégions[2]).getByRole("link", { name: régions["bretagne"].label });
-    expect(bretagne).toHaveAttribute("href", paths.RÉGION + "/bretagne");
-    const paysDeLaLoire = within(listeRégions[3]).getByRole("link", { name: régions["pays-de-la-loire"].label });
-    expect(paysDeLaLoire).toHaveAttribute("href", paths.RÉGION + "/pays-de-la-loire");
+    const franceMetropole = within(listeRégions[0]).getByRole("link", { name: régions["france-metropolitaine"].label });
+    expect(franceMetropole).toHaveAttribute("href", paths.RÉGION + "/france-metropolitaine");
   });
 
   it('affiche les résultats après avoir cliqué sur le bouton "Rechercher"', async () => {
