@@ -1,38 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
 
-import { useDependencies } from "../commun/contexts/useDependencies";
-import { régions } from "../région/régions";
-import carteFrance from "./carte-france.svg";
-import "@gouvfr/dsfr/dist/component/card/card.min.css";
-import styles from "./Cartographie.module.css";
-import { FEATURE_NAME } from "../../utils/featureToggle";
+import { FEATURE_NAME } from "../../../utils/featureToggle";
+import { useDependencies } from "../../commun/contexts/useDependencies";
+import { régions } from "../../région/régions";
 
-export const Cartographie = () => {
-  const { wording } = useDependencies();
-
-  return (
-    <section aria-label={wording.CARTOGRAPHIE}>
-      <h2 className={styles["titre"]}>{wording.CARTOGRAPHIE}</h2>
-      <div className="fr-card fr-card--horizontal fr-card--no-arrow">
-        <div className={"fr-card__body " + styles["body"]}>
-          <div className="fr-card__content">
-            <h3 className="fr-card__title">{wording.OFFRE_SANTÉ_PAR_REGION}</h3>
-            <p className="fr-card__desc">{wording.CARTOGRAPHIE_DESCRIPTION}</p>
-          </div>
-          <div className="fr-card__footer">
-            <GroupeDeBoutonsDeRegion />
-          </div>
-        </div>
-        <div>
-          <Image alt="" height="300" src={carteFrance} width="300" />
-        </div>
-      </div>
-    </section>
-  );
-};
-
-export const GroupeDeBoutonsDeRegion = () => {
+export const GroupeBoutonRegions = () => {
   const { paths, isFeatureEnabled } = useDependencies();
 
   if (!isFeatureEnabled(FEATURE_NAME.CARTO_FRANCE_METROPOLE)) {
