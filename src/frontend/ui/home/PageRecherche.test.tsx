@@ -44,9 +44,7 @@ describe("La page de d’accueil", () => {
 
     // THEN
     const cartographie = screen.getByLabelText(wording.CARTOGRAPHIE);
-    const titre = within(cartographie).getByRole("heading", { level: 2, name: wording.CARTOGRAPHIE });
-    expect(titre).toBeInTheDocument();
-    const sousTitre = within(cartographie).getByRole("heading", { level: 3, name: wording.OFFRE_SANTÉ_PAR_REGION });
+    const sousTitre = within(cartographie).getByRole("heading", { level: 3, name: wording.CARTOGRAPHIE });
     expect(sousTitre).toBeInTheDocument();
     const description = within(cartographie).getByText(wording.CARTOGRAPHIE_DESCRIPTION, { selector: "p" });
     expect(description).toBeInTheDocument();
