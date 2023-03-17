@@ -1,7 +1,7 @@
 import Head from "next/head";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
-import { BandeauDInformation } from "./BandeauInformation/BandeauDInformation";
+import { BandeauDInformation } from "./Bandeau/BandeauDInformation";
 import { Cartographie } from "./Cartographie/Cartographie";
 import { FormulaireDeRecherche } from "./FormulaireDeRecherche";
 import { RechercheCassée } from "./RechercheCassée";

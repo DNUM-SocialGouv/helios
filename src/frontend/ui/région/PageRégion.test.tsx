@@ -12,6 +12,7 @@ describe("La page d’une région", () => {
     ["bretagne", régions["bretagne"].label, régions["bretagne"].source],
     ["occitanie", régions["occitanie"].label, régions["occitanie"].source],
     ["pays-de-la-loire", régions["pays-de-la-loire"].label, régions["pays-de-la-loire"].source],
+    ["france-metropolitaine", régions["france-metropolitaine"].label, régions["france-metropolitaine"].source],
   ])("affiche la carte de %s", (région, label, source) => {
     // WHEN
     renderFakeComponent(<PageRégion région={région} />);
@@ -19,5 +20,6 @@ describe("La page d’une région", () => {
     // THEN
     expect(screen.getByRole("heading", { level: 1, name: label })).toBeInTheDocument();
     expect(screen.getByTitle(wording.régionAtlasSanté(label))).toHaveAttribute("src", source);
+    expect(screen.getByText(wording.COOKIES_ATLASSANTÉ, { selector: "p" })).toBeInTheDocument();
   });
 });
