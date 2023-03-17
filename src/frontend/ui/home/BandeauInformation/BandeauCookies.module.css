@@ -1,0 +1,17 @@
+.bandeau-cookies {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 16px 120px;
+    gap: 16px;
+
+    /*width: 1440px;*/
+    /*height: 56px;*/
+
+    background: #E8EDFF;
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}

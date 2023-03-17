@@ -2,6 +2,7 @@ import Head from "next/head";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
+import { BandeauCookies } from "../home/BandeauInformation/BandeauCookies";
 import { régions } from "./régions";
 
 export const PageRégion = ({ région }: { région: string }) => {
@@ -21,6 +22,7 @@ export const PageRégion = ({ région }: { région: string }) => {
       </Head>
       <section>
         <h1 className="fr-container">{labelDeLaRégion}</h1>
+        <BandeauCookies texte={wording.COOKIES_ATLASSANTÉ} />
         <iframe allowFullScreen height="650" src={régions[région].source} title={wording.régionAtlasSanté(régions[région].label)} width="100%" />
       </section>
     </main>
