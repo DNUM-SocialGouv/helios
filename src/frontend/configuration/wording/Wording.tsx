@@ -52,6 +52,8 @@ export interface Wording {
   readonly OFFRE_SANTÉ_PAR_REGION: string;
   readonly CARTOGRAPHIE_DESCRIPTION: string;
 
+  readonly COOKIES_ATLASSANTÉ: string;
+
   // Région
   readonly régionAtlasSanté: (placeholder: string) => string;
 

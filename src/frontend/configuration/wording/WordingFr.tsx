@@ -70,6 +70,8 @@ export class WordingFr implements Wording {
   readonly OFFRE_SANTÉ_PAR_REGION: string = "Offre de santé par région";
   readonly CARTOGRAPHIE_DESCRIPTION: string = "Visualisez l’offre de santé d’une région en retrouvant tous les établissements de votre choix.";
 
+  readonly COOKIES_ATLASSANTÉ: string = "Pour afficher la carte, nous vous invitons à activer les cookies Atlasanté.";
+
   // Région
   readonly régionAtlasSanté: (placeholder: string) => string = (placeholder: string) => `Carte de ${placeholder}`;
 
