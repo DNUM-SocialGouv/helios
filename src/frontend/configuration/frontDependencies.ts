@@ -1,5 +1,6 @@
 import * as Sentry from "@sentry/nextjs";
-import { ParsedUrlQuery } from "querystring";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 import { FEATURE_NAME, isFeatureEnabled } from "../utils/featureToggle";
 import { BreadcrumbHandler } from "./BreadcrumbHandler";
@@ -14,18 +15,29 @@ export type FrontDependencies = Readonly<{
   isFeatureEnabled: (feature: FEATURE_NAME) => boolean;
 }>;
 
-function createFrontDependencies(query?: ParsedUrlQuery): FrontDependencies {
-  Sentry.init({
-    dsn: process.env["NEXT_PUBLIC_SENTRY_DSN"],
-    environment: process.env["NEXT_PUBLIC_SENTRY_ENVIRONMENT"],
-    tracesSampleRate: 1.0,
-  });
-  return {
-    breadcrumbHandler: new BreadcrumbHandler(),
-    paths: new Paths(),
-    wording: new WordingFr(),
-    isFeatureEnabled: isFeatureEnabled(query),
-  };
+function useFrontDependencies(): FrontDependencies {
+  const router = useRouter();
+
+  const [dependencies, setDependencies] = useState(defaultDependencies);
+
+  useEffect(() => {
+    Sentry.init({
+      dsn: process.env["NEXT_PUBLIC_SENTRY_DSN"],
+      environment: process.env["NEXT_PUBLIC_SENTRY_ENVIRONMENT"],
+      tracesSampleRate: 1.0,
+    });
+
+    setDependencies({ ...dependencies, isFeatureEnabled: isFeatureEnabled(router?.query) });
+  }, [router?.query]);
+
+  return dependencies;
 }
 
-export const frontDependencies = createFrontDependencies;
+export const frontDependencies = useFrontDependencies;
+
+export const defaultDependencies = {
+  breadcrumbHandler: new BreadcrumbHandler(),
+  paths: new Paths(),
+  wording: new WordingFr(),
+  isFeatureEnabled: isFeatureEnabled(),
+};
