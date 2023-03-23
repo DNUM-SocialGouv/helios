@@ -1,8 +1,6 @@
 import Head from "next/head";
 
-import { FEATURE_NAME } from "../../utils/featureToggle";
 import { useDependencies } from "../commun/contexts/useDependencies";
-import { BandeauDInformation } from "./Bandeau/BandeauDInformation";
 import { Cartographie } from "./Cartographie/Cartographie";
 import { FormulaireDeRecherche } from "./FormulaireDeRecherche";
 import { RechercheCassée } from "./RechercheCassée";
@@ -11,7 +9,7 @@ import { RésultatsDeRecherche } from "./RésultatsDeRecherche";
 import { useRecherche } from "./useRecherche";
 
 export const PageRecherche = () => {
-  const { wording, isFeatureEnabled } = useDependencies();
+  const { wording } = useDependencies();
 
   const {
     estCeEnAttente,
@@ -27,18 +25,11 @@ export const PageRecherche = () => {
     termeFixe,
   } = useRecherche();
 
-  let bandeau = <></>;
-
-  if (!isFeatureEnabled(FEATURE_NAME.BANDEAU)) {
-    bandeau = <BandeauDInformation texte={wording.SITE_EN_CONSTRUCTION} />;
-  }
-
   return (
     <main className="fr-container">
       <Head>
         <title>{wording.TITRE_PAGE_ACCUEIL}</title>
       </Head>
-      {bandeau}
       <FormulaireDeRecherche isLoading={estCeEnAttente} lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} terme={terme} />
 
       {estCeEnAttente && <RechercheEnAttente />}
