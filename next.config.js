@@ -74,6 +74,10 @@ const nextConfig = withBundleAnalyzer({
             headers: securityHeaders,
             source: "/:path*",
           },
+          {
+            headers: [{ key: "Cache-Control", value: "max-age=31536000" }],
+            source: "/(smarttag.js|favicon.ico|logo.svg)",
+          },
         ]
       : [];
   },
