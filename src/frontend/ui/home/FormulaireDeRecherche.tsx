@@ -1,6 +1,5 @@
 import { ChangeEventHandler, MouseEventHandler } from "react";
 
-import { FEATURE_NAME } from "../../utils/featureToggle";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./Recherche.module.css";
 
@@ -32,30 +31,11 @@ export const FormulaireDeRecherche = ({ lancerLaRecherche, rechercheOnChange, te
             type="search"
             value={terme}
           />
-          <ButtonRecherche isLoading={isLoading} lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} terme={terme} />
+          <button className="fr-btn" disabled={isLoading} onClick={lancerLaRecherche} type="submit">
+            {wording.RECHERCHE_LABEL}
+          </button>
         </form>
       </section>
     </div>
-  );
-};
-
-export const ButtonRecherche = ({ lancerLaRecherche, isLoading }: FormulaireDeRechercheProps) => {
-  const { wording, isFeatureEnabled } = useDependencies();
-
-  if (!isFeatureEnabled(FEATURE_NAME.BOUTON_RECHERCHE)) {
-    return (
-      <>
-        <button className="fr-btn" onClick={lancerLaRecherche} type="submit">
-          {wording.RECHERCHE_LABEL}
-        </button>
-      </>
-    );
-  }
-  return (
-    <>
-      <button className="fr-btn" disabled={isLoading} onClick={lancerLaRecherche} type="submit">
-        {wording.RECHERCHE_LABEL}
-      </button>
-    </>
   );
 };
