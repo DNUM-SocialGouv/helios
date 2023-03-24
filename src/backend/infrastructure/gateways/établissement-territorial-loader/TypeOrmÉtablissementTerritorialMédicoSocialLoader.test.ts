@@ -2,7 +2,7 @@ import { Repository } from "typeorm";
 
 import { ActivitéMédicoSocialModel } from "../../../../../database/models/ActivitéMédicoSocialModel";
 import { AutorisationMédicoSocialModel } from "../../../../../database/models/AutorisationMédicoSocialModel";
-import { BudgetEtFinancesMédicoSocialModel, CadreBudgétaire } from "../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
+import { BudgetEtFinancesMédicoSocialModel } from "../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
 import { CpomModel } from "../../../../../database/models/CpomModel";
 import { DateMiseÀJourFichierSourceModel } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
@@ -15,6 +15,7 @@ import { ÉtablissementTerritorialAutorisationModelTestBuilder } from "../../../
 import { ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder";
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder";
 import { ÉtablissementTerritorialRessourcesHumainesModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialRessourcesHumainesModelTestBuilder";
+import { CadreBudgétaire } from "../../../métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
 import { MonoÉtablissement } from "../../../métier/entities/établissement-territorial-médico-social/MonoÉtablissement";
 import { ÉtablissementTerritorialMédicoSocial } from "../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
 import { ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from "../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation";

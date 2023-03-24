@@ -1,4 +1,5 @@
-import { BudgetEtFinancesMédicoSocialModel, CadreBudgétaire } from "../models/BudgetEtFinancesMédicoSocialModel";
+import { CadreBudgétaire } from "../../src/backend/métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
+import { BudgetEtFinancesMédicoSocialModel } from "../models/BudgetEtFinancesMédicoSocialModel";
 
 export class ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder {
   public static créeMédicoSocial(

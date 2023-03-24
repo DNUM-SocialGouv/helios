@@ -2,11 +2,12 @@ import { DataSource } from "typeorm";
 
 import { ActivitéMédicoSocialModel } from "../../../../../database/models/ActivitéMédicoSocialModel";
 import { AutorisationMédicoSocialModel } from "../../../../../database/models/AutorisationMédicoSocialModel";
-import { BudgetEtFinancesMédicoSocialModel, CadreBudgétaire } from "../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
+import { BudgetEtFinancesMédicoSocialModel } from "../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { RessourcesHumainesMédicoSocialModel } from "../../../../../database/models/RessourcesHumainesMédicoSocialModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
+import { CadreBudgétaire } from "../../../métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
 import { MonoÉtablissement } from "../../../métier/entities/établissement-territorial-médico-social/MonoÉtablissement";
 import { ÉtablissementTerritorialMédicoSocialActivité } from "../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité";
 import {

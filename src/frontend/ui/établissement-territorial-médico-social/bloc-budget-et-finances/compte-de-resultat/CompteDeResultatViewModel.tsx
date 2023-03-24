@@ -1,4 +1,4 @@
-import { CadreBudgétaire } from "../../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
+import { CadreBudgétaire } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
 import { Wording } from "../../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../../utils/dateUtils";

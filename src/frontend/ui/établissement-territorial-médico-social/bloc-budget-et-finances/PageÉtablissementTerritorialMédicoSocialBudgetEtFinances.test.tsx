@@ -1,6 +1,6 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 
-import { CadreBudgétaire } from "../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
+import { CadreBudgétaire } from "../../../../backend/métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
 import { textMatch, fakeFrontDependencies, renderFakeComponent, annéeEnCours } from "../../../test-helpers/testHelper";

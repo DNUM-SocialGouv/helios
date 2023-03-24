@@ -59,8 +59,13 @@ const securityHeaders = [
   },
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+});
+
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig = withBundleAnalyzer({
   devIndicators: { buildActivityPosition: "bottom-right" },
   async headers() {
     return process.env["NODE_ENV"] !== "development"
@@ -69,11 +74,15 @@ const nextConfig = {
             headers: securityHeaders,
             source: "/:path*",
           },
+          {
+            headers: [{ key: "Cache-Control", value: "max-age=31536000" }],
+            source: "/(smarttag.js|favicon.ico|logo.svg)",
+          },
         ]
       : [];
   },
   poweredByHeader: false,
   reactStrictMode: true,
-};
+});
 
 module.exports = nextConfig;

@@ -1,4 +1,4 @@
-import { CadreBudgétaire } from "../../../database/models/BudgetEtFinancesMédicoSocialModel";
+import { CadreBudgétaire } from "../métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
 import { ÉtablissementTerritorialMédicoSocialActivité } from "../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité";
 import { ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from "../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation";
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
