@@ -5,7 +5,6 @@ import {
   CapacitéSanitaire,
   ÉtablissementTerritorialSanitaireAutorisationEtCapacité,
 } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
-import { numéroFinessÉtablissementTerritorial } from "../../../../backend/testHelper";
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { BlocAutorisationEtCapacitéSanitaire } from "./BlocAutorisationEtCapacitéSanitaire";
@@ -229,7 +228,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
             nombreDePlacesEnSsr: null,
           },
         ],
-        numéroFinessÉtablissementTerritorial,
+        numéroFinessÉtablissementTerritorial: "1",
         reconnaissancesContractuelles: {
           activités: [],
           dateMiseÀJourSource: "2022-09-05",

@@ -1,10 +1,6 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
 
-export enum CadreBudgétaire {
-  ERRD = "ERRD",
-  CA_PA = "CA_PA",
-  CA_PH = "CA_PH",
-}
+import { CadreBudgétaire } from "../../src/backend/métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
 
 @Entity({ name: "budget_et_finances_medico_social" })
 export class BudgetEtFinancesMédicoSocialModel {
