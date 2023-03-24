@@ -5627,7 +5627,7 @@ __metadata:
     jest-environment-jsdom: ^28.0.2
     jest-mock-extended: ^3.0.1
     next: 13
-    next-router-mock: ^0.9.3
+    next-router-mock: ^0.7.4
     node-fetch: 2.6.7
     pg: ^8.7.3
     prettier: ^2.8.2
@@ -7921,13 +7921,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-router-mock@npm:^0.9.3":
-  version: 0.9.3
-  resolution: "next-router-mock@npm:0.9.3"
+"next-router-mock@npm:^0.7.4":
+  version: 0.7.4
+  resolution: "next-router-mock@npm:0.7.4"
   peerDependencies:
     next: ">=10.0.0"
     react: ">=17.0.0"
-  checksum: 5e8a6ffd5517e896711af2bc009414ad3f68cb89ccc3d483bd03e818876d9bc95a2fc80d14db67e90f1ea26a39853ddd5b4902cb40398b51bef749b98b9ec38f
+  checksum: 0014def3dd61b1ee7d324cef757fccbca72d2df61d17745d78bc7969fde4e5e1614a7401cc9f40735af86fe5699ec5610270a982252e1ef2c9761d24ac187fb7
   languageName: node
   linkType: hard
 
