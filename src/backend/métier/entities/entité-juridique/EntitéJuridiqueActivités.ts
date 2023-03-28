@@ -45,4 +45,8 @@ export type EntitéJuridiqueActivités = {
     dateMiseÀJourSource: string;
     value: number | null;
   };
+  nombreSéjoursHad: {
+    dateMiseÀJourSource: string;
+    value: number | null;
+  };
 };

@@ -108,6 +108,10 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
         dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
         value: activite.nombreSéjoursPartielsObstétrique,
       },
+      nombreSéjoursHad: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
+        value: activite.nombreSéjoursHad,
+      },
     }));
   }
 
