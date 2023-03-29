@@ -35,6 +35,7 @@ import { AjoutCategorisationEntiteJuridique1675329220245 } from "./migrations/16
 import { AjoutActiviteSanitaireEntiteJuridique1675695881364 } from "./migrations/1675695881364-AjoutActiviteSanitaireEntiteJuridique";
 import { RenommerColonnePassageUrgenceActivitesEntiteJuridique1675867340170 } from "./migrations/1675867340170-RenommerColonnePassageUrgenceActivitesEntiteJuridique";
 import { AjouterBlocBudgetFinanceEJ1677495763184 } from "./migrations/1677495763184-AjouterBlocBugetFinanceEJ";
+import { AjoutCapacitesSanitaireEJ1680076022425 } from "./migrations/1680076022425-AjoutCapacitesSanitaireEJ";
 import { AjouteHAD1680014929754 } from "./migrations/1680014929754-AjouteHAD";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "./models/ActivitéSanitaireEntitéJuridiqueModel";
@@ -113,6 +114,7 @@ export default new DataSource({
     AjoutActiviteSanitaireEntiteJuridique1675695881364,
     RenommerColonnePassageUrgenceActivitesEntiteJuridique1675867340170,
     AjouterBlocBudgetFinanceEJ1677495763184,
+    AjoutCapacitesSanitaireEJ1680076022425,
     AjouteHAD1680014929754,
   ],
   type: "postgres",
