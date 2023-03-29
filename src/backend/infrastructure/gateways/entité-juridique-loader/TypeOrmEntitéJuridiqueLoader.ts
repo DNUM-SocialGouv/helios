@@ -3,7 +3,6 @@ import { DataSource } from "typeorm";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
 import { BudgetEtFinancesEntiteJuridiqueModel } from "../../../../../database/models/BudgetEtFinancesEntiteJuridiqueModel";
 import { CapacitesSanitaireEntiteJuridiqueModel } from "../../../../../database/models/CapacitesSanitaireEntiteJuridiqueModel";
-import { CapacitéAutorisationSanitaireModel } from "../../../../../database/models/CapacitéAutorisationSanitaireModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { CatégorisationEnum, EntitéJuridiqueIdentité } from "../../../métier/entities/entité-juridique/EntitéJuridique";
@@ -15,10 +14,6 @@ import {
 import { EntitéJuridiqueBudgetFinance } from "../../../métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { EntitéJuridiqueNonTrouvée } from "../../../métier/entities/EntitéJuridiqueNonTrouvée";
 import { EntitéJuridiqueDeRattachement } from "../../../métier/entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement";
-import {
-  CapacitéSanitaire,
-  ÉtablissementTerritorialSanitaireAutorisationEtCapacité,
-} from "../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 import { EntitéJuridiqueLoader } from "../../../métier/gateways/EntitéJuridiqueLoader";
 
 export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {

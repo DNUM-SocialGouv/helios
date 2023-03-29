@@ -33,7 +33,6 @@ describe("Entité juridique loader", () => {
 
   beforeEach(async () => {
     await clearAllTables(await orm);
-    await dateMiseÀJourFichierSourceRepository.insert(DateMiseÀJourFichierSourceModelTestBuilder.créePourTousLesFichiers());
   });
 
   afterAll(async () => {
@@ -297,6 +296,12 @@ describe("Entité juridique loader", () => {
     it("charge les capacités d'une entité juridique", async () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }));
+      await dateMiseÀJourFichierSourceRepository.insert([
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: "2022-05-14",
+          fichier: FichierSource.DIAMANT_ANN_SAE,
+        }),
+      ]);
       await capacitéSanitaireRepository.insert([
         EntitéJuridiqueModelTestBuilder.créeCapacitéSanitaireEntiteJuridique({
           année: 2021,
@@ -316,7 +321,7 @@ describe("Entité juridique loader", () => {
       // THEN
       expect(capacités[0]).toStrictEqual<EntitéJuridiqueAutorisationEtCapacité["capacités"][0]>({
         année: 2021,
-        dateMiseÀJourSource: "2022-02-02",
+        dateMiseÀJourSource: "2022-05-14",
         nombreDeLitsEnChirurgie: 20,
         nombreDeLitsEnMédecine: 35,
         nombreDeLitsEnObstétrique: 12,
