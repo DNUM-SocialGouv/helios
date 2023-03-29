@@ -2,10 +2,12 @@ import { Repository } from "typeorm";
 
 import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
 import { BudgetEtFinancesEntiteJuridiqueModel } from "../../../../../database/models/BudgetEtFinancesEntiteJuridiqueModel";
+import { CapacitesSanitaireEntiteJuridiqueModel } from "../../../../../database/models/CapacitesSanitaireEntiteJuridiqueModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { DateMiseÀJourFichierSourceModelTestBuilder } from "../../../../../database/test-builder/DateMiseÀJourFichierSourceModelTestBuilder";
 import { EntitéJuridiqueModelTestBuilder } from "../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder";
+import { EntitéJuridiqueAutorisationEtCapacité } from "../../../métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { EntitéJuridiqueBudgetFinance } from "../../../métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { EntitéJuridiqueNonTrouvée } from "../../../métier/entities/EntitéJuridiqueNonTrouvée";
 import { EntitéJuridiqueDeRattachement } from "../../../métier/entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement";
@@ -19,16 +21,19 @@ describe("Entité juridique loader", () => {
   let entitéJuridiqueActivitésRepository: Repository<ActivitéSanitaireEntitéJuridiqueModel>;
   let dateMiseÀJourFichierSourceRepository: Repository<DateMiseÀJourFichierSourceModel>;
   let budgetFinanceEntiteJuridiqueRepository: Repository<BudgetEtFinancesEntiteJuridiqueModel>;
+  let capacitéSanitaireRepository: Repository<CapacitesSanitaireEntiteJuridiqueModel>;
 
   beforeAll(async () => {
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel);
     entitéJuridiqueActivitésRepository = (await orm).getRepository(ActivitéSanitaireEntitéJuridiqueModel);
     dateMiseÀJourFichierSourceRepository = (await orm).getRepository(DateMiseÀJourFichierSourceModel);
     budgetFinanceEntiteJuridiqueRepository = (await orm).getRepository(BudgetEtFinancesEntiteJuridiqueModel);
+    capacitéSanitaireRepository = (await orm).getRepository(CapacitesSanitaireEntiteJuridiqueModel);
   });
 
   beforeEach(async () => {
     await clearAllTables(await orm);
+    await dateMiseÀJourFichierSourceRepository.insert(DateMiseÀJourFichierSourceModelTestBuilder.créePourTousLesFichiers());
   });
 
   afterAll(async () => {
@@ -285,6 +290,46 @@ describe("Entité juridique loader", () => {
           resultatNetComptable: 0.1,
         } as EntitéJuridiqueBudgetFinance,
       ]);
+    });
+  });
+
+  describe("charge les capacités et autorisations d'une entité juridique", () => {
+    it("charge les capacités d'une entité juridique", async () => {
+      // GIVEN
+      await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }));
+      await capacitéSanitaireRepository.insert([
+        EntitéJuridiqueModelTestBuilder.créeCapacitéSanitaireEntiteJuridique({
+          année: 2021,
+          numéroFinessEntitéJuridique,
+        }),
+        EntitéJuridiqueModelTestBuilder.créeCapacitéSanitaireEntiteJuridique({
+          année: 2022,
+          nombreDeLitsEnChirurgie: 10,
+          numéroFinessEntitéJuridique,
+        }),
+      ]);
+      const entiteJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
+
+      // WHEN
+      const { capacités } = await entiteJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique);
+
+      // THEN
+      expect(capacités[0]).toStrictEqual<EntitéJuridiqueAutorisationEtCapacité["capacités"][0]>({
+        année: 2021,
+        dateMiseÀJourSource: "2022-02-02",
+        nombreDeLitsEnChirurgie: 20,
+        nombreDeLitsEnMédecine: 35,
+        nombreDeLitsEnObstétrique: 12,
+        nombreDeLitsEnSsr: 3,
+        nombreDeLitsEnUsld: 15,
+        nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 5,
+        nombreDePlacesEnChirurgie: 25,
+        nombreDePlacesEnMédecine: 40,
+        nombreDePlacesEnObstétrique: 12,
+        nombreDePlacesEnPsyHospitalisationPartielle: 13,
+        nombreDePlacesEnSsr: 3,
+      });
+      expect(capacités[1]?.nombreDeLitsEnChirurgie).toBe(10);
     });
   });
 });

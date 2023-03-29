@@ -1,6 +1,7 @@
 import { AutorisationMédicoSocialModel } from "../models/AutorisationMédicoSocialModel";
 import { AutorisationSanitaireModel } from "../models/AutorisationSanitaireModel";
 import { AutreActivitéSanitaireModel } from "../models/AutreActivitéSanitaireModel";
+import { CapacitesSanitaireEntiteJuridiqueModel } from "../models/CapacitesSanitaireEntiteJuridiqueModel";
 import { CapacitéAutorisationSanitaireModel } from "../models/CapacitéAutorisationSanitaireModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../models/ReconnaissanceContractuelleSanitaireModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "../models/ÉquipementMatérielLourdSanitaireModel";
