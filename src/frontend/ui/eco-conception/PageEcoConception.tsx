@@ -1,10 +1,7 @@
-import { useDependencies } from "../commun/contexts/useDependencies";
-
 export const PageEcoConception = () => {
-  const { wording } = useDependencies();
   return (
     <>
-      <h1>{wording.ECO_CONCEPTION}</h1>
+      <h1>Declaration d’Eco-Conception RGESN</h1>
       <p>
         <i> Dernière mise à jour : 29 mars 2023</i>
       </p>

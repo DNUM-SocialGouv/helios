@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import "@gouvfr/dsfr/dist/component/footer/footer.min.css";
 
+import { FEATURE_NAME } from "../../../utils/featureToggle";
 import { useDependencies } from "../contexts/useDependencies";
 
 export const Footer = () => {
@@ -73,11 +74,7 @@ export const Footer = () => {
                 {`${wording.ACCESSIBILITÉ} : ${wording.NON_CONFORME}`}
               </Link>
             </li>
-            <li className="fr-footer__bottom-item">
-              <Link className="fr-footer__bottom-link" href={paths.ECO_CONCEPTION} passHref>
-                {wording.ECO_CONCEPTION}
-              </Link>
-            </li>
+            <EcoConception />
             <li className="fr-footer__bottom-item">
               <Link className="fr-footer__bottom-link" href={paths.MENTIONS_LÉGALES} passHref>
                 {wording.MENTIONS_LÉGALES}
@@ -110,5 +107,23 @@ export const Footer = () => {
         </div>
       </div>
     </footer>
+  );
+};
+
+export const EcoConception = () => {
+  const { paths, wording, isFeatureEnabled } = useDependencies();
+
+  if (!isFeatureEnabled(FEATURE_NAME.ECO_CONCEPTION)) {
+    return <></>;
+  }
+
+  return (
+    <>
+      <li className="fr-footer__bottom-item">
+        <Link className="fr-footer__bottom-link" href={paths.ECO_CONCEPTION} passHref>
+          {wording.ECO_CONCEPTION}
+        </Link>
+      </li>
+    </>
   );
 };

@@ -372,7 +372,7 @@ export class WordingFr implements Wording {
   readonly MENTION_LICENCE: string = "Sauf mention contraire, tous les contenus de ce site sont sous ";
   readonly LICENCE_ETALAB: string = "licence etalab-2.0";
   readonly NOUVELLE_FENÊTRE: string = "nouvelle Fenêtre";
-  readonly ECO_CONCEPTION: string = "Declaration d'Eco-Conception RGESN";
+  readonly ECO_CONCEPTION: string = "Eco-Conception";
 
   // Accessibilité
   readonly AUDIT_EN_COURS: string = "Audit en cours de réalisation.";
