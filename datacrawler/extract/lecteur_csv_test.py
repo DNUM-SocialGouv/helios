@@ -126,6 +126,7 @@ class TestLisLeFichierCsv:
                 "Nombre de séjours HC Obstétrique": [NaN, 10.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 10.0],
                 "Nombre de journées hospit complète SSR": [NaN, 1074.0, 1103.0, 1087.0, NaN, NaN, NaN, NaN, NaN, 1074.0],
                 "Nombre de journées HTP SSR": [NaN, 100.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 100],
+                "Nombre total de séjours HAD": [NaN, 1674.0, 1103.0, 1087.0, NaN, NaN, NaN, NaN, NaN, 1674.0],
                 "Nb journées hospit complète PSY": [NaN, 200.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
                 "Nb journées HTP PSY": [NaN, 300.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 300],
             }

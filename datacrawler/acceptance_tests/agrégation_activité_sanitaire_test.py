@@ -38,6 +38,7 @@ class TestAgrègeLesActivitesSanitaireDesEntitesJuridiques:
                 "nombre_journees_complete_psy": [1.0, 2.0, 5.0],
                 "nombre_journées_partielles_psy": [1.0, 2.0, 5.0],
                 "nombre_passages_urgences": [1.0, 2.0, 5.0],
+                "nombre_sejours_had": [1.0, 2.0, 5.0],
             }
         )
 
@@ -64,6 +65,7 @@ class TestAgrègeLesActivitesSanitaireDesEntitesJuridiques:
                 "nombre_journees_complete_psy": [3.0, 5.0],
                 "nombre_journées_partielles_psy": [3.0, 5.0],
                 "nombre_passage_urgence": [3.0, 5.0],
+                "nombre_sejours_had": [3.0, 5.0],
             }
         )
         pd.testing.assert_frame_equal(agrégation_activités_enregistrées, agrégation_activités_attendues)

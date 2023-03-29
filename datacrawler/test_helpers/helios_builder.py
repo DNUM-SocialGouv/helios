@@ -105,6 +105,7 @@ def helios_activité_sanitaire_builder(champs_surchargés: Optional[Dict] = None
         "nombre_journees_complete_psy": 1.0,
         "nombre_journées_partielles_psy": 1.0,
         "nombre_passages_urgences": 100.0,
+        "nombre_sejours_had": 200.0,
     }
     if champs_surchargés:
         return {**activité, **champs_surchargés}

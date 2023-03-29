@@ -31,6 +31,7 @@ export class ÉtablissementTerritorialActivitéModelTestBuilder {
     activitéSanitaireModel.nombreJournéesPartielsSsr = champsSurchargés?.nombreJournéesPartielsSsr || 60;
     activitéSanitaireModel.nombreJournéesCompletePsy = champsSurchargés?.nombreJournéesCompletePsy || 60;
     activitéSanitaireModel.nombreJournéesPartiellesPsy = champsSurchargés?.nombreJournéesPartiellesPsy || 60;
+    activitéSanitaireModel.nombreSéjoursHad = champsSurchargés?.nombreSéjoursHad || 60;
     return activitéSanitaireModel;
   }
 }
