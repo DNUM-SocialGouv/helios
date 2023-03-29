@@ -7,4 +7,5 @@ export class Paths {
   readonly ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL: string = "/etablissement-territorial-medico-social";
   readonly ÉTABLISSEMENT_TERRITORIAL_SANITAIRE: string = "/etablissement-territorial-sanitaire";
   readonly RÉGION: string = "/region";
+  readonly ECO_CONCEPTION: string = "/eco-conception";
 }

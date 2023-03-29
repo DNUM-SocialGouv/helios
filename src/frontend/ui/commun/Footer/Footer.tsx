@@ -74,6 +74,11 @@ export const Footer = () => {
               </Link>
             </li>
             <li className="fr-footer__bottom-item">
+              <Link className="fr-footer__bottom-link" href={paths.ECO_CONCEPTION} passHref>
+                {wording.ECO_CONCEPTION}
+              </Link>
+            </li>
+            <li className="fr-footer__bottom-item">
               <Link className="fr-footer__bottom-link" href={paths.MENTIONS_LÉGALES} passHref>
                 {wording.MENTIONS_LÉGALES}
               </Link>
