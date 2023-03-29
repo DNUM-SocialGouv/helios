@@ -125,6 +125,7 @@ describe("Entité juridique loader", () => {
       activites.nombreSéjoursPartielsChirurgie = 9;
       activites.nombreSéjoursPartielsObstétrique = 10;
       activites.nombreDePassagesAuxUrgences = 11;
+      activites.nombreSéjoursHad = 12;
 
       await entitéJuridiqueActivitésRepository.insert(activites);
       await dateMiseÀJourFichierSourceRepository.insert([
@@ -190,6 +191,10 @@ describe("Entité juridique loader", () => {
           nombreSéjoursPartielsObstétrique: {
             dateMiseÀJourSource: "2023-01-01",
             value: 10,
+          },
+          nombreSéjoursHad: {
+            dateMiseÀJourSource: "2023-01-01",
+            value: 12,
           },
         },
       ]);

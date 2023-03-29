@@ -46,4 +46,7 @@ export class ActivitéSanitaireModel {
 
   @Column({ name: "nombre_journées_partielles_psy", nullable: true, type: "float" })
   public nombreJournéesPartiellesPsy!: number;
+
+  @Column({ name: "nombre_sejours_had", nullable: true, type: "float" })
+  public nombreSéjoursHad!: number;
 }

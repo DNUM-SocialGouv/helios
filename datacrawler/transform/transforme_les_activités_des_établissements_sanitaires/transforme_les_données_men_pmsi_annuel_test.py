@@ -92,6 +92,7 @@ class TestTransformeLesDonnéesMenPmsiAnnuel:
                         "Nombre de journées HTP SSR": NaN,
                         "Nb journées hospit complète PSY": NaN,
                         "Nb journées HTP PSY": NaN,
+                        "Nombre total de séjours HAD": NaN,
                     }
                 ),
             ]
@@ -123,6 +124,7 @@ class TestTransformeLesDonnéesMenPmsiAnnuel:
                             "nombre_journees_partiels_ssr": NaN,
                             "nombre_journees_complete_psy": NaN,
                             "nombre_journées_partielles_psy": NaN,
+                            "nombre_sejours_had": NaN,
                         }
                     )
                 ],

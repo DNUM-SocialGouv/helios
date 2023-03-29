@@ -52,6 +52,7 @@ colonnes_à_lire_ann_ms_tdp_et: List[str] = list(équivalences_diamant_ann_ms_td
     "Nombre de journées HTP SSR": ColonneHelios(nom="nombre_journees_partiels_ssr", type=float),
     "Nb journées hospit complète PSY": ColonneHelios(nom="nombre_journees_complete_psy", type=float),
     "Nb journées HTP PSY": ColonneHelios(nom="nombre_journées_partielles_psy", type=float),
+    "Nombre total de séjours HAD": ColonneHelios(nom="nombre_sejours_had", type=float),
 }
 
 colonnes_à_lire_men_pmsi_annuel: List[str] = list(équivalences_diamant_men_pmsi_annuel_helios.keys())
