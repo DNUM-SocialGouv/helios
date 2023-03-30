@@ -5,7 +5,7 @@ import { CapacitéSanitaire } from "../../../../backend/métier/entities/établi
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { GraphiqueCapacitésParActivité } from "./GraphiqueCapacitésParActivité";
-import { GraphiqueCapacitésParActivitéViewModel } from "./ÉtablissementTerritorialSanitaireAutorisationsViewModel";
+import { GraphiqueCapacitésParActivitéViewModel } from "./GraphiqueCapacitésParActivitéViewModel";
 
 const { wording } = fakeFrontDependencies;
 

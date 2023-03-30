@@ -2,8 +2,8 @@ import { useState } from "react";
 
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
-import { ContenuCapacitéParActivités } from "../InfoBulle/ContenuCapacitéParActivités";
-import { GraphiqueCapacitésParActivitéViewModel } from "./ÉtablissementTerritorialSanitaireAutorisationsViewModel";
+import { ContenuCapacitéParActivités } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuCapacitéParActivités";
+import { GraphiqueCapacitésParActivitéViewModel } from "./GraphiqueCapacitésParActivitéViewModel";
 
 type GraphiqueCapacitésParActivitéProps = Readonly<{
   graphiqueCapacitésParActivitéViewModel: GraphiqueCapacitésParActivitéViewModel;
