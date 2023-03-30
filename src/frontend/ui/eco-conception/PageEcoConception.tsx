@@ -2,7 +2,7 @@ export const PageEcoConception = () => {
   return (
     <>
       <h1>
-        Declaration d’Eco-Conception <abbr title="Référentiel général d'écoconception de services numériques">RGESN</abbr>
+        Déclaration d’éco-conception <abbr title="Référentiel général d'écoconception de services numériquesx">RGESN</abbr>
       </h1>
       <p>
         <i> Dernière mise à jour : 29 mars 2023</i>
@@ -21,27 +21,25 @@ export const PageEcoConception = () => {
       </p>
       <h2 className="fr-h6">Les bonnes pratiques que nous avons appliquées :</h2>
       <ul>
-        <li>
+        <li className="fr-mb-2w">
           Dès le cadrage, l’équipe de conception et de développement a été sensibilisée aux enjeux environnementaux du numérique et a intégré dans ses rituels,
           ses outils et son pilotage produit les bonnes pratiques d’éco-conception.
         </li>
-        <li>
+        <li className="fr-mb-2w">
           Nous faisons des audits express via&nbsp;
           <a href="https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=fr">Lighthouse</a> et l’extension&nbsp;
           <a href="https://chrome.google.com/webstore/detail/greenit-analysis/mofbfhffeklkbebfclfaiifefjflcpad?hl=fr">Green IT Analysis</a> pour identifier
           rapidement les leviers d’optimisation en écodéveloppement et intégration au backlog.
         </li>
-        <li>
+        <li className="fr-mb-2w">
           Helios a une retro compatibilité de cinq ans pour éviter de contribuer au renouvellement des équipements numériques. <br />
           Quelques indications sur les configurations minimales supportées par le service :
           <ul>
             <li>Le service supporte toutes les versions navigateurs qui ont moins de 5 ans et qui couvrent plus de 0,2% des parts de marché en France</li>
-            <li>
-              Le service s’adapte à différentes tailles d’écran jusqu’à <b>820 px</b> au minimum.
-            </li>
+            <li>Le service s’adapte à différentes tailles d’écran jusqu’à 820 px au minimum.</li>
           </ul>
         </li>
-        <li>
+        <li className="fr-mb-2w">
           Certains choix d’UX design ont été consciemment pris afin d’améliorer l’expérience utilisateur et de sélectionner uniquement les fonctionnalités les
           plus utiles tout en veillant au respect de la conformité RGAA. Notamment :
           <ul>
@@ -52,14 +50,14 @@ export const PageEcoConception = () => {
             <li>Utilisation du Système de Design de l’État (DSFR)</li>
           </ul>
         </li>
-        <li>
+        <li className="fr-mb-2w">
           Techniquement, des technologies standards ont été utilisées et un travail d’optimisation a été réalisé afin de limiter le nombre de requêtes serveurs
           et réduire les données transférées.
         </li>
       </ul>
       <p>
         <b>
-          En mars 2023, la version du site répond positivement à 85% soit 67 des 79 critères du référentiel général d’éco conception des services
+          En mars 2023, la version du site répond positivement à 85% soit 67 des 79 critères du référentiel général d’éco-conception des services
           numériques&nbsp;
         </b>
         <a href="https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/" rel="external noopener noreferrer" target="_blank">
