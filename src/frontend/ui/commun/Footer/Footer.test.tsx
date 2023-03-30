@@ -68,8 +68,8 @@ describe("Le pied de page", () => {
     renderFakeComponent(<Footer />);
 
     // THEN
-    const mentionsLégales = screen.getByRole("link", { name: wording.ECO_CONCEPTION });
-    expect(mentionsLégales).toHaveAttribute("href", paths.ECO_CONCEPTION);
+    const ecoConception = screen.getByRole("link", { name: wording.ECO_CONCEPTION });
+    expect(ecoConception).toHaveAttribute("href", paths.ECO_CONCEPTION);
   });
 
   it("affiche un lien pour accéder à la page d’informations relatives aux données personnelles", () => {

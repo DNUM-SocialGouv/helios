@@ -1,7 +1,9 @@
 export const PageEcoConception = () => {
   return (
     <>
-      <h1>Declaration d’Eco-Conception RGESN</h1>
+      <h1>
+        Declaration d’Eco-Conception <abbr title="Référentiel général d'écoconception de services numériques">RGESN</abbr>
+      </h1>
       <p>
         <i> Dernière mise à jour : 29 mars 2023</i>
       </p>
@@ -17,15 +19,15 @@ export const PageEcoConception = () => {
         L’équipe a, dès le début, intégré des bonnes pratiques d’écoconception pour le développement de sa plateforme numérique. Cette déclaration volontaire a
         pour objectif de partager et de faire connaître notre démarche afin d’inspirer d’autres entités à s’engager en faveur d’un numérique plus responsable.
       </p>
-      <h6>Les bonnes pratiques que nous avons appliquées :</h6>
+      <h2 className="fr-h6">Les bonnes pratiques que nous avons appliquées :</h2>
       <ul>
         <li>
           Dès le cadrage, l’équipe de conception et de développement a été sensibilisée aux enjeux environnementaux du numérique et a intégré dans ses rituels,
           ses outils et son pilotage produit les bonnes pratiques d’éco-conception.
         </li>
         <li>
-          Nous faisons des audits express via{" "}
-          <a href="https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=fr">Lighthouse</a> et l’extension{" "}
+          Nous faisons des audits express via&nbsp;
+          <a href="https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=fr">Lighthouse</a> et l’extension&nbsp;
           <a href="https://chrome.google.com/webstore/detail/greenit-analysis/mofbfhffeklkbebfclfaiifefjflcpad?hl=fr">Green IT Analysis</a> pour identifier
           rapidement les leviers d’optimisation en écodéveloppement et intégration au backlog.
         </li>
@@ -35,7 +37,7 @@ export const PageEcoConception = () => {
           <ul>
             <li>Le service supporte toutes les versions navigateurs qui ont moins de 5 ans et qui couvrent plus de 0,2% des parts de marché en France</li>
             <li>
-              Le service s’adapte à différentes tailles d’écran jusqu’à <b>1200 ou 820 px</b> au minimum.{" "}
+              Le service s’adapte à différentes tailles d’écran jusqu’à <b>820 px</b> au minimum.
             </li>
           </ul>
         </li>
@@ -56,7 +58,10 @@ export const PageEcoConception = () => {
         </li>
       </ul>
       <p>
-        <b>En mars 2023, la version du site répond positivement à x% soit x des 79 critères du référentiel général d’éco conception des services numériques </b>
+        <b>
+          En mars 2023, la version du site répond positivement à 85% soit 67 des 79 critères du référentiel général d’éco conception des services
+          numériques&nbsp;
+        </b>
         <a href="https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/" rel="external noopener noreferrer" target="_blank">
           (RGESN)
         </a>
