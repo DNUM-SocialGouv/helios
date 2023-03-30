@@ -1,3 +1,4 @@
+import { CapacitesSanitaireEntiteJuridiqueModel } from "../models/CapacitesSanitaireEntiteJuridiqueModel";
 import { EntitéJuridiqueModel } from "../models/EntitéJuridiqueModel";
 
 export class EntitéJuridiqueModelTestBuilder {
@@ -17,5 +18,26 @@ export class EntitéJuridiqueModelTestBuilder {
     entitéJuridique.téléphone = champsSurchargés?.téléphone || "0102030406";
     entitéJuridique.catégorisation = champsSurchargés?.catégorisation || "public";
     return entitéJuridique;
+  }
+
+  public static créeCapacitéSanitaireEntiteJuridique(
+    champsSurchargés?: Partial<CapacitesSanitaireEntiteJuridiqueModel>
+  ): CapacitesSanitaireEntiteJuridiqueModel {
+    const capacitéAutorisationSanitaireModel = new CapacitesSanitaireEntiteJuridiqueModel();
+    capacitéAutorisationSanitaireModel.année = champsSurchargés?.année || 2022;
+    capacitéAutorisationSanitaireModel.nombreDeLitsEnChirurgie = champsSurchargés?.nombreDeLitsEnChirurgie || 20;
+    capacitéAutorisationSanitaireModel.nombreDeLitsEnMédecine = champsSurchargés?.nombreDeLitsEnMédecine || 35;
+    capacitéAutorisationSanitaireModel.nombreDeLitsEnObstétrique = champsSurchargés?.nombreDeLitsEnObstétrique || 12;
+    capacitéAutorisationSanitaireModel.nombreDeLitsEnSsr = champsSurchargés?.nombreDeLitsEnSsr || 3;
+    capacitéAutorisationSanitaireModel.nombreDePlacesEnChirurgie = champsSurchargés?.nombreDePlacesEnChirurgie || 25;
+    capacitéAutorisationSanitaireModel.nombreDePlacesEnMédecine = champsSurchargés?.nombreDePlacesEnMédecine || 40;
+    capacitéAutorisationSanitaireModel.nombreDePlacesEnObstétrique = champsSurchargés?.nombreDePlacesEnObstétrique || 12;
+    capacitéAutorisationSanitaireModel.nombreDePlacesEnSsr = champsSurchargés?.nombreDePlacesEnSsr || 3;
+    capacitéAutorisationSanitaireModel.nombreDeLitsEnUsld = champsSurchargés?.nombreDeLitsEnUsld || 15;
+    capacitéAutorisationSanitaireModel.nombreDeLitsOuPlacesEnPsyHospitalisationComplète =
+      champsSurchargés?.nombreDeLitsOuPlacesEnPsyHospitalisationComplète || 5;
+    capacitéAutorisationSanitaireModel.nombreDePlacesEnPsyHospitalisationPartielle = champsSurchargés?.nombreDePlacesEnPsyHospitalisationPartielle || 13;
+    capacitéAutorisationSanitaireModel.numéroFinessEntitéJuridique = champsSurchargés?.numéroFinessEntitéJuridique || "670799667";
+    return capacitéAutorisationSanitaireModel;
   }
 }

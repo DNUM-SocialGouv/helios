@@ -2,6 +2,7 @@ import { mock } from "jest-mock-extended";
 
 import { EntitéJuridiqueTestBuilder } from "../../test-builder/EntitéJuridiqueTestBuilder";
 import { numéroFinessEntitéJuridique } from "../../testHelper";
+import { CapacitéSanitaireEntitéJuridique } from "../entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { EntitéJuridiqueNonTrouvée } from "../entities/EntitéJuridiqueNonTrouvée";
 import { EntitéJuridiqueLoader } from "../gateways/EntitéJuridiqueLoader";
 import { RécupèreLEntitéJuridiqueUseCase } from "./RécupèreLEntitéJuridiqueUseCase";
@@ -122,5 +123,36 @@ describe("La récupération d’une entité juridique", () => {
 
     // THEN
     expect(entitéJuridique.budgetFinance).toStrictEqual(mockBudgetFinance);
+  });
+
+  it("récupère toutes les autorisations et capacités", async () => {
+    // GIVEN
+    const mockCapacités: CapacitéSanitaireEntitéJuridique = {
+      année: 2022,
+      dateMiseÀJourSource: "2022-12-12",
+      nombreDeLitsEnChirurgie: 1,
+      nombreDeLitsEnMédecine: 1,
+      nombreDeLitsEnObstétrique: 1,
+      nombreDeLitsEnSsr: 1,
+      nombreDeLitsEnUsld: 1,
+      nombreDePlacesEnPsyHospitalisationPartielle: 1,
+      nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 1,
+      nombreDePlacesEnChirurgie: 1,
+      nombreDePlacesEnMédecine: 1,
+      nombreDePlacesEnSsr: 1,
+      nombreDePlacesEnObstétrique: 1,
+    };
+
+    const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
+      chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue(mockCapacités),
+    });
+
+    const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
+
+    // WHEN
+    const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
+
+    // THEN
+    expect(entitéJuridique.autorisationsEtCapacites).toStrictEqual(mockCapacités);
   });
 });

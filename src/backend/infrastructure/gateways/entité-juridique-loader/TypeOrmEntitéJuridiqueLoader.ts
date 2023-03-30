@@ -2,10 +2,15 @@ import { DataSource } from "typeorm";
 
 import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
 import { BudgetEtFinancesEntiteJuridiqueModel } from "../../../../../database/models/BudgetEtFinancesEntiteJuridiqueModel";
+import { CapacitesSanitaireEntiteJuridiqueModel } from "../../../../../database/models/CapacitesSanitaireEntiteJuridiqueModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { CatégorisationEnum, EntitéJuridiqueIdentité } from "../../../métier/entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueActivités } from "../../../métier/entities/entité-juridique/EntitéJuridiqueActivités";
+import {
+  CapacitéSanitaireEntitéJuridique,
+  EntitéJuridiqueAutorisationEtCapacité,
+} from "../../../métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { EntitéJuridiqueBudgetFinance } from "../../../métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { EntitéJuridiqueNonTrouvée } from "../../../métier/entities/EntitéJuridiqueNonTrouvée";
 import { EntitéJuridiqueDeRattachement } from "../../../métier/entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement";
@@ -244,6 +249,45 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
         (budget.recettesTitreIIIGlobal - budget.recettesTitreIIIH) +
         budget.recettesTitreIVGlobal,
       resultatNetComptable: budget.resultatNetComptableSan,
+    }));
+  }
+
+  async chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique: string): Promise<EntitéJuridiqueAutorisationEtCapacité> {
+    const capacitésDeLÉtablissementModel = await this.chargeLesCapacitésModel(numéroFinessEntitéJuridique);
+    const dateDeMiseÀJourDiamantAnnSaeModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_SAE)) as DateMiseÀJourFichierSourceModel;
+
+    return {
+      capacités: this.construisLesCapacités(capacitésDeLÉtablissementModel, dateDeMiseÀJourDiamantAnnSaeModel),
+      numéroFinessEntitéJuridique,
+    };
+  }
+
+  private async chargeLaDateDeMiseÀJourModel(fichierSource: FichierSource): Promise<DateMiseÀJourFichierSourceModel | null> {
+    return await (await this.orm).getRepository(DateMiseÀJourFichierSourceModel).findOneBy({ fichier: fichierSource });
+  }
+
+  private async chargeLesCapacitésModel(numéroFinessEntitéJuridique: string): Promise<CapacitesSanitaireEntiteJuridiqueModel[]> {
+    return await (await this.orm).getRepository(CapacitesSanitaireEntiteJuridiqueModel).find({ where: { numéroFinessEntitéJuridique } });
+  }
+
+  private construisLesCapacités(
+    capacitésDeLÉntiteJuridiqueModel: CapacitesSanitaireEntiteJuridiqueModel[],
+    dateDeMiseÀJourDiamantAnnSaeModel: DateMiseÀJourFichierSourceModel
+  ): CapacitéSanitaireEntitéJuridique[] {
+    return capacitésDeLÉntiteJuridiqueModel.map((capacités) => ({
+      année: capacités.année,
+      dateMiseÀJourSource: dateDeMiseÀJourDiamantAnnSaeModel.dernièreMiseÀJour,
+      nombreDeLitsEnChirurgie: capacités.nombreDeLitsEnChirurgie,
+      nombreDeLitsEnMédecine: capacités.nombreDeLitsEnMédecine,
+      nombreDeLitsEnObstétrique: capacités.nombreDeLitsEnObstétrique,
+      nombreDeLitsEnSsr: capacités.nombreDeLitsEnSsr,
+      nombreDeLitsEnUsld: capacités.nombreDeLitsEnUsld,
+      nombreDeLitsOuPlacesEnPsyHospitalisationComplète: capacités.nombreDeLitsOuPlacesEnPsyHospitalisationComplète,
+      nombreDePlacesEnChirurgie: capacités.nombreDePlacesEnChirurgie,
+      nombreDePlacesEnMédecine: capacités.nombreDePlacesEnMédecine,
+      nombreDePlacesEnObstétrique: capacités.nombreDePlacesEnObstétrique,
+      nombreDePlacesEnPsyHospitalisationPartielle: capacités.nombreDePlacesEnPsyHospitalisationPartielle,
+      nombreDePlacesEnSsr: capacités.nombreDePlacesEnSsr,
     }));
   }
 }
