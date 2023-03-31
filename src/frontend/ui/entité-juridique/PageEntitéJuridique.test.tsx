@@ -115,6 +115,20 @@ describe("La page Entité Juridique", () => {
     expect(blocBudgetFinance).toBeInTheDocument();
   });
 
+  it("affiche le bloc autorisation et capacité", () => {
+    // WHEN
+    renderFakeComponent(
+      <PageEntitéJuridique
+        entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+        établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
+      />
+    );
+
+    // THEN
+    const blocAutorisationCapacites = screen.getByText(wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ);
+    expect(blocAutorisationCapacites).toBeInTheDocument();
+  });
+
   describe("affiche le bloc identité de l’entité juridique", () => {
     it("affiche le nom de l’établissement", () => {
       // WHEN
