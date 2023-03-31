@@ -5,19 +5,19 @@ import { CapacitéSanitaire } from "../../../../backend/métier/entities/établi
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { GraphiqueCapacitésParActivité } from "./GraphiqueCapacitésParActivité";
-import { GraphiqueCapacitésParActivitéViewModel } from "./ÉtablissementTerritorialSanitaireAutorisationsViewModel";
+import { GraphiqueCapacitésParActivitéViewModel } from "./GraphiqueCapacitésParActivitéViewModel";
 
 const { wording } = fakeFrontDependencies;
 
 describe("GraphiqueCapacitésParActivité", () => {
-  const graphiqurCapacitésViewModel = new GraphiqueCapacitésParActivitéViewModel(
+  const graphiqueCapacitésViewModel = new GraphiqueCapacitésParActivitéViewModel(
     ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.capacités,
     wording
   );
 
   it('affiche les informations de l’indicateur "Capacité par activités"', () => {
     // WHEN
-    renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={graphiqurCapacitésViewModel} />);
+    renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={graphiqueCapacitésViewModel} />);
 
     // THEN
     const capacitéParActivités = screen.getByRole("listitem");
@@ -38,7 +38,7 @@ describe("GraphiqueCapacitésParActivité", () => {
   describe("Info bulle", () => {
     it('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails" (Capacité par activités)', () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={graphiqurCapacitésViewModel} />);
+      renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={graphiqueCapacitésViewModel} />);
       const détails = screen.getByRole("button", { name: wording.DÉTAILS });
 
       // WHEN
@@ -65,7 +65,7 @@ describe("GraphiqueCapacitésParActivité", () => {
 
     it('ferme l’info bulle après avoir cliqué sur le bouton "Fermer" (Capacité par activités)', () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={graphiqurCapacitésViewModel} />);
+      renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={graphiqueCapacitésViewModel} />);
       const détails = screen.getByRole("button", { name: wording.DÉTAILS });
       fireEvent.click(détails);
       const infoBulle = screen.getByRole("dialog", { name: wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS });
@@ -82,12 +82,12 @@ describe("GraphiqueCapacitésParActivité", () => {
   describe("Transcription textuelle", () => {
     it("affiche un tableau descriptif avec les toutes les activités", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={graphiqurCapacitésViewModel} />);
+      renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={graphiqueCapacitésViewModel} />);
 
       // THEN
       const tableau = screen.getByRole("table");
 
-      const libellésLigneDEnTête = [wording.ACTIVITÉS, wording.LITS, wording.PLACES];
+      const libellésLigneDEnTête = [wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, wording.LITS, wording.PLACES];
       const indicateursLigneDEnTête = within(tableau).getAllByRole("columnheader");
       libellésLigneDEnTête.forEach((libellé, index) => {
         expect(indicateursLigneDEnTête[index].textContent).toBe(libellé);

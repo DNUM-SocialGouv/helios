@@ -5,6 +5,7 @@ import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../
 import { Paths } from "../../configuration/Paths";
 import { Wording } from "../../configuration/wording/Wording";
 import { ÉtablissementTerritorialMédicoSocialViewModel } from "../../ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel";
+import { annéeEnCours } from "../testHelper";
 
 export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
   public static identité: ÉtablissementTerritorialMédicoSocial["identité"] = {
@@ -629,7 +630,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialBudgetEtFinances>
   ): ÉtablissementTerritorialMédicoSocialBudgetEtFinances {
     return {
-      année: 2019,
+      année: annéeEnCours - 3,
       cadreBudgétaire: CadreBudgétaire.CA_PA,
       chargesEtProduits: {
         charges: -1613142.1299999997,

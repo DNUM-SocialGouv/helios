@@ -4,13 +4,13 @@ import { ÉtablissementTerritorialSanitaire } from "../../../backend/métier/ent
 import { Paths } from "../../configuration/Paths";
 import { Wording } from "../../configuration/wording/Wording";
 import { ÉtablissementTerritorialSanitaireActivitéViewModel } from "./bloc-activité/ÉtablissementTerritorialSanitaireActivitéViewModel";
-import { ÉtablissementTerritorialSanitaireAutorisationsViewModel } from "./bloc-autorisations/ÉtablissementTerritorialSanitaireAutorisationsViewModel";
+import { EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel } from "./bloc-autorisations/ÉtablissementTerritorialSanitaireAutorisationsCapacitesViewModel";
 import { ÉtablissementTerritorialSanitaireIdentitéViewModel } from "./bloc-identité/ÉtablissementTerritorialSanitaireIdentitéViewModel";
 
 export class ÉtablissementTerritorialSanitaireViewModel {
   private établissementTerritorialSanitaireIdentitéViewModel: ÉtablissementTerritorialSanitaireIdentitéViewModel;
   private établissementTerritorialSanitaireActivitésViewModel: ÉtablissementTerritorialSanitaireActivitéViewModel;
-  private établissementTerritorialSanitaireAutorisationsViewModel: ÉtablissementTerritorialSanitaireAutorisationsViewModel;
+  private établissementTerritorialSanitaireAutorisationsViewModel: EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel;
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, private readonly wording: Wording, paths: Paths) {
     this.établissementTerritorialSanitaireIdentitéViewModel = new ÉtablissementTerritorialSanitaireIdentitéViewModel(
@@ -22,7 +22,7 @@ export class ÉtablissementTerritorialSanitaireViewModel {
       établissementTerritorial.activités,
       wording
     );
-    this.établissementTerritorialSanitaireAutorisationsViewModel = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
+    this.établissementTerritorialSanitaireAutorisationsViewModel = new EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel(
       établissementTerritorial.autorisationsEtCapacités,
       wording
     );
@@ -54,7 +54,7 @@ export class ÉtablissementTerritorialSanitaireViewModel {
     return this.établissementTerritorialSanitaireActivitésViewModel;
   }
 
-  public get autorisationsViewModel(): ÉtablissementTerritorialSanitaireAutorisationsViewModel {
+  public get autorisationsViewModel(): EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
     return this.établissementTerritorialSanitaireAutorisationsViewModel;
   }
 

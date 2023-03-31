@@ -8,12 +8,12 @@ import {
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { BlocAutorisationEtCapacitéSanitaire } from "./BlocAutorisationEtCapacitéSanitaire";
-import { ÉtablissementTerritorialSanitaireAutorisationsViewModel } from "./ÉtablissementTerritorialSanitaireAutorisationsViewModel";
+import { EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel } from "./ÉtablissementTerritorialSanitaireAutorisationsCapacitesViewModel";
 
 const { paths, wording } = fakeFrontDependencies;
 
 describe("La page établissement territorial sanitaire - bloc autorisation et capacité", () => {
-  const autorisationsViewModel = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
+  const autorisationsViewModel = new EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel(
     ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
     wording
   );
@@ -85,7 +85,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     [wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, "équipementsMatérielsLourds", "équipements"],
   ])("n’affiche pas l’indicateur si l’établissement n’a pas de %s", (nomDeLIndicateur: string, champDeLaDonnéeVide: string, activitésOuÉquipements) => {
     // GIVEN
-    const autorisationsViewModelSansAutorisations = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
+    const autorisationsViewModelSansAutorisations = new EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel(
       mockDeep<ÉtablissementTerritorialSanitaireAutorisationEtCapacité>({
         capacités: [mock<CapacitéSanitaire>({ année: 2022 })],
         [champDeLaDonnéeVide]: {
@@ -201,7 +201,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
 
   it("affiche une phrase à la place des indicateurs lorsqu’aucune autorisation ni capacité n’est renseignée", () => {
     // GIVEN
-    const autorisationsViewModel = new ÉtablissementTerritorialSanitaireAutorisationsViewModel(
+    const autorisationsViewModel = new EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel(
       {
         autorisations: {
           activités: [],

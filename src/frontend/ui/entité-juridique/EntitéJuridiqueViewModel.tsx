@@ -4,6 +4,7 @@ import { EntitéJuridique } from "../../../backend/métier/entities/entité-juri
 import { Wording } from "../../configuration/wording/Wording";
 import { StringFormater } from "../commun/StringFormater";
 import { EntitéJuridiqueActivitésViewModel } from "./bloc-activité/EntitéJuridiqueActivitésViewModel";
+import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "./bloc-autorisations-capacites/EntitéJuridiqueAutorisationsCapacitesViewModel";
 import { EntitéJuridiqueBudgetFinanceViewModel } from "./bloc-budget-finance/EntitéJuridiqueBudgetFinanceViewModel";
 import { CatégorisationViewModel } from "./catégorisation/CatégorisationViewModel";
 
@@ -11,11 +12,16 @@ export class EntitéJuridiqueViewModel {
   public catégorisationViewModel: CatégorisationViewModel;
   public entitéJuridiqueActivitéViewModel: EntitéJuridiqueActivitésViewModel;
   public entitéJuridiqueBudgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;
+  public entitéJuridiqueAutorisationsCapacitesViewModel: EntitéJuridiqueAutorisationsCapacitesViewModel;
 
   constructor(private readonly entitéJuridique: EntitéJuridique, private readonly wording: Wording) {
     this.catégorisationViewModel = new CatégorisationViewModel(entitéJuridique.catégorisation, wording);
     this.entitéJuridiqueActivitéViewModel = new EntitéJuridiqueActivitésViewModel(entitéJuridique.activités, wording);
     this.entitéJuridiqueBudgetFinanceViewModel = new EntitéJuridiqueBudgetFinanceViewModel(entitéJuridique.budgetFinance, wording);
+    this.entitéJuridiqueAutorisationsCapacitesViewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
+      entitéJuridique.autorisationsEtCapacites.capacités,
+      wording
+    );
   }
 
   public get titreAccessible(): ReactElement {
