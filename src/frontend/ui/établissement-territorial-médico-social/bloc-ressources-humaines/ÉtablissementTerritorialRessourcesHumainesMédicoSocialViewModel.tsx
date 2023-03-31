@@ -447,7 +447,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
     return [valeurs, années];
   }
 
-  private anneesAvecTauxAbsenteisme(): number[] {
+  public anneesAvecTauxAbsenteisme(): number[] {
     return this.ressourcesHumainesMédicoSocial
       .filter(filtreParPrésenceDesTauxDAbsentéisme)
       .map((ressourcesHumaines) => ressourcesHumaines.année)

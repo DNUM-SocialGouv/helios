@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { DeuxHistogrammesHorizontaux } from "../../commun/Graphique/DeuxHistogrammesHorizontaux";
-import { SelectionAnnee } from "../../commun/Graphique/SelectionAnnee";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ContenuCapacitéParActivités } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuCapacitéParActivités";
 import { GraphiqueCapacitésParActivitéViewModel } from "./GraphiqueCapacitésParActivitéViewModel";
@@ -19,7 +18,7 @@ export const GraphiqueCapacitésParActivité = ({ graphiqueCapacitésParActivit�
 
   return (
     <IndicateurGraphique
-      années={<SelectionAnnee annees={annees} setAnnéeEnCours={setAnnéeEnCours} />}
+      années={{ liste: annees, setAnnéeEnCours }}
       contenuInfoBulle={
         <ContenuCapacitéParActivités
           dateDeMiseÀJour={graphiqueCapacitésParActivitéViewModel.dateDeMiseÀJourDeLaCapacitéInstalléeParActivités}

@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { DeuxHistogrammesHorizontaux } from "../../../commun/Graphique/DeuxHistogrammesHorizontaux";
-import { SelectionAnnee } from "../../../commun/Graphique/SelectionAnnee";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ContenuCompteDeRésultat } from "../../InfoBulle/ContenuCompteDeRésultat";
 import { CompteDeResultatViewModel } from "./CompteDeResultatViewModel";
@@ -19,7 +18,7 @@ export const GraphiqueCompteDeResultat = ({ compteDeRésultatViewModel }: BlocBu
 
   return (
     <IndicateurGraphique
-      années={SelectionAnnee({ setAnnéeEnCours, annees })}
+      années={{ liste: annees, setAnnéeEnCours }}
       contenuInfoBulle={<ContenuCompteDeRésultat dateDeMiseÀJour={compteDeRésultatViewModel.dateMiseÀJour} source={wording.CNSA} />}
       dateDeMiseÀJour={compteDeRésultatViewModel.dateMiseÀJour}
       identifiant="budget-et-finances-compte-de-résultat"
