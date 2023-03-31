@@ -63,6 +63,7 @@ export class CompteDeResultatViewModel {
     }
 
     return new HistogrammeData(
+      this.entêtesDesAutresColonnes(budgetEtFinance)[0],
       this.libellés(budgetEtFinance),
       dépensesOuCharges,
       [
@@ -73,9 +74,8 @@ export class CompteDeResultatViewModel {
           isError: dépensesOuCharges.map((depenses) => depenses > 0),
         },
       ],
-      this.entêtesDesAutresColonnes(budgetEtFinance)[0],
-      this.ratioHistogramme(budgetEtFinance),
-      StringFormater.formateLeMontantEnEuros
+      StringFormater.formateLeMontantEnEuros,
+      this.ratioHistogramme(budgetEtFinance)
     );
   }
 
@@ -97,6 +97,7 @@ export class CompteDeResultatViewModel {
     }
 
     return new HistogrammeData(
+      this.entêtesDesAutresColonnes(budgetEtFinance)[1],
       this.libellés(budgetEtFinance),
       recettesOuProduits,
       [
@@ -107,9 +108,8 @@ export class CompteDeResultatViewModel {
           isError: recettesOuProduits.map((recette) => recette < 0),
         },
       ],
-      this.entêtesDesAutresColonnes(budgetEtFinance)[1],
-      this.ratioHistogramme(budgetEtFinance),
-      StringFormater.formateLeMontantEnEuros
+      StringFormater.formateLeMontantEnEuros,
+      this.ratioHistogramme(budgetEtFinance)
     );
   }
 

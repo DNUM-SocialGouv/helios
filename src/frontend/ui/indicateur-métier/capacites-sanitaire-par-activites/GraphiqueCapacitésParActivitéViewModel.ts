@@ -109,6 +109,7 @@ export class GraphiqueCapacitésParActivitéViewModel {
   public valeursLits(annéeEnCours: number): HistogrammeData {
     const lits = this.lits(annéeEnCours);
     return new HistogrammeData(
+      this.wording.LITS,
       this.libellés(annéeEnCours),
       lits,
       [
@@ -119,8 +120,6 @@ export class GraphiqueCapacitésParActivitéViewModel {
           label: this.wording.LITS,
         },
       ],
-      this.wording.LITS,
-      2,
       this.valueFormatter.bind(this)
     );
   }
@@ -128,6 +127,7 @@ export class GraphiqueCapacitésParActivitéViewModel {
   public valeursPlaces(annéeEnCours: number): HistogrammeData {
     const places = this.places(annéeEnCours);
     return new HistogrammeData(
+      this.wording.PLACES,
       this.libellés(annéeEnCours),
       places,
       [
@@ -138,8 +138,6 @@ export class GraphiqueCapacitésParActivitéViewModel {
           label: this.wording.PLACES,
         },
       ],
-      this.wording.PLACES,
-      2,
       this.valueFormatter.bind(this)
     );
   }
