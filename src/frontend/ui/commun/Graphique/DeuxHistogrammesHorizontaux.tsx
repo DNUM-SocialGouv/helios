@@ -184,9 +184,11 @@ export const DeuxHistogrammesHorizontaux = ({
     return histogrammes.flatMap((histogramme) => histogramme.transcriptionsValeurs);
   }
 
+  const aucuneDonnées = annéesManquantes.length >= nombreDAnnéeTotale;
+
   return (
     <>
-      {annéesManquantes.length < nombreDAnnéeTotale && (
+      {!aucuneDonnées && (
         <div
           style={{
             display: "grid",
@@ -212,14 +214,16 @@ export const DeuxHistogrammesHorizontaux = ({
         />
       )}
       {annéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
-      <Transcription
-        disabled={annéesManquantes.length === nombreDAnnéeTotale}
-        entêteLibellé={nom}
-        identifiantUnique={nom}
-        identifiants={transcriptionTitles()}
-        libellés={histogrammes[0].labels}
-        valeurs={getTranscriptionValeurs()}
-      />
+      {!aucuneDonnées && (
+        <Transcription
+          disabled={annéesManquantes.length === nombreDAnnéeTotale}
+          entêteLibellé={nom}
+          identifiantUnique={nom}
+          identifiants={transcriptionTitles()}
+          libellés={histogrammes[0].labels}
+          valeurs={getTranscriptionValeurs()}
+        />
+      )}
     </>
   );
 };
