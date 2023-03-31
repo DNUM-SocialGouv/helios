@@ -1,10 +1,10 @@
-import { ChangeEvent, ReactElement } from "react";
+import { ReactElement } from "react";
 
 import { CapacitéSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
+import { DeuxHistogrammesHorizontaux, HistogrammeData } from "../../commun/Graphique/DeuxHistogrammesHorizontaux";
 import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
-import { Select } from "../../commun/Select/Select";
 import { StringFormater } from "../../commun/StringFormater";
 
 export class GraphiqueCapacitésParActivitéViewModel extends GraphiqueViewModel {
@@ -18,25 +18,7 @@ export class GraphiqueCapacitésParActivitéViewModel extends GraphiqueViewModel
     return this.filtrerLesAnnéesAvecDesCapacités()[0];
   }
 
-  public listeDéroulanteDesAnnéesDesCapacités(setAnnéeEnCours: Function): ReactElement {
-    const annéesRangéesAntéChronologiquement = this.filtrerLesAnnéesAvecDesCapacités();
-
-    if (annéesRangéesAntéChronologiquement.length > 0) {
-      return (
-        <Select
-          label={this.wording.ANNÉE}
-          onChange={(event: ChangeEvent<HTMLSelectElement>) => {
-            setAnnéeEnCours(Number(event.target.value));
-          }}
-          options={annéesRangéesAntéChronologiquement}
-        />
-      );
-    }
-
-    return <></>;
-  }
-
-  private filtrerLesAnnéesAvecDesCapacités() {
+  public filtrerLesAnnéesAvecDesCapacités() {
     const capacitésRenseignées = this.filtreLesCapacitésRenseignées();
     return this.annéesRangéesParAntéChronologie(capacitésRenseignées);
   }
@@ -114,20 +96,29 @@ export class GraphiqueCapacitésParActivitéViewModel extends GraphiqueViewModel
     const libellés = litsEtPlacesSansLignesVides.map((litEtPlace) => litEtPlace.libellé);
     const lits = litsEtPlacesSansLignesVides.map((litEtPlace) => litEtPlace.nombreDeLits);
     const places = litsEtPlacesSansLignesVides.map((litEtPlace) => litEtPlace.nombreDePlaces);
-    const chartColors = [this.couleurDuFondHistogrammeSecondaire];
-    const identifiants = [this.wording.LITS, this.wording.PLACES];
-    const ratioHistogrammeCapacitéParActivités = litsEtPlacesSansLignesVides.length < 3 ? 9 : 5;
 
-    return this.afficheDeuxHistogrammesHorizontaux(
-      chartColors,
-      lits,
-      places,
+    const valeurDeGauche: HistogrammeData = new HistogrammeData(
       libellés,
-      ratioHistogrammeCapacitéParActivités,
-      this.wording.ACTIVITÉS,
-      identifiants,
-      annéesManquantes(this.filtrerLesAnnéesAvecDesCapacités(), this.NOMBRE_ANNEES),
-      this.NOMBRE_ANNEES
+      lits,
+      [{ data: lits, backgroundColor: [this.couleurDuFondHistogrammeSecondaire], isError: [false], label: this.wording.LITS }],
+      this.wording.LITS
+    );
+
+    const valeurDeDroite: HistogrammeData = new HistogrammeData(
+      libellés,
+      places,
+      [{ data: places, backgroundColor: [this.couleurDuFondHistogrammeSecondaire], isError: [false], label: this.wording.PLACES }],
+      this.wording.PLACES
+    );
+
+    return (
+      <DeuxHistogrammesHorizontaux
+        annéesManquantes={annéesManquantes(this.filtrerLesAnnéesAvecDesCapacités(), this.NOMBRE_ANNEES)}
+        nom={this.wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
+        nombreDAnnéeTotale={this.NOMBRE_ANNEES}
+        valeursDeDroite={valeurDeDroite}
+        valeursDeGauche={valeurDeGauche}
+      />
     );
   }
 }
