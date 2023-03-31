@@ -1,3 +1,4 @@
+import { FEATURE_NAME } from "../../../utils/featureToggle";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
@@ -9,20 +10,21 @@ type BlocAutorisationsCapacitesProps = Readonly<{
 }>;
 
 export const BlocAutorisationsCapacites = ({ entitéJuridiqueAutorisationsCapacitesViewModel }: BlocAutorisationsCapacitesProps) => {
-  const { wording } = useDependencies();
+  const { wording, isFeatureEnabled } = useDependencies();
 
-  if (entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsCapacitesNeSontPasRenseignées) {
+  if (entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsCapacitesNeSontPasRenseignées || !isFeatureEnabled(FEATURE_NAME.CAPACITES_EJ)) {
     return <BlocIndicateurVide title={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} />;
   }
 
   return (
     <Bloc titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>
       <ul className="indicateurs">
-        {entitéJuridiqueAutorisationsCapacitesViewModel.graphiqueCapacitesParActivitesViewModel.lesCapacitésParActivitésSontEllesRenseignées && (
-          <GraphiqueCapacitésParActivité
-            graphiqueCapacitésParActivitéViewModel={entitéJuridiqueAutorisationsCapacitesViewModel.graphiqueCapacitesParActivitesViewModel}
-          />
-        )}
+        {isFeatureEnabled(FEATURE_NAME.CAPACITES_EJ) &&
+          entitéJuridiqueAutorisationsCapacitesViewModel.graphiqueCapacitesParActivitesViewModel.lesCapacitésParActivitésSontEllesRenseignées && (
+            <GraphiqueCapacitésParActivité
+              graphiqueCapacitésParActivitéViewModel={entitéJuridiqueAutorisationsCapacitesViewModel.graphiqueCapacitesParActivitesViewModel}
+            />
+          )}
       </ul>
     </Bloc>
   );

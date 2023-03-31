@@ -11,10 +11,11 @@ import { ParsedUrlQuery } from "querystring";
 
 export enum FEATURE_NAME {
   "COMPTE_RESULTAT_EJ" = "COMPTE_RESULTAT_EJ",
+  "CAPACITES_EJ" = "CAPACITES_EJ",
   "ECO_CONCEPTION" = "ECO_CONCEPTION",
 }
 
-const currentFeaturesToggled: FEATURE_NAME[] = [FEATURE_NAME.COMPTE_RESULTAT_EJ, FEATURE_NAME.ECO_CONCEPTION];
+const currentFeaturesToggled: FEATURE_NAME[] = [FEATURE_NAME.COMPTE_RESULTAT_EJ, FEATURE_NAME.ECO_CONCEPTION, FEATURE_NAME.CAPACITES_EJ];
 const currentEnabledFeatures: FEATURE_NAME[] = parseEnvEnabledFeature();
 
 function parseEnvEnabledFeature(): FEATURE_NAME[] {
