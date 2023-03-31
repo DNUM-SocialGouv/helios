@@ -5,7 +5,6 @@ import { Bar } from "react-chartjs-2";
 
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
-import { StringFormater } from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
 
 type Stack = { label?: string; data: number[]; backgroundColor: string[]; isError: boolean[] };
@@ -43,7 +42,7 @@ export class HistogrammeData {
     private stacks: Stack[],
     public nom: string,
     private aspectRatio = 2,
-    private valueFormatter: (value: number) => string = StringFormater.formateLeMontantEnEuros
+    private valueFormatter: (value: number) => string = (value) => value.toString()
   ) {
     this.areStacksVisible = new Array(stacks.length).fill(true);
   }

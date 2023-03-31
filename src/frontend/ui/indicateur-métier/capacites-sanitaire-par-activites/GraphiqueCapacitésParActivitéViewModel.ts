@@ -2,23 +2,19 @@ import { CapacitéSanitaire } from "../../../../backend/métier/entities/établi
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
 import { HistogrammeData } from "../../commun/Graphique/DeuxHistogrammesHorizontaux";
-import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../commun/StringFormater";
 
-export class GraphiqueCapacitésParActivitéViewModel extends GraphiqueViewModel {
+export class GraphiqueCapacitésParActivitéViewModel {
   public NOMBRE_ANNEES = 5;
 
-  constructor(private readonly capacitésSanitaire: CapacitéSanitaire[], wording: Wording) {
-    super(wording);
-  }
+  constructor(private readonly capacitésSanitaire: CapacitéSanitaire[], private wording: Wording) {}
 
   public get annéeInitiale() {
     return this.filtrerLesAnnéesAvecDesCapacités()[0];
   }
 
-  public filtrerLesAnnéesAvecDesCapacités() {
-    const capacitésRenseignées = this.filtreLesCapacitésRenseignées();
-    return this.annéesRangéesParAntéChronologie(capacitésRenseignées);
+  public filtrerLesAnnéesAvecDesCapacités(): number[] {
+    return this.filtreLesCapacitésRenseignées().map((capacité) => capacité.année);
   }
 
   private filtreLesCapacitésRenseignées() {
@@ -37,10 +33,6 @@ export class GraphiqueCapacitésParActivitéViewModel extends GraphiqueViewModel
         capacités.nombreDePlacesEnPsyHospitalisationPartielle !== null
       );
     });
-  }
-
-  private annéesRangéesParAntéChronologie(capacités: CapacitéSanitaire[]): number[] {
-    return capacités.map((capacité) => capacité.année).sort((année1, année2) => année2 - année1);
   }
 
   public get lesCapacitésParActivitésSontEllesRenseignées(): boolean {
@@ -122,7 +114,7 @@ export class GraphiqueCapacitésParActivitéViewModel extends GraphiqueViewModel
       [
         {
           data: lits,
-          backgroundColor: [this.couleurDuFondHistogrammeSecondaire],
+          backgroundColor: ["#4E68BB"],
           isError: [false],
           label: this.wording.LITS,
         },
@@ -141,7 +133,7 @@ export class GraphiqueCapacitésParActivitéViewModel extends GraphiqueViewModel
       [
         {
           data: places,
-          backgroundColor: [this.couleurDuFondHistogrammeSecondaire],
+          backgroundColor: ["#4E68BB"],
           isError: [false],
           label: this.wording.PLACES,
         },

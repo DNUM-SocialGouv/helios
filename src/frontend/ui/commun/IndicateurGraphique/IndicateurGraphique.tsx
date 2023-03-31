@@ -1,13 +1,13 @@
 import { ReactChild, ReactElement, useState } from "react";
 
 import { useDependencies } from "../contexts/useDependencies";
+import { SelectionAnnee } from "../Graphique/SelectionAnnee";
 import { InfoBulle } from "../InfoBulle/InfoBulle";
 import styles from "./IndicateurGraphique.module.css";
-
 import "@gouvfr/dsfr/dist/component/button/button.min.css";
 
 type IndicateurProps = Readonly<{
-  années?: ReactElement;
+  années?: { liste: number[]; setAnnéeEnCours: (annee: number) => void };
   children: ReactElement;
   contenuInfoBulle: ReactElement;
   dateDeMiseÀJour: string;
@@ -16,15 +16,7 @@ type IndicateurProps = Readonly<{
   source: ReactElement;
 }>;
 
-export const IndicateurGraphique = ({
-  années = <></>,
-  children,
-  contenuInfoBulle,
-  dateDeMiseÀJour,
-  identifiant,
-  nomDeLIndicateur,
-  source,
-}: IndicateurProps) => {
+export const IndicateurGraphique = ({ années, children, contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source }: IndicateurProps) => {
   const { wording } = useDependencies();
   const [estCeOuvert, setEstCeOuvert] = useState(false);
 
@@ -33,7 +25,7 @@ export const IndicateurGraphique = ({
       <div>
         <h6 className={`fr-m-0 fr-text--bold ${styles["intitule"]}`}>
           {nomDeLIndicateur}
-          {années}
+          {années ? <SelectionAnnee annees={années.liste} setAnnéeEnCours={années.setAnnéeEnCours} /> : <></>}
         </h6>
         <div className={styles["mise-a-jour-source"]}>
           <p className={`fr-text--xs ${styles["titraille"]}`}>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>

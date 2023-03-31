@@ -35,7 +35,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     return annéesManquantes(this.lesAnnéesEffectivesDuCompteDeRésultat(), this.NOMBRE_ANNEES);
   }
 
-  private lesAnnéesEffectivesDuCompteDeRésultat(): number[] {
+  public lesAnnéesEffectivesDuCompteDeRésultat(): number[] {
     return this.budgetEtFinance.filter((budgetEtFinance) => !this.compteResultatVide(budgetEtFinance)).map((budgetFinance) => budgetFinance.année);
   }
 
@@ -61,10 +61,6 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       !budgetFinance.depensesTitreIIIGlobal &&
       !budgetFinance.depensesTitreIVGlobal
     );
-  }
-
-  annéesRangéesParAntéChronologie(): number[] {
-    return this.lesAnnéesEffectivesDuCompteDeRésultat().sort((année1, année2) => (année1 < année2 ? 1 : -1));
   }
 
   public get dateMiseÀJour(): string {
@@ -116,7 +112,9 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
           isError: depensesAnnexes.map((depense) => depense > 0),
         },
       ],
-      this.wording.CHARGES
+      this.wording.CHARGES,
+      2,
+      StringFormater.formateLeMontantEnEuros
     );
   }
 
@@ -165,7 +163,9 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
           isError: produitsAnnexes.map((depense) => depense < 0),
         },
       ],
-      this.wording.PRODUITS
+      this.wording.PRODUITS,
+      2,
+      StringFormater.formateLeMontantEnEuros
     );
   }
 

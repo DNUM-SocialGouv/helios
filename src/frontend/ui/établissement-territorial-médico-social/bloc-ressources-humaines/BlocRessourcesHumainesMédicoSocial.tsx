@@ -105,7 +105,10 @@ export const BlocRessourcesHumainesMédicoSocial = ({
             {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.tauxDeRotationDuPersonnel}
           </IndicateurGraphique>
           <IndicateurGraphique
-            années={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.listeDéroulanteDesAnnéesDesTauxDAbsentéismes(setAnnéeEnCours)}
+            années={{
+              liste: établissementTerritorialMédicoSocialRessourcesHumainesViewModel.anneesAvecTauxAbsenteisme(),
+              setAnnéeEnCours,
+            }}
             contenuInfoBulle={
               <ContenuDesTauxDAbsentéismes
                 dateDeMiseÀJour={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.dateDeMiseÀJourDesTauxDAbsentéismes}

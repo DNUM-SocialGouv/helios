@@ -25,11 +25,8 @@ export class CompteDeResultatViewModel {
     ) as ÉtablissementTerritorialMédicoSocialBudgetEtFinances;
   }
 
-  annéesRangéesParAntéChronologie(): number[] {
-    return this.budgetEtFinancesMédicoSocial
-      .filter(filtreParCadreBudgétaireEtRecettesEtDépenses)
-      .map((budgetEtFinance) => budgetEtFinance.année)
-      .reverse();
+  anneesAvecCompteDeResultat(): number[] {
+    return this.budgetEtFinancesMédicoSocial.filter(filtreParCadreBudgétaireEtRecettesEtDépenses).map((budgetEtFinance) => budgetEtFinance.année);
 
     function filtreParCadreBudgétaireEtRecettesEtDépenses(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances): boolean {
       if (
@@ -77,7 +74,8 @@ export class CompteDeResultatViewModel {
         },
       ],
       this.entêtesDesAutresColonnes(budgetEtFinance)[0],
-      this.ratioHistogramme(budgetEtFinance)
+      this.ratioHistogramme(budgetEtFinance),
+      StringFormater.formateLeMontantEnEuros
     );
   }
 
@@ -110,7 +108,8 @@ export class CompteDeResultatViewModel {
         },
       ],
       this.entêtesDesAutresColonnes(budgetEtFinance)[1],
-      this.ratioHistogramme(budgetEtFinance)
+      this.ratioHistogramme(budgetEtFinance),
+      StringFormater.formateLeMontantEnEuros
     );
   }
 
