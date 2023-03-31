@@ -1,11 +1,10 @@
-import { ChangeEvent, ReactElement } from "react";
+import { ReactElement } from "react";
 
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
 import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe } from "../../commun/Graphique/GraphiqueViewModel";
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
-import { Select } from "../../commun/Select/Select";
 import { StringFormater } from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";
 
@@ -41,27 +40,11 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
       [this.wording.TAUX_D_ABSENTÉISME_POUR_MATERNITÉ_PATERNITÉ]: { couleurDeLArc: this.couleurDesArcsDuDonut.opaque[4], couleurDuLibellé: "#FFF" },
       [this.wording.TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX]: { couleurDeLArc: this.couleurDesArcsDuDonut.opaque[5], couleurDuLibellé: "#FFF" },
     };
-    this.annéesAvecDesTauxDAbsentéismes = this.annéesRangéesParAntéChronologie();
+    this.annéesAvecDesTauxDAbsentéismes = this.anneesAvecTauxAbsenteisme();
   }
 
   public get annéeInitiale() {
     return this.annéesAvecDesTauxDAbsentéismes[0];
-  }
-
-  public listeDéroulanteDesAnnéesDesTauxDAbsentéismes(setAnnéeEnCours: Function): JSX.Element {
-    if (this.annéesAvecDesTauxDAbsentéismes.length > 0) {
-      return (
-        <Select
-          label={this.wording.ANNÉE}
-          onChange={(event: ChangeEvent<HTMLSelectElement>) => {
-            setAnnéeEnCours(Number(event.target.value));
-          }}
-          options={this.annéesAvecDesTauxDAbsentéismes}
-        />
-      );
-    }
-
-    return <></>;
   }
 
   public get lesDonnéesRessourcesHumainesNeSontPasRenseignées(): boolean {
@@ -464,7 +447,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
     return [valeurs, années];
   }
 
-  private annéesRangéesParAntéChronologie(): number[] {
+  private anneesAvecTauxAbsenteisme(): number[] {
     return this.ressourcesHumainesMédicoSocial
       .filter(filtreParPrésenceDesTauxDAbsentéisme)
       .map((ressourcesHumaines) => ressourcesHumaines.année)

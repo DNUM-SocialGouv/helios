@@ -1,37 +1,15 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { DeuxHistogrammesHorizontaux } from "../../../commun/Graphique/DeuxHistogrammesHorizontaux";
+import { SelectionAnnee } from "../../../commun/Graphique/SelectionAnnee";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
-import { Select } from "../../../commun/Select/Select";
 import { ContenuCompteDeRésultatEJ } from "../../info-bulle/ContenuCompteDeRésultatEJ";
 import { EntitéJuridiqueBudgetFinanceViewModel } from "../EntitéJuridiqueBudgetFinanceViewModel";
 
 type BlocBudgetFinanceProps = Readonly<{
   entitéJuridiqueBudgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;
 }>;
-
-const ListeDéroulanteDesAnnéesDuCompteDeRésultat = ({
-  entitéJuridiqueBudgetFinanceViewModel,
-  setAnnéeEnCours,
-}: BlocBudgetFinanceProps & { setAnnéeEnCours: Dispatch<SetStateAction<number>> }) => {
-  const { wording } = useDependencies();
-  const annéesRangéesAntéChronologiquement = entitéJuridiqueBudgetFinanceViewModel.annéesRangéesParAntéChronologie();
-
-  if (annéesRangéesAntéChronologiquement.length > 0) {
-    return (
-      <Select
-        label={wording.ANNÉE}
-        onChange={(event: ChangeEvent<HTMLSelectElement>) => {
-          setAnnéeEnCours(Number(event.target.value));
-        }}
-        options={annéesRangéesAntéChronologiquement}
-      />
-    );
-  }
-
-  return <></>;
-};
 
 export function CompteDeResultat({ entitéJuridiqueBudgetFinanceViewModel }: BlocBudgetFinanceProps) {
   const { wording } = useDependencies();
@@ -40,12 +18,7 @@ export function CompteDeResultat({ entitéJuridiqueBudgetFinanceViewModel }: Blo
 
   return (
     <IndicateurGraphique
-      années={
-        <ListeDéroulanteDesAnnéesDuCompteDeRésultat
-          entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueBudgetFinanceViewModel}
-          setAnnéeEnCours={setAnnéeEnCours}
-        />
-      }
+      années={<SelectionAnnee annees={entitéJuridiqueBudgetFinanceViewModel.lesAnnéesEffectivesDuCompteDeRésultat()} setAnnéeEnCours={setAnnéeEnCours} />}
       contenuInfoBulle={<ContenuCompteDeRésultatEJ dateDeMiseÀJour={entitéJuridiqueBudgetFinanceViewModel.dateMiseÀJour} source={wording.ANCRE} />}
       dateDeMiseÀJour={entitéJuridiqueBudgetFinanceViewModel.dateMiseÀJour}
       identifiant="budget-et-finances-compte-de-résultat"

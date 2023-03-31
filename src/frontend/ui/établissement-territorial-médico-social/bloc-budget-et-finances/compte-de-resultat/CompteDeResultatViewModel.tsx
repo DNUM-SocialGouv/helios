@@ -25,11 +25,8 @@ export class CompteDeResultatViewModel {
     ) as ÉtablissementTerritorialMédicoSocialBudgetEtFinances;
   }
 
-  annéesRangéesParAntéChronologie(): number[] {
-    return this.budgetEtFinancesMédicoSocial
-      .filter(filtreParCadreBudgétaireEtRecettesEtDépenses)
-      .map((budgetEtFinance) => budgetEtFinance.année)
-      .reverse();
+  anneesAvecCompteDeResultat(): number[] {
+    return this.budgetEtFinancesMédicoSocial.filter(filtreParCadreBudgétaireEtRecettesEtDépenses).map((budgetEtFinance) => budgetEtFinance.année);
 
     function filtreParCadreBudgétaireEtRecettesEtDépenses(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances): boolean {
       if (

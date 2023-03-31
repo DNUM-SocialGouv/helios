@@ -16,9 +16,8 @@ export class GraphiqueCapacitésParActivitéViewModel extends GraphiqueViewModel
     return this.filtrerLesAnnéesAvecDesCapacités()[0];
   }
 
-  public filtrerLesAnnéesAvecDesCapacités() {
-    const capacitésRenseignées = this.filtreLesCapacitésRenseignées();
-    return this.annéesRangéesParAntéChronologie(capacitésRenseignées);
+  public filtrerLesAnnéesAvecDesCapacités(): number[] {
+    return this.filtreLesCapacitésRenseignées().map((capacité) => capacité.année);
   }
 
   private filtreLesCapacitésRenseignées() {
@@ -37,10 +36,6 @@ export class GraphiqueCapacitésParActivitéViewModel extends GraphiqueViewModel
         capacités.nombreDePlacesEnPsyHospitalisationPartielle !== null
       );
     });
-  }
-
-  private annéesRangéesParAntéChronologie(capacités: CapacitéSanitaire[]): number[] {
-    return capacités.map((capacité) => capacité.année).sort((année1, année2) => année2 - année1);
   }
 
   public get lesCapacitésParActivitésSontEllesRenseignées(): boolean {

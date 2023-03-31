@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
+import { SelectionAnnee } from "../../commun/Graphique/SelectionAnnee";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { Sources } from "../../commun/Sources/Sources";
@@ -105,7 +106,12 @@ export const BlocRessourcesHumainesMédicoSocial = ({
             {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.tauxDeRotationDuPersonnel}
           </IndicateurGraphique>
           <IndicateurGraphique
-            années={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.listeDéroulanteDesAnnéesDesTauxDAbsentéismes(setAnnéeEnCours)}
+            années={
+              <SelectionAnnee
+                annees={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.anneesAvecTauxAbsenteisme()}
+                setAnnéeEnCours={setAnnéeEnCours}
+              />
+            }
             contenuInfoBulle={
               <ContenuDesTauxDAbsentéismes
                 dateDeMiseÀJour={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.dateDeMiseÀJourDesTauxDAbsentéismes}
