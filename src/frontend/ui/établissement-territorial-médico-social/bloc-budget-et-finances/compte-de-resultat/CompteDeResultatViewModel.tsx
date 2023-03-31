@@ -74,7 +74,8 @@ export class CompteDeResultatViewModel {
         },
       ],
       this.entêtesDesAutresColonnes(budgetEtFinance)[0],
-      this.ratioHistogramme(budgetEtFinance)
+      this.ratioHistogramme(budgetEtFinance),
+      StringFormater.formateLeMontantEnEuros
     );
   }
 
@@ -107,7 +108,8 @@ export class CompteDeResultatViewModel {
         },
       ],
       this.entêtesDesAutresColonnes(budgetEtFinance)[1],
-      this.ratioHistogramme(budgetEtFinance)
+      this.ratioHistogramme(budgetEtFinance),
+      StringFormater.formateLeMontantEnEuros
     );
   }
 

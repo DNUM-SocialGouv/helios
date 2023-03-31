@@ -112,7 +112,9 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
           isError: depensesAnnexes.map((depense) => depense > 0),
         },
       ],
-      this.wording.CHARGES
+      this.wording.CHARGES,
+      2,
+      StringFormater.formateLeMontantEnEuros
     );
   }
 
@@ -161,7 +163,9 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
           isError: produitsAnnexes.map((depense) => depense < 0),
         },
       ],
-      this.wording.PRODUITS
+      this.wording.PRODUITS,
+      2,
+      StringFormater.formateLeMontantEnEuros
     );
   }
 

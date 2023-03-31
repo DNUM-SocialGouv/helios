@@ -43,7 +43,7 @@ export class HistogrammeData {
     private stacks: Stack[],
     public nom: string,
     private aspectRatio = 2,
-    private valueFormatter: (value: number) => string = StringFormater.formateLeMontantEnEuros
+    private valueFormatter: (value: number) => string = (value) => value.toString()
   ) {
     this.areStacksVisible = new Array(stacks.length).fill(true);
   }
