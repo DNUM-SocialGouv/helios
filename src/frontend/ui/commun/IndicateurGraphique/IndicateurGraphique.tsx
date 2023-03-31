@@ -1,11 +1,10 @@
 import { ReactChild, ReactElement, useState } from "react";
 
 import { useDependencies } from "../contexts/useDependencies";
+import { SelectionAnnee } from "../Graphique/SelectionAnnee";
 import { InfoBulle } from "../InfoBulle/InfoBulle";
 import styles from "./IndicateurGraphique.module.css";
-
 import "@gouvfr/dsfr/dist/component/button/button.min.css";
-import { SelectionAnnee } from "../Graphique/SelectionAnnee";
 
 type IndicateurProps = Readonly<{
   années?: { liste: number[]; setAnnéeEnCours: (annee: number) => void };
