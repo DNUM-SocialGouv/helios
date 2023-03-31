@@ -97,18 +97,24 @@ export class GraphiqueCapacitésParActivitéViewModel extends GraphiqueViewModel
     const lits = litsEtPlacesSansLignesVides.map((litEtPlace) => litEtPlace.nombreDeLits);
     const places = litsEtPlacesSansLignesVides.map((litEtPlace) => litEtPlace.nombreDePlaces);
 
+    const valueFormatter = (value: number) => (value === null ? this.wording.NON_RENSEIGNÉ : value.toString());
+
     const valeurDeGauche: HistogrammeData = new HistogrammeData(
       libellés,
       lits,
       [{ data: lits, backgroundColor: [this.couleurDuFondHistogrammeSecondaire], isError: [false], label: this.wording.LITS }],
-      this.wording.LITS
+      this.wording.LITS,
+      2,
+      valueFormatter
     );
 
     const valeurDeDroite: HistogrammeData = new HistogrammeData(
       libellés,
       places,
       [{ data: places, backgroundColor: [this.couleurDuFondHistogrammeSecondaire], isError: [false], label: this.wording.PLACES }],
-      this.wording.PLACES
+      this.wording.PLACES,
+      2,
+      valueFormatter
     );
 
     return (

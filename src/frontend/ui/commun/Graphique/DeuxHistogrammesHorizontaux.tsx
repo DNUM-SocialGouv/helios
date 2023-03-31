@@ -37,7 +37,14 @@ function useChartData(charts: HistogrammeData[]) {
 export class HistogrammeData {
   couleurIdentifiant = "#000";
   public areStacksVisible: boolean[];
-  constructor(public labels: string[], private totals: number[], private stacks: Stack[], public nom: string, private aspectRatio = 2) {
+  constructor(
+    public labels: string[],
+    private totals: number[],
+    private stacks: Stack[],
+    public nom: string,
+    private aspectRatio = 2,
+    private valueFormatter: (value: number) => string = StringFormater.formateLeMontantEnEuros
+  ) {
     this.areStacksVisible = new Array(stacks.length).fill(true);
   }
 
@@ -88,8 +95,8 @@ export class HistogrammeData {
   }
 
   public get transcriptionValeurs(): string[][] {
-    const stacksValues = this.stacks.map((stack) => stack.data.map(StringFormater.formateLeMontantEnEuros));
-    const totalsEuros = this.totals.map(StringFormater.formateLeMontantEnEuros);
+    const stacksValues = this.stacks.map((stack) => stack.data.map(this.valueFormatter));
+    const totalsEuros = this.totals.map(this.valueFormatter);
     return stacksValues.length > 1 ? [...stacksValues, totalsEuros] : stacksValues;
   }
 
@@ -140,7 +147,7 @@ export class HistogrammeData {
             const hasMultipleStacks = this.visibleStacks.length > 1;
             const sum = hasMultipleStacks ? this.totals[_context.dataIndex] : this.visibleStacks[0].data[_context.dataIndex];
             const isLastStack = _context.datasetIndex === _context.chart.data.datasets.length - 1;
-            return isLastStack ? StringFormater.formateLeMontantEnEuros(sum) : "";
+            return isLastStack ? this.valueFormatter(sum) : "";
           },
         },
         legend: { display: false },
