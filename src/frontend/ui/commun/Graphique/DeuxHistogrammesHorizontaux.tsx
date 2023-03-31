@@ -36,15 +36,31 @@ function useChartData(charts: HistogrammeData[]) {
 export class HistogrammeData {
   couleurIdentifiant = "#000";
   public areStacksVisible: boolean[];
+
+  /**
+   *
+   * @param nom Nom du graphique qui apparaitra au dussus du graphique
+   * @param labels Liste des libellés correspondant à chaque bar
+   * @param totals Liste des nombre affichés après chaque bar ( si une seule Stack le total correspond aux valeurs de la stack, si plusieurs stack on peut faire la somme de chaque stack)
+   * @param stacks Liste des Stack du graphique. La notion de Stack correspond à ChartJS (empilement de plusieurs barre sur une même ligne).
+   * Chaque Stack définit sa liste de valeur pour chaque Bar, la couleur et le fait d'être en erreur ou pas.
+   * Un graphique n'ayant pas plusieurs Stack est géré comme un graphique avec plusieurs stack mais il n'aura qu'un seul élément dans Stack.
+   * @param valueFormatter Une fonction qui sera appliquée à la valeur numérique pour l'afficher dans le format attendu selon l'usage.
+   * @param aspectRatio
+   */
   constructor(
+    public nom: string,
     public labels: string[],
     private totals: number[],
     private stacks: Stack[],
-    public nom: string,
-    private aspectRatio = 2,
-    private valueFormatter: (value: number) => string = (value) => value.toString()
+    private valueFormatter: (value: number) => string = (value) => value.toString(),
+    private aspectRatio = 2
   ) {
-    this.areStacksVisible = new Array(stacks.length).fill(true);
+    this.areStacksVisible = this.makeAllStacksVisible(stacks);
+  }
+
+  private makeAllStacksVisible(stacks: Stack[]): boolean[] {
+    return new Array(stacks.length).fill(true);
   }
 
   public get chartData(): ChartData {

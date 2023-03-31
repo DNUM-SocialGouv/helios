@@ -14,7 +14,7 @@ export const GraphiqueCapacitésParActivité = ({ graphiqueCapacitésParActivit�
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(graphiqueCapacitésParActivitéViewModel.annéeInitiale);
 
-  const annees = graphiqueCapacitésParActivitéViewModel.filtrerLesAnnéesAvecDesCapacités();
+  const annees = graphiqueCapacitésParActivitéViewModel.annéesAvecDonnées();
 
   return (
     <IndicateurGraphique

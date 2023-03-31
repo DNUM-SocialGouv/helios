@@ -96,6 +96,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       .map(Number)
       .map(Math.round);
     return new HistogrammeData(
+      this.wording.CHARGES,
       [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
       depensesGlobales,
       [
@@ -112,8 +113,6 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
           isError: depensesAnnexes.map((depense) => depense > 0),
         },
       ],
-      this.wording.CHARGES,
-      2,
       StringFormater.formateLeMontantEnEuros
     );
   }
@@ -147,6 +146,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       .map(Number)
       .map(Math.round);
     return new HistogrammeData(
+      this.wording.PRODUITS,
       [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
       produitsGlobaux,
       [
@@ -163,8 +163,6 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
           isError: produitsAnnexes.map((depense) => depense < 0),
         },
       ],
-      this.wording.PRODUITS,
-      2,
       StringFormater.formateLeMontantEnEuros
     );
   }

@@ -4,16 +4,23 @@ import { annéesManquantes } from "../../../utils/dateUtils";
 import { HistogrammeData } from "../../commun/Graphique/DeuxHistogrammesHorizontaux";
 import { StringFormater } from "../../commun/StringFormater";
 
-export class GraphiqueCapacitésParActivitéViewModel {
+interface AnneeModifiable {
+  NOMBRE_ANNEES: number;
+  annéeInitiale: number;
+  annéesAvecDonnées: () => number[];
+  annéesManquantes: () => number[];
+}
+
+export class GraphiqueCapacitésParActivitéViewModel implements AnneeModifiable {
   public NOMBRE_ANNEES = 5;
 
   constructor(private readonly capacitésSanitaire: CapacitéSanitaire[], private wording: Wording) {}
 
   public get annéeInitiale() {
-    return this.filtrerLesAnnéesAvecDesCapacités()[0];
+    return this.annéesAvecDonnées()[0];
   }
 
-  public filtrerLesAnnéesAvecDesCapacités(): number[] {
+  public annéesAvecDonnées(): number[] {
     return this.filtreLesCapacitésRenseignées().map((capacité) => capacité.année);
   }
 
@@ -44,7 +51,7 @@ export class GraphiqueCapacitésParActivitéViewModel {
   }
 
   public annéesManquantes(): number[] {
-    return annéesManquantes(this.filtrerLesAnnéesAvecDesCapacités(), this.NOMBRE_ANNEES);
+    return annéesManquantes(this.annéesAvecDonnées(), this.NOMBRE_ANNEES);
   }
 
   private litsEtPlaces(annéeSelectionnée: number) {
@@ -109,6 +116,7 @@ export class GraphiqueCapacitésParActivitéViewModel {
   public valeursLits(annéeEnCours: number): HistogrammeData {
     const lits = this.lits(annéeEnCours);
     return new HistogrammeData(
+      this.wording.LITS,
       this.libellés(annéeEnCours),
       lits,
       [
@@ -119,8 +127,6 @@ export class GraphiqueCapacitésParActivitéViewModel {
           label: this.wording.LITS,
         },
       ],
-      this.wording.LITS,
-      2,
       this.valueFormatter.bind(this)
     );
   }
@@ -128,6 +134,7 @@ export class GraphiqueCapacitésParActivitéViewModel {
   public valeursPlaces(annéeEnCours: number): HistogrammeData {
     const places = this.places(annéeEnCours);
     return new HistogrammeData(
+      this.wording.PLACES,
       this.libellés(annéeEnCours),
       places,
       [
@@ -138,8 +145,6 @@ export class GraphiqueCapacitésParActivitéViewModel {
           label: this.wording.PLACES,
         },
       ],
-      this.wording.PLACES,
-      2,
       this.valueFormatter.bind(this)
     );
   }
