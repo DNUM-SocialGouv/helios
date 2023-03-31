@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from "react";
 
 import { useDependencies } from "../../commun/contexts/useDependencies";
+import { DeuxHistogrammesHorizontaux } from "../../commun/Graphique/DeuxHistogrammesHorizontaux";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { Select } from "../../commun/Select/Select";
 import { ContenuCapacitéParActivités } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuCapacitéParActivités";
@@ -53,7 +54,13 @@ export const GraphiqueCapacitésParActivité = ({ graphiqueCapacitésParActivit�
       nomDeLIndicateur={wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
       source={wording.SAE}
     >
-      {graphiqueCapacitésParActivitéViewModel.capacitéParActivités(annéeEnCours)}
+      <DeuxHistogrammesHorizontaux
+        annéesManquantes={graphiqueCapacitésParActivitéViewModel.annéesManquantes()}
+        nom={wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
+        nombreDAnnéeTotale={graphiqueCapacitésParActivitéViewModel.NOMBRE_ANNEES}
+        valeursDeDroite={graphiqueCapacitésParActivitéViewModel.valeursPlaces(annéeEnCours)}
+        valeursDeGauche={graphiqueCapacitésParActivitéViewModel.valeursLits(annéeEnCours)}
+      />
     </IndicateurGraphique>
   );
 };
