@@ -4,16 +4,23 @@ import { annéesManquantes } from "../../../utils/dateUtils";
 import { HistogrammeData } from "../../commun/Graphique/DeuxHistogrammesHorizontaux";
 import { StringFormater } from "../../commun/StringFormater";
 
-export class GraphiqueCapacitésParActivitéViewModel {
+interface AnneeModifiable {
+  NOMBRE_ANNEES: number;
+  annéeInitiale: number;
+  annéesAvecDonnées: () => number[];
+  annéesManquantes: () => number[];
+}
+
+export class GraphiqueCapacitésParActivitéViewModel implements AnneeModifiable {
   public NOMBRE_ANNEES = 5;
 
   constructor(private readonly capacitésSanitaire: CapacitéSanitaire[], private wording: Wording) {}
 
   public get annéeInitiale() {
-    return this.filtrerLesAnnéesAvecDesCapacités()[0];
+    return this.annéesAvecDonnées()[0];
   }
 
-  public filtrerLesAnnéesAvecDesCapacités(): number[] {
+  public annéesAvecDonnées(): number[] {
     return this.filtreLesCapacitésRenseignées().map((capacité) => capacité.année);
   }
 
@@ -44,7 +51,7 @@ export class GraphiqueCapacitésParActivitéViewModel {
   }
 
   public annéesManquantes(): number[] {
-    return annéesManquantes(this.filtrerLesAnnéesAvecDesCapacités(), this.NOMBRE_ANNEES);
+    return annéesManquantes(this.annéesAvecDonnées(), this.NOMBRE_ANNEES);
   }
 
   private litsEtPlaces(annéeSelectionnée: number) {
