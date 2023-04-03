@@ -4,10 +4,10 @@ import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
 import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe } from "../../commun/Graphique/GraphiqueViewModel";
+import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";
-import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 
 type IndicateurAvecUnNombre = Exclude<
   keyof ÉtablissementTerritorialMédicoSocialRessourcesHumaines,

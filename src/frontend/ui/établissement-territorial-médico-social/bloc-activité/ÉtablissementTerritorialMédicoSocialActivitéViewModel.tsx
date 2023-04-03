@@ -5,8 +5,8 @@ import { ÉtablissementTerritorialMédicoSocialActivité } from "../../../../bac
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
 import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
-import { StringFormater } from "../../commun/StringFormater";
 import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
+import { StringFormater } from "../../commun/StringFormater";
 
 export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends GraphiqueViewModel {
   readonly seuilValeurAtypique = 120;
