@@ -82,7 +82,6 @@ export class HistogrammeData {
           data: stack.data.map(Math.abs),
           maxBarThickness: 35,
           datalabels: {
-            font: { weight: "bold" },
             labels: {
               title: { color: this.labelsColor },
             },
