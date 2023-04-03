@@ -1,12 +1,8 @@
-import { ChartData, ChartOptions } from "chart.js";
+import { ChartOptions } from "chart.js";
 import { Context } from "chartjs-plugin-datalabels";
 import { ReactElement } from "react";
-import { Bar } from "react-chartjs-2";
 
-import { useDependencies } from "../contexts/useDependencies";
-import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
-import { formateEnFrancais, StringFormater } from "../StringFormater";
-import { Transcription } from "../Transcription/Transcription";
+import { StringFormater } from "../StringFormater";
 import { CouleurHistogramme, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "./GraphiqueViewModel";
 import { HistogrammeData, HistogrammesHorizontaux } from "./HistogrammesHorizontaux";
 
@@ -14,9 +10,9 @@ type HistogrammeHorizontalProps = {
   valeurs: number[];
   libellés: string[];
   couleursDeLHistogramme: CouleurHistogramme[];
-  libellésDesValeurs: LibelléDeDonnéeGraphe[];
-  libellésDesTicks: LibelléDeTickGraphe[];
-  ratioLargeurSurHauteur: number;
+  libellésDesValeurs?: LibelléDeDonnéeGraphe[];
+  libellésDesTicks?: LibelléDeTickGraphe[];
+  ratioLargeurSurHauteur?: number;
   entêteLibellé: string;
   identifiant: string;
   libellésDeValeursManquantes: number[];

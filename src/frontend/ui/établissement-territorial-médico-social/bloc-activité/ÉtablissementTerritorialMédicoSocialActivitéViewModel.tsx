@@ -217,12 +217,12 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
 
   private construisLesAnnéesEtSesValeurs(
     indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialActivité, "année" | "dateMiseÀJourSource" | "numéroFinessÉtablissementTerritorial">
-  ): number[][] {
+  ): [number[], string[]] {
     const valeurs: number[] = [];
-    const années: number[] = [];
+    const années: string[] = [];
     this.établissementTerritorialActivité.forEach((activité: ÉtablissementTerritorialMédicoSocialActivité) => {
       if (activité[indicateur].value !== null) {
-        années.push(activité.année);
+        années.push(activité.année.toString());
       }
 
       if (activité[indicateur].value !== null) {

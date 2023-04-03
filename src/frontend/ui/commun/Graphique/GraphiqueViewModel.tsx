@@ -196,14 +196,14 @@ export class GraphiqueViewModel {
 
   protected afficheUnHistogrammeHorizontal(
     valeurs: number[],
-    libellés: (number | string)[],
+    libellés: string[],
     couleursDeLHistogramme: CouleurHistogramme[],
     libellésDesValeurs: LibelléDeDonnéeGraphe[],
     libellésDesTicks: LibelléDeTickGraphe[],
     ratioLargeurSurHauteur: number,
     entêteLibellé: string,
     identifiant: string,
-    libellésDeValeursManquantes: number[] | string[],
+    libellésDeValeursManquantes: number[],
     nombreDeLibelléTotal: number = 3
   ): ReactElement {
     return (

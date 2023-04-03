@@ -419,13 +419,13 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
     return { couleur: this.couleursDuDoughnutDesTauxDAbsentéismes[motif].couleurDuLibellé };
   }
 
-  private extraisLesValeursNombréesDesIndicateurs(indicateur: IndicateurAvecUnNombre): number[][] {
+  private extraisLesValeursNombréesDesIndicateurs(indicateur: IndicateurAvecUnNombre): [number[], string[]] {
     const valeurs: number[] = [];
-    const années: number[] = [];
+    const années: string[] = [];
     this.ressourcesHumainesMédicoSocial.forEach((ressourceHumaineMédicoSocial: ÉtablissementTerritorialMédicoSocialRessourcesHumaines) => {
       const valeur = ressourceHumaineMédicoSocial[indicateur].valeur;
       if (valeur !== null) {
-        années.push(ressourceHumaineMédicoSocial.année);
+        années.push(ressourceHumaineMédicoSocial.année.toString());
         valeurs.push(valeur);
       }
     });

@@ -100,7 +100,7 @@ export class HistogrammeData {
 
   private get labelsColor(): string[] {
     const isLabelsError = this.visibleStacks
-      .map((stack) => stack.isError)
+      .map((stack) => stack.isError as boolean[])
       .reduce((isLabelInError, isErrorStack) => {
         return isLabelInError.map((isError, index) => isError || isErrorStack[index]);
       });
@@ -108,7 +108,7 @@ export class HistogrammeData {
   }
 
   private stackBackgroundColor(stack: Stack) {
-    return stack.isError.map((error, index) => (error ? this.couleurErreur : stack.backgroundColor[index]));
+    return (stack.isError as boolean[]).map((error, index) => (error ? this.couleurErreur : stack.backgroundColor[index]));
   }
 
   public get transcriptionTitles(): string[] {
@@ -237,16 +237,15 @@ export const HistogrammesHorizontaux = ({
         />
       )}
       {annéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
-      {!aucuneDonnées && (
-        <Transcription
-          disabled={annéesManquantes.length === nombreDAnnéeTotale}
-          entêteLibellé={nom}
-          identifiantUnique={nom}
-          identifiants={transcriptionTitles()}
-          libellés={histogrammes[0].labels}
-          valeurs={getTranscriptionValeurs()}
-        />
-      )}
+
+      <Transcription
+        disabled={aucuneDonnées}
+        entêteLibellé={nom}
+        identifiantUnique={nom}
+        identifiants={transcriptionTitles()}
+        libellés={histogrammes[0].labels}
+        valeurs={getTranscriptionValeurs()}
+      />
     </>
   );
 };

@@ -3,6 +3,11 @@ import { fireEvent, screen } from "@testing-library/react";
 import { Wording } from "../configuration/wording/Wording";
 import { textMatch } from "./testHelper";
 
+/*
+ * Class utilitaire pour faciliter les tests des blocs de graphiques avec React Testing Library
+ * @Todo : Refacto => utiliser cette classe dans tous les tests sur des bloc de graphique
+ * @Todo : Améliorer cette classe pour pouvoir tester plus facilement le contenu de la transcription, la mise en exergue et la sélection des années
+ * */
 export class GraphiqueTest {
   constructor(private wording: Wording) {}
 
@@ -30,8 +35,11 @@ export class GraphiqueTest {
   }
 
   fermeDétail() {
-    const fermer = screen.getAllByRole("button", { name: this.wording.FERMER })[1];
-    fireEvent.click(fermer);
+    fireEvent.click(this.boutonFermerDétail);
+  }
+
+  get boutonFermerDétail() {
+    return screen.getAllByRole("button", { name: this.wording.FERMER })[1];
   }
 
   dateMiseAJour(fichier: string, date: string): HTMLElement[] {
