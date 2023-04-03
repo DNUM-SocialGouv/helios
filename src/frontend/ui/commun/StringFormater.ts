@@ -20,16 +20,16 @@ export namespace StringFormater {
     return `${Math.round(montant).toLocaleString("fr")} €`.replace("-", "−");
   }
 
-  export function formateEnFrançais(valeurs: (number | null)[]): (string | null)[] {
-    return valeurs.map((valeur) => {
-      if (valeur === null || valeur === undefined) return valeur;
+  export function formateValeursEnFrançais(valeurs: number[]): string[] {
+    return valeurs.map(formateEnFrancais);
+  }
 
-      return valeur.toLocaleString("fr");
-    });
+  export function formateEnFrancais(valeur: number): string {
+    return valeur.toLocaleString("fr");
   }
 
   export function ajouteLePourcentage(valeurs: number[]): string[] {
-    return formateEnFrançais(valeurs).map((valeur) => valeur + " %");
+    return formateValeursEnFrançais(valeurs).map((valeur) => valeur + " %");
   }
 
   export function transformeEnTaux(nombre: number): number {

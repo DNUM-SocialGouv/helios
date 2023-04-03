@@ -71,7 +71,7 @@ export class HistogrammeData {
           borderColor: "white",
           backgroundColor: this.stackBackgroundColor(stack),
           data: stack.data.map(Math.abs),
-          maxBarThickness: 60,
+          maxBarThickness: 35,
           datalabels: {
             font: { weight: "bold" },
             labels: {
@@ -175,6 +175,7 @@ type HistogrammeHorizontalNewProps = {
   annéesManquantes: number[] | string[];
   nombreDAnnéeTotale: number;
   légende?: string[];
+  epaisseur?: "FIN" | "EPAIS";
 };
 export const HistogrammesHorizontaux = ({
   nom,
@@ -182,6 +183,7 @@ export const HistogrammesHorizontaux = ({
   annéesManquantes,
   nombreDAnnéeTotale = 5,
   légende,
+  epaisseur = "EPAIS",
 }: HistogrammeHorizontalNewProps): ReactElement => {
   const { wording } = useDependencies();
   const { histogrammes, toggleStackVisibility } = useChartData(valeursDesHistogrammes);
@@ -195,8 +197,8 @@ export const HistogrammesHorizontaux = ({
   }
 
   const aucuneDonnées = annéesManquantes.length >= nombreDAnnéeTotale;
-  const DEFAULT_ASPECT_RATIO = 4;
-  const aspectRatio = DEFAULT_ASPECT_RATIO / valeursDesHistogrammes.length;
+  const ASPECT_RATIO = epaisseur === "EPAIS" ? 5 : 7;
+  const aspectRatio = ASPECT_RATIO / valeursDesHistogrammes.length;
 
   return (
     <>

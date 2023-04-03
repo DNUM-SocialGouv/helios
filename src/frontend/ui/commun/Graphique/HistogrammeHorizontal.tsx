@@ -5,20 +5,21 @@ import { Bar } from "react-chartjs-2";
 
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
-import { StringFormater } from "../StringFormater";
+import { formateEnFrancais, StringFormater } from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
 import { CouleurHistogramme, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "./GraphiqueViewModel";
+import { HistogrammeData, HistogrammesHorizontaux } from "./HistogrammesHorizontaux";
 
 type HistogrammeHorizontalProps = {
   valeurs: number[];
-  libellés: (number | string)[];
+  libellés: string[];
   couleursDeLHistogramme: CouleurHistogramme[];
   libellésDesValeurs: LibelléDeDonnéeGraphe[];
   libellésDesTicks: LibelléDeTickGraphe[];
   ratioLargeurSurHauteur: number;
   entêteLibellé: string;
   identifiant: string;
-  libellésDeValeursManquantes: number[] | string[];
+  libellésDeValeursManquantes: number[];
   nombreDeLibelléTotal: number;
 };
 
@@ -95,9 +96,34 @@ export const HistogrammeHorizontal = ({
   libellésDeValeursManquantes,
   nombreDeLibelléTotal = 3,
 }: HistogrammeHorizontalProps): ReactElement => {
-  const { wording } = useDependencies();
+  const valeursDesHistogrammes: HistogrammeData[] = [
+    new HistogrammeData(
+      "",
+      libellés,
+      valeurs,
+      [
+        {
+          data: valeurs,
+          barColor: couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
+          isError: [false],
+          label: identifiant,
+        },
+      ],
+      StringFormater.formateEnFrancais
+    ),
+  ];
 
-  const data: ChartData = {
+  return (
+    <HistogrammesHorizontaux
+      annéesManquantes={libellésDeValeursManquantes}
+      epaisseur="FIN"
+      nom={entêteLibellé}
+      nombreDAnnéeTotale={nombreDeLibelléTotal}
+      valeursDesHistogrammes={valeursDesHistogrammes}
+    />
+  );
+
+  /* const data: ChartData = {
     datasets: [
       {
         backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
@@ -110,7 +136,7 @@ export const HistogrammeHorizontal = ({
     ],
     labels: libellés,
   };
-  const valeursFrançaises = StringFormater.formateEnFrançais(valeurs);
+  const valeursFrançaises = StringFormater.formateValeursEnFrançais(valeurs);
 
   return (
     <>
@@ -136,5 +162,5 @@ export const HistogrammeHorizontal = ({
         valeurs={[valeursFrançaises]}
       />
     </>
-  );
+  );*/
 };
