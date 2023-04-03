@@ -1,25 +1,23 @@
 import { EntitéJuridiqueActivités } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueActivités";
 import { Wording } from "../../../configuration/wording/Wording";
-import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { IndicateurActivité } from "../../indicateur-métier/IndicateurActivité";
 import { NombreDeSejourMCOViewModel } from "../../indicateur-métier/nombre-de-sejour-mco/NombreDeSejourMCOViewModel";
 import { ActivitesPsySSR, NombreDeJourneesPsySSRViewModel } from "../../indicateur-métier/nombre-journees-psy-ssr/NombreDeJourneesPsySSRViewModel";
 import { NombrePassageAuxUrgencesViewModel } from "../../indicateur-métier/nombre-passage-urgence/NombrePassageAuxUrgencesViewModel";
 
-export class EntitéJuridiqueActivitésViewModel extends GraphiqueViewModel {
+export class EntitéJuridiqueActivitésViewModel {
   // @ts-ignore
   public nombreDePassageAuxUrgencesViewModel: NombrePassageAuxUrgencesViewModel;
   public nombreJourneesPsySSRViewModel: NombreDeJourneesPsySSRViewModel;
   public nombreDeSejourMCOViewModel: NombreDeSejourMCOViewModel;
 
-  constructor(private readonly entitéJuridiqueActivités: EntitéJuridiqueActivités[], wording: Wording) {
-    super(wording);
-    this.createNombrePassageUrgenceViewModel(wording);
-    this.nombreDeSejourMCOViewModel = new NombreDeSejourMCOViewModel(entitéJuridiqueActivités, wording);
-    this.nombreJourneesPsySSRViewModel = this.createNombreJourneesPsySSRViewModel(wording);
+  constructor(private readonly entitéJuridiqueActivités: EntitéJuridiqueActivités[], private wording: Wording) {
+    this.nombreDePassageAuxUrgencesViewModel = this.createNombrePassageUrgenceViewModel();
+    this.nombreDeSejourMCOViewModel = new NombreDeSejourMCOViewModel(entitéJuridiqueActivités, this.wording);
+    this.nombreJourneesPsySSRViewModel = this.createNombreJourneesPsySSRViewModel();
   }
 
-  private createNombreJourneesPsySSRViewModel(wording: Wording) {
+  private createNombreJourneesPsySSRViewModel() {
     return new NombreDeJourneesPsySSRViewModel(
       this.entitéJuridiqueActivités.map(
         (activite): ActivitesPsySSR => ({
@@ -28,11 +26,11 @@ export class EntitéJuridiqueActivitésViewModel extends GraphiqueViewModel {
           nombreJournéesPartielsSsr: activite.nombreJournéesPartiellesSsr,
         })
       ),
-      wording
+      this.wording
     );
   }
 
-  private createNombrePassageUrgenceViewModel(wording: Wording) {
+  private createNombrePassageUrgenceViewModel() {
     const indicateurNombrePassage: IndicateurActivité[] = this.entitéJuridiqueActivités.map((activité) => {
       return {
         année: activité.année,
@@ -40,7 +38,7 @@ export class EntitéJuridiqueActivitésViewModel extends GraphiqueViewModel {
         value: activité.nombreDePassagesAuxUrgences.value,
       };
     });
-    this.nombreDePassageAuxUrgencesViewModel = new NombrePassageAuxUrgencesViewModel(indicateurNombrePassage, wording);
+    return new NombrePassageAuxUrgencesViewModel(indicateurNombrePassage, this.wording);
   }
 
   public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
