@@ -10,7 +10,6 @@ type HistogrammeHorizontalProps = {
   valeurs: number[];
   libellés: string[];
   couleursDeLHistogramme: CouleurHistogramme[];
-  libellésDesValeurs?: LibelléDeDonnéeGraphe[];
   libellésDesTicks?: LibelléDeTickGraphe[];
   ratioLargeurSurHauteur?: number;
   entêteLibellé: string;
@@ -84,7 +83,6 @@ export const HistogrammeHorizontal = ({
   valeurs,
   libellés,
   couleursDeLHistogramme,
-  libellésDesValeurs,
   libellésDesTicks,
   entêteLibellé,
   identifiant,

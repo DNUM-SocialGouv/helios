@@ -87,7 +87,6 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
         secondPlan: this.couleurDuFondHistogrammePrimaire,
       };
     };
-    const libellésDesValeurs = Array(capacités.length).fill({ couleur: this.couleurIdentifiant });
     const libellésDesTicks = activités.map((activité) => ({
       tailleDePolice: activité === this.wording.NOMBRE_TOTAL_DE_PLACE ? this.policeGrasse : this.policeNormale,
     }));
@@ -96,7 +95,6 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
       capacités,
       activités,
       this.construisLesCouleursDeLHistogramme(capacités, activités, construisLaCouleurDeLaBarreHorizontale),
-      libellésDesValeurs,
       libellésDesTicks,
       this.wording.ACTIVITÉ,
       this.wording.CAPACITÉ_INSTALLÉE,

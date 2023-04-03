@@ -54,7 +54,6 @@ export class GraphiqueViewModel {
   readonly couleurDuFondHistogrammeDeDépassementTransparent = "rgba(201, 25, 30, 0.5)";
   readonly couleurSecondPlanHistogrammeDeDépassement = "#FFE9E9";
   readonly couleurDelAbscisse = "#161616";
-  readonly couleurDeLaValeur = "#3A3A3A";
   readonly couleurIdentifiant = "#000";
   readonly policeGrasse = "bold";
   readonly policeNormale = "normal";
@@ -195,7 +194,6 @@ export class GraphiqueViewModel {
     valeurs: number[],
     libellés: string[],
     couleursDeLHistogramme: CouleurHistogramme[],
-    libellésDesValeurs: LibelléDeDonnéeGraphe[],
     libellésDesTicks: LibelléDeTickGraphe[],
     entêteLibellé: string,
     identifiant: string,
@@ -210,7 +208,6 @@ export class GraphiqueViewModel {
         libellés={libellés}
         libellésDeValeursManquantes={libellésDeValeursManquantes}
         libellésDesTicks={libellésDesTicks}
-        libellésDesValeurs={libellésDesValeurs}
         nombreDeLibelléTotal={nombreDeLibelléTotal}
         valeurs={valeurs}
       />
