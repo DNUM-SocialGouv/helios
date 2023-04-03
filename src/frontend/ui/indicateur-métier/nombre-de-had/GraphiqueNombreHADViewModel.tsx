@@ -39,7 +39,7 @@ export class GraphiqueNombreHADViewModel {
     return new HistogrammeData(this.wording.NOMBRE_DE_HAD, this.libellés, this.valeurs, [
       {
         data: this.valeurs,
-        barColor: ["#4E68BB"],
+        backgroundColor: ["#4E68BB"],
         isError: [false],
         label: this.wording.NOMBRE_DE_HAD,
       },
@@ -56,9 +56,5 @@ export class GraphiqueNombreHADViewModel {
 
   get totals() {
     return this.valeurs;
-  }
-
-  public get nombreDeHADSontIlsRenseignes(): boolean {
-    return this.valeurs.some((had) => had !== null);
   }
 }

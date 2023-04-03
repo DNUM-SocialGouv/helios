@@ -1,4 +1,4 @@
-import { fireEvent, screen, within } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 
 import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
@@ -65,8 +65,7 @@ describe("Graphique Nombre de HAD", () => {
       graphiqueTest.ouvreDétail();
 
       // WHEN
-      const fermer = screen.getAllByRole("button", { name: wording.FERMER })[0];
-      fireEvent.click(fermer);
+      graphiqueTest.fermeDétail();
 
       // THEN
       const détails = graphiqueTest.détail;

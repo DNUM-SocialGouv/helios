@@ -75,7 +75,9 @@ export class EntitéJuridiqueActivitésViewModel {
       (activité: EntitéJuridiqueActivités) => activité.nombreDePassagesAuxUrgences.value !== null && activité.nombreDePassagesAuxUrgences.value !== undefined
     );
   }
-  private nombreHADEstIlRenseigné(): boolean {
-    return this.entitéJuridiqueActivités.some((activité: EntitéJuridiqueActivités) => activité.nombreSéjoursHad.value !== null);
+  public nombreHADEstIlRenseigné(): boolean {
+    return this.entitéJuridiqueActivités.some(
+      (activité: EntitéJuridiqueActivités) => activité.nombreSéjoursHad.value !== null && activité.nombreSéjoursHad.value !== undefined
+    );
   }
 }
