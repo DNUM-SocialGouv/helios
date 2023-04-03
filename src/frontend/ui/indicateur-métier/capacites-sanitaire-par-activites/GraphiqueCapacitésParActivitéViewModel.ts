@@ -122,7 +122,7 @@ export class GraphiqueCapacitésParActivitéViewModel implements AnneeModifiable
       [
         {
           data: lits,
-          backgroundColor: ["#4E68BB"],
+          barColor: ["#4E68BB"],
           isError: [false],
           label: this.wording.LITS,
         },
@@ -140,7 +140,7 @@ export class GraphiqueCapacitésParActivitéViewModel implements AnneeModifiable
       [
         {
           data: places,
-          backgroundColor: ["#4E68BB"],
+          barColor: ["#4E68BB"],
           isError: [false],
           label: this.wording.PLACES,
         },

@@ -26,7 +26,7 @@ export function CompteDeResultat({ entitéJuridiqueBudgetFinanceViewModel }: Blo
     >
       <HistogrammesHorizontaux
         annéesManquantes={entitéJuridiqueBudgetFinanceViewModel.lesAnnéesManquantesDuCompteDeRésultat()}
-        légendes={entitéJuridiqueBudgetFinanceViewModel.légendeChart}
+        légende={entitéJuridiqueBudgetFinanceViewModel.légendeChart}
         nom={wording.COMPTE_DE_RÉSULTAT}
         nombreDAnnéeTotale={entitéJuridiqueBudgetFinanceViewModel.NOMBRE_ANNEES}
         valeursDesHistogrammes={[

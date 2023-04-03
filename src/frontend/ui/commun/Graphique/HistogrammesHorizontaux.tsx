@@ -7,7 +7,7 @@ import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
 
-type Stack = { label?: string; data: number[]; backgroundColor: string[]; isError: boolean[] };
+type Stack = { label?: string; data: number[]; barColor: string[]; isError: boolean[] };
 
 function useChartData(charts: HistogrammeData[]) {
   const [chartsData, setChartsData] = useState(charts);
@@ -39,7 +39,7 @@ export class HistogrammeData {
 
   /**
    *
-   * @param nom Nom du graphique qui apparaitra au dussus du graphique
+   * @param nom Nom du graphique qui apparaitra au-dessus du graphique
    * @param labels Liste des libellés correspondant à chaque bar
    * @param totals Liste des nombres affichées après chaque bar (si une seule Stack le total correspond aux valeurs de la stack, si plusieurs stack on peut faire la somme de chaque stack)
    * @param stacks Liste des Stack du graphique. La notion de Stack correspond à ChartJS (empilement de plusieurs barre sur une même ligne).
@@ -99,7 +99,7 @@ export class HistogrammeData {
   }
 
   private stackBackgroundColor(stack: Stack) {
-    return stack.isError.map((error, index) => (error ? this.couleurErreur : stack.backgroundColor[index]));
+    return stack.isError.map((error, index) => (error ? this.couleurErreur : stack.barColor[index]));
   }
 
   public get transcriptionTitles(): string[] {
@@ -114,7 +114,7 @@ export class HistogrammeData {
   }
 
   public get legendColors(): string[] {
-    return this.stacks.map((stack) => stack.backgroundColor[0]);
+    return this.stacks.map((stack) => stack.barColor[0]);
   }
 
   public get legendId(): string {
@@ -174,14 +174,14 @@ type HistogrammeHorizontalNewProps = {
   valeursDesHistogrammes: HistogrammeData[];
   annéesManquantes: number[] | string[];
   nombreDAnnéeTotale: number;
-  légendes?: string[];
+  légende?: string[];
 };
 export const HistogrammesHorizontaux = ({
   nom,
   valeursDesHistogrammes,
   annéesManquantes,
   nombreDAnnéeTotale = 5,
-  légendes,
+  légende,
 }: HistogrammeHorizontalNewProps): ReactElement => {
   const { wording } = useDependencies();
   const { histogrammes, toggleStackVisibility } = useChartData(valeursDesHistogrammes);
@@ -217,11 +217,11 @@ export const HistogrammesHorizontaux = ({
           ))}
         </div>
       )}
-      {légendes && (
-        <LegendeDeuxHistogrammes
+      {légende && (
+        <LegendeHistogrammes
           areStacksVisible={histogrammes[0].areStacksVisible}
           color={histogrammes[0].legendColors}
-          legends={légendes}
+          legend={légende}
           toggleStackVisibility={toggleStackVisibility}
         />
       )}
@@ -240,20 +240,20 @@ export const HistogrammesHorizontaux = ({
   );
 };
 
-function LegendeDeuxHistogrammes({
-  legends,
+function LegendeHistogrammes({
+  legend,
   color,
   toggleStackVisibility,
   areStacksVisible,
 }: {
-  legends: string[];
+  legend: string[];
   color: string[];
   toggleStackVisibility: (index: number, isVisible: boolean) => void;
   areStacksVisible: boolean[];
 }) {
   return (
     <div aria-hidden="true" className="fr-checkbox-group " style={{ display: "flex", marginLeft: "2rem", marginBottom: "2rem" }}>
-      {legends.map((légende, index) => (
+      {legend.map((légende, index) => (
         <div className="fr-mr-5w" key={légende}>
           <input
             checked={areStacksVisible[index]}
