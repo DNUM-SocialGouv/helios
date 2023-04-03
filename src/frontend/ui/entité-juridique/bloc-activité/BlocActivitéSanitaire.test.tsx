@@ -274,6 +274,10 @@ describe("Bloc Activité Sanitaire", () => {
             dateMiseÀJourSource: "2020-10-01",
             value: null,
           },
+          nombreSéjoursHad: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
         }),
       ],
       wording

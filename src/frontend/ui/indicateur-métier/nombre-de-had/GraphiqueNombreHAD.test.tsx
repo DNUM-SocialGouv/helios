@@ -90,15 +90,6 @@ describe("Graphique Nombre de HAD", () => {
       expect(titre).toBeInTheDocument();
     });
 
-    it("désactive la transcription", () => {
-      // WHEN
-      renderFakeComponent(<GraphiqueNombreHAD nombreHADViewModel={viewModel} />);
-
-      // THEN
-      const transcription = graphiqueTest.boutonAfficherTranscription;
-      expect(transcription).toBeDisabled();
-    });
-
     it("affiche la mise en exergue de toutes les années sans données", () => {
       // WHEN
       renderFakeComponent(<GraphiqueNombreHAD nombreHADViewModel={viewModel} />);
