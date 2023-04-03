@@ -101,7 +101,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       depensesGlobales,
       [
         {
-          barColor: this.getBackgroundColorBudgetPrincipal(),
+          backgroundColor: this.getBackgroundColorBudgetPrincipal(),
           data: depensesPrincipales,
           isError: depensesPrincipales.map((depense) => depense > 0),
           label: this.wording.CHARGES_PRINCIPALES,
@@ -109,7 +109,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
         {
           label: this.wording.CHARGES_ANNEXES,
           data: depensesAnnexes,
-          barColor: this.getBackgroundColorBudgetSecondaire(),
+          backgroundColor: this.getBackgroundColorBudgetSecondaire(),
           isError: depensesAnnexes.map((depense) => depense > 0),
         },
       ],
@@ -153,13 +153,13 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
         {
           label: this.wording.PRODUITS_PRINCIPAUX,
           data: produitsPrincipaux,
-          barColor: this.getBackgroundColorBudgetPrincipal(),
+          backgroundColor: this.getBackgroundColorBudgetPrincipal(),
           isError: produitsPrincipaux.map((depense) => depense < 0),
         },
         {
           label: this.wording.PRODUITS_ANNEXES,
           data: produitsAnnexes,
-          barColor: this.getBackgroundColorBudgetSecondaire(),
+          backgroundColor: this.getBackgroundColorBudgetSecondaire(),
           isError: produitsAnnexes.map((depense) => depense < 0),
         },
       ],

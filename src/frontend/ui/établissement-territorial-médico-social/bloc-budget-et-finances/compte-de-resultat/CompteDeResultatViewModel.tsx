@@ -69,7 +69,7 @@ export class CompteDeResultatViewModel {
       [
         {
           data: dépensesOuCharges,
-          barColor: this.getLineColors(),
+          backgroundColor: this.getLineColors(),
           label: this.entêtesDesAutresColonnes(budgetEtFinance)[0],
           isError: dépensesOuCharges.map((depenses) => depenses > 0),
         },
@@ -102,7 +102,7 @@ export class CompteDeResultatViewModel {
       [
         {
           data: recettesOuProduits,
-          barColor: this.getLineColors(),
+          backgroundColor: this.getLineColors(),
           label: this.entêtesDesAutresColonnes(budgetEtFinance)[1],
           isError: recettesOuProduits.map((recette) => recette < 0),
         },

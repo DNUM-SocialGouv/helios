@@ -1,24 +1,19 @@
-import { ChartData, ChartOptions } from "chart.js";
+import { ChartOptions } from "chart.js";
 import { Context } from "chartjs-plugin-datalabels";
 import { ReactElement } from "react";
-import { Bar } from "react-chartjs-2";
 
-import { useDependencies } from "../contexts/useDependencies";
-import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
-import { Transcription } from "../Transcription/Transcription";
-import { CouleurHistogramme, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "./GraphiqueViewModel";
+import { CouleurHistogramme } from "./GraphiqueViewModel";
+import { HistogrammeData, HistogrammesHorizontaux } from "./HistogrammesHorizontaux";
 
 type HistogrammeHorizontalProps = {
   valeurs: number[];
-  libellés: (number | string)[];
+  libellés: string[];
   couleursDeLHistogramme: CouleurHistogramme[];
-  libellésDesValeurs: LibelléDeDonnéeGraphe[];
-  libellésDesTicks: LibelléDeTickGraphe[];
-  ratioLargeurSurHauteur: number;
+  ratioLargeurSurHauteur?: number;
   entêteLibellé: string;
   identifiant: string;
-  libellésDeValeursManquantes: number[] | string[];
+  libellésDeValeursManquantes: number[];
   nombreDeLibelléTotal: number;
 };
 
@@ -87,54 +82,34 @@ export const HistogrammeHorizontal = ({
   valeurs,
   libellés,
   couleursDeLHistogramme,
-  libellésDesValeurs,
-  libellésDesTicks,
-  ratioLargeurSurHauteur,
   entêteLibellé,
   identifiant,
   libellésDeValeursManquantes,
   nombreDeLibelléTotal = 3,
 }: HistogrammeHorizontalProps): ReactElement => {
-  const { wording } = useDependencies();
-
-  const data: ChartData = {
-    datasets: [
-      {
-        backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
-        data: valeurs,
-        datalabels: { labels: { title: { color: libellésDesValeurs.map((libellé) => libellé.couleur) } } },
-        maxBarThickness: 60,
-        type: "bar",
-        yAxisID: "y",
-      },
-    ],
-    labels: libellés,
-  };
-  const valeursFrançaises = StringFormater.formateEnFrançais(valeurs);
+  const valeursDesHistogrammes: HistogrammeData[] = [
+    new HistogrammeData(
+      "",
+      libellés,
+      valeurs,
+      [
+        {
+          data: valeurs,
+          backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
+          label: identifiant,
+        },
+      ],
+      StringFormater.formateEnFrancais
+    ),
+  ];
 
   return (
-    <>
-      {libellésDeValeursManquantes.length < nombreDeLibelléTotal && (
-        <Bar
-          // @ts-ignore
-          data={data}
-          options={optionsHistogrammeHorizontal(
-            ratioLargeurSurHauteur,
-            Math.max(...valeurs),
-            libellésDesTicks.map((libellé) => libellé.tailleDePolice)
-          )}
-        />
-      )}
-      {libellésDeValeursManquantes.length > 0 && (
-        <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${libellésDeValeursManquantes.join(", ")}`}</MiseEnExergue>
-      )}
-      <Transcription
-        disabled={libellésDeValeursManquantes.length === nombreDeLibelléTotal}
-        entêteLibellé={entêteLibellé}
-        identifiants={[identifiant]}
-        libellés={libellés}
-        valeurs={[valeursFrançaises]}
-      />
-    </>
+    <HistogrammesHorizontaux
+      annéesManquantes={libellésDeValeursManquantes}
+      epaisseur="FIN"
+      nom={entêteLibellé}
+      nombreDAnnéeTotale={nombreDeLibelléTotal}
+      valeursDesHistogrammes={valeursDesHistogrammes}
+    />
   );
 };

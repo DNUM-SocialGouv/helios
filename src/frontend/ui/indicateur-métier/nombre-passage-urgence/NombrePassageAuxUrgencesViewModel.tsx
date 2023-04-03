@@ -5,7 +5,6 @@ import { StringFormater } from "../../commun/StringFormater";
 import { IndicateurActivité } from "../IndicateurActivité";
 
 export class NombrePassageAuxUrgencesViewModel extends GraphiqueViewModel {
-  readonly ratioHistogrammeNombreDePassagesAuxUrgences = 7;
   public valeurs: number[];
   private années: number[];
   public nombreDeLibelléTotal = 5;
@@ -21,24 +20,12 @@ export class NombrePassageAuxUrgencesViewModel extends GraphiqueViewModel {
     return StringFormater.formateLaDate(this.indicateurActivité[0]?.dateMiseÀJourSource);
   }
 
-  get ratioLargeurSurHauteur() {
-    return this.ratioHistogrammeNombreDePassagesAuxUrgences;
-  }
-
-  get libellés() {
-    return this.années;
+  get libellés(): string[] {
+    return this.années.map((année) => année.toString());
   }
 
   get libellésDeValeursManquantes() {
     return annéesManquantes(this.années, 5);
-  }
-
-  get libellésDesTicks() {
-    return this.années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
-  }
-
-  get libellésDesValeurs() {
-    return Array(this.valeurs.length).fill({ couleur: this.couleurIdentifiant });
   }
 
   get identifiant() {

@@ -4,6 +4,7 @@ import { ÉtablissementTerritorialMédicoSocial } from "../../../../backend/mét
 import { CapacitéParActivité } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation";
 import { Wording } from "../../../configuration/wording/Wording";
 import { CouleurHistogramme, GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
+import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 import { StringFormater } from "../../commun/StringFormater";
 import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../../commun/Tag";
 
@@ -87,22 +88,17 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
         secondPlan: this.couleurDuFondHistogrammePrimaire,
       };
     };
-    const libellésDesValeurs = Array(capacités.length).fill({ couleur: this.couleurIdentifiant });
-    const libellésDesTicks = activités.map((activité) => ({
-      tailleDePolice: activité === this.wording.NOMBRE_TOTAL_DE_PLACE ? this.policeGrasse : this.policeNormale,
-    }));
 
-    return this.afficheUnHistogrammeHorizontal(
-      capacités,
-      activités,
-      this.construisLesCouleursDeLHistogramme(capacités, activités, construisLaCouleurDeLaBarreHorizontale),
-      libellésDesValeurs,
-      libellésDesTicks,
-      this.calculeLeRatioDesHistogrammesHorizontaux(activités.length),
-      this.wording.ACTIVITÉ,
-      this.wording.CAPACITÉ_INSTALLÉE,
-      [],
-      capacités.length
+    return (
+      <HistogrammeHorizontal
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(capacités, activités, construisLaCouleurDeLaBarreHorizontale)}
+        entêteLibellé={this.wording.ACTIVITÉ}
+        identifiant={this.wording.CAPACITÉ_INSTALLÉE}
+        libellés={activités}
+        libellésDeValeursManquantes={[]}
+        nombreDeLibelléTotal={capacités.length}
+        valeurs={capacités}
+      />
     );
   }
 

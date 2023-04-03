@@ -5,11 +5,11 @@ import { ÉtablissementTerritorialMédicoSocialActivité } from "../../../../bac
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
 import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
+import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 import { StringFormater } from "../../commun/StringFormater";
 
 export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends GraphiqueViewModel {
   readonly seuilValeurAtypique = 120;
-  readonly ratioHistogrammeBlocActivité = 2;
 
   constructor(private readonly établissementTerritorialActivité: ÉtablissementTerritorialMédicoSocial["activités"], wording: Wording) {
     super(wording);
@@ -127,16 +127,16 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   public get fileActivePersonnesAccompagnées(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs("fileActivePersonnesAccompagnées");
 
-    return this.afficheUnHistogrammeHorizontal(
-      valeurs,
-      années,
-      this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale),
-      Array(valeurs.length).fill({ couleur: this.couleurIdentifiant }),
-      this.construisLesLibellésDesTicks(années),
-      this.ratioHistogrammeBlocActivité,
-      this.wording.ANNÉE,
-      this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES,
-      annéesManquantes(années)
+    return (
+      <HistogrammeHorizontal
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale)}
+        entêteLibellé={this.wording.ANNÉE}
+        identifiant={this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES}
+        libellés={années}
+        libellésDeValeursManquantes={annéesManquantes(années)}
+        nombreDeLibelléTotal={3}
+        valeurs={valeurs}
+      />
     );
   }
 
@@ -151,16 +151,16 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   public get nombreMoyenJournéesAbsencePersonnesAccompagnées(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs("nombreMoyenJournéesAbsencePersonnesAccompagnées");
 
-    return this.afficheUnHistogrammeHorizontal(
-      valeurs,
-      années,
-      this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale),
-      Array(valeurs.length).fill({ couleur: this.couleurIdentifiant }),
-      this.construisLesLibellésDesTicks(années),
-      this.ratioHistogrammeBlocActivité,
-      this.wording.ANNÉE,
-      this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES,
-      annéesManquantes(années)
+    return (
+      <HistogrammeHorizontal
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale)}
+        entêteLibellé={this.wording.ANNÉE}
+        identifiant={this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES}
+        libellés={années}
+        libellésDeValeursManquantes={annéesManquantes(années)}
+        nombreDeLibelléTotal={3}
+        valeurs={valeurs}
+      />
     );
   }
 
@@ -175,16 +175,16 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   public get duréeMoyenneSéjourAccompagnementPersonnesSorties(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs("duréeMoyenneSéjourAccompagnementPersonnesSorties");
 
-    return this.afficheUnHistogrammeHorizontal(
-      valeurs,
-      années,
-      this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale),
-      Array(valeurs.length).fill({ couleur: this.couleurIdentifiant }),
-      this.construisLesLibellésDesTicks(années),
-      this.ratioHistogrammeBlocActivité,
-      this.wording.ANNÉE,
-      this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES,
-      annéesManquantes(années)
+    return (
+      <HistogrammeHorizontal
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale)}
+        entêteLibellé={this.wording.ANNÉE}
+        identifiant={this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES}
+        libellés={années}
+        libellésDeValeursManquantes={annéesManquantes(années)}
+        nombreDeLibelléTotal={3}
+        valeurs={valeurs}
+      />
     );
   }
 
@@ -217,12 +217,12 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
 
   private construisLesAnnéesEtSesValeurs(
     indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialActivité, "année" | "dateMiseÀJourSource" | "numéroFinessÉtablissementTerritorial">
-  ): number[][] {
+  ): [number[], string[]] {
     const valeurs: number[] = [];
-    const années: number[] = [];
+    const années: string[] = [];
     this.établissementTerritorialActivité.forEach((activité: ÉtablissementTerritorialMédicoSocialActivité) => {
       if (activité[indicateur].value !== null) {
-        années.push(activité.année);
+        années.push(activité.année.toString());
       }
 
       if (activité[indicateur].value !== null) {

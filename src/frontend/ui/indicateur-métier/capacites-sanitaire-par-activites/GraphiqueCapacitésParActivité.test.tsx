@@ -2,55 +2,52 @@ import { fireEvent, screen, within } from "@testing-library/react";
 import { mock } from "jest-mock-extended";
 
 import { CapacitéSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
+import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
-import { annéeEnCours, fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
+import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { GraphiqueCapacitésParActivité } from "./GraphiqueCapacitésParActivité";
 import { GraphiqueCapacitésParActivitéViewModel } from "./GraphiqueCapacitésParActivitéViewModel";
 
 const { wording } = fakeFrontDependencies;
 
 describe("GraphiqueCapacitésParActivité", () => {
+  let graphiqueTest: GraphiqueTest;
   const graphiqueCapacitésViewModel = new GraphiqueCapacitésParActivitéViewModel(
     ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.capacités,
     wording
   );
+
+  beforeAll(() => {
+    graphiqueTest = new GraphiqueTest(wording);
+  });
 
   it('affiche les informations de l’indicateur "Capacité par activités"', () => {
     // WHEN
     renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={graphiqueCapacitésViewModel} />);
 
     // THEN
-    const capacitéParActivités = screen.getByRole("listitem");
-    const titre = within(capacitéParActivités).getByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: "h6" });
-    expect(titre).toBeInTheDocument();
-    const dateMiseAJour = within(capacitéParActivités).getAllByText(textMatch(`${wording.miseÀJour("02/09/2022")} - Source : SAE`), { selector: "p" });
-    expect(dateMiseAJour[0]).toBeInTheDocument();
-    const transcription = within(capacitéParActivités).getByText(wording.AFFICHER_LA_TRANSCRIPTION);
-    expect(transcription).toHaveAttribute("aria-expanded", "false");
-    expect(transcription).not.toBeDisabled();
-    const abréviationSourceOrigine = within(capacitéParActivités).getAllByText("SAE", { selector: "abbr" });
-    expect(abréviationSourceOrigine[0]).toHaveAttribute("title", wording.SAE_TITLE);
-    const détails = within(capacitéParActivités).getByRole("button", { name: wording.DÉTAILS });
-    expect(détails).toHaveAttribute("aria-controls", "nom-info-bulle-capacite-sanitaire");
-    expect(détails).toHaveAttribute("data-fr-opened", "false");
+    expect(graphiqueTest.titre(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS)).toBeInTheDocument();
+    expect(graphiqueTest.dateMiseAJour("SAE", "02/09/2022")[0]).toBeInTheDocument();
+    expect(graphiqueTest.boutonAfficherTranscription).toHaveAttribute("aria-expanded", "false");
+    expect(graphiqueTest.boutonAfficherTranscription).not.toBeDisabled();
+    expect(graphiqueTest.abréviationFichierSource("SAE")).toHaveAttribute("title", wording.SAE_TITLE);
+    expect(graphiqueTest.détail).toHaveAttribute("aria-controls", "nom-info-bulle-capacite-sanitaire");
+    expect(graphiqueTest.détail).toHaveAttribute("data-fr-opened", "false");
   });
 
   describe("Info bulle", () => {
     it('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails" (Capacité par activités)', () => {
       // GIVEN
       renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={graphiqueCapacitésViewModel} />);
-      const détails = screen.getByRole("button", { name: wording.DÉTAILS });
 
       // WHEN
-      fireEvent.click(détails);
+      graphiqueTest.ouvreDétail();
 
       // THEN
-      expect(détails).toHaveAttribute("data-fr-opened", "true");
+      expect(graphiqueTest.détail).toHaveAttribute("data-fr-opened", "true");
       const infoBulle = screen.getByRole("dialog", { name: wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS });
-      const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
-      expect(fermer).toBeInTheDocument();
-      const abréviationSourceOrigine = within(infoBulle).getAllByText("SAE", { selector: "abbr" });
-      expect(abréviationSourceOrigine[0]).toHaveAttribute("title", wording.SAE_TITLE);
+      expect(graphiqueTest.boutonFermerDétail).toBeInTheDocument();
+      expect(graphiqueTest.abréviationFichierSource("SAE")).toHaveAttribute("title", wording.SAE_TITLE);
       const élémentsDeCompréhension = within(infoBulle).getByRole("region", { name: wording.ÉLÉMENTS_DE_COMPRÉHENSION });
       expect(élémentsDeCompréhension).toBeInTheDocument();
       const fréquence = within(infoBulle).getByRole("region", { name: wording.FRÉQUENCE });
@@ -66,16 +63,13 @@ describe("GraphiqueCapacitésParActivité", () => {
     it('ferme l’info bulle après avoir cliqué sur le bouton "Fermer" (Capacité par activités)', () => {
       // GIVEN
       renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={graphiqueCapacitésViewModel} />);
-      const détails = screen.getByRole("button", { name: wording.DÉTAILS });
-      fireEvent.click(détails);
-      const infoBulle = screen.getByRole("dialog", { name: wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS });
-      const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
+      graphiqueTest.ouvreDétail();
 
       // WHEN
-      fireEvent.click(fermer);
+      graphiqueTest.fermeDétail();
 
       // THEN
-      expect(détails).toHaveAttribute("data-fr-opened", "false");
+      expect(graphiqueTest.détail).toHaveAttribute("data-fr-opened", "false");
     });
   });
 
@@ -85,7 +79,7 @@ describe("GraphiqueCapacitésParActivité", () => {
       renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={graphiqueCapacitésViewModel} />);
 
       // THEN
-      const tableau = screen.getByRole("table");
+      const tableau = graphiqueTest.transcriptionTable;
 
       const libellésLigneDEnTête = [wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, wording.LITS, wording.PLACES];
       const indicateursLigneDEnTête = within(tableau).getAllByRole("columnheader");
@@ -158,7 +152,7 @@ describe("GraphiqueCapacitésParActivité", () => {
       renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={autorisationsViewModel} />);
 
       // THEN
-      const tableau = screen.getByRole("table");
+      const tableau = graphiqueTest.transcriptionTable;
       const tbody = within(tableau).getAllByRole("rowgroup")[1];
       const lignes = within(tbody).getAllByRole("row");
       expect(lignes).toHaveLength(5);
@@ -191,7 +185,7 @@ describe("GraphiqueCapacitésParActivité", () => {
       renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={autorisationsViewModel} />);
 
       // THEN
-      const tableau = screen.getByRole("table");
+      const tableau = graphiqueTest.transcriptionTable;
       const tbody = within(tableau).getAllByRole("rowgroup")[1];
       const lignes = within(tbody).getAllByRole("row");
       expect(lignes).toHaveLength(5);
@@ -203,8 +197,8 @@ describe("GraphiqueCapacitésParActivité", () => {
       // WHEN
       renderFakeComponent(<GraphiqueCapacitésParActivité graphiqueCapacitésParActivitéViewModel={autorisationsSansActivité} />);
       // THEN
-      const tableau = screen.queryByRole("table");
-      expect(tableau).not.toBeInTheDocument();
+      const transcription = graphiqueTest.boutonAfficherTranscription;
+      expect(transcription).toBeDisabled();
     });
   });
 

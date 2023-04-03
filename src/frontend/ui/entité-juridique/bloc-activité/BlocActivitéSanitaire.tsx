@@ -29,10 +29,12 @@ export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel }: B
         {entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés && (
           <GraphiquePsySSR estEntitéJuridique={true} nombreJournéesPsySSRViewModel={entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel} />
         )}
-        <GraphiqueNombrePassageUrgence
-          estEntitéJuridique={true}
-          nombrePassageAuxUrgencesViewModel={entitéJuridiqueActivitéViewModel.nombreDePassageAuxUrgencesViewModel}
-        />
+        {entitéJuridiqueActivitéViewModel.nombrePassageUrgenceEstIlRenseigné() && (
+          <GraphiqueNombrePassageUrgence
+            estEntitéJuridique={true}
+            nombrePassageAuxUrgencesViewModel={entitéJuridiqueActivitéViewModel.nombreDePassageAuxUrgencesViewModel}
+          />
+        )}
       </ul>
     </Bloc>
   );

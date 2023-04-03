@@ -28,7 +28,6 @@ import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
 import styles from "./GraphiqueViewModel.module.css";
-import { HistogrammeHorizontal } from "./HistogrammeHorizontal";
 
 export type LibelléDeDonnéeGraphe = Readonly<{
   couleur: string;
@@ -45,9 +44,6 @@ export type CouleurHistogramme = Readonly<{
 
 export class GraphiqueViewModel {
   protected readonly SEUIL_DE_CONTRASTE_DES_LIBELLÉS_DES_TAUX = 20;
-  readonly ratioMinHistogrammeHorizontal = 2;
-  readonly ratioMaxHistogrammeHorizontal = 15;
-  readonly facteurDiminutionHistogrammeHorizontal = 1.5;
   readonly couleurDuFond = "#E8EDFF";
   readonly couleurDeFondDuBloc = "#F6F6F6";
   readonly couleurDuFondHistogrammePrimaire = "#000091";
@@ -57,7 +53,6 @@ export class GraphiqueViewModel {
   readonly couleurDuFondHistogrammeDeDépassementTransparent = "rgba(201, 25, 30, 0.5)";
   readonly couleurSecondPlanHistogrammeDeDépassement = "#FFE9E9";
   readonly couleurDelAbscisse = "#161616";
-  readonly couleurDeLaValeur = "#3A3A3A";
   readonly couleurIdentifiant = "#000";
   readonly policeGrasse = "bold";
   readonly policeNormale = "normal";
@@ -193,35 +188,6 @@ export class GraphiqueViewModel {
       return calculeLaCouleurDesBarresDeLHistogramme(valeur, libellés[index]);
     });
   }
-
-  protected afficheUnHistogrammeHorizontal(
-    valeurs: number[],
-    libellés: (number | string)[],
-    couleursDeLHistogramme: CouleurHistogramme[],
-    libellésDesValeurs: LibelléDeDonnéeGraphe[],
-    libellésDesTicks: LibelléDeTickGraphe[],
-    ratioLargeurSurHauteur: number,
-    entêteLibellé: string,
-    identifiant: string,
-    libellésDeValeursManquantes: number[] | string[],
-    nombreDeLibelléTotal: number = 3
-  ): ReactElement {
-    return (
-      <HistogrammeHorizontal
-        couleursDeLHistogramme={couleursDeLHistogramme}
-        entêteLibellé={entêteLibellé}
-        identifiant={identifiant}
-        libellés={libellés}
-        libellésDeValeursManquantes={libellésDeValeursManquantes}
-        libellésDesTicks={libellésDesTicks}
-        libellésDesValeurs={libellésDesValeurs}
-        nombreDeLibelléTotal={nombreDeLibelléTotal}
-        ratioLargeurSurHauteur={ratioLargeurSurHauteur}
-        valeurs={valeurs}
-      />
-    );
-  }
-
   protected afficheUnDiagrammeEnDonut(
     valeurs: number[],
     libellés: string[],
@@ -254,12 +220,6 @@ export class GraphiqueViewModel {
         <menu className={styles["légende-donut"]} id={idDeLaLégende} />
       </div>
     );
-  }
-
-  protected calculeLeRatioDesHistogrammesHorizontaux(nombreDeLignes: number): number {
-    return this.ratioMaxHistogrammeHorizontal - this.facteurDiminutionHistogrammeHorizontal * nombreDeLignes > this.ratioMinHistogrammeHorizontal
-      ? this.ratioMaxHistogrammeHorizontal - this.facteurDiminutionHistogrammeHorizontal * nombreDeLignes
-      : this.ratioMinHistogrammeHorizontal;
   }
 
   private construisLePluginDeLégende() {

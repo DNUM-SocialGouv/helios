@@ -9,5 +9,5 @@ export function annéesManquantes(années: (number | string)[], annéesTotales: 
     .fill(annéeEnCours)
     .map((annéeÀAvoir, index) => annéeÀAvoir - index - 1)
     .reverse()
-    .filter((année) => !années.includes(année));
+    .filter((année) => !années.map(Number).includes(année));
 }

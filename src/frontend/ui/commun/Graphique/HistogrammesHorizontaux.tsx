@@ -7,7 +7,7 @@ import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
 
-type Stack = { label?: string; data: number[]; barColor: string[]; isError: boolean[] };
+type Stack = { label?: string; data: number[]; backgroundColor: string[]; isError?: boolean[] };
 
 function useChartData(charts: HistogrammeData[]) {
   const [chartsData, setChartsData] = useState(charts);
@@ -55,6 +55,15 @@ export class HistogrammeData {
     private valueFormatter: (value: number) => string = (value) => value.toString()
   ) {
     this.areStacksVisible = this.makeAllStacksVisible(stacks);
+    this.setDefaultErrorStatut();
+  }
+
+  private setDefaultErrorStatut() {
+    this.stacks.forEach((stack) => {
+      if (!stack.isError) {
+        stack.isError = new Array(stack.data.length).fill(false);
+      }
+    });
   }
 
   private makeAllStacksVisible(stacks: Stack[]): boolean[] {
@@ -71,9 +80,8 @@ export class HistogrammeData {
           borderColor: "white",
           backgroundColor: this.stackBackgroundColor(stack),
           data: stack.data.map(Math.abs),
-          maxBarThickness: 60,
+          maxBarThickness: 35,
           datalabels: {
-            font: { weight: "bold" },
             labels: {
               title: { color: this.labelsColor },
             },
@@ -91,7 +99,7 @@ export class HistogrammeData {
 
   private get labelsColor(): string[] {
     const isLabelsError = this.visibleStacks
-      .map((stack) => stack.isError)
+      .map((stack) => stack.isError as boolean[])
       .reduce((isLabelInError, isErrorStack) => {
         return isLabelInError.map((isError, index) => isError || isErrorStack[index]);
       });
@@ -99,7 +107,7 @@ export class HistogrammeData {
   }
 
   private stackBackgroundColor(stack: Stack) {
-    return stack.isError.map((error, index) => (error ? this.couleurErreur : stack.barColor[index]));
+    return (stack.isError as boolean[]).map((error, index) => (error ? this.couleurErreur : stack.backgroundColor[index]));
   }
 
   public get transcriptionTitles(): string[] {
@@ -114,7 +122,7 @@ export class HistogrammeData {
   }
 
   public get legendColors(): string[] {
-    return this.stacks.map((stack) => stack.barColor[0]);
+    return this.stacks.map((stack) => stack.backgroundColor[0]);
   }
 
   public get legendId(): string {
@@ -175,6 +183,7 @@ type HistogrammeHorizontalNewProps = {
   annéesManquantes: number[] | string[];
   nombreDAnnéeTotale: number;
   légende?: string[];
+  epaisseur?: "FIN" | "EPAIS";
 };
 export const HistogrammesHorizontaux = ({
   nom,
@@ -182,6 +191,7 @@ export const HistogrammesHorizontaux = ({
   annéesManquantes,
   nombreDAnnéeTotale = 5,
   légende,
+  epaisseur = "EPAIS",
 }: HistogrammeHorizontalNewProps): ReactElement => {
   const { wording } = useDependencies();
   const { histogrammes, toggleStackVisibility } = useChartData(valeursDesHistogrammes);
@@ -195,8 +205,8 @@ export const HistogrammesHorizontaux = ({
   }
 
   const aucuneDonnées = annéesManquantes.length >= nombreDAnnéeTotale;
-  const DEFAULT_ASPECT_RATIO = 4;
-  const aspectRatio = DEFAULT_ASPECT_RATIO / valeursDesHistogrammes.length;
+  const ASPECT_RATIO = epaisseur === "EPAIS" ? 5 : 7;
+  const aspectRatio = ASPECT_RATIO / valeursDesHistogrammes.length;
 
   return (
     <>
@@ -226,16 +236,15 @@ export const HistogrammesHorizontaux = ({
         />
       )}
       {annéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
-      {!aucuneDonnées && (
-        <Transcription
-          disabled={annéesManquantes.length === nombreDAnnéeTotale}
-          entêteLibellé={nom}
-          identifiantUnique={nom}
-          identifiants={transcriptionTitles()}
-          libellés={histogrammes[0].labels}
-          valeurs={getTranscriptionValeurs()}
-        />
-      )}
+
+      <Transcription
+        disabled={aucuneDonnées}
+        entêteLibellé={nom}
+        identifiantUnique={nom}
+        identifiants={transcriptionTitles()}
+        libellés={histogrammes[0].labels}
+        valeurs={getTranscriptionValeurs()}
+      />
     </>
   );
 };

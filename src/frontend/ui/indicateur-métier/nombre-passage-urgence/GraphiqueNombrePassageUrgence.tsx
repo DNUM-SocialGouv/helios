@@ -31,10 +31,7 @@ export const GraphiqueNombrePassageUrgence = ({ nombrePassageAuxUrgencesViewMode
         identifiant={wording.NOMBRE_DE_PASSAGES_AUX_URGENCES}
         libellés={nombrePassageAuxUrgencesViewModel.libellés}
         libellésDeValeursManquantes={nombrePassageAuxUrgencesViewModel.libellésDeValeursManquantes}
-        libellésDesTicks={nombrePassageAuxUrgencesViewModel.libellésDesTicks}
-        libellésDesValeurs={nombrePassageAuxUrgencesViewModel.libellésDesValeurs}
         nombreDeLibelléTotal={nombrePassageAuxUrgencesViewModel.nombreDeLibelléTotal}
-        ratioLargeurSurHauteur={nombrePassageAuxUrgencesViewModel.ratioLargeurSurHauteur}
         valeurs={nombrePassageAuxUrgencesViewModel.valeurs}
       />
     </IndicateurGraphique>

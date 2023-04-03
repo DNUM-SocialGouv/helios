@@ -4,6 +4,7 @@ import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
 import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe } from "../../commun/Graphique/GraphiqueViewModel";
+import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";
@@ -19,7 +20,6 @@ type IndicateurAvecUnTaux = Exclude<
 >;
 
 export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel extends GraphiqueViewModel {
-  private readonly RATIO_HISTOGRAMME_HORIZONTAL = 2;
   private readonly SEUIL_DU_TAUX_DE_ROTATION_DU_PERSONNEL_ATYPIQUE: number = 50;
   private readonly SEUIL_DU_TAUX_D_ETP_VACANTS_ATYPIQUE: number = 20;
   private readonly SEUIL_DU_TAUX_DE_PRESTATIONS_EXTERNES: number = 20;
@@ -68,20 +68,18 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
       premierPlan: estCeLAnnéePassée(année) ? this.couleurDuFondHistogrammePrimaire : this.couleurDuFondHistogrammeSecondaire,
       secondPlan: this.couleurDuFond,
     }));
-    const libellésDesValeurs = Array(valeurs.length).fill({ couleur: this.couleurIdentifiant });
-    const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
     const listeAnnéesManquantes = annéesManquantes(années);
 
-    return this.afficheUnHistogrammeHorizontal(
-      valeurs,
-      années,
-      couleursDeLHistogramme,
-      libellésDesValeurs,
-      libellésDesTicks,
-      this.RATIO_HISTOGRAMME_HORIZONTAL,
-      this.wording.ANNÉE,
-      this.wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION,
-      listeAnnéesManquantes
+    return (
+      <HistogrammeHorizontal
+        couleursDeLHistogramme={couleursDeLHistogramme}
+        entêteLibellé={this.wording.ANNÉE}
+        identifiant={this.wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION}
+        libellés={années}
+        libellésDeValeursManquantes={listeAnnéesManquantes}
+        nombreDeLibelléTotal={3}
+        valeurs={valeurs}
+      />
     );
   }
 
@@ -99,20 +97,18 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
       premierPlan: estCeLAnnéePassée(année) ? this.couleurDuFondHistogrammePrimaire : this.couleurDuFondHistogrammeSecondaire,
       secondPlan: this.couleurDuFond,
     }));
-    const libellésDesValeurs = Array(valeurs.length).fill({ couleur: this.couleurIdentifiant });
-    const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
     const listeAnnéesManquantes = annéesManquantes(années);
 
-    return this.afficheUnHistogrammeHorizontal(
-      valeurs,
-      années,
-      couleursDeLHistogramme,
-      libellésDesValeurs,
-      libellésDesTicks,
-      this.RATIO_HISTOGRAMME_HORIZONTAL,
-      this.wording.ANNÉE,
-      this.wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION,
-      listeAnnéesManquantes
+    return (
+      <HistogrammeHorizontal
+        couleursDeLHistogramme={couleursDeLHistogramme}
+        entêteLibellé={this.wording.ANNÉE}
+        identifiant={this.wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION}
+        libellés={années}
+        libellésDeValeursManquantes={listeAnnéesManquantes}
+        nombreDeLibelléTotal={3}
+        valeurs={valeurs}
+      />
     );
   }
 
@@ -419,13 +415,13 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
     return { couleur: this.couleursDuDoughnutDesTauxDAbsentéismes[motif].couleurDuLibellé };
   }
 
-  private extraisLesValeursNombréesDesIndicateurs(indicateur: IndicateurAvecUnNombre): number[][] {
+  private extraisLesValeursNombréesDesIndicateurs(indicateur: IndicateurAvecUnNombre): [number[], string[]] {
     const valeurs: number[] = [];
-    const années: number[] = [];
+    const années: string[] = [];
     this.ressourcesHumainesMédicoSocial.forEach((ressourceHumaineMédicoSocial: ÉtablissementTerritorialMédicoSocialRessourcesHumaines) => {
       const valeur = ressourceHumaineMédicoSocial[indicateur].valeur;
       if (valeur !== null) {
-        années.push(ressourceHumaineMédicoSocial.année);
+        années.push(ressourceHumaineMédicoSocial.année.toString());
         valeurs.push(valeur);
       }
     });
