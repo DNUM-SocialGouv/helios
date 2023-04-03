@@ -54,22 +54,22 @@ export const PageEcoConception = () => {
           Techniquement, des technologies standards ont été utilisées et un travail d’optimisation a été réalisé afin de limiter le nombre de requêtes serveurs
           et réduire les données transférées.
         </li>
-        <li className="fr-mb-2w">
-          <b>
-            En mars 2023, la version du site répond positivement à 85% soit 67 des 79 critères du référentiel général d’éco-conception des services
-            numériques&nbsp;
-          </b>
-          <a href="https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/" rel="external noopener noreferrer" target="_blank">
-            (RGESN)
-          </a>
-          . Ce référentiel a été conçu dans le cadre de la mission interministérielle co-pilotée par la DNUM, le Ministère de la Transition Écologique, l’ADEME
-          et l’Institut du Numérique Responsable.
-        </li>
-        <li className="fr-mb-2w">
-          Afin de continuer de maximiser l’impact positif du service numérique et améliorer nos pratiques, nous avons ritualisé le suivi de notre impact
-          environnementale afin d’identifier des actions à intégrer au Backlog.
-        </li>
       </ol>
+      <p className="fr-mb-2w">
+        <b>
+          En mars 2023, la version du site répond positivement à 85% soit 67 des 79 critères du référentiel général d’éco-conception des services
+          numériques&nbsp;
+        </b>
+        <a href="https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/" rel="external noopener noreferrer" target="_blank">
+          (RGESN)
+        </a>
+        . Ce référentiel a été conçu dans le cadre de la mission interministérielle co-pilotée par la DNUM, le Ministère de la Transition Écologique, l’ADEME et
+        l’Institut du Numérique Responsable.
+      </p>
+      <p className="fr-mb-2w">
+        Afin de continuer de maximiser l’impact positif du service numérique et améliorer nos pratiques, nous avons ritualisé le suivi de notre impact
+        environnementale afin d’identifier des actions à intégrer au Backlog.
+      </p>
     </>
   );
 };
