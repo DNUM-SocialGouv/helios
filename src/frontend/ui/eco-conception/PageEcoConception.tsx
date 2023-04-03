@@ -20,7 +20,7 @@ export const PageEcoConception = () => {
         pour objectif de partager et de faire connaître notre démarche afin d’inspirer d’autres entités à s’engager en faveur d’un numérique plus responsable.
       </p>
       <h2 className="fr-h6">Les bonnes pratiques que nous avons appliquées :</h2>
-      <ul>
+      <ol>
         <li className="fr-mb-2w">
           Dès le cadrage, l’équipe de conception et de développement a été sensibilisée aux enjeux environnementaux du numérique et a intégré dans ses rituels,
           ses outils et son pilotage produit les bonnes pratiques d’éco-conception.
@@ -54,7 +54,7 @@ export const PageEcoConception = () => {
           Techniquement, des technologies standards ont été utilisées et un travail d’optimisation a été réalisé afin de limiter le nombre de requêtes serveurs
           et réduire les données transférées.
         </li>
-      </ul>
+      </ol>
       <p>
         <b>
           En mars 2023, la version du site répond positivement à 85% soit 67 des 79 critères du référentiel général d’éco-conception des services
