@@ -1,6 +1,7 @@
 import { EntitéJuridiqueActivités } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueActivités";
 import { Wording } from "../../../configuration/wording/Wording";
 import { IndicateurActivité } from "../../indicateur-métier/IndicateurActivité";
+import { NombreDeHADViewModel } from "../../indicateur-métier/nombre-de-had/NombreDeHADViewModel";
 import { NombreDeSejourMCOViewModel } from "../../indicateur-métier/nombre-de-sejour-mco/NombreDeSejourMCOViewModel";
 import { ActivitesPsySSR, NombreDeJourneesPsySSRViewModel } from "../../indicateur-métier/nombre-journees-psy-ssr/NombreDeJourneesPsySSRViewModel";
 import { NombrePassageAuxUrgencesViewModel } from "../../indicateur-métier/nombre-passage-urgence/NombrePassageAuxUrgencesViewModel";
@@ -10,6 +11,7 @@ export class EntitéJuridiqueActivitésViewModel {
   public nombreDePassageAuxUrgencesViewModel: NombrePassageAuxUrgencesViewModel;
   public nombreJourneesPsySSRViewModel: NombreDeJourneesPsySSRViewModel;
   public nombreDeSejourMCOViewModel: NombreDeSejourMCOViewModel;
+  public nombreDeHADViewModel: NombreDeHADViewModel;
 
   constructor(private readonly entitéJuridiqueActivités: EntitéJuridiqueActivités[], private wording: Wording) {
     this.nombreDePassageAuxUrgencesViewModel = this.createNombrePassageUrgenceViewModel();
