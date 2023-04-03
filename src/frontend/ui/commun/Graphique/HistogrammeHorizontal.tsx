@@ -86,7 +86,6 @@ export const HistogrammeHorizontal = ({
   couleursDeLHistogramme,
   libellésDesValeurs,
   libellésDesTicks,
-  ratioLargeurSurHauteur,
   entêteLibellé,
   identifiant,
   libellésDeValeursManquantes,

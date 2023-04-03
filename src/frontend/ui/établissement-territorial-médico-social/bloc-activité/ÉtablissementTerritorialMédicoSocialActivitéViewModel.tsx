@@ -9,7 +9,6 @@ import { StringFormater } from "../../commun/StringFormater";
 
 export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends GraphiqueViewModel {
   readonly seuilValeurAtypique = 120;
-  readonly ratioHistogrammeBlocActivité = 2;
 
   constructor(private readonly établissementTerritorialActivité: ÉtablissementTerritorialMédicoSocial["activités"], wording: Wording) {
     super(wording);
@@ -133,7 +132,6 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
       this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale),
       Array(valeurs.length).fill({ couleur: this.couleurIdentifiant }),
       this.construisLesLibellésDesTicks(années),
-      this.ratioHistogrammeBlocActivité,
       this.wording.ANNÉE,
       this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES,
       annéesManquantes(années)
@@ -157,7 +155,6 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
       this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale),
       Array(valeurs.length).fill({ couleur: this.couleurIdentifiant }),
       this.construisLesLibellésDesTicks(années),
-      this.ratioHistogrammeBlocActivité,
       this.wording.ANNÉE,
       this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES,
       annéesManquantes(années)
@@ -181,7 +178,6 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
       this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale),
       Array(valeurs.length).fill({ couleur: this.couleurIdentifiant }),
       this.construisLesLibellésDesTicks(années),
-      this.ratioHistogrammeBlocActivité,
       this.wording.ANNÉE,
       this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES,
       annéesManquantes(années)

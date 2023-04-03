@@ -45,9 +45,6 @@ export type CouleurHistogramme = Readonly<{
 
 export class GraphiqueViewModel {
   protected readonly SEUIL_DE_CONTRASTE_DES_LIBELLÉS_DES_TAUX = 20;
-  readonly ratioMinHistogrammeHorizontal = 2;
-  readonly ratioMaxHistogrammeHorizontal = 15;
-  readonly facteurDiminutionHistogrammeHorizontal = 1.5;
   readonly couleurDuFond = "#E8EDFF";
   readonly couleurDeFondDuBloc = "#F6F6F6";
   readonly couleurDuFondHistogrammePrimaire = "#000091";
@@ -200,12 +197,11 @@ export class GraphiqueViewModel {
     couleursDeLHistogramme: CouleurHistogramme[],
     libellésDesValeurs: LibelléDeDonnéeGraphe[],
     libellésDesTicks: LibelléDeTickGraphe[],
-    ratioLargeurSurHauteur: number,
     entêteLibellé: string,
     identifiant: string,
     libellésDeValeursManquantes: number[],
     nombreDeLibelléTotal: number = 3
-  ): ReactElement {
+  ): React.ReactElement {
     return (
       <HistogrammeHorizontal
         couleursDeLHistogramme={couleursDeLHistogramme}
@@ -216,7 +212,6 @@ export class GraphiqueViewModel {
         libellésDesTicks={libellésDesTicks}
         libellésDesValeurs={libellésDesValeurs}
         nombreDeLibelléTotal={nombreDeLibelléTotal}
-        ratioLargeurSurHauteur={ratioLargeurSurHauteur}
         valeurs={valeurs}
       />
     );
@@ -254,12 +249,6 @@ export class GraphiqueViewModel {
         <menu className={styles["légende-donut"]} id={idDeLaLégende} />
       </div>
     );
-  }
-
-  protected calculeLeRatioDesHistogrammesHorizontaux(nombreDeLignes: number): number {
-    return this.ratioMaxHistogrammeHorizontal - this.facteurDiminutionHistogrammeHorizontal * nombreDeLignes > this.ratioMinHistogrammeHorizontal
-      ? this.ratioMaxHistogrammeHorizontal - this.facteurDiminutionHistogrammeHorizontal * nombreDeLignes
-      : this.ratioMinHistogrammeHorizontal;
   }
 
   private construisLePluginDeLégende() {

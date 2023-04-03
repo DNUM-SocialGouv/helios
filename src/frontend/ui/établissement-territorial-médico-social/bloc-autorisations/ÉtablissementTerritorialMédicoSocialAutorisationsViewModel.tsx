@@ -98,7 +98,6 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
       this.construisLesCouleursDeLHistogramme(capacités, activités, construisLaCouleurDeLaBarreHorizontale),
       libellésDesValeurs,
       libellésDesTicks,
-      this.calculeLeRatioDesHistogrammesHorizontaux(activités.length),
       this.wording.ACTIVITÉ,
       this.wording.CAPACITÉ_INSTALLÉE,
       [],

@@ -19,7 +19,6 @@ type IndicateurAvecUnTaux = Exclude<
 >;
 
 export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel extends GraphiqueViewModel {
-  private readonly RATIO_HISTOGRAMME_HORIZONTAL = 2;
   private readonly SEUIL_DU_TAUX_DE_ROTATION_DU_PERSONNEL_ATYPIQUE: number = 50;
   private readonly SEUIL_DU_TAUX_D_ETP_VACANTS_ATYPIQUE: number = 20;
   private readonly SEUIL_DU_TAUX_DE_PRESTATIONS_EXTERNES: number = 20;
@@ -78,7 +77,6 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
       couleursDeLHistogramme,
       libellésDesValeurs,
       libellésDesTicks,
-      this.RATIO_HISTOGRAMME_HORIZONTAL,
       this.wording.ANNÉE,
       this.wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION,
       listeAnnéesManquantes
@@ -109,7 +107,6 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
       couleursDeLHistogramme,
       libellésDesValeurs,
       libellésDesTicks,
-      this.RATIO_HISTOGRAMME_HORIZONTAL,
       this.wording.ANNÉE,
       this.wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION,
       listeAnnéesManquantes
