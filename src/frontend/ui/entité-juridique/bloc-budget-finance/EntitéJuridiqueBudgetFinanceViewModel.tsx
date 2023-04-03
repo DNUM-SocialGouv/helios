@@ -1,7 +1,7 @@
 import { EntitéJuridiqueBudgetFinance } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
-import { HistogrammeData } from "../../commun/Graphique/DeuxHistogrammesHorizontaux";
+import { HistogrammeData } from "../../commun/Graphique/HistogrammesHorizontaux";
 import { StringFormater } from "../../commun/StringFormater";
 import { ResultatNetComptableViewModel } from "../../indicateur-métier/resultat-net-comptable/ResultatNetComptableViewModel";
 
@@ -101,7 +101,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       depensesGlobales,
       [
         {
-          backgroundColor: this.getBackgroundColorBudgetPrincipal(),
+          barColor: this.getBackgroundColorBudgetPrincipal(),
           data: depensesPrincipales,
           isError: depensesPrincipales.map((depense) => depense > 0),
           label: this.wording.CHARGES_PRINCIPALES,
@@ -109,7 +109,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
         {
           label: this.wording.CHARGES_ANNEXES,
           data: depensesAnnexes,
-          backgroundColor: this.getBackgroundColorBudgetSecondaire(),
+          barColor: this.getBackgroundColorBudgetSecondaire(),
           isError: depensesAnnexes.map((depense) => depense > 0),
         },
       ],
@@ -153,13 +153,13 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
         {
           label: this.wording.PRODUITS_PRINCIPAUX,
           data: produitsPrincipaux,
-          backgroundColor: this.getBackgroundColorBudgetPrincipal(),
+          barColor: this.getBackgroundColorBudgetPrincipal(),
           isError: produitsPrincipaux.map((depense) => depense < 0),
         },
         {
           label: this.wording.PRODUITS_ANNEXES,
           data: produitsAnnexes,
-          backgroundColor: this.getBackgroundColorBudgetSecondaire(),
+          barColor: this.getBackgroundColorBudgetSecondaire(),
           isError: produitsAnnexes.map((depense) => depense < 0),
         },
       ],
