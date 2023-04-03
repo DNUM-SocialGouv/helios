@@ -41,20 +41,18 @@ export class HistogrammeData {
    *
    * @param nom Nom du graphique qui apparaitra au dussus du graphique
    * @param labels Liste des libellés correspondant à chaque bar
-   * @param totals Liste des nombre affichés après chaque bar ( si une seule Stack le total correspond aux valeurs de la stack, si plusieurs stack on peut faire la somme de chaque stack)
+   * @param totals Liste des nombres affichées après chaque bar (si une seule Stack le total correspond aux valeurs de la stack, si plusieurs stack on peut faire la somme de chaque stack)
    * @param stacks Liste des Stack du graphique. La notion de Stack correspond à ChartJS (empilement de plusieurs barre sur une même ligne).
    * Chaque Stack définit sa liste de valeur pour chaque Bar, la couleur et le fait d'être en erreur ou pas.
    * Un graphique n'ayant pas plusieurs Stack est géré comme un graphique avec plusieurs stack mais il n'aura qu'un seul élément dans Stack.
    * @param valueFormatter Une fonction qui sera appliquée à la valeur numérique pour l'afficher dans le format attendu selon l'usage.
-   * @param aspectRatio
    */
   constructor(
     public nom: string,
     public labels: string[],
     private totals: number[],
     private stacks: Stack[],
-    private valueFormatter: (value: number) => string = (value) => value.toString(),
-    private aspectRatio = 2
+    private valueFormatter: (value: number) => string = (value) => value.toString()
   ) {
     this.areStacksVisible = this.makeAllStacksVisible(stacks);
   }
@@ -134,7 +132,6 @@ export class HistogrammeData {
 
     return {
       animation: false,
-      aspectRatio: this.aspectRatio,
       indexAxis: "y",
       scales: {
         x: {
@@ -174,22 +171,20 @@ export class HistogrammeData {
 
 type HistogrammeHorizontalNewProps = {
   nom: string;
-  valeursDeGauche: HistogrammeData;
-  valeursDeDroite: HistogrammeData;
+  valeursDesHistogrammes: HistogrammeData[];
   annéesManquantes: number[] | string[];
   nombreDAnnéeTotale: number;
   légendes?: string[];
 };
-export const DeuxHistogrammesHorizontaux = ({
+export const HistogrammesHorizontaux = ({
   nom,
-  valeursDeGauche,
-  valeursDeDroite,
+  valeursDesHistogrammes,
   annéesManquantes,
   nombreDAnnéeTotale = 5,
   légendes,
 }: HistogrammeHorizontalNewProps): ReactElement => {
   const { wording } = useDependencies();
-  const { histogrammes, toggleStackVisibility } = useChartData([valeursDeGauche, valeursDeDroite]);
+  const { histogrammes, toggleStackVisibility } = useChartData(valeursDesHistogrammes);
 
   function transcriptionTitles(): string[] {
     return histogrammes.map((histogramme) => histogramme.transcriptionTitles).flat() as string[];
@@ -200,6 +195,8 @@ export const DeuxHistogrammesHorizontaux = ({
   }
 
   const aucuneDonnées = annéesManquantes.length >= nombreDAnnéeTotale;
+  const DEFAULT_ASPECT_RATIO = 4;
+  const aspectRatio = DEFAULT_ASPECT_RATIO / valeursDesHistogrammes.length;
 
   return (
     <>
@@ -207,7 +204,7 @@ export const DeuxHistogrammesHorizontaux = ({
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(2, 50%)",
+            gridTemplateColumns: `repeat(${valeursDesHistogrammes.length}, 1fr)`,
             marginBottom: "3rem",
           }}
         >
@@ -215,7 +212,7 @@ export const DeuxHistogrammesHorizontaux = ({
             <div key={histogramme.nom}>
               {/*
                  // @ts-ignore */}
-              <Bar data={histogramme.chartData} options={histogramme.optionsHistogramme} />
+              <Bar data={histogramme.chartData} options={{ ...histogramme.optionsHistogramme, aspectRatio }} />
             </div>
           ))}
         </div>

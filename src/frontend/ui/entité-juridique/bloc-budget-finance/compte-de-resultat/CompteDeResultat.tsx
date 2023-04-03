@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { useDependencies } from "../../../commun/contexts/useDependencies";
-import { DeuxHistogrammesHorizontaux } from "../../../commun/Graphique/DeuxHistogrammesHorizontaux";
+import { HistogrammesHorizontaux } from "../../../commun/Graphique/HistogrammesHorizontaux";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ContenuCompteDeRésultatEJ } from "../../info-bulle/ContenuCompteDeRésultatEJ";
 import { EntitéJuridiqueBudgetFinanceViewModel } from "../EntitéJuridiqueBudgetFinanceViewModel";
@@ -24,13 +24,15 @@ export function CompteDeResultat({ entitéJuridiqueBudgetFinanceViewModel }: Blo
       nomDeLIndicateur={<>{wording.COMPTE_DE_RÉSULTAT}</>}
       source={wording.ANCRE}
     >
-      <DeuxHistogrammesHorizontaux
+      <HistogrammesHorizontaux
         annéesManquantes={entitéJuridiqueBudgetFinanceViewModel.lesAnnéesManquantesDuCompteDeRésultat()}
         légendes={entitéJuridiqueBudgetFinanceViewModel.légendeChart}
         nom={wording.COMPTE_DE_RÉSULTAT}
         nombreDAnnéeTotale={entitéJuridiqueBudgetFinanceViewModel.NOMBRE_ANNEES}
-        valeursDeDroite={entitéJuridiqueBudgetFinanceViewModel.dataGraphiqueProduits(budgetEtFinance)}
-        valeursDeGauche={entitéJuridiqueBudgetFinanceViewModel.dataGraphiqueCharges(budgetEtFinance)}
+        valeursDesHistogrammes={[
+          entitéJuridiqueBudgetFinanceViewModel.dataGraphiqueCharges(budgetEtFinance),
+          entitéJuridiqueBudgetFinanceViewModel.dataGraphiqueProduits(budgetEtFinance),
+        ]}
       />
     </IndicateurGraphique>
   );

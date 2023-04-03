@@ -2,7 +2,7 @@ import { CadreBudgétaire } from "../../../../../backend/métier/entities/établ
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
 import { Wording } from "../../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../../utils/dateUtils";
-import { HistogrammeData } from "../../../commun/Graphique/DeuxHistogrammesHorizontaux";
+import { HistogrammeData } from "../../../commun/Graphique/HistogrammesHorizontaux";
 import { StringFormater } from "../../../commun/StringFormater";
 
 export class CompteDeResultatViewModel {
@@ -74,8 +74,7 @@ export class CompteDeResultatViewModel {
           isError: dépensesOuCharges.map((depenses) => depenses > 0),
         },
       ],
-      StringFormater.formateLeMontantEnEuros,
-      this.ratioHistogramme(budgetEtFinance)
+      StringFormater.formateLeMontantEnEuros
     );
   }
 
@@ -108,8 +107,7 @@ export class CompteDeResultatViewModel {
           isError: recettesOuProduits.map((recette) => recette < 0),
         },
       ],
-      StringFormater.formateLeMontantEnEuros,
-      this.ratioHistogramme(budgetEtFinance)
+      StringFormater.formateLeMontantEnEuros
     );
   }
 
@@ -117,12 +115,6 @@ export class CompteDeResultatViewModel {
     return budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA
       ? [this.wording.TOTAL]
       : [this.wording.TOTAL, this.wording.GROUPE_I, this.wording.GROUPE_II, this.wording.GROUPE_III];
-  }
-
-  public ratioHistogramme(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances) {
-    const RATIO_CA_PA = 5;
-    const DEFAULT_RATIO = 2;
-    return budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA ? RATIO_CA_PA : DEFAULT_RATIO;
   }
 
   public entêtesDesAutresColonnes(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances) {
