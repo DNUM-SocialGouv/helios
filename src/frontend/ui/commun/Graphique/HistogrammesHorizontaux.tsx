@@ -7,7 +7,7 @@ import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
 
-type Stack = { label?: string; data: number[]; barColor: string[]; isError: boolean[] };
+type Stack = { label?: string; data: number[]; backgroundColor: string[]; isError?: boolean[] };
 
 function useChartData(charts: HistogrammeData[]) {
   const [chartsData, setChartsData] = useState(charts);
@@ -55,6 +55,15 @@ export class HistogrammeData {
     private valueFormatter: (value: number) => string = (value) => value.toString()
   ) {
     this.areStacksVisible = this.makeAllStacksVisible(stacks);
+    this.setDefaultErrorStatut();
+  }
+
+  private setDefaultErrorStatut() {
+    this.stacks.forEach((stack) => {
+      if (!stack.isError) {
+        stack.isError = new Array(stack.data.length).fill(false);
+      }
+    });
   }
 
   private makeAllStacksVisible(stacks: Stack[]): boolean[] {
@@ -99,7 +108,7 @@ export class HistogrammeData {
   }
 
   private stackBackgroundColor(stack: Stack) {
-    return stack.isError.map((error, index) => (error ? this.couleurErreur : stack.barColor[index]));
+    return stack.isError.map((error, index) => (error ? this.couleurErreur : stack.backgroundColor[index]));
   }
 
   public get transcriptionTitles(): string[] {
@@ -114,7 +123,7 @@ export class HistogrammeData {
   }
 
   public get legendColors(): string[] {
-    return this.stacks.map((stack) => stack.barColor[0]);
+    return this.stacks.map((stack) => stack.backgroundColor[0]);
   }
 
   public get legendId(): string {

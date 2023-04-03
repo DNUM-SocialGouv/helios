@@ -104,8 +104,7 @@ export const HistogrammeHorizontal = ({
       [
         {
           data: valeurs,
-          barColor: couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
-          isError: [false],
+          backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
           label: identifiant,
         },
       ],
