@@ -7,6 +7,7 @@ import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe } from 
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";
+import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 
 type IndicateurAvecUnNombre = Exclude<
   keyof ÉtablissementTerritorialMédicoSocialRessourcesHumaines,
@@ -69,13 +70,16 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
     }));
     const listeAnnéesManquantes = annéesManquantes(années);
 
-    return this.afficheUnHistogrammeHorizontal(
-      valeurs,
-      années,
-      couleursDeLHistogramme,
-      this.wording.ANNÉE,
-      this.wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION,
-      listeAnnéesManquantes
+    return (
+      <HistogrammeHorizontal
+        couleursDeLHistogramme={couleursDeLHistogramme}
+        entêteLibellé={this.wording.ANNÉE}
+        identifiant={this.wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION}
+        libellés={années}
+        libellésDeValeursManquantes={listeAnnéesManquantes}
+        nombreDeLibelléTotal={3}
+        valeurs={valeurs}
+      />
     );
   }
 
@@ -95,13 +99,16 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
     }));
     const listeAnnéesManquantes = annéesManquantes(années);
 
-    return this.afficheUnHistogrammeHorizontal(
-      valeurs,
-      années,
-      couleursDeLHistogramme,
-      this.wording.ANNÉE,
-      this.wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION,
-      listeAnnéesManquantes
+    return (
+      <HistogrammeHorizontal
+        couleursDeLHistogramme={couleursDeLHistogramme}
+        entêteLibellé={this.wording.ANNÉE}
+        identifiant={this.wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION}
+        libellés={années}
+        libellésDeValeursManquantes={listeAnnéesManquantes}
+        nombreDeLibelléTotal={3}
+        valeurs={valeurs}
+      />
     );
   }
 

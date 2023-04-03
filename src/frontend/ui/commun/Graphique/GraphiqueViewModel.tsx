@@ -28,7 +28,6 @@ import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
 import styles from "./GraphiqueViewModel.module.css";
-import { HistogrammeHorizontal } from "./HistogrammeHorizontal";
 
 export type LibelléDeDonnéeGraphe = Readonly<{
   couleur: string;
@@ -189,29 +188,6 @@ export class GraphiqueViewModel {
       return calculeLaCouleurDesBarresDeLHistogramme(valeur, libellés[index]);
     });
   }
-
-  protected afficheUnHistogrammeHorizontal(
-    valeurs: number[],
-    libellés: string[],
-    couleursDeLHistogramme: CouleurHistogramme[],
-    entêteLibellé: string,
-    identifiant: string,
-    libellésDeValeursManquantes: number[],
-    nombreDeLibelléTotal: number = 3
-  ): React.ReactElement {
-    return (
-      <HistogrammeHorizontal
-        couleursDeLHistogramme={couleursDeLHistogramme}
-        entêteLibellé={entêteLibellé}
-        identifiant={identifiant}
-        libellés={libellés}
-        libellésDeValeursManquantes={libellésDeValeursManquantes}
-        nombreDeLibelléTotal={nombreDeLibelléTotal}
-        valeurs={valeurs}
-      />
-    );
-  }
-
   protected afficheUnDiagrammeEnDonut(
     valeurs: number[],
     libellés: string[],

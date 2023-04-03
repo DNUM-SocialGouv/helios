@@ -6,6 +6,7 @@ import { Wording } from "../../../configuration/wording/Wording";
 import { CouleurHistogramme, GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../commun/StringFormater";
 import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../../commun/Tag";
+import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 
 export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extends GraphiqueViewModel {
   constructor(private readonly établissementTerritorialAutorisations: ÉtablissementTerritorialMédicoSocial["autorisationsEtCapacités"], wording: Wording) {
@@ -88,14 +89,16 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
       };
     };
 
-    return this.afficheUnHistogrammeHorizontal(
-      capacités,
-      activités,
-      this.construisLesCouleursDeLHistogramme(capacités, activités, construisLaCouleurDeLaBarreHorizontale),
-      this.wording.ACTIVITÉ,
-      this.wording.CAPACITÉ_INSTALLÉE,
-      [],
-      capacités.length
+    return (
+      <HistogrammeHorizontal
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(capacités, activités, construisLaCouleurDeLaBarreHorizontale)}
+        entêteLibellé={this.wording.ACTIVITÉ}
+        identifiant={this.wording.CAPACITÉ_INSTALLÉE}
+        libellés={activités}
+        libellésDeValeursManquantes={[]}
+        nombreDeLibelléTotal={capacités.length}
+        valeurs={capacités}
+      />
     );
   }
 

@@ -6,6 +6,7 @@ import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
 import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../commun/StringFormater";
+import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 
 export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends GraphiqueViewModel {
   readonly seuilValeurAtypique = 120;
@@ -126,13 +127,16 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   public get fileActivePersonnesAccompagnées(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs("fileActivePersonnesAccompagnées");
 
-    return this.afficheUnHistogrammeHorizontal(
-      valeurs,
-      années,
-      this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale),
-      this.wording.ANNÉE,
-      this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES,
-      annéesManquantes(années)
+    return (
+      <HistogrammeHorizontal
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale)}
+        entêteLibellé={this.wording.ANNÉE}
+        identifiant={this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES}
+        libellés={années}
+        libellésDeValeursManquantes={annéesManquantes(années)}
+        nombreDeLibelléTotal={3}
+        valeurs={valeurs}
+      />
     );
   }
 
@@ -147,13 +151,16 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   public get nombreMoyenJournéesAbsencePersonnesAccompagnées(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs("nombreMoyenJournéesAbsencePersonnesAccompagnées");
 
-    return this.afficheUnHistogrammeHorizontal(
-      valeurs,
-      années,
-      this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale),
-      this.wording.ANNÉE,
-      this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES,
-      annéesManquantes(années)
+    return (
+      <HistogrammeHorizontal
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale)}
+        entêteLibellé={this.wording.ANNÉE}
+        identifiant={this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES}
+        libellés={années}
+        libellésDeValeursManquantes={annéesManquantes(années)}
+        nombreDeLibelléTotal={3}
+        valeurs={valeurs}
+      />
     );
   }
 
@@ -168,13 +175,16 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   public get duréeMoyenneSéjourAccompagnementPersonnesSorties(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs("duréeMoyenneSéjourAccompagnementPersonnesSorties");
 
-    return this.afficheUnHistogrammeHorizontal(
-      valeurs,
-      années,
-      this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale),
-      this.wording.ANNÉE,
-      this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES,
-      annéesManquantes(années)
+    return (
+      <HistogrammeHorizontal
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale)}
+        entêteLibellé={this.wording.ANNÉE}
+        identifiant={this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES}
+        libellés={années}
+        libellésDeValeursManquantes={annéesManquantes(années)}
+        nombreDeLibelléTotal={3}
+        valeurs={valeurs}
+      />
     );
   }
 
