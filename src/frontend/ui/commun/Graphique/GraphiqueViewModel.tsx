@@ -194,7 +194,6 @@ export class GraphiqueViewModel {
     valeurs: number[],
     libellés: string[],
     couleursDeLHistogramme: CouleurHistogramme[],
-    libellésDesTicks: LibelléDeTickGraphe[],
     entêteLibellé: string,
     identifiant: string,
     libellésDeValeursManquantes: number[],
@@ -207,7 +206,6 @@ export class GraphiqueViewModel {
         identifiant={identifiant}
         libellés={libellés}
         libellésDeValeursManquantes={libellésDeValeursManquantes}
-        libellésDesTicks={libellésDesTicks}
         nombreDeLibelléTotal={nombreDeLibelléTotal}
         valeurs={valeurs}
       />

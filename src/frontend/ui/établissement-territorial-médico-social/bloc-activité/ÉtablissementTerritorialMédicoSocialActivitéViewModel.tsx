@@ -130,7 +130,6 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
       valeurs,
       années,
       this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale),
-      this.construisLesLibellésDesTicks(années),
       this.wording.ANNÉE,
       this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES,
       annéesManquantes(années)
@@ -152,7 +151,6 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
       valeurs,
       années,
       this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale),
-      this.construisLesLibellésDesTicks(années),
       this.wording.ANNÉE,
       this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES,
       annéesManquantes(années)
@@ -174,7 +172,6 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
       valeurs,
       années,
       this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale),
-      this.construisLesLibellésDesTicks(années),
       this.wording.ANNÉE,
       this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES,
       annéesManquantes(années)

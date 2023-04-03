@@ -87,15 +87,11 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
         secondPlan: this.couleurDuFondHistogrammePrimaire,
       };
     };
-    const libellésDesTicks = activités.map((activité) => ({
-      tailleDePolice: activité === this.wording.NOMBRE_TOTAL_DE_PLACE ? this.policeGrasse : this.policeNormale,
-    }));
 
     return this.afficheUnHistogrammeHorizontal(
       capacités,
       activités,
       this.construisLesCouleursDeLHistogramme(capacités, activités, construisLaCouleurDeLaBarreHorizontale),
-      libellésDesTicks,
       this.wording.ACTIVITÉ,
       this.wording.CAPACITÉ_INSTALLÉE,
       [],

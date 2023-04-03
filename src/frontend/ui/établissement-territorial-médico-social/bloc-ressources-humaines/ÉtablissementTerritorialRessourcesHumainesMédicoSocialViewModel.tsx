@@ -67,14 +67,12 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
       premierPlan: estCeLAnnéePassée(année) ? this.couleurDuFondHistogrammePrimaire : this.couleurDuFondHistogrammeSecondaire,
       secondPlan: this.couleurDuFond,
     }));
-    const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
     const listeAnnéesManquantes = annéesManquantes(années);
 
     return this.afficheUnHistogrammeHorizontal(
       valeurs,
       années,
       couleursDeLHistogramme,
-      libellésDesTicks,
       this.wording.ANNÉE,
       this.wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION,
       listeAnnéesManquantes
@@ -95,14 +93,12 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
       premierPlan: estCeLAnnéePassée(année) ? this.couleurDuFondHistogrammePrimaire : this.couleurDuFondHistogrammeSecondaire,
       secondPlan: this.couleurDuFond,
     }));
-    const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
     const listeAnnéesManquantes = annéesManquantes(années);
 
     return this.afficheUnHistogrammeHorizontal(
       valeurs,
       années,
       couleursDeLHistogramme,
-      libellésDesTicks,
       this.wording.ANNÉE,
       this.wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION,
       listeAnnéesManquantes
