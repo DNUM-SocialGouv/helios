@@ -52,7 +52,7 @@ export class HistogrammeData {
     public labels: string[],
     private totals: number[],
     private stacks: Stack[],
-    private valueFormatter: (value: number) => string = (value) => value.toString()
+    private valueFormatter: (value: number) => string = (value) => value?.toString()
   ) {
     this.areStacksVisible = this.makeAllStacksVisible(stacks);
     this.setDefaultErrorStatut();

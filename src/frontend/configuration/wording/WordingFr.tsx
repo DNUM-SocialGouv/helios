@@ -169,6 +169,7 @@ export class WordingFr implements Wording {
   readonly HOSPITALISATION_COMPLÈTE_SSR: string = "Hospitalisation Complète SSR";
   readonly HOSPITALISATION_PARTIELLE_PSY: string = "Hospitalisation Partielle PSY";
   readonly HOSPITALISATION_COMPLÈTE_PSY: string = "Hospitalisation Complète PSY";
+  readonly NOMBRE_DE_HAD: string = "Nombre de Séjours HAD";
 
   // Bloc Autorisation
   readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string = "autorisation et capacité";

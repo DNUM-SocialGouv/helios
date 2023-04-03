@@ -200,6 +200,18 @@ describe("Bloc Activité Sanitaire", () => {
     expect(titre).not.toBeInTheDocument();
   });
 
+  it("n'affiche pas l'indicateur HAD si il n'y a pas des donnees", () => {
+    // GIVEN
+    const viewModel = new EntitéJuridiqueActivitésViewModel([], wording);
+
+    // WHEN
+    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
+
+    // THEN
+    const titre = screen.queryByText(wording.NOMBRE_DE_HAD, { selector: "p" });
+    expect(titre).not.toBeInTheDocument();
+  });
+
   it("affiche un l'indicateur vide si il n'y a pas des données", () => {
     // GIVEN
     const viewModel = new EntitéJuridiqueActivitésViewModel([], wording);
