@@ -45,13 +45,13 @@ export class EtablissementsTerritoriauxRattachésTestBuilder {
   }
 }
 
-export const établissementMédicoSocial: ÉtablissementTerritorialRattaché = {
+const établissementMédicoSocial: ÉtablissementTerritorialRattaché = {
   domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
   numéroFiness: "010000040",
   raisonSocialeCourte: "CH NANTUA",
 };
 
-export const établissementSanitaire: ÉtablissementTerritorialRattaché = {
+const établissementSanitaire: ÉtablissementTerritorialRattaché = {
   domaine: DomaineÉtablissementTerritorial.SANITAIRE,
   numéroFiness: "590782553",
   raisonSocialeCourte: "HP VILLENEUVE DASCQ",

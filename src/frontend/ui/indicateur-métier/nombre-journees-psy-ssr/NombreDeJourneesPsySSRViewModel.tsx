@@ -3,7 +3,7 @@ import { Wording } from "../../../configuration/wording/Wording";
 import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../commun/StringFormater";
 
-export type DonnéesDeDiagrammeDesJournéesPsyEtSsr = Readonly<{
+type DonnéesDeDiagrammeDesJournéesPsyEtSsr = Readonly<{
   nombreJournéesComplètesPsy: { x: number; y: number | null }[];
   nombreJournéesComplètesSsr: { x: number; y: number | null }[];
   nombreJournéesPartiellesPsy: { x: number; y: number | null }[];

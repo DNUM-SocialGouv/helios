@@ -110,7 +110,7 @@ export const Footer = () => {
   );
 };
 
-export const EcoConception = () => {
+const EcoConception = () => {
   const { paths, wording, isFeatureEnabled } = useDependencies();
 
   if (!isFeatureEnabled(FEATURE_NAME.ECO_CONCEPTION)) {
