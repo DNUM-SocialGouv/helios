@@ -1,15 +1,14 @@
-import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
-import { HistogrammeData } from "../../commun/Graphique/HistogrammesHorizontaux";
 import { StringFormater } from "../../commun/StringFormater";
 import { IndicateurActivité } from "../IndicateurActivité";
 
 export class GraphiqueNombreHADViewModel {
   public NOMBRE_ANNEES = 5;
   public valeurs: number[];
-  private années: number[];
+  private readonly années: number[];
+  readonly couleurDuFondHistogrammeSecondaire = "#4E68BB";
 
-  constructor(private readonly indicateurActivité: IndicateurActivité[], private wording: Wording) {
+  constructor(private readonly indicateurActivité: IndicateurActivité[]) {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs();
     this.valeurs = valeurs;
     this.années = années;
@@ -35,15 +34,10 @@ export class GraphiqueNombreHADViewModel {
     return [valeurs, années];
   }
 
-  public valeursHAD(): HistogrammeData {
-    return new HistogrammeData(this.wording.NOMBRE_DE_HAD, this.libellés, this.valeurs, [
-      {
-        data: this.valeurs,
-        backgroundColor: ["#4E68BB"],
-        isError: [false],
-        label: this.wording.NOMBRE_DE_HAD,
-      },
-    ]);
+  get couleursDeLHistogramme() {
+    return this.valeurs.map(() => {
+      return { premierPlan: this.couleurDuFondHistogrammeSecondaire };
+    });
   }
 
   public annéesManquantes(): number[] {
@@ -52,9 +46,5 @@ export class GraphiqueNombreHADViewModel {
 
   get libellés(): string[] {
     return this.années.map((annee) => annee.toString());
-  }
-
-  get totals() {
-    return this.valeurs;
   }
 }

@@ -7,18 +7,16 @@ import { ActivitesPsySSR, NombreDeJourneesPsySSRViewModel } from "../../indicate
 import { NombrePassageAuxUrgencesViewModel } from "../../indicateur-métier/nombre-passage-urgence/NombrePassageAuxUrgencesViewModel";
 
 export class EntitéJuridiqueActivitésViewModel {
-  // @ts-ignore
   public nombreDePassageAuxUrgencesViewModel: NombrePassageAuxUrgencesViewModel;
   public nombreJourneesPsySSRViewModel: NombreDeJourneesPsySSRViewModel;
   public nombreDeSejourMCOViewModel: NombreDeSejourMCOViewModel;
-  // @ts-ignore
   public nombreHADViewModel: GraphiqueNombreHADViewModel;
 
   constructor(private readonly entitéJuridiqueActivités: EntitéJuridiqueActivités[], private wording: Wording) {
     this.nombreDePassageAuxUrgencesViewModel = this.createNombrePassageUrgenceViewModel();
     this.nombreDeSejourMCOViewModel = new NombreDeSejourMCOViewModel(entitéJuridiqueActivités, this.wording);
     this.nombreJourneesPsySSRViewModel = this.createNombreJourneesPsySSRViewModel();
-    this.createNombreDeHADViewModel(wording);
+    this.nombreHADViewModel = this.createNombreDeHADViewModel();
   }
 
   private createNombreJourneesPsySSRViewModel() {
@@ -45,7 +43,7 @@ export class EntitéJuridiqueActivitésViewModel {
     return new NombrePassageAuxUrgencesViewModel(indicateurNombrePassage, this.wording);
   }
 
-  private createNombreDeHADViewModel(wording: Wording) {
+  private createNombreDeHADViewModel() {
     const indicateurNombreHAD: IndicateurActivité[] = this.entitéJuridiqueActivités.map((activité) => {
       return {
         année: activité.année,
@@ -53,7 +51,7 @@ export class EntitéJuridiqueActivitésViewModel {
         value: activité.nombreSéjoursHad.value,
       };
     });
-    this.nombreHADViewModel = new GraphiqueNombreHADViewModel(indicateurNombreHAD, wording);
+    return new GraphiqueNombreHADViewModel(indicateurNombreHAD);
   }
 
   public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {

@@ -1,5 +1,5 @@
 import { useDependencies } from "../../commun/contexts/useDependencies";
-import { HistogrammesHorizontaux } from "../../commun/Graphique/HistogrammesHorizontaux";
+import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ContenuNombreHAD } from "./ContenuNombreHAD";
 import { GraphiqueNombreHADViewModel } from "./GraphiqueNombreHADViewModel";
@@ -18,11 +18,14 @@ export const GraphiqueNombreHAD = ({ nombreHADViewModel }: GraphiqueNombreHADPro
       nomDeLIndicateur={wording.NOMBRE_DE_HAD}
       source={wording.RPU}
     >
-      <HistogrammesHorizontaux
-        annéesManquantes={nombreHADViewModel.annéesManquantes()}
-        nom={wording.NOMBRE_DE_HAD}
-        nombreDAnnéeTotale={nombreHADViewModel.NOMBRE_ANNEES}
-        valeursDesHistogrammes={[nombreHADViewModel.valeursHAD()]}
+      <HistogrammeHorizontal
+        couleursDeLHistogramme={nombreHADViewModel.couleursDeLHistogramme}
+        entêteLibellé={wording.ANNÉE}
+        identifiant={wording.NOMBRE_DE_HAD}
+        libellés={nombreHADViewModel.libellés}
+        libellésDeValeursManquantes={nombreHADViewModel.annéesManquantes()}
+        nombreDeLibelléTotal={nombreHADViewModel.NOMBRE_ANNEES}
+        valeurs={nombreHADViewModel.valeurs}
       />
     </IndicateurGraphique>
   );

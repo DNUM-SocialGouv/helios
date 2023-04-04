@@ -35,7 +35,7 @@ export type LibelléDeTickGraphe = Readonly<{
 
 export type CouleurHistogramme = Readonly<{
   premierPlan: string;
-  secondPlan: string;
+  secondPlan?: string;
 }>;
 
 export class GraphiqueViewModel {

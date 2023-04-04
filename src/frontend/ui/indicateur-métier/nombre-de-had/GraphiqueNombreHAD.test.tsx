@@ -16,7 +16,7 @@ describe("Graphique Nombre de HAD", () => {
 
   it("affiche abréviation du fichier source", () => {
     // GIVEN
-    const viewModel = new GraphiqueNombreHADViewModel([], wording);
+    const viewModel = new GraphiqueNombreHADViewModel([]);
 
     // WHEN
     renderFakeComponent(<GraphiqueNombreHAD nombreHADViewModel={viewModel} />);
@@ -32,7 +32,7 @@ describe("Graphique Nombre de HAD", () => {
 
     beforeAll(() => {
       // GIVEN
-      viewModel = new GraphiqueNombreHADViewModel([], wording);
+      viewModel = new GraphiqueNombreHADViewModel([]);
     });
 
     it("affiche le bouton de détail", () => {
@@ -78,7 +78,7 @@ describe("Graphique Nombre de HAD", () => {
 
     beforeEach(() => {
       // GIVEN
-      viewModel = new GraphiqueNombreHADViewModel([], wording);
+      viewModel = new GraphiqueNombreHADViewModel([]);
     });
 
     it("affiche le titre", () => {
@@ -106,16 +106,13 @@ describe("Graphique Nombre de HAD", () => {
     let nombreHADUneAnnée: GraphiqueNombreHADViewModel;
 
     beforeAll(() => {
-      nombreHADUneAnnée = new GraphiqueNombreHADViewModel(
-        [
-          {
-            année: annéeEnCours - 1,
-            value: 100,
-            dateMiseÀJourSource: "2020-10-01",
-          },
-        ],
-        wording
-      );
+      nombreHADUneAnnée = new GraphiqueNombreHADViewModel([
+        {
+          année: annéeEnCours - 1,
+          value: 100,
+          dateMiseÀJourSource: "2020-10-01",
+        },
+      ]);
     });
 
     it("affiche la date de mise à jour du fichier RPU", () => {
