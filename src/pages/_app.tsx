@@ -15,14 +15,7 @@ import "../frontend/ui/commun/global.css";
 import { DependenciesProvider } from "../frontend/ui/commun/contexts/useDependencies";
 import { Footer } from "../frontend/ui/commun/Footer/Footer";
 import { Header } from "../frontend/ui/commun/Header/Header";
-
-import { Chart } from "chart.js";
-
-function resizeChartAtPrint() {
-  for (const id in Chart.instances) {
-    Chart.instances[id].resize();
-  }
-}
+import { resizeChartOnPrint } from "./resizeChartAtPrint";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -43,16 +36,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         atPiano.page.send({ name: router.asPath });
       }
     }
-
-    if ("matchMedia" in window) {
-      window.matchMedia("print").addEventListener("change", function () {
-        resizeChartAtPrint();
-      });
-    } else {
-      window.onbeforeprint = resizeChartAtPrint;
-    }
-    window.addEventListener("resize", resizeChartAtPrint);
   });
+
+  useEffect(resizeChartOnPrint, []);
 
   return (
     <DependenciesProvider>

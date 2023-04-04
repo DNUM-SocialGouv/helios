@@ -213,14 +213,7 @@ export const HistogrammesHorizontaux = ({
   return (
     <>
       {!aucuneDonnées && (
-        <div
-          className={styles["container"]}
-          style={{
-            display: "grid",
-            gridTemplateColumns: `repeat(${valeursDesHistogrammes.length}, 1fr)`,
-            marginBottom: "3rem",
-          }}
-        >
+        <div className={styles["container"]}>
           {histogrammes.map((histogramme) => (
             <div key={histogramme.nom}>
               {/*

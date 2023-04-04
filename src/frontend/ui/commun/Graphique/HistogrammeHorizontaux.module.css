@@ -4,3 +4,10 @@
         display:block !important;
     }
 }
+.container {
+    display: flex;
+    margin-bottom: 3rem;
+}
+.container > div {
+    flex:1
+}
