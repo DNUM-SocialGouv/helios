@@ -1,3 +1,4 @@
+import { FEATURE_NAME } from "../../../utils/featureToggle";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
@@ -30,9 +31,7 @@ export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel }: B
         {entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés && (
           <GraphiquePsySSR estEntitéJuridique={true} nombreJournéesPsySSRViewModel={entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel} />
         )}
-        {entitéJuridiqueActivitéViewModel.nombreHADEstIlRenseigné() && (
-          <GraphiqueNombreHAD nombreHADViewModel={entitéJuridiqueActivitéViewModel.nombreHADViewModel} />
-        )}
+        {entitéJuridiqueActivitéViewModel.nombreHADEstIlRenseigné() && <GraphiqueHAD entitéJuridiqueActivitéViewModel={entitéJuridiqueActivitéViewModel} />}
         {entitéJuridiqueActivitéViewModel.nombrePassageUrgenceEstIlRenseigné() && (
           <GraphiqueNombrePassageUrgence
             estEntitéJuridique={true}
@@ -42,4 +41,14 @@ export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel }: B
       </ul>
     </Bloc>
   );
+};
+
+const GraphiqueHAD = ({ entitéJuridiqueActivitéViewModel }: BlocActivitéSanitaireProps) => {
+  const { isFeatureEnabled } = useDependencies();
+
+  if (!isFeatureEnabled(FEATURE_NAME.HAD)) {
+    return <></>;
+  }
+
+  return <GraphiqueNombreHAD nombreHADViewModel={entitéJuridiqueActivitéViewModel.nombreHADViewModel} />;
 };
