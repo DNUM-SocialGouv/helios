@@ -300,28 +300,17 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
           !this.leTauxDAbsentéismeHorsFormationEstIlDansLesBornesAcceptables(tauxDAbsentéismeHorsFormation),
           this.leTauxDAbsentéismeHorsFormationEstIlNul(tauxDAbsentéismeHorsFormation)
         )}
-        {
-          !this.leTauxDAbsentéismeHorsFormationEstIlNul(tauxDAbsentéismeHorsFormation) && (
-            <Donut
-              couleursDuDoughnut={couleursDuDoughnut}
-              idDeLaLégende={this.IDENTIFIANT_DE_LA_LÉGENDE_DES_TAUX_D_ABSENTÉISMES}
-              libellés={motifsDesTauxDAbsentéismes}
-              libellésDesValeurs={libellésDesValeurs}
-              texteCentral={texteCentral}
-              total={tauxDAbsentéismeHorsFormation}
-              valeurs={valeursDesTauxDAbsentéismes}
-            />
-          )
-          /*this.afficheUnDiagrammeEnDonut(
-            valeursDesTauxDAbsentéismes,
-            motifsDesTauxDAbsentéismes,
-            couleursDuDoughnut,
-            libellésDesValeurs,
-            texteCentral,
-            tauxDAbsentéismeHorsFormation,
-            this.IDENTIFIANT_DE_LA_LÉGENDE_DES_TAUX_D_ABSENTÉISMES
-          )*/
-        }
+        {!this.leTauxDAbsentéismeHorsFormationEstIlNul(tauxDAbsentéismeHorsFormation) && (
+          <Donut
+            couleursDuDoughnut={couleursDuDoughnut}
+            idDeLaLégende={this.IDENTIFIANT_DE_LA_LÉGENDE_DES_TAUX_D_ABSENTÉISMES}
+            libellés={motifsDesTauxDAbsentéismes}
+            libellésDesValeurs={libellésDesValeurs}
+            texteCentral={texteCentral}
+            total={tauxDAbsentéismeHorsFormation}
+            valeurs={valeursDesTauxDAbsentéismes}
+          />
+        )}
         {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
         <Transcription
           disabled={listeAnnéesManquantes.length === 3}
