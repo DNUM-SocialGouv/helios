@@ -8,9 +8,10 @@ import { GraphiqueCapacitésParActivitéViewModel } from "./GraphiqueCapacitésP
 
 type GraphiqueCapacitésParActivitéProps = Readonly<{
   graphiqueCapacitésParActivitéViewModel: GraphiqueCapacitésParActivitéViewModel;
+  estEntitéJuridique?: boolean;
 }>;
 
-export const GraphiqueCapacitésParActivité = ({ graphiqueCapacitésParActivitéViewModel }: GraphiqueCapacitésParActivitéProps) => {
+export const GraphiqueCapacitésParActivité = ({ graphiqueCapacitésParActivitéViewModel, estEntitéJuridique = false }: GraphiqueCapacitésParActivitéProps) => {
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(graphiqueCapacitésParActivitéViewModel.annéeInitiale);
 
@@ -27,7 +28,7 @@ export const GraphiqueCapacitésParActivité = ({ graphiqueCapacitésParActivit�
       }
       dateDeMiseÀJour={graphiqueCapacitésParActivitéViewModel.dateDeMiseÀJourDeLaCapacitéInstalléeParActivités}
       identifiant="capacite-sanitaire"
-      nomDeLIndicateur={wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
+      nomDeLIndicateur={estEntitéJuridique ? wording.CAPACITÉ_INSTALLÉE_EJ : wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
       source={wording.SAE}
     >
       <HistogrammesHorizontaux

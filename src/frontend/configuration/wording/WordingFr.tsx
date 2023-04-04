@@ -181,6 +181,7 @@ export class WordingFr implements Wording {
   readonly DERNIÈRE_INSTALLATION: string = "Dernière installation";
   readonly CAPACITÉ_INSTALLÉE: string = "Capacité installée";
   readonly CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS: string = "Capacité installée par activités";
+  readonly CAPACITÉ_INSTALLÉE_EJ: string = "Capacité installée selon l'activité des établissements sanitaire";
   readonly NOMBRE_TOTAL_DE_PLACE: string = "Nombre total de places";
   readonly ACTIVITÉ: string = "Activité";
 
