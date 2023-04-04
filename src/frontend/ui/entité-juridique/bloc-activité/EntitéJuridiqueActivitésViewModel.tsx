@@ -1,20 +1,22 @@
 import { EntitéJuridiqueActivités } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueActivités";
 import { Wording } from "../../../configuration/wording/Wording";
 import { IndicateurActivité } from "../../indicateur-métier/IndicateurActivité";
+import { GraphiqueNombreHADViewModel } from "../../indicateur-métier/nombre-de-had/GraphiqueNombreHADViewModel";
 import { NombreDeSejourMCOViewModel } from "../../indicateur-métier/nombre-de-sejour-mco/NombreDeSejourMCOViewModel";
 import { ActivitesPsySSR, NombreDeJourneesPsySSRViewModel } from "../../indicateur-métier/nombre-journees-psy-ssr/NombreDeJourneesPsySSRViewModel";
 import { NombrePassageAuxUrgencesViewModel } from "../../indicateur-métier/nombre-passage-urgence/NombrePassageAuxUrgencesViewModel";
 
 export class EntitéJuridiqueActivitésViewModel {
-  // @ts-ignore
   public nombreDePassageAuxUrgencesViewModel: NombrePassageAuxUrgencesViewModel;
   public nombreJourneesPsySSRViewModel: NombreDeJourneesPsySSRViewModel;
   public nombreDeSejourMCOViewModel: NombreDeSejourMCOViewModel;
+  public nombreHADViewModel: GraphiqueNombreHADViewModel;
 
   constructor(private readonly entitéJuridiqueActivités: EntitéJuridiqueActivités[], private wording: Wording) {
     this.nombreDePassageAuxUrgencesViewModel = this.createNombrePassageUrgenceViewModel();
     this.nombreDeSejourMCOViewModel = new NombreDeSejourMCOViewModel(entitéJuridiqueActivités, this.wording);
     this.nombreJourneesPsySSRViewModel = this.createNombreJourneesPsySSRViewModel();
+    this.nombreHADViewModel = this.createNombreDeHADViewModel();
   }
 
   private createNombreJourneesPsySSRViewModel() {
@@ -41,12 +43,24 @@ export class EntitéJuridiqueActivitésViewModel {
     return new NombrePassageAuxUrgencesViewModel(indicateurNombrePassage, this.wording);
   }
 
+  private createNombreDeHADViewModel() {
+    const indicateurNombreHAD: IndicateurActivité[] = this.entitéJuridiqueActivités.map((activité) => {
+      return {
+        année: activité.année,
+        dateMiseÀJourSource: activité.nombreSéjoursHad.dateMiseÀJourSource,
+        value: activité.nombreSéjoursHad.value,
+      };
+    });
+    return new GraphiqueNombreHADViewModel(indicateurNombreHAD);
+  }
+
   public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
     return (
       !this.activitéEstElleRenseignée ||
       (!this.nombrePassageUrgenceEstIlRenseigné() &&
         !this.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés &&
-        !this.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés)
+        !this.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés &&
+        !this.nombreHADEstIlRenseigné())
     );
   }
 
@@ -57,6 +71,11 @@ export class EntitéJuridiqueActivitésViewModel {
   public nombrePassageUrgenceEstIlRenseigné(): boolean {
     return this.entitéJuridiqueActivités.some(
       (activité: EntitéJuridiqueActivités) => activité.nombreDePassagesAuxUrgences.value !== null && activité.nombreDePassagesAuxUrgences.value !== undefined
+    );
+  }
+  public nombreHADEstIlRenseigné(): boolean {
+    return this.entitéJuridiqueActivités.some(
+      (activité: EntitéJuridiqueActivités) => activité.nombreSéjoursHad.value !== null && activité.nombreSéjoursHad.value !== undefined
     );
   }
 }

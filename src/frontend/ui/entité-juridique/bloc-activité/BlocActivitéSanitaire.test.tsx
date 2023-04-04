@@ -200,6 +200,45 @@ describe("Bloc Activité Sanitaire", () => {
     expect(titre).not.toBeInTheDocument();
   });
 
+  it("n'affiche pas l'indicateur HAD si il n'y a pas des donnees", () => {
+    // GIVEN
+    const viewModel = new EntitéJuridiqueActivitésViewModel([], wording);
+
+    // WHEN
+    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
+
+    // THEN
+    const titre = screen.queryByText(wording.NOMBRE_DE_HAD, { selector: "p" });
+    expect(titre).not.toBeInTheDocument();
+  });
+
+  it("affiche  l'indicateur HAD si il y a des donnees", () => {
+    // GIVEN
+    const viewModel = new EntitéJuridiqueActivitésViewModel(
+      [
+        mock<EntitéJuridiqueActivités>({
+          année: annéeEnCours - 1,
+          nombreSéjoursHad: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: 500,
+          },
+          nombreJournéesPartiellesSsr: {},
+          nombreJournéesCompletesPsy: {},
+          nombreJournéesCompletesSsr: {},
+          nombreJournéesPartiellesPsy: {},
+        }),
+      ],
+      wording
+    );
+
+    // WHEN
+    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
+
+    // THEN
+    const titre = screen.queryByText(wording.NOMBRE_DE_HAD, { selector: "h6" });
+    expect(titre).toBeInTheDocument();
+  });
+
   it("affiche un l'indicateur vide si il n'y a pas des données", () => {
     // GIVEN
     const viewModel = new EntitéJuridiqueActivitésViewModel([], wording);
@@ -259,6 +298,10 @@ describe("Bloc Activité Sanitaire", () => {
             value: null,
           },
           nombreJournéesCompletesSsr: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreSéjoursHad: {
             dateMiseÀJourSource: "2020-10-01",
             value: null,
           },

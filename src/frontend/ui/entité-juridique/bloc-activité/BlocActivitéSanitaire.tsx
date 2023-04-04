@@ -1,6 +1,8 @@
+import { FEATURE_NAME } from "../../../utils/featureToggle";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
+import { GraphiqueNombreHAD } from "../../indicateur-métier/nombre-de-had/GraphiqueNombreHAD";
 import { GraphiqueNombreDeSejourMCO } from "../../indicateur-métier/nombre-de-sejour-mco/GraphiqueNombreDeSejourMCO";
 import { GraphiquePsySSR } from "../../indicateur-métier/nombre-journees-psy-ssr/GraphiquePsySSR";
 import { GraphiqueNombrePassageUrgence } from "../../indicateur-métier/nombre-passage-urgence/GraphiqueNombrePassageUrgence";
@@ -29,6 +31,7 @@ export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel }: B
         {entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés && (
           <GraphiquePsySSR estEntitéJuridique={true} nombreJournéesPsySSRViewModel={entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel} />
         )}
+        {entitéJuridiqueActivitéViewModel.nombreHADEstIlRenseigné() && <GraphiqueHAD entitéJuridiqueActivitéViewModel={entitéJuridiqueActivitéViewModel} />}
         {entitéJuridiqueActivitéViewModel.nombrePassageUrgenceEstIlRenseigné() && (
           <GraphiqueNombrePassageUrgence
             estEntitéJuridique={true}
@@ -38,4 +41,14 @@ export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel }: B
       </ul>
     </Bloc>
   );
+};
+
+const GraphiqueHAD = ({ entitéJuridiqueActivitéViewModel }: BlocActivitéSanitaireProps) => {
+  const { isFeatureEnabled } = useDependencies();
+
+  if (!isFeatureEnabled(FEATURE_NAME.HAD)) {
+    return <></>;
+  }
+
+  return <GraphiqueNombreHAD nombreHADViewModel={entitéJuridiqueActivitéViewModel.nombreHADViewModel} />;
 };

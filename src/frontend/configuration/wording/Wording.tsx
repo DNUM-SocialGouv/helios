@@ -139,6 +139,8 @@ export interface Wording {
   readonly HOSPITALISATION_PARTIELLE_PSY: string;
   readonly HOSPITALISATION_COMPLÈTE_PSY: string;
 
+  readonly NOMBRE_DE_HAD: string;
+
   // Bloc Autorisation
   readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string;
   readonly AUTORISATIONS: string;
