@@ -15,7 +15,7 @@ import "../frontend/ui/commun/global.css";
 import { DependenciesProvider } from "../frontend/ui/commun/contexts/useDependencies";
 import { Footer } from "../frontend/ui/commun/Footer/Footer";
 import { Header } from "../frontend/ui/commun/Header/Header";
-import { resizeChartOnPrint } from "./resizeChartAtPrint";
+import { resizeChartOnPrint } from "../plugins/resizeChartAtPrint";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
