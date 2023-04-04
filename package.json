@@ -55,8 +55,6 @@
     "updateCapacitéSanitaireEntitéJuridique:local": "pipenv run populate_capacites_sanitaire_entites_juridiques",
     "start": "next start",
     "start:db": "docker-compose down && docker-compose up -d && bash -c \"while ! docker-compose logs | grep -q 'listening on IPv4 address'; do echo 'Waiting for database'; sleep 0.5; done\"; yarn migrations:up",
-    "start:production": "ts-node -T src/backend/infrastructure/controllers/allumeLaProductionCron.ts",
-    "stop:production": "ts-node -T src/backend/infrastructure/controllers/éteintLaProductionCron.ts",
     "test": "yarn test:typescript && yarn test:python",
     "test:accessibility": "lhci autorun",
     "test:mutation": "env-cmd -f .env.test npx stryker run",
