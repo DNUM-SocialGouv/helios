@@ -2,12 +2,12 @@ import { ReactElement } from "react";
 
 import { useDependencies } from "../../commun/contexts/useDependencies";
 
-type ContenuRésultatNetComptableProps = Readonly<{
+type ContenuNombreHADProps = Readonly<{
   dateDeMiseÀJour: string;
   source: ReactElement;
 }>;
 
-export const ContenuNombreHAD = ({ dateDeMiseÀJour, source }: ContenuRésultatNetComptableProps) => {
+export const ContenuNombreHAD = ({ dateDeMiseÀJour, source }: ContenuNombreHADProps) => {
   const { wording } = useDependencies();
 
   return (
