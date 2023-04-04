@@ -5,9 +5,10 @@ import { useDependencies } from "../../commun/contexts/useDependencies";
 type ContenuCapacitéParActivitésProps = Readonly<{
   dateDeMiseÀJour: string;
   source: ReactElement;
+  estEntitéJuridique?: boolean;
 }>;
 
-export const ContenuCapacitéParActivités = ({ dateDeMiseÀJour, source }: ContenuCapacitéParActivitésProps) => {
+export const ContenuCapacitéParActivités = ({ dateDeMiseÀJour, source, estEntitéJuridique = false }: ContenuCapacitéParActivitésProps) => {
   const { wording } = useDependencies();
 
   return (
@@ -51,6 +52,12 @@ export const ContenuCapacitéParActivités = ({ dateDeMiseÀJour, source }: Cont
           <br />
           Nombre de lits USLD : Le nombre de lits installés au 31 décembre de l’année est égal à la somme du nombre de lits en état d’accueillir des malades.
         </p>
+        {estEntitéJuridique && (
+          <p>
+            Les capacités affichées au niveau de l’entité juridique (EJ) correspondent à la somme des capacités du ou des établissements géographiques rattachés
+            à l’EJ.
+          </p>
+        )}
       </section>
       <section aria-label={wording.SOURCES}>
         <p>

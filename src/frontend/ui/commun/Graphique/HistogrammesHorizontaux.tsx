@@ -6,6 +6,7 @@ import { Bar } from "react-chartjs-2";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
+import styles from "./HistogrammeHorizontaux.module.css";
 
 type Stack = { label?: string; data: number[]; backgroundColor: string[]; isError?: boolean[] };
 
@@ -139,6 +140,7 @@ export class HistogrammeData {
     const valeurMax = Math.max(...this.totals.map(Math.abs));
 
     return {
+      maintainAspectRatio: false,
       animation: false,
       indexAxis: "y",
       scales: {
@@ -211,13 +213,7 @@ export const HistogrammesHorizontaux = ({
   return (
     <>
       {!aucuneDonnées && (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: `repeat(${valeursDesHistogrammes.length}, 1fr)`,
-            marginBottom: "3rem",
-          }}
-        >
+        <div className={styles["container"]}>
           {histogrammes.map((histogramme) => (
             <div key={histogramme.nom}>
               {/*

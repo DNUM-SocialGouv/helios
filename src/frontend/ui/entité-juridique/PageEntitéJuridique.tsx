@@ -1,6 +1,7 @@
 import Head from "next/head";
 
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
+import { SeparatorHorizontal } from "../commun/Separateur/SeparatorHorizontal";
 import { Titre } from "../commun/Titre/Titre";
 import { BlocActivitéSanitaire } from "./bloc-activité/BlocActivitéSanitaire";
 import { BlocAutorisationsCapacites } from "./bloc-autorisations-capacites/BlocAutorisationsCapacites";
@@ -35,7 +36,9 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, établissement
       <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
       <ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />
       <BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={entitéJuridiqueViewModel.entitéJuridiqueAutorisationsCapacitesViewModel} />
+      <SeparatorHorizontal></SeparatorHorizontal>
       <BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel} />
+      <SeparatorHorizontal></SeparatorHorizontal>
       <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} />
     </main>
   );
