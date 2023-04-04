@@ -3,6 +3,7 @@ import { ReactElement } from "react";
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
+import { couleurDesArcsDuDonut, Donut } from "../../commun/Graphique/Donut";
 import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe } from "../../commun/Graphique/GraphiqueViewModel";
 import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
@@ -33,12 +34,12 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
   constructor(private readonly ressourcesHumainesMédicoSocial: ÉtablissementTerritorialMédicoSocialRessourcesHumaines[], wording: Wording) {
     super(wording);
     this.couleursDuDoughnutDesTauxDAbsentéismes = {
-      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_COURTE_DURÉE]: { couleurDeLArc: this.couleurDesArcsDuDonut.opaque[0], couleurDuLibellé: "#000" },
-      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_MOYENNE_DURÉE]: { couleurDeLArc: this.couleurDesArcsDuDonut.opaque[1], couleurDuLibellé: "#000" },
-      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_LONGUE_DURÉE]: { couleurDeLArc: this.couleurDesArcsDuDonut.opaque[2], couleurDuLibellé: "#FFF" },
-      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE]: { couleurDeLArc: this.couleurDesArcsDuDonut.opaque[3], couleurDuLibellé: "#FFF" },
-      [this.wording.TAUX_D_ABSENTÉISME_POUR_MATERNITÉ_PATERNITÉ]: { couleurDeLArc: this.couleurDesArcsDuDonut.opaque[4], couleurDuLibellé: "#FFF" },
-      [this.wording.TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX]: { couleurDeLArc: this.couleurDesArcsDuDonut.opaque[5], couleurDuLibellé: "#FFF" },
+      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_COURTE_DURÉE]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[0], couleurDuLibellé: "#000" },
+      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_MOYENNE_DURÉE]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[1], couleurDuLibellé: "#000" },
+      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_LONGUE_DURÉE]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[2], couleurDuLibellé: "#FFF" },
+      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[3], couleurDuLibellé: "#FFF" },
+      [this.wording.TAUX_D_ABSENTÉISME_POUR_MATERNITÉ_PATERNITÉ]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[4], couleurDuLibellé: "#FFF" },
+      [this.wording.TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[5], couleurDuLibellé: "#FFF" },
     };
     this.annéesAvecDesTauxDAbsentéismes = this.anneesAvecTauxAbsenteisme();
   }
@@ -299,16 +300,17 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
           !this.leTauxDAbsentéismeHorsFormationEstIlDansLesBornesAcceptables(tauxDAbsentéismeHorsFormation),
           this.leTauxDAbsentéismeHorsFormationEstIlNul(tauxDAbsentéismeHorsFormation)
         )}
-        {!this.leTauxDAbsentéismeHorsFormationEstIlNul(tauxDAbsentéismeHorsFormation) &&
-          this.afficheUnDiagrammeEnDonut(
-            valeursDesTauxDAbsentéismes,
-            motifsDesTauxDAbsentéismes,
-            couleursDuDoughnut,
-            libellésDesValeurs,
-            texteCentral,
-            tauxDAbsentéismeHorsFormation,
-            this.IDENTIFIANT_DE_LA_LÉGENDE_DES_TAUX_D_ABSENTÉISMES
-          )}
+        {!this.leTauxDAbsentéismeHorsFormationEstIlNul(tauxDAbsentéismeHorsFormation) && (
+          <Donut
+            couleursDuDoughnut={couleursDuDoughnut}
+            idDeLaLégende={this.IDENTIFIANT_DE_LA_LÉGENDE_DES_TAUX_D_ABSENTÉISMES}
+            libellés={motifsDesTauxDAbsentéismes}
+            libellésDesValeurs={libellésDesValeurs}
+            texteCentral={texteCentral}
+            total={tauxDAbsentéismeHorsFormation}
+            valeurs={valeursDesTauxDAbsentéismes}
+          />
+        )}
         {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
         <Transcription
           disabled={listeAnnéesManquantes.length === 3}
