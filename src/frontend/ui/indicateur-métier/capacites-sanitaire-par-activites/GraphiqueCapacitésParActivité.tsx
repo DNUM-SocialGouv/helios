@@ -23,7 +23,7 @@ export const GraphiqueCapacitésParActivité = ({ graphiqueCapacitésParActivit�
       contenuInfoBulle={
         <ContenuCapacitéParActivités
           dateDeMiseÀJour={graphiqueCapacitésParActivitéViewModel.dateDeMiseÀJourDeLaCapacitéInstalléeParActivités}
-          estEntitéJuridique
+          estEntitéJuridique={estEntitéJuridique}
           source={wording.SAE}
         />
       }
