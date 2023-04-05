@@ -152,7 +152,6 @@ export interface Wording {
   readonly CAPACITÉ_AUTORISÉE: string;
   readonly CAPACITÉ_INSTALLÉE: string;
   readonly CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS: string;
-  readonly CAPACITÉ_INSTALLÉE_EJ: string;
   readonly NOMBRE_TOTAL_DE_PLACE: string;
   readonly ACTIVITÉ: string;
 

@@ -23,13 +23,13 @@ export const GraphiqueCapacitésParActivité = ({ graphiqueCapacitésParActivit�
       contenuInfoBulle={
         <ContenuCapacitéParActivités
           dateDeMiseÀJour={graphiqueCapacitésParActivitéViewModel.dateDeMiseÀJourDeLaCapacitéInstalléeParActivités}
-          estEntitéJuridique
+          estEntitéJuridique={estEntitéJuridique}
           source={wording.SAE}
         />
       }
       dateDeMiseÀJour={graphiqueCapacitésParActivitéViewModel.dateDeMiseÀJourDeLaCapacitéInstalléeParActivités}
       identifiant="capacite-sanitaire"
-      nomDeLIndicateur={estEntitéJuridique ? wording.CAPACITÉ_INSTALLÉE_EJ : wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
+      nomDeLIndicateur={wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
       source={wording.SAE}
     >
       <HistogrammesHorizontaux
