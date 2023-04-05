@@ -8,4 +8,5 @@ export class Paths {
   readonly ÉTABLISSEMENT_TERRITORIAL_SANITAIRE: string = "/etablissement-territorial-sanitaire";
   readonly RÉGION: string = "/region";
   readonly ECO_CONCEPTION: string = "/eco-conception";
+  readonly GESTION_DES_COOKIES: string = "/gestion-des-cookies";
 }

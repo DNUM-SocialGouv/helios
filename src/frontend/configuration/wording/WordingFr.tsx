@@ -375,6 +375,7 @@ export class WordingFr implements Wording {
   readonly LICENCE_ETALAB: string = "licence etalab-2.0";
   readonly NOUVELLE_FENÊTRE: string = "nouvelle Fenêtre";
   readonly ECO_CONCEPTION: string = "Eco-Conception";
+  readonly COOKIES: string = "Gestion de Cookies";
 
   // Accessibilité
   readonly AUDIT_EN_COURS: string = "Audit en cours de réalisation.";
