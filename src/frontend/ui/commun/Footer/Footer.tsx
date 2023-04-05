@@ -85,6 +85,7 @@ export const Footer = () => {
                 {wording.DONNÉES_PERSONNELLES}
               </Link>
             </li>
+            <GestionDeCookies />
             <li className="fr-footer__bottom-item">
               <a className="fr-footer__bottom-link" href="mailto:dnum.scn-helios-support@sg.social.gouv.fr" rel="external noopener noreferrer" target="_blank">
                 {wording.NOUS_CONTACTER}
@@ -122,6 +123,23 @@ const EcoConception = () => {
       <li className="fr-footer__bottom-item">
         <Link className="fr-footer__bottom-link" href={paths.ECO_CONCEPTION} passHref>
           {wording.ECO_CONCEPTION}
+        </Link>
+      </li>
+    </>
+  );
+};
+const GestionDeCookies = () => {
+  const { paths, wording, isFeatureEnabled } = useDependencies();
+
+  if (!isFeatureEnabled(FEATURE_NAME.COOKIES)) {
+    return <></>;
+  }
+
+  return (
+    <>
+      <li className="fr-footer__bottom-item">
+        <Link className="fr-footer__bottom-link" href={paths.GESTION_DES_COOKIES} passHref>
+          {wording.COOKIES}
         </Link>
       </li>
     </>
