@@ -22,6 +22,7 @@ export const BlocAutorisationsCapacites = ({ entitéJuridiqueAutorisationsCapaci
         {isFeatureEnabled(FEATURE_NAME.CAPACITES_EJ) &&
           entitéJuridiqueAutorisationsCapacitesViewModel.graphiqueCapacitesParActivitesViewModel.lesCapacitésParActivitésSontEllesRenseignées && (
             <GraphiqueCapacitésParActivité
+              estEntitéJuridique
               graphiqueCapacitésParActivitéViewModel={entitéJuridiqueAutorisationsCapacitesViewModel.graphiqueCapacitesParActivitesViewModel}
             />
           )}
