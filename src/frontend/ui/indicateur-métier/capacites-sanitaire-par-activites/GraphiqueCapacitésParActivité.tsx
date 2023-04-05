@@ -29,7 +29,7 @@ export const GraphiqueCapacitésParActivité = ({ graphiqueCapacitésParActivit�
       }
       dateDeMiseÀJour={graphiqueCapacitésParActivitéViewModel.dateDeMiseÀJourDeLaCapacitéInstalléeParActivités}
       identifiant="capacite-sanitaire"
-      nomDeLIndicateur={estEntitéJuridique ? wording.CAPACITÉ_INSTALLÉE_EJ : wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
+      nomDeLIndicateur={wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
       source={wording.SAE}
     >
       <HistogrammesHorizontaux
