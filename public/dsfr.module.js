@@ -1,4 +1,4 @@
-/*! DSFR v1.8.5 | SPDX-License-Identifier: MIT | License-Filename: LICENSE.md | restricted use (see terms and conditions) */
+/*! DSFR v1.9.0 | SPDX-License-Identifier: MIT | License-Filename: LICENSE.md | restricted use (see terms and conditions) */
 
 class State {
   constructor () {
@@ -59,7 +59,7 @@ const config = {
   prefix: 'fr',
   namespace: 'dsfr',
   organisation: '@gouvfr',
-  version: '1.8.5'
+  version: '1.9.0'
 };
 
 class LogLevel {
@@ -130,7 +130,7 @@ class Message {
 }
 
 const LEVELS = {
-  trace: new LogLevel(0, '#616161', '#989898'),
+  log: new LogLevel(0, '#616161', '#989898'),
   debug: new LogLevel(1, '#000091', '#8B8BFF'),
   info: new LogLevel(2, '#007c3b', '#00ed70'),
   warn: new LogLevel(3, '#ba4500', '#fa5c00', 'warn'),
@@ -153,7 +153,7 @@ class Inspector {
   state () {
     const message = new Message();
     message.add(state);
-    this.trace.print(message);
+    this.log.print(message);
   }
 
   tree () {
@@ -161,7 +161,7 @@ class Inspector {
     if (!stage) return;
     const message = new Message();
     this._branch(stage.root, 0, message);
-    this.trace.print(message);
+    this.log.print(message);
   }
 
   _branch (element, space, message) {
@@ -1182,7 +1182,10 @@ api$1.stop = engine.stop;
 api$1.inspector = inspector;
 api$1.colors = colors;
 
-options.configure(window[config.namespace], api$1.start);
+const configuration = window[config.namespace];
+api$1.internals.configuration = configuration;
+
+options.configure(configuration, api$1.start);
 
 window[config.namespace] = api$1;
 
@@ -1273,10 +1276,16 @@ class Instance {
 
   get proxy () {
     const scope = this;
-    return {
+    const proxy = {
       render: () => scope.render(),
       resize: () => scope.resize()
     };
+    const proxyAccessors = {
+      get node () {
+        return this.node;
+      }
+    };
+    return completeAssign(proxy, proxyAccessors);
   }
 
   register (selector, InstanceClass) {
@@ -2294,7 +2303,7 @@ class Artwork extends Instance {
   }
 
   fetch () {
-    this.xlink = this.node.getAttribute('xlink:href');
+    this.xlink = this.node.getAttribute('href');
     const splitUrl = this.xlink.split('#');
     this.svgUrl = splitUrl[0];
     this.svgName = splitUrl[1];
@@ -2555,6 +2564,7 @@ class Scheme extends api.core.Instance {
         this.setAttribute(SchemeAttribute.THEME, value);
         this.descend(SchemeEmission.THEME, value);
         this.dispatch(SchemeEvent.THEME, { theme: this._theme });
+        document.documentElement.style.colorScheme = value === SchemeTheme.DARK ? 'dark' : '';
         break;
     }
   }
@@ -2731,7 +2741,7 @@ class ToggleInput extends api.core.Instance {
   }
 
   get isChecked () {
-    return this.hasAttribute('checked');
+    return this.node.checked;
   }
 }
 
@@ -3973,7 +3983,7 @@ class AssessFile extends api.core.Instance {
     fetch(this.href, { method: 'HEAD', mode: 'cors' }).then(response => {
       this.length = response.headers.get('content-length') || -1;
       if (this.length === -1) {
-        console.warn('Impossible de détecter le poids du fichier ' + this.href + '\nErreur de récupération de l\'en-tête HTTP : "content-length"');
+        api.inspector.warn('File size unknown: ' + this.href + '\nUnable to get HTTP header: "content-length"');
       }
       this.update();
     });
@@ -4136,7 +4146,7 @@ api.header = {
   doc: 'https://www.systeme-de-design.gouv.fr/elements-d-interface/composants/en-tete'
 };
 
-api.internals.register(api.header.HeaderSelector.BUTTONS, api.header.HeaderLinks);
+api.internals.register(api.header.HeaderSelector.TOOLS_LINKS, api.header.HeaderLinks);
 api.internals.register(api.header.HeaderSelector.MODALS, api.header.HeaderModal);
 
 const DisplaySelector = {
