@@ -12,11 +12,11 @@ export const GraphiqueNombreHAD = ({ nombreHADViewModel }: GraphiqueNombreHADPro
 
   return (
     <IndicateurGraphique
-      contenuInfoBulle={<ContenuNombreHAD dateDeMiseÀJour={nombreHADViewModel.dateMiseAJour} source={wording.RPU} />}
+      contenuInfoBulle={<ContenuNombreHAD dateDeMiseÀJour={nombreHADViewModel.dateMiseAJour} source={wording.PMSI} />}
       dateDeMiseÀJour={nombreHADViewModel.dateMiseAJour}
       identifiant="activite-2"
       nomDeLIndicateur={wording.NOMBRE_DE_HAD}
-      source={wording.RPU}
+      source={wording.PMSI}
     >
       <HistogrammeHorizontal
         couleursDeLHistogramme={nombreHADViewModel.couleursDeLHistogramme}

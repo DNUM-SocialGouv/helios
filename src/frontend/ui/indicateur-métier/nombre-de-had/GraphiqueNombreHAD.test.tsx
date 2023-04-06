@@ -22,9 +22,9 @@ describe("Graphique Nombre de HAD", () => {
     renderFakeComponent(<GraphiqueNombreHAD nombreHADViewModel={viewModel} />);
 
     // THEN
-    const rpu = graphiqueTest.abréviationFichierSource("RPU");
+    const rpu = graphiqueTest.abréviationFichierSource("PMSI");
     expect(rpu).toBeInTheDocument();
-    expect(rpu).toHaveAttribute("title", wording.RPU_TITLE);
+    expect(rpu).toHaveAttribute("title", wording.PMSI_TITLE);
   });
 
   describe("Détails info bulle", () => {
@@ -115,12 +115,12 @@ describe("Graphique Nombre de HAD", () => {
       ]);
     });
 
-    it("affiche la date de mise à jour du fichier RPU", () => {
+    it("affiche la date de mise à jour du fichier PMSI", () => {
       // WHEN
       renderFakeComponent(<GraphiqueNombreHAD nombreHADViewModel={nombreHADUneAnnée} />);
 
       // THEN
-      const dateMiseAJour = graphiqueTest.dateMiseAJour("RPU", "01/10/2020");
+      const dateMiseAJour = graphiqueTest.dateMiseAJour("PMSI", "01/10/2020");
       expect(dateMiseAJour[0]).toBeInTheDocument();
     });
 
