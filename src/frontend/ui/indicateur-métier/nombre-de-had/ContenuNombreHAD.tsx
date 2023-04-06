@@ -14,7 +14,10 @@ export const ContenuNombreHAD = ({ dateDeMiseÀJour, source }: ContenuNombreHADP
     <>
       <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
-        <p>Permet d’observer l’évolution de l’activité de l’établissement et le développement des prises en charge ambulatoires.</p>
+        <p>
+          Permet d’observer l’évolution de l’activité de l’établissement et le développement des prises en charge sur leur lieu de vie de malades atteints de
+          pathologies graves, aiguës ou chroniques.
+        </p>
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
@@ -29,11 +32,14 @@ export const ContenuNombreHAD = ({ dateDeMiseÀJour, source }: ContenuNombreHADP
         </p>
       </section>
       <section aria-label={wording.SOURCES}>
+        <span className="fr-text--bold">Source(s) : </span>
+        <ul>
+          <li>Programme de médicalisation des systèmes d’information (PMSI) - Agence technique de l’information sur l’hospitalisation (ATIH)</li>
+          <li>Hospitalisation A Domicile (HAD) - fichiers RAPSS (Résumés Anonyme Par Sous-Séquence)</li>
+        </ul>
         <p>
-          <span className="fr-text--bold">Source(s) : </span>
-          Hospitalisation A Domicile (HAD) - fichiers RAPSS (Résumés Anonyme Par Sous-Séquence) Hélios collecte ces données depuis le SI mutualisé des ARS
-          DIAMANT qui est un système décisionnel national permettant de stocker des informations provenant de plusieurs sources. DIAMANT : Décisionnel Inter-ARS
-          pour la Maîtrise et l’Anticipation.
+          Hélios collecte ces données depuis le SI mutualisé des ARS DIAMANT qui est un système décisionnel national permettant de stocker des informations
+          provenant de plusieurs sources. DIAMANT : Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation
         </p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
