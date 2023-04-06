@@ -27,9 +27,14 @@ export const PageEcoConception = () => {
         </li>
         <li className="fr-mb-2w">
           Nous faisons des audits express via&nbsp;
-          <a href="https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=fr">Lighthouse</a> et l’extension&nbsp;
-          <a href="https://chrome.google.com/webstore/detail/greenit-analysis/mofbfhffeklkbebfclfaiifefjflcpad?hl=fr">Green IT Analysis</a> pour identifier
-          rapidement les leviers d’optimisation en écodéveloppement et intégration au backlog.
+          <a className="fr-link" href="https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=fr">
+            Lighthouse
+          </a>{" "}
+          et l’extension&nbsp;
+          <a className="fr-link" href="https://chrome.google.com/webstore/detail/greenit-analysis/mofbfhffeklkbebfclfaiifefjflcpad?hl=fr">
+            Green IT Analysis
+          </a>{" "}
+          pour identifier rapidement les leviers d’optimisation en écodéveloppement et intégration au backlog.
         </li>
         <li className="fr-mb-2w">
           Helios a une retro compatibilité de cinq ans pour éviter de contribuer au renouvellement des équipements numériques. <br />
@@ -60,7 +65,12 @@ export const PageEcoConception = () => {
           En mars 2023, la version du site répond positivement à 85% soit 67 des 79 critères du référentiel général d’éco-conception des services
           numériques&nbsp;
         </b>
-        <a href="https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/" rel="external noopener noreferrer" target="_blank">
+        <a
+          className="fr-link"
+          href="https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/"
+          rel="external noopener noreferrer"
+          target="_blank"
+        >
           (RGESN)
         </a>
         . Ce référentiel a été conçu dans le cadre de la mission interministérielle co-pilotée par la DNUM, le Ministère de la Transition Écologique, l’ADEME et
