@@ -2,9 +2,9 @@
   display: grid;
   gap: 1rem;
   grid-template-areas:
-  "graph1 graph1 graph2"
-  "graph3 graph4 graph5"
-  "graph6 vide vide";
+  "graph1 graph1 graph1"
+  "graph2 graph3 graph4"
+  "graph5 graph6 vide";
   grid-template-columns: repeat(3, 1fr);
 }
 
