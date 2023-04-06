@@ -1,4 +1,4 @@
-/*! DSFR v1.8.5 | SPDX-License-Identifier: MIT | License-Filename: LICENSE.md | restricted use (see terms and conditions) */
+/*! DSFR v1.9.0 | SPDX-License-Identifier: MIT | License-Filename: LICENSE.md | restricted use (see terms and conditions) */
 
 (function () {
   'use strict';
@@ -70,7 +70,7 @@
     prefix: 'fr',
     namespace: 'dsfr',
     organisation: '@gouvfr',
-    version: '1.8.5'
+    version: '1.9.0'
   };
 
   var LogLevel = function LogLevel (level, light, dark, logger) {
@@ -148,7 +148,7 @@
   };
 
   var LEVELS = {
-    trace: new LogLevel(0, '#616161', '#989898'),
+    log: new LogLevel(0, '#616161', '#989898'),
     debug: new LogLevel(1, '#000091', '#8B8BFF'),
     info: new LogLevel(2, '#007c3b', '#00ed70'),
     warn: new LogLevel(3, '#ba4500', '#fa5c00', 'warn'),
@@ -177,7 +177,7 @@
   Inspector.prototype.state = function state$1 () {
     var message = new Message();
     message.add(state);
-    this.trace.print(message);
+    this.log.print(message);
   };
 
   Inspector.prototype.tree = function tree () {
@@ -185,7 +185,7 @@
     if (!stage) { return; }
     var message = new Message();
     this._branch(stage.root, 0, message);
-    this.trace.print(message);
+    this.log.print(message);
   };
 
   Inspector.prototype._branch = function _branch (element, space, message) {
@@ -1373,7 +1373,10 @@
   api$1.inspector = inspector;
   api$1.colors = colors;
 
-  options.configure(window[config.namespace], api$1.start);
+  var configuration = window[config.namespace];
+  api$1.internals.configuration = configuration;
+
+  options.configure(configuration, api$1.start);
 
   window[config.namespace] = api$1;
 
@@ -1468,10 +1471,16 @@
 
   prototypeAccessors$1.proxy.get = function () {
     var scope = this;
-    return {
+    var proxy = {
       render: function () { return scope.render(); },
       resize: function () { return scope.resize(); }
     };
+    var proxyAccessors = {
+      get node () {
+        return this.node;
+      }
+    };
+    return completeAssign(proxy, proxyAccessors);
   };
 
   Instance.prototype.register = function register (selector, InstanceClass) {
@@ -2660,7 +2669,7 @@
     Artwork.prototype.fetch = function fetch () {
       var this$1$1 = this;
 
-      this.xlink = this.node.getAttribute('xlink:href');
+      this.xlink = this.node.getAttribute('href');
       var splitUrl = this.xlink.split('#');
       this.svgUrl = splitUrl[0];
       this.svgName = splitUrl[1];
@@ -2947,6 +2956,7 @@
           this.setAttribute(SchemeAttribute.THEME, value);
           this.descend(SchemeEmission.THEME, value);
           this.dispatch(SchemeEvent.THEME, { theme: this._theme });
+          document.documentElement.style.colorScheme = value === SchemeTheme.DARK ? 'dark' : '';
           break;
       }
     };
@@ -3165,7 +3175,7 @@
     };
 
     prototypeAccessors.isChecked.get = function () {
-      return this.hasAttribute('checked');
+      return this.node.checked;
     };
 
     Object.defineProperties( ToggleInput.prototype, prototypeAccessors );
@@ -4698,7 +4708,7 @@
       fetch(this.href, { method: 'HEAD', mode: 'cors' }).then(function (response) {
         this$1$1.length = response.headers.get('content-length') || -1;
         if (this$1$1.length === -1) {
-          console.warn('Impossible de détecter le poids du fichier ' + this$1$1.href + '\nErreur de récupération de l\'en-tête HTTP : "content-length"');
+          api.inspector.warn('File size unknown: ' + this$1$1.href + '\nUnable to get HTTP header: "content-length"');
         }
         this$1$1.update();
       });
@@ -4893,7 +4903,7 @@
     doc: 'https://www.systeme-de-design.gouv.fr/elements-d-interface/composants/en-tete'
   };
 
-  api.internals.register(api.header.HeaderSelector.BUTTONS, api.header.HeaderLinks);
+  api.internals.register(api.header.HeaderSelector.TOOLS_LINKS, api.header.HeaderLinks);
   api.internals.register(api.header.HeaderSelector.MODALS, api.header.HeaderModal);
 
   var DisplaySelector = {
