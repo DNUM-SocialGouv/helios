@@ -23,6 +23,7 @@ import { annéesManquantes } from "../../../utils/dateUtils";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
+import { HistogrammeVertical } from "./HistogrammeVertical";
 import { construisLePluginDeLaLegende } from "./LegendPlugin";
 
 export type LibelléDeDonnéeGraphe = Readonly<{
@@ -78,65 +79,17 @@ export class GraphiqueViewModel {
     identifiant: string,
     annéesTotales: number = 3
   ): ReactElement {
-    const data: ChartData = {
-      datasets: [
-        {
-          borderColor: this.couleurDuFondDeLaLigne,
-          borderDash: [3, 3],
-          borderWidth: 2,
-          data: [
-            {
-              x: -1,
-              y: 100,
-            },
-            {
-              x: 2,
-              y: 100,
-            },
-          ],
-          datalabels: { display: false },
-          type: "line",
-          xAxisID: "xLine",
-        },
-        {
-          backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
-          data: valeurs,
-          datalabels: { labels: { title: { color: libellésDesValeurs.map((libellé) => libellé.couleur) } } },
-          maxBarThickness: 60,
-          type: "bar",
-          xAxisID: "x",
-        },
-        {
-          backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.secondPlan),
-          data: Array(valeurs.length).fill(100),
-          datalabels: { display: false },
-          maxBarThickness: 60,
-          type: "bar",
-          xAxisID: "x",
-        },
-      ],
-      labels: libellés,
-    };
-    const listeAnnéesManquantes = annéesManquantes(libellés, annéesTotales);
-
     return (
-      <>
-        {listeAnnéesManquantes.length < annéesTotales && (
-          <Bar
-            // @ts-ignore
-            data={data}
-            options={this.optionsHistogrammeVertical(libellésDesTicks.map((libelléDuTick) => libelléDuTick.tailleDePolice))}
-          />
-        )}
-        {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
-        <Transcription
-          disabled={listeAnnéesManquantes.length === annéesTotales}
-          entêteLibellé={entêteLibellé}
-          identifiants={[identifiant]}
-          libellés={libellés}
-          valeurs={[StringFormater.ajouteLePourcentage(valeurs)]}
-        />
-      </>
+      <HistogrammeVertical
+        annéesTotales={annéesTotales}
+        couleursDeLHistogramme={couleursDeLHistogramme}
+        entêteLibellé={entêteLibellé}
+        identifiant={identifiant}
+        libellés={libellés}
+        libellésDesTicks={libellésDesTicks}
+        libellésDesValeurs={libellésDesValeurs}
+        valeurs={valeurs}
+      />
     );
   }
 
