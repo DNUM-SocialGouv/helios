@@ -1,5 +1,5 @@
 import { useDependencies } from "../../commun/contexts/useDependencies";
-import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
+import { HistogrammeVerticalABandes } from "../../commun/Graphique/HistogrammeVerticalABandes";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ContenuNombreDeSéjourMCO } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeSéjourMCO";
 import { NombreDeSejourMCOViewModel } from "./NombreDeSejourMCOViewModel";
@@ -25,12 +25,13 @@ export const GraphiqueNombreDeSejourMCO = ({ nombreDeSejourMCOViewModel, estEnti
       nomDeLIndicateur={wording.NOMBRE_DE_SÉJOUR_MCO}
       source={wording.PMSI}
     >
-      <HistogrammeVertical
+      <HistogrammeVerticalABandes
+        créeLeLibelléDuTooltip={nombreDeSejourMCOViewModel.tooltipSéjoursMCO}
         data={nombreDeSejourMCOViewModel.getHistogrammeDataSet()}
         id={nombreDeSejourMCOViewModel.identifiantDeLaLégendeDesSéjoursMCO}
+        idDeLaLégende={nombreDeSejourMCOViewModel.identifiantDeLaLégendeDesSéjoursMCO}
         identifiants={nombreDeSejourMCOViewModel.getIdentifiantTableIndicateur()}
         libellés={nombreDeSejourMCOViewModel.années}
-        optionsHistogramme={nombreDeSejourMCOViewModel.getOptionsHistogramme()}
         valeurs={nombreDeSejourMCOViewModel.getValeurTableIndicateur()}
       />
     </IndicateurGraphique>

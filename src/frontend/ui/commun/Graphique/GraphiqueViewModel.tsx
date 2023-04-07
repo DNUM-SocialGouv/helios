@@ -196,33 +196,4 @@ export class GraphiqueViewModel {
       },
     };
   }
-
-  protected optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuTooltip: Function): ChartOptions<"bar"> {
-    return {
-      animation: false,
-      elements: { bar: { borderWidth: 2 } },
-      plugins: {
-        datalabels: { display: false },
-        // @ts-ignore
-        htmlLegend: { containerID: idDeLaLégende },
-        legend: { display: false },
-        tooltip: { callbacks: { label: créeLeLibelléDuTooltip(this.wording) } },
-      },
-      responsive: true,
-      scales: {
-        x: {
-          grid: { drawOnChartArea: false },
-          ticks: { color: "var(--text-default-grey)" },
-        },
-        y: {
-          grid: {
-            color: this.couleurDelAbscisse,
-            drawBorder: false,
-          },
-          stacked: true,
-          ticks: { color: "var(--text-default-grey)" },
-        },
-      },
-    };
-  }
 }
