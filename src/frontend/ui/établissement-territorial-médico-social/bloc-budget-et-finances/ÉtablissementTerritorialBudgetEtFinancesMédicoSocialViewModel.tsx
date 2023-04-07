@@ -8,6 +8,7 @@ import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../..
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
 import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
+import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
 import { IndicateurTabulaire, IndicateurTabulaireProps } from "../../commun/IndicateurTabulaire/IndicateurTabulaire";
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../../commun/StringFormater";
@@ -96,14 +97,17 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
     const libellésDesValeurs = valeurs.map((valeur) => ({ couleur: valeur > this.seuilDuContrasteDuLibellé ? this.couleurDuFond : this.couleurIdentifiant }));
     const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
 
-    return this.afficheUnHistogrammeVertical(
-      valeurs,
-      années,
-      this.construisLesCouleursDeLHistogramme(valeurs, années, construisLaCouleurDeLaBarre),
-      libellésDesValeurs,
-      libellésDesTicks,
-      this.wording.ANNÉE,
-      this.wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION
+    return (
+      <HistogrammeVertical
+        annéesTotales={3}
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, construisLaCouleurDeLaBarre)}
+        entêteLibellé={this.wording.ANNÉE}
+        identifiant={this.wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION}
+        libellés={années}
+        libellésDesTicks={libellésDesTicks}
+        libellésDesValeurs={libellésDesValeurs}
+        valeurs={valeurs}
+      />
     );
   }
 

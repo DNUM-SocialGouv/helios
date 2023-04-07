@@ -6,6 +6,7 @@ import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
 import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
 import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
+import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
 import { StringFormater } from "../../commun/StringFormater";
 
 export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends GraphiqueViewModel {
@@ -39,14 +40,17 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   public get tauxOccupationHébergementPermanent(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxOccupationHébergementPermanent");
 
-    return this.afficheUnHistogrammeVertical(
-      valeurs,
-      années,
-      this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreVerticale),
-      this.construisLesLibellésDesValeurs(valeurs),
-      this.construisLesLibellésDesTicks(années),
-      this.wording.ANNÉE,
-      this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT
+    return (
+      <HistogrammeVertical
+        annéesTotales={3}
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreVerticale)}
+        entêteLibellé={this.wording.ANNÉE}
+        identifiant={this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT}
+        libellés={années}
+        libellésDesTicks={this.construisLesLibellésDesTicks(années)}
+        libellésDesValeurs={this.construisLesLibellésDesValeurs(valeurs)}
+        valeurs={valeurs}
+      />
     );
   }
 
@@ -61,14 +65,17 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   public get tauxOccupationHébergementTemporaire(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxOccupationHébergementTemporaire");
 
-    return this.afficheUnHistogrammeVertical(
-      valeurs,
-      années,
-      this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreVerticale),
-      this.construisLesLibellésDesValeurs(valeurs),
-      this.construisLesLibellésDesTicks(années),
-      this.wording.ANNÉE,
-      this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE
+    return (
+      <HistogrammeVertical
+        annéesTotales={3}
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreVerticale)}
+        entêteLibellé={this.wording.ANNÉE}
+        identifiant={this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE}
+        libellés={années}
+        libellésDesTicks={this.construisLesLibellésDesTicks(années)}
+        libellésDesValeurs={this.construisLesLibellésDesValeurs(valeurs)}
+        valeurs={valeurs}
+      />
     );
   }
 
@@ -83,14 +90,17 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   public get tauxOccupationAccueilDeJour(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxOccupationAccueilDeJour");
 
-    return this.afficheUnHistogrammeVertical(
-      valeurs,
-      années,
-      this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreVerticale),
-      this.construisLesLibellésDesValeurs(valeurs),
-      this.construisLesLibellésDesTicks(années),
-      this.wording.ANNÉE,
-      this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR
+    return (
+      <HistogrammeVertical
+        annéesTotales={3}
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreVerticale)}
+        entêteLibellé={this.wording.ANNÉE}
+        identifiant={this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR}
+        libellés={années}
+        libellésDesTicks={this.construisLesLibellésDesTicks(années)}
+        libellésDesValeurs={this.construisLesLibellésDesValeurs(valeurs)}
+        valeurs={valeurs}
+      />
     );
   }
 
@@ -105,14 +115,17 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   public get tauxRéalisationActivité(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxRéalisationActivité");
 
-    return this.afficheUnHistogrammeVertical(
-      valeurs,
-      années,
-      this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreVerticale),
-      this.construisLesLibellésDesValeurs(valeurs),
-      this.construisLesLibellésDesTicks(années),
-      this.wording.ANNÉE,
-      this.wording.TAUX_RÉALISATION_ACTIVITÉ
+    return (
+      <HistogrammeVertical
+        annéesTotales={3}
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreVerticale)}
+        entêteLibellé={this.wording.ANNÉE}
+        identifiant={this.wording.TAUX_RÉALISATION_ACTIVITÉ}
+        libellés={années}
+        libellésDesTicks={this.construisLesLibellésDesTicks(années)}
+        libellésDesValeurs={this.construisLesLibellésDesValeurs(valeurs)}
+        valeurs={valeurs}
+      />
     );
   }
 
