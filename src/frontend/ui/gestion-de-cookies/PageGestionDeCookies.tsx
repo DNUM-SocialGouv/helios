@@ -12,8 +12,9 @@ export const PageGestionDeCookies = () => {
           rel="external noopener noreferrer"
           target="_blank"
         >
-          exemptés de consentement.
+          exemptés de consentement
         </a>
+        .
       </p>
       <p>
         Il nous permet d’analyser la façon dont vous utilisez le site internet. Les informations collectées anonymement permettent de mieux répondre à vos
