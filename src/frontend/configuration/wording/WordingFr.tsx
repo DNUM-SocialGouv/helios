@@ -236,6 +236,7 @@ export class WordingFr implements Wording {
   readonly MONTANT: string = "Montant";
   readonly TAUX_DE_VÉTUSTÉ_CONSTRUCTION: string = "Taux de vétusté construction";
   readonly RÉSULTAT_NET_COMPTABLE: string = "Résultat net comptable";
+  readonly RATIO_DEPENDANCE_FINANCIERE: string = "Ration de dépendance financière";
   readonly COMPTE_DE_RÉSULTAT_ERRD: string = "Compte de résultat ERRD";
   readonly COMPTE_DE_RÉSULTAT_CA: string = "Compte de résultat CA";
   readonly TITRE_BUDGÉTAIRE: string = "Titre budgétaire";

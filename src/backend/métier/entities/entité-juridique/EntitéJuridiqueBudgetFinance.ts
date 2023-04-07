@@ -38,4 +38,6 @@ export type EntitéJuridiqueBudgetFinance = {
   totalRecettesAnnexe: number;
 
   resultatNetComptable: number | null;
+
+  ratioDependanceFinanciere: number | null;
 };

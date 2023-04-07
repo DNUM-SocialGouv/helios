@@ -4,6 +4,7 @@ import { annéesManquantes } from "../../../utils/dateUtils";
 import { HistogrammeData } from "../../commun/Graphique/HistogrammesHorizontaux";
 import { StringFormater } from "../../commun/StringFormater";
 import { ResultatNetComptableViewModel } from "../../indicateur-métier/resultat-net-comptable/ResultatNetComptableViewModel";
+import { RatioDependanceFinanciereViewModel } from "./ratio-dependance-financiere/RatioDependanceFinanciereViewModel";
 
 export class EntitéJuridiqueBudgetFinanceViewModel {
   private budgetEtFinance: EntitéJuridiqueBudgetFinance[];
@@ -15,6 +16,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     this.wording = wording;
     this.budgetEtFinance = budgetFinance;
     this.resultatNetComptable = new ResultatNetComptableViewModel(budgetFinance);
+    this.ratioDependanceFinanciere = new RatioDependanceFinanciereViewModel(budgetFinance);
   }
 
   public get annéeInitiale() {

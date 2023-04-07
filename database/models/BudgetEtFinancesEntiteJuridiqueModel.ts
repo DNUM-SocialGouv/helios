@@ -60,5 +60,5 @@ export class BudgetEtFinancesEntiteJuridiqueModel {
   public tauxDeCafNetteSan!: number;
 
   @Column({ name: "ratio_dependance_financiere", nullable: true, type: "float" })
-  public ratioDependeanceFinanciere!: number;
+  public ratioDependanceFinanciere!: number;
 }
