@@ -6,6 +6,7 @@ import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils
 import { couleurDesArcsDuDonut, Donut } from "../../commun/Graphique/Donut";
 import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe } from "../../commun/Graphique/GraphiqueViewModel";
 import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
+import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";
@@ -146,14 +147,17 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
     const libellésDesValeurs = this.construisLesLibellésDesValeursDeTaux(valeurs);
     const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
 
-    return this.afficheUnHistogrammeVertical(
-      valeurs,
-      années,
-      this.construisLesCouleursDeLHistogramme(valeurs, années, construisLaCouleurDeLaBarreDeLHistogramme),
-      libellésDesValeurs,
-      libellésDesTicks,
-      this.wording.ANNÉE,
-      this.wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES
+    return (
+      <HistogrammeVertical
+        annéesTotales={3}
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, construisLaCouleurDeLaBarreDeLHistogramme)}
+        entêteLibellé={this.wording.ANNÉE}
+        identifiant={this.wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES}
+        libellés={années}
+        libellésDesTicks={libellésDesTicks}
+        libellésDesValeurs={libellésDesValeurs}
+        valeurs={valeurs}
+      />
     );
   }
 
@@ -194,14 +198,17 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
     const libellésDesValeurs = this.construisLesLibellésDesValeursDeTaux(valeurs);
     const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
 
-    return this.afficheUnHistogrammeVertical(
-      valeurs,
-      années,
-      this.construisLesCouleursDeLHistogramme(valeurs, années, construisLaCouleurDeLaBarreDeLHistogramme),
-      libellésDesValeurs,
-      libellésDesTicks,
-      this.wording.ANNÉE,
-      this.wording.TAUX_D_ETP_VACANTS_AU_31_12
+    return (
+      <HistogrammeVertical
+        annéesTotales={3}
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, construisLaCouleurDeLaBarreDeLHistogramme)}
+        entêteLibellé={this.wording.ANNÉE}
+        identifiant={this.wording.TAUX_D_ETP_VACANTS_AU_31_12}
+        libellés={années}
+        libellésDesTicks={libellésDesTicks}
+        libellésDesValeurs={libellésDesValeurs}
+        valeurs={valeurs}
+      />
     );
   }
 
@@ -242,14 +249,17 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
     const libellésDesValeurs = this.construisLesLibellésDesValeursDeTaux(valeurs);
     const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
 
-    return this.afficheUnHistogrammeVertical(
-      valeurs,
-      années,
-      this.construisLesCouleursDeLHistogramme(valeurs, années, construisLaCouleurDeLaBarreDeLHistogramme),
-      libellésDesValeurs,
-      libellésDesTicks,
-      this.wording.ANNÉE,
-      this.wording.TAUX_DE_ROTATION_DU_PERSONNEL
+    return (
+      <HistogrammeVertical
+        annéesTotales={3}
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, construisLaCouleurDeLaBarreDeLHistogramme)}
+        entêteLibellé={this.wording.ANNÉE}
+        identifiant={this.wording.TAUX_DE_ROTATION_DU_PERSONNEL}
+        libellés={années}
+        libellésDesTicks={libellésDesTicks}
+        libellésDesValeurs={libellésDesValeurs}
+        valeurs={valeurs}
+      />
     );
   }
 

@@ -1,5 +1,4 @@
 import { Wording } from "../../../configuration/wording/Wording";
-import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../commun/StringFormater";
 import { ActivitéMCO } from "./IndicateurDesSejoursMCO";
 
@@ -11,7 +10,7 @@ type IndicateurDesSejoursMCO = Readonly<{
   nombreSéjoursPartielsChirurgie: { x: number; y: number | null }[];
   nombreSéjoursPartielsObstétrique: { x: number; y: number | null }[];
 }>;
-export class NombreDeSejourMCOViewModel extends GraphiqueViewModel {
+export class NombreDeSejourMCOViewModel {
   readonly couleurDuFondHistogrammeVertClair = "#DFFDF7";
   readonly couleurDuFondHistogrammeVertFoncé = "#006A6F";
   readonly couleurDuFondHistogrammeRougeClair = "#FEE9E6";
@@ -22,8 +21,7 @@ export class NombreDeSejourMCOViewModel extends GraphiqueViewModel {
 
   private nombreDeSéjours: IndicateurDesSejoursMCO;
   readonly années: number[];
-  constructor(private readonly activitésMCO: ActivitéMCO[], wording: Wording) {
-    super(wording);
+  constructor(private readonly activitésMCO: ActivitéMCO[], private wording: Wording) {
     const [nombreDeSéjours, années] = this.construisLesSéjoursMCOParAnnée();
     this.nombreDeSéjours = nombreDeSéjours;
     this.années = années;
@@ -137,10 +135,6 @@ export class NombreDeSejourMCOViewModel extends GraphiqueViewModel {
     };
   }
 
-  public getOptionsHistogramme() {
-    return this.optionsHistogrammeÀBandes(this.identifiantDeLaLégendeDesSéjoursMCO, this.tooltipSéjoursMCO);
-  }
-
   public getIdentifiantTableIndicateur() {
     return [
       this.wording.HOSPITALISATION_PARTIELLE_MÉDECINE,
@@ -170,7 +164,7 @@ export class NombreDeSejourMCOViewModel extends GraphiqueViewModel {
     });
   }
 
-  private tooltipSéjoursMCO(wording: Wording) {
+  public tooltipSéjoursMCO(wording: Wording) {
     return function (context: any) {
       const label = `${context.dataset.label} : ${context.parsed.y.toLocaleString("fr")}`;
 

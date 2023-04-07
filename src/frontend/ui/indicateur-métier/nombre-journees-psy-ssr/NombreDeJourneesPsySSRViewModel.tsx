@@ -1,6 +1,5 @@
 import { ÉtablissementTerritorialSanitaireActivité } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
 import { Wording } from "../../../configuration/wording/Wording";
-import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../commun/StringFormater";
 
 type DonnéesDeDiagrammeDesJournéesPsyEtSsr = Readonly<{
@@ -15,7 +14,7 @@ export type ActivitesPsySSR = Pick<
   "année" | "nombreJournéesPartiellesPsy" | "nombreJournéesCompletesSsr" | "nombreJournéesCompletePsy" | "nombreJournéesPartielsSsr"
 >;
 
-export class NombreDeJourneesPsySSRViewModel extends GraphiqueViewModel {
+export class NombreDeJourneesPsySSRViewModel {
   readonly couleurDuFondHistogrammeBleuClair = "#DEE5FD";
   readonly couleurDuFondHistogrammeBleuFoncé = "#2F4077";
   readonly couleurDuFondHistogrammeRougeClair = "#FEE9E6";
@@ -24,8 +23,7 @@ export class NombreDeJourneesPsySSRViewModel extends GraphiqueViewModel {
   private nombreDeJournées: DonnéesDeDiagrammeDesJournéesPsyEtSsr;
   années: number[];
 
-  constructor(private activitésPsySSR: ActivitesPsySSR[], wording: Wording) {
-    super(wording);
+  constructor(private activitésPsySSR: ActivitesPsySSR[], private wording: Wording) {
     const [nombreDeJournées, années] = this.construisLesJournéesPsyEtSsrParAnnée();
     this.nombreDeJournées = nombreDeJournées;
     this.années = années;
@@ -74,10 +72,6 @@ export class NombreDeJourneesPsySSRViewModel extends GraphiqueViewModel {
       });
     });
     return [nombreDeJournées, années];
-  }
-
-  public getOptionsHistogramme() {
-    return this.optionsHistogrammeÀBandes(this.identifiantDeLaLégendeDesJournéesPsyEtSsr, this.tooltipJournéesPsyEtSsr);
   }
 
   public get histogrammeDataSet() {
@@ -140,7 +134,7 @@ export class NombreDeJourneesPsySSRViewModel extends GraphiqueViewModel {
     });
   }
 
-  private tooltipJournéesPsyEtSsr(wording: Wording) {
+  public tooltipJournéesPsyEtSsr(wording: Wording) {
     return function (context: any) {
       const label = `${context.dataset.label} : ${context.parsed.y.toLocaleString("fr")}`;
 

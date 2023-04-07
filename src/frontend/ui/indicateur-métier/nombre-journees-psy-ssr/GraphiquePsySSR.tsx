@@ -1,5 +1,5 @@
 import { useDependencies } from "../../commun/contexts/useDependencies";
-import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
+import { HistogrammeVerticalABandes } from "../../commun/Graphique/HistogrammeVerticalABandes";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ContenuNombreDeJournéesPSYetSSR } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeJournéesPSYetSSR";
 import { NombreDeJourneesPsySSRViewModel } from "./NombreDeJourneesPsySSRViewModel";
@@ -26,12 +26,13 @@ export function GraphiquePsySSR({ nombreJournéesPsySSRViewModel, estEntitéJuri
       nomDeLIndicateur={wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR}
       source={wording.PMSI}
     >
-      <HistogrammeVertical
+      <HistogrammeVerticalABandes
+        créeLeLibelléDuTooltip={nombreJournéesPsySSRViewModel.tooltipJournéesPsyEtSsr}
         data={nombreJournéesPsySSRViewModel.histogrammeDataSet}
         id={nombreJournéesPsySSRViewModel.identifiantDeLaLégendeDesJournéesPsyEtSsr}
+        idDeLaLégende={nombreJournéesPsySSRViewModel.identifiantDeLaLégendeDesJournéesPsyEtSsr}
         identifiants={nombreJournéesPsySSRViewModel.identifiants}
         libellés={nombreJournéesPsySSRViewModel.années}
-        optionsHistogramme={nombreJournéesPsySSRViewModel.getOptionsHistogramme()}
         valeurs={nombreJournéesPsySSRViewModel.valeurs}
       />
     </IndicateurGraphique>
