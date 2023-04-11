@@ -1,6 +1,7 @@
 import { EntitéJuridiqueBudgetFinance } from "../../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { annéesManquantes } from "../../../../utils/dateUtils";
 import { LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../../commun/Graphique/GraphiqueViewModel";
+import { CouleurHistogramme } from "../../../commun/Graphique/HistogrammeVertical";
 import { StringFormater } from "../../../commun/StringFormater";
 
 type RatioDependanceFinanciere = { ratio: number | null; année: number; dateDeMiseÀJour: string };
@@ -74,13 +75,20 @@ export class RatioDependanceFinanciereViewModel {
   }
 
   public construisLesLibellésDesValeurs(): LibelléDeDonnéeGraphe[] {
-    return this.ratioDependanceFinanciere.map(() => ({ couleur: "#000" }));
+    const couleurDuFond = "#E8EDFF";
+    const SEUIL_DE_CONTRASTE_DES_LIBELLÉS_DES_TAUX = 0.2;
+    return this.ratioDependanceFinanciere.map((ratio) => ({
+      couleur: (ratio.ratio as number) > SEUIL_DE_CONTRASTE_DES_LIBELLÉS_DES_TAUX ? couleurDuFond : "#000",
+    }));
   }
 
-  get couleursDeLHistogramme() {
+  get couleursDeLHistogramme(): CouleurHistogramme[] {
     const couleurDuFondHistogrammeSecondaire = "#4E68BB";
     return this.ratioDependanceFinanciere.map(() => {
-      return { premierPlan: couleurDuFondHistogrammeSecondaire };
+      return {
+        premierPlan: couleurDuFondHistogrammeSecondaire,
+        secondPlan: "#E8EDFF",
+      };
     });
   }
 }

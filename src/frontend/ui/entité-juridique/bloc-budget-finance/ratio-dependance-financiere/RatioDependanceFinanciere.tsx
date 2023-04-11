@@ -10,17 +10,17 @@ type RationDependanceFinanciereProps = Readonly<{
 }>;
 
 function ContenuRatioDependanceFinancière(props: { dateDeMiseÀJour: any; source: ReactElement }): ReactElement {
-  return <>{props}</>;
+  return <>{props.source}</>;
 }
 
 export function RatioDependanceFinanciere({ ratioDependanceFinanciereViewModel }: RationDependanceFinanciereProps) {
   const { wording } = useDependencies();
-  // const infoBulleContenu = <ContenuRatioDependanceFinancière dateDeMiseÀJour={ratioDependanceFinanciereViewModel.dateMiseÀJour} source={wording.CNSA} />;
+  const infoBulleContenu = <ContenuRatioDependanceFinancière dateDeMiseÀJour={ratioDependanceFinanciereViewModel.dateMiseÀJour} source={wording.CNSA} />;
   const sourceName = wording.CNSA;
 
   return ratioDependanceFinanciereViewModel.auMoinsUnRatioRenseigné() ? (
     <IndicateurGraphique
-      contenuInfoBulle={<></>}
+      contenuInfoBulle={infoBulleContenu}
       dateDeMiseÀJour={ratioDependanceFinanciereViewModel.dateMiseÀJour}
       identifiant="budget-et-finances-résultat-net-comptable"
       nomDeLIndicateur={wording.RATIO_DEPENDANCE_FINANCIERE}
