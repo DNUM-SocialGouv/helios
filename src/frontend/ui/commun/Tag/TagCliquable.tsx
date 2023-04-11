@@ -6,14 +6,20 @@ type ActionneurDAccordéonProps = Readonly<{
   for: string;
   texteGras?: boolean;
   titre: string;
+  masquerET?: boolean;
 }>;
 
-export const TagCliquable = ({ for: identifiant, titre, texteGras = true }: ActionneurDAccordéonProps) => {
+export const TagCliquable = ({ for: identifiant, titre, texteGras = true, masquerET = false }: ActionneurDAccordéonProps) => {
+  let className = `fr-tag fr-text-label--grey ${texteGras ? "fr-text--bold" : ""} ` + styles["tag-actionnable"];
+  if (masquerET) {
+    className = "fr-tag fr-tag--sm";
+  }
+
   return (
     <Link
       aria-controls={identifiant}
       aria-expanded="false"
-      className={`fr-tag fr-text-label--grey ${texteGras ? "fr-text--bold" : ""} ` + styles["tag-actionnable"]}
+      className={className}
       href="#"
       onClick={(event) => {
         event.preventDefault();

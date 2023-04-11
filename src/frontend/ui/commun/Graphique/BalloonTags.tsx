@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 
 import stylesBlocAutorisationsEtCapacités from "../../établissement-territorial-sanitaire/bloc-autorisations/BlocAutorisationEtCapacitéSanitaire.module.css";
-import { useDependencies } from "../contexts/useDependencies";
+import { BoutonLink } from "../Bouton/BoutonLink";
 import { StringFormater } from "../StringFormater";
 import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../Tag";
 
@@ -21,17 +21,23 @@ export type SecondaryLabel = {
 
 export type FormDetails = {
   formName: {
-    name: string;
-    value: string;
+    etablissementTerritorial: {
+      numeroFiness: string;
+      nom: string;
+    };
+    authorisation: {
+      nom: string;
+      value: string;
+    }[];
   }[];
-  entityTerritorialNumber: string;
   libellé: string;
   code: string;
 };
+
 export const BalloonTags = ({ entityJuridiqueAuth }: TagCliquableProps): ReactElement => {
-  const { wording } = useDependencies();
   // TODO rename variables
-  // TODO make the Tags Dynamic
+  // TODO Change Masquer ET to a bouton + make text dynamic
+  // TODO BoutonLink needs to be reworked --> currently reusing what is inside TagCliquable, but with classname of buttons
 
   return (
     <ul aria-label="activités" className={`${stylesBlocAutorisationsEtCapacités["liste-activités"]}`}>
@@ -48,30 +54,32 @@ export const BalloonTags = ({ entityJuridiqueAuth }: TagCliquableProps): ReactEl
                 />
                 <ul className="fr-collapse niveau2" id={`autorisations-accordion-${activité.code}-${modalité.code}`}>
                   {modalité.formDetails.map((forme) => {
-                    const details = new Map(forme.formName.map((i) => [i.name, i.value]));
                     return (
-                      <>
-                        <li key={`forme-${forme.code}`} />
-                        <TagGroup label="autre-activité">
-                          <Tag label={`${modalité.libellé} [${modalité.code}]`} size={TAG_SIZE.SM} withArrow />
-                          <Tag
-                            label={`${wording.DATE_D_AUTORISATION} : ${
-                              details.get("dateDAutorisation") ? StringFormater.formateLaDate(details.get("dateDAutorisation")!) : "N/A"
-                            }`}
-                            size={TAG_SIZE.SM}
-                          />
-                          <Tag
-                            label={`${wording.DATE_DE_MISE_EN_OEUVRE} : ${
-                              details.get("dateDeMiseEnOeuvre") ? StringFormater.formateLaDate(details.get("dateDeMiseEnOeuvre")!) : "N/A"
-                            }`}
-                            size={TAG_SIZE.SM}
-                          />
-                          <Tag
-                            label={`${wording.DATE_DE_FIN} : ${details.get("dateDeFin") ? StringFormater.formateLaDate(details.get("dateDeFin")!) : "N/A"}`}
-                            size={TAG_SIZE.SM}
-                          />
-                        </TagGroup>
-                      </>
+                      <li key={`modalité-${forme.code}`}>
+                        <Tag label={`${forme.libellé} [${forme.code}]`} size={TAG_SIZE.SM} withArrow />
+                        <BoutonLink for={`autorisations-accordion-${modalité.code}-${forme.code}`} titre="ET" />
+                        <ul className="fr-collapse niveau3" id={`autorisations-accordion-${modalité.code}-${forme.code}`}>
+                          {forme.formName.map((details) => {
+                            return (
+                              <li key={`details-${details.etablissementTerritorial.numeroFiness}`}>
+                                <p>{details.etablissementTerritorial.numeroFiness + " - " + details.etablissementTerritorial.nom}</p>
+                                <TagGroup label="authorisation">
+                                  {details.authorisation.map((auth) => {
+                                    return (
+                                      <Tag
+                                        key={auth.nom}
+                                        label={`${auth.nom} : ${auth.nom ? StringFormater.formateLaDate(auth.value) : "N/A"}`}
+                                        // TODO move the string formatter to outside the component
+                                        size={TAG_SIZE.SM}
+                                      />
+                                    );
+                                  })}
+                                </TagGroup>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </li>
                     );
                   })}
                 </ul>

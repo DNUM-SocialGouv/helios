@@ -106,21 +106,77 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel ex
 
     const mockFormDetails = [
       {
-        entityTerritorialNumber: "99999999",
         libellé: "label 3",
         code: "03",
         formName: [
           {
-            name: "dateDAutorisation",
-            value: "10/02/2020",
+            etablissementTerritorial: {
+              numeroFiness: "99999999",
+              nom: "amazing Hospital",
+            },
+            authorisation: [
+              {
+                nom: "dateDAutorisation",
+                value: "10/02/2020",
+              },
+              {
+                nom: "dateDeFin",
+                value: "10/10/2023",
+              },
+              {
+                nom: "dateDeMiseEnOeuvre",
+                value: "13/05/2025",
+              },
+            ],
           },
-          // {
-          //   name: "dateDeFin",
-          //   value: "10/10/2023",
-          // },
           {
-            name: "dateDeMiseEnOeuvre",
-            value: "13/05/2025",
+            etablissementTerritorial: {
+              numeroFiness: "11111111",
+              nom: "rainbow Hospital",
+            },
+            authorisation: [
+              {
+                nom: "dateDAutorisation",
+                value: "10/02/2020",
+              },
+              {
+                nom: "dateDeFin",
+                value: "10/10/2023",
+              },
+              {
+                nom: "dateDeMiseEnOeuvre",
+                value: "13/05/2025",
+              },
+            ],
+          },
+        ],
+      },
+    ];
+
+    const mockFormDetails2 = [
+      {
+        libellé: "label 3",
+        code: "05",
+        formName: [
+          {
+            etablissementTerritorial: {
+              numeroFiness: "77777777",
+              nom: "regular Hospital",
+            },
+            authorisation: [
+              {
+                nom: "dateDAutorisation",
+                value: "10/02/2020",
+              },
+              {
+                nom: "dateDeFin",
+                value: "10/10/2023",
+              },
+              {
+                nom: "dateDeMiseEnOeuvre",
+                value: "13/05/2025",
+              },
+            ],
           },
         ],
       },
@@ -128,9 +184,17 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel ex
 
     const mockSecondaryLabel = [
       {
-        libellé: "label",
-        code: "01",
+        libellé: "secondLabel",
+        code: "99",
         formDetails: mockFormDetails,
+      },
+    ];
+
+    const mockSecondaryLabel2 = [
+      {
+        libellé: "secondLabel",
+        code: "55",
+        formDetails: mockFormDetails2,
       },
     ];
 
@@ -143,7 +207,7 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel ex
       {
         libellé: "label2",
         code: "02",
-        secondaryLabel: mockSecondaryLabel,
+        secondaryLabel: mockSecondaryLabel2,
       },
     ];
 
