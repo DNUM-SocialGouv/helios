@@ -30,7 +30,8 @@ export type FormDetails = {
 };
 export const BalloonTags = ({ entityJuridiqueAuth }: TagCliquableProps): ReactElement => {
   const { wording } = useDependencies();
-  // const formTypes =
+  // TODO rename variables
+  // TODO make the Tags Dynamic
 
   return (
     <ul aria-label="activités" className={`${stylesBlocAutorisationsEtCapacités["liste-activités"]}`}>
@@ -50,7 +51,7 @@ export const BalloonTags = ({ entityJuridiqueAuth }: TagCliquableProps): ReactEl
                     const details = new Map(forme.formName.map((i) => [i.name, i.value]));
                     return (
                       <>
-                        <li key={`forme-${details}`} />
+                        <li key={`forme-${forme.code}`} />
                         <TagGroup label="autre-activité">
                           <Tag label={`${modalité.libellé} [${modalité.code}]`} size={TAG_SIZE.SM} withArrow />
                           <Tag
