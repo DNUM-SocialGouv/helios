@@ -15,7 +15,7 @@ export class GraphiqueNombreHADViewModel {
   }
 
   public get dateMiseAJour(): string {
-    return StringFormater.formateLaDate(this.indicateurActivité[0]?.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.indicateurActivité[0]?.dateMiseÀJourSource);
   }
 
   private construisLesAnnéesEtSesValeurs(): number[][] {

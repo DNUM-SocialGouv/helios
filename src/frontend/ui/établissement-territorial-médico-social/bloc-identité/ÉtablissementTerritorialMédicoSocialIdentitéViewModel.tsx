@@ -22,7 +22,7 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
   }
 
   public get dateDeMiseÀJourDuNomDeLÉtablissementTerritorial(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialIdentité.raisonSociale.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialIdentité.raisonSociale.dateMiseÀJourSource);
   }
 
   public get numéroFinessÉtablissementTerritorial(): string {
@@ -30,7 +30,7 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
   }
 
   public get dateDeMiseÀJourDuNuméroFinessÉtablissementTerritorial(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialIdentité.numéroFinessÉtablissementTerritorial.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialIdentité.numéroFinessÉtablissementTerritorial.dateMiseÀJourSource);
   }
 
   public get siret(): string {
@@ -38,7 +38,7 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
   }
 
   public get dateDeMiseÀJourDuSiret(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialIdentité.siret.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialIdentité.siret.dateMiseÀJourSource);
   }
 
   public get adresse(): string {
@@ -46,17 +46,17 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
   }
 
   public get dateDeMiseÀJourDeLAdresse(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialIdentité.adresseNuméroVoie.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialIdentité.adresseNuméroVoie.dateMiseÀJourSource);
   }
 
   public get téléphoneEtEmail(): string {
-    const téléphoneFormaté = this.valeurOuNonRenseigné(StringFormater.formateLeNuméroDeTéléphone(this.établissementTerritorialIdentité.téléphone.value));
+    const téléphoneFormaté = this.valeurOuNonRenseigné(StringFormater.formatPhoneNumber(this.établissementTerritorialIdentité.téléphone.value));
     const email = this.valeurOuNonRenseigné(this.établissementTerritorialIdentité.courriel.value);
     return `${téléphoneFormaté} | ${email}`;
   }
 
   public get dateDeMiseÀJourDuTéléphoneEtDeLEmail(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialIdentité.téléphone.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialIdentité.téléphone.dateMiseÀJourSource);
   }
 
   public get entitéJuridiqueDeRattachement(): ReactElement {
@@ -72,7 +72,7 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
   }
 
   public get dateDeMiseÀJourDeLEntitéJuridiqueDeRattachement(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialIdentité.raisonSocialeDeLEntitéDeRattachement.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialIdentité.raisonSocialeDeLEntitéDeRattachement.dateMiseÀJourSource);
   }
 
   public get catégorieDeLÉtablissement(): string {
@@ -80,7 +80,7 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
   }
 
   public get dateDeMiseÀJourDeLaCatégorieDeLÉtablissement(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialIdentité.catégorieÉtablissement.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialIdentité.catégorieÉtablissement.dateMiseÀJourSource);
   }
 
   public get modeDeTarification(): string {
@@ -88,7 +88,7 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
   }
 
   public get dateDeMiseÀJourDuModeDeTarification(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialIdentité.codeModeTarification.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialIdentité.codeModeTarification.dateMiseÀJourSource);
   }
 
   public get statutDeLÉtablissement(): string {
@@ -96,7 +96,7 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
   }
 
   public get dateDeMiseÀJourDuStatutDeLÉtablissement(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialIdentité.statutJuridique.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialIdentité.statutJuridique.dateMiseÀJourSource);
   }
 
   public get monoÉtablissement(): string {
@@ -104,7 +104,7 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
   }
 
   public get dateDeMiseÀJourDuMonoÉtablissement(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialIdentité.estMonoÉtablissement.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialIdentité.estMonoÉtablissement.dateMiseÀJourSource);
   }
 
   public get principalOuSecondaire(): string {
@@ -114,16 +114,16 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
   }
 
   public get dateDeMiseÀJourDuPrincipalOuDuSecondaire(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal.dateMiseÀJourSource);
   }
 
   public get dateDeLEntréeEnVigueurDuCpom(): string {
     const dateDEntréeEnVigueurDuCpom = this.établissementTerritorialIdentité.dateDEntréeEnVigueurDuCpom.value;
-    return dateDEntréeEnVigueurDuCpom !== "" ? StringFormater.formateLaDate(dateDEntréeEnVigueurDuCpom) : this.wording.NON_RENSEIGNÉ;
+    return dateDEntréeEnVigueurDuCpom !== "" ? StringFormater.formatDate(dateDEntréeEnVigueurDuCpom) : this.wording.NON_RENSEIGNÉ;
   }
 
   public get dateDeMiseÀJourDeLEntréeEnVigueurDuCpom(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialIdentité.dateDEntréeEnVigueurDuCpom.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialIdentité.dateDEntréeEnVigueurDuCpom.dateMiseÀJourSource);
   }
 
   private formateLeTitreDeLEntitéJuridiqueDeRattachement(): string {

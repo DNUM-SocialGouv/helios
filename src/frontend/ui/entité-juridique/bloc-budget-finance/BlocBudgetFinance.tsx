@@ -5,6 +5,7 @@ import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicat
 import { ResultatNetComptable } from "../../indicateur-métier/resultat-net-comptable/ResultatNetComptable";
 import { CompteDeResultat } from "./compte-de-resultat/CompteDeResultat";
 import { EntitéJuridiqueBudgetFinanceViewModel } from "./EntitéJuridiqueBudgetFinanceViewModel";
+import { RatioDependanceFinanciere } from "./ratio-dependance-financiere/RatioDependanceFinanciere";
 
 type BlocBudgetFinanceProps = Readonly<{
   entitéJuridiqueBudgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;
@@ -21,6 +22,7 @@ export const BlocBudgetFinance = ({ entitéJuridiqueBudgetFinanceViewModel }: Bl
       <ul className="indicateurs">
         <CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueBudgetFinanceViewModel} />
         <ResultatNetComptable estEntitéJuridique={true} resultatNetComptableViewModel={entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable} />
+        <RatioDependanceFinanciere ratioDependanceFinanciereViewModel={entitéJuridiqueBudgetFinanceViewModel.ratioDependanceFinanciere} />
       </ul>
     </Bloc>
   );

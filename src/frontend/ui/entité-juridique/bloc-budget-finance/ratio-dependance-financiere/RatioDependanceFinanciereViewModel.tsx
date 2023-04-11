@@ -1,5 +1,6 @@
 import { EntitéJuridiqueBudgetFinance } from "../../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { annéesManquantes } from "../../../../utils/dateUtils";
+import { LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../../commun/StringFormater";
 
 type RatioDependanceFinanciere = { ratio: number | null; année: number; dateDeMiseÀJour: string };
@@ -21,7 +22,7 @@ export class RatioDependanceFinanciereViewModel {
   }
 
   public get dateMiseÀJour(): string {
-    return StringFormater.formateLaDate(this.ratioDependanceFinanciere[0]?.dateDeMiseÀJour);
+    return StringFormater.formatDate(this.ratioDependanceFinanciere[0]?.dateDeMiseÀJour);
   }
 
   public auMoinsUnRatioRenseigné() {
@@ -45,11 +46,11 @@ export class RatioDependanceFinanciereViewModel {
       .filter(this.ratioRemplis)
       .filter((ratio) => this.estDansLesAnneesVisible(ratio))
       .sort(this.trierParAnnée)
-      .map(this.formatResultNetComptable);
+      .map(this.formatRatioDependanceFinanciere);
   }
 
   public get valeurs(): number[] {
-    return this.ratioDependanceFinanciere.map((ratio) => StringFormater.transformeEnTaux(ratio.ratio as number));
+    return this.ratioDependanceFinanciere.map((ratio) => StringFormater.transformInRate(ratio.ratio as number));
   }
 
   private estDansLesAnneesVisible(ratio: RatioDependanceFinanciere): boolean {
@@ -61,10 +62,25 @@ export class RatioDependanceFinanciereViewModel {
     return ratio1.année < ratio2.année ? -1 : 1;
   }
 
-  private formatResultNetComptable(ratio: RatioDependanceFinanciere) {
+  private formatRatioDependanceFinanciere(ratio: RatioDependanceFinanciere) {
     return {
       année: ratio.année,
-      valeur: StringFormater.transformeEnTaux(ratio.ratio) as string,
+      valeur: StringFormater.addPercent(StringFormater.transformInRate(ratio.ratio as number).toString()),
     };
+  }
+
+  public construisLesLibellésDesTicks(): LibelléDeTickGraphe[] {
+    return this.ratioDependanceFinanciere.map(() => ({ tailleDePolice: "normal" }));
+  }
+
+  public construisLesLibellésDesValeurs(): LibelléDeDonnéeGraphe[] {
+    return this.ratioDependanceFinanciere.map(() => ({ couleur: "#000" }));
+  }
+
+  get couleursDeLHistogramme() {
+    const couleurDuFondHistogrammeSecondaire = "#4E68BB";
+    return this.ratioDependanceFinanciere.map(() => {
+      return { premierPlan: couleurDuFondHistogrammeSecondaire };
+    });
   }
 }

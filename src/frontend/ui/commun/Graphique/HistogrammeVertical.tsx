@@ -93,7 +93,7 @@ export function HistogrammeVertical(props: {
         entêteLibellé={props.entêteLibellé}
         identifiants={[props.identifiant]}
         libellés={props.libellés}
-        valeurs={[StringFormater.ajouteLePourcentage(props.valeurs)]}
+        valeurs={[StringFormater.addPercentToValues(props.valeurs)]}
       />
     </>
   );

@@ -10,7 +10,7 @@ export class ResultatNetComptableViewModel {
   }
 
   public get dateMiseÀJour(): string {
-    return StringFormater.formateLaDate(this.budgetEtFinance[0]?.dateMiseÀJourSource as string);
+    return StringFormater.formatDate(this.budgetEtFinance[0]?.dateMiseÀJourSource as string);
   }
 
   public lesAnnéesManquantesDuResultatNet(): number[] {
@@ -39,7 +39,7 @@ export class ResultatNetComptableViewModel {
   private formatResultNetComptable(budget: EntitéJuridiqueBudgetFinance) {
     return {
       année: budget.année,
-      valeur: StringFormater.formateLeMontantEnEuros(budget.resultatNetComptable as number),
+      valeur: StringFormater.formatInEuro(budget.resultatNetComptable as number),
     };
   }
 

@@ -40,7 +40,7 @@ export class NombreDeSejourMCOViewModel {
   }
 
   public get dateDeMiseÀJourDuNombreDeSéjoursMédecineChirurgieObstétrique(): string {
-    return StringFormater.formateLaDate(this.activitésMCO[0]?.nombreSéjoursCompletsMédecine?.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.activitésMCO[0]?.nombreSéjoursCompletsMédecine?.dateMiseÀJourSource);
   }
 
   private construisLesSéjoursMCOParAnnée(): [IndicateurDesSejoursMCO, number[]] {

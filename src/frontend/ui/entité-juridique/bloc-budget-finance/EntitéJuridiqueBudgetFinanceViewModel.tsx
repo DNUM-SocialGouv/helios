@@ -11,6 +11,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   public resultatNetComptable: ResultatNetComptableViewModel;
   private wording: Wording;
   public NOMBRE_ANNEES = 5;
+  public ratioDependanceFinanciere: RatioDependanceFinanciereViewModel;
 
   constructor(budgetFinance: EntitéJuridiqueBudgetFinance[], wording: Wording) {
     this.wording = wording;
@@ -66,7 +67,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   }
 
   public get dateMiseÀJour(): string {
-    return StringFormater.formateLaDate(this.budgetEtFinance[0]?.dateMiseÀJourSource as string);
+    return StringFormater.formatDate(this.budgetEtFinance[0]?.dateMiseÀJourSource as string);
   }
 
   public dataGraphiqueCharges(budget: EntitéJuridiqueBudgetFinance): HistogrammeData {
@@ -115,7 +116,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
           isError: depensesAnnexes.map((depense) => depense > 0),
         },
       ],
-      StringFormater.formateLeMontantEnEuros
+      StringFormater.formatInEuro
     );
   }
 
@@ -165,7 +166,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
           isError: produitsAnnexes.map((depense) => depense < 0),
         },
       ],
-      StringFormater.formateLeMontantEnEuros
+      StringFormater.formatInEuro
     );
   }
 

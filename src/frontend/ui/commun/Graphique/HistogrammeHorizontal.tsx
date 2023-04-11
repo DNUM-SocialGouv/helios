@@ -36,7 +36,7 @@ export const HistogrammeHorizontal = ({
           label: identifiant,
         },
       ],
-      StringFormater.formateEnFrancais
+      StringFormater.formatInFrench
     ),
   ];
 

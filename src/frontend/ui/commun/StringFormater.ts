@@ -1,38 +1,42 @@
 export namespace StringFormater {
-  export function formateLeNuméroDeTéléphone(téléphone: string): string {
-    return insèreUnEspaceTousLesNCaractères(téléphone, 2);
+  export function formatPhoneNumber(phoneNumber: string): string {
+    return addSpaceForNCharacters(phoneNumber, 2);
   }
 
   // format DD/MM/AAAA
-  export function formateLaDate(date: string): string {
+  export function formatDate(date: string): string {
     return new Date(date).toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit", year: "numeric" });
   }
 
-  function insèreUnEspaceTousLesNCaractères(str: string, nombreDeCaractères: number): string {
+  function addSpaceForNCharacters(str: string, numberOfCharacters: number): string {
     return str
       .split("")
-      .map((letter, index) => (index % nombreDeCaractères === 0 ? " " + letter : letter))
+      .map((letter, index) => (index % numberOfCharacters === 0 ? " " + letter : letter))
       .join("")
       .trim();
   }
 
-  export function formateLeMontantEnEuros(montant: number): string {
-    return `${Math.round(montant).toLocaleString("fr")} €`.replace("-", "−");
+  export function formatInEuro(amount: number): string {
+    return `${Math.round(amount).toLocaleString("fr")} €`.replace("-", "−");
   }
 
-  export function formateValeursEnFrançais(valeurs: number[]): string[] {
-    return valeurs.map(formateEnFrancais);
+  export function formatAllInFrench(values: number[]): string[] {
+    return values.map(formatInFrench);
   }
 
-  export function formateEnFrancais(valeur: number): string {
-    return valeur.toLocaleString("fr");
+  export function formatInFrench(value: number): string {
+    return value.toLocaleString("fr");
   }
 
-  export function ajouteLePourcentage(valeurs: number[]): string[] {
-    return formateValeursEnFrançais(valeurs).map((valeur) => valeur + " %");
+  export function addPercent(value: string) {
+    return value + " %";
   }
 
-  export function transformeEnTaux(nombre: number): number {
-    return Number((nombre * 100).toFixed(1));
+  export function addPercentToValues(values: number[]): string[] {
+    return formatAllInFrench(values).map(addPercent);
+  }
+
+  export function transformInRate(number: number): number {
+    return Number((number * 100).toFixed(1));
   }
 }

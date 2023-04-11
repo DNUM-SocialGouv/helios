@@ -38,21 +38,19 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
                             <Tag label={`${clientèle.libellé} [${clientèle.code}]`} size={TAG_SIZE.SM} withArrow />
                             <Tag
                               label={`${this.wording.DATE_D_AUTORISATION} : ${
-                                datesEtCapacités.dateDAutorisation ? StringFormater.formateLaDate(datesEtCapacités.dateDAutorisation) : "N/A"
+                                datesEtCapacités.dateDAutorisation ? StringFormater.formatDate(datesEtCapacités.dateDAutorisation) : "N/A"
                               }`}
                               size={TAG_SIZE.SM}
                             />
                             <Tag
                               label={`${this.wording.MISE_À_JOUR_AUTORISATION} : ${
-                                datesEtCapacités.dateDeMiseÀJourDAutorisation
-                                  ? StringFormater.formateLaDate(datesEtCapacités.dateDeMiseÀJourDAutorisation)
-                                  : "N/A"
+                                datesEtCapacités.dateDeMiseÀJourDAutorisation ? StringFormater.formatDate(datesEtCapacités.dateDeMiseÀJourDAutorisation) : "N/A"
                               }`}
                               size={TAG_SIZE.SM}
                             />
                             <Tag
                               label={`${this.wording.DERNIÈRE_INSTALLATION} : ${
-                                datesEtCapacités.dateDeDernièreInstallation ? StringFormater.formateLaDate(datesEtCapacités.dateDeDernièreInstallation) : "N/A"
+                                datesEtCapacités.dateDeDernièreInstallation ? StringFormater.formatDate(datesEtCapacités.dateDeDernièreInstallation) : "N/A"
                               }`}
                               size={TAG_SIZE.SM}
                             />
@@ -77,7 +75,7 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
   }
 
   public get dateDeMiseÀJourDesAutorisations(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialAutorisations.autorisations.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialAutorisations.autorisations.dateMiseÀJourSource);
   }
 
   public get capacitéParActivités(): ReactElement {
@@ -107,7 +105,7 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
   }
 
   public get dateDeMiseÀJourDesCapacitésParActivités(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialAutorisations.capacités.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialAutorisations.capacités.dateMiseÀJourSource);
   }
 
   private construisLesCapacitésParActivités(): [string[], number[]] {
