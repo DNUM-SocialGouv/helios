@@ -84,11 +84,16 @@ export class RatioDependanceFinanciereViewModel {
 
   get couleursDeLHistogramme(): CouleurHistogramme[] {
     const couleurDuFondHistogrammeSecondaire = "#4E68BB";
-    return this.ratioDependanceFinanciere.map(() => {
+    return this.ratioDependanceFinanciere.map((ratio) => {
       return {
-        premierPlan: couleurDuFondHistogrammeSecondaire,
+        premierPlan: this.ratioEstEnErreur(ratio) ? "#C9191E" : couleurDuFondHistogrammeSecondaire,
         secondPlan: "#E8EDFF",
       };
     });
+  }
+
+  private ratioEstEnErreur(ratioDependanceFinanciere: RatioDependanceFinanciere): boolean {
+    const ratio = ratioDependanceFinanciere.ratio;
+    return ratio === null || ratio > 0.5 || ratio < 0;
   }
 }
