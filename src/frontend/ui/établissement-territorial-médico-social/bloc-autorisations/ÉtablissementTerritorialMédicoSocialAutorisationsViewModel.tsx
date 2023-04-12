@@ -3,6 +3,7 @@ import { ReactElement } from "react";
 import { ÉtablissementTerritorialMédicoSocial } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
 import { CapacitéParActivité } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation";
 import { Wording } from "../../../configuration/wording/Wording";
+import { couleurDuFondHistogrammePrimaire, couleurDuFondHistogrammeSecondaire } from "../../commun/Graphique/couleursGraphique";
 import { CouleurHistogramme, GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 import { StringFormater } from "../../commun/StringFormater";
@@ -82,8 +83,8 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extend
     const [activités, capacités] = this.construisLesCapacitésParActivités();
     const construisLaCouleurDeLaBarreHorizontale = (_valeur: number, libellé: number | string): CouleurHistogramme => {
       return {
-        premierPlan: libellé === this.wording.NOMBRE_TOTAL_DE_PLACE ? this.couleurDuFondHistogrammePrimaire : this.couleurDuFondHistogrammeSecondaire,
-        secondPlan: this.couleurDuFondHistogrammePrimaire,
+        premierPlan: libellé === this.wording.NOMBRE_TOTAL_DE_PLACE ? couleurDuFondHistogrammePrimaire : couleurDuFondHistogrammeSecondaire,
+        secondPlan: couleurDuFondHistogrammePrimaire,
       };
     };
 
