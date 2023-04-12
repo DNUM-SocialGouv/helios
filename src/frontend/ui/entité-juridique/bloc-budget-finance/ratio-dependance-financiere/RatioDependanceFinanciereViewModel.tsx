@@ -1,5 +1,4 @@
 import { EntitéJuridiqueBudgetFinance } from "../../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
-import { annéesManquantes } from "../../../../utils/dateUtils";
 import { LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../../commun/Graphique/GraphiqueViewModel";
 import { CouleurHistogramme } from "../../../commun/Graphique/HistogrammeVertical";
 import { StringFormater } from "../../../commun/StringFormater";
@@ -34,40 +33,8 @@ export class RatioDependanceFinanciereViewModel {
     return !!ratio.ratio;
   }
 
-  private lesAnnéesEffectivesDuRatioDeDépendanceFinanciere(): number[] {
-    return this.ratioDependanceFinanciere.filter(this.ratioRemplis).map((budget) => budget.année);
-  }
-
-  public lesAnnéesManquantesDuRatio(): number[] {
-    return annéesManquantes(this.lesAnnéesEffectivesDuRatioDeDépendanceFinanciere(), this.NOMBRE_ANNEES);
-  }
-
-  public valeursRatio(): { année: number; valeur: string }[] {
-    return this.ratioDependanceFinanciere
-      .filter(this.ratioRemplis)
-      .filter((ratio) => this.estDansLesAnneesVisible(ratio))
-      .sort(this.trierParAnnée)
-      .map(this.formatRatioDependanceFinanciere);
-  }
-
   public get valeurs(): number[] {
     return this.ratioDependanceFinanciere.map((ratio) => StringFormater.transformInRate(ratio.ratio as number));
-  }
-
-  private estDansLesAnneesVisible(ratio: RatioDependanceFinanciere): boolean {
-    const currentAnnee = new Date().getFullYear();
-    return ratio.année >= currentAnnee - this.NOMBRE_ANNEES;
-  }
-
-  private trierParAnnée(ratio1: RatioDependanceFinanciere, ratio2: RatioDependanceFinanciere) {
-    return ratio1.année < ratio2.année ? -1 : 1;
-  }
-
-  private formatRatioDependanceFinanciere(ratio: RatioDependanceFinanciere) {
-    return {
-      année: ratio.année,
-      valeur: StringFormater.addPercent(StringFormater.transformInRate(ratio.ratio as number).toString()),
-    };
   }
 
   public construisLesLibellésDesTicks(): LibelléDeTickGraphe[] {
@@ -94,6 +61,8 @@ export class RatioDependanceFinanciereViewModel {
 
   private ratioEstEnErreur(ratioDependanceFinanciere: RatioDependanceFinanciere): boolean {
     const ratio = ratioDependanceFinanciere.ratio;
-    return ratio === null || ratio > 0.5 || ratio < 0;
+    const RATIO_MAXIMUM = 0.5;
+    const RATION_MINIMUM = 0;
+    return ratio === null || ratio > RATIO_MAXIMUM || ratio < RATION_MINIMUM;
   }
 }
