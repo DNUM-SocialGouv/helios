@@ -10,6 +10,7 @@ import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
+import { couleurDelAbscisse, couleurDuFondDeLaLigne } from "./couleursGraphique";
 
 export type LibelléDeDonnéeGraphe = Readonly<{
   couleur: string;
@@ -35,7 +36,6 @@ export function HistogrammeVertical(props: {
   annéesTotales: number;
 }): ReactElement {
   const { wording } = useDependencies();
-  const couleurDuFondDeLaLigne = "#929292";
 
   const data: ChartData = {
     datasets: [
@@ -101,7 +101,6 @@ export function HistogrammeVertical(props: {
 
 function optionsHistogrammeVertical(grosseursDePoliceDesLibellés: string[]): ChartOptions<"bar"> {
   const borneMaximaleDeLHistogrammeVertical = 105;
-  const couleurDelAbscisse = "#161616";
 
   return {
     animation: false,

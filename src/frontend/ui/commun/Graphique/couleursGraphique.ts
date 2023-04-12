@@ -6,3 +6,6 @@ export const couleurDuFondHistogrammeDeDépassement = "#C9191E";
 export const couleurSecondPlanHistogrammeDeDépassement = "#FFE9E9";
 export const couleurDelAbscisse = "#161616";
 export const couleurIdentifiant = "#000";
+export const couleurDeFondDuBloc = "#F6F6F6";
+export const couleurErreur = "#C9191E";
+export const couleurDuFondHistogrammeBleuFoncé = "#2F4077"

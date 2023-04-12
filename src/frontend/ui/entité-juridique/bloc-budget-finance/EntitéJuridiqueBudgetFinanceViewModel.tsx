@@ -5,6 +5,7 @@ import { HistogrammeData } from "../../commun/Graphique/HistogrammesHorizontaux"
 import { StringFormater } from "../../commun/StringFormater";
 import { ResultatNetComptableViewModel } from "../../indicateur-métier/resultat-net-comptable/ResultatNetComptableViewModel";
 import { RatioDependanceFinanciereViewModel } from "./ratio-dependance-financiere/RatioDependanceFinanciereViewModel";
+import { couleurDuFondHistogrammeBleuFoncé, couleurDuFondHistogrammeSecondaire } from "../../commun/Graphique/couleursGraphique";
 
 export class EntitéJuridiqueBudgetFinanceViewModel {
   private budgetEtFinance: EntitéJuridiqueBudgetFinance[];
@@ -177,7 +178,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   }
 
   private getBackgroundColorBudgetPrincipal() {
-    return ["#2F4077", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"];
+    return [couleurDuFondHistogrammeBleuFoncé, couleurDuFondHistogrammeSecondaire, couleurDuFondHistogrammeSecondaire, couleurDuFondHistogrammeSecondaire, couleurDuFondHistogrammeSecondaire];
   }
 
   get légendeChart(): string[] {

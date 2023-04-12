@@ -4,6 +4,7 @@ import { Wording } from "../../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../../utils/dateUtils";
 import { HistogrammeData } from "../../../commun/Graphique/HistogrammesHorizontaux";
 import { StringFormater } from "../../../commun/StringFormater";
+import { couleurDuFondHistogrammeSecondaire } from "../../../commun/Graphique/couleursGraphique";
 
 export class CompteDeResultatViewModel {
   private readonly nombreDAnnéesParIndicateur = 3;
@@ -79,7 +80,7 @@ export class CompteDeResultatViewModel {
   }
 
   private getLineColors() {
-    return ["#000091", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"];
+    return ["#000091", couleurDuFondHistogrammeSecondaire, couleurDuFondHistogrammeSecondaire, couleurDuFondHistogrammeSecondaire, couleurDuFondHistogrammeSecondaire];
   }
 
   public recettesOuProduits(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances): HistogrammeData {

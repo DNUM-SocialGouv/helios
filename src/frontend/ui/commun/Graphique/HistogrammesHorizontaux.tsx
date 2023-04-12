@@ -6,6 +6,7 @@ import { Bar } from "react-chartjs-2";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
+import { couleurDelAbscisse, couleurErreur, couleurIdentifiant } from "./couleursGraphique";
 import styles from "./HistogrammeHorizontaux.module.css";
 
 type Stack = { label?: string; data: number[]; backgroundColor: string[]; isError?: boolean[] };
@@ -35,7 +36,6 @@ function useChartData(charts: HistogrammeData[]) {
 }
 
 export class HistogrammeData {
-  couleurIdentifiant = "#000";
   public areStacksVisible: boolean[];
 
   /**
@@ -92,8 +92,6 @@ export class HistogrammeData {
     };
   }
 
-  private couleurErreur = "#C9191E";
-
   public get visibleStacks(): Stack[] {
     return this.stacks.filter((_, index) => this.areStacksVisible[index]);
   }
@@ -104,11 +102,11 @@ export class HistogrammeData {
       .reduce((isLabelInError, isErrorStack) => {
         return isLabelInError.map((isError, index) => isError || isErrorStack[index]);
       });
-    return isLabelsError.map((error) => (error ? this.couleurErreur : this.couleurIdentifiant));
+    return isLabelsError.map((error) => (error ? couleurErreur : couleurIdentifiant));
   }
 
   private stackBackgroundColor(stack: Stack) {
-    return (stack.isError as boolean[]).map((error, index) => (error ? this.couleurErreur : stack.backgroundColor[index]));
+    return (stack.isError as boolean[]).map((error, index) => (error ? couleurErreur : stack.backgroundColor[index]));
   }
 
   public get transcriptionTitles(): string[] {
@@ -135,8 +133,6 @@ export class HistogrammeData {
   }
 
   public get optionsHistogramme() {
-    const couleurIdentifiant = "#000";
-    const couleurDelAbscisse = "#161616";
     const valeurMax = Math.max(...this.totals.map(Math.abs));
 
     return {

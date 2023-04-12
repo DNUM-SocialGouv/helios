@@ -1,12 +1,12 @@
 import { annéesManquantes } from "../../../utils/dateUtils";
 import { StringFormater } from "../../commun/StringFormater";
 import { IndicateurActivité } from "../IndicateurActivité";
+import { couleurDuFondHistogrammeSecondaire } from "../../commun/Graphique/couleursGraphique";
 
 export class GraphiqueNombreHADViewModel {
   public NOMBRE_ANNEES = 5;
   public valeurs: number[];
   private readonly années: number[];
-  readonly couleurDuFondHistogrammeSecondaire = "#4E68BB";
 
   constructor(private readonly indicateurActivité: IndicateurActivité[]) {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs();
@@ -36,7 +36,7 @@ export class GraphiqueNombreHADViewModel {
 
   get couleursDeLHistogramme() {
     return this.valeurs.map(() => {
-      return { premierPlan: this.couleurDuFondHistogrammeSecondaire };
+      return { premierPlan: couleurDuFondHistogrammeSecondaire };
     });
   }
 

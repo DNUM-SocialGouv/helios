@@ -2,6 +2,7 @@ import { ActiveElement, ArcElement, Chart as ChartJS, ChartData, ChartEvent, Cha
 import ChartDataLabels, { Context } from "chartjs-plugin-datalabels";
 import { Doughnut } from "react-chartjs-2";
 
+import { couleurDeFondDuBloc, couleurDelAbscisse, couleurErreur } from "./couleursGraphique";
 import styles from "./Donut.module.css";
 import { CouleurHistogramme, LibelléDeDonnéeGraphe } from "./GraphiqueViewModel";
 import { construisLePluginDeLaLegende } from "./LegendPlugin";
@@ -17,8 +18,6 @@ export function Donut(props: {
   total: number;
   idDeLaLégende: string;
 }): JSX.Element {
-  const couleurDeFondDuBloc = "#F6F6F6";
-
   const data: ChartData<"doughnut", number[], string> = {
     datasets: [
       {
@@ -47,7 +46,6 @@ export function Donut(props: {
 function optionsDiagrammeDoughnut(texteCentral: string, totalDesValeurs: number, idDeLaLégende: string): ChartOptions<"doughnut"> {
   const AUCUN_ARC_SURVOLÉ = -1;
   let indexDeLArcSurvolé = AUCUN_ARC_SURVOLÉ;
-  const couleurDelAbscisse = "#161616";
 
   const unArcEstSurvolé = (élémentsActifs: ActiveElement[]) => élémentsActifs.length && élémentsActifs[0].element instanceof ArcElement;
   const metsEnGrasLaPoliceDuLibelléDeLégende = (élément: Element) => {
@@ -146,7 +144,6 @@ export const couleurDesArcsDuDonut = {
 };
 
 const couleurDuFondHistogrammeDeDépassementTransparent = "rgba(201, 25, 30, 0.5)";
-const couleurDuFondHistogrammeDeDépassement = "#C9191E";
 
 const associeLaCouleurTransparente: Record<string, string> = {
   [couleurDesArcsDuDonut.opaque[0]]: couleurDesArcsDuDonut.transparent[0],
@@ -155,7 +152,7 @@ const associeLaCouleurTransparente: Record<string, string> = {
   [couleurDesArcsDuDonut.opaque[3]]: couleurDesArcsDuDonut.transparent[3],
   [couleurDesArcsDuDonut.opaque[4]]: couleurDesArcsDuDonut.transparent[4],
   [couleurDesArcsDuDonut.opaque[5]]: couleurDesArcsDuDonut.transparent[5],
-  [couleurDuFondHistogrammeDeDépassement]: couleurDuFondHistogrammeDeDépassementTransparent,
+  [couleurErreur]: couleurDuFondHistogrammeDeDépassementTransparent,
 };
 
 const associeLaCouleurOpaque: Record<string, string> = {
@@ -165,7 +162,7 @@ const associeLaCouleurOpaque: Record<string, string> = {
   [couleurDesArcsDuDonut.transparent[3]]: couleurDesArcsDuDonut.opaque[3],
   [couleurDesArcsDuDonut.transparent[4]]: couleurDesArcsDuDonut.opaque[4],
   [couleurDesArcsDuDonut.transparent[5]]: couleurDesArcsDuDonut.opaque[5],
-  [couleurDuFondHistogrammeDeDépassementTransparent]: couleurDuFondHistogrammeDeDépassement,
+  [couleurDuFondHistogrammeDeDépassementTransparent]: couleurErreur,
 };
 
 function construisLePluginDeTexteAuCentreDuDonut() {

@@ -3,6 +3,7 @@ import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
 import { HistogrammeData } from "../../commun/Graphique/HistogrammesHorizontaux";
 import { StringFormater } from "../../commun/StringFormater";
+import { couleurDuFondHistogrammeSecondaire } from "../../commun/Graphique/couleursGraphique";
 
 interface AnneeModifiable {
   NOMBRE_ANNEES: number;
@@ -122,7 +123,7 @@ export class GraphiqueCapacitésParActivitéViewModel implements AnneeModifiable
       [
         {
           data: lits,
-          backgroundColor: ["#4E68BB"],
+          backgroundColor: [couleurDuFondHistogrammeSecondaire],
           isError: [false],
           label: this.wording.LITS,
         },
@@ -140,7 +141,7 @@ export class GraphiqueCapacitésParActivitéViewModel implements AnneeModifiable
       [
         {
           data: places,
-          backgroundColor: ["#4E68BB"],
+          backgroundColor: [couleurDuFondHistogrammeSecondaire],
           isError: [false],
           label: this.wording.PLACES,
         },
