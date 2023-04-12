@@ -30,7 +30,9 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
 
   public get lesDonnéesBudgetEtFinanceNeSontPasRenseignées() {
     return (
-      !this.budgetEtFinance || this.budgetEtFinance.length === 0 || (this.compteDeResultatVide() && !this.resultatNetComptable.auMoinsUnResultatNetRenseigné())
+      !this.budgetEtFinance ||
+      this.budgetEtFinance.length === 0 ||
+      (this.compteDeResultatVide() && !this.resultatNetComptable.auMoinsUnResultatNetRenseigné() && !this.ratioDependanceFinanciere.auMoinsUnRatioRenseigné())
     );
   }
 

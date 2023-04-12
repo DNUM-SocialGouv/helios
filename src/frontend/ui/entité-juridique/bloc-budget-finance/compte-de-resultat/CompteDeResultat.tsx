@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { HistogrammesHorizontaux } from "../../../commun/Graphique/HistogrammesHorizontaux";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
-import { ContenuCompteDeRésultatEJ } from "../../info-bulle/ContenuCompteDeRésultatEJ";
 import { EntitéJuridiqueBudgetFinanceViewModel } from "../EntitéJuridiqueBudgetFinanceViewModel";
+import { ContenuCompteDeRésultatEJ } from "./ContenuCompteDeRésultatEJ";
 
 type BlocBudgetFinanceProps = Readonly<{
   entitéJuridiqueBudgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;

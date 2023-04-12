@@ -27,6 +27,7 @@ describe("Bloc Budget et Finance", () => {
         année: 2022,
         depensesTitreIGlobal: null,
         resultatNetComptable: null,
+        ratioDependanceFinanciere: null,
       } as EntitéJuridiqueBudgetFinance,
     ];
     const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, wording);
@@ -72,6 +73,24 @@ describe("Bloc Budget et Finance", () => {
 
     // THEN
     const titre = screen.getAllByText(wording.RÉSULTAT_NET_COMPTABLE);
+    expect(titre).not.toHaveLength(0);
+  });
+
+  it("affiche l'indicateur ratio dépendance financière s'il y a de la données", () => {
+    // GIVEN
+    const budgetFinance: EntitéJuridiqueBudgetFinance[] = [
+      {
+        année: 2022,
+        ratioDependanceFinanciere: 0.5,
+      } as EntitéJuridiqueBudgetFinance,
+    ];
+    const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, wording);
+
+    // WHEN
+    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} />);
+
+    // THEN
+    const titre = screen.getAllByText(wording.RATIO_DEPENDANCE_FINANCIERE);
     expect(titre).not.toHaveLength(0);
   });
 });

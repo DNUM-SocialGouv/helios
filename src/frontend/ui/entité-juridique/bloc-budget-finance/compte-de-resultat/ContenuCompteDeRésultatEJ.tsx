@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 
-import { useDependencies } from "../../commun/contexts/useDependencies";
+import { useDependencies } from "../../../commun/contexts/useDependencies";
 
 type ContenuCompteDeRésultatEJProps = Readonly<{
   dateDeMiseÀJour: string;
