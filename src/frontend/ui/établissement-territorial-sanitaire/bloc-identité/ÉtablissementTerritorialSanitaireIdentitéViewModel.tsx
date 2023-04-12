@@ -22,7 +22,7 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
   }
 
   public get dateDeMiseÀJourDuNomDeLÉtablissementTerritorial(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialSanitaireIdentité.raisonSociale.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialSanitaireIdentité.raisonSociale.dateMiseÀJourSource);
   }
 
   public get numéroFinessÉtablissementTerritorial(): string {
@@ -30,7 +30,7 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
   }
 
   public get dateDeMiseÀJourDuSiret(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialSanitaireIdentité.siret.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialSanitaireIdentité.siret.dateMiseÀJourSource);
   }
 
   public get siret(): string {
@@ -38,7 +38,7 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
   }
 
   public get dateDeMiseÀJourDuNuméroFinessÉtablissementTerritorial(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialSanitaireIdentité.numéroFinessÉtablissementTerritorial.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialSanitaireIdentité.numéroFinessÉtablissementTerritorial.dateMiseÀJourSource);
   }
 
   public get adresse(): string {
@@ -46,19 +46,17 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
   }
 
   public get dateDeMiseÀJourDeLAdresse(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialSanitaireIdentité.adresseNuméroVoie.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialSanitaireIdentité.adresseNuméroVoie.dateMiseÀJourSource);
   }
 
   public get téléphoneEtEmail(): string {
-    const téléphoneFormaté = this.valeurOuNonRenseigné(
-      StringFormater.formateLeNuméroDeTéléphone(this.établissementTerritorialSanitaireIdentité.téléphone.value)
-    );
+    const téléphoneFormaté = this.valeurOuNonRenseigné(StringFormater.formatPhoneNumber(this.établissementTerritorialSanitaireIdentité.téléphone.value));
     const email = this.valeurOuNonRenseigné(this.établissementTerritorialSanitaireIdentité.courriel.value);
     return `${téléphoneFormaté} | ${email}`;
   }
 
   public get dateDeMiseÀJourDutéléphoneEtDeLEmail(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialSanitaireIdentité.téléphone.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialSanitaireIdentité.téléphone.dateMiseÀJourSource);
   }
 
   public get entitéJuridiqueDeRattachement(): ReactElement {
@@ -74,7 +72,7 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
   }
 
   public get dateDeMiseÀJourDeLEntitéJuridiqueDeRattachement(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialSanitaireIdentité.raisonSocialeDeLEntitéDeRattachement.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialSanitaireIdentité.raisonSocialeDeLEntitéDeRattachement.dateMiseÀJourSource);
   }
 
   public get catégorieDeLÉtablissement(): string {
@@ -82,7 +80,7 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
   }
 
   public get dateDeMiseÀJourDeLaCatégorieDeLÉtablissement(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialSanitaireIdentité.catégorieÉtablissement.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialSanitaireIdentité.catégorieÉtablissement.dateMiseÀJourSource);
   }
 
   public get modeDeTarification(): string {
@@ -90,7 +88,7 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
   }
 
   public get dateDeMiseÀJourDuModeDeTarification(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialSanitaireIdentité.codeModeTarification.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialSanitaireIdentité.codeModeTarification.dateMiseÀJourSource);
   }
 
   public get statutDeLÉtablissement(): string {
@@ -98,7 +96,7 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
   }
 
   public get dateDeMiseÀJourDuStatutDeLÉtablissement(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialSanitaireIdentité.statutJuridique.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialSanitaireIdentité.statutJuridique.dateMiseÀJourSource);
   }
 
   private valeurOuNonRenseigné(valeur: string): string {

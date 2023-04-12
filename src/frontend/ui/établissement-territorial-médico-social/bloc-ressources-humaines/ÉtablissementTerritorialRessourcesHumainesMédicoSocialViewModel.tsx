@@ -86,7 +86,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
   }
 
   public get dateDeMiseÀJourDuNombreDEtpRéalisé(): string {
-    return StringFormater.formateLaDate(this.ressourcesHumainesMédicoSocial[0].nombreDEtpRéalisés.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.ressourcesHumainesMédicoSocial[0].nombreDEtpRéalisés.dateMiseÀJourSource);
   }
 
   private get leNombreDeCddDeRemplacementEstIlRenseigné(): boolean {
@@ -115,7 +115,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
   }
 
   public get dateDeMiseÀJourDuNombreDeCddDeRemplacement(): string {
-    return StringFormater.formateLaDate(this.ressourcesHumainesMédicoSocial[0].nombreDeCddDeRemplacement.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.ressourcesHumainesMédicoSocial[0].nombreDeCddDeRemplacement.dateMiseÀJourSource);
   }
 
   private get leTauxDePrestationsExternesEstIlRenseigné(): boolean {
@@ -166,7 +166,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
   }
 
   public get dateDeMiseÀJourDuTauxDePrestationsExternes(): string {
-    return StringFormater.formateLaDate(this.ressourcesHumainesMédicoSocial[0].tauxDePrestationsExternes.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.ressourcesHumainesMédicoSocial[0].tauxDePrestationsExternes.dateMiseÀJourSource);
   }
 
   private get leTauxDEtpVacantsEstIlRenseigné(): boolean {
@@ -217,7 +217,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
   }
 
   public get dateDeMiseÀJourDuTauxDEtpVacants(): string {
-    return StringFormater.formateLaDate(this.ressourcesHumainesMédicoSocial[0].tauxDEtpVacants.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.ressourcesHumainesMédicoSocial[0].tauxDEtpVacants.dateMiseÀJourSource);
   }
 
   private get leTauxDeRotationDuPersonnelEstIlRenseigné(): boolean {
@@ -268,7 +268,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
   }
 
   public get dateDeMiseÀJourDuTauxDeRotationDuPersonnel(): string {
-    return StringFormater.formateLaDate(this.ressourcesHumainesMédicoSocial[0].tauxDeRotationDuPersonnel.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.ressourcesHumainesMédicoSocial[0].tauxDeRotationDuPersonnel.dateMiseÀJourSource);
   }
 
   private get lesTauxDAbsentéismeEstIlRenseigné(): boolean {
@@ -296,7 +296,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
     });
     const valeursDesTauxDAbsentéismes = valeursAvecMotif.map((tauxDAbsentéisme) => tauxDAbsentéisme.valeur);
     const motifsDesTauxDAbsentéismes = valeursAvecMotif.map((tauxDAbsentéisme) => tauxDAbsentéisme.motif);
-    const pourcentageDuTauxDAbsentéismeHorsFormation = StringFormater.ajouteLePourcentage([tauxDAbsentéismeHorsFormation])[0];
+    const pourcentageDuTauxDAbsentéismeHorsFormation = StringFormater.addPercentToValues([tauxDAbsentéismeHorsFormation])[0];
     const texteCentral = this.leTauxDAbsentéismeHorsFormationEstIlDansLesBornesAcceptables(tauxDAbsentéismeHorsFormation)
       ? pourcentageDuTauxDAbsentéismeHorsFormation
       : `! ${pourcentageDuTauxDAbsentéismeHorsFormation}`;
@@ -327,7 +327,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
           entêteLibellé={this.wording.MOTIF_DU_TAUX_D_ABSENTÉISME}
           identifiants={[this.wording.TAUX]}
           libellés={motifsDesTauxDAbsentéismes}
-          valeurs={[StringFormater.ajouteLePourcentage(valeursDesTauxDAbsentéismes)]}
+          valeurs={[StringFormater.addPercentToValues(valeursDesTauxDAbsentéismes)]}
         />
       </>
     );
@@ -345,7 +345,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
   }
 
   public get dateDeMiseÀJourDesTauxDAbsentéismes(): string {
-    return StringFormater.formateLaDate(this.ressourcesHumainesMédicoSocial[0].tauxDAbsentéisme.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.ressourcesHumainesMédicoSocial[0].tauxDAbsentéisme.dateMiseÀJourSource);
   }
 
   private construisLesTauxDAbsentéisme(
@@ -353,42 +353,42 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
   ): [{ valeur: number; motif: string }[], number] {
     const valeursAvecMotif = [];
 
-    const tauxDAbsentéismeHorsFormation = StringFormater.transformeEnTaux(tauxDAbsentéismesDeLAnnéeEnCours.horsFormation || 0);
+    const tauxDAbsentéismeHorsFormation = StringFormater.transformInRate(tauxDAbsentéismesDeLAnnéeEnCours.horsFormation || 0);
 
     if (this.leTauxEstIlRenseigné(tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieCourteDurée)) {
       valeursAvecMotif.push({
         motif: this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_COURTE_DURÉE,
-        valeur: StringFormater.transformeEnTaux(tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieCourteDurée as number),
+        valeur: StringFormater.transformInRate(tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieCourteDurée as number),
       });
     }
     if (this.leTauxEstIlRenseigné(tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieMoyenneDurée)) {
       valeursAvecMotif.push({
         motif: this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_MOYENNE_DURÉE,
-        valeur: StringFormater.transformeEnTaux(tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieMoyenneDurée as number),
+        valeur: StringFormater.transformInRate(tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieMoyenneDurée as number),
       });
     }
     if (this.leTauxEstIlRenseigné(tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieLongueDurée)) {
       valeursAvecMotif.push({
         motif: this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_LONGUE_DURÉE,
-        valeur: StringFormater.transformeEnTaux(tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieLongueDurée as number),
+        valeur: StringFormater.transformInRate(tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieLongueDurée as number),
       });
     }
     if (this.leTauxEstIlRenseigné(tauxDAbsentéismesDeLAnnéeEnCours.pourAccidentMaladieProfessionnelle)) {
       valeursAvecMotif.push({
         motif: this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE,
-        valeur: StringFormater.transformeEnTaux(tauxDAbsentéismesDeLAnnéeEnCours.pourAccidentMaladieProfessionnelle as number),
+        valeur: StringFormater.transformInRate(tauxDAbsentéismesDeLAnnéeEnCours.pourAccidentMaladieProfessionnelle as number),
       });
     }
     if (this.leTauxEstIlRenseigné(tauxDAbsentéismesDeLAnnéeEnCours.pourMaternitéPaternité)) {
       valeursAvecMotif.push({
         motif: this.wording.TAUX_D_ABSENTÉISME_POUR_MATERNITÉ_PATERNITÉ,
-        valeur: StringFormater.transformeEnTaux(tauxDAbsentéismesDeLAnnéeEnCours.pourMaternitéPaternité as number),
+        valeur: StringFormater.transformInRate(tauxDAbsentéismesDeLAnnéeEnCours.pourMaternitéPaternité as number),
       });
     }
     if (this.leTauxEstIlRenseigné(tauxDAbsentéismesDeLAnnéeEnCours.pourCongésSpéciaux)) {
       valeursAvecMotif.push({
         motif: this.wording.TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX,
-        valeur: StringFormater.transformeEnTaux(tauxDAbsentéismesDeLAnnéeEnCours.pourCongésSpéciaux as number),
+        valeur: StringFormater.transformInRate(tauxDAbsentéismesDeLAnnéeEnCours.pourCongésSpéciaux as number),
       });
     }
 
@@ -448,7 +448,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
       const valeur = ressourceHumaineMédicoSocial[indicateur].valeur;
       if (valeur !== null) {
         années.push(ressourceHumaineMédicoSocial.année);
-        valeurs.push(StringFormater.transformeEnTaux(valeur));
+        valeurs.push(StringFormater.transformInRate(valeur));
       }
     });
 

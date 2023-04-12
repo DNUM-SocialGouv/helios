@@ -5,6 +5,7 @@ import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicat
 import { ResultatNetComptable } from "../../indicateur-métier/resultat-net-comptable/ResultatNetComptable";
 import { CompteDeResultat } from "./compte-de-resultat/CompteDeResultat";
 import { EntitéJuridiqueBudgetFinanceViewModel } from "./EntitéJuridiqueBudgetFinanceViewModel";
+import { RatioDependanceFinanciere } from "./ratio-dependance-financiere/RatioDependanceFinanciere";
 
 type BlocBudgetFinanceProps = Readonly<{
   entitéJuridiqueBudgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;
@@ -20,7 +21,12 @@ export const BlocBudgetFinance = ({ entitéJuridiqueBudgetFinanceViewModel }: Bl
     <Bloc titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES}>
       <ul className="indicateurs">
         <CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueBudgetFinanceViewModel} />
-        <ResultatNetComptable estEntitéJuridique={true} resultatNetComptableViewModel={entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable} />
+        <div className="fr-grid-row">
+          <ResultatNetComptable estEntitéJuridique={true} resultatNetComptableViewModel={entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable} />
+          {isFeatureEnabled(FEATURE_NAME.DEPENDANCE_FINANCIERE_EJ) && (
+            <RatioDependanceFinanciere ratioDependanceFinanciereViewModel={entitéJuridiqueBudgetFinanceViewModel.ratioDependanceFinanciere} />
+          )}
+        </div>
       </ul>
     </Bloc>
   );

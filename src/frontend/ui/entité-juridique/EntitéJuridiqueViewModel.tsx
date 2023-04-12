@@ -49,7 +49,7 @@ export class EntitéJuridiqueViewModel {
   }
 
   public get dateDeMiseÀJourDuNomDeLEntitéJuridique(): string {
-    return StringFormater.formateLaDate(this.entitéJuridique.raisonSociale.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.entitéJuridique.raisonSociale.dateMiseÀJourSource);
   }
 
   public get numéroFiness(): string {
@@ -57,7 +57,7 @@ export class EntitéJuridiqueViewModel {
   }
 
   public get dateDeMiseÀJourDusiren(): string {
-    return StringFormater.formateLaDate(this.entitéJuridique.siren.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.entitéJuridique.siren.dateMiseÀJourSource);
   }
 
   public get siren(): string {
@@ -65,7 +65,7 @@ export class EntitéJuridiqueViewModel {
   }
 
   public get dateDeMiseÀJourDuNuméroFiness(): string {
-    return StringFormater.formateLaDate(this.entitéJuridique.numéroFinessEntitéJuridique.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.entitéJuridique.numéroFinessEntitéJuridique.dateMiseÀJourSource);
   }
 
   public get adresse(): string {
@@ -73,15 +73,15 @@ export class EntitéJuridiqueViewModel {
   }
 
   public get dateDeMiseÀJourDeLAdresse(): string {
-    return StringFormater.formateLaDate(this.entitéJuridique.adresseNuméroVoie.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.entitéJuridique.adresseNuméroVoie.dateMiseÀJourSource);
   }
 
   public get téléphone(): string {
-    return this.valeurOuNonRenseigné(StringFormater.formateLeNuméroDeTéléphone(this.entitéJuridique.téléphone.value));
+    return this.valeurOuNonRenseigné(StringFormater.formatPhoneNumber(this.entitéJuridique.téléphone.value));
   }
 
   public get dateDeMiseÀJourDuTéléphone(): string {
-    return StringFormater.formateLaDate(this.entitéJuridique.téléphone.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.entitéJuridique.téléphone.dateMiseÀJourSource);
   }
 
   public get statutDeLEntitéJuridique(): string {
@@ -89,7 +89,7 @@ export class EntitéJuridiqueViewModel {
   }
 
   public get dateDeMiseÀJourDuStatutDeLEntitéJuridique(): string {
-    return StringFormater.formateLaDate(this.entitéJuridique.libelléStatutJuridique.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.entitéJuridique.libelléStatutJuridique.dateMiseÀJourSource);
   }
 
   private valeurOuNonRenseigné(valeur: string): string {

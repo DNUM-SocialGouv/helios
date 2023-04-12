@@ -4,17 +4,20 @@ import { annéesManquantes } from "../../../utils/dateUtils";
 import { HistogrammeData } from "../../commun/Graphique/HistogrammesHorizontaux";
 import { StringFormater } from "../../commun/StringFormater";
 import { ResultatNetComptableViewModel } from "../../indicateur-métier/resultat-net-comptable/ResultatNetComptableViewModel";
+import { RatioDependanceFinanciereViewModel } from "./ratio-dependance-financiere/RatioDependanceFinanciereViewModel";
 
 export class EntitéJuridiqueBudgetFinanceViewModel {
   private budgetEtFinance: EntitéJuridiqueBudgetFinance[];
   public resultatNetComptable: ResultatNetComptableViewModel;
   private wording: Wording;
   public NOMBRE_ANNEES = 5;
+  public ratioDependanceFinanciere: RatioDependanceFinanciereViewModel;
 
   constructor(budgetFinance: EntitéJuridiqueBudgetFinance[], wording: Wording) {
     this.wording = wording;
     this.budgetEtFinance = budgetFinance;
     this.resultatNetComptable = new ResultatNetComptableViewModel(budgetFinance);
+    this.ratioDependanceFinanciere = new RatioDependanceFinanciereViewModel(budgetFinance);
   }
 
   public get annéeInitiale() {
@@ -27,7 +30,9 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
 
   public get lesDonnéesBudgetEtFinanceNeSontPasRenseignées() {
     return (
-      !this.budgetEtFinance || this.budgetEtFinance.length === 0 || (this.compteDeResultatVide() && !this.resultatNetComptable.auMoinsUnResultatNetRenseigné())
+      !this.budgetEtFinance ||
+      this.budgetEtFinance.length === 0 ||
+      (this.compteDeResultatVide() && !this.resultatNetComptable.auMoinsUnResultatNetRenseigné() && !this.ratioDependanceFinanciere.auMoinsUnRatioRenseigné())
     );
   }
 
@@ -64,7 +69,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   }
 
   public get dateMiseÀJour(): string {
-    return StringFormater.formateLaDate(this.budgetEtFinance[0]?.dateMiseÀJourSource as string);
+    return StringFormater.formatDate(this.budgetEtFinance[0]?.dateMiseÀJourSource as string);
   }
 
   public dataGraphiqueCharges(budget: EntitéJuridiqueBudgetFinance): HistogrammeData {
@@ -113,7 +118,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
           isError: depensesAnnexes.map((depense) => depense > 0),
         },
       ],
-      StringFormater.formateLeMontantEnEuros
+      StringFormater.formatInEuro
     );
   }
 
@@ -163,7 +168,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
           isError: produitsAnnexes.map((depense) => depense < 0),
         },
       ],
-      StringFormater.formateLeMontantEnEuros
+      StringFormater.formatInEuro
     );
   }
 

@@ -31,7 +31,7 @@ export function ResultatNetComptable({ resultatNetComptableViewModel, estEntité
       source={sourceName}
     >
       <IndicateurTabulaire
-        annéesManquantes={resultatNetComptableViewModel.lesAnnéesManquantesDuCompteDeRésultat()}
+        annéesManquantes={resultatNetComptableViewModel.lesAnnéesManquantesDuResultatNet()}
         valeursParAnnée={resultatNetComptableViewModel.resultatNetComptable()}
       />
     </IndicateurGraphique>

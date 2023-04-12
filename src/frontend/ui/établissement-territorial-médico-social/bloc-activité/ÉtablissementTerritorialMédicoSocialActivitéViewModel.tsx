@@ -55,7 +55,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   }
 
   public get dateDeMiseÀJourDuTauxOccupationHébergementPermanent(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialActivité[0].tauxOccupationHébergementPermanent.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialActivité[0].tauxOccupationHébergementPermanent.dateMiseÀJourSource);
   }
 
   public get leTauxOccupationHébergementTemporaireEstIlRenseigné(): boolean {
@@ -80,7 +80,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   }
 
   public get dateDeMiseÀJourDuTauxOccupationHébergementTemporaire(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialActivité[0].tauxOccupationHébergementTemporaire.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialActivité[0].tauxOccupationHébergementTemporaire.dateMiseÀJourSource);
   }
 
   public get leTauxOccupationAccueilDeJourEstIlRenseigné(): boolean {
@@ -105,7 +105,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   }
 
   public get dateDeMiseÀJourDuTauxOccupationAccueilDeJour(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialActivité[0].tauxOccupationAccueilDeJour.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialActivité[0].tauxOccupationAccueilDeJour.dateMiseÀJourSource);
   }
 
   public get leTauxRéalisationActivitéEstIlRenseigné(): boolean {
@@ -130,7 +130,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   }
 
   public get dateDeMiseÀJourDuTauxRéalisationActivité(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialActivité[0].tauxRéalisationActivité.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialActivité[0].tauxRéalisationActivité.dateMiseÀJourSource);
   }
 
   public get laFileActivePersonnesAccompagnéesEstElleRenseignée(): boolean {
@@ -154,7 +154,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   }
 
   public get dateDeMiseÀJourDeLaFileActivePersonnesAccompagnées(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialActivité[0].fileActivePersonnesAccompagnées.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialActivité[0].fileActivePersonnesAccompagnées.dateMiseÀJourSource);
   }
 
   public get leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné(): boolean {
@@ -178,7 +178,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   }
 
   public get dateDeMiseÀJourDuNombreMoyenJournéesAbsencePersonnesAccompagnées(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialActivité[0].nombreMoyenJournéesAbsencePersonnesAccompagnées.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialActivité[0].nombreMoyenJournéesAbsencePersonnesAccompagnées.dateMiseÀJourSource);
   }
 
   public get laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée(): boolean {
@@ -202,7 +202,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   }
 
   public get dateDeMiseÀJourDeLaDuréeMoyenneSéjourAccompagnementPersonnesSorties(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialActivité[0].duréeMoyenneSéjourAccompagnementPersonnesSorties.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialActivité[0].duréeMoyenneSéjourAccompagnementPersonnesSorties.dateMiseÀJourSource);
   }
 
   private leTauxEstIlDansLesBornesAcceptables = (valeur: number): boolean => {
@@ -221,7 +221,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
 
       if (activité[indicateur].value !== null) {
         // @ts-ignore
-        valeurs.push(StringFormater.transformeEnTaux(activité[indicateur].value));
+        valeurs.push(StringFormater.transformInRate(activité[indicateur].value));
       }
     });
 

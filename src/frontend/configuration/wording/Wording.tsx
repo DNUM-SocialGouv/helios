@@ -181,6 +181,8 @@ export interface Wording {
   readonly MONTANT: string;
   readonly TAUX_DE_VÉTUSTÉ_CONSTRUCTION: string;
   readonly RÉSULTAT_NET_COMPTABLE: string;
+
+  readonly RATIO_DEPENDANCE_FINANCIERE: string;
   readonly COMPTE_DE_RÉSULTAT_ERRD: string;
   readonly COMPTE_DE_RÉSULTAT_CA: string;
   readonly TITRE_BUDGÉTAIRE: string;

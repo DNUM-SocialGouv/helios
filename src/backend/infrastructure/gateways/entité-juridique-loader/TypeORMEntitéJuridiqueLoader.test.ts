@@ -237,7 +237,7 @@ describe("Entité juridique loader", () => {
       budgetFinanceEntiteJuridique.recettesTitreIIIH = 30;
       budgetFinanceEntiteJuridique.resultatNetComptableSan = 0.1;
       budgetFinanceEntiteJuridique.tauxDeCafNetteSan = 0.2;
-      budgetFinanceEntiteJuridique.ratioDependeanceFinanciere = 0.3;
+      budgetFinanceEntiteJuridique.ratioDependanceFinanciere = 0.3;
 
       await budgetFinanceEntiteJuridiqueRepository.insert(budgetFinanceEntiteJuridique);
 
@@ -287,6 +287,8 @@ describe("Entité juridique loader", () => {
           totalRecettesAnnexe: 940,
 
           resultatNetComptable: 0.1,
+
+          ratioDependanceFinanciere: 0.3,
         } as EntitéJuridiqueBudgetFinance,
       ]);
     });

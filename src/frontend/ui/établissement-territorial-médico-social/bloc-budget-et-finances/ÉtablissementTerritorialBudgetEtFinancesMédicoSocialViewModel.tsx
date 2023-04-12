@@ -48,7 +48,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
         if (budgetEtFinancesMédicoSocial.contributionAuxFraisDeSiège.valeur) {
           montantParAnnée.push({
             année: budgetEtFinancesMédicoSocial.année,
-            valeur: StringFormater.formateLeMontantEnEuros(budgetEtFinancesMédicoSocial.contributionAuxFraisDeSiège.valeur),
+            valeur: StringFormater.formatInEuro(budgetEtFinancesMédicoSocial.contributionAuxFraisDeSiège.valeur),
           });
         }
         return montantParAnnée;
@@ -64,7 +64,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
   }
 
   public get dateMiseÀJourMontantDeLaContributionAuxFraisDeSiège(): string {
-    return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].contributionAuxFraisDeSiège?.dateMiseÀJourSource as string);
+    return StringFormater.formatDate(this.budgetEtFinancesMédicoSocial[0].contributionAuxFraisDeSiège?.dateMiseÀJourSource as string);
   }
 
   public get leMontantDeLaContributionAuxFraisDeSiègeEstIlRenseigné(): boolean {
@@ -112,7 +112,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
   }
 
   public get dateMiseÀJourTauxDeVétustéConstruction(): string {
-    return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].tauxDeVétustéConstruction?.dateMiseÀJourSource as string);
+    return StringFormater.formatDate(this.budgetEtFinancesMédicoSocial[0].tauxDeVétustéConstruction?.dateMiseÀJourSource as string);
   }
 
   private leTauxDeVétustéConstructionEstIlAberrant = (valeur: number): boolean => {
@@ -125,7 +125,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
         if (budgetEtFinancesMédicoSocial.résultatNetComptable.valeur) {
           résultatNetComptableParAnnée.push({
             année: budgetEtFinancesMédicoSocial.année,
-            valeur: StringFormater.formateLeMontantEnEuros(budgetEtFinancesMédicoSocial.résultatNetComptable.valeur),
+            valeur: StringFormater.formatInEuro(budgetEtFinancesMédicoSocial.résultatNetComptable.valeur),
           });
         }
         return résultatNetComptableParAnnée;
@@ -139,7 +139,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
   }
 
   public get dateMiseÀJourRésultatNetComptable(): string {
-    return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].résultatNetComptable?.dateMiseÀJourSource as string);
+    return StringFormater.formatDate(this.budgetEtFinancesMédicoSocial[0].résultatNetComptable?.dateMiseÀJourSource as string);
   }
 
   public get leRésultatNetComptableEstIlRenseigné(): boolean {
@@ -182,7 +182,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
   }
 
   public get dateMiseÀJourTauxDeCaf(): string {
-    return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].tauxDeCafNette?.dateMiseÀJourSource as string);
+    return StringFormater.formatDate(this.budgetEtFinancesMédicoSocial[0].tauxDeCafNette?.dateMiseÀJourSource as string);
   }
 
   public get fondDeRoulementNetGlobal(): ReactElement {
@@ -194,7 +194,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
             fondsParAnnée.push({
               année: budgetEtFinancesMédicoSocial.année,
               miseEnForme: budgetEtFinancesMédicoSocial.fondsDeRoulement.valeur < 0 ? "fr-text--bold fr-text-default--error" : "",
-              valeur: StringFormater.formateLeMontantEnEuros(budgetEtFinancesMédicoSocial.fondsDeRoulement.valeur),
+              valeur: StringFormater.formatInEuro(budgetEtFinancesMédicoSocial.fondsDeRoulement.valeur),
             });
           }
         } else {
@@ -212,7 +212,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
   }
 
   public get dateMiseÀJourFondDeRoulementNetGlobal(): string {
-    return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].fondsDeRoulement?.dateMiseÀJourSource as string);
+    return StringFormater.formatDate(this.budgetEtFinancesMédicoSocial[0].fondsDeRoulement?.dateMiseÀJourSource as string);
   }
 
   public get leFondsDeRoulementEstIlRenseigné(): boolean {
@@ -276,7 +276,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
           entêteLibellé={this.wording.ANNÉE}
           identifiants={[this.wording.TAUX_DE_CAF]}
           libellés={années}
-          valeurs={[StringFormater.ajouteLePourcentage(valeurs)]}
+          valeurs={[StringFormater.addPercentToValues(valeurs)]}
         />
       </>
     );
@@ -373,7 +373,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       const valeur = budgetEtFinancesMédicoSocial[indicateur].valeur;
       if (valeur !== null) {
         années.push(budgetEtFinancesMédicoSocial.année);
-        valeurs.push(StringFormater.transformeEnTaux(valeur));
+        valeurs.push(StringFormater.transformInRate(valeur));
       }
     });
 

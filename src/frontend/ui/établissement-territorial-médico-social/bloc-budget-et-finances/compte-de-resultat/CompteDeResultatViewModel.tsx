@@ -74,7 +74,7 @@ export class CompteDeResultatViewModel {
           isError: dépensesOuCharges.map((depenses) => depenses > 0),
         },
       ],
-      StringFormater.formateLeMontantEnEuros
+      StringFormater.formatInEuro
     );
   }
 
@@ -107,7 +107,7 @@ export class CompteDeResultatViewModel {
           isError: recettesOuProduits.map((recette) => recette < 0),
         },
       ],
-      StringFormater.formateLeMontantEnEuros
+      StringFormater.formatInEuro
     );
   }
 
@@ -161,6 +161,6 @@ export class CompteDeResultatViewModel {
   }
 
   public get dateMiseÀJour(): string {
-    return StringFormater.formateLaDate(this.budgetEtFinancesMédicoSocial[0].tauxDeVétustéConstruction?.dateMiseÀJourSource as string);
+    return StringFormater.formatDate(this.budgetEtFinancesMédicoSocial[0].tauxDeVétustéConstruction?.dateMiseÀJourSource as string);
   }
 }

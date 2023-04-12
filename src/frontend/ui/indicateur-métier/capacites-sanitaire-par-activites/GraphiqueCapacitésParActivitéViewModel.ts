@@ -47,7 +47,7 @@ export class GraphiqueCapacitésParActivitéViewModel implements AnneeModifiable
   }
 
   public get dateDeMiseÀJourDeLaCapacitéInstalléeParActivités(): string {
-    return StringFormater.formateLaDate(this.capacitésSanitaire[0]?.dateMiseÀJourSource as string);
+    return StringFormater.formatDate(this.capacitésSanitaire[0]?.dateMiseÀJourSource as string);
   }
 
   public annéesManquantes(): number[] {
