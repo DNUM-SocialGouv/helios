@@ -2,6 +2,7 @@ import { CadreBudgétaire } from "../../../../../backend/métier/entities/établ
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
 import { Wording } from "../../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../../utils/dateUtils";
+import { couleurDuFondHistogrammePrimaire, couleurDuFondHistogrammeSecondaire } from "../../../commun/Graphique/couleursGraphique";
 import { HistogrammeData } from "../../../commun/Graphique/HistogrammesHorizontaux";
 import { StringFormater } from "../../../commun/StringFormater";
 
@@ -79,7 +80,13 @@ export class CompteDeResultatViewModel {
   }
 
   private getLineColors() {
-    return ["#000091", "#4E68BB", "#4E68BB", "#4E68BB", "#4E68BB"];
+    return [
+      couleurDuFondHistogrammePrimaire,
+      couleurDuFondHistogrammeSecondaire,
+      couleurDuFondHistogrammeSecondaire,
+      couleurDuFondHistogrammeSecondaire,
+      couleurDuFondHistogrammeSecondaire,
+    ];
   }
 
   public recettesOuProduits(budgetEtFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances): HistogrammeData {

@@ -1,5 +1,6 @@
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
+import { couleurDuFond, couleurDuFondHistogrammePrimaire, couleurDuFondHistogrammeSecondaire } from "../../commun/Graphique/couleursGraphique";
 import { CouleurHistogramme, GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../commun/StringFormater";
 import { IndicateurActivité } from "../IndicateurActivité";
@@ -36,12 +37,12 @@ export class NombrePassageAuxUrgencesViewModel extends GraphiqueViewModel {
     const construisLaCouleurDeLaBarreHorizontale = (_valeur: number, année: number | string): CouleurHistogramme => {
       return estCeLAnnéePassée(année)
         ? {
-            premierPlan: this.couleurDuFondHistogrammePrimaire,
-            secondPlan: this.couleurDuFond,
+            premierPlan: couleurDuFondHistogrammePrimaire,
+            secondPlan: couleurDuFond,
           }
         : {
-            premierPlan: this.couleurDuFondHistogrammeSecondaire,
-            secondPlan: this.couleurDuFond,
+            premierPlan: couleurDuFondHistogrammeSecondaire,
+            secondPlan: couleurDuFond,
           };
     };
     return this.construisLesCouleursDeLHistogramme(this.valeurs, this.années, construisLaCouleurDeLaBarreHorizontale);

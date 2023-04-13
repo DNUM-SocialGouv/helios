@@ -1,5 +1,11 @@
 import { ÉtablissementTerritorialSanitaireActivité } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
 import { Wording } from "../../../configuration/wording/Wording";
+import {
+  couleurDuFondHistogrammeBleuClair,
+  couleurDuFondHistogrammeBleuFoncé,
+  couleurDuFondHistogrammeRougeClair,
+  couleurDuFondHistogrammeRougeFoncé,
+} from "../../commun/Graphique/couleursGraphique";
 import { StringFormater } from "../../commun/StringFormater";
 
 type DonnéesDeDiagrammeDesJournéesPsyEtSsr = Readonly<{
@@ -15,10 +21,6 @@ export type ActivitesPsySSR = Pick<
 >;
 
 export class NombreDeJourneesPsySSRViewModel {
-  readonly couleurDuFondHistogrammeBleuClair = "#DEE5FD";
-  readonly couleurDuFondHistogrammeBleuFoncé = "#2F4077";
-  readonly couleurDuFondHistogrammeRougeClair = "#FEE9E6";
-  readonly couleurDuFondHistogrammeRougeFoncé = "#A94645";
   readonly identifiantDeLaLégendeDesJournéesPsyEtSsr = "légende-graphique-sanitaire-journées-psy-et-ssr";
   private nombreDeJournées: DonnéesDeDiagrammeDesJournéesPsyEtSsr;
   années: number[];
@@ -78,29 +80,29 @@ export class NombreDeJourneesPsySSRViewModel {
     return {
       datasets: [
         {
-          backgroundColor: this.couleurDuFondHistogrammeBleuClair,
-          borderColor: this.couleurDuFondHistogrammeBleuFoncé,
+          backgroundColor: couleurDuFondHistogrammeBleuClair,
+          borderColor: couleurDuFondHistogrammeBleuFoncé,
           data: this.nombreDeJournées.nombreJournéesPartiellesSsr,
           label: this.wording.HOSPITALISATION_PARTIELLE_SSR,
           stack: "Stack 1",
         },
         {
-          backgroundColor: this.couleurDuFondHistogrammeBleuFoncé,
-          borderColor: this.couleurDuFondHistogrammeBleuFoncé,
+          backgroundColor: couleurDuFondHistogrammeBleuFoncé,
+          borderColor: couleurDuFondHistogrammeBleuFoncé,
           data: this.nombreDeJournées.nombreJournéesComplètesSsr,
           label: this.wording.HOSPITALISATION_COMPLÈTE_SSR,
           stack: "Stack 1",
         },
         {
-          backgroundColor: this.couleurDuFondHistogrammeRougeClair,
-          borderColor: this.couleurDuFondHistogrammeRougeFoncé,
+          backgroundColor: couleurDuFondHistogrammeRougeClair,
+          borderColor: couleurDuFondHistogrammeRougeFoncé,
           data: this.nombreDeJournées.nombreJournéesPartiellesPsy,
           label: this.wording.HOSPITALISATION_PARTIELLE_PSY,
           stack: "Stack 2",
         },
         {
-          backgroundColor: this.couleurDuFondHistogrammeRougeFoncé,
-          borderColor: this.couleurDuFondHistogrammeRougeFoncé,
+          backgroundColor: couleurDuFondHistogrammeRougeFoncé,
+          borderColor: couleurDuFondHistogrammeRougeFoncé,
           data: this.nombreDeJournées.nombreJournéesComplètesPsy,
           label: this.wording.HOSPITALISATION_COMPLÈTE_PSY,
           stack: "Stack 2",

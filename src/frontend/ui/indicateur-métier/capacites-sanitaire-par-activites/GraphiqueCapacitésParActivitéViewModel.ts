@@ -1,6 +1,7 @@
 import { CapacitéSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
+import { couleurDuFondHistogrammeSecondaire } from "../../commun/Graphique/couleursGraphique";
 import { HistogrammeData } from "../../commun/Graphique/HistogrammesHorizontaux";
 import { StringFormater } from "../../commun/StringFormater";
 
@@ -122,7 +123,7 @@ export class GraphiqueCapacitésParActivitéViewModel implements AnneeModifiable
       [
         {
           data: lits,
-          backgroundColor: ["#4E68BB"],
+          backgroundColor: [couleurDuFondHistogrammeSecondaire],
           isError: [false],
           label: this.wording.LITS,
         },
@@ -140,7 +141,7 @@ export class GraphiqueCapacitésParActivitéViewModel implements AnneeModifiable
       [
         {
           data: places,
-          backgroundColor: ["#4E68BB"],
+          backgroundColor: [couleurDuFondHistogrammeSecondaire],
           isError: [false],
           label: this.wording.PLACES,
         },

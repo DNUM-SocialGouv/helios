@@ -21,14 +21,6 @@ export type CouleurHistogramme = Readonly<{
 
 export class GraphiqueViewModel {
   protected readonly SEUIL_DE_CONTRASTE_DES_LIBELLÉS_DES_TAUX = 20;
-  readonly couleurDuFond = "#E8EDFF";
-  readonly couleurDuFondHistogrammePrimaire = "#000091";
-  readonly couleurDuFondHistogrammeSecondaire = "#4E68BB";
-  readonly couleurDuFondDeLaLigne = "#929292";
-  readonly couleurDuFondHistogrammeDeDépassement = "#C9191E";
-  readonly couleurSecondPlanHistogrammeDeDépassement = "#FFE9E9";
-  readonly couleurDelAbscisse = "#161616";
-  readonly couleurIdentifiant = "#000";
   readonly policeGrasse = "bold";
   readonly policeNormale = "normal";
 

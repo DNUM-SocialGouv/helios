@@ -5,10 +5,9 @@ import { Wording } from "../../../configuration/wording/Wording";
 import stylesBlocActivité from "../../établissement-territorial-sanitaire/bloc-activité/BlocActivitéSanitaire.module.css";
 import { useDependencies } from "../contexts/useDependencies";
 import { Transcription } from "../Transcription/Transcription";
+import { couleurDelAbscisse } from "./couleursGraphique";
 
 function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuTooltip: Function, wording: Wording): ChartOptions<"bar"> {
-  const couleurDelAbscisse = "#161616";
-
   return {
     animation: false,
     elements: { bar: { borderWidth: 2 } },

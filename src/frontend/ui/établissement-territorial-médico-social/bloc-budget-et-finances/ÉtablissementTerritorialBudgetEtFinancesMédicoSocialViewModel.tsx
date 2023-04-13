@@ -7,6 +7,17 @@ import { CadreBudgétaire } from "../../../../backend/métier/entities/établiss
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
+import {
+  couleurDelAbscisse,
+  couleurDuFond,
+  couleurDuFondDeLaLigne,
+  couleurDuFondHistogrammePrimaire,
+  couleurDuFondHistogrammeSecondaire,
+  couleurIdentifiant,
+  couleurSecondPlanHistogrammeDeDépassement,
+  couleurErreur,
+  couleurDuSeuil,
+} from "../../commun/Graphique/couleursGraphique";
 import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
 import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
 import { IndicateurTabulaire, IndicateurTabulaireProps } from "../../commun/IndicateurTabulaire/IndicateurTabulaire";
@@ -22,7 +33,6 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
   private readonly seuilMinimalDuTauxDeCaf = -21;
   private readonly seuilMaximalDuTauxDeCaf = 21;
   private readonly seuilDuTauxDeCaf = 2;
-  private readonly couleurDuSeuil = "#18753C";
   private readonly nombreDAnnéesParIndicateur = 3;
   public compteDeResultatViewModel: CompteDeResultatViewModel;
 
@@ -80,21 +90,21 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
   public get tauxDeVétustéConstruction(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxDeVétustéConstruction");
     const construisLaCouleurDeLaBarre = (valeur: number, année: number | string): CouleurHistogramme => {
-      let premierPlan = this.couleurDuFondHistogrammeSecondaire;
-      let secondPlan = this.couleurDuFond;
+      let premierPlan = couleurDuFondHistogrammeSecondaire;
+      let secondPlan = couleurDuFond;
 
       if (estCeLAnnéePassée(année)) {
-        premierPlan = this.couleurDuFondHistogrammePrimaire;
-        secondPlan = this.couleurDuFond;
+        premierPlan = couleurDuFondHistogrammePrimaire;
+        secondPlan = couleurDuFond;
       }
 
       if (this.leTauxDeVétustéConstructionEstIlAberrant(valeur)) {
-        premierPlan = this.couleurDuFondHistogrammeDeDépassement;
-        secondPlan = this.couleurSecondPlanHistogrammeDeDépassement;
+        premierPlan = couleurErreur;
+        secondPlan = couleurSecondPlanHistogrammeDeDépassement;
       }
       return { premierPlan, secondPlan };
     };
-    const libellésDesValeurs = valeurs.map((valeur) => ({ couleur: valeur > this.seuilDuContrasteDuLibellé ? this.couleurDuFond : this.couleurIdentifiant }));
+    const libellésDesValeurs = valeurs.map((valeur) => ({ couleur: valeur > this.seuilDuContrasteDuLibellé ? couleurDuFond : couleurIdentifiant }));
     const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
 
     return (
@@ -155,21 +165,21 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
   public get tauxDeCaf(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxDeCafNette");
     const construisLaCouleurDeLaBarre = (valeur: number, année: number | string): CouleurHistogramme => {
-      let premierPlan = this.couleurDuFondHistogrammeSecondaire;
-      let secondPlan = this.couleurDuFond;
+      let premierPlan = couleurDuFondHistogrammeSecondaire;
+      let secondPlan = couleurDuFond;
 
       if (estCeLAnnéePassée(année)) {
-        premierPlan = this.couleurDuFondHistogrammePrimaire;
-        secondPlan = this.couleurDuFond;
+        premierPlan = couleurDuFondHistogrammePrimaire;
+        secondPlan = couleurDuFond;
       }
 
       if (this.leTauxDeCafEstIlAberrant(valeur)) {
-        premierPlan = this.couleurDuFondHistogrammeDeDépassement;
-        secondPlan = this.couleurSecondPlanHistogrammeDeDépassement;
+        premierPlan = couleurErreur;
+        secondPlan = couleurSecondPlanHistogrammeDeDépassement;
       }
       return { premierPlan, secondPlan };
     };
-    const libellésDesValeurs = valeurs.map(() => ({ couleur: this.couleurDuFond }));
+    const libellésDesValeurs = valeurs.map(() => ({ couleur: couleurDuFond }));
     const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
 
     return this.afficheLHistogrammeDuTauxDeCaf(
@@ -239,7 +249,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
           xAxisID: "x",
         },
         {
-          borderColor: this.couleurDuSeuil,
+          borderColor: couleurDuSeuil,
           data: [
             { x: -1, y: this.seuilDuTauxDeCaf },
             { x: 2, y: this.seuilDuTauxDeCaf },
@@ -248,7 +258,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
           xAxisID: "xLine",
         },
         {
-          borderColor: this.couleurDelAbscisse,
+          borderColor: couleurDelAbscisse,
           data: [
             { x: -1, y: 0 },
             { x: 2, y: 0 },
@@ -319,7 +329,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
             drawTicks: false,
           },
           ticks: {
-            color: this.couleurDelAbscisse,
+            color: couleurDelAbscisse,
             // @ts-ignore
             font: { weight: libellésDesTicks.map((libellé) => libellé.tailleDePolice) },
             padding: 10,
@@ -339,7 +349,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
         },
         y: {
           grid: {
-            color: this.couleurDuFondDeLaLigne,
+            color: couleurDuFondDeLaLigne,
             drawBorder: false,
             drawOnChartArea: true,
             drawTicks: false,
@@ -350,7 +360,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
             callback: (tickValue: string | number) => {
               return tickValue === this.seuilDuTauxDeCaf ? `${tickValue} (seuil)` : tickValue;
             },
-            color: this.couleurDelAbscisse,
+            color: couleurDelAbscisse,
             // @ts-ignore
             font: {
               weight: (context: ScriptableScaleContext) =>

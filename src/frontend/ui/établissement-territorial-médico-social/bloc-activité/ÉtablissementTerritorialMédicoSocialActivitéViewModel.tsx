@@ -4,6 +4,14 @@ import { ÉtablissementTerritorialMédicoSocial } from "../../../../backend/mét
 import { ÉtablissementTerritorialMédicoSocialActivité } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité";
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
+import {
+  couleurDuFond,
+  couleurDuFondHistogrammePrimaire,
+  couleurDuFondHistogrammeSecondaire,
+  couleurIdentifiant,
+  couleurSecondPlanHistogrammeDeDépassement,
+  couleurErreur,
+} from "../../commun/Graphique/couleursGraphique";
 import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
 import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
@@ -253,17 +261,17 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   }
 
   private construisLaCouleurDeLaBarreVerticale = (valeur: number, année: number | string): CouleurHistogramme => {
-    let premierPlan = this.couleurDuFondHistogrammeSecondaire;
-    let secondPlan = this.couleurDuFond;
+    let premierPlan = couleurDuFondHistogrammeSecondaire;
+    let secondPlan = couleurDuFond;
 
     if (estCeLAnnéePassée(année)) {
-      premierPlan = this.couleurDuFondHistogrammePrimaire;
-      secondPlan = this.couleurDuFond;
+      premierPlan = couleurDuFondHistogrammePrimaire;
+      secondPlan = couleurDuFond;
     }
 
     if (!this.leTauxEstIlDansLesBornesAcceptables(valeur)) {
-      premierPlan = this.couleurDuFondHistogrammeDeDépassement;
-      secondPlan = this.couleurSecondPlanHistogrammeDeDépassement;
+      premierPlan = couleurErreur;
+      secondPlan = couleurSecondPlanHistogrammeDeDépassement;
     }
     return { premierPlan, secondPlan };
   };
@@ -271,17 +279,17 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
   private construisLaCouleurDeLaBarreHorizontale = (_valeur: number, année: number | string): CouleurHistogramme => {
     return estCeLAnnéePassée(année)
       ? {
-          premierPlan: this.couleurDuFondHistogrammePrimaire,
-          secondPlan: this.couleurDuFond,
+          premierPlan: couleurDuFondHistogrammePrimaire,
+          secondPlan: couleurDuFond,
         }
       : {
-          premierPlan: this.couleurDuFondHistogrammeSecondaire,
-          secondPlan: this.couleurDuFond,
+          premierPlan: couleurDuFondHistogrammeSecondaire,
+          secondPlan: couleurDuFond,
         };
   };
 
   private construisLesLibellésDesValeurs(valeurs: number[]): LibelléDeDonnéeGraphe[] {
-    return valeurs.map((valeur) => ({ couleur: valeur > this.SEUIL_DE_CONTRASTE_DES_LIBELLÉS_DES_TAUX ? this.couleurDuFond : this.couleurIdentifiant }));
+    return valeurs.map((valeur) => ({ couleur: valeur > this.SEUIL_DE_CONTRASTE_DES_LIBELLÉS_DES_TAUX ? couleurDuFond : couleurIdentifiant }));
   }
 
   private construisLesLibellésDesTicks(libellés: (number | string)[]): LibelléDeTickGraphe[] {
