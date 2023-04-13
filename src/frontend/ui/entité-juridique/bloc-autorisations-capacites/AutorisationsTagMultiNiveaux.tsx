@@ -3,7 +3,7 @@ import { ReactElement, useState } from "react";
 
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../../commun/Tag";
-import style from "./TagMultiNiveaux.module.css";
+import style from "./AutorisationsTagMultiNiveaux.module.css";
 
 export type TagMultiNiveauxProps = {
   activites: Activite[];
@@ -56,6 +56,30 @@ const mockFormDetails: Forme[] = [
           {
             nom: "dateDeFin",
             valeur: "10/10/2023",
+          },
+          {
+            nom: "dateDeMiseEnOeuvre",
+            valeur: "13/05/2025",
+          },
+          {
+            nom: "dateDeMiseEnOeuvre",
+            valeur: "13/05/2025",
+          },
+          {
+            nom: "dateDeMiseEnOeuvre",
+            valeur: "13/05/2025",
+          },
+          {
+            nom: "dateDeMiseEnOeuvre",
+            valeur: "13/05/2025",
+          },
+          {
+            nom: "dateDeMiseEnOeuvre",
+            valeur: "13/05/2025",
+          },
+          {
+            nom: "dateDeMiseEnOeuvre",
+            valeur: "13/05/2025",
           },
           {
             nom: "dateDeMiseEnOeuvre",
