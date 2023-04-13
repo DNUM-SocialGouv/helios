@@ -1,0 +1,18 @@
+.liste-etablissements {
+    list-style: circle;
+}
+
+.etablissement {
+    display:grid;
+    grid-auto-flow: column;
+    grid-template-columns: min-content 5fr;
+    margin-left: 70px;
+}
+
+.etablissement > a {
+    width:max-content;
+    display:list-item;
+    list-style: disc;
+    height:fit-content;
+    margin-right:10px;
+}
