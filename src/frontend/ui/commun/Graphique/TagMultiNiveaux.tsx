@@ -1,10 +1,6 @@
 import Link from "next/link";
 import { ReactElement, useState } from "react";
 
-import {
-  CapacitéSanitaireEntitéJuridique,
-  EntitéJuridiqueAutorisationEtCapacité,
-} from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { useDependencies } from "../contexts/useDependencies";
 import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../Tag";
 import style from "./TagMultiNiveaux.module.css";
@@ -149,16 +145,8 @@ const mockPrimaryLabel = [
   },
 ];
 
-const mockCapacite: CapacitéSanitaireEntitéJuridique[] = [];
-
-const mockEJ: EntitéJuridiqueAutorisationEtCapacité = {
-  autreActivities: mockPrimaryLabel,
-  capacités: mockCapacite,
-  numéroFinessEntitéJuridique: "12345678",
-};
-
 export const TagMultiNiveauxMock = () => {
-  return <TagMultiNiveaux activites={mockEJ.autreActivities} />;
+  return <TagMultiNiveaux activites={mockPrimaryLabel} />;
 };
 
 export const TagMultiNiveaux = ({ activites }: TagMultiNiveauxProps): ReactElement => {
