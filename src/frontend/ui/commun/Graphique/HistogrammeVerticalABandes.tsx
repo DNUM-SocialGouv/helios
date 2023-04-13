@@ -8,7 +8,6 @@ import { Transcription } from "../Transcription/Transcription";
 import { couleurDelAbscisse } from "./couleursGraphique";
 
 function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuTooltip: Function, wording: Wording): ChartOptions<"bar"> {
-
   return {
     animation: false,
     elements: { bar: { borderWidth: 2 } },

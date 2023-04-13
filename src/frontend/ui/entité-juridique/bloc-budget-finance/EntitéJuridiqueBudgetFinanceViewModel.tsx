@@ -1,11 +1,11 @@
 import { EntitéJuridiqueBudgetFinance } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
+import { couleurDuFondHistogrammeBleuFoncé, couleurDuFondHistogrammeSecondaire } from "../../commun/Graphique/couleursGraphique";
 import { HistogrammeData } from "../../commun/Graphique/HistogrammesHorizontaux";
 import { StringFormater } from "../../commun/StringFormater";
 import { ResultatNetComptableViewModel } from "../../indicateur-métier/resultat-net-comptable/ResultatNetComptableViewModel";
 import { RatioDependanceFinanciereViewModel } from "./ratio-dependance-financiere/RatioDependanceFinanciereViewModel";
-import { couleurDuFondHistogrammeBleuFoncé, couleurDuFondHistogrammeSecondaire } from "../../commun/Graphique/couleursGraphique";
 
 export class EntitéJuridiqueBudgetFinanceViewModel {
   private budgetEtFinance: EntitéJuridiqueBudgetFinance[];
@@ -178,7 +178,13 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   }
 
   private getBackgroundColorBudgetPrincipal() {
-    return [couleurDuFondHistogrammeBleuFoncé, couleurDuFondHistogrammeSecondaire, couleurDuFondHistogrammeSecondaire, couleurDuFondHistogrammeSecondaire, couleurDuFondHistogrammeSecondaire];
+    return [
+      couleurDuFondHistogrammeBleuFoncé,
+      couleurDuFondHistogrammeSecondaire,
+      couleurDuFondHistogrammeSecondaire,
+      couleurDuFondHistogrammeSecondaire,
+      couleurDuFondHistogrammeSecondaire,
+    ];
   }
 
   get légendeChart(): string[] {

@@ -11,11 +11,12 @@ import {
   couleurDelAbscisse,
   couleurDuFond,
   couleurDuFondDeLaLigne,
-  couleurDuFondHistogrammeDeDépassement,
   couleurDuFondHistogrammePrimaire,
   couleurDuFondHistogrammeSecondaire,
   couleurIdentifiant,
   couleurSecondPlanHistogrammeDeDépassement,
+  couleurErreur,
+  couleurDuSeuil,
 } from "../../commun/Graphique/couleursGraphique";
 import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
 import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
@@ -32,7 +33,6 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
   private readonly seuilMinimalDuTauxDeCaf = -21;
   private readonly seuilMaximalDuTauxDeCaf = 21;
   private readonly seuilDuTauxDeCaf = 2;
-  private readonly couleurDuSeuil = "#18753C";
   private readonly nombreDAnnéesParIndicateur = 3;
   public compteDeResultatViewModel: CompteDeResultatViewModel;
 
@@ -99,7 +99,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       }
 
       if (this.leTauxDeVétustéConstructionEstIlAberrant(valeur)) {
-        premierPlan = couleurDuFondHistogrammeDeDépassement;
+        premierPlan = couleurErreur;
         secondPlan = couleurSecondPlanHistogrammeDeDépassement;
       }
       return { premierPlan, secondPlan };
@@ -174,7 +174,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
       }
 
       if (this.leTauxDeCafEstIlAberrant(valeur)) {
-        premierPlan = couleurDuFondHistogrammeDeDépassement;
+        premierPlan = couleurErreur;
         secondPlan = couleurSecondPlanHistogrammeDeDépassement;
       }
       return { premierPlan, secondPlan };
@@ -249,7 +249,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
           xAxisID: "x",
         },
         {
-          borderColor: this.couleurDuSeuil,
+          borderColor: couleurDuSeuil,
           data: [
             { x: -1, y: this.seuilDuTauxDeCaf },
             { x: 2, y: this.seuilDuTauxDeCaf },

@@ -1,13 +1,8 @@
 import { EntitéJuridiqueBudgetFinance } from "../../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
+import { couleurDuFond, couleurDuFondHistogrammeSecondaire, couleurErreur, couleurIdentifiant } from "../../../commun/Graphique/couleursGraphique";
 import { LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../../commun/Graphique/GraphiqueViewModel";
 import { CouleurHistogramme } from "../../../commun/Graphique/HistogrammeVertical";
 import { StringFormater } from "../../../commun/StringFormater";
-import {
-  couleurDuFond,
-  couleurDuFondHistogrammeSecondaire,
-  couleurErreur,
-  couleurIdentifiant
-} from "../../../commun/Graphique/couleursGraphique";
 
 type RatioDependanceFinanciere = { ratio: number | null; année: number; dateDeMiseÀJour: string };
 

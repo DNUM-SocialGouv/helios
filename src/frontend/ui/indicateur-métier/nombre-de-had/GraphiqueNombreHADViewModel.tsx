@@ -1,7 +1,7 @@
 import { annéesManquantes } from "../../../utils/dateUtils";
+import { couleurDuFondHistogrammeSecondaire } from "../../commun/Graphique/couleursGraphique";
 import { StringFormater } from "../../commun/StringFormater";
 import { IndicateurActivité } from "../IndicateurActivité";
-import { couleurDuFondHistogrammeSecondaire } from "../../commun/Graphique/couleursGraphique";
 
 export class GraphiqueNombreHADViewModel {
   public NOMBRE_ANNEES = 5;

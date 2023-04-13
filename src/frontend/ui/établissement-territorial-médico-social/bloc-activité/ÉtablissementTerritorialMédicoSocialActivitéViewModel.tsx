@@ -6,11 +6,11 @@ import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
 import {
   couleurDuFond,
-  couleurDuFondHistogrammeDeDépassement,
   couleurDuFondHistogrammePrimaire,
   couleurDuFondHistogrammeSecondaire,
   couleurIdentifiant,
   couleurSecondPlanHistogrammeDeDépassement,
+  couleurErreur,
 } from "../../commun/Graphique/couleursGraphique";
 import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
 import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
@@ -270,7 +270,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends Gr
     }
 
     if (!this.leTauxEstIlDansLesBornesAcceptables(valeur)) {
-      premierPlan = couleurDuFondHistogrammeDeDépassement;
+      premierPlan = couleurErreur;
       secondPlan = couleurSecondPlanHistogrammeDeDépassement;
     }
     return { premierPlan, secondPlan };

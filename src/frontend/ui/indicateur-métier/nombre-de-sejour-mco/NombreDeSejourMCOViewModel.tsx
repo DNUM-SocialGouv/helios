@@ -1,4 +1,12 @@
 import { Wording } from "../../../configuration/wording/Wording";
+import {
+  couleurDuFondHistogrammeBleuClair,
+  couleurDuFondHistogrammeBleuFoncé,
+  couleurDuFondHistogrammeRougeClair,
+  couleurDuFondHistogrammeRougeFoncé,
+  couleurDuFondHistogrammeVertClair,
+  couleurDuFondHistogrammeVertFoncé,
+} from "../../commun/Graphique/couleursGraphique";
 import { StringFormater } from "../../commun/StringFormater";
 import { ActivitéMCO } from "./IndicateurDesSejoursMCO";
 
@@ -11,12 +19,6 @@ type IndicateurDesSejoursMCO = Readonly<{
   nombreSéjoursPartielsObstétrique: { x: number; y: number | null }[];
 }>;
 export class NombreDeSejourMCOViewModel {
-  readonly couleurDuFondHistogrammeVertClair = "#DFFDF7";
-  readonly couleurDuFondHistogrammeVertFoncé = "#006A6F";
-  readonly couleurDuFondHistogrammeRougeClair = "#FEE9E6";
-  readonly couleurDuFondHistogrammeBleuClair = "#DEE5FD";
-  readonly couleurDuFondHistogrammeBleuFoncé = "#2F4077";
-  readonly couleurDuFondHistogrammeRougeFoncé = "#A94645";
   readonly identifiantDeLaLégendeDesSéjoursMCO = "légende-graphique-sanitaire-journées-séjours-mco";
 
   private nombreDeSéjours: IndicateurDesSejoursMCO;
@@ -89,43 +91,43 @@ export class NombreDeSejourMCOViewModel {
     return {
       datasets: [
         {
-          backgroundColor: this.couleurDuFondHistogrammeBleuClair,
-          borderColor: this.couleurDuFondHistogrammeBleuFoncé,
+          backgroundColor: couleurDuFondHistogrammeBleuClair,
+          borderColor: couleurDuFondHistogrammeBleuFoncé,
           data: nombreDeSéjours.nombreSéjoursPartielsMédecine,
           label: this.wording.HOSPITALISATION_PARTIELLE_MÉDECINE,
           stack: "Stack 1",
         },
         {
-          backgroundColor: this.couleurDuFondHistogrammeBleuFoncé,
-          borderColor: this.couleurDuFondHistogrammeBleuFoncé,
+          backgroundColor: couleurDuFondHistogrammeBleuFoncé,
+          borderColor: couleurDuFondHistogrammeBleuFoncé,
           data: nombreDeSéjours.nombreSéjoursCompletsMédecine,
           label: this.wording.HOSPITALISATION_COMPLÈTE_MÉDECINE,
           stack: "Stack 1",
         },
         {
-          backgroundColor: this.couleurDuFondHistogrammeVertClair,
-          borderColor: this.couleurDuFondHistogrammeVertFoncé,
+          backgroundColor: couleurDuFondHistogrammeVertClair,
+          borderColor: couleurDuFondHistogrammeVertFoncé,
           data: nombreDeSéjours.nombreSéjoursPartielsChirurgie,
           label: this.wording.HOSPITALISATION_PARTIELLE_CHIRURGIE,
           stack: "Stack 2",
         },
         {
-          backgroundColor: this.couleurDuFondHistogrammeVertFoncé,
-          borderColor: this.couleurDuFondHistogrammeVertFoncé,
+          backgroundColor: couleurDuFondHistogrammeVertFoncé,
+          borderColor: couleurDuFondHistogrammeVertFoncé,
           data: nombreDeSéjours.nombreSéjoursCompletsChirurgie,
           label: this.wording.HOSPITALISATION_COMPLÈTE_CHIRURGIE,
           stack: "Stack 2",
         },
         {
-          backgroundColor: this.couleurDuFondHistogrammeRougeClair,
-          borderColor: this.couleurDuFondHistogrammeRougeFoncé,
+          backgroundColor: couleurDuFondHistogrammeRougeClair,
+          borderColor: couleurDuFondHistogrammeRougeFoncé,
           data: nombreDeSéjours.nombreSéjoursPartielsObstétrique,
           label: this.wording.HOSPITALISATION_PARTIELLE_OBSTÉTRIQUE,
           stack: "Stack 3",
         },
         {
-          backgroundColor: this.couleurDuFondHistogrammeRougeFoncé,
-          borderColor: this.couleurDuFondHistogrammeRougeFoncé,
+          backgroundColor: couleurDuFondHistogrammeRougeFoncé,
+          borderColor: couleurDuFondHistogrammeRougeFoncé,
           data: nombreDeSéjours.nombreSéjoursCompletsObstétrique,
           label: this.wording.HOSPITALISATION_COMPLÈTE_OBSTÉTRIQUE,
           stack: "Stack 3",

@@ -5,11 +5,12 @@ import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
 import {
   couleurDuFond,
-  couleurDuFondHistogrammeDeDépassement,
   couleurDuFondHistogrammePrimaire,
   couleurDuFondHistogrammeSecondaire,
+  couleurErreur,
   couleurIdentifiant,
   couleurSecondPlanHistogrammeDeDépassement,
+  noir,
 } from "../../commun/Graphique/couleursGraphique";
 import { couleurDesArcsDuDonut, Donut } from "../../commun/Graphique/Donut";
 import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe } from "../../commun/Graphique/GraphiqueViewModel";
@@ -43,12 +44,12 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
   constructor(private readonly ressourcesHumainesMédicoSocial: ÉtablissementTerritorialMédicoSocialRessourcesHumaines[], wording: Wording) {
     super(wording);
     this.couleursDuDoughnutDesTauxDAbsentéismes = {
-      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_COURTE_DURÉE]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[0], couleurDuLibellé: "#000" },
-      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_MOYENNE_DURÉE]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[1], couleurDuLibellé: "#000" },
-      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_LONGUE_DURÉE]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[2], couleurDuLibellé: "#FFF" },
-      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[3], couleurDuLibellé: "#FFF" },
-      [this.wording.TAUX_D_ABSENTÉISME_POUR_MATERNITÉ_PATERNITÉ]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[4], couleurDuLibellé: "#FFF" },
-      [this.wording.TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[5], couleurDuLibellé: "#FFF" },
+      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_COURTE_DURÉE]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[0], couleurDuLibellé: couleurIdentifiant },
+      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_MOYENNE_DURÉE]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[1], couleurDuLibellé: couleurIdentifiant },
+      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_LONGUE_DURÉE]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[2], couleurDuLibellé: noir },
+      [this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[3], couleurDuLibellé: noir },
+      [this.wording.TAUX_D_ABSENTÉISME_POUR_MATERNITÉ_PATERNITÉ]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[4], couleurDuLibellé: noir },
+      [this.wording.TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[5], couleurDuLibellé: noir },
     };
     this.annéesAvecDesTauxDAbsentéismes = this.anneesAvecTauxAbsenteisme();
   }
@@ -135,7 +136,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
     const construisLaCouleurDeLaBarreDeLHistogramme = (valeur: number, année: string | number) => {
       if (!this.leTauxDePrestationsExternesEstIlDansLesBornesAcceptables(valeur)) {
         return {
-          premierPlan: couleurDuFondHistogrammeDeDépassement,
+          premierPlan: couleurErreur,
           secondPlan: couleurSecondPlanHistogrammeDeDépassement,
         };
       }
@@ -186,7 +187,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
     const construisLaCouleurDeLaBarreDeLHistogramme = (valeur: number, année: string | number) => {
       if (!this.leTauxDEtpVacantsEstIlDansLesBornesAcceptables(valeur)) {
         return {
-          premierPlan: couleurDuFondHistogrammeDeDépassement,
+          premierPlan: couleurErreur,
           secondPlan: couleurSecondPlanHistogrammeDeDépassement,
         };
       }
@@ -237,7 +238,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
     const construisLaCouleurDeLaBarreDeLHistogramme = (valeur: number, année: string | number) => {
       if (!this.leTauxDeRotationDuPersonnelEstIlDansLesBornesAcceptables(valeur)) {
         return {
-          premierPlan: couleurDuFondHistogrammeDeDépassement,
+          premierPlan: couleurErreur,
           secondPlan: couleurSecondPlanHistogrammeDeDépassement,
         };
       }
@@ -293,7 +294,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel e
     valeursAvecMotif.forEach((tauxDAbsentéisme) => {
       if (!this.leTauxDAbsentéismeDUnMotifEstIlDansLesBornesAcceptables(tauxDAbsentéisme.valeur)) {
         couleursDuDoughnut.push({
-          premierPlan: couleurDuFondHistogrammeDeDépassement,
+          premierPlan: couleurErreur,
           secondPlan: couleurSecondPlanHistogrammeDeDépassement,
         });
         libellésDesValeurs.push({ couleur: couleurDuFond });
