@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { ReactElement, useState } from "react";
 
-import { useDependencies } from "../contexts/useDependencies";
-import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../Tag";
+import { useDependencies } from "../../commun/contexts/useDependencies";
+import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../../commun/Tag";
 import style from "./TagMultiNiveaux.module.css";
 
 export type TagMultiNiveauxProps = {
@@ -146,10 +146,10 @@ const mockPrimaryLabel = [
 ];
 
 export const TagMultiNiveauxMock = () => {
-  return <TagMultiNiveaux activites={mockPrimaryLabel} />;
+  return <AutorisationsTagMultiNiveaux activites={mockPrimaryLabel} />;
 };
 
-export const TagMultiNiveaux = ({ activites }: TagMultiNiveauxProps): ReactElement => {
+export const AutorisationsTagMultiNiveaux = ({ activites }: TagMultiNiveauxProps): ReactElement => {
   return (
     <ul>
       {activites.map((activité) => (
