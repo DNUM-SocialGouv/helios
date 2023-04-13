@@ -5,5 +5,4 @@ export type CapacitéSanitaireEntitéJuridique = CapacitéSanitaire;
 export type EntitéJuridiqueAutorisationEtCapacité = Readonly<{
   numéroFinessEntitéJuridique: string;
   capacités: CapacitéSanitaireEntitéJuridique[];
-  autreActivities: PrimaryLabel[];
 }>;
