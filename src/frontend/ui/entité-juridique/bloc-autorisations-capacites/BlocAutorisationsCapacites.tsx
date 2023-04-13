@@ -1,7 +1,9 @@
 import { FEATURE_NAME } from "../../../utils/featureToggle";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
+import { TagMultiNiveauxMock } from "../../commun/Graphique/TagMultiNiveaux";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
+import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { GraphiqueCapacitésParActivité } from "../../indicateur-métier/capacites-sanitaire-par-activites/GraphiqueCapacitésParActivité";
 import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "./EntitéJuridiqueAutorisationsCapacitesViewModel";
 
@@ -26,6 +28,15 @@ export const BlocAutorisationsCapacites = ({ entitéJuridiqueAutorisationsCapaci
               graphiqueCapacitésParActivitéViewModel={entitéJuridiqueAutorisationsCapacitesViewModel.graphiqueCapacitesParActivitesViewModel}
             />
           )}
+        <IndicateurGraphique
+          contenuInfoBulle={<></>}
+          dateDeMiseÀJour="20/20/2022"
+          identifiant="test bloc multi niveau"
+          nomDeLIndicateur="test bloc multi niveau"
+          source={<>toto</>}
+        >
+          <TagMultiNiveauxMock />
+        </IndicateurGraphique>
       </ul>
     </Bloc>
   );

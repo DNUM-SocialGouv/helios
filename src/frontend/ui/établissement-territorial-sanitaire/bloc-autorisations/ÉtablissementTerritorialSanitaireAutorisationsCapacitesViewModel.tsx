@@ -1,13 +1,8 @@
 import { ReactElement } from "react";
 
-import {
-  CapacitéSanitaireEntitéJuridique,
-  EntitéJuridiqueAutorisationEtCapacité,
-} from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { ÉtablissementTerritorialSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 import { Wording } from "../../../configuration/wording/Wording";
 import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
-import { Forme, Modalite, TagMultiNiveaux } from "../../commun/Graphique/TagMultiNiveaux";
 import { StringFormater } from "../../commun/StringFormater";
 import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../../commun/Tag";
 import { GraphiqueCapacitésParActivitéViewModel } from "../../indicateur-métier/capacites-sanitaire-par-activites/GraphiqueCapacitésParActivitéViewModel";
@@ -102,175 +97,58 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel ex
   }
 
   public get autresActivités(): ReactElement {
-    // const autresActivitésDeLÉtablissement = this.établissementTerritorialSanitaireAutorisations.autresActivités;
+    const autresActivitésDeLÉtablissement = this.établissementTerritorialSanitaireAutorisations.autresActivités;
 
-    const mockFormDetails: Forme[] = [
-      {
-        libelle: "label 3",
-        code: "03",
-        nom: [
-          {
-            etablissementTerritorial: {
-              numeroFiness: "99999999",
-              nom: "amazing Hospital",
-            },
-            autorisations: [
-              {
-                nom: "dateDAutorisation",
-                valeur: "10/02/2020",
-              },
-              {
-                nom: "dateDeFin",
-                valeur: "10/10/2023",
-              },
-              {
-                nom: "dateDeMiseEnOeuvre",
-                valeur: "13/05/2025",
-              },
-            ],
-          },
-          {
-            etablissementTerritorial: {
-              numeroFiness: "11111111",
-              nom: "rainbow Hospital",
-            },
-            autorisations: [
-              {
-                nom: "dateDAutorisation",
-                valeur: "10/02/2020",
-              },
-              {
-                nom: "dateDeFin",
-                valeur: "10/10/2023",
-              },
-              {
-                nom: "dateDeMiseEnOeuvre",
-                valeur: "13/05/2025",
-              },
-            ],
-          },
-        ],
-      },
-    ];
-
-    const mockFormDetails2: Forme[] = [
-      {
-        libelle: "label 3",
-        code: "05",
-        nom: [
-          {
-            etablissementTerritorial: {
-              numeroFiness: "77777777",
-              nom: "regular Hospital",
-            },
-            autorisations: [
-              {
-                nom: "dateDAutorisation",
-                valeur: "10/02/2020",
-              },
-              {
-                nom: "dateDeFin",
-                valeur: "10/10/2023",
-              },
-              {
-                nom: "dateDeMiseEnOeuvre",
-                valeur: "13/05/2025",
-              },
-            ],
-          },
-        ],
-      },
-    ];
-
-    const mockSecondaryLabel: Modalite[] = [
-      {
-        libelle: "secondLabel",
-        code: "99",
-        forme: mockFormDetails,
-      },
-    ];
-
-    const mockSecondaryLabel2: Modalite[] = [
-      {
-        libelle: "secondLabel",
-        code: "55",
-        forme: mockFormDetails2,
-      },
-    ];
-
-    const mockPrimaryLabel = [
-      {
-        libelle: "label",
-        code: "01",
-        modalites: mockSecondaryLabel,
-      },
-      {
-        libelle: "label2",
-        code: "02",
-        modalites: mockSecondaryLabel2,
-      },
-    ];
-
-    const mockCapacite: CapacitéSanitaireEntitéJuridique[] = [];
-
-    const mockEJ: EntitéJuridiqueAutorisationEtCapacité = {
-      autreActivities: mockPrimaryLabel,
-      capacités: mockCapacite,
-      numéroFinessEntitéJuridique: "12345678",
-    };
-
-    return <TagMultiNiveaux activites={mockEJ.autreActivities} />;
-
-    // return (
-    //   <ul aria-label="activités" className={`${stylesBlocAutorisationsEtCapacités["liste-activités"]}`}>
-    //     {autresActivitésDeLÉtablissement.activités.map((activité) => (
-    //       <li key={`activité-${activité.code}`}>
-    //         <TagCliquable for={`autresActivités-accordion-${activité.code}`} titre={`${activité.libellé} [${activité.code}]`} />
-    //         <ul className=" fr-collapse niveau1" id={`autresActivités-accordion-${activité.code}`}>
-    //           {activité.modalités.map((modalité) => (
-    //             <li key={`modalité-${modalité.code}`}>
-    //               <TagCliquable
-    //                 for={`autresActivités-accordion-${activité.code}-${modalité.code}`}
-    //                 texteGras={false}
-    //                 titre={`${modalité.libellé} [${modalité.code}]`}
-    //               />
-    //               <ul className="fr-collapse niveau2" id={`autresActivités-accordion-${activité.code}-${modalité.code}`}>
-    //                 {modalité.formes.map((forme) => {
-    //                   const autreActivitéSanitaire = forme.autreActivitéSanitaire;
-    //                   return (
-    //                     <li key={`forme-${forme.code}`}>
-    //                       <TagGroup label="autre-activité">
-    //                         <Tag label={`${forme.libellé} [${forme.code}]`} size={TAG_SIZE.SM} withArrow />
-    //                         <Tag
-    //                           label={`${this.wording.DATE_D_AUTORISATION} : ${
-    //                             autreActivitéSanitaire.dateDAutorisation ? StringFormater.formatDate(autreActivitéSanitaire.dateDAutorisation) : "N/A"
-    //                           }`}
-    //                           size={TAG_SIZE.SM}
-    //                         />
-    //                         <Tag
-    //                           label={`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${
-    //                             autreActivitéSanitaire.dateDeMiseEnOeuvre ? StringFormater.formatDate(autreActivitéSanitaire.dateDeMiseEnOeuvre) : "N/A"
-    //                           }`}
-    //                           size={TAG_SIZE.SM}
-    //                         />
-    //                         <Tag
-    //                           label={`${this.wording.DATE_DE_FIN} : ${
-    //                             autreActivitéSanitaire.dateDeFin ? StringFormater.formatDate(autreActivitéSanitaire.dateDeFin) : "N/A"
-    //                           }`}
-    //                           size={TAG_SIZE.SM}
-    //                         />
-    //                       </TagGroup>
-    //                     </li>
-    //                   );
-    //                 })}
-    //               </ul>
-    //             </li>
-    //           ))}
-    //         </ul>
-    //       </li>
-    //     ))}
-    //   </ul>
-    // );
+    return (
+      <ul aria-label="activités" className={`${stylesBlocAutorisationsEtCapacités["liste-activités"]}`}>
+        {autresActivitésDeLÉtablissement.activités.map((activité) => (
+          <li key={`activité-${activité.code}`}>
+            <TagCliquable for={`autresActivités-accordion-${activité.code}`} titre={`${activité.libellé} [${activité.code}]`} />
+            <ul className=" fr-collapse niveau1" id={`autresActivités-accordion-${activité.code}`}>
+              {activité.modalités.map((modalité) => (
+                <li key={`modalité-${modalité.code}`}>
+                  <TagCliquable
+                    for={`autresActivités-accordion-${activité.code}-${modalité.code}`}
+                    texteGras={false}
+                    titre={`${modalité.libellé} [${modalité.code}]`}
+                  />
+                  <ul className="fr-collapse niveau2" id={`autresActivités-accordion-${activité.code}-${modalité.code}`}>
+                    {modalité.formes.map((forme) => {
+                      const autreActivitéSanitaire = forme.autreActivitéSanitaire;
+                      return (
+                        <li key={`forme-${forme.code}`}>
+                          <TagGroup label="autre-activité">
+                            <Tag label={`${forme.libellé} [${forme.code}]`} size={TAG_SIZE.SM} withArrow />
+                            <Tag
+                              label={`${this.wording.DATE_D_AUTORISATION} : ${
+                                autreActivitéSanitaire.dateDAutorisation ? StringFormater.formatDate(autreActivitéSanitaire.dateDAutorisation) : "N/A"
+                              }`}
+                              size={TAG_SIZE.SM}
+                            />
+                            <Tag
+                              label={`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${
+                                autreActivitéSanitaire.dateDeMiseEnOeuvre ? StringFormater.formatDate(autreActivitéSanitaire.dateDeMiseEnOeuvre) : "N/A"
+                              }`}
+                              size={TAG_SIZE.SM}
+                            />
+                            <Tag
+                              label={`${this.wording.DATE_DE_FIN} : ${
+                                autreActivitéSanitaire.dateDeFin ? StringFormater.formatDate(autreActivitéSanitaire.dateDeFin) : "N/A"
+                              }`}
+                              size={TAG_SIZE.SM}
+                            />
+                          </TagGroup>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+    );
   }
 
   public get dateDeMiseÀJourDesAutresActivités(): string {
@@ -278,7 +156,7 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel ex
   }
 
   public get lesAutresActivitésSontEllesRenseignées(): boolean {
-    return true; // this.établissementTerritorialSanitaireAutorisations.autresActivités.activités.length !== 0;
+    return this.établissementTerritorialSanitaireAutorisations.autresActivités.activités.length !== 0;
   }
 
   public get reconnaissancesContractuelles(): ReactElement {

@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { ReactElement, useState } from "react";
 
+import {
+  CapacitéSanitaireEntitéJuridique,
+  EntitéJuridiqueAutorisationEtCapacité,
+} from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { useDependencies } from "../contexts/useDependencies";
 import { StringFormater } from "../StringFormater";
 import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../Tag";
@@ -37,6 +41,125 @@ export type Forme = {
   nom: AutorisationEtablissement[];
   libelle: string;
   code: string;
+};
+
+const mockFormDetails: Forme[] = [
+  {
+    libelle: "label 3",
+    code: "03",
+    nom: [
+      {
+        etablissementTerritorial: {
+          numeroFiness: "99999999",
+          nom: "amazing Hospital",
+        },
+        autorisations: [
+          {
+            nom: "dateDAutorisation",
+            valeur: "10/02/2020",
+          },
+          {
+            nom: "dateDeFin",
+            valeur: "10/10/2023",
+          },
+          {
+            nom: "dateDeMiseEnOeuvre",
+            valeur: "13/05/2025",
+          },
+        ],
+      },
+      {
+        etablissementTerritorial: {
+          numeroFiness: "11111111",
+          nom: "rainbow Hospital",
+        },
+        autorisations: [
+          {
+            nom: "dateDAutorisation",
+            valeur: "10/02/2020",
+          },
+          {
+            nom: "dateDeFin",
+            valeur: "10/10/2023",
+          },
+          {
+            nom: "dateDeMiseEnOeuvre",
+            valeur: "13/05/2025",
+          },
+        ],
+      },
+    ],
+  },
+];
+
+const mockFormDetails2: Forme[] = [
+  {
+    libelle: "label 3",
+    code: "05",
+    nom: [
+      {
+        etablissementTerritorial: {
+          numeroFiness: "77777777",
+          nom: "regular Hospital",
+        },
+        autorisations: [
+          {
+            nom: "dateDAutorisation",
+            valeur: "10/02/2020",
+          },
+          {
+            nom: "dateDeFin",
+            valeur: "10/10/2023",
+          },
+          {
+            nom: "dateDeMiseEnOeuvre",
+            valeur: "13/05/2025",
+          },
+        ],
+      },
+    ],
+  },
+];
+
+const mockSecondaryLabel: Modalite[] = [
+  {
+    libelle: "secondLabel",
+    code: "99",
+    forme: mockFormDetails,
+  },
+];
+
+const mockSecondaryLabel2: Modalite[] = [
+  {
+    libelle: "secondLabel",
+    code: "55",
+    forme: mockFormDetails2,
+  },
+];
+
+const mockPrimaryLabel = [
+  {
+    libelle: "label",
+    code: "01",
+    modalites: mockSecondaryLabel,
+  },
+  {
+    libelle: "label2",
+    code: "02",
+    modalites: mockSecondaryLabel2,
+  },
+];
+
+const mockCapacite: CapacitéSanitaireEntitéJuridique[] = [];
+
+const mockEJ: EntitéJuridiqueAutorisationEtCapacité = {
+  autreActivities: mockPrimaryLabel,
+  capacités: mockCapacite,
+  numéroFinessEntitéJuridique: "12345678",
+};
+
+export const TagMultiNiveauxMock = () => {
+  return <TagMultiNiveaux activites={mockEJ.autreActivities} />;
 };
 
 export const TagMultiNiveaux = ({ activites }: TagMultiNiveauxProps): ReactElement => {
