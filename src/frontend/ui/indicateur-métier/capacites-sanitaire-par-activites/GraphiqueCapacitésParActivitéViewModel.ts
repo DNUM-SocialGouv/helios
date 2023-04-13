@@ -5,9 +5,9 @@ import { couleurDuFondHistogrammeSecondaire } from "../../commun/Graphique/coule
 import { HistogrammeData } from "../../commun/Graphique/HistogrammesHorizontaux";
 import { StringFormater } from "../../commun/StringFormater";
 
-interface AnneeModifiable {
+export interface AnneeModifiable {
   NOMBRE_ANNEES: number;
-  annéeInitiale: number;
+  annéeInitiale?: number;
   annéesAvecDonnées: () => number[];
   annéesManquantes: () => number[];
 }
