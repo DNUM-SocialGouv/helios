@@ -6,7 +6,6 @@ import {
   EntitéJuridiqueAutorisationEtCapacité,
 } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { useDependencies } from "../contexts/useDependencies";
-import { StringFormater } from "../StringFormater";
 import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../Tag";
 import style from "./TagMultiNiveaux.module.css";
 
@@ -238,14 +237,7 @@ const AutorisationEtablissement = ({ etablissementTerritorial, autorisations }: 
       </Link>
       <TagGroup label="autorisations">
         {autorisations.map((autorisation) => {
-          return (
-            <Tag
-              key={autorisation.nom}
-              label={`${autorisation.nom} : ${autorisation.nom ? StringFormater.formatDate(autorisation.valeur) : "N/A"}`}
-              // TODO move the string formatter to outside the component
-              size={TAG_SIZE.SM}
-            />
-          );
+          return <Tag key={autorisation.nom} label={`${autorisation.nom} : ${autorisation.nom ? autorisation.valeur : "N/A"}`} size={TAG_SIZE.SM} />;
         })}
       </TagGroup>
     </li>
