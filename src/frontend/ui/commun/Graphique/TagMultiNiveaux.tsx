@@ -45,7 +45,7 @@ const mockFormDetails: Forme[] = [
     nom: [
       {
         etablissementTerritorial: {
-          numeroFiness: "99999999",
+          numeroFiness: "570001057",
           nom: "amazing Hospital",
         },
         autorisations: [
@@ -65,7 +65,7 @@ const mockFormDetails: Forme[] = [
       },
       {
         etablissementTerritorial: {
-          numeroFiness: "11111111",
+          numeroFiness: "570001057",
           nom: "rainbow Hospital",
         },
         autorisations: [
@@ -94,7 +94,7 @@ const mockFormDetails2: Forme[] = [
     nom: [
       {
         etablissementTerritorial: {
-          numeroFiness: "77777777",
+          numeroFiness: "570001057",
           nom: "regular Hospital",
         },
         autorisations: [
