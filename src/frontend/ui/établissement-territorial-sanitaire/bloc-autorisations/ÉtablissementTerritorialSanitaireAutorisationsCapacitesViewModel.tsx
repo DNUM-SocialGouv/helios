@@ -6,8 +6,8 @@ import {
 } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { ÉtablissementTerritorialSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 import { Wording } from "../../../configuration/wording/Wording";
-import { BalloonTags } from "../../commun/Graphique/BalloonTags";
 import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
+import { Forme, Modalite, TagMultiNiveaux } from "../../commun/Graphique/TagMultiNiveaux";
 import { StringFormater } from "../../commun/StringFormater";
 import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../../commun/Tag";
 import { GraphiqueCapacitésParActivitéViewModel } from "../../indicateur-métier/capacites-sanitaire-par-activites/GraphiqueCapacitésParActivitéViewModel";
@@ -63,19 +63,19 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel ex
                             />
                             <Tag
                               label={`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${
-                                autorisationSanitaire.dateDeMiseEnOeuvre ? StringFormater.formateLaDate(autorisationSanitaire.dateDeMiseEnOeuvre) : "N/A"
+                                autorisationSanitaire.dateDeMiseEnOeuvre ? StringFormater.formatDate(autorisationSanitaire.dateDeMiseEnOeuvre) : "N/A"
                               }`}
                               size={TAG_SIZE.SM}
                             />
                             <Tag
                               label={`${this.wording.DATE_DE_FIN} : ${
-                                autorisationSanitaire.dateDeFin ? StringFormater.formateLaDate(autorisationSanitaire.dateDeFin) : "N/A"
+                                autorisationSanitaire.dateDeFin ? StringFormater.formatDate(autorisationSanitaire.dateDeFin) : "N/A"
                               }`}
                               size={TAG_SIZE.SM}
                             />
                             <Tag
                               label={`${this.wording.DATE_D_AUTORISATION} : ${
-                                autorisationSanitaire.dateDAutorisation ? StringFormater.formateLaDate(autorisationSanitaire.dateDAutorisation) : "N/A"
+                                autorisationSanitaire.dateDAutorisation ? StringFormater.formatDate(autorisationSanitaire.dateDAutorisation) : "N/A"
                               }`}
                               size={TAG_SIZE.SM}
                             />
@@ -98,34 +98,34 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel ex
   }
 
   public get dateDeMiseÀJourDesAutorisations(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialSanitaireAutorisations.autorisations.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialSanitaireAutorisations.autorisations.dateMiseÀJourSource);
   }
 
   public get autresActivités(): ReactElement {
     // const autresActivitésDeLÉtablissement = this.établissementTerritorialSanitaireAutorisations.autresActivités;
 
-    const mockFormDetails = [
+    const mockFormDetails: Forme[] = [
       {
-        libellé: "label 3",
+        libelle: "label 3",
         code: "03",
-        formName: [
+        nom: [
           {
             etablissementTerritorial: {
               numeroFiness: "99999999",
               nom: "amazing Hospital",
             },
-            authorisation: [
+            autorisations: [
               {
                 nom: "dateDAutorisation",
-                value: "10/02/2020",
+                valeur: "10/02/2020",
               },
               {
                 nom: "dateDeFin",
-                value: "10/10/2023",
+                valeur: "10/10/2023",
               },
               {
                 nom: "dateDeMiseEnOeuvre",
-                value: "13/05/2025",
+                valeur: "13/05/2025",
               },
             ],
           },
@@ -134,18 +134,18 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel ex
               numeroFiness: "11111111",
               nom: "rainbow Hospital",
             },
-            authorisation: [
+            autorisations: [
               {
                 nom: "dateDAutorisation",
-                value: "10/02/2020",
+                valeur: "10/02/2020",
               },
               {
                 nom: "dateDeFin",
-                value: "10/10/2023",
+                valeur: "10/10/2023",
               },
               {
                 nom: "dateDeMiseEnOeuvre",
-                value: "13/05/2025",
+                valeur: "13/05/2025",
               },
             ],
           },
@@ -153,28 +153,28 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel ex
       },
     ];
 
-    const mockFormDetails2 = [
+    const mockFormDetails2: Forme[] = [
       {
-        libellé: "label 3",
+        libelle: "label 3",
         code: "05",
-        formName: [
+        nom: [
           {
             etablissementTerritorial: {
               numeroFiness: "77777777",
               nom: "regular Hospital",
             },
-            authorisation: [
+            autorisations: [
               {
                 nom: "dateDAutorisation",
-                value: "10/02/2020",
+                valeur: "10/02/2020",
               },
               {
                 nom: "dateDeFin",
-                value: "10/10/2023",
+                valeur: "10/10/2023",
               },
               {
                 nom: "dateDeMiseEnOeuvre",
-                value: "13/05/2025",
+                valeur: "13/05/2025",
               },
             ],
           },
@@ -182,32 +182,32 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel ex
       },
     ];
 
-    const mockSecondaryLabel = [
+    const mockSecondaryLabel: Modalite[] = [
       {
-        libellé: "secondLabel",
+        libelle: "secondLabel",
         code: "99",
-        formDetails: mockFormDetails,
+        forme: mockFormDetails,
       },
     ];
 
-    const mockSecondaryLabel2 = [
+    const mockSecondaryLabel2: Modalite[] = [
       {
-        libellé: "secondLabel",
+        libelle: "secondLabel",
         code: "55",
-        formDetails: mockFormDetails2,
+        forme: mockFormDetails2,
       },
     ];
 
     const mockPrimaryLabel = [
       {
-        libellé: "label",
+        libelle: "label",
         code: "01",
-        secondaryLabel: mockSecondaryLabel,
+        modalites: mockSecondaryLabel,
       },
       {
-        libellé: "label2",
+        libelle: "label2",
         code: "02",
-        secondaryLabel: mockSecondaryLabel2,
+        modalites: mockSecondaryLabel2,
       },
     ];
 
@@ -219,7 +219,7 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel ex
       numéroFinessEntitéJuridique: "12345678",
     };
 
-    return <BalloonTags entityJuridiqueAuth={mockEJ.autreActivities} />;
+    return <TagMultiNiveaux activites={mockEJ.autreActivities} />;
 
     // return (
     //   <ul aria-label="activités" className={`${stylesBlocAutorisationsEtCapacités["liste-activités"]}`}>
@@ -243,19 +243,19 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel ex
     //                         <Tag label={`${forme.libellé} [${forme.code}]`} size={TAG_SIZE.SM} withArrow />
     //                         <Tag
     //                           label={`${this.wording.DATE_D_AUTORISATION} : ${
-    //                             autreActivitéSanitaire.dateDAutorisation ? StringFormater.formateLaDate(autreActivitéSanitaire.dateDAutorisation) : "N/A"
+    //                             autreActivitéSanitaire.dateDAutorisation ? StringFormater.formatDate(autreActivitéSanitaire.dateDAutorisation) : "N/A"
     //                           }`}
     //                           size={TAG_SIZE.SM}
     //                         />
     //                         <Tag
     //                           label={`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${
-    //                             autreActivitéSanitaire.dateDeMiseEnOeuvre ? StringFormater.formateLaDate(autreActivitéSanitaire.dateDeMiseEnOeuvre) : "N/A"
+    //                             autreActivitéSanitaire.dateDeMiseEnOeuvre ? StringFormater.formatDate(autreActivitéSanitaire.dateDeMiseEnOeuvre) : "N/A"
     //                           }`}
     //                           size={TAG_SIZE.SM}
     //                         />
     //                         <Tag
     //                           label={`${this.wording.DATE_DE_FIN} : ${
-    //                             autreActivitéSanitaire.dateDeFin ? StringFormater.formateLaDate(autreActivitéSanitaire.dateDeFin) : "N/A"
+    //                             autreActivitéSanitaire.dateDeFin ? StringFormater.formatDate(autreActivitéSanitaire.dateDeFin) : "N/A"
     //                           }`}
     //                           size={TAG_SIZE.SM}
     //                         />
@@ -274,11 +274,11 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel ex
   }
 
   public get dateDeMiseÀJourDesAutresActivités(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialSanitaireAutorisations.autresActivités.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialSanitaireAutorisations.autresActivités.dateMiseÀJourSource);
   }
 
   public get lesAutresActivitésSontEllesRenseignées(): boolean {
-    return this.établissementTerritorialSanitaireAutorisations.autresActivités.activités.length !== 0;
+    return true; // this.établissementTerritorialSanitaireAutorisations.autresActivités.activités.length !== 0;
   }
 
   public get reconnaissancesContractuelles(): ReactElement {
@@ -318,7 +318,7 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel ex
                               {this.wording.DATE_D_EFFET_ASR}
                               {`: ${
                                 reconnaissancesContractuellesSanitaire.dateDEffetAsr
-                                  ? StringFormater.formateLaDate(reconnaissancesContractuellesSanitaire.dateDEffetAsr)
+                                  ? StringFormater.formatDate(reconnaissancesContractuellesSanitaire.dateDEffetAsr)
                                   : "N/A"
                               }`}
                             </Tag>
@@ -326,7 +326,7 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel ex
                               {this.wording.DATE_D_EFFET_CPOM}
                               {`: ${
                                 reconnaissancesContractuellesSanitaire.dateDEffetCpom
-                                  ? StringFormater.formateLaDate(reconnaissancesContractuellesSanitaire.dateDEffetCpom)
+                                  ? StringFormater.formatDate(reconnaissancesContractuellesSanitaire.dateDEffetCpom)
                                   : "N/A"
                               }`}
                             </Tag>
@@ -334,7 +334,7 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel ex
                               {this.wording.DATE_DE_FIN_CPOM}
                               {`: ${
                                 reconnaissancesContractuellesSanitaire.dateDeFinCpom
-                                  ? StringFormater.formateLaDate(reconnaissancesContractuellesSanitaire.dateDeFinCpom)
+                                  ? StringFormater.formatDate(reconnaissancesContractuellesSanitaire.dateDeFinCpom)
                                   : "N/A"
                               }`}
                             </Tag>
@@ -359,7 +359,7 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel ex
   }
 
   public get dateDeMiseÀJourDesReconnaissancesContractuelles(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialSanitaireAutorisations.reconnaissancesContractuelles.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialSanitaireAutorisations.reconnaissancesContractuelles.dateMiseÀJourSource);
   }
 
   public get lesReconnaissancesContractuellesSontEllesRenseignées(): boolean {
@@ -389,7 +389,7 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel ex
                       <Tag
                         label={`${this.wording.DATE_D_AUTORISATION} : ${
                           autorisationÉquipementMatérielLourd.dateDAutorisation
-                            ? StringFormater.formateLaDate(autorisationÉquipementMatérielLourd.dateDAutorisation)
+                            ? StringFormater.formatDate(autorisationÉquipementMatérielLourd.dateDAutorisation)
                             : "N/A"
                         }`}
                         size={TAG_SIZE.SM}
@@ -397,14 +397,14 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel ex
                       <Tag
                         label={`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${
                           autorisationÉquipementMatérielLourd.dateDeMiseEnOeuvre
-                            ? StringFormater.formateLaDate(autorisationÉquipementMatérielLourd.dateDeMiseEnOeuvre)
+                            ? StringFormater.formatDate(autorisationÉquipementMatérielLourd.dateDeMiseEnOeuvre)
                             : "N/A"
                         }`}
                         size={TAG_SIZE.SM}
                       />
                       <Tag
                         label={`${this.wording.DATE_DE_FIN} : ${
-                          autorisationÉquipementMatérielLourd.dateDeFin ? StringFormater.formateLaDate(autorisationÉquipementMatérielLourd.dateDeFin) : "N/A"
+                          autorisationÉquipementMatérielLourd.dateDeFin ? StringFormater.formatDate(autorisationÉquipementMatérielLourd.dateDeFin) : "N/A"
                         }`}
                         size={TAG_SIZE.SM}
                       />
@@ -420,7 +420,7 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel ex
   }
 
   public get dateDeMiseÀJourDesÉquipementsMatérielsLourds(): string {
-    return StringFormater.formateLaDate(this.établissementTerritorialSanitaireAutorisations.équipementsMatérielsLourds.dateMiseÀJourSource);
+    return StringFormater.formatDate(this.établissementTerritorialSanitaireAutorisations.équipementsMatérielsLourds.dateMiseÀJourSource);
   }
 
   public get lesÉquipementsMatérielsLourdsSontIlsRenseignés(): boolean {
