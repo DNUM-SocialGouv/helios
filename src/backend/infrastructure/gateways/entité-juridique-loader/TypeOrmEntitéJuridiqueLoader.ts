@@ -257,17 +257,26 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
   async chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique: string): Promise<EntitéJuridiqueAutorisationEtCapacité> {
     const capacitésDeLÉtablissementModel = await this.chargeLesCapacitésModel(numéroFinessEntitéJuridique);
     const dateDeMiseÀJourDiamantAnnSaeModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_SAE)) as DateMiseÀJourFichierSourceModel;
-    const autorisationSanitaireRepo = (await this.orm).getRepository(AutorisationSanitaireModel).find({
-      relations: {
-        établissementTerritorial: true,
-      },
-    });
+    const autorisationsActivités = await this.chargeLesAutorisationsActivites(numéroFinessEntitéJuridique);
 
     return {
       capacités: this.construisLesCapacités(capacitésDeLÉtablissementModel, dateDeMiseÀJourDiamantAnnSaeModel),
-      autorisationsActivités: await autorisationSanitaireRepo,
+      autorisationsActivités,
       numéroFinessEntitéJuridique,
     };
+  }
+
+  private async chargeLesAutorisationsActivites(numéroFinessEntitéJuridique: string) {
+    return (await this.orm).getRepository(AutorisationSanitaireModel).find({
+      relations: {
+        établissementTerritorial: true,
+      },
+      where: {
+        établissementTerritorial: {
+          numéroFinessEntitéJuridique: numéroFinessEntitéJuridique,
+        },
+      },
+    });
   }
 
   private async chargeLaDateDeMiseÀJourModel(fichierSource: FichierSource): Promise<DateMiseÀJourFichierSourceModel | null> {
