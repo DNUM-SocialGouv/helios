@@ -9,6 +9,7 @@ import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJur
 import { CatégorisationEnum, EntitéJuridiqueIdentité } from "../../../métier/entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueActivités } from "../../../métier/entities/entité-juridique/EntitéJuridiqueActivités";
 import {
+  AutorisationActivites,
   CapacitéSanitaireEntitéJuridique,
   EntitéJuridiqueAutorisationEtCapacité,
 } from "../../../métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
@@ -266,21 +267,49 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
     };
   }
 
-  private async chargeLesAutorisationsActivites(numéroFinessEntitéJuridique: string) {
-    const resultAutorisationActivite = await (await this.orm)
-      .createQueryBuilder()
-      .select(["autorisation_sanitaire.codeActivité"])
-      .from(AutorisationSanitaireModel, "autorisation_sanitaire")
+  private async chargeLesAutorisationsActivites(numéroFinessEntitéJuridique: string): Promise<AutorisationActivites[]> {
+    const autorisationsEntities = await (await this.orm)
+      .getRepository(AutorisationSanitaireModel)
+      .createQueryBuilder("autorisation_sanitaire")
       .leftJoin("autorisation_sanitaire.établissementTerritorial", "établissementTerritorial")
       .where("établissementTerritorial.numero_finess_entite_juridique = :finess", { finess: numéroFinessEntitéJuridique })
-      .groupBy("autorisation_sanitaire.codeActivité")
-      .getRawMany();
+      .getMany();
 
-    return resultAutorisationActivite.map((activite) => {
-      return {
-        codeActivité: activite.autorisation_sanitaire_code_activite,
+    const autorisationsActivites = this.grouperLesAutorisationsParActivités(autorisationsEntities);
+    this.grouperLesAutorisationsParModalités(autorisationsEntities, autorisationsActivites);
+    return autorisationsActivites;
+  }
+
+  private grouperLesAutorisationsParModalités(autorisationsEntities: AutorisationSanitaireModel[], autorisationsActivites: AutorisationActivites[]) {
+    autorisationsEntities.forEach((autorisationEntity) => {
+      const currentModalité = {
+        code: autorisationEntity.codeModalité,
+        libelle: autorisationEntity.libelléModalité,
       };
+      const activité = autorisationsActivites.find((autorisation) => autorisation.code === autorisationEntity.codeActivité) as AutorisationActivites;
+      const modalitéExiste = activité.modalités.find((modalité) => modalité.code === currentModalité.code);
+      if (!modalitéExiste) {
+        activité.modalités.push(currentModalité);
+      }
     });
+  }
+
+  private grouperLesAutorisationsParActivités(autorisationsEntities: AutorisationSanitaireModel[]) {
+    const autorisationsActivites: AutorisationActivites[] = [];
+    autorisationsEntities.forEach((autorisationEntity) => {
+      const currentActivité = {
+        code: autorisationEntity.codeActivité,
+        libelle: autorisationEntity.libelléActivité,
+      };
+      const existingActivité = autorisationsActivites.find((autorisation) => autorisation.code === currentActivité.code);
+      if (existingActivité === undefined) {
+        autorisationsActivites.push({
+          ...currentActivité,
+          modalités: [],
+        });
+      }
+    });
+    return autorisationsActivites;
   }
 
   private async chargeLaDateDeMiseÀJourModel(fichierSource: FichierSource): Promise<DateMiseÀJourFichierSourceModel | null> {
