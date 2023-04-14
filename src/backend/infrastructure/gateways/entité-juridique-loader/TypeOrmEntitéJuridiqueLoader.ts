@@ -267,15 +267,19 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
   }
 
   private async chargeLesAutorisationsActivites(numéroFinessEntitéJuridique: string) {
-    return (await this.orm).getRepository(AutorisationSanitaireModel).find({
-      relations: {
-        établissementTerritorial: true,
-      },
-      where: {
-        établissementTerritorial: {
-          numéroFinessEntitéJuridique: numéroFinessEntitéJuridique,
-        },
-      },
+    const resultAutorisationActivite = await (await this.orm)
+      .createQueryBuilder()
+      .select(["autorisation_sanitaire.codeActivité"])
+      .from(AutorisationSanitaireModel, "autorisation_sanitaire")
+      .leftJoin("autorisation_sanitaire.établissementTerritorial", "établissementTerritorial")
+      .where("établissementTerritorial.numero_finess_entite_juridique = :finess", { finess: numéroFinessEntitéJuridique })
+      .groupBy("autorisation_sanitaire.codeActivité")
+      .getRawMany();
+
+    return resultAutorisationActivite.map((activite) => {
+      return {
+        codeActivité: activite.autorisation_sanitaire_code_activite,
+      };
     });
   }
 
