@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 
 import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
+import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
 import { BudgetEtFinancesEntiteJuridiqueModel } from "../../../../../database/models/BudgetEtFinancesEntiteJuridiqueModel";
 import { CapacitesSanitaireEntiteJuridiqueModel } from "../../../../../database/models/CapacitesSanitaireEntiteJuridiqueModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
@@ -256,9 +257,15 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
   async chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique: string): Promise<EntitéJuridiqueAutorisationEtCapacité> {
     const capacitésDeLÉtablissementModel = await this.chargeLesCapacitésModel(numéroFinessEntitéJuridique);
     const dateDeMiseÀJourDiamantAnnSaeModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_SAE)) as DateMiseÀJourFichierSourceModel;
+    const autorisationSanitaireRepo = (await this.orm).getRepository(AutorisationSanitaireModel).find({
+      relations: {
+        établissementTerritorial: true,
+      },
+    });
 
     return {
       capacités: this.construisLesCapacités(capacitésDeLÉtablissementModel, dateDeMiseÀJourDiamantAnnSaeModel),
+      autorisationsActivités: await autorisationSanitaireRepo,
       numéroFinessEntitéJuridique,
     };
   }
