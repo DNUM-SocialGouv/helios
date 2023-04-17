@@ -41,7 +41,10 @@ export class RécupèreLEntitéJuridiqueUseCase {
     autorisationsActivites: AutorisationActivites[]
   ) {
     autorisationsEtCapacites.autorisationsSanitaire.forEach((autorisationSanitaire) => {
-      const currentEtablissement: AutorisationEtablissement = { numeroFiness: autorisationSanitaire.numéroFinessÉtablissementTerritorial };
+      const currentEtablissement: AutorisationEtablissement = {
+        numeroFiness: autorisationSanitaire.numéroFinessÉtablissementTerritorial,
+        autorisation: [],
+      };
       const activité = autorisationsActivites.find((autorisation) => autorisation.code === autorisationSanitaire.codeActivité) as AutorisationActivites;
       const modalité = activité.modalités.find((modalité) => modalité.code === autorisationSanitaire.codeModalité) as Modalite;
       const formeExiste = modalité.formes.find((forme) => forme.code === autorisationSanitaire.codeForme) as Forme;
@@ -49,6 +52,25 @@ export class RécupèreLEntitéJuridiqueUseCase {
       const etablissementExiste = formeExiste.autorisationEtablissements.find(
         (autorisationEtablissement) => autorisationEtablissement.numeroFiness === autorisationSanitaire.numéroFinessÉtablissementTerritorial
       );
+      const currentAutorisation = [
+        {
+          nom: "numéroAutorisationArhgos",
+          valeur: autorisationSanitaire.numéroAutorisationArhgos,
+        },
+        {
+          nom: "dateDAutorisation",
+          valeur: autorisationSanitaire.dateAutorisation,
+        },
+        {
+          nom: "dateDeFin",
+          valeur: autorisationSanitaire.dateFin,
+        },
+        {
+          nom: "dateDeMiseEnOeuvre",
+          valeur: autorisationSanitaire.dateMiseEnOeuvre,
+        },
+      ];
+      etablissementExiste ? (etablissementExiste.autorisation = currentAutorisation) : (currentEtablissement.autorisation = currentAutorisation);
       if (!etablissementExiste) {
         formeExiste.autorisationEtablissements.push(currentEtablissement);
       }

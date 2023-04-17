@@ -300,7 +300,7 @@ describe("La récupération d’une entité juridique", () => {
       expect(formes[1].libelle).toBe("forme-2-libelle");
     });
 
-    it("recuperer la liste des autorisations d'activités groupées par établissements territoriaux", async () => {
+    it("recuperer la liste des regroupment de établissements territoriaux", async () => {
       // GIVEN
       const autorisationsSanitaire: AutorisationSanitaireModel[] = [
         mock<AutorisationSanitaireModel>({
@@ -336,6 +336,42 @@ describe("La récupération d’une entité juridique", () => {
       expect(forme.autorisationEtablissements).toHaveLength(2);
       expect(forme.autorisationEtablissements[0].numeroFiness).toBe("etablissement-1");
       expect(forme.autorisationEtablissements[1].numeroFiness).toBe("etablissement-2");
+    });
+
+    it("recuperer la liste des autorisations d'activités groupées par établissements territoriaux", async () => {
+      // GIVEN
+      const autorisationsSanitaire: AutorisationSanitaireModel[] = [
+        mock<AutorisationSanitaireModel>({
+          codeActivité: "1",
+          codeModalité: "1",
+          codeForme: "forme-1",
+          numéroFinessÉtablissementTerritorial: "etablissement-1",
+          numéroAutorisationArhgos: "argos-1",
+          dateAutorisation: "10/01/2020",
+          dateFin: "20/10/2021",
+          dateMiseEnOeuvre: "15/01/2020",
+        }),
+      ];
+      const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
+        chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({ autorisationsSanitaire }),
+      });
+
+      const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
+
+      // WHEN
+      const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
+
+      // THEN
+      const forme = entitéJuridique.autorisationsEtCapacites.autorisationsActivités[0].modalités[0].formes[0];
+      expect(forme.autorisationEtablissements).toHaveLength(1);
+      expect(forme.autorisationEtablissements[0].autorisation[0].nom).toBe("numéroAutorisationArhgos");
+      expect(forme.autorisationEtablissements[0].autorisation[0].valeur).toBe("argos-1");
+      expect(forme.autorisationEtablissements[0].autorisation[1].nom).toBe("dateDAutorisation");
+      expect(forme.autorisationEtablissements[0].autorisation[1].valeur).toBe("10/01/2020");
+      expect(forme.autorisationEtablissements[0].autorisation[2].nom).toBe("dateDeFin");
+      expect(forme.autorisationEtablissements[0].autorisation[2].valeur).toBe("20/10/2021");
+      expect(forme.autorisationEtablissements[0].autorisation[3].nom).toBe("dateDeMiseEnOeuvre");
+      expect(forme.autorisationEtablissements[0].autorisation[3].valeur).toBe("15/01/2020");
     });
   });
 });
