@@ -15,4 +15,8 @@ export class EntitéJuridiqueAutorisationsCapacitesViewModel {
   public get lesAutorisationsCapacitesNeSontPasRenseignées() {
     return !((this.capacites && this.capacites.length > 0) || this.autorisationSanitare.length > 0);
   }
+
+  public lesAutorisationsActivitesNeSontPasRenseignées(): boolean {
+    return !(this.autorisationSanitare && this.autorisationSanitare.length > 0);
+  }
 }

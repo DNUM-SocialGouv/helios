@@ -2,11 +2,8 @@ import { FEATURE_NAME } from "../../../utils/featureToggle";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
-import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
-import { Sources } from "../../commun/Sources/Sources";
+import { GraphiqueAutorisationsActivites } from "../../indicateur-métier/autorisations-activites/GraphiqueAutorisationsActivites";
 import { GraphiqueCapacitésParActivité } from "../../indicateur-métier/capacites-sanitaire-par-activites/GraphiqueCapacitésParActivité";
-import { ContenuAutorisations } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuAutorisations";
-import { AutorisationsTagMultiNiveaux } from "./AutorisationsTagMultiNiveaux";
 import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "./EntitéJuridiqueAutorisationsCapacitesViewModel";
 
 type BlocAutorisationsCapacitesProps = Readonly<{
@@ -16,7 +13,12 @@ type BlocAutorisationsCapacitesProps = Readonly<{
 export const BlocAutorisationsCapacites = ({ entitéJuridiqueAutorisationsCapacitesViewModel }: BlocAutorisationsCapacitesProps) => {
   const { wording, isFeatureEnabled } = useDependencies();
 
-  if (entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsCapacitesNeSontPasRenseignées || !isFeatureEnabled(FEATURE_NAME.CAPACITES_EJ)) {
+  if (
+    entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsCapacitesNeSontPasRenseignées ||
+    entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasRenseignées() ||
+    !isFeatureEnabled(FEATURE_NAME.CAPACITES_EJ) ||
+    !isFeatureEnabled(FEATURE_NAME.AUTHORISATIONS_ACTIVITES)
+  ) {
     return <BlocIndicateurVide title={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} />;
   }
 
@@ -30,15 +32,9 @@ export const BlocAutorisationsCapacites = ({ entitéJuridiqueAutorisationsCapaci
               graphiqueCapacitésParActivitéViewModel={entitéJuridiqueAutorisationsCapacitesViewModel.graphiqueCapacitesParActivitesViewModel}
             />
           )}
-        <IndicateurGraphique
-          contenuInfoBulle={<ContenuAutorisations dateDeMiseÀJour="" estEntitéJuridique={true} source={Sources(wording.FINESS, wording.ARHGOS)} />}
-          dateDeMiseÀJour=""
-          identifiant="autorisation-activites"
-          nomDeLIndicateur={wording.AUTORISATIONS_ACTIVITES}
-          source={Sources(wording.FINESS, wording.ARHGOS)}
-        >
-          <AutorisationsTagMultiNiveaux activites={entitéJuridiqueAutorisationsCapacitesViewModel.autorisations} />
-        </IndicateurGraphique>
+        {isFeatureEnabled(FEATURE_NAME.AUTHORISATIONS_ACTIVITES) && (
+          <GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={entitéJuridiqueAutorisationsCapacitesViewModel.autorisations} />
+        )}
       </ul>
     </Bloc>
   );

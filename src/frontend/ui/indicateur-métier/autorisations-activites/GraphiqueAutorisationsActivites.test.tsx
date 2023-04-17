@@ -1,0 +1,88 @@
+import { fireEvent, screen } from "@testing-library/react";
+
+import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
+import { fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
+import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "../../entité-juridique/bloc-autorisations-capacites/EntitéJuridiqueAutorisationsCapacitesViewModel";
+import { GraphiqueAutorisationsActivites } from "./GraphiqueAutorisationsActivites";
+
+const { wording } = fakeFrontDependencies;
+
+describe("GraphiqueAutorisationActivite", () => {
+  let graphiqueTest: GraphiqueTest;
+
+  beforeAll(() => {
+    graphiqueTest = new GraphiqueTest(wording);
+  });
+
+  it("affiche abréviation du fichier source ARHGOS", () => {
+    // GIVEN
+    const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel([], [], wording);
+
+    // WHEN
+    renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisations} />);
+
+    // THEN
+    const arhgos = graphiqueTest.abréviationFichierSource("ARHGOS");
+    expect(arhgos).toBeInTheDocument();
+    expect(arhgos).toHaveAttribute("title", wording.ARHGOS_TITLE);
+  });
+
+  it("affiche abréviation du fichier source FINESS", () => {
+    // GIVEN
+    const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel([], [], wording);
+
+    // WHEN
+    renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisations} />);
+
+    // THEN
+    const arhgos = graphiqueTest.abréviationFichierSource("FINESS");
+    expect(arhgos).toBeInTheDocument();
+    expect(arhgos).toHaveAttribute("title", wording.FINESS_TITLE);
+  });
+
+  describe("Détails info bulle", () => {
+    let viewModel: EntitéJuridiqueAutorisationsCapacitesViewModel;
+
+    beforeAll(() => {
+      // GIVEN
+      viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel([], [], wording);
+    });
+
+    it("affiche le bouton de détail", () => {
+      // WHEN
+      renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisations} />);
+
+      // THEN
+      const détails = graphiqueTest.détail;
+      expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-autorisation-activites`);
+      expect(détails).toHaveAttribute("data-fr-opened", "false");
+    });
+
+    it("affiche le contenu de l’info bulle après avoir cliqué sur le bouton 'détails'", () => {
+      // GIVEN
+      renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisations} />);
+
+      // WHEN
+      const détails = graphiqueTest.détail;
+      graphiqueTest.ouvreDétail();
+
+      // THEN
+      expect(détails).toHaveAttribute("data-fr-opened", "true");
+      const h1 = graphiqueTest.titreDétail(wording.AUTORISATIONS_ACTIVITES);
+      expect(h1).toBeInTheDocument();
+    });
+
+    it("ferme l'info bulle en cliquant sur le bouton 'Fermer'", () => {
+      // GIVEN
+      renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisations} />);
+      graphiqueTest.ouvreDétail();
+
+      // WHEN
+      fireEvent.click(screen.getAllByRole("button", { name: wording.FERMER })[0]);
+
+      // THEN
+      const détails = graphiqueTest.détail;
+      expect(détails).toHaveAttribute("data-fr-opened", "false");
+    });
+  });
+});
