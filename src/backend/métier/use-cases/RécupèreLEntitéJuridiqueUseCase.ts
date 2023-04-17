@@ -43,6 +43,7 @@ export class RécupèreLEntitéJuridiqueUseCase {
     autorisationsEtCapacites.autorisationsSanitaire.forEach((autorisationSanitaire) => {
       const currentEtablissement: AutorisationEtablissement = {
         numeroFiness: autorisationSanitaire.numéroFinessÉtablissementTerritorial,
+        nom: autorisationSanitaire.établissementTerritorial.raisonSocialeCourte,
         autorisation: [],
       };
       const activité = autorisationsActivites.find((autorisation) => autorisation.code === autorisationSanitaire.codeActivité) as AutorisationActivites;

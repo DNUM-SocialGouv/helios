@@ -308,18 +308,15 @@ describe("La récupération d’une entité juridique", () => {
           codeModalité: "1",
           codeForme: "forme-1",
           numéroFinessÉtablissementTerritorial: "etablissement-1",
+          établissementTerritorial: { raisonSocialeCourte: "Nom ET 1" },
         }),
-        mock<AutorisationSanitaireModel>({
-          codeActivité: "1",
-          codeModalité: "1",
-          codeForme: "forme-1",
-          numéroFinessÉtablissementTerritorial: "etablissement-1",
-        }),
+
         mock<AutorisationSanitaireModel>({
           codeActivité: "1",
           codeModalité: "1",
           codeForme: "forme-1",
           numéroFinessÉtablissementTerritorial: "etablissement-2",
+          établissementTerritorial: { raisonSocialeCourte: "Nom ET 2" },
         }),
       ];
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
@@ -335,7 +332,9 @@ describe("La récupération d’une entité juridique", () => {
       const forme = entitéJuridique.autorisationsEtCapacites.autorisationsActivités[0].modalités[0].formes[0];
       expect(forme.autorisationEtablissements).toHaveLength(2);
       expect(forme.autorisationEtablissements[0].numeroFiness).toBe("etablissement-1");
+      expect(forme.autorisationEtablissements[0].nom).toBe("Nom ET 1");
       expect(forme.autorisationEtablissements[1].numeroFiness).toBe("etablissement-2");
+      expect(forme.autorisationEtablissements[1].nom).toBe("Nom ET 2");
     });
 
     it("recuperer la liste des autorisations d'activités groupées par établissements territoriaux", async () => {

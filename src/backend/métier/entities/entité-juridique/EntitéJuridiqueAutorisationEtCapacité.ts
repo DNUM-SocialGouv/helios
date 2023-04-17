@@ -21,6 +21,7 @@ export type Autorisation = {
 };
 export type AutorisationEtablissement = {
   numeroFiness: string;
+  nom: string;
   autorisation: Autorisation[];
 };
 export type Forme = {
