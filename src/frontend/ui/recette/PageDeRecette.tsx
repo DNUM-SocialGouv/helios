@@ -4,7 +4,6 @@ import { Bloc } from "../commun/Bloc/Bloc";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../commun/IndicateurGraphique/IndicateurGraphique";
 import { ListItem } from "../commun/ListItem/ListItem";
-import { TagMultiNiveauxMock } from "../entité-juridique/bloc-autorisations-capacites/AutorisationsTagMultiNiveaux";
 import LogoÉtablissementTerritorialMédicoSocial from "../entité-juridique/liste-des-établissements/logo-établissement-territorial-médico-social-noir.svg";
 import LogoÉtablissementTerritorialSanitaire from "../entité-juridique/liste-des-établissements/logo-établissement-territorial-sanitaire-noir.svg";
 import LogoEntitéJuridiqueNoir from "../home/logo-entité-juridique-noir.svg";

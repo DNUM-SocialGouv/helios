@@ -145,6 +145,7 @@ export interface Wording {
   // Bloc Autorisation
   readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string;
   readonly AUTORISATIONS: string;
+  readonly AUTORISATIONS_ACTIVITES: string;
   readonly DATE_D_AUTORISATION: string;
   readonly DATE_DE_FIN: string;
   readonly DATE_DE_MISE_EN_OEUVRE: string;

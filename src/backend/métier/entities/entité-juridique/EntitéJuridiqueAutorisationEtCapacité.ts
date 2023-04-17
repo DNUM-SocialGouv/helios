@@ -21,8 +21,8 @@ export type Autorisation = {
 };
 export type AutorisationEtablissement = {
   numeroFiness: string;
-  nom: string;
-  autorisation: Autorisation[];
+  nomEtablissement: string;
+  autorisations: Autorisation[];
 };
 export type Forme = {
   autorisationEtablissements: AutorisationEtablissement[];
@@ -35,7 +35,7 @@ export type Modalite = {
   libelle: string;
 };
 export type AutorisationActivites = {
-  modalités: Modalite[];
+  modalites: Modalite[];
   libelle: string;
   code: string;
 };

@@ -256,8 +256,8 @@ describe("La récupération d’une entité juridique", () => {
 
       // THEN
       expect(entitéJuridique.autorisationsEtCapacites.autorisationsActivités).toHaveLength(1);
-      expect(entitéJuridique.autorisationsEtCapacites.autorisationsActivités[0].modalités[0].code).toBe("1");
-      expect(entitéJuridique.autorisationsEtCapacites.autorisationsActivités[0].modalités[1].code).toBe("2");
+      expect(entitéJuridique.autorisationsEtCapacites.autorisationsActivités[0].modalites[0].code).toBe("1");
+      expect(entitéJuridique.autorisationsEtCapacites.autorisationsActivités[0].modalites[1].code).toBe("2");
     });
 
     it("recuperer la liste des autorisations d'activités groupées par formes", async () => {
@@ -292,7 +292,7 @@ describe("La récupération d’une entité juridique", () => {
       const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
 
       // THEN
-      const formes = entitéJuridique.autorisationsEtCapacites.autorisationsActivités[0].modalités[0].formes;
+      const formes = entitéJuridique.autorisationsEtCapacites.autorisationsActivités[0].modalites[0].formes;
       expect(formes).toHaveLength(2);
       expect(formes[0].code).toBe("forme-1");
       expect(formes[0].libelle).toBe("forme-1-libelle");
@@ -329,12 +329,12 @@ describe("La récupération d’une entité juridique", () => {
       const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
 
       // THEN
-      const forme = entitéJuridique.autorisationsEtCapacites.autorisationsActivités[0].modalités[0].formes[0];
+      const forme = entitéJuridique.autorisationsEtCapacites.autorisationsActivités[0].modalites[0].formes[0];
       expect(forme.autorisationEtablissements).toHaveLength(2);
       expect(forme.autorisationEtablissements[0].numeroFiness).toBe("etablissement-1");
-      expect(forme.autorisationEtablissements[0].nom).toBe("Nom ET 1");
+      expect(forme.autorisationEtablissements[0].nomEtablissement).toBe("Nom ET 1");
       expect(forme.autorisationEtablissements[1].numeroFiness).toBe("etablissement-2");
-      expect(forme.autorisationEtablissements[1].nom).toBe("Nom ET 2");
+      expect(forme.autorisationEtablissements[1].nomEtablissement).toBe("Nom ET 2");
     });
 
     it("recuperer la liste des autorisations d'activités groupées par établissements territoriaux", async () => {
@@ -361,16 +361,16 @@ describe("La récupération d’une entité juridique", () => {
       const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
 
       // THEN
-      const forme = entitéJuridique.autorisationsEtCapacites.autorisationsActivités[0].modalités[0].formes[0];
+      const forme = entitéJuridique.autorisationsEtCapacites.autorisationsActivités[0].modalites[0].formes[0];
       expect(forme.autorisationEtablissements).toHaveLength(1);
-      expect(forme.autorisationEtablissements[0].autorisation[0].nom).toBe("Numéro ARHGOS");
-      expect(forme.autorisationEtablissements[0].autorisation[0].valeur).toBe("argos-1");
-      expect(forme.autorisationEtablissements[0].autorisation[1].nom).toBe("Date d'autorisation");
-      expect(forme.autorisationEtablissements[0].autorisation[1].valeur).toBe("10/01/2020");
-      expect(forme.autorisationEtablissements[0].autorisation[2].nom).toBe("Date de mise en oeuvre");
-      expect(forme.autorisationEtablissements[0].autorisation[2].valeur).toBe("15/01/2020");
-      expect(forme.autorisationEtablissements[0].autorisation[3].nom).toBe("Date de fin");
-      expect(forme.autorisationEtablissements[0].autorisation[3].valeur).toBe("20/10/2021");
+      expect(forme.autorisationEtablissements[0].autorisations[0].nom).toBe("Numéro ARHGOS");
+      expect(forme.autorisationEtablissements[0].autorisations[0].valeur).toBe("argos-1");
+      expect(forme.autorisationEtablissements[0].autorisations[1].nom).toBe("Date d'autorisation");
+      expect(forme.autorisationEtablissements[0].autorisations[1].valeur).toBe("10/01/2020");
+      expect(forme.autorisationEtablissements[0].autorisations[2].nom).toBe("Date de mise en oeuvre");
+      expect(forme.autorisationEtablissements[0].autorisations[2].valeur).toBe("15/01/2020");
+      expect(forme.autorisationEtablissements[0].autorisations[3].nom).toBe("Date de fin");
+      expect(forme.autorisationEtablissements[0].autorisations[3].valeur).toBe("20/10/2021");
     });
   });
 });

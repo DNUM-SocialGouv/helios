@@ -20,6 +20,7 @@ export class EntitéJuridiqueViewModel {
     this.entitéJuridiqueBudgetFinanceViewModel = new EntitéJuridiqueBudgetFinanceViewModel(entitéJuridique.budgetFinance, wording);
     this.entitéJuridiqueAutorisationsCapacitesViewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
       entitéJuridique.autorisationsEtCapacites.capacités,
+      entitéJuridique.autorisationsEtCapacites.autorisationsActivités,
       wording
     );
   }
