@@ -385,6 +385,7 @@ describe("Entité juridique loader", () => {
         // THEN
         expect(autorisationsSanitaire).toHaveLength(2);
         expect(autorisationsSanitaire[0].numéroAutorisationArhgos).toBe("1");
+        expect(autorisationsSanitaire[0].établissementTerritorial.raisonSocialeCourte).toBe("HP VILLENEUVE DASCQ");
         expect(autorisationsSanitaire[1].numéroAutorisationArhgos).toBe("2");
       });
     });

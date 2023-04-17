@@ -257,7 +257,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
   async chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique: string): Promise<EntitéJuridiqueAutorisationEtCapacitéLoader> {
     const capacitésDeLÉtablissementModel = await this.chargeLesCapacitésModel(numéroFinessEntitéJuridique);
     const dateDeMiseÀJourDiamantAnnSaeModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_SAE)) as DateMiseÀJourFichierSourceModel;
-    const autorisationsSanitaire = await this.chargeLesAutorisationsActivites(numéroFinessEntitéJuridique);
+    const autorisationsSanitaire = await this.chargeLesAutorisationsSanitaires(numéroFinessEntitéJuridique);
 
     return {
       capacités: this.construisLesCapacités(capacitésDeLÉtablissementModel, dateDeMiseÀJourDiamantAnnSaeModel),
@@ -266,15 +266,13 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
     };
   }
 
-  private async chargeLesAutorisationsActivites(numéroFinessEntitéJuridique: string): Promise<AutorisationSanitaireModel[]> {
-    const autorisationsEntities = (await this.orm)
+  private async chargeLesAutorisationsSanitaires(numéroFinessEntitéJuridique: string): Promise<AutorisationSanitaireModel[]> {
+    return (await this.orm)
       .getRepository(AutorisationSanitaireModel)
       .createQueryBuilder("autorisation_sanitaire")
-      .leftJoin("autorisation_sanitaire.établissementTerritorial", "établissementTerritorial")
+      .leftJoinAndSelect("autorisation_sanitaire.établissementTerritorial", "établissementTerritorial")
       .where("établissementTerritorial.numero_finess_entite_juridique = :finess", { finess: numéroFinessEntitéJuridique })
       .getMany();
-
-    return autorisationsEntities;
   }
 
   private async chargeLaDateDeMiseÀJourModel(fichierSource: FichierSource): Promise<DateMiseÀJourFichierSourceModel | null> {
