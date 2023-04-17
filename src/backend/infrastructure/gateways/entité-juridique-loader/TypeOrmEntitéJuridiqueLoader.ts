@@ -9,9 +9,8 @@ import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJur
 import { CatégorisationEnum, EntitéJuridiqueIdentité } from "../../../métier/entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueActivités } from "../../../métier/entities/entité-juridique/EntitéJuridiqueActivités";
 import {
-  AutorisationActivites,
   CapacitéSanitaireEntitéJuridique,
-  EntitéJuridiqueAutorisationEtCapacité,
+  EntitéJuridiqueAutorisationEtCapacitéLoader,
 } from "../../../métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { EntitéJuridiqueBudgetFinance } from "../../../métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { EntitéJuridiqueNonTrouvée } from "../../../métier/entities/EntitéJuridiqueNonTrouvée";
@@ -255,61 +254,27 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
     }));
   }
 
-  async chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique: string): Promise<EntitéJuridiqueAutorisationEtCapacité> {
+  async chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique: string): Promise<EntitéJuridiqueAutorisationEtCapacitéLoader> {
     const capacitésDeLÉtablissementModel = await this.chargeLesCapacitésModel(numéroFinessEntitéJuridique);
     const dateDeMiseÀJourDiamantAnnSaeModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_SAE)) as DateMiseÀJourFichierSourceModel;
-    const autorisationsActivités = await this.chargeLesAutorisationsActivites(numéroFinessEntitéJuridique);
+    const autorisationsSanitaire = await this.chargeLesAutorisationsActivites(numéroFinessEntitéJuridique);
 
     return {
       capacités: this.construisLesCapacités(capacitésDeLÉtablissementModel, dateDeMiseÀJourDiamantAnnSaeModel),
-      autorisationsActivités,
+      autorisationsSanitaire: autorisationsSanitaire,
       numéroFinessEntitéJuridique,
     };
   }
 
-  private async chargeLesAutorisationsActivites(numéroFinessEntitéJuridique: string): Promise<AutorisationActivites[]> {
-    const autorisationsEntities = await (await this.orm)
+  private async chargeLesAutorisationsActivites(numéroFinessEntitéJuridique: string): Promise<AutorisationSanitaireModel[]> {
+    const autorisationsEntities = (await this.orm)
       .getRepository(AutorisationSanitaireModel)
       .createQueryBuilder("autorisation_sanitaire")
       .leftJoin("autorisation_sanitaire.établissementTerritorial", "établissementTerritorial")
       .where("établissementTerritorial.numero_finess_entite_juridique = :finess", { finess: numéroFinessEntitéJuridique })
       .getMany();
 
-    const autorisationsActivites = this.grouperLesAutorisationsParActivités(autorisationsEntities);
-    this.grouperLesAutorisationsParModalités(autorisationsEntities, autorisationsActivites);
-    return autorisationsActivites;
-  }
-
-  private grouperLesAutorisationsParModalités(autorisationsEntities: AutorisationSanitaireModel[], autorisationsActivites: AutorisationActivites[]) {
-    autorisationsEntities.forEach((autorisationEntity) => {
-      const currentModalité = {
-        code: autorisationEntity.codeModalité,
-        libelle: autorisationEntity.libelléModalité,
-      };
-      const activité = autorisationsActivites.find((autorisation) => autorisation.code === autorisationEntity.codeActivité) as AutorisationActivites;
-      const modalitéExiste = activité.modalités.find((modalité) => modalité.code === currentModalité.code);
-      if (!modalitéExiste) {
-        activité.modalités.push(currentModalité);
-      }
-    });
-  }
-
-  private grouperLesAutorisationsParActivités(autorisationsEntities: AutorisationSanitaireModel[]) {
-    const autorisationsActivites: AutorisationActivites[] = [];
-    autorisationsEntities.forEach((autorisationEntity) => {
-      const currentActivité = {
-        code: autorisationEntity.codeActivité,
-        libelle: autorisationEntity.libelléActivité,
-      };
-      const existingActivité = autorisationsActivites.find((autorisation) => autorisation.code === currentActivité.code);
-      if (existingActivité === undefined) {
-        autorisationsActivites.push({
-          ...currentActivité,
-          modalités: [],
-        });
-      }
-    });
-    return autorisationsActivites;
+    return autorisationsEntities;
   }
 
   private async chargeLaDateDeMiseÀJourModel(fichierSource: FichierSource): Promise<DateMiseÀJourFichierSourceModel | null> {

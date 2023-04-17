@@ -366,97 +366,26 @@ describe("Entité juridique loader", () => {
         );
       }
 
-      it("recuperer la liste des autorisations d'activités", async () => {
-        // GIVEN
-        await insertAutorisationActivités(numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial, { codeActivité: "1" });
-
-        // WHEN
-        const entiteJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
-        const { autorisationsActivités } = await entiteJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique);
-
-        // THEN
-        expect(autorisationsActivités).toHaveLength(1);
-        expect(autorisationsActivités[0].code).toBe("1");
-      });
-
-      it("recuperer la liste des autorisations d'activités pour une entité juridique", async () => {
-        // GIVEN
-        await insertAutorisationActivités(numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial, {
-          numéroAutorisationArhgos: "1",
-          codeActivité: "1",
-          libelléActivité: "Nom activité",
-        });
-        await insertAutorisationActivités("autre", "autre_et", { numéroAutorisationArhgos: "2", codeActivité: "2" });
-
-        // WHEN
-        const entiteJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
-        const { autorisationsActivités } = await entiteJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique);
-
-        // THEN
-        expect(autorisationsActivités).toHaveLength(1);
-        expect(autorisationsActivités[0].code).toBe("1");
-        expect(autorisationsActivités[0].libelle).toBe("Nom activité");
-      });
-
-      it("recuperer la liste des autorisations d'activités pour une entité juridique avec deux activites different", async () => {
-        // GIVEN
-        await insertAutorisationActivités(numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial, {
-          numéroAutorisationArhgos: "1",
-          codeActivité: "1",
-        });
-        await insertAutorisationActivités(numéroFinessEntitéJuridique, "autre_et", { numéroAutorisationArhgos: "2", codeActivité: "2" });
-
-        // WHEN
-        const entiteJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
-        const { autorisationsActivités } = await entiteJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique);
-
-        // THEN
-        expect(autorisationsActivités).toHaveLength(2);
-        expect(autorisationsActivités[0].code).toBe("1");
-        expect(autorisationsActivités[1].code).toBe("2");
-      });
-
       it("recuperer la liste des autorisations d'activités grouper par Activité", async () => {
         // GIVEN
         await insertAutorisationActivités(numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial, {
           numéroAutorisationArhgos: "1",
-          codeActivité: "1",
         });
         await insertAutorisationActivités(numéroFinessEntitéJuridique, "et_num_2", {
+          numéroAutorisationArhgos: "2",
+        });
+        await insertAutorisationActivités("autreEJ", "et_num_3", {
           numéroAutorisationArhgos: "3",
-          codeActivité: "1",
         });
 
         // WHEN
         const entiteJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
-        const { autorisationsActivités } = await entiteJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique);
+        const { autorisationsSanitaire } = await entiteJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique);
 
         // THEN
-        expect(autorisationsActivités).toHaveLength(1);
-        expect(autorisationsActivités[0].code).toBe("1");
-      });
-
-      it("recuperer la liste des autorisations d'activités grouper par modalité", async () => {
-        // GIVEN
-        await insertAutorisationActivités(numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial, {
-          numéroAutorisationArhgos: "1",
-          codeModalité: "1",
-          codeActivité: "1",
-        });
-        await insertAutorisationActivités(numéroFinessEntitéJuridique, "et_num_2", {
-          numéroAutorisationArhgos: "3",
-          codeModalité: "2",
-          codeActivité: "1",
-        });
-
-        // WHEN
-        const entiteJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
-        const { autorisationsActivités } = await entiteJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique);
-
-        // THEN
-        expect(autorisationsActivités).toHaveLength(1);
-        expect(autorisationsActivités[0].modalités[0].code).toBe("1");
-        expect(autorisationsActivités[0].modalités[1].code).toBe("2");
+        expect(autorisationsSanitaire).toHaveLength(2);
+        expect(autorisationsSanitaire[0].numéroAutorisationArhgos).toBe("1");
+        expect(autorisationsSanitaire[1].numéroAutorisationArhgos).toBe("2");
       });
     });
   });
