@@ -32,7 +32,11 @@ export class RécupèreLEntitéJuridiqueUseCase {
       ...entitéJuridiqueIdentitéOuErreur,
       activités,
       budgetFinance,
-      autorisationsEtCapacites: { ...autorisationsEtCapacites, autorisationsActivités: autorisationsActivites },
+      autorisationsEtCapacites: {
+        numéroFinessEntitéJuridique: autorisationsEtCapacites.numéroFinessEntitéJuridique,
+        capacités: autorisationsEtCapacites.capacités,
+        autorisationsActivités: autorisationsActivites,
+      },
     };
   }
 
