@@ -1,6 +1,12 @@
 import { AutorisationSanitaireModel } from "../../../../database/models/AutorisationSanitaireModel";
 import { EntitéJuridique } from "../entities/entité-juridique/EntitéJuridique";
-import { AutorisationActivites } from "../entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
+import {
+  AutorisationActivites,
+  AutorisationEtablissement,
+  EntitéJuridiqueAutorisationEtCapacitéLoader,
+  Forme,
+  Modalite,
+} from "../entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { EntitéJuridiqueNonTrouvée } from "../entities/EntitéJuridiqueNonTrouvée";
 import { EntitéJuridiqueLoader } from "../gateways/EntitéJuridiqueLoader";
 
@@ -19,6 +25,9 @@ export class RécupèreLEntitéJuridiqueUseCase {
 
     const autorisationsActivites = this.grouperLesAutorisationsParActivités(autorisationsEtCapacites.autorisationsSanitaire);
     this.grouperLesAutorisationsParModalités(autorisationsEtCapacites.autorisationsSanitaire, autorisationsActivites);
+    this.grouperLesAutorisationsParForme(autorisationsEtCapacites, autorisationsActivites);
+    this.grouperLesAutorisationsParEtablissements(autorisationsEtCapacites, autorisationsActivites);
+
     return {
       ...entitéJuridiqueIdentitéOuErreur,
       activités,
@@ -27,11 +36,50 @@ export class RécupèreLEntitéJuridiqueUseCase {
     };
   }
 
+  private grouperLesAutorisationsParEtablissements(
+    autorisationsEtCapacites: EntitéJuridiqueAutorisationEtCapacitéLoader,
+    autorisationsActivites: AutorisationActivites[]
+  ) {
+    autorisationsEtCapacites.autorisationsSanitaire.forEach((autorisationSanitaire) => {
+      const currentEtablissement: AutorisationEtablissement = { numeroFiness: autorisationSanitaire.numéroFinessÉtablissementTerritorial };
+      const activité = autorisationsActivites.find((autorisation) => autorisation.code === autorisationSanitaire.codeActivité) as AutorisationActivites;
+      const modalité = activité.modalités.find((modalité) => modalité.code === autorisationSanitaire.codeModalité) as Modalite;
+      const formeExiste = modalité.formes.find((forme) => forme.code === autorisationSanitaire.codeForme) as Forme;
+
+      const etablissementExiste = formeExiste.autorisationEtablissements.find(
+        (autorisationEtablissement) => autorisationEtablissement.numeroFiness === autorisationSanitaire.numéroFinessÉtablissementTerritorial
+      );
+      if (!etablissementExiste) {
+        formeExiste.autorisationEtablissements.push(currentEtablissement);
+      }
+    });
+  }
+
+  private grouperLesAutorisationsParForme(
+    autorisationsEtCapacites: EntitéJuridiqueAutorisationEtCapacitéLoader,
+    autorisationsActivites: AutorisationActivites[]
+  ) {
+    autorisationsEtCapacites.autorisationsSanitaire.forEach((autorisationSanitaire) => {
+      const currentForme: Forme = {
+        libelle: autorisationSanitaire.libelléForme,
+        code: autorisationSanitaire.codeForme,
+        autorisationEtablissements: [],
+      };
+      const activité = autorisationsActivites.find((autorisation) => autorisation.code === autorisationSanitaire.codeActivité) as AutorisationActivites;
+      const modalité = activité.modalités.find((modalité) => modalité.code === autorisationSanitaire.codeModalité) as Modalite;
+      const formeExiste = modalité.formes.find((forme) => forme.code === autorisationSanitaire.codeForme);
+      if (!formeExiste) {
+        modalité.formes.push(currentForme);
+      }
+    });
+  }
+
   private grouperLesAutorisationsParModalités(autorisationsEntities: AutorisationSanitaireModel[], autorisationsActivites: AutorisationActivites[]) {
     autorisationsEntities.forEach((autorisationEntity) => {
-      const currentModalité = {
+      const currentModalité: Modalite = {
         code: autorisationEntity.codeModalité,
         libelle: autorisationEntity.libelléModalité,
+        formes: [],
       };
       const activité = autorisationsActivites.find((autorisation) => autorisation.code === autorisationEntity.codeActivité) as AutorisationActivites;
       const modalitéExiste = activité.modalités.find((modalité) => modalité.code === currentModalité.code);

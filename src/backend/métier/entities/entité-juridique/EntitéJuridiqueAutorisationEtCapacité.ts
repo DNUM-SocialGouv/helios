@@ -15,8 +15,19 @@ export type EntitéJuridiqueAutorisationEtCapacitéLoader = Readonly<{
   autorisationsSanitaire: AutorisationSanitaireModel[];
 }>;
 
+export type AutorisationEtablissement = { numeroFiness: string };
+export type Forme = {
+  autorisationEtablissements: AutorisationEtablissement[];
+  code: string;
+  libelle: string;
+};
+export type Modalite = {
+  formes: Forme[];
+  code: string;
+  libelle: string;
+};
 export type AutorisationActivites = {
-  modalités: { code: string; libelle: string }[];
+  modalités: Modalite[];
   libelle: string;
   code: string;
 };
