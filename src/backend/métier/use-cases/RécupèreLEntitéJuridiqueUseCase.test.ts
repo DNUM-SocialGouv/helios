@@ -363,14 +363,14 @@ describe("La récupération d’une entité juridique", () => {
       // THEN
       const forme = entitéJuridique.autorisationsEtCapacites.autorisationsActivités[0].modalités[0].formes[0];
       expect(forme.autorisationEtablissements).toHaveLength(1);
-      expect(forme.autorisationEtablissements[0].autorisation[0].nom).toBe("numéroAutorisationArhgos");
+      expect(forme.autorisationEtablissements[0].autorisation[0].nom).toBe("Numéro ARHGOS");
       expect(forme.autorisationEtablissements[0].autorisation[0].valeur).toBe("argos-1");
-      expect(forme.autorisationEtablissements[0].autorisation[1].nom).toBe("dateDAutorisation");
+      expect(forme.autorisationEtablissements[0].autorisation[1].nom).toBe("Date d'autorisation");
       expect(forme.autorisationEtablissements[0].autorisation[1].valeur).toBe("10/01/2020");
-      expect(forme.autorisationEtablissements[0].autorisation[2].nom).toBe("dateDeFin");
-      expect(forme.autorisationEtablissements[0].autorisation[2].valeur).toBe("20/10/2021");
-      expect(forme.autorisationEtablissements[0].autorisation[3].nom).toBe("dateDeMiseEnOeuvre");
-      expect(forme.autorisationEtablissements[0].autorisation[3].valeur).toBe("15/01/2020");
+      expect(forme.autorisationEtablissements[0].autorisation[2].nom).toBe("Date de mise en oeuvre");
+      expect(forme.autorisationEtablissements[0].autorisation[2].valeur).toBe("15/01/2020");
+      expect(forme.autorisationEtablissements[0].autorisation[3].nom).toBe("Date de fin");
+      expect(forme.autorisationEtablissements[0].autorisation[3].valeur).toBe("20/10/2021");
     });
   });
 });
