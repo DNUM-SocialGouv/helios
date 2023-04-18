@@ -1,8 +1,6 @@
 import Image from "next/image";
 
-import { Bloc } from "../commun/Bloc/Bloc";
 import { useDependencies } from "../commun/contexts/useDependencies";
-import { IndicateurGraphique } from "../commun/IndicateurGraphique/IndicateurGraphique";
 import { ListItem } from "../commun/ListItem/ListItem";
 import LogoÉtablissementTerritorialMédicoSocial from "../entité-juridique/liste-des-établissements/logo-établissement-territorial-médico-social-noir.svg";
 import LogoÉtablissementTerritorialSanitaire from "../entité-juridique/liste-des-établissements/logo-établissement-territorial-sanitaire-noir.svg";
@@ -201,25 +199,6 @@ export const PageDeRecette = () => {
             />
           ))}
         </ul>
-      </section>
-      <br />
-      <br />
-      <br />
-      <br />
-      <section>
-        <Bloc titre="Test tag multi niveau">
-          <ul className="indicateurs">
-            <IndicateurGraphique
-              contenuInfoBulle={<></>}
-              dateDeMiseÀJour="20/20/2022"
-              identifiant="test bloc multi niveau"
-              nomDeLIndicateur="test bloc multi niveau"
-              source={<>toto</>}
-            >
-              <TagMultiNiveauxMock />
-            </IndicateurGraphique>
-          </ul>
-        </Bloc>
       </section>
     </main>
   );
