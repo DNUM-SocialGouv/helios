@@ -1,18 +1,22 @@
 import { Repository } from "typeorm";
 
 import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
+import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
 import { BudgetEtFinancesEntiteJuridiqueModel } from "../../../../../database/models/BudgetEtFinancesEntiteJuridiqueModel";
 import { CapacitesSanitaireEntiteJuridiqueModel } from "../../../../../database/models/CapacitesSanitaireEntiteJuridiqueModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
+import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { DateMiseÀJourFichierSourceModelTestBuilder } from "../../../../../database/test-builder/DateMiseÀJourFichierSourceModelTestBuilder";
 import { EntitéJuridiqueModelTestBuilder } from "../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder";
+import { ÉtablissementTerritorialAutorisationModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialAutorisationModelTestBuilder";
+import { ÉtablissementTerritorialIdentitéModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder";
 import { EntitéJuridiqueAutorisationEtCapacité } from "../../../métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { EntitéJuridiqueBudgetFinance } from "../../../métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { EntitéJuridiqueNonTrouvée } from "../../../métier/entities/EntitéJuridiqueNonTrouvée";
 import { EntitéJuridiqueDeRattachement } from "../../../métier/entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement";
 import { EntitéJuridiqueTestBuilder } from "../../../test-builder/EntitéJuridiqueTestBuilder";
-import { clearAllTables, getOrm, numéroFinessEntitéJuridique } from "../../../testHelper";
+import { clearAllTables, getOrm, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from "../../../testHelper";
 import { TypeOrmEntitéJuridiqueLoader } from "./TypeOrmEntitéJuridiqueLoader";
 
 describe("Entité juridique loader", () => {
@@ -22,6 +26,8 @@ describe("Entité juridique loader", () => {
   let dateMiseÀJourFichierSourceRepository: Repository<DateMiseÀJourFichierSourceModel>;
   let budgetFinanceEntiteJuridiqueRepository: Repository<BudgetEtFinancesEntiteJuridiqueModel>;
   let capacitéSanitaireRepository: Repository<CapacitesSanitaireEntiteJuridiqueModel>;
+  let etablissementTerritorialRepository: Repository<ÉtablissementTerritorialIdentitéModel>;
+  let autorisationsActivitesRepository: Repository<AutorisationSanitaireModel>;
 
   beforeAll(async () => {
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel);
@@ -29,6 +35,8 @@ describe("Entité juridique loader", () => {
     dateMiseÀJourFichierSourceRepository = (await orm).getRepository(DateMiseÀJourFichierSourceModel);
     budgetFinanceEntiteJuridiqueRepository = (await orm).getRepository(BudgetEtFinancesEntiteJuridiqueModel);
     capacitéSanitaireRepository = (await orm).getRepository(CapacitesSanitaireEntiteJuridiqueModel);
+    etablissementTerritorialRepository = (await orm).getRepository(ÉtablissementTerritorialIdentitéModel);
+    autorisationsActivitesRepository = (await orm).getRepository(AutorisationSanitaireModel);
   });
 
   beforeEach(async () => {
@@ -304,6 +312,12 @@ describe("Entité juridique loader", () => {
           fichier: FichierSource.DIAMANT_ANN_SAE,
         }),
       ]);
+      await dateMiseÀJourFichierSourceRepository.insert([
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: "2022-05-14",
+          fichier: FichierSource.FINESS_CS1400103,
+        }),
+      ]);
       await capacitéSanitaireRepository.insert([
         EntitéJuridiqueModelTestBuilder.créeCapacitéSanitaireEntiteJuridique({
           année: 2021,
@@ -337,6 +351,56 @@ describe("Entité juridique loader", () => {
         nombreDePlacesEnSsr: 3,
       });
       expect(capacités[1]?.nombreDeLitsEnChirurgie).toBe(10);
+    });
+
+    describe("Autorisations Activites", () => {
+      async function insertAutorisationActivités(numeroFinessEJ: string, numeroFinessET: string, autorisation: Partial<AutorisationSanitaireModel>) {
+        await entitéJuridiqueRepository.upsert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: numeroFinessEJ }), [
+          "numéroFinessEntitéJuridique",
+        ]);
+        await etablissementTerritorialRepository.insert(
+          ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
+            numéroFinessEntitéJuridique: numeroFinessEJ,
+            numéroFinessÉtablissementTerritorial: numeroFinessET,
+          })
+        );
+        await autorisationsActivitesRepository.insert(
+          ÉtablissementTerritorialAutorisationModelTestBuilder.créeAutorisationSanitaire({
+            numéroFinessÉtablissementTerritorial: numeroFinessET,
+            ...autorisation,
+          })
+        );
+      }
+
+      it("recuperer la liste des autorisations d'activités grouper par Activité", async () => {
+        // GIVEN
+        await dateMiseÀJourFichierSourceRepository.insert([
+          DateMiseÀJourFichierSourceModelTestBuilder.crée({
+            dernièreMiseÀJour: "2022-05-14",
+            fichier: FichierSource.FINESS_CS1400103,
+          }),
+        ]);
+        await insertAutorisationActivités(numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial, {
+          numéroAutorisationArhgos: "1",
+        });
+        await insertAutorisationActivités(numéroFinessEntitéJuridique, "et_num_2", {
+          numéroAutorisationArhgos: "2",
+        });
+        await insertAutorisationActivités("autreEJ", "et_num_3", {
+          numéroAutorisationArhgos: "3",
+        });
+
+        // WHEN
+        const entiteJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
+        const { autorisationsSanitaire } = await entiteJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique);
+
+        // THEN
+        expect(autorisationsSanitaire.dateMiseÀJourSource).toBe("2022-05-14");
+        expect(autorisationsSanitaire.autorisations).toHaveLength(2);
+        expect(autorisationsSanitaire.autorisations[0].numéroAutorisationArhgos).toBe("1");
+        expect(autorisationsSanitaire.autorisations[0].établissementTerritorial.raisonSocialeCourte).toBe("HP VILLENEUVE DASCQ");
+        expect(autorisationsSanitaire.autorisations[1].numéroAutorisationArhgos).toBe("2");
+      });
     });
   });
 });

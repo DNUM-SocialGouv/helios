@@ -174,6 +174,7 @@ export class WordingFr implements Wording {
   // Bloc Autorisation
   readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string = "autorisation et capacité";
   readonly AUTORISATIONS: string = "Autorisations";
+  readonly AUTORISATIONS_ACTIVITES: string = "Autorisations d'activité de soins";
   readonly DATE_D_AUTORISATION: string = "Date d’autorisation";
   readonly CAPACITÉ_AUTORISÉE: string = "Capacité autorisée";
 

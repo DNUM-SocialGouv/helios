@@ -1,3 +1,5 @@
+import { StringFormater } from "../../../frontend/ui/commun/StringFormater";
+import { AutorisationActivitesFactory } from "../entities/entité-juridique/AutorisationActivitesFactory";
 import { EntitéJuridique } from "../entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueNonTrouvée } from "../entities/EntitéJuridiqueNonTrouvée";
 import { EntitéJuridiqueLoader } from "../gateways/EntitéJuridiqueLoader";
@@ -15,11 +17,20 @@ export class RécupèreLEntitéJuridiqueUseCase {
       throw entitéJuridiqueIdentitéOuErreur;
     }
 
+    const autorisationsActivites = AutorisationActivitesFactory.createFromAutorisationsSanitaire(autorisationsEtCapacites.autorisationsSanitaire.autorisations);
+
     return {
       ...entitéJuridiqueIdentitéOuErreur,
       activités,
       budgetFinance,
-      autorisationsEtCapacites,
+      autorisationsEtCapacites: {
+        numéroFinessEntitéJuridique: autorisationsEtCapacites.numéroFinessEntitéJuridique,
+        capacités: autorisationsEtCapacites.capacités,
+        autorisationsActivités: {
+          autorisations: autorisationsActivites,
+          dateMiseÀJourSource: StringFormater.formatDate(autorisationsEtCapacites.autorisationsSanitaire.dateMiseÀJourSource),
+        },
+      },
     };
   }
 }

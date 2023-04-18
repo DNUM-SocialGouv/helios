@@ -47,7 +47,7 @@ export class EntitéJuridiqueViewModelTestBuilder {
     },
     activités: [],
     budgetFinance: [],
-    autorisationsEtCapacites: { numéroFinessEntitéJuridique: "", capacités: [] },
+    autorisationsEtCapacites: { numéroFinessEntitéJuridique: "", capacités: [], autorisationsActivités: { autorisations: [], dateMiseÀJourSource: "" } },
   };
 
   public static crée(wording: Wording, champsSurchargés?: Partial<EntitéJuridique>): EntitéJuridiqueViewModel {
