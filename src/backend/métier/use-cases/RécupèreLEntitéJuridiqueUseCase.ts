@@ -1,4 +1,5 @@
 import { AutorisationSanitaireModel } from "../../../../database/models/AutorisationSanitaireModel";
+import { StringFormater } from "../../../frontend/ui/commun/StringFormater";
 import { EntitéJuridique } from "../entities/entité-juridique/EntitéJuridique";
 import {
   Autorisation,
@@ -118,7 +119,7 @@ export class RécupèreLEntitéJuridiqueUseCase {
         capacités: autorisationsEtCapacites.capacités,
         autorisationsActivités: {
           autorisations: autorisationsActivites,
-          dateMiseÀJourSource: autorisationsEtCapacites.autorisationsSanitaire.dateMiseÀJourSource,
+          dateMiseÀJourSource: StringFormater.formatDate(autorisationsEtCapacites.autorisationsSanitaire.dateMiseÀJourSource),
         },
       },
     };

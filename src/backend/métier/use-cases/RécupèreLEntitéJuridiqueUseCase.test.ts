@@ -158,6 +158,20 @@ describe("La récupération d’une entité juridique", () => {
   });
 
   describe("Autorisations Activites", () => {
+    it("recuperer la date de mise à jour des activités", async () => {
+      // GIVEN
+      const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
+        chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({ autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" } }),
+      });
+      const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
+
+      // WHEN
+      const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
+
+      // THEN
+      expect(entitéJuridique.autorisationsEtCapacites.autorisationsActivités.dateMiseÀJourSource).toBe("21/10/2023");
+    });
+
     it("recuperer la liste des autorisations d'activités", async () => {
       // GIVEN
       const autorisationsSanitaire: AutorisationSanitaireModel[] = [
