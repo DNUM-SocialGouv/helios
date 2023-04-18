@@ -10,7 +10,7 @@ export class AutorisationActivitesFactory {
       const etablissement = this.findOrAddEtablissement(forme, autorisationSanitaire);
       const autorisation = this.addAutorisation(autorisationSanitaire);
 
-      etablissement.autorisation.push(...autorisation);
+      etablissement.autorisations.push(...autorisation);
       return autorisationsActivites;
     }, []);
   }
@@ -20,7 +20,7 @@ export class AutorisationActivitesFactory {
 
     if (!activite) {
       activite = {
-        modalités: [],
+        modalites: [],
         libelle: autorisationSanitaire.libelléActivité,
         code: autorisationSanitaire.codeActivité,
       };
@@ -31,7 +31,7 @@ export class AutorisationActivitesFactory {
   }
 
   private static findOrAddModalité(activite: AutorisationActivites, autorisationSanitaire: AutorisationSanitaireModel): Modalite {
-    let modalite = activite.modalités.find((m) => m.code === autorisationSanitaire.codeModalité);
+    let modalite = activite.modalites.find((m) => m.code === autorisationSanitaire.codeModalité);
 
     if (!modalite) {
       modalite = {
@@ -39,7 +39,7 @@ export class AutorisationActivitesFactory {
         code: autorisationSanitaire.codeModalité,
         libelle: autorisationSanitaire.libelléModalité,
       };
-      activite.modalités.push(modalite);
+      activite.modalites.push(modalite);
     }
 
     return modalite;
@@ -66,8 +66,8 @@ export class AutorisationActivitesFactory {
     if (!etablissement) {
       etablissement = {
         numeroFiness: autorisationSanitaire.numéroFinessÉtablissementTerritorial,
-        nom: autorisationSanitaire.établissementTerritorial.raisonSocialeCourte,
-        autorisation: [],
+        nomEtablissement: autorisationSanitaire.établissementTerritorial.raisonSocialeCourte,
+        autorisations: [],
       };
       forme.autorisationEtablissements.push(etablissement);
     }
