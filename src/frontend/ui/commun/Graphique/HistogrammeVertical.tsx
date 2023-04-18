@@ -100,14 +100,18 @@ export function HistogrammeVertical(props: {
 }
 
 function optionsHistogrammeVertical(grosseursDePoliceDesLibellés: string[]): ChartOptions<"bar"> {
-  const borneMaximaleDeLHistogrammeVertical = 105;
+  const borneMaximale = 105;
+  const borneMinimale = -1;
 
   return {
     animation: false,
     plugins: {
       datalabels: {
         align: "end",
-        anchor: "start",
+        anchor: (context) => {
+          const value = context.dataset.data[context.dataIndex] as number;
+          return value > 0 ? "start" : "end";
+        },
         font: {
           family: "Marianne",
           size: 16,
@@ -142,7 +146,8 @@ function optionsHistogrammeVertical(grosseursDePoliceDesLibellés: string[]): Ch
       },
       y: {
         display: false,
-        max: borneMaximaleDeLHistogrammeVertical,
+        max: borneMaximale,
+        min: borneMinimale,
       },
     },
   };
