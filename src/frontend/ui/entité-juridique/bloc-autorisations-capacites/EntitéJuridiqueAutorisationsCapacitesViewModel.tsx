@@ -13,7 +13,7 @@ export class EntitéJuridiqueAutorisationsCapacitesViewModel {
   }
 
   public get lesAutorisationsCapacitesNeSontPasRenseignées() {
-    return !((this.capacites && this.capacites.length > 0) || this.autorisationSanitare.length > 0);
+    return !(this.capacites && this.capacites.length > 0);
   }
 
   public lesAutorisationsActivitesNeSontPasRenseignées(): boolean {

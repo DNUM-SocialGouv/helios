@@ -1,5 +1,7 @@
 import { fireEvent, screen } from "@testing-library/react";
+import { mock } from "jest-mock-extended";
 
+import { AutorisationActivites } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
 import { fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "../../entité-juridique/bloc-autorisations-capacites/EntitéJuridiqueAutorisationsCapacitesViewModel";
@@ -9,15 +11,27 @@ const { wording } = fakeFrontDependencies;
 
 describe("GraphiqueAutorisationActivite", () => {
   let graphiqueTest: GraphiqueTest;
+  let viewModel: EntitéJuridiqueAutorisationsCapacitesViewModel;
 
   beforeAll(() => {
     graphiqueTest = new GraphiqueTest(wording);
+    viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
+      [],
+      [mock<AutorisationActivites>({ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] })],
+      wording
+    );
+  });
+
+  it("affiche le titre", () => {
+    // WHEN
+    renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisations} />);
+
+    // THEN
+    const titre = graphiqueTest.titre(wording.AUTORISATIONS_ACTIVITES);
+    expect(titre).toBeInTheDocument();
   });
 
   it("affiche abréviation du fichier source ARHGOS", () => {
-    // GIVEN
-    const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel([], [], wording);
-
     // WHEN
     renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisations} />);
 
@@ -28,9 +42,6 @@ describe("GraphiqueAutorisationActivite", () => {
   });
 
   it("affiche abréviation du fichier source FINESS", () => {
-    // GIVEN
-    const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel([], [], wording);
-
     // WHEN
     renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisations} />);
 
@@ -45,7 +56,11 @@ describe("GraphiqueAutorisationActivite", () => {
 
     beforeAll(() => {
       // GIVEN
-      viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel([], [], wording);
+      viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
+        [],
+        [mock<AutorisationActivites>({ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] })],
+        wording
+      );
     });
 
     it("affiche le bouton de détail", () => {
@@ -83,6 +98,20 @@ describe("GraphiqueAutorisationActivite", () => {
       // THEN
       const détails = graphiqueTest.détail;
       expect(détails).toHaveAttribute("data-fr-opened", "false");
+    });
+  });
+
+  describe("Donnee manquants", () => {
+    it("n'affiche pas le graphique s'il n'y a pas de données", () => {
+      // GIVEN
+      viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel([], [], wording);
+
+      // WHEN
+      renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisations} />);
+
+      // THEN
+      const graphique = graphiqueTest.titre(wording.AUTORISATIONS_ACTIVITES);
+      expect(graphique).not.toBeInTheDocument();
     });
   });
 });

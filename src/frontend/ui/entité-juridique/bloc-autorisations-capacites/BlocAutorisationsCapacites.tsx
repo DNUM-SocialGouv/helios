@@ -14,10 +14,9 @@ export const BlocAutorisationsCapacites = ({ entitéJuridiqueAutorisationsCapaci
   const { wording, isFeatureEnabled } = useDependencies();
 
   if (
-    entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsCapacitesNeSontPasRenseignées ||
-    entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasRenseignées() ||
-    !isFeatureEnabled(FEATURE_NAME.CAPACITES_EJ) ||
-    !isFeatureEnabled(FEATURE_NAME.AUTHORISATIONS_ACTIVITES)
+    (entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsCapacitesNeSontPasRenseignées &&
+      entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasRenseignées()) ||
+    (!isFeatureEnabled(FEATURE_NAME.CAPACITES_EJ) && !isFeatureEnabled(FEATURE_NAME.AUTHORISATIONS_ACTIVITES))
   ) {
     return <BlocIndicateurVide title={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} />;
   }
@@ -32,9 +31,10 @@ export const BlocAutorisationsCapacites = ({ entitéJuridiqueAutorisationsCapaci
               graphiqueCapacitésParActivitéViewModel={entitéJuridiqueAutorisationsCapacitesViewModel.graphiqueCapacitesParActivitesViewModel}
             />
           )}
-        {isFeatureEnabled(FEATURE_NAME.AUTHORISATIONS_ACTIVITES) && (
-          <GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={entitéJuridiqueAutorisationsCapacitesViewModel.autorisations} />
-        )}
+        {isFeatureEnabled(FEATURE_NAME.AUTHORISATIONS_ACTIVITES) &&
+          !entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasRenseignées() && (
+            <GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={entitéJuridiqueAutorisationsCapacitesViewModel.autorisations} />
+          )}
       </ul>
     </Bloc>
   );
