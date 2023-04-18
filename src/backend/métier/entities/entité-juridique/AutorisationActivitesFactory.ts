@@ -94,12 +94,8 @@ export class AutorisationActivitesFactory {
   }
 
   private static addAutorisation(autorisationSanitaire: AutorisationEtAutresActivitesSanitaire<any>): Autorisation[] {
-    if (!autorisationSanitaire.numéroAutorisationArhgos === undefined) {
+    if (autorisationSanitaire.numéroAutorisationArhgos === undefined) {
       return [
-        {
-          nom: "Numéro ARHGOS",
-          valeur: autorisationSanitaire.numéroAutorisationArhgos,
-        },
         {
           nom: "Date d'autorisation",
           valeur: autorisationSanitaire.dateAutorisation,
@@ -115,6 +111,10 @@ export class AutorisationActivitesFactory {
       ];
     } else {
       return [
+        {
+          nom: "Numéro ARHGOS",
+          valeur: autorisationSanitaire.numéroAutorisationArhgos,
+        },
         {
           nom: "Date d'autorisation",
           valeur: autorisationSanitaire.dateAutorisation,
