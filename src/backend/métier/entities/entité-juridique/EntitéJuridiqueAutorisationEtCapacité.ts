@@ -5,10 +5,13 @@ import { CapacitéSanitaire } from "../établissement-territorial-sanitaire/Éta
 export type CapacitéSanitaireEntitéJuridique = CapacitéSanitaire;
 
 export type AutorisationsActivités = { autorisations: AutorisationActivites[]; dateMiseÀJourSource: string };
+export type AutresActivités = { autorisations: AutorisationActivites[]; dateMiseÀJourSource: string };
+
 export type EntitéJuridiqueAutorisationEtCapacité = Readonly<{
   numéroFinessEntitéJuridique: string;
   capacités: CapacitéSanitaireEntitéJuridique[];
   autorisationsActivités: AutorisationsActivités;
+  autresActivités: AutresActivités;
 }>;
 
 export type EntitéJuridiqueAutorisationEtCapacitéLoader = Readonly<{

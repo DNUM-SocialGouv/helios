@@ -1,4 +1,6 @@
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
+import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
+import { AutorisationEtAutresActivitesSanitaire } from "./AutorisationEtAutresActivitesSanitaire";
 import { Autorisation, AutorisationActivites, AutorisationEtablissement, Forme, Modalite } from "./EntitéJuridiqueAutorisationEtCapacité";
 
 export class AutorisationActivitesFactory {
@@ -15,7 +17,23 @@ export class AutorisationActivitesFactory {
     }, []);
   }
 
-  private static findOrAddActivité(autorisationActivites: AutorisationActivites[], autorisationSanitaire: AutorisationSanitaireModel): AutorisationActivites {
+  static createFromAutresActivitesSanitaire(autreActivitesSanitaire: AutreActivitéSanitaireModel[]): AutorisationActivites[] {
+    return autreActivitesSanitaire.reduce((autreActivites: AutorisationActivites[], autreActiviteSanitaire) => {
+      const activite = this.findOrAddActivité(autreActivites, autreActiviteSanitaire);
+      const modalite = this.findOrAddModalité(activite, autreActiviteSanitaire);
+      const forme = this.findOrAddForme(modalite, autreActiviteSanitaire);
+      const etablissement = this.findOrAddEtablissement(forme, autreActiviteSanitaire);
+      const autorisation = this.addAutorisation(autreActiviteSanitaire);
+
+      etablissement.autorisations.push(...autorisation);
+      return autreActivites;
+    }, []);
+  }
+
+  private static findOrAddActivité(
+    autorisationActivites: AutorisationActivites[],
+    autorisationSanitaire: AutorisationEtAutresActivitesSanitaire<any>
+  ): AutorisationActivites {
     let activite = autorisationActivites.find((a) => a.code === autorisationSanitaire.codeActivité);
 
     if (!activite) {
@@ -30,7 +48,7 @@ export class AutorisationActivitesFactory {
     return activite;
   }
 
-  private static findOrAddModalité(activite: AutorisationActivites, autorisationSanitaire: AutorisationSanitaireModel): Modalite {
+  private static findOrAddModalité(activite: AutorisationActivites, autorisationSanitaire: AutorisationEtAutresActivitesSanitaire<any>): Modalite {
     let modalite = activite.modalites.find((m) => m.code === autorisationSanitaire.codeModalité);
 
     if (!modalite) {
@@ -45,7 +63,7 @@ export class AutorisationActivitesFactory {
     return modalite;
   }
 
-  private static findOrAddForme(modalite: Modalite, autorisationSanitaire: AutorisationSanitaireModel): Forme {
+  private static findOrAddForme(modalite: Modalite, autorisationSanitaire: AutorisationEtAutresActivitesSanitaire<any>): Forme {
     let forme = modalite.formes.find((f) => f.code === autorisationSanitaire.codeForme);
 
     if (!forme) {
@@ -60,7 +78,7 @@ export class AutorisationActivitesFactory {
     return forme;
   }
 
-  private static findOrAddEtablissement(forme: Forme, autorisationSanitaire: AutorisationSanitaireModel): AutorisationEtablissement {
+  private static findOrAddEtablissement(forme: Forme, autorisationSanitaire: AutorisationEtAutresActivitesSanitaire<any>): AutorisationEtablissement {
     let etablissement = forme.autorisationEtablissements.find((e) => e.numeroFiness === autorisationSanitaire.numéroFinessÉtablissementTerritorial);
 
     if (!etablissement) {
@@ -75,24 +93,41 @@ export class AutorisationActivitesFactory {
     return etablissement;
   }
 
-  private static addAutorisation(autorisationSanitaire: AutorisationSanitaireModel): Autorisation[] {
-    return [
-      {
-        nom: "Numéro ARHGOS",
-        valeur: autorisationSanitaire.numéroAutorisationArhgos,
-      },
-      {
-        nom: "Date d'autorisation",
-        valeur: autorisationSanitaire.dateAutorisation,
-      },
-      {
-        nom: "Date de mise en oeuvre",
-        valeur: autorisationSanitaire.dateMiseEnOeuvre,
-      },
-      {
-        nom: "Date de fin",
-        valeur: autorisationSanitaire.dateFin,
-      },
-    ];
+  private static addAutorisation(autorisationSanitaire: AutorisationEtAutresActivitesSanitaire<any>): Autorisation[] {
+    if (autorisationSanitaire.numéroAutorisationArhgos === undefined) {
+      return [
+        {
+          nom: "Numéro ARHGOS",
+          valeur: autorisationSanitaire.numéroAutorisationArhgos,
+        },
+        {
+          nom: "Date d'autorisation",
+          valeur: autorisationSanitaire.dateAutorisation,
+        },
+        {
+          nom: "Date de mise en oeuvre",
+          valeur: autorisationSanitaire.dateMiseEnOeuvre,
+        },
+        {
+          nom: "Date de fin",
+          valeur: autorisationSanitaire.dateFin,
+        },
+      ];
+    } else {
+      return [
+        {
+          nom: "Date d'autorisation",
+          valeur: autorisationSanitaire.dateAutorisation,
+        },
+        {
+          nom: "Date de mise en oeuvre",
+          valeur: autorisationSanitaire.dateMiseEnOeuvre,
+        },
+        {
+          nom: "Date de fin",
+          valeur: autorisationSanitaire.dateFin,
+        },
+      ];
+    }
   }
 }
