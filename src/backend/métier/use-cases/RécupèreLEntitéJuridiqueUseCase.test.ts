@@ -9,6 +9,14 @@ import { EntitéJuridiqueLoader } from "../gateways/EntitéJuridiqueLoader";
 import { RécupèreLEntitéJuridiqueUseCase } from "./RécupèreLEntitéJuridiqueUseCase";
 
 describe("La récupération d’une entité juridique", () => {
+  let entiteJuridiqueLoaderMock: EntitéJuridiqueLoader;
+
+  beforeEach(() => {
+    entiteJuridiqueLoaderMock = mock<EntitéJuridiqueLoader>({
+      chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({ autorisationsSanitaire: { autorisations: [] } }),
+    });
+  });
+
   it("récupère la fiche identité de l’entité juridique", async () => {
     // GIVEN
     const entitéJuridiqueIdentité = EntitéJuridiqueTestBuilder.créeEntitéJuridiqueIdentité({
@@ -18,16 +26,18 @@ describe("La récupération d’une entité juridique", () => {
       },
     });
     const mockedChargeParNuméroFiness = jest.fn().mockResolvedValueOnce(entitéJuridiqueIdentité);
-    const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
-      chargeIdentité: mockedChargeParNuméroFiness,
-    });
-    const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
+    entiteJuridiqueLoaderMock.chargeIdentité = mockedChargeParNuméroFiness;
+    const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entiteJuridiqueLoaderMock);
 
     // WHEN
     const ficheIdentitéRécupérée = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
 
     // THEN
-    expect(ficheIdentitéRécupérée).toEqual(entitéJuridiqueIdentité);
+    expect(ficheIdentitéRécupérée.adresseAcheminement).toEqual(entitéJuridiqueIdentité.adresseAcheminement);
+    expect(ficheIdentitéRécupérée.adresseNuméroVoie).toEqual(entitéJuridiqueIdentité.adresseNuméroVoie);
+    expect(ficheIdentitéRécupérée.adresseVoie).toEqual(entitéJuridiqueIdentité.adresseVoie);
+    expect(ficheIdentitéRécupérée.catégorisation).toEqual(entitéJuridiqueIdentité.catégorisation);
+    expect(ficheIdentitéRécupérée.libelléStatutJuridique).toEqual(entitéJuridiqueIdentité.libelléStatutJuridique);
     expect(mockedChargeParNuméroFiness).toHaveBeenCalledWith(numéroFinessEntitéJuridique);
     expect(mockedChargeParNuméroFiness).toHaveBeenCalledTimes(1);
   });
@@ -59,10 +69,10 @@ describe("La récupération d’une entité juridique", () => {
         value: 10,
       },
     };
-    const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
-      chargeActivités: jest.fn().mockResolvedValue(mockActivités),
-    });
-    const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
+
+    const mockChargeActivités = jest.fn().mockResolvedValue(mockActivités);
+    entiteJuridiqueLoaderMock.chargeActivités = mockChargeActivités;
+    const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entiteJuridiqueLoaderMock);
 
     // WHEN
     const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
@@ -113,11 +123,9 @@ describe("La récupération d’une entité juridique", () => {
       totalDepensesH: -100,
     };
 
-    const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
-      chargeBudgetFinance: jest.fn().mockResolvedValue(mockBudgetFinance),
-    });
-
-    const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
+    const mockChargeBudgetFinance = jest.fn().mockResolvedValue(mockBudgetFinance);
+    entiteJuridiqueLoaderMock.chargeBudgetFinance = mockChargeBudgetFinance;
+    const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entiteJuridiqueLoaderMock);
 
     // WHEN
     const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
@@ -144,17 +152,15 @@ describe("La récupération d’une entité juridique", () => {
       nombreDePlacesEnObstétrique: 1,
     };
 
-    const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
-      chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue(mockCapacités),
-    });
-
-    const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
+    const mockChargeAutorisationsEtCapacités = jest.fn().mockResolvedValue({ capacités: mockCapacités, autorisationsSanitaire: { autorisations: [] } });
+    entiteJuridiqueLoaderMock.chargeAutorisationsEtCapacités = mockChargeAutorisationsEtCapacités;
+    const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entiteJuridiqueLoaderMock);
 
     // WHEN
     const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
 
     // THEN
-    expect(entitéJuridique.autorisationsEtCapacites).toStrictEqual(mockCapacités);
+    expect(entitéJuridique.autorisationsEtCapacites.capacités).toStrictEqual(mockCapacités);
   });
 
   describe("Autorisations Activites", () => {
