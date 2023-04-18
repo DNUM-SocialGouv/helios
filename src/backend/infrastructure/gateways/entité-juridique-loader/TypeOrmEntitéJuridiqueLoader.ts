@@ -2,6 +2,7 @@ import { DataSource } from "typeorm";
 
 import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
+import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
 import { BudgetEtFinancesEntiteJuridiqueModel } from "../../../../../database/models/BudgetEtFinancesEntiteJuridiqueModel";
 import { CapacitesSanitaireEntiteJuridiqueModel } from "../../../../../database/models/CapacitesSanitaireEntiteJuridiqueModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
@@ -259,10 +260,12 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
     const dateDeMiseÀJourDiamantAnnSaeModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_SAE)) as DateMiseÀJourFichierSourceModel;
     const dateDeMiseÀJourFinessCs1400103Model = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400103)) as DateMiseÀJourFichierSourceModel;
     const autorisationsSanitaire = await this.chargeLesAutorisationsSanitaires(numéroFinessEntitéJuridique);
+    const autresActivitesSanitaire = await this.chargeLesAutresActivitesSanitaires(numéroFinessEntitéJuridique);
 
     return {
       capacités: this.construisLesCapacités(capacitésDeLÉtablissementModel, dateDeMiseÀJourDiamantAnnSaeModel),
       autorisationsSanitaire: { autorisations: autorisationsSanitaire, dateMiseÀJourSource: dateDeMiseÀJourFinessCs1400103Model.dernièreMiseÀJour },
+      autresActivitesSanitaire: { autorisations: autresActivitesSanitaire, dateMiseÀJourSource: dateDeMiseÀJourFinessCs1400103Model.dernièreMiseÀJour },
       numéroFinessEntitéJuridique,
     };
   }
@@ -272,6 +275,15 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
       .getRepository(AutorisationSanitaireModel)
       .createQueryBuilder("autorisation_sanitaire")
       .leftJoinAndSelect("autorisation_sanitaire.établissementTerritorial", "établissementTerritorial")
+      .where("établissementTerritorial.numero_finess_entite_juridique = :finess", { finess: numéroFinessEntitéJuridique })
+      .getMany();
+  }
+
+  private async chargeLesAutresActivitesSanitaires(numéroFinessEntitéJuridique: string): Promise<AutreActivitéSanitaireModel[]> {
+    return (await this.orm)
+      .getRepository(AutreActivitéSanitaireModel)
+      .createQueryBuilder("autre_activite_sanitaire")
+      .leftJoinAndSelect("autre_activite_sanitaire.établissementTerritorial", "établissementTerritorial")
       .where("établissementTerritorial.numero_finess_entite_juridique = :finess", { finess: numéroFinessEntitéJuridique })
       .getMany();
   }

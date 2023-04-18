@@ -1,4 +1,5 @@
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
+import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
 import { CapacitéSanitaire } from "../établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 
 export type CapacitéSanitaireEntitéJuridique = CapacitéSanitaire;
@@ -14,6 +15,7 @@ export type EntitéJuridiqueAutorisationEtCapacitéLoader = Readonly<{
   numéroFinessEntitéJuridique: string;
   capacités: CapacitéSanitaireEntitéJuridique[];
   autorisationsSanitaire: { autorisations: AutorisationSanitaireModel[]; dateMiseÀJourSource: string };
+  autresActivitesSanitaire: { autorisations: AutreActivitéSanitaireModel[]; dateMiseÀJourSource: string };
 }>;
 
 export type Autorisation = {
