@@ -3,16 +3,17 @@ import { CapacitéSanitaire } from "../établissement-territorial-sanitaire/Éta
 
 export type CapacitéSanitaireEntitéJuridique = CapacitéSanitaire;
 
+export type AutorisationsActivités = { autorisations: AutorisationActivites[]; dateMiseÀJourSource: string };
 export type EntitéJuridiqueAutorisationEtCapacité = Readonly<{
   numéroFinessEntitéJuridique: string;
   capacités: CapacitéSanitaireEntitéJuridique[];
-  autorisationsActivités: AutorisationActivites[];
+  autorisationsActivités: AutorisationsActivités;
 }>;
 
 export type EntitéJuridiqueAutorisationEtCapacitéLoader = Readonly<{
   numéroFinessEntitéJuridique: string;
   capacités: CapacitéSanitaireEntitéJuridique[];
-  autorisationsSanitaire: AutorisationSanitaireModel[];
+  autorisationsSanitaire: { autorisations: AutorisationSanitaireModel[]; dateMiseÀJourSource: string };
 }>;
 
 export type Autorisation = {

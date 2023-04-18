@@ -1,4 +1,5 @@
 import { AutorisationSanitaireModel } from "../../../../database/models/AutorisationSanitaireModel";
+import { StringFormater } from "../../../frontend/ui/commun/StringFormater";
 import { EntitéJuridique } from "../entities/entité-juridique/EntitéJuridique";
 import {
   Autorisation,
@@ -107,7 +108,7 @@ export class RécupèreLEntitéJuridiqueUseCase {
       throw entitéJuridiqueIdentitéOuErreur;
     }
 
-    const autorisationsActivites = AutorisationActivitesFactory.createFromAutorisationsSanitaire(autorisationsEtCapacites.autorisationsSanitaire);
+    const autorisationsActivites = AutorisationActivitesFactory.createFromAutorisationsSanitaire(autorisationsEtCapacites.autorisationsSanitaire.autorisations);
 
     return {
       ...entitéJuridiqueIdentitéOuErreur,
@@ -116,7 +117,10 @@ export class RécupèreLEntitéJuridiqueUseCase {
       autorisationsEtCapacites: {
         numéroFinessEntitéJuridique: autorisationsEtCapacites.numéroFinessEntitéJuridique,
         capacités: autorisationsEtCapacites.capacités,
-        autorisationsActivités: autorisationsActivites,
+        autorisationsActivités: {
+          autorisations: autorisationsActivites,
+          dateMiseÀJourSource: StringFormater.formatDate(autorisationsEtCapacites.autorisationsSanitaire.dateMiseÀJourSource),
+        },
       },
     };
   }

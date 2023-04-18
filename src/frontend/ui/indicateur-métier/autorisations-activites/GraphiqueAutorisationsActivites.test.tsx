@@ -33,7 +33,7 @@ describe("GraphiqueAutorisationActivite", () => {
 
   it("affiche abréviation du fichier source ARHGOS", () => {
     // WHEN
-    renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisations} />);
+    renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisationsActivités} />);
 
     // THEN
     const arhgos = graphiqueTest.abréviationFichierSource("ARHGOS");
@@ -43,7 +43,7 @@ describe("GraphiqueAutorisationActivite", () => {
 
   it("affiche abréviation du fichier source FINESS", () => {
     // WHEN
-    renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisations} />);
+    renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisationsActivités} />);
 
     // THEN
     const arhgos = graphiqueTest.abréviationFichierSource("FINESS");
@@ -65,7 +65,7 @@ describe("GraphiqueAutorisationActivite", () => {
 
     it("affiche le bouton de détail", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisations} />);
+      renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisationsActivités} />);
 
       // THEN
       const détails = graphiqueTest.détail;
@@ -75,7 +75,7 @@ describe("GraphiqueAutorisationActivite", () => {
 
     it("affiche le contenu de l’info bulle après avoir cliqué sur le bouton 'détails'", () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisations} />);
+      renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisationsActivités} />);
 
       // WHEN
       const détails = graphiqueTest.détail;
@@ -89,7 +89,7 @@ describe("GraphiqueAutorisationActivite", () => {
 
     it("ferme l'info bulle en cliquant sur le bouton 'Fermer'", () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisations} />);
+      renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisationsActivités} />);
       graphiqueTest.ouvreDétail();
 
       // WHEN

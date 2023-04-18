@@ -1,15 +1,17 @@
-import { AutorisationActivites } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
+import { AutorisationActivites, AutorisationsActivités } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { CapacitéSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 import { Wording } from "../../../configuration/wording/Wording";
 import { GraphiqueCapacitésParActivitéViewModel } from "../../indicateur-métier/capacites-sanitaire-par-activites/GraphiqueCapacitésParActivitéViewModel";
 
 export class EntitéJuridiqueAutorisationsCapacitesViewModel {
   public graphiqueCapacitesParActivitesViewModel: GraphiqueCapacitésParActivitéViewModel;
-  public autorisations: AutorisationActivites[];
+  public autorisationsActivités: AutorisationActivites[];
+  public dateMiseAJourAutorisationActivités: string;
 
-  constructor(private capacites: CapacitéSanitaire[], private autorisationSanitare: AutorisationActivites[], wording: Wording) {
+  constructor(private capacites: CapacitéSanitaire[], autorisationsSanitaire: AutorisationsActivités, wording: Wording) {
     this.graphiqueCapacitesParActivitesViewModel = new GraphiqueCapacitésParActivitéViewModel(capacites, wording);
-    this.autorisations = autorisationSanitare;
+    this.autorisationsActivités = autorisationsSanitaire.autorisations;
+    this.dateMiseAJourAutorisationActivités = autorisationsSanitaire.dateMiseÀJourSource;
   }
 
   public get lesAutorisationsCapacitesNeSontPasRenseignées() {
@@ -17,6 +19,6 @@ export class EntitéJuridiqueAutorisationsCapacitesViewModel {
   }
 
   public lesAutorisationsActivitesNeSontPasRenseignées(): boolean {
-    return !(this.autorisationSanitare && this.autorisationSanitare.length > 0);
+    return !(this.autorisationsActivités && this.autorisationsActivités.length > 0);
   }
 }

@@ -368,6 +368,12 @@ describe("Entité juridique loader", () => {
 
       it("recuperer la liste des autorisations d'activités grouper par Activité", async () => {
         // GIVEN
+        await dateMiseÀJourFichierSourceRepository.insert([
+          DateMiseÀJourFichierSourceModelTestBuilder.crée({
+            dernièreMiseÀJour: "2022-05-14",
+            fichier: FichierSource.FINESS_CS1400103,
+          }),
+        ]);
         await insertAutorisationActivités(numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial, {
           numéroAutorisationArhgos: "1",
         });
@@ -383,10 +389,11 @@ describe("Entité juridique loader", () => {
         const { autorisationsSanitaire } = await entiteJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique);
 
         // THEN
-        expect(autorisationsSanitaire).toHaveLength(2);
-        expect(autorisationsSanitaire[0].numéroAutorisationArhgos).toBe("1");
-        expect(autorisationsSanitaire[0].établissementTerritorial.raisonSocialeCourte).toBe("HP VILLENEUVE DASCQ");
-        expect(autorisationsSanitaire[1].numéroAutorisationArhgos).toBe("2");
+        expect(autorisationsSanitaire.dateMiseÀJourSource).toBe("2022-05-14");
+        expect(autorisationsSanitaire.autorisations).toHaveLength(2);
+        expect(autorisationsSanitaire.autorisations[0].numéroAutorisationArhgos).toBe("1");
+        expect(autorisationsSanitaire.autorisations[0].établissementTerritorial.raisonSocialeCourte).toBe("HP VILLENEUVE DASCQ");
+        expect(autorisationsSanitaire.autorisations[1].numéroAutorisationArhgos).toBe("2");
       });
     });
   });
