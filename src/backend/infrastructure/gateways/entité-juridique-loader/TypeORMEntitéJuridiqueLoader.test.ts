@@ -312,6 +312,12 @@ describe("Entité juridique loader", () => {
           fichier: FichierSource.DIAMANT_ANN_SAE,
         }),
       ]);
+      await dateMiseÀJourFichierSourceRepository.insert([
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: "2022-05-14",
+          fichier: FichierSource.FINESS_CS1400103,
+        }),
+      ]);
       await capacitéSanitaireRepository.insert([
         EntitéJuridiqueModelTestBuilder.créeCapacitéSanitaireEntiteJuridique({
           année: 2021,
