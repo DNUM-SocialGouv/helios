@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react";
 import { mock } from "jest-mock-extended";
 
 import {
-  AutorisationActivites,
+  AutorisationsActivités,
   CapacitéSanitaireEntitéJuridique,
 } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
@@ -14,7 +14,11 @@ const { wording } = fakeFrontDependencies;
 describe("Bloc Autorisation et activités", () => {
   it("affiche le GraphiqueCapacitesParActivite", () => {
     // GIVEN
-    const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel([mock<CapacitéSanitaireEntitéJuridique>({ année: annéeEnCours - 1 })], [], wording);
+    const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
+      [mock<CapacitéSanitaireEntitéJuridique>({ année: annéeEnCours - 1 })],
+      { autorisations: [], dateMiseÀJourSource: "" },
+      wording
+    );
 
     // WHEN
     renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
@@ -28,7 +32,7 @@ describe("Bloc Autorisation et activités", () => {
     // GIVEN
     const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
       [mock<CapacitéSanitaireEntitéJuridique>({ année: annéeEnCours - 1 })],
-      [mock<AutorisationActivites>({ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] })],
+      mock<AutorisationsActivités>({ autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }] }),
       wording
     );
 
@@ -42,7 +46,7 @@ describe("Bloc Autorisation et activités", () => {
 
   it("n'affiche pas le graphique capacité par activité s'il n'y a pas de valeur", () => {
     // GIVEN
-    const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel([], [], wording);
+    const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel([], { autorisations: [], dateMiseÀJourSource: "" }, wording);
 
     // WHEN
     renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
@@ -54,7 +58,7 @@ describe("Bloc Autorisation et activités", () => {
 
   it("affiche un l'indicateur vide si il n'y a pas des données", () => {
     // GIVEN
-    const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel([], [], wording);
+    const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel([], { autorisations: [], dateMiseÀJourSource: "" }, wording);
 
     // WHEN
     renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
