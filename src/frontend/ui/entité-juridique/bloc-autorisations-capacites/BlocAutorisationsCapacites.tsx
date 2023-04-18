@@ -33,7 +33,7 @@ export const BlocAutorisationsCapacites = ({ entitéJuridiqueAutorisationsCapaci
             />
           )}
         {isFeatureEnabled(FEATURE_NAME.AUTHORISATIONS_ACTIVITES) && (
-          <GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={entitéJuridiqueAutorisationsCapacitesViewModel.autorisations} />
+          <GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={entitéJuridiqueAutorisationsCapacitesViewModel.autorisationsActivités} />
         )}
       </ul>
     </Bloc>
