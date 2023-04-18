@@ -6,13 +6,13 @@ export type CapacitéSanitaireEntitéJuridique = CapacitéSanitaire;
 export type EntitéJuridiqueAutorisationEtCapacité = Readonly<{
   numéroFinessEntitéJuridique: string;
   capacités: CapacitéSanitaireEntitéJuridique[];
-  autorisationsActivités: AutorisationActivites[];
+  autorisationsActivités: { autorisations: AutorisationActivites[]; dateMiseÀJourSource: string };
 }>;
 
 export type EntitéJuridiqueAutorisationEtCapacitéLoader = Readonly<{
   numéroFinessEntitéJuridique: string;
   capacités: CapacitéSanitaireEntitéJuridique[];
-  autorisationsSanitaire: AutorisationSanitaireModel[];
+  autorisationsSanitaire: { autorisations: AutorisationSanitaireModel[]; dateMiseÀJourSource: string };
 }>;
 
 export type Autorisation = {

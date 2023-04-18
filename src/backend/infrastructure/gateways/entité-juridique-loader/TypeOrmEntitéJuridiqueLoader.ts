@@ -257,11 +257,12 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
   async chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique: string): Promise<EntitéJuridiqueAutorisationEtCapacitéLoader> {
     const capacitésDeLÉtablissementModel = await this.chargeLesCapacitésModel(numéroFinessEntitéJuridique);
     const dateDeMiseÀJourDiamantAnnSaeModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_SAE)) as DateMiseÀJourFichierSourceModel;
+    const dateDeMiseÀJourFinessCs1400103Model = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400103)) as DateMiseÀJourFichierSourceModel;
     const autorisationsSanitaire = await this.chargeLesAutorisationsSanitaires(numéroFinessEntitéJuridique);
 
     return {
       capacités: this.construisLesCapacités(capacitésDeLÉtablissementModel, dateDeMiseÀJourDiamantAnnSaeModel),
-      autorisationsSanitaire: autorisationsSanitaire,
+      autorisationsSanitaire: { autorisations: autorisationsSanitaire, dateMiseÀJourSource: dateDeMiseÀJourFinessCs1400103Model.dernièreMiseÀJour },
       numéroFinessEntitéJuridique,
     };
   }

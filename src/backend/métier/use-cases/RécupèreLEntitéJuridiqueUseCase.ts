@@ -107,7 +107,7 @@ export class RécupèreLEntitéJuridiqueUseCase {
       throw entitéJuridiqueIdentitéOuErreur;
     }
 
-    const autorisationsActivites = AutorisationActivitesFactory.createFromAutorisationsSanitaire(autorisationsEtCapacites.autorisationsSanitaire);
+    const autorisationsActivites = AutorisationActivitesFactory.createFromAutorisationsSanitaire(autorisationsEtCapacites.autorisationsSanitaire.autorisations);
 
     return {
       ...entitéJuridiqueIdentitéOuErreur,
@@ -116,7 +116,10 @@ export class RécupèreLEntitéJuridiqueUseCase {
       autorisationsEtCapacites: {
         numéroFinessEntitéJuridique: autorisationsEtCapacites.numéroFinessEntitéJuridique,
         capacités: autorisationsEtCapacites.capacités,
-        autorisationsActivités: autorisationsActivites,
+        autorisationsActivités: {
+          autorisations: autorisationsActivites,
+          dateMiseÀJourSource: autorisationsEtCapacites.autorisationsSanitaire.dateMiseÀJourSource,
+        },
       },
     };
   }
