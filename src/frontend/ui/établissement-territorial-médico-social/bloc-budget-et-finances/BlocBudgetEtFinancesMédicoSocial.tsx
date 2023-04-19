@@ -9,6 +9,7 @@ import { ContenuTauxDeCaf } from "../InfoBulle/ContenuTauxDeCaf";
 import { ContenuTauxDeVétustéConstruction } from "../InfoBulle/ContenuTauxDeVétustéConstruction";
 import styles from "./BlocBudgetEtFinancesMédicoSocial.module.css";
 import { GraphiqueCompteDeResultat } from "./compte-de-resultat/GraphiqueCompteDeResultat";
+import { TauxDeCaf } from "./taux-de-caf/TauxDeCaf";
 import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from "./ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel";
 
 type BlocBudgetEtFinancesMédicoSocialProps = Readonly<{
@@ -58,20 +59,7 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMé
             {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.montantDeLaContributionAuxFraisDeSiège}
           </IndicateurGraphique>
         )}
-        <IndicateurGraphique
-          contenuInfoBulle={
-            <ContenuTauxDeCaf
-              dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeCafViewModel.dateMiseÀJourTauxDeCaf}
-              source={wording.CNSA}
-            />
-          }
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeCafViewModel.dateMiseÀJourTauxDeCaf}
-          identifiant="budget-et-finances-taux-de-caf"
-          nomDeLIndicateur={wording.TAUX_DE_CAF}
-          source={wording.CNSA}
-        >
-          {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeCafViewModel.tauxDeCaf}
-        </IndicateurGraphique>
+        <TauxDeCaf tauxDeCafViewModel={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeCafViewModel} />
         <IndicateurGraphique
           contenuInfoBulle={
             <ContenuTauxDeVétustéConstruction
