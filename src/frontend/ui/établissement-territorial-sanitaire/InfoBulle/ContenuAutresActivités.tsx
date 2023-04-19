@@ -5,9 +5,10 @@ import { useDependencies } from "../../commun/contexts/useDependencies";
 type ContenuAutresActivitésProps = Readonly<{
   dateDeMiseÀJour: string;
   source: ReactElement;
+  estEntitéJuridique?: boolean;
 }>;
 
-export const ContenuAutresActivités = ({ dateDeMiseÀJour, source }: ContenuAutresActivitésProps) => {
+export const ContenuAutresActivités = ({ dateDeMiseÀJour, source, estEntitéJuridique = false }: ContenuAutresActivitésProps) => {
   const { wording } = useDependencies();
 
   return (
@@ -28,6 +29,15 @@ export const ContenuAutresActivités = ({ dateDeMiseÀJour, source }: ContenuAut
           Hebdomadaire
         </p>
       </section>
+      {estEntitéJuridique && (
+        <section aria-label={wording.MODE_DE_CALCUL}>
+          <p>
+            <span className="fr-text--bold">Mode de calcul : </span>
+            Les autorisations et capacités affichées au niveau de l’entité juridique (EJ) correspondent à l’ensemble des autorisations et capacités des
+            établissements géographiques sanitaires rattachés à l’EJ.
+          </p>
+        </section>
+      )}
       <section aria-label={wording.SOURCES}>
         <p>
           <span className="fr-text--bold">Source(s) : </span>

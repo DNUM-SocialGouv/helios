@@ -2,6 +2,7 @@ import { Repository } from "typeorm";
 
 import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
+import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
 import { BudgetEtFinancesEntiteJuridiqueModel } from "../../../../../database/models/BudgetEtFinancesEntiteJuridiqueModel";
 import { CapacitesSanitaireEntiteJuridiqueModel } from "../../../../../database/models/CapacitesSanitaireEntiteJuridiqueModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
@@ -28,6 +29,7 @@ describe("Entité juridique loader", () => {
   let capacitéSanitaireRepository: Repository<CapacitesSanitaireEntiteJuridiqueModel>;
   let etablissementTerritorialRepository: Repository<ÉtablissementTerritorialIdentitéModel>;
   let autorisationsActivitesRepository: Repository<AutorisationSanitaireModel>;
+  let autresActivitesRepository: Repository<AutreActivitéSanitaireModel>;
 
   beforeAll(async () => {
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel);
@@ -37,6 +39,7 @@ describe("Entité juridique loader", () => {
     capacitéSanitaireRepository = (await orm).getRepository(CapacitesSanitaireEntiteJuridiqueModel);
     etablissementTerritorialRepository = (await orm).getRepository(ÉtablissementTerritorialIdentitéModel);
     autorisationsActivitesRepository = (await orm).getRepository(AutorisationSanitaireModel);
+    autresActivitesRepository = (await orm).getRepository(AutreActivitéSanitaireModel);
   });
 
   beforeEach(async () => {
@@ -400,6 +403,57 @@ describe("Entité juridique loader", () => {
         expect(autorisationsSanitaire.autorisations[0].numéroAutorisationArhgos).toBe("1");
         expect(autorisationsSanitaire.autorisations[0].établissementTerritorial.raisonSocialeCourte).toBe("HP VILLENEUVE DASCQ");
         expect(autorisationsSanitaire.autorisations[1].numéroAutorisationArhgos).toBe("2");
+      });
+    });
+
+    describe("Autres Activites", () => {
+      async function insertAutresActivités(numeroFinessEJ: string, numeroFinessET: string, autresActivites: Partial<AutreActivitéSanitaireModel>) {
+        await entitéJuridiqueRepository.upsert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: numeroFinessEJ }), [
+          "numéroFinessEntitéJuridique",
+        ]);
+        await etablissementTerritorialRepository.insert(
+          ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
+            numéroFinessEntitéJuridique: numeroFinessEJ,
+            numéroFinessÉtablissementTerritorial: numeroFinessET,
+          })
+        );
+        await autresActivitesRepository.insert(
+          ÉtablissementTerritorialAutorisationModelTestBuilder.créeAutreActivitéSanitaire({
+            numéroFinessÉtablissementTerritorial: numeroFinessET,
+            ...autresActivites,
+          })
+        );
+      }
+
+      it("recuperer la liste des autres d'activités grouper par Activité", async () => {
+        // GIVEN
+        await dateMiseÀJourFichierSourceRepository.insert([
+          DateMiseÀJourFichierSourceModelTestBuilder.crée({
+            dernièreMiseÀJour: "2022-05-14",
+            fichier: FichierSource.FINESS_CS1400103,
+          }),
+        ]);
+        await insertAutresActivités(numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial, {
+          codeActivité: "1",
+        });
+        await insertAutresActivités(numéroFinessEntitéJuridique, "et_num_2", {
+          codeActivité: "2",
+        });
+        await insertAutresActivités("autreEJ", "et_num_3", {
+          codeActivité: "3",
+        });
+
+        // WHEN
+        const entiteJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
+        const { autresActivitesSanitaire } = await entiteJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique);
+
+        // THEN
+
+        expect(autresActivitesSanitaire.dateMiseÀJourSource).toBe("2022-05-14");
+        expect(autresActivitesSanitaire.autorisations).toHaveLength(2);
+        expect(autresActivitesSanitaire.autorisations[0].codeActivité).toBe("1");
+        expect(autresActivitesSanitaire.autorisations[0].établissementTerritorial.raisonSocialeCourte).toBe("HP VILLENEUVE DASCQ");
+        expect(autresActivitesSanitaire.autorisations[1].codeActivité).toBe("2");
       });
     });
   });

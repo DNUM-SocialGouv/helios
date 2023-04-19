@@ -5,11 +5,11 @@ import { AutorisationsActivités, AutresActivités } from "../../../../backend/m
 import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
 import { fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "../../entité-juridique/bloc-autorisations-capacites/EntitéJuridiqueAutorisationsCapacitesViewModel";
-import { GraphiqueAutorisationsActivites } from "./GraphiqueAutorisationsActivites";
+import { GraphiqueAutresActivites } from "./GraphiqueAutresActivites";
 
 const { wording } = fakeFrontDependencies;
 
-describe("GraphiqueAutorisationActivite", () => {
+describe("GraphiqueAutresActivites", () => {
   let graphiqueTest: GraphiqueTest;
   let viewModel: EntitéJuridiqueAutorisationsCapacitesViewModel;
 
@@ -17,24 +17,24 @@ describe("GraphiqueAutorisationActivite", () => {
     graphiqueTest = new GraphiqueTest(wording);
     viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
       [],
-      mock<AutorisationsActivités>({ autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }] }),
-      mock<AutresActivités>(),
+      mock<AutorisationsActivités>(),
+      mock<AutresActivités>({ autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }] }),
       wording
     );
   });
 
   it("affiche le titre", () => {
     // WHEN
-    renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisationsActivités} />);
+    renderFakeComponent(<GraphiqueAutresActivites entiteJuridiqueAutorisations={viewModel.autresActivités} />);
 
     // THEN
-    const titre = graphiqueTest.titre(wording.AUTORISATIONS_ACTIVITES);
+    const titre = graphiqueTest.titre(wording.AUTRES_ACTIVITÉS);
     expect(titre).toBeInTheDocument();
   });
 
   it("affiche abréviation du fichier source ARHGOS", () => {
     // WHEN
-    renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisationsActivités} />);
+    renderFakeComponent(<GraphiqueAutresActivites entiteJuridiqueAutorisations={viewModel.autresActivités} />);
 
     // THEN
     const arhgos = graphiqueTest.abréviationFichierSource("ARHGOS");
@@ -44,7 +44,7 @@ describe("GraphiqueAutorisationActivite", () => {
 
   it("affiche abréviation du fichier source FINESS", () => {
     // WHEN
-    renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisationsActivités} />);
+    renderFakeComponent(<GraphiqueAutresActivites entiteJuridiqueAutorisations={viewModel.autresActivités} />);
 
     // THEN
     const arhgos = graphiqueTest.abréviationFichierSource("FINESS");
@@ -59,17 +59,15 @@ describe("GraphiqueAutorisationActivite", () => {
       // GIVEN
       viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
         [],
-        mock<AutorisationsActivités>({
-          autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }],
-        }),
-        mock<AutresActivités>(),
+        mock<AutorisationsActivités>(),
+        mock<AutresActivités>({ autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }] }),
         wording
       );
     });
 
     it("affiche le bouton de détail", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisationsActivités} />);
+      renderFakeComponent(<GraphiqueAutresActivites entiteJuridiqueAutorisations={viewModel.autresActivités} />);
 
       // THEN
       const détails = graphiqueTest.détail;
@@ -79,7 +77,7 @@ describe("GraphiqueAutorisationActivite", () => {
 
     it("affiche le contenu de l’info bulle après avoir cliqué sur le bouton 'détails'", () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisationsActivités} />);
+      renderFakeComponent(<GraphiqueAutresActivites entiteJuridiqueAutorisations={viewModel.autresActivités} />);
 
       // WHEN
       const détails = graphiqueTest.détail;
@@ -87,13 +85,13 @@ describe("GraphiqueAutorisationActivite", () => {
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const h1 = graphiqueTest.titreDétail(wording.AUTORISATIONS_ACTIVITES);
+      const h1 = graphiqueTest.titreDétail(wording.AUTRES_ACTIVITÉS);
       expect(h1).toBeInTheDocument();
     });
 
     it("ferme l'info bulle en cliquant sur le bouton 'Fermer'", () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisationsActivités} />);
+      renderFakeComponent(<GraphiqueAutresActivites entiteJuridiqueAutorisations={viewModel.autresActivités} />);
       graphiqueTest.ouvreDétail();
 
       // WHEN
