@@ -1,3 +1,7 @@
+export type Indicateur = Readonly<{
+  dateMiseÀJourSource: string;
+  valeur: number | null;
+}>;
 export type ÉtablissementTerritorialMédicoSocialBudgetEtFinances = Readonly<{
   année: number;
   cadreBudgétaire: string;
@@ -6,14 +10,8 @@ export type ÉtablissementTerritorialMédicoSocialBudgetEtFinances = Readonly<{
     charges: number | null;
     produits: number | null;
   }>;
-  contributionAuxFraisDeSiège: Readonly<{
-    dateMiseÀJourSource: string;
-    valeur: number | null;
-  }>;
-  fondsDeRoulement: Readonly<{
-    dateMiseÀJourSource: string;
-    valeur: number | null;
-  }>;
+  contributionAuxFraisDeSiège: Indicateur;
+  fondsDeRoulement: Indicateur;
   recettesEtDépenses: Readonly<{
     dateMiseÀJourSource: string;
     dépensesGroupe1: number | null;
@@ -23,16 +21,7 @@ export type ÉtablissementTerritorialMédicoSocialBudgetEtFinances = Readonly<{
     recettesGroupe2: number | null;
     recettesGroupe3: number | null;
   }>;
-  résultatNetComptable: Readonly<{
-    dateMiseÀJourSource: string;
-    valeur: number | null;
-  }>;
-  tauxDeCafNette: Readonly<{
-    dateMiseÀJourSource: string;
-    valeur: number | null;
-  }>;
-  tauxDeVétustéConstruction: Readonly<{
-    dateMiseÀJourSource: string;
-    valeur: number | null;
-  }>;
+  résultatNetComptable: Indicateur;
+  tauxDeCafNette: Indicateur;
+  tauxDeVétustéConstruction: Indicateur;
 }>;

@@ -60,14 +60,17 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMé
         )}
         <IndicateurGraphique
           contenuInfoBulle={
-            <ContenuTauxDeCaf dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourTauxDeCaf} source={wording.CNSA} />
+            <ContenuTauxDeCaf
+              dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeCafViewModel.dateMiseÀJourTauxDeCaf}
+              source={wording.CNSA}
+            />
           }
-          dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourTauxDeCaf}
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeCafViewModel.dateMiseÀJourTauxDeCaf}
           identifiant="budget-et-finances-taux-de-caf"
           nomDeLIndicateur={wording.TAUX_DE_CAF}
           source={wording.CNSA}
         >
-          {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeCaf}
+          {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeCafViewModel.tauxDeCaf}
         </IndicateurGraphique>
         <IndicateurGraphique
           contenuInfoBulle={
