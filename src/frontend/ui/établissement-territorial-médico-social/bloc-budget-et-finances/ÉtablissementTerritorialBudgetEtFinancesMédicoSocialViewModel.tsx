@@ -26,30 +26,36 @@ import { StringFormater } from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";
 import { CompteDeResultatViewModel } from "./compte-de-resultat/CompteDeResultatViewModel";
 
+type TauxDeCaf = Readonly<{ année: number; valeur: number | null }>;
+
 export class TauxDeCafViewModel extends GraphiqueViewModel {
   private readonly nombreDAnnéesParIndicateur = 3;
   private readonly seuilDuTauxDeCaf = 2;
   private readonly seuilMinimalDuTauxDeCaf = -21;
   private readonly seuilMaximalDuTauxDeCaf = 21;
-  constructor(private budgetEtFinancesMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[], wording: Wording) {
+
+  static fromBudgetFinanceMedicoSocial(budgetFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[], wording: Wording) {
+    const tauxDeCaf: TauxDeCaf[] = budgetFinance.map((budget) => ({ année: budget.année, valeur: budget.tauxDeCafNette.valeur }));
+    const dateMiseÀJourSource = budgetFinance.length > 0 ? budgetFinance[0].tauxDeCafNette?.dateMiseÀJourSource : "";
+    return new TauxDeCafViewModel(tauxDeCaf, dateMiseÀJourSource, wording);
+  }
+  constructor(private tauxDeCafParAnnée: TauxDeCaf[], private dateMiseÀJourSource: string, wording: Wording) {
     super(wording);
   }
 
   public get leTauxDeCafEstIlRenseigné(): boolean {
-    const [années] = this.construisLesAnnéesEtSesTaux("tauxDeCafNette");
+    const [années] = this.construisLesAnnéesEtSesTaux();
 
     return années.length > 0;
   }
 
-  private construisLesAnnéesEtSesTaux(
-    indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialBudgetEtFinances, "année" | "cadreBudgétaire" | "chargesEtProduits" | "recettesEtDépenses">
-  ): number[][] {
+  private construisLesAnnéesEtSesTaux(): number[][] {
     const valeurs: number[] = [];
     const années: number[] = [];
-    this.budgetEtFinancesMédicoSocial.forEach((budgetEtFinancesMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances) => {
-      const valeur = budgetEtFinancesMédicoSocial[indicateur].valeur;
+    this.tauxDeCafParAnnée.forEach((tauxDeCaf: TauxDeCaf) => {
+      const valeur = tauxDeCaf.valeur;
       if (valeur !== null) {
-        années.push(budgetEtFinancesMédicoSocial.année);
+        années.push(tauxDeCaf.année);
         valeurs.push(StringFormater.transformInRate(valeur));
       }
     });
@@ -58,7 +64,7 @@ export class TauxDeCafViewModel extends GraphiqueViewModel {
   }
 
   public get tauxDeCaf(): ReactElement {
-    const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxDeCafNette");
+    const [valeurs, années] = this.construisLesAnnéesEtSesTaux();
     const construisLaCouleurDeLaBarre = (valeur: number, année: number | string): CouleurHistogramme => {
       let premierPlan = couleurDuFondHistogrammeSecondaire;
       let secondPlan = couleurDuFond;
@@ -232,7 +238,7 @@ export class TauxDeCafViewModel extends GraphiqueViewModel {
   }
 
   public get dateMiseÀJourTauxDeCaf(): string {
-    return StringFormater.formatDate(this.budgetEtFinancesMédicoSocial[0].tauxDeCafNette?.dateMiseÀJourSource as string);
+    return StringFormater.formatDate(this.dateMiseÀJourSource);
   }
 }
 
@@ -247,7 +253,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel ext
   constructor(private readonly budgetEtFinancesMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[], wording: Wording) {
     super(wording);
     this.compteDeResultatViewModel = new CompteDeResultatViewModel(budgetEtFinancesMédicoSocial, wording);
-    this.tauxDeCafViewModel = new TauxDeCafViewModel(budgetEtFinancesMédicoSocial, wording);
+    this.tauxDeCafViewModel = TauxDeCafViewModel.fromBudgetFinanceMedicoSocial(budgetEtFinancesMédicoSocial, wording);
   }
 
   public get lesDonnéesBudgetEtFinancesNeSontPasRenseignées(): boolean {
