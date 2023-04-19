@@ -1,7 +1,11 @@
 import { fireEvent, screen } from "@testing-library/react";
 import { mock } from "jest-mock-extended";
 
-import { AutorisationsActivités, AutresActivités } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
+import {
+  AutorisationsActivités,
+  AutresActivités,
+  ReconnaissanceContractuelleActivités,
+} from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
 import { fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "../../entité-juridique/bloc-autorisations-capacites/EntitéJuridiqueAutorisationsCapacitesViewModel";
@@ -19,6 +23,7 @@ describe("GraphiqueAutorisationActivite", () => {
       [],
       mock<AutorisationsActivités>({ autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }] }),
       mock<AutresActivités>(),
+      mock<ReconnaissanceContractuelleActivités>(),
       wording
     );
   });
@@ -63,6 +68,7 @@ describe("GraphiqueAutorisationActivite", () => {
           autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }],
         }),
         mock<AutresActivités>(),
+        mock<ReconnaissanceContractuelleActivités>(),
         wording
       );
     });

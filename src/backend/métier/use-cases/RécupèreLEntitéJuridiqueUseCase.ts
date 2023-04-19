@@ -19,7 +19,7 @@ export class RécupèreLEntitéJuridiqueUseCase {
 
     const autorisationsActivites = AutorisationActivitesFactory.createFromAutorisationsSanitaire(autorisationsEtCapacites.autorisationsSanitaire.autorisations);
     const autresActivites = AutorisationActivitesFactory.createFromAutresActivitesSanitaire(autorisationsEtCapacites.autresActivitesSanitaire.autorisations);
-    const reconnaisanceContractuellesActivites = AutorisationActivitesFactory.createFromReconnaissanceContractuellesSanitaire(
+    const reconnaissanceContractuellesActivites = AutorisationActivitesFactory.createFromReconnaissanceContractuellesSanitaire(
       autorisationsEtCapacites.reconnaissanceContractuellesSanitaire.autorisations
     );
 
@@ -39,7 +39,7 @@ export class RécupèreLEntitéJuridiqueUseCase {
           dateMiseÀJourSource: StringFormater.formatDate(autorisationsEtCapacites.autresActivitesSanitaire.dateMiseÀJourSource),
         },
         reconnaissanceContractuelleActivités: {
-          autorisations: reconnaisanceContractuellesActivites,
+          autorisations: reconnaissanceContractuellesActivites,
           dateMiseÀJourSource: StringFormater.formatDate(autorisationsEtCapacites.reconnaissanceContractuellesSanitaire.dateMiseÀJourSource),
         },
       },
