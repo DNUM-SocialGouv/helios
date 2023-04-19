@@ -5,9 +5,10 @@ import { useDependencies } from "../../commun/contexts/useDependencies";
 type ContenuReconnaissancesContractuellesProps = Readonly<{
   dateDeMiseÀJour: string;
   source: ReactElement;
+  estEntitéJuridique?: boolean;
 }>;
 
-export const ContenuReconnaissancesContractuelles = ({ dateDeMiseÀJour, source }: ContenuReconnaissancesContractuellesProps) => {
+export const ContenuReconnaissancesContractuelles = ({ dateDeMiseÀJour, source, estEntitéJuridique }: ContenuReconnaissancesContractuellesProps) => {
   const { wording } = useDependencies();
 
   return (
@@ -28,6 +29,15 @@ export const ContenuReconnaissancesContractuelles = ({ dateDeMiseÀJour, source 
           Hebdomadaire
         </p>
       </section>
+      {estEntitéJuridique && (
+        <section aria-label={wording.MODE_DE_CALCUL}>
+          <p>
+            <span className="fr-text--bold">Mode de calcul : </span>
+            Les reconnaissances contractuelles affichées au niveau de l’entité juridique (EJ) correspondent à l’ensemble reconnaissances contractuelles des
+            établissements géographiques sanitaires rattachés à l’EJ
+          </p>
+        </section>
+      )}
       <section aria-label={wording.SOURCES}>
         <p>
           <span className="fr-text--bold">Source(s) : </span>

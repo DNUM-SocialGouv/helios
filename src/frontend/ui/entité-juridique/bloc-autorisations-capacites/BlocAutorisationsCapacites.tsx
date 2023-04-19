@@ -5,6 +5,7 @@ import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicat
 import { GraphiqueAutorisationsActivites } from "../../indicateur-métier/autorisations-activites/GraphiqueAutorisationsActivites";
 import { GraphiqueAutresActivites } from "../../indicateur-métier/autres-activites/GraphiqueAutresActivites";
 import { GraphiqueCapacitésParActivité } from "../../indicateur-métier/capacites-sanitaire-par-activites/GraphiqueCapacitésParActivité";
+import { GraphiqueReconnaissanceContractuelles } from "../../indicateur-métier/reconnaissance-contractuelles/GraphiqueReconnaissanceContractuelles";
 import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "./EntitéJuridiqueAutorisationsCapacitesViewModel";
 
 type BlocAutorisationsCapacitesProps = Readonly<{
@@ -17,7 +18,8 @@ export const BlocAutorisationsCapacites = ({ entitéJuridiqueAutorisationsCapaci
   if (
     (entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsCapacitesNeSontPasRenseignées &&
       entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasRenseignées() &&
-      entitéJuridiqueAutorisationsCapacitesViewModel.lesAutresActivitesNeSontPasRenseignées()) ||
+      entitéJuridiqueAutorisationsCapacitesViewModel.lesAutresActivitesNeSontPasRenseignées() &&
+      entitéJuridiqueAutorisationsCapacitesViewModel.lesReconnaissanceContractuellesNeSontPasRenseignées()) ||
     (!isFeatureEnabled(FEATURE_NAME.CAPACITES_EJ) && !isFeatureEnabled(FEATURE_NAME.ACTIVITES))
   ) {
     return <BlocIndicateurVide title={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} />;
@@ -36,8 +38,11 @@ export const BlocAutorisationsCapacites = ({ entitéJuridiqueAutorisationsCapaci
         {isFeatureEnabled(FEATURE_NAME.ACTIVITES) && !entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasRenseignées() && (
           <GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={entitéJuridiqueAutorisationsCapacitesViewModel.autorisationsActivités} />
         )}
-        {isFeatureEnabled(FEATURE_NAME.ACTIVITES) && !entitéJuridiqueAutorisationsCapacitesViewModel.lesAutresActivitesNeSontPasRenseignées() && (
+        {isFeatureEnabled(FEATURE_NAME.ACTIVITES) && !entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasRenseignées() && (
           <GraphiqueAutresActivites entiteJuridiqueAutorisations={entitéJuridiqueAutorisationsCapacitesViewModel.autresActivités} />
+        )}
+        {isFeatureEnabled(FEATURE_NAME.ACTIVITES) && !entitéJuridiqueAutorisationsCapacitesViewModel.lesReconnaissanceContractuellesNeSontPasRenseignées() && (
+          <GraphiqueReconnaissanceContractuelles entiteJuridiqueAutorisations={entitéJuridiqueAutorisationsCapacitesViewModel.reconnaissanceActivités} />
         )}
       </ul>
     </Bloc>
