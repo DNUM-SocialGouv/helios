@@ -154,16 +154,16 @@ export class TauxDeCafViewModel extends GraphiqueViewModel {
 
     return (
       <>
-        {annéesManquantes.length < this.nombreDAnnéesParIndicateur && (
+        {listeAnnéesManquantes.length < this.nombreDAnnéesParIndicateur && (
           <Bar
             // @ts-ignore
             data={data}
             options={this.construisLesOptionsDeLHistogrammeDuTauxDeCaf(couleursDeLHistogramme, libellésDesTicks, maxDeLHistogramme, minDeLHistogramme)}
           />
         )}
-        {annéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
+        {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
         <Transcription
-          disabled={annéesManquantes.length === this.nombreDAnnéesParIndicateur}
+          disabled={listeAnnéesManquantes.length === this.nombreDAnnéesParIndicateur}
           entêteLibellé={this.wording.ANNÉE}
           identifiants={[this.wording.TAUX_DE_CAF]}
           libellés={années}
