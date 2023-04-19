@@ -169,7 +169,7 @@ export class AutorisationActivitesFactory {
     return [
       {
         nom: "Capacité autorisée",
-        valeur: reconnaissanceContractuelle.capacitéAutorisée.toString(),
+        valeur: reconnaissanceContractuelle.capacitéAutorisée ? reconnaissanceContractuelle.capacitéAutorisée.toString() : "N/A",
       },
       {
         nom: "Date d'effet de l'ASR",
