@@ -393,9 +393,9 @@ describe("La récupération d’une entité juridique", () => {
           codeForme: "forme-1",
           numéroFinessÉtablissementTerritorial: "etablissement-1",
           numéroAutorisationArhgos: "argos-1",
-          dateAutorisation: "10/01/2020",
-          dateFin: "20/10/2021",
-          dateMiseEnOeuvre: "15/01/2020",
+          dateAutorisation: "01/20/2020",
+          dateFin: "10/20/2021",
+          dateMiseEnOeuvre: "01/15/2020",
         }),
       ];
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
@@ -415,7 +415,7 @@ describe("La récupération d’une entité juridique", () => {
       expect(forme.autorisationEtablissements[0].autorisations[0].nom).toBe("Numéro ARHGOS");
       expect(forme.autorisationEtablissements[0].autorisations[0].valeur).toBe("argos-1");
       expect(forme.autorisationEtablissements[0].autorisations[1].nom).toBe("Date d'autorisation");
-      expect(forme.autorisationEtablissements[0].autorisations[1].valeur).toBe("10/01/2020");
+      expect(forme.autorisationEtablissements[0].autorisations[1].valeur).toBe("20/01/2020");
       expect(forme.autorisationEtablissements[0].autorisations[2].nom).toBe("Date de mise en oeuvre");
       expect(forme.autorisationEtablissements[0].autorisations[2].valeur).toBe("15/01/2020");
       expect(forme.autorisationEtablissements[0].autorisations[3].nom).toBe("Date de fin");
@@ -644,9 +644,9 @@ describe("La récupération d’une entité juridique", () => {
           codeModalité: "1",
           codeForme: "forme-1",
           numéroFinessÉtablissementTerritorial: "etablissement-1",
-          dateAutorisation: "10/01/2020",
-          dateFin: "20/10/2021",
-          dateMiseEnOeuvre: "15/01/2020",
+          dateAutorisation: "01/10/2020",
+          dateFin: "10/20/2021",
+          dateMiseEnOeuvre: "01/15/2020",
         }),
       ];
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
