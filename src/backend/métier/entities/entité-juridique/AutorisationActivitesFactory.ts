@@ -1,5 +1,6 @@
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
 import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
+import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { StringFormater } from "../../../../frontend/ui/commun/StringFormater";
 import { Autorisation, AutorisationActivites, AutorisationEtablissement, Forme, Modalite } from "./EntitéJuridiqueAutorisationEtCapacité";
 
@@ -27,6 +28,21 @@ export class AutorisationActivitesFactory {
 
       etablissement.autorisations.push(...autorisation);
       return autreActivites;
+    }, []);
+  }
+
+  static createFromReconnaissanceContractuellesSanitaire(
+    reconnaissanceContractuelleSanitaire: ReconnaissanceContractuelleSanitaireModel[]
+  ): AutorisationActivites[] {
+    return reconnaissanceContractuelleSanitaire.reduce((reconnaissancesContractuelles: AutorisationActivites[], reconnaissanceContractuelle) => {
+      const activite = this.findOrAddActivité(reconnaissancesContractuelles, reconnaissanceContractuelle);
+      const modalite = this.findOrAddModalité(activite, reconnaissanceContractuelle);
+      const forme = this.findOrAddForme(modalite, reconnaissanceContractuelle);
+      const etablissement = this.findOrAddEtablissement(forme, reconnaissanceContractuelle);
+      const autorisation = this.addReconnaissanceContractuelles(reconnaissanceContractuelle);
+
+      etablissement.autorisations.push(...autorisation);
+      return reconnaissancesContractuelles;
     }, []);
   }
 
@@ -125,19 +141,55 @@ export class AutorisationActivitesFactory {
     ];
   }
 
-  private static addAutresActivites(autorisationSanitaire: { dateAutorisation: string; dateMiseEnOeuvre: string; dateFin: string }): Autorisation[] {
+  private static addAutresActivites(autresActivites: { dateAutorisation: string; dateMiseEnOeuvre: string; dateFin: string }): Autorisation[] {
     return [
       {
         nom: "Date d'autorisation",
-        valeur: autorisationSanitaire.dateAutorisation ? StringFormater.formatDate(autorisationSanitaire.dateAutorisation) : "N/A",
+        valeur: autresActivites.dateAutorisation ? StringFormater.formatDate(autresActivites.dateAutorisation) : "N/A",
       },
       {
         nom: "Date de mise en oeuvre",
-        valeur: autorisationSanitaire.dateMiseEnOeuvre ? StringFormater.formatDate(autorisationSanitaire.dateMiseEnOeuvre) : "N/A",
+        valeur: autresActivites.dateMiseEnOeuvre ? StringFormater.formatDate(autresActivites.dateMiseEnOeuvre) : "N/A",
       },
       {
         nom: "Date de fin",
-        valeur: autorisationSanitaire.dateFin ? StringFormater.formatDate(autorisationSanitaire.dateFin) : "N/A",
+        valeur: autresActivites.dateFin ? StringFormater.formatDate(autresActivites.dateFin) : "N/A",
+      },
+    ];
+  }
+
+  private static addReconnaissanceContractuelles(reconnaissanceContractuelle: {
+    capacitéAutorisée: number;
+    dateEffetAsr: string;
+    numéroAutorisationArhgos: string;
+    dateEffetCpom: string;
+    dateFinCpom: string;
+    numéroCpom: string;
+  }): Autorisation[] {
+    return [
+      {
+        nom: "Capacité autorisée",
+        valeur: reconnaissanceContractuelle.capacitéAutorisée.toString(),
+      },
+      {
+        nom: "Date d'effet de l'ASR",
+        valeur: reconnaissanceContractuelle.dateEffetAsr ? StringFormater.formatDate(reconnaissanceContractuelle.dateEffetAsr) : "N/A",
+      },
+      {
+        nom: "Auto. ARGHOS",
+        valeur: reconnaissanceContractuelle.numéroAutorisationArhgos,
+      },
+      {
+        nom: "Date d'effet du CPOM",
+        valeur: reconnaissanceContractuelle.dateEffetCpom ? StringFormater.formatDate(reconnaissanceContractuelle.dateEffetCpom) : "N/A",
+      },
+      {
+        nom: "Date de fin du CPOM",
+        valeur: reconnaissanceContractuelle.dateFinCpom ? StringFormater.formatDate(reconnaissanceContractuelle.dateFinCpom) : "N/A",
+      },
+      {
+        nom: "Numéro de CPOM",
+        valeur: reconnaissanceContractuelle.numéroCpom,
       },
     ];
   }

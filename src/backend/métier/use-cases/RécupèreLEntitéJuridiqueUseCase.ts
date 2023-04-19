@@ -19,6 +19,9 @@ export class RécupèreLEntitéJuridiqueUseCase {
 
     const autorisationsActivites = AutorisationActivitesFactory.createFromAutorisationsSanitaire(autorisationsEtCapacites.autorisationsSanitaire.autorisations);
     const autresActivites = AutorisationActivitesFactory.createFromAutresActivitesSanitaire(autorisationsEtCapacites.autresActivitesSanitaire.autorisations);
+    const reconnaisanceContractuellesActivites = AutorisationActivitesFactory.createFromReconnaissanceContractuellesSanitaire(
+      autorisationsEtCapacites.reconnaissanceContractuellesSanitaire.autorisations
+    );
 
     return {
       ...entitéJuridiqueIdentitéOuErreur,
@@ -34,6 +37,10 @@ export class RécupèreLEntitéJuridiqueUseCase {
         autresActivités: {
           autorisations: autresActivites,
           dateMiseÀJourSource: StringFormater.formatDate(autorisationsEtCapacites.autresActivitesSanitaire.dateMiseÀJourSource),
+        },
+        reconnaissanceContractuelleActivités: {
+          autorisations: reconnaisanceContractuellesActivites,
+          dateMiseÀJourSource: StringFormater.formatDate(autorisationsEtCapacites.reconnaissanceContractuellesSanitaire.dateMiseÀJourSource),
         },
       },
     };

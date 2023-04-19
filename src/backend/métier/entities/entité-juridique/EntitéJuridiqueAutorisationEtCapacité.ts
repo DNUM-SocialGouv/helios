@@ -7,12 +7,14 @@ export type CapacitéSanitaireEntitéJuridique = CapacitéSanitaire;
 
 export type AutorisationsActivités = { autorisations: AutorisationActivites[]; dateMiseÀJourSource: string };
 export type AutresActivités = { autorisations: AutorisationActivites[]; dateMiseÀJourSource: string };
+export type ReconnaissanceContractuelleActivités = { autorisations: AutorisationActivites[]; dateMiseÀJourSource: string };
 
 export type EntitéJuridiqueAutorisationEtCapacité = Readonly<{
   numéroFinessEntitéJuridique: string;
   capacités: CapacitéSanitaireEntitéJuridique[];
   autorisationsActivités: AutorisationsActivités;
   autresActivités: AutresActivités;
+  reconnaissanceContractuelleActivités: ReconnaissanceContractuelleActivités;
 }>;
 
 export type EntitéJuridiqueAutorisationEtCapacitéLoader = Readonly<{
