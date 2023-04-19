@@ -1,6 +1,6 @@
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
 import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
-import { AutorisationEtAutresActivitesSanitaire } from "./AutorisationEtAutresActivitesSanitaire";
+import { StringFormater } from "../../../../frontend/ui/commun/StringFormater";
 import { Autorisation, AutorisationActivites, AutorisationEtablissement, Forme, Modalite } from "./EntitéJuridiqueAutorisationEtCapacité";
 
 export class AutorisationActivitesFactory {
@@ -23,7 +23,7 @@ export class AutorisationActivitesFactory {
       const modalite = this.findOrAddModalité(activite, autreActiviteSanitaire);
       const forme = this.findOrAddForme(modalite, autreActiviteSanitaire);
       const etablissement = this.findOrAddEtablissement(forme, autreActiviteSanitaire);
-      const autorisation = this.addAutorisation(autreActiviteSanitaire);
+      const autorisation = this.addAutresActivites(autreActiviteSanitaire);
 
       etablissement.autorisations.push(...autorisation);
       return autreActivites;
@@ -32,7 +32,7 @@ export class AutorisationActivitesFactory {
 
   private static findOrAddActivité(
     autorisationActivites: AutorisationActivites[],
-    autorisationSanitaire: AutorisationEtAutresActivitesSanitaire<any>
+    autorisationSanitaire: { libelléActivité: string; codeActivité: string }
   ): AutorisationActivites {
     let activite = autorisationActivites.find((a) => a.code === autorisationSanitaire.codeActivité);
 
@@ -48,7 +48,7 @@ export class AutorisationActivitesFactory {
     return activite;
   }
 
-  private static findOrAddModalité(activite: AutorisationActivites, autorisationSanitaire: AutorisationEtAutresActivitesSanitaire<any>): Modalite {
+  private static findOrAddModalité(activite: AutorisationActivites, autorisationSanitaire: { codeModalité: string; libelléModalité: string }): Modalite {
     let modalite = activite.modalites.find((m) => m.code === autorisationSanitaire.codeModalité);
 
     if (!modalite) {
@@ -63,7 +63,7 @@ export class AutorisationActivitesFactory {
     return modalite;
   }
 
-  private static findOrAddForme(modalite: Modalite, autorisationSanitaire: AutorisationEtAutresActivitesSanitaire<any>): Forme {
+  private static findOrAddForme(modalite: Modalite, autorisationSanitaire: { codeForme: string; libelléForme: string }): Forme {
     let forme = modalite.formes.find((f) => f.code === autorisationSanitaire.codeForme);
 
     if (!forme) {
@@ -78,7 +78,13 @@ export class AutorisationActivitesFactory {
     return forme;
   }
 
-  private static findOrAddEtablissement(forme: Forme, autorisationSanitaire: AutorisationEtAutresActivitesSanitaire<any>): AutorisationEtablissement {
+  private static findOrAddEtablissement(
+    forme: Forme,
+    autorisationSanitaire: {
+      numéroFinessÉtablissementTerritorial: string;
+      établissementTerritorial: { raisonSocialeCourte: string };
+    }
+  ): AutorisationEtablissement {
     let etablissement = forme.autorisationEtablissements.find((e) => e.numeroFiness === autorisationSanitaire.numéroFinessÉtablissementTerritorial);
 
     if (!etablissement) {
@@ -93,41 +99,46 @@ export class AutorisationActivitesFactory {
     return etablissement;
   }
 
-  private static addAutorisation(autorisationSanitaire: AutorisationEtAutresActivitesSanitaire<any>): Autorisation[] {
-    if (autorisationSanitaire.numéroAutorisationArhgos === undefined) {
-      return [
-        {
-          nom: "Date d'autorisation",
-          valeur: autorisationSanitaire.dateAutorisation,
-        },
-        {
-          nom: "Date de mise en oeuvre",
-          valeur: autorisationSanitaire.dateMiseEnOeuvre,
-        },
-        {
-          nom: "Date de fin",
-          valeur: autorisationSanitaire.dateFin,
-        },
-      ];
-    } else {
-      return [
-        {
-          nom: "Numéro ARHGOS",
-          valeur: autorisationSanitaire.numéroAutorisationArhgos,
-        },
-        {
-          nom: "Date d'autorisation",
-          valeur: autorisationSanitaire.dateAutorisation,
-        },
-        {
-          nom: "Date de mise en oeuvre",
-          valeur: autorisationSanitaire.dateMiseEnOeuvre,
-        },
-        {
-          nom: "Date de fin",
-          valeur: autorisationSanitaire.dateFin,
-        },
-      ];
-    }
+  private static addAutorisation(autorisationSanitaire: {
+    dateAutorisation: string;
+    dateMiseEnOeuvre: string;
+    dateFin: string;
+    numéroAutorisationArhgos: string;
+  }): Autorisation[] {
+    return [
+      {
+        nom: "Numéro ARHGOS",
+        valeur: autorisationSanitaire.numéroAutorisationArhgos,
+      },
+      {
+        nom: "Date d'autorisation",
+        valeur: autorisationSanitaire.dateAutorisation ? StringFormater.formatDate(autorisationSanitaire.dateAutorisation) : "N/A",
+      },
+      {
+        nom: "Date de mise en oeuvre",
+        valeur: autorisationSanitaire.dateMiseEnOeuvre ? StringFormater.formatDate(autorisationSanitaire.dateMiseEnOeuvre) : "N/A",
+      },
+      {
+        nom: "Date de fin",
+        valeur: autorisationSanitaire.dateFin ? StringFormater.formatDate(autorisationSanitaire.dateFin) : "N/A",
+      },
+    ];
+  }
+
+  private static addAutresActivites(autorisationSanitaire: { dateAutorisation: string; dateMiseEnOeuvre: string; dateFin: string }): Autorisation[] {
+    return [
+      {
+        nom: "Date d'autorisation",
+        valeur: autorisationSanitaire.dateAutorisation ? StringFormater.formatDate(autorisationSanitaire.dateAutorisation) : "N/A",
+      },
+      {
+        nom: "Date de mise en oeuvre",
+        valeur: autorisationSanitaire.dateMiseEnOeuvre ? StringFormater.formatDate(autorisationSanitaire.dateMiseEnOeuvre) : "N/A",
+      },
+      {
+        nom: "Date de fin",
+        valeur: autorisationSanitaire.dateFin ? StringFormater.formatDate(autorisationSanitaire.dateFin) : "N/A",
+      },
+    ];
   }
 }
