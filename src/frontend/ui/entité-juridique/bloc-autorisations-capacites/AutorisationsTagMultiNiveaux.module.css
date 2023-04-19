@@ -7,6 +7,13 @@
     grid-auto-flow: column;
     grid-template-columns: min-content 5fr;
     margin-left: 70px;
+    margin-bottom: 10px;
+}
+
+@media(max-width:991px) {
+    .etablissement {
+        display:block;
+    }
 }
 
 .etablissement > a {
@@ -15,4 +22,9 @@
     list-style: disc;
     height:fit-content;
     margin-right:10px;
+    margin-bottom: 10px;
+}
+
+.etablissement li {
+    line-height: 0;
 }
