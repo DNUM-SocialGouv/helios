@@ -7,6 +7,7 @@ import { BudgetEtFinancesEntiteJuridiqueModel } from "../../../../../database/mo
 import { CapacitesSanitaireEntiteJuridiqueModel } from "../../../../../database/models/CapacitesSanitaireEntiteJuridiqueModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
+import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { DateMiseÀJourFichierSourceModelTestBuilder } from "../../../../../database/test-builder/DateMiseÀJourFichierSourceModelTestBuilder";
 import { EntitéJuridiqueModelTestBuilder } from "../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder";
@@ -30,6 +31,7 @@ describe("Entité juridique loader", () => {
   let etablissementTerritorialRepository: Repository<ÉtablissementTerritorialIdentitéModel>;
   let autorisationsActivitesRepository: Repository<AutorisationSanitaireModel>;
   let autresActivitesRepository: Repository<AutreActivitéSanitaireModel>;
+  let reconnaissanceContractuelleRepository: Repository<ReconnaissanceContractuelleSanitaireModel>;
 
   beforeAll(async () => {
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel);
@@ -40,6 +42,7 @@ describe("Entité juridique loader", () => {
     etablissementTerritorialRepository = (await orm).getRepository(ÉtablissementTerritorialIdentitéModel);
     autorisationsActivitesRepository = (await orm).getRepository(AutorisationSanitaireModel);
     autresActivitesRepository = (await orm).getRepository(AutreActivitéSanitaireModel);
+    reconnaissanceContractuelleRepository = (await orm).getRepository(ReconnaissanceContractuelleSanitaireModel);
   });
 
   beforeEach(async () => {
@@ -454,6 +457,61 @@ describe("Entité juridique loader", () => {
         expect(autresActivitesSanitaire.autorisations[0].codeActivité).toBe("1");
         expect(autresActivitesSanitaire.autorisations[0].établissementTerritorial.raisonSocialeCourte).toBe("HP VILLENEUVE DASCQ");
         expect(autresActivitesSanitaire.autorisations[1].codeActivité).toBe("2");
+      });
+    });
+
+    describe("Reconnaissance Contractuelle", () => {
+      async function insertReconnaissanceContractuelles(
+        numeroFinessEJ: string,
+        numeroFinessET: string,
+        reconnaissanceContractuelle: Partial<ReconnaissanceContractuelleSanitaireModel>
+      ) {
+        await entitéJuridiqueRepository.upsert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: numeroFinessEJ }), [
+          "numéroFinessEntitéJuridique",
+        ]);
+        await etablissementTerritorialRepository.insert(
+          ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
+            numéroFinessEntitéJuridique: numeroFinessEJ,
+            numéroFinessÉtablissementTerritorial: numeroFinessET,
+          })
+        );
+        await reconnaissanceContractuelleRepository.insert(
+          ÉtablissementTerritorialAutorisationModelTestBuilder.créeReconnaissanceContractuelleSanitaire({
+            numéroFinessÉtablissementTerritorial: numeroFinessET,
+            ...reconnaissanceContractuelle,
+          })
+        );
+      }
+
+      it("recuperer la liste des autres d'activités grouper par Activité", async () => {
+        // GIVEN
+        await dateMiseÀJourFichierSourceRepository.insert([
+          DateMiseÀJourFichierSourceModelTestBuilder.crée({
+            dernièreMiseÀJour: "2022-05-14",
+            fichier: FichierSource.FINESS_CS1400103,
+          }),
+        ]);
+        await insertReconnaissanceContractuelles(numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial, {
+          numéroAutorisationArhgos: "1",
+        });
+        await insertReconnaissanceContractuelles(numéroFinessEntitéJuridique, "et_num_2", {
+          numéroAutorisationArhgos: "2",
+        });
+        await insertReconnaissanceContractuelles("autreEJ", "et_num_3", {
+          numéroAutorisationArhgos: "3",
+        });
+
+        // WHEN
+        const entiteJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
+        const { reconnaissanceContractuellesSanitaire } = await entiteJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique);
+
+        // THEN
+
+        expect(reconnaissanceContractuellesSanitaire.dateMiseÀJourSource).toBe("2022-05-14");
+        expect(reconnaissanceContractuellesSanitaire.autorisations).toHaveLength(2);
+        expect(reconnaissanceContractuellesSanitaire.autorisations[0].numéroAutorisationArhgos).toBe("1");
+        expect(reconnaissanceContractuellesSanitaire.autorisations[0].établissementTerritorial.raisonSocialeCourte).toBe("HP VILLENEUVE DASCQ");
+        expect(reconnaissanceContractuellesSanitaire.autorisations[1].numéroAutorisationArhgos).toBe("2");
       });
     });
   });

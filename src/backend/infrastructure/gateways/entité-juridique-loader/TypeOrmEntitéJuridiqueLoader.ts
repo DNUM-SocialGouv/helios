@@ -7,6 +7,7 @@ import { BudgetEtFinancesEntiteJuridiqueModel } from "../../../../../database/mo
 import { CapacitesSanitaireEntiteJuridiqueModel } from "../../../../../database/models/CapacitesSanitaireEntiteJuridiqueModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
+import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { CatégorisationEnum, EntitéJuridiqueIdentité } from "../../../métier/entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueActivités } from "../../../métier/entities/entité-juridique/EntitéJuridiqueActivités";
 import {
@@ -261,11 +262,16 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
     const dateDeMiseÀJourFinessCs1400103Model = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400103)) as DateMiseÀJourFichierSourceModel;
     const autorisationsSanitaire = await this.chargeLesAutorisationsSanitaires(numéroFinessEntitéJuridique);
     const autresActivitesSanitaire = await this.chargeLesAutresActivitesSanitaires(numéroFinessEntitéJuridique);
+    const reconnaissanceContractuellesSanitaire = await this.chargeLesReconnaissanceContractuellesSanitaires(numéroFinessEntitéJuridique);
 
     return {
       capacités: this.construisLesCapacités(capacitésDeLÉtablissementModel, dateDeMiseÀJourDiamantAnnSaeModel),
       autorisationsSanitaire: { autorisations: autorisationsSanitaire, dateMiseÀJourSource: dateDeMiseÀJourFinessCs1400103Model.dernièreMiseÀJour },
       autresActivitesSanitaire: { autorisations: autresActivitesSanitaire, dateMiseÀJourSource: dateDeMiseÀJourFinessCs1400103Model.dernièreMiseÀJour },
+      reconnaissanceContractuellesSanitaire: {
+        autorisations: reconnaissanceContractuellesSanitaire,
+        dateMiseÀJourSource: dateDeMiseÀJourFinessCs1400103Model.dernièreMiseÀJour,
+      },
       numéroFinessEntitéJuridique,
     };
   }
@@ -284,6 +290,15 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
       .getRepository(AutreActivitéSanitaireModel)
       .createQueryBuilder("autre_activite_sanitaire")
       .leftJoinAndSelect("autre_activite_sanitaire.établissementTerritorial", "établissementTerritorial")
+      .where("établissementTerritorial.numero_finess_entite_juridique = :finess", { finess: numéroFinessEntitéJuridique })
+      .getMany();
+  }
+
+  private async chargeLesReconnaissanceContractuellesSanitaires(numéroFinessEntitéJuridique: string): Promise<ReconnaissanceContractuelleSanitaireModel[]> {
+    return (await this.orm)
+      .getRepository(ReconnaissanceContractuelleSanitaireModel)
+      .createQueryBuilder("reconnaissance_contractuelle_sanitaire")
+      .leftJoinAndSelect("reconnaissance_contractuelle_sanitaire.établissementTerritorial", "établissementTerritorial")
       .where("établissementTerritorial.numero_finess_entite_juridique = :finess", { finess: numéroFinessEntitéJuridique })
       .getMany();
   }
