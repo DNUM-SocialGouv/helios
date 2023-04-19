@@ -9,11 +9,11 @@ import {
 import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
 import { fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "../../entité-juridique/bloc-autorisations-capacites/EntitéJuridiqueAutorisationsCapacitesViewModel";
-import { GraphiqueAutorisationsActivites } from "./GraphiqueAutorisationsActivites";
+import { GraphiqueReconnaissanceContractuelles } from "./GraphiqueReconnaissanceContractuelles";
 
 const { wording } = fakeFrontDependencies;
 
-describe("GraphiqueAutorisationActivite", () => {
+describe("GraphiqueReconnaissanceContractuelles", () => {
   let graphiqueTest: GraphiqueTest;
   let viewModel: EntitéJuridiqueAutorisationsCapacitesViewModel;
 
@@ -21,25 +21,27 @@ describe("GraphiqueAutorisationActivite", () => {
     graphiqueTest = new GraphiqueTest(wording);
     viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
       [],
-      mock<AutorisationsActivités>({ autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }] }),
+      mock<AutorisationsActivités>(),
       mock<AutresActivités>(),
-      mock<ReconnaissanceContractuelleActivités>(),
+      mock<ReconnaissanceContractuelleActivités>({
+        autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }],
+      }),
       wording
     );
   });
 
   it("affiche le titre", () => {
     // WHEN
-    renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisationsActivités} />);
+    renderFakeComponent(<GraphiqueReconnaissanceContractuelles entiteJuridiqueAutorisations={viewModel.reconnaissanceActivités} />);
 
     // THEN
-    const titre = graphiqueTest.titre(wording.AUTORISATIONS_ACTIVITES);
+    const titre = graphiqueTest.titre(wording.RECONNAISSANCES_CONTRACTUELLES);
     expect(titre).toBeInTheDocument();
   });
 
   it("affiche abréviation du fichier source ARHGOS", () => {
     // WHEN
-    renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisationsActivités} />);
+    renderFakeComponent(<GraphiqueReconnaissanceContractuelles entiteJuridiqueAutorisations={viewModel.reconnaissanceActivités} />);
 
     // THEN
     const arhgos = graphiqueTest.abréviationFichierSource("ARHGOS");
@@ -49,7 +51,7 @@ describe("GraphiqueAutorisationActivite", () => {
 
   it("affiche abréviation du fichier source FINESS", () => {
     // WHEN
-    renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisationsActivités} />);
+    renderFakeComponent(<GraphiqueReconnaissanceContractuelles entiteJuridiqueAutorisations={viewModel.reconnaissanceActivités} />);
 
     // THEN
     const arhgos = graphiqueTest.abréviationFichierSource("FINESS");
@@ -64,28 +66,28 @@ describe("GraphiqueAutorisationActivite", () => {
       // GIVEN
       viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
         [],
-        mock<AutorisationsActivités>({
+        mock<AutorisationsActivités>(),
+        mock<AutresActivités>(),
+        mock<ReconnaissanceContractuelleActivités>({
           autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }],
         }),
-        mock<AutresActivités>(),
-        mock<ReconnaissanceContractuelleActivités>(),
         wording
       );
     });
 
     it("affiche le bouton de détail", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisationsActivités} />);
+      renderFakeComponent(<GraphiqueReconnaissanceContractuelles entiteJuridiqueAutorisations={viewModel.reconnaissanceActivités} />);
 
       // THEN
       const détails = graphiqueTest.détail;
-      expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-autorisation-activites`);
+      expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-reconnaissance-contractuelles`);
       expect(détails).toHaveAttribute("data-fr-opened", "false");
     });
 
     it("affiche le contenu de l’info bulle après avoir cliqué sur le bouton 'détails'", () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisationsActivités} />);
+      renderFakeComponent(<GraphiqueReconnaissanceContractuelles entiteJuridiqueAutorisations={viewModel.reconnaissanceActivités} />);
 
       // WHEN
       const détails = graphiqueTest.détail;
@@ -93,13 +95,13 @@ describe("GraphiqueAutorisationActivite", () => {
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const h1 = graphiqueTest.titreDétail(wording.AUTORISATIONS_ACTIVITES);
+      const h1 = graphiqueTest.titreDétail(wording.RECONNAISSANCES_CONTRACTUELLES);
       expect(h1).toBeInTheDocument();
     });
 
     it("ferme l'info bulle en cliquant sur le bouton 'Fermer'", () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisationsActivités} />);
+      renderFakeComponent(<GraphiqueReconnaissanceContractuelles entiteJuridiqueAutorisations={viewModel.reconnaissanceActivités} />);
       graphiqueTest.ouvreDétail();
 
       // WHEN

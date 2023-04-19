@@ -5,6 +5,7 @@ import {
   AutorisationsActivités,
   AutresActivités,
   CapacitéSanitaireEntitéJuridique,
+  ReconnaissanceContractuelleActivités,
 } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { BlocAutorisationsCapacites } from "./BlocAutorisationsCapacites";
@@ -17,6 +18,7 @@ describe("Bloc Autorisation et activités", () => {
     // GIVEN
     const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
       [mock<CapacitéSanitaireEntitéJuridique>({ année: annéeEnCours - 1 })],
+      { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
       wording
@@ -36,6 +38,7 @@ describe("Bloc Autorisation et activités", () => {
       [mock<CapacitéSanitaireEntitéJuridique>({ année: annéeEnCours - 1 })],
       mock<AutorisationsActivités>({ autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }] }),
       mock<AutresActivités>({ autorisations: [] }),
+      mock<ReconnaissanceContractuelleActivités>({ autorisations: [] }),
       wording
     );
 
@@ -53,6 +56,7 @@ describe("Bloc Autorisation et activités", () => {
       [mock<CapacitéSanitaireEntitéJuridique>({ année: annéeEnCours - 1 })],
       mock<AutorisationsActivités>({ autorisations: [] }),
       mock<AutresActivités>({ autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test2" }] }] }] }] }] }),
+      mock<ReconnaissanceContractuelleActivités>({ autorisations: [] }),
       wording
     );
 
@@ -64,10 +68,31 @@ describe("Bloc Autorisation et activités", () => {
     expect(titre).toBeInTheDocument();
   });
 
+  it("affiche le Graphique Reconnaissance Contractuelles", () => {
+    // GIVEN
+    const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
+      [mock<CapacitéSanitaireEntitéJuridique>({ année: annéeEnCours - 1 })],
+      mock<AutorisationsActivités>({ autorisations: [] }),
+      mock<AutresActivités>({ autorisations: [] }),
+      mock<ReconnaissanceContractuelleActivités>({
+        autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test2" }] }] }] }] }],
+      }),
+      wording
+    );
+
+    // WHEN
+    renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
+
+    // THEN
+    const titre = screen.getByText(wording.RECONNAISSANCES_CONTRACTUELLES, { selector: "h6" });
+    expect(titre).toBeInTheDocument();
+  });
+
   it("n'affiche pas le graphique capacité par activité s'il n'y a pas de valeur", () => {
     // GIVEN
     const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
       [],
+      { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
       wording
@@ -85,6 +110,7 @@ describe("Bloc Autorisation et activités", () => {
     // GIVEN
     const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
       [],
+      { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
       wording

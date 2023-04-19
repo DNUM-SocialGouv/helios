@@ -1,17 +1,20 @@
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
 import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
+import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { CapacitéSanitaire } from "../établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 
 export type CapacitéSanitaireEntitéJuridique = CapacitéSanitaire;
 
 export type AutorisationsActivités = { autorisations: AutorisationActivites[]; dateMiseÀJourSource: string };
 export type AutresActivités = { autorisations: AutorisationActivites[]; dateMiseÀJourSource: string };
+export type ReconnaissanceContractuelleActivités = { autorisations: AutorisationActivites[]; dateMiseÀJourSource: string };
 
 export type EntitéJuridiqueAutorisationEtCapacité = Readonly<{
   numéroFinessEntitéJuridique: string;
   capacités: CapacitéSanitaireEntitéJuridique[];
   autorisationsActivités: AutorisationsActivités;
   autresActivités: AutresActivités;
+  reconnaissanceContractuelleActivités: ReconnaissanceContractuelleActivités;
 }>;
 
 export type EntitéJuridiqueAutorisationEtCapacitéLoader = Readonly<{
@@ -19,6 +22,7 @@ export type EntitéJuridiqueAutorisationEtCapacitéLoader = Readonly<{
   capacités: CapacitéSanitaireEntitéJuridique[];
   autorisationsSanitaire: { autorisations: AutorisationSanitaireModel[]; dateMiseÀJourSource: string };
   autresActivitesSanitaire: { autorisations: AutreActivitéSanitaireModel[]; dateMiseÀJourSource: string };
+  reconnaissanceContractuellesSanitaire: { autorisations: ReconnaissanceContractuelleSanitaireModel[]; dateMiseÀJourSource: string };
 }>;
 
 export type Autorisation = {
