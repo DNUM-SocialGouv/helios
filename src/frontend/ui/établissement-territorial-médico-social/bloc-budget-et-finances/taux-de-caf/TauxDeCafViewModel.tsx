@@ -3,6 +3,7 @@ import { Context } from "chartjs-plugin-datalabels";
 import { ReactElement } from "react";
 import { Bar } from "react-chartjs-2";
 
+import { EntitéJuridiqueBudgetFinance } from "../../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
 import { Wording } from "../../../../configuration/wording/Wording";
 import { annéesManquantes, estCeLAnnéePassée } from "../../../../utils/dateUtils";
@@ -35,6 +36,15 @@ export class TauxDeCafViewModel extends GraphiqueViewModel {
       valeur: budget.tauxDeCafNette.valeur,
     }));
     const dateMiseÀJourSource = budgetFinance.length > 0 ? budgetFinance[0].tauxDeCafNette?.dateMiseÀJourSource : "";
+    return new TauxDeCafViewModel(tauxDeCaf, dateMiseÀJourSource, wording);
+  }
+
+  static fromBudgetFinanceEntiteJuridique(budgetFinance: EntitéJuridiqueBudgetFinance[], wording: Wording) {
+    const tauxDeCaf: TauxDeCaf[] = budgetFinance.map((budget) => ({
+      année: budget.année,
+      valeur: budget.tauxDeCafNetSan,
+    }));
+    const dateMiseÀJourSource = budgetFinance.length > 0 ? budgetFinance[0].dateMiseÀJourSource : "";
     return new TauxDeCafViewModel(tauxDeCaf, dateMiseÀJourSource, wording);
   }
 

@@ -253,6 +253,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
         budget.recettesTitreIVGlobal,
       resultatNetComptable: budget.resultatNetComptableSan,
       ratioDependanceFinanciere: budget.ratioDependanceFinanciere,
+      tauxDeCafNetSan: budget.tauxDeCafNetteSan,
     }));
   }
 

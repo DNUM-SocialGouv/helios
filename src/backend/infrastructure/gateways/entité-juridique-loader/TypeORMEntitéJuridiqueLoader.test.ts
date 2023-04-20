@@ -303,6 +303,8 @@ describe("Entité juridique loader", () => {
           resultatNetComptable: 0.1,
 
           ratioDependanceFinanciere: 0.3,
+
+          tauxDeCafNetSan: 0.2,
         } as EntitéJuridiqueBudgetFinance,
       ]);
     });
