@@ -1,8 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import "@gouvfr/dsfr/dist/component/footer/footer.min.css";
 
-import { FEATURE_NAME } from "../../../utils/featureToggle";
+import "@gouvfr/dsfr/dist/component/footer/footer.min.css";
 import { useDependencies } from "../contexts/useDependencies";
 
 export const Footer = () => {
@@ -74,7 +73,11 @@ export const Footer = () => {
                 {`${wording.ACCESSIBILITÉ} : ${wording.NON_CONFORME}`}
               </Link>
             </li>
-            <EcoConception />
+            <li className="fr-footer__bottom-item">
+              <Link className="fr-footer__bottom-link" href={paths.ECO_CONCEPTION} passHref>
+                {wording.ECO_CONCEPTION}
+              </Link>
+            </li>
             <li className="fr-footer__bottom-item">
               <Link className="fr-footer__bottom-link" href={paths.MENTIONS_LÉGALES} passHref>
                 {wording.MENTIONS_LÉGALES}
@@ -85,7 +88,11 @@ export const Footer = () => {
                 {wording.DONNÉES_PERSONNELLES}
               </Link>
             </li>
-            <GestionDeCookies />
+            <li className="fr-footer__bottom-item">
+              <Link className="fr-footer__bottom-link" href={paths.GESTION_DES_COOKIES} passHref>
+                {wording.COOKIES}
+              </Link>
+            </li>
             <li className="fr-footer__bottom-item">
               <a className="fr-footer__bottom-link" href="mailto:dnum.scn-helios-support@sg.social.gouv.fr" rel="external noopener noreferrer" target="_blank">
                 {wording.NOUS_CONTACTER}
@@ -108,40 +115,5 @@ export const Footer = () => {
         </div>
       </div>
     </footer>
-  );
-};
-
-const EcoConception = () => {
-  const { paths, wording, isFeatureEnabled } = useDependencies();
-
-  if (!isFeatureEnabled(FEATURE_NAME.ECO_CONCEPTION)) {
-    return <></>;
-  }
-
-  return (
-    <>
-      <li className="fr-footer__bottom-item">
-        <Link className="fr-footer__bottom-link" href={paths.ECO_CONCEPTION} passHref>
-          {wording.ECO_CONCEPTION}
-        </Link>
-      </li>
-    </>
-  );
-};
-const GestionDeCookies = () => {
-  const { paths, wording, isFeatureEnabled } = useDependencies();
-
-  if (!isFeatureEnabled(FEATURE_NAME.COOKIES)) {
-    return <></>;
-  }
-
-  return (
-    <>
-      <li className="fr-footer__bottom-item">
-        <Link className="fr-footer__bottom-link" href={paths.GESTION_DES_COOKIES} passHref>
-          {wording.COOKIES}
-        </Link>
-      </li>
-    </>
   );
 };
