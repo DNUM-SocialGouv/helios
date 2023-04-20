@@ -5,7 +5,7 @@ import { couleurDuFondHistogrammeBleuFoncé, couleurDuFondHistogrammeSecondaire 
 import { HistogrammeData } from "../../commun/Graphique/HistogrammesHorizontaux";
 import { StringFormater } from "../../commun/StringFormater";
 import { ResultatNetComptableViewModel } from "../../indicateur-métier/resultat-net-comptable/ResultatNetComptableViewModel";
-import { TauxDeCafViewModel } from "../../établissement-territorial-médico-social/bloc-budget-et-finances/taux-de-caf/TauxDeCafViewModel";
+import { TauxDeCafViewModel } from "../../indicateur-métier/taux-de-caf/TauxDeCafViewModel";
 import { RatioDependanceFinanciereViewModel } from "./ratio-dependance-financiere/RatioDependanceFinanciereViewModel";
 
 export class EntitéJuridiqueBudgetFinanceViewModel {

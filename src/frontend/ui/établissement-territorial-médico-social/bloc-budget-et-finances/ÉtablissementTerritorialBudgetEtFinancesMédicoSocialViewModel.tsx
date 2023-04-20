@@ -16,8 +16,8 @@ import { CouleurHistogramme, GraphiqueViewModel } from "../../commun/Graphique/G
 import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
 import { IndicateurTabulaire, IndicateurTabulaireProps } from "../../commun/IndicateurTabulaire/IndicateurTabulaire";
 import { StringFormater } from "../../commun/StringFormater";
+import { TauxDeCafViewModel } from "../../indicateur-métier/taux-de-caf/TauxDeCafViewModel";
 import { CompteDeResultatViewModel } from "./compte-de-resultat/CompteDeResultatViewModel";
-import { TauxDeCafViewModel } from "./taux-de-caf/TauxDeCafViewModel";
 
 export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel extends GraphiqueViewModel {
   private readonly seuilMinimalDuTauxDeVétustéConstruction = 0;

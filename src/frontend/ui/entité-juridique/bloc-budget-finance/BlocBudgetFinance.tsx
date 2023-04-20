@@ -3,7 +3,7 @@ import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { ResultatNetComptable } from "../../indicateur-métier/resultat-net-comptable/ResultatNetComptable";
-import { TauxDeCaf } from "../../établissement-territorial-médico-social/bloc-budget-et-finances/taux-de-caf/TauxDeCaf";
+import { TauxDeCaf } from "../../indicateur-métier/taux-de-caf/TauxDeCaf";
 import { CompteDeResultat } from "./compte-de-resultat/CompteDeResultat";
 import { EntitéJuridiqueBudgetFinanceViewModel } from "./EntitéJuridiqueBudgetFinanceViewModel";
 import { RatioDependanceFinanciere } from "./ratio-dependance-financiere/RatioDependanceFinanciere";

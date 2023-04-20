@@ -3,10 +3,10 @@ import { Context } from "chartjs-plugin-datalabels";
 import { ReactElement } from "react";
 import { Bar } from "react-chartjs-2";
 
-import { EntitéJuridiqueBudgetFinance } from "../../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
-import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
-import { Wording } from "../../../../configuration/wording/Wording";
-import { annéesManquantes, estCeLAnnéePassée } from "../../../../utils/dateUtils";
+import { EntitéJuridiqueBudgetFinance } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
+import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
+import { Wording } from "../../../configuration/wording/Wording";
+import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
 import {
   couleurDelAbscisse,
   couleurDuFond,
@@ -16,11 +16,11 @@ import {
   couleurDuSeuil,
   couleurErreur,
   couleurSecondPlanHistogrammeDeDépassement,
-} from "../../../commun/Graphique/couleursGraphique";
-import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../../commun/Graphique/GraphiqueViewModel";
-import { MiseEnExergue } from "../../../commun/MiseEnExergue/MiseEnExergue";
-import { StringFormater } from "../../../commun/StringFormater";
-import { Transcription } from "../../../commun/Transcription/Transcription";
+} from "../../commun/Graphique/couleursGraphique";
+import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
+import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
+import { StringFormater } from "../../commun/StringFormater";
+import { Transcription } from "../../commun/Transcription/Transcription";
 
 type TauxDeCaf = Readonly<{ année: number; valeur: number | null }>;
 

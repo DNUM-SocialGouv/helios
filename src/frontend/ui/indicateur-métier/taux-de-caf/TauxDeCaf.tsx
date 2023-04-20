@@ -1,6 +1,6 @@
-import { useDependencies } from "../../../commun/contexts/useDependencies";
-import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
-import { ContenuTauxDeCaf } from "../../InfoBulle/ContenuTauxDeCaf";
+import { useDependencies } from "../../commun/contexts/useDependencies";
+import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
+import { ContenuTauxDeCaf } from "../../établissement-territorial-médico-social/InfoBulle/ContenuTauxDeCaf";
 import { TauxDeCafViewModel } from "./TauxDeCafViewModel";
 
 export const TauxDeCaf = ({ tauxDeCafViewModel }: { tauxDeCafViewModel: TauxDeCafViewModel }) => {
