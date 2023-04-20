@@ -40,4 +40,6 @@ export type EntitéJuridiqueBudgetFinance = {
   resultatNetComptable: number | null;
 
   ratioDependanceFinanciere: number | null;
+
+  tauxDeCafNetSan: number | null;
 };

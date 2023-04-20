@@ -5,6 +5,7 @@ import { couleurDuFondHistogrammeBleuFoncé, couleurDuFondHistogrammeSecondaire 
 import { HistogrammeData } from "../../commun/Graphique/HistogrammesHorizontaux";
 import { StringFormater } from "../../commun/StringFormater";
 import { ResultatNetComptableViewModel } from "../../indicateur-métier/resultat-net-comptable/ResultatNetComptableViewModel";
+import { TauxDeCafViewModel } from "../../indicateur-métier/taux-de-caf/TauxDeCafViewModel";
 import { RatioDependanceFinanciereViewModel } from "./ratio-dependance-financiere/RatioDependanceFinanciereViewModel";
 
 export class EntitéJuridiqueBudgetFinanceViewModel {
@@ -13,12 +14,14 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   private wording: Wording;
   public NOMBRE_ANNEES = 5;
   public ratioDependanceFinanciere: RatioDependanceFinanciereViewModel;
+  public tauxDeCafViewModel: TauxDeCafViewModel;
 
   constructor(budgetFinance: EntitéJuridiqueBudgetFinance[], wording: Wording) {
     this.wording = wording;
     this.budgetEtFinance = budgetFinance;
     this.resultatNetComptable = new ResultatNetComptableViewModel(budgetFinance);
     this.ratioDependanceFinanciere = new RatioDependanceFinanciereViewModel(budgetFinance);
+    this.tauxDeCafViewModel = TauxDeCafViewModel.fromBudgetFinanceEntiteJuridique(budgetFinance, wording);
   }
 
   public get annéeInitiale() {
@@ -33,7 +36,10 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     return (
       !this.budgetEtFinance ||
       this.budgetEtFinance.length === 0 ||
-      (this.compteDeResultatVide() && !this.resultatNetComptable.auMoinsUnResultatNetRenseigné() && !this.ratioDependanceFinanciere.auMoinsUnRatioRenseigné())
+      (this.compteDeResultatVide() &&
+        !this.resultatNetComptable.auMoinsUnResultatNetRenseigné() &&
+        !this.ratioDependanceFinanciere.auMoinsUnRatioRenseigné() &&
+        !this.tauxDeCafViewModel.leTauxDeCafEstIlRenseigné)
     );
   }
 

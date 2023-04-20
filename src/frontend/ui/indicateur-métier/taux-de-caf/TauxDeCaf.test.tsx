@@ -1,8 +1,8 @@
 import { screen, within } from "@testing-library/react";
 import React from "react";
 
-import { GraphiqueTest } from "../../../../test-helpers/GraphiqueTest";
-import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../../test-helpers/testHelper";
+import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
+import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { TauxDeCaf } from "./TauxDeCaf";
 import { TauxDeCafViewModel } from "./TauxDeCafViewModel";
 

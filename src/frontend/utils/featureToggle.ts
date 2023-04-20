@@ -15,6 +15,7 @@ export enum FEATURE_NAME {
   "HAD" = "HAD",
   "DEPENDANCE_FINANCIERE_EJ" = "DEPENDANCE_FINANCIERE_EJ",
   "ACTIVITES" = "ACTIVITIES",
+  TAUX_DE_CAF_EJ = "TAUX_DE_CAF_EJ",
 }
 
 const currentFeaturesToggled: FEATURE_NAME[] = [
@@ -23,6 +24,7 @@ const currentFeaturesToggled: FEATURE_NAME[] = [
   FEATURE_NAME.HAD,
   FEATURE_NAME.DEPENDANCE_FINANCIERE_EJ,
   FEATURE_NAME.ACTIVITES,
+  FEATURE_NAME.TAUX_DE_CAF_EJ,
 ];
 const currentEnabledFeatures: FEATURE_NAME[] = parseEnvEnabledFeature();
 

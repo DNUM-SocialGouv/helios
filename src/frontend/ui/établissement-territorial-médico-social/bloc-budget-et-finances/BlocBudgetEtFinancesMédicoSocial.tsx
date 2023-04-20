@@ -2,13 +2,13 @@ import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
+import { TauxDeCaf } from "../../indicateur-métier/taux-de-caf/TauxDeCaf";
 import { ContenuFondDeRoulementNetGlobal } from "../InfoBulle/ContenuFondDeRoulementNetGlobal";
 import { ContenuMontantDeLaContributionAuxFraisDeSiège } from "../InfoBulle/ContenuMontantDeLaContributionAuxFraisDeSiège";
 import { ContenuRésultatNetComptable } from "../InfoBulle/ContenuRésultatNetComptable";
 import { ContenuTauxDeVétustéConstruction } from "../InfoBulle/ContenuTauxDeVétustéConstruction";
 import styles from "./BlocBudgetEtFinancesMédicoSocial.module.css";
 import { GraphiqueCompteDeResultat } from "./compte-de-resultat/GraphiqueCompteDeResultat";
-import { TauxDeCaf } from "./taux-de-caf/TauxDeCaf";
 import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from "./ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel";
 
 type BlocBudgetEtFinancesMédicoSocialProps = Readonly<{

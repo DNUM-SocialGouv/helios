@@ -3,9 +3,10 @@ import { Context } from "chartjs-plugin-datalabels";
 import { ReactElement } from "react";
 import { Bar } from "react-chartjs-2";
 
-import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
-import { Wording } from "../../../../configuration/wording/Wording";
-import { annéesManquantes, estCeLAnnéePassée } from "../../../../utils/dateUtils";
+import { EntitéJuridiqueBudgetFinance } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
+import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
+import { Wording } from "../../../configuration/wording/Wording";
+import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
 import {
   couleurDelAbscisse,
   couleurDuFond,
@@ -15,16 +16,16 @@ import {
   couleurDuSeuil,
   couleurErreur,
   couleurSecondPlanHistogrammeDeDépassement,
-} from "../../../commun/Graphique/couleursGraphique";
-import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../../commun/Graphique/GraphiqueViewModel";
-import { MiseEnExergue } from "../../../commun/MiseEnExergue/MiseEnExergue";
-import { StringFormater } from "../../../commun/StringFormater";
-import { Transcription } from "../../../commun/Transcription/Transcription";
+} from "../../commun/Graphique/couleursGraphique";
+import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
+import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
+import { StringFormater } from "../../commun/StringFormater";
+import { Transcription } from "../../commun/Transcription/Transcription";
 
 type TauxDeCaf = Readonly<{ année: number; valeur: number | null }>;
 
 export class TauxDeCafViewModel extends GraphiqueViewModel {
-  private readonly nombreDAnnéesParIndicateur = 3;
+  private readonly nombreDAnnéesParIndicateur = 5;
   private readonly seuilDuTauxDeCaf = 2;
   private readonly seuilMinimalDuTauxDeCaf = -21;
   private readonly seuilMaximalDuTauxDeCaf = 21;
@@ -35,6 +36,15 @@ export class TauxDeCafViewModel extends GraphiqueViewModel {
       valeur: budget.tauxDeCafNette.valeur,
     }));
     const dateMiseÀJourSource = budgetFinance.length > 0 ? budgetFinance[0].tauxDeCafNette?.dateMiseÀJourSource : "";
+    return new TauxDeCafViewModel(tauxDeCaf, dateMiseÀJourSource, wording);
+  }
+
+  static fromBudgetFinanceEntiteJuridique(budgetFinance: EntitéJuridiqueBudgetFinance[], wording: Wording) {
+    const tauxDeCaf: TauxDeCaf[] = budgetFinance.map((budget) => ({
+      année: budget.année,
+      valeur: budget.tauxDeCafNetSan,
+    }));
+    const dateMiseÀJourSource = budgetFinance.length > 0 ? budgetFinance[0].dateMiseÀJourSource : "";
     return new TauxDeCafViewModel(tauxDeCaf, dateMiseÀJourSource, wording);
   }
 
@@ -180,6 +190,7 @@ export class TauxDeCafViewModel extends GraphiqueViewModel {
     minDeLHistogramme: number | undefined
   ): ChartOptions<"bar"> {
     return {
+      aspectRatio: 1.5,
       animation: false,
       plugins: {
         datalabels: {

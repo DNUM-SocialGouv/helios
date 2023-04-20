@@ -28,6 +28,7 @@ describe("Bloc Budget et Finance", () => {
         depensesTitreIGlobal: null,
         resultatNetComptable: null,
         ratioDependanceFinanciere: null,
+        tauxDeCafNetSan: null,
       } as EntitéJuridiqueBudgetFinance,
     ];
     const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, wording);
@@ -91,6 +92,24 @@ describe("Bloc Budget et Finance", () => {
 
     // THEN
     const titre = screen.getAllByText(wording.RATIO_DEPENDANCE_FINANCIERE);
+    expect(titre).not.toHaveLength(0);
+  });
+
+  it("affiche l'indicateur taux de caf nette s'il y a de la données", () => {
+    // GIVEN
+    const budgetFinance: EntitéJuridiqueBudgetFinance[] = [
+      {
+        année: 2022,
+        tauxDeCafNetSan: 0.5,
+      } as EntitéJuridiqueBudgetFinance,
+    ];
+    const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, wording);
+
+    // WHEN
+    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} />);
+
+    // THEN
+    const titre = screen.getAllByText(wording.TAUX_DE_CAF);
     expect(titre).not.toHaveLength(0);
   });
 });
