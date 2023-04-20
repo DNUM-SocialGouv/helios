@@ -27,7 +27,9 @@ export const BlocBudgetFinance = ({ entitéJuridiqueBudgetFinanceViewModel }: Bl
             <ResultatNetComptable estEntitéJuridique={true} resultatNetComptableViewModel={entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable} />
           </div>
           <div className="fr-col">
-            {isFeatureEnabled(FEATURE_NAME.TAUX_DE_CAF_EJ) && <TauxDeCaf tauxDeCafViewModel={entitéJuridiqueBudgetFinanceViewModel.tauxDeCafViewModel} />}
+            {isFeatureEnabled(FEATURE_NAME.TAUX_DE_CAF_EJ) && (
+              <TauxDeCaf isEntiteJuridique={true} tauxDeCafViewModel={entitéJuridiqueBudgetFinanceViewModel.tauxDeCafViewModel} />
+            )}
           </div>
           <div className="fr-col">
             {isFeatureEnabled(FEATURE_NAME.DEPENDANCE_FINANCIERE_EJ) && (

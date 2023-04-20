@@ -25,7 +25,7 @@ import { Transcription } from "../../commun/Transcription/Transcription";
 type TauxDeCaf = Readonly<{ année: number; valeur: number | null }>;
 
 export class TauxDeCafViewModel extends GraphiqueViewModel {
-  private readonly nombreDAnnéesParIndicateur = 3;
+  private readonly nombreDAnnéesParIndicateur = 5;
   private readonly seuilDuTauxDeCaf = 2;
   private readonly seuilMinimalDuTauxDeCaf = -21;
   private readonly seuilMaximalDuTauxDeCaf = 21;
@@ -190,6 +190,7 @@ export class TauxDeCafViewModel extends GraphiqueViewModel {
     minDeLHistogramme: number | undefined
   ): ChartOptions<"bar"> {
     return {
+      aspectRatio: 1.5,
       animation: false,
       plugins: {
         datalabels: {
