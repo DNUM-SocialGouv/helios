@@ -12,7 +12,7 @@ import {
   Modalite,
 } from "./EntitéJuridiqueAutorisationEtCapacité";
 
-class AutorisationsCapacitesPresenter {
+class AutorisationsFactory {
   static createFromAutorisationsSanitaire(autorisationsSanitaire: AutorisationSanitaireModel[]): AutorisationActivites[] {
     return autorisationsSanitaire.reduce((autorisationsActivites: AutorisationActivites[], autorisationSanitaire) => {
       const activite = this.findOrAddActivité(autorisationsActivites, autorisationSanitaire);
@@ -205,11 +205,9 @@ class AutorisationsCapacitesPresenter {
 
 export class AutorisationsEtCapacitesPresenter {
   static present(autorisationsEtCapacites: EntitéJuridiqueAutorisationEtCapacitéLoader): EntitéJuridique["autorisationsEtCapacites"] {
-    const autorisationsActivites = AutorisationsCapacitesPresenter.createFromAutorisationsSanitaire(
-      autorisationsEtCapacites.autorisationsSanitaire.autorisations
-    );
-    const autresActivites = AutorisationsCapacitesPresenter.createFromAutresActivitesSanitaire(autorisationsEtCapacites.autresActivitesSanitaire.autorisations);
-    const reconnaissanceContractuellesActivites = AutorisationsCapacitesPresenter.createFromReconnaissanceContractuellesSanitaire(
+    const autorisationsActivites = AutorisationsFactory.createFromAutorisationsSanitaire(autorisationsEtCapacites.autorisationsSanitaire.autorisations);
+    const autresActivites = AutorisationsFactory.createFromAutresActivitesSanitaire(autorisationsEtCapacites.autresActivitesSanitaire.autorisations);
+    const reconnaissanceContractuellesActivites = AutorisationsFactory.createFromReconnaissanceContractuellesSanitaire(
       autorisationsEtCapacites.reconnaissanceContractuellesSanitaire.autorisations
     );
 
