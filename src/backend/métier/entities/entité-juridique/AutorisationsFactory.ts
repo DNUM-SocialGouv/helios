@@ -4,7 +4,7 @@ import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../databa
 import { StringFormater } from "../../../../frontend/ui/commun/StringFormater";
 import { Autorisation, AutorisationActivites, AutorisationEtablissement, Forme, Modalite } from "./EntitéJuridiqueAutorisationEtCapacité";
 
-export class AutorisationActivitesFactory {
+export class AutorisationsFactory {
   static createFromAutorisationsSanitaire(autorisationsSanitaire: AutorisationSanitaireModel[]): AutorisationActivites[] {
     return autorisationsSanitaire.reduce((autorisationsActivites: AutorisationActivites[], autorisationSanitaire) => {
       const activite = this.findOrAddActivité(autorisationsActivites, autorisationSanitaire);

@@ -1,8 +1,30 @@
 import { StringFormater } from "../../../frontend/ui/commun/StringFormater";
-import { AutorisationActivitesFactory } from "../entities/entité-juridique/AutorisationActivitesFactory";
+import { AutorisationsFactory } from "../entities/entité-juridique/AutorisationsFactory";
 import { EntitéJuridique } from "../entities/entité-juridique/EntitéJuridique";
+import { AutorisationActivites } from "../entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { EntitéJuridiqueNonTrouvée } from "../entities/EntitéJuridiqueNonTrouvée";
 import { EntitéJuridiqueLoader } from "../gateways/EntitéJuridiqueLoader";
+
+function sortAutorisationActivites(data: AutorisationActivites[]): AutorisationActivites[] {
+  return data
+    .sort((a, b) => a.code.localeCompare(b.code))
+    .map((autorisationActivite) => ({
+      ...autorisationActivite,
+      modalites: autorisationActivite.modalites
+        .sort((a, b) => a.code.localeCompare(b.code))
+        .map((modalite) => ({
+          ...modalite,
+          formes: modalite.formes
+            .sort((a, b) => a.code.localeCompare(b.code))
+            .map((forme) => {
+              return {
+                ...forme,
+                autorisationEtablissements: forme.autorisationEtablissements.sort((a, b) => a.numeroFiness.localeCompare(b.numeroFiness)),
+              };
+            }),
+        })),
+    }));
+}
 
 export class RécupèreLEntitéJuridiqueUseCase {
   constructor(private entitéJuridiqueLoader: EntitéJuridiqueLoader) {}
@@ -17,9 +39,9 @@ export class RécupèreLEntitéJuridiqueUseCase {
       throw entitéJuridiqueIdentitéOuErreur;
     }
 
-    const autorisationsActivites = AutorisationActivitesFactory.createFromAutorisationsSanitaire(autorisationsEtCapacites.autorisationsSanitaire.autorisations);
-    const autresActivites = AutorisationActivitesFactory.createFromAutresActivitesSanitaire(autorisationsEtCapacites.autresActivitesSanitaire.autorisations);
-    const reconnaissanceContractuellesActivites = AutorisationActivitesFactory.createFromReconnaissanceContractuellesSanitaire(
+    const autorisationsActivites = AutorisationsFactory.createFromAutorisationsSanitaire(autorisationsEtCapacites.autorisationsSanitaire.autorisations);
+    const autresActivites = AutorisationsFactory.createFromAutresActivitesSanitaire(autorisationsEtCapacites.autresActivitesSanitaire.autorisations);
+    const reconnaissanceContractuellesActivites = AutorisationsFactory.createFromReconnaissanceContractuellesSanitaire(
       autorisationsEtCapacites.reconnaissanceContractuellesSanitaire.autorisations
     );
 
@@ -31,15 +53,15 @@ export class RécupèreLEntitéJuridiqueUseCase {
         numéroFinessEntitéJuridique: autorisationsEtCapacites.numéroFinessEntitéJuridique,
         capacités: autorisationsEtCapacites.capacités,
         autorisationsActivités: {
-          autorisations: autorisationsActivites,
+          autorisations: sortAutorisationActivites(autorisationsActivites),
           dateMiseÀJourSource: StringFormater.formatDate(autorisationsEtCapacites.autorisationsSanitaire.dateMiseÀJourSource),
         },
         autresActivités: {
-          autorisations: autresActivites,
+          autorisations: sortAutorisationActivites(autresActivites),
           dateMiseÀJourSource: StringFormater.formatDate(autorisationsEtCapacites.autresActivitesSanitaire.dateMiseÀJourSource),
         },
         reconnaissanceContractuelleActivités: {
-          autorisations: reconnaissanceContractuellesActivites,
+          autorisations: sortAutorisationActivites(reconnaissanceContractuellesActivites),
           dateMiseÀJourSource: StringFormater.formatDate(autorisationsEtCapacites.reconnaissanceContractuellesSanitaire.dateMiseÀJourSource),
         },
       },

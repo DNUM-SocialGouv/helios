@@ -227,6 +227,9 @@ describe("La récupération d’une entité juridique", () => {
       // GIVEN
       const autorisationsSanitaire: AutorisationSanitaireModel[] = [
         mock<AutorisationSanitaireModel>({
+          codeActivité: "3",
+        }),
+        mock<AutorisationSanitaireModel>({
           codeActivité: "1",
         }),
         mock<AutorisationSanitaireModel>({
@@ -249,9 +252,10 @@ describe("La récupération d’une entité juridique", () => {
 
       // THEN
       const autorisations = entitéJuridique.autorisationsEtCapacites.autorisationsActivités.autorisations;
-      expect(autorisations).toHaveLength(2);
+      expect(autorisations).toHaveLength(3);
       expect(autorisations[0].code).toBe("1");
       expect(autorisations[1].code).toBe("2");
+      expect(autorisations[2].code).toBe("3");
     });
 
     it("recuperer la liste des autorisations d'activités groupées par Activité", async () => {
@@ -259,9 +263,11 @@ describe("La récupération d’une entité juridique", () => {
       const autorisationsSanitaire: AutorisationSanitaireModel[] = [
         mock<AutorisationSanitaireModel>({
           codeActivité: "1",
+          codeModalité: "1",
         }),
         mock<AutorisationSanitaireModel>({
           codeActivité: "1",
+          codeModalité: "2",
         }),
       ];
 
@@ -289,6 +295,10 @@ describe("La récupération d’une entité juridique", () => {
       const autorisationsSanitaire: AutorisationSanitaireModel[] = [
         mock<AutorisationSanitaireModel>({
           codeActivité: "1",
+          codeModalité: "3",
+        }),
+        mock<AutorisationSanitaireModel>({
+          codeActivité: "1",
           codeModalité: "1",
         }),
         mock<AutorisationSanitaireModel>({
@@ -314,6 +324,7 @@ describe("La récupération d’une entité juridique", () => {
       expect(autorisations).toHaveLength(1);
       expect(autorisations[0].modalites[0].code).toBe("1");
       expect(autorisations[0].modalites[1].code).toBe("2");
+      expect(autorisations[0].modalites[2].code).toBe("3");
     });
 
     it("recuperer la liste triée des autorisations d'activités groupées par formes", async () => {
@@ -322,20 +333,23 @@ describe("La récupération d’une entité juridique", () => {
         mock<AutorisationSanitaireModel>({
           codeActivité: "1",
           codeModalité: "1",
-          codeForme: "forme-1",
-          libelléForme: "forme-1-libelle",
-        }),
-        mock<AutorisationSanitaireModel>({
-          codeActivité: "1",
-          codeModalité: "1",
-          codeForme: "forme-1",
-          libelléForme: "forme-1-libelle",
-        }),
-        mock<AutorisationSanitaireModel>({
-          codeActivité: "1",
-          codeModalité: "1",
           codeForme: "forme-2",
           libelléForme: "forme-2-libelle",
+          numéroFinessÉtablissementTerritorial: "1",
+        }),
+        mock<AutorisationSanitaireModel>({
+          codeActivité: "1",
+          codeModalité: "1",
+          codeForme: "forme-1",
+          libelléForme: "forme-1-libelle",
+          numéroFinessÉtablissementTerritorial: "2",
+        }),
+        mock<AutorisationSanitaireModel>({
+          codeActivité: "1",
+          codeModalité: "1",
+          codeForme: "forme-1",
+          libelléForme: "forme-1-libelle",
+          numéroFinessÉtablissementTerritorial: "3",
         }),
       ];
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
@@ -367,16 +381,16 @@ describe("La récupération d’une entité juridique", () => {
           codeActivité: "1",
           codeModalité: "1",
           codeForme: "forme-1",
-          numéroFinessÉtablissementTerritorial: "etablissement-1",
-          établissementTerritorial: { raisonSocialeCourte: "Nom ET 1" },
+          numéroFinessÉtablissementTerritorial: "etablissement-2",
+          établissementTerritorial: { raisonSocialeCourte: "Nom ET 2" },
         }),
 
         mock<AutorisationSanitaireModel>({
           codeActivité: "1",
           codeModalité: "1",
           codeForme: "forme-1",
-          numéroFinessÉtablissementTerritorial: "etablissement-2",
-          établissementTerritorial: { raisonSocialeCourte: "Nom ET 2" },
+          numéroFinessÉtablissementTerritorial: "etablissement-1",
+          établissementTerritorial: { raisonSocialeCourte: "Nom ET 1" },
         }),
       ];
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
@@ -461,7 +475,7 @@ describe("La récupération d’une entité juridique", () => {
       expect(entitéJuridique.autorisationsEtCapacites.autresActivités.dateMiseÀJourSource).toBe("21/05/2023");
     });
 
-    it("recuperer la liste des autorisations d'activités", async () => {
+    it("recuperer la liste des autorisations d'autres activités", async () => {
       // GIVEN
       const autresActivites: AutreActivitéSanitaireModel[] = [
         mock<AutreActivitéSanitaireModel>({
@@ -490,14 +504,17 @@ describe("La récupération d’une entité juridique", () => {
       expect(activites[0].libelle).toBe("Nom activité");
     });
 
-    it("recuperer la liste triée des autorisations d'activités pour une entité juridique avec deux activites differentes", async () => {
+    it("recuperer la liste triée des autorisations d'autres activités pour une entité juridique avec deux activites differentes", async () => {
       // GIVEN
       const autresActivites: AutreActivitéSanitaireModel[] = [
+        mock<AutreActivitéSanitaireModel>({
+          codeActivité: "2",
+        }),
         mock<AutreActivitéSanitaireModel>({
           codeActivité: "1",
         }),
         mock<AutreActivitéSanitaireModel>({
-          codeActivité: "2",
+          codeActivité: "3",
         }),
       ];
 
@@ -516,19 +533,22 @@ describe("La récupération d’une entité juridique", () => {
 
       // THEN
       const activites = entitéJuridique.autorisationsEtCapacites.autresActivités.autorisations;
-      expect(activites).toHaveLength(2);
+      expect(activites).toHaveLength(3);
       expect(activites[0].code).toBe("1");
       expect(activites[1].code).toBe("2");
+      expect(activites[2].code).toBe("3");
     });
 
-    it("recuperer la liste des autorisations d'activités groupées par Activité", async () => {
+    it("recuperer la liste des autorisations d'autres activités groupées par Activité", async () => {
       // GIVEN
       const autresActivites: AutreActivitéSanitaireModel[] = [
         mock<AutreActivitéSanitaireModel>({
           codeActivité: "1",
+          codeModalité: "1",
         }),
         mock<AutreActivitéSanitaireModel>({
           codeActivité: "1",
+          codeModalité: "2",
         }),
       ];
 
@@ -551,9 +571,13 @@ describe("La récupération d’une entité juridique", () => {
       expect(activites[0].code).toBe("1");
     });
 
-    it("recuperer la liste triée des autorisations d'activités groupées par modalité", async () => {
+    it("recuperer la liste triée des autorisations d'autres activités groupées par modalité", async () => {
       // GIVEN
       const autresActivites: AutreActivitéSanitaireModel[] = [
+        mock<AutreActivitéSanitaireModel>({
+          codeActivité: "1",
+          codeModalité: "3",
+        }),
         mock<AutreActivitéSanitaireModel>({
           codeActivité: "1",
           codeModalité: "1",
@@ -577,32 +601,36 @@ describe("La récupération d’une entité juridique", () => {
       const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
 
       // THEN
-      const activites = entitéJuridique.autorisationsEtCapacites.autresActivités.autorisations;
-      expect(activites).toHaveLength(1);
-      expect(activites[0].modalites[0].code).toBe("1");
-      expect(activites[0].modalites[1].code).toBe("2");
+      const modalites = entitéJuridique.autorisationsEtCapacites.autresActivités.autorisations[0].modalites;
+      expect(modalites).toHaveLength(3);
+      expect(modalites[0].code).toBe("1");
+      expect(modalites[1].code).toBe("2");
+      expect(modalites[2].code).toBe("3");
     });
 
-    it("recuperer la liste triée des autorisations d'activités groupées par formes", async () => {
+    it("recuperer la liste triée des autorisations d'autres activités groupées par formes", async () => {
       // GIVEN
       const autresActivites: AutreActivitéSanitaireModel[] = [
         mock<AutreActivitéSanitaireModel>({
           codeActivité: "1",
           codeModalité: "1",
-          codeForme: "forme-1",
-          libelléForme: "forme-1-libelle",
-        }),
-        mock<AutreActivitéSanitaireModel>({
-          codeActivité: "1",
-          codeModalité: "1",
-          codeForme: "forme-1",
-          libelléForme: "forme-1-libelle",
-        }),
-        mock<AutreActivitéSanitaireModel>({
-          codeActivité: "1",
-          codeModalité: "1",
           codeForme: "forme-2",
           libelléForme: "forme-2-libelle",
+          numéroFinessÉtablissementTerritorial: "2",
+        }),
+        mock<AutreActivitéSanitaireModel>({
+          codeActivité: "1",
+          codeModalité: "1",
+          codeForme: "forme-1",
+          libelléForme: "forme-1-libelle",
+          numéroFinessÉtablissementTerritorial: "1",
+        }),
+        mock<AutreActivitéSanitaireModel>({
+          codeActivité: "1",
+          codeModalité: "1",
+          codeForme: "forme-1",
+          libelléForme: "forme-1-libelle",
+          numéroFinessÉtablissementTerritorial: "3",
         }),
       ];
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
@@ -634,16 +662,16 @@ describe("La récupération d’une entité juridique", () => {
           codeActivité: "1",
           codeModalité: "1",
           codeForme: "forme-1",
-          numéroFinessÉtablissementTerritorial: "etablissement-1",
-          établissementTerritorial: { raisonSocialeCourte: "Nom ET 1" },
+          numéroFinessÉtablissementTerritorial: "etablissement-2",
+          établissementTerritorial: { raisonSocialeCourte: "Nom ET 2" },
         }),
 
         mock<AutreActivitéSanitaireModel>({
           codeActivité: "1",
           codeModalité: "1",
           codeForme: "forme-1",
-          numéroFinessÉtablissementTerritorial: "etablissement-2",
-          établissementTerritorial: { raisonSocialeCourte: "Nom ET 2" },
+          numéroFinessÉtablissementTerritorial: "etablissement-1",
+          établissementTerritorial: { raisonSocialeCourte: "Nom ET 1" },
         }),
       ];
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
@@ -758,10 +786,13 @@ describe("La récupération d’une entité juridique", () => {
       // GIVEN
       const reconnaissanceContractuelle: ReconnaissanceContractuelleSanitaireModel[] = [
         mock<ReconnaissanceContractuelleSanitaireModel>({
+          codeActivité: "2",
+        }),
+        mock<ReconnaissanceContractuelleSanitaireModel>({
           codeActivité: "1",
         }),
         mock<ReconnaissanceContractuelleSanitaireModel>({
-          codeActivité: "2",
+          codeActivité: "3",
         }),
       ];
 
@@ -780,9 +811,10 @@ describe("La récupération d’une entité juridique", () => {
 
       // THEN
       const activites = entitéJuridique.autorisationsEtCapacites.reconnaissanceContractuelleActivités.autorisations;
-      expect(activites).toHaveLength(2);
+      expect(activites).toHaveLength(3);
       expect(activites[0].code).toBe("1");
       expect(activites[1].code).toBe("2");
+      expect(activites[2].code).toBe("3");
     });
 
     it("recuperer la liste des reconnaissance Contractuelle d'activités groupées par Activité", async () => {
@@ -790,9 +822,11 @@ describe("La récupération d’une entité juridique", () => {
       const reconnaissanceContractuelle: ReconnaissanceContractuelleSanitaireModel[] = [
         mock<ReconnaissanceContractuelleSanitaireModel>({
           codeActivité: "1",
+          codeModalité: "1",
         }),
         mock<ReconnaissanceContractuelleSanitaireModel>({
           codeActivité: "1",
+          codeModalité: "2",
         }),
       ];
 
@@ -820,11 +854,11 @@ describe("La récupération d’une entité juridique", () => {
       const reconnaissanceContractuelle: ReconnaissanceContractuelleSanitaireModel[] = [
         mock<ReconnaissanceContractuelleSanitaireModel>({
           codeActivité: "1",
-          codeModalité: "1",
+          codeModalité: "2",
         }),
         mock<ReconnaissanceContractuelleSanitaireModel>({
           codeActivité: "1",
-          codeModalité: "2",
+          codeModalité: "1",
         }),
       ];
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
@@ -841,10 +875,10 @@ describe("La récupération d’une entité juridique", () => {
       const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
 
       // THEN
-      const activites = entitéJuridique.autorisationsEtCapacites.reconnaissanceContractuelleActivités.autorisations;
-      expect(activites).toHaveLength(1);
-      expect(activites[0].modalites[0].code).toBe("1");
-      expect(activites[0].modalites[1].code).toBe("2");
+      const modalites = entitéJuridique.autorisationsEtCapacites.reconnaissanceContractuelleActivités.autorisations[0].modalites;
+      expect(modalites).toHaveLength(2);
+      expect(modalites[0].code).toBe("1");
+      expect(modalites[1].code).toBe("2");
     });
 
     it("recuperer la liste triée des reconnaissance reconnaissance d'activités groupées par formes", async () => {
@@ -853,20 +887,23 @@ describe("La récupération d’une entité juridique", () => {
         mock<ReconnaissanceContractuelleSanitaireModel>({
           codeActivité: "1",
           codeModalité: "1",
-          codeForme: "forme-1",
-          libelléForme: "forme-1-libelle",
-        }),
-        mock<ReconnaissanceContractuelleSanitaireModel>({
-          codeActivité: "1",
-          codeModalité: "1",
-          codeForme: "forme-1",
-          libelléForme: "forme-1-libelle",
-        }),
-        mock<ReconnaissanceContractuelleSanitaireModel>({
-          codeActivité: "1",
-          codeModalité: "1",
           codeForme: "forme-2",
           libelléForme: "forme-2-libelle",
+          numéroFinessÉtablissementTerritorial: "3",
+        }),
+        mock<ReconnaissanceContractuelleSanitaireModel>({
+          codeActivité: "1",
+          codeModalité: "1",
+          codeForme: "forme-1",
+          libelléForme: "forme-1-libelle",
+          numéroFinessÉtablissementTerritorial: "1",
+        }),
+        mock<ReconnaissanceContractuelleSanitaireModel>({
+          codeActivité: "1",
+          codeModalité: "1",
+          codeForme: "forme-1",
+          libelléForme: "forme-1-libelle",
+          numéroFinessÉtablissementTerritorial: "2",
         }),
       ];
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
@@ -898,16 +935,16 @@ describe("La récupération d’une entité juridique", () => {
           codeActivité: "1",
           codeModalité: "1",
           codeForme: "forme-1",
-          numéroFinessÉtablissementTerritorial: "etablissement-1",
-          établissementTerritorial: { raisonSocialeCourte: "Nom ET 1" },
+          numéroFinessÉtablissementTerritorial: "etablissement-2",
+          établissementTerritorial: { raisonSocialeCourte: "Nom ET 2" },
         }),
 
         mock<ReconnaissanceContractuelleSanitaireModel>({
           codeActivité: "1",
           codeModalité: "1",
           codeForme: "forme-1",
-          numéroFinessÉtablissementTerritorial: "etablissement-2",
-          établissementTerritorial: { raisonSocialeCourte: "Nom ET 2" },
+          numéroFinessÉtablissementTerritorial: "etablissement-1",
+          établissementTerritorial: { raisonSocialeCourte: "Nom ET 1" },
         }),
       ];
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
