@@ -27,7 +27,7 @@ export const ContenuTauxDeCafEJ = ({ dateDeMiseÀJour, source }: ContenuTauxDeCa
         </p>
       </section>
       <section aria-label={wording.MODE_DE_CALCUL}>
-        <p>
+        <div>
           <p className="fr-text--bold">Mode de calcul : </p>
           <p className="fr-text--bold">Numérateur - Capacité d’autofinancement (CAF) :</p>
           <p>
@@ -43,13 +43,13 @@ export const ContenuTauxDeCafEJ = ({ dateDeMiseÀJour, source }: ContenuTauxDeCa
           <p>- 775 « Produits des cessions d’immobilisations »</p>
           <p>- 777 « Quote-part des subventions amortissables transférées au compte de résultat »</p>
           <p>- 78 « Reprises sur amortissements et provisions »</p>
-        </p>
+        </div>
       </section>
       <section aria-label={wording.SOURCES}>
-        <p>
+        <div>
           <span className="fr-text--bold">Source(s) : </span>
           <p>ANCRE (Application Nationale Compte financier Rapport infra-annuel Eprd) - Agence technique de l’information sur l’hospitalisation (ATIH)</p>
-        </p>
+        </div>
         <p>
           Hélios collecte ces données depuis le SI mutualisé des ARS DIAMANT « Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation », outil décisionnel de
           pilotage centré sur la régulation de l’offre de soins, abordée sous les aspects des moyens humains, financiers, et productivité.

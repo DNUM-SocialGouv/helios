@@ -1,5 +1,5 @@
 {
-  "extends": ["next/core-web-vitals", "prettier"],
+  "extends": ["next/core-web-vitals", "plugin:react/recommended","prettier"],
   "env": {
     "browser": true,
     "es2021": true,
@@ -13,11 +13,18 @@
   },
   "ignorePatterns": ["public/smarttag.js"],
   "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
   "plugins": [
     "eslint-plugin-react",
+    "react",
     "@typescript-eslint"
   ],
   "rules": {
+    "react/react-in-jsx-scope": "off",
     "default-case": "error",
     "eqeqeq": "error",
     "id-match": "error",
