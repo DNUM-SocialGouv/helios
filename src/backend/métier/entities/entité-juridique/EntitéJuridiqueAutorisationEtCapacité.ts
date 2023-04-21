@@ -49,3 +49,19 @@ export type AutorisationActivites = {
   libelle: string;
   code: string;
 };
+
+export type EquipementLourds = {
+  equipementEtablissements: EquipementEtablissement[];
+  libelle: string;
+  code: string;
+};
+
+export type EquipementEtablissement = {
+  numeroFiness: string;
+  nomEtablissement: string;
+  etablissements: Equipements[];
+};
+
+export type Equipements = {
+  autorisations: Autorisation[];
+};
