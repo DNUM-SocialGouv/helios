@@ -1,13 +1,5 @@
-.liste-etablissements {
-    list-style: circle;
-}
-
 .etablissement {
-    font-size: 14px;
     display:grid;
-    /*grid-auto-flow: column;*/
-    grid-template-columns: 2fr;
-    grid-template-rows: min-content 5fr;
     margin-left: 70px;
     margin-bottom: 10px;
 }
@@ -18,14 +10,12 @@
     }
 }
 
-
-.etablissement > a {
+.etablissement > div {
     width:max-content;
     display:list-item;
     list-style: disc;
     height:fit-content;
     margin-right:10px;
-    margin-bottom: 10px;
 }
 
 .etablissement li {
@@ -34,4 +24,8 @@
 
 .etablissementFont {
     font-size: 14px;
+}
+
+.nombre-equipement {
+    display: inline;
 }

@@ -35,22 +35,6 @@ const mockEquipementEtab1: EquipementEtablissement[] = [
           },
         ],
       },
-      {
-        autorisations: [
-          {
-            nom: "dateDAutorisation2",
-            valeur: "10/02/2020",
-          },
-          {
-            nom: "dateDeFin2",
-            valeur: "10/10/2023",
-          },
-          {
-            nom: "dateDeMiseEnOeuvre2",
-            valeur: "13/05/2025",
-          },
-        ],
-      },
     ],
   },
   {
@@ -181,10 +165,15 @@ const EquipementEtablissement = ({ numeroFiness, nomEtablissement, etablissement
   const { paths } = useDependencies();
   return (
     <li className={style["etablissement"]}>
-      <Link className={style["etablissementFont"]} href={paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE + "/" + numeroFiness}>
-        {numeroFiness + " - " + nomEtablissement}
-      </Link>{" "}
-      ({etablissements.length} equipements)
+      <div>
+        <Link className={style["etablissementFont"]} href={paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE + "/" + numeroFiness}>
+          {numeroFiness + " - " + nomEtablissement}
+        </Link>
+        &nbsp;&nbsp;
+        {etablissements.length > 1 ? (
+          <p className={style["nombre-equipement"] + " " + style["etablissementFont"]}>({etablissements.length} équipements)</p>
+        ) : null}
+      </div>
       <ul id={`etablissement-accordion-${etablissements}`}>
         {etablissements.map((equipements, index) => {
           return <Autorisations autorisations={equipements.autorisations} key={`etablissement-${index}`} />;
@@ -195,19 +184,19 @@ const EquipementEtablissement = ({ numeroFiness, nomEtablissement, etablissement
 };
 
 const Autorisations = ({ autorisations }: Equipements): ReactElement => {
-  let labelbulle = "";
-  autorisations.map((autorisation) => {
-    const nomEtValeur = autorisation.nom ? autorisation.valeur : "N/A";
-
-    if (autorisations[autorisations.length - 1] !== autorisation) {
-      labelbulle = labelbulle.concat(autorisation.nom + " : " + nomEtValeur + " | ");
-    } else {
-      labelbulle = labelbulle.concat(autorisation.nom + " : " + nomEtValeur);
-    }
-  });
   return (
     <li className={style["liste-etablissement"]}>
-      <Tag key={labelbulle} label={labelbulle} size={TAG_SIZE.SM} />
+      <Tag size={TAG_SIZE.SM}>
+        {autorisations.map((autorisation, index) => {
+          const valeur = autorisation.nom ? autorisation.valeur : "N/A";
+          return (
+            <span key={autorisation.nom}>
+              {autorisation.nom}&nbsp;:&nbsp;<span className="fr-text--bold">{valeur}</span>
+              {autorisations.length - 1 === index ? "" : " |"}&nbsp;
+            </span>
+          );
+        })}
+      </Tag>
     </li>
   );
 };
