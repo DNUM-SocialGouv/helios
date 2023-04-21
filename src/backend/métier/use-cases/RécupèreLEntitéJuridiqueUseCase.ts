@@ -1,4 +1,4 @@
-import { AutorisationsEtCapacitesPresenter } from "../entities/entité-juridique/AutorisationsCapacitesPresenter";
+import { AutorisationsEtCapacitesPresenter } from "../entities/entité-juridique/AutorisationsEtCapacitesPresenter";
 import { EntitéJuridique } from "../entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueNonTrouvée } from "../entities/EntitéJuridiqueNonTrouvée";
 import { EntitéJuridiqueLoader } from "../gateways/EntitéJuridiqueLoader";
