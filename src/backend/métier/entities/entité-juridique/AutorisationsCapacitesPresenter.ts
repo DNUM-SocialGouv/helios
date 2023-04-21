@@ -2,9 +2,17 @@ import { AutorisationSanitaireModel } from "../../../../../database/models/Autor
 import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { StringFormater } from "../../../../frontend/ui/commun/StringFormater";
-import { Autorisation, AutorisationActivites, AutorisationEtablissement, Forme, Modalite } from "./EntitéJuridiqueAutorisationEtCapacité";
+import { EntitéJuridique } from "./EntitéJuridique";
+import {
+  Autorisation,
+  AutorisationActivites,
+  AutorisationEtablissement,
+  EntitéJuridiqueAutorisationEtCapacitéLoader,
+  Forme,
+  Modalite,
+} from "./EntitéJuridiqueAutorisationEtCapacité";
 
-export class AutorisationsFactory {
+class AutorisationsCapacitesPresenter {
   static createFromAutorisationsSanitaire(autorisationsSanitaire: AutorisationSanitaireModel[]): AutorisationActivites[] {
     return autorisationsSanitaire.reduce((autorisationsActivites: AutorisationActivites[], autorisationSanitaire) => {
       const activite = this.findOrAddActivité(autorisationsActivites, autorisationSanitaire);
@@ -192,5 +200,55 @@ export class AutorisationsFactory {
         valeur: reconnaissanceContractuelle.numéroCpom,
       },
     ];
+  }
+}
+
+export class AutorisationsEtCapacitesPresenter {
+  static present(autorisationsEtCapacites: EntitéJuridiqueAutorisationEtCapacitéLoader): EntitéJuridique["autorisationsEtCapacites"] {
+    const autorisationsActivites = AutorisationsCapacitesPresenter.createFromAutorisationsSanitaire(
+      autorisationsEtCapacites.autorisationsSanitaire.autorisations
+    );
+    const autresActivites = AutorisationsCapacitesPresenter.createFromAutresActivitesSanitaire(autorisationsEtCapacites.autresActivitesSanitaire.autorisations);
+    const reconnaissanceContractuellesActivites = AutorisationsCapacitesPresenter.createFromReconnaissanceContractuellesSanitaire(
+      autorisationsEtCapacites.reconnaissanceContractuellesSanitaire.autorisations
+    );
+
+    return {
+      numéroFinessEntitéJuridique: autorisationsEtCapacites.numéroFinessEntitéJuridique,
+      capacités: autorisationsEtCapacites.capacités,
+      autorisationsActivités: {
+        autorisations: this.sortAutorisationActivites(autorisationsActivites),
+        dateMiseÀJourSource: StringFormater.formatDate(autorisationsEtCapacites.autorisationsSanitaire.dateMiseÀJourSource),
+      },
+      autresActivités: {
+        autorisations: this.sortAutorisationActivites(autresActivites),
+        dateMiseÀJourSource: StringFormater.formatDate(autorisationsEtCapacites.autresActivitesSanitaire.dateMiseÀJourSource),
+      },
+      reconnaissanceContractuelleActivités: {
+        autorisations: this.sortAutorisationActivites(reconnaissanceContractuellesActivites),
+        dateMiseÀJourSource: StringFormater.formatDate(autorisationsEtCapacites.reconnaissanceContractuellesSanitaire.dateMiseÀJourSource),
+      },
+    };
+  }
+
+  private static sortAutorisationActivites(data: AutorisationActivites[]): AutorisationActivites[] {
+    return data
+      .sort((a, b) => a.code.localeCompare(b.code))
+      .map((autorisationActivite) => ({
+        ...autorisationActivite,
+        modalites: autorisationActivite.modalites
+          .sort((a, b) => a.code.localeCompare(b.code))
+          .map((modalite) => ({
+            ...modalite,
+            formes: modalite.formes
+              .sort((a, b) => a.code.localeCompare(b.code))
+              .map((forme) => {
+                return {
+                  ...forme,
+                  autorisationEtablissements: forme.autorisationEtablissements.sort((a, b) => a.numeroFiness.localeCompare(b.numeroFiness)),
+                };
+              }),
+          })),
+      }));
   }
 }
