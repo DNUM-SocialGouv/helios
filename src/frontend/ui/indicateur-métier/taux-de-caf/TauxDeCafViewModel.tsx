@@ -199,7 +199,7 @@ export class TauxDeCafViewModel extends GraphiqueViewModel {
           clamp: true,
           font: {
             family: "Marianne",
-            size: 16,
+            size: 12,
             weight: 700,
           },
           formatter: (value: number, _context: Context): string => value.toLocaleString("fr") + " %",
