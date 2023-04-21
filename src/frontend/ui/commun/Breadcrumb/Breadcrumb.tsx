@@ -29,9 +29,9 @@ export const Breadcrumb = () => {
             {HomeAndBreadcrumb.map((item, index) => (
               <li key={index}>
                 {item.path === "" ? (
-                  <a aria-current="page" className="fr-breadcrumb__link">
+                  <button aria-current="page" className="fr-breadcrumb__link">
                     {item.label}
-                  </a>
+                  </button>
                 ) : (
                   <Link className="fr-breadcrumb__link" href={item.path} passHref prefetch={false}>
                     {item.label}

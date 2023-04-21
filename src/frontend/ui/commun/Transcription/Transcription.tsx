@@ -27,13 +27,7 @@ export const Transcription = ({ disabled = false, entêteLibellé, identifiants,
           Hack pour les tests : on ajoute style={{ display: "flex" }} pour que la dialog ne soit pas en display:none dans les tests.
           En dehors des tests la classe "fr-modal" ajoute le display:"flex" mais les classes ne sont pas appliquées dans les tests
         */}
-        <dialog
-          aria-labelledby={identifiant + "-modal-title"}
-          className="fr-modal"
-          id={identifiant + "-modal-transcription"}
-          role="dialog"
-          style={{ display: "flex" }}
-        >
+        <dialog aria-labelledby={identifiant + "-modal-title"} className="fr-modal" id={identifiant + "-modal-transcription"} style={{ display: "flex" }}>
           <div className="fr-container fr-container--fluid fr-container-md">
             <div className="fr-grid-row fr-grid-row--center">
               <div>

@@ -10,8 +10,7 @@ export const Cartographie = () => {
   const { wording } = useDependencies();
 
   return (
-    <section aria-label={wording.CARTOGRAPHIE}>
-      <h2 className={styles["titre"]}></h2>
+    <section aria-label={wording.CARTOGRAPHIE} className="fr-mt-8w">
       <div className="fr-card fr-card--horizontal fr-card--no-arrow">
         <div className={"fr-card__body " + styles["body"]}>
           <div className="fr-card__content">

@@ -1,5 +1,5 @@
 {
-  "extends": ["next/core-web-vitals", "plugin:react/recommended","prettier"],
+  "extends": ["next/core-web-vitals", "plugin:react/recommended","plugin:jsx-a11y/recommended","prettier"],
   "env": {
     "browser": true,
     "es2021": true,
@@ -20,6 +20,7 @@
   },
   "plugins": [
     "eslint-plugin-react",
+    "jsx-a11y",
     "react",
     "@typescript-eslint"
   ],
