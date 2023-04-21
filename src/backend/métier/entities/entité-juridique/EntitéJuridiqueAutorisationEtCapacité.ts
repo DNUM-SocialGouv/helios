@@ -59,7 +59,7 @@ export type EquipementLourds = {
 export type EquipementEtablissement = {
   numeroFiness: string;
   nomEtablissement: string;
-  equipements: Equipements[];
+  etablissements: Equipements[];
 };
 
 export type Equipements = {

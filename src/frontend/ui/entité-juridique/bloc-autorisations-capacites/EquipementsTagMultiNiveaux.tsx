@@ -7,8 +7,8 @@ import {
   Equipements,
 } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { useDependencies } from "../../commun/contexts/useDependencies";
-import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../../commun/Tag";
-import style from "./AutorisationsTagMultiNiveaux.module.css";
+import { Tag, TAG_SIZE, TagCliquable } from "../../commun/Tag";
+import style from "./EquipementsTagMultiNiveaux.module.css";
 
 export type EquipementsProps = {
   activites: EquipementLourds[];
@@ -18,7 +18,7 @@ const mockEquipementEtab1: EquipementEtablissement[] = [
   {
     numeroFiness: "570001057",
     nomEtablissement: "amazing Hospital",
-    equipements: [
+    etablissements: [
       {
         autorisations: [
           {
@@ -56,7 +56,7 @@ const mockEquipementEtab1: EquipementEtablissement[] = [
   {
     numeroFiness: "570001222",
     nomEtablissement: "happy Hospital",
-    equipements: [
+    etablissements: [
       {
         autorisations: [
           {
@@ -97,7 +97,7 @@ const mockEquipementEtab2: EquipementEtablissement[] = [
   {
     numeroFiness: "570001057",
     nomEtablissement: "normal Hospital",
-    equipements: [
+    etablissements: [
       {
         autorisations: [
           {
@@ -110,6 +110,10 @@ const mockEquipementEtab2: EquipementEtablissement[] = [
           },
           {
             nom: "dateDeMiseEnOeuvre1",
+            valeur: "13/05/2025",
+          },
+          {
+            nom: "autre Date",
             valeur: "13/05/2025",
           },
         ],
@@ -156,11 +160,11 @@ export const EquipementsTagMultiniveaux = ({ activites }: EquipementsProps): Rea
     <ul>
       {activites.map((activité) => (
         <li key={`activité-${activité.code}`}>
-          <TagCliquable for={`autresActivités-accordion-${activité.code}`} titre={`${activité.libelle} [${activité.code}]`} />
-          <ul className="fr-collapse niveau1" id={`autresActivités-accordion-${activité.code}`}>
+          <TagCliquable for={`equipementlourds-accordion-${activité.code}`} titre={`${activité.libelle} [${activité.code}]`} />
+          <ul className="fr-collapse niveau1" id={`equipementlourds-accordion-${activité.code}`}>
             {activité.equipementEtablissements.map((equipements) => (
               <EquipementEtablissement
-                equipements={equipements.equipements}
+                etablissements={equipements.etablissements}
                 key={`details-${equipements.numeroFiness}`}
                 nomEtablissement={equipements.nomEtablissement}
                 numeroFiness={equipements.numeroFiness}
@@ -173,14 +177,17 @@ export const EquipementsTagMultiniveaux = ({ activites }: EquipementsProps): Rea
   );
 };
 
-const EquipementEtablissement = ({ numeroFiness, nomEtablissement, equipements }: EquipementEtablissement): ReactElement => {
+const EquipementEtablissement = ({ numeroFiness, nomEtablissement, etablissements }: EquipementEtablissement): ReactElement => {
   const { paths } = useDependencies();
   return (
     <li className={style["etablissement"]}>
-      <Link href={paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE + "/" + numeroFiness}>{numeroFiness + " - " + nomEtablissement}</Link>
-      <ul id={`autorisations-accordion-${equipements}`}>
-        {equipements.map((autorisation) => {
-          return <Autorisations autorisations={autorisation.autorisations} key={`autorisations-${autorisation.autorisations}`} />;
+      <Link className={style["etablissementFont"]} href={paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE + "/" + numeroFiness}>
+        {numeroFiness + " - " + nomEtablissement}
+      </Link>{" "}
+      ({etablissements.length} equipements)
+      <ul id={`etablissement-accordion-${etablissements}`}>
+        {etablissements.map((equipements, index) => {
+          return <Autorisations autorisations={equipements.autorisations} key={`etablissement-${index}`} />;
         })}
       </ul>
     </li>
@@ -188,13 +195,19 @@ const EquipementEtablissement = ({ numeroFiness, nomEtablissement, equipements }
 };
 
 const Autorisations = ({ autorisations }: Equipements): ReactElement => {
+  let labelbulle = "";
+  autorisations.map((autorisation) => {
+    const nomEtValeur = autorisation.nom ? autorisation.valeur : "N/A";
+
+    if (autorisations[autorisations.length - 1] !== autorisation) {
+      labelbulle = labelbulle.concat(autorisation.nom + " : " + nomEtValeur + " | ");
+    } else {
+      labelbulle = labelbulle.concat(autorisation.nom + " : " + nomEtValeur);
+    }
+  });
   return (
     <li className={style["liste-etablissement"]}>
-      <TagGroup label="autorisations">
-        {autorisations.map((autorisation) => {
-          return <Tag key={autorisation.nom} label={`${autorisation.nom} : ${autorisation.nom ? autorisation.valeur : "N/A"}`} size={TAG_SIZE.SM} />;
-        })}
-      </TagGroup>
+      <Tag key={labelbulle} label={labelbulle} size={TAG_SIZE.SM} />
     </li>
   );
 };

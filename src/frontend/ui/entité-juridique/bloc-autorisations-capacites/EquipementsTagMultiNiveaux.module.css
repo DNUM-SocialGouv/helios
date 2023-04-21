@@ -1,0 +1,37 @@
+.liste-etablissements {
+    list-style: circle;
+}
+
+.etablissement {
+    font-size: 14px;
+    display:grid;
+    /*grid-auto-flow: column;*/
+    grid-template-columns: 2fr;
+    grid-template-rows: min-content 5fr;
+    margin-left: 70px;
+    margin-bottom: 10px;
+}
+
+@media(max-width:991px) {
+    .etablissement {
+        display:block;
+    }
+}
+
+
+.etablissement > a {
+    width:max-content;
+    display:list-item;
+    list-style: disc;
+    height:fit-content;
+    margin-right:10px;
+    margin-bottom: 10px;
+}
+
+.etablissement li {
+    line-height: 2;
+}
+
+.etablissementFont {
+    font-size: 14px;
+}
