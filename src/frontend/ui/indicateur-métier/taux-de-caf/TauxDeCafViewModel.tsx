@@ -15,16 +15,15 @@ import {
   couleurDuFondHistogrammeSecondaire,
   couleurDuSeuil,
   couleurErreur,
-  couleurSecondPlanHistogrammeDeDépassement,
 } from "../../commun/Graphique/couleursGraphique";
-import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
+import { CouleurHistogramme, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";
 
 type TauxDeCaf = Readonly<{ année: number; valeur: number | null }>;
 
-export class TauxDeCafViewModel extends GraphiqueViewModel {
+export class TauxDeCafViewModel {
   private readonly nombreDAnnéesParIndicateur = 5;
   private readonly seuilDuTauxDeCaf = 2;
   private readonly seuilMinimalDuTauxDeCaf = -21;
@@ -48,9 +47,7 @@ export class TauxDeCafViewModel extends GraphiqueViewModel {
     return new TauxDeCafViewModel(tauxDeCaf, dateMiseÀJourSource, wording);
   }
 
-  constructor(private tauxDeCafParAnnée: TauxDeCaf[], private dateMiseÀJourSource: string, wording: Wording) {
-    super(wording);
-  }
+  constructor(private tauxDeCafParAnnée: TauxDeCaf[], private dateMiseÀJourSource: string, private wording: Wording) {}
 
   public get leTauxDeCafEstIlRenseigné(): boolean {
     const [années] = this.construisLesAnnéesEtSesTaux();
@@ -74,31 +71,22 @@ export class TauxDeCafViewModel extends GraphiqueViewModel {
 
   public get tauxDeCaf(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux();
-    const construisLaCouleurDeLaBarre = (valeur: number, année: number | string): CouleurHistogramme => {
-      let premierPlan = couleurDuFondHistogrammeSecondaire;
-      let secondPlan = couleurDuFond;
-
-      if (estCeLAnnéePassée(année)) {
-        premierPlan = couleurDuFondHistogrammePrimaire;
-        secondPlan = couleurDuFond;
-      }
-
-      if (this.leTauxDeCafEstIlAberrant(valeur)) {
-        premierPlan = couleurErreur;
-        secondPlan = couleurSecondPlanHistogrammeDeDépassement;
-      }
-      return {
-        premierPlan,
-        secondPlan,
-      };
-    };
     const libellésDesValeurs = valeurs.map(() => ({ couleur: couleurDuFond }));
-    const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
+    const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? "bold" : "normal" }));
 
     return this.afficheLHistogrammeDuTauxDeCaf(
       valeurs,
       années,
-      this.construisLesCouleursDeLHistogramme(valeurs, années, construisLaCouleurDeLaBarre),
+      valeurs.map((valeur: number, index: number) => {
+        let premierPlan = couleurDuFondHistogrammeSecondaire;
+        if (estCeLAnnéePassée(années[index])) {
+          premierPlan = couleurDuFondHistogrammePrimaire;
+        }
+        if (this.leTauxDeCafEstIlAberrant(valeur)) {
+          premierPlan = couleurErreur;
+        }
+        return { premierPlan };
+      }),
       libellésDesValeurs,
       libellésDesTicks
     );
@@ -251,8 +239,7 @@ export class TauxDeCafViewModel extends GraphiqueViewModel {
             color: couleurDelAbscisse,
             // @ts-ignore
             font: {
-              weight: (context: ScriptableScaleContext) =>
-                context.tick && context.tick.value === this.seuilDuTauxDeCaf ? this.policeGrasse : this.policeNormale,
+              weight: (context: ScriptableScaleContext) => (context.tick && context.tick.value === this.seuilDuTauxDeCaf ? "bold" : "normal"),
             },
             includeBounds: false,
             stepSize: 2,
