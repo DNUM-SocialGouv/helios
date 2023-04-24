@@ -8,6 +8,7 @@ import { CapacitesSanitaireEntiteJuridiqueModel } from "../../../../../database/
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
+import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
 import { CatégorisationEnum, EntitéJuridiqueIdentité } from "../../../métier/entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueActivités } from "../../../métier/entities/entité-juridique/EntitéJuridiqueActivités";
 import {
@@ -264,6 +265,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
     const autorisationsSanitaire = await this.chargeLesAutorisationsSanitaires(numéroFinessEntitéJuridique);
     const autresActivitesSanitaire = await this.chargeLesAutresActivitesSanitaires(numéroFinessEntitéJuridique);
     const reconnaissanceContractuellesSanitaire = await this.chargeLesReconnaissanceContractuellesSanitaires(numéroFinessEntitéJuridique);
+    const equipementMaterielLordsSanitaire = await this.chargeLesEquipementsMaterielLordsSanitaire(numéroFinessEntitéJuridique);
 
     return {
       capacités: this.construisLesCapacités(capacitésDeLÉtablissementModel, dateDeMiseÀJourDiamantAnnSaeModel),
@@ -271,6 +273,10 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
       autresActivitesSanitaire: { autorisations: autresActivitesSanitaire, dateMiseÀJourSource: dateDeMiseÀJourFinessCs1400103Model.dernièreMiseÀJour },
       reconnaissanceContractuellesSanitaire: {
         autorisations: reconnaissanceContractuellesSanitaire,
+        dateMiseÀJourSource: dateDeMiseÀJourFinessCs1400103Model.dernièreMiseÀJour,
+      },
+      equipementMaterielLordsSanitaire: {
+        autorisations: equipementMaterielLordsSanitaire,
         dateMiseÀJourSource: dateDeMiseÀJourFinessCs1400103Model.dernièreMiseÀJour,
       },
       numéroFinessEntitéJuridique,
@@ -300,6 +306,15 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
       .getRepository(ReconnaissanceContractuelleSanitaireModel)
       .createQueryBuilder("reconnaissance_contractuelle_sanitaire")
       .leftJoinAndSelect("reconnaissance_contractuelle_sanitaire.établissementTerritorial", "établissementTerritorial")
+      .where("établissementTerritorial.numero_finess_entite_juridique = :finess", { finess: numéroFinessEntitéJuridique })
+      .getMany();
+  }
+
+  private async chargeLesEquipementsMaterielLordsSanitaire(numéroFinessEntitéJuridique: string): Promise<ÉquipementMatérielLourdSanitaireModel[]> {
+    return (await this.orm)
+      .getRepository(ÉquipementMatérielLourdSanitaireModel)
+      .createQueryBuilder("equipement_materiel_lourd_sanitaire")
+      .leftJoinAndSelect("equipement_materiel_lourd_sanitaire.établissementTerritorial", "établissementTerritorial")
       .where("établissementTerritorial.numero_finess_entite_juridique = :finess", { finess: numéroFinessEntitéJuridique })
       .getMany();
   }
