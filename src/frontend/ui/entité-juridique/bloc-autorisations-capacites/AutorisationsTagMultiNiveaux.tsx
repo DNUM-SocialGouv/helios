@@ -56,7 +56,7 @@ const Modalite = ({ modalité, codeActivite }: { codeActivite: string; modalité
   return (
     <li>
       <TagCliquable for={`autorisations-accordion-${codeActivite}-${modalité.code}`} texteGras={false} titre={`${modalité.libelle} [${modalité.code}]`} />
-      <ul className="fr-collapse niveau2" id={`autorisations-accordion-${codeActivite}-${modalité.code}`}>
+      <ul className={"fr-collapse niveau2 " + style["modalites"]} id={`autorisations-accordion-${codeActivite}-${modalité.code}`}>
         {modalité.formes.map((forme) => (
           <Forme codeActivite={codeActivite} codeModalite={modalité.code} forme={forme} key={`forme-${forme.code}`} />
         ))}
@@ -69,7 +69,7 @@ const Forme = ({ codeModalite, forme, codeActivite }: { codeModalite: string; fo
     <li>
       <Tag label={`${forme.libelle} [${forme.code}]`} size={TAG_SIZE.SM} withArrow />
       <AfficherLesEt for={`autorisations-accordion-${codeActivite}-${codeModalite}-${forme.code}`} />
-      <ul className={"fr-collapse niveau3" + style["liste-etablissements"]} id={`autorisations-accordion-${codeActivite}-${codeModalite}-${forme.code}`}>
+      <ul className={"fr-collapse niveau3 " + style["liste-etablissements"]} id={`autorisations-accordion-${codeActivite}-${codeModalite}-${forme.code}`}>
         {forme.autorisationEtablissements.map((autorisationEtablissement) => (
           <AutorisationEtablissement
             autorisations={autorisationEtablissement.autorisations}

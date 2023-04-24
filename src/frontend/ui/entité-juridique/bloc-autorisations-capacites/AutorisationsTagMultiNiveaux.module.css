@@ -16,6 +16,14 @@
     }
 }
 
+/* Ne pas afficher la liste des établissement en mode print si les modalités ne sont pas ouvertes (override du global.css)*/
+@media print {
+    .modalites:global(.fr-collapse:not(.fr-collapse--expanded)) {
+        visibility: hidden !important;
+        max-height: 0 !important;
+    }
+}
+
 .etablissement > a {
     width:max-content;
     display:list-item;
