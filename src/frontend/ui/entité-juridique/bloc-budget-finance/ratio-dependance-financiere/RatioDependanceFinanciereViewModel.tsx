@@ -1,6 +1,6 @@
 import { EntitéJuridiqueBudgetFinance } from "../../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { couleurDuFond, couleurDuFondHistogrammeSecondaire, couleurErreur, couleurIdentifiant } from "../../../commun/Graphique/couleursGraphique";
-import { LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../../commun/Graphique/GraphiqueViewModel";
+import { LibelléDeTickGraphe } from "../../../commun/Graphique/GraphiqueViewModel";
 import { CouleurHistogramme } from "../../../commun/Graphique/HistogrammeVertical";
 import { StringFormater } from "../../../commun/StringFormater";
 
@@ -42,11 +42,11 @@ export class RatioDependanceFinanciereViewModel {
     return this.ratioDependanceFinanciere.map(() => ({ tailleDePolice: "normal" }));
   }
 
-  public construisLesLibellésDesValeurs(): LibelléDeDonnéeGraphe[] {
+  public construisLesCouleursDesLibelles(): string[] {
     const SEUIL_DE_CONTRASTE_DES_LIBELLÉS_DES_TAUX = 0.2;
-    return this.ratioDependanceFinanciere.map((ratio) => ({
-      couleur: (ratio.ratio as number) > SEUIL_DE_CONTRASTE_DES_LIBELLÉS_DES_TAUX ? couleurDuFond : couleurIdentifiant,
-    }));
+    return this.ratioDependanceFinanciere.map((ratio) =>
+      (ratio.ratio as number) > SEUIL_DE_CONTRASTE_DES_LIBELLÉS_DES_TAUX ? couleurDuFond : couleurIdentifiant
+    );
   }
 
   get couleursDeLHistogramme(): CouleurHistogramme[] {

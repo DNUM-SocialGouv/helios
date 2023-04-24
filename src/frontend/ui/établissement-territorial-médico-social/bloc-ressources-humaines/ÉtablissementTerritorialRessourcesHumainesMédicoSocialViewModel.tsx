@@ -13,7 +13,7 @@ import {
   noir,
 } from "../../commun/Graphique/couleursGraphique";
 import { couleurDesArcsDuDonut, Donut } from "../../commun/Graphique/Donut";
-import { CouleurHistogramme, LibelléDeDonnéeGraphe } from "../../commun/Graphique/GraphiqueViewModel";
+import { CouleurHistogramme } from "../../commun/Graphique/GraphiqueViewModel";
 import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
@@ -154,12 +154,13 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
   public get tauxDePrestationsExternes(): JSX.Element {
     const [valeurs, années] = this.extraisLesTauxDesIndicateurs("tauxDePrestationsExternes");
 
-    const libellésDesValeurs = this.construisLesLibellésDesValeursDeTaux(valeurs);
+    const libellésDesValeurs = this.construisLesCouleursLibellésDeTaux(valeurs);
     const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? "bold" : "normal" }));
 
     return (
       <HistogrammeVertical
         annéesTotales={3}
+        couleurDesLibelles={libellésDesValeurs}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) =>
           this.construisLaCouleurDeLaBarreDeLHistogramme(valeur, années[index], this.leTauxDePrestationsExternesEstIlDansLesBornesAcceptables.bind(this))
         )}
@@ -167,7 +168,6 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
         identifiant={this.wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES}
         libellés={années}
         libellésDesTicks={libellésDesTicks}
-        libellésDesValeurs={libellésDesValeurs}
         valeurs={valeurs}
       />
     );
@@ -187,12 +187,13 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
 
   public get tauxDEtpVacants(): JSX.Element {
     const [valeurs, années] = this.extraisLesTauxDesIndicateurs("tauxDEtpVacants");
-    const libellésDesValeurs = this.construisLesLibellésDesValeursDeTaux(valeurs);
+    const libellésDesValeurs = this.construisLesCouleursLibellésDeTaux(valeurs);
     const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? "bold" : "normal" }));
 
     return (
       <HistogrammeVertical
         annéesTotales={3}
+        couleurDesLibelles={libellésDesValeurs}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) =>
           this.construisLaCouleurDeLaBarreDeLHistogramme(valeur, années[index], this.leTauxDEtpVacantsEstIlDansLesBornesAcceptables.bind(this))
         )}
@@ -200,7 +201,6 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
         identifiant={this.wording.TAUX_D_ETP_VACANTS_AU_31_12}
         libellés={années}
         libellésDesTicks={libellésDesTicks}
-        libellésDesValeurs={libellésDesValeurs}
         valeurs={valeurs}
       />
     );
@@ -220,12 +220,13 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
 
   public get tauxDeRotationDuPersonnel(): JSX.Element {
     const [valeurs, années] = this.extraisLesTauxDesIndicateurs("tauxDeRotationDuPersonnel");
-    const libellésDesValeurs = this.construisLesLibellésDesValeursDeTaux(valeurs);
+    const libellésDesValeurs = this.construisLesCouleursLibellésDeTaux(valeurs);
     const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? "bold" : "normal" }));
 
     return (
       <HistogrammeVertical
         annéesTotales={3}
+        couleurDesLibelles={libellésDesValeurs}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) =>
           this.construisLaCouleurDeLaBarreDeLHistogramme(valeur, années[index], this.leTauxDeRotationDuPersonnelEstIlDansLesBornesAcceptables.bind(this))
         )}
@@ -233,7 +234,6 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
         identifiant={this.wording.TAUX_DE_ROTATION_DU_PERSONNEL}
         libellés={années}
         libellésDesTicks={libellésDesTicks}
-        libellésDesValeurs={libellésDesValeurs}
         valeurs={valeurs}
       />
     );
@@ -257,17 +257,17 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     const tauxDAbsentéismesDeLAnnéeEnCours = this.trouveLesTauxDAbsentéismesDeLAnnée(annéeEnCours);
     const [valeursAvecMotif, tauxDAbsentéismeHorsFormation] = this.construisLesTauxDAbsentéisme(tauxDAbsentéismesDeLAnnéeEnCours);
     const couleursDuDoughnut: CouleurHistogramme[] = [];
-    const libellésDesValeurs: LibelléDeDonnéeGraphe[] = [];
+    const couleursDesLibelles: string[] = [];
     valeursAvecMotif.forEach((tauxDAbsentéisme) => {
       if (!this.leTauxDAbsentéismeDUnMotifEstIlDansLesBornesAcceptables(tauxDAbsentéisme.valeur)) {
         couleursDuDoughnut.push({
           premierPlan: couleurErreur,
           secondPlan: couleurSecondPlanHistogrammeDeDépassement,
         });
-        libellésDesValeurs.push({ couleur: couleurDuFond });
+        couleursDesLibelles.push(couleurDuFond);
       } else {
         couleursDuDoughnut.push(this.associeLaCouleurDeLArcAuMotifDuTauxDAbsentéisme(tauxDAbsentéisme.motif));
-        libellésDesValeurs.push(this.associeLaCouleurDuLibelléAuMotifDAbsentéisme(tauxDAbsentéisme.motif));
+        couleursDesLibelles.push(this.associeLaCouleurDuLibelléAuMotifDAbsentéisme(tauxDAbsentéisme.motif));
       }
     });
     const valeursDesTauxDAbsentéismes = valeursAvecMotif.map((tauxDAbsentéisme) => tauxDAbsentéisme.valeur);
@@ -289,9 +289,9 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
         {!this.leTauxDAbsentéismeHorsFormationEstIlNul(tauxDAbsentéismeHorsFormation) && (
           <Donut
             couleursDuDoughnut={couleursDuDoughnut}
+            couleursLibelle={couleursDesLibelles}
             idDeLaLégende={this.IDENTIFIANT_DE_LA_LÉGENDE_DES_TAUX_D_ABSENTÉISMES}
             libellés={motifsDesTauxDAbsentéismes}
-            libellésDesValeurs={libellésDesValeurs}
             texteCentral={texteCentral}
             total={tauxDAbsentéismeHorsFormation}
             valeurs={valeursDesTauxDAbsentéismes}
@@ -399,8 +399,8 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     };
   }
 
-  private associeLaCouleurDuLibelléAuMotifDAbsentéisme(motif: string) {
-    return { couleur: this.couleursDuDoughnutDesTauxDAbsentéismes[motif].couleurDuLibellé };
+  private associeLaCouleurDuLibelléAuMotifDAbsentéisme(motif: string): string {
+    return this.couleursDuDoughnutDesTauxDAbsentéismes[motif].couleurDuLibellé;
   }
 
   private extraisLesValeursNombréesDesIndicateurs(indicateur: IndicateurAvecUnNombre): [number[], string[]] {
@@ -453,9 +453,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     }
   }
 
-  private construisLesLibellésDesValeursDeTaux(valeursDesTaux: number[]) {
-    return valeursDesTaux.map((valeur) => ({
-      couleur: valeur > 20 ? couleurDuFond : valeur < 0 ? couleurDuFond : couleurIdentifiant,
-    }));
+  private construisLesCouleursLibellésDeTaux(valeursDesTaux: number[]): string[] {
+    return valeursDesTaux.map((valeur) => (valeur > 20 ? couleurDuFond : valeur < 0 ? couleurDuFond : couleurIdentifiant));
   }
 }

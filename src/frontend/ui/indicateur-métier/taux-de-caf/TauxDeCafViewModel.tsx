@@ -16,7 +16,7 @@ import {
   couleurDuSeuil,
   couleurErreur,
 } from "../../commun/Graphique/couleursGraphique";
-import { CouleurHistogramme, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
+import { CouleurHistogramme, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";
@@ -71,7 +71,7 @@ export class TauxDeCafViewModel {
 
   public get tauxDeCaf(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux();
-    const libellésDesValeurs = valeurs.map(() => ({ couleur: couleurDuFond }));
+    const libellésDesValeurs = valeurs.map(() => couleurDuFond);
     const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? "bold" : "normal" }));
 
     return this.afficheLHistogrammeDuTauxDeCaf(
@@ -100,7 +100,7 @@ export class TauxDeCafViewModel {
     valeurs: number[],
     années: number[],
     couleursDeLHistogramme: CouleurHistogramme[],
-    libellésDesValeurs: LibelléDeDonnéeGraphe[],
+    couleurDesLibelles: string[],
     libellésDesTicks: LibelléDeTickGraphe[]
   ) {
     const minDeLHistogramme = Math.min(...valeurs) < this.seuilMinimalDuTauxDeCaf ? this.seuilMinimalDuTauxDeCaf : undefined;
@@ -110,7 +110,7 @@ export class TauxDeCafViewModel {
         {
           backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
           data: valeurs,
-          datalabels: { labels: { title: { color: libellésDesValeurs.map((libelléDeValeur) => libelléDeValeur.couleur) } } },
+          datalabels: { labels: { title: { color: couleurDesLibelles } } },
           maxBarThickness: 60,
           type: "bar",
           xAxisID: "x",

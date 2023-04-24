@@ -12,7 +12,7 @@ import {
   couleurIdentifiant,
   couleurSecondPlanHistogrammeDeDépassement,
 } from "../../commun/Graphique/couleursGraphique";
-import { CouleurHistogramme, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
+import { CouleurHistogramme, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
 import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
 import { StringFormater } from "../../commun/StringFormater";
@@ -49,6 +49,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return (
       <HistogrammeVertical
         annéesTotales={3}
+        couleurDesLibelles={this.construisLesLibellésDesValeurs(valeurs)}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) => {
           return this.construisLaCouleurDeLaBarreVerticale(valeur, années[index]);
         })}
@@ -56,7 +57,6 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         identifiant={this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT}
         libellés={années}
         libellésDesTicks={this.construisLesLibellésDesTicks(années)}
-        libellésDesValeurs={this.construisLesLibellésDesValeurs(valeurs)}
         valeurs={valeurs}
       />
     );
@@ -76,6 +76,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return (
       <HistogrammeVertical
         annéesTotales={3}
+        couleurDesLibelles={this.construisLesLibellésDesValeurs(valeurs)}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) => {
           return this.construisLaCouleurDeLaBarreVerticale(valeur, années[index]);
         })}
@@ -83,7 +84,6 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         identifiant={this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE}
         libellés={années}
         libellésDesTicks={this.construisLesLibellésDesTicks(années)}
-        libellésDesValeurs={this.construisLesLibellésDesValeurs(valeurs)}
         valeurs={valeurs}
       />
     );
@@ -103,6 +103,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return (
       <HistogrammeVertical
         annéesTotales={3}
+        couleurDesLibelles={this.construisLesLibellésDesValeurs(valeurs)}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) => {
           return this.construisLaCouleurDeLaBarreVerticale(valeur, années[index]);
         })}
@@ -110,7 +111,6 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         identifiant={this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR}
         libellés={années}
         libellésDesTicks={this.construisLesLibellésDesTicks(années)}
-        libellésDesValeurs={this.construisLesLibellésDesValeurs(valeurs)}
         valeurs={valeurs}
       />
     );
@@ -130,6 +130,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return (
       <HistogrammeVertical
         annéesTotales={3}
+        couleurDesLibelles={this.construisLesLibellésDesValeurs(valeurs)}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) => {
           return this.construisLaCouleurDeLaBarreVerticale(valeur, années[index]);
         })}
@@ -137,7 +138,6 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         identifiant={this.wording.TAUX_RÉALISATION_ACTIVITÉ}
         libellés={années}
         libellésDesTicks={this.construisLesLibellésDesTicks(années)}
-        libellésDesValeurs={this.construisLesLibellésDesValeurs(valeurs)}
         valeurs={valeurs}
       />
     );
@@ -300,8 +300,8 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         };
   };
 
-  private construisLesLibellésDesValeurs(valeurs: number[]): LibelléDeDonnéeGraphe[] {
-    return valeurs.map((valeur) => ({ couleur: valeur > 20 ? couleurDuFond : couleurIdentifiant }));
+  private construisLesLibellésDesValeurs(valeurs: number[]): string[] {
+    return valeurs.map((valeur) => (valeur > 20 ? couleurDuFond : couleurIdentifiant));
   }
 
   private construisLesLibellésDesTicks(libellés: (number | string)[]): LibelléDeTickGraphe[] {

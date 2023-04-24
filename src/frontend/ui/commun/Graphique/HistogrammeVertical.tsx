@@ -12,10 +12,6 @@ import { StringFormater } from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
 import { couleurDelAbscisse, couleurDuFondDeLaLigne } from "./couleursGraphique";
 
-export type LibelléDeDonnéeGraphe = Readonly<{
-  couleur: string;
-}>;
-
 export type LibelléDeTickGraphe = Readonly<{
   tailleDePolice: string;
 }>;
@@ -29,7 +25,7 @@ export function HistogrammeVertical(props: {
   valeurs: number[];
   libellés: (number | string)[];
   couleursDeLHistogramme: CouleurHistogramme[];
-  libellésDesValeurs: LibelléDeDonnéeGraphe[];
+  couleurDesLibelles: string[];
   libellésDesTicks: LibelléDeTickGraphe[];
   entêteLibellé: string;
   identifiant: string;
@@ -60,7 +56,7 @@ export function HistogrammeVertical(props: {
       {
         backgroundColor: props.couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
         data: props.valeurs,
-        datalabels: { labels: { title: { color: props.libellésDesValeurs.map((libellé) => libellé.couleur) } } },
+        datalabels: { labels: { title: { color: props.couleurDesLibelles } } },
         maxBarThickness: 60,
         type: "bar",
         xAxisID: "x",

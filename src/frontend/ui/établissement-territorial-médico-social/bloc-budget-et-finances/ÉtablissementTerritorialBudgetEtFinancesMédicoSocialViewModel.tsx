@@ -97,18 +97,18 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
   public get tauxDeVétustéConstruction(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxDeVétustéConstruction");
 
-    const libellésDesValeurs = valeurs.map((valeur) => ({ couleur: valeur > this.seuilDuContrasteDuLibellé ? couleurDuFond : couleurIdentifiant }));
+    const libellésDesValeurs = valeurs.map((valeur) => (valeur > this.seuilDuContrasteDuLibellé ? couleurDuFond : couleurIdentifiant));
     const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? "bold" : "normal" }));
 
     return (
       <HistogrammeVertical
         annéesTotales={3}
+        couleurDesLibelles={libellésDesValeurs}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) => this.construisLaCouleurDeLaBarre(valeur, années[index]))}
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION}
         libellés={années}
         libellésDesTicks={libellésDesTicks}
-        libellésDesValeurs={libellésDesValeurs}
         valeurs={valeurs}
       />
     );
