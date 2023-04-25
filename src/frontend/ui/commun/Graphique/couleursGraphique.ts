@@ -1,3 +1,20 @@
+import {
+  BarController,
+  BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
+  LineController,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+} from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
+
+import { construisLePluginDeLaLegende } from "./LegendPlugin";
+
 export const couleurDuFond = "#E8EDFF";
 export const couleurDuFondHistogrammePrimaire = "#000091";
 export const couleurDuFondHistogrammeSecondaire = "#4E68BB";
@@ -20,3 +37,18 @@ export type CouleurHistogramme = Readonly<{
   premierPlan: string;
   secondPlan?: string;
 }>;
+
+ChartJS.register(
+  Title,
+  LineController,
+  Legend,
+  BarElement,
+  BarController,
+  LinearScale,
+  CategoryScale,
+  ChartDataLabels,
+  PointElement,
+  LineElement,
+  Tooltip,
+  construisLePluginDeLaLegende()
+);
