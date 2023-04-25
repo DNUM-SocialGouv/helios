@@ -1,6 +1,6 @@
 import { EntitéJuridiqueBudgetFinance } from "../../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { couleurDuFond, couleurDuFondHistogrammeSecondaire, couleurErreur, couleurIdentifiant } from "../../../commun/Graphique/couleursGraphique";
-import { LibelléDeTickGraphe } from "../../../commun/Graphique/GraphiqueViewModel";
+import { TaillePoliceTick } from "../../../commun/Graphique/GraphiqueViewModel";
 import { CouleurHistogramme } from "../../../commun/Graphique/HistogrammeVertical";
 import { StringFormater } from "../../../commun/StringFormater";
 
@@ -38,8 +38,8 @@ export class RatioDependanceFinanciereViewModel {
     return this.ratioDependanceFinanciere.map((ratio) => StringFormater.transformInRate(ratio.ratio as number));
   }
 
-  public construisLesLibellésDesTicks(): LibelléDeTickGraphe[] {
-    return this.ratioDependanceFinanciere.map(() => ({ tailleDePolice: "normal" }));
+  public construisLesLibellésDesTicks(): TaillePoliceTick[] {
+    return this.ratioDependanceFinanciere.map(() => "normal");
   }
 
   public construisLesCouleursDesLibelles(): string[] {

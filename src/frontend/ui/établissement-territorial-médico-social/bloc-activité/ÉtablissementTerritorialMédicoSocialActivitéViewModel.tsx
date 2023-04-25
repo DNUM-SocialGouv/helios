@@ -12,7 +12,7 @@ import {
   couleurIdentifiant,
   couleurSecondPlanHistogrammeDeDépassement,
 } from "../../commun/Graphique/couleursGraphique";
-import { CouleurHistogramme, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
+import { CouleurHistogramme, TaillePoliceTick } from "../../commun/Graphique/GraphiqueViewModel";
 import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
 import { StringFormater } from "../../commun/StringFormater";
@@ -56,7 +56,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT}
         libellés={années}
-        libellésDesTicks={this.construisLesLibellésDesTicks(années)}
+        taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
         valeurs={valeurs}
       />
     );
@@ -83,7 +83,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE}
         libellés={années}
-        libellésDesTicks={this.construisLesLibellésDesTicks(années)}
+        taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
         valeurs={valeurs}
       />
     );
@@ -110,7 +110,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR}
         libellés={années}
-        libellésDesTicks={this.construisLesLibellésDesTicks(années)}
+        taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
         valeurs={valeurs}
       />
     );
@@ -137,7 +137,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_RÉALISATION_ACTIVITÉ}
         libellés={années}
-        libellésDesTicks={this.construisLesLibellésDesTicks(années)}
+        taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
         valeurs={valeurs}
       />
     );
@@ -304,7 +304,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return valeurs.map((valeur) => (valeur > 20 ? couleurDuFond : couleurIdentifiant));
   }
 
-  private construisLesLibellésDesTicks(libellés: (number | string)[]): LibelléDeTickGraphe[] {
-    return libellés.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? "bold" : "normal" }));
+  private construisLesLibellésDesTicks(libellés: (number | string)[]): TaillePoliceTick[] {
+    return libellés.map((année) => (estCeLAnnéePassée(année) ? "bold" : "normal"));
   }
 }

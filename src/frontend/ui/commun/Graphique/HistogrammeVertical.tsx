@@ -12,9 +12,7 @@ import { StringFormater } from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
 import { couleurDelAbscisse, couleurDuFondDeLaLigne } from "./couleursGraphique";
 
-export type LibelléDeTickGraphe = Readonly<{
-  tailleDePolice: string;
-}>;
+export type TaillePoliceTick = "bold" | "normal";
 
 export type CouleurHistogramme = Readonly<{
   premierPlan: string;
@@ -26,7 +24,7 @@ export function HistogrammeVertical(props: {
   libellés: (number | string)[];
   couleursDeLHistogramme: CouleurHistogramme[];
   couleurDesLibelles: string[];
-  libellésDesTicks: LibelléDeTickGraphe[];
+  taillePoliceTicks: TaillePoliceTick[];
   entêteLibellé: string;
   identifiant: string;
   annéesTotales: number;
@@ -80,7 +78,7 @@ export function HistogrammeVertical(props: {
         <Bar
           // @ts-ignore
           data={data}
-          options={optionsHistogrammeVertical(props.libellésDesTicks.map((libelléDuTick) => libelléDuTick.tailleDePolice))}
+          options={optionsHistogrammeVertical(props.taillePoliceTicks)}
         />
       )}
       {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}

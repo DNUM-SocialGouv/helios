@@ -98,7 +98,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxDeVétustéConstruction");
 
     const libellésDesValeurs = valeurs.map((valeur) => (valeur > this.seuilDuContrasteDuLibellé ? couleurDuFond : couleurIdentifiant));
-    const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? "bold" : "normal" }));
+    const libellésDesTicks = années.map((année) => (estCeLAnnéePassée(année) ? "bold" : "normal"));
 
     return (
       <HistogrammeVertical
@@ -108,7 +108,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION}
         libellés={années}
-        libellésDesTicks={libellésDesTicks}
+        taillePoliceTicks={libellésDesTicks}
         valeurs={valeurs}
       />
     );

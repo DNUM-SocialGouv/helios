@@ -155,7 +155,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     const [valeurs, années] = this.extraisLesTauxDesIndicateurs("tauxDePrestationsExternes");
 
     const libellésDesValeurs = this.construisLesCouleursLibellésDeTaux(valeurs);
-    const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? "bold" : "normal" }));
+    const taillePoliceTick = années.map((année) => (estCeLAnnéePassée(année) ? "bold" : "normal"));
 
     return (
       <HistogrammeVertical
@@ -167,7 +167,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES}
         libellés={années}
-        libellésDesTicks={libellésDesTicks}
+        taillePoliceTicks={taillePoliceTick}
         valeurs={valeurs}
       />
     );
@@ -188,7 +188,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
   public get tauxDEtpVacants(): JSX.Element {
     const [valeurs, années] = this.extraisLesTauxDesIndicateurs("tauxDEtpVacants");
     const libellésDesValeurs = this.construisLesCouleursLibellésDeTaux(valeurs);
-    const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? "bold" : "normal" }));
+    const taillePoliceTick = années.map((année) => (estCeLAnnéePassée(année) ? "bold" : "normal"));
 
     return (
       <HistogrammeVertical
@@ -200,7 +200,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_D_ETP_VACANTS_AU_31_12}
         libellés={années}
-        libellésDesTicks={libellésDesTicks}
+        taillePoliceTicks={taillePoliceTick}
         valeurs={valeurs}
       />
     );
@@ -221,7 +221,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
   public get tauxDeRotationDuPersonnel(): JSX.Element {
     const [valeurs, années] = this.extraisLesTauxDesIndicateurs("tauxDeRotationDuPersonnel");
     const libellésDesValeurs = this.construisLesCouleursLibellésDeTaux(valeurs);
-    const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? "bold" : "normal" }));
+    const libellésDesTicks = années.map((année) => (estCeLAnnéePassée(année) ? "bold" : "normal"));
 
     return (
       <HistogrammeVertical
@@ -233,7 +233,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_DE_ROTATION_DU_PERSONNEL}
         libellés={années}
-        libellésDesTicks={libellésDesTicks}
+        taillePoliceTicks={libellésDesTicks}
         valeurs={valeurs}
       />
     );

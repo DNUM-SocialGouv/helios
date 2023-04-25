@@ -1,8 +1,6 @@
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
-export type LibelléDeTickGraphe = Readonly<{
-  tailleDePolice: string;
-}>;
+export type TaillePoliceTick = "normal" | "bold";
 
 export type CouleurHistogramme = Readonly<{
   premierPlan: string;

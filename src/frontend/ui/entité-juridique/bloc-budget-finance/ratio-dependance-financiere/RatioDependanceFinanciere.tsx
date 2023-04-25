@@ -86,7 +86,7 @@ export function RatioDependanceFinanciere({ ratioDependanceFinanciereViewModel }
         entêteLibellé={wording.ANNÉE}
         identifiant={wording.RATIO_DEPENDANCE_FINANCIERE}
         libellés={ratioDependanceFinanciereViewModel.années}
-        libellésDesTicks={ratioDependanceFinanciereViewModel.construisLesLibellésDesTicks()}
+        taillePoliceTicks={ratioDependanceFinanciereViewModel.construisLesLibellésDesTicks()}
         valeurs={ratioDependanceFinanciereViewModel.valeurs}
       />
     </IndicateurGraphique>

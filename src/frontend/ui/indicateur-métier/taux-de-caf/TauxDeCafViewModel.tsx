@@ -16,7 +16,7 @@ import {
   couleurDuSeuil,
   couleurErreur,
 } from "../../commun/Graphique/couleursGraphique";
-import { CouleurHistogramme, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
+import { CouleurHistogramme, TaillePoliceTick } from "../../commun/Graphique/GraphiqueViewModel";
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";
@@ -72,7 +72,7 @@ export class TauxDeCafViewModel {
   public get tauxDeCaf(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux();
     const libellésDesValeurs = valeurs.map(() => couleurDuFond);
-    const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? "bold" : "normal" }));
+    const taillePoliceTick = années.map((année) => (estCeLAnnéePassée(année) ? "bold" : "normal"));
 
     return this.afficheLHistogrammeDuTauxDeCaf(
       valeurs,
@@ -88,7 +88,7 @@ export class TauxDeCafViewModel {
         return { premierPlan };
       }),
       libellésDesValeurs,
-      libellésDesTicks
+      taillePoliceTick
     );
   }
 
@@ -101,7 +101,7 @@ export class TauxDeCafViewModel {
     années: number[],
     couleursDeLHistogramme: CouleurHistogramme[],
     couleurDesLibelles: string[],
-    libellésDesTicks: LibelléDeTickGraphe[]
+    taillePoliceTick: TaillePoliceTick[]
   ) {
     const minDeLHistogramme = Math.min(...valeurs) < this.seuilMinimalDuTauxDeCaf ? this.seuilMinimalDuTauxDeCaf : undefined;
     const maxDeLHistogramme = Math.max(...valeurs) > this.seuilMaximalDuTauxDeCaf ? this.seuilMaximalDuTauxDeCaf : undefined;
@@ -156,7 +156,7 @@ export class TauxDeCafViewModel {
           <Bar
             // @ts-ignore
             data={data}
-            options={this.construisLesOptionsDeLHistogrammeDuTauxDeCaf(couleursDeLHistogramme, libellésDesTicks, maxDeLHistogramme, minDeLHistogramme)}
+            options={this.construisLesOptionsDeLHistogrammeDuTauxDeCaf(couleursDeLHistogramme, taillePoliceTick, maxDeLHistogramme, minDeLHistogramme)}
           />
         )}
         {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
@@ -173,7 +173,7 @@ export class TauxDeCafViewModel {
 
   private construisLesOptionsDeLHistogrammeDuTauxDeCaf(
     couleursDeLHistogramme: CouleurHistogramme[],
-    libellésDesTicks: LibelléDeTickGraphe[],
+    taillePoliceTick: TaillePoliceTick[],
     maxDeLHistogramme: number | undefined,
     minDeLHistogramme: number | undefined
   ): ChartOptions<"bar"> {
@@ -207,7 +207,7 @@ export class TauxDeCafViewModel {
           ticks: {
             color: couleurDelAbscisse,
             // @ts-ignore
-            font: { weight: libellésDesTicks.map((libellé) => libellé.tailleDePolice) },
+            font: { weight: taillePoliceTick },
             padding: 10,
           },
         },
