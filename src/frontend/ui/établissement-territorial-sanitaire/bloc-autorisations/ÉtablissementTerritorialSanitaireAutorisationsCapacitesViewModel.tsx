@@ -2,18 +2,20 @@ import { ReactElement } from "react";
 
 import { ÉtablissementTerritorialSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 import { Wording } from "../../../configuration/wording/Wording";
+import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../commun/StringFormater";
 import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../../commun/Tag";
 import { GraphiqueCapacitésParActivitéViewModel } from "../../indicateur-métier/capacites-sanitaire-par-activites/GraphiqueCapacitésParActivitéViewModel";
 import stylesBlocAutorisationsEtCapacités from "./BlocAutorisationEtCapacitéSanitaire.module.css";
 
-export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
+export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel extends GraphiqueViewModel {
   public graphiqueCapacitésParActivitéViewModel: GraphiqueCapacitésParActivitéViewModel;
 
   constructor(
     private readonly établissementTerritorialSanitaireAutorisations: ÉtablissementTerritorialSanitaire["autorisationsEtCapacités"],
-    private wording: Wording
+    wording: Wording
   ) {
+    super(wording);
     this.graphiqueCapacitésParActivitéViewModel = new GraphiqueCapacitésParActivitéViewModel(établissementTerritorialSanitaireAutorisations.capacités, wording);
   }
 

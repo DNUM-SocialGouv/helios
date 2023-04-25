@@ -11,15 +11,15 @@ import {
   couleurErreur,
   couleurIdentifiant,
   couleurSecondPlanHistogrammeDeDépassement,
-  CouleurHistogramme,
 } from "../../commun/Graphique/couleursGraphique";
+import { CouleurHistogramme, GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
 import { IndicateurTabulaire, IndicateurTabulaireProps } from "../../commun/IndicateurTabulaire/IndicateurTabulaire";
 import { StringFormater } from "../../commun/StringFormater";
 import { TauxDeCafViewModel } from "../../indicateur-métier/taux-de-caf/TauxDeCafViewModel";
 import { CompteDeResultatViewModel } from "./compte-de-resultat/CompteDeResultatViewModel";
 
-export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
+export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel extends GraphiqueViewModel {
   private readonly seuilMinimalDuTauxDeVétustéConstruction = 0;
   private readonly seuilMaximalDuTauxDeVétustéConstruction = 80;
   private readonly seuilDuContrasteDuLibellé = 10;
@@ -27,7 +27,8 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
   public compteDeResultatViewModel: CompteDeResultatViewModel;
   public tauxDeCafViewModel: TauxDeCafViewModel;
 
-  constructor(private readonly budgetEtFinancesMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[], private wording: Wording) {
+  constructor(private readonly budgetEtFinancesMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[], wording: Wording) {
+    super(wording);
     this.compteDeResultatViewModel = new CompteDeResultatViewModel(budgetEtFinancesMédicoSocial, wording);
     this.tauxDeCafViewModel = TauxDeCafViewModel.fromBudgetFinanceMedicoSocial(budgetEtFinancesMédicoSocial, wording);
   }
@@ -78,37 +79,35 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
     return années.length > 0;
   }
 
-  private construisLaCouleurDeLaBarre(valeur: number, année: number | string): CouleurHistogramme {
-    let premierPlan = couleurDuFondHistogrammeSecondaire;
-    let secondPlan = couleurDuFond;
-
-    if (estCeLAnnéePassée(année)) {
-      premierPlan = couleurDuFondHistogrammePrimaire;
-      secondPlan = couleurDuFond;
-    }
-
-    if (this.leTauxDeVétustéConstructionEstIlAberrant(valeur)) {
-      premierPlan = couleurErreur;
-      secondPlan = couleurSecondPlanHistogrammeDeDépassement;
-    }
-    return { premierPlan, secondPlan };
-  }
-
   public get tauxDeVétustéConstruction(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxDeVétustéConstruction");
+    const construisLaCouleurDeLaBarre = (valeur: number, année: number | string): CouleurHistogramme => {
+      let premierPlan = couleurDuFondHistogrammeSecondaire;
+      let secondPlan = couleurDuFond;
 
-    const libellésDesValeurs = valeurs.map((valeur) => (valeur > this.seuilDuContrasteDuLibellé ? couleurDuFond : couleurIdentifiant));
-    const libellésDesTicks = années.map((année) => (estCeLAnnéePassée(année) ? "bold" : "normal"));
+      if (estCeLAnnéePassée(année)) {
+        premierPlan = couleurDuFondHistogrammePrimaire;
+        secondPlan = couleurDuFond;
+      }
+
+      if (this.leTauxDeVétustéConstructionEstIlAberrant(valeur)) {
+        premierPlan = couleurErreur;
+        secondPlan = couleurSecondPlanHistogrammeDeDépassement;
+      }
+      return { premierPlan, secondPlan };
+    };
+    const libellésDesValeurs = valeurs.map((valeur) => ({ couleur: valeur > this.seuilDuContrasteDuLibellé ? couleurDuFond : couleurIdentifiant }));
+    const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
 
     return (
       <HistogrammeVertical
         annéesTotales={3}
-        couleurDesLibelles={libellésDesValeurs}
-        couleursDeLHistogramme={valeurs.map((valeur: number, index: number) => this.construisLaCouleurDeLaBarre(valeur, années[index]))}
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, construisLaCouleurDeLaBarre)}
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION}
         libellés={années}
-        taillePoliceTicks={libellésDesTicks}
+        libellésDesTicks={libellésDesTicks}
+        libellésDesValeurs={libellésDesValeurs}
         valeurs={valeurs}
       />
     );

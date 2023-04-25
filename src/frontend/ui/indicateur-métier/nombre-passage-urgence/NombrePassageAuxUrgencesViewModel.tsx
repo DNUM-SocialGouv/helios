@@ -1,15 +1,17 @@
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
-import { couleurDuFondHistogrammePrimaire, couleurDuFondHistogrammeSecondaire } from "../../commun/Graphique/couleursGraphique";
+import { couleurDuFond, couleurDuFondHistogrammePrimaire, couleurDuFondHistogrammeSecondaire } from "../../commun/Graphique/couleursGraphique";
+import { CouleurHistogramme, GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { StringFormater } from "../../commun/StringFormater";
 import { IndicateurActivité } from "../IndicateurActivité";
 
-export class NombrePassageAuxUrgencesViewModel {
+export class NombrePassageAuxUrgencesViewModel extends GraphiqueViewModel {
   public valeurs: number[];
   private années: number[];
   public nombreDeLibelléTotal = 5;
 
-  constructor(private readonly indicateurActivité: IndicateurActivité[], private wording: Wording) {
+  constructor(private readonly indicateurActivité: IndicateurActivité[], wording: Wording) {
+    super(wording);
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs();
     this.valeurs = valeurs;
     this.années = années;
@@ -32,9 +34,18 @@ export class NombrePassageAuxUrgencesViewModel {
   }
 
   get couleursDeLHistogramme() {
-    return this.années.map((année: number) => {
-      return { premierPlan: estCeLAnnéePassée(année) ? couleurDuFondHistogrammePrimaire : couleurDuFondHistogrammeSecondaire };
-    });
+    const construisLaCouleurDeLaBarreHorizontale = (_valeur: number, année: number | string): CouleurHistogramme => {
+      return estCeLAnnéePassée(année)
+        ? {
+            premierPlan: couleurDuFondHistogrammePrimaire,
+            secondPlan: couleurDuFond,
+          }
+        : {
+            premierPlan: couleurDuFondHistogrammeSecondaire,
+            secondPlan: couleurDuFond,
+          };
+    };
+    return this.construisLesCouleursDeLHistogramme(this.valeurs, this.années, construisLaCouleurDeLaBarreHorizontale);
   }
 
   private construisLesAnnéesEtSesValeurs(): number[][] {

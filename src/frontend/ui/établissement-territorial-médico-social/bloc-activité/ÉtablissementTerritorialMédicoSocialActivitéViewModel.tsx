@@ -8,20 +8,21 @@ import {
   couleurDuFond,
   couleurDuFondHistogrammePrimaire,
   couleurDuFondHistogrammeSecondaire,
-  couleurErreur,
   couleurIdentifiant,
   couleurSecondPlanHistogrammeDeDépassement,
-  TaillePoliceTick,
-  CouleurHistogramme,
+  couleurErreur,
 } from "../../commun/Graphique/couleursGraphique";
+import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
 import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
 import { StringFormater } from "../../commun/StringFormater";
 
-export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
+export class ÉtablissementTerritorialMédicoSocialActivitéViewModel extends GraphiqueViewModel {
   readonly seuilValeurAtypique = 120;
 
-  constructor(private readonly établissementTerritorialActivité: ÉtablissementTerritorialMédicoSocial["activités"], private wording: Wording) {}
+  constructor(private readonly établissementTerritorialActivité: ÉtablissementTerritorialMédicoSocial["activités"], wording: Wording) {
+    super(wording);
+  }
 
   public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
     return (
@@ -50,14 +51,12 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return (
       <HistogrammeVertical
         annéesTotales={3}
-        couleurDesLibelles={this.construisLesLibellésDesValeurs(valeurs)}
-        couleursDeLHistogramme={valeurs.map((valeur: number, index: number) => {
-          return this.construisLaCouleurDeLaBarreVerticale(valeur, années[index]);
-        })}
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreVerticale)}
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT}
         libellés={années}
-        taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
+        libellésDesTicks={this.construisLesLibellésDesTicks(années)}
+        libellésDesValeurs={this.construisLesLibellésDesValeurs(valeurs)}
         valeurs={valeurs}
       />
     );
@@ -77,14 +76,12 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return (
       <HistogrammeVertical
         annéesTotales={3}
-        couleurDesLibelles={this.construisLesLibellésDesValeurs(valeurs)}
-        couleursDeLHistogramme={valeurs.map((valeur: number, index: number) => {
-          return this.construisLaCouleurDeLaBarreVerticale(valeur, années[index]);
-        })}
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreVerticale)}
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE}
         libellés={années}
-        taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
+        libellésDesTicks={this.construisLesLibellésDesTicks(années)}
+        libellésDesValeurs={this.construisLesLibellésDesValeurs(valeurs)}
         valeurs={valeurs}
       />
     );
@@ -104,14 +101,12 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return (
       <HistogrammeVertical
         annéesTotales={3}
-        couleurDesLibelles={this.construisLesLibellésDesValeurs(valeurs)}
-        couleursDeLHistogramme={valeurs.map((valeur: number, index: number) => {
-          return this.construisLaCouleurDeLaBarreVerticale(valeur, années[index]);
-        })}
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreVerticale)}
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR}
         libellés={années}
-        taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
+        libellésDesTicks={this.construisLesLibellésDesTicks(années)}
+        libellésDesValeurs={this.construisLesLibellésDesValeurs(valeurs)}
         valeurs={valeurs}
       />
     );
@@ -131,14 +126,12 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return (
       <HistogrammeVertical
         annéesTotales={3}
-        couleurDesLibelles={this.construisLesLibellésDesValeurs(valeurs)}
-        couleursDeLHistogramme={valeurs.map((valeur: number, index: number) => {
-          return this.construisLaCouleurDeLaBarreVerticale(valeur, années[index]);
-        })}
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreVerticale)}
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_RÉALISATION_ACTIVITÉ}
         libellés={années}
-        taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
+        libellésDesTicks={this.construisLesLibellésDesTicks(années)}
+        libellésDesValeurs={this.construisLesLibellésDesValeurs(valeurs)}
         valeurs={valeurs}
       />
     );
@@ -157,9 +150,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
 
     return (
       <HistogrammeHorizontal
-        couleursDeLHistogramme={valeurs.map((valeur: number, index: number) => {
-          return this.construisLaCouleurDeLaBarreHorizontale(valeur, années[index]);
-        })}
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale)}
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES}
         libellés={années}
@@ -183,9 +174,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
 
     return (
       <HistogrammeHorizontal
-        couleursDeLHistogramme={valeurs.map((valeur: number, index: number) => {
-          return this.construisLaCouleurDeLaBarreHorizontale(valeur, années[index]);
-        })}
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale)}
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES}
         libellés={années}
@@ -209,9 +198,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
 
     return (
       <HistogrammeHorizontal
-        couleursDeLHistogramme={valeurs.map((valeur: number, index: number) => {
-          return this.construisLaCouleurDeLaBarreHorizontale(valeur, années[index]);
-        })}
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(valeurs, années, this.construisLaCouleurDeLaBarreHorizontale)}
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES}
         libellés={années}
@@ -301,11 +288,11 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         };
   };
 
-  private construisLesLibellésDesValeurs(valeurs: number[]): string[] {
-    return valeurs.map((valeur) => (valeur > 20 ? couleurDuFond : couleurIdentifiant));
+  private construisLesLibellésDesValeurs(valeurs: number[]): LibelléDeDonnéeGraphe[] {
+    return valeurs.map((valeur) => ({ couleur: valeur > this.SEUIL_DE_CONTRASTE_DES_LIBELLÉS_DES_TAUX ? couleurDuFond : couleurIdentifiant }));
   }
 
-  private construisLesLibellésDesTicks(libellés: (number | string)[]): TaillePoliceTick[] {
-    return libellés.map((année) => (estCeLAnnéePassée(année) ? "bold" : "normal"));
+  private construisLesLibellésDesTicks(libellés: (number | string)[]): LibelléDeTickGraphe[] {
+    return libellés.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
   }
 }

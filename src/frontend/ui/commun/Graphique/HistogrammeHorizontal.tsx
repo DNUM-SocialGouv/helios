@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 
 import { StringFormater } from "../StringFormater";
-import { CouleurHistogramme } from "./couleursGraphique";
+import { CouleurHistogramme } from "./GraphiqueViewModel";
 import { HistogrammeData, HistogrammesHorizontaux } from "./HistogrammesHorizontaux";
 
 type HistogrammeHorizontalProps = {

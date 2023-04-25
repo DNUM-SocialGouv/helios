@@ -1,18 +1,20 @@
 import { ÉtablissementTerritorialSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 import { ÉtablissementTerritorialSanitaireActivité } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
 import { Wording } from "../../../configuration/wording/Wording";
+import { GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { IndicateurActivité } from "../../indicateur-métier/IndicateurActivité";
 import { NombreDeSejourMCOViewModel } from "../../indicateur-métier/nombre-de-sejour-mco/NombreDeSejourMCOViewModel";
 import { NombreDeJourneesPsySSRViewModel } from "../../indicateur-métier/nombre-journees-psy-ssr/NombreDeJourneesPsySSRViewModel";
 import { NombrePassageAuxUrgencesViewModel } from "../../indicateur-métier/nombre-passage-urgence/NombrePassageAuxUrgencesViewModel";
 
-export class ÉtablissementTerritorialSanitaireActivitéViewModel {
+export class ÉtablissementTerritorialSanitaireActivitéViewModel extends GraphiqueViewModel {
   // @ts-ignore
   nombreDePassagesAuxUrgencesViewModel: NombrePassageAuxUrgencesViewModel;
   nombreDeSejourMCOViewModel: NombreDeSejourMCOViewModel;
   nombreJourneesPsySSRViewModel: NombreDeJourneesPsySSRViewModel;
 
   constructor(private readonly établissementTerritorialSanitaireActivités: ÉtablissementTerritorialSanitaire["activités"], wording: Wording) {
+    super(wording);
     this.createNombrePassageUrgenceViewModel(wording);
     this.nombreDeSejourMCOViewModel = new NombreDeSejourMCOViewModel(établissementTerritorialSanitaireActivités, wording);
     this.nombreJourneesPsySSRViewModel = new NombreDeJourneesPsySSRViewModel(établissementTerritorialSanitaireActivités, wording);

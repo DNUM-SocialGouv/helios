@@ -1,12 +1,7 @@
 import { EntitéJuridiqueBudgetFinance } from "../../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
-import {
-  couleurDuFond,
-  couleurDuFondHistogrammeSecondaire,
-  couleurErreur,
-  CouleurHistogramme,
-  couleurIdentifiant,
-  TaillePoliceTick,
-} from "../../../commun/Graphique/couleursGraphique";
+import { couleurDuFond, couleurDuFondHistogrammeSecondaire, couleurErreur, couleurIdentifiant } from "../../../commun/Graphique/couleursGraphique";
+import { LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../../commun/Graphique/GraphiqueViewModel";
+import { CouleurHistogramme } from "../../../commun/Graphique/HistogrammeVertical";
 import { StringFormater } from "../../../commun/StringFormater";
 
 type RatioDependanceFinanciere = { ratio: number | null; année: number; dateDeMiseÀJour: string };
@@ -43,15 +38,15 @@ export class RatioDependanceFinanciereViewModel {
     return this.ratioDependanceFinanciere.map((ratio) => StringFormater.transformInRate(ratio.ratio as number));
   }
 
-  public construisLesLibellésDesTicks(): TaillePoliceTick[] {
-    return this.ratioDependanceFinanciere.map(() => "normal");
+  public construisLesLibellésDesTicks(): LibelléDeTickGraphe[] {
+    return this.ratioDependanceFinanciere.map(() => ({ tailleDePolice: "normal" }));
   }
 
-  public construisLesCouleursDesLibelles(): string[] {
+  public construisLesLibellésDesValeurs(): LibelléDeDonnéeGraphe[] {
     const SEUIL_DE_CONTRASTE_DES_LIBELLÉS_DES_TAUX = 0.2;
-    return this.ratioDependanceFinanciere.map((ratio) =>
-      (ratio.ratio as number) > SEUIL_DE_CONTRASTE_DES_LIBELLÉS_DES_TAUX ? couleurDuFond : couleurIdentifiant
-    );
+    return this.ratioDependanceFinanciere.map((ratio) => ({
+      couleur: (ratio.ratio as number) > SEUIL_DE_CONTRASTE_DES_LIBELLÉS_DES_TAUX ? couleurDuFond : couleurIdentifiant,
+    }));
   }
 
   get couleursDeLHistogramme(): CouleurHistogramme[] {

@@ -15,16 +15,16 @@ import {
   couleurDuFondHistogrammeSecondaire,
   couleurDuSeuil,
   couleurErreur,
-  TaillePoliceTick,
-  CouleurHistogramme,
+  couleurSecondPlanHistogrammeDeDépassement,
 } from "../../commun/Graphique/couleursGraphique";
+import { CouleurHistogramme, GraphiqueViewModel, LibelléDeDonnéeGraphe, LibelléDeTickGraphe } from "../../commun/Graphique/GraphiqueViewModel";
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";
 
 type TauxDeCaf = Readonly<{ année: number; valeur: number | null }>;
 
-export class TauxDeCafViewModel {
+export class TauxDeCafViewModel extends GraphiqueViewModel {
   private readonly nombreDAnnéesParIndicateur = 5;
   private readonly seuilDuTauxDeCaf = 2;
   private readonly seuilMinimalDuTauxDeCaf = -21;
@@ -48,7 +48,9 @@ export class TauxDeCafViewModel {
     return new TauxDeCafViewModel(tauxDeCaf, dateMiseÀJourSource, wording);
   }
 
-  constructor(private tauxDeCafParAnnée: TauxDeCaf[], private dateMiseÀJourSource: string, private wording: Wording) {}
+  constructor(private tauxDeCafParAnnée: TauxDeCaf[], private dateMiseÀJourSource: string, wording: Wording) {
+    super(wording);
+  }
 
   public get leTauxDeCafEstIlRenseigné(): boolean {
     const [années] = this.construisLesAnnéesEtSesTaux();
@@ -72,24 +74,33 @@ export class TauxDeCafViewModel {
 
   public get tauxDeCaf(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux();
-    const libellésDesValeurs = valeurs.map(() => couleurDuFond);
-    const taillePoliceTick = années.map((année) => (estCeLAnnéePassée(année) ? "bold" : "normal"));
+    const construisLaCouleurDeLaBarre = (valeur: number, année: number | string): CouleurHistogramme => {
+      let premierPlan = couleurDuFondHistogrammeSecondaire;
+      let secondPlan = couleurDuFond;
+
+      if (estCeLAnnéePassée(année)) {
+        premierPlan = couleurDuFondHistogrammePrimaire;
+        secondPlan = couleurDuFond;
+      }
+
+      if (this.leTauxDeCafEstIlAberrant(valeur)) {
+        premierPlan = couleurErreur;
+        secondPlan = couleurSecondPlanHistogrammeDeDépassement;
+      }
+      return {
+        premierPlan,
+        secondPlan,
+      };
+    };
+    const libellésDesValeurs = valeurs.map(() => ({ couleur: couleurDuFond }));
+    const libellésDesTicks = années.map((année) => ({ tailleDePolice: estCeLAnnéePassée(année) ? this.policeGrasse : this.policeNormale }));
 
     return this.afficheLHistogrammeDuTauxDeCaf(
       valeurs,
       années,
-      valeurs.map((valeur: number, index: number) => {
-        let premierPlan = couleurDuFondHistogrammeSecondaire;
-        if (estCeLAnnéePassée(années[index])) {
-          premierPlan = couleurDuFondHistogrammePrimaire;
-        }
-        if (this.leTauxDeCafEstIlAberrant(valeur)) {
-          premierPlan = couleurErreur;
-        }
-        return { premierPlan };
-      }),
+      this.construisLesCouleursDeLHistogramme(valeurs, années, construisLaCouleurDeLaBarre),
       libellésDesValeurs,
-      taillePoliceTick
+      libellésDesTicks
     );
   }
 
@@ -101,8 +112,8 @@ export class TauxDeCafViewModel {
     valeurs: number[],
     années: number[],
     couleursDeLHistogramme: CouleurHistogramme[],
-    couleurDesLibelles: string[],
-    taillePoliceTick: TaillePoliceTick[]
+    libellésDesValeurs: LibelléDeDonnéeGraphe[],
+    libellésDesTicks: LibelléDeTickGraphe[]
   ) {
     const minDeLHistogramme = Math.min(...valeurs) < this.seuilMinimalDuTauxDeCaf ? this.seuilMinimalDuTauxDeCaf : undefined;
     const maxDeLHistogramme = Math.max(...valeurs) > this.seuilMaximalDuTauxDeCaf ? this.seuilMaximalDuTauxDeCaf : undefined;
@@ -111,7 +122,7 @@ export class TauxDeCafViewModel {
         {
           backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
           data: valeurs,
-          datalabels: { labels: { title: { color: couleurDesLibelles } } },
+          datalabels: { labels: { title: { color: libellésDesValeurs.map((libelléDeValeur) => libelléDeValeur.couleur) } } },
           maxBarThickness: 60,
           type: "bar",
           xAxisID: "x",
@@ -157,7 +168,7 @@ export class TauxDeCafViewModel {
           <Bar
             // @ts-ignore
             data={data}
-            options={this.construisLesOptionsDeLHistogrammeDuTauxDeCaf(couleursDeLHistogramme, taillePoliceTick, maxDeLHistogramme, minDeLHistogramme)}
+            options={this.construisLesOptionsDeLHistogrammeDuTauxDeCaf(couleursDeLHistogramme, libellésDesTicks, maxDeLHistogramme, minDeLHistogramme)}
           />
         )}
         {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
@@ -174,7 +185,7 @@ export class TauxDeCafViewModel {
 
   private construisLesOptionsDeLHistogrammeDuTauxDeCaf(
     couleursDeLHistogramme: CouleurHistogramme[],
-    taillePoliceTick: TaillePoliceTick[],
+    libellésDesTicks: LibelléDeTickGraphe[],
     maxDeLHistogramme: number | undefined,
     minDeLHistogramme: number | undefined
   ): ChartOptions<"bar"> {
@@ -208,7 +219,7 @@ export class TauxDeCafViewModel {
           ticks: {
             color: couleurDelAbscisse,
             // @ts-ignore
-            font: { weight: taillePoliceTick },
+            font: { weight: libellésDesTicks.map((libellé) => libellé.tailleDePolice) },
             padding: 10,
           },
         },
@@ -240,7 +251,8 @@ export class TauxDeCafViewModel {
             color: couleurDelAbscisse,
             // @ts-ignore
             font: {
-              weight: (context: ScriptableScaleContext) => (context.tick && context.tick.value === this.seuilDuTauxDeCaf ? "bold" : "normal"),
+              weight: (context: ScriptableScaleContext) =>
+                context.tick && context.tick.value === this.seuilDuTauxDeCaf ? this.policeGrasse : this.policeNormale,
             },
             includeBounds: false,
             stepSize: 2,

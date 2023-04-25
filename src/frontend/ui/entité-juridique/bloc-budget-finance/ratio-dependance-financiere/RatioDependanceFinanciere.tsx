@@ -81,12 +81,12 @@ export function RatioDependanceFinanciere({ ratioDependanceFinanciereViewModel }
     >
       <HistogrammeVertical
         annéesTotales={ratioDependanceFinanciereViewModel.NOMBRE_ANNEES}
-        couleurDesLibelles={ratioDependanceFinanciereViewModel.construisLesCouleursDesLibelles()}
         couleursDeLHistogramme={ratioDependanceFinanciereViewModel.couleursDeLHistogramme}
         entêteLibellé={wording.ANNÉE}
         identifiant={wording.RATIO_DEPENDANCE_FINANCIERE}
         libellés={ratioDependanceFinanciereViewModel.années}
-        taillePoliceTicks={ratioDependanceFinanciereViewModel.construisLesLibellésDesTicks()}
+        libellésDesTicks={ratioDependanceFinanciereViewModel.construisLesLibellésDesTicks()}
+        libellésDesValeurs={ratioDependanceFinanciereViewModel.construisLesLibellésDesValeurs()}
         valeurs={ratioDependanceFinanciereViewModel.valeurs}
       />
     </IndicateurGraphique>

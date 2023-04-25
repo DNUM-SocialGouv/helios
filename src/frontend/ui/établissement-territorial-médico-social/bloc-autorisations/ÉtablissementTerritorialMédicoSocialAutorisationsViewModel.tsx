@@ -4,15 +4,15 @@ import { ÉtablissementTerritorialMédicoSocial } from "../../../../backend/mét
 import { CapacitéParActivité } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation";
 import { Wording } from "../../../configuration/wording/Wording";
 import { couleurDuFondHistogrammePrimaire, couleurDuFondHistogrammeSecondaire } from "../../commun/Graphique/couleursGraphique";
+import { CouleurHistogramme, GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
 import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 import { StringFormater } from "../../commun/StringFormater";
 import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../../commun/Tag";
 
-export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel {
-  constructor(
-    private readonly établissementTerritorialAutorisations: ÉtablissementTerritorialMédicoSocial["autorisationsEtCapacités"],
-    private wording: Wording
-  ) {}
+export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel extends GraphiqueViewModel {
+  constructor(private readonly établissementTerritorialAutorisations: ÉtablissementTerritorialMédicoSocial["autorisationsEtCapacités"], wording: Wording) {
+    super(wording);
+  }
 
   public get lesDonnéesAutorisationEtCapacitéNeSontPasRenseignées(): boolean {
     return !this.lesAutorisationsSontEllesRenseignées && !this.lesCapacitésSontEllesRenseignées;
@@ -81,12 +81,16 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel {
 
   public get capacitéParActivités(): ReactElement {
     const [activités, capacités] = this.construisLesCapacitésParActivités();
+    const construisLaCouleurDeLaBarreHorizontale = (_valeur: number, libellé: number | string): CouleurHistogramme => {
+      return {
+        premierPlan: libellé === this.wording.NOMBRE_TOTAL_DE_PLACE ? couleurDuFondHistogrammePrimaire : couleurDuFondHistogrammeSecondaire,
+        secondPlan: couleurDuFondHistogrammePrimaire,
+      };
+    };
 
     return (
       <HistogrammeHorizontal
-        couleursDeLHistogramme={activités.map((activité: string) => ({
-          premierPlan: activité === this.wording.NOMBRE_TOTAL_DE_PLACE ? couleurDuFondHistogrammePrimaire : couleurDuFondHistogrammeSecondaire,
-        }))}
+        couleursDeLHistogramme={this.construisLesCouleursDeLHistogramme(capacités, activités, construisLaCouleurDeLaBarreHorizontale)}
         entêteLibellé={this.wording.ACTIVITÉ}
         identifiant={this.wording.CAPACITÉ_INSTALLÉE}
         libellés={activités}
