@@ -15,3 +15,8 @@ export const couleurDuFondHistogrammeRougeFoncé = "#A94645";
 export const couleurDuFondHistogrammeVertClair = "#DFFDF7";
 export const couleurDuFondHistogrammeVertFoncé = "#006A6F";
 export const couleurDuSeuil = "#18753C";
+export type TaillePoliceTick = "bold" | "normal";
+export type CouleurHistogramme = Readonly<{
+  premierPlan: string;
+  secondPlan?: string;
+}>;
