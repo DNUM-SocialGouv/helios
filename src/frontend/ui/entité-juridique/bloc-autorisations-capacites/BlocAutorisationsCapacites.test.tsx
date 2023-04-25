@@ -88,7 +88,7 @@ describe("Bloc Autorisation et activités", () => {
     expect(titre).toBeInTheDocument();
   });
 
-  it("n'affiche pas le graphique capacité par activité s'il n'y a pas de valeur", () => {
+  it("n'affiche pas les autorisations s'il n'y a pas de valeur", () => {
     // GIVEN
     const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
       [],
@@ -102,8 +102,14 @@ describe("Bloc Autorisation et activités", () => {
     renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
 
     // THEN
-    const titre = screen.queryByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: "h6" });
-    expect(titre).not.toBeInTheDocument();
+    const capaciteParActivites = screen.queryByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: "h6" });
+    const autorisationActivites = screen.queryByText(wording.AUTORISATIONS_ACTIVITES, { selector: "h6" });
+    const autresActivites = screen.queryByText(wording.AUTRES_ACTIVITÉS, { selector: "h6" });
+    const reconnaissanceContractuelles = screen.queryByText(wording.RECONNAISSANCES_CONTRACTUELLES, { selector: "h6" });
+    expect(capaciteParActivites).not.toBeInTheDocument();
+    expect(autorisationActivites).not.toBeInTheDocument();
+    expect(autresActivites).not.toBeInTheDocument();
+    expect(reconnaissanceContractuelles).not.toBeInTheDocument();
   });
 
   it("affiche un l'indicateur vide si il n'y a pas des données", () => {
