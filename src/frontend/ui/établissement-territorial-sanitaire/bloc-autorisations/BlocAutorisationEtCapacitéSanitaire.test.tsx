@@ -102,7 +102,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
 
     // THEN
     const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
-    expect(within(autorisationEtCapacité).queryByText(nomDeLIndicateur, { selector: "p" })).not.toBeInTheDocument();
+    expect(within(autorisationEtCapacité).queryByText(nomDeLIndicateur)).not.toBeInTheDocument();
     expect(within(autorisationEtCapacité).queryByText(wording.INDICATEURS_VIDES)).not.toBeInTheDocument();
   });
 
