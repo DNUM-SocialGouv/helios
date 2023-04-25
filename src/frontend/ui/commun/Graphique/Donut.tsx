@@ -2,9 +2,8 @@ import { ActiveElement, ArcElement, Chart as ChartJS, ChartData, ChartEvent, Cha
 import ChartDataLabels, { Context } from "chartjs-plugin-datalabels";
 import { Doughnut } from "react-chartjs-2";
 
-import { couleurDeFondDuBloc, couleurDelAbscisse, couleurErreur } from "./couleursGraphique";
+import { couleurDeFondDuBloc, couleurDelAbscisse, couleurErreur, CouleurHistogramme } from "./couleursGraphique";
 import styles from "./Donut.module.css";
-import { CouleurHistogramme } from "./GraphiqueViewModel";
 import { construisLePluginDeLaLegende } from "./LegendPlugin";
 
 ChartJS.register(DoughnutController, ArcElement, Tooltip, Legend, construisLePluginDeTexteAuCentreDuDonut(), construisLePluginDeLaLegende(), ChartDataLabels);

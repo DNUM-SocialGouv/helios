@@ -11,8 +11,9 @@ import {
   couleurErreur,
   couleurIdentifiant,
   couleurSecondPlanHistogrammeDeDépassement,
+  TaillePoliceTick,
+  CouleurHistogramme,
 } from "../../commun/Graphique/couleursGraphique";
-import { CouleurHistogramme, TaillePoliceTick } from "../../commun/Graphique/GraphiqueViewModel";
 import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
 import { StringFormater } from "../../commun/StringFormater";

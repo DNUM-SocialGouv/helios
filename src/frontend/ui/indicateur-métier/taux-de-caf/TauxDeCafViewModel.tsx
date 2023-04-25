@@ -15,8 +15,9 @@ import {
   couleurDuFondHistogrammeSecondaire,
   couleurDuSeuil,
   couleurErreur,
+  TaillePoliceTick,
+  CouleurHistogramme,
 } from "../../commun/Graphique/couleursGraphique";
-import { CouleurHistogramme, TaillePoliceTick } from "../../commun/Graphique/GraphiqueViewModel";
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";

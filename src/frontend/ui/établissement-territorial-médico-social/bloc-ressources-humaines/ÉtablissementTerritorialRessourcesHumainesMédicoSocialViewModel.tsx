@@ -11,9 +11,9 @@ import {
   couleurIdentifiant,
   couleurSecondPlanHistogrammeDeDépassement,
   noir,
+  CouleurHistogramme,
 } from "../../commun/Graphique/couleursGraphique";
 import { couleurDesArcsDuDonut, Donut } from "../../commun/Graphique/Donut";
-import { CouleurHistogramme } from "../../commun/Graphique/GraphiqueViewModel";
 import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";

@@ -10,14 +10,7 @@ import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
-import { couleurDelAbscisse, couleurDuFondDeLaLigne } from "./couleursGraphique";
-
-export type TaillePoliceTick = "bold" | "normal";
-
-export type CouleurHistogramme = Readonly<{
-  premierPlan: string;
-  secondPlan?: string;
-}>;
+import { couleurDelAbscisse, couleurDuFondDeLaLigne, CouleurHistogramme, TaillePoliceTick } from "./couleursGraphique";
 
 export function HistogrammeVertical(props: {
   valeurs: number[];

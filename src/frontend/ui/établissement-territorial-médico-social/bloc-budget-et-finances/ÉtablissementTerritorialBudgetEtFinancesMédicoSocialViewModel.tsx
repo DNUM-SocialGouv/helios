@@ -11,8 +11,8 @@ import {
   couleurErreur,
   couleurIdentifiant,
   couleurSecondPlanHistogrammeDeDépassement,
+  CouleurHistogramme,
 } from "../../commun/Graphique/couleursGraphique";
-import { CouleurHistogramme } from "../../commun/Graphique/GraphiqueViewModel";
 import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
 import { IndicateurTabulaire, IndicateurTabulaireProps } from "../../commun/IndicateurTabulaire/IndicateurTabulaire";
 import { StringFormater } from "../../commun/StringFormater";
