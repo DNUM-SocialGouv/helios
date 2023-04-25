@@ -22,15 +22,11 @@ export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel }: B
   return (
     <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
       <ul className="indicateurs">
-        {entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés && (
-          <GraphiqueNombreDeSejourMCO
-            estEntitéJuridique={true}
-            nombreDeSejourMCOViewModel={entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel}
-          ></GraphiqueNombreDeSejourMCO>
-        )}
-        {entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés && (
-          <GraphiquePsySSR estEntitéJuridique={true} nombreJournéesPsySSRViewModel={entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel} />
-        )}
+        <GraphiqueNombreDeSejourMCO
+          estEntitéJuridique={true}
+          nombreDeSejourMCOViewModel={entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel}
+        ></GraphiqueNombreDeSejourMCO>
+        <GraphiquePsySSR estEntitéJuridique={true} nombreJournéesPsySSRViewModel={entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel} />
         {entitéJuridiqueActivitéViewModel.nombreHADEstIlRenseigné() && <GraphiqueHAD entitéJuridiqueActivitéViewModel={entitéJuridiqueActivitéViewModel} />}
         {entitéJuridiqueActivitéViewModel.nombrePassageUrgenceEstIlRenseigné() && (
           <GraphiqueNombrePassageUrgence
