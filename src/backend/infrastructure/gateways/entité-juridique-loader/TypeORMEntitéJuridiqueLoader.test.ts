@@ -563,15 +563,15 @@ describe("Entité juridique loader", () => {
 
         // WHEN
         const entiteJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
-        const { equipementMaterielLordsSanitaire } = await entiteJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique);
+        const { equipementMaterielLourdSanitaire } = await entiteJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique);
 
         // THEN
 
-        expect(equipementMaterielLordsSanitaire.dateMiseÀJourSource).toBe("2022-05-14");
-        expect(equipementMaterielLordsSanitaire.autorisations).toHaveLength(2);
-        expect(equipementMaterielLordsSanitaire.autorisations[0].numéroAutorisationArhgos).toBe("1");
-        expect(equipementMaterielLordsSanitaire.autorisations[0].établissementTerritorial.raisonSocialeCourte).toBe("HP VILLENEUVE DASCQ");
-        expect(equipementMaterielLordsSanitaire.autorisations[1].numéroAutorisationArhgos).toBe("2");
+        expect(equipementMaterielLourdSanitaire.dateMiseÀJourSource).toBe("2022-05-14");
+        expect(equipementMaterielLourdSanitaire.autorisations).toHaveLength(2);
+        expect(equipementMaterielLourdSanitaire.autorisations[0].numéroAutorisationArhgos).toBe("1");
+        expect(equipementMaterielLourdSanitaire.autorisations[0].établissementTerritorial.raisonSocialeCourte).toBe("HP VILLENEUVE DASCQ");
+        expect(equipementMaterielLourdSanitaire.autorisations[1].numéroAutorisationArhgos).toBe("2");
       });
     });
   });

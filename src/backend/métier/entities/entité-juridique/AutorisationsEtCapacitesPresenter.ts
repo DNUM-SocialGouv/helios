@@ -1,6 +1,7 @@
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
 import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
+import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
 import { StringFormater } from "../../../../frontend/ui/commun/StringFormater";
 import { EntitéJuridique } from "./EntitéJuridique";
 import {
@@ -8,6 +9,9 @@ import {
   AutorisationActivites,
   AutorisationEtablissement,
   EntitéJuridiqueAutorisationEtCapacitéLoader,
+  EquipementEtablissement,
+  EquipementLourds,
+  Equipements,
   Forme,
   Modalite,
 } from "./EntitéJuridiqueAutorisationEtCapacité";
@@ -210,6 +214,9 @@ export class AutorisationsEtCapacitesPresenter {
     const reconnaissanceContractuellesActivites = AutorisationsFactory.createFromReconnaissanceContractuellesSanitaire(
       autorisationsEtCapacites.reconnaissanceContractuellesSanitaire.autorisations
     );
+    const equipementMateriauxLourdsActivites = EquipementFactory.createFromEquipementMaterielLourdSanitaire(
+      autorisationsEtCapacites.equipementMaterielLourdSanitaire.autorisations
+    );
 
     return {
       numéroFinessEntitéJuridique: autorisationsEtCapacites.numéroFinessEntitéJuridique,
@@ -225,6 +232,10 @@ export class AutorisationsEtCapacitesPresenter {
       reconnaissanceContractuelleActivités: {
         autorisations: this.sortAutorisationActivites(reconnaissanceContractuellesActivites),
         dateMiseÀJourSource: StringFormater.formatDate(autorisationsEtCapacites.reconnaissanceContractuellesSanitaire.dateMiseÀJourSource),
+      },
+      equipementMaterielLordsActivités: {
+        autorisations: this.sortEquipementsLourds(equipementMateriauxLourdsActivites),
+        dateMiseÀJourSource: StringFormater.formatDate(autorisationsEtCapacites.equipementMaterielLourdSanitaire.dateMiseÀJourSource),
       },
     };
   }
@@ -248,5 +259,100 @@ export class AutorisationsEtCapacitesPresenter {
               }),
           })),
       }));
+  }
+
+  private static sortEquipementsLourds(data: EquipementLourds[]): EquipementLourds[] {
+    return data
+      .sort((a, b) => a.code.localeCompare(b.code))
+      .map((equipementLourd) => ({
+        ...equipementLourd,
+        equipementEtablissements: equipementLourd.equipementEtablissements.sort((a, b) => a.numeroFiness.localeCompare(b.numeroFiness)),
+      }));
+  }
+}
+
+export class EquipementFactory {
+  static createFromEquipementMaterielLourdSanitaire(equipementMaterielLourdModel: ÉquipementMatérielLourdSanitaireModel[]): EquipementLourds[] {
+    return equipementMaterielLourdModel.reduce((equipementsLourds: EquipementLourds[], equipementLourdModel) => {
+      const equipementMaterielLourd = this.findOrAddEquipementsLourds(equipementsLourds, equipementLourdModel);
+      const etablissement = this.findOrAddEtablissement(equipementMaterielLourd, equipementLourdModel);
+      this.findOrAddEquipements(etablissement, equipementLourdModel);
+      return equipementsLourds;
+    }, []);
+  }
+
+  private static findOrAddEquipementsLourds(
+    equipementLourds: EquipementLourds[],
+    equipementSanitaire: ÉquipementMatérielLourdSanitaireModel
+  ): EquipementLourds {
+    let equipement = equipementLourds.find((a) => a.code === equipementSanitaire.codeÉquipementMatérielLourd);
+
+    if (!equipement) {
+      equipement = {
+        equipementEtablissements: [],
+        libelle: equipementSanitaire.libelléÉquipementMatérielLourd,
+        code: equipementSanitaire.codeÉquipementMatérielLourd,
+      };
+      equipementLourds.push(equipement);
+    }
+
+    return equipement;
+  }
+
+  private static findOrAddEtablissement(
+    equipementEtablissement: EquipementLourds,
+    equipementSanitaire: {
+      numéroFinessÉtablissementTerritorial: string;
+      établissementTerritorial: { raisonSocialeCourte: string };
+    }
+  ): EquipementEtablissement {
+    let etablissement = equipementEtablissement.equipementEtablissements.find(
+      (e) => e.numeroFiness === equipementSanitaire.numéroFinessÉtablissementTerritorial
+    );
+
+    if (!etablissement) {
+      etablissement = {
+        numeroFiness: equipementSanitaire.numéroFinessÉtablissementTerritorial,
+        nomEtablissement: equipementSanitaire.établissementTerritorial.raisonSocialeCourte,
+        equipements: [],
+      };
+      equipementEtablissement.equipementEtablissements.push(etablissement);
+    }
+
+    return etablissement;
+  }
+
+  private static findOrAddEquipements(
+    equipementEtablissement: EquipementEtablissement,
+    equipementLourdModel: ÉquipementMatérielLourdSanitaireModel
+  ): Equipements {
+    equipementEtablissement.equipements.push({ autorisations: this.addEquipementMaterielLourd(equipementLourdModel) });
+    return equipementEtablissement.equipements[equipementEtablissement.equipements.length - 1];
+  }
+
+  private static addEquipementMaterielLourd(equipementMaterielLourd: {
+    numéroAutorisationArhgos: string;
+    dateAutorisation: string;
+    dateMiseEnOeuvre: string;
+    dateFin: string;
+  }): Autorisation[] {
+    return [
+      {
+        nom: "Numéro ARHGOS",
+        valeur: equipementMaterielLourd.numéroAutorisationArhgos,
+      },
+      {
+        nom: "Date d'autorisation",
+        valeur: equipementMaterielLourd.dateAutorisation ? StringFormater.formatDate(equipementMaterielLourd.dateAutorisation) : "N/A",
+      },
+      {
+        nom: "Date de mis en oeuvre",
+        valeur: equipementMaterielLourd.dateMiseEnOeuvre ? StringFormater.formatDate(equipementMaterielLourd.dateMiseEnOeuvre) : "N/A",
+      },
+      {
+        nom: "Date de fin",
+        valeur: equipementMaterielLourd.dateFin ? StringFormater.formatDate(equipementMaterielLourd.dateFin) : "N/A",
+      },
+    ];
   }
 }

@@ -275,7 +275,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
         autorisations: reconnaissanceContractuellesSanitaire,
         dateMiseÀJourSource: dateDeMiseÀJourFinessCs1400103Model.dernièreMiseÀJour,
       },
-      equipementMaterielLordsSanitaire: {
+      equipementMaterielLourdSanitaire: {
         autorisations: equipementMaterielLordsSanitaire,
         dateMiseÀJourSource: dateDeMiseÀJourFinessCs1400103Model.dernièreMiseÀJour,
       },

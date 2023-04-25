@@ -3,9 +3,13 @@ import { mock } from "jest-mock-extended";
 import { AutorisationSanitaireModel } from "../../../../database/models/AutorisationSanitaireModel";
 import { AutreActivitéSanitaireModel } from "../../../../database/models/AutreActivitéSanitaireModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
+import { ÉquipementMatérielLourdSanitaireModel } from "../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
 import { EntitéJuridiqueTestBuilder } from "../../test-builder/EntitéJuridiqueTestBuilder";
 import { numéroFinessEntitéJuridique } from "../../testHelper";
-import { CapacitéSanitaireEntitéJuridique } from "../entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
+import {
+  CapacitéSanitaireEntitéJuridique,
+  EntitéJuridiqueAutorisationEtCapacitéLoader,
+} from "../entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { EntitéJuridiqueNonTrouvée } from "../entities/EntitéJuridiqueNonTrouvée";
 import { EntitéJuridiqueLoader } from "../gateways/EntitéJuridiqueLoader";
 import { RécupèreLEntitéJuridiqueUseCase } from "./RécupèreLEntitéJuridiqueUseCase";
@@ -16,10 +20,13 @@ describe("La récupération d’une entité juridique", () => {
   beforeEach(() => {
     entiteJuridiqueLoaderMock = mock<EntitéJuridiqueLoader>({
       chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
-        autorisationsSanitaire: { autorisations: [] },
-        autresActivitesSanitaire: { autorisations: [] },
-        reconnaissanceContractuellesSanitaire: { autorisations: [] },
-      }),
+        numéroFinessEntitéJuridique: "",
+        capacités: [],
+        autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+      } as EntitéJuridiqueAutorisationEtCapacitéLoader),
     });
   });
 
@@ -142,28 +149,32 @@ describe("La récupération d’une entité juridique", () => {
 
   it("récupère toutes les autorisations et capacités", async () => {
     // GIVEN
-    const mockCapacités: CapacitéSanitaireEntitéJuridique = {
-      année: 2022,
-      dateMiseÀJourSource: "2022-12-12",
-      nombreDeLitsEnChirurgie: 1,
-      nombreDeLitsEnMédecine: 1,
-      nombreDeLitsEnObstétrique: 1,
-      nombreDeLitsEnSsr: 1,
-      nombreDeLitsEnUsld: 1,
-      nombreDePlacesEnPsyHospitalisationPartielle: 1,
-      nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 1,
-      nombreDePlacesEnChirurgie: 1,
-      nombreDePlacesEnMédecine: 1,
-      nombreDePlacesEnSsr: 1,
-      nombreDePlacesEnObstétrique: 1,
-    };
+    const mockCapacités: CapacitéSanitaireEntitéJuridique[] = [
+      {
+        année: 2022,
+        dateMiseÀJourSource: "2022-12-12",
+        nombreDeLitsEnChirurgie: 1,
+        nombreDeLitsEnMédecine: 1,
+        nombreDeLitsEnObstétrique: 1,
+        nombreDeLitsEnSsr: 1,
+        nombreDeLitsEnUsld: 1,
+        nombreDePlacesEnPsyHospitalisationPartielle: 1,
+        nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 1,
+        nombreDePlacesEnChirurgie: 1,
+        nombreDePlacesEnMédecine: 1,
+        nombreDePlacesEnSsr: 1,
+        nombreDePlacesEnObstétrique: 1,
+      },
+    ];
 
     const mockChargeAutorisationsEtCapacités = jest.fn().mockResolvedValue({
+      numéroFinessEntitéJuridique: "",
       capacités: mockCapacités,
-      autorisationsSanitaire: { autorisations: [] },
-      autresActivitesSanitaire: { autorisations: [] },
-      reconnaissanceContractuellesSanitaire: { autorisations: [] },
-    });
+      autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+      autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+      reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+      equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+    } as EntitéJuridiqueAutorisationEtCapacitéLoader);
     entiteJuridiqueLoaderMock.chargeAutorisationsEtCapacités = mockChargeAutorisationsEtCapacités;
     const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entiteJuridiqueLoaderMock);
 
@@ -178,11 +189,13 @@ describe("La récupération d’une entité juridique", () => {
     it("recuperer la date de mise à jour des activités", async () => {
       // GIVEN
       const mockChargeAutorisationsEtCapacités = jest.fn().mockResolvedValue({
+        numéroFinessEntitéJuridique: "",
         capacités: [],
         autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
         autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-05-21" },
         reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-07-21" },
-      });
+        equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-08-21" },
+      } as EntitéJuridiqueAutorisationEtCapacitéLoader);
       entiteJuridiqueLoaderMock.chargeAutorisationsEtCapacités = mockChargeAutorisationsEtCapacités;
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entiteJuridiqueLoaderMock);
@@ -205,10 +218,13 @@ describe("La récupération d’une entité juridique", () => {
 
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
         chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
-          autorisationsSanitaire: { autorisations: autorisationsSanitaire },
-          autresActivitesSanitaire: { autorisations: [] },
-          reconnaissanceContractuellesSanitaire: { autorisations: [] },
-        }),
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: autorisationsSanitaire, dateMiseÀJourSource: "" },
+          autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
       });
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
@@ -239,10 +255,13 @@ describe("La récupération d’une entité juridique", () => {
 
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
         chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
-          autorisationsSanitaire: { autorisations: autorisationsSanitaire },
-          autresActivitesSanitaire: { autorisations: [] },
-          reconnaissanceContractuellesSanitaire: { autorisations: [] },
-        }),
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: autorisationsSanitaire, dateMiseÀJourSource: "" },
+          autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
       });
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
@@ -273,10 +292,13 @@ describe("La récupération d’une entité juridique", () => {
 
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
         chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
-          autorisationsSanitaire: { autorisations: autorisationsSanitaire },
-          autresActivitesSanitaire: { autorisations: [] },
-          reconnaissanceContractuellesSanitaire: { autorisations: [] },
-        }),
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: autorisationsSanitaire, dateMiseÀJourSource: "" },
+          autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
       });
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
@@ -308,10 +330,13 @@ describe("La récupération d’une entité juridique", () => {
       ];
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
         chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
-          autorisationsSanitaire: { autorisations: autorisationsSanitaire },
-          autresActivitesSanitaire: { autorisations: [] },
-          reconnaissanceContractuellesSanitaire: { autorisations: [] },
-        }),
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: autorisationsSanitaire, dateMiseÀJourSource: "" },
+          autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
       });
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
@@ -354,10 +379,13 @@ describe("La récupération d’une entité juridique", () => {
       ];
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
         chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
-          autorisationsSanitaire: { autorisations: autorisationsSanitaire },
-          autresActivitesSanitaire: { autorisations: [] },
-          reconnaissanceContractuellesSanitaire: { autorisations: [] },
-        }),
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: autorisationsSanitaire, dateMiseÀJourSource: "" },
+          autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
       });
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
@@ -395,10 +423,13 @@ describe("La récupération d’une entité juridique", () => {
       ];
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
         chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
-          autorisationsSanitaire: { autorisations: autorisationsSanitaire },
-          autresActivitesSanitaire: { autorisations: [] },
-          reconnaissanceContractuellesSanitaire: { autorisations: [] },
-        }),
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: autorisationsSanitaire, dateMiseÀJourSource: "" },
+          autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
       });
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
@@ -431,10 +462,13 @@ describe("La récupération d’une entité juridique", () => {
       ];
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
         chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
-          autorisationsSanitaire: { autorisations: autorisationsSanitaire },
-          autresActivitesSanitaire: { autorisations: [] },
-          reconnaissanceContractuellesSanitaire: { autorisations: [] },
-        }),
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: autorisationsSanitaire, dateMiseÀJourSource: "" },
+          autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
       });
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
@@ -460,11 +494,13 @@ describe("La récupération d’une entité juridique", () => {
     it("recuperer la date de mise à jour des activités", async () => {
       // GIVEN
       const mockChargeAutorisationsEtCapacités = jest.fn().mockResolvedValue({
+        numéroFinessEntitéJuridique: "",
         capacités: [],
         autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
         autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-05-21" },
         reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-07-21" },
-      });
+        equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-08-21" },
+      } as EntitéJuridiqueAutorisationEtCapacitéLoader);
       entiteJuridiqueLoaderMock.chargeAutorisationsEtCapacités = mockChargeAutorisationsEtCapacités;
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entiteJuridiqueLoaderMock);
@@ -486,10 +522,13 @@ describe("La récupération d’une entité juridique", () => {
 
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
         chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
-          autorisationsSanitaire: { autorisations: [] },
-          autresActivitesSanitaire: { autorisations: autresActivites },
-          reconnaissanceContractuellesSanitaire: { autorisations: autresActivites },
-        }),
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autresActivitesSanitaire: { autorisations: autresActivites, dateMiseÀJourSource: "" },
+          reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
       });
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
@@ -520,10 +559,13 @@ describe("La récupération d’une entité juridique", () => {
 
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
         chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
-          autorisationsSanitaire: { autorisations: [] },
-          autresActivitesSanitaire: { autorisations: autresActivites },
-          reconnaissanceContractuellesSanitaire: { autorisations: autresActivites },
-        }),
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autresActivitesSanitaire: { autorisations: autresActivites, dateMiseÀJourSource: "" },
+          reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
       });
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
@@ -554,10 +596,13 @@ describe("La récupération d’une entité juridique", () => {
 
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
         chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
-          autorisationsSanitaire: { autorisations: [] },
-          autresActivitesSanitaire: { autorisations: autresActivites },
-          reconnaissanceContractuellesSanitaire: { autorisations: autresActivites },
-        }),
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autresActivitesSanitaire: { autorisations: autresActivites, dateMiseÀJourSource: "" },
+          reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
       });
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
@@ -589,10 +634,13 @@ describe("La récupération d’une entité juridique", () => {
       ];
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
         chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
-          autorisationsSanitaire: { autorisations: [] },
-          autresActivitesSanitaire: { autorisations: autresActivites },
-          reconnaissanceContractuellesSanitaire: { autorisations: autresActivites },
-        }),
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autresActivitesSanitaire: { autorisations: autresActivites, dateMiseÀJourSource: "" },
+          reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
       });
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
@@ -635,10 +683,13 @@ describe("La récupération d’une entité juridique", () => {
       ];
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
         chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
-          autorisationsSanitaire: { autorisations: [] },
-          autresActivitesSanitaire: { autorisations: autresActivites },
-          reconnaissanceContractuellesSanitaire: { autorisations: autresActivites },
-        }),
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autresActivitesSanitaire: { autorisations: autresActivites, dateMiseÀJourSource: "" },
+          reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
       });
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
@@ -676,10 +727,13 @@ describe("La récupération d’une entité juridique", () => {
       ];
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
         chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
-          autorisationsSanitaire: { autorisations: [] },
-          autresActivitesSanitaire: { autorisations: autresActivites },
-          reconnaissanceContractuellesSanitaire: { autorisations: autresActivites },
-        }),
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autresActivitesSanitaire: { autorisations: autresActivites, dateMiseÀJourSource: "" },
+          reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
       });
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
@@ -711,10 +765,13 @@ describe("La récupération d’une entité juridique", () => {
       ];
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
         chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
-          autorisationsSanitaire: { autorisations: [] },
-          autresActivitesSanitaire: { autorisations: autresActivites },
-          reconnaissanceContractuellesSanitaire: { autorisations: autresActivites },
-        }),
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autresActivitesSanitaire: { autorisations: autresActivites, dateMiseÀJourSource: "" },
+          reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
       });
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
@@ -738,11 +795,14 @@ describe("La récupération d’une entité juridique", () => {
     it("recuperer la date de mise à jour des activités", async () => {
       // GIVEN
       const mockChargeAutorisationsEtCapacités = jest.fn().mockResolvedValue({
+        numéroFinessEntitéJuridique: "",
         capacités: [],
         autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
         autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-05-21" },
         reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-07-21" },
-      });
+        equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-08-21" },
+      } as EntitéJuridiqueAutorisationEtCapacitéLoader);
+
       entiteJuridiqueLoaderMock.chargeAutorisationsEtCapacités = mockChargeAutorisationsEtCapacités;
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entiteJuridiqueLoaderMock);
@@ -764,10 +824,13 @@ describe("La récupération d’une entité juridique", () => {
 
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
         chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
-          autorisationsSanitaire: { autorisations: [] },
-          autresActivitesSanitaire: { autorisations: [] },
-          reconnaissanceContractuellesSanitaire: { autorisations: reconnaissanceContractuelle },
-        }),
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          reconnaissanceContractuellesSanitaire: { autorisations: reconnaissanceContractuelle, dateMiseÀJourSource: "" },
+          equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
       });
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
@@ -798,10 +861,13 @@ describe("La récupération d’une entité juridique", () => {
 
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
         chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
-          autorisationsSanitaire: { autorisations: [] },
-          autresActivitesSanitaire: { autorisations: [] },
-          reconnaissanceContractuellesSanitaire: { autorisations: reconnaissanceContractuelle },
-        }),
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          reconnaissanceContractuellesSanitaire: { autorisations: reconnaissanceContractuelle, dateMiseÀJourSource: "" },
+          equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
       });
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
@@ -832,10 +898,13 @@ describe("La récupération d’une entité juridique", () => {
 
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
         chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
-          autorisationsSanitaire: { autorisations: [] },
-          autresActivitesSanitaire: { autorisations: [] },
-          reconnaissanceContractuellesSanitaire: { autorisations: reconnaissanceContractuelle },
-        }),
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          reconnaissanceContractuellesSanitaire: { autorisations: reconnaissanceContractuelle, dateMiseÀJourSource: "" },
+          equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
       });
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
@@ -863,10 +932,13 @@ describe("La récupération d’une entité juridique", () => {
       ];
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
         chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
-          autorisationsSanitaire: { autorisations: [] },
-          autresActivitesSanitaire: { autorisations: [] },
-          reconnaissanceContractuellesSanitaire: { autorisations: reconnaissanceContractuelle },
-        }),
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          reconnaissanceContractuellesSanitaire: { autorisations: reconnaissanceContractuelle, dateMiseÀJourSource: "" },
+          equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
       });
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
@@ -908,10 +980,13 @@ describe("La récupération d’une entité juridique", () => {
       ];
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
         chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
-          autorisationsSanitaire: { autorisations: [] },
-          autresActivitesSanitaire: { autorisations: [] },
-          reconnaissanceContractuellesSanitaire: { autorisations: reconnaissanceContractuelle },
-        }),
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          reconnaissanceContractuellesSanitaire: { autorisations: reconnaissanceContractuelle, dateMiseÀJourSource: "" },
+          equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
       });
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
@@ -949,10 +1024,13 @@ describe("La récupération d’une entité juridique", () => {
       ];
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
         chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
-          autorisationsSanitaire: { autorisations: [] },
-          autresActivitesSanitaire: { autorisations: [] },
-          reconnaissanceContractuellesSanitaire: { autorisations: reconnaissanceContractuelle },
-        }),
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          reconnaissanceContractuellesSanitaire: { autorisations: reconnaissanceContractuelle, dateMiseÀJourSource: "" },
+          equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
       });
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
@@ -987,10 +1065,13 @@ describe("La récupération d’une entité juridique", () => {
       ];
       const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
         chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
-          autorisationsSanitaire: { autorisations: [] },
-          autresActivitesSanitaire: { autorisations: [] },
-          reconnaissanceContractuellesSanitaire: { autorisations: reconnaissanceContractuelle },
-        }),
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          reconnaissanceContractuellesSanitaire: { autorisations: reconnaissanceContractuelle, dateMiseÀJourSource: "" },
+          equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
       });
 
       const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
@@ -1013,6 +1094,219 @@ describe("La récupération d’une entité juridique", () => {
       expect(forme.autorisationEtablissements[0].autorisations[4].valeur).toBe("15/02/2020");
       expect(forme.autorisationEtablissements[0].autorisations[5].nom).toBe("Numéro de CPOM");
       expect(forme.autorisationEtablissements[0].autorisations[5].valeur).toBe("cpom-1");
+    });
+  });
+
+  describe("Equipement Materiel Lourd", () => {
+    it("recuperer la date de mise à jour des activités", async () => {
+      // GIVEN
+      const mockChargeAutorisationsEtCapacités = jest.fn().mockResolvedValue({
+        numéroFinessEntitéJuridique: "",
+        capacités: [],
+        autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+        autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-05-21" },
+        reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-07-21" },
+        equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-07-21" },
+      } as EntitéJuridiqueAutorisationEtCapacitéLoader);
+      entiteJuridiqueLoaderMock.chargeAutorisationsEtCapacités = mockChargeAutorisationsEtCapacités;
+
+      const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entiteJuridiqueLoaderMock);
+      // WHEN
+      const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
+
+      // THEN
+      expect(entitéJuridique.autorisationsEtCapacites.equipementMaterielLordsActivités.dateMiseÀJourSource).toBe("21/07/2023");
+    });
+
+    it("recuperer la liste des equipement Materiel lourds d'activités", async () => {
+      // GIVEN
+      const equipementMaterielLourd: ÉquipementMatérielLourdSanitaireModel[] = [
+        mock<ÉquipementMatérielLourdSanitaireModel>({
+          codeÉquipementMatérielLourd: "1",
+          libelléÉquipementMatérielLourd: "Nom activité",
+        }),
+      ];
+
+      const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
+        chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+          autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+          reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+          equipementMaterielLourdSanitaire: { autorisations: equipementMaterielLourd, dateMiseÀJourSource: "2023-10-21" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
+      });
+
+      const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
+
+      // WHEN
+      const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
+
+      // THEN
+      const activites = entitéJuridique.autorisationsEtCapacites.equipementMaterielLordsActivités.autorisations;
+      expect(activites).toHaveLength(1);
+      expect(activites[0].code).toBe("1");
+      expect(activites[0].libelle).toBe("Nom activité");
+    });
+
+    it("recuperer la liste triée des equipements materiaux lourds pour une entité juridique avec deux activites differentes", async () => {
+      // GIVEN
+      const equipementMaterielLourd: ÉquipementMatérielLourdSanitaireModel[] = [
+        mock<ÉquipementMatérielLourdSanitaireModel>({
+          codeÉquipementMatérielLourd: "2",
+        }),
+        mock<ÉquipementMatérielLourdSanitaireModel>({
+          codeÉquipementMatérielLourd: "1",
+        }),
+        mock<ÉquipementMatérielLourdSanitaireModel>({
+          codeÉquipementMatérielLourd: "3",
+        }),
+      ];
+
+      const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
+        chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+          autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+          reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+          equipementMaterielLourdSanitaire: { autorisations: equipementMaterielLourd, dateMiseÀJourSource: "2023-10-21" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
+      });
+
+      const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
+
+      // WHEN
+      const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
+
+      // THEN
+      const activites = entitéJuridique.autorisationsEtCapacites.equipementMaterielLordsActivités.autorisations;
+      expect(activites).toHaveLength(3);
+      expect(activites[0].code).toBe("1");
+      expect(activites[1].code).toBe("2");
+      expect(activites[2].code).toBe("3");
+    });
+
+    it("recuperer la liste des reconnaissance Contractuelle d'activités groupées par Activité", async () => {
+      // GIVEN
+      const equipementMaterielLourd: ÉquipementMatérielLourdSanitaireModel[] = [
+        mock<ÉquipementMatérielLourdSanitaireModel>({
+          codeÉquipementMatérielLourd: "1",
+          numéroFinessÉtablissementTerritorial: "123",
+        }),
+        mock<ÉquipementMatérielLourdSanitaireModel>({
+          codeÉquipementMatérielLourd: "1",
+          numéroFinessÉtablissementTerritorial: "111",
+        }),
+        mock<ÉquipementMatérielLourdSanitaireModel>({
+          codeÉquipementMatérielLourd: "2",
+          numéroFinessÉtablissementTerritorial: "123",
+        }),
+      ];
+
+      const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
+        chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+          autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+          reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+          equipementMaterielLourdSanitaire: { autorisations: equipementMaterielLourd, dateMiseÀJourSource: "2023-10-21" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
+      });
+
+      const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
+
+      // WHEN
+      const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
+
+      // THEN
+      const activites = entitéJuridique.autorisationsEtCapacites.equipementMaterielLordsActivités.autorisations;
+      expect(activites).toHaveLength(2);
+      expect(activites[0].code).toBe("1");
+      expect(activites[1].code).toBe("2");
+    });
+
+    it("recuperer la liste triée des regroupements de établissements territoriaux des equipement lourds", async () => {
+      // GIVEN
+      const equipementMaterielLourd: ÉquipementMatérielLourdSanitaireModel[] = [
+        mock<ÉquipementMatérielLourdSanitaireModel>({
+          codeÉquipementMatérielLourd: "1",
+          numéroFinessÉtablissementTerritorial: "etablissement-2",
+          établissementTerritorial: { raisonSocialeCourte: "Nom ET 2" },
+        }),
+
+        mock<ÉquipementMatérielLourdSanitaireModel>({
+          codeÉquipementMatérielLourd: "1",
+          numéroFinessÉtablissementTerritorial: "etablissement-1",
+          établissementTerritorial: { raisonSocialeCourte: "Nom ET 1" },
+        }),
+      ];
+      const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
+        chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+          autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+          reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+          equipementMaterielLourdSanitaire: { autorisations: equipementMaterielLourd, dateMiseÀJourSource: "2023-10-21" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
+      });
+
+      const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
+
+      // WHEN
+      const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
+
+      // THEN
+      const equipementEtablissement = entitéJuridique.autorisationsEtCapacites.equipementMaterielLordsActivités.autorisations[0];
+      expect(equipementEtablissement.equipementEtablissements).toHaveLength(2);
+      expect(equipementEtablissement.equipementEtablissements[0].numeroFiness).toBe("etablissement-1");
+      expect(equipementEtablissement.equipementEtablissements[0].nomEtablissement).toBe("Nom ET 1");
+      expect(equipementEtablissement.equipementEtablissements[1].numeroFiness).toBe("etablissement-2");
+      expect(equipementEtablissement.equipementEtablissements[1].nomEtablissement).toBe("Nom ET 2");
+    });
+
+    it("recuperer la liste des materiel lourds groupées par établissements territoriaux", async () => {
+      // GIVEN
+      const equipementMaterielLourd: ÉquipementMatérielLourdSanitaireModel[] = [
+        mock<ÉquipementMatérielLourdSanitaireModel>({
+          codeÉquipementMatérielLourd: "1",
+          numéroFinessÉtablissementTerritorial: "etablissement-1",
+          dateAutorisation: "10/20/2021",
+          numéroAutorisationArhgos: "argos-1",
+          dateFin: "01/15/2020",
+          dateMiseEnOeuvre: "02/15/2020",
+        }),
+      ];
+      const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
+        chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+          autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+          reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+          equipementMaterielLourdSanitaire: { autorisations: equipementMaterielLourd, dateMiseÀJourSource: "2023-10-21" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
+      });
+
+      const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
+
+      // WHEN
+      const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
+
+      // THEN
+      const equipements = entitéJuridique.autorisationsEtCapacites.equipementMaterielLordsActivités.autorisations[0].equipementEtablissements[0].equipements;
+      expect(equipements).toHaveLength(1);
+      expect(equipements[0].autorisations[0].nom).toBe("Numéro ARHGOS");
+      expect(equipements[0].autorisations[0].valeur).toBe("argos-1");
+      expect(equipements[0].autorisations[1].nom).toBe("Date d'autorisation");
+      expect(equipements[0].autorisations[1].valeur).toBe("20/10/2021");
+      expect(equipements[0].autorisations[2].nom).toBe("Date de mis en oeuvre");
+      expect(equipements[0].autorisations[2].valeur).toBe("15/02/2020");
+      expect(equipements[0].autorisations[3].nom).toBe("Date de fin");
+      expect(equipements[0].autorisations[3].valeur).toBe("15/01/2020");
     });
   });
 });

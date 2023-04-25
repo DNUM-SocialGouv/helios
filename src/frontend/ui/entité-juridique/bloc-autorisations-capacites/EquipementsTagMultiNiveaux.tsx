@@ -18,7 +18,7 @@ const mockEquipementEtab1: EquipementEtablissement[] = [
   {
     numeroFiness: "570001057",
     nomEtablissement: "amazing Hospital",
-    etablissements: [
+    equipements: [
       {
         autorisations: [
           {
@@ -40,7 +40,7 @@ const mockEquipementEtab1: EquipementEtablissement[] = [
   {
     numeroFiness: "570001222",
     nomEtablissement: "happy Hospital",
-    etablissements: [
+    equipements: [
       {
         autorisations: [
           {
@@ -81,7 +81,7 @@ const mockEquipementEtab2: EquipementEtablissement[] = [
   {
     numeroFiness: "570001057",
     nomEtablissement: "normal Hospital",
-    etablissements: [
+    equipements: [
       {
         autorisations: [
           {
@@ -148,7 +148,7 @@ export const EquipementsTagMultiniveaux = ({ activites }: EquipementsProps): Rea
           <ul className="fr-collapse niveau1" id={`equipementlourds-accordion-${activité.code}`}>
             {activité.equipementEtablissements.map((equipements) => (
               <EquipementEtablissement
-                etablissements={equipements.etablissements}
+                equipements={equipements.equipements}
                 key={`details-${equipements.numeroFiness}`}
                 nomEtablissement={equipements.nomEtablissement}
                 numeroFiness={equipements.numeroFiness}
@@ -161,7 +161,7 @@ export const EquipementsTagMultiniveaux = ({ activites }: EquipementsProps): Rea
   );
 };
 
-const EquipementEtablissement = ({ numeroFiness, nomEtablissement, etablissements }: EquipementEtablissement): ReactElement => {
+const EquipementEtablissement = ({ numeroFiness, nomEtablissement, equipements }: EquipementEtablissement): ReactElement => {
   const { paths } = useDependencies();
   return (
     <li className={style["etablissement"]}>
@@ -170,12 +170,10 @@ const EquipementEtablissement = ({ numeroFiness, nomEtablissement, etablissement
           {numeroFiness + " - " + nomEtablissement}
         </Link>
         &nbsp;&nbsp;
-        {etablissements.length > 1 ? (
-          <p className={style["nombre-equipement"] + " " + style["etablissementFont"]}>({etablissements.length} équipements)</p>
-        ) : null}
+        {equipements.length > 1 ? <p className={style["nombre-equipement"] + " " + style["etablissementFont"]}>({equipements.length} équipements)</p> : null}
       </div>
-      <ul id={`etablissement-accordion-${etablissements}`}>
-        {etablissements.map((equipements, index) => {
+      <ul id={`etablissement-accordion-${equipements}`}>
+        {equipements.map((equipements, index) => {
           return <Autorisations autorisations={equipements.autorisations} key={`etablissement-${index}`} />;
         })}
       </ul>
