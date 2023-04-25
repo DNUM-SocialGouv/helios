@@ -27,6 +27,7 @@ export function GraphiquePsySSR({ nombreJournéesPsySSRViewModel, estEntitéJuri
       source={wording.PMSI}
     >
       <HistogrammeVerticalABandes
+        annéesTotales={nombreJournéesPsySSRViewModel.NOMBRE_ANNEES}
         créeLeLibelléDuTooltip={nombreJournéesPsySSRViewModel.tooltipJournéesPsyEtSsr}
         data={nombreJournéesPsySSRViewModel.histogrammeDataSet}
         id={nombreJournéesPsySSRViewModel.identifiantDeLaLégendeDesJournéesPsyEtSsr}

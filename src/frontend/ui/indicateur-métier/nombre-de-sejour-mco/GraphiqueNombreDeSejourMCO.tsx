@@ -26,6 +26,7 @@ export const GraphiqueNombreDeSejourMCO = ({ nombreDeSejourMCOViewModel, estEnti
       source={wording.PMSI}
     >
       <HistogrammeVerticalABandes
+        annéesTotales={nombreDeSejourMCOViewModel.NOMBRE_ANNEES}
         créeLeLibelléDuTooltip={nombreDeSejourMCOViewModel.tooltipSéjoursMCO}
         data={nombreDeSejourMCOViewModel.getHistogrammeDataSet()}
         id={nombreDeSejourMCOViewModel.identifiantDeLaLégendeDesSéjoursMCO}

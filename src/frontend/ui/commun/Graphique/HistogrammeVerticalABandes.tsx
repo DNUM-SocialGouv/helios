@@ -2,8 +2,10 @@ import { ChartOptions } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
 import { Wording } from "../../../configuration/wording/Wording";
+import { annéesManquantes } from "../../../utils/dateUtils";
 import stylesBlocActivité from "../../établissement-territorial-sanitaire/bloc-activité/BlocActivitéSanitaire.module.css";
 import { useDependencies } from "../contexts/useDependencies";
+import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
 import { couleurDelAbscisse } from "./couleursGraphique";
 
@@ -52,13 +54,16 @@ export function HistogrammeVerticalABandes(props: {
   valeurs: (string | null)[][];
   idDeLaLégende: string;
   créeLeLibelléDuTooltip: Function;
+  annéesTotales: number;
 }) {
   const { wording } = useDependencies();
+  const listeAnnéesManquantes = annéesManquantes(props.libellés, props.annéesTotales);
 
   return (
     <>
       <Bar data={props.data} options={optionsHistogrammeÀBandes(props.idDeLaLégende, props.créeLeLibelléDuTooltip, wording)} />
       <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} />
+      {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
       <Transcription entêteLibellé={wording.ANNÉE} identifiants={props.identifiants} libellés={props.libellés} valeurs={props.valeurs} />
     </>
   );

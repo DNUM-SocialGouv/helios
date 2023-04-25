@@ -19,6 +19,7 @@ type IndicateurDesSejoursMCO = Readonly<{
   nombreSéjoursPartielsObstétrique: { x: number; y: number | null }[];
 }>;
 export class NombreDeSejourMCOViewModel {
+  public NOMBRE_ANNEES = 5;
   readonly identifiantDeLaLégendeDesSéjoursMCO = "légende-graphique-sanitaire-journées-séjours-mco";
 
   private nombreDeSéjours: IndicateurDesSejoursMCO;
@@ -159,7 +160,6 @@ export class NombreDeSejourMCOViewModel {
     ];
   }
 
-  // TODO this is used in EtablismentTerritorialSanitaireActiviteVM
   private valeursDesNombresDeSéjours(nombresSéjours: { x: number; y: number | null }[]): (string | null)[] {
     return nombresSéjours.map((nombreSéjour) => {
       return nombreSéjour.y ? nombreSéjour.y.toLocaleString("fr") : null;
