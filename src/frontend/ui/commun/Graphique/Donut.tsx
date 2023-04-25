@@ -2,9 +2,8 @@ import { ActiveElement, ArcElement, Chart as ChartJS, ChartData, ChartEvent, Cha
 import ChartDataLabels, { Context } from "chartjs-plugin-datalabels";
 import { Doughnut } from "react-chartjs-2";
 
-import { couleurDeFondDuBloc, couleurDelAbscisse, couleurErreur } from "./couleursGraphique";
+import { couleurDeFondDuBloc, couleurDelAbscisse, couleurErreur, CouleurHistogramme } from "./couleursGraphique";
 import styles from "./Donut.module.css";
-import { CouleurHistogramme, LibelléDeDonnéeGraphe } from "./GraphiqueViewModel";
 import { construisLePluginDeLaLegende } from "./LegendPlugin";
 
 ChartJS.register(DoughnutController, ArcElement, Tooltip, Legend, construisLePluginDeTexteAuCentreDuDonut(), construisLePluginDeLaLegende(), ChartDataLabels);
@@ -13,7 +12,7 @@ export function Donut(props: {
   valeurs: number[];
   libellés: string[];
   couleursDuDoughnut: CouleurHistogramme[];
-  libellésDesValeurs: LibelléDeDonnéeGraphe[];
+  couleursLibelle: string[];
   texteCentral: string;
   total: number;
   idDeLaLégende: string;
@@ -25,7 +24,7 @@ export function Donut(props: {
         borderColor: couleurDeFondDuBloc,
         borderWidth: 1,
         data: props.valeurs,
-        datalabels: { labels: { title: { color: props.libellésDesValeurs.map((libellé) => libellé.couleur) } } },
+        datalabels: { labels: { title: { color: props.couleursLibelle } } },
         hoverBackgroundColor: props.couleursDuDoughnut.map((couleur) => couleur.premierPlan),
         type: "doughnut",
       },

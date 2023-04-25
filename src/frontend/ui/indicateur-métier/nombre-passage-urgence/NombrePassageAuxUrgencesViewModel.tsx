@@ -1,17 +1,15 @@
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
-import { couleurDuFond, couleurDuFondHistogrammePrimaire, couleurDuFondHistogrammeSecondaire } from "../../commun/Graphique/couleursGraphique";
-import { CouleurHistogramme, GraphiqueViewModel } from "../../commun/Graphique/GraphiqueViewModel";
+import { couleurDuFondHistogrammePrimaire, couleurDuFondHistogrammeSecondaire } from "../../commun/Graphique/couleursGraphique";
 import { StringFormater } from "../../commun/StringFormater";
 import { IndicateurActivité } from "../IndicateurActivité";
 
-export class NombrePassageAuxUrgencesViewModel extends GraphiqueViewModel {
+export class NombrePassageAuxUrgencesViewModel {
   public valeurs: number[];
   private années: number[];
   public nombreDeLibelléTotal = 5;
 
-  constructor(private readonly indicateurActivité: IndicateurActivité[], wording: Wording) {
-    super(wording);
+  constructor(private readonly indicateurActivité: IndicateurActivité[], private wording: Wording) {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs();
     this.valeurs = valeurs;
     this.années = années;
@@ -34,18 +32,9 @@ export class NombrePassageAuxUrgencesViewModel extends GraphiqueViewModel {
   }
 
   get couleursDeLHistogramme() {
-    const construisLaCouleurDeLaBarreHorizontale = (_valeur: number, année: number | string): CouleurHistogramme => {
-      return estCeLAnnéePassée(année)
-        ? {
-            premierPlan: couleurDuFondHistogrammePrimaire,
-            secondPlan: couleurDuFond,
-          }
-        : {
-            premierPlan: couleurDuFondHistogrammeSecondaire,
-            secondPlan: couleurDuFond,
-          };
-    };
-    return this.construisLesCouleursDeLHistogramme(this.valeurs, this.années, construisLaCouleurDeLaBarreHorizontale);
+    return this.années.map((année: number) => {
+      return { premierPlan: estCeLAnnéePassée(année) ? couleurDuFondHistogrammePrimaire : couleurDuFondHistogrammeSecondaire };
+    });
   }
 
   private construisLesAnnéesEtSesValeurs(): number[][] {
