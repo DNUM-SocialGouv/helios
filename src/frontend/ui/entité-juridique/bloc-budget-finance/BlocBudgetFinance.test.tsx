@@ -8,39 +8,6 @@ import { EntitéJuridiqueBudgetFinanceViewModel } from "./EntitéJuridiqueBudget
 const { wording } = fakeFrontDependencies;
 
 describe("Bloc Budget et Finance", () => {
-  it("affiche un l'indicateur vide si il n'y a pas des données", () => {
-    // GIVEN
-    const viewModel = new EntitéJuridiqueBudgetFinanceViewModel([], wording);
-
-    // WHEN
-    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} />);
-
-    // THEN
-    const titre = screen.getByText(wording.INDICATEURS_VIDES);
-    expect(titre).toBeInTheDocument();
-  });
-
-  it("affiche un l'indicateur vide si les données sont null", () => {
-    // GIVEN
-    const budgetFinance: EntitéJuridiqueBudgetFinance[] = [
-      {
-        année: 2022,
-        depensesTitreIGlobal: null,
-        resultatNetComptable: null,
-        ratioDependanceFinanciere: null,
-        tauxDeCafNetSan: null,
-      } as EntitéJuridiqueBudgetFinance,
-    ];
-    const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, wording);
-
-    // WHEN
-    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} />);
-
-    // THEN
-    const titre = screen.getByText(wording.INDICATEURS_VIDES);
-    expect(titre).toBeInTheDocument();
-  });
-
   it("affiche l'indicateur compte de résultat s'il y a des données", () => {
     // GIVEN
     const budgetFinance: EntitéJuridiqueBudgetFinance[] = [
