@@ -1,9 +1,13 @@
 import { fireEvent, screen, within } from "@testing-library/react";
+import { mock } from "jest-mock-extended";
 
+import { ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation";
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { PageÉtablissementTerritorialMédicoSocial } from "../PageÉtablissementTerritorialMédicoSocial";
 import { ÉtablissementTerritorialMédicoSocialViewModel } from "../ÉtablissementTerritorialMédicoSocialViewModel";
+import { BlocAutorisationEtCapacitéMédicoSocial } from "./BlocAutorisationEtCapacitéMédicoSocial";
+import { ÉtablissementTerritorialMédicoSocialAutorisationsViewModel } from "./ÉtablissementTerritorialMédicoSocialAutorisationsViewModel";
 
 const { paths, wording } = fakeFrontDependencies;
 
@@ -326,5 +330,21 @@ describe("La page établissement territorial médico-social - bloc autorisation 
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
     const phrase = within(activité).getByText(wording.INDICATEURS_VIDES);
     expect(phrase).toBeInTheDocument();
+  });
+
+  it("n'affiche pas les autorisations s'il n'y en a pas", () => {
+    const autorisationsCapacites = { ...ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations, autorisations: { disciplines: [] } };
+    const etablissementMedicoSocialAutorisationsViewModel = new ÉtablissementTerritorialMédicoSocialAutorisationsViewModel(
+      mock<ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité>(autorisationsCapacites),
+      wording
+    );
+    // WHEN
+    renderFakeComponent(
+      <BlocAutorisationEtCapacitéMédicoSocial établissementTerritorialAutorisationsMédicoSocialViewModel={etablissementMedicoSocialAutorisationsViewModel} />
+    );
+
+    // THEN
+    const titre = screen.queryByText(wording.AUTORISATIONS, { selector: "h6" });
+    expect(titre).not.toBeInTheDocument();
   });
 });

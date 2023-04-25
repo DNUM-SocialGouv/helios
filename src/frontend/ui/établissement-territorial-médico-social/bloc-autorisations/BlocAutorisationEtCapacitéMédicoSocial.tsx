@@ -40,20 +40,22 @@ export const BlocAutorisationEtCapacitéMédicoSocial = ({
             {établissementTerritorialAutorisationsMédicoSocialViewModel.capacitéParActivités}
           </IndicateurGraphique>
         )}
-        <IndicateurGraphique
-          contenuInfoBulle={
-            <ContenuAutorisations
-              dateDeMiseÀJour={établissementTerritorialAutorisationsMédicoSocialViewModel.dateDeMiseÀJourDesAutorisations}
-              source={Sources(wording.FINESS, wording.ARHGOS)}
-            />
-          }
-          dateDeMiseÀJour={établissementTerritorialAutorisationsMédicoSocialViewModel.dateDeMiseÀJourDesAutorisations}
-          identifiant="autorisations-médico-social"
-          nomDeLIndicateur={wording.AUTORISATIONS}
-          source={Sources(wording.FINESS, wording.ARHGOS)}
-        >
-          {établissementTerritorialAutorisationsMédicoSocialViewModel.autorisations}
-        </IndicateurGraphique>
+        {établissementTerritorialAutorisationsMédicoSocialViewModel.lesAutorisationsSontEllesRenseignées ? (
+          <IndicateurGraphique
+            contenuInfoBulle={
+              <ContenuAutorisations
+                dateDeMiseÀJour={établissementTerritorialAutorisationsMédicoSocialViewModel.dateDeMiseÀJourDesAutorisations}
+                source={Sources(wording.FINESS, wording.ARHGOS)}
+              />
+            }
+            dateDeMiseÀJour={établissementTerritorialAutorisationsMédicoSocialViewModel.dateDeMiseÀJourDesAutorisations}
+            identifiant="autorisations-médico-social"
+            nomDeLIndicateur={wording.AUTORISATIONS}
+            source={Sources(wording.FINESS, wording.ARHGOS)}
+          >
+            {établissementTerritorialAutorisationsMédicoSocialViewModel.autorisations}
+          </IndicateurGraphique>
+        ) : null}
       </ul>
     </Bloc>
   );
