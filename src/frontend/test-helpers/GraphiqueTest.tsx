@@ -1,7 +1,7 @@
 import { fireEvent, screen } from "@testing-library/react";
 
 import { Wording } from "../configuration/wording/Wording";
-import { textMatch } from "./testHelper";
+import { annéeEnCours, textMatch } from "./testHelper";
 
 /*
  * Class utilitaire pour faciliter les tests des blocs de graphiques avec React Testing Library
@@ -58,5 +58,11 @@ export class GraphiqueTest {
 
   afficherLaTranscription(): void {
     fireEvent.click(this.boutonAfficherTranscription);
+  }
+
+  miseEnExergue(années: number[]): HTMLElement {
+    return screen.getByText(`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${années.join(", ")}`, {
+      selector: "p",
+    });
   }
 }
