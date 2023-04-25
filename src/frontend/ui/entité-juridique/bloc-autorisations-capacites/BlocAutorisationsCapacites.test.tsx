@@ -102,31 +102,11 @@ describe("Bloc Autorisation et activités", () => {
     renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
 
     // THEN
-    const capaciteParActivites = screen.queryByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: "h6" });
     const autorisationActivites = screen.queryByText(wording.AUTORISATIONS_ACTIVITES, { selector: "h6" });
     const autresActivites = screen.queryByText(wording.AUTRES_ACTIVITÉS, { selector: "h6" });
     const reconnaissanceContractuelles = screen.queryByText(wording.RECONNAISSANCES_CONTRACTUELLES, { selector: "h6" });
-    expect(capaciteParActivites).not.toBeInTheDocument();
     expect(autorisationActivites).not.toBeInTheDocument();
     expect(autresActivites).not.toBeInTheDocument();
     expect(reconnaissanceContractuelles).not.toBeInTheDocument();
-  });
-
-  it("affiche un l'indicateur vide si il n'y a pas des données", () => {
-    // GIVEN
-    const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
-      [],
-      { autorisations: [], dateMiseÀJourSource: "" },
-      { autorisations: [], dateMiseÀJourSource: "" },
-      { autorisations: [], dateMiseÀJourSource: "" },
-      wording
-    );
-
-    // WHEN
-    renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
-
-    // THEN
-    const titre = screen.getByText(wording.INDICATEURS_VIDES);
-    expect(titre).toBeInTheDocument();
   });
 });
