@@ -26,38 +26,36 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMé
     <Bloc isMain={false} titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES}>
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         <GraphiqueCompteDeResultat compteDeRésultatViewModel={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.compteDeResultatViewModel} />
-        {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leRésultatNetComptableEstIlRenseigné && (
-          <IndicateurGraphique
-            contenuInfoBulle={
-              <ContenuRésultatNetComptable
-                dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourRésultatNetComptable}
-                source={wording.CNSA}
-              />
-            }
-            dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourRésultatNetComptable}
-            identifiant="budget-et-finances-résultat-net-comptable"
-            nomDeLIndicateur={wording.RÉSULTAT_NET_COMPTABLE}
-            source={wording.CNSA}
-          >
-            {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.résultatNetComptable}
-          </IndicateurGraphique>
-        )}
-        {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leMontantDeLaContributionAuxFraisDeSiègeEstIlRenseigné && (
-          <IndicateurGraphique
-            contenuInfoBulle={
-              <ContenuMontantDeLaContributionAuxFraisDeSiège
-                dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourMontantDeLaContributionAuxFraisDeSiège}
-                source={wording.CNSA}
-              />
-            }
-            dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourMontantDeLaContributionAuxFraisDeSiège}
-            identifiant="budget-et-finances-montant-de-la-contribution"
-            nomDeLIndicateur={wording.MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE}
-            source={wording.CNSA}
-          >
-            {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.montantDeLaContributionAuxFraisDeSiège}
-          </IndicateurGraphique>
-        )}
+        <IndicateurGraphique
+          contenuInfoBulle={
+            <ContenuRésultatNetComptable
+              dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourRésultatNetComptable}
+              source={wording.CNSA}
+            />
+          }
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourRésultatNetComptable}
+          identifiant="budget-et-finances-résultat-net-comptable"
+          nomDeLIndicateur={wording.RÉSULTAT_NET_COMPTABLE}
+          source={wording.CNSA}
+        >
+          {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.résultatNetComptable}
+        </IndicateurGraphique>
+
+        <IndicateurGraphique
+          contenuInfoBulle={
+            <ContenuMontantDeLaContributionAuxFraisDeSiège
+              dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourMontantDeLaContributionAuxFraisDeSiège}
+              source={wording.CNSA}
+            />
+          }
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourMontantDeLaContributionAuxFraisDeSiège}
+          identifiant="budget-et-finances-montant-de-la-contribution"
+          nomDeLIndicateur={wording.MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE}
+          source={wording.CNSA}
+        >
+          {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.montantDeLaContributionAuxFraisDeSiège}
+        </IndicateurGraphique>
+
         <TauxDeCaf tauxDeCafViewModel={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeCafViewModel} />
         <IndicateurGraphique
           contenuInfoBulle={
@@ -73,22 +71,20 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMé
         >
           {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeVétustéConstruction}
         </IndicateurGraphique>
-        {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leFondsDeRoulementEstIlRenseigné && (
-          <IndicateurGraphique
-            contenuInfoBulle={
-              <ContenuFondDeRoulementNetGlobal
-                dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourFondDeRoulementNetGlobal}
-                source={wording.CNSA}
-              />
-            }
-            dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourFondDeRoulementNetGlobal}
-            identifiant="budget-et-finances-fond-de-roulement-net-global"
-            nomDeLIndicateur={wording.FONDS_DE_ROULEMENT_NET_GLOBAL}
-            source={wording.CNSA}
-          >
-            {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.fondDeRoulementNetGlobal}
-          </IndicateurGraphique>
-        )}
+        <IndicateurGraphique
+          contenuInfoBulle={
+            <ContenuFondDeRoulementNetGlobal
+              dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourFondDeRoulementNetGlobal}
+              source={wording.CNSA}
+            />
+          }
+          dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourFondDeRoulementNetGlobal}
+          identifiant="budget-et-finances-fond-de-roulement-net-global"
+          nomDeLIndicateur={wording.FONDS_DE_ROULEMENT_NET_GLOBAL}
+          source={wording.CNSA}
+        >
+          {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.fondDeRoulementNetGlobal}
+        </IndicateurGraphique>
       </ul>
     </Bloc>
   );

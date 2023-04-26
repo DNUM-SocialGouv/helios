@@ -136,68 +136,6 @@ describe("La page établissement territorial médico-social - bloc autorisation 
     expect(détails).toHaveAttribute("data-fr-opened", "false");
   });
 
-  it("n’affiche pas l’histogramme des capacités si elles ne sont pas renseignées", () => {
-    // GIVEN
-    const établissementTerritorialSansAutorisation = new ÉtablissementTerritorialMédicoSocialViewModel(
-      {
-        activités: [],
-        autorisationsEtCapacités: {
-          autorisations: {
-            dateMiseÀJourSource: "2022-05-14",
-            disciplines: [
-              {
-                activités: [
-                  {
-                    clientèles: [
-                      {
-                        code: "010",
-                        datesEtCapacités: {
-                          capacitéAutoriséeTotale: 10,
-                          capacitéInstalléeTotale: 10,
-                          dateDAutorisation: "2020-01-01",
-                          dateDeDernièreInstallation: "2020-01-01",
-                          dateDeMiseÀJourDAutorisation: "2020-01-01",
-                          estInstallée: true,
-                        },
-                        libellé: "Tous Types de Déficiences Pers.Handicap.(sans autre indic.)",
-                      },
-                    ],
-                    code: "21",
-                    libellé: "Accueil de Jour",
-                  },
-                ],
-                code: "658",
-                libellé: "Accueil temporaire pour adultes handicapés",
-              },
-            ],
-          },
-          capacités: {
-            capacitéParActivité: [],
-            dateMiseÀJourSource: "2022-08-18",
-          },
-          numéroFinessÉtablissementTerritorial: "010000040",
-        },
-        budgetEtFinances: [],
-        identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
-        ressourcesHumaines: [],
-      },
-      wording,
-      paths
-    );
-
-    // WHEN
-    renderFakeComponent(
-      <BlocAutorisationEtCapacitéMédicoSocial
-        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialSansAutorisation.autorisationsViewModel}
-      />
-    );
-
-    // THEN
-    const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
-    const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
-    expect(within(indicateurs[0]).queryByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: "p" })).not.toBeInTheDocument();
-  });
-
   it("affiche le titre de la partie autorisations, sa source et l’accès aux détails", () => {
     // WHEN
     renderFakeComponent(
