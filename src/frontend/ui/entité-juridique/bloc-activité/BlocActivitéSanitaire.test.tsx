@@ -150,4 +150,83 @@ describe("Bloc Activité Sanitaire", () => {
     const titre = screen.queryByText(wording.NOMBRE_DE_HAD, { selector: "h6" });
     expect(titre).toBeInTheDocument();
   });
+
+  it("affiche un l'indicateur vide si il n'y a pas des données", () => {
+    // GIVEN
+    const viewModel = new EntitéJuridiqueActivitésViewModel([], wording);
+
+    // WHEN
+    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
+
+    // THEN
+    const titre = screen.getByText(wording.INDICATEURS_VIDES);
+    expect(titre).toBeInTheDocument();
+  });
+
+  it("affiche l'indicateur vide si les données sont null", () => {
+    // GIVEN
+    const viewModel = new EntitéJuridiqueActivitésViewModel(
+      [
+        mock<EntitéJuridiqueActivités>({
+          année: annéeEnCours - 1,
+          nombreDePassagesAuxUrgences: {
+            value: null,
+            dateMiseÀJourSource: "2020-10-01",
+          },
+          nombreSéjoursPartielsMédecine: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreSéjoursCompletsMédecine: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreSéjoursPartielsChirurgie: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreSéjoursCompletsChirurgie: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreSéjoursPartielsObstétrique: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreSéjoursCompletsObstétrique: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreJournéesPartiellesSsr: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreJournéesCompletesPsy: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreJournéesPartiellesPsy: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreJournéesCompletesSsr: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+          nombreSéjoursHad: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: null,
+          },
+        }),
+      ],
+      wording
+    );
+
+    // WHEN
+    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
+
+    // THEN
+    const titre = screen.getByText(wording.INDICATEURS_VIDES);
+    expect(titre).toBeInTheDocument();
+  });
 });
