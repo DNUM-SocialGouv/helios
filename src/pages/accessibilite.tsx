@@ -1,5 +1,6 @@
 import Head from "next/head";
 
+import { PageAccessibilite } from "../frontend/ui/accessibilite/PageAccessibilite";
 import { useDependencies } from "../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
 
@@ -17,8 +18,7 @@ export default function Accessibilité() {
       <Head>
         <title>{wording.TITRE_PAGE_ACCESSIBILITÉ}</title>
       </Head>
-      <h1>{`${wording.ACCESSIBILITÉ} : ${wording.NON_CONFORME}`}</h1>
-      <p>{wording.AUDIT_EN_COURS}</p>
+      <PageAccessibilite />
     </main>
   );
 }
