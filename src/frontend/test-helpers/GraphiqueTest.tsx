@@ -59,4 +59,10 @@ export class GraphiqueTest {
   afficherLaTranscription(): void {
     fireEvent.click(this.boutonAfficherTranscription);
   }
+
+  miseEnExergue(années: number[]): HTMLElement {
+    return screen.getByText(`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${années.join(", ")}`, {
+      selector: "p",
+    });
+  }
 }

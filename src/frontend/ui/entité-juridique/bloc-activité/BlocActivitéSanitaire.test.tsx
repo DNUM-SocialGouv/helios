@@ -23,6 +23,7 @@ describe("Bloc Activité Sanitaire", () => {
           nombreJournéesCompletesPsy: {},
           nombreJournéesCompletesSsr: {},
           nombreJournéesPartiellesPsy: {},
+          nombreSéjoursHad: {},
         }),
       ],
       wording
@@ -58,6 +59,8 @@ describe("Bloc Activité Sanitaire", () => {
             dateMiseÀJourSource: "2020-10-01",
             value: 4444,
           },
+          nombreSéjoursHad: {},
+          nombreDePassagesAuxUrgences: {},
         }),
       ],
       wording
@@ -69,41 +72,6 @@ describe("Bloc Activité Sanitaire", () => {
     // THEN
     const titre = screen.getByText(wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, { selector: "h6" });
     expect(titre).toBeInTheDocument();
-  });
-
-  it("n'affiche pas le graphique Psy SSR s'il n'y a pas de valeur", () => {
-    // GIVEN
-    const viewModel = new EntitéJuridiqueActivitésViewModel(
-      [
-        mock<EntitéJuridiqueActivités>({
-          année: annéeEnCours - 1,
-          nombreJournéesPartiellesSsr: {
-            dateMiseÀJourSource: "2020-10-01",
-            value: null,
-          },
-          nombreJournéesCompletesPsy: {
-            dateMiseÀJourSource: "2020-10-01",
-            value: null,
-          },
-          nombreJournéesPartiellesPsy: {
-            dateMiseÀJourSource: "2020-10-01",
-            value: null,
-          },
-          nombreJournéesCompletesSsr: {
-            dateMiseÀJourSource: "2020-10-01",
-            value: null,
-          },
-        }),
-      ],
-      wording
-    );
-
-    // WHEN
-    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
-
-    // THEN
-    const titre = screen.queryByText(wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, { selector: "p" });
-    expect(titre).not.toBeInTheDocument();
   });
 
   it("affiche le GraphiqueNombreDeSejourMCO", () => {
@@ -140,6 +108,8 @@ describe("Bloc Activité Sanitaire", () => {
           nombreJournéesCompletesPsy: {},
           nombreJournéesCompletesSsr: {},
           nombreJournéesPartiellesPsy: {},
+          nombreSéjoursHad: {},
+          nombreDePassagesAuxUrgences: {},
         }),
       ],
       wording
@@ -151,65 +121,6 @@ describe("Bloc Activité Sanitaire", () => {
     // THEN
     const titre = screen.queryByText(wording.NOMBRE_DE_SÉJOUR_MCO, { selector: "h6" });
     expect(titre).toBeInTheDocument();
-  });
-
-  it("n'affiche pas le GraphiqueNombreDeSejourMCO si les valeurs sont vide", () => {
-    // GIVEN
-    const viewModel = new EntitéJuridiqueActivitésViewModel(
-      [
-        mock<EntitéJuridiqueActivités>({
-          année: annéeEnCours - 1,
-          nombreSéjoursPartielsMédecine: {
-            dateMiseÀJourSource: "2020-10-01",
-            value: null,
-          },
-          nombreSéjoursCompletsMédecine: {
-            dateMiseÀJourSource: "2020-10-01",
-            value: null,
-          },
-          nombreSéjoursPartielsChirurgie: {
-            dateMiseÀJourSource: "2020-10-01",
-            value: null,
-          },
-          nombreSéjoursCompletsChirurgie: {
-            dateMiseÀJourSource: "2020-10-01",
-            value: null,
-          },
-          nombreSéjoursPartielsObstétrique: {
-            dateMiseÀJourSource: "2020-10-01",
-            value: null,
-          },
-          nombreSéjoursCompletsObstétrique: {
-            dateMiseÀJourSource: "2020-10-01",
-            value: null,
-          },
-          nombreJournéesPartiellesSsr: {},
-          nombreJournéesCompletesPsy: {},
-          nombreJournéesCompletesSsr: {},
-          nombreJournéesPartiellesPsy: {},
-        }),
-      ],
-      wording
-    );
-
-    // WHEN
-    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
-
-    // THEN
-    const titre = screen.queryByText(wording.NOMBRE_DE_SÉJOUR_MCO, { selector: "p" });
-    expect(titre).not.toBeInTheDocument();
-  });
-
-  it("n'affiche pas l'indicateur HAD si il n'y a pas des donnees", () => {
-    // GIVEN
-    const viewModel = new EntitéJuridiqueActivitésViewModel([], wording);
-
-    // WHEN
-    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
-
-    // THEN
-    const titre = screen.queryByText(wording.NOMBRE_DE_HAD, { selector: "p" });
-    expect(titre).not.toBeInTheDocument();
   });
 
   it("affiche  l'indicateur HAD si il y a des donnees", () => {
@@ -226,6 +137,7 @@ describe("Bloc Activité Sanitaire", () => {
           nombreJournéesCompletesPsy: {},
           nombreJournéesCompletesSsr: {},
           nombreJournéesPartiellesPsy: {},
+          nombreDePassagesAuxUrgences: {},
         }),
       ],
       wording
