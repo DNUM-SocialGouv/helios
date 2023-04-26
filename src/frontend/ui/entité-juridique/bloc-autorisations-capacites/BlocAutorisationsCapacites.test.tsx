@@ -81,7 +81,7 @@ describe("Bloc Autorisation et activités", () => {
   it("affiche le Graphique Equipement Lourds", () => {
     // GIVEN
     viewModel.equipementsLourds = mock<EquipementsMateriauxLourdsActivités>({
-      autorisations: [{ equipementEtablissements: [{ equipements: [{ autorisations: [{ nom: "test2" }] }] }] }],
+      autorisations: [{ equipementEtablissements: [{ equipements: [{ autorisations: [{ nom: "test2", valeur: "10" }] }] }] }],
     });
 
     // WHEN

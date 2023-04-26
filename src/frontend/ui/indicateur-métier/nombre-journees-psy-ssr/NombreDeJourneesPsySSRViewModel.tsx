@@ -33,12 +33,15 @@ export class NombreDeJourneesPsySSRViewModel {
   }
 
   public get nombreDeJournéesPsyEtSsrSontIlsRenseignés(): boolean {
-    return this.activitésPsySSR.some(
-      (activité: ActivitesPsySSR) =>
-        activité["nombreJournéesPartiellesPsy"].value !== null ||
-        activité["nombreJournéesCompletesSsr"].value !== null ||
-        activité["nombreJournéesPartielsSsr"].value !== null ||
-        activité["nombreJournéesCompletePsy"].value !== null
+    return this.activitésPsySSR.some(this.psySSRRenseignes);
+  }
+
+  private psySSRRenseignes(activité: ActivitesPsySSR): boolean {
+    return (
+      activité["nombreJournéesPartiellesPsy"].value !== null ||
+      activité["nombreJournéesCompletesSsr"].value !== null ||
+      activité["nombreJournéesPartielsSsr"].value !== null ||
+      activité["nombreJournéesCompletePsy"].value !== null
     );
   }
 
@@ -55,7 +58,7 @@ export class NombreDeJourneesPsySSRViewModel {
     };
     const années: number[] = [];
 
-    this.activitésPsySSR.forEach((activité: ActivitesPsySSR) => {
+    this.activitésPsySSR.filter(this.psySSRRenseignes).forEach((activité: ActivitesPsySSR) => {
       années.push(activité.année);
       nombreDeJournées.nombreJournéesComplètesPsy.push({
         x: activité.année,

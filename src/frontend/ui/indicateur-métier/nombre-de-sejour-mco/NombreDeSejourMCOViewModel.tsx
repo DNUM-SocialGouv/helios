@@ -31,14 +31,17 @@ export class NombreDeSejourMCOViewModel {
   }
 
   public get nombreDeSéjoursMCOSontIlsRenseignés(): boolean {
-    return this.activitésMCO.some(
-      (activité: ActivitéMCO) =>
-        activité["nombreSéjoursPartielsMédecine"].value !== null ||
-        activité["nombreSéjoursCompletsMédecine"].value !== null ||
-        activité["nombreSéjoursPartielsChirurgie"].value !== null ||
-        activité["nombreSéjoursCompletsChirurgie"].value !== null ||
-        activité["nombreSéjoursPartielsObstétrique"].value !== null ||
-        activité["nombreSéjoursCompletsObstétrique"].value !== null
+    return this.activitésMCO.some(this.activitesMCORenseignees);
+  }
+
+  private activitesMCORenseignees(activité: ActivitéMCO): boolean {
+    return (
+      activité["nombreSéjoursPartielsMédecine"].value !== null ||
+      activité["nombreSéjoursCompletsMédecine"].value !== null ||
+      activité["nombreSéjoursPartielsChirurgie"].value !== null ||
+      activité["nombreSéjoursCompletsChirurgie"].value !== null ||
+      activité["nombreSéjoursPartielsObstétrique"].value !== null ||
+      activité["nombreSéjoursCompletsObstétrique"].value !== null
     );
   }
 
@@ -57,7 +60,7 @@ export class NombreDeSejourMCOViewModel {
     };
     const années: number[] = [];
 
-    this.activitésMCO.forEach((activité: ActivitéMCO) => {
+    this.activitésMCO.filter(this.activitesMCORenseignees).forEach((activité: ActivitéMCO) => {
       années.push(activité.année);
       nombreDeSéjours.nombreSéjoursCompletsChirurgie.push({
         x: activité.année,

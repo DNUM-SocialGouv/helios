@@ -58,7 +58,9 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
     );
 
     const listeAnnéesManquantes = annéesManquantes(
-      this.budgetEtFinancesMédicoSocial.map((montantDesContributionsAuxFraisDeSiègeParAnnée) => montantDesContributionsAuxFraisDeSiègeParAnnée.année)
+      montantDesContributionsAuxFraisDeSiègeParAnnée.map(
+        (montantDesContributionsAuxFraisDeSiègeParAnnée) => montantDesContributionsAuxFraisDeSiègeParAnnée.année
+      )
     );
 
     return <IndicateurTabulaire annéesManquantes={listeAnnéesManquantes} valeursParAnnée={montantDesContributionsAuxFraisDeSiègeParAnnée} />;

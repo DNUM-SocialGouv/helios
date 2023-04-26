@@ -9,6 +9,8 @@ import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
 import { couleurDelAbscisse } from "./couleursGraphique";
 
+import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
+
 function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuTooltip: Function, wording: Wording): ChartOptions<"bar"> {
   return {
     animation: false,
@@ -58,11 +60,16 @@ export function HistogrammeVerticalABandes(props: {
 }) {
   const { wording } = useDependencies();
   const listeAnnéesManquantes = annéesManquantes(props.libellés, props.annéesTotales);
+  const aucuneDonnee = listeAnnéesManquantes.length >= props.annéesTotales;
 
   return (
     <>
-      <Bar data={props.data} options={optionsHistogrammeÀBandes(props.idDeLaLégende, props.créeLeLibelléDuTooltip, wording)} />
-      <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} />
+      {!aucuneDonnee ? (
+        <>
+          <Bar data={props.data} options={optionsHistogrammeÀBandes(props.idDeLaLégende, props.créeLeLibelléDuTooltip, wording)} />
+          <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} />
+        </>
+      ) : null}
       {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
       <Transcription entêteLibellé={wording.ANNÉE} identifiants={props.identifiants} libellés={props.libellés} valeurs={props.valeurs} />
     </>
