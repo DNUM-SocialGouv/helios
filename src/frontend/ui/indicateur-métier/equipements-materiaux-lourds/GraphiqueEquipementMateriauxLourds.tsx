@@ -16,7 +16,7 @@ export const GraphiqueEquipementMateriauxLourds = ({ entiteJuridiqueEquipementLo
       contenuInfoBulle={
         <ContenuÉquipementsMatérielsLourds
           dateDeMiseÀJour={entiteJuridiqueEquipementLourds.dateMiseÀJourSource}
-          // estEntitéJuridique={true}
+          estEntitéJuridique={true}
           source={Sources(wording.FINESS, wording.ARHGOS)}
         />
       }

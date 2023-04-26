@@ -5,9 +5,10 @@ import { useDependencies } from "../../commun/contexts/useDependencies";
 type ContenuÉquipementsMatérielsLourdsProps = Readonly<{
   dateDeMiseÀJour: string;
   source: ReactElement;
+  estEntitéJuridique?: boolean;
 }>;
 
-export const ContenuÉquipementsMatérielsLourds = ({ dateDeMiseÀJour, source }: ContenuÉquipementsMatérielsLourdsProps) => {
+export const ContenuÉquipementsMatérielsLourds = ({ dateDeMiseÀJour, source, estEntitéJuridique = false }: ContenuÉquipementsMatérielsLourdsProps) => {
   const { wording } = useDependencies();
 
   return (
@@ -29,6 +30,15 @@ export const ContenuÉquipementsMatérielsLourds = ({ dateDeMiseÀJour, source }
           Hebdomadaire
         </p>
       </section>
+      {estEntitéJuridique && (
+        <section aria-label={wording.MODE_DE_CALCUL}>
+          <p>
+            <span className="fr-text--bold">Mode de calcul : </span>
+            Les équipements affichés au niveau de l’entité juridique (EJ) correspondent à l’ensemble des équipements des établissements géographiques sanitaires
+            rattachés à l’EJ.
+          </p>
+        </section>
+      )}
       <section aria-label={wording.SOURCES}>
         <p>
           <span className="fr-text--bold">Source(s) : </span>
