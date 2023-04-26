@@ -109,4 +109,22 @@ describe("Bloc Autorisation et activités", () => {
     expect(autresActivites).not.toBeInTheDocument();
     expect(reconnaissanceContractuelles).not.toBeInTheDocument();
   });
+
+  it("affiche un l'indicateur vide si il n'y a pas des données", () => {
+    // GIVEN
+    const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
+      [],
+      { autorisations: [], dateMiseÀJourSource: "" },
+      { autorisations: [], dateMiseÀJourSource: "" },
+      { autorisations: [], dateMiseÀJourSource: "" },
+      wording
+    );
+
+    // WHEN
+    renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
+
+    // THEN
+    const titre = screen.getByText(wording.INDICATEURS_VIDES);
+    expect(titre).toBeInTheDocument();
+  });
 });
