@@ -144,7 +144,8 @@ export interface Wording {
 
   // Bloc Autorisation
   readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string;
-  readonly AUTORISATIONS: string;
+  readonly AUTORISATIONS_SANITAIRE: string;
+  readonly AUTORISATIONS_MS: string;
   readonly AUTORISATIONS_ACTIVITES: string;
   readonly DATE_D_AUTORISATION: string;
   readonly DATE_DE_FIN: string;
@@ -159,6 +160,7 @@ export interface Wording {
 
   // Bloc Autorisation Sanitaire
   readonly AUTRES_ACTIVITÉS: string;
+  readonly AUTRES_ACTIVITÉS_SAN: string;
   readonly RECONNAISSANCES_CONTRACTUELLES: string;
   readonly ÉQUIPEMENTS_MATÉRIELS_LOURDS: string;
   readonly DATE_D_EFFET_ASR: ReactElement;

@@ -38,7 +38,7 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             }
             dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesAutorisations}
             identifiant="autorisations-sanitaire"
-            nomDeLIndicateur={wording.AUTORISATIONS}
+            nomDeLIndicateur={wording.AUTORISATIONS_SANITAIRE}
             source={Sources(wording.FINESS, wording.ARHGOS)}
           >
             {établissementTerritorialSanitaireAutorisationsViewModel.autorisations}
@@ -54,7 +54,7 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             }
             dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesAutresActivités}
             identifiant="autres-activités-sanitaire"
-            nomDeLIndicateur={wording.AUTRES_ACTIVITÉS}
+            nomDeLIndicateur={wording.AUTRES_ACTIVITÉS_SAN}
             source={Sources(wording.FINESS, wording.ARHGOS)}
           >
             {établissementTerritorialSanitaireAutorisationsViewModel.autresActivités}

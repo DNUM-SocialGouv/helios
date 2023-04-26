@@ -173,7 +173,8 @@ export class WordingFr implements Wording {
 
   // Bloc Autorisation
   readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string = "autorisation et capacité";
-  readonly AUTORISATIONS: string = "Autorisations";
+  readonly AUTORISATIONS_SANITAIRE: string = "Autorisations de soins";
+  readonly AUTORISATIONS_MS: string = "Autorisations sociales et médico-sociales";
   readonly AUTORISATIONS_ACTIVITES: string = "Autorisations d'activité de soins";
   readonly DATE_D_AUTORISATION: string = "Date d’autorisation";
   readonly CAPACITÉ_AUTORISÉE: string = "Capacité autorisée";
@@ -188,6 +189,7 @@ export class WordingFr implements Wording {
 
   // Bloc Autorisation Sanitaire
   readonly AUTRES_ACTIVITÉS: string = "Autres activités";
+  readonly AUTRES_ACTIVITÉS_SAN: string = "Autres activités de soins";
   readonly RECONNAISSANCES_CONTRACTUELLES: string = "Reconnaissances contractuelles";
   readonly ÉQUIPEMENTS_MATÉRIELS_LOURDS: string = "Équipements matériels lourds";
   readonly DATE_DE_FIN: string = "Date de fin";
@@ -232,7 +234,7 @@ export class WordingFr implements Wording {
   readonly PLACES: string = "Places";
 
   // Bloc budget et finances
-  readonly TITRE_BLOC_BUDGET_ET_FINANCES: string = "budget & finances";
+  readonly TITRE_BLOC_BUDGET_ET_FINANCES: string = "budget et finances";
   readonly MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE: string = "Montant de la contribution aux frais de siège et/ou de groupement";
   readonly MONTANT: string = "Montant";
   readonly TAUX_DE_VÉTUSTÉ_CONSTRUCTION: string = "Taux de vétusté construction";

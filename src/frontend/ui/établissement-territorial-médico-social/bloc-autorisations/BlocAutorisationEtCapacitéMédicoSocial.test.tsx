@@ -148,7 +148,7 @@ describe("La page établissement territorial médico-social - bloc autorisation 
     const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
     const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
     const autorisations = indicateurs[1];
-    const titre = within(autorisations).getByText(wording.AUTORISATIONS, { selector: "h6" });
+    const titre = within(autorisations).getByText(wording.AUTORISATIONS_MS, { selector: "h6" });
     expect(titre).toBeInTheDocument();
     const dateMiseAJour = within(autorisations).getAllByText(textMatch(`${wording.miseÀJour("18/08/2022")} - Source : ARHGOS, FINESS`), { selector: "p" });
     expect(dateMiseAJour[0]).toBeInTheDocument();
@@ -178,7 +178,7 @@ describe("La page établissement territorial médico-social - bloc autorisation 
 
     // THEN
     expect(détails).toHaveAttribute("data-fr-opened", "true");
-    const infoBulle = screen.getByRole("dialog", { name: wording.AUTORISATIONS });
+    const infoBulle = screen.getByRole("dialog", { name: wording.AUTORISATIONS_MS });
     const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
     expect(fermer).toBeInTheDocument();
     const abréviationSourceFournisseur = within(infoBulle).getAllByText("FINESS", { selector: "abbr" });
@@ -207,7 +207,7 @@ describe("La page établissement territorial médico-social - bloc autorisation 
     const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
     const détails = within(indicateurs[1]).getByRole("button", { name: wording.DÉTAILS });
     fireEvent.click(détails);
-    const infoBulle = screen.getByRole("dialog", { name: wording.AUTORISATIONS });
+    const infoBulle = screen.getByRole("dialog", { name: wording.AUTORISATIONS_MS });
     const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
 
     // WHEN
@@ -327,7 +327,7 @@ describe("La page établissement territorial médico-social - bloc autorisation 
     );
 
     // THEN
-    const titre = screen.queryByText(wording.AUTORISATIONS, { selector: "h6" });
+    const titre = screen.queryByText(wording.AUTORISATIONS_MS, { selector: "h6" });
     expect(titre).not.toBeInTheDocument();
   });
 });

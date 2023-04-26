@@ -23,7 +23,7 @@ export const PageEcoConception = () => {
       <ol>
         <li className="fr-mb-2w">
           Dès le cadrage, l’équipe de conception et de développement a été sensibilisée aux enjeux environnementaux du numérique et a intégré dans ses rituels,
-          ses outils et son pilotage produit les bonnes pratiques d’éco-conception.
+          ses outils et son pilotage les bonnes pratiques d’éco-conception.
         </li>
         <li className="fr-mb-2w">
           Nous faisons des audits express via&nbsp;
