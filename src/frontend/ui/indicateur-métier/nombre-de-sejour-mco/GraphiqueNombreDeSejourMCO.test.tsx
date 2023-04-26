@@ -148,4 +148,13 @@ describe("Graphique Nombre de Sejour MCO", () => {
       expect(transcriptionTable.getByText("90")).toBeInTheDocument();
     });
   });
+
+  it("affiche la mise en exergue pour les années manquantes", () => {
+    // WHEN
+    renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
+
+    // THEN
+    const exergue = graphiqueTest.miseEnExergue([annéeEnCours - 5, annéeEnCours - 4, annéeEnCours - 3, annéeEnCours - 2]);
+    expect(exergue).toBeInTheDocument();
+  });
 });

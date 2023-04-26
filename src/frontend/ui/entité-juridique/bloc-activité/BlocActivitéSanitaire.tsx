@@ -22,22 +22,13 @@ export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel }: B
   return (
     <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
       <ul className="indicateurs">
-        {entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés && (
-          <GraphiqueNombreDeSejourMCO
-            estEntitéJuridique={true}
-            nombreDeSejourMCOViewModel={entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel}
-          ></GraphiqueNombreDeSejourMCO>
-        )}
-        {entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés && (
-          <GraphiquePsySSR estEntitéJuridique={true} nombreJournéesPsySSRViewModel={entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel} />
-        )}
-        {entitéJuridiqueActivitéViewModel.nombreHADEstIlRenseigné() && <GraphiqueHAD entitéJuridiqueActivitéViewModel={entitéJuridiqueActivitéViewModel} />}
-        {entitéJuridiqueActivitéViewModel.nombrePassageUrgenceEstIlRenseigné() && (
-          <GraphiqueNombrePassageUrgence
-            estEntitéJuridique={true}
-            nombrePassageAuxUrgencesViewModel={entitéJuridiqueActivitéViewModel.nombreDePassageAuxUrgencesViewModel}
-          />
-        )}
+        <GraphiqueNombreDeSejourMCO estEntitéJuridique={true} nombreDeSejourMCOViewModel={entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel} />
+        <GraphiquePsySSR estEntitéJuridique={true} nombreJournéesPsySSRViewModel={entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel} />
+        <GraphiqueHAD entitéJuridiqueActivitéViewModel={entitéJuridiqueActivitéViewModel} />
+        <GraphiqueNombrePassageUrgence
+          estEntitéJuridique={true}
+          nombrePassageAuxUrgencesViewModel={entitéJuridiqueActivitéViewModel.nombreDePassageAuxUrgencesViewModel}
+        />
       </ul>
     </Bloc>
   );

@@ -24,36 +24,37 @@ export const BlocAutorisationEtCapacitéMédicoSocial = ({
   return (
     <Bloc isMain={false} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
-        {établissementTerritorialAutorisationsMédicoSocialViewModel.lesCapacitésSontEllesRenseignées && (
-          <IndicateurGraphique
-            contenuInfoBulle={
-              <ContenuCapacitéParActivité
-                dateDeMiseÀJour={établissementTerritorialAutorisationsMédicoSocialViewModel.dateDeMiseÀJourDesCapacitésParActivités}
-                source={Sources(wording.FINESS)}
-              />
-            }
-            dateDeMiseÀJour={établissementTerritorialAutorisationsMédicoSocialViewModel.dateDeMiseÀJourDesCapacitésParActivités}
-            identifiant="capacité-par-activités-médico-social"
-            nomDeLIndicateur={wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
-            source={Sources(wording.FINESS)}
-          >
-            {établissementTerritorialAutorisationsMédicoSocialViewModel.capacitéParActivités}
-          </IndicateurGraphique>
-        )}
         <IndicateurGraphique
           contenuInfoBulle={
-            <ContenuAutorisations
-              dateDeMiseÀJour={établissementTerritorialAutorisationsMédicoSocialViewModel.dateDeMiseÀJourDesAutorisations}
-              source={Sources(wording.FINESS, wording.ARHGOS)}
+            <ContenuCapacitéParActivité
+              dateDeMiseÀJour={établissementTerritorialAutorisationsMédicoSocialViewModel.dateDeMiseÀJourDesCapacitésParActivités}
+              source={Sources(wording.FINESS)}
             />
           }
-          dateDeMiseÀJour={établissementTerritorialAutorisationsMédicoSocialViewModel.dateDeMiseÀJourDesAutorisations}
-          identifiant="autorisations-médico-social"
-          nomDeLIndicateur={wording.AUTORISATIONS}
-          source={Sources(wording.FINESS, wording.ARHGOS)}
+          dateDeMiseÀJour={établissementTerritorialAutorisationsMédicoSocialViewModel.dateDeMiseÀJourDesCapacitésParActivités}
+          identifiant="capacité-par-activités-médico-social"
+          nomDeLIndicateur={wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
+          source={Sources(wording.FINESS)}
         >
-          {établissementTerritorialAutorisationsMédicoSocialViewModel.autorisations}
+          {établissementTerritorialAutorisationsMédicoSocialViewModel.capacitéParActivités}
         </IndicateurGraphique>
+
+        {établissementTerritorialAutorisationsMédicoSocialViewModel.lesAutorisationsSontEllesRenseignées ? (
+          <IndicateurGraphique
+            contenuInfoBulle={
+              <ContenuAutorisations
+                dateDeMiseÀJour={établissementTerritorialAutorisationsMédicoSocialViewModel.dateDeMiseÀJourDesAutorisations}
+                source={Sources(wording.FINESS, wording.ARHGOS)}
+              />
+            }
+            dateDeMiseÀJour={établissementTerritorialAutorisationsMédicoSocialViewModel.dateDeMiseÀJourDesAutorisations}
+            identifiant="autorisations-médico-social"
+            nomDeLIndicateur={wording.AUTORISATIONS}
+            source={Sources(wording.FINESS, wording.ARHGOS)}
+          >
+            {établissementTerritorialAutorisationsMédicoSocialViewModel.autorisations}
+          </IndicateurGraphique>
+        ) : null}
       </ul>
     </Bloc>
   );

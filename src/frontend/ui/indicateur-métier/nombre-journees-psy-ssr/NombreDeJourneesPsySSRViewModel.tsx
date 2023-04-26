@@ -21,6 +21,7 @@ export type ActivitesPsySSR = Pick<
 >;
 
 export class NombreDeJourneesPsySSRViewModel {
+  public NOMBRE_ANNEES = 5;
   readonly identifiantDeLaLégendeDesJournéesPsyEtSsr = "légende-graphique-sanitaire-journées-psy-et-ssr";
   private nombreDeJournées: DonnéesDeDiagrammeDesJournéesPsyEtSsr;
   années: number[];

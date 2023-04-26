@@ -1,9 +1,12 @@
 import { fireEvent, screen, within } from "@testing-library/react";
+import { mock } from "jest-mock-extended";
 
+import { ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation";
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
-import { PageÉtablissementTerritorialMédicoSocial } from "../PageÉtablissementTerritorialMédicoSocial";
 import { ÉtablissementTerritorialMédicoSocialViewModel } from "../ÉtablissementTerritorialMédicoSocialViewModel";
+import { BlocAutorisationEtCapacitéMédicoSocial } from "./BlocAutorisationEtCapacitéMédicoSocial";
+import { ÉtablissementTerritorialMédicoSocialAutorisationsViewModel } from "./ÉtablissementTerritorialMédicoSocialAutorisationsViewModel";
 
 const { paths, wording } = fakeFrontDependencies;
 
@@ -12,13 +15,15 @@ describe("La page établissement territorial médico-social - bloc autorisation 
 
   it("affiche le titre de la partie capacités, sa source et l’accès aux détails", () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(
+      <BlocAutorisationEtCapacitéMédicoSocial
+        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
+      />
+    );
 
     // THEN
-    const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
-    const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
-    const capacités = indicateurs[0];
-    const titre = within(capacités).getByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: "h6" });
+    const capacités = screen.getAllByRole("listitem")[0];
+    const titre = screen.getByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: "h6" });
     expect(titre).toBeInTheDocument();
     const dateMiseAJour = within(capacités).getAllByText(textMatch(`${wording.miseÀJour("19/08/2022")} - Source : FINESS`), { selector: "p" });
     expect(dateMiseAJour[0]).toBeInTheDocument();
@@ -31,7 +36,11 @@ describe("La page établissement territorial médico-social - bloc autorisation 
 
   it("affiche un tableau descriptif des capacités", () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(
+      <BlocAutorisationEtCapacitéMédicoSocial
+        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
+      />
+    );
 
     // THEN
     const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -73,7 +82,11 @@ describe("La page établissement territorial médico-social - bloc autorisation 
 
   it('affiche le contenu de l’info bulle des capacités après avoir cliqué sur le bouton "détails"', () => {
     // GIVEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(
+      <BlocAutorisationEtCapacitéMédicoSocial
+        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
+      />
+    );
 
     const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
     const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
@@ -103,7 +116,11 @@ describe("La page établissement territorial médico-social - bloc autorisation 
 
   it('ferme l’info bulle des capacités après avoir cliqué sur le bouton "Fermer"', () => {
     // GIVEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(
+      <BlocAutorisationEtCapacitéMédicoSocial
+        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
+      />
+    );
 
     const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
     const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
@@ -119,67 +136,13 @@ describe("La page établissement territorial médico-social - bloc autorisation 
     expect(détails).toHaveAttribute("data-fr-opened", "false");
   });
 
-  it("n’affiche pas l’histogramme des capacités si elles ne sont pas renseignées", () => {
-    // GIVEN
-    const établissementTerritorialSansAutorisation = new ÉtablissementTerritorialMédicoSocialViewModel(
-      {
-        activités: [],
-        autorisationsEtCapacités: {
-          autorisations: {
-            dateMiseÀJourSource: "2022-05-14",
-            disciplines: [
-              {
-                activités: [
-                  {
-                    clientèles: [
-                      {
-                        code: "010",
-                        datesEtCapacités: {
-                          capacitéAutoriséeTotale: 10,
-                          capacitéInstalléeTotale: 10,
-                          dateDAutorisation: "2020-01-01",
-                          dateDeDernièreInstallation: "2020-01-01",
-                          dateDeMiseÀJourDAutorisation: "2020-01-01",
-                          estInstallée: true,
-                        },
-                        libellé: "Tous Types de Déficiences Pers.Handicap.(sans autre indic.)",
-                      },
-                    ],
-                    code: "21",
-                    libellé: "Accueil de Jour",
-                  },
-                ],
-                code: "658",
-                libellé: "Accueil temporaire pour adultes handicapés",
-              },
-            ],
-          },
-          capacités: {
-            capacitéParActivité: [],
-            dateMiseÀJourSource: "2022-08-18",
-          },
-          numéroFinessÉtablissementTerritorial: "010000040",
-        },
-        budgetEtFinances: [],
-        identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
-        ressourcesHumaines: [],
-      },
-      wording,
-      paths
-    );
-
-    // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansAutorisation} />);
-
-    // THEN
-    const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
-    const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
-    expect(within(indicateurs[0]).queryByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: "p" })).not.toBeInTheDocument();
-  });
-
   it("affiche le titre de la partie autorisations, sa source et l’accès aux détails", () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(
+      <BlocAutorisationEtCapacitéMédicoSocial
+        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
+      />
+    );
 
     // THEN
     const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -200,7 +163,11 @@ describe("La page établissement territorial médico-social - bloc autorisation 
 
   it('affiche le contenu de l’info bulle des autorisations après avoir cliqué sur le bouton "détails"', () => {
     // GIVEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(
+      <BlocAutorisationEtCapacitéMédicoSocial
+        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
+      />
+    );
 
     const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
     const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
@@ -230,7 +197,11 @@ describe("La page établissement territorial médico-social - bloc autorisation 
 
   it('ferme l’info bulle des autorisations après avoir cliqué sur le bouton "Fermer"', () => {
     // GIVEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(
+      <BlocAutorisationEtCapacitéMédicoSocial
+        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
+      />
+    );
 
     const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
     const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
@@ -248,7 +219,11 @@ describe("La page établissement territorial médico-social - bloc autorisation 
 
   it("affiche un lien pour chaque disciplines de l’établissement", () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(
+      <BlocAutorisationEtCapacitéMédicoSocial
+        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
+      />
+    );
 
     // THEN
     const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -262,7 +237,11 @@ describe("La page établissement territorial médico-social - bloc autorisation 
 
   it("affiche un lien pour chaque activités d’une discipline", () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(
+      <BlocAutorisationEtCapacitéMédicoSocial
+        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
+      />
+    );
 
     // THEN
     const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -278,7 +257,11 @@ describe("La page établissement territorial médico-social - bloc autorisation 
 
   it("affiche le titre, les dates et les capacités pour chaque clientèle quand ces informations sont renseignées", () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(
+      <BlocAutorisationEtCapacitéMédicoSocial
+        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
+      />
+    );
 
     // THEN
     const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
@@ -320,11 +303,31 @@ describe("La page établissement territorial médico-social - bloc autorisation 
     );
 
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansAutorisation} />);
+    renderFakeComponent(
+      <BlocAutorisationEtCapacitéMédicoSocial
+        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialSansAutorisation.autorisationsViewModel}
+      />
+    );
 
     // THEN
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
     const phrase = within(activité).getByText(wording.INDICATEURS_VIDES);
     expect(phrase).toBeInTheDocument();
+  });
+
+  it("n'affiche pas les autorisations s'il n'y en a pas", () => {
+    const autorisationsCapacites = { ...ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations, autorisations: { disciplines: [] } };
+    const etablissementMedicoSocialAutorisationsViewModel = new ÉtablissementTerritorialMédicoSocialAutorisationsViewModel(
+      mock<ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité>(autorisationsCapacites),
+      wording
+    );
+    // WHEN
+    renderFakeComponent(
+      <BlocAutorisationEtCapacitéMédicoSocial établissementTerritorialAutorisationsMédicoSocialViewModel={etablissementMedicoSocialAutorisationsViewModel} />
+    );
+
+    // THEN
+    const titre = screen.queryByText(wording.AUTORISATIONS, { selector: "h6" });
+    expect(titre).not.toBeInTheDocument();
   });
 });

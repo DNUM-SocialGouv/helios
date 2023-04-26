@@ -10,27 +10,14 @@ import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
-import { couleurDelAbscisse, couleurDuFondDeLaLigne } from "./couleursGraphique";
-
-export type LibelléDeDonnéeGraphe = Readonly<{
-  couleur: string;
-}>;
-
-export type LibelléDeTickGraphe = Readonly<{
-  tailleDePolice: string;
-}>;
-
-export type CouleurHistogramme = Readonly<{
-  premierPlan: string;
-  secondPlan?: string;
-}>;
+import { couleurDelAbscisse, couleurDuFondDeLaLigne, CouleurHistogramme, TaillePoliceTick } from "./couleursGraphique";
 
 export function HistogrammeVertical(props: {
   valeurs: number[];
   libellés: (number | string)[];
   couleursDeLHistogramme: CouleurHistogramme[];
-  libellésDesValeurs: LibelléDeDonnéeGraphe[];
-  libellésDesTicks: LibelléDeTickGraphe[];
+  couleurDesLibelles: string[];
+  taillePoliceTicks: TaillePoliceTick[];
   entêteLibellé: string;
   identifiant: string;
   annéesTotales: number;
@@ -60,7 +47,7 @@ export function HistogrammeVertical(props: {
       {
         backgroundColor: props.couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
         data: props.valeurs,
-        datalabels: { labels: { title: { color: props.libellésDesValeurs.map((libellé) => libellé.couleur) } } },
+        datalabels: { labels: { title: { color: props.couleurDesLibelles } } },
         maxBarThickness: 60,
         type: "bar",
         xAxisID: "x",
@@ -84,7 +71,7 @@ export function HistogrammeVertical(props: {
         <Bar
           // @ts-ignore
           data={data}
-          options={optionsHistogrammeVertical(props.libellésDesTicks.map((libelléDuTick) => libelléDuTick.tailleDePolice))}
+          options={optionsHistogrammeVertical(props.taillePoliceTicks)}
         />
       )}
       {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
