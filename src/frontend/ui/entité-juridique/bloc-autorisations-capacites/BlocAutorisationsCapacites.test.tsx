@@ -5,6 +5,7 @@ import {
   AutorisationsActivités,
   AutresActivités,
   CapacitéSanitaireEntitéJuridique,
+  EquipementsMateriauxLourdsActivités,
   ReconnaissanceContractuelleActivités,
 } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
@@ -14,16 +15,20 @@ import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "./EntitéJuridi
 const { wording } = fakeFrontDependencies;
 
 describe("Bloc Autorisation et activités", () => {
-  it("affiche le GraphiqueCapacitesParActivite", () => {
-    // GIVEN
-    const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
+  let viewModel: EntitéJuridiqueAutorisationsCapacitesViewModel;
+
+  beforeAll(() => {
+    viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
       [mock<CapacitéSanitaireEntitéJuridique>({ année: annéeEnCours - 1 })],
-      { autorisations: [], dateMiseÀJourSource: "" },
-      { autorisations: [], dateMiseÀJourSource: "" },
-      { autorisations: [], dateMiseÀJourSource: "" },
+      mock<AutorisationsActivités>({ autorisations: [] }),
+      mock<AutresActivités>({ autorisations: [] }),
+      mock<ReconnaissanceContractuelleActivités>({ autorisations: [] }),
+      mock<EquipementsMateriauxLourdsActivités>({ autorisations: [] }),
       wording
     );
+  });
 
+  it("affiche le GraphiqueCapacitesParActivite", () => {
     // WHEN
     renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
 
@@ -34,13 +39,9 @@ describe("Bloc Autorisation et activités", () => {
 
   it("affiche le GraphiqueAutorisationActivite", () => {
     // GIVEN
-    const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
-      [mock<CapacitéSanitaireEntitéJuridique>({ année: annéeEnCours - 1 })],
-      mock<AutorisationsActivités>({ autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }] }),
-      mock<AutresActivités>({ autorisations: [] }),
-      mock<ReconnaissanceContractuelleActivités>({ autorisations: [] }),
-      wording
-    );
+    viewModel.autorisationsActivités = mock<AutorisationsActivités>({
+      autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }],
+    });
 
     // WHEN
     renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
@@ -52,14 +53,9 @@ describe("Bloc Autorisation et activités", () => {
 
   it("affiche le Graphique Autres Activite", () => {
     // GIVEN
-    const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
-      [mock<CapacitéSanitaireEntitéJuridique>({ année: annéeEnCours - 1 })],
-      mock<AutorisationsActivités>({ autorisations: [] }),
-      mock<AutresActivités>({ autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test2" }] }] }] }] }] }),
-      mock<ReconnaissanceContractuelleActivités>({ autorisations: [] }),
-      wording
-    );
-
+    viewModel.autresActivités = mock<AutresActivités>({
+      autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test2" }] }] }] }] }],
+    });
     // WHEN
     renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
 
@@ -70,15 +66,9 @@ describe("Bloc Autorisation et activités", () => {
 
   it("affiche le Graphique Reconnaissance Contractuelles", () => {
     // GIVEN
-    const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
-      [mock<CapacitéSanitaireEntitéJuridique>({ année: annéeEnCours - 1 })],
-      mock<AutorisationsActivités>({ autorisations: [] }),
-      mock<AutresActivités>({ autorisations: [] }),
-      mock<ReconnaissanceContractuelleActivités>({
-        autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test2" }] }] }] }] }],
-      }),
-      wording
-    );
+    viewModel.reconnaissanceActivités = mock<ReconnaissanceContractuelleActivités>({
+      autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test2" }] }] }] }] }],
+    });
 
     // WHEN
     renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
@@ -88,10 +78,25 @@ describe("Bloc Autorisation et activités", () => {
     expect(titre).toBeInTheDocument();
   });
 
+  it("affiche le Graphique Equipement Lourds", () => {
+    // GIVEN
+    viewModel.equipementsLourds = mock<EquipementsMateriauxLourdsActivités>({
+      autorisations: [{ equipementEtablissements: [{ equipements: [{ autorisations: [{ nom: "test2" }] }] }] }],
+    });
+
+    // WHEN
+    renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
+
+    // THEN
+    const titre = screen.getByText(wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, { selector: "h6" });
+    expect(titre).toBeInTheDocument();
+  });
+
   it("n'affiche pas le graphique capacité par activité s'il n'y a pas de valeur", () => {
     // GIVEN
     const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
       [],
+      { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
@@ -110,6 +115,7 @@ describe("Bloc Autorisation et activités", () => {
     // GIVEN
     const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
       [],
+      { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
