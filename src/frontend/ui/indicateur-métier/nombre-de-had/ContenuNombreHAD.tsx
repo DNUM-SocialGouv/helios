@@ -38,8 +38,8 @@ export const ContenuNombreHAD = ({ dateDeMiseÀJour, source }: ContenuNombreHADP
           <li>Hospitalisation A Domicile (HAD) - fichiers RAPSS (Résumés Anonyme Par Sous-Séquence)</li>
         </ul>
         <p>
-          Hélios collecte ces données depuis le SI mutualisé des ARS DIAMANT qui est un système décisionnel national permettant de stocker des informations
-          provenant de plusieurs sources. DIAMANT : Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation
+          Hélios collecte ces données depuis le SI mutualisé des ARS DIAMANT « Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation. », outil décisionnel de
+          pilotage centré sur la régulation de l’offre de soins, abordée sous les aspects des moyens humains, financiers, et productivité.
         </p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>

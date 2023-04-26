@@ -61,7 +61,7 @@ export const ContenuTauxDeCaf = ({ dateDeMiseÀJour, source }: ContenuTauxDeCafP
           <li>CA PH (« Charges expl. » et « Produits expl. »)</li>
         </ul>
         <p>
-          Hélios collecte ces données depuis le SI mutualisé des ARS DIAMANT « Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation », outil décisionnel de
+          Hélios collecte ces données depuis le SI mutualisé des ARS DIAMANT « Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation. », outil décisionnel de
           pilotage centré sur la régulation de l’offre de soins, abordée sous les aspects des moyens humains, financiers, et productivité.
         </p>
       </section>

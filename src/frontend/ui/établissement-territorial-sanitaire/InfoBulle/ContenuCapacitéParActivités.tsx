@@ -65,8 +65,8 @@ export const ContenuCapacitéParActivités = ({ dateDeMiseÀJour, source, estEnt
           Statistique annuelle des établissements de santé (SAE) - Direction de la Recherche, des Études, de l’Évaluation et des Statistiques (DREES).
           <br />
           <br />
-          DIAMANT « Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation. » est un outil décisionnel de pilotage centré sur la régulation de l’offre de
-          soins, abordée sous les aspects des moyens humains, financiers, et productivité.
+          Hélios collecte ces données depuis le SI mutualisé des ARS DIAMANT « Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation. », outil décisionnel de
+          pilotage centré sur la régulation de l’offre de soins, abordée sous les aspects des moyens humains, financiers, et productivité.
         </p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
