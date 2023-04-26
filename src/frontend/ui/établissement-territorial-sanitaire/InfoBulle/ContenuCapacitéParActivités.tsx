@@ -65,8 +65,6 @@ export const ContenuCapacitéParActivités = ({ dateDeMiseÀJour, source, estEnt
           Statistique annuelle des établissements de santé (SAE) - Direction de la Recherche, des Études, de l’Évaluation et des Statistiques (DREES).
           <br />
           <br />
-          Hélios collecte ces données depuis le SI mutualisé des ARS DIAMANT « Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation. », outil décisionnel de
-          pilotage centré sur la régulation de l’offre de soins, abordée sous les aspects des moyens humains, financiers, et productivité.
         </p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
@@ -74,6 +72,10 @@ export const ContenuCapacitéParActivités = ({ dateDeMiseÀJour, source, estEnt
           La Statistique annuelle des établissements de santé (SAE) est une enquête administrative exhaustive obligatoire, réalisée chaque année par la DREES
           auprès de tous les établissements de santé de France, pour recueillir des informations sur leur activité, leurs capacités, leurs équipements, et leurs
           personnel médicaux et non-médicaux.
+        </p>
+        <p>
+          Hélios collecte ces données depuis le SI mutualisé des ARS DIAMANT « Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation. », outil décisionnel de
+          pilotage centré sur la régulation de l’offre de soins, abordée sous les aspects des moyens humains, financiers, et productivité.
         </p>
       </section>
     </>
