@@ -25,7 +25,9 @@ describe("GraphiqueEquipementMaterielLourd", () => {
       mock<AutorisationsActivités>(),
       mock<AutresActivités>(),
       mock<ReconnaissanceContractuelleActivités>(),
-      mock<EquipementsMateriauxLourdsActivités>({ autorisations: [{ equipementEtablissements: [{ equipements: [{ autorisations: [{ nom: "test" }] }] }] }] }),
+      mock<EquipementsMateriauxLourdsActivités>({
+        autorisations: [{ equipementEtablissements: [{ equipements: [{ autorisations: [{ nom: "test", valeur: "test value" }] }] }] }],
+      }),
       wording
     );
   });

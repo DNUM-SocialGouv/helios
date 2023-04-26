@@ -53,6 +53,7 @@ export class EntitéJuridiqueViewModelTestBuilder {
       autorisationsActivités: { autorisations: [], dateMiseÀJourSource: "" },
       autresActivités: { autorisations: [], dateMiseÀJourSource: "" },
       reconnaissanceContractuelleActivités: { autorisations: [], dateMiseÀJourSource: "" },
+      equipementMaterielLordsActivités: { autorisations: [], dateMiseÀJourSource: "" },
     },
   };
 
