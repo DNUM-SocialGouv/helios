@@ -1,6 +1,7 @@
 import {
   AutorisationsActivités,
   AutresActivités,
+  EquipementsMateriauxLourdsActivités,
   ReconnaissanceContractuelleActivités,
 } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { CapacitéSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
@@ -12,6 +13,7 @@ export class EntitéJuridiqueAutorisationsCapacitesViewModel {
   public autorisationsActivités: AutorisationsActivités;
   public autresActivités: AutresActivités;
   public reconnaissanceActivités: ReconnaissanceContractuelleActivités;
+  public equipementsLourds: EquipementsMateriauxLourdsActivités;
   public dateMiseAJourAutorisationActivités: string;
 
   constructor(
@@ -19,12 +21,14 @@ export class EntitéJuridiqueAutorisationsCapacitesViewModel {
     autorisationsSanitaire: AutorisationsActivités,
     autresActivitesSanitaire: AutresActivités,
     reconnaissancesContractuellesSanitaire: ReconnaissanceContractuelleActivités,
+    equipementsLourdsSanitaire: EquipementsMateriauxLourdsActivités,
     wording: Wording
   ) {
     this.graphiqueCapacitesParActivitesViewModel = new GraphiqueCapacitésParActivitéViewModel(capacites, wording);
     this.autorisationsActivités = autorisationsSanitaire;
     this.autresActivités = autresActivitesSanitaire;
     this.reconnaissanceActivités = reconnaissancesContractuellesSanitaire;
+    this.equipementsLourds = equipementsLourdsSanitaire;
     this.dateMiseAJourAutorisationActivités = autorisationsSanitaire.dateMiseÀJourSource;
   }
 
@@ -40,5 +44,8 @@ export class EntitéJuridiqueAutorisationsCapacitesViewModel {
   }
   public lesReconnaissanceContractuellesNeSontPasRenseignées(): boolean {
     return !(this.reconnaissanceActivités.autorisations && this.reconnaissanceActivités.autorisations.length > 0);
+  }
+  public lesEquipementsLourdsNeSontPasRenseignées(): boolean {
+    return !(this.equipementsLourds.autorisations && this.equipementsLourds.autorisations.length > 0);
   }
 }

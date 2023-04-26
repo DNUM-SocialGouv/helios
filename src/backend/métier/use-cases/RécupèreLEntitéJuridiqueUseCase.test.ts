@@ -14,6 +14,7 @@ import { EntitéJuridiqueNonTrouvée } from "../entities/EntitéJuridiqueNonTrou
 import { EntitéJuridiqueLoader } from "../gateways/EntitéJuridiqueLoader";
 import { RécupèreLEntitéJuridiqueUseCase } from "./RécupèreLEntitéJuridiqueUseCase";
 
+// TODO look at refactring the mock to only have it once and not repeated everywhere
 describe("La récupération d’une entité juridique", () => {
   let entiteJuridiqueLoaderMock: EntitéJuridiqueLoader;
 

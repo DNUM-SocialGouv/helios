@@ -11,142 +11,119 @@ import { Tag, TAG_SIZE, TagCliquable } from "../../commun/Tag";
 import style from "./EquipementsTagMultiNiveaux.module.css";
 
 export type EquipementsProps = {
-  activites: EquipementLourds[];
+  equipementLourds: EquipementLourds[];
 };
-
-const mockEquipementEtab1: EquipementEtablissement[] = [
-  {
-    numeroFiness: "570001057",
-    nomEtablissement: "amazing Hospital",
-    equipements: [
-      {
-        autorisations: [
-          {
-            nom: "dateDAutorisation1",
-            valeur: "10/02/2020",
-          },
-          {
-            nom: "dateDeFin1",
-            valeur: "10/10/2023",
-          },
-          {
-            nom: "dateDeMiseEnOeuvre1",
-            valeur: "13/05/2025",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    numeroFiness: "570001222",
-    nomEtablissement: "happy Hospital",
-    equipements: [
-      {
-        autorisations: [
-          {
-            nom: "dateDAutorisation1",
-            valeur: "10/02/2020",
-          },
-          {
-            nom: "dateDeFin1",
-            valeur: "10/10/2023",
-          },
-          {
-            nom: "dateDeMiseEnOeuvre1",
-            valeur: "13/05/2025",
-          },
-        ],
-      },
-      {
-        autorisations: [
-          {
-            nom: "dateDAutorisation2",
-            valeur: "10/02/2020",
-          },
-          {
-            nom: "dateDeFin2",
-            valeur: "10/10/2023",
-          },
-          {
-            nom: "dateDeMiseEnOeuvre2",
-            valeur: "13/05/2025",
-          },
-        ],
-      },
-    ],
-  },
-];
-
-const mockEquipementEtab2: EquipementEtablissement[] = [
-  {
-    numeroFiness: "570001057",
-    nomEtablissement: "normal Hospital",
-    equipements: [
-      {
-        autorisations: [
-          {
-            nom: "dateDAutorisation1",
-            valeur: "10/02/2020",
-          },
-          {
-            nom: "dateDeFin1",
-            valeur: "10/10/2023",
-          },
-          {
-            nom: "dateDeMiseEnOeuvre1",
-            valeur: "13/05/2025",
-          },
-          {
-            nom: "autre Date",
-            valeur: "13/05/2025",
-          },
-        ],
-      },
-      {
-        autorisations: [
-          {
-            nom: "dateDAutorisation2",
-            valeur: "10/02/2020",
-          },
-          {
-            nom: "dateDeFin2",
-            valeur: "10/10/2023",
-          },
-          {
-            nom: "dateDeMiseEnOeuvre2",
-            valeur: "13/05/2025",
-          },
-        ],
-      },
-    ],
-  },
-];
-
-const mockPrimaryLabel = [
-  {
-    libelle: "label",
-    code: "01",
-    equipementEtablissements: mockEquipementEtab1,
-  },
-  {
-    libelle: "label2",
-    code: "02",
-    equipementEtablissements: mockEquipementEtab2,
-  },
-];
 
 export const EquipementsTagMultiniveauxMock = () => {
-  return <EquipementsTagMultiniveaux activites={mockPrimaryLabel} />;
+  return <EquipementsTagMultiniveaux equipementLourds={blah} />;
 };
 
-export const EquipementsTagMultiniveaux = ({ activites }: EquipementsProps): ReactElement => {
+const blah = [
+  {
+    equipementEtablissements: [
+      {
+        numeroFiness: "010005239",
+        nomEtablissement: "CH DU HAUT BUGEY - GEOVREISSET",
+        equipements: [
+          {
+            autorisations: [
+              {
+                nom: "Numéro ARHGOS",
+                valeur: "01-00-0000",
+              },
+              {
+                nom: "Date d'autorisation",
+                valeur: "06/11/2007",
+              },
+              {
+                nom: "Date de mis en oeuvre",
+                valeur: "19/10/2011",
+              },
+              {
+                nom: "Date de fin",
+                valeur: "01/01/2029",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    libelle: "Scanographe à utilisation médicale",
+    code: "05602",
+  },
+  {
+    equipementEtablissements: [
+      {
+        numeroFiness: "010786259",
+        nomEtablissement: "USLD CH DE NANTUA",
+        equipements: [
+          {
+            autorisations: [
+              {
+                nom: "Numéro ARHGOS",
+                valeur: "02-00-0000",
+              },
+              {
+                nom: "Date d'autorisation",
+                valeur: "N/A",
+              },
+              {
+                nom: "Date de mis en oeuvre",
+                valeur: "N/A",
+              },
+              {
+                nom: "Date de fin",
+                valeur: "N/A",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    libelle: "Caméra à scintillation sans détecteur d'émission de positons",
+    code: "05701",
+  },
+  {
+    equipementEtablissements: [
+      {
+        numeroFiness: "010005239",
+        nomEtablissement: "CH DU HAUT BUGEY - GEOVREISSET",
+        equipements: [
+          {
+            autorisations: [
+              {
+                nom: "Numéro ARHGOS",
+                valeur: "01-00-0001",
+              },
+              {
+                nom: "Date d'autorisation",
+                valeur: "02/05/2006",
+              },
+              {
+                nom: "Date de mis en oeuvre",
+                valeur: "20/01/2009",
+              },
+              {
+                nom: "Date de fin",
+                valeur: "16/02/2027",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    libelle: "Appareil d'IRM à utilisation clinique",
+    code: "06201",
+  },
+] as EquipementLourds[];
+export const EquipementsTagMultiniveaux = ({ equipementLourds }: EquipementsProps): ReactElement => {
   return (
     <ul>
-      {activites.map((activité) => (
-        <li key={`activité-${activité.code}`}>
-          <TagCliquable for={`equipementlourds-accordion-${activité.code}`} titre={`${activité.libelle} [${activité.code}]`} />
-          <ul className="fr-collapse niveau1" id={`equipementlourds-accordion-${activité.code}`}>
-            {activité.equipementEtablissements.map((equipements) => (
+      {equipementLourds.map((equipementLourd) => (
+        <li key={`equipementlourd-${equipementLourd.code}`}>
+          <TagCliquable for={`equipementlourds-accordion-${equipementLourd.code}`} titre={`${equipementLourd.libelle} [${equipementLourd.code}]`} />
+          <ul className="fr-collapse niveau1" id={`equipementlourds-accordion-${equipementLourd.code}`}>
+            {equipementLourd.equipementEtablissements.map((equipements) => (
               <EquipementEtablissement
                 equipements={equipements.equipements}
                 key={`details-${equipements.numeroFiness}`}
