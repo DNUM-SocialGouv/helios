@@ -54,6 +54,10 @@ export const ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées = ({
           solidarité pour l’autonomie (CNSA), le Tableau de bord de la performance est devenu un outil de référence pour l’ensemble des acteurs du secteur
           médico-social.
         </p>
+        <p>
+          Hélios collecte ces données depuis le SI mutualisé des ARS DIAMANT « Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation. », outil décisionnel de
+          pilotage centré sur la régulation de l’offre de soins, abordée sous les aspects des moyens humains, financiers, et productivité.
+        </p>
       </section>
     </>
   );

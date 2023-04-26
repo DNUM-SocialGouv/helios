@@ -19,8 +19,8 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
   );
 
   it.each([
-    [wording.AUTORISATIONS, "autorisations-sanitaire"],
-    [wording.AUTRES_ACTIVITÉS, "autres-activités-sanitaire"],
+    [wording.AUTORISATIONS_SANITAIRE, "autorisations-sanitaire"],
+    [wording.AUTRES_ACTIVITÉS_SAN, "autres-activités-sanitaire"],
     [wording.RECONNAISSANCES_CONTRACTUELLES, "reconnaissances-contractuelles-sanitaire"],
     [wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, "équipements-matériels-lourds-sanitaire"],
   ])("affiche le titre de la partie %s, sa source et l’accès aux détails", (nomDeLIndicateur: string, suffixeDeLInfoBulle: string) => {
@@ -44,43 +44,45 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     expect(détails).toHaveAttribute("data-fr-opened", "false");
   });
 
-  it.each([[wording.AUTORISATIONS], [wording.AUTRES_ACTIVITÉS], [wording.RECONNAISSANCES_CONTRACTUELLES], [wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS]])(
-    "a une infobulle avec le contenu relatif aux %s",
-    (nomDeLIndicateur: string) => {
-      // GIVEN
-      renderFakeComponent(<BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModel} />);
+  it.each([
+    [wording.AUTORISATIONS_SANITAIRE],
+    [wording.AUTRES_ACTIVITÉS_SAN],
+    [wording.RECONNAISSANCES_CONTRACTUELLES],
+    [wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS],
+  ])("a une infobulle avec le contenu relatif aux %s", (nomDeLIndicateur: string) => {
+    // GIVEN
+    renderFakeComponent(<BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModel} />);
 
-      const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
-      const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
-      const autorisations = sélectionneLIndicateur(nomDeLIndicateur, indicateurs);
-      const détails = within(autorisations).getByRole("button", { name: wording.DÉTAILS });
+    const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
+    const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
+    const autorisations = sélectionneLIndicateur(nomDeLIndicateur, indicateurs);
+    const détails = within(autorisations).getByRole("button", { name: wording.DÉTAILS });
 
-      // WHEN
-      fireEvent.click(détails);
+    // WHEN
+    fireEvent.click(détails);
 
-      // THEN
-      expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = screen.getByRole("dialog", { name: nomDeLIndicateur });
-      const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
-      expect(fermer).toBeInTheDocument();
-      const abréviationSourceFournisseur = within(infoBulle).getAllByText("FINESS", { selector: "abbr" });
-      expect(abréviationSourceFournisseur[0]).toHaveAttribute("title", wording.FINESS_TITLE);
-      const abréviationSourceOrigine = within(infoBulle).getAllByText("ARHGOS", { selector: "abbr" });
-      expect(abréviationSourceOrigine[0]).toHaveAttribute("title", wording.ARHGOS_TITLE);
-      const élémentsDeCompréhension = within(infoBulle).getByRole("region", { name: wording.ÉLÉMENTS_DE_COMPRÉHENSION });
-      expect(élémentsDeCompréhension).toBeInTheDocument();
-      const fréquence = within(infoBulle).getByRole("region", { name: wording.FRÉQUENCE });
-      expect(fréquence).toBeInTheDocument();
-      const sources = within(infoBulle).getByRole("region", { name: wording.SOURCES });
-      expect(sources).toBeInTheDocument();
-      const informationsComplémentaires = within(infoBulle).getByRole("region", { name: wording.INFOS_COMPLÉMENTAIRES });
-      expect(informationsComplémentaires).toBeInTheDocument();
-    }
-  );
+    // THEN
+    expect(détails).toHaveAttribute("data-fr-opened", "true");
+    const infoBulle = screen.getByRole("dialog", { name: nomDeLIndicateur });
+    const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
+    expect(fermer).toBeInTheDocument();
+    const abréviationSourceFournisseur = within(infoBulle).getAllByText("FINESS", { selector: "abbr" });
+    expect(abréviationSourceFournisseur[0]).toHaveAttribute("title", wording.FINESS_TITLE);
+    const abréviationSourceOrigine = within(infoBulle).getAllByText("ARHGOS", { selector: "abbr" });
+    expect(abréviationSourceOrigine[0]).toHaveAttribute("title", wording.ARHGOS_TITLE);
+    const élémentsDeCompréhension = within(infoBulle).getByRole("region", { name: wording.ÉLÉMENTS_DE_COMPRÉHENSION });
+    expect(élémentsDeCompréhension).toBeInTheDocument();
+    const fréquence = within(infoBulle).getByRole("region", { name: wording.FRÉQUENCE });
+    expect(fréquence).toBeInTheDocument();
+    const sources = within(infoBulle).getByRole("region", { name: wording.SOURCES });
+    expect(sources).toBeInTheDocument();
+    const informationsComplémentaires = within(infoBulle).getByRole("region", { name: wording.INFOS_COMPLÉMENTAIRES });
+    expect(informationsComplémentaires).toBeInTheDocument();
+  });
 
   it.each([
-    [wording.AUTORISATIONS, "autorisations", "activités"],
-    [wording.AUTRES_ACTIVITÉS, "autresActivités", "activités"],
+    [wording.AUTORISATIONS_SANITAIRE, "autorisations", "activités"],
+    [wording.AUTRES_ACTIVITÉS_SAN, "autresActivités", "activités"],
     [wording.RECONNAISSANCES_CONTRACTUELLES, "reconnaissancesContractuelles", "activités"],
     [wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, "équipementsMatérielsLourds", "équipements"],
   ])("n’affiche pas l’indicateur si l’établissement n’a pas de %s", (nomDeLIndicateur: string, champDeLaDonnéeVide: string, activitésOuÉquipements) => {
@@ -114,7 +116,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
       const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
-      const autorisations = sélectionneLIndicateur(wording.AUTORISATIONS, indicateurs);
+      const autorisations = sélectionneLIndicateur(wording.AUTORISATIONS_SANITAIRE, indicateurs);
       expect(
         within(autorisations).getByRole("link", { name: "Traitement de l'insuffisance rénale chronique par épuration extrarénale [16]" })
       ).toBeInTheDocument();
@@ -127,7 +129,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
       const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
-      const autorisations = sélectionneLIndicateur(wording.AUTORISATIONS, indicateurs);
+      const autorisations = sélectionneLIndicateur(wording.AUTORISATIONS_SANITAIRE, indicateurs);
       expect(within(autorisations).getByRole("link", { name: "Hémodialyse en unité médicalisée [42]" })).toBeInTheDocument();
     });
 
@@ -138,7 +140,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
       const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
-      const autorisations = sélectionneLIndicateur(wording.AUTORISATIONS, indicateurs);
+      const autorisations = sélectionneLIndicateur(wording.AUTORISATIONS_SANITAIRE, indicateurs);
       const informationsDUneAutorisation = within(autorisations).getAllByRole("list", { name: "autorisations" })[0];
       const tags = within(informationsDUneAutorisation).getAllByRole("listitem");
 
@@ -158,7 +160,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
       const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
-      const autresActivités = sélectionneLIndicateur(wording.AUTRES_ACTIVITÉS, indicateurs);
+      const autresActivités = sélectionneLIndicateur(wording.AUTRES_ACTIVITÉS_SAN, indicateurs);
       const activité1 = within(autresActivités).getByRole("link", { name: "Installation de chirurgie esthétique [A0]" });
       expect(activité1).toHaveAttribute("aria-expanded", "false");
       const activité2 = within(autresActivités).getByRole("link", { name: "Dépôt de sang [A1]" });
@@ -172,7 +174,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
       const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
-      const autresActivités = sélectionneLIndicateur(wording.AUTRES_ACTIVITÉS, indicateurs);
+      const autresActivités = sélectionneLIndicateur(wording.AUTRES_ACTIVITÉS_SAN, indicateurs);
       const modalité1 = within(autresActivités).getByRole("link", { name: "Dépôt relais [M2]" });
       expect(modalité1).toHaveAttribute("aria-expanded", "false");
       const modalité2 = within(autresActivités).getByRole("link", { name: "Dépôt d'urgence [M0]" });
@@ -188,7 +190,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
       // THEN
       const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
       const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
-      const autresActivités = sélectionneLIndicateur(wording.AUTRES_ACTIVITÉS, indicateurs);
+      const autresActivités = sélectionneLIndicateur(wording.AUTRES_ACTIVITÉS_SAN, indicateurs);
       const informationsDUneAutreActivité = within(autresActivités).getAllByRole("list", { name: "autre-activité" })[0];
       const tags = within(informationsDUneAutreActivité).getAllByRole("listitem");
 
@@ -251,7 +253,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
 
   it.each([
     {
-      indicateurAffiché: wording.AUTORISATIONS,
+      indicateurAffiché: wording.AUTORISATIONS_SANITAIRE,
       viewModel: ÉtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(wording, paths, {
         autresActivités: {
           activités: [],
@@ -286,7 +288,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
       }),
     },
     {
-      indicateurAffiché: wording.AUTRES_ACTIVITÉS,
+      indicateurAffiché: wording.AUTRES_ACTIVITÉS_SAN,
       viewModel: ÉtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(wording, paths, {
         autorisations: {
           activités: [],
@@ -518,7 +520,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
     const itemCapacitéParActivités = sélectionneLIndicateur(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, indicateurs);
     const indexPartieCapacitéParActivités = indicateurs.indexOf(itemCapacitéParActivités);
-    const itemAutorisations = sélectionneLIndicateur(wording.AUTORISATIONS, indicateurs);
+    const itemAutorisations = sélectionneLIndicateur(wording.AUTORISATIONS_SANITAIRE, indicateurs);
     const indexPartieAutorisations = indicateurs.indexOf(itemAutorisations);
     const itemAutresActivités = sélectionneLIndicateur(wording.AUTRES_ACTIVITÉS, indicateurs);
     const indexPartieAutresActivités = indicateurs.indexOf(itemAutresActivités);

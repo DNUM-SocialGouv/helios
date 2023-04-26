@@ -49,7 +49,7 @@ export const BlocAutorisationEtCapacitéMédicoSocial = ({
             }
             dateDeMiseÀJour={établissementTerritorialAutorisationsMédicoSocialViewModel.dateDeMiseÀJourDesAutorisations}
             identifiant="autorisations-médico-social"
-            nomDeLIndicateur={wording.AUTORISATIONS}
+            nomDeLIndicateur={wording.AUTORISATIONS_MS}
             source={Sources(wording.FINESS, wording.ARHGOS)}
           >
             {établissementTerritorialAutorisationsMédicoSocialViewModel.autorisations}
