@@ -233,7 +233,7 @@ export class AutorisationsEtCapacitesPresenter {
         autorisations: this.sortAutorisationActivites(reconnaissanceContractuellesActivites),
         dateMiseÀJourSource: StringFormater.formatDate(autorisationsEtCapacites.reconnaissanceContractuellesSanitaire.dateMiseÀJourSource),
       },
-      equipementMaterielLordsActivités: {
+      equipementMaterielLourdsActivités: {
         autorisations: this.sortEquipementsLourds(equipementMateriauxLourdsActivites),
         dateMiseÀJourSource: StringFormater.formatDate(autorisationsEtCapacites.equipementMaterielLourdSanitaire.dateMiseÀJourSource),
       },

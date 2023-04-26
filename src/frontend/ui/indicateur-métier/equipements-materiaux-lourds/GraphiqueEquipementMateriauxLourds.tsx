@@ -21,7 +21,7 @@ export const GraphiqueEquipementMateriauxLourds = ({ entiteJuridiqueEquipementLo
         />
       }
       dateDeMiseÀJour={entiteJuridiqueEquipementLourds.dateMiseÀJourSource}
-      identifiant="reconnaissance-contractuelles"
+      identifiant="equipement-materiaux-lourds"
       nomDeLIndicateur={wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS}
       source={Sources(wording.FINESS, wording.ARHGOS)}
     >

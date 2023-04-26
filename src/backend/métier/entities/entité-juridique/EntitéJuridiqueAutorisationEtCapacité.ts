@@ -17,7 +17,7 @@ export type EntitéJuridiqueAutorisationEtCapacité = Readonly<{
   autorisationsActivités: AutorisationsActivités;
   autresActivités: AutresActivités;
   reconnaissanceContractuelleActivités: ReconnaissanceContractuelleActivités;
-  equipementMaterielLordsActivités: EquipementsMateriauxLourdsActivités;
+  equipementMaterielLourdsActivités: EquipementsMateriauxLourdsActivités;
 }>;
 
 export type EntitéJuridiqueAutorisationEtCapacitéLoader = Readonly<{

@@ -1115,7 +1115,7 @@ describe("La récupération d’une entité juridique", () => {
       const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
 
       // THEN
-      expect(entitéJuridique.autorisationsEtCapacites.equipementMaterielLordsActivités.dateMiseÀJourSource).toBe("21/07/2023");
+      expect(entitéJuridique.autorisationsEtCapacites.equipementMaterielLourdsActivités.dateMiseÀJourSource).toBe("21/07/2023");
     });
 
     it("recuperer la liste des equipement Materiel lourds d'activités", async () => {
@@ -1144,7 +1144,7 @@ describe("La récupération d’une entité juridique", () => {
       const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
 
       // THEN
-      const activites = entitéJuridique.autorisationsEtCapacites.equipementMaterielLordsActivités.autorisations;
+      const activites = entitéJuridique.autorisationsEtCapacites.equipementMaterielLourdsActivités.autorisations;
       expect(activites).toHaveLength(1);
       expect(activites[0].code).toBe("1");
       expect(activites[0].libelle).toBe("Nom activité");
@@ -1181,7 +1181,7 @@ describe("La récupération d’une entité juridique", () => {
       const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
 
       // THEN
-      const activites = entitéJuridique.autorisationsEtCapacites.equipementMaterielLordsActivités.autorisations;
+      const activites = entitéJuridique.autorisationsEtCapacites.equipementMaterielLourdsActivités.autorisations;
       expect(activites).toHaveLength(3);
       expect(activites[0].code).toBe("1");
       expect(activites[1].code).toBe("2");
@@ -1222,7 +1222,7 @@ describe("La récupération d’une entité juridique", () => {
       const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
 
       // THEN
-      const activites = entitéJuridique.autorisationsEtCapacites.equipementMaterielLordsActivités.autorisations;
+      const activites = entitéJuridique.autorisationsEtCapacites.equipementMaterielLourdsActivités.autorisations;
       expect(activites).toHaveLength(2);
       expect(activites[0].code).toBe("1");
       expect(activites[1].code).toBe("2");
@@ -1260,7 +1260,7 @@ describe("La récupération d’une entité juridique", () => {
       const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
 
       // THEN
-      const equipementEtablissement = entitéJuridique.autorisationsEtCapacites.equipementMaterielLordsActivités.autorisations[0];
+      const equipementEtablissement = entitéJuridique.autorisationsEtCapacites.equipementMaterielLourdsActivités.autorisations[0];
       expect(equipementEtablissement.equipementEtablissements).toHaveLength(2);
       expect(equipementEtablissement.equipementEtablissements[0].numeroFiness).toBe("etablissement-1");
       expect(equipementEtablissement.equipementEtablissements[0].nomEtablissement).toBe("Nom ET 1");
@@ -1297,7 +1297,7 @@ describe("La récupération d’une entité juridique", () => {
       const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
 
       // THEN
-      const equipements = entitéJuridique.autorisationsEtCapacites.equipementMaterielLordsActivités.autorisations[0].equipementEtablissements[0].equipements;
+      const equipements = entitéJuridique.autorisationsEtCapacites.equipementMaterielLourdsActivités.autorisations[0].equipementEtablissements[0].equipements;
       expect(equipements).toHaveLength(1);
       expect(equipements[0].autorisations[0].nom).toBe("Numéro ARHGOS");
       expect(equipements[0].autorisations[0].valeur).toBe("argos-1");

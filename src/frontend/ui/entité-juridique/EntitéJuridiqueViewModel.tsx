@@ -23,7 +23,7 @@ export class EntitéJuridiqueViewModel {
       entitéJuridique.autorisationsEtCapacites.autorisationsActivités,
       entitéJuridique.autorisationsEtCapacites.autresActivités,
       entitéJuridique.autorisationsEtCapacites.reconnaissanceContractuelleActivités,
-      entitéJuridique.autorisationsEtCapacites.equipementMaterielLordsActivités,
+      entitéJuridique.autorisationsEtCapacites.equipementMaterielLourdsActivités,
       wording
     );
   }

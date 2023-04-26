@@ -265,7 +265,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
     const autorisationsSanitaire = await this.chargeLesAutorisationsSanitaires(numéroFinessEntitéJuridique);
     const autresActivitesSanitaire = await this.chargeLesAutresActivitesSanitaires(numéroFinessEntitéJuridique);
     const reconnaissanceContractuellesSanitaire = await this.chargeLesReconnaissanceContractuellesSanitaires(numéroFinessEntitéJuridique);
-    const equipementMaterielLordsSanitaire = await this.chargeLesEquipementsMaterielLordsSanitaire(numéroFinessEntitéJuridique);
+    const equipementMaterielLourdsSanitaire = await this.chargeLesEquipementsMaterielLourdsSanitaire(numéroFinessEntitéJuridique);
 
     return {
       capacités: this.construisLesCapacités(capacitésDeLÉtablissementModel, dateDeMiseÀJourDiamantAnnSaeModel),
@@ -276,7 +276,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
         dateMiseÀJourSource: dateDeMiseÀJourFinessCs1400103Model.dernièreMiseÀJour,
       },
       equipementMaterielLourdSanitaire: {
-        autorisations: equipementMaterielLordsSanitaire,
+        autorisations: equipementMaterielLourdsSanitaire,
         dateMiseÀJourSource: dateDeMiseÀJourFinessCs1400103Model.dernièreMiseÀJour,
       },
       numéroFinessEntitéJuridique,
@@ -310,7 +310,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
       .getMany();
   }
 
-  private async chargeLesEquipementsMaterielLordsSanitaire(numéroFinessEntitéJuridique: string): Promise<ÉquipementMatérielLourdSanitaireModel[]> {
+  private async chargeLesEquipementsMaterielLourdsSanitaire(numéroFinessEntitéJuridique: string): Promise<ÉquipementMatérielLourdSanitaireModel[]> {
     return (await this.orm)
       .getRepository(ÉquipementMatérielLourdSanitaireModel)
       .createQueryBuilder("equipement_materiel_lourd_sanitaire")
