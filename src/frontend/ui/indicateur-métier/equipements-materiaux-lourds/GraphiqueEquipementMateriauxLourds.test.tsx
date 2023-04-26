@@ -68,7 +68,7 @@ describe("GraphiqueEquipementMaterielLourd", () => {
 
       // THEN
       const détails = graphiqueTest.détail;
-      expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-reconnaissance-contractuelles`);
+      expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-equipement-materiaux-lourds`);
       expect(détails).toHaveAttribute("data-fr-opened", "false");
     });
 
