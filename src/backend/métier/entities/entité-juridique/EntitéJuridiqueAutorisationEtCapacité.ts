@@ -1,6 +1,7 @@
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
 import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
+import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
 import { CapacitéSanitaire } from "../établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 
 export type CapacitéSanitaireEntitéJuridique = CapacitéSanitaire;
@@ -8,6 +9,7 @@ export type CapacitéSanitaireEntitéJuridique = CapacitéSanitaire;
 export type AutorisationsActivités = { autorisations: AutorisationActivites[]; dateMiseÀJourSource: string };
 export type AutresActivités = { autorisations: AutorisationActivites[]; dateMiseÀJourSource: string };
 export type ReconnaissanceContractuelleActivités = { autorisations: AutorisationActivites[]; dateMiseÀJourSource: string };
+export type EquipementsMateriauxLourdsActivités = { autorisations: EquipementLourds[]; dateMiseÀJourSource: string };
 
 export type EntitéJuridiqueAutorisationEtCapacité = Readonly<{
   numéroFinessEntitéJuridique: string;
@@ -15,6 +17,7 @@ export type EntitéJuridiqueAutorisationEtCapacité = Readonly<{
   autorisationsActivités: AutorisationsActivités;
   autresActivités: AutresActivités;
   reconnaissanceContractuelleActivités: ReconnaissanceContractuelleActivités;
+  equipementMaterielLourdsActivités: EquipementsMateriauxLourdsActivités;
 }>;
 
 export type EntitéJuridiqueAutorisationEtCapacitéLoader = Readonly<{
@@ -23,6 +26,7 @@ export type EntitéJuridiqueAutorisationEtCapacitéLoader = Readonly<{
   autorisationsSanitaire: { autorisations: AutorisationSanitaireModel[]; dateMiseÀJourSource: string };
   autresActivitesSanitaire: { autorisations: AutreActivitéSanitaireModel[]; dateMiseÀJourSource: string };
   reconnaissanceContractuellesSanitaire: { autorisations: ReconnaissanceContractuelleSanitaireModel[]; dateMiseÀJourSource: string };
+  equipementMaterielLourdSanitaire: { autorisations: ÉquipementMatérielLourdSanitaireModel[]; dateMiseÀJourSource: string };
 }>;
 
 export type Autorisation = {
@@ -59,7 +63,7 @@ export type EquipementLourds = {
 export type EquipementEtablissement = {
   numeroFiness: string;
   nomEtablissement: string;
-  etablissements: Equipements[];
+  equipements: Equipements[];
 };
 
 export type Equipements = {

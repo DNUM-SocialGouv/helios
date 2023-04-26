@@ -8,6 +8,7 @@ import { CapacitesSanitaireEntiteJuridiqueModel } from "../../../../../database/
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
+import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { DateMiseÀJourFichierSourceModelTestBuilder } from "../../../../../database/test-builder/DateMiseÀJourFichierSourceModelTestBuilder";
 import { EntitéJuridiqueModelTestBuilder } from "../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder";
@@ -32,6 +33,7 @@ describe("Entité juridique loader", () => {
   let autorisationsActivitesRepository: Repository<AutorisationSanitaireModel>;
   let autresActivitesRepository: Repository<AutreActivitéSanitaireModel>;
   let reconnaissanceContractuelleRepository: Repository<ReconnaissanceContractuelleSanitaireModel>;
+  let equipementMaterielLourdRepository: Repository<ÉquipementMatérielLourdSanitaireModel>;
 
   beforeAll(async () => {
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel);
@@ -43,6 +45,7 @@ describe("Entité juridique loader", () => {
     autorisationsActivitesRepository = (await orm).getRepository(AutorisationSanitaireModel);
     autresActivitesRepository = (await orm).getRepository(AutreActivitéSanitaireModel);
     reconnaissanceContractuelleRepository = (await orm).getRepository(ReconnaissanceContractuelleSanitaireModel);
+    equipementMaterielLourdRepository = (await orm).getRepository(ÉquipementMatérielLourdSanitaireModel);
   });
 
   beforeEach(async () => {
@@ -485,7 +488,7 @@ describe("Entité juridique loader", () => {
         );
       }
 
-      it("recuperer la liste des autres d'activités grouper par Activité", async () => {
+      it("recuperer la liste des reconnaissance contratuelles grouper par Activité", async () => {
         // GIVEN
         await dateMiseÀJourFichierSourceRepository.insert([
           DateMiseÀJourFichierSourceModelTestBuilder.crée({
@@ -514,6 +517,61 @@ describe("Entité juridique loader", () => {
         expect(reconnaissanceContractuellesSanitaire.autorisations[0].numéroAutorisationArhgos).toBe("1");
         expect(reconnaissanceContractuellesSanitaire.autorisations[0].établissementTerritorial.raisonSocialeCourte).toBe("HP VILLENEUVE DASCQ");
         expect(reconnaissanceContractuellesSanitaire.autorisations[1].numéroAutorisationArhgos).toBe("2");
+      });
+    });
+
+    describe("Equipement Materiel Lourds", () => {
+      async function insertEquipementLourds(
+        numeroFinessEJ: string,
+        numeroFinessET: string,
+        equipementMaterielLourd: Partial<ÉquipementMatérielLourdSanitaireModel>
+      ) {
+        await entitéJuridiqueRepository.upsert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: numeroFinessEJ }), [
+          "numéroFinessEntitéJuridique",
+        ]);
+        await etablissementTerritorialRepository.insert(
+          ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
+            numéroFinessEntitéJuridique: numeroFinessEJ,
+            numéroFinessÉtablissementTerritorial: numeroFinessET,
+          })
+        );
+        await equipementMaterielLourdRepository.insert(
+          ÉtablissementTerritorialAutorisationModelTestBuilder.créeÉquipementMatérielLourdSanitaire({
+            numéroFinessÉtablissementTerritorial: numeroFinessET,
+            ...equipementMaterielLourd,
+          })
+        );
+      }
+
+      it("recuperer la liste des equipements materiel lourd grouper par Activité", async () => {
+        // GIVEN
+        await dateMiseÀJourFichierSourceRepository.insert([
+          DateMiseÀJourFichierSourceModelTestBuilder.crée({
+            dernièreMiseÀJour: "2022-05-14",
+            fichier: FichierSource.FINESS_CS1400103,
+          }),
+        ]);
+        await insertEquipementLourds(numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial, {
+          numéroAutorisationArhgos: "1",
+        });
+        await insertEquipementLourds(numéroFinessEntitéJuridique, "et_num_2", {
+          numéroAutorisationArhgos: "2",
+        });
+        await insertEquipementLourds("autreEJ", "et_num_3", {
+          numéroAutorisationArhgos: "3",
+        });
+
+        // WHEN
+        const entiteJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
+        const { equipementMaterielLourdSanitaire } = await entiteJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique);
+
+        // THEN
+
+        expect(equipementMaterielLourdSanitaire.dateMiseÀJourSource).toBe("2022-05-14");
+        expect(equipementMaterielLourdSanitaire.autorisations).toHaveLength(2);
+        expect(equipementMaterielLourdSanitaire.autorisations[0].numéroAutorisationArhgos).toBe("1");
+        expect(equipementMaterielLourdSanitaire.autorisations[0].établissementTerritorial.raisonSocialeCourte).toBe("HP VILLENEUVE DASCQ");
+        expect(equipementMaterielLourdSanitaire.autorisations[1].numéroAutorisationArhgos).toBe("2");
       });
     });
   });

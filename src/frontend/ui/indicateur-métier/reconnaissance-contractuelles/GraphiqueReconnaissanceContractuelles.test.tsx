@@ -4,6 +4,7 @@ import { mock } from "jest-mock-extended";
 import {
   AutorisationsActivités,
   AutresActivités,
+  EquipementsMateriauxLourdsActivités,
   ReconnaissanceContractuelleActivités,
 } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
@@ -26,6 +27,7 @@ describe("GraphiqueReconnaissanceContractuelles", () => {
       mock<ReconnaissanceContractuelleActivités>({
         autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }],
       }),
+      mock<EquipementsMateriauxLourdsActivités>(),
       wording
     );
   });
@@ -60,21 +62,6 @@ describe("GraphiqueReconnaissanceContractuelles", () => {
   });
 
   describe("Détails info bulle", () => {
-    let viewModel: EntitéJuridiqueAutorisationsCapacitesViewModel;
-
-    beforeAll(() => {
-      // GIVEN
-      viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
-        [],
-        mock<AutorisationsActivités>(),
-        mock<AutresActivités>(),
-        mock<ReconnaissanceContractuelleActivités>({
-          autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }],
-        }),
-        wording
-      );
-    });
-
     it("affiche le bouton de détail", () => {
       // WHEN
       renderFakeComponent(<GraphiqueReconnaissanceContractuelles entiteJuridiqueAutorisations={viewModel.reconnaissanceActivités} />);
