@@ -82,8 +82,6 @@ describe("Graphique ResultatNetComptable", () => {
       graphiqueTest.ouvreDétail();
 
       // WHEN
-      // TODO regard why we cant use fermeDetail
-      // graphiqueTest.fermeDétail();
       const fermer = screen.getAllByRole("button", { name: wording.FERMER })[0];
       fireEvent.click(fermer);
 
