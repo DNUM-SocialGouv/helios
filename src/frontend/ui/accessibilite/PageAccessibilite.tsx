@@ -6,7 +6,7 @@ export const PageAccessibilite = () => {
         <i> Dernière mise à jour : 26 avril 2023</i>
       </p>
       <div className="fr-mb-5w">
-        <h2 className="fr-mb-h3">Qu’est-ce que l’accessibilité numérique ?</h2>
+        <h2 className="fr-h6">Qu’est-ce que l’accessibilité numérique ?</h2>
         <p>
           Un site web accessible est un site qui permet aux personnes en situation de handicap d’accéder à ses contenus et ses fonctionnalités sans difficulté.
         </p>
@@ -43,7 +43,11 @@ export const PageAccessibilite = () => {
         <p>
           Vous pouvez nous aider à améliorer l’accessibilité du site en nous signalant les problèmes éventuels que vous rencontrez. Pour ce faire, envoyez-nous
           un courriel à&nbsp;
-          <a className="fr-link" href="dnum.scn-helios-support@sg.social.gouv.fr">
+          <a
+            className="fr-link"
+            href="mailto:dnum.scn-helios-support@sg.social.gouv.fr"
+            title="Envoyer un email à dnum.scn-helios-support@sg.social.gouv.fr - ouvre un nouvelle fenêtre"
+          >
             dnum.scn-helios-support@sg.social.gouv.fr
           </a>
         </p>
