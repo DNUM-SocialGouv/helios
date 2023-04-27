@@ -6,6 +6,7 @@
 
 .list-equipement {
     display:inline-block;
+    margin-bottom:3px
 }
 
 @media(max-width:991px) {
@@ -29,4 +30,5 @@
 
 .nombre-equipement {
     display: inline;
+    font-size: 14px;
 }
