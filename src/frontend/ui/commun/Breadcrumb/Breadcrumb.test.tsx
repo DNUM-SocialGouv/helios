@@ -153,7 +153,7 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
     renderFakeComponent(
       <>
         <Breadcrumb />
-        <PageRégion région="bretagne" />
+        <PageRégion région="france-metropolitaine" />
       </>
     );
 
@@ -165,6 +165,6 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
     const région = levels[1];
     const lienAccueil = within(accueil).getByRole("link", { name: wording.ACCUEIL });
     expect(lienAccueil).toHaveAttribute("href", "/");
-    expect(within(région).getByText(wording.régionBreadcrumb(régions["bretagne"].label))).toBeInTheDocument();
+    expect(within(région).getByText(wording.régionBreadcrumb(régions["france-metropolitaine"].label))).toBeInTheDocument();
   });
 });
