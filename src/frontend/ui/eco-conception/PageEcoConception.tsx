@@ -16,8 +16,9 @@ export const PageEcoConception = () => {
         structurées en fiche de synthèse, permettent de situer l’acteur sanitaire ou médico-social dans son environnement.
       </p>
       <p>
-        L’équipe a, dès le début, intégré des bonnes pratiques d’écoconception pour le développement de sa plateforme numérique. Cette déclaration volontaire a
-        pour objectif de partager et de faire connaître notre démarche afin d’inspirer d’autres entités à s’engager en faveur d’un numérique plus responsable.
+        L’équipe a, dès le début du projet, intégré des bonnes pratiques d’écoconception pour le développement de sa plateforme numérique. Cette déclaration
+        volontaire a pour objectif de partager et de faire connaître notre démarche afin d’inspirer d’autres entités à s’engager en faveur d’un numérique plus
+        responsable.
       </p>
       <h2 className="fr-h6">Les bonnes pratiques que nous avons appliquées :</h2>
       <ol>
@@ -51,7 +52,7 @@ export const PageEcoConception = () => {
             <li>Veiller à la sobriété des pages et parcours avec comme objectif d’arriver en maximum 3 clics à la fonctionnalité principale</li>
             <li>Le téléchargement progressif en fonction de la navigation des éléments de la page et le lancement non automatique des contenus</li>
             <li>Privilégier les médias légers comme les pictos et optimiser les formats</li>
-            <li>Aucun tracking non nécessaire et donc cookie nécessitant le consentement des utilisateurs</li>
+            <li>Aucun tracking non nécessaire ni cookie nécessitant le consentement des utilisateurs</li>
             <li>Utilisation du Système de Design de l’État (DSFR)</li>
           </ul>
         </li>
@@ -78,7 +79,7 @@ export const PageEcoConception = () => {
       </p>
       <p className="fr-mb-2w">
         Afin de continuer de maximiser l’impact positif du service numérique et améliorer nos pratiques, nous avons ritualisé le suivi de notre impact
-        environnementale afin d’identifier des actions à intégrer au Backlog.
+        environnemental afin d’identifier des actions à intégrer au Backlog.
       </p>
     </>
   );
