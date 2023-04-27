@@ -51,6 +51,8 @@ describe("La page de d’accueil", () => {
     const listeRégions = within(cartographie).getAllByRole("listitem");
     const franceMetropole = within(listeRégions[0]).getByRole("link", { name: régions["france-metropolitaine"].label });
     expect(franceMetropole).toHaveAttribute("href", paths.RÉGION + "/france-metropolitaine");
+    const outreMer = within(listeRégions[1]).getByRole("link", { name: régions["outre-mer"].label });
+    expect(outreMer).toHaveAttribute("href", paths.RÉGION + "/outre-mer");
   });
 
   it('affiche les résultats après avoir cliqué sur le bouton "Rechercher"', async () => {

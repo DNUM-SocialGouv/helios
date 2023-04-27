@@ -12,6 +12,11 @@ export const GroupeBoutonRegions = () => {
           {régions["france-metropolitaine"].label}
         </Link>
       </li>
+      <li>
+        <Link className="fr-btn" href={paths.RÉGION + "/outre-mer"} passHref>
+          {régions["outre-mer"].label}
+        </Link>
+      </li>
     </ul>
   );
 };
