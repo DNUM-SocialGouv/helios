@@ -300,7 +300,6 @@ export interface Wording {
   // Données personnelles
   readonly FINALITÉ_ET_FONDEMENT_DU_TRAITEMENT: string;
   readonly PROTECTION_DES_DONNÉES_PERSONNELLES: string;
-  readonly DROITS_DES_PERSONNES_CONCERNÉES: string;
 
   // Mentions légales
   readonly ÉDITEUR_DU_SITE: string;

@@ -387,7 +387,6 @@ export class WordingFr implements Wording {
   // Données personnelles
   readonly FINALITÉ_ET_FONDEMENT_DU_TRAITEMENT: string = "Finalité et fondement du traitement";
   readonly PROTECTION_DES_DONNÉES_PERSONNELLES: string = "Protection des données personnelles";
-  readonly DROITS_DES_PERSONNES_CONCERNÉES: string = "Droits des personnes concernées";
 
   // Mentions légales
   readonly ÉDITEUR_DU_SITE: string = "Éditeur du site";

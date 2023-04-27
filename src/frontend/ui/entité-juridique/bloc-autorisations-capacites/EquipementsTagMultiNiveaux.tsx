@@ -41,9 +41,7 @@ const EquipementEtablissement = ({ numeroFiness, nomEtablissement, equipements }
   return (
     <li className={style["etablissement"]}>
       <div>
-        <Link className={style["etablissementFont"]} href={paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE + "/" + numeroFiness}>
-          {numeroFiness + " - " + nomEtablissement}
-        </Link>
+        <Link href={paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE + "/" + numeroFiness}>{numeroFiness + " - " + nomEtablissement}</Link>
         &nbsp;&nbsp;
         {equipements.length > 1 ? <p className={style["nombre-equipement"] + " " + style["etablissementFont"]}>({equipements.length} équipements)</p> : null}
       </div>
@@ -58,8 +56,8 @@ const EquipementEtablissement = ({ numeroFiness, nomEtablissement, equipements }
 
 const Autorisations = ({ autorisations }: Equipements): ReactElement => {
   return (
-    <li className={style["liste-etablissement"]}>
-      <Tag size={TAG_SIZE.SM}>
+    <li>
+      <Tag isComposedTag={style["list-equipement"]} size={TAG_SIZE.SM}>
         {autorisations.map((autorisation, index) => {
           const valeur = autorisation.nom ? autorisation.valeur : "N/A";
           return (

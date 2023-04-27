@@ -4,6 +4,10 @@
     margin-bottom: 10px;
 }
 
+.list-equipement {
+    display:inline-block;
+}
+
 @media(max-width:991px) {
     .etablissement {
         display:block;
@@ -16,14 +20,11 @@
     list-style: disc;
     height:fit-content;
     margin-right:10px;
+    font-size: 14px;
 }
 
 .etablissement li {
     line-height: 2;
-}
-
-.etablissementFont {
-    font-size: 14px;
 }
 
 .nombre-equipement {

@@ -1,5 +1,6 @@
 .liste-etablissements {
     list-style: circle;
+    font-size: 14px;
 }
 
 .etablissement {
