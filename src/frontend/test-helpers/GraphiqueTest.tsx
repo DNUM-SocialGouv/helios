@@ -20,7 +20,7 @@ export class GraphiqueTest {
   }
 
   titre(titre: string): HTMLElement | null {
-    return screen.queryByText(titre, { selector: "h6" });
+    return screen.queryByText(titre, { selector: "h3" });
   }
 
   titreDétail(titre: string): HTMLElement {

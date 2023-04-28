@@ -7,15 +7,16 @@ type SelectProps = Readonly<{
   label: ReactChild;
   onChange: ChangeEventHandler<HTMLSelectElement>;
   options: (number | string)[];
+  id?: string;
 }>;
 
-export const Select = ({ label, onChange, options }: SelectProps) => {
+export const Select = ({ label, onChange, options, id }: SelectProps) => {
   return (
     <span className={"fr-select-group " + styles["années"]}>
-      <label className={styles["invisible"]} htmlFor="select">
+      <label className={styles["invisible"]} htmlFor={"select" + label}>
         {label}
       </label>
-      <select className="fr-select" id="select" name="select" onChange={onChange}>
+      <select className="fr-select" id={"select" + id} name="select" onChange={onChange}>
         {options.map((option) => {
           return (
             <option key={option} value={option}>

@@ -43,7 +43,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
       const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
       const indicateur = indicateurs[indiceDeLIndicateur];
-      const titre = within(indicateur).getByText(libelléDeLIndicateur, { selector: "h6" });
+      const titre = within(indicateur).getByText(libelléDeLIndicateur, { selector: "h3" });
       expect(titre).toBeInTheDocument();
       const dateMiseAJour = within(indicateur).getAllByText(textMatch(`${wording.miseÀJour("01/01/2022")} - Source : CNSA`), { selector: "p" });
       expect(dateMiseAJour[0]).toBeInTheDocument();
@@ -69,7 +69,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
     const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
     const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
     const indicateur = indicateurs[indiceDeLIndicateur.recettesEtDépenses];
-    const titre = within(indicateur).getByText(wording.COMPTE_DE_RÉSULTAT_CA, { selector: "h6" });
+    const titre = within(indicateur).getByText(wording.COMPTE_DE_RÉSULTAT_CA, { selector: "h3" });
     expect(titre).toBeInTheDocument();
   });
 

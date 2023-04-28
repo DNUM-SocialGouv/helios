@@ -3,6 +3,7 @@ import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { ResultatNetComptable } from "../../indicateur-métier/resultat-net-comptable/ResultatNetComptable";
 import { TauxDeCaf } from "../../indicateur-métier/taux-de-caf/TauxDeCaf";
+import styles from "./BlocBudgetFinance.module.css";
 import { CompteDeResultat } from "./compte-de-resultat/CompteDeResultat";
 import { EntitéJuridiqueBudgetFinanceViewModel } from "./EntitéJuridiqueBudgetFinanceViewModel";
 import { RatioDependanceFinanciere } from "./ratio-dependance-financiere/RatioDependanceFinanciere";
@@ -19,19 +20,11 @@ export const BlocBudgetFinance = ({ entitéJuridiqueBudgetFinanceViewModel }: Bl
 
   return (
     <Bloc titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES}>
-      <ul className="indicateurs">
+      <ul className={"indicateurs " + styles["budget"]}>
         <CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueBudgetFinanceViewModel} />
-        <div className="fr-grid-row fr-grid-row--gutters">
-          <div className="fr-col">
-            <ResultatNetComptable estEntitéJuridique={true} resultatNetComptableViewModel={entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable} />
-          </div>
-          <div className="fr-col">
-            <TauxDeCaf isEntiteJuridique={true} tauxDeCafViewModel={entitéJuridiqueBudgetFinanceViewModel.tauxDeCafViewModel} />
-          </div>
-          <div className="fr-col">
-            <RatioDependanceFinanciere ratioDependanceFinanciereViewModel={entitéJuridiqueBudgetFinanceViewModel.ratioDependanceFinanciere} />
-          </div>
-        </div>
+        <ResultatNetComptable estEntitéJuridique={true} resultatNetComptableViewModel={entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable} />
+        <TauxDeCaf isEntiteJuridique={true} tauxDeCafViewModel={entitéJuridiqueBudgetFinanceViewModel.tauxDeCafViewModel} />
+        <RatioDependanceFinanciere ratioDependanceFinanciereViewModel={entitéJuridiqueBudgetFinanceViewModel.ratioDependanceFinanciere} />
       </ul>
     </Bloc>
   );

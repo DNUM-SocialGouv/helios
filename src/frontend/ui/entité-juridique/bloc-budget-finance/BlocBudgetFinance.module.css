@@ -1,0 +1,24 @@
+.budget {
+    display:grid;
+    grid-template:
+        "cdr cdr cdr" 1fr
+        "rnc tdf rdf" / 1fr 1fr 1fr;
+    grid-gap: 20px;
+
+}
+
+.budget li:nth-child(1) {
+    grid-area: cdr;
+}
+
+.budget li:nth-child(2){
+    grid-area: rnc;
+}
+
+.budget li:nth-child(3){
+    grid-area: tdf;
+}
+
+.budget li:nth-child(4){
+    grid-area: rdf;
+}
