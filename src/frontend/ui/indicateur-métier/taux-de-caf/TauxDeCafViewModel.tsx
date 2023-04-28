@@ -25,7 +25,6 @@ import { Transcription } from "../../commun/Transcription/Transcription";
 type TauxDeCaf = Readonly<{ année: number; valeur: number | null }>;
 
 export class TauxDeCafViewModel {
-  private readonly nombreDAnnéesParIndicateur = 5;
   private readonly seuilDuTauxDeCaf = 2;
   private readonly seuilMinimalDuTauxDeCaf = -21;
   private readonly seuilMaximalDuTauxDeCaf = 21;
@@ -36,7 +35,7 @@ export class TauxDeCafViewModel {
       valeur: budget.tauxDeCafNette.valeur,
     }));
     const dateMiseÀJourSource = budgetFinance.length > 0 ? budgetFinance[0].tauxDeCafNette?.dateMiseÀJourSource : "";
-    return new TauxDeCafViewModel(tauxDeCaf, dateMiseÀJourSource, wording);
+    return new TauxDeCafViewModel(tauxDeCaf, dateMiseÀJourSource, wording, 3);
   }
 
   static fromBudgetFinanceEntiteJuridique(budgetFinance: EntitéJuridiqueBudgetFinance[], wording: Wording) {
@@ -48,7 +47,7 @@ export class TauxDeCafViewModel {
     return new TauxDeCafViewModel(tauxDeCaf, dateMiseÀJourSource, wording);
   }
 
-  constructor(private tauxDeCafParAnnée: TauxDeCaf[], private dateMiseÀJourSource: string, private wording: Wording) {}
+  constructor(private tauxDeCafParAnnée: TauxDeCaf[], private dateMiseÀJourSource: string, private wording: Wording, private nombreDAnnéesParIndicateur = 5) {}
 
   public get leTauxDeCafEstIlRenseigné(): boolean {
     const [années] = this.construisLesAnnéesEtSesTaux();

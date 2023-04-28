@@ -113,7 +113,7 @@ describe("Taux de CAF", () => {
   describe("affiche des années", () => {
     it("doit afficher la mise en exergue pour les années manquantes sur les 3 dernières années", () => {
       // GIVEN
-      const budgetFinanceVide = new TauxDeCafViewModel([{ année: annéeEnCours - 2, valeur: 0.1 }], "22-10-2023", wording);
+      const budgetFinanceVide = new TauxDeCafViewModel([{ année: annéeEnCours - 2, valeur: 0.1 }], "22-10-2023", wording, 3);
       // WHEN
       renderFakeComponent(<TauxDeCaf tauxDeCafViewModel={budgetFinanceVide} />);
 
@@ -131,7 +131,8 @@ describe("Taux de CAF", () => {
           { année: annéeEnCours - 3, valeur: 0.3 },
         ],
         "22-10-2022",
-        wording
+        wording,
+        3
       );
       // WHEN
       renderFakeComponent(<TauxDeCaf tauxDeCafViewModel={budgetFinanceAnnees} />);
