@@ -601,10 +601,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gouvfr/dsfr@npm:1.9.0":
-  version: 1.9.0
-  resolution: "@gouvfr/dsfr@npm:1.9.0"
-  checksum: 62896c39ae2a376b70010e6770b5f3cefb004475f4fbb9072640dbeb002e94c2fe81ad7c9c66325053432a72885e7525a7218bf1edb177f06508ac01e845ff34
+"@gouvfr/dsfr@npm:1.9.2":
+  version: 1.9.2
+  resolution: "@gouvfr/dsfr@npm:1.9.2"
+  checksum: 3516c42d3444f009d0b3ba6fddfba2939c7916ad042e5dbef89552441bc067d69e893f97a6ced428ab60e23f3a23ddf2b457777b485cc468d5a65857c4ac62ed
   languageName: node
   linkType: hard
 
@@ -5746,7 +5746,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "helios@workspace:."
   dependencies:
-    "@gouvfr/dsfr": 1.9.0
+    "@gouvfr/dsfr": 1.9.2
     "@lhci/cli": ^0.9.0
     "@next/bundle-analyzer": ^13.2.4
     "@sentry/nextjs": 7.29.0

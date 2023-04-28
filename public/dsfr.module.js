@@ -1,4 +1,4 @@
-/*! DSFR v1.9.0 | SPDX-License-Identifier: MIT | License-Filename: LICENSE.md | restricted use (see terms and conditions) */
+/*! DSFR v1.9.2 | SPDX-License-Identifier: MIT | License-Filename: LICENSE.md | restricted use (see terms and conditions) */
 
 class State {
   constructor () {
@@ -59,7 +59,7 @@ const config = {
   prefix: 'fr',
   namespace: 'dsfr',
   organisation: '@gouvfr',
-  version: '1.9.0'
+  version: '1.9.2'
 };
 
 class LogLevel {
@@ -210,9 +210,27 @@ class Options {
     this.preventManipulation = false;
   }
 
-  configure (settings = {}, start) {
+  configure (settings = {}, start, query) {
     this.startCallback = start;
-    if (settings.verbose === true) inspector.level = 0;
+    const isProduction = settings.production && (!query || query.production !== 'false');
+    switch (true) {
+      case query && !isNaN(query.level):
+        inspector.level = Number(query.level);
+        break;
+
+      case query && query.verbose && (query.verbose === 'true' || query.verbose === 1):
+        inspector.level = 0;
+        break;
+
+      case isProduction:
+        inspector.level = 999;
+        break;
+
+      case settings.verbose:
+        inspector.level = 0;
+        break;
+    }
+    inspector.info(`version ${config.version}`);
     this.mode = settings.mode || Modes.AUTO;
   }
 
@@ -1133,6 +1151,24 @@ const property = {};
 
 property.completeAssign = completeAssign;
 
+/**
+ * Return an object of query params or null
+ *
+ * @method
+ * @name searchParams
+ * @param {string} url - an url
+ * @returns {Object} object of query params or null
+ */
+
+const searchParams = (url) => {
+  if (url && url.search) {
+    const params = new URLSearchParams(window.location.search);
+    const entries = params.entries();
+    return Object.fromEntries(entries);
+  }
+  return null;
+};
+
 const internals = {};
 const legacy = {};
 
@@ -1152,6 +1188,7 @@ internals.property = property;
 internals.ns = ns;
 internals.register = engine.register;
 internals.state = state;
+internals.query = searchParams(window.location);
 
 Object.defineProperty(internals, 'preventManipulation', {
   get: () => options.preventManipulation
@@ -1160,13 +1197,14 @@ Object.defineProperty(internals, 'stage', {
   get: () => state.getModule('stage')
 });
 
-inspector.info(`version ${config.version}`);
-
 const api$1 = (node) => {
   const stage = state.getModule('stage');
   return stage.getProxy(node);
 };
 
+api$1.version = config.version;
+api$1.prefix = config.prefix;
+api$1.organisation = config.organisation;
 api$1.Modes = Modes;
 
 Object.defineProperty(api$1, 'mode', {
@@ -1175,6 +1213,7 @@ Object.defineProperty(api$1, 'mode', {
 });
 
 api$1.internals = internals;
+api$1.version = config.version;
 
 api$1.start = engine.start;
 api$1.stop = engine.stop;
@@ -1185,7 +1224,7 @@ api$1.colors = colors;
 const configuration = window[config.namespace];
 api$1.internals.configuration = configuration;
 
-options.configure(configuration, api$1.start);
+options.configure(configuration, api$1.start, api$1.internals.query);
 
 window[config.namespace] = api$1;
 
@@ -1997,6 +2036,10 @@ const DisclosureType = {
   }
 };
 
+const DisclosureSelector = {
+  PREVENT_CONCEAL: ns.attr.selector('prevent-conceal')
+};
+
 class CollapseButton extends DisclosureButton {
   constructor () {
     super(DisclosureType.EXPAND);
@@ -2393,6 +2436,7 @@ api$1.core = {
   DisclosuresGroup: DisclosuresGroup,
   DisclosureType: DisclosureType,
   DisclosureEvent: DisclosureEvent,
+  DisclosureSelector: DisclosureSelector,
   DisclosureEmission: DisclosureEmission,
   Collapse: Collapse,
   CollapseButton: CollapseButton,
@@ -2962,7 +3006,7 @@ class FocusTrap {
     if (!this.isTrapping) return;
     this.isTrapping = false;
     const focusables = this.focusables;
-    if (focusables.length) focusables[0].focus();
+    if (focusables.length && focusables.indexOf(document.activeElement) === -1) focusables[0].focus();
     this.element.setAttribute('aria-modal', true);
     window.addEventListener('keydown', this.handling);
     document.body.addEventListener('focus', this.focusing, true);
@@ -3270,6 +3314,7 @@ class PasswordInput extends api.core.Instance {
   }
 
   capslock (event) {
+    if (event && typeof event.getModifierState !== 'function') return;
     if (event.getModifierState('CapsLock')) {
       this.node.parentNode.setAttribute(api.internals.ns.attr('capslock'), '');
     } else {
@@ -3377,21 +3422,26 @@ class Navigation extends api.core.CollapsesGroup {
     super.init();
     this.clicked = false;
     this.out = false;
-    this.listen('focusout', this.focusOut.bind(this));
-    this.listen('mousedown', this.down.bind(this));
+    this.listen('focusout', this.focusOutHandler.bind(this));
+    this.listen('mousedown', this.mouseDownHandler.bind(this));
+    this.listen('click', this.clickHandler.bind(this), { capture: true });
   }
 
   validate (member) {
     return member.element.node.matches(NavigationSelector.COLLAPSE);
   }
 
-  down (e) {
+  mouseDownHandler (e) {
     if (!this.isBreakpoint(api.core.Breakpoints.LG) || this.index === -1 || !this.current) return;
     this.position = this.current.node.contains(e.target) ? NavigationMousePosition.INSIDE : NavigationMousePosition.OUTSIDE;
     this.requestPosition();
   }
 
-  focusOut (e) {
+  clickHandler (e) {
+    if (e.target.matches('a, button') && !e.target.matches('[aria-controls]') && !e.target.matches(api.core.DisclosureSelector.PREVENT_CONCEAL)) this.index = -1;
+  }
+
+  focusOutHandler (e) {
     if (!this.isBreakpoint(api.core.Breakpoints.LG)) return;
     this.out = true;
     this.requestPosition();
@@ -4105,6 +4155,11 @@ ${api.header.doc}`);
 }
 
 class HeaderModal extends api.core.Instance {
+  constructor () {
+    super();
+    this._clickHandling = this.clickHandler.bind(this);
+  }
+
   static get instanceClassName () {
     return 'HeaderModal';
   }
@@ -4129,6 +4184,7 @@ class HeaderModal extends api.core.Instance {
       if (button.isPrimary && id) break;
     }
     this.setAttribute('aria-labelledby', id);
+    this.listen('click', this._clickHandling, { capture: true });
   }
 
   unqualify () {
@@ -4136,6 +4192,14 @@ class HeaderModal extends api.core.Instance {
     if (modal) modal.conceal();
     this.removeAttribute('role');
     this.removeAttribute('aria-labelledby');
+    this.unlisten('click', this._clickHandling, { capture: true });
+  }
+
+  clickHandler (e) {
+    if (e.target.matches('a, button') && !e.target.matches('[aria-controls]') && !e.target.matches(api.core.DisclosureSelector.PREVENT_CONCEAL)) {
+      const modal = this.element.getInstance('Modal');
+      modal.conceal();
+    }
   }
 }
 
