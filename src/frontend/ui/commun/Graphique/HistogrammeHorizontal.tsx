@@ -44,6 +44,7 @@ export const HistogrammeHorizontal = ({
     <HistogrammesHorizontaux
       annéesManquantes={libellésDeValeursManquantes}
       epaisseur="FIN"
+      identifiant={identifiant}
       nom={entêteLibellé}
       nombreDAnnéeTotale={nombreDeLibelléTotal}
       valeursDesHistogrammes={valeursDesHistogrammes}

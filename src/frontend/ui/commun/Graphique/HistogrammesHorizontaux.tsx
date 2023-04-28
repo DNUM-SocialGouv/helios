@@ -182,6 +182,7 @@ type HistogrammeHorizontalNewProps = {
   nombreDAnnéeTotale: number;
   légende?: string[];
   epaisseur?: "FIN" | "EPAIS";
+  identifiant?: string;
 };
 export const HistogrammesHorizontaux = ({
   nom,
@@ -189,6 +190,7 @@ export const HistogrammesHorizontaux = ({
   annéesManquantes,
   nombreDAnnéeTotale = 5,
   légende,
+  identifiant,
   epaisseur = "EPAIS",
 }: HistogrammeHorizontalNewProps): ReactElement => {
   const { wording } = useDependencies();
@@ -232,7 +234,7 @@ export const HistogrammesHorizontaux = ({
       <Transcription
         disabled={aucuneDonnées}
         entêteLibellé={nom}
-        identifiantUnique={nom}
+        identifiantUnique={identifiant}
         identifiants={transcriptionTitles()}
         libellés={histogrammes[0].labels}
         valeurs={getTranscriptionValeurs()}
