@@ -71,7 +71,13 @@ export function HistogrammeVerticalABandes(props: {
         </>
       ) : null}
       {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
-      <Transcription entêteLibellé={wording.ANNÉE} identifiants={props.identifiants} libellés={props.libellés} valeurs={props.valeurs} />
+      <Transcription
+        disabled={aucuneDonnee}
+        entêteLibellé={wording.ANNÉE}
+        identifiants={props.identifiants}
+        libellés={props.libellés}
+        valeurs={props.valeurs}
+      />
     </>
   );
 }
