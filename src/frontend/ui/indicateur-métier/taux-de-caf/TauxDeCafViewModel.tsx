@@ -149,7 +149,7 @@ export class TauxDeCafViewModel {
       ],
       labels: années,
     };
-    const listeAnnéesManquantes = annéesManquantes(années);
+    const listeAnnéesManquantes = annéesManquantes(années, this.nombreDAnnéesParIndicateur);
 
     return (
       <>
