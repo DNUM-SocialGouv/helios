@@ -21,7 +21,7 @@ export const AutorisationsTagMultiNiveaux = ({ activites }: TagMultiNiveauxProps
       {activites.map((activité) => (
         <li key={`activité-${activité.code}`}>
           <TagCliquable for={`autresActivités-accordion-${activité.code}`} titre={`${activité.libelle} [${activité.code}]`} />
-          <ul className="fr-collapse niveau1" id={`autresActivités-accordion-${activité.code}`}>
+          <ul className={"fr-collapse niveau1 " + style["tag-niveau1"]} id={`autresActivités-accordion-${activité.code}`}>
             {activité.modalites.map((modalités) => (
               <Modalite codeActivite={activité.code} key={`modalité-${modalités.code}`} modalité={modalités} />
             ))}
