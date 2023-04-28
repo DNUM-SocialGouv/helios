@@ -23,7 +23,7 @@ describe("La page établissement territorial médico-social - bloc autorisation 
 
     // THEN
     const capacités = screen.getAllByRole("listitem")[0];
-    const titre = screen.getByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: "h6" });
+    const titre = screen.getByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: "h3" });
     expect(titre).toBeInTheDocument();
     const dateMiseAJour = within(capacités).getAllByText(textMatch(`${wording.miseÀJour("19/08/2022")} - Source : FINESS`), { selector: "p" });
     expect(dateMiseAJour[0]).toBeInTheDocument();
@@ -148,7 +148,7 @@ describe("La page établissement territorial médico-social - bloc autorisation 
     const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
     const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
     const autorisations = indicateurs[1];
-    const titre = within(autorisations).getByText(wording.AUTORISATIONS_MS, { selector: "h6" });
+    const titre = within(autorisations).getByText(wording.AUTORISATIONS_MS, { selector: "h3" });
     expect(titre).toBeInTheDocument();
     const dateMiseAJour = within(autorisations).getAllByText(textMatch(`${wording.miseÀJour("18/08/2022")} - Source : ARHGOS, FINESS`), { selector: "p" });
     expect(dateMiseAJour[0]).toBeInTheDocument();
@@ -327,7 +327,7 @@ describe("La page établissement territorial médico-social - bloc autorisation 
     );
 
     // THEN
-    const titre = screen.queryByText(wording.AUTORISATIONS_MS, { selector: "h6" });
+    const titre = screen.queryByText(wording.AUTORISATIONS_MS, { selector: "h3" });
     expect(titre).not.toBeInTheDocument();
   });
 });

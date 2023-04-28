@@ -62,7 +62,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéM
             />
           }
           dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationAccueilDeJour}
-          identifiant="graphique-taux-occupation-accueil-jour"
+          identifiant="activite-2"
           nomDeLIndicateur={wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR}
           source={wording.CNSA}
         >

@@ -33,7 +33,7 @@ describe("Bloc Autorisation et activités", () => {
     renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
 
     // THEN
-    const titre = screen.getByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: "h6" });
+    const titre = screen.getByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: "h3" });
     expect(titre).toBeInTheDocument();
   });
 
@@ -47,7 +47,7 @@ describe("Bloc Autorisation et activités", () => {
     renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
 
     // THEN
-    const titre = screen.getByText(wording.AUTORISATIONS_ACTIVITES, { selector: "h6" });
+    const titre = screen.getByText(wording.AUTORISATIONS_ACTIVITES, { selector: "h3" });
     expect(titre).toBeInTheDocument();
   });
 
@@ -60,7 +60,7 @@ describe("Bloc Autorisation et activités", () => {
     renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
 
     // THEN
-    const titre = screen.getByText(wording.AUTRES_ACTIVITÉS, { selector: "h6" });
+    const titre = screen.getByText(wording.AUTRES_ACTIVITÉS, { selector: "h3" });
     expect(titre).toBeInTheDocument();
   });
 
@@ -74,7 +74,7 @@ describe("Bloc Autorisation et activités", () => {
     renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
 
     // THEN
-    const titre = screen.getByText(wording.RECONNAISSANCES_CONTRACTUELLES, { selector: "h6" });
+    const titre = screen.getByText(wording.RECONNAISSANCES_CONTRACTUELLES, { selector: "h3" });
     expect(titre).toBeInTheDocument();
   });
 
@@ -88,7 +88,7 @@ describe("Bloc Autorisation et activités", () => {
     renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
 
     // THEN
-    const titre = screen.getByText(wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, { selector: "h6" });
+    const titre = screen.getByText(wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, { selector: "h3" });
     expect(titre).toBeInTheDocument();
   });
 
@@ -107,9 +107,9 @@ describe("Bloc Autorisation et activités", () => {
     renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
 
     // THEN
-    const autorisationActivites = screen.queryByText(wording.AUTORISATIONS_ACTIVITES, { selector: "h6" });
-    const autresActivites = screen.queryByText(wording.AUTRES_ACTIVITÉS, { selector: "h6" });
-    const reconnaissanceContractuelles = screen.queryByText(wording.RECONNAISSANCES_CONTRACTUELLES, { selector: "h6" });
+    const autorisationActivites = screen.queryByText(wording.AUTORISATIONS_ACTIVITES, { selector: "h3" });
+    const autresActivites = screen.queryByText(wording.AUTRES_ACTIVITÉS, { selector: "h3" });
+    const reconnaissanceContractuelles = screen.queryByText(wording.RECONNAISSANCES_CONTRACTUELLES, { selector: "h3" });
     expect(autorisationActivites).not.toBeInTheDocument();
     expect(autresActivites).not.toBeInTheDocument();
     expect(reconnaissanceContractuelles).not.toBeInTheDocument();

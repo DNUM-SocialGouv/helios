@@ -33,7 +33,7 @@ describe("Bloc Activité Sanitaire", () => {
     renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
 
     // THEN
-    const titre = screen.getByText(wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, { selector: "h6" });
+    const titre = screen.getByText(wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, { selector: "h3" });
     expect(titre).toBeInTheDocument();
   });
 
@@ -70,7 +70,7 @@ describe("Bloc Activité Sanitaire", () => {
     renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
 
     // THEN
-    const titre = screen.getByText(wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, { selector: "h6" });
+    const titre = screen.getByText(wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, { selector: "h3" });
     expect(titre).toBeInTheDocument();
   });
 
@@ -119,7 +119,7 @@ describe("Bloc Activité Sanitaire", () => {
     renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
 
     // THEN
-    const titre = screen.queryByText(wording.NOMBRE_DE_SÉJOUR_MCO, { selector: "h6" });
+    const titre = screen.queryByText(wording.NOMBRE_DE_SÉJOUR_MCO, { selector: "h3" });
     expect(titre).toBeInTheDocument();
   });
 
@@ -147,7 +147,7 @@ describe("Bloc Activité Sanitaire", () => {
     renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
 
     // THEN
-    const titre = screen.queryByText(wording.NOMBRE_DE_HAD, { selector: "h6" });
+    const titre = screen.queryByText(wording.NOMBRE_DE_HAD, { selector: "h3" });
     expect(titre).toBeInTheDocument();
   });
 

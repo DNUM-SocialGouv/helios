@@ -21,7 +21,7 @@ export const GraphiqueNombrePassageUrgence = ({ nombrePassageAuxUrgencesViewMode
         />
       }
       dateDeMiseÀJour={nombrePassageAuxUrgencesViewModel.dateMiseAJour}
-      identifiant="graphique-passage-urgence"
+      identifiant="activite-2"
       nomDeLIndicateur={wording.NOMBRE_DE_PASSAGES_AUX_URGENCES}
       source={wording.RPU}
     >

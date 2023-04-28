@@ -22,7 +22,7 @@ describe("La page établissement territorial sanitaire - bloc activité", () => 
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
     const indicateurs = within(activité).getAllByRole("listitem");
     expect(indicateurs).toHaveLength(3);
-    const titre = within(indicateurs[identifiant]).getByText(titreSection, { selector: "h6" });
+    const titre = within(indicateurs[identifiant]).getByText(titreSection, { selector: "h3" });
     expect(titre).toBeInTheDocument();
     const dateMiseAJour = within(indicateurs[identifiant]).getAllByText(textMatch(`${wording.miseÀJour("07/07/2021")} - Source : ${sourceOrigineAttendue}`), {
       selector: "p",
