@@ -1,4 +1,3 @@
-import { FEATURE_NAME } from "../../../utils/featureToggle";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
@@ -24,7 +23,7 @@ export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel }: B
       <ul className="indicateurs">
         <GraphiqueNombreDeSejourMCO estEntitéJuridique={true} nombreDeSejourMCOViewModel={entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel} />
         <GraphiquePsySSR estEntitéJuridique={true} nombreJournéesPsySSRViewModel={entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel} />
-        <GraphiqueHAD entitéJuridiqueActivitéViewModel={entitéJuridiqueActivitéViewModel} />
+        <GraphiqueNombreHAD nombreHADViewModel={entitéJuridiqueActivitéViewModel.nombreHADViewModel} />
         <GraphiqueNombrePassageUrgence
           estEntitéJuridique={true}
           nombrePassageAuxUrgencesViewModel={entitéJuridiqueActivitéViewModel.nombreDePassageAuxUrgencesViewModel}
@@ -32,14 +31,4 @@ export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel }: B
       </ul>
     </Bloc>
   );
-};
-
-const GraphiqueHAD = ({ entitéJuridiqueActivitéViewModel }: BlocActivitéSanitaireProps) => {
-  const { isFeatureEnabled } = useDependencies();
-
-  if (!isFeatureEnabled(FEATURE_NAME.HAD)) {
-    return <></>;
-  }
-
-  return <GraphiqueNombreHAD nombreHADViewModel={entitéJuridiqueActivitéViewModel.nombreHADViewModel} />;
 };
