@@ -11,21 +11,9 @@ import { ParsedUrlQuery } from "querystring";
 
 export enum FEATURE_NAME {
   "COMPTE_RESULTAT_EJ" = "COMPTE_RESULTAT_EJ",
-  "CAPACITES_EJ" = "CAPACITES_EJ",
-  "HAD" = "HAD",
-  "DEPENDANCE_FINANCIERE_EJ" = "DEPENDANCE_FINANCIERE_EJ",
-  "ACTIVITES" = "ACTIVITIES",
-  TAUX_DE_CAF_EJ = "TAUX_DE_CAF_EJ",
 }
 
-const currentFeaturesToggled: FEATURE_NAME[] = [
-  FEATURE_NAME.COMPTE_RESULTAT_EJ,
-  FEATURE_NAME.CAPACITES_EJ,
-  FEATURE_NAME.HAD,
-  FEATURE_NAME.DEPENDANCE_FINANCIERE_EJ,
-  FEATURE_NAME.ACTIVITES,
-  FEATURE_NAME.TAUX_DE_CAF_EJ,
-];
+const currentFeaturesToggled: FEATURE_NAME[] = [FEATURE_NAME.COMPTE_RESULTAT_EJ];
 const currentEnabledFeatures: FEATURE_NAME[] = parseEnvEnabledFeature();
 
 function parseEnvEnabledFeature(): FEATURE_NAME[] {
