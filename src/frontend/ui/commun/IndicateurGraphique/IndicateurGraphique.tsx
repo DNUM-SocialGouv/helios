@@ -23,10 +23,10 @@ export const IndicateurGraphique = ({ années, children, contenuInfoBulle, dateD
   return (
     <li>
       <div>
-        <h6 className={`fr-m-0 fr-text--bold ${styles["intitule"]}`}>
+        <h3 className={`fr-m-0 fr-text--bold ${styles["intitule"]} fr-h6`}>
           {nomDeLIndicateur}
-          {années ? <SelectionAnnee annees={années.liste} setAnnéeEnCours={années.setAnnéeEnCours} /> : <></>}
-        </h6>
+          {années ? <SelectionAnnee annees={années.liste} id={identifiant} setAnnéeEnCours={années.setAnnéeEnCours} /> : <></>}
+        </h3>
         <div className={styles["mise-a-jour-source"]}>
           <p className={`fr-text--xs ${styles["titraille"]}`}>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
           <button
