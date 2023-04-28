@@ -160,7 +160,7 @@ export class HistogrammeData {
         datalabels: {
           align: "end",
           anchor: "end",
-          font: { family: "Marianne", size: 14 },
+          font: { family: "Marianne", size: 12, weight: "700" },
           formatter: (_: number, _context: Context): string => {
             const hasMultipleStacks = this.visibleStacks.length > 1;
             const sum = hasMultipleStacks ? this.totals[_context.dataIndex] : this.visibleStacks[0].data[_context.dataIndex];

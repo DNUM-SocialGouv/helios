@@ -5,3 +5,7 @@
 .body {
   justify-content: space-between;
 }
+
+.description {
+  font-size: 16px;
+}

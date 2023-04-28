@@ -15,7 +15,7 @@ export const Cartographie = () => {
         <div className={"fr-card__body " + styles["body"]}>
           <div className="fr-card__content">
             <h3 className="fr-card__title">{wording.CARTOGRAPHIE}</h3>
-            <p className="fr-card__desc">{wording.CARTOGRAPHIE_DESCRIPTION}</p>
+            <p className={"fr-card__desc " + styles["description"]}>{wording.CARTOGRAPHIE_DESCRIPTION}</p>
           </div>
           <div className="fr-card__footer">
             <GroupeBoutonRegions />
