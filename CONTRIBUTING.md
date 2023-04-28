@@ -554,6 +554,7 @@ class NomDeMaClasse:
 ##### Mettre à jour le design système : 
 Pour mettre à jour le design système il faut :
 - Mettre à jour la dépendance avec yarn 
+- Naviger dans @gouvfr/dsfr/dist/
 - Copier, depuis les node_modules, les fichiers `dsfr.module.min.js` et `dsfr.nomodule.min.js` de la nouvelle version dans le dossier public (on peut également ajouter les sources maps)
 - Si besoin, mettre à jour le lien des scripts dans `_app.tsx`
 - Faire un contrôle visuel de l'appli et des intéractions
