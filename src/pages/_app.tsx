@@ -10,6 +10,7 @@ import "@gouvfr/dsfr/dist/utility/colors/colors.min.css";
 import "@gouvfr/dsfr/dist/component/button/button.min.css";
 import "@gouvfr/dsfr/dist/component/input/input.min.css";
 import "@gouvfr/dsfr/dist/component/search/search.min.css";
+import "@gouvfr/dsfr/dist/component/badge/badge.min.css";
 import "../frontend/ui/commun/global.css";
 
 import { DependenciesProvider } from "../frontend/ui/commun/contexts/useDependencies";

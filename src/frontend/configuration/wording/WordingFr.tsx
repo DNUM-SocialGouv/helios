@@ -9,6 +9,19 @@ export class WordingFr implements Wording {
   readonly ASR_TITLE: string = "Activités Soumises à Reconnaissance contractuelle";
   readonly ASR: ReactElement = (<abbr title={this.ASR_TITLE}>ASR</abbr>);
 
+   // Commun
+   readonly CANCEL: string = "Annuler";
+   readonly SEND_EMAIL: string = "Envoyer un email";
+   readonly RESEND_EMAIL: string = "Envoyer à nouveau";
+   readonly BACK_TO_HOME: string = "Retour à l'accueil";
+   readonly APPLY: string =  "Appliquer";
+
+
+    // Messages d'erreur
+  readonly MISSING_EMAIL: string = "Veuillez renseigner le champ courriel";
+  readonly EMAIL_NOT_VALID: string = "Veuillez saisir une adresse email valide";
+  readonly SOMETHING_WENT_WRONG: string = "Quelque chose s'est mal passé. Veuillez réessayer ultérieurement";
+
   // Header
   readonly INTITULÉ_RÉPUBLIQUE_FRANÇAISE: ReactElement = (
     <>
@@ -394,4 +407,15 @@ export class WordingFr implements Wording {
   readonly LIMITES_DE_RESPONSABILITÉ: string = "Limites de responsabilité";
 
   readonly EN_CONSTRUCTION: string = "Demander à Daisy ce que l’on doit écrire.";
+
+    // Mot de passe oublié
+    readonly MOT_PASSE_OUBLIE_TITRE: string = "Vous avez oublié votre mot de passe ?";
+    readonly MOT_PASSE_OUBLIE_LABEL: string = "Courriel";
+    readonly MOT_PASSE_OUBLIE_SUCCESS_MESSAGE: string = "Un courriel a été envoyé à ";
+
+    // Changement de mot de passe
+  readonly CHANGEMENT_MOT_PASSE_TITRE: string = "Changement de mot de passe";
+  readonly CHANGEMENT_MOT_PASSE_DESCRIPTION: string = "Merci de changer votre mot de passe pour accéder de nouveau à l'application";
+  readonly MOT_DE_PASSE: string = "Mot de passe";
+  readonly CONFIRMER_MOT_DE_PASSE: string = "Confirmation mot de passe";
 }

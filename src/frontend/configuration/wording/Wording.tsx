@@ -7,6 +7,19 @@ export interface Wording {
   readonly ASR_TITLE: string;
   readonly ASR: ReactElement;
 
+  // Commun
+  readonly CANCEL: string;
+  readonly SEND_EMAIL: string;
+  readonly RESEND_EMAIL: string;
+  readonly BACK_TO_HOME: string;
+  readonly APPLY: string;
+
+
+  // Messages d'erreur
+  readonly MISSING_EMAIL: string;
+  readonly EMAIL_NOT_VALID: string;
+  readonly SOMETHING_WENT_WRONG: string;
+
   // Header
   readonly INTITULÉ_RÉPUBLIQUE_FRANÇAISE: ReactElement;
   readonly ACCUEIL: string;
@@ -307,4 +320,15 @@ export interface Wording {
   readonly LIMITES_DE_RESPONSABILITÉ: string;
 
   readonly EN_CONSTRUCTION: string;
+
+  // Mot de passe oublié
+  readonly MOT_PASSE_OUBLIE_TITRE: string;
+  readonly MOT_PASSE_OUBLIE_LABEL: string;
+  readonly MOT_PASSE_OUBLIE_SUCCESS_MESSAGE: string;
+
+  // Changement de mot de passe
+  readonly CHANGEMENT_MOT_PASSE_TITRE: string;
+  readonly CHANGEMENT_MOT_PASSE_DESCRIPTION: string;
+  readonly MOT_DE_PASSE: string;
+  readonly CONFIRMER_MOT_DE_PASSE: string;
 }
