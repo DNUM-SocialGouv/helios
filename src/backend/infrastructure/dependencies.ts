@@ -16,6 +16,8 @@ import { TypeOrmRechercheLoader } from "./gateways/recherche-loader/TypeOrmReche
 import { TypeOrmÉtablissementTerritorialMédicoSocialLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialMédicoSocialLoader";
 import { TypeOrmÉtablissementTerritorialRattachéLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialRattachéLoader";
 import { TypeOrmÉtablissementTerritorialSanitaireLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialSanitaireLoader";
+import { TypeOrmChangePasswordLoader } from "./gateways/change-password-loader/TypeOrmChangePasswordLoader";
+import { ChangePasswordLoader } from "../métier/gateways/ChangePasswordLoader";
 
 export type Dependencies = Readonly<{
   environmentVariables: EnvironmentVariables;
@@ -25,6 +27,7 @@ export type Dependencies = Readonly<{
   établissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader;
   établissementTerritorialRattachéLoader: ÉtablissementTerritorialRattachéLoader;
   établissementTerritorialSanitaireLoader: ÉtablissementTerritorialSanitaireLoader;
+  changePasswordLoader: ChangePasswordLoader;
 }>;
 
 const createDependencies = (): Dependencies => {
@@ -47,6 +50,7 @@ const createDependencies = (): Dependencies => {
     établissementTerritorialMédicoSocialLoader: new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm),
     établissementTerritorialRattachéLoader: new TypeOrmÉtablissementTerritorialRattachéLoader(orm),
     établissementTerritorialSanitaireLoader: new TypeOrmÉtablissementTerritorialSanitaireLoader(orm),
+    changePasswordLoader: new TypeOrmChangePasswordLoader(orm),
   };
 };
 

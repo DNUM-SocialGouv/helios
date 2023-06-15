@@ -1,9 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-const doSomething = (emailValue: string, password: string) => {
-    console.log("it's just a method", emailValue, password);
-    return true;
-};
+import { changePasswordEndpoint } from "../../backend/infrastructure/controllers/changePasswordEndpoint";
+import { dependencies } from "../../backend/infrastructure/dependencies";
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   if (request.method !== "POST") {
@@ -12,7 +10,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
 
   const { loginToken, password } = request.body;
 
-  const result = await doSomething(loginToken, password);
+  const result = await changePasswordEndpoint(dependencies,loginToken, password);
   response.status(200).json(result);
  
 }

@@ -3,7 +3,7 @@ import { Dependencies } from "../dependencies";
 
 export async function changePasswordEndpoint(dependencies: Dependencies, loginToken: string, password: string): Promise<boolean> {
     try {
-      const changePasswordUseCase = new ChangePasswordUseCase();
+      const changePasswordUseCase = new ChangePasswordUseCase(dependencies.changePasswordLoader);
   
       return await changePasswordUseCase.exécute(loginToken, password);
     } catch (error) {
