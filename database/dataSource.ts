@@ -55,6 +55,7 @@ import { ReconnaissanceContractuelleSanitaireModel } from "./models/Reconnaissan
 import { RessourcesHumainesMédicoSocialModel } from "./models/RessourcesHumainesMédicoSocialModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "./models/ÉquipementMatérielLourdSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "./models/ÉtablissementTerritorialIdentitéModel";
+import { AjoutTableUtilisateurRoleEtablissement1686646154737 } from "./migrations/1686646154737-AjoutTableUtilisateurRoleEtablissement";
 
 const logger = new ConsoleLogger();
 dotEnvConfig();
@@ -118,6 +119,7 @@ export default new DataSource({
     AjouterBlocBudgetFinanceEJ1677495763184,
     AjoutCapacitesSanitaireEJ1680076022425,
     AjouteHAD1680014929754,
+    AjoutTableUtilisateurRoleEtablissement1686646154737,
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
