@@ -56,6 +56,9 @@ import { RessourcesHumainesMédicoSocialModel } from "./models/RessourcesHumaine
 import { ÉquipementMatérielLourdSanitaireModel } from "./models/ÉquipementMatérielLourdSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "./models/ÉtablissementTerritorialIdentitéModel";
 import { AjoutTableUtilisateurRoleEtablissement1686646154737 } from "./migrations/1686646154737-AjoutTableUtilisateurRoleEtablissement";
+import { UtilisateurModel } from "./models/UtilisateurModel";
+import { RoleModel } from "./models/RoleModel";
+import { InstitutionModel } from "./models/InstitutionModel";
 
 const logger = new ConsoleLogger();
 dotEnvConfig();
@@ -81,6 +84,9 @@ export default new DataSource({
     ReconnaissanceContractuelleSanitaireModel,
     RessourcesHumainesMédicoSocialModel,
     ActivitéSanitaireEntitéJuridiqueModel,
+    UtilisateurModel,
+    RoleModel,
+    InstitutionModel,
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,

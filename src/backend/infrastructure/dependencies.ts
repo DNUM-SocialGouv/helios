@@ -16,11 +16,14 @@ import { TypeOrmRechercheLoader } from "./gateways/recherche-loader/TypeOrmReche
 import { TypeOrmÉtablissementTerritorialMédicoSocialLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialMédicoSocialLoader";
 import { TypeOrmÉtablissementTerritorialRattachéLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialRattachéLoader";
 import { TypeOrmÉtablissementTerritorialSanitaireLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialSanitaireLoader";
+import { UtilisateurLoader } from "../métier/gateways/UtilisateurLoader";
+import { TypeOrmUtilisateurLoader } from "./gateways/utilisateur-loader/TypeOrmUtilisateurLoader";
 
 export type Dependencies = Readonly<{
   environmentVariables: EnvironmentVariables;
   entitéJuridiqueLoader: EntitéJuridiqueLoader;
   logger: Logger;
+  utilisateurLoader: UtilisateurLoader;
   rechercheLoader: RechercheLoader;
   établissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader;
   établissementTerritorialRattachéLoader: ÉtablissementTerritorialRattachéLoader;
@@ -43,6 +46,7 @@ const createDependencies = (): Dependencies => {
     entitéJuridiqueLoader: new TypeOrmEntitéJuridiqueLoader(orm),
     environmentVariables,
     logger,
+    utilisateurLoader: new TypeOrmUtilisateurLoader(orm),
     rechercheLoader: new TypeOrmRechercheLoader(orm),
     établissementTerritorialMédicoSocialLoader: new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm),
     établissementTerritorialRattachéLoader: new TypeOrmÉtablissementTerritorialRattachéLoader(orm),
