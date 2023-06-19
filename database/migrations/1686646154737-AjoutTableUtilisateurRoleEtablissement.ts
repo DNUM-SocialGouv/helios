@@ -25,6 +25,7 @@ export class AjoutTableUtilisateurRoleEtablissement1686646154737 implements Migr
                 ut_id bigserial NOT NULL,
                 ut_code uuid NOT NULL default gen_random_uuid(),
                 ut_nom character varying(255) NOT NULL,
+                ut_prenom character varying(255),
                 ut_email character varying(255) NOT NULL,
                 ut_institution bigint NOT NULL,
                 ut_actif boolean default false,
