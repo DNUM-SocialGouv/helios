@@ -1,7 +1,7 @@
 {
   "jobs": [
     {
-      "command": "40 12 * * 1-5 /app/populateDatabase.sh",
+      "command": "50 10 * * 1-5 /app/populateDatabase.sh",
       "size": "2XL"
     }
   ]
