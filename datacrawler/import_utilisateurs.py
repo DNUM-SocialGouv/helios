@@ -18,8 +18,8 @@ def import_des_utilisateurs(base_de_données: Engine, logger: Logger) -> None:
     db_roles = db.Table('role', metadata, autoload=True, autoload_with=base_de_données)
     db_institutions = db.Table('institution', metadata, autoload=True, autoload_with=base_de_données)
     hashing = hashlib.sha256()
-    hashing.update(b"HeliosConnect1")
-    hashed_password = hashing.hexdigest()
+    hashing.update(b"HeliosConnect-")
+    
 
     with base_de_données.begin() as connection:
         for user in df.iterrows():
@@ -48,6 +48,8 @@ def import_des_utilisateurs(base_de_données: Engine, logger: Logger) -> None:
                 logger.info("Utilisateur en création :" + data["E-mail"])
                 code_Insitution = data['Code institution']
                 code_role = data['Code Rôle']
+                hashing.update(code_Insitution.encode('utf-8'))
+                hashed_password = hashing.hexdigest()
                 getInstituteByCode = db.select([db_institutions.columns.inst_id]).filter_by(inst_code = code_Insitution)
                 institude_id = connection.execute(getInstituteByCode).fetchone()[0]
                 getRoleByCode = db.select({db_roles.columns.role_id}).filter_by(role_code = code_role)
