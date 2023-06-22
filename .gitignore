@@ -65,3 +65,6 @@ reports
 !**/.yarn/sdks
 !**/.yarn/versions
 **/.pnp.*
+
+# vscode
+.vscode
