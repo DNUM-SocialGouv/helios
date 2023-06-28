@@ -26,14 +26,14 @@ export default NextAuth({
             },
             body: JSON.stringify(credentials),
           })
-console.log("authResponse", authResponse);
 
           if (!authResponse.ok) {
             return null;
           }
 
-          const user = await authResponse.json();
-          return { id: user.utilisateur.code, ...user.utilisateur };
+          const { utilisateur } = await authResponse.json();
+          
+          return {  ...utilisateur, id: utilisateur.code, };
         } catch (error) {
           return null;
         }
@@ -49,7 +49,6 @@ console.log("authResponse", authResponse);
           name: user.nom,
         }
       }
-
       return token
     },
     async session({ session }) {

@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-server-import-in-page */
-import { NextResponse } from "next/server";
 import { withAuth } from "next-auth/middleware";
+import { NextResponse } from "next/server";
 
 import type { NextRequest } from "next/server";
 

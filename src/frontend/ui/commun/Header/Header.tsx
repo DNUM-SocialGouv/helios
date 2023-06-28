@@ -1,3 +1,4 @@
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -9,9 +10,8 @@ import "@gouvfr/dsfr/dist/component/link/link.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
 import { useDependencies } from "../contexts/useDependencies";
-import styles from "./Header.module.css";
-import { signOut, useSession } from "next-auth/react";
 import { useOutsideClick } from "../hooks/useOutsideClick";
+import styles from "./Header.module.css";
 
 export const Header = () => {
   const { paths, wording } = useDependencies();
@@ -113,23 +113,19 @@ export const Header = () => {
                 <div className={styles["dropdown"]}>
                   <button
                     className={"fr-icon-account-line " + styles["account-logo"]}
-                    ref={ref}
                     onClick={() => {
                       setDisplayMenu(!displayMenu)
-                    }}>
+                    }}
+                    ref={ref}>
                      {data?.user?.name}
                   </button>
                   {displayMenu ? (
                     <ul className={styles["menu"]}>
                       <li className={styles["menu-item"]}>
-                        <button
-                          // onClick={() => {
-                          //   signOut({ callbackUrl: paths.CONNEXION });
-                          //   setDisplayMenu(false)
-                          // }}
-                          >
-                          Profil
-                        </button>
+                        <button>Profil</button>
+                      </li>
+                      <li className={styles["menu-item"]}>
+                        <button>Mot de passe</button>
                       </li>
                       <li className={styles["menu-item"]}>
                         <button

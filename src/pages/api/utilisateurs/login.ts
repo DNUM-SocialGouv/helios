@@ -11,9 +11,9 @@ export default async function handler(request: NextApiRequest, response: NextApi
         const { email, password } = request.body
         const user = await loginEndpoint(dependencies, email, password)
         if (user) {
-            return response.status(200).json({ user });
+            return response.status(200).json(user);
         } else {
-            return response.status(400).json({ user });
+            return response.status(400).json(user);
         }
     } catch (error) {
         return response.status(500);
