@@ -11,7 +11,7 @@ export class WordingFr implements Wording {
 
    // Commun
    readonly CANCEL: string = "Annuler";
-   readonly SEND_EMAIL: string = "Envoyer un email";
+   readonly SEND_EMAIL: string = "Confirmer la demande de renouvellement";
    readonly RESEND_EMAIL: string = "Envoyer à nouveau";
    readonly BACK_TO_HOME: string = "Retour à l'accueil";
    readonly APPLY: string =  "Appliquer";
@@ -414,8 +414,9 @@ export class WordingFr implements Wording {
     readonly MOT_PASSE_OUBLIE_SUCCESS_MESSAGE: string = "Un courriel a été envoyé à ";
 
     // Changement de mot de passe
-  readonly CHANGEMENT_MOT_PASSE_TITRE: string = "Changement de mot de passe";
-  readonly CHANGEMENT_MOT_PASSE_DESCRIPTION: string = "Merci de changer votre mot de passe pour accéder de nouveau à l'application";
-  readonly MOT_DE_PASSE: string = "Mot de passe";
+  readonly CHANGEMENT_MOT_PASSE_TITRE: string = "Réinitialisation de votre mot de passe";
+  readonly CHANGEMENT_MOT_PASSE_DESCRIPTION: string = "Merci de renseigner votre nouveau mot de passe";
+  readonly MOT_DE_PASSE: string = "Nouveau Mot de passe";
   readonly CONFIRMER_MOT_DE_PASSE: string = "Confirmation mot de passe";
+  readonly CONFIRM_CHANGE_PASSWORD: string = "Confirmer la demande de réinitialisation";
 }

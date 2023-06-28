@@ -60,13 +60,13 @@ export const Header = () => {
                   </div>
                 </div>
                 <div className="fr-header__service">
-                  <Link href="/" passHref title={wording.ACCUEIL}>
+                { router.pathname !== paths.FORGET_PASSWORD && router.pathname !== paths.CHANGE_PASSWORD? <Link href="/" passHref title={wording.ACCUEIL}>
                     <p className="fr-header__service-title">{wording.TITRE_DU_SITE}</p>
-                  </Link>
+                  </Link> :    <p className="fr-header__service-title">{wording.RECHERCHE_TITRE}</p> }
                 </div>
               </div>
               <div className="fr-header__tools">
-                {router.pathname !== paths.ACCUEIL && (
+                {router.pathname !== paths.ACCUEIL && router.pathname !== paths.FORGET_PASSWORD && router.pathname !== paths.CHANGE_PASSWORD && (
                   <div className="fr-header__search fr-modal" id="modal-541">
                     <div className="fr-container fr-container-lg--fluid">
                       <button aria-controls="modal-541" className="fr-btn--close fr-btn" title="Fermer">

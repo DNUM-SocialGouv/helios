@@ -8,9 +8,11 @@ export class TypeOrmChangePasswordLoader implements ChangePasswordLoader {
 
     async changePassword(loginToken: string, password: string): Promise<boolean> {
         console.log("loginToken   ", loginToken, "   password   ", password); 
-        const email = await checkToken(loginToken);
-
-        return true;
+        const info =  checkToken(loginToken);
+        if (info?.email) {   
+            return true
+        }               
+        return false;
     }
 
 }

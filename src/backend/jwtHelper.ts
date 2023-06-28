@@ -12,3 +12,8 @@ export const checkToken = (token: string): { email: string } | null => {
         return null;
       }
 };
+
+export const generateToken = (payload : string, timeout : string) :string => {
+    return jwt.sign({email : payload}, JWT_SECRET_KEY, { expiresIn:  timeout });
+  }
+

@@ -49,11 +49,7 @@ export const FormulaireMdpOublie = ({ emailValueOnChange, envoyerEmail, annuler,
               <form className="fr-col-5" onSubmit={envoyerEmail}>
                 {errorMessage && <div className={styles["error"]}> {errorMessage} </div>}
                 <div className="fr-grid-row fr-grid-row--center">
-                  <div className="fr-col-12 fr-col-lg-4">
-                    <label className="fr-label">
-                      {wording.MOT_PASSE_OUBLIE_LABEL}
-                    </label>
-                  </div>
+             
                   <div className="fr-col-12 fr-col-lg-8">
                     <input
                       className="fr-input"

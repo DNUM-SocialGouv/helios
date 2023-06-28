@@ -331,4 +331,5 @@ export interface Wording {
   readonly CHANGEMENT_MOT_PASSE_DESCRIPTION: string;
   readonly MOT_DE_PASSE: string;
   readonly CONFIRMER_MOT_DE_PASSE: string;
+  readonly CONFIRM_CHANGE_PASSWORD: string;
 }

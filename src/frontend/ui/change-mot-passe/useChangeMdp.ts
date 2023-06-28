@@ -39,11 +39,13 @@ export function useChangeMdp() {
 
     const changePasswordService = () => {
         fetch("/api/change-mot-passe", {
-            body: JSON.stringify({ loginToken, passwordValue }),
+            body: JSON.stringify({loginToken: loginToken, password: passwordValue }),
             headers: { "Content-Type": "application/json" },
             method: "POST",
           })
-          .then((response) => response.json())
+          .then((response) => {response.json()
+          console.log(response,'response');
+          })
           .then((data) => {
           })
           .catch(() => {

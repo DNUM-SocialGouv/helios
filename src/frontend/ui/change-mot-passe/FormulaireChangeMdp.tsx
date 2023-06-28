@@ -71,7 +71,7 @@ export const FormulaireChangeMdp = ({ changePassword, annuler, passwordValueOnCh
                 </li>    
                 <li>
                   <button className="fr-btn" type="submit">            
-                    {wording.APPLY}        
+                    {wording.CONFIRM_CHANGE_PASSWORD}        
                   </button>    
                 </li>
               </ul>
