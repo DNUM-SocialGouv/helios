@@ -44,7 +44,9 @@ export function useChangeMdp() {
             method: "POST",
           })
           .then((response) => {response.json()
-          console.log(response,'response');
+          if(response.status ===200) {
+            router.push("/")
+          }
           })
           .then((data) => {
           })

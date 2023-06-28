@@ -38,6 +38,7 @@ export class WordingFr implements Wording {
 
   // Titre des pages
   readonly TITRE_PAGE_ACCUEIL: string = "Accueil - Helios";
+  readonly TITRE_PAGE_CONNEXION: string = "Connexion - Helios";
   readonly TITRE_PAGE_PLAN_DU_SITE: string = "Plan du site - Helios";
   readonly TITRE_PAGE_ACCESSIBILITÉ: string = "Accessibilité - Helios";
   readonly TITRE_PAGE_MENTIONS_LÉGALES: string = "Mentions légales - Helios";
@@ -58,7 +59,15 @@ export class WordingFr implements Wording {
   readonly ENTITÉS_JURIDIQUES: string = "Entité(s) Juridique(s)";
   readonly ÉTABLISSEMENT_TERRITORIAUX: string = "Établissements Territoriaux";
   readonly SITE_EN_CONSTRUCTION: string = "Le site est dans sa phase pilote : il est toujours en construction et va évoluer régulièrement.";
+  
+  // Connexion
+  readonly CONNEXION_TITRE: string = "Bienvenue sur Helios !"
+  readonly CONNEXION_IDENTIFIANT: string = "Identifiant *"
+  readonly CONNEXION_MOT_DE_PASSE: string = "Mot de passe *"
+  readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string = "Mot de passe oublié ?"
+  readonly CONNEXION_LIBELLE: string = "Connexion"
 
+  
   // Recherche
   readonly RECHERCHE_TITRE: string = "Bienvenue sur Helios !";
   readonly RECHERCHE_DESCRIPTION: ReactElement = (

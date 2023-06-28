@@ -1,5 +1,6 @@
 export class Paths {
   readonly ACCUEIL: string = "/";
+  readonly CONNEXION: string = "/connexion";
   readonly ACCESSIBILITÉ: string = "/accessibilite";
   readonly MENTIONS_LÉGALES: string = "/mentions-legales";
   readonly DONNÉES_PERSONNELLES: string = "/donnees-personnelles";

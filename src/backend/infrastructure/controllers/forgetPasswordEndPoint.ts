@@ -1,17 +1,10 @@
 import { generateToken } from "../../jwtHelper";
 
-const nodemailer = require("nodemailer");
-
-export async function forgetPasswordEndPoint(email:string) :Promise<Object> {
-  console.log('7845');
-  
-    try {
-      console.log('after ...');
-      const APP_URL = '/localhost:3000'
-      const token  =generateToken(email,'72h')
-      console.log( 'token',token)
-
-        const html = `
+export async function forgetPasswordEndPoint(email: string): Promise<Object> {
+  try {
+    const APP_URL = process.env["APP_BASE_URL"]
+    const token = generateToken(email, '72h')    
+    const html = `
     Bonjour,
 
     <p>Nous avons reçu une demande de réinitialisation de mot de passe pour votre compte.</p>
@@ -30,23 +23,38 @@ export async function forgetPasswordEndPoint(email:string) :Promise<Object> {
 
     <p>En cas de difficulté dans votre demande de réinitialisation, merci de contacter l’équipe Support Helios : dnum.scn-helios-support@sg.social.gouv.fr</p>
     `
-    const transporter = nodemailer.createTransport({
-        host:"smtp.forwardemail.net",
-        port:465,
-        secure:true,
-        auth: {
-             user :'s.ferre@cat-amania.com',
-             pass:`7XG^x}7'tWe4pA.`
-        }
-    })
-    return  await transporter.sendMail({
-        from: 's.ferre@cat-amania.com', 
-        to: email, 
-        subject: "Demande de réinitialisation de mot de passe Helios", // Subject line
-        html: html,
-      });
-    } catch (error) {
-        return error
-    }
+    const body = {
+      "to": [
+          {
+              "address":email,
+          }
+      ],
+      "msg": {
+        "from": {
+          "personalName": "sebastian",
+          "address": "s.ferre@pmns.fr"
+          },
+          "subject": "Demande de réinitialisation de mot de passe Helios",
+          "html": html
+      
+      }
+  }
+
+    const response = await fetch('https://api.tipimail.com/v1/messages/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Tipimail-ApiUser': `f6da913ad5d0a1a449864c5d6f1fe70e`,
+        'X-Tipimail-ApiKey':'8ff59cc5287cd5b1846a623d8f79fa7e'
+      },
+      body: JSON.stringify(body)
+    });
+    
+    return response
+  } catch (error) {
+    console.log(error);
+    
+    return error
+  }
 
 }

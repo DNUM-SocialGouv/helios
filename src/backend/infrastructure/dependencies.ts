@@ -18,11 +18,14 @@ import { TypeOrmÉtablissementTerritorialRattachéLoader } from "./gateways/éta
 import { TypeOrmÉtablissementTerritorialSanitaireLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialSanitaireLoader";
 import { TypeOrmChangePasswordLoader } from "./gateways/change-password-loader/TypeOrmChangePasswordLoader";
 import { ChangePasswordLoader } from "../métier/gateways/ChangePasswordLoader";
+import { UtilisateurLoader } from "../métier/gateways/UtilisateurLoader";
+import { TypeOrmUtilisateurLoader } from "./gateways/utilisateur-loader/TypeOrmUtilisateurLoader";
 
 export type Dependencies = Readonly<{
   environmentVariables: EnvironmentVariables;
   entitéJuridiqueLoader: EntitéJuridiqueLoader;
   logger: Logger;
+  utilisateurLoader: UtilisateurLoader;
   rechercheLoader: RechercheLoader;
   établissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader;
   établissementTerritorialRattachéLoader: ÉtablissementTerritorialRattachéLoader;
@@ -46,6 +49,7 @@ const createDependencies = (): Dependencies => {
     entitéJuridiqueLoader: new TypeOrmEntitéJuridiqueLoader(orm),
     environmentVariables,
     logger,
+    utilisateurLoader: new TypeOrmUtilisateurLoader(orm),
     rechercheLoader: new TypeOrmRechercheLoader(orm),
     établissementTerritorialMédicoSocialLoader: new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm),
     établissementTerritorialRattachéLoader: new TypeOrmÉtablissementTerritorialRattachéLoader(orm),

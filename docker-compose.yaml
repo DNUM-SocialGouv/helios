@@ -52,7 +52,12 @@ services:
         source: postgres_data
         target: /var/lib/postgresql/data
     command: ["postgres", "-c", "log_statement=all", "-c", "max_connections=10"]
-
+  smtp:
+    restart: always
+    image: jijiechen/papercut:latest
+    ports:
+      - "465:25"
+      - "37408:37408"
   postgres-test:
     image: postgres:13.7-alpine # Conserver la même version avec le fichier de la CI : helios-ci.yml
     container_name: helios_test_db
