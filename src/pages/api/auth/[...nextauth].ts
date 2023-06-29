@@ -40,7 +40,7 @@ export default NextAuth({
       },
     }),
   ],
-  secret: "secret",
+  secret: process.env["NEXTAUTH_SECRET"],
   callbacks: {
     async jwt({ token, user, account }) {
       if (account && user) {

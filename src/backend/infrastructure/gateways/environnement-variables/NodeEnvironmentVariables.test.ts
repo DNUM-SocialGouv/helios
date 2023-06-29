@@ -10,6 +10,22 @@ describe("Gestion des variables d’environnement", () => {
     expect(nodeEnvironmentVariables.DATABASE_URL).toBe("postgres://helios:h3li0s@localhost:5433/helios");
   });
 
+  it("retourne la valeur de NEXTAUTH_URL du .env", () => {
+    // WHEN
+    const nodeEnvironmentVariables = new NodeEnvironmentVariables(fakeLogger);
+
+    // THEN
+    expect(nodeEnvironmentVariables.NEXTAUTH_URL).toBe("http://fake-url-helios.com");
+  });
+
+  it("retourne la valeur de NEXTAUTH_SECRET du .env", () => {
+    // WHEN
+    const nodeEnvironmentVariables = new NodeEnvironmentVariables(fakeLogger);
+
+    // THEN
+    expect(nodeEnvironmentVariables.NEXTAUTH_SECRET).toBe("random-text");
+  });
+
   it("retourne la valeur de ORM_DEBUG du .env", () => {
     // WHEN
     const nodeEnvironmentVariables = new NodeEnvironmentVariables(fakeLogger);
