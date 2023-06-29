@@ -36,7 +36,7 @@ export const FormulaireDeConnexion = () => {
     return (
         <div className="fr-grid-row  fr-grid-row--center">
             <section className={"fr-col-6 " + styles["container"]}>
-                <form className="fr-mt-5w" id="login-1760" onSubmit={handleSubmit}>
+                <form className="fr-mt-5w" data-testid="login-form" id="login-1760" onSubmit={handleSubmit}>
                     <div className="fr-fieldset__element">
                         <div className="fr-fieldset__element">
                             <div className="fr-input-group fr-mb-3w">

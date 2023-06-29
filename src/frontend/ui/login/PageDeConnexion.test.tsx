@@ -21,7 +21,7 @@ describe("La page de d’accueil", () => {
     renderFakeComponent(<PageDeConnexion />);
 
     // THEN
-    const formulaire = screen.getByRole("login");
+    const formulaire = screen.getByTestId("login-form");
     const labelId = within(formulaire).getByLabelText(wording.CONNEXION_IDENTIFIANT);
     expect(labelId).toBeInTheDocument();
     const inputId = within(formulaire).getByRole("textbox", { name: wording.CONNEXION_IDENTIFIANT });

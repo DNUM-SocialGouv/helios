@@ -1,4 +1,5 @@
 import { fireEvent, screen, within } from "@testing-library/react";
+import { SessionProvider } from 'next-auth/react';
 import mockRouter from "next-router-mock";
 
 import { fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
@@ -6,11 +7,16 @@ import { Header } from "./Header";
 
 jest.mock("next/router", () => require("next-router-mock"));
 const { paths, wording } = fakeFrontDependencies;
+const mockSession = {
+  name: "john",
+  email: "test@test.fr",
+  expires: "1235"
+}
 
 describe("En-tête de page", () => {
   it("affiche un lien pour accéder à la page d’accueil", () => {
     // WHEN
-    renderFakeComponent(<Header />);
+    renderFakeComponent(<SessionProvider session={mockSession}><Header /></SessionProvider>);
 
     // THEN
     const accueil = screen.getByRole("link", { name: wording.ACCUEIL });
@@ -19,8 +25,8 @@ describe("En-tête de page", () => {
   });
 
   it("affiche un menu pour afficher la déconnexion et un pour le moteur de recherche en mobile", () => {
-    // WHEN
-    renderFakeComponent(<Header />);
+    // WHEN    
+    renderFakeComponent(<SessionProvider session={mockSession}><Header /></SessionProvider>);
 
     // THEN
     const menuDeDéconnexion = screen.getByRole("button", { name: wording.MENU });
@@ -33,7 +39,7 @@ describe("En-tête de page", () => {
 
   it("affiche le formulaire de recherche", () => {
     // WHEN
-    renderFakeComponent(<Header />);
+    renderFakeComponent(<SessionProvider session={mockSession}><Header /></SessionProvider>);
 
     // THEN
     const formulaire = screen.getByRole("search");
@@ -49,7 +55,7 @@ describe("En-tête de page", () => {
     // GIVEN
     const router = mockRouter;
     const terme = "hospitalier";
-    renderFakeComponent(<Header />);
+    renderFakeComponent(<SessionProvider session={mockSession}><Header /></SessionProvider>);
     const formulaire = screen.getByRole("search");
     const rechercher = within(formulaire).getByRole("button", { name: wording.RECHERCHE_LABEL });
     const input = within(formulaire).getByPlaceholderText(wording.RECHERCHE_LABEL);
@@ -69,7 +75,7 @@ describe("En-tête de page", () => {
     router.push(paths.ACCUEIL);
 
     // WHEN
-    renderFakeComponent(<Header />);
+    renderFakeComponent(<SessionProvider session={mockSession}><Header /></SessionProvider>);
 
     // THEN
     const formulaire = screen.queryByRole("search");
