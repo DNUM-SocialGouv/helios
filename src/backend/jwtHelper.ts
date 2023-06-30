@@ -1,7 +1,7 @@
 import jwt, { VerifyErrors } from 'jsonwebtoken';
 
 
-const JWT_SECRET_KEY = "just a key for test";
+const JWT_SECRET_KEY = process.env['JWT_SECRET_KEY'] as string;
 
 export const checkToken = (token: string): { email: string } | null => {
     try {
