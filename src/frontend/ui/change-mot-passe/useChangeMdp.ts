@@ -32,8 +32,9 @@ export function useChangeMdp() {
         if(passwordValue !== confirmPasswordValue){
             setErrorMessage("Les mots de passe ne correspondent pas.");
         }
-        
-        changePasswordService();
+        else {
+         changePasswordService();
+        }
 
     }
 

@@ -11,11 +11,9 @@ export class TypeOrmChangePasswordLoader implements ChangePasswordLoader {
         const info =  checkToken(loginToken);
         if (info?.email) {
             const salt = await bcrypt.genSalt(10);
-            const hashedPassword = await bcrypt.hash(password, salt);       
-            const user = await (await this.orm).getRepository(UtilisateurModel).update({ email: info.email.trim() }, {password : hashedPassword});
-            console.log(user,'user');
-            
-            if (user) {
+            const hashedPassword = await bcrypt.hash(password, salt);     
+            const user = await (await this.orm).getRepository(UtilisateurModel).update({ email: info.email.trim() }, {password : hashedPassword});    
+            if (user?.affected) {
                 return true
             }
         }               
