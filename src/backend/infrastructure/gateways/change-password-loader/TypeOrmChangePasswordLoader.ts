@@ -1,9 +1,9 @@
 import { DataSource } from "typeorm";
-const bcrypt = require('bcrypt');
 import { ChangePasswordLoader } from "../../../métier/gateways/ChangePasswordLoader";
 import { checkToken } from "../../../jwtHelper";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 
+const bcrypt = require('bcrypt');
 export class TypeOrmChangePasswordLoader implements ChangePasswordLoader {
     constructor(private readonly orm: Promise<DataSource>) {}
 

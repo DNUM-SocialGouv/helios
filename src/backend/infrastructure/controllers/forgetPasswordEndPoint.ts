@@ -52,8 +52,6 @@ export async function forgetPasswordEndPoint(email: string): Promise<Object> {
     
     return response
   } catch (error) {
-    console.log(error);
-    
     return error
   }
 

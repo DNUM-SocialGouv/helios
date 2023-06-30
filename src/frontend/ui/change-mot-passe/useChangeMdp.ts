@@ -49,8 +49,6 @@ export function useChangeMdp() {
             router.push("/")
           }
           })
-          .then((data) => {
-          })
           .catch(() => {
             setErrorMessage(wording.SOMETHING_WENT_WRONG);
           });

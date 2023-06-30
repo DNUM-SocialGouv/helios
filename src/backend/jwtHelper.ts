@@ -1,4 +1,4 @@
-import jwt, { VerifyErrors } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 
 const JWT_SECRET_KEY = process.env['JWT_SECRET_KEY'] as string;
@@ -8,7 +8,6 @@ export const checkToken = (token: string): { email: string } | null => {
         const decoded = jwt.verify(token, JWT_SECRET_KEY) as { email: string } ;
         return decoded;
     } catch (error) {
-        console.error('Failed to verify JWT:', error as VerifyErrors);
         return null;
       }
 };
