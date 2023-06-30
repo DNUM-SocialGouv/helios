@@ -1,5 +1,5 @@
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import React, { useState, FormEvent } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
