@@ -9,16 +9,9 @@ export default NextAuth({
     CredentialsProvider({
       id: 'credentials',
       name: 'Helios',
-      credentials: {
-        email: {
-          label: 'email',
-          type: 'email',
-        },
-        password: { label: 'Password', type: 'password' },
-      },
+      credentials: {},
       async authorize(credentials) {
         try {
-
           const authResponse = await fetch(`${process.env.NEXTAUTH_URL}/api/utilisateurs/login`, {
             method: "POST",
             headers: {
@@ -28,7 +21,7 @@ export default NextAuth({
           })
 
           if (!authResponse.ok) {
-            return null;
+            throw new Error('Invalid credentials');
           }
 
           const { utilisateur } = await authResponse.json();
