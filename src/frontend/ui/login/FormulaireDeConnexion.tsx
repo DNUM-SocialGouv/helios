@@ -29,7 +29,7 @@ export const FormulaireDeConnexion = () => {
             setLoading(false);
         } else {
             setError(null);
-            router.push(process.env["NEXT_PUBLIC_HELIOS_URL"] as string);
+            router.push("/donnees-personnelles");
         }
     }
 
