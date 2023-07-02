@@ -1,5 +1,4 @@
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import React, { useState, FormEvent } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
@@ -9,7 +8,6 @@ const formsLink = "https://forms.office.com/e/ERQ9ck5sSc"
 
 export const FormulaireDeConnexion = () => {
     const { wording } = useDependencies();
-    const router = useRouter();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
@@ -29,7 +27,7 @@ export const FormulaireDeConnexion = () => {
             setLoading(false);
         } else {
             setError(null);
-            router.push("/donnees-personnelles");
+            window.location.href = "/"
         }
     }
 
