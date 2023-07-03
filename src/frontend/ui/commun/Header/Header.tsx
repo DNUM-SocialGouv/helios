@@ -17,7 +17,7 @@ import { signOut, useSession } from "next-auth/react";
 export const Header = () => {
   const { paths, wording } = useDependencies();
   const router = useRouter();
-  const {data, status} = useSession()
+  const { data, status } = useSession()
   const [terme, setTerme] = useState<string>("");
   const [displayMenu, setDisplayMenu] = useState<boolean>(false);
 
@@ -69,13 +69,13 @@ export const Header = () => {
                   </div>
                 </div>
                 <div className="fr-header__service">
-                { router.pathname !== paths.FORGET_PASSWORD && router.pathname !== paths.CHANGE_PASSWORD  && router.pathname !== paths.CONNEXION? <Link href="/" passHref title={wording.ACCUEIL}>
-                <p className="fr-header__service-title">{wording.RECHERCHE_TITRE}</p>
-                  </Link> :    <p className="fr-header__service-title">{wording.TITRE_DU_SITE}</p>}
+                  <Link href="/" passHref title={wording.ACCUEIL}>
+                    <p className="fr-header__service-title">{wording.TITRE_DU_SITE}</p>
+                  </Link>
                 </div>
               </div>
               <div className="fr-header__tools">
-                {router.pathname !== paths.ACCUEIL && router.pathname !== paths.FORGET_PASSWORD && router.pathname !== paths.CHANGE_PASSWORD &&  router.pathname !== paths.CONNEXION &&(
+                {router.pathname !== paths.ACCUEIL && router.pathname !== paths.FORGET_PASSWORD && router.pathname !== paths.CHANGE_PASSWORD && router.pathname !== paths.CONNEXION && (
                   <div className="fr-header__search fr-modal" id="modal-541">
                     <div className="fr-container fr-container-lg--fluid">
                       <button aria-controls="modal-541" className="fr-btn--close fr-btn" title="Fermer">
@@ -118,7 +118,7 @@ export const Header = () => {
                       setDisplayMenu(!displayMenu)
                     }}
                     ref={ref}>
-                     {data?.user?.name}
+                    {data?.user?.name}
                   </button>
                   {displayMenu ? (
                     <ul className={styles["menu"]}>
@@ -139,7 +139,7 @@ export const Header = () => {
                       </li>
                     </ul>
                   ) : null}
-               
+
                 </div>
               ) : null}
             </div>
