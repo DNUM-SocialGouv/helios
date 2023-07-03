@@ -5,18 +5,18 @@ import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./MdpOublie.module.css";
 
 type FormulaireMdpOublieProps = Readonly<{
-  envoyerEmail: FormEventHandler<HTMLFormElement>;
   annuler: MouseEventHandler<HTMLButtonElement>;
-  emailValueOnChange: ChangeEventHandler<HTMLInputElement>;
-  retourAccueil: MouseEventHandler<HTMLButtonElement>;
-  emailValue: string;
   emailSent: boolean;
+  emailValue: string;
+  emailValueOnChange: ChangeEventHandler<HTMLInputElement>;
+  envoyerEmail: FormEventHandler<HTMLFormElement>;
   errorMessage: string;
+  retourAccueil: MouseEventHandler<HTMLButtonElement>;
   // isLoading: boolean;
 }>;
 
 
-export const FormulaireMdpOublie = ({annuler,emailSent,emailValue,emailValueOnChange,envoyerEmail,errorMessage,retourAccueil,}: FormulaireMdpOublieProps) => {
+export const FormulaireMdpOublie = ({annuler,emailSent,emailValue,emailValueOnChange,envoyerEmail,errorMessage,retourAccueil}: FormulaireMdpOublieProps) => {
   const { wording } = useDependencies();
 
   return (

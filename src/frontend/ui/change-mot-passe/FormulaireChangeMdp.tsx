@@ -5,18 +5,18 @@ import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./changeMdp.module.css";
 
 type FormulaireChangeMdpProps = Readonly<{
-  changePassword: FormEventHandler<HTMLFormElement>;
   annuler: MouseEventHandler<HTMLButtonElement>;
-  passwordValueOnChange: ChangeEventHandler<HTMLInputElement>;
-  confirmPasswordValueOnChange: ChangeEventHandler<HTMLInputElement>;
-  passwordValue: string;
+  changePassword: FormEventHandler<HTMLFormElement>;
   confirmPasswordValue: string;
+  confirmPasswordValueOnChange: ChangeEventHandler<HTMLInputElement>;
   errorMessage: string;
+  passwordValue: string;
+  passwordValueOnChange: ChangeEventHandler<HTMLInputElement>;
   // isLoading: boolean;
 }>;
 
 
-export const FormulaireChangeMdp = ({annuler,changePassword,confirmPasswordValue,confirmPasswordValueOnChange,errorMessage,passwordValue,passwordValueOnChange,}: FormulaireChangeMdpProps) => {
+export const FormulaireChangeMdp = ({annuler,changePassword,confirmPasswordValue,confirmPasswordValueOnChange,errorMessage,passwordValue,passwordValueOnChange}: FormulaireChangeMdpProps) => {
   const { wording } = useDependencies();
 
   return (
