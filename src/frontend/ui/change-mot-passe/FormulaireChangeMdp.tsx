@@ -16,15 +16,7 @@ type FormulaireChangeMdpProps = Readonly<{
 }>;
 
 
-export const FormulaireChangeMdp = ({
-  annuler,
-  changePassword,
-  confirmPasswordValue,
-  confirmPasswordValueOnChange,
-  errorMessage,
-  passwordValue,
-  passwordValueOnChange,
-}: FormulaireChangeMdpProps) => {
+export const FormulaireChangeMdp = ({annuler,changePassword,confirmPasswordValue,confirmPasswordValueOnChange,errorMessage,passwordValue,passwordValueOnChange,}: FormulaireChangeMdpProps) => {
   const { wording } = useDependencies();
 
   return (

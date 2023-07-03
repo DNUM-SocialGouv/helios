@@ -52,7 +52,6 @@ export interface Wording {
   readonly SITE_EN_CONSTRUCTION: string;
 
   // Connexion
-  readonly CONNEXION_TITRE: string
   readonly CONNEXION_IDENTIFIANT: string
   readonly CONNEXION_MOT_DE_PASSE: string
   readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string
