@@ -4,6 +4,7 @@ import { checkToken } from "../../../jwtHelper";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 
 const bcrypt = require('bcrypt');
+
 export class TypeOrmChangePasswordLoader implements ChangePasswordLoader {
     constructor(private readonly orm: Promise<DataSource>) {}
 
