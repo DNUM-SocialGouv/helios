@@ -1,8 +1,10 @@
 import { DataSource } from "typeorm";
-import { ChangePasswordLoader } from "../../../métier/gateways/ChangePasswordLoader";
-import { checkToken } from "../../../jwtHelper";
-import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 
+import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
+import { checkToken } from "../../../jwtHelper";
+import { ChangePasswordLoader } from "../../../métier/gateways/ChangePasswordLoader";
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const bcrypt = require('bcrypt');
 
 export class TypeOrmChangePasswordLoader implements ChangePasswordLoader {

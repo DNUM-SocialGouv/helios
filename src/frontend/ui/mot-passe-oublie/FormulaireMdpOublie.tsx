@@ -1,7 +1,6 @@
 import { ChangeEventHandler, MouseEventHandler, FormEventHandler } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
-
 import styles from "./MdpOublie.module.css";
 
 type FormulaireMdpOublieProps = Readonly<{
@@ -53,10 +52,10 @@ export const FormulaireMdpOublie = ({annuler,emailSent,emailValue,emailValueOnCh
                 <div className="fr-col-12 fr-col-lg-8">
                   <input
                     className="fr-input"
+                    onChange={emailValueOnChange}
                     required
                     type="email"
                     value={emailValue}
-                    onChange={emailValueOnChange}
                   />
                 </div>
               </div>

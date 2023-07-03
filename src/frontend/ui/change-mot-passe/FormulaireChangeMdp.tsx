@@ -1,7 +1,6 @@
 import { ChangeEventHandler, MouseEventHandler, FormEventHandler } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
-
 import styles from "./changeMdp.module.css";
 
 type FormulaireChangeMdpProps = Readonly<{
@@ -35,12 +34,12 @@ export const FormulaireChangeMdp = ({annuler,changePassword,confirmPasswordValue
             <div className="fr-col-11 fr-col-md-8">
               <input
                 className="fr-input"
+                onChange={passwordValueOnChange}
                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{12,}"
+                required
                 title="Mot de passe invalide. Le mot de passe doit être composé d'au moins 12 caractères dont: 1 lettre minuscule, 1 lettre majuscule, 1 chiffre et 1 caractère spécial."
                 type="password"
                 value={passwordValue}
-                onChange={passwordValueOnChange}
-                required
               />
             </div>
           </div>
@@ -53,12 +52,12 @@ export const FormulaireChangeMdp = ({annuler,changePassword,confirmPasswordValue
             <div className="fr-col-11 fr-col-md-8">
               <input
                 className="fr-input"
+                onChange={confirmPasswordValueOnChange}
                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{12,}"
+                required
                 title="Mot de passe invalide. Le mot de passe doit être composé d'au moins 12 caractères dont: 1 lettre minuscule, 1 lettre majuscule, 1 chiffre et 1 caractère spécial."
                 type="password"
                 value={confirmPasswordValue}
-                onChange={confirmPasswordValueOnChange}
-                required
               />
             </div>
           </div>
