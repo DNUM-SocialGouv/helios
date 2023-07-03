@@ -67,6 +67,7 @@ export interface Wording {
   readonly aucunRésultat: (terme: string) => string;
   readonly ERREUR_TECHNIQUE: string;
   readonly VOIR_PLUS_RÉSULTATS: string;
+  readonly RECHERCHE_TITRE: string;
 
   // Cartographie
   readonly CARTOGRAPHIE: string;

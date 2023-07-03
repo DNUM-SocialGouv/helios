@@ -85,6 +85,7 @@ export class WordingFr implements Wording {
   readonly ERREUR_TECHNIQUE: string =
     "Veuillez nous excuser, nous venons de rencontrer une erreur technique. Nous vous invitons à effectuer une nouvelle recherche plus tard.";
   readonly VOIR_PLUS_RÉSULTATS: string = "Voir plus de résultats";
+  readonly RECHERCHE_TITRE: string = "";
 
   // Cartographie
   readonly CARTOGRAPHIE: string = "Cartographie";
