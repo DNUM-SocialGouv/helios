@@ -51,15 +51,11 @@ import { CapacitéAutorisationSanitaireModel } from "./models/CapacitéAutorisat
 import { CpomModel } from "./models/CpomModel";
 import { DateMiseÀJourFichierSourceModel } from "./models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "./models/EntitéJuridiqueModel";
-import { InstitutionModel } from "./models/InstitutionModel";
 import { RechercheModel } from "./models/RechercheModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "./models/ReconnaissanceContractuelleSanitaireModel";
 import { RessourcesHumainesMédicoSocialModel } from "./models/RessourcesHumainesMédicoSocialModel";
-import { RoleModel } from "./models/RoleModel";
-import { UtilisateurModel } from "./models/UtilisateurModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "./models/ÉquipementMatérielLourdSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "./models/ÉtablissementTerritorialIdentitéModel";
-import { AjoutTableUtilisateurRoleEtablissement1686646154737 } from "./migrations/1686646154737-AjoutTableUtilisateurRoleEtablissement";
 import { UtilisateurModel } from "./models/UtilisateurModel";
 import { RoleModel } from "./models/RoleModel";
 import { InstitutionModel } from "./models/InstitutionModel";
