@@ -9,9 +9,10 @@ import "@gouvfr/dsfr/dist/component/link/link.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
 import { useDependencies } from "../contexts/useDependencies";
-import styles from "./Header.module.css";
-import { signOut, useSession } from "next-auth/react";
 import { useOutsideClick } from "../hooks/useOutsideClick";
+import styles from "./Header.module.css";
+
+import { signOut, useSession } from "next-auth/react";
 
 export const Header = () => {
   const { paths, wording } = useDependencies();
@@ -68,9 +69,9 @@ export const Header = () => {
                   </div>
                 </div>
                 <div className="fr-header__service">
-                { router.pathname !== paths.FORGET_PASSWORD && router.pathname !== paths.CHANGE_PASSWORD? <Link href="/" passHref title={wording.ACCUEIL}>
-                    <p className="fr-header__service-title">{wording.TITRE_DU_SITE}</p>
-                  </Link> :    <p className="fr-header__service-title">{wording.RECHERCHE_TITRE}</p> }
+                { router.pathname !== paths.FORGET_PASSWORD && router.pathname !== paths.CHANGE_PASSWORD  && router.pathname !== paths.CONNEXION? <Link href="/" passHref title={wording.ACCUEIL}>
+                <p className="fr-header__service-title">{wording.RECHERCHE_TITRE}</p>
+                  </Link> :    <p className="fr-header__service-title">{wording.TITRE_DU_SITE}</p>}
                 </div>
               </div>
               <div className="fr-header__tools">
