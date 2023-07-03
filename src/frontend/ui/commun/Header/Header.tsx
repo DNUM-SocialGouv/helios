@@ -74,7 +74,7 @@ export const Header = () => {
                 </div>
               </div>
               <div className="fr-header__tools">
-                {router.pathname !== paths.ACCUEIL && router.pathname !== paths.FORGET_PASSWORD && router.pathname !== paths.CHANGE_PASSWORD && (
+                {router.pathname !== paths.ACCUEIL && router.pathname !== paths.FORGET_PASSWORD && router.pathname !== paths.CHANGE_PASSWORD &&  router.pathname !== paths.CONNEXION &&(
                   <div className="fr-header__search fr-modal" id="modal-541">
                     <div className="fr-container fr-container-lg--fluid">
                       <button aria-controls="modal-541" className="fr-btn--close fr-btn" title="Fermer">
@@ -113,23 +113,19 @@ export const Header = () => {
                 <div className={styles["dropdown"]}>
                   <button
                     className={"fr-icon-account-line " + styles["account-logo"]}
-                    ref={ref}
                     onClick={() => {
                       setDisplayMenu(!displayMenu)
-                    }}>
+                    }}
+                    ref={ref}>
                      {data?.user?.name}
                   </button>
                   {displayMenu ? (
                     <ul className={styles["menu"]}>
                       <li className={styles["menu-item"]}>
-                        <button
-                          // onClick={() => {
-                          //   signOut({ callbackUrl: paths.CONNEXION });
-                          //   setDisplayMenu(false)
-                          // }}
-                          >
-                          Profil
-                        </button>
+                        <button>Profil</button>
+                      </li>
+                      <li className={styles["menu-item"]}>
+                        <button>Mot de passe</button>
                       </li>
                       <li className={styles["menu-item"]}>
                         <button

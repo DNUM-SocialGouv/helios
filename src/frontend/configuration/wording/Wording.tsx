@@ -59,7 +59,6 @@ export interface Wording {
   readonly CONNEXION_LIBELLE: string
 
   // Recherche
-  readonly RECHERCHE_TITRE: string;
   readonly RECHERCHE_DESCRIPTION: ReactElement;
   readonly RECHERCHE_PLACEHOLDER: string;
   readonly RECHERCHE_LABEL: string;

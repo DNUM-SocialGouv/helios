@@ -3,6 +3,7 @@ import { UtilisateurLoader } from "../../../métier/gateways/UtilisateurLoader";
 import { RésultatLogin } from "../../../métier/entities/Utilisateur/RésultatLogin";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 
+
 export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     constructor(private readonly orm: Promise<DataSource>) { }
 

@@ -25,8 +25,6 @@ describe("La page de d’accueil", () => {
     renderFakeComponent(<PageRecherche />);
 
     // THEN
-    const titre = screen.getByRole("heading", { level: 1, name: wording.RECHERCHE_TITRE });
-    expect(titre).toBeInTheDocument();
     const description = screen.getByText(htmlNodeAndReactElementMatcher(wording.RECHERCHE_DESCRIPTION), { selector: "p" });
     expect(description).toBeInTheDocument();
     const formulaire = screen.getByRole("search");

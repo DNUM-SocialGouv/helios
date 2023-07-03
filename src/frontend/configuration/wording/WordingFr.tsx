@@ -34,7 +34,7 @@ export class WordingFr implements Wording {
   readonly MENU: string = "Menu";
   readonly DÉCONNEXION: string = "Déconnexion";
   readonly FERMER: string = "Fermer";
-  readonly TITRE_DU_SITE: string = "Fiche de synthèse - Helios";
+  readonly TITRE_DU_SITE: string = "Bienvenue sur Helios";
 
   // Titre des pages
   readonly TITRE_PAGE_ACCUEIL: string = "Accueil - Helios";
@@ -61,15 +61,13 @@ export class WordingFr implements Wording {
   readonly SITE_EN_CONSTRUCTION: string = "Le site est dans sa phase pilote : il est toujours en construction et va évoluer régulièrement.";
   
   // Connexion
-  readonly CONNEXION_TITRE: string = "Bienvenue sur Helios !"
   readonly CONNEXION_IDENTIFIANT: string = "Identifiant *"
   readonly CONNEXION_MOT_DE_PASSE: string = "Mot de passe *"
-  readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string = "Mot de passe oublié ?"
+  readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string = "Vous n'avez pas de compte ? "
   readonly CONNEXION_LIBELLE: string = "Connexion"
 
   
   // Recherche
-  readonly RECHERCHE_TITRE: string = "Bienvenue sur Helios !";
   readonly RECHERCHE_DESCRIPTION: ReactElement = (
     <>
       Accédez rapidement et simplement à la fiche de synthèse d’un établissement géographique

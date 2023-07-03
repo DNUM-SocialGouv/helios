@@ -1,20 +1,19 @@
-// import { ChangeEventHandler, MouseEventHandler } from "react";
-
 import { signIn } from "next-auth/react";
+import React, { useState, FormEvent } from "react";
+
 import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./Connexion.module.css";
-import { useState } from "react";
-import { useRouter } from "next/router";
+
+const formsLink = "https://forms.office.com/e/ERQ9ck5sSc"
 
 export const FormulaireDeConnexion = () => {
     const { wording } = useDependencies();
-    const router = useRouter();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
         setLoading(true);
         const res = await signIn("credentials", {
@@ -23,20 +22,19 @@ export const FormulaireDeConnexion = () => {
             redirect: false,
         })
 
-        if(res?.error) {
+        if (res?.error) {
             setError("L'identifiant et/ou le mot de passe sont incorrects.");
             setLoading(false);
         } else {
             setError(null);
-            router.push("/");
+            window.location.href = "/"
         }
     }
 
     return (
         <div className="fr-grid-row  fr-grid-row--center">
             <section className={"fr-col-6 " + styles["container"]}>
-                <h1>{wording.CONNEXION_TITRE}</h1>
-                <form id="login-1760" className="fr-mt-5w" onSubmit={handleSubmit}>
+                <form className="fr-mt-5w" data-testid="login-form" id="login-1760" onSubmit={handleSubmit}>
                     <div className="fr-fieldset__element">
                         <div className="fr-fieldset__element">
                             <div className="fr-input-group fr-mb-3w">
@@ -44,18 +42,18 @@ export const FormulaireDeConnexion = () => {
                                     {wording.CONNEXION_IDENTIFIANT}
                                 </label>
                                 <input
-                                    className="fr-input fr-mt-1w"
-                                    autoComplete="username"
-                                    aria-required="true"
                                     aria-describedby="username-1757-messages"
-                                    name="username"
+                                    aria-required="true"
+                                    autoComplete="username"
+                                    className="fr-input fr-mt-1w"
                                     id="username-1757"
-                                    type="email"
-                                    value={email}
+                                    name="username"
                                     onChange={({ target }) => { setEmail(target.value) }}
                                     required
+                                    type="email"
+                                    value={email}
                                 />
-                                <div className="fr-messages-group" id="username-1757-messages" aria-live="assertive">
+                                <div aria-live="assertive" className="fr-messages-group" id="username-1757-messages">
                                 </div>
                             </div>
                         </div>
@@ -66,43 +64,43 @@ export const FormulaireDeConnexion = () => {
                                 </label>
                                 <div className="fr-input-wrap fr-mt-1w fr-mb-2w">
                                     <input
-                                        className="fr-password__input fr-input"
                                         aria-describedby="password-1758-input-messages"
                                         aria-required="true"
-                                        name="password"
                                         autoComplete="current-password"
-                                        id="password-1758-input"
+                                        className="fr-password__input fr-input"
                                         data-testid="password-1758-input"
-                                        type="password"
-                                        value={password}
+                                        id="password-1758-input"
+                                        name="password"
                                         onChange={({ target }) => setPassword(target.value)}
                                         required
+                                        type="password"
+                                        value={password}
                                     />
                                 </div>
-                                <div className="fr-messages-group" id="password-1758-input-messages" aria-live="assertive">
+                                <div aria-live="assertive" className="fr-messages-group" id="password-1758-input-messages">
                                 </div>
                                 <p>
-                                    <a href="/mot-passe-oublie" className="fr-link">
-                                        {wording.CONNEXION_MOT_DE_PASSE_OUBLIE}
+                                    {wording.CONNEXION_MOT_DE_PASSE_OUBLIE}
+                                    <a className="fr-link" href={formsLink}>
+                                        S&apos;inscrire
                                     </a>
                                 </p>
                             </div>
                         </div>
-                        <div className={"fr-messages-group " + styles["error-message"]} id="credentials-messages" aria-live="assertive">
+                        <div aria-live="assertive" className={"fr-messages-group " + styles["error-message"]} id="credentials-messages">
                             {error}
                         </div>
                     </div>
                     <div className="fr-fieldset__element">
                         <ul className="fr-btns-group">
                             <li>
-                                <button className="fr-mt-2v fr-btn" type="submit" disabled={loading}>
+                                <button className="fr-mt-2v fr-btn" disabled={loading} type="submit">
                                     {wording.CONNEXION_LIBELLE}
                                 </button>
                             </li>
                         </ul>
                     </div>
-                    <div className="fr-messages-group" id="login-1760-fieldset-messages" aria-live="assertive">
-                        {/* {session.status} */}
+                    <div aria-live="assertive" className="fr-messages-group" id="login-1760-fieldset-messages">
                     </div>
                 </form>
             </section>
