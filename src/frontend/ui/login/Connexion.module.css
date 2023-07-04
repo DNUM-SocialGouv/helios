@@ -1,0 +1,11 @@
+.container {
+    margin-top: 3.5rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+.error-message {
+  width: 15rem;
+  color: #cd3939;
+}

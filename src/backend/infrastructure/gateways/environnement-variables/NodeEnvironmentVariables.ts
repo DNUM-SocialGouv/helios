@@ -6,6 +6,9 @@ export class NodeEnvironmentVariables implements EnvironmentVariables {
 
   readonly DATABASE_URL: string = this.getOrElse("DATABASE_URL");
 
+  readonly NEXTAUTH_URL: string = this.getOrElse("NEXTAUTH_URL");
+  readonly NEXTAUTH_SECRET: string = this.getOrElse("NEXTAUTH_SECRET");
+
   readonly ORM_DEBUG: string = this.getOrElse("ORM_DEBUG");
 
   readonly SCALINGO_TOKEN: string = this.getOrElse("SCALINGO_TOKEN");
