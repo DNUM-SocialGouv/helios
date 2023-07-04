@@ -46,14 +46,14 @@ export class WordingFr implements Wording {
   readonly ENTITÉS_JURIDIQUES: string = "Entité(s) Juridique(s)";
   readonly ÉTABLISSEMENT_TERRITORIAUX: string = "Établissements Territoriaux";
   readonly SITE_EN_CONSTRUCTION: string = "Le site est dans sa phase pilote : il est toujours en construction et va évoluer régulièrement.";
-  
+
   // Connexion
   readonly CONNEXION_IDENTIFIANT: string = "Identifiant *"
   readonly CONNEXION_MOT_DE_PASSE: string = "Mot de passe *"
   readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string = "Vous n'avez pas de compte ? "
   readonly CONNEXION_LIBELLE: string = "Connexion"
 
-  
+
   // Recherche
   readonly RECHERCHE_DESCRIPTION: ReactElement = (
     <>
@@ -191,7 +191,7 @@ export class WordingFr implements Wording {
   readonly MISE_À_JOUR_AUTORISATION: string = "Mise à jour d’autorisation";
   readonly DERNIÈRE_INSTALLATION: string = "Dernière installation";
   readonly CAPACITÉ_INSTALLÉE: string = "Capacité installée";
-  readonly CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS: string = "Capacité installée par activités sanitaires";
+  readonly CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS: string = "Capacité installée par activités médico-sociales";
   readonly NOMBRE_TOTAL_DE_PLACE: string = "Nombre total de places";
   readonly ACTIVITÉ: string = "Activité";
 
