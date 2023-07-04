@@ -20,11 +20,15 @@ export class ModificationTableInstitution1688376404752 implements MigrationInter
             ALTER TABLE public.institution ADD CONSTRAINT inst_code_geo_key UNIQUE(inst_code_geo);
         `);
 
+        await queryRunner.query("update public.institution set inst_code=CONCAT ('ARS_',inst_code_geo);");
+
         await queryRunner.query(`
             ALTER TABLE public.institution ALTER COLUMN inst_code_geo set NOT NULL;
         `);
 
-        await queryRunner.query("update public.institution set inst_code=CONCAT ('ARS_',inst_code_geo);");
+        await queryRunner.query("insert into public.institution(inst_code, inst_libelle, inst_code_geo) values('SCN', 'DNUM (SCN)', '00');");
+        await queryRunner.query("insert into public.institution(inst_code, inst_libelle, inst_code_geo) values('CAT', 'CAT-AMANIA', '75');");
+        await queryRunner.query("insert into public.institution(inst_code, inst_libelle, inst_code_geo) values('TEST', 'TEST', '44');");
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
