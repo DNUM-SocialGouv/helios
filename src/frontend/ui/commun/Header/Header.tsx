@@ -1,3 +1,4 @@
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -12,7 +13,6 @@ import { useDependencies } from "../contexts/useDependencies";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 import styles from "./Header.module.css";
 
-import { signOut, useSession } from "next-auth/react";
 
 export const Header = () => {
   const { paths, wording } = useDependencies();

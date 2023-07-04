@@ -24,18 +24,18 @@ export async function forgetPasswordEndPoint(email: string): Promise<Object> {
     <p>En cas de difficulté dans votre demande de réinitialisation, merci de contacter l’équipe Support Helios : dnum.scn-helios-support@sg.social.gouv.fr</p>
     `
     const body = {
-      "to": [
+      to: [
           {
-              "address":email,
+              address:email,
           }
       ],
-      "msg": {
-        "from": {
-          "personalName": "sebastian",
-          "address": "s.ferre@pmns.fr"
+      msg: {
+        from: {
+          personalName: process.env['TIPIMAIL_SENDER_NAME'],
+          address: process.env['TIPIMAIL_SENDER_ADDRESS']
           },
-          "subject": "Demande de réinitialisation de mot de passe Helios",
-          "html": html
+          subject: "Demande de réinitialisation de mot de passe Helios",
+          html: html
       
       }
   }
@@ -44,8 +44,8 @@ export async function forgetPasswordEndPoint(email: string): Promise<Object> {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Tipimail-ApiUser': `f6da913ad5d0a1a449864c5d6f1fe70e`,
-        'X-Tipimail-ApiKey':'8ff59cc5287cd5b1846a623d8f79fa7e'
+        'X-Tipimail-ApiUser': `${process.env['TIPIMAIL_APIUSER']}` || '',
+        'X-Tipimail-ApiKey':`${process.env['TIPIMAIL_APIKEY']}` || ''
       },
       body: JSON.stringify(body)
     });

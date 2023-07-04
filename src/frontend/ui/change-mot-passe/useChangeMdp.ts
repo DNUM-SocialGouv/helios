@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
+import { ChangeEvent, FormEvent, MouseEvent, useState } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
 
-import { ChangeEvent, FormEvent, MouseEvent, useState } from "react";
 
 export function useChangeMdp() {
     const router = useRouter();
@@ -29,37 +29,38 @@ export function useChangeMdp() {
 
     const changePassword = (event: FormEvent) => {
         event.preventDefault();
-        if(passwordValue !== confirmPasswordValue){
+        if (passwordValue !== confirmPasswordValue) {
             setErrorMessage("Les mots de passe ne correspondent pas.");
         }
         else {
-         changePasswordService();
+            changePasswordService();
         }
 
     }
 
     const changePasswordService = () => {
         fetch("/api/change-mot-passe", {
-            body: JSON.stringify({loginToken: loginToken, password: passwordValue }),
+            body: JSON.stringify({ loginToken: loginToken, password: passwordValue }),
             headers: { "Content-Type": "application/json" },
             method: "POST",
-          })
-          .then((response) => {response.json()
-          if(response.status ===200) {
-            router.push("/")
-          }
-          })
-          .catch(() => {
-            setErrorMessage(wording.SOMETHING_WENT_WRONG);
-          });
+        })
+            .then((response) => {
+                response.json()
+                if (response.status === 200) {
+                    router.push("/")
+                }
+            })
+            .catch(() => {
+                setErrorMessage(wording.SOMETHING_WENT_WRONG);
+            });
     }
 
 
-    return{
+    return {
         passwordValue,
         confirmPasswordValue,
         changePassword,
-        passwordValueOnChange, 
+        passwordValueOnChange,
         confirmPasswordValueOnChange,
         annuler,
         errorMessage,

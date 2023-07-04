@@ -17,7 +17,6 @@ type FormulaireMdpOublieProps = Readonly<{
 
 export const FormulaireMdpOublie = ({annuler,emailSent,emailValue,emailValueOnChange,envoyerEmail,errorMessage,retourAccueil}: FormulaireMdpOublieProps) => {
   const { wording } = useDependencies();
-
   return (
     <div className={styles["align"]}>
       <div className="fr-grid-row fr-grid-row--center">
@@ -44,7 +43,7 @@ export const FormulaireMdpOublie = ({annuler,emailSent,emailValue,emailValueOnCh
               </div>
             </form>
           ) :
-          (
+          ( 
             <form className="fr-col-5" onSubmit={envoyerEmail}>
               {errorMessage && <div className={styles["error"]}> {errorMessage} </div>}
               <div className="fr-grid-row fr-grid-row--center">
@@ -62,10 +61,10 @@ export const FormulaireMdpOublie = ({annuler,emailSent,emailValue,emailValueOnCh
               <div className="fr-grid-row fr-grid-row--center fr-mt-8w fr-mb-6w">
                 <ul className="fr-btns-group fr-btns-group--inline-sm">
                   <li>
-                    <button className="fr-btn fr-btn--secondary" onClick={()=>annuler}>
+                    <button className="fr-btn fr-btn--secondary" onClick={annuler} type="button">
                       {wording.CANCEL}
                     </button>
-                  </li>
+                  </li>        
                   <li>
                     <button className="fr-btn" type="submit">
                       {wording.SEND_EMAIL}

@@ -51,14 +51,14 @@ import { CapacitéAutorisationSanitaireModel } from "./models/CapacitéAutorisat
 import { CpomModel } from "./models/CpomModel";
 import { DateMiseÀJourFichierSourceModel } from "./models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "./models/EntitéJuridiqueModel";
+import { InstitutionModel } from "./models/InstitutionModel";
 import { RechercheModel } from "./models/RechercheModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "./models/ReconnaissanceContractuelleSanitaireModel";
 import { RessourcesHumainesMédicoSocialModel } from "./models/RessourcesHumainesMédicoSocialModel";
+import { RoleModel } from "./models/RoleModel";
+import { UtilisateurModel } from "./models/UtilisateurModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "./models/ÉquipementMatérielLourdSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "./models/ÉtablissementTerritorialIdentitéModel";
-import { UtilisateurModel } from "./models/UtilisateurModel";
-import { RoleModel } from "./models/RoleModel";
-import { InstitutionModel } from "./models/InstitutionModel";
 
 const logger = new ConsoleLogger();
 dotEnvConfig();

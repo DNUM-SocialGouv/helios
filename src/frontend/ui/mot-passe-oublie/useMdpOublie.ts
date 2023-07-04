@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
+import { ChangeEvent, MouseEvent, FormEvent, useState } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
 
-import { ChangeEvent, MouseEvent, FormEvent, useState } from "react";
 
 type MdpOublieState = Readonly<{
     emailValue: string;
