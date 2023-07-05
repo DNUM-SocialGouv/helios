@@ -16,10 +16,6 @@ export class ModificationTableInstitution1688376404752 implements MigrationInter
             ALTER TABLE public.institution ADD CONSTRAINT inst_code_key UNIQUE(inst_code);
         `);
 
-        await queryRunner.query(`
-            ALTER TABLE public.institution ADD CONSTRAINT inst_code_geo_key UNIQUE(inst_code_geo);
-        `);
-
         await queryRunner.query("update public.institution set inst_code=CONCAT ('ARS_',inst_code_geo);");
 
         await queryRunner.query(`
@@ -35,10 +31,6 @@ export class ModificationTableInstitution1688376404752 implements MigrationInter
         await queryRunner.query(`
            ALTER TABLE public.institution DROP CONSTRAINT inst_code_key
         `);
-
-        await queryRunner.query(`
-            ALTER TABLE public.institution DROP CONSTRAINT inst_code_geo_key;
-         `);
 
         await queryRunner.query(`
            ALTER TABLE public.institution DROP COLUMN inst_code;
