@@ -64,6 +64,7 @@ export class WordingFr implements Wording {
   readonly CONNEXION_IDENTIFIANT: string = "Identifiant *"
   readonly CONNEXION_MOT_DE_PASSE: string = "Mot de passe *"
   readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string = "Vous n'avez pas de compte ? "
+  readonly FORGET_PASSEWORD: string = "Mot de passe oublié ?"
   readonly CONNEXION_LIBELLE: string = "Connexion"
 
   

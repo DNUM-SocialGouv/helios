@@ -3,6 +3,7 @@ import React, { useState, FormEvent } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./Connexion.module.css";
+import Link from "next/link";
 
 const formsLink = "https://forms.office.com/e/ERQ9ck5sSc"
 
@@ -80,8 +81,13 @@ export const FormulaireDeConnexion = () => {
                                 <div aria-live="assertive" className="fr-messages-group" id="password-1758-input-messages">
                                 </div>
                                 <p>
+                                    <Link className={"fr-link "+ styles['background-img']} href="/mot-passe-oublie">
+                                        {wording.FORGET_PASSEWORD}
+                                    </Link>
+                                </p>
+                                <p>
                                     {wording.CONNEXION_MOT_DE_PASSE_OUBLIE}
-                                    <a className="fr-link" href={formsLink}>
+                                    <a className={"fr-link "+ styles['background-img']}href={formsLink}>
                                         S&apos;inscrire
                                     </a>
                                 </p>

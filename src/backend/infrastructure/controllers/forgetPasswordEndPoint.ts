@@ -15,7 +15,7 @@ export async function forgetPasswordEndPoint(email: string): Promise<Object> {
 
     <p>Si le lien de réinitialisation ne s'affiche pas, copiez et collez-le dans votre navigateur.</p>
 
-    <p>Si votre lien de réinitialisation a expiré, merci de cliquer <p><a href="${APP_URL}/mot-passe-oublie">Ici</a></p> </p>
+    <p>Si votre lien de réinitialisation a expiré, merci de cliquer <span> <a href="${APP_URL}/mot-passe-oublie">ici</a> </span> </p>
 
     <p>Si vous ne souhaitez pas réinitialiser votre mot de passe, vous pouvez ignorer cet e-mail.</p>
 
