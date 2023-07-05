@@ -14,10 +14,10 @@ export interface EnvironmentVariables {
 
   readonly TIME_OF_CACHE_PAGE: string;
 
+  readonly APP_BASE_URL: string;
   readonly TIPIMAIL_SENDER_NAME: string;
   readonly TIPIMAIL_SENDER_ADDRESS: string;
   readonly TIPIMAIL_APIUSER: string;
   readonly TIPIMAIL_APIKEY: string;
   readonly JWT_SECRET_KEY: string;
-  readonly APP_BASE_URL: string;
 }

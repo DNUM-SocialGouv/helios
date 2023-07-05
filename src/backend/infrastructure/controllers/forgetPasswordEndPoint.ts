@@ -44,8 +44,8 @@ export async function forgetPasswordEndPoint(email: string): Promise<Object> {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Tipimail-ApiUser': `${process.env['TIPIMAIL_APIUSER']}` || '',
-        'X-Tipimail-ApiKey':`${process.env['TIPIMAIL_APIKEY']}` || ''
+        'X-Tipimail-ApiUser': process.env['TIPIMAIL_APIUSER'] || '',
+        'X-Tipimail-ApiKey':process.env['TIPIMAIL_APIKEY']|| ''
       },
       body: JSON.stringify(body)
     });
