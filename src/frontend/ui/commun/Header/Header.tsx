@@ -110,7 +110,7 @@ export const Header = () => {
                   </div>
                 )}
               </div>
-              {status !== "unauthenticated" ? (
+              {status === "authenticated" && paths.CONNEXION !== router.pathname? (
                 <div className={styles["dropdown"]}>
                   <button
                     className={"fr-icon-account-line " + styles["account-logo"]}
