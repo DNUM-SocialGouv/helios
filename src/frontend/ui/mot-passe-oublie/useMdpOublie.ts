@@ -2,12 +2,14 @@ import { useRouter } from 'next/router';
 import { ChangeEvent, MouseEvent, FormEvent, useState } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
+import isEmail from '../commun/validation';
 
 
 type MdpOublieState = Readonly<{
     emailValue: string;
     emailSent: boolean;
     errorMessage: string;
+    isLoading : boolean;
 }>;
 
 export function useMdpOublie() {
@@ -17,6 +19,7 @@ export function useMdpOublie() {
         emailValue: "",
         emailSent: false,
         errorMessage: "",
+        isLoading: false,
     });
 
     const emailValueOnChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -27,46 +30,26 @@ export function useMdpOublie() {
     };
 
     const envoyerEmailService = (emailValue: string) => {
+        setState({...state, isLoading : true})
         fetch("/api/mot-passe-oublie", {
             body: JSON.stringify({ emailValue}),
             headers: { "Content-Type": "application/json" },
             method: "POST",
           })
           .then((response) => response.json())
-          .then((data) => {
-            switch (data.message) {
-                case "Missing params":
+          .then(() => {
+                
                     setState({
                         ...state,
-                        emailSent: false,
-                        errorMessage: wording.MISSING_EMAIL,
-                    });
-                  break;
-                  case "email not valid":
-                    setState({
-                        ...state,
-                        emailSent: false,
-                        errorMessage: wording.EMAIL_NOT_VALID,
-                    });
-                  break;
-                case "Mail sent":
-                    setState({
-                        ...state,
-                        emailSent: true,
-                        errorMessage: "",
-                    });
-                    break;
-                default:
-                    setState({
-                        ...state,
+                        isLoading:false,
                         emailSent: true,
                     })
-              }
           })
           .catch(() => {
             setState({
                 ...state,
                 emailSent: false,
+                isLoading:false,
                 errorMessage: wording.SOMETHING_WENT_WRONG,
             });
           });
@@ -74,14 +57,14 @@ export function useMdpOublie() {
 
     const envoyerEmail = (event: FormEvent) => {
         event.preventDefault();
-        envoyerEmailService(state.emailValue)
+        if (isEmail(state.emailValue)) {
+            envoyerEmailService(state.emailValue)
+        }
     };
 
     const annuler = (event: MouseEvent) => {
         event.preventDefault();
-        //TODO change the path 
-        // the right path is back to connexion 
-        router.push("/");
+        router.back();
     };
 
     const retourAccueil = (event: MouseEvent) => {
@@ -97,5 +80,6 @@ export function useMdpOublie() {
         annuler,
         retourAccueil,
         errorMessage: state.errorMessage,
+        isLoading:state.isLoading
     }
 }

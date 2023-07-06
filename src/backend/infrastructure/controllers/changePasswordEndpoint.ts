@@ -11,3 +11,4 @@ export async function changePasswordEndpoint(dependencies: Dependencies, loginTo
       throw error;
     }
   }
+  

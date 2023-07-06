@@ -1,9 +1,10 @@
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 import React, { useState, FormEvent } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./Connexion.module.css";
-import Link from "next/link";
+
 
 const formsLink = "https://forms.office.com/e/ERQ9ck5sSc"
 

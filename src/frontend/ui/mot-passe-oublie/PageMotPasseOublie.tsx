@@ -11,9 +11,18 @@ export const PageMotPasseOublie = () => {
     annuler,
     retourAccueil,
     errorMessage,
+    isLoading
   } = useMdpOublie();
 
   return (
-    <FormulaireMdpOublie annuler={annuler} emailSent={emailSent} emailValue={emailValue} emailValueOnChange={emailValueOnChange} envoyerEmail={envoyerEmail} errorMessage={errorMessage} retourAccueil={retourAccueil}/>
+    <FormulaireMdpOublie
+      annuler={annuler}
+      emailSent={emailSent}
+      emailValue={emailValue}
+      emailValueOnChange={emailValueOnChange}
+      envoyerEmail={envoyerEmail}
+      errorMessage={errorMessage}
+      isLoading={isLoading}
+      retourAccueil={retourAccueil} />
   );
 };

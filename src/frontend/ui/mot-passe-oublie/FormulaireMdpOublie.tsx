@@ -11,11 +11,11 @@ type FormulaireMdpOublieProps = Readonly<{
   envoyerEmail: FormEventHandler<HTMLFormElement>;
   errorMessage: string;
   retourAccueil: MouseEventHandler<HTMLButtonElement>;
-  // isLoading: boolean;
+   isLoading: boolean;
 }>;
 
 
-export const FormulaireMdpOublie = ({annuler,emailSent,emailValue,emailValueOnChange,envoyerEmail,errorMessage,retourAccueil}: FormulaireMdpOublieProps) => {
+export const FormulaireMdpOublie = ({annuler,emailSent,emailValue,emailValueOnChange,envoyerEmail,errorMessage,retourAccueil,isLoading}: FormulaireMdpOublieProps) => {
   const { wording } = useDependencies();
   return (
     <div className={styles["align"]}>
@@ -26,7 +26,7 @@ export const FormulaireMdpOublie = ({annuler,emailSent,emailValue,emailValueOnCh
         {emailSent ?
           (
             <form className="fr-col-6" onSubmit={envoyerEmail}>
-              <div className={styles["success"]}>{wording.MOT_PASSE_OUBLIE_SUCCESS_MESSAGE + emailValue}</div>
+              { !isLoading && <div className={styles["success"]}>{wording.MOT_PASSE_OUBLIE_SUCCESS_MESSAGE + emailValue}</div> }
               <div className="fr-grid-row fr-grid-row--center fr-mt-8w fr-mb-6w">
                 <ul className="fr-btns-group fr-btns-group--inline-sm">
                   <li>
@@ -35,7 +35,7 @@ export const FormulaireMdpOublie = ({annuler,emailSent,emailValue,emailValueOnCh
                     </button>
                   </li>
                   <li>
-                    <button className="fr-btn" type="submit">
+                    <button className="fr-btn" disabled={isLoading} type="submit">
                       {wording.RESEND_EMAIL}
                     </button>
                   </li>
@@ -66,7 +66,8 @@ export const FormulaireMdpOublie = ({annuler,emailSent,emailValue,emailValueOnCh
                     </button>
                   </li>        
                   <li>
-                    <button className="fr-btn" type="submit">
+                    <div>{isLoading}</div>
+                    <button className="fr-btn" disabled={isLoading} type="submit">
                       {wording.SEND_EMAIL}
                     </button>
                   </li>
@@ -78,3 +79,4 @@ export const FormulaireMdpOublie = ({annuler,emailSent,emailValue,emailValueOnCh
     </div>
   );
 };
+
