@@ -45,6 +45,7 @@ populate_budget_et_finances_entite_juridique = 'python -m datacrawler.ajoute_le_
 populate_ressoures_humaines_medico_social = 'python -m datacrawler.ajoute_le_bloc_ressources_humaines_des_établissements_médico_sociaux'
 populate_activites_sanitaire_entites_juridiques = 'python -m datacrawler.agrégation_activité_sanitaire'
 populate_capacites_sanitaire_entites_juridiques = 'python -m datacrawler.agrégation_capacité_sanitaire'
+populate_app_users = 'python -m datacrawler.import_utilisateurs'
 test = 'pytest --tb=short'
 test_coverage = 'pytest --tb=short --cov=datacrawler --cov-report=xml'
 test_watch = 'ptw'
