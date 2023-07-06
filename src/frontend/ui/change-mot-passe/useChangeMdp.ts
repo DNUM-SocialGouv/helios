@@ -11,6 +11,7 @@ export function useChangeMdp() {
     const [passwordValue, setPasswordValue] = useState("");
     const [confirmPasswordValue, setConfirmPasswordValue] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const { loginToken } = router.query;
 
@@ -39,18 +40,21 @@ export function useChangeMdp() {
     }
 
     const changePasswordService = () => {
+        setIsLoading(true)
         fetch("/api/change-mot-passe", {
             body: JSON.stringify({ loginToken: loginToken, password: passwordValue }),
             headers: { "Content-Type": "application/json" },
             method: "POST",
         })
             .then((response) => {
+                setIsLoading(false)
                 response.json()
                 if (response.status === 200) {
                     router.push("/")
                 }
             })
             .catch(() => {
+                setIsLoading(false)
                 setErrorMessage(wording.SOMETHING_WENT_WRONG);
             });
     }
@@ -64,5 +68,6 @@ export function useChangeMdp() {
         confirmPasswordValueOnChange,
         annuler,
         errorMessage,
+        isLoading
     }
 }

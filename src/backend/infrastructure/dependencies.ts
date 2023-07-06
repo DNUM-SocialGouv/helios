@@ -13,7 +13,7 @@ import { TypeOrmChangePasswordLoader } from "./gateways/change-password-loader/T
 import { dotEnvConfig } from "./gateways/dot-env/dotEnvConfig";
 import { TypeOrmEntitéJuridiqueLoader } from "./gateways/entité-juridique-loader/TypeOrmEntitéJuridiqueLoader";
 import { NodeEnvironmentVariables } from "./gateways/environnement-variables/NodeEnvironmentVariables";
-import { ForgetPasswordService } from "./gateways/forget-password-loader/ForgetPasswordService";
+import { TypeOrmForgetPasswordLoader } from "./gateways/forget-password-loader/TypeOrmForgetPasswordLoader";
 import { ConsoleLogger } from "./gateways/logger/ConsoleLogger";
 import { typeOrmOrm } from "./gateways/orm/typeOrmOrm";
 import { TypeOrmRechercheLoader } from "./gateways/recherche-loader/TypeOrmRechercheLoader";
@@ -32,7 +32,7 @@ export type Dependencies = Readonly<{
   établissementTerritorialRattachéLoader: ÉtablissementTerritorialRattachéLoader;
   établissementTerritorialSanitaireLoader: ÉtablissementTerritorialSanitaireLoader;
   changePasswordLoader: ChangePasswordLoader;
-  forgetPasswordLoader : ForgetPasswordService;
+  forgetPasswordLoader : TypeOrmForgetPasswordLoader;
 }>;
 
 const createDependencies = (): Dependencies => {
@@ -57,7 +57,7 @@ const createDependencies = (): Dependencies => {
     établissementTerritorialRattachéLoader: new TypeOrmÉtablissementTerritorialRattachéLoader(orm),
     établissementTerritorialSanitaireLoader: new TypeOrmÉtablissementTerritorialSanitaireLoader(orm),
     changePasswordLoader: new TypeOrmChangePasswordLoader(orm),
-    forgetPasswordLoader : new  ForgetPasswordService(orm)
+    forgetPasswordLoader : new  TypeOrmForgetPasswordLoader()
   };
 };
 

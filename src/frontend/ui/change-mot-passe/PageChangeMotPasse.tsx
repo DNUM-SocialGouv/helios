@@ -11,11 +11,20 @@ export const PageChangeMotPasse = () => {
     confirmPasswordValueOnChange,
     annuler,
     errorMessage,
+    isLoading
   } = useChangeMdp();
 
   return (
     <main className="fr-container">
-      <FormulaireChangeMdp annuler={annuler} changePassword={changePassword} confirmPasswordValue={confirmPasswordValue} confirmPasswordValueOnChange={confirmPasswordValueOnChange} errorMessage={errorMessage} passwordValue={passwordValue} passwordValueOnChange={passwordValueOnChange}
+      <FormulaireChangeMdp
+        annuler={annuler}
+        changePassword={changePassword}
+        confirmPasswordValue={confirmPasswordValue}
+        confirmPasswordValueOnChange={confirmPasswordValueOnChange}
+        errorMessage={errorMessage}
+        isLoading={isLoading}
+        passwordValue={passwordValue}
+        passwordValueOnChange={passwordValueOnChange}
       />
     </main>
   );

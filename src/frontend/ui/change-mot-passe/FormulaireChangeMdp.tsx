@@ -11,11 +11,11 @@ type FormulaireChangeMdpProps = Readonly<{
   errorMessage: string;
   passwordValue: string;
   passwordValueOnChange: ChangeEventHandler<HTMLInputElement>;
-  // isLoading: boolean;
+  isLoading: boolean;
 }>;
 
 
-export const FormulaireChangeMdp = ({ annuler, changePassword, confirmPasswordValue, confirmPasswordValueOnChange, errorMessage, passwordValue, passwordValueOnChange }: FormulaireChangeMdpProps) => {
+export const FormulaireChangeMdp = ({ annuler, changePassword, confirmPasswordValue, confirmPasswordValueOnChange, errorMessage, isLoading, passwordValue, passwordValueOnChange }: FormulaireChangeMdpProps) => {
   const { wording } = useDependencies();
 
   return (
@@ -69,7 +69,7 @@ export const FormulaireChangeMdp = ({ annuler, changePassword, confirmPasswordVa
                 </button>
               </li>
               <li>
-                <button className="fr-btn" type="submit">
+                <button className="fr-btn" disabled={isLoading} type="submit">
                   {wording.CONFIRM_CHANGE_PASSWORD}
                 </button>
               </li>

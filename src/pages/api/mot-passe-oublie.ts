@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { forgetPasswordEndPoint } from "../../backend/infrastructure/controllers/forgetPasswordEndPoint";
-
+import { dependencies } from "../../backend/infrastructure/dependencies";
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   if (request.method !== "POST") {
@@ -9,7 +9,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
   }
   const { emailValue } = request.body;
    try {
-     const info = await forgetPasswordEndPoint(emailValue);
+     const info = await forgetPasswordEndPoint(dependencies, emailValue);
      if (info) {
        return   response.status(200).json({info})   
      } 
