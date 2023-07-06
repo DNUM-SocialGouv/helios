@@ -10,7 +10,12 @@
   color: #cd3939;
 }
 
-.background-img{
+.password-label {
+  display: flex;
+  justify-content: space-between;
+}
+
+.links-underline {
   background-image: none;
 }
 

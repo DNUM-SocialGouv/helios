@@ -68,9 +68,15 @@ export const FormulaireDeConnexion = () => {
                         </div>
                         <div className="fr-fieldset__element fr-mb-3w">
                             <div className="fr-password" id="password-1758">
-                                <label className="fr-label" htmlFor="password-1758-input">
-                                    {wording.CONNEXION_MOT_DE_PASSE}
-                                </label>
+                                <div className={"fr-password__checkbox fr-checkbox-group fr-checkbox-group--sm " + styles['password-label']}>
+                                    <label className="fr-label" htmlFor="password-1758-input">
+                                        {wording.CONNEXION_MOT_DE_PASSE}
+                                    </label>
+                                    <label className="fr-password__checkbox fr-label" htmlFor="password-1758-show">
+                                    <input aria-describedby="password-1758-show-messages" aria-label="Afficher le mot de passe" id="password-1758-show" style={{marginRight: "3px"}} type="checkbox" />
+                                        Afficher
+                                    </label>
+                                </div>
                                 <div className="fr-input-wrap fr-mt-1w fr-mb-2w">
                                     <input
                                         aria-describedby="password-1758-input-messages"
@@ -89,13 +95,13 @@ export const FormulaireDeConnexion = () => {
                                 <div aria-live="assertive" className="fr-messages-group" id="password-1758-input-messages">
                                 </div>
                                 <p>
-                                    <Link className={"fr-link "+ styles['background-img']} href="/mot-passe-oublie">
+                                    <Link className={"fr-link " + styles['links-underline']} href="/mot-passe-oublie">
                                         {wording.FORGET_PASSEWORD}
                                     </Link>
                                 </p>
                                 <p>
                                     {wording.CONNEXION_MOT_DE_PASSE_OUBLIE}
-                                    <a className={"fr-link "+ styles['background-img']}href={formsLink}>
+                                    <a className={"fr-link " + styles['links-underline']} href={formsLink}>
                                         S&apos;inscrire
                                     </a>
                                 </p>
