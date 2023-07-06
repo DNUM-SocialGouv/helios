@@ -57,7 +57,7 @@ const createDependencies = (): Dependencies => {
     établissementTerritorialRattachéLoader: new TypeOrmÉtablissementTerritorialRattachéLoader(orm),
     établissementTerritorialSanitaireLoader: new TypeOrmÉtablissementTerritorialSanitaireLoader(orm),
     changePasswordLoader: new TypeOrmChangePasswordLoader(orm),
-    forgetPasswordLoader : new  TypeOrmForgetPasswordLoader()
+    forgetPasswordLoader : new  TypeOrmForgetPasswordLoader(orm)
   };
 };
 
