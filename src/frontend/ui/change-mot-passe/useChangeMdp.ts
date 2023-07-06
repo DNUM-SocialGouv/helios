@@ -36,7 +36,6 @@ export function useChangeMdp() {
         else {
             changePasswordService();
         }
-
     }
 
     const changePasswordService = () => {
@@ -51,6 +50,9 @@ export function useChangeMdp() {
                 response.json()
                 if (response.status === 200) {
                     router.push("/")
+                }
+                if (response.status === 400) {
+                    setErrorMessage(wording.INVALID_REQUEST);
                 }
             })
             .catch(() => {

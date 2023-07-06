@@ -9,7 +9,7 @@ type MdpOublieState = Readonly<{
     emailValue: string;
     emailSent: boolean;
     errorMessage: string;
-    isLoading : boolean;
+    isLoading: boolean;
 }>;
 
 export function useMdpOublie() {
@@ -31,29 +31,37 @@ export function useMdpOublie() {
     };
 
     const envoyerEmailService = (emailValue: string) => {
-        setState({...state, isLoading : true})
+        setState({ ...state, isLoading: true })
         fetch("/api/mot-passe-oublie", {
-            body: JSON.stringify({ emailValue}),
+            body: JSON.stringify({ emailValue }),
             headers: { "Content-Type": "application/json" },
             method: "POST",
-          })
-          .then((response) => response.json())
-          .then(() => {
-                
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.err) {
                     setState({
                         ...state,
-                        isLoading:false,
+                        emailSent: false,
+                        isLoading: false,
+                        errorMessage: wording.INVALID_REQUEST,
+                    });
+                } else {
+                    setState({
+                        ...state,
+                        isLoading: false,
                         emailSent: true,
                     })
-          })
-          .catch(() => {
-            setState({
-                ...state,
-                emailSent: false,
-                isLoading:false,
-                errorMessage: wording.SOMETHING_WENT_WRONG,
+                }
+            })
+            .catch(() => {
+                setState({
+                    ...state,
+                    emailSent: false,
+                    isLoading: false,
+                    errorMessage: wording.SOMETHING_WENT_WRONG,
+                });
             });
-          });
     }
 
     const envoyerEmail = (event: FormEvent) => {
@@ -75,14 +83,14 @@ export function useMdpOublie() {
         router.push("/");
     };
 
-    return{
+    return {
         emailValue: state.emailValue,
-        emailValueOnChange, 
+        emailValueOnChange,
         envoyerEmail,
         emailSent: state.emailSent,
         annuler,
         retourAccueil,
         errorMessage: state.errorMessage,
-        isLoading:state.isLoading
+        isLoading: state.isLoading
     }
 }
