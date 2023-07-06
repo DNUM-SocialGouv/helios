@@ -10,18 +10,13 @@ from datacrawler.dependencies.dépendances import initialise_les_dépendances
 
 
 def import_des_utilisateurs(base_de_données: Engine, logger: Logger) -> None:
-    
     utilisateur_data_file = variables_d_environnement["UTILISATEURS_DATA_PATH"]+"/Utilisateurs_Helios_importation.csv"
     metadata = db.MetaData()
-    
+
     data_frame = pd.read_csv(utilisateur_data_file,encoding='utf-8', delimiter=";").astype(str)
     db_users = db.Table('utilisateur', metadata, autoload=True, autoload_with=base_de_données)
     db_roles = db.Table('role', metadata, autoload=True, autoload_with=base_de_données)
     db_institutions = db.Table('institution', metadata, autoload=True, autoload_with=base_de_données)
-    hashing = hashlib.sha256()
-    hashing.update(b"HeliosConnect-")
-    
-
     with base_de_données.begin() as connection:
         for user in data_frame.iterrows():
             data = user[1].astype(str)
@@ -29,45 +24,44 @@ def import_des_utilisateurs(base_de_données: Engine, logger: Logger) -> None:
             rst = connection.execute(query).fetchone()
 
             if rst:
-                logger.info("Utilisateur en modification :" + data["E-mail"])
-                code_institution = data['Code institution']
-                code_role = data['Code Rôle']
-                get_institute_by_code = db.select([db_institutions.columns.inst_id]).filter_by(inst_code = code_institution)
-                institude_id = connection.execute(get_institute_by_code).fetchone()[0]
-                get_role_by_code = db.select({db_roles.columns.role_id}).filter_by(role_code = code_role)
-                id_role = connection.execute(get_role_by_code).fetchone()[0]
-                connection.execute(
-                    db_users.update()
-                    .where(db_users.columns.ut_email == data["E-mail"])
-                    .values(ut_nom=data["Nom"],
-                            ut_prenom=data["Prénom"],
-                            ut_institution=institude_id,
-                            ut_actif=True,
-                            ut_role=id_role,
-                            ut_date_modification=datetime.now()))
+                modifier_utilisateur(connection, data, logger,db_users, db_roles, db_institutions)
             else:
-                logger.info("Utilisateur en création :" + data["E-mail"])
-                code_institution = data['Code institution']
-                code_role = data['Code Rôle']
-                get_institute_by_code = db.select([db_institutions.columns.inst_id, db_institutions.columns.inst_code_geo]).filter_by(inst_code = code_institution)
-                rst = connection.execute(get_institute_by_code).fetchone()
-                get_role_by_code = db.select({db_roles.columns.role_id}).filter_by(role_code = code_role)
-                id_role = connection.execute(get_role_by_code).fetchone()[0]
-                code_geo = str(rst[1])
-                logger.info("Utilisateur en code geo :" + code_geo)
-                hashing.update(code_geo.encode('utf-8'))
-                hashed_password = hashing.hexdigest()
-                logger.info("Utilisateur en hash :" + hashed_password)
-                connection.execute(db_users.insert().values(ut_nom=data["Nom"], 
-                                                        ut_prenom=data["Prénom"],
-                                                        ut_email=data["E-mail"],
-                                                        ut_institution=rst[0],
-                                                        ut_actif=True,
-                                                        ut_role=id_role,
-                                                        ut_password=hashed_password,
-                                                        ut_date_creation=datetime.now()))
-                
+                creer_utilisateur(connection, data, logger,db_users, db_roles, db_institutions)
 
+
+def modifier_utilisateur(connection, data, logger: Logger, db_users, db_roles, db_institutions) -> None:
+    logger.info("Utilisateur en modification :" + data["E-mail"])
+    get_institute_by_code = db.select([db_institutions.columns.inst_id]).filter_by(inst_code = data['Code institution'])
+    institude_id = connection.execute(get_institute_by_code).fetchone()[0]
+    get_role_by_code = db.select({db_roles.columns.role_id}).filter_by(role_code = data['Code Rôle'])
+    id_role = connection.execute(get_role_by_code).fetchone()[0]
+    connection.execute(
+        db_users.update()
+        .where(db_users.columns.ut_email == data["E-mail"])
+        .values(ut_nom=data["Nom"],
+                ut_prenom=data["Prénom"],
+                ut_institution=institude_id,
+                ut_actif=True,
+                ut_role=id_role,
+                ut_date_modification=datetime.now()))
+
+def creer_utilisateur(connection, data, logger: Logger, db_users, db_roles, db_institutions) -> None:
+    logger.info("Utilisateur en création :" + data["E-mail"])
+    hashing = hashlib.sha256()
+    hashing.update(b"HeliosConnect-")
+    get_institute_by_code = db.select([db_institutions.columns.inst_id, db_institutions.columns.inst_code_geo]).filter_by(inst_code = data['Code institution'])
+    rst = connection.execute(get_institute_by_code).fetchone()
+    get_role_by_code = db.select({db_roles.columns.role_id}).filter_by(role_code = data['Code Rôle'])
+    id_role = connection.execute(get_role_by_code).fetchone()[0]
+    hashing.update(str(rst[1]).encode('utf-8'))
+    connection.execute(db_users.insert().values(ut_nom=data["Nom"],
+                                            ut_prenom=data["Prénom"],
+                                            ut_email=data["E-mail"],
+                                            ut_institution=rst[0],
+                                            ut_actif=True,
+                                            ut_role=id_role,
+                                            ut_password=hashing.hexdigest(),
+                                            ut_date_creation=datetime.now()))
 
 if __name__ == "__main__":
     logger_helios, variables_d_environnement = initialise_les_dépendances()
