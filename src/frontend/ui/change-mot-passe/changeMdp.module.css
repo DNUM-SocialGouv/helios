@@ -1,6 +1,6 @@
 .container {
     text-align: center;
-    margin-top: 2rem;
+    margin-top: 6rem;
 }
 
 .form {
@@ -25,7 +25,7 @@
     background-color: #f7d7d4;
     border: 1px solid #f4c7c2;
     color: #ce0500;
-    width: 100%; 
+    width: 100%;
     text-align: center;
     display: flex;
     align-items: center;

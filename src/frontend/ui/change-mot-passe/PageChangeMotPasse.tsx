@@ -14,7 +14,9 @@ export const PageChangeMotPasse = () => {
   } = useChangeMdp();
 
   return (
-    <FormulaireChangeMdp annuler={annuler} changePassword={changePassword} confirmPasswordValue={confirmPasswordValue} confirmPasswordValueOnChange={confirmPasswordValueOnChange} errorMessage={errorMessage} passwordValue={passwordValue} passwordValueOnChange={passwordValueOnChange}
-    />
+    <main className="fr-container">
+      <FormulaireChangeMdp annuler={annuler} changePassword={changePassword} confirmPasswordValue={confirmPasswordValue} confirmPasswordValueOnChange={confirmPasswordValueOnChange} errorMessage={errorMessage} passwordValue={passwordValue} passwordValueOnChange={passwordValueOnChange}
+      />
+    </main>
   );
 };

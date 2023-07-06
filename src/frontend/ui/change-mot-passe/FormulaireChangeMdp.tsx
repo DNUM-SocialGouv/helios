@@ -15,7 +15,7 @@ type FormulaireChangeMdpProps = Readonly<{
 }>;
 
 
-export const FormulaireChangeMdp = ({annuler,changePassword,confirmPasswordValue,confirmPasswordValueOnChange,errorMessage,passwordValue,passwordValueOnChange}: FormulaireChangeMdpProps) => {
+export const FormulaireChangeMdp = ({ annuler, changePassword, confirmPasswordValue, confirmPasswordValueOnChange, errorMessage, passwordValue, passwordValueOnChange }: FormulaireChangeMdpProps) => {
   const { wording } = useDependencies();
 
   return (
@@ -23,7 +23,7 @@ export const FormulaireChangeMdp = ({annuler,changePassword,confirmPasswordValue
       <h1>{wording.CHANGEMENT_MOT_PASSE_TITRE}</h1>
       <p>{wording.CHANGEMENT_MOT_PASSE_DESCRIPTION}</p>
       <div className="fr-grid-row fr-grid-row--center fr-mt-8w">
-        <form className="fr-col-12 fr-col-md-6" onSubmit={changePassword} >
+        <form className="fr-col-12 fr-col-md-6 fr-mt-5w" onSubmit={changePassword} >
           {errorMessage && <div className={"fr-mb-5w " + styles["error"]}> {errorMessage} </div>}
           <div className="fr-grid-row fr-grid-row--center">
             <div className="fr-col-12 fr-col-md-4">
