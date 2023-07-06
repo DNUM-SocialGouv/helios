@@ -1,9 +1,10 @@
+from datetime import datetime
+import hashlib
 from logging import Logger
 import pandas as pd
-import hashlib
 import sqlalchemy as db
 from sqlalchemy.engine import Engine, create_engine
-from datetime import datetime
+
 
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 
@@ -13,7 +14,7 @@ def import_des_utilisateurs(base_de_données: Engine, logger: Logger) -> None:
     utilisateur_data_file = variables_d_environnement["UTILISATEURS_DATA_PATH"]+"/Utilisateurs_Helios_importation.csv"
     metadata = db.MetaData()
     
-    df = pd.read_csv(utilisateur_data_file,encoding='utf-8', delimiter=";").astype(str)
+    data_frame = pd.read_csv(utilisateur_data_file,encoding='utf-8', delimiter=";").astype(str)
     db_users = db.Table('utilisateur', metadata, autoload=True, autoload_with=base_de_données)
     db_roles = db.Table('role', metadata, autoload=True, autoload_with=base_de_données)
     db_institutions = db.Table('institution', metadata, autoload=True, autoload_with=base_de_données)
@@ -22,19 +23,19 @@ def import_des_utilisateurs(base_de_données: Engine, logger: Logger) -> None:
     
 
     with base_de_données.begin() as connection:
-        for user in df.iterrows():
+        for user in data_frame.iterrows():
             data = user[1].astype(str)
             query = db_users.select().where(db_users.columns.ut_email == data["E-mail"])
             rst = connection.execute(query).fetchone()
 
             if rst:
                 logger.info("Utilisateur en modification :" + data["E-mail"])
-                code_Insitution = data['Code institution']
+                code_institution = data['Code institution']
                 code_role = data['Code Rôle']
-                getInstituteByCode = db.select([db_institutions.columns.inst_id]).filter_by(inst_code = code_Insitution)
-                institude_id = connection.execute(getInstituteByCode).fetchone()[0]
-                getRoleByCode = db.select({db_roles.columns.role_id}).filter_by(role_code = code_role)
-                id_role = connection.execute(getRoleByCode).fetchone()[0]
+                get_institute_by_code = db.select([db_institutions.columns.inst_id]).filter_by(inst_code = code_institution)
+                institude_id = connection.execute(get_institute_by_code).fetchone()[0]
+                get_role_by_code = db.select({db_roles.columns.role_id}).filter_by(role_code = code_role)
+                id_role = connection.execute(get_role_by_code).fetchone()[0]
                 connection.execute(
                     db_users.update()
                     .where(db_users.columns.ut_email == data["E-mail"])
@@ -46,12 +47,12 @@ def import_des_utilisateurs(base_de_données: Engine, logger: Logger) -> None:
                             ut_date_modification=datetime.now()))
             else:
                 logger.info("Utilisateur en création :" + data["E-mail"])
-                code_Insitution = data['Code institution']
+                code_institution = data['Code institution']
                 code_role = data['Code Rôle']
-                getInstituteByCode = db.select([db_institutions.columns.inst_id, db_institutions.columns.inst_code_geo]).filter_by(inst_code = code_Insitution)
-                rst = connection.execute(getInstituteByCode).fetchone()
-                getRoleByCode = db.select({db_roles.columns.role_id}).filter_by(role_code = code_role)
-                id_role = connection.execute(getRoleByCode).fetchone()[0]
+                get_institute_by_code = db.select([db_institutions.columns.inst_id, db_institutions.columns.inst_code_geo]).filter_by(inst_code = code_institution)
+                rst = connection.execute(get_institute_by_code).fetchone()
+                get_role_by_code = db.select({db_roles.columns.role_id}).filter_by(role_code = code_role)
+                id_role = connection.execute(get_role_by_code).fetchone()[0]
                 code_geo = str(rst[1])
                 logger.info("Utilisateur en code geo :" + code_geo)
                 hashing.update(code_geo.encode('utf-8'))
