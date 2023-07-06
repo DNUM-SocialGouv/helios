@@ -5,6 +5,7 @@ import pandas as pd
 from pandas import Series
 import sqlalchemy as db
 from sqlalchemy.engine import Engine, create_engine, Connection
+from sqlalchemy import select
 from sqlalchemy import Table
 
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
@@ -31,9 +32,9 @@ def import_des_utilisateurs(base_de_données: Engine, logger: Logger) -> None:
 
 def modifier_utilisateur(connection: Connection, data: Series, logger: Logger, db_users: Table, db_roles: Table, db_institutions: Table) -> None:
     logger.info("Utilisateur en modification :" + data["E-mail"])
-    get_institute_by_code = db.select([db_institutions.columns.inst_id]).filter_by(inst_code = data['Code institution'])
+    get_institute_by_code = select(db_institutions.columns.inst_id).where(db_institutions.columns.inst_code == data['Code institution'])
     institude_id = connection.execute(get_institute_by_code).fetchone()[0]
-    get_role_by_code = db.select({db_roles.columns.role_id}).filter_by(role_code = data['Code Rôle'])
+    get_role_by_code = select(db_roles.columns.role_id).where(db_roles.columns.role_code == data['Code Rôle'])
     id_role = connection.execute(get_role_by_code).fetchone()[0]
     connection.execute(
         db_users.update()
@@ -49,9 +50,9 @@ def creer_utilisateur(connection: Connection, data: Series, logger: Logger, db_u
     logger.info("Utilisateur en création :" + data["E-mail"])
     hashing = hashlib.sha256()
     hashing.update(b"HeliosConnect-")
-    get_institute_by_code = db.select([db_institutions.columns.inst_id, db_institutions.columns.inst_code_geo]).filter_by(inst_code = data['Code institution'])
+    get_institute_by_code = select([db_institutions.columns.inst_id, db_institutions.columns.inst_code_geo]).where(db_institutions.columns.inst_code == data['Code institution'])
     rst = connection.execute(get_institute_by_code).fetchone()
-    get_role_by_code = db.select({db_roles.columns.role_id}).filter_by(role_code = data['Code Rôle'])
+    get_role_by_code = select(db_roles.columns.role_id).where(db_roles.columns.role_code == data['Code Rôle'])
     id_role = connection.execute(get_role_by_code).fetchone()[0]
     hashing.update(str(rst[1]).encode('utf-8'))
     connection.execute(db_users.insert().values(ut_nom=data["Nom"],
