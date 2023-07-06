@@ -48,16 +48,19 @@ def import_des_utilisateurs(base_de_données: Engine, logger: Logger) -> None:
                 logger.info("Utilisateur en création :" + data["E-mail"])
                 code_Insitution = data['Code institution']
                 code_role = data['Code Rôle']
-                hashing.update(code_Insitution.encode('utf-8'))
-                hashed_password = hashing.hexdigest()
-                getInstituteByCode = db.select([db_institutions.columns.inst_id]).filter_by(inst_code = code_Insitution)
-                institude_id = connection.execute(getInstituteByCode).fetchone()[0]
+                getInstituteByCode = db.select([db_institutions.columns.inst_id, db_institutions.columns.inst_code_geo]).filter_by(inst_code = code_Insitution)
+                rst = connection.execute(getInstituteByCode).fetchone()
                 getRoleByCode = db.select({db_roles.columns.role_id}).filter_by(role_code = code_role)
                 id_role = connection.execute(getRoleByCode).fetchone()[0]
+                code_geo = str(rst[1])
+                logger.info("Utilisateur en code geo :" + code_geo)
+                hashing.update(code_geo.encode('utf-8'))
+                hashed_password = hashing.hexdigest()
+                logger.info("Utilisateur en hash :" + hashed_password)
                 connection.execute(db_users.insert().values(ut_nom=data["Nom"], 
                                                         ut_prenom=data["Prénom"],
                                                         ut_email=data["E-mail"],
-                                                        ut_institution=institude_id,
+                                                        ut_institution=rst[0],
                                                         ut_actif=True,
                                                         ut_role=id_role,
                                                         ut_password=hashed_password,
