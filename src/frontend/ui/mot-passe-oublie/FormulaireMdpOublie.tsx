@@ -25,7 +25,7 @@ export const FormulaireMdpOublie = ({annuler,emailSent,emailValue,emailValueOnCh
       <div className="fr-grid-row fr-grid-row--center fr-mt-8w">
         {emailSent ?
           (
-            <form className="fr-col-6" onSubmit={envoyerEmail}>
+            <form className="fr-col-6 fr-col-sm-6" onSubmit={envoyerEmail}>
               { !isLoading && <div className={styles["success"]}>{wording.MOT_PASSE_OUBLIE_SUCCESS_MESSAGE + emailValue}</div> }
               <div className="fr-grid-row fr-grid-row--center fr-mt-8w fr-mb-6w">
                 <ul className="fr-btns-group fr-btns-group--inline-sm">
@@ -43,12 +43,12 @@ export const FormulaireMdpOublie = ({annuler,emailSent,emailValue,emailValueOnCh
               </div>
             </form>
           ) :
-          ( 
-            <form className="fr-col-5" onSubmit={envoyerEmail}>
+          (
+            <form className="fr-col-10 fr-col-sm-5" onSubmit={envoyerEmail}>
               {errorMessage && <div className={styles["error"]}> {errorMessage} </div>}
               <div className="fr-grid-row fr-grid-row--center">
 
-                <div className="fr-col-12 fr-col-lg-8">
+                <div className="fr-col-12">
                   <input
                     className="fr-input"
                     onChange={emailValueOnChange}
@@ -64,7 +64,7 @@ export const FormulaireMdpOublie = ({annuler,emailSent,emailValue,emailValueOnCh
                     <button className="fr-btn fr-btn--secondary" onClick={annuler} type="button">
                       {wording.CANCEL}
                     </button>
-                  </li>        
+                  </li>
                   <li>
                     <div>{isLoading}</div>
                     <button className="fr-btn" disabled={isLoading} type="submit">
