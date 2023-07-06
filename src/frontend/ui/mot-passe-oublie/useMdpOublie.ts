@@ -25,6 +25,7 @@ export function useMdpOublie() {
     const emailValueOnChange = (event: ChangeEvent<HTMLInputElement>) => {
         setState({
             ...state,
+            errorMessage : "",
             emailValue: event.target.value,
         });
     };
@@ -67,6 +68,8 @@ export function useMdpOublie() {
         event.preventDefault();
         if (isEmail(state.emailValue)) {
             envoyerEmailService(state.emailValue)
+        } else {
+            setState({...state,errorMessage : 'Email invalide'})
         }
     };
 

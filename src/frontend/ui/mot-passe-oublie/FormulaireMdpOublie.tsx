@@ -45,18 +45,18 @@ export const FormulaireMdpOublie = ({annuler,emailSent,emailValue,emailValueOnCh
           ) :
           (
             <form className="fr-col-10 fr-col-sm-5" onSubmit={envoyerEmail}>
-              {errorMessage && <div className={styles["error"]}> {errorMessage} </div>}
               <div className="fr-grid-row fr-grid-row--center">
 
-                <div className="fr-col-12">
+                <div className={`fr-col-12 ${errorMessage ? styles['mb-20'] : ''}`}>
                   <input
                     className="fr-input"
                     onChange={emailValueOnChange}
                     required
                     type="email"
                     value={emailValue}
-                  />
+                    />
                 </div>
+                    {errorMessage && <div className={styles["error"]}> {errorMessage} </div>}
               </div>
               <div className="fr-grid-row fr-grid-row--center fr-mt-8w fr-mb-6w">
                 <ul className="fr-btns-group fr-btns-group--inline-sm">
