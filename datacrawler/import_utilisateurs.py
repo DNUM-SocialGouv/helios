@@ -50,7 +50,9 @@ def creer_utilisateur(connection: Connection, data: Series, logger: Logger, db_u
     logger.info("Utilisateur en création :" + data["E-mail"])
     hashing = hashlib.sha256()
     hashing.update(b"HeliosConnect-")
-    get_institute_by_code = select([db_institutions.columns.inst_id, db_institutions.columns.inst_code_geo]).where(db_institutions.columns.inst_code == data['Code institution'])
+    get_institute_by_code = select(
+        [db_institutions.columns.inst_id, db_institutions.columns.inst_code_geo]
+    ).where(db_institutions.columns.inst_code == data['Code institution'])
     rst = connection.execute(get_institute_by_code).fetchone()
     get_role_by_code = select(db_roles.columns.role_id).where(db_roles.columns.role_code == data['Code Rôle'])
     id_role = connection.execute(get_role_by_code).fetchone()[0]
