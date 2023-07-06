@@ -16,7 +16,6 @@ export const FormulaireDeRecherche = ({ lancerLaRecherche, rechercheOnChange, te
   return (
     <div className="fr-grid-row fr-grid-row--center">
       <section className={"fr-col-8 " + styles["formulaire"]}>
-        <h1>{wording.RECHERCHE_TITRE}</h1>
         <p>{wording.RECHERCHE_DESCRIPTION}</p>
         <form action="/" className="fr-search-bar fr-search-bar--lg" id="search-2" role="search">
           <label className="fr-label" htmlFor="search-787-input">

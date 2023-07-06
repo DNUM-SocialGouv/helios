@@ -1,3 +1,4 @@
+import { SessionProvider } from 'next-auth/react';
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -6,6 +7,7 @@ import { useEffect } from "react";
 
 import "@gouvfr/dsfr/dist/core/core.min.css";
 import "@gouvfr/dsfr/dist/utility/icons/icons-system/icons-system.min.css";
+import "@gouvfr/dsfr/dist/utility/icons/icons-user/icons-user.min.css";
 import "@gouvfr/dsfr/dist/utility/colors/colors.min.css";
 import "@gouvfr/dsfr/dist/component/button/button.min.css";
 import "@gouvfr/dsfr/dist/component/input/input.min.css";
@@ -17,7 +19,7 @@ import { Footer } from "../frontend/ui/commun/Footer/Footer";
 import { Header } from "../frontend/ui/commun/Header/Header";
 import { resizeChartOnPrint } from "../plugins/resizeChartAtPrint";
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const router = useRouter();
 
   useEffect(() => {
@@ -41,17 +43,19 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   useEffect(resizeChartOnPrint, []);
 
   return (
-    <DependenciesProvider>
-      <Head>
-        <meta charSet="utf-8" />
-        <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
-      </Head>
-      <Header />
-      <Component {...pageProps} />
-      <Footer />
-      <Script src="/dsfr.module.min.js" strategy="lazyOnload" type="module"></Script>
-      <Script noModule src="/dsfr.nomodule.min.js" strategy="lazyOnload" type="text/javascript"></Script>
-      {process.env.NODE_ENV !== "development" && <Script src="/smarttag.js" strategy="beforeInteractive" />}
-    </DependenciesProvider>
+    <SessionProvider session={session}>
+      <DependenciesProvider>
+        <Head>
+          <meta charSet="utf-8" />
+          <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
+        </Head>
+        <Header />
+        <Component {...pageProps} />
+        <Footer />
+        <Script src="/dsfr.module.min.js" strategy="lazyOnload" type="module"></Script>
+        <Script noModule src="/dsfr.nomodule.min.js" strategy="lazyOnload" type="text/javascript"></Script>
+        {process.env.NODE_ENV !== "development" && <Script src="/smarttag.js" strategy="beforeInteractive" />}
+      </DependenciesProvider>
+    </SessionProvider>
   );
 }

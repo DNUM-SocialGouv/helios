@@ -23,6 +23,8 @@ import { Logger } from "./métier/gateways/Logger";
 
 const environmentVariables: EnvironmentVariables = {
   DATABASE_URL: "postgres://helios:h3li0s@localhost:5433/helios",
+  NEXTAUTH_SECRET: "random-text",
+  NEXTAUTH_URL: "http://fake-url-helios.com",
   ORM_DEBUG: "true",
   SCALINGO_TOKEN: "fake_token",
   SENTRY_AUTH_TOKEN: "1234567890",

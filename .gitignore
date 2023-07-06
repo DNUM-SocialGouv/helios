@@ -65,6 +65,8 @@ reports
 !**/.yarn/sdks
 !**/.yarn/versions
 **/.pnp.*
-
-# vscode
-.vscode
+dnum_ssh_key
+sftp_local
+sftp_local.pub
+ssh_key
+**/.vscode/*

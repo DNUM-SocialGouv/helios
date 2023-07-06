@@ -1,6 +1,9 @@
 export interface EnvironmentVariables {
   readonly DATABASE_URL: string;
 
+  readonly NEXTAUTH_URL: string;
+  readonly NEXTAUTH_SECRET: string;
+  
   readonly ORM_DEBUG: string;
 
   readonly SCALINGO_TOKEN: string;

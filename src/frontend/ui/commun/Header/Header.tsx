@@ -1,3 +1,4 @@
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -9,12 +10,17 @@ import "@gouvfr/dsfr/dist/component/link/link.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
 import { useDependencies } from "../contexts/useDependencies";
+import { useOutsideClick } from "../hooks/useOutsideClick";
 import styles from "./Header.module.css";
 
 export const Header = () => {
   const { paths, wording } = useDependencies();
   const router = useRouter();
+  const {data, status} = useSession()
   const [terme, setTerme] = useState<string>("");
+  const [displayMenu, setDisplayMenu] = useState<boolean>(false);
+
+  const ref = useOutsideClick(() => setDisplayMenu(false));
 
   const rechercheOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTerme(event.target.value);
@@ -35,7 +41,7 @@ export const Header = () => {
                     <Image alt="" height="80" src="/logo.svg" width="80" />
                   </div>
                   <div className="fr-header__navbar">
-                    {router.pathname !== paths.ACCUEIL && (
+                    {router.pathname !== paths.ACCUEIL && router.pathname !== paths.CONNEXION && (
                       <button
                         aria-controls="modal-541"
                         className="fr-btn--search fr-btn"
@@ -46,17 +52,19 @@ export const Header = () => {
                         {wording.RECHERCHE_LABEL}
                       </button>
                     )}
-                    <button
-                      aria-controls="modal-833"
-                      aria-haspopup="menu"
-                      className="fr-btn--menu fr-btn"
-                      data-fr-opened="false"
-                      id="fr-btn-menu-mobile"
-                      title={wording.MENU}
-                      type="button"
-                    >
-                      {wording.MENU}
-                    </button>
+                    {status !== "unauthenticated" &&
+                      <button
+                        aria-controls="modal-833"
+                        aria-haspopup="menu"
+                        className="fr-btn--menu fr-btn"
+                        data-fr-opened="false"
+                        id="fr-btn-menu-mobile"
+                        title={wording.MENU}
+                        type="button"
+                      >
+                        {wording.MENU}
+                      </button>
+                    }
                   </div>
                 </div>
                 <div className="fr-header__service">
@@ -66,7 +74,7 @@ export const Header = () => {
                 </div>
               </div>
               <div className="fr-header__tools">
-                {router.pathname !== paths.ACCUEIL && (
+                {router.pathname !== paths.ACCUEIL && router.pathname !== paths.CONNEXION && (
                   <div className="fr-header__search fr-modal" id="modal-541">
                     <div className="fr-container fr-container-lg--fluid">
                       <button aria-controls="modal-541" className="fr-btn--close fr-btn" title="Fermer">
@@ -101,17 +109,62 @@ export const Header = () => {
                   </div>
                 )}
               </div>
+              {status !== "unauthenticated" ? (
+                <div className={styles["dropdown"]}>
+                  <button
+                    className={"fr-icon-account-line " + styles["account-logo"]}
+                    onClick={() => {
+                      setDisplayMenu(!displayMenu)
+                    }}
+                    ref={ref}>
+                     {data?.user?.name}
+                  </button>
+                  {displayMenu ? (
+                    <ul className={styles["menu"]}>
+                      <li className={styles["menu-item"]}>
+                        <button>Profil</button>
+                      </li>
+                      <li className={styles["menu-item"]}>
+                        <button>Mot de passe</button>
+                      </li>
+                      <li className={styles["menu-item"]}>
+                        <button
+                          onClick={() => {
+                            signOut({ callbackUrl: paths.CONNEXION });
+                            setDisplayMenu(false)
+                          }}>
+                          {wording.DÉCONNEXION}
+                        </button>
+                      </li>
+                    </ul>
+                  ) : null}
+               
+                </div>
+              ) : null}
             </div>
           </div>
         </div>
-        <div aria-labelledby="fr-btn-menu-mobile" className="fr-header__menu fr-modal" id="modal-833">
-          <div className="fr-container">
-            <button aria-controls="modal-833" className="fr-link--close fr-link" type="button">
-              {wording.FERMER}
-            </button>
-            <div className="fr-header__menu-links"></div>
+        {status !== "unauthenticated" && (
+          <div aria-labelledby="fr-btn-menu-mobile" className="fr-header__menu fr-modal" id="modal-833">
+            <div className="fr-container">
+              <button aria-controls="modal-833" className="fr-link--close fr-link" type="button">
+                {wording.FERMER}
+              </button>
+              <div className="fr-header__menu-links">
+                <ul>
+                  <li>
+                    <button onClick={() => {
+                      signOut({ callbackUrl: paths.CONNEXION });
+                      setDisplayMenu(false)
+                    }}>
+                      {wording.DÉCONNEXION}
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
       </header>
       <Breadcrumb />
     </>

@@ -17,6 +17,7 @@ export interface Wording {
 
   // Titre des pages
   readonly TITRE_PAGE_ACCUEIL: string;
+  readonly TITRE_PAGE_CONNEXION: string;
   readonly TITRE_PAGE_ACCESSIBILITÉ: string;
   readonly TITRE_PAGE_MENTIONS_LÉGALES: string;
   readonly TITRE_PAGE_DONNÉES_PERSONNELLES: string;
@@ -37,8 +38,13 @@ export interface Wording {
   readonly ÉTABLISSEMENT_TERRITORIAUX: string;
   readonly SITE_EN_CONSTRUCTION: string;
 
+  // Connexion
+  readonly CONNEXION_IDENTIFIANT: string
+  readonly CONNEXION_MOT_DE_PASSE: string
+  readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string
+  readonly CONNEXION_LIBELLE: string
+
   // Recherche
-  readonly RECHERCHE_TITRE: string;
   readonly RECHERCHE_DESCRIPTION: ReactElement;
   readonly RECHERCHE_PLACEHOLDER: string;
   readonly RECHERCHE_LABEL: string;
