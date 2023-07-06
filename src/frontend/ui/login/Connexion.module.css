@@ -13,3 +13,19 @@
 .background-img{
   background-image: none;
 }
+
+.error {
+  height: fit-content;
+  background-color: #f7d7d4;
+  border: 1px solid #f4c7c2;
+  color: #ce0500;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.mb-20{
+  margin-bottom: 20px;
+}

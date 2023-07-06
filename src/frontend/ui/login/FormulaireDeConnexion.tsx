@@ -4,6 +4,7 @@ import React, { useState, FormEvent } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./Connexion.module.css";
+import isEmail from "../commun/validation";
 
 
 const formsLink = "https://forms.office.com/e/ERQ9ck5sSc"
@@ -14,22 +15,27 @@ export const FormulaireDeConnexion = () => {
     const [password, setPassword] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
+    const [errorMsg,setErrorMsg] = useState<string>("");
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
-        setLoading(true);
-        const res = await signIn("credentials", {
-            email,
-            password,
-            redirect: false,
-        })
-
-        if (res?.error) {
-            setError("L'identifiant et/ou le mot de passe sont incorrects.");
-            setLoading(false);
+        if (isEmail(email)) {
+            setLoading(true);
+            const res = await signIn("credentials", {
+                email,
+                password,
+                redirect: false,
+            })
+    
+            if (res?.error) {
+                setError("L'identifiant et/ou le mot de passe sont incorrects.");
+                setLoading(false);
+            } else {
+                setError(null);
+                window.location.href = "/"
+            }
         } else {
-            setError(null);
-            window.location.href = "/"
+             setErrorMsg('Email invalide')
         }
     }
 
@@ -47,14 +53,15 @@ export const FormulaireDeConnexion = () => {
                                     aria-describedby="username-1757-messages"
                                     aria-required="true"
                                     autoComplete="username"
-                                    className="fr-input fr-mt-1w"
+                                    className={`fr-input fr-mt-1w ${styles["mb-20"]}`}
                                     id="username-1757"
                                     name="username"
-                                    onChange={({ target }) => { setEmail(target.value) }}
+                                    onChange={({ target }) => { setEmail(target.value) ; setErrorMsg(''); setError("");}}
                                     required
                                     type="email"
                                     value={email}
-                                />
+                                    />
+                                    {errorMsg && <div className={styles["error"]}> {errorMsg} </div>}
                                 <div aria-live="assertive" className="fr-messages-group" id="username-1757-messages">
                                 </div>
                             </div>
