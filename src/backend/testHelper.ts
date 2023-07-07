@@ -31,6 +31,12 @@ const environmentVariables: EnvironmentVariables = {
   SENTRY_DSN: "https://fake-sentry.io/11",
   SENTRY_ENVIRONMENT: "test",
   TIME_OF_CACHE_PAGE: "72000",
+  APP_BASE_URL: "http://localhost:3000",
+  JWT_SECRET_KEY: "SECRET_KEY",
+  TIPIMAIL_SENDER_NAME: "Sebastien",
+  TIPIMAIL_SENDER_ADDRESS: "s.ferre@pmns.fr",
+  TIPIMAIL_APIUSER: "f6da913ad5d0a1a449864c5d6f1fe70e",
+  TIPIMAIL_APIKEY: "8ff59cc5287cd5b1846a623d8f79fa7e"
 };
 
 export function getOrm(): Promise<DataSource> {

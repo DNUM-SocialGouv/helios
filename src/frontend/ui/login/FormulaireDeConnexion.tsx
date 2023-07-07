@@ -1,8 +1,11 @@
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 import React, { useState, FormEvent } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./Connexion.module.css";
+import isEmail from "../commun/validation";
+
 
 const formsLink = "https://forms.office.com/e/ERQ9ck5sSc"
 
@@ -12,22 +15,27 @@ export const FormulaireDeConnexion = () => {
     const [password, setPassword] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
+    const [errorMsg,setErrorMsg] = useState<string>("");
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
-        setLoading(true);
-        const res = await signIn("credentials", {
-            email,
-            password,
-            redirect: false,
-        })
-
-        if (res?.error) {
-            setError("L'identifiant et/ou le mot de passe sont incorrects.");
-            setLoading(false);
+        if (isEmail(email)) {
+            setLoading(true);
+            const res = await signIn("credentials", {
+                email,
+                password,
+                redirect: false,
+            })
+    
+            if (res?.error) {
+                setError("L'identifiant et/ou le mot de passe sont incorrects.");
+                setLoading(false);
+            } else {
+                setError(null);
+                window.location.href = "/"
+            }
         } else {
-            setError(null);
-            window.location.href = "/"
+             setErrorMsg('Email invalide')
         }
     }
 
@@ -45,23 +53,30 @@ export const FormulaireDeConnexion = () => {
                                     aria-describedby="username-1757-messages"
                                     aria-required="true"
                                     autoComplete="username"
-                                    className="fr-input fr-mt-1w"
+                                    className={`fr-input fr-mt-1w ${styles["mb-20"]}`}
                                     id="username-1757"
                                     name="username"
-                                    onChange={({ target }) => { setEmail(target.value) }}
+                                    onChange={({ target }) => { setEmail(target.value) ; setErrorMsg(''); setError("");}}
                                     required
                                     type="email"
                                     value={email}
-                                />
+                                    />
+                                    {errorMsg && <div className={styles["error"]}> {errorMsg} </div>}
                                 <div aria-live="assertive" className="fr-messages-group" id="username-1757-messages">
                                 </div>
                             </div>
                         </div>
                         <div className="fr-fieldset__element fr-mb-3w">
                             <div className="fr-password" id="password-1758">
-                                <label className="fr-label" htmlFor="password-1758-input">
-                                    {wording.CONNEXION_MOT_DE_PASSE}
-                                </label>
+                                <div className={"fr-password__checkbox fr-checkbox-group fr-checkbox-group--sm " + styles['password-label']}>
+                                    <label className="fr-label" htmlFor="password-1758-input">
+                                        {wording.CONNEXION_MOT_DE_PASSE}
+                                    </label>
+                                    <label className="fr-password__checkbox fr-label" htmlFor="password-1758-show">
+                                    <input aria-describedby="password-1758-show-messages" aria-label="Afficher le mot de passe" id="password-1758-show" style={{marginRight: "3px"}} type="checkbox" />
+                                        Afficher
+                                    </label>
+                                </div>
                                 <div className="fr-input-wrap fr-mt-1w fr-mb-2w">
                                     <input
                                         aria-describedby="password-1758-input-messages"
@@ -80,8 +95,13 @@ export const FormulaireDeConnexion = () => {
                                 <div aria-live="assertive" className="fr-messages-group" id="password-1758-input-messages">
                                 </div>
                                 <p>
+                                    <Link className={"fr-link " + styles['links-underline']} href="/mot-passe-oublie">
+                                        {wording.FORGET_PASSEWORD}
+                                    </Link>
+                                </p>
+                                <p>
                                     {wording.CONNEXION_MOT_DE_PASSE_OUBLIE}
-                                    <a className="fr-link" href={formsLink}>
+                                    <a className={"fr-link " + styles['links-underline']} href={formsLink}>
                                         S&apos;inscrire
                                     </a>
                                 </p>

@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import Script from "next/script";
 import { useEffect } from "react";
 
+
 import "@gouvfr/dsfr/dist/core/core.min.css";
 import "@gouvfr/dsfr/dist/utility/icons/icons-system/icons-system.min.css";
 import "@gouvfr/dsfr/dist/utility/icons/icons-user/icons-user.min.css";
@@ -12,6 +13,7 @@ import "@gouvfr/dsfr/dist/utility/colors/colors.min.css";
 import "@gouvfr/dsfr/dist/component/button/button.min.css";
 import "@gouvfr/dsfr/dist/component/input/input.min.css";
 import "@gouvfr/dsfr/dist/component/search/search.min.css";
+import "@gouvfr/dsfr/dist/component/badge/badge.min.css";
 import "../frontend/ui/commun/global.css";
 
 import { DependenciesProvider } from "../frontend/ui/commun/contexts/useDependencies";
