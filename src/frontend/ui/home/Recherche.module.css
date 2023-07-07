@@ -17,10 +17,34 @@
   text-transform: capitalize;
 }
 
+.star-fill {
+  align-self: flex-start;
+  margin: 2.5rem 0.1rem 0 2rem;
+  min-width: 3rem;
+  color: goldenrod;
+}
+
+.star-line {
+  align-self: flex-start;
+  margin: 2.5rem 0.1rem 0 2rem;
+  min-width: 3rem;
+}
+
 @media (max-width: 48em) {
   .tuile {
     align-self: center;
     margin-left: 0;
+  }
+
+  .star-fill {
+    align-self: center;
+    margin: 0 0.1rem 2.5rem 0;
+    color: goldenrod;
+  }
+
+  .star-line {
+    align-self: center;
+    margin: 0 0.1rem 2.5rem 0;
   }
 }
 
