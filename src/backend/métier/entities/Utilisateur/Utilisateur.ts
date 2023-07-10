@@ -10,7 +10,7 @@ export type Utilisateur = {
     institution: Institution;
     actif: boolean;
     role: Role;
-    password: string;
+    password?: string;
     dateCreation: Date;
     dateModification: Date;
     creePar: number;
