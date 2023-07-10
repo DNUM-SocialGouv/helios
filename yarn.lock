@@ -4126,6 +4126,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"crypto@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "crypto@npm:1.0.1"
+  checksum: 087fe3165bd94c333a49e6ed66a0193911f63eac38a24f379b3001a5fe260a59c413646e53a0f67875ba13902b2686d81dc703cb2c147a4ec727dcdc04e5645e
+  languageName: node
+  linkType: hard
+
 "csp_evaluator@npm:1.1.0":
   version: 1.1.0
   resolution: "csp_evaluator@npm:1.1.0"
@@ -6157,6 +6164,7 @@ __metadata:
     bcrypt: ^5.1.0
     chart.js: ^3.8.0
     chartjs-plugin-datalabels: ^2.0.0
+    crypto: ^1.0.1
     depcheck: ^1.4.3
     dotenv-defaults: ^5.0.0
     env-cmd: ^10.1.0
