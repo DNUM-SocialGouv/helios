@@ -46,7 +46,7 @@ export type Dependencies = Readonly<{
 
 const createDependencies = (): Dependencies => {
   dotEnvConfig();
-  const finessSftpPath = "../usr_finess/flux_finess";
+  const finessSftpPath = "/flux_finess";
   const finessLocalPath = "finess";
 
   const cheminDesFichiersSourcesDiamantSurLeSftpDnum = "DIAMANT/incoming";
