@@ -37,6 +37,8 @@ import { RenommerColonnePassageUrgenceActivitesEntiteJuridique1675867340170 } fr
 import { AjouterBlocBudgetFinanceEJ1677495763184 } from "./migrations/1677495763184-AjouterBlocBugetFinanceEJ";
 import { AjouteHAD1680014929754 } from "./migrations/1680014929754-AjouteHAD";
 import { AjoutCapacitesSanitaireEJ1680076022425 } from "./migrations/1680076022425-AjoutCapacitesSanitaireEJ";
+import { AjoutTableUtilisateurRoleEtablissement1686646154737 } from "./migrations/1686646154737-AjoutTableUtilisateurRoleEtablissement";
+import { ModificationTableInstitution1688376404752 } from "./migrations/1688376404752-ModificationTableInstitution"
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "./models/ActivitéSanitaireEntitéJuridiqueModel";
 import { ActivitéSanitaireModel } from "./models/ActivitéSanitaireModel";
@@ -50,6 +52,7 @@ import { CapacitéAutorisationSanitaireModel } from "./models/CapacitéAutorisat
 import { CpomModel } from "./models/CpomModel";
 import { DateMiseÀJourFichierSourceModel } from "./models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "./models/EntitéJuridiqueModel";
+import { FavorisModel } from "./models/FavorisModel";
 import { InstitutionModel } from "./models/InstitutionModel";
 import { RechercheModel } from "./models/RechercheModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "./models/ReconnaissanceContractuelleSanitaireModel";
@@ -58,8 +61,6 @@ import { RoleModel } from "./models/RoleModel";
 import { UtilisateurModel } from "./models/UtilisateurModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "./models/ÉquipementMatérielLourdSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "./models/ÉtablissementTerritorialIdentitéModel";
-import { AjoutTableUtilisateurRoleEtablissement1686646154737 } from "./migrations/1686646154737-AjoutTableUtilisateurRoleEtablissement";
-import { ModificationTableInstitution1688376404752 } from "./migrations/1688376404752-ModificationTableInstitution"
 
 const logger = new ConsoleLogger();
 dotEnvConfig();
@@ -79,6 +80,7 @@ export default new DataSource({
     CpomModel,
     DateMiseÀJourFichierSourceModel,
     EntitéJuridiqueModel,
+    FavorisModel,
     ÉquipementMatérielLourdSanitaireModel,
     ÉtablissementTerritorialIdentitéModel,
     RechercheModel,

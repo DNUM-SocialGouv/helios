@@ -17,34 +17,25 @@
   text-transform: capitalize;
 }
 
-.star-fill {
-  align-self: flex-start;
-  margin: 2.5rem 0.1rem 0 2rem;
-  min-width: 3rem;
-  color: goldenrod;
-}
 
-.star-line {
+.star {
+  color: #000091;
   align-self: flex-start;
-  margin: 2.5rem 0.1rem 0 2rem;
   min-width: 3rem;
+  margin-top: 0.5rem;
 }
 
 @media (max-width: 48em) {
+  .star {
+    align-self: center;
+    min-width: 3rem;
+    color: #000091;
+    margin-bottom: 2rem;
+  }
+
   .tuile {
     align-self: center;
     margin-left: 0;
-  }
-
-  .star-fill {
-    align-self: center;
-    margin: 0 0.1rem 2.5rem 0;
-    color: goldenrod;
-  }
-
-  .star-line {
-    align-self: center;
-    margin: 0 0.1rem 2.5rem 0;
   }
 }
 

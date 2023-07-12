@@ -7,10 +7,14 @@ import LogoÉtablissementTerritorialSanitaire from "../entité-juridique/liste-d
 import LogoEntitéJuridiqueNoir from "./logo-entité-juridique-noir.svg";
 
 export class RechercheViewModel {
-  constructor(private readonly recherche: Résultat, private readonly paths: Paths) {}
+  constructor(private readonly recherche: Résultat, private readonly paths: Paths) { }
 
   public get numéroFiness(): string {
     return this.recherche.numéroFiness;
+  }
+
+  public get type(): string {
+    return this.recherche.type;
   }
 
   public get titre(): ReactElement {

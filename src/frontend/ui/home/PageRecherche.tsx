@@ -1,6 +1,8 @@
 import Head from "next/head";
+import { useEffect } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
+import { useFavoris } from "../favoris/useFavoris";
 import { Cartographie } from "./Cartographie/Cartographie";
 import { FormulaireDeRecherche } from "./FormulaireDeRecherche";
 import { RechercheCassée } from "./RechercheCassée";
@@ -10,6 +12,12 @@ import { useRecherche } from "./useRecherche";
 
 export const PageRecherche = () => {
   const { wording } = useDependencies();
+  const { getAllFavoris } = useFavoris();
+
+
+  useEffect(() => {
+    getAllFavoris('1');
+  }, []);
 
   const {
     estCeEnAttente,

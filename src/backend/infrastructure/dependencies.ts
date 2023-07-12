@@ -2,6 +2,7 @@ import * as Sentry from "@sentry/nextjs";
 
 import { EntitéJuridiqueLoader } from "../métier/gateways/EntitéJuridiqueLoader";
 import { EnvironmentVariables } from "../métier/gateways/EnvironmentVariables";
+import { FavorisLoader } from "../métier/gateways/FavorisLoader";
 import { Logger } from "../métier/gateways/Logger";
 import { RechercheLoader } from "../métier/gateways/RechercheLoader";
 import { UtilisateurLoader } from "../métier/gateways/UtilisateurLoader";
@@ -11,6 +12,7 @@ import { ÉtablissementTerritorialSanitaireLoader } from "../métier/gateways/É
 import { dotEnvConfig } from "./gateways/dot-env/dotEnvConfig";
 import { TypeOrmEntitéJuridiqueLoader } from "./gateways/entité-juridique-loader/TypeOrmEntitéJuridiqueLoader";
 import { NodeEnvironmentVariables } from "./gateways/environnement-variables/NodeEnvironmentVariables";
+import { TypeOrmFavorisLoader } from "./gateways/favoris-loader/TypeOrmFavorisLoader";
 import { ConsoleLogger } from "./gateways/logger/ConsoleLogger";
 import { typeOrmOrm } from "./gateways/orm/typeOrmOrm";
 import { TypeOrmRechercheLoader } from "./gateways/recherche-loader/TypeOrmRechercheLoader";
@@ -28,6 +30,7 @@ export type Dependencies = Readonly<{
   établissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader;
   établissementTerritorialRattachéLoader: ÉtablissementTerritorialRattachéLoader;
   établissementTerritorialSanitaireLoader: ÉtablissementTerritorialSanitaireLoader;
+  favorisLoader: FavorisLoader;
 }>;
 
 const createDependencies = (): Dependencies => {
@@ -51,6 +54,7 @@ const createDependencies = (): Dependencies => {
     établissementTerritorialMédicoSocialLoader: new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm),
     établissementTerritorialRattachéLoader: new TypeOrmÉtablissementTerritorialRattachéLoader(orm),
     établissementTerritorialSanitaireLoader: new TypeOrmÉtablissementTerritorialSanitaireLoader(orm),
+    favorisLoader: new TypeOrmFavorisLoader(orm),
   };
 };
 
