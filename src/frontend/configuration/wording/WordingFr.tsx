@@ -401,4 +401,11 @@ export class WordingFr implements Wording {
   readonly LIMITES_DE_RESPONSABILITÉ: string = "Limites de responsabilité";
 
   readonly EN_CONSTRUCTION: string = "Demander à Daisy ce que l’on doit écrire.";
+
+  // Favoris
+  readonly FAVORIS_LIST: string = "Liste des favoris";
+  readonly EJ_SECTION_TITLE: string = "Entités juridiques";
+  readonly SANITAIRE_SECTION_TITLE: string = "Etablissements sanitaires";
+  readonly SOCIAL_SECTION_TITLE: string = "Etablissements sociaux et médico-sociaux";
+
 }

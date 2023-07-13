@@ -313,4 +313,10 @@ export interface Wording {
   readonly LIMITES_DE_RESPONSABILITÉ: string;
 
   readonly EN_CONSTRUCTION: string;
+
+  // Favoris
+  readonly FAVORIS_LIST: string;
+  readonly EJ_SECTION_TITLE: string;
+  readonly SANITAIRE_SECTION_TITLE: string;
+  readonly SOCIAL_SECTION_TITLE: string;
 }

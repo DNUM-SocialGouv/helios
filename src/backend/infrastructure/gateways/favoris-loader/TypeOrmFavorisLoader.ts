@@ -7,11 +7,15 @@ export class TypeOrmFavorisLoader implements FavorisLoader {
     constructor(private readonly orm: Promise<DataSource>) { }
 
 
-    async addToFavoris(finessNumber: string, type: string, idUser: number) {
+    async addToFavoris(finessNumber: string, type: string, idUser: number, commune: string, departement: string, socialReason
+        : string) {
         const favori = new FavorisModel();
         favori.finessNumber = finessNumber;
         favori.type = type;
         favori.userId = idUser;
+        favori.commune = commune;
+        favori.departement = departement;
+        favori.socialReason = socialReason;
         await (await this.orm).getRepository(FavorisModel).save(favori);
     }
 

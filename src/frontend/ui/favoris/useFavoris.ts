@@ -1,15 +1,31 @@
 import { useContext } from "react";
 
+import { FavorisModel } from "../../../../database/models/FavorisModel";
+import { Résultat } from "../../../backend/métier/entities/RésultatDeRecherche";
+import { useDependencies } from "../commun/contexts/useDependencies";
 import { UserContext } from "../commun/contexts/userContext";
-import { FavorisViewModel } from "./favorisViewModel";
+import { RechercheViewModel } from "../home/RechercheViewModel";
 
 export function useFavoris() {
 
     const userContext = useContext(UserContext);
+    const { paths } = useDependencies();
 
-    const addToFavoris = (finessNumber: string, type: string, idUser: string) => {
+    const buildRechecheView = (favori: FavorisModel): RechercheViewModel => {
+        const result: Résultat = {
+            commune: favori.commune,
+            département: favori.departement,
+            numéroFiness: favori.finessNumber,
+            raisonSocialeCourte: favori.socialReason,
+            type: favori.type,
+        }
+        const rechercheViewModel = new RechercheViewModel(result, paths);
+        return rechercheViewModel;
+    }
+
+    const addToFavoris = (finessNumber: string, type: string, idUser: string, commune: string, departement: string, socialReason: string) => {
         fetch("/api/favoris/add-to-favoris", {
-            body: JSON.stringify({ finessNumber, type, idUser }),
+            body: JSON.stringify({ finessNumber, type, idUser, commune, departement, socialReason }),
             headers: { "Content-Type": "application/json" },
             method: "POST",
         })
@@ -47,11 +63,11 @@ export function useFavoris() {
         })
             .then((response) => response.json())
             .then((data) => {
-                var favorisViewModel = [];
+                var favorisViewModel: RechercheViewModel[] = [];
                 data.forEach((element: any) => {
-                    favorisViewModel.push(new FavorisViewModel(element.finessNumber, element.type, '1'));
+                    favorisViewModel.push(buildRechecheView(element));
                 });
-                userContext?.setFavoris(data);
+                userContext?.setFavoris(favorisViewModel);
             })
             .catch((error) => {
                 // eslint-disable-next-line no-console
@@ -63,5 +79,6 @@ export function useFavoris() {
         addToFavoris,
         removeFromFavoris,
         getAllFavoris,
+        buildRechecheView,
     };
 }

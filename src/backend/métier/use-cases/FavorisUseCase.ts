@@ -4,8 +4,9 @@ import { FavorisLoader } from "../gateways/FavorisLoader";
 export class AddToFavorisUseCase {
     constructor(private favorisLoader: FavorisLoader) { }
 
-    async exécute(finessNumber: string, type: string, idUser: number): Promise<void> {
-        await this.favorisLoader.addToFavoris(finessNumber, type, idUser);
+    async exécute(finessNumber: string, type: string, idUser: number, commune: string, departement: string, socialReason
+        : string): Promise<void> {
+        await this.favorisLoader.addToFavoris(finessNumber, type, idUser, commune, departement, socialReason);
     }
 }
 

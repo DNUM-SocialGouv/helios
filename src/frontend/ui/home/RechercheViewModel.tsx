@@ -17,6 +17,18 @@ export class RechercheViewModel {
     return this.recherche.type;
   }
 
+  public get commune(): string {
+    return this.recherche.commune;
+  }
+
+  public get departement(): string {
+    return this.recherche.département;
+  }
+
+  public get socialReason(): string {
+    return this.recherche.raisonSocialeCourte;
+  }
+
   public get titre(): ReactElement {
     return (
       <>

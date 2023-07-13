@@ -16,6 +16,15 @@ export class FavorisModel {
     @Column({ name: 'user_id' })
     public userId!: number;
 
+    @Column({ name: 'social_reason' })
+    public socialReason!: string;
+
+    @Column({ name: 'commune' })
+    public commune!: string;
+
+    @Column({ name: 'departement' })
+    public departement!: string;
+
     @ManyToOne(() => UtilisateurModel)
     @JoinColumn({ name: "user_id", referencedColumnName: "id" })
     public user!: UtilisateurModel;

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { useContext } from "react";
 
 import { UserContext } from "../commun/contexts/userContext";
@@ -8,40 +7,37 @@ import styles from "./Recherche.module.css";
 import { RechercheViewModel } from "./RechercheViewModel";
 
 type EstablishmentProps = Readonly<{
-  résultatViewModel: RechercheViewModel;
+  résultatViewModel: any;
 }>;
 
 export const Establishment = ({
   résultatViewModel
 }: EstablishmentProps) => {
-  const router = useRouter();
   const userContext = useContext(UserContext);
 
   const { addToFavoris, removeFromFavoris } = useFavoris();
   const handleFavoriteStatus = async (element: RechercheViewModel) => {
-    const filtredFavoris = userContext?.favoris.filter((item) => item.finessNumber === element.numéroFiness);
+    const filtredFavoris = userContext?.favoris.filter((item) => item.numéroFiness === element.numéroFiness);
+
     if (filtredFavoris?.length !== 0) {
       await removeFromFavoris('1', element.numéroFiness);
       userContext?.removeFromFavoris(element);
     } else {
-      await addToFavoris(element.numéroFiness, element.type, '1');
+      await addToFavoris(element.numéroFiness, element.type, '1', element.commune, element.departement, element.socialReason);
       userContext?.addToFavoris(element);
     }
   }
 
-  // eslint-disable-next-line no-console
-  console.log('userContext?.favoris.includes(résultatViewModel)', userContext?.favoris.includes(résultatViewModel));
-
   return (
-    <div className="fr-tile fr-enlarge-link fr-tile--horizontal-md">
+    <div className="fr-tile fr-tile--horizontal-md">
       <button
-        className={userContext?.favoris.filter((item) => item.finessNumber === résultatViewModel.numéroFiness).length !== 0 ? "fr-icon-star-fill " + styles["star"] : "fr-icon-star-line " + styles["star"]}
+        className={userContext?.favoris.filter((item) => item.numéroFiness === résultatViewModel.numéroFiness).length !== 0 ? "fr-icon-star-fill " + styles["star"] : "fr-icon-star-line " + styles["star"]}
         onClick={() => handleFavoriteStatus(résultatViewModel)} />
-      <div className="fr-tile__body">
+      <div className="fr-tile__body fr-enlarge-link">
         <h2 className="fr-tile__title">
-          <button className="fr-tile__link" onClick={() => { router.push(résultatViewModel.construisLeLien()) }}>
+          <a className="fr-tile__link" href={résultatViewModel.construisLeLien()}>
             {résultatViewModel.titre}
-          </button>
+          </a>
         </h2>
         <p className={"fr-tile__desc " + styles["description"]}>{résultatViewModel.départementEtCommune}</p>
       </div>

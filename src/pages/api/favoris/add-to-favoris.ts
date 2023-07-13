@@ -8,7 +8,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
         response.status(405).send("Method not allowed");
     }
 
-    const { finessNumber, type, idUser, } = request.body;
-    const recherche = await addToFavorisEndpoint(dependencies, finessNumber, type, idUser);
+    const { finessNumber, type, idUser, commune, departement, socialReason } = request.body;
+    const recherche = await addToFavorisEndpoint(dependencies, finessNumber, type, idUser, commune, departement, socialReason);
     response.status(200).json(recherche);
 }
