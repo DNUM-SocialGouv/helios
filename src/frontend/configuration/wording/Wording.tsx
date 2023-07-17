@@ -20,6 +20,7 @@ export interface Wording {
   readonly EMAIL_NOT_VALID: string;
   readonly SOMETHING_WENT_WRONG: string;
   readonly INVALID_REQUEST: string;
+  readonly INVALID_USER: string;
 
   // Header
   readonly INTITULÉ_RÉPUBLIQUE_FRANÇAISE: ReactElement;
