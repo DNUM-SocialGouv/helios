@@ -11,7 +11,7 @@ export interface Wording {
   readonly CANCEL: string;
   readonly SEND_EMAIL: string;
   readonly RESEND_EMAIL: string;
-  readonly BACK_TO_HOME: string;
+  readonly BACK_TO_CONNEXION: string;
   readonly APPLY: string;
 
 

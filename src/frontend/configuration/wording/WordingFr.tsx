@@ -13,7 +13,7 @@ export class WordingFr implements Wording {
   readonly CANCEL: string = "Annuler";
   readonly SEND_EMAIL: string = "Confirmer la demande de renouvellement";
   readonly RESEND_EMAIL: string = "Envoyer à nouveau";
-  readonly BACK_TO_HOME: string = "Retour à l'accueil";
+  readonly BACK_TO_CONNEXION: string = "Retour à la page de connexion";
   readonly APPLY: string = "Appliquer";
 
 
