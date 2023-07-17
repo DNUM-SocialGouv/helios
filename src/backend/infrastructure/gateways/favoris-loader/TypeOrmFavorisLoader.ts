@@ -7,7 +7,7 @@ export class TypeOrmFavorisLoader implements FavorisLoader {
     constructor(private readonly orm: Promise<DataSource>) { }
 
 
-    async addToFavoris(finessNumber: string, type: string, idUser: number, commune: string, departement: string, socialReason
+    async addToFavoris(finessNumber: string, type: string, idUser: string, commune: string, departement: string, socialReason
         : string) {
         const favori = new FavorisModel();
         favori.finessNumber = finessNumber;
@@ -19,11 +19,11 @@ export class TypeOrmFavorisLoader implements FavorisLoader {
         await (await this.orm).getRepository(FavorisModel).save(favori);
     }
 
-    async removeFromFavoris(idUser: number, finessNumber: string) {
+    async removeFromFavoris(idUser: string, finessNumber: string) {
         await (await this.orm).getRepository(FavorisModel).delete({ userId: idUser, finessNumber: finessNumber });
     }
 
-    async getAllFavoris(idUser: number): Promise<FavorisModel[]> {
+    async getAllFavoris(idUser: string): Promise<FavorisModel[]> {
         return await (await this.orm).getRepository(FavorisModel).find({ where: { userId: idUser } });
     }
 }

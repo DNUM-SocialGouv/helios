@@ -2,12 +2,13 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 
 import "@gouvfr/dsfr/dist/component/header/header.min.css";
 import "@gouvfr/dsfr/dist/component/logo/logo.min.css";
 import "@gouvfr/dsfr/dist/component/link/link.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
+import { useFavoris } from "../../favoris/useFavoris";
 import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
 import { useDependencies } from "../contexts/useDependencies";
 import { UserContext } from "../contexts/userContext";
@@ -19,6 +20,7 @@ export const Header = () => {
   const router = useRouter();
   const userContext = useContext(UserContext);
   const { data, status } = useSession();
+  const { getAllFavoris } = useFavoris();
   const [terme, setTerme] = useState<string>("");
   const [displayMenu, setDisplayMenu] = useState<boolean>(false);
 
@@ -27,6 +29,13 @@ export const Header = () => {
   const rechercheOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTerme(event.target.value);
   };
+
+
+  useEffect(() => {
+    if (data?.user?.idUser) {
+      getAllFavoris(data?.user?.idUser);
+    }
+  }, [data?.user?.idUser]);
 
   return (
     <>
@@ -76,7 +85,7 @@ export const Header = () => {
                 </div>
               </div>
               <div className="fr-header__tools">
-                {router.pathname !== paths.ACCUEIL && router.pathname !== paths.CONNEXION && (
+                {router.pathname !== paths.ACCUEIL && router.pathname !== paths.CONNEXION && router.pathname !== paths.FAVORIS && (
                   <div className="fr-header__search fr-modal" id="modal-541">
                     <div className="fr-container fr-container-lg--fluid">
                       <button aria-controls="modal-541" className="fr-btn--close fr-btn" title="Fermer">

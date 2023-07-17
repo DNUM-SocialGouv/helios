@@ -10,4 +10,5 @@ export class Paths {
   readonly RÉGION: string = "/region";
   readonly ECO_CONCEPTION: string = "/eco-conception";
   readonly GESTION_DES_COOKIES: string = "/gestion-des-cookies";
+  readonly FAVORIS: string = "/favoris"
 }

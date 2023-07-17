@@ -4,5 +4,12 @@ import NextAuth, { DefaultSession, DefaultUser } from "next-auth"
 declare module "next-auth" {
   interface User {
     nom: string;
-  } 
+    code: string;
+  }
+
+  interface Session {
+    user: {
+      idUser: string,
+    } & DefaultSession["user"]
+  }
 }

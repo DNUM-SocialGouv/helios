@@ -14,7 +14,7 @@ export class FavorisModel {
     public type!: string;
 
     @Column({ name: 'user_id' })
-    public userId!: number;
+    public userId!: string;
 
     @Column({ name: 'social_reason' })
     public socialReason!: string;

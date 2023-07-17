@@ -9,12 +9,11 @@ export default async function handler(request: NextApiRequest, response: NextApi
     }
 
     const idUser = request.query["idUser"];
-    let userId;
-    if (typeof idUser === 'string') {
-        userId = parseInt(idUser);
-        const recherche = await getAllFavorisEndpoint(dependencies, userId);
-        response.status(200).json(recherche);
+
+    if (idUser && typeof idUser === 'string') {
+        const recherche = await getAllFavorisEndpoint(dependencies, idUser);
+        return response.status(200).json(recherche);
     } else {
-        response.status(401).json('Invalid idUser');
+        return response.status(401).json('Invalid idUser');
     }
 }

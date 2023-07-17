@@ -25,8 +25,8 @@ export default NextAuth({
           }
 
           const { utilisateur } = await authResponse.json();
-          
-          return {  ...utilisateur, id: utilisateur.code, };
+
+          return { ...utilisateur };
         } catch (error) {
           return null;
         }
@@ -40,11 +40,14 @@ export default NextAuth({
         return {
           ...token,
           name: user.nom,
+          idUser: user.code
         }
       }
       return token
     },
-    async session({ session }) {
+    async session({ session, token }) {
+      session.user.idUser = token['idUser'] as string;
+
       return session
     },
   },

@@ -4,7 +4,7 @@ import { FavorisLoader } from "../gateways/FavorisLoader";
 export class AddToFavorisUseCase {
     constructor(private favorisLoader: FavorisLoader) { }
 
-    async exécute(finessNumber: string, type: string, idUser: number, commune: string, departement: string, socialReason
+    async exécute(finessNumber: string, type: string, idUser: string, commune: string, departement: string, socialReason
         : string): Promise<void> {
         await this.favorisLoader.addToFavoris(finessNumber, type, idUser, commune, departement, socialReason);
     }
@@ -13,7 +13,7 @@ export class AddToFavorisUseCase {
 export class RemoveFromFavorisUseCase {
     constructor(private favorisLoader: FavorisLoader) { }
 
-    async exécute(idUser: number, finessNumber: string): Promise<void> {
+    async exécute(idUser: string, finessNumber: string): Promise<void> {
         await this.favorisLoader.removeFromFavoris(idUser, finessNumber);
     }
 }
@@ -21,7 +21,7 @@ export class RemoveFromFavorisUseCase {
 export class GetAllFavorisUseCase {
     constructor(private favorisLoader: FavorisLoader) { }
 
-    async exécute(idUser: number): Promise<FavorisModel[]> {
+    async exécute(idUser: string): Promise<FavorisModel[]> {
         return await this.favorisLoader.getAllFavoris(idUser);
     }
 }

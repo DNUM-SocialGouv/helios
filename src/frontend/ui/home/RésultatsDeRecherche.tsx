@@ -1,6 +1,6 @@
 import { useDependencies } from "../commun/contexts/useDependencies";
 import "@gouvfr/dsfr/dist/component/tile/tile.min.css";
-import { Establishment } from "./establishment";
+import { Establishment } from "./Establishment";
 import styles from "./Recherche.module.css";
 import { RechercheViewModel } from "./RechercheViewModel";
 

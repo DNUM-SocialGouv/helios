@@ -6,21 +6,14 @@ import { UserContext } from "../commun/contexts/userContext";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 import styles from "./Favoris.module.css";
 import { FavorisBlock } from "./FavorisBlock";
-import { useFavoris } from "./useFavoris";
 
 export const FavorisPage = () => {
     const { wording } = useDependencies();
     const userContext = useContext(UserContext);
-    const { getAllFavoris } = useFavoris();
 
     const [ejFavoris, setEjFavoris] = useState<RechercheViewModel[]>([]);
     const [sanitaireFavoris, setSanitaireFavoris] = useState<RechercheViewModel[]>([]);
     const [socialFavoris, setSocialFavoris] = useState<RechercheViewModel[]>([]);
-
-
-    useEffect(() => {
-        getAllFavoris('1');
-    }, []);
 
     useEffect(() => {
         setEjFavoris(userContext?.favoris.filter(elt => elt.type === 'Entité juridique') || []);

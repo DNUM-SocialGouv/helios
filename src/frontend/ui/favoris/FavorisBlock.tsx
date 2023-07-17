@@ -1,7 +1,7 @@
 import "@gouvfr/dsfr/dist/component/tile/tile.min.css";
 import { Badge } from "../commun/Badge/Badge";
 import { useDependencies } from "../commun/contexts/useDependencies";
-import { Establishment } from "../home/establishment";
+import { Establishment } from "../home/Establishment";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 import styles from "./Favoris.module.css";
 

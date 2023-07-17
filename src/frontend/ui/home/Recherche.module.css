@@ -18,23 +18,7 @@
 }
 
 
-.star {
-  color: #000091;
-  align-self: flex-start;
-  min-width: 3rem;
-  margin-top: 0.5rem;
-  background-color: transparent !important;
-}
-
 @media (max-width: 48em) {
-  .star {
-    align-self: center;
-    min-width: 3rem;
-    color: #000091;
-    margin-bottom: 2rem;
-    background-color: transparent !important;
-  }
-
   .tuile {
     align-self: center;
     margin-left: 0;

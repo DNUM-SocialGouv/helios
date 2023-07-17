@@ -1,8 +1,11 @@
 import Head from "next/head";
+import { useState, useEffect } from "react";
 
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { SeparatorHorizontal } from "../commun/Separateur/SeparatorHorizontal";
 import { Titre } from "../commun/Titre/Titre";
+import { RechercheViewModel } from "../home/RechercheViewModel";
+import { useRecherche } from "../home/useRecherche";
 import { BlocActivitéSanitaire } from "./bloc-activité/BlocActivitéSanitaire";
 import { BlocAutorisationsCapacites } from "./bloc-autorisations-capacites/BlocAutorisationsCapacites";
 import { BlocBudgetFinance } from "./bloc-budget-finance/BlocBudgetFinance";
@@ -26,20 +29,34 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, établissement
     },
   ]);
 
+  const { rechercher, résultats } = useRecherche();
+  const [rechercheViewModel, setRechercheViewModel] = useState<RechercheViewModel>();
+
+  useEffect(() => {
+    rechercher(entitéJuridiqueViewModel.numéroFiness, 1);
+  }, [])
+
+  useEffect(() => {
+    setRechercheViewModel(résultats[0] as RechercheViewModel);
+  }, [résultats])
   return (
     <main className="fr-container">
       <Head>
         <title>{entitéJuridiqueViewModel.titre}</title>
       </Head>
-      <Catégorisation catégorisationViewModel={entitéJuridiqueViewModel.catégorisationViewModel} />
-      <Titre logo={LogoEntitéJuridique}>{entitéJuridiqueViewModel.titre}</Titre>
-      <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
-      <ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />
-      <BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={entitéJuridiqueViewModel.entitéJuridiqueAutorisationsCapacitesViewModel} />
-      <SeparatorHorizontal></SeparatorHorizontal>
-      <BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel} />
-      <SeparatorHorizontal></SeparatorHorizontal>
-      <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} />
+      {rechercheViewModel && (
+        <>
+          <Catégorisation catégorisationViewModel={entitéJuridiqueViewModel.catégorisationViewModel} />
+          <Titre logo={LogoEntitéJuridique} rechercheViewModel={rechercheViewModel}>{entitéJuridiqueViewModel.titre}</Titre>
+          <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
+          <ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />
+          <BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={entitéJuridiqueViewModel.entitéJuridiqueAutorisationsCapacitesViewModel} />
+          <SeparatorHorizontal></SeparatorHorizontal>
+          <BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel} />
+          <SeparatorHorizontal></SeparatorHorizontal>
+          <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} />
+        </>
+      )}
     </main>
   );
 };
