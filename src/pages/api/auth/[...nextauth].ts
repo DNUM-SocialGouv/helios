@@ -37,6 +37,8 @@ export default NextAuth({
   callbacks: {
     async jwt({ token, user, account }) {
       if (account && user) {
+        // eslint-disable-next-line no-console
+        console.log('user', user)
         return {
           ...token,
           name: user.nom,
@@ -46,6 +48,9 @@ export default NextAuth({
       return token
     },
     async session({ session, token }) {
+
+      // eslint-disable-next-line no-console
+      console.log('id user', token)
       session.user.idUser = token['idUser'] as string;
 
       return session

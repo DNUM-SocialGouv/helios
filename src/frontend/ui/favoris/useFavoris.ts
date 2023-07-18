@@ -1,5 +1,4 @@
-import { useSession } from "next-auth/react";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 
 import { FavorisModel } from "../../../../database/models/FavorisModel";
 import { Résultat } from "../../../backend/métier/entities/RésultatDeRecherche";
@@ -11,14 +10,7 @@ export function useFavoris() {
 
     const userContext = useContext(UserContext);
     const { paths } = useDependencies();
-    const { data } = useSession();
 
-    const [idUser, setIdUser] = useState<string>();
-
-    useEffect(() => {
-        if (data?.user?.idUser)
-            setIdUser(data.user.idUser);
-    }, [data?.user?.idUser]);
 
 
     const buildRechecheView = (favori: FavorisModel): RechercheViewModel => {
@@ -33,7 +25,7 @@ export function useFavoris() {
         return rechercheViewModel;
     }
 
-    const addToFavoris = (favorite: any) => {
+    const addToFavoris = (favorite: any, idUser: string) => {
         fetch("/api/favoris/add-to-favoris", {
             body: JSON.stringify({ finessNumber: favorite.numéroFiness, type: favorite.type, idUser, commune: favorite.commune, departement: favorite.departement, socialReason: favorite.socialReason }),
             headers: { "Content-Type": "application/json" },
@@ -46,7 +38,7 @@ export function useFavoris() {
             })
     }
 
-    const removeFromFavoris = (favorite: any) => {
+    const removeFromFavoris = (favorite: any, idUser: string) => {
         fetch("/api/favoris/remove-from-favoris", {
             body: JSON.stringify({ idUser, finessNumber: favorite.numéroFiness }),
             headers: { "Content-Type": "application/json" },

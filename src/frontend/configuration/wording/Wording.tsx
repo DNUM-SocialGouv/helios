@@ -7,6 +7,20 @@ export interface Wording {
   readonly ASR_TITLE: string;
   readonly ASR: ReactElement;
 
+  // Commun
+  readonly CANCEL: string;
+  readonly SEND_EMAIL: string;
+  readonly RESEND_EMAIL: string;
+  readonly BACK_TO_HOME: string;
+  readonly APPLY: string;
+
+
+  // Messages d'erreur
+  readonly MISSING_EMAIL: string;
+  readonly EMAIL_NOT_VALID: string;
+  readonly SOMETHING_WENT_WRONG: string;
+  readonly INVALID_REQUEST: string;
+
   // Header
   readonly INTITULÉ_RÉPUBLIQUE_FRANÇAISE: ReactElement;
   readonly ACCUEIL: string;
@@ -42,6 +56,7 @@ export interface Wording {
   readonly CONNEXION_IDENTIFIANT: string
   readonly CONNEXION_MOT_DE_PASSE: string
   readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string
+  readonly FORGET_PASSEWORD: string
   readonly CONNEXION_LIBELLE: string
 
   // Recherche
@@ -54,6 +69,7 @@ export interface Wording {
   readonly aucunRésultat: (terme: string) => string;
   readonly ERREUR_TECHNIQUE: string;
   readonly VOIR_PLUS_RÉSULTATS: string;
+  readonly RECHERCHE_TITRE: string;
 
   // Cartographie
   readonly CARTOGRAPHIE: string;
@@ -319,4 +335,15 @@ export interface Wording {
   readonly EJ_SECTION_TITLE: string;
   readonly SANITAIRE_SECTION_TITLE: string;
   readonly SOCIAL_SECTION_TITLE: string;
+  // Mot de passe oublié
+  readonly MOT_PASSE_OUBLIE_TITRE: string;
+  readonly MOT_PASSE_OUBLIE_LABEL: string;
+  readonly MOT_PASSE_OUBLIE_SUCCESS_MESSAGE: string;
+
+  // Changement de mot de passe
+  readonly CHANGEMENT_MOT_PASSE_TITRE: string;
+  readonly CHANGEMENT_MOT_PASSE_DESCRIPTION: string;
+  readonly MOT_DE_PASSE: string;
+  readonly CONFIRMER_MOT_DE_PASSE: string;
+  readonly CONFIRM_CHANGE_PASSWORD: string;
 }

@@ -8,12 +8,13 @@ export default async function handler(request: NextApiRequest, response: NextApi
         response.status(405).send("Method not allowed");
     }
     try {
-        const { email, password } = request.body
-        const user = await loginEndpoint(dependencies, email, password)
-        if (user) {
-            return response.status(200).json(user);
+        const { email, password } = request.body;
+        const resp = await loginEndpoint(dependencies, email, password);
+        if (resp) {
+            delete resp.utilisateur?.password;
+            return response.status(200).json(resp);
         } else {
-            return response.status(400).json(user);
+            return response.status(400).json(resp);
         }
     } catch (error) {
         return response.status(500);

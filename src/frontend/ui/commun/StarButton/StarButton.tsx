@@ -1,3 +1,4 @@
+import { useSession } from "next-auth/react";
 import { useContext } from "react";
 
 import { useFavoris } from "../../favoris/useFavoris";
@@ -12,14 +13,22 @@ type StarButtonProps = Readonly<{
 export const StarButton = ({ favorite }: StarButtonProps) => {
     const userContext = useContext(UserContext);
     const { addToFavoris, removeFromFavoris } = useFavoris();
+    const { data } = useSession();
+
+    // const [idUser, setIdUser] = useState<string>();
+
+    // useEffect(() => {
+    //     if (data?.user?.idUser)
+    //         setIdUser(data.user.idUser);
+    // }, [data?.user?.idUser]);
 
     const handleFavoriteStatus = async () => {
         const filtredFavoris = userContext?.favoris.filter((item) => item.numéroFiness === favorite?.numéroFiness);
 
         if (filtredFavoris?.length !== 0) {
-            await removeFromFavoris(favorite);
+            await removeFromFavoris(favorite, data?.user?.idUser as string);
         } else {
-            await addToFavoris(favorite);
+            await addToFavoris(favorite, data?.user?.idUser as string);
         }
     }
 

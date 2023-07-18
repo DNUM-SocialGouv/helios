@@ -15,6 +15,7 @@ import { UserContext } from "../contexts/userContext";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 import styles from "./Header.module.css";
 
+
 export const Header = () => {
   const { paths, wording } = useDependencies();
   const router = useRouter();
@@ -85,7 +86,7 @@ export const Header = () => {
                 </div>
               </div>
               <div className="fr-header__tools">
-                {router.pathname !== paths.ACCUEIL && router.pathname !== paths.CONNEXION && router.pathname !== paths.FAVORIS && (
+                {router.pathname !== paths.ACCUEIL && router.pathname !== paths.FORGET_PASSWORD && router.pathname !== paths.CHANGE_PASSWORD && router.pathname !== paths.CONNEXION && router.pathname !== paths.FAVORIS && (
                   <div className="fr-header__search fr-modal" id="modal-541">
                     <div className="fr-container fr-container-lg--fluid">
                       <button aria-controls="modal-541" className="fr-btn--close fr-btn" title="Fermer">
@@ -120,7 +121,7 @@ export const Header = () => {
                   </div>
                 )}
               </div>
-              {status !== "unauthenticated" ? (
+              {status === "authenticated" && paths.CONNEXION !== router.pathname ? (
                 <div className={styles["dropdown"]}>
                   <button
                     className={"fr-icon-account-line " + styles["account-logo"]}
