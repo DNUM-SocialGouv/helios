@@ -25,8 +25,8 @@ export default NextAuth({
           }
 
           const { utilisateur } = await authResponse.json();
-          
-          return {  ...utilisateur, id: utilisateur.code, };
+
+          return { ...utilisateur, id: utilisateur.code, };
         } catch (error) {
           return null;
         }
@@ -37,14 +37,19 @@ export default NextAuth({
   callbacks: {
     async jwt({ token, user, account }) {
       if (account && user) {
+        // eslint-disable-next-line no-console
+        console.log('user', user);
+
         return {
           ...token,
           name: user.nom,
+          firstname: user.prenom
         }
       }
       return token
     },
-    async session({ session }) {
+    async session({ session, token }) {
+      session.user.firstname = token['firstname'] as string;
       return session
     },
   },
