@@ -2,7 +2,7 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 import "@gouvfr/dsfr/dist/component/header/header.min.css";
 import "@gouvfr/dsfr/dist/component/logo/logo.min.css";
@@ -11,7 +11,6 @@ import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 import { useFavoris } from "../../favoris/useFavoris";
 import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
 import { useDependencies } from "../contexts/useDependencies";
-import { UserContext } from "../contexts/userContext";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 import styles from "./Header.module.css";
 
@@ -19,7 +18,6 @@ import styles from "./Header.module.css";
 export const Header = () => {
   const { paths, wording } = useDependencies();
   const router = useRouter();
-  const userContext = useContext(UserContext);
   const { data, status } = useSession();
   const { getAllFavoris } = useFavoris();
   const [terme, setTerme] = useState<string>("");
@@ -139,14 +137,14 @@ export const Header = () => {
                       <li className={styles["menu-item"]}>
                         <button>Mot de passe</button>
                       </li>
-                      {userContext?.favoris.length !== 0 && <li className={styles["menu-item"]}>
+                      <li className={styles["menu-item"]}>
                         <button
                           onClick={() => {
                             router.push("/favoris");
                           }}>
                           Favoris
                         </button>
-                      </li>}
+                      </li>
                       <li className={styles["menu-item"]}>
                         <button
                           onClick={() => {
