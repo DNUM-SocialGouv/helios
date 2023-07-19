@@ -1,4 +1,3 @@
-import { useSession } from "next-auth/react";
 import { useContext } from "react";
 
 import { useFavoris } from "../../favoris/useFavoris";
@@ -13,28 +12,24 @@ type StarButtonProps = Readonly<{
 export const StarButton = ({ favorite }: StarButtonProps) => {
     const userContext = useContext(UserContext);
     const { addToFavoris, removeFromFavoris } = useFavoris();
-    const { data } = useSession();
 
-    // const [idUser, setIdUser] = useState<string>();
-
-    // useEffect(() => {
-    //     if (data?.user?.idUser)
-    //         setIdUser(data.user.idUser);
-    // }, [data?.user?.idUser]);
 
     const handleFavoriteStatus = async () => {
         const filtredFavoris = userContext?.favoris.filter((item) => item.numéroFiness === favorite?.numéroFiness);
 
         if (filtredFavoris?.length !== 0) {
-            await removeFromFavoris(favorite, data?.user?.idUser as string);
+            await removeFromFavoris(favorite);
         } else {
-            await addToFavoris(favorite, data?.user?.idUser as string);
+            await addToFavoris(favorite);
         }
     }
 
     return (
         <button
             className={userContext?.favoris.filter((item) => item.numéroFiness === favorite?.numéroFiness).length !== 0 ? "fr-icon-star-fill .fr-icon--lg " + styles["star"] : "fr-icon-star-line .fr-icon--lg	" + styles["star"]}
-            onClick={() => handleFavoriteStatus()} />
+            onClick={() => handleFavoriteStatus()}
+            title={userContext?.favoris.filter((item) => item.numéroFiness === favorite?.numéroFiness).length !== 0 ? "Enlever cet établissement des favoris" : "Ajouter cet établissement aux favoris"}
+        />
+
     );
 };

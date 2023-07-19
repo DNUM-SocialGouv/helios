@@ -48,9 +48,6 @@ export default NextAuth({
       return token
     },
     async session({ session, token }) {
-
-      // eslint-disable-next-line no-console
-      console.log('id user', token)
       session.user.idUser = token['idUser'] as string;
 
       return session
