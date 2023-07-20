@@ -6,7 +6,6 @@ import { SeparatorHorizontal } from "../commun/Separateur/SeparatorHorizontal";
 import { Titre } from "../commun/Titre/Titre";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 import { useRecherche } from "../home/useRecherche";
-import { useSearchHistory } from "../search-history/useSearchHistory";
 import { BlocActivitéSanitaire } from "./bloc-activité/BlocActivitéSanitaire";
 import { BlocAutorisationsCapacites } from "./bloc-autorisations-capacites/BlocAutorisationsCapacites";
 import { BlocBudgetFinance } from "./bloc-budget-finance/BlocBudgetFinance";
@@ -29,14 +28,6 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, établissement
       path: "",
     },
   ]);
-  const { saveSearchHistory } = useSearchHistory();
-  useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log('use effect ran');
-    saveSearchHistory(entitéJuridiqueViewModel.titre, '7eb4d131-718d-4e06-9952-4e048a145b37', entitéJuridiqueViewModel.numéroFiness);
-
-  }, [])
-
   const { rechercher, résultats } = useRecherche();
   const [rechercheViewModel, setRechercheViewModel] = useState<RechercheViewModel>();
 

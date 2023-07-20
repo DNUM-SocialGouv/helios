@@ -13,6 +13,9 @@ export class SearchHistoryModel {
     @Column({ name: "finess_number" })
     public finessNumber!: string;
 
+    @Column({ name: "type" })
+    public type!: string;
+
     @Column({ name: "date" })
     public date!: Date;
 
