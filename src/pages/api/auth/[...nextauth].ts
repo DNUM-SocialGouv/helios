@@ -37,8 +37,6 @@ export default NextAuth({
   callbacks: {
     async jwt({ token, user, account }) {
       if (account && user) {
-        // eslint-disable-next-line no-console
-        console.log('user', user)
         return {
           ...token,
           name: user.nom,

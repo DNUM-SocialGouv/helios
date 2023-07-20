@@ -15,7 +15,7 @@ export const Establishment = ({
   const { saveSearchHistory } = useSearchHistory();
 
   const saveToHistory = () => {
-    saveSearchHistory(résultatViewModel.socialReason, '7eb4d131-718d-4e06-9952-4e048a145b37', résultatViewModel.numéroFiness, résultatViewModel.type);
+    saveSearchHistory(résultatViewModel.socialReason, résultatViewModel.numéroFiness, résultatViewModel.type);
   }
 
   return (

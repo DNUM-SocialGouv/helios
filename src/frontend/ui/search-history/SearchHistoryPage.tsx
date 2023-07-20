@@ -1,9 +1,22 @@
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+
+import { formatDateAndHours } from "../../utils/dateUtils";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./SearchHistory.module.css";
+import { useSearchHistory } from "./useSearchHistory";
 
 export const SearchHistoryPage = () => {
     const { wording } = useDependencies();
+    const { data } = useSession();
+    const { getAllSearchHistory, searchHistory } = useSearchHistory();
+
+    useEffect(() => {
+        if (data?.user?.idUser) {
+            getAllSearchHistory(data?.user?.idUser);
+        }
+    }, [data?.user?.idUser]);
 
     return (
         <main className="fr-container">
@@ -17,14 +30,12 @@ export const SearchHistoryPage = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>{wording.ETABLISSEMENT_CONSULTE}</td>
-                            <td>{wording.DATE}</td>
-                        </tr>
-                        <tr>
-                            <td>{wording.ETABLISSEMENT_CONSULTE}</td>
-                            <td>{wording.DATE}</td>
-                        </tr>
+                        {searchHistory.map((elt) => (
+                            <tr key={elt.numéroFiness}>
+                                <td>{elt.title}</td>
+                                <td>{formatDateAndHours(elt.date)}</td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>

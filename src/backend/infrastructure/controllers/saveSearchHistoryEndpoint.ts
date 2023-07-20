@@ -1,4 +1,4 @@
-import { SaveSearchHistoryUseCase } from "../../métier/use-cases/saveSearchHistoryUseCase";
+import { SaveSearchHistoryUseCase } from "../../métier/use-cases/SearchHistoryUseCase";
 import { Dependencies } from "../dependencies";
 
 export async function saveSearchHistoryEndpoint(dependencies: Dependencies, titre: string, idUser: string, finessNumber: string, type: string): Promise<void> {
