@@ -436,4 +436,9 @@ export class WordingFr implements Wording {
   readonly MOT_DE_PASSE: string = "Nouveau mot de passe";
   readonly CONFIRMER_MOT_DE_PASSE: string = "Confirmation mot de passe";
   readonly CONFIRM_CHANGE_PASSWORD: string = "Confirmer la demande de réinitialisation";
+
+  // Historique de recherche
+  readonly HISTORIQUE_DE_RECHERECHE_TITRE: string = "Historique des derniers établissements consultés suite à une recherche";
+  readonly ETABLISSEMENT_CONSULTE: string = "Etablissements consultés";
+  readonly DATE: string = "Date";
 }

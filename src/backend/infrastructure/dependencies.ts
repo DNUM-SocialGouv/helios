@@ -6,6 +6,7 @@ import { EnvironmentVariables } from "../métier/gateways/EnvironmentVariables";
 import { FavorisLoader } from "../métier/gateways/FavorisLoader";
 import { Logger } from "../métier/gateways/Logger";
 import { RechercheLoader } from "../métier/gateways/RechercheLoader";
+import { SearchHistoryLoader } from "../métier/gateways/SearchHistoryLoader";
 import { UtilisateurLoader } from "../métier/gateways/UtilisateurLoader";
 import { ÉtablissementTerritorialMédicoSocialLoader } from "../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader";
 import { ÉtablissementTerritorialRattachéLoader } from "../métier/gateways/ÉtablissementTerritorialRattachéLoader";
@@ -19,6 +20,7 @@ import { TypeOrmForgetPasswordLoader } from "./gateways/forget-password-loader/T
 import { ConsoleLogger } from "./gateways/logger/ConsoleLogger";
 import { typeOrmOrm } from "./gateways/orm/typeOrmOrm";
 import { TypeOrmRechercheLoader } from "./gateways/recherche-loader/TypeOrmRechercheLoader";
+import { TypeOrmSearchHistoryLoader } from "./gateways/search-history-loader/TypeOrmSearchHistoryLoader";
 import { TypeOrmUtilisateurLoader } from "./gateways/utilisateur-loader/TypeOrmUtilisateurLoader";
 import { TypeOrmÉtablissementTerritorialMédicoSocialLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialMédicoSocialLoader";
 import { TypeOrmÉtablissementTerritorialRattachéLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialRattachéLoader";
@@ -36,6 +38,7 @@ export type Dependencies = Readonly<{
   favorisLoader: FavorisLoader;
   changePasswordLoader: ChangePasswordLoader;
   forgetPasswordLoader: TypeOrmForgetPasswordLoader;
+  searchHistoryLoader: SearchHistoryLoader
 }>;
 
 const createDependencies = (): Dependencies => {
@@ -61,7 +64,8 @@ const createDependencies = (): Dependencies => {
     établissementTerritorialSanitaireLoader: new TypeOrmÉtablissementTerritorialSanitaireLoader(orm),
     favorisLoader: new TypeOrmFavorisLoader(orm),
     changePasswordLoader: new TypeOrmChangePasswordLoader(orm),
-    forgetPasswordLoader: new TypeOrmForgetPasswordLoader(orm)
+    forgetPasswordLoader: new TypeOrmForgetPasswordLoader(orm),
+    searchHistoryLoader: new TypeOrmSearchHistoryLoader(orm)
   };
 };
 

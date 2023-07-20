@@ -346,4 +346,9 @@ export interface Wording {
   readonly MOT_DE_PASSE: string;
   readonly CONFIRMER_MOT_DE_PASSE: string;
   readonly CONFIRM_CHANGE_PASSWORD: string;
+
+  // Historique de recherche
+  readonly HISTORIQUE_DE_RECHERECHE_TITRE: string;
+  readonly ETABLISSEMENT_CONSULTE: string;
+  readonly DATE: string;
 }

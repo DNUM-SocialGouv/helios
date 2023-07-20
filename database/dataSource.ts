@@ -38,7 +38,7 @@ import { AjouterBlocBudgetFinanceEJ1677495763184 } from "./migrations/1677495763
 import { AjouteHAD1680014929754 } from "./migrations/1680014929754-AjouteHAD";
 import { AjoutCapacitesSanitaireEJ1680076022425 } from "./migrations/1680076022425-AjoutCapacitesSanitaireEJ";
 import { AjoutTableUtilisateurRoleEtablissement1686646154737 } from "./migrations/1686646154737-AjoutTableUtilisateurRoleEtablissement";
-import { ModificationTableInstitution1688376404752 } from "./migrations/1688376404752-ModificationTableInstitution"
+import { ModificationTableInstitution1688376404752 } from "./migrations/1688376404752-ModificationTableInstitution";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "./models/ActivitéSanitaireEntitéJuridiqueModel";
 import { ActivitéSanitaireModel } from "./models/ActivitéSanitaireModel";
@@ -58,6 +58,7 @@ import { RechercheModel } from "./models/RechercheModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "./models/ReconnaissanceContractuelleSanitaireModel";
 import { RessourcesHumainesMédicoSocialModel } from "./models/RessourcesHumainesMédicoSocialModel";
 import { RoleModel } from "./models/RoleModel";
+import { SearchHistoryModel } from "./models/SearchHistoryModel";
 import { UtilisateurModel } from "./models/UtilisateurModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "./models/ÉquipementMatérielLourdSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "./models/ÉtablissementTerritorialIdentitéModel";
@@ -90,6 +91,7 @@ export default new DataSource({
     UtilisateurModel,
     RoleModel,
     InstitutionModel,
+    SearchHistoryModel,
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
