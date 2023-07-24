@@ -12,13 +12,13 @@ export function annéesManquantes(années: (number | string)[], annéesTotales: 
     .filter((année) => !années.map(Number).includes(année));
 }
 
-// format DD/MM/AAAA
+// format DD/MM/AAAA - HHhMM
 export function formatDateAndHours(date: string): string {
   const formated = new Date(date).toLocaleDateString("fr-FR", {
     day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit",
     minute: "2-digit",
   });
-  return (formated.replace(':', 'h'));
+  return (formated.replace(':', 'h').replace(' ', ' - '));
 }
 
 

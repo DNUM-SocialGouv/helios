@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 type SearchHistoryView = Readonly<{
     title: string;
     date: string;
+    finessNumber: string,
+    type: string,
+
 }>;
 
 export function useSearchHistory() {
@@ -47,6 +50,8 @@ export function useSearchHistory() {
                     const formattedElement: SearchHistoryView = {
                         title: getTitleType(elt.type) + ' - ' + elt.finessNumber + ' - ' + elt.title,
                         date: elt.date,
+                        finessNumber: elt.finessNumber,
+                        type: elt.type,
                     };
                     formattedHistory.push(formattedElement);
                 });

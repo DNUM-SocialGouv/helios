@@ -7,3 +7,7 @@
 .align table {
     display: table;
 }
+
+.align-text {
+    text-align: center;
+}
