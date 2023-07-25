@@ -110,7 +110,7 @@ export const Header = () => {
                   </div>
                 )}
               </div>
-              {status === "authenticated" && paths.CONNEXION !== router.pathname? (
+              {status === "authenticated" && paths.CONNEXION !== router.pathname ? (
                 <div className={styles["dropdown"]}>
                   <button
                     className={"fr-icon-account-line " + styles["account-logo"]}
@@ -123,7 +123,9 @@ export const Header = () => {
                   {displayMenu ? (
                     <ul className={styles["menu"]}>
                       <li className={styles["menu-item"]}>
-                        <button>Profil</button>
+                        <button onClick={() => {
+                          router.push("/profile");
+                        }}>Profil</button>
                       </li>
                       <li className={styles["menu-item"]}>
                         <button>Mot de passe</button>

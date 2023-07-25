@@ -430,4 +430,15 @@ export class WordingFr implements Wording {
   readonly MOT_DE_PASSE: string = "Nouveau mot de passe";
   readonly CONFIRMER_MOT_DE_PASSE: string = "Confirmation mot de passe";
   readonly CONFIRM_CHANGE_PASSWORD: string = "Confirmer la demande de réinitialisation";
+
+  //  Profile page
+  readonly USER_PROFILE: string = "Profil de l'utilisateur";
+  readonly FIRSTNAME: string = "Prénom";
+  readonly LASTNAME: string = "Nom";
+  readonly EMAIL: string = "Email";
+  readonly ORGANIZATION: string = "Organisme de rattachement";
+  readonly ROLE: string = "Profil";
+  readonly SUPER_ADMIN: string = "super admin";
+  readonly ADMIN: string = "admin régional";
+  readonly USER: string = "utilisateur";
 }

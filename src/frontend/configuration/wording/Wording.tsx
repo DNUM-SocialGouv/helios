@@ -341,4 +341,15 @@ export interface Wording {
   readonly MOT_DE_PASSE: string;
   readonly CONFIRMER_MOT_DE_PASSE: string;
   readonly CONFIRM_CHANGE_PASSWORD: string;
+
+  //  Profile page
+  readonly USER_PROFILE: string;
+  readonly FIRSTNAME: string;
+  readonly LASTNAME: string;
+  readonly EMAIL: string;
+  readonly ORGANIZATION: string;
+  readonly ROLE: string;
+  readonly SUPER_ADMIN: string;
+  readonly ADMIN: string;
+  readonly USER: string;
 }
