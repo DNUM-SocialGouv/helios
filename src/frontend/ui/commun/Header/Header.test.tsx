@@ -8,8 +8,13 @@ import { Header } from "./Header";
 jest.mock("next/router", () => require("next-router-mock"));
 const { paths, wording } = fakeFrontDependencies;
 const mockSession = {
-  name: "john",
-  email: "test@test.fr",
+  user: {
+    firstname: "Doe",
+    name: "john",
+    email: "test@test.fr",
+    role: "1",
+    institution: "ARS Auvergne-Rhône-Alpes"
+  },
   expires: "1235"
 }
 
