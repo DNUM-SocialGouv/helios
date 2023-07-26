@@ -6,7 +6,6 @@ from pandas import Series
 import sqlalchemy as db
 from sqlalchemy.engine import Engine, create_engine, Connection
 from sqlalchemy import select, Table
-from sqlalchemy.sql import FromClause
 
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 
