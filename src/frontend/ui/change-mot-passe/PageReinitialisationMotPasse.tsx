@@ -1,5 +1,5 @@
-import { FormulaireChangeMdp } from "./FormulaireChangeMdp";
-import { useChangeMdp } from "./useChangeMdp";
+import { FormulaireChangeMdp } from "./FormulaireReinitialisationMdp";
+import { useReinitialisationMdp } from "./useReinitialisationMdp";
 
 export const PageChangeMotPasse = () => {
 
@@ -12,7 +12,7 @@ export const PageChangeMotPasse = () => {
     annuler,
     errorMessage,
     isLoading
-  } = useChangeMdp();
+  } = useReinitialisationMdp();
 
   return (
     <main className="fr-container">
