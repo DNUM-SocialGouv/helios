@@ -9,7 +9,7 @@ export class TypeOrmForgetPasswordLoader implements ForgetPasswordLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
 
   async forgetPassword(email: string): Promise<Object | null> {
-    const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({email:email})
+    const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email })
     if (user) {
       const APP_URL = process.env["APP_BASE_URL"]
       const token = generateToken(email, '72h')
@@ -18,7 +18,7 @@ export class TypeOrmForgetPasswordLoader implements ForgetPasswordLoader {
       
           <p>Nous avons reçu une demande de réinitialisation de mot de passe pour votre compte.</p>
       
-          <p>Modifiez-le en cliquant sur ce lien (valide pendant 72 heure) :</p>
+          <p>Modifiez-le en cliquant sur ce lien (valide pendant 72 heures) :</p>
       
           <p><a href="${APP_URL}/change-mot-passe?loginToken=${token}">${APP_URL}/change-mot-passe?loginToken=${token}</a></p>
       
@@ -45,10 +45,10 @@ export class TypeOrmForgetPasswordLoader implements ForgetPasswordLoader {
           },
           subject: "Demande de réinitialisation de mot de passe Helios",
           html: html
-  
+
         }
       }
-  
+
       const response = await fetch('https://api.tipimail.com/v1/messages/send', {
         method: 'POST',
         headers: {
@@ -58,7 +58,7 @@ export class TypeOrmForgetPasswordLoader implements ForgetPasswordLoader {
         },
         body: JSON.stringify(body)
       });
-  
+
       return response
     }
     else {
