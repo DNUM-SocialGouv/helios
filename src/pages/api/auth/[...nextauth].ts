@@ -25,8 +25,8 @@ export default NextAuth({
           }
 
           const { utilisateur } = await authResponse.json();
-          
-          return {  ...utilisateur, id: utilisateur.code, };
+
+          return { ...utilisateur, id: utilisateur.code, };
         } catch (error) {
           return null;
         }
@@ -47,6 +47,10 @@ export default NextAuth({
     async session({ session }) {
       return session
     },
+  },
+  session: {
+    strategy: "jwt",
+    maxAge: 8 * 60 * 60
   },
   theme: {
     colorScheme: 'auto', // "auto" | "dark" | "light"
