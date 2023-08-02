@@ -85,7 +85,7 @@
     "dotenv-defaults": "^5.0.0",
     "husky": "^7.0.4",
     "joi": "^17.9.2",
-    "jsonwebtoken": "^9.0.0",
+    "jsonwebtoken": "^8.5.1",
     "next": "13",
     "next-auth": "^4.22.1",
     "node-fetch": "2.6.7",
