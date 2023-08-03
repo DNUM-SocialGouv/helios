@@ -55,7 +55,7 @@ export function useReinitialisationMdp() {
                 }
                 if (response.status === 400) {
                     if (data.err === "The password must be different from the current password") {
-                        setErrorMessage(wording.OLD_MOT_DE_PASSE);
+                        setErrorMessage(wording.OLD_MOT_DE_PASSE_REINITIALISATION);
                     } else {
                         setErrorMessage(wording.SOMETHING_WENT_WRONG);
                     }
