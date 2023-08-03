@@ -338,7 +338,12 @@ export interface Wording {
   // Changement de mot de passe
   readonly CHANGEMENT_MOT_PASSE_TITRE: string;
   readonly CHANGEMENT_MOT_PASSE_DESCRIPTION: string;
+  readonly OLD_MOT_DE_PASSE: string;
   readonly MOT_DE_PASSE: string;
   readonly CONFIRMER_MOT_DE_PASSE: string;
   readonly CONFIRM_CHANGE_PASSWORD: string;
+  readonly CONFIRM_UPDATE_PASSWORD: string;
+  readonly REINITIALISATION_MOT_PASSE_TITRE: string;
+  readonly REINITIALISATION_MOT_PASSE_DESCRIPTION: string;
+  readonly DIFFERENT_MOT_PASSE: string;
 }

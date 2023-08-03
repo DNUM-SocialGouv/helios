@@ -425,9 +425,14 @@ export class WordingFr implements Wording {
   readonly MOT_PASSE_OUBLIE_SUCCESS_MESSAGE: string = "Un courriel a été envoyé à ";
 
   // Changement de mot de passe
-  readonly CHANGEMENT_MOT_PASSE_TITRE: string = "Réinitialisation de votre mot de passe";
-  readonly CHANGEMENT_MOT_PASSE_DESCRIPTION: string = "Merci de renseigner votre nouveau mot de passe";
+  readonly CHANGEMENT_MOT_PASSE_TITRE: string = "Changement de mot de passe";
+  readonly CHANGEMENT_MOT_PASSE_DESCRIPTION: string = "Pour modifier votre mot de passe actuel, merci de renseigner les champs";
+  readonly OLD_MOT_DE_PASSE: string = "Ancien mot de passe";
   readonly MOT_DE_PASSE: string = "Nouveau mot de passe";
   readonly CONFIRMER_MOT_DE_PASSE: string = "Confirmation mot de passe";
   readonly CONFIRM_CHANGE_PASSWORD: string = "Confirmer la demande de réinitialisation";
+  readonly CONFIRM_UPDATE_PASSWORD: string = "Confirmer la modification du mot de passe";
+  readonly REINITIALISATION_MOT_PASSE_TITRE: string = "Réinitialisation de votre mot de passe";
+  readonly REINITIALISATION_MOT_PASSE_DESCRIPTION: string = "Merci de renseigner votre nouveau mot de passe";
+  readonly DIFFERENT_MOT_PASSE: string = "Le mot de passe doit être différent du mot de passe actuel";
 }

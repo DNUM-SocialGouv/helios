@@ -110,7 +110,7 @@ export const Header = () => {
                   </div>
                 )}
               </div>
-              {status === "authenticated" && paths.CONNEXION !== router.pathname? (
+              {status === "authenticated" && paths.CONNEXION !== router.pathname ? (
                 <div className={styles["dropdown"]}>
                   <button
                     className={"fr-icon-account-line " + styles["account-logo"]}
@@ -126,14 +126,19 @@ export const Header = () => {
                         <button>Profil</button>
                       </li>
                       <li className={styles["menu-item"]}>
-                        <button>Mot de passe</button>
+                        <button
+                          onClick={() => {
+                            router.push("/change-mot-passe");
+                          }}
+                        >Mot de passe</button>
                       </li>
                       <li className={styles["menu-item"]}>
                         <button
                           onClick={() => {
                             signOut({ callbackUrl: paths.CONNEXION });
                             setDisplayMenu(false)
-                          }}>
+                          }}
+                        >
                           {wording.DÉCONNEXION}
                         </button>
                       </li>
