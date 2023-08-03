@@ -56,7 +56,6 @@ export function useChangeMdp() {
                 setIsLoading(false)
                 const data = await response.json();
 
-
                 if (response.status === 200) {
                     setUpdated(true);
                     setErrorMessage("");
@@ -72,7 +71,6 @@ export function useChangeMdp() {
                             setErrorMessage(wording.INVALID_REQUEST);
                         }
                     }
-
                 }
             })
             .catch(() => {

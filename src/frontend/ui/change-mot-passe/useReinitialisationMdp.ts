@@ -45,14 +45,20 @@ export function useReinitialisationMdp() {
             headers: { "Content-Type": "application/json" },
             method: "POST",
         })
-            .then((response) => {
+            .then(async (response) => {
                 setIsLoading(false)
-                response.json()
+                const data = await response.json();
+
                 if (response.status === 200) {
+                    setErrorMessage("");
                     router.push("/")
                 }
                 if (response.status === 400) {
-                    setErrorMessage(wording.INVALID_REQUEST);
+                    if (data.err === "The password must be different from the current password") {
+                        setErrorMessage(wording.OLD_MOT_DE_PASSE);
+                    } else {
+                        setErrorMessage(wording.SOMETHING_WENT_WRONG);
+                    }
                 }
             })
             .catch(() => {
