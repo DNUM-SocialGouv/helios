@@ -39,6 +39,7 @@ import { AjouteHAD1680014929754 } from "./migrations/1680014929754-AjouteHAD";
 import { AjoutCapacitesSanitaireEJ1680076022425 } from "./migrations/1680076022425-AjoutCapacitesSanitaireEJ";
 import { AjoutTableUtilisateurRoleEtablissement1686646154737 } from "./migrations/1686646154737-AjoutTableUtilisateurRoleEtablissement";
 import { ModificationTableInstitution1688376404752 } from "./migrations/1688376404752-ModificationTableInstitution"
+import { AjoutTableFavori1691393817990 } from "./migrations/1691393817990-AjoutTableFavori";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "./models/ActivitéSanitaireEntitéJuridiqueModel";
 import { ActivitéSanitaireModel } from "./models/ActivitéSanitaireModel";
@@ -128,6 +129,7 @@ export default new DataSource({
     AjouterBlocBudgetFinanceEJ1677495763184,
     AjoutCapacitesSanitaireEJ1680076022425,
     AjouteHAD1680014929754,
+    AjoutTableFavori1691393817990,
     AjoutTableUtilisateurRoleEtablissement1686646154737,
     ModificationTableInstitution1688376404752,
   ],
