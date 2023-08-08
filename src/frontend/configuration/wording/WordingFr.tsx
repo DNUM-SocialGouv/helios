@@ -442,4 +442,6 @@ export class WordingFr implements Wording {
   readonly SUPER_ADMIN: string = "super admin";
   readonly ADMIN: string = "admin régional";
   readonly USER: string = "utilisateur";
+  readonly PROFILE: string = "Profil";
+
 }

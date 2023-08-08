@@ -353,4 +353,5 @@ export interface Wording {
   readonly SUPER_ADMIN: string;
   readonly ADMIN: string;
   readonly USER: string;
+  readonly PROFILE: string;
 }
