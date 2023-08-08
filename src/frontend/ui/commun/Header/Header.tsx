@@ -110,7 +110,7 @@ export const Header = () => {
                   </div>
                 )}
               </div>
-              {status === "authenticated" && paths.CONNEXION !== router.pathname? (
+              {status === "authenticated" && paths.CONNEXION !== router.pathname ? (
                 <div className={styles["dropdown"]}>
                   <button
                     className={"fr-icon-account-line " + styles["account-logo"]}
@@ -118,7 +118,7 @@ export const Header = () => {
                       setDisplayMenu(!displayMenu)
                     }}
                     ref={ref}>
-                    {data?.user?.name}
+                    {data?.user?.firstname} {data?.user?.name}
                   </button>
                   {displayMenu ? (
                     <ul className={styles["menu"]}>
