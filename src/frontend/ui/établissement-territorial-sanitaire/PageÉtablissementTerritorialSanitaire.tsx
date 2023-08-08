@@ -46,16 +46,14 @@ export const PageÉtablissementTerritorialSanitaire = ({ établissementTerritori
       <Head>
         <title>{établissementTerritorialSanitaireViewModel.titre}</title>
       </Head>
-      {rechercheViewModel && (
-        <> <Titre logo={LogoÉtablissementTerritorial} rechercheViewModel={rechercheViewModel}>{établissementTerritorialSanitaireViewModel.titre}</Titre>
-          <BlocIdentitéSanitaire établissementTerritorialSanitaireIdentitéViewModel={établissementTerritorialSanitaireViewModel.identitéViewModel} />
-          <BlocAutorisationEtCapacitéSanitaire
-            établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
-          />
-          <SeparatorHorizontal></SeparatorHorizontal>
-          <BlocActivitéSanitaire établissementTerritorialSanitaireActivitéViewModel={établissementTerritorialSanitaireViewModel.activitésViewModel} />
-        </>
-      )}
+      <> <Titre logo={LogoÉtablissementTerritorial} rechercheViewModel={rechercheViewModel}>{établissementTerritorialSanitaireViewModel.titre}</Titre>
+        <BlocIdentitéSanitaire établissementTerritorialSanitaireIdentitéViewModel={établissementTerritorialSanitaireViewModel.identitéViewModel} />
+        <BlocAutorisationEtCapacitéSanitaire
+          établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+        />
+        <SeparatorHorizontal></SeparatorHorizontal>
+        <BlocActivitéSanitaire établissementTerritorialSanitaireActivitéViewModel={établissementTerritorialSanitaireViewModel.activitésViewModel} />
+      </>
     </main>
   );
 };

@@ -6,7 +6,9 @@ export async function addToFavorisEndpoint(dependencies: Dependencies, finessNum
     try {
         const addToFavorisUseCase = new AddToFavorisUseCase(dependencies.favorisLoader);
 
-        return await addToFavorisUseCase.exécute(finessNumber, type, idUser, commune, departement, socialReason);
+        const userId = idUser.toString();
+
+        return await addToFavorisUseCase.exécute(finessNumber, type, userId, commune, departement, socialReason);
     } catch (error) {
         dependencies.logger.error(error);
         throw error;

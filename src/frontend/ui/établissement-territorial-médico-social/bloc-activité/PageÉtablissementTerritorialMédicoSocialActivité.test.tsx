@@ -1,4 +1,5 @@
 import { fireEvent, screen, within } from "@testing-library/react";
+import { SessionProvider } from "next-auth/react";
 
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
@@ -6,6 +7,12 @@ import { PageÉtablissementTerritorialMédicoSocial } from "../PageÉtablissemen
 import { ÉtablissementTerritorialMédicoSocialViewModel } from "../ÉtablissementTerritorialMédicoSocialViewModel";
 
 const { paths, wording } = fakeFrontDependencies;
+const mockSession = {
+  name: "john",
+  email: "test@test.fr",
+  user: { idUser: '1' },
+  expires: "1235"
+}
 
 describe("La page établissement territorial médico-social - bloc activité", () => {
   const établissementTerritorialMédicoSocial = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths);
@@ -20,7 +27,7 @@ describe("La page établissement territorial médico-social - bloc activité", (
     [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6, "TdB Perf", wording.TDB_PERF_TITLE],
   ])("affiche les informations l’indicateur %s", (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /></SessionProvider>);
 
     // THEN
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
@@ -54,7 +61,7 @@ describe("La page établissement territorial médico-social - bloc activité", (
     [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6, (1013).toLocaleString("fr"), "994", "990"],
   ])("affiche un tableau descriptif avec les trois années (%s)", (titreSection, identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);
 
     // THEN
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
@@ -208,7 +215,7 @@ describe("La page établissement territorial médico-social - bloc activité", (
         wording,
         paths
       );
-      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+      renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /></SessionProvider>);
       const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
       const indicateurs = within(activité).getAllByRole("listitem");
       const transcription = within(indicateurs[identifiant]).getByRole("button", { name: wording.AFFICHER_LA_TRANSCRIPTION });
@@ -343,7 +350,7 @@ describe("La page établissement territorial médico-social - bloc activité", (
         wording,
         paths
       );
-      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+      renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /></SessionProvider>);
       const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
       const indicateurs = within(activité).getAllByRole("listitem");
       const transcription = within(indicateurs[identifiant]).getByRole("button", { name: wording.AFFICHER_LA_TRANSCRIPTION });
@@ -371,7 +378,7 @@ describe("La page établissement territorial médico-social - bloc activité", (
     'affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails" (%s)',
     (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
       // GIVEN
-      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+      renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);
       const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
       const indicateurs = within(activité).getAllByRole("listitem");
       const détails = within(indicateurs[identifiant]).getByRole("button", { name: wording.DÉTAILS });
@@ -409,7 +416,7 @@ describe("La page établissement territorial médico-social - bloc activité", (
     [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6],
   ])('ferme l’info bulle après avoir cliqué sur le bouton "Fermer" (%s)', (titreSection, identifiant) => {
     // GIVEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
     const indicateurs = within(activité).getAllByRole("listitem");
     const détails = within(indicateurs[identifiant]).getByRole("button", { name: wording.DÉTAILS });
@@ -545,7 +552,7 @@ describe("La page établissement territorial médico-social - bloc activité", (
       );
 
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansActivité} />);
+      renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansActivité} /> </SessionProvider>);
 
       // THEN
       const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
@@ -672,7 +679,7 @@ describe("La page établissement territorial médico-social - bloc activité", (
     );
 
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansActivité} />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansActivité} /> </SessionProvider>);
 
     // THEN
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
@@ -695,7 +702,7 @@ describe("La page établissement territorial médico-social - bloc activité", (
     );
 
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansActivité} />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansActivité} /> </SessionProvider>);
 
     // THEN
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
