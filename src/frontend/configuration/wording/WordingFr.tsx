@@ -13,7 +13,7 @@ export class WordingFr implements Wording {
   readonly CANCEL: string = "Annuler";
   readonly SEND_EMAIL: string = "Confirmer la demande de renouvellement";
   readonly RESEND_EMAIL: string = "Envoyer à nouveau";
-  readonly BACK_TO_HOME: string = "Retour à l'accueil";
+  readonly BACK_TO_CONNEXION: string = "Retour à la page de connexion";
   readonly APPLY: string = "Appliquer";
 
 
@@ -22,6 +22,7 @@ export class WordingFr implements Wording {
   readonly EMAIL_NOT_VALID: string = "Veuillez saisir une adresse email valide";
   readonly SOMETHING_WENT_WRONG: string = "Quelque chose s'est mal passé. Veuillez réessayer ultérieurement";
   readonly INVALID_REQUEST: string = "veuillez vérifier vos données";
+  readonly INVALID_USER: string = "Compte non inscrit sur Helios";
 
 
   // Header
