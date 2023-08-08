@@ -11,7 +11,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     constructor(private readonly orm: Promise<DataSource>) { }
 
     async login(email: string, password: string): Promise<RésultatLogin> {
-        const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email.trim() });
+        const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email.trim().toLowerCase() });
         if (user) {
             const hashing = createHash('sha256');
             hashing.update(password);
