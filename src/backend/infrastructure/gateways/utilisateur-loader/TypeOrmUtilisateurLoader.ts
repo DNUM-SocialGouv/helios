@@ -21,4 +21,11 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
             return null
         }
     }
+
+    async checkIfEmailExists(email: string): Promise<boolean> {
+        const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email.trim() });
+        if (user) {
+            return true
+        } else return false;
+    }
 }
