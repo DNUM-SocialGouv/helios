@@ -11,7 +11,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     constructor(private readonly orm: Promise<DataSource>) { }
 
     async login(email: string, password: string): Promise<RésultatLogin> {
-        const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { email: email.trim() }, relations: ['institution'] });
+        const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { email: email.trim().toLowerCase() }, relations: ['institution'] });
         if (user) {
             const hashing = createHash('sha256');
             hashing.update(password);
@@ -20,5 +20,12 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         } else {
             return null
         }
+    }
+
+    async checkIfEmailExists(email: string): Promise<boolean> {
+        const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email.trim() });
+        if (user) {
+            return true
+        } else return false;
     }
 }

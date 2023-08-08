@@ -25,7 +25,7 @@ export function useMdpOublie() {
     const emailValueOnChange = (event: ChangeEvent<HTMLInputElement>) => {
         setState({
             ...state,
-            errorMessage : "",
+            errorMessage: "",
             emailValue: event.target.value,
         });
     };
@@ -40,12 +40,21 @@ export function useMdpOublie() {
             .then((response) => response.json())
             .then((data) => {
                 if (data.err) {
-                    setState({
-                        ...state,
-                        emailSent: false,
-                        isLoading: false,
-                        errorMessage: wording.INVALID_REQUEST,
-                    });
+                    if (data.err === 'Email does not exists') {
+                        setState({
+                            ...state,
+                            emailSent: false,
+                            isLoading: false,
+                            errorMessage: wording.INVALID_USER,
+                        });
+                    } else {
+                        setState({
+                            ...state,
+                            emailSent: false,
+                            isLoading: false,
+                            errorMessage: wording.INVALID_REQUEST,
+                        });
+                    }
                 } else {
                     setState({
                         ...state,
@@ -69,7 +78,7 @@ export function useMdpOublie() {
         if (isEmail(state.emailValue)) {
             envoyerEmailService(state.emailValue)
         } else {
-            setState({...state,errorMessage : 'Email invalide'})
+            setState({ ...state, errorMessage: 'Email invalide' })
         }
     };
 

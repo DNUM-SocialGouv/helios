@@ -6,6 +6,8 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  BeforeInsert,
+  BeforeUpdate,
 } from "typeorm";
 
 import { InstitutionModel } from "./InstitutionModel";
@@ -27,6 +29,12 @@ export class UtilisateurModel {
 
   @Column({ name: "ut_email" })
   public email!: string;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  setEmailToLowercase() {
+    this.email = this.email.toLowerCase();
+  }
 
   @ManyToOne(() => InstitutionModel)
   @JoinColumn({ name: "ut_institution", referencedColumnName: "id" })
