@@ -1,4 +1,5 @@
 import { screen, within } from "@testing-library/react";
+import { SessionProvider } from "next-auth/react";
 
 import PageDAccueil from "../../../../pages";
 import Accessibilité from "../../../../pages/accessibilite";
@@ -18,6 +19,12 @@ import { Breadcrumb } from "./Breadcrumb";
 
 jest.mock("next/router", () => require("next-router-mock"));
 const { paths, wording } = fakeFrontDependencies;
+const mockSession = {
+  name: "john",
+  email: "test@test.fr",
+  user: { idUser: '1' },
+  expires: "1235"
+}
 
 describe("Le fil d’Ariane (breadcrumb)", () => {
   it("ne s’affiche pas sur la page d’accueil", () => {
@@ -69,11 +76,13 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
     // WHEN
     renderFakeComponent(
       <>
-        <Breadcrumb />
-        <PageEntitéJuridique
-          entitéJuridiqueViewModel={entitéJuridiqueViewModel}
-          établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
-        />
+        <SessionProvider session={mockSession}>
+          <Breadcrumb />
+          <PageEntitéJuridique
+            entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+            établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
+          />
+        </SessionProvider>
       </>
     );
 
@@ -97,8 +106,10 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
     // WHEN
     renderFakeComponent(
       <>
-        <Breadcrumb />
-        <PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocialViewModel} />
+        <SessionProvider session={mockSession}>
+          <Breadcrumb />
+          <PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocialViewModel} />
+        </SessionProvider>
       </>
     );
 
@@ -126,8 +137,10 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
     // WHEN
     renderFakeComponent(
       <>
-        <Breadcrumb />
-        <PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />
+        <SessionProvider session={mockSession}>
+          <Breadcrumb />
+          <PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />
+        </SessionProvider>
       </>
     );
 

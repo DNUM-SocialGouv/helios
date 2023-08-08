@@ -43,19 +43,17 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, établissement
       <Head>
         <title>{entitéJuridiqueViewModel.titre}</title>
       </Head>
-      {rechercheViewModel && (
-        <>
-          <Catégorisation catégorisationViewModel={entitéJuridiqueViewModel.catégorisationViewModel} />
-          <Titre logo={LogoEntitéJuridique} rechercheViewModel={rechercheViewModel}>{entitéJuridiqueViewModel.titre}</Titre>
-          <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
-          <ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />
-          <BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={entitéJuridiqueViewModel.entitéJuridiqueAutorisationsCapacitesViewModel} />
-          <SeparatorHorizontal></SeparatorHorizontal>
-          <BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel} />
-          <SeparatorHorizontal></SeparatorHorizontal>
-          <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} />
-        </>
-      )}
+      <>
+        <Catégorisation catégorisationViewModel={entitéJuridiqueViewModel.catégorisationViewModel} />
+        <Titre logo={LogoEntitéJuridique} rechercheViewModel={rechercheViewModel}>{entitéJuridiqueViewModel.titre}</Titre>
+        <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
+        <ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />
+        <BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={entitéJuridiqueViewModel.entitéJuridiqueAutorisationsCapacitesViewModel} />
+        <SeparatorHorizontal></SeparatorHorizontal>
+        <BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel} />
+        <SeparatorHorizontal></SeparatorHorizontal>
+        <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} />
+      </>
     </main>
   );
 };

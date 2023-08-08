@@ -48,24 +48,22 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ établissementTerri
       <Head>
         <title>{établissementTerritorialViewModel.titre}</title>
       </Head>
-      {rechercheViewModel && (
-        <>
-          <Titre logo={LogoÉtablissementTerritorial} rechercheViewModel={rechercheViewModel}>{établissementTerritorialViewModel.titre}</Titre>
-          <BlocIdentitéMédicoSocial établissementTerritorialIdentitéMédicoSocialViewModel={établissementTerritorialViewModel.identitéViewModel} />
-          <BlocAutorisationEtCapacitéMédicoSocial
-            établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialViewModel.autorisationsViewModel}
-          />
-          <SeparatorHorizontal></SeparatorHorizontal>
-          <BlocActivitéMédicoSocial établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialViewModel.activitésViewModel} />
-          <SeparatorHorizontal></SeparatorHorizontal>
-          <BlocRessourcesHumainesMédicoSocial
-            établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialViewModel.ressourcesHumainesViewModel}
-          />
-          <SeparatorHorizontal></SeparatorHorizontal>
-          <BlocBudgetEtFinancesMédicoSocial
-            établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={établissementTerritorialViewModel.budgetEtFinancesViewModel} />
-        </>
-      )}
+      <>
+        <Titre logo={LogoÉtablissementTerritorial} rechercheViewModel={rechercheViewModel}>{établissementTerritorialViewModel.titre}</Titre>
+        <BlocIdentitéMédicoSocial établissementTerritorialIdentitéMédicoSocialViewModel={établissementTerritorialViewModel.identitéViewModel} />
+        <BlocAutorisationEtCapacitéMédicoSocial
+          établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialViewModel.autorisationsViewModel}
+        />
+        <SeparatorHorizontal></SeparatorHorizontal>
+        <BlocActivitéMédicoSocial établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialViewModel.activitésViewModel} />
+        <SeparatorHorizontal></SeparatorHorizontal>
+        <BlocRessourcesHumainesMédicoSocial
+          établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialViewModel.ressourcesHumainesViewModel}
+        />
+        <SeparatorHorizontal></SeparatorHorizontal>
+        <BlocBudgetEtFinancesMédicoSocial
+          établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={établissementTerritorialViewModel.budgetEtFinancesViewModel} />
+      </>
     </main>
   );
 };

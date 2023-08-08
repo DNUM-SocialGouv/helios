@@ -1,17 +1,24 @@
 import { fireEvent, screen, within } from "@testing-library/react";
+import { SessionProvider } from "next-auth/react";
 
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch, trimHtml } from "../../../test-helpers/testHelper";
 import { PageÉtablissementTerritorialMédicoSocial } from "../PageÉtablissementTerritorialMédicoSocial";
 
 const { paths, wording } = fakeFrontDependencies;
+const mockSession = {
+  name: "john",
+  email: "test@test.fr",
+  user: { idUser: '1' },
+  expires: "1235"
+}
 const établissementTerritorialMédicoSocial = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths);
 const identité = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité;
 
 describe("La page établissement territorial - bloc identité", () => {
   it("affiche le titre dans l’onglet", () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);
 
     // THEN
     expect(document.title).toBe(`ET - ${identité.numéroFinessÉtablissementTerritorial.value} - ${identité.raisonSocialeCourte.value}`);
@@ -19,7 +26,7 @@ describe("La page établissement territorial - bloc identité", () => {
 
   it('affiche le titre : "ET - numéro de FINESS - nom court de l’établissement"', () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);
 
     // THEN
     const titre = screen.getByRole("heading", {
@@ -31,7 +38,7 @@ describe("La page établissement territorial - bloc identité", () => {
 
   it("affiche le bouton pour imprimer", () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);
 
     // THEN
     const imprimer = screen.getByRole("button", { name: wording.TÉLÉCHARGER_EN_PDF });
@@ -41,7 +48,7 @@ describe("La page établissement territorial - bloc identité", () => {
   it("j’imprime quand je clique sur le bouton d’impression", () => {
     // GIVEN
     jest.spyOn(window, "print").mockImplementation();
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /></SessionProvider>);
     const imprimer = screen.getByRole("button", { name: wording.TÉLÉCHARGER_EN_PDF });
 
     // WHEN
@@ -53,7 +60,7 @@ describe("La page établissement territorial - bloc identité", () => {
 
   it("affiche le nom de l’établissement", () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -71,7 +78,7 @@ describe("La page établissement territorial - bloc identité", () => {
 
   it("affiche le numéro FINESS", () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -86,7 +93,7 @@ describe("La page établissement territorial - bloc identité", () => {
 
   it("affiche le SIRET", () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -101,7 +108,7 @@ describe("La page établissement territorial - bloc identité", () => {
 
   it("affiche l’adresse", () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -116,7 +123,7 @@ describe("La page établissement territorial - bloc identité", () => {
 
   it("affiche le téléphone et e-mail", () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -132,7 +139,7 @@ describe("La page établissement territorial - bloc identité", () => {
 
   it("affiche un lien pour naviguer vers l’entité juridique de rattachement", () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -148,7 +155,7 @@ describe("La page établissement territorial - bloc identité", () => {
 
   it("affiche la catégorie de l’établissement avec son libellé", () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -164,7 +171,7 @@ describe("La page établissement territorial - bloc identité", () => {
 
   it("affiche le mode de tarification", () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -180,7 +187,7 @@ describe("La page établissement territorial - bloc identité", () => {
 
   it("affiche le statut juridique de l’établissement", () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -204,7 +211,7 @@ describe("La page établissement territorial - bloc identité", () => {
     });
 
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMonoÉtablissement} />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMonoÉtablissement} /> </SessionProvider>);
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -228,7 +235,7 @@ describe("La page établissement territorial - bloc identité", () => {
     });
 
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMonoÉtablissement} />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMonoÉtablissement} /> </SessionProvider>);
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -253,7 +260,7 @@ describe("La page établissement territorial - bloc identité", () => {
       });
 
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialPrincipal} />);
+      renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialPrincipal} /> </SessionProvider>);
 
       // THEN
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -269,7 +276,7 @@ describe("La page établissement territorial - bloc identité", () => {
 
     it('affiche "Secondaire" et le numéro Finess de l’établissement principal si l’établissement n’est pas un établissement principal', () => {
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+      renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);
 
       // THEN
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -286,7 +293,7 @@ describe("La page établissement territorial - bloc identité", () => {
 
   it("affiche la date d’entrée en vigueur du CPOM", () => {
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -313,7 +320,7 @@ describe("La page établissement territorial - bloc identité", () => {
       });
 
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansTéléphone} />);
+      renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansTéléphone} /> </SessionProvider>);
 
       // THEN
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -332,7 +339,7 @@ describe("La page établissement territorial - bloc identité", () => {
       });
 
       // WHEN
-      renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansEMail} />);
+      renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansEMail} /> </SessionProvider>);
 
       // THEN
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -352,7 +359,7 @@ describe("La page établissement territorial - bloc identité", () => {
 
       // WHEN
       renderFakeComponent(
-        <PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansDateDEntréeEnVigueurDuCpom} />
+        <SessionProvider session={mockSession}> <PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansDateDEntréeEnVigueurDuCpom} /></SessionProvider>
       );
 
       // THEN
@@ -372,7 +379,7 @@ describe("La page établissement territorial - bloc identité", () => {
     });
 
     // WHEN
-    renderFakeComponent(<PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansAdresseVoie} />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialSansAdresseVoie} /></SessionProvider>);
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });

@@ -17,7 +17,6 @@
   text-transform: capitalize;
 }
 
-
 @media (max-width: 48em) {
   .tuile {
     align-self: center;

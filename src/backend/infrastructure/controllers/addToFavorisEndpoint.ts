@@ -5,8 +5,9 @@ export async function addToFavorisEndpoint(dependencies: Dependencies, finessNum
     : string): Promise<void> {
     try {
         const addToFavorisUseCase = new AddToFavorisUseCase(dependencies.favorisLoader);
+        const userId = idUser.toString();
 
-        return await addToFavorisUseCase.exécute(finessNumber, type, idUser, commune, departement, socialReason);
+        return await addToFavorisUseCase.exécute(finessNumber, type, userId, commune, departement, socialReason);
     } catch (error) {
         dependencies.logger.error(error);
         throw error;

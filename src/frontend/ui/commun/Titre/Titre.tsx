@@ -9,7 +9,7 @@ import styles from "./Titre.module.css";
 type TitreProps = Readonly<{
   logo: StaticImageData;
   children: ReactElement | string;
-  rechercheViewModel: RechercheViewModel;
+  rechercheViewModel: RechercheViewModel | undefined;
 }>;
 
 export const Titre = ({ logo, children, rechercheViewModel }: TitreProps) => {

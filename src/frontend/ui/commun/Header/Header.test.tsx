@@ -10,12 +10,17 @@ const { paths, wording } = fakeFrontDependencies;
 const mockSession = {
   name: "john",
   email: "test@test.fr",
+  user: { idUser: '1' },
   expires: "1235"
 }
 
 describe("En-tête de page", () => {
   it("affiche un lien pour accéder à la page d’accueil", () => {
     // WHEN
+    // @ts-ignore
+    jest.spyOn(global, "fetch").mockResolvedValue({
+      json: jest.fn().mockResolvedValue([]),
+    });
     renderFakeComponent(<SessionProvider session={mockSession}><Header /></SessionProvider>);
 
     // THEN
@@ -25,6 +30,10 @@ describe("En-tête de page", () => {
   });
 
   it("affiche un menu pour afficher la déconnexion et un pour le moteur de recherche en mobile", () => {
+    // @ts-ignore
+    jest.spyOn(global, "fetch").mockResolvedValue({
+      json: jest.fn().mockResolvedValue([]),
+    });
     // WHEN    
     renderFakeComponent(<SessionProvider session={mockSession}><Header /></SessionProvider>);
 
@@ -38,6 +47,10 @@ describe("En-tête de page", () => {
   });
 
   it("affiche le formulaire de recherche", () => {
+    // @ts-ignore
+    jest.spyOn(global, "fetch").mockResolvedValue({
+      json: jest.fn().mockResolvedValue([]),
+    });
     // WHEN
     renderFakeComponent(<SessionProvider session={mockSession}><Header /></SessionProvider>);
 
@@ -52,6 +65,10 @@ describe("En-tête de page", () => {
   });
 
   it("redirection vers la recherche quand on fait une recherche", () => {
+    // @ts-ignore
+    jest.spyOn(global, "fetch").mockResolvedValue({
+      json: jest.fn().mockResolvedValue([]),
+    });
     // GIVEN
     const router = mockRouter;
     const terme = "hospitalier";
@@ -71,6 +88,10 @@ describe("En-tête de page", () => {
 
   it("n’affiche pas le formulaire de recherche quand on est sur l’accueil", () => {
     // GIVEN
+    // @ts-ignore
+    jest.spyOn(global, "fetch").mockResolvedValue({
+      json: jest.fn().mockResolvedValue([]),
+    });
     const router = mockRouter;
     router.push(paths.ACCUEIL);
 
