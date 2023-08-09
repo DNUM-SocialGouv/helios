@@ -118,7 +118,7 @@ export const Header = () => {
                       setDisplayMenu(!displayMenu)
                     }}
                     ref={ref}>
-                    {data?.user?.name}
+                    {data?.user?.firstname} {data?.user?.name}
                   </button>
                   {displayMenu ? (
                     <ul className={styles["menu"]}>
