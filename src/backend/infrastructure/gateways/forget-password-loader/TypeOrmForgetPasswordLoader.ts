@@ -9,7 +9,7 @@ export class TypeOrmForgetPasswordLoader implements ForgetPasswordLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
 
   async forgetPassword(email: string): Promise<Object | null> {
-    const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email })
+    const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email.trim().toLowerCase() })
     if (user) {
       const APP_URL = process.env["APP_BASE_URL"]
       const token = generateToken(email, '72h')
