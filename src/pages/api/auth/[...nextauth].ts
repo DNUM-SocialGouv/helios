@@ -50,7 +50,7 @@ export default NextAuth({
   },
   session: {
     strategy: "jwt",
-    maxAge: 8 * 60 * 60
+    maxAge: 1 * 60 * 60
   },
   theme: {
     colorScheme: 'auto', // "auto" | "dark" | "light"
