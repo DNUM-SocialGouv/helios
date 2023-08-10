@@ -40,11 +40,13 @@ export default NextAuth({
         return {
           ...token,
           name: user.nom,
+          firstname: user.prenom
         }
       }
       return token
     },
-    async session({ session }) {
+    async session({ session, token }) {
+      session.user.firstname = token['firstname'] as string;
       return session
     },
   },
