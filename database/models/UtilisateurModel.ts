@@ -47,6 +47,9 @@ export class UtilisateurModel {
   @JoinColumn({ name: "ut_role", referencedColumnName: "id" })
   public role!: RoleModel;
 
+  @Column({ name: "ut_role" })
+  public roleId!: RoleModel;
+
   @Column({ name: "ut_password", nullable: true })
   public password!: string;
 

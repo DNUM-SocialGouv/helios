@@ -123,7 +123,9 @@ export const Header = () => {
                   {displayMenu ? (
                     <ul className={styles["menu"]}>
                       <li className={styles["menu-item"]}>
-                        <button>Profil</button>
+                        <button onClick={() => {
+                          router.push("/profile");
+                        }}>Profil</button>
                       </li>
                       <li className={styles["menu-item"]}>
                         <button>Mot de passe</button>
