@@ -17,7 +17,7 @@ export function useReinitialisationMdp() {
 
     const annuler = (event: MouseEvent) => {
         event.preventDefault();
-        router.push("/");
+        router.push("/connexion");
     };
 
     const passwordValueOnChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +51,7 @@ export function useReinitialisationMdp() {
 
                 if (response.status === 200) {
                     setErrorMessage("");
-                    router.push("/")
+                    router.push("/connexion")
                 }
                 if (response.status === 400) {
                     if (data.err === "The password must be different from the current password") {

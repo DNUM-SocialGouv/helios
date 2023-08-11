@@ -348,4 +348,5 @@ export interface Wording {
   readonly REINITIALISATION_MOT_PASSE_TITRE: string;
   readonly REINITIALISATION_MOT_PASSE_DESCRIPTION: string;
   readonly DIFFERENT_MOT_PASSE: string;
+  readonly WRONG_OLD_MOT_DE_PASSE: string;
 }

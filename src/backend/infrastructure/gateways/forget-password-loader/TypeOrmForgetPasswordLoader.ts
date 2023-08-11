@@ -20,7 +20,7 @@ export class TypeOrmForgetPasswordLoader implements ForgetPasswordLoader {
       
           <p>Modifiez-le en cliquant sur ce lien (valide pendant 72 heure) :</p>
       
-          <p><a href="${APP_URL}/reinitialisation-mot-passe?loginToken=${token}">${APP_URL}/reinitialisation-mot-passeloginToken=${token}</a></p>
+          <p><a href="${APP_URL}/reinitialisation-mot-passe?loginToken=${token}">${APP_URL}/reinitialisation-mot-passe?loginToken=${token}</a></p>
       
           <p>Si le lien de réinitialisation ne s'affiche pas, copiez et collez-le dans votre navigateur.</p>
       

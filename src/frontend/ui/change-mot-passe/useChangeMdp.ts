@@ -63,7 +63,7 @@ export function useChangeMdp() {
                 if (response.status === 400) {
                     setUpdated(false);
                     if (data.err === "wrong old password") {
-                        setErrorMessage(wording.OLD_MOT_DE_PASSE);
+                        setErrorMessage(wording.WRONG_OLD_MOT_DE_PASSE);
                     } else {
                         if (data.err === "The password must be different from the current password") {
                             setErrorMessage(wording.DIFFERENT_MOT_PASSE);

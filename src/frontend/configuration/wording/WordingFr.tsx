@@ -437,4 +437,5 @@ export class WordingFr implements Wording {
   readonly REINITIALISATION_MOT_PASSE_TITRE: string = "Réinitialisation de votre mot de passe";
   readonly REINITIALISATION_MOT_PASSE_DESCRIPTION: string = "Merci de renseigner votre nouveau mot de passe";
   readonly DIFFERENT_MOT_PASSE: string = "Le mot de passe doit être différent du mot de passe actuel";
+  readonly WRONG_OLD_MOT_DE_PASSE: string = "Ancien mot de passe erroné"
 }

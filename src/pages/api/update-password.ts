@@ -39,6 +39,9 @@ export default async function handler(request: NextApiRequest, response: NextApi
             if (result === 'same password') {
                 return response.status(400).send({ 'err': 'The password must be different from the current password' })
             }
+            if (result === 'wrong password') {
+                return response.status(400).send({ 'err': 'wrong old password' })
+            }
             return response.status(400).json({ 'err': 'error occured while changing password' })
         }
     } catch (error) {
