@@ -438,4 +438,17 @@ export class WordingFr implements Wording {
   readonly REINITIALISATION_MOT_PASSE_DESCRIPTION: string = "Merci de renseigner votre nouveau mot de passe";
   readonly DIFFERENT_MOT_PASSE: string = "Le mot de passe doit être différent du mot de passe actuel";
   readonly WRONG_OLD_MOT_DE_PASSE: string = "Ancien mot de passe erroné"
+
+  //  Profile page
+  readonly USER_PROFILE: string = "Profil de l'utilisateur";
+  readonly FIRSTNAME: string = "Prénom";
+  readonly LASTNAME: string = "Nom";
+  readonly EMAIL: string = "Email";
+  readonly ORGANIZATION: string = "Organisme de rattachement";
+  readonly ROLE: string = "Profil";
+  readonly SUPER_ADMIN: string = "super admin";
+  readonly ADMIN: string = "admin régional";
+  readonly USER: string = "utilisateur";
+  readonly PROFILE: string = "Profil";
+
 }
