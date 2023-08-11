@@ -44,6 +44,21 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
   });
 
   useEffect(resizeChartOnPrint, []);
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      window.onpageshow = function (event) {
+        if (event.persisted) {
+          window.location.reload();
+        }
+      };
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.addEventListener('beforeunload', handleBeforeUnload);
+    }
+  }, []);
 
   return (
     <SessionProvider session={session}>
