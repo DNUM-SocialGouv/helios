@@ -14,7 +14,9 @@ export function useChangeMdp() {
     const [confirmPasswordValue, setConfirmPasswordValue] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [updated, setUpdated] = useState(false);
+    const [validToken, setValidToken] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [isChecking, setIsChecking] = useState(true);
 
     const { data } = useSession();
 
@@ -80,16 +82,38 @@ export function useChangeMdp() {
             });
     }
 
+    const checkTokenService = async (token: string) => {
+        fetch("/api/check-token", {
+            body: JSON.stringify({ token }),
+            headers: { "Content-Type": "application/json" },
+            method: "POST",
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setIsChecking(false);
+                if (data.info.email) {
+                    setValidToken(true);
+                }
+            })
+            .catch(() => {
+                setIsChecking(false);
+                setValidToken(false);
+            });
+    }
+
 
     return {
         passwordValue,
         confirmPasswordValue,
         oldPasswordValue,
+        validToken,
+        isChecking,
         changePassword,
         passwordValueOnChange,
         oldPasswordValueOnChange,
         confirmPasswordValueOnChange,
         annuler,
+        checkTokenService,
         errorMessage,
         updated,
         isLoading

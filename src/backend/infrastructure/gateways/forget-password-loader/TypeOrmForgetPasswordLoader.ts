@@ -18,7 +18,7 @@ export class TypeOrmForgetPasswordLoader implements ForgetPasswordLoader {
       
           <p>Nous avons reçu une demande de réinitialisation de mot de passe pour votre compte.</p>
       
-          <p>Modifiez-le en cliquant sur ce lien (valide pendant 72 heure) :</p>
+          <p>Modifiez-le en cliquant sur ce lien (valide pendant 72 heures) :</p>
       
           <p><a href="${APP_URL}/reinitialisation-mot-passe?loginToken=${token}">${APP_URL}/reinitialisation-mot-passe?loginToken=${token}</a></p>
       

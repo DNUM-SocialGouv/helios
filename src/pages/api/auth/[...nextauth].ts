@@ -53,6 +53,10 @@ export default NextAuth({
       return session
     },
   },
+  session: {
+    strategy: "jwt",
+    maxAge: 1 * 60 * 60
+  },
   theme: {
     colorScheme: 'auto', // "auto" | "dark" | "light"
     brandColor: '', // Hex color code #33FF5D
