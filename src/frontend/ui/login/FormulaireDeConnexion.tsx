@@ -3,8 +3,8 @@ import Link from "next/link";
 import React, { useState, FormEvent } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
-import styles from "./Connexion.module.css";
 import isEmail from "../commun/validation";
+import styles from "./Connexion.module.css";
 
 
 const formsLink = "https://forms.office.com/e/ERQ9ck5sSc"

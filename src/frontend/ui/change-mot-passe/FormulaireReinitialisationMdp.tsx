@@ -20,8 +20,8 @@ export const FormulaireChangeMdp = ({ annuler, changePassword, confirmPasswordVa
 
   return (
     <div className={styles["container"]}>
-      <h1>{wording.CHANGEMENT_MOT_PASSE_TITRE}</h1>
-      <p>{wording.CHANGEMENT_MOT_PASSE_DESCRIPTION}</p>
+      <h1>{wording.REINITIALISATION_MOT_PASSE_TITRE}</h1>
+      <p>{wording.REINITIALISATION_MOT_PASSE_DESCRIPTION}</p>
       <div className="fr-grid-row fr-grid-row--center fr-mt-8w">
         <form className="fr-col-12 fr-col-md-8 fr-mt-5w" onSubmit={changePassword} >
           {errorMessage && <div className={"fr-mb-5w " + styles["error"]}> {errorMessage} </div>}

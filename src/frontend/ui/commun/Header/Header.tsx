@@ -128,14 +128,19 @@ export const Header = () => {
                         }}>Profil</button>
                       </li>
                       <li className={styles["menu-item"]}>
-                        <button>Mot de passe</button>
+                        <button
+                          onClick={() => {
+                            router.push("/change-mot-passe");
+                          }}
+                        >Mot de passe</button>
                       </li>
                       <li className={styles["menu-item"]}>
                         <button
                           onClick={() => {
                             signOut({ callbackUrl: paths.CONNEXION });
                             setDisplayMenu(false)
-                          }}>
+                          }}
+                        >
                           {wording.DÉCONNEXION}
                         </button>
                       </li>
