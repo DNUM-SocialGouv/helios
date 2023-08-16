@@ -30,7 +30,7 @@ export function useSearchHistory() {
     }
 
     const saveSearchHistory = (title: string, finessNumber: string, type: string) => {
-        fetch("/api/history/save-search-history", {
+        fetch("/api/history/add", {
             body: JSON.stringify({ title, idUser, finessNumber, type }),
             headers: { "Content-Type": "application/json" },
             method: "POST",
@@ -39,7 +39,7 @@ export function useSearchHistory() {
 
     const getAllSearchHistory = (idUser: string) => {
         const params = { idUser: idUser };
-        fetch("/api/history/get-user-search-history/?" + (new URLSearchParams(params)).toString(), {
+        fetch("/api/history/get/?" + (new URLSearchParams(params)).toString(), {
             headers: { "Content-Type": "application/json" },
             method: "GET",
         })

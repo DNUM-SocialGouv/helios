@@ -34,7 +34,7 @@ export function useFavoris() {
     }
 
     const addToFavoris = (favorite: any) => {
-        fetch("/api/favoris/add-to-favoris", {
+        fetch("/api/favoris/add", {
             body: JSON.stringify({ finessNumber: favorite.numéroFiness, type: favorite.type, idUser, commune: favorite.commune, departement: favorite.departement, socialReason: favorite.socialReason }),
             headers: { "Content-Type": "application/json" },
             method: "POST",
@@ -47,7 +47,7 @@ export function useFavoris() {
     }
 
     const removeFromFavoris = (favorite: any) => {
-        fetch("/api/favoris/remove-from-favoris", {
+        fetch("/api/favoris/remove", {
             body: JSON.stringify({ idUser, finessNumber: favorite.numéroFiness }),
             headers: { "Content-Type": "application/json" },
             method: "POST",
@@ -61,7 +61,7 @@ export function useFavoris() {
 
     const getAllFavoris = (idUser: string) => {
         const params = { idUser: idUser };
-        fetch("/api/favoris/get-all-favoris/?" + (new URLSearchParams(params)).toString(), {
+        fetch("/api/favoris/get/?" + (new URLSearchParams(params)).toString(), {
             headers: { "Content-Type": "application/json" },
             method: "GET",
         })

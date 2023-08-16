@@ -132,18 +132,6 @@ export const Header = () => {
                   {displayMenu ? (
                     <ul className={styles["menu"]}>
                       <li className={styles["menu-item"]}>
-                        <button onClick={() => {
-                          router.push("/profile");
-                        }}>Profil</button>
-                      </li>
-                      <li className={styles["menu-item"]}>
-                        <button
-                          onClick={() => {
-                            router.push("/change-mot-passe");
-                          }}
-                        >Mot de passe</button>
-                      </li>
-                      <li className={styles["menu-item"]}>
                         <button
                           onClick={() => {
                             router.push("/favoris");
@@ -158,6 +146,18 @@ export const Header = () => {
                           }}>
                           Historique
                         </button>
+                      </li>
+                      <li className={styles["menu-item"]}>
+                        <button onClick={() => {
+                          router.push("/profile");
+                        }}>Profil</button>
+                      </li>
+                      <li className={styles["menu-item"]}>
+                        <button
+                          onClick={() => {
+                            router.push("/change-mot-passe");
+                          }}
+                        >Mot de passe</button>
                       </li>
                       <li className={styles["menu-item"]}>
                         <button
