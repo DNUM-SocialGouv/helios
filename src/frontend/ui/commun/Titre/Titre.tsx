@@ -22,7 +22,7 @@ export const Titre = ({ logo, children, rechercheViewModel }: TitreProps) => {
       <h1>{children}</h1>
       <StarButton favorite={rechercheViewModel} />
       <div>
-        <button className="fr-btn fr-btn--secondary fr-fi-download-line fr-btn--icon-left" onClick={imprimer} title={wording.TÉLÉCHARGER_EN_PDF} type="button">
+        <button className="fr-btn fr-btn--secondary fr-fi-download-line fr-btn--icon-left" name={wording.TÉLÉCHARGER_EN_PDF} onClick={imprimer} title={wording.TÉLÉCHARGER_EN_PDF} type="button">
           {wording.TÉLÉCHARGER_EN_PDF}
         </button>
       </div>

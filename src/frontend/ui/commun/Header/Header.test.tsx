@@ -19,8 +19,14 @@ const mockSession = {
   expires: "1235"
 }
 
+
+
 describe("En-tête de page", () => {
   it("affiche un lien pour accéder à la page d’accueil", () => {
+    // @ts-ignore
+    jest.spyOn(global, "fetch").mockResolvedValue({
+      json: jest.fn().mockResolvedValue([]),
+    });
     // WHEN
     // @ts-ignore
     jest.spyOn(global, "fetch").mockResolvedValue({
@@ -99,6 +105,10 @@ describe("En-tête de page", () => {
     });
     const router = mockRouter;
     router.push(paths.ACCUEIL);
+    // @ts-ignore
+    jest.spyOn(global, "fetch").mockResolvedValue({
+      json: jest.fn().mockResolvedValue([]),
+    });
 
     // WHEN
     renderFakeComponent(<SessionProvider session={mockSession}><Header /></SessionProvider>);
