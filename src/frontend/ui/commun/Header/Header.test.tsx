@@ -12,9 +12,11 @@ const mockSession = {
   email: "test@test.fr",
   user: {
     idUser: '1',
+    firstname: "Doe",
     name: "john",
     email: "test@test.fr",
-    firstname: "Doe",
+    role: "1",
+    institution: "ARS Auvergne-Rhône-Alpes"
   },
   expires: "1235"
 }

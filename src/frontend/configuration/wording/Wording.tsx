@@ -344,6 +344,8 @@ export interface Wording {
   // Changement de mot de passe
   readonly CHANGEMENT_MOT_PASSE_TITRE: string;
   readonly CHANGEMENT_MOT_PASSE_DESCRIPTION: string;
+  readonly OLD_MOT_DE_PASSE_REINITIALISATION: string;
+  readonly OLD_MOT_DE_PASSE: string;
   readonly MOT_DE_PASSE: string;
   readonly CONFIRMER_MOT_DE_PASSE: string;
   readonly CONFIRM_CHANGE_PASSWORD: string;
@@ -352,4 +354,21 @@ export interface Wording {
   readonly HISTORIQUE_DE_RECHERECHE_TITRE: string;
   readonly ETABLISSEMENT_CONSULTE: string;
   readonly DATE: string;
+  readonly CONFIRM_UPDATE_PASSWORD: string;
+  readonly REINITIALISATION_MOT_PASSE_TITRE: string;
+  readonly REINITIALISATION_MOT_PASSE_DESCRIPTION: string;
+  readonly DIFFERENT_MOT_PASSE: string;
+  readonly WRONG_OLD_MOT_DE_PASSE: string;
+
+  //  Profile page
+  readonly USER_PROFILE: string;
+  readonly FIRSTNAME: string;
+  readonly LASTNAME: string;
+  readonly EMAIL: string;
+  readonly ORGANIZATION: string;
+  readonly ROLE: string;
+  readonly SUPER_ADMIN: string;
+  readonly ADMIN: string;
+  readonly USER: string;
+  readonly PROFILE: string;
 }

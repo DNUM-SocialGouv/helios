@@ -14,6 +14,7 @@ import "@gouvfr/dsfr/dist/component/button/button.min.css";
 import "@gouvfr/dsfr/dist/component/input/input.min.css";
 import "@gouvfr/dsfr/dist/component/search/search.min.css";
 import "@gouvfr/dsfr/dist/component/badge/badge.min.css";
+import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 import "../frontend/ui/commun/global.css";
 
 import { DependenciesProvider } from "../frontend/ui/commun/contexts/useDependencies";
@@ -44,6 +45,21 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
   });
 
   useEffect(resizeChartOnPrint, []);
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      window.onpageshow = function (event) {
+        if (event.persisted) {
+          window.location.reload();
+        }
+      };
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.addEventListener('beforeunload', handleBeforeUnload);
+    }
+  }, []);
 
   return (
     <SessionProvider session={session}>

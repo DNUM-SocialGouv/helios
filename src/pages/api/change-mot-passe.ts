@@ -30,9 +30,12 @@ export default async function handler(request: NextApiRequest, response: NextApi
     }
 
     const result = await changePasswordEndpoint(dependencies, loginToken, password);
-    if (result) {
+    if (result === 'user updated') {
       return response.status(200).json(result);
     } else {
+      if (result === 'same password') {
+        return response.status(400).send({ 'err': 'The password must be different from the current password' })
+      }
       return response.status(400).json({ 'err': 'error occured while changing password' })
     }
   } catch (error) {

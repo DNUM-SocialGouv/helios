@@ -132,10 +132,16 @@ export const Header = () => {
                   {displayMenu ? (
                     <ul className={styles["menu"]}>
                       <li className={styles["menu-item"]}>
-                        <button>Profil</button>
+                        <button onClick={() => {
+                          router.push("/profile");
+                        }}>Profil</button>
                       </li>
                       <li className={styles["menu-item"]}>
-                        <button>Mot de passe</button>
+                        <button
+                          onClick={() => {
+                            router.push("/change-mot-passe");
+                          }}
+                        >Mot de passe</button>
                       </li>
                       <li className={styles["menu-item"]}>
                         <button
@@ -158,7 +164,8 @@ export const Header = () => {
                           onClick={() => {
                             signOut({ callbackUrl: paths.CONNEXION });
                             setDisplayMenu(false)
-                          }}>
+                          }}
+                        >
                           {wording.DÉCONNEXION}
                         </button>
                       </li>
