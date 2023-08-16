@@ -14,7 +14,12 @@ const { paths, wording } = fakeFrontDependencies;
 const mockSession = {
   name: "john",
   email: "test@test.fr",
-  user: { idUser: '1', firstname: 'Doe' },
+  user: {
+    idUser: '1',
+    firstname: 'Doe',
+    role: 'admin',
+    institution: {},
+  },
   expires: "1235"
 }
 

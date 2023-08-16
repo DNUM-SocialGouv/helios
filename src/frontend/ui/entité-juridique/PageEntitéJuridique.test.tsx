@@ -1,21 +1,30 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 import { SessionProvider } from "next-auth/react";
 
+import { RésultatDeRechercheTestBuilder } from "../../../backend/test-builder/RésultatDeRechercheTestBuilder";
 import { EntitéJuridiqueViewModelTestBuilder } from "../../test-helpers/test-builder/EntitéJuridiqueViewModelTestBuilder";
 import { EtablissementsTerritoriauxRattachésTestBuilder } from "../../test-helpers/test-builder/EtablissementsTerritoriauxRattachésTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../test-helpers/testHelper";
+import { RechercheViewModel } from "../home/RechercheViewModel";
 import { PageEntitéJuridique } from "./PageEntitéJuridique";
 
-const { wording } = fakeFrontDependencies;
+const { wording, paths } = fakeFrontDependencies;
 const mockSession = {
   name: "john",
   email: "test@test.fr",
-  user: { idUser: '1' },
+  user: {
+    idUser: '1',
+    firstname: 'Doe',
+    role: 'admin',
+    institution: {},
+  },
   expires: "1235"
 }
 const entitéJuridiqueViewModel = EntitéJuridiqueViewModelTestBuilder.crée(wording);
 const entitéJuridique = EntitéJuridiqueViewModelTestBuilder.entitéJuridique;
 const établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
+const result = RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({ numéroFiness: "000000000" });
+const rechercheViewModel = new RechercheViewModel(result, paths);
 
 describe("La page Entité Juridique", () => {
   it("affiche le titre court dans l’onglet", () => {
@@ -24,6 +33,7 @@ describe("La page Entité Juridique", () => {
       <SessionProvider session={mockSession}>
         <PageEntitéJuridique
           entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+          rechercheViewModel={rechercheViewModel}
           établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
         />
       </SessionProvider>
@@ -39,6 +49,7 @@ describe("La page Entité Juridique", () => {
       <SessionProvider session={mockSession}>
         <PageEntitéJuridique
           entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+          rechercheViewModel={rechercheViewModel}
           établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
         />
       </SessionProvider>
@@ -58,6 +69,7 @@ describe("La page Entité Juridique", () => {
       <SessionProvider session={mockSession}>
         <PageEntitéJuridique
           entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+          rechercheViewModel={rechercheViewModel}
           établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
         />
       </SessionProvider>
@@ -75,6 +87,7 @@ describe("La page Entité Juridique", () => {
       <SessionProvider session={mockSession}>
         <PageEntitéJuridique
           entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+          rechercheViewModel={rechercheViewModel}
           établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
         />
       </SessionProvider>
@@ -94,6 +107,7 @@ describe("La page Entité Juridique", () => {
       <SessionProvider session={mockSession}>
         <PageEntitéJuridique
           entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+          rechercheViewModel={rechercheViewModel}
           établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
         />
       </SessionProvider>
@@ -110,6 +124,7 @@ describe("La page Entité Juridique", () => {
       <SessionProvider session={mockSession}>
         <PageEntitéJuridique
           entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+          rechercheViewModel={rechercheViewModel}
           établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
         />
       </SessionProvider>
@@ -126,6 +141,7 @@ describe("La page Entité Juridique", () => {
       <SessionProvider session={mockSession}>
         <PageEntitéJuridique
           entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+          rechercheViewModel={rechercheViewModel}
           établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
         />
       </SessionProvider>
@@ -142,6 +158,7 @@ describe("La page Entité Juridique", () => {
       <SessionProvider session={mockSession}>
         <PageEntitéJuridique
           entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+          rechercheViewModel={rechercheViewModel}
           établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
         />
       </SessionProvider>
@@ -159,6 +176,7 @@ describe("La page Entité Juridique", () => {
         <SessionProvider session={mockSession}>
           <PageEntitéJuridique
             entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+            rechercheViewModel={rechercheViewModel}
             établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
           />
         </SessionProvider>
@@ -184,6 +202,7 @@ describe("La page Entité Juridique", () => {
         <SessionProvider session={mockSession}>
           <PageEntitéJuridique
             entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+            rechercheViewModel={rechercheViewModel}
             établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
           />
         </SessionProvider>
@@ -206,6 +225,7 @@ describe("La page Entité Juridique", () => {
         <SessionProvider session={mockSession}>
           <PageEntitéJuridique
             entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+            rechercheViewModel={rechercheViewModel}
             établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
           />
         </SessionProvider>
@@ -228,6 +248,7 @@ describe("La page Entité Juridique", () => {
         <SessionProvider session={mockSession}>
           <PageEntitéJuridique
             entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+            rechercheViewModel={rechercheViewModel}
             établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
           />
         </SessionProvider>
@@ -250,6 +271,7 @@ describe("La page Entité Juridique", () => {
         <SessionProvider session={mockSession}>
           <PageEntitéJuridique
             entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+            rechercheViewModel={rechercheViewModel}
             établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
           />
         </SessionProvider>
@@ -272,6 +294,7 @@ describe("La page Entité Juridique", () => {
         <SessionProvider session={mockSession}>
           <PageEntitéJuridique
             entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+            rechercheViewModel={rechercheViewModel}
             établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
           />
         </SessionProvider>
@@ -303,6 +326,7 @@ describe("La page Entité Juridique", () => {
         <SessionProvider session={mockSession}>
           <PageEntitéJuridique
             entitéJuridiqueViewModel={entitéJuridiqueViewModelAvecUneValeurVide}
+            rechercheViewModel={rechercheViewModel}
             établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
           />
         </SessionProvider>
@@ -329,6 +353,7 @@ describe("La page Entité Juridique", () => {
         <SessionProvider session={mockSession}>
           <PageEntitéJuridique
             entitéJuridiqueViewModel={entitéJuridiqueViewModelAvecUneValeurVide}
+            rechercheViewModel={rechercheViewModel}
             établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
           />
         </SessionProvider>
