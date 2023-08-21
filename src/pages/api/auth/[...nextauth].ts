@@ -39,6 +39,7 @@ export default NextAuth({
         return {
           ...token,
           name: user.nom,
+          idUser: user.code,
           firstname: user.prenom,
           role: user.roleId,
           institution: user.institution
@@ -47,6 +48,7 @@ export default NextAuth({
       return token
     },
     async session({ session, token }) {
+      session.user.idUser = token['idUser'] as string;
       session.user.firstname = token['firstname'] as string;
       session.user.role = token['role'] as string;
       session.user.institution = token['institution'] as string;

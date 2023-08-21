@@ -1,7 +1,6 @@
-import Image from "next/image";
-
 import { useDependencies } from "../commun/contexts/useDependencies";
 import "@gouvfr/dsfr/dist/component/tile/tile.min.css";
+import { Establishment } from "./Establishment";
 import styles from "./Recherche.module.css";
 import { RechercheViewModel } from "./RechercheViewModel";
 
@@ -30,19 +29,7 @@ export const RésultatsDeRecherche = ({
       <ul className={"fr-grid-row fr-grid-row--gutters " + styles["tuiles"]}>
         {résultats.map((résultatViewModel, index) => (
           <li className="fr-col-3" key={résultatViewModel.numéroFiness + index}>
-            <div className="fr-tile fr-enlarge-link fr-tile--horizontal-md">
-              <div className="fr-tile__body">
-                <h2 className="fr-tile__title">
-                  <a className="fr-tile__link" href={résultatViewModel.construisLeLien()}>
-                    {résultatViewModel.titre}
-                  </a>
-                </h2>
-                <p className={"fr-tile__desc " + styles["description"]}>{résultatViewModel.départementEtCommune}</p>
-              </div>
-              <div className={styles["tuile"]}>
-                <Image alt="" height="40" src={résultatViewModel.afficheLeLogo()} width="40" />
-              </div>
-            </div>
+            <Establishment résultatViewModel={résultatViewModel} />
           </li>
         ))}
       </ul>

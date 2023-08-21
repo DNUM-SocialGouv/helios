@@ -3,8 +3,10 @@ import * as Sentry from "@sentry/nextjs";
 import { ChangePasswordLoader } from "../métier/gateways/ChangePasswordLoader";
 import { EntitéJuridiqueLoader } from "../métier/gateways/EntitéJuridiqueLoader";
 import { EnvironmentVariables } from "../métier/gateways/EnvironmentVariables";
+import { FavorisLoader } from "../métier/gateways/FavorisLoader";
 import { Logger } from "../métier/gateways/Logger";
 import { RechercheLoader } from "../métier/gateways/RechercheLoader";
+import { SearchHistoryLoader } from "../métier/gateways/SearchHistoryLoader";
 import { UtilisateurLoader } from "../métier/gateways/UtilisateurLoader";
 import { ÉtablissementTerritorialMédicoSocialLoader } from "../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader";
 import { ÉtablissementTerritorialRattachéLoader } from "../métier/gateways/ÉtablissementTerritorialRattachéLoader";
@@ -13,10 +15,12 @@ import { TypeOrmChangePasswordLoader } from "./gateways/change-password-loader/T
 import { dotEnvConfig } from "./gateways/dot-env/dotEnvConfig";
 import { TypeOrmEntitéJuridiqueLoader } from "./gateways/entité-juridique-loader/TypeOrmEntitéJuridiqueLoader";
 import { NodeEnvironmentVariables } from "./gateways/environnement-variables/NodeEnvironmentVariables";
+import { TypeOrmFavorisLoader } from "./gateways/favoris-loader/TypeOrmFavorisLoader";
 import { TypeOrmForgetPasswordLoader } from "./gateways/forget-password-loader/TypeOrmForgetPasswordLoader";
 import { ConsoleLogger } from "./gateways/logger/ConsoleLogger";
 import { typeOrmOrm } from "./gateways/orm/typeOrmOrm";
 import { TypeOrmRechercheLoader } from "./gateways/recherche-loader/TypeOrmRechercheLoader";
+import { TypeOrmSearchHistoryLoader } from "./gateways/search-history-loader/TypeOrmSearchHistoryLoader";
 import { TypeOrmUtilisateurLoader } from "./gateways/utilisateur-loader/TypeOrmUtilisateurLoader";
 import { TypeOrmÉtablissementTerritorialMédicoSocialLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialMédicoSocialLoader";
 import { TypeOrmÉtablissementTerritorialRattachéLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialRattachéLoader";
@@ -31,8 +35,10 @@ export type Dependencies = Readonly<{
   établissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader;
   établissementTerritorialRattachéLoader: ÉtablissementTerritorialRattachéLoader;
   établissementTerritorialSanitaireLoader: ÉtablissementTerritorialSanitaireLoader;
+  favorisLoader: FavorisLoader;
   changePasswordLoader: ChangePasswordLoader;
-  forgetPasswordLoader : TypeOrmForgetPasswordLoader;
+  forgetPasswordLoader: TypeOrmForgetPasswordLoader;
+  searchHistoryLoader: SearchHistoryLoader
 }>;
 
 const createDependencies = (): Dependencies => {
@@ -56,8 +62,10 @@ const createDependencies = (): Dependencies => {
     établissementTerritorialMédicoSocialLoader: new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm),
     établissementTerritorialRattachéLoader: new TypeOrmÉtablissementTerritorialRattachéLoader(orm),
     établissementTerritorialSanitaireLoader: new TypeOrmÉtablissementTerritorialSanitaireLoader(orm),
+    favorisLoader: new TypeOrmFavorisLoader(orm),
     changePasswordLoader: new TypeOrmChangePasswordLoader(orm),
-    forgetPasswordLoader : new  TypeOrmForgetPasswordLoader(orm)
+    forgetPasswordLoader: new TypeOrmForgetPasswordLoader(orm),
+    searchHistoryLoader: new TypeOrmSearchHistoryLoader(orm)
   };
 };
 

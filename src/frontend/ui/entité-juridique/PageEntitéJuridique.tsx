@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { SeparatorHorizontal } from "../commun/Separateur/SeparatorHorizontal";
 import { Titre } from "../commun/Titre/Titre";
+import { RechercheViewModel } from "../home/RechercheViewModel";
 import { BlocActivitéSanitaire } from "./bloc-activité/BlocActivitéSanitaire";
 import { BlocAutorisationsCapacites } from "./bloc-autorisations-capacites/BlocAutorisationsCapacites";
 import { BlocBudgetFinance } from "./bloc-budget-finance/BlocBudgetFinance";
@@ -16,9 +17,10 @@ import LogoEntitéJuridique from "./logo-entité-juridique.svg";
 type EntitéJuridiqueProps = Readonly<{
   entitéJuridiqueViewModel: EntitéJuridiqueViewModel;
   établissementsTerritoriauxRattachésViewModels: EtablissementsTerritoriauxRattachésViewModel;
+  rechercheViewModel: RechercheViewModel;
 }>;
 
-export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, établissementsTerritoriauxRattachésViewModels }: EntitéJuridiqueProps) => {
+export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, rechercheViewModel, établissementsTerritoriauxRattachésViewModels }: EntitéJuridiqueProps) => {
   useBreadcrumb([
     {
       label: entitéJuridiqueViewModel.titreAccessible,
@@ -31,15 +33,17 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, établissement
       <Head>
         <title>{entitéJuridiqueViewModel.titre}</title>
       </Head>
-      <Catégorisation catégorisationViewModel={entitéJuridiqueViewModel.catégorisationViewModel} />
-      <Titre logo={LogoEntitéJuridique}>{entitéJuridiqueViewModel.titre}</Titre>
-      <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
-      <ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />
-      <BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={entitéJuridiqueViewModel.entitéJuridiqueAutorisationsCapacitesViewModel} />
-      <SeparatorHorizontal></SeparatorHorizontal>
-      <BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel} />
-      <SeparatorHorizontal></SeparatorHorizontal>
-      <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} />
+      <>
+        <Catégorisation catégorisationViewModel={entitéJuridiqueViewModel.catégorisationViewModel} />
+        <Titre logo={LogoEntitéJuridique} rechercheViewModel={rechercheViewModel}>{entitéJuridiqueViewModel.titre}</Titre>
+        <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
+        <ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />
+        <BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={entitéJuridiqueViewModel.entitéJuridiqueAutorisationsCapacitesViewModel} />
+        <SeparatorHorizontal></SeparatorHorizontal>
+        <BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel} />
+        <SeparatorHorizontal></SeparatorHorizontal>
+        <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} />
+      </>
     </main>
   );
 };

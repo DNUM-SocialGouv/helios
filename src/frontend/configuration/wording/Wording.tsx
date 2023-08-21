@@ -331,6 +331,11 @@ export interface Wording {
 
   readonly EN_CONSTRUCTION: string;
 
+  // Favoris
+  readonly FAVORIS_LIST: string;
+  readonly EJ_SECTION_TITLE: string;
+  readonly SANITAIRE_SECTION_TITLE: string;
+  readonly SOCIAL_SECTION_TITLE: string;
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string;
   readonly MOT_PASSE_OUBLIE_LABEL: string;
@@ -344,6 +349,11 @@ export interface Wording {
   readonly MOT_DE_PASSE: string;
   readonly CONFIRMER_MOT_DE_PASSE: string;
   readonly CONFIRM_CHANGE_PASSWORD: string;
+
+  // Historique de recherche
+  readonly HISTORIQUE_DE_RECHERECHE_TITRE: string;
+  readonly ETABLISSEMENT_CONSULTE: string;
+  readonly DATE: string;
   readonly CONFIRM_UPDATE_PASSWORD: string;
   readonly REINITIALISATION_MOT_PASSE_TITRE: string;
   readonly REINITIALISATION_MOT_PASSE_DESCRIPTION: string;

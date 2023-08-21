@@ -420,6 +420,12 @@ export class WordingFr implements Wording {
 
   readonly EN_CONSTRUCTION: string = "Demander à Daisy ce que l’on doit écrire.";
 
+  // Favoris
+  readonly FAVORIS_LIST: string = "Liste des favoris";
+  readonly EJ_SECTION_TITLE: string = "Entités juridiques";
+  readonly SANITAIRE_SECTION_TITLE: string = "Etablissements sanitaires";
+  readonly SOCIAL_SECTION_TITLE: string = "Etablissements sociaux et médico-sociaux";
+
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string = "Vous avez oublié votre mot de passe ?";
   readonly MOT_PASSE_OUBLIE_LABEL: string = "Courriel";
@@ -433,6 +439,11 @@ export class WordingFr implements Wording {
   readonly MOT_DE_PASSE: string = "Nouveau mot de passe";
   readonly CONFIRMER_MOT_DE_PASSE: string = "Confirmation mot de passe";
   readonly CONFIRM_CHANGE_PASSWORD: string = "Confirmer la demande de réinitialisation";
+
+  // Historique de recherche
+  readonly HISTORIQUE_DE_RECHERECHE_TITRE: string = "Historique des derniers établissements consultés suite à une recherche";
+  readonly ETABLISSEMENT_CONSULTE: string = "Etablissements consultés";
+  readonly DATE: string = "Date";
   readonly CONFIRM_UPDATE_PASSWORD: string = "Confirmer la modification du mot de passe";
   readonly REINITIALISATION_MOT_PASSE_TITRE: string = "Réinitialisation de votre mot de passe";
   readonly REINITIALISATION_MOT_PASSE_DESCRIPTION: string = "Merci de renseigner votre nouveau mot de passe";
