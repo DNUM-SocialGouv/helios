@@ -1,14 +1,6 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
-type SearchHistoryView = Readonly<{
-    title: string;
-    date: string;
-    finessNumber: string,
-    type: string,
-
-}>;
-
 export function useSearchHistory() {
     const { data } = useSession();
 
@@ -38,6 +30,8 @@ export function useSearchHistory() {
     }
 
     const getAllSearchHistory = (idUser: string) => {
+        // eslint-disable-next-line no-console
+        console.log('called !!');
         const params = { idUser: idUser };
         fetch("/api/history/get/?" + (new URLSearchParams(params)).toString(), {
             headers: { "Content-Type": "application/json" },
@@ -45,15 +39,13 @@ export function useSearchHistory() {
         })
             .then((response) => response.json())
             .then((data) => {
-                var formattedHistory: SearchHistoryView[] = [];
-                data.map((elt: any) => {
-                    const formattedElement: SearchHistoryView = {
+                const formattedHistory = data.map((elt: any) => {
+                    return {
                         title: getTitleType(elt.type) + ' - ' + elt.finessNumber + ' - ' + elt.title,
                         date: elt.date,
                         finessNumber: elt.finessNumber,
                         type: elt.type,
                     };
-                    formattedHistory.push(formattedElement);
                 });
                 setSearchHistory(formattedHistory);
             })
