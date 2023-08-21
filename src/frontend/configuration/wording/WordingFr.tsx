@@ -427,7 +427,7 @@ export class WordingFr implements Wording {
 
   // Changement de mot de passe
   readonly CHANGEMENT_MOT_PASSE_TITRE: string = "Changement de mot de passe";
-  readonly CHANGEMENT_MOT_PASSE_DESCRIPTION: string = "Pour modifier votre mot de passe actuel, merci de renseigner les champs";
+  readonly CHANGEMENT_MOT_PASSE_DESCRIPTION: string = "Pour modifier votre mot de passe actuel, merci de renseigner les champs suivants";
   readonly OLD_MOT_DE_PASSE: string = "Ancien mot de passe";
   readonly OLD_MOT_DE_PASSE_REINITIALISATION: string = "Mot de passe précédemment utilisé. Merci de renseigner un nouveau mot de passe unique.";
   readonly MOT_DE_PASSE: string = "Nouveau mot de passe";
@@ -444,10 +444,10 @@ export class WordingFr implements Wording {
   readonly FIRSTNAME: string = "Prénom";
   readonly LASTNAME: string = "Nom";
   readonly EMAIL: string = "Email";
-  readonly ORGANIZATION: string = "Organisme de rattachement";
+  readonly ORGANIZATION: string = "Institution";
   readonly ROLE: string = "Profil";
-  readonly SUPER_ADMIN: string = "super admin";
-  readonly ADMIN: string = "admin régional";
+  readonly SUPER_ADMIN: string = "Super administrateur";
+  readonly ADMIN: string = "Administrateur régional";
   readonly USER: string = "utilisateur";
   readonly PROFILE: string = "Profil";
 
