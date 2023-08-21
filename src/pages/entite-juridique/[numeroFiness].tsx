@@ -1,6 +1,6 @@
 import { GetStaticPathsResult, GetStaticPropsResult } from "next";
-import { useEffect, useState } from "react";
 
+import { rechercheParmiLesEntitésEtÉtablissementsEndpoint } from "../../backend/infrastructure/controllers/rechercheEndpoints";
 import { récupèreLEntitéJuridiqueEndpoint } from "../../backend/infrastructure/controllers/récupèreLEntitéJuridiqueEndpoint";
 import { dependencies } from "../../backend/infrastructure/dependencies";
 import { EntitéJuridique } from "../../backend/métier/entities/entité-juridique/EntitéJuridique";
@@ -12,31 +12,21 @@ import { EntitéJuridiqueViewModel } from "../../frontend/ui/entité-juridique/E
 import { EtablissementsTerritoriauxRattachésViewModel } from "../../frontend/ui/entité-juridique/liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
 import { PageEntitéJuridique } from "../../frontend/ui/entité-juridique/PageEntitéJuridique";
 import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
-import { useRecherche } from "../../frontend/ui/home/useRecherche";
 
 type RouterProps = Readonly<{
   entitéJuridique: EntitéJuridique;
   établissementsTerritoriauxRattachés: ÉtablissementTerritorialRattaché[];
+  rechercheResult: any;
 }>;
 
-export default function Router({ entitéJuridique, établissementsTerritoriauxRattachés }: RouterProps) {
-  const { wording } = useDependencies();
-
-  const { rechercher, résultats } = useRecherche();
-  const [rechercheViewModel, setRechercheViewModel] = useState<RechercheViewModel>();
-
-  useEffect(() => {
-    rechercher(entitéJuridiqueViewModel.numéroFiness, 1);
-  }, [])
-
-  useEffect(() => {
-    setRechercheViewModel(résultats[0] as RechercheViewModel);
-  }, [résultats])
+export default function Router({ rechercheResult, entitéJuridique, établissementsTerritoriauxRattachés }: RouterProps) {
+  const { wording, paths } = useDependencies();
 
   if (!établissementsTerritoriauxRattachés || !entitéJuridique) return null;
 
   const entitéJuridiqueViewModel = new EntitéJuridiqueViewModel(entitéJuridique, wording);
   const établissementsTerritoriauxRattachéesViewModel = new EtablissementsTerritoriauxRattachésViewModel(établissementsTerritoriauxRattachés, wording);
+  const rechercheViewModel = new RechercheViewModel(rechercheResult.résultats[0], paths);
 
   return (
     <>
@@ -65,11 +55,13 @@ export async function getStaticProps({ params }: { params: { numeroFiness: strin
   try {
     const { environmentVariables } = dependencies;
     const entitéJuridiqueEndpoint = (await récupèreLEntitéJuridiqueEndpoint(dependencies, params.numeroFiness)) as RouterProps;
+    const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, params.numeroFiness, 1);
 
     return {
       props: {
         entitéJuridique: entitéJuridiqueEndpoint.entitéJuridique,
         établissementsTerritoriauxRattachés: entitéJuridiqueEndpoint.établissementsTerritoriauxRattachés,
+        rechercheResult: rechercheResult,
       },
       revalidate: Number(environmentVariables.TIME_OF_CACHE_PAGE),
     };

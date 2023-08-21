@@ -3,9 +3,10 @@ import Image from "next/image";
 import { StarButton } from "../commun/StarButton/StarButton";
 import { useSearchHistory } from "../search-history/useSearchHistory";
 import styles from "./Recherche.module.css";
+import { RechercheViewModel } from "./RechercheViewModel";
 
 type EstablishmentProps = Readonly<{
-  résultatViewModel: any;
+  résultatViewModel: RechercheViewModel;
 }>;
 
 export const Establishment = ({

@@ -67,9 +67,8 @@ export function useFavoris() {
         })
             .then((response) => response.json())
             .then((data) => {
-                var favorisViewModel: RechercheViewModel[] = [];
-                data.forEach((element: any) => {
-                    favorisViewModel.push(buildRechecheView(element));
+                const favorisViewModel = data.map((element: any) => {
+                    return buildRechecheView(element);
                 });
                 userContext?.setFavoris(favorisViewModel);
             })

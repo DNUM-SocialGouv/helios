@@ -11,6 +11,9 @@ export const FavorisPage = () => {
     const { wording } = useDependencies();
     const userContext = useContext(UserContext);
 
+    // eslint-disable-next-line no-console
+    console.log('userContext', userContext);
+
     const [ejFavoris, setEjFavoris] = useState<RechercheViewModel[]>([]);
     const [sanitaireFavoris, setSanitaireFavoris] = useState<RechercheViewModel[]>([]);
     const [socialFavoris, setSocialFavoris] = useState<RechercheViewModel[]>([]);
@@ -23,7 +26,7 @@ export const FavorisPage = () => {
 
     return (
         <main className="fr-container">
-            <h1 className={styles["title"]}>{wording.FAVORIS_LIST} ({userContext?.favoris.length})</h1>
+            <h1 className={styles["title"]}>{wording.FAVORIS_LIST} ({userContext?.favoris?.length})</h1>
             <FavorisBlock favorisList={ejFavoris} title={wording.EJ_SECTION_TITLE} />
             <FavorisBlock favorisList={sanitaireFavoris} title={wording.SANITAIRE_SECTION_TITLE} />
             <FavorisBlock favorisList={socialFavoris} title={wording.SOCIAL_SECTION_TITLE} />
