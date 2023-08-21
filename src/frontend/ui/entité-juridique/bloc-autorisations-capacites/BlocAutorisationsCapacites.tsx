@@ -30,6 +30,7 @@ export const BlocAutorisationsCapacites = ({ entitéJuridiqueAutorisationsCapaci
       <ul className="indicateurs">
         <GraphiqueCapacitésParActivité
           estEntitéJuridique
+          estSanitaire={false}
           graphiqueCapacitésParActivitéViewModel={entitéJuridiqueAutorisationsCapacitesViewModel.graphiqueCapacitesParActivitesViewModel}
         />
         {!entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasRenseignées() && (

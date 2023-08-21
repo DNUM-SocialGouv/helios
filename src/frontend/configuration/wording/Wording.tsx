@@ -167,6 +167,7 @@ export interface Wording {
 
   // Bloc Autorisation
   readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string;
+  readonly CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE: string;
   readonly AUTORISATIONS_SANITAIRE: string;
   readonly AUTORISATIONS_MS: string;
   readonly AUTORISATIONS_ACTIVITES: string;

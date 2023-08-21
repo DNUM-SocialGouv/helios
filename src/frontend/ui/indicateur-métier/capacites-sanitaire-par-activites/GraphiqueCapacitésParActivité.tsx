@@ -9,9 +9,10 @@ import { GraphiqueCapacitésParActivitéViewModel } from "./GraphiqueCapacitésP
 type GraphiqueCapacitésParActivitéProps = Readonly<{
   graphiqueCapacitésParActivitéViewModel: GraphiqueCapacitésParActivitéViewModel;
   estEntitéJuridique?: boolean;
+  estSanitaire: boolean;
 }>;
 
-export const GraphiqueCapacitésParActivité = ({ graphiqueCapacitésParActivitéViewModel, estEntitéJuridique = false }: GraphiqueCapacitésParActivitéProps) => {
+export const GraphiqueCapacitésParActivité = ({ graphiqueCapacitésParActivitéViewModel, estEntitéJuridique = false, estSanitaire }: GraphiqueCapacitésParActivitéProps) => {
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(graphiqueCapacitésParActivitéViewModel.annéeInitiale);
 
@@ -29,12 +30,12 @@ export const GraphiqueCapacitésParActivité = ({ graphiqueCapacitésParActivit�
       }
       dateDeMiseÀJour={graphiqueCapacitésParActivitéViewModel.dateDeMiseÀJourDeLaCapacitéInstalléeParActivités}
       identifiant="capacite-sanitaire"
-      nomDeLIndicateur={wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
+      nomDeLIndicateur={estSanitaire ? wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE : wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
       source={wording.SAE}
     >
       <HistogrammesHorizontaux
         annéesManquantes={graphiqueCapacitésParActivitéViewModel.annéesManquantes()}
-        nom={wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
+        nom={estSanitaire ? wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE : wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
         nombreDAnnéeTotale={graphiqueCapacitésParActivitéViewModel.NOMBRE_ANNEES}
         valeursDesHistogrammes={[
           graphiqueCapacitésParActivitéViewModel.valeursLits(annéeEnCours),
