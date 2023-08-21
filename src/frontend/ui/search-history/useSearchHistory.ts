@@ -30,8 +30,6 @@ export function useSearchHistory() {
     }
 
     const getAllSearchHistory = (idUser: string) => {
-        // eslint-disable-next-line no-console
-        console.log('called !!');
         const params = { idUser: idUser };
         fetch("/api/history/get/?" + (new URLSearchParams(params)).toString(), {
             headers: { "Content-Type": "application/json" },
