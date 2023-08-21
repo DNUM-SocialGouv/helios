@@ -11,9 +11,6 @@ export const FavorisPage = () => {
     const { wording } = useDependencies();
     const userContext = useContext(UserContext);
 
-    // eslint-disable-next-line no-console
-    console.log('userContext', userContext);
-
     const [ejFavoris, setEjFavoris] = useState<RechercheViewModel[]>([]);
     const [sanitaireFavoris, setSanitaireFavoris] = useState<RechercheViewModel[]>([]);
     const [socialFavoris, setSocialFavoris] = useState<RechercheViewModel[]>([]);
