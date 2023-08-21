@@ -37,6 +37,8 @@ export const config = {
     "/etablissement-territorial-sanitaire/:path*",
     "/etablissement-territorial-medico-social/:path*",
     "/profile",
+    "/favoris",
+    "/history",
     "/change-mot-passe",
     "/accessibilite",
     "/donnees-personnelles",
