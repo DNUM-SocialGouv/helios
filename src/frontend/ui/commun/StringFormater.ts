@@ -32,6 +32,14 @@ export namespace StringFormater {
     return value + " %";
   }
 
+  export function formatCenterText(value: number) {
+    return (value + " %").replace('.', ',');
+  }
+
+  export function removePercent(value: string) {
+    return parseFloat(value.slice(0, -2).replace(',', '.'));
+  }
+
   export function addPercentToValues(values: number[]): string[] {
     return formatAllInFrench(values).map(addPercent);
   }

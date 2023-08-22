@@ -1,5 +1,7 @@
 import { Chart as ChartJS } from "chart.js";
 
+import { StringFormater } from "../../commun/StringFormater";
+
 
 export function construisLePluginDeLaLegende() {
   function créeLeLibelléPourLaLégende(chart: ChartJS, libellé: any): HTMLLIElement {
@@ -17,6 +19,18 @@ export function construisLePluginDeLaLegende() {
 
     const handleCheckboxChange = () => {
       chart.toggleDataVisibility(libellé.index);
+      // @ts-ignore
+      const currentSum = StringFormater.removePercent(chart.config.options.elements.center.text);
+      let sum;
+      if (chart.getDataVisibility(libellé.index)) {
+        // @ts-ignore
+        sum = currentSum + chart.data.datasets[0].data[libellé.index]
+      } else {
+        // @ts-ignore
+        sum = currentSum - chart.data.datasets[0].data[libellé.index]
+      }
+      // @ts-ignore
+      chart.config.options.elements.center.text = StringFormater.formatCenterText(sum.toFixed(1));
       chart.update();
     }
 
