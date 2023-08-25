@@ -1,17 +1,17 @@
 .star {
     color: #000091;
-    align-self: flex-start;
-    min-width: 3rem;
-    margin-top: .5rem;
+    min-width: 3rem !important;
     background-color: transparent !important;
+    position: relative;
+    top: -8px;
 }
 
 @media (max-width: 48em) {
     .star {
-        align-self: center;
-        min-width: 3rem;
+        min-width: 3rem !important;
         color: #000091;
-        margin-bottom: 2rem;
         background-color: transparent !important;
+        position: relative;
+        top: -8px;
     }
 }
