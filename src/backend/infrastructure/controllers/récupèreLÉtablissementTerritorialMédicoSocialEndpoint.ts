@@ -20,7 +20,7 @@ export async function récupèreLÉtablissementTerritorialMédicoSocialEndpoint(
       'siret': 'ok',
       'adresse': 'ok',
       'télEtEmail': 'ok',
-      'EJ_rattachement': 'no',
+      'EJ_rattachement': 'ok',
       'catégorieÉtablissement': 'ok',
       'modeTarification': 'ok',
       'statut_EJ': 'ok',

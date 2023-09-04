@@ -11,7 +11,7 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
     private readonly établissementTerritorialIdentité: ÉtablissementTerritorialMédicoSocial["identité"],
     private readonly wording: Wording,
     private readonly paths: Paths
-  ) {}
+  ) { }
 
   public get nomDeLÉtablissementTerritorial(): string {
     return this.établissementTerritorialIdentité.raisonSociale.value;
@@ -134,4 +134,11 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
   private valeurOuNonRenseigné(valeur: string): string {
     return valeur === "" ? this.wording.NON_RENSEIGNÉ : valeur;
   }
+
+  public get laDateDeLEntréeEnVigueurDuCpomsEstElleAutorisée(): boolean {
+    // eslint-disable-next-line no-console
+    console.log('this.établissementTerritorialIdentité', this.établissementTerritorialIdentité.dateDEntréeEnVigueurDuCpom);
+    return this.établissementTerritorialIdentité.dateDEntréeEnVigueurDuCpom.value !== '';
+  }
+
 }

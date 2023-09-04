@@ -1,6 +1,7 @@
+import styles from "./Notauthorized.module.css";
 
 export const NotAUthorized = () => {
     return (
-        <div> vous n&apos;êtes pas autorisé à consulter ces informations </div>
+        <div className={styles["not-authorized-message"]} > vous n&apos;êtes pas autorisé à consulter cette information. </div>
     );
 };
