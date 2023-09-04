@@ -13,6 +13,7 @@ export const GraphiqueEquipementMateriauxLourds = ({ entiteJuridiqueEquipementLo
   const { wording } = useDependencies();
   return (
     <IndicateurGraphique
+      authorized
       contenuInfoBulle={
         <ContenuÉquipementsMatérielsLourds
           dateDeMiseÀJour={entiteJuridiqueEquipementLourds.dateMiseÀJourSource}

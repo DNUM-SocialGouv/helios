@@ -19,7 +19,7 @@ export type EntitéJuridiqueIdentité = {
     dateMiseÀJourSource: string;
     value: string;
   }>;
-  catégorisation: CatégorisationEnum;
+  catégorisation: CatégorisationEnum | string;
   libelléStatutJuridique: Readonly<{
     dateMiseÀJourSource: string;
     value: string;

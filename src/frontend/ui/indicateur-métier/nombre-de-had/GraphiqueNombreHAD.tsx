@@ -12,6 +12,7 @@ export const GraphiqueNombreHAD = ({ nombreHADViewModel }: GraphiqueNombreHADPro
 
   return (
     <IndicateurGraphique
+      authorized
       contenuInfoBulle={<ContenuNombreHAD dateDeMiseÀJour={nombreHADViewModel.dateMiseAJour} source={wording.PMSI} />}
       dateDeMiseÀJour={nombreHADViewModel.dateMiseAJour}
       identifiant="activite-6"

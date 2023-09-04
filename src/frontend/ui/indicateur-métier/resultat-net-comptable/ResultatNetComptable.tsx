@@ -24,6 +24,7 @@ export function ResultatNetComptable({ resultatNetComptableViewModel, estEntité
 
   return resultatNetComptableViewModel.auMoinsUnResultatNetRenseigné() ? (
     <IndicateurGraphique
+      authorized
       contenuInfoBulle={infoBulleContenu}
       dateDeMiseÀJour={resultatNetComptableViewModel.dateMiseÀJour}
       identifiant="budget-et-finances-résultat-net-comptable"

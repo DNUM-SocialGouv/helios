@@ -25,6 +25,7 @@ export const BlocAutorisationEtCapacitéMédicoSocial = ({
     <Bloc isMain={false} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         <IndicateurGraphique
+          authorized
           contenuInfoBulle={
             <ContenuCapacitéParActivité
               dateDeMiseÀJour={établissementTerritorialAutorisationsMédicoSocialViewModel.dateDeMiseÀJourDesCapacitésParActivités}
@@ -41,6 +42,7 @@ export const BlocAutorisationEtCapacitéMédicoSocial = ({
 
         {établissementTerritorialAutorisationsMédicoSocialViewModel.lesAutorisationsSontEllesRenseignées ? (
           <IndicateurGraphique
+            authorized
             contenuInfoBulle={
               <ContenuAutorisations
                 dateDeMiseÀJour={établissementTerritorialAutorisationsMédicoSocialViewModel.dateDeMiseÀJourDesAutorisations}

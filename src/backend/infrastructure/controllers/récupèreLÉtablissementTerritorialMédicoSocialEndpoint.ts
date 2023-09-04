@@ -1,5 +1,6 @@
 import { ÉtablissementTerritorialMédicoSocial } from "../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
 import { RécupèreLÉtablissementTerritorialMédicoSocialUseCase } from "../../métier/use-cases/RécupèreLÉtablissementTerritorialMédicoSocialUseCase";
+import { filterEtablissementMedicoSocial } from "../../profileFiltersHelper";
 import { Dependencies } from "../dependencies";
 
 export async function récupèreLÉtablissementTerritorialMédicoSocialEndpoint(
@@ -11,9 +12,69 @@ export async function récupèreLÉtablissementTerritorialMédicoSocialEndpoint(
     dependencies.entitéJuridiqueLoader
   );
 
+  const profilMédicoSocial = {
+    'identité': {
+      'habilité': 'ok',
+      'nom': 'ok',
+      'numéroFiness': 'ok',
+      'siret': 'ok',
+      'adresse': 'ok',
+      'télEtEmail': 'ok',
+      'EJ_rattachement': 'no',
+      'catégorieÉtablissement': 'ok',
+      'modeTarification': 'ok',
+      'statut_EJ': 'ok',
+      'mono_établissement': 'ok',
+      'ET_principal_secondaire': 'ok',
+      'dateDEntréeEnVigueurDuCpom': 'no'
+    },
+    'autorisationsEtCapacités': {
+      'habilité': 'ok',
+      'capacités': 'no',
+      'autorisations': 'ok',
+    },
+    'activités': {
+      'habilité': 'ok',
+      'duréeMoyenneSéjourAccompagnementPersonnesSorties': 'ok',
+      'fileActivePersonnesAccompagnées': 'no',
+      'nombreMoyenJournéesAbsencePersonnesAccompagnées': 'no',
+      'tauxOccupationAccueilDeJour': 'ok',
+      'tauxOccupationHébergementPermanent': 'ok',
+      'tauxOccupationHébergementTemporaire': 'ok',
+      'tauxRéalisationActivité': 'ok'
+    },
+    'ressourcesHumaines': {
+      'habilité': 'ok',
+      'nombreDEtpRéalisés': 'ok',
+      'nombreDeCddDeRemplacement': 'ok',
+      'tauxDAbsentéisme': 'ok',
+      'tauxDEtpVacants': 'ok',
+      'tauxDePrestationsExternes': 'ok',
+      'tauxDeRotationDuPersonnel': 'ok'
+    },
+    'budgetEtFinances': {
+      'habilité': 'ok',
+      'compteRésultats': 'ok',
+      'contributionAuxFraisDeSiège': 'ok',
+      'fondsDeRoulement': 'ok',
+      'résultatNetComptable': 'ok',
+      'tauxDeCafNette': 'ok',
+      'tauxDeVétustéConstruction': 'ok'
+    },
+    'Qualité': {
+      'habilité': 'ok',
+      'nombre_reclamation': 'ok',
+      'nombre_reclamation_motif': 'ok',
+      'missions': 'ok',
+      'vignette': 'ok',
+      'nombre_EIAS/EIGS': 'ok',
+      'nombre_incident_encours': 'ok',
+      'nombre_incident_cloturé': 'ok'
+    }
+  }
+
   const établissementTerritorialMédicoSocial = await récupèreLÉtablissementTerritorialMédicoSocialUseCase.exécute(
     numéroFinessÉtablissementTerritorialMédicoSocial
   );
-
-  return établissementTerritorialMédicoSocial;
+  return filterEtablissementMedicoSocial(établissementTerritorialMédicoSocial, profilMédicoSocial);
 }

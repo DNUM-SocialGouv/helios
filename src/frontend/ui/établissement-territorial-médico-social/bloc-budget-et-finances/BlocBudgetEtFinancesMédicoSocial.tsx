@@ -27,6 +27,7 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMé
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         <GraphiqueCompteDeResultat compteDeRésultatViewModel={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.compteDeResultatViewModel} />
         <IndicateurGraphique
+          authorized
           contenuInfoBulle={
             <ContenuRésultatNetComptable
               dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourRésultatNetComptable}
@@ -42,6 +43,7 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMé
         </IndicateurGraphique>
 
         <IndicateurGraphique
+          authorized
           contenuInfoBulle={
             <ContenuMontantDeLaContributionAuxFraisDeSiège
               dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourMontantDeLaContributionAuxFraisDeSiège}
@@ -58,6 +60,7 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMé
 
         <TauxDeCaf tauxDeCafViewModel={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeCafViewModel} />
         <IndicateurGraphique
+          authorized
           contenuInfoBulle={
             <ContenuTauxDeVétustéConstruction
               dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourTauxDeVétustéConstruction}
@@ -72,6 +75,7 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMé
           {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeVétustéConstruction}
         </IndicateurGraphique>
         <IndicateurGraphique
+          authorized
           contenuInfoBulle={
             <ContenuFondDeRoulementNetGlobal
               dateDeMiseÀJour={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.dateMiseÀJourFondDeRoulementNetGlobal}

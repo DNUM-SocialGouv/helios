@@ -27,6 +27,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéM
     <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         <IndicateurGraphique
+          authorized={établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementPermanentEstIlAutorisé}
           contenuInfoBulle={
             <ContenuTauxOccupationHébergementPermanent
               dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementPermanent}
@@ -41,6 +42,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéM
           {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationHébergementPermanent}
         </IndicateurGraphique>
         <IndicateurGraphique
+          authorized={établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementTemporaireEstIlAutorisé}
           contenuInfoBulle={
             <ContenuTauxOccupationHébergementTemporaire
               dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementTemporaire}
@@ -55,6 +57,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéM
           {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationHébergementTemporaire}
         </IndicateurGraphique>
         <IndicateurGraphique
+          authorized={établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationAccueilDeJourEstIlAutorisé}
           contenuInfoBulle={
             <ContenuTauxOccupationAccueilDeJour
               dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationAccueilDeJour}
@@ -69,6 +72,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéM
           {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationAccueilDeJour}
         </IndicateurGraphique>
         <IndicateurGraphique
+          authorized={établissementTerritorialActivitéMédicoSocialViewModel.leTauxRéalisationActivitéEstIlAutorisé}
           contenuInfoBulle={
             <ContenuTauxRéalisationActivité
               dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxRéalisationActivité}
@@ -83,6 +87,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéM
           {établissementTerritorialActivitéMédicoSocialViewModel.tauxRéalisationActivité}
         </IndicateurGraphique>
         <IndicateurGraphique
+          authorized={établissementTerritorialActivitéMédicoSocialViewModel.laFileActivePersonnesAccompagnéesEstElleAutorisé}
           contenuInfoBulle={
             <ContenuFileActivePersonnesAccompagnées
               dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDeLaFileActivePersonnesAccompagnées}
@@ -97,6 +102,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéM
           {établissementTerritorialActivitéMédicoSocialViewModel.fileActivePersonnesAccompagnées}
         </IndicateurGraphique>
         <IndicateurGraphique
+          authorized={établissementTerritorialActivitéMédicoSocialViewModel.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlAutorisé}
           contenuInfoBulle={
             <ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées
               dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuNombreMoyenJournéesAbsencePersonnesAccompagnées}
@@ -111,6 +117,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéM
           {établissementTerritorialActivitéMédicoSocialViewModel.nombreMoyenJournéesAbsencePersonnesAccompagnées}
         </IndicateurGraphique>
         <IndicateurGraphique
+          authorized={établissementTerritorialActivitéMédicoSocialViewModel.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleAutorisé}
           contenuInfoBulle={
             <ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties
               dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDeLaDuréeMoyenneSéjourAccompagnementPersonnesSorties}

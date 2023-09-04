@@ -18,6 +18,7 @@ export function CompteDeResultat({ entitéJuridiqueBudgetFinanceViewModel }: Blo
   return (
     <IndicateurGraphique
       années={{ liste: entitéJuridiqueBudgetFinanceViewModel.lesAnnéesEffectivesDuCompteDeRésultat(), setAnnéeEnCours }}
+      authorized
       contenuInfoBulle={<ContenuCompteDeRésultatEJ dateDeMiseÀJour={entitéJuridiqueBudgetFinanceViewModel.dateMiseÀJour} source={wording.ANCRE} />}
       dateDeMiseÀJour={entitéJuridiqueBudgetFinanceViewModel.dateMiseÀJour}
       identifiant="budget-et-finances-compte-de-résultat"

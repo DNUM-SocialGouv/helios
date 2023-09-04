@@ -32,6 +32,7 @@ export const BlocRessourcesHumainesMédicoSocial = ({
     <Bloc isMain={false} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES}>
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         <IndicateurGraphique
+          authorized
           contenuInfoBulle={
             <ContenuDuNombreDEtpRéalisé
               dateDeMiseÀJour={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.dateDeMiseÀJourDuNombreDEtpRéalisé}
@@ -46,6 +47,7 @@ export const BlocRessourcesHumainesMédicoSocial = ({
           {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.nombreDEtpRéalisé}
         </IndicateurGraphique>
         <IndicateurGraphique
+          authorized
           contenuInfoBulle={
             <ContenuDuNombreDeCddDeRemplacement
               dateDeMiseÀJour={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.dateDeMiseÀJourDuNombreDeCddDeRemplacement}
@@ -60,6 +62,7 @@ export const BlocRessourcesHumainesMédicoSocial = ({
           {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.nombreDeCddDeRemplacement}
         </IndicateurGraphique>
         <IndicateurGraphique
+          authorized
           contenuInfoBulle={
             <ContenuDePrestationsExternes
               dateDeMiseÀJour={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.dateDeMiseÀJourDuTauxDePrestationsExternes}
@@ -74,6 +77,7 @@ export const BlocRessourcesHumainesMédicoSocial = ({
           {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.tauxDePrestationsExternes}
         </IndicateurGraphique>
         <IndicateurGraphique
+          authorized
           contenuInfoBulle={
             <ContenuDuTauxDEtpVacants
               dateDeMiseÀJour={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.dateDeMiseÀJourDuTauxDEtpVacants}
@@ -88,6 +92,7 @@ export const BlocRessourcesHumainesMédicoSocial = ({
           {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.tauxDEtpVacants}
         </IndicateurGraphique>
         <IndicateurGraphique
+          authorized
           contenuInfoBulle={
             <ContenuDuTauxDeRotationDuPersonnel
               dateDeMiseÀJour={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.dateDeMiseÀJourDuTauxDeRotationDuPersonnel}
@@ -106,6 +111,7 @@ export const BlocRessourcesHumainesMédicoSocial = ({
             liste: établissementTerritorialMédicoSocialRessourcesHumainesViewModel.anneesAvecTauxAbsenteisme(),
             setAnnéeEnCours,
           }}
+          authorized
           contenuInfoBulle={
             <ContenuDesTauxDAbsentéismes
               dateDeMiseÀJour={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.dateDeMiseÀJourDesTauxDAbsentéismes}

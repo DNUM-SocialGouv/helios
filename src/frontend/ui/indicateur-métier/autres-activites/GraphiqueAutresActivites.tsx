@@ -13,6 +13,7 @@ export const GraphiqueAutresActivites = ({ entiteJuridiqueAutorisations }: Graph
   const { wording } = useDependencies();
   return (
     <IndicateurGraphique
+      authorized
       contenuInfoBulle={
         <ContenuAutresActivités
           dateDeMiseÀJour={entiteJuridiqueAutorisations.dateMiseÀJourSource}

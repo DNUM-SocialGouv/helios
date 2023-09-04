@@ -13,6 +13,7 @@ export const GraphiqueNombreDeSejourMCO = ({ nombreDeSejourMCOViewModel, estEnti
 
   return (
     <IndicateurGraphique
+      authorized
       contenuInfoBulle={
         <ContenuNombreDeSéjourMCO
           dateDeMiseÀJour={nombreDeSejourMCOViewModel.dateDeMiseÀJourDuNombreDeSéjoursMédecineChirurgieObstétrique}

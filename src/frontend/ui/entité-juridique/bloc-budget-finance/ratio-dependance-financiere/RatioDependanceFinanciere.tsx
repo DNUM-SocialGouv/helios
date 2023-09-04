@@ -73,6 +73,7 @@ export function RatioDependanceFinanciere({ ratioDependanceFinanciereViewModel }
 
   return ratioDependanceFinanciereViewModel.auMoinsUnRatioRenseigné() ? (
     <IndicateurGraphique
+      authorized
       contenuInfoBulle={infoBulleContenu}
       dateDeMiseÀJour={ratioDependanceFinanciereViewModel.dateMiseÀJour}
       identifiant="budget-et-finances-ratio-dependance-financiere"
