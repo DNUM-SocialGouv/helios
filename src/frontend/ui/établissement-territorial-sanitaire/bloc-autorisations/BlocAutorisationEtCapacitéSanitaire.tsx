@@ -26,7 +26,7 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
     <Bloc isMain={false} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         <GraphiqueCapacitésParActivité
-          graphiqueCapacitésParActivitéViewModel={établissementTerritorialSanitaireAutorisationsViewModel.graphiqueCapacitésParActivitéViewModel}
+          estSanitaire={true} graphiqueCapacitésParActivitéViewModel={établissementTerritorialSanitaireAutorisationsViewModel.graphiqueCapacitésParActivitéViewModel}
         />
         {établissementTerritorialSanitaireAutorisationsViewModel.lesAutorisationsSontEllesRenseignées && (
           <IndicateurGraphique

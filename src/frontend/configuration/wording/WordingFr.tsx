@@ -216,6 +216,7 @@ export class WordingFr implements Wording {
   // Bloc Autorisation Sanitaire
   readonly AUTRES_ACTIVITÉS: string = "Autres activités";
   readonly AUTRES_ACTIVITÉS_SAN: string = "Autres activités de soins";
+  readonly CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE: string = "Capacité installée par activités sanitaires";
   readonly RECONNAISSANCES_CONTRACTUELLES: string = "Reconnaissances contractuelles";
   readonly ÉQUIPEMENTS_MATÉRIELS_LOURDS: string = "Équipements matériels lourds";
   readonly DATE_DE_FIN: string = "Date de fin";
