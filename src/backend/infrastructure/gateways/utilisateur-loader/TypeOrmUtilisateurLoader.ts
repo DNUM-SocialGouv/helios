@@ -23,7 +23,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     }
 
     async checkIfEmailExists(email: string): Promise<boolean> {
-        const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email.trim() });
+        const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email.trim().toLowerCase() });
         if (user) {
             return true
         } else return false;
