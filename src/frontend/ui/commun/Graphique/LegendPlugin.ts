@@ -1,33 +1,40 @@
-import { Chart as ChartJS, LegendItem } from "chart.js";
+import { Chart as ChartJS } from "chart.js";
+
+import { StringFormater } from "../../commun/StringFormater";
+
 
 export function construisLePluginDeLaLegende() {
-  function créeLeLibelléPourLaLégende(chart: ChartJS, libellé: LegendItem): HTMLLIElement {
+  function créeLeLibelléPourLaLégende(chart: ChartJS, libellé: any): HTMLLIElement {
     const conteneur = document.createElement("li");
 
     const caseÀCocher = document.createElement("input");
     caseÀCocher.type = "checkbox";
     caseÀCocher.id = libellé.text;
     caseÀCocher.name = libellé.text;
-    caseÀCocher.checked = chart.isDatasetVisible(libellé.datasetIndex);
+    caseÀCocher.checked = !libellé.hidden;
 
     const libelléCaseÀCocher = document.createElement("label");
     libelléCaseÀCocher.classList.add("fr-label");
     libelléCaseÀCocher.htmlFor = libellé.text;
 
-    libelléCaseÀCocher.onclick = () => {
-      chart.setDatasetVisibility(libellé.datasetIndex, !chart.isDatasetVisible(libellé.datasetIndex));
-      chart.update();
-    };
-
-    caseÀCocher.onkeydown = (event) => {
-      if (event.code === "Space") {
-        event.preventDefault();
-        chart.setDatasetVisibility(libellé.datasetIndex, !chart.isDatasetVisible(libellé.datasetIndex));
-        chart.update();
+    const handleCheckboxChange = () => {
+      chart.toggleDataVisibility(libellé.index);
+      // @ts-ignore
+      const currentSum = StringFormater.removePercent(chart.config.options.elements.center.text);
+      let sum;
+      if (chart.getDataVisibility(libellé.index)) {
         // @ts-ignore
-        document.getElementById(event.target.id).focus();
+        sum = currentSum + chart.data.datasets[0].data[libellé.index]
+      } else {
+        // @ts-ignore
+        sum = currentSum - chart.data.datasets[0].data[libellé.index]
       }
-    };
+      // @ts-ignore
+      chart.config.options.elements.center.text = StringFormater.formatCenterText(sum.toFixed(1));
+      chart.update();
+    }
+
+    caseÀCocher.addEventListener('change', handleCheckboxChange);
 
     const cercleDeCouleur = document.createElement("span");
     cercleDeCouleur.style.background = libellé.fillStyle as string;
@@ -54,9 +61,9 @@ export function construisLePluginDeLaLegende() {
       }
 
       // @ts-ignore
-      const libellésDeLaLégende = chart.options.plugins?.legend?.labels.generateLabels(chart) || [];
+      const libellésDeLaLégende = chart.options.plugins?.legend?.labels.generateLabels(chart);
 
-      libellésDeLaLégende.forEach((libellé) => {
+      libellésDeLaLégende?.forEach((libellé) => {
         const libelléDeLégende = créeLeLibelléPourLaLégende(chart, libellé);
         légende.appendChild(libelléDeLégende);
       });
