@@ -20,7 +20,6 @@ export const GraphiqueCapacitésParActivité = ({ graphiqueCapacitésParActivit�
   return (
     <IndicateurGraphique
       années={{ liste: annees, setAnnéeEnCours }}
-      authorized
       contenuInfoBulle={
         <ContenuCapacitéParActivités
           dateDeMiseÀJour={graphiqueCapacitésParActivitéViewModel.dateDeMiseÀJourDeLaCapacitéInstalléeParActivités}

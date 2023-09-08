@@ -136,9 +136,14 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
   }
 
   public get laDateDeLEntréeEnVigueurDuCpomsEstElleAutorisée(): boolean {
-    // eslint-disable-next-line no-console
-    console.log('this.établissementTerritorialIdentité', this.établissementTerritorialIdentité.dateDEntréeEnVigueurDuCpom);
     return this.établissementTerritorialIdentité.dateDEntréeEnVigueurDuCpom.value !== '';
+  }
+
+  public get lesDonnéesIdentitésPasAutorisés(): (string | ReactElement)[] {
+    const nonAutorisés = [];
+    if (!this.laDateDeLEntréeEnVigueurDuCpomsEstElleAutorisée) nonAutorisés.push(this.wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM);
+
+    return nonAutorisés;
   }
 
 }

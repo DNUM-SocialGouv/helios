@@ -1,7 +1,21 @@
-import styles from "./Notauthorized.module.css";
+import "@gouvfr/dsfr/dist/component/callout/callout.min.css";
+import { ReactElement } from "react";
 
-export const NotAUthorized = () => {
+type NotAUthorizedProps = Readonly<{
+    indicateurs: (string | ReactElement)[];
+}>;
+
+export const NotAUthorized = ({ indicateurs }: NotAUthorizedProps) => {
     return (
-        <div className={styles["not-authorized-message"]} > vous n&apos;êtes pas autorisé à consulter cette information. </div>
+        <div className="fr-callout">
+            <p className="fr-callout__title"> Vous n&apos;êtes pas autorisé à consulter les indicateurs suivants :</p>
+            <ul>
+                {indicateurs?.map(((indicateur, index) => (
+                    <li className="fr-callout__text" key={index} >
+                        {indicateur}
+                    </li>
+                )))}
+            </ul>
+        </div>
     );
 };

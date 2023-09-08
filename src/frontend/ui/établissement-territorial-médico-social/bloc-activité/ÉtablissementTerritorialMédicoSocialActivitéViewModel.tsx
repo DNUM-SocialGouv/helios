@@ -309,6 +309,19 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return this.établissementTerritorialActivité.some((activité: ÉtablissementTerritorialMédicoSocialActivité) => activité[indicateur].value !== '');
   }
 
+  public get lesDonnéesActivitésPasAutorisés(): string[] {
+    const nonAutorisés = [];
+    if (!this.leTauxOccupationHébergementPermanentEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT);
+    if (!this.leTauxOccupationHébergementTemporaireEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE);
+    if (!this.leTauxOccupationAccueilDeJourEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR);
+    if (!this.leTauxRéalisationActivitéEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_RÉALISATION_ACTIVITÉ);
+    if (!this.laFileActivePersonnesAccompagnéesEstElleAutorisé) nonAutorisés.push(this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES);
+    if (!this.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlAutorisé) nonAutorisés.push(this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES);
+    if (!this.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleAutorisé) nonAutorisés.push(this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES);
+
+    return nonAutorisés;
+  }
+
   private construisLaCouleurDeLaBarreVerticale = (valeur: number, année: number | string): CouleurHistogramme => {
     let premierPlan = couleurDuFondHistogrammeSecondaire;
     let secondPlan = couleurDuFond;

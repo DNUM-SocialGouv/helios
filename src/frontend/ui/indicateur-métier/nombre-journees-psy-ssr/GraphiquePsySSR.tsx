@@ -14,7 +14,6 @@ export function GraphiquePsySSR({ nombreJournéesPsySSRViewModel, estEntitéJuri
 
   return (
     <IndicateurGraphique
-      authorized
       contenuInfoBulle={
         <ContenuNombreDeJournéesPSYetSSR
           dateDeMiseÀJour={nombreJournéesPsySSRViewModel.dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr}

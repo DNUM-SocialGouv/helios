@@ -30,27 +30,27 @@ export async function récupèreLÉtablissementTerritorialMédicoSocialEndpoint(
     },
     'autorisationsEtCapacités': {
       'habilité': 'ok',
-      'capacités': 'no',
-      'autorisations': 'ok',
+      'capacités': 'ok',
+      'autorisations': 'no',
     },
     'activités': {
       'habilité': 'ok',
-      'duréeMoyenneSéjourAccompagnementPersonnesSorties': 'ok',
+      'duréeMoyenneSéjourAccompagnementPersonnesSorties': 'no',
       'fileActivePersonnesAccompagnées': 'no',
       'nombreMoyenJournéesAbsencePersonnesAccompagnées': 'no',
       'tauxOccupationAccueilDeJour': 'ok',
       'tauxOccupationHébergementPermanent': 'ok',
       'tauxOccupationHébergementTemporaire': 'ok',
-      'tauxRéalisationActivité': 'ok'
+      'tauxRéalisationActivité': 'no'
     },
     'ressourcesHumaines': {
       'habilité': 'ok',
       'nombreDEtpRéalisés': 'ok',
       'nombreDeCddDeRemplacement': 'ok',
-      'tauxDAbsentéisme': 'ok',
-      'tauxDEtpVacants': 'ok',
-      'tauxDePrestationsExternes': 'ok',
-      'tauxDeRotationDuPersonnel': 'ok'
+      'tauxDAbsentéisme': 'nofilterEtablissementMedicoSocial',
+      'tauxDEtpVacants': 'no',
+      'tauxDePrestationsExternes': 'no',
+      'tauxDeRotationDuPersonnel': 'no'
     },
     'budgetEtFinances': {
       'habilité': 'ok',

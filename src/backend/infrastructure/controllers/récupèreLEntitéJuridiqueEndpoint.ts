@@ -23,25 +23,25 @@ export async function récupèreLEntitéJuridiqueEndpoint(dependencies: Dependen
     },
     'autorisationsEtCapacités': {
       'habilité': 'ok',
-      'capacités': 'ok',
-      'autorisationsActivités': 'ok',
+      'capacités': 'no',
+      'autorisationsActivités': 'no',
       'autresActivités': 'ok',
       'reconnaissanceContractuelleActivités': 'ok',
-      'equipementMaterielLourdsActivités': 'ok',
+      'equipementMaterielLourdsActivités': 'no',
     },
     'activités': {
       'habilité': 'ok',
-      'nombreSéjours': 'ok',
-      'nombreJournées': 'ok',
+      'nombreSéjours': 'no',
+      'nombreJournées': 'no',
       'nombrePassage': 'ok',
       'nombreSéjoursHad': 'ok',
     },
     'budgetEtFinance': {
       'habilité': 'ok',
-      'compteRésultats': 'no',
-      'résultatNetComptable': 'ok',
+      'compteRésultats': 'ok',
+      'résultatNetComptable': 'no',
       'tauxDeCafNette': 'no',
-      'ratioDépendanceFinancière': 'ok',
+      'ratioDépendanceFinancière': 'no',
     },
   }
 

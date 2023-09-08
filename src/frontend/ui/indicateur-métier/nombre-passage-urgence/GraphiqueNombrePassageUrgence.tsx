@@ -13,7 +13,6 @@ export const GraphiqueNombrePassageUrgence = ({ nombrePassageAuxUrgencesViewMode
 
   return (
     <IndicateurGraphique
-      authorized
       contenuInfoBulle={
         <ContenuNombreDePassagesAuxUrgences
           dateDeMiseÀJour={nombrePassageAuxUrgencesViewModel.dateMiseAJour}

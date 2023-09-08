@@ -78,4 +78,25 @@ export class EntitéJuridiqueActivitésViewModel {
       (activité: EntitéJuridiqueActivités) => activité.nombreSéjoursHad.value !== null && activité.nombreSéjoursHad.value !== undefined
     );
   }
+
+  public get lesDonnéesActivitéPasAutorisés(): string[] {
+    const nonAutorisés = [];
+    if (!this.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsAutorisés) nonAutorisés.push(this.wording.NOMBRE_DE_SÉJOUR_MCO);
+    if (!this.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsAutorisé) nonAutorisés.push(this.wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR);
+    if (!this.nombreHADEstIlAutorisé) nonAutorisés.push(this.wording.NOMBRE_DE_HAD);
+    if (!this.nombrePassageUrgenceEstIlAutorisé) nonAutorisés.push(this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES);
+    return nonAutorisés;
+  }
+
+  public get nombrePassageUrgenceEstIlAutorisé(): boolean {
+    return this.entitéJuridiqueActivités.some(
+      (activité: EntitéJuridiqueActivités) => activité.nombreDePassagesAuxUrgences.dateMiseÀJourSource !== ''
+    );
+  }
+
+  public get nombreHADEstIlAutorisé(): boolean {
+    return this.entitéJuridiqueActivités.some(
+      (activité: EntitéJuridiqueActivités) => activité.nombreSéjoursHad.dateMiseÀJourSource !== ''
+    );
+  }
 }

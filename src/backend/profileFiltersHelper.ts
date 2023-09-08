@@ -202,13 +202,13 @@ const filterAutorisationCapaciteMedicoSocial = (autorisationCapacite: any, profi
 const filterBudgetFinanceMedicoSocial = (budgetFinances: any, profil: any) => {
     for (const budgetFinance of budgetFinances) {
         budgetFinance.cadreBudgétaire = profil.compteRésultats === 'ok' ? budgetFinance.cadreBudgétaire : '';
-        budgetFinance.chargesEtProduits = profil.compteRésultats === 'ok' ? budgetFinance.chargesEtProduits : {};
-        budgetFinance.recettesEtDépenses = profil.compteRésultats === 'ok' ? budgetFinance.recettesEtDépenses : {};
-        budgetFinance.contributionAuxFraisDeSiège = profil.contributionAuxFraisDeSiège === 'ok' ? budgetFinance.contributionAuxFraisDeSiège : { 'dateMiseÀJourSource': '', value: '' };
-        budgetFinance.fondsDeRoulement = profil.fondsDeRoulement === 'ok' ? budgetFinance.fondsDeRoulement : { 'dateMiseÀJourSource': '', value: '' };
-        budgetFinance.résultatNetComptable = profil.résultatNetComptable === 'ok' ? budgetFinance.résultatNetComptable : { 'dateMiseÀJourSource': '', value: '' };
-        budgetFinance.tauxDeCafNette = profil.tauxDeCafNette === 'ok' ? budgetFinance.tauxDeCafNette : { 'dateMiseÀJourSource': '', value: '' };
-        budgetFinance.tauxDeVétustéConstruction = profil.tauxDeVétustéConstruction === 'ok' ? budgetFinance.tauxDeVétustéConstruction : { 'dateMiseÀJourSource': '', value: '' };
+        budgetFinance.chargesEtProduits = profil.compteRésultats === 'ok' ? budgetFinance.chargesEtProduits : { 'dateMiseÀJourSource': '' };
+        budgetFinance.recettesEtDépenses = profil.compteRésultats === 'ok' ? budgetFinance.recettesEtDépenses : { 'dateMiseÀJourSource': '' };
+        budgetFinance.contributionAuxFraisDeSiège = profil.contributionAuxFraisDeSiège === 'ok' ? budgetFinance.contributionAuxFraisDeSiège : { 'dateMiseÀJourSource': '', valeur: '' };
+        budgetFinance.fondsDeRoulement = profil.fondsDeRoulement === 'ok' ? budgetFinance.fondsDeRoulement : { 'dateMiseÀJourSource': '', valeur: '' };
+        budgetFinance.résultatNetComptable = profil.résultatNetComptable === 'ok' ? budgetFinance.résultatNetComptable : { 'dateMiseÀJourSource': '', valeur: '' };
+        budgetFinance.tauxDeCafNette = profil.tauxDeCafNette === 'ok' ? budgetFinance.tauxDeCafNette : { 'dateMiseÀJourSource': '', valeur: '' };
+        budgetFinance.tauxDeVétustéConstruction = profil.tauxDeVétustéConstruction === 'ok' ? budgetFinance.tauxDeVétustéConstruction : { 'dateMiseÀJourSource': '', valeur: '' };
     }
     return budgetFinances;
 }
@@ -217,7 +217,7 @@ const filterressourcesHumainesMedicoSocial = (ressourcesHumaines: any, profil: a
     for (const ressource of ressourcesHumaines) {
         ressource.nombreDEtpRéalisés = profil.nombreDEtpRéalisés === 'ok' ? ressource.nombreDEtpRéalisés : { 'dateMiseÀJourSource': '', valeur: '' };
         ressource.nombreDeCddDeRemplacement = profil.nombreDeCddDeRemplacement === 'ok' ? ressource.nombreDeCddDeRemplacement : { 'dateMiseÀJourSource': '', valeur: '' };
-        ressource.tauxDAbsentéisme = profil.tauxDAbsentéisme === 'ok' ? ressource.tauxDAbsentéisme : {};
+        ressource.tauxDAbsentéisme = profil.tauxDAbsentéisme === 'ok' ? ressource.tauxDAbsentéisme : { 'dateMiseÀJourSource': '' };
         ressource.tauxDEtpVacants = profil.tauxDEtpVacants === 'ok' ? ressource.tauxDEtpVacants : { 'dateMiseÀJourSource': '', valeur: '' };
         ressource.tauxDePrestationsExternes = profil.tauxDePrestationsExternes === 'ok' ? ressource.tauxDePrestationsExternes : { 'dateMiseÀJourSource': '', valeur: '' };
         ressource.tauxDeRotationDuPersonnel = profil.tauxDeRotationDuPersonnel === 'ok' ? ressource.tauxDeRotationDuPersonnel : { 'dateMiseÀJourSource': '', valeur: '' };
@@ -249,7 +249,7 @@ const filterAutorisationCapaciteEJ = (autorisationsEtCapacites: any, profil: any
         autresActivités: profil.autresActivités === 'ok' ? autorisationsEtCapacites.autresActivités : { 'dateMiseÀJourSource': '', autorisations: [] },
         reconnaissanceContractuelleActivités: profil.reconnaissanceContractuelleActivités === 'ok' ? autorisationsEtCapacites.reconnaissanceContractuelleActivités : { 'dateMiseÀJourSource': '', autorisations: [] },
         equipementMaterielLourdsActivités: profil.equipementMaterielLourdsActivités === 'ok' ? autorisationsEtCapacites.equipementMaterielLourdsActivités : { 'dateMiseÀJourSource': '', autorisations: [] },
-        capacités: profil.capacités === 'ok' ? autorisationsEtCapacites.capacités : [],
+        capacités: profil.capacités === 'ok' ? autorisationsEtCapacites.capacités : [{ 'dateMiseÀJourSource': '' }],
         numéroFinessEntitéJuridique: autorisationsEtCapacites.numéroFinessEntitéJuridique
     }
     return filtredAutorisationCapacite;
@@ -278,7 +278,6 @@ const filterBudgetFinanceEJ = (budgetFinance: any, profil: any) => {
         budget.recettesTitreIPrincipales = profil.compteRésultats === 'ok' ? budget.recettesTitreIPrincipales : '';
         budget.recettesTitreIIPrincipales = profil.compteRésultats === 'ok' ? budget.recettesTitreIIPrincipales : '';
         budget.recettesTitreIIIPrincipales = profil.compteRésultats === 'ok' ? budget.recettesTitreIIIPrincipales : '';
-        budget.recettesTitreIVPrincipales = profil.compteRésultats === 'ok' ? budget.recettesTitreIVPrincipales : '';
         budget.totalRecettesPrincipales = profil.compteRésultats === 'ok' ? budget.totalRecettesPrincipales : '';
 
         budget.depensesTitreIAnnexe = profil.compteRésultats === 'ok' ? budget.depensesTitreIAnnexe : '';

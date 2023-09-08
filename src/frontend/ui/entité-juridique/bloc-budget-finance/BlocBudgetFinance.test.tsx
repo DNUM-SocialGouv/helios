@@ -55,7 +55,7 @@ describe("Bloc Budget et Finance", () => {
     renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} />);
 
     // THEN
-    const titre = screen.getAllByText(wording.COMPTE_DE_RÉSULTAT);
+    const titre = screen.getAllByText(wording.COMPTE_DE_RÉSULTAT_CF);
     expect(titre).not.toHaveLength(0);
   });
 

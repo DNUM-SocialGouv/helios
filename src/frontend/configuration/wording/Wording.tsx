@@ -209,6 +209,7 @@ export interface Wording {
   readonly RÉSULTAT_NET_COMPTABLE: string;
 
   readonly RATIO_DEPENDANCE_FINANCIERE: string;
+  readonly COMPTE_DE_RÉSULTAT: string;
   readonly COMPTE_DE_RÉSULTAT_ERRD: string;
   readonly COMPTE_DE_RÉSULTAT_CA: string;
   readonly TITRE_BUDGÉTAIRE: string;
@@ -228,7 +229,7 @@ export interface Wording {
   readonly TITRE_II: string;
   readonly TITRE_III: string;
   readonly TITRE_IV: string;
-  readonly COMPTE_DE_RÉSULTAT: string;
+  readonly COMPTE_DE_RÉSULTAT_CF: string;
 
   readonly PRODUITS_PRINCIPAUX: string;
   readonly PRODUITS_ANNEXES: string;

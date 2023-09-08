@@ -30,7 +30,6 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
         />
         {établissementTerritorialSanitaireAutorisationsViewModel.lesAutorisationsSontEllesRenseignées && (
           <IndicateurGraphique
-            authorized
             contenuInfoBulle={
               <ContenuAutorisations
                 dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesAutorisations}
@@ -47,7 +46,6 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
         )}
         {établissementTerritorialSanitaireAutorisationsViewModel.lesAutresActivitésSontEllesRenseignées && (
           <IndicateurGraphique
-            authorized
             contenuInfoBulle={
               <ContenuAutresActivités
                 dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesAutresActivités}
@@ -64,7 +62,6 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
         )}
         {établissementTerritorialSanitaireAutorisationsViewModel.lesReconnaissancesContractuellesSontEllesRenseignées && (
           <IndicateurGraphique
-            authorized
             contenuInfoBulle={
               <ContenuReconnaissancesContractuelles
                 dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesReconnaissancesContractuelles}
@@ -81,7 +78,6 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
         )}
         {établissementTerritorialSanitaireAutorisationsViewModel.lesÉquipementsMatérielsLourdsSontIlsRenseignés && (
           <IndicateurGraphique
-            authorized
             contenuInfoBulle={
               <ContenuÉquipementsMatérielsLourds
                 dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesÉquipementsMatérielsLourds}

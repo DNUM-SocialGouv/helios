@@ -36,12 +36,25 @@ export class NombreDeJourneesPsySSRViewModel {
     return this.activitésPsySSR.some(this.psySSRRenseignes);
   }
 
+  public get nombreDeJournéesPsyEtSsrSontIlsAutorisé(): boolean {
+    return this.activitésPsySSR.some(this.psySSRAutorisé);
+  }
+
   private psySSRRenseignes(activité: ActivitesPsySSR): boolean {
     return (
       activité["nombreJournéesPartiellesPsy"].value !== null ||
       activité["nombreJournéesCompletesSsr"].value !== null ||
       activité["nombreJournéesPartielsSsr"].value !== null ||
       activité["nombreJournéesCompletePsy"].value !== null
+    );
+  }
+
+  private psySSRAutorisé(activité: ActivitesPsySSR): boolean {
+    return (
+      activité["nombreJournéesPartiellesPsy"].dateMiseÀJourSource !== '' ||
+      activité["nombreJournéesCompletesSsr"].dateMiseÀJourSource !== '' ||
+      activité["nombreJournéesPartielsSsr"].dateMiseÀJourSource !== '' ||
+      activité["nombreJournéesCompletePsy"].dateMiseÀJourSource !== ''
     );
   }
 

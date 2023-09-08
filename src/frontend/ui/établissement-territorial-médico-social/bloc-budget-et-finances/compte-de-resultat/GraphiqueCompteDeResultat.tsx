@@ -19,7 +19,6 @@ export const GraphiqueCompteDeResultat = ({ compteDeRésultatViewModel }: BlocBu
   return (
     <IndicateurGraphique
       années={{ liste: annees, setAnnéeEnCours }}
-      authorized
       contenuInfoBulle={<ContenuCompteDeRésultat dateDeMiseÀJour={compteDeRésultatViewModel.dateMiseÀJour} source={wording.CNSA} />}
       dateDeMiseÀJour={compteDeRésultatViewModel.dateMiseÀJour}
       identifiant="budget-et-finances-compte-de-résultat"
