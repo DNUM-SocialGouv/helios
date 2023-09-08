@@ -26,7 +26,7 @@ export const StarButton = ({ favorite, parent }: StarButtonProps) => {
 
     return (
         <button
-            className={filtredFavoris?.length !== 0 ? "fr-icon-star-fill .fr-icon--lg " + styles[parent === "titre" ? "star" : "starInEstablishment"] : "fr-icon-star-line .fr-icon--lg	" + styles[parent === "titre" ? "star" : "starInEstablishment"]}
+            className={(filtredFavoris?.length !== 0 ? "fr-icon-star-fill .fr-icon--lg " : "fr-icon-star-line .fr-icon--lg	") + styles[parent === "titre" ? "star" : "starInEstablishment"]}
             onClick={() => handleFavoriteStatus()}
             title={filtredFavoris?.length !== 0 ? "Enlever cet établissement des favoris" : "Ajouter cet établissement aux favoris"}
         />
