@@ -19,8 +19,7 @@ export const Titre = ({ logo, children, rechercheViewModel }: TitreProps) => {
   return (
     <div className={styles["titre"]}>
       <Image alt="" height="27" src={logo} width="27" />
-      <h1>{children}</h1>
-      <StarButton favorite={rechercheViewModel} />
+      <h1>{children} <StarButton favorite={rechercheViewModel} parent="titre" /> </h1>
       <div>
         <button className="fr-btn fr-btn--secondary fr-fi-download-line fr-btn--icon-left" name={wording.TÉLÉCHARGER_EN_PDF} onClick={imprimer} title={wording.TÉLÉCHARGER_EN_PDF} type="button">
           {wording.TÉLÉCHARGER_EN_PDF}
