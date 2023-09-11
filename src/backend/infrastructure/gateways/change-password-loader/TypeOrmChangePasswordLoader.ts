@@ -29,7 +29,7 @@ export class TypeOrmChangePasswordLoader implements ChangePasswordLoader {
             email = token;
         }
 
-        const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email.trim() });
+        const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email.trim().toLocaleLowerCase() });
 
         if (user) {
             let checkOldPwd;
