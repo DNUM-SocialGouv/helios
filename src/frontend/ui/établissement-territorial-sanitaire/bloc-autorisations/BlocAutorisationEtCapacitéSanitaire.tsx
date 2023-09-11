@@ -2,6 +2,7 @@ import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
+import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import { Sources } from "../../commun/Sources/Sources";
 import { GraphiqueCapacitésParActivité } from "../../indicateur-métier/capacites-sanitaire-par-activites/GraphiqueCapacitésParActivité";
 import { ContenuAutorisations } from "../InfoBulle/ContenuAutorisations";
@@ -24,11 +25,14 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
 
   return (
     <Bloc isMain={false} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>
+      {établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés} /> : <></>}
+
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
-        <GraphiqueCapacitésParActivité
-          graphiqueCapacitésParActivitéViewModel={établissementTerritorialSanitaireAutorisationsViewModel.graphiqueCapacitésParActivitéViewModel}
-        />
-        {établissementTerritorialSanitaireAutorisationsViewModel.lesAutorisationsSontEllesRenseignées && (
+        {établissementTerritorialSanitaireAutorisationsViewModel.graphiqueCapacitésParActivitéViewModel.lesCapacitésParActivitésSontEllesAutorisées ?
+          <GraphiqueCapacitésParActivité
+            graphiqueCapacitésParActivitéViewModel={établissementTerritorialSanitaireAutorisationsViewModel.graphiqueCapacitésParActivitéViewModel}
+          /> : <></>}
+        {établissementTerritorialSanitaireAutorisationsViewModel.lesAutorisationsSontEllesAutorisées && (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuAutorisations
@@ -44,7 +48,7 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             {établissementTerritorialSanitaireAutorisationsViewModel.autorisations}
           </IndicateurGraphique>
         )}
-        {établissementTerritorialSanitaireAutorisationsViewModel.lesAutresActivitésSontEllesRenseignées && (
+        {établissementTerritorialSanitaireAutorisationsViewModel.lesAutresActivitésSontEllesAutorisées && (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuAutresActivités
@@ -60,7 +64,7 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             {établissementTerritorialSanitaireAutorisationsViewModel.autresActivités}
           </IndicateurGraphique>
         )}
-        {établissementTerritorialSanitaireAutorisationsViewModel.lesReconnaissancesContractuellesSontEllesRenseignées && (
+        {établissementTerritorialSanitaireAutorisationsViewModel.lesReconnaissancesContractuellesSontEllesAutorisées && (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuReconnaissancesContractuelles
@@ -76,7 +80,7 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             {établissementTerritorialSanitaireAutorisationsViewModel.reconnaissancesContractuelles}
           </IndicateurGraphique>
         )}
-        {établissementTerritorialSanitaireAutorisationsViewModel.lesÉquipementsMatérielsLourdsSontIlsRenseignés && (
+        {établissementTerritorialSanitaireAutorisationsViewModel.lesÉquipementsMatérielsLourdsSontIlsAutorisés && (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuÉquipementsMatérielsLourds

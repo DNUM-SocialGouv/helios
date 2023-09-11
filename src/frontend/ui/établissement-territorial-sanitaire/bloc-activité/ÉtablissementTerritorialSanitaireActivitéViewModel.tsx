@@ -11,11 +11,13 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel {
   nombreDePassagesAuxUrgencesViewModel: NombrePassageAuxUrgencesViewModel;
   nombreDeSejourMCOViewModel: NombreDeSejourMCOViewModel;
   nombreJourneesPsySSRViewModel: NombreDeJourneesPsySSRViewModel;
+  wording: Wording;
 
   constructor(private readonly établissementTerritorialSanitaireActivités: ÉtablissementTerritorialSanitaire["activités"], wording: Wording) {
     this.createNombrePassageUrgenceViewModel(wording);
     this.nombreDeSejourMCOViewModel = new NombreDeSejourMCOViewModel(établissementTerritorialSanitaireActivités, wording);
     this.nombreJourneesPsySSRViewModel = new NombreDeJourneesPsySSRViewModel(établissementTerritorialSanitaireActivités, wording);
+    this.wording = wording;
   }
 
   private createNombrePassageUrgenceViewModel(wording: Wording) {
@@ -46,9 +48,28 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel {
     return this.lIndicateurEstIlRenseigné("nombreDePassagesAuxUrgences");
   }
 
+  public get nombreDePassagesAuxUrgencesEstIlAutorisé(): boolean {
+    return this.lIndicateurEstIlAutorisé("nombreDePassagesAuxUrgences");
+  }
+
   private lIndicateurEstIlRenseigné(
     indicateur: Exclude<keyof ÉtablissementTerritorialSanitaireActivité, "année" | "dateMiseÀJourSource" | "numéroFinessÉtablissementTerritorial">
   ): boolean {
     return this.établissementTerritorialSanitaireActivités.some((activité: ÉtablissementTerritorialSanitaireActivité) => activité[indicateur].value !== null);
+  }
+
+  private lIndicateurEstIlAutorisé(
+    indicateur: Exclude<keyof ÉtablissementTerritorialSanitaireActivité, "année" | "dateMiseÀJourSource" | "numéroFinessÉtablissementTerritorial">
+  ): boolean {
+    return this.établissementTerritorialSanitaireActivités.some((activité: ÉtablissementTerritorialSanitaireActivité) => activité[indicateur].value !== '');
+  }
+
+  public get lesDonnéesActivitésPasAutorisés(): string[] {
+    const nonAutorisés = [];
+    if (!this.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsAutorisés) nonAutorisés.push(this.wording.NOMBRE_DE_SÉJOUR_MCO);
+    if (!this.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsAutorisé) nonAutorisés.push(this.wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR);
+    if (!this.nombreDePassagesAuxUrgencesEstIlAutorisé) nonAutorisés.push(this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES);
+
+    return nonAutorisés;
   }
 }

@@ -144,7 +144,7 @@ const filterAutorisationSanitaire = (autorisationCapacite: any, profil: any) => 
         autresActivités: profil.autresActivités === 'ok' ? autorisationCapacite.autresActivités : { 'dateMiseÀJourSource': '', activités: [] },
         reconnaissancesContractuelles: profil.reconnaissanceContractuelleActivités === 'ok' ? autorisationCapacite.reconnaissancesContractuelles : { 'dateMiseÀJourSource': '', activités: [] },
         équipementsMatérielsLourds: profil.equipementMaterielLourdsActivités === 'ok' ? autorisationCapacite.équipementsMatérielsLourds : { 'dateMiseÀJourSource': '', équipements: [] },
-        capacités: profil.capacités === 'ok' ? autorisationCapacite.capacités : [],
+        capacités: profil.capacités === 'ok' ? autorisationCapacite.capacités : [{ 'dateMiseÀJourSource': '' }],
         numéroFinessÉtablissementTerritorial: autorisationCapacite.numéroFinessÉtablissementTerritorial
     }
     return filtredAutorisationCapacite;
