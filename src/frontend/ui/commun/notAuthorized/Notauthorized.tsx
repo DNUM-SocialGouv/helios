@@ -8,7 +8,7 @@ type NotAUthorizedProps = Readonly<{
 export const NotAUthorized = ({ indicateurs }: NotAUthorizedProps) => {
     return (
         <div className="fr-callout">
-            <p className="fr-callout__title"> Vous n&apos;êtes pas autorisé à consulter les indicateurs suivants :</p>
+            <p className="fr-text--bold fr-h6"> Vous n&apos;êtes pas autorisé à consulter les indicateurs suivants :</p>
             <ul>
                 {indicateurs?.map(((indicateur, index) => (
                     <li className="fr-callout__text" key={index} >
