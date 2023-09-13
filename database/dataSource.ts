@@ -41,6 +41,7 @@ import { AjoutTableUtilisateurRoleEtablissement1686646154737 } from "./migration
 import { ModificationTableInstitution1688376404752 } from "./migrations/1688376404752-ModificationTableInstitution";
 import { AjoutTableFavori1691393817990 } from "./migrations/1691393817990-AjoutTableFavori";
 import { AjoutTableSearchHistory1691400360927 } from "./migrations/1691400360927-AjoutTableSearchHistory";
+import { AjoutRefDepartementRegion1694523233904 } from "./migrations/1694523233904-AjoutRefDepartementRegion";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "./models/ActivitéSanitaireEntitéJuridiqueModel";
 import { ActivitéSanitaireModel } from "./models/ActivitéSanitaireModel";
@@ -58,6 +59,7 @@ import { FavorisModel } from "./models/FavorisModel";
 import { InstitutionModel } from "./models/InstitutionModel";
 import { RechercheModel } from "./models/RechercheModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "./models/ReconnaissanceContractuelleSanitaireModel";
+import { RefDepartementRegionModel } from "./models/RefDepartementRegionModel";
 import { RessourcesHumainesMédicoSocialModel } from "./models/RessourcesHumainesMédicoSocialModel";
 import { RoleModel } from "./models/RoleModel";
 import { SearchHistoryModel } from "./models/SearchHistoryModel";
@@ -94,6 +96,7 @@ export default new DataSource({
     RoleModel,
     InstitutionModel,
     SearchHistoryModel,
+    RefDepartementRegionModel,
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -136,6 +139,7 @@ export default new DataSource({
     AjoutTableFavori1691393817990,
     AjoutTableUtilisateurRoleEtablissement1686646154737,
     ModificationTableInstitution1688376404752,
+    AjoutRefDepartementRegion1694523233904,
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
