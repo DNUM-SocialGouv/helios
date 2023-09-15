@@ -1,5 +1,5 @@
 import { EntitéJuridique } from "../../../métier/entities/EntitéJuridique";
-import { créerFichierXMLTest, fakeLogger, getFakeDataCrawlerDependencies, supprimerDossier } from "../../../testHelper";
+import { créerFichierXMLTest, fakeLogger, getFakeDataCrawlerDependencies, getOrm, supprimerDossier } from "../../../testHelper";
 import { NodeXmlToJs } from "../xml-to-js/NodeXmlToJs";
 import { FinessXmlEntitésJuridiquesSourceExterneLoader } from "./FinessXmlEntitésJuridiquesSourceExterneLoader";
 
@@ -7,12 +7,13 @@ describe("Récupération des entités juridiques de la source de données FINESS
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies();
   const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_ej`;
   const finessLocalPath = `${localPath}/finess/simple`;
+  const orm = getOrm();
 
   afterEach(() => {
     supprimerDossier(localPath);
   });
 
-  it("récupère uniquement les entités juridiques ouvertes de la source de données FINESS", () => {
+  it("récupère uniquement les entités juridiques ouvertes de la source de données FINESS", async () => {
     // GIVEN
     const ejOuverte1 = `<structureej>
         <nofiness>010008407</nofiness>
@@ -24,6 +25,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
         <ligneacheminement>01117 OYONNAX CEDEX</ligneacheminement>
         <libcommune>OYONNAX</libcommune>
         <libdepartement>AIN</libdepartement>
+        <departement>01</departement>
         <telephone>0474731001</telephone>
         <libstatutjuridique>Etablissement Public Intercommunal d'Hospitalisation</libstatutjuridique>
         <statutjuridique>14</statutjuridique>
@@ -41,6 +43,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
         <ligneacheminement>59650 VILLENEUVE D ASCQ</ligneacheminement>
         <libcommune>VILLENEUVE D ASCQ</libcommune>
         <libdepartement>NORD</libdepartement>
+        <departement>59</departement>
         <telephone>0826666900</telephone>
         <libstatutjuridique>Société Anonyme (S.A.)</libstatutjuridique>
         <statutjuridique>73</statutjuridique>
@@ -69,8 +72,8 @@ describe("Récupération des entités juridiques de la source de données FINESS
 
     créerFichierXMLTest(toutesLesEJ.join(), finessLocalPath, "finess_cs1400101_stock_20211214-0333");
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessXmlEntitésJuridiquesSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
-    const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes();
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitésJuridiquesSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger, orm);
+    const entitésJuridiques = await entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes();
 
     // THEN
     expect(entitésJuridiques).toStrictEqual<EntitéJuridique[]>([
@@ -88,6 +91,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
         siren: "260104631",
         statutJuridique: "14",
         téléphone: "0474731001",
+        codeRégion: "84",
       },
       {
         adresseAcheminement: "59650 VILLENEUVE D ASCQ",
@@ -103,11 +107,12 @@ describe("Récupération des entités juridiques de la source de données FINESS
         siren: "260104632",
         statutJuridique: "73",
         téléphone: "0826666900",
+        codeRégion: "32",
       },
     ]);
   });
 
-  it("ne renvoie pas de valeur lorsque la valeur d’un champ n’est pas renseignée", () => {
+  it("ne renvoie pas de valeur lorsque la valeur d’un champ n’est pas renseignée", async () => {
     // GIVEN
     const structureEJXml = ` <structureej>
         <nofiness>010008407</nofiness>
@@ -185,8 +190,8 @@ describe("Récupération des entités juridiques de la source de données FINESS
       </structureej>`;
     créerFichierXMLTest(structureEJXml, finessLocalPath, "finess_cs1400101_stock_20211214-0333");
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessXmlEntitésJuridiquesSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
-    const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes();
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitésJuridiquesSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger, orm);
+    const entitésJuridiques = await entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes();
 
     // THEN
     expect(entitésJuridiques).toStrictEqual<EntitéJuridique[]>([
@@ -204,6 +209,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
         siren: "260110218",
         statutJuridique: "14",
         téléphone: "",
+        codeRégion: "84",
       },
       {
         adresseAcheminement: "59650 VILLENEUVE D ASCQ",
@@ -219,11 +225,12 @@ describe("Récupération des entités juridiques de la source de données FINESS
         siren: "476780333",
         statutJuridique: "73",
         téléphone: "0826666900",
+        codeRégion: "32",
       },
     ]);
   });
 
-  it("récupère la raison sociale écourtée si la raison sociale longue n’est pas renseignée", () => {
+  it("récupère la raison sociale écourtée si la raison sociale longue n’est pas renseignée", async () => {
     // GIVEN
     const entitéSansRaisonSocialeLongue1 = `<structureej>
         <nofiness>010008407</nofiness>
@@ -235,6 +242,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
         <ligneacheminement>01117 OYONNAX CEDEX</ligneacheminement>
         <libcommune>OYONNAX</libcommune>
         <libdepartement>AIN</libdepartement>
+        <departement>01</departement>
         <telephone>0474731001</telephone>
         <libstatutjuridique>Etablissement Public Intercommunal d'Hospitalisation</libstatutjuridique>
         <statutjuridique>14</statutjuridique>
@@ -252,6 +260,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
         <ligneacheminement>59650 VILLENEUVE D ASCQ</ligneacheminement>
         <libcommune>VILLENEUVE D ASCQ</libcommune>
         <libdepartement>NORD</libdepartement>
+        <departement>59</departement>
         <telephone>0826666900</telephone>
         <libstatutjuridique>Société Anonyme (S.A.)</libstatutjuridique>
         <statutjuridique>73</statutjuridique>
@@ -263,8 +272,8 @@ describe("Récupération des entités juridiques de la source de données FINESS
     const entitésSansRaisonsSociale = [entitéSansRaisonSocialeLongue1, entitéSansRaisonSocialeLongue2];
     créerFichierXMLTest(entitésSansRaisonsSociale.join(), finessLocalPath, "finess_cs1400101_stock_20211214-0333");
     // WHEN
-    const entitéJuridiqueFinessLoader = new FinessXmlEntitésJuridiquesSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
-    const entitésJuridiques = entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes();
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitésJuridiquesSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger, orm);
+    const entitésJuridiques = await entitéJuridiqueFinessLoader.récupèreLesEntitésJuridiquesOuvertes();
 
     // THEN
     expect(entitésJuridiques).toStrictEqual<EntitéJuridique[]>([
@@ -282,6 +291,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
         siren: "260104631",
         statutJuridique: "14",
         téléphone: "0474731001",
+        codeRégion: "84",
       },
       {
         adresseAcheminement: "59650 VILLENEUVE D ASCQ",
@@ -297,6 +307,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
         siren: "260104632",
         statutJuridique: "73",
         téléphone: "0826666900",
+        codeRégion: "32",
       },
     ]);
   });
@@ -305,7 +316,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
     // GIVEN
     créerFichierXMLTest("empty file", finessLocalPath, "finess_cs1400101_stock_20211214-0333");
 
-    const entitéJuridiqueFinessLoader = new FinessXmlEntitésJuridiquesSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
+    const entitéJuridiqueFinessLoader = new FinessXmlEntitésJuridiquesSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger, orm);
 
     // WHEN
     const dateDeMiseÀJourDuFichierSource = entitéJuridiqueFinessLoader.récupèreLaDateDeMiseÀJourDuFichierSource();

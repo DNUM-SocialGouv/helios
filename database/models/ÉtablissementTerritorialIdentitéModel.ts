@@ -34,6 +34,13 @@ export class ÉtablissementTerritorialIdentitéModel {
   public département!: string;
 
   @Column({
+    length: 255,
+    name: "code_region",
+    default: ''
+  })
+  public codeRégion!: string;
+
+  @Column({
     enum: DomaineÉtablissementTerritorial,
     enumName: "domaine_et",
     type: "enum",

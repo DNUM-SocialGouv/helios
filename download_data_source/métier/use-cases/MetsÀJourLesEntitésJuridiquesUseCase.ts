@@ -15,12 +15,12 @@ export class MetsÀJourLesEntitésJuridiquesUseCase {
     private readonly entitéJuridiqueHeliosLoader: EntitéJuridiqueHeliosLoader,
     private readonly catégorisationSourceExterneLoader: StatutsJuridiquesSourceExterneLoader,
     private readonly logger: Logger
-  ) {}
+  ) { }
 
   async exécute(): Promise<void> {
     try {
       const dateDeMiseAJourDuFichierSource = this.entitéJuridiqueSourceExterneLoader.récupèreLaDateDeMiseÀJourDuFichierSource();
-      const entitésJuridiquesOuvertes = this.entitéJuridiqueSourceExterneLoader.récupèreLesEntitésJuridiquesOuvertes();
+      const entitésJuridiquesOuvertes = await this.entitéJuridiqueSourceExterneLoader.récupèreLesEntitésJuridiquesOuvertes();
       const entitéJuridiquesSauvegardées = await this.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques();
 
       const entitésJuridiquesÀSupprimer = this.extraisLesEntitésJuridiquesRécemmentFermées(entitésJuridiquesOuvertes, entitéJuridiquesSauvegardées);

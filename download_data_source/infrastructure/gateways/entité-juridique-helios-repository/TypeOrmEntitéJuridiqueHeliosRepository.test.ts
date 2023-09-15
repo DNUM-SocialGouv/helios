@@ -79,6 +79,7 @@ describe("Sauvegarde des entités juridiques", () => {
     entitéJuridiqueMisÀJourAttendu1.raisonSocialeCourte = "CH DU HAUT BUGEY";
     entitéJuridiqueMisÀJourAttendu1.siren = "260104631";
     entitéJuridiqueMisÀJourAttendu1.téléphone = "0102030406";
+    entitéJuridiqueMisÀJourAttendu1.codeRégion = "84";
     const entitéJuridiqueMisÀJourAttendu2 = new EntitéJuridiqueModel();
     entitéJuridiqueMisÀJourAttendu2.adresseAcheminement = "59650 VILLENEUVE D ASCQ";
     entitéJuridiqueMisÀJourAttendu2.adresseNuméroVoie = "20";
@@ -93,6 +94,7 @@ describe("Sauvegarde des entités juridiques", () => {
     entitéJuridiqueMisÀJourAttendu2.raisonSocialeCourte = "HOPITAL PRIVE DE VILLENEUVE DASCQ";
     entitéJuridiqueMisÀJourAttendu2.siren = "260104632";
     entitéJuridiqueMisÀJourAttendu2.téléphone = "0102030405";
+    entitéJuridiqueMisÀJourAttendu2.codeRégion = "84";
     expect(entitésJuridiquesQuery).toStrictEqual([entitéJuridiqueMisÀJourAttendu1, entitéJuridiqueMisÀJourAttendu2]);
     const dateMiseÀJourFichierSourceSauvée = await dateMiseÀJourFichierSourceRepository.find({ where: { fichier: FichierSource.FINESS_CS1400101 } });
     const dateMiseÀJourFichierSourceAttendue = new DateMiseÀJourFichierSourceModel();
@@ -138,6 +140,7 @@ describe("Sauvegarde des entités juridiques", () => {
     entitéJuridiqueAttendu.raisonSociale = "CENTRE HOSPITALIER DU HAUT BUGEY";
     entitéJuridiqueAttendu.raisonSocialeCourte = "CH DU HAUT BUGEY";
     entitéJuridiqueAttendu.siren = "260104631";
+    entitéJuridiqueAttendu.codeRégion = "84";
     entitéJuridiqueAttendu.téléphone = "0102030406";
     expect(entitésJuridiquesSauvées).toStrictEqual([entitéJuridiqueAttendu]);
 
