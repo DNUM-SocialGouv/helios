@@ -322,7 +322,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
       }),
     },
     {
-      indicateurAffiché: wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS,
+      indicateurAffiché: wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE,
       viewModel: ÉtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(wording, paths, {
         autorisations: {
           activités: [],
@@ -518,7 +518,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     // THEN
     const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
     const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
-    const itemCapacitéParActivités = sélectionneLIndicateur(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, indicateurs);
+    const itemCapacitéParActivités = sélectionneLIndicateur(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE, indicateurs);
     const indexPartieCapacitéParActivités = indicateurs.indexOf(itemCapacitéParActivités);
     const itemAutorisations = sélectionneLIndicateur(wording.AUTORISATIONS_SANITAIRE, indicateurs);
     const indexPartieAutorisations = indicateurs.indexOf(itemAutorisations);

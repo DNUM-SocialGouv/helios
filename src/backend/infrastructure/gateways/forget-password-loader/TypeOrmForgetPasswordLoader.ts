@@ -18,13 +18,13 @@ export class TypeOrmForgetPasswordLoader implements ForgetPasswordLoader {
       
           <p>Nous avons reçu une demande de réinitialisation de mot de passe pour votre compte.</p>
       
-          <p>Modifiez-le en cliquant sur ce lien (valide pendant 72 heures) :</p>
+          <p>Modifiez-le en cliquant sur ce lien</p>
       
           <p><a href="${APP_URL}/reinitialisation-mot-passe?loginToken=${token}">${APP_URL}/reinitialisation-mot-passe?loginToken=${token}</a></p>
       
           <p>Si le lien de réinitialisation ne s'affiche pas, copiez et collez-le dans votre navigateur.</p>
       
-          <p>Si votre lien de réinitialisation a expiré, merci de cliquer <span> <a href="${APP_URL}/mot-passe-oublie">ici</a> </span> </p>
+          <p>Ce lien reste valide pendant 72 heures après réception du mail. Une erreur 404 apparaitra sur le site Helios en cas d'expiration du lien, dans ce cas, merci de cliquer sur le lien suivant :<span> <a href="${APP_URL}/mot-passe-oublie">ici</a> </span> </p>
       
           <p>Si vous ne souhaitez pas réinitialiser votre mot de passe, vous pouvez ignorer cet e-mail.</p>
       
