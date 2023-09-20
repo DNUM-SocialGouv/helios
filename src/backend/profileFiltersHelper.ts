@@ -67,6 +67,7 @@ export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): En
         raisonSocialeCourte: profil.identité.nom === 'ok' ? result.raisonSocialeCourte : { 'dateMiseÀJourSource': '', value: '' },
         siren: profil.identité.siret === 'ok' ? result.siren : { 'dateMiseÀJourSource': '', value: '' },
         téléphone: profil.identité.télEtEmail === 'ok' ? result.téléphone : { 'dateMiseÀJourSource': '', value: '' },
+        codeRegion: result.codeRegion,
         activités: activités,
         autorisationsEtCapacites: autorisationsEtCapacites,
         budgetFinance: budgetFinance

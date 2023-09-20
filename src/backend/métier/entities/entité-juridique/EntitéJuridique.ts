@@ -44,6 +44,7 @@ export type EntitéJuridiqueIdentité = {
     dateMiseÀJourSource: string;
     value: string;
   }>;
+  codeRegion: string;
 };
 
 export type EntitéJuridique = EntitéJuridiqueIdentité &

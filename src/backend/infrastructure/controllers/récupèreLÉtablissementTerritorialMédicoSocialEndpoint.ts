@@ -47,7 +47,7 @@ export async function récupèreLÉtablissementTerritorialMédicoSocialEndpoint(
       'habilité': 'ok',
       'nombreDEtpRéalisés': 'ok',
       'nombreDeCddDeRemplacement': 'ok',
-      'tauxDAbsentéisme': 'nofilterEtablissementMedicoSocial',
+      'tauxDAbsentéisme': 'ok',
       'tauxDEtpVacants': 'no',
       'tauxDePrestationsExternes': 'no',
       'tauxDeRotationDuPersonnel': 'no'

@@ -44,6 +44,7 @@ import { AjoutTableSearchHistory1691400360927 } from "./migrations/1691400360927
 import { AjoutRefDepartementRegion1694523233904 } from "./migrations/1694523233904-AjoutRefDepartementRegion";
 import { AjoutRégionDansEntitéJuridique1694616724703 } from "./migrations/1694616724703-AjoutRégionDansEntitéJuridique";
 import { AjoutRégionDansEtablissementTerritorial1694617579347 } from "./migrations/1694617579347-AjoutRégionDansEtablissementTerritorial";
+import { AjoutTableProfil1695040172513 } from "./migrations/1695040172513-AjoutTableProfil";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "./models/ActivitéSanitaireEntitéJuridiqueModel";
 import { ActivitéSanitaireModel } from "./models/ActivitéSanitaireModel";
@@ -59,6 +60,7 @@ import { DateMiseÀJourFichierSourceModel } from "./models/DateMiseÀJourFichier
 import { EntitéJuridiqueModel } from "./models/EntitéJuridiqueModel";
 import { FavorisModel } from "./models/FavorisModel";
 import { InstitutionModel } from "./models/InstitutionModel";
+import { ProfilModel } from "./models/ProfilModel";
 import { RechercheModel } from "./models/RechercheModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "./models/ReconnaissanceContractuelleSanitaireModel";
 import { RefDepartementRegionModel } from "./models/RefDepartementRegionModel";
@@ -99,6 +101,7 @@ export default new DataSource({
     InstitutionModel,
     SearchHistoryModel,
     RefDepartementRegionModel,
+    ProfilModel,
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -144,6 +147,7 @@ export default new DataSource({
     AjoutRefDepartementRegion1694523233904,
     AjoutRégionDansEntitéJuridique1694616724703,
     AjoutRégionDansEtablissementTerritorial1694617579347,
+    AjoutTableProfil1695040172513,
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

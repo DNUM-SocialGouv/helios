@@ -1,5 +1,8 @@
+import { ProfilModel } from "../../../../database/models/ProfilModel";
+import myCache from "../../cacheProvider";
 import { EntitéJuridique } from "../../métier/entities/entité-juridique/EntitéJuridique";
 import { ÉtablissementTerritorialRattaché } from "../../métier/entities/entité-juridique/ÉtablissementTerritorialRattaché";
+import { LoginUseCase } from "../../métier/use-cases/LoginUseCase";
 import { RécupèreLEntitéJuridiqueUseCase } from "../../métier/use-cases/RécupèreLEntitéJuridiqueUseCase";
 import { RécupèreLesÉtablissementsTerritoriauxRattachésUseCase } from "../../métier/use-cases/RécupèreLesÉtablissementsTerritoriauxRattachésÀLEntitéJuridiqueUseCase";
 import { filterEntiteJuridique } from "../../profileFiltersHelper";
@@ -10,43 +13,21 @@ type EntitéJuridiqueEndpoint = Readonly<{
   établissementsTerritoriauxRattachés: ÉtablissementTerritorialRattaché[];
 }>;
 
-export async function récupèreLEntitéJuridiqueEndpoint(dependencies: Dependencies, numéroFiness: string): Promise<EntitéJuridiqueEndpoint> {
-  const profilEJ = {
-    'identité': {
-      'habilité': 'ok',
-      'nom': 'ok',
-      'numéroFiness': 'ok',
-      'siret': 'ok',
-      'adresse': 'ok',
-      'télEtEmail': 'ok',
-      'statut_EJ': 'ok',
-    },
-    'autorisationsEtCapacités': {
-      'habilité': 'ok',
-      'capacités': 'no',
-      'autorisationsActivités': 'no',
-      'autresActivités': 'ok',
-      'reconnaissanceContractuelleActivités': 'ok',
-      'equipementMaterielLourdsActivités': 'no',
-    },
-    'activités': {
-      'habilité': 'ok',
-      'nombreSéjours': 'no',
-      'nombreJournées': 'no',
-      'nombrePassage': 'ok',
-      'nombreSéjoursHad': 'ok',
-    },
-    'budgetEtFinance': {
-      'habilité': 'ok',
-      'compteRésultats': 'ok',
-      'résultatNetComptable': 'no',
-      'tauxDeCafNette': 'no',
-      'ratioDépendanceFinancière': 'no',
-    },
-  }
-
+export async function récupèreLEntitéJuridiqueEndpoint(dependencies: Dependencies, numéroFiness: string, codeRegion: string): Promise<EntitéJuridiqueEndpoint> {
   const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(dependencies.entitéJuridiqueLoader);
   const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFiness);
+
+  const loginUseCase = new LoginUseCase(dependencies.utilisateurLoader);
+  const profilInCache = myCache.get("userProfile") as ProfilModel; 0
+  let profil: ProfilModel | null;
+  if (profilInCache === undefined) {
+    profil = await loginUseCase.getProfile();
+    myCache.set("userProfile", profil, 3600);
+  } else {
+    profil = profilInCache;
+  }
+
+  const profilEJ = entitéJuridique.codeRegion === codeRegion ? profil?.value.institution.profilEJ : profil?.value.autreRegion.profilEJ;
 
   const filtredEntitéJuridique = filterEntiteJuridique(entitéJuridique, profilEJ);
 
