@@ -115,6 +115,7 @@ const filterIdentiteSanitaire = (identite: any, profil: any) => {
         téléphone: profil.télEtEmail === 'ok' ? identite.téléphone : { 'dateMiseÀJourSource': '', value: '' },
         raisonSocialeDeLEntitéDeRattachement: profil.EJ_rattachement === 'ok' ? identite.raisonSocialeDeLEntitéDeRattachement : { 'dateMiseÀJourSource': '', value: '' },
         statutJuridique: profil.statut_EJ === 'ok' ? identite.statutJuridique : { 'dateMiseÀJourSource': '', value: '' },
+        codeRegion: identite.codeRegion
     }
 
     return filtredIdentite;
@@ -174,6 +175,7 @@ const filterIdentiteMedicoSocial = (identite: any, profil: any) => {
         raisonSocialeDeLEntitéDeRattachement: profil.EJ_rattachement === 'ok' ? identite.raisonSocialeDeLEntitéDeRattachement : { 'dateMiseÀJourSource': '', value: '' },
         statutJuridique: profil.statut_EJ === 'ok' ? identite.statutJuridique : { 'dateMiseÀJourSource': '', value: '' },
         estMonoÉtablissement: profil.estMonoÉtablissement === 'ok' ? identite.estMonoÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
+        codeRegion: identite.codeRegion
     }
     return filtredIdentite;
 }

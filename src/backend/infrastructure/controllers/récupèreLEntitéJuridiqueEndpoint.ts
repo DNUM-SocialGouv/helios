@@ -1,5 +1,5 @@
 import { ProfilModel } from "../../../../database/models/ProfilModel";
-import myCache from "../../cacheProvider";
+import appCache from "../../cacheProvider";
 import { EntitéJuridique } from "../../métier/entities/entité-juridique/EntitéJuridique";
 import { ÉtablissementTerritorialRattaché } from "../../métier/entities/entité-juridique/ÉtablissementTerritorialRattaché";
 import { LoginUseCase } from "../../métier/use-cases/LoginUseCase";
@@ -18,11 +18,11 @@ export async function récupèreLEntitéJuridiqueEndpoint(dependencies: Dependen
   const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFiness);
 
   const loginUseCase = new LoginUseCase(dependencies.utilisateurLoader);
-  const profilInCache = myCache.get("userProfile") as ProfilModel; 0
+  const profilInCache = appCache.get("userProfile") as ProfilModel;
   let profil: ProfilModel | null;
   if (profilInCache === undefined) {
     profil = await loginUseCase.getProfile();
-    myCache.set("userProfile", profil, 3600);
+    appCache.set("userProfile", profil, 3600);
   } else {
     profil = profilInCache;
   }

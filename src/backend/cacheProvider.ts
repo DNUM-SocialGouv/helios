@@ -1,6 +1,6 @@
 import NodeCache from "node-cache";
 
-const myCache = new NodeCache({ checkperiod: 24 * 60 * 60 });
+const appCache = new NodeCache({ checkperiod: 24 * 60 * 60 });
 
 
-export default myCache;
+export default appCache;
