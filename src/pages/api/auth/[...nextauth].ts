@@ -25,8 +25,7 @@ export default NextAuth({
           }
 
           const { utilisateur } = await authResponse.json();
-
-          return { ...utilisateur, id: utilisateur.code, institution: utilisateur.institution.libelle, codeRegion: utilisateur.institution.codeGeo };
+          return { ...utilisateur, id: utilisateur.code, institution: utilisateur.institution.libelle, codeRegion: utilisateur.institution.codeGeo, codeProfiles: utilisateur.profils };
         } catch (error) {
           return null;
         }
@@ -44,7 +43,8 @@ export default NextAuth({
           firstname: user.prenom,
           role: user.roleId,
           institution: user.institution,
-          codeRegion: user.codeRegion
+          codeRegion: user.codeRegion,
+          codeProfiles: user.codeProfiles
         }
       }
       return token
@@ -55,6 +55,7 @@ export default NextAuth({
       session.user.role = token['role'] as string;
       session.user.institution = token['institution'] as string;
       session.user.codeRegion = token['codeRegion'] as string;
+      session.user.codeProfiles = token['codeProfiles'] as string[];
       return session
     },
   },

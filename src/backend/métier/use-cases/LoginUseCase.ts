@@ -13,7 +13,7 @@ export class LoginUseCase {
     return await this.utilisateurLoader.checkIfEmailExists(email);
   }
 
-  async getProfile(): Promise<ProfilModel | null> {
-    return await this.utilisateurLoader.getProfile();
+  async getUserProfiles(codes: string[]): Promise<ProfilModel[] | null> {
+    return await this.utilisateurLoader.getUserProfiles(codes);
   }
 }

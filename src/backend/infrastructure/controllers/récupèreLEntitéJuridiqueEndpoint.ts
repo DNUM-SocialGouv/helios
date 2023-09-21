@@ -5,7 +5,7 @@ import { ÉtablissementTerritorialRattaché } from "../../métier/entities/entit
 import { LoginUseCase } from "../../métier/use-cases/LoginUseCase";
 import { RécupèreLEntitéJuridiqueUseCase } from "../../métier/use-cases/RécupèreLEntitéJuridiqueUseCase";
 import { RécupèreLesÉtablissementsTerritoriauxRattachésUseCase } from "../../métier/use-cases/RécupèreLesÉtablissementsTerritoriauxRattachésÀLEntitéJuridiqueUseCase";
-import { filterEntiteJuridique } from "../../profileFiltersHelper";
+import { combineProfils, filterEntiteJuridique } from "../../profileFiltersHelper";
 import { Dependencies } from "../dependencies";
 
 type EntitéJuridiqueEndpoint = Readonly<{
@@ -13,23 +13,25 @@ type EntitéJuridiqueEndpoint = Readonly<{
   établissementsTerritoriauxRattachés: ÉtablissementTerritorialRattaché[];
 }>;
 
-export async function récupèreLEntitéJuridiqueEndpoint(dependencies: Dependencies, numéroFiness: string, codeRegion: string): Promise<EntitéJuridiqueEndpoint> {
+export async function récupèreLEntitéJuridiqueEndpoint(dependencies: Dependencies, numéroFiness: string, codeRegion: string, codeProfiles: string[]): Promise<EntitéJuridiqueEndpoint> {
   const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(dependencies.entitéJuridiqueLoader);
   const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFiness);
 
   const loginUseCase = new LoginUseCase(dependencies.utilisateurLoader);
-  const profilInCache = appCache.get("userProfile") as ProfilModel;
-  let profil: ProfilModel | null;
+  const profilInCache = appCache.get("userProfile") as object;
+  let profil: object;
+
+
   if (profilInCache === undefined) {
-    profil = await loginUseCase.getProfile();
+    const profiles = await loginUseCase.getUserProfiles(codeProfiles) as ProfilModel[];
+    const profilesValues = profiles.map((profile) => entitéJuridique.codeRegion === codeRegion ? profile?.value.institution.profilEJ : profile?.value.autreRegion.profilEJ)
+    profil = combineProfils(profilesValues);
     appCache.set("userProfile", profil, 3600);
   } else {
     profil = profilInCache;
   }
 
-  const profilEJ = entitéJuridique.codeRegion === codeRegion ? profil?.value.institution.profilEJ : profil?.value.autreRegion.profilEJ;
-
-  const filtredEntitéJuridique = filterEntiteJuridique(entitéJuridique, profilEJ);
+  const filtredEntitéJuridique = filterEntiteJuridique(entitéJuridique, profil);
 
   const récupèreLesÉtablissementsTerritoriauxRattachésUseCase = new RécupèreLesÉtablissementsTerritoriauxRattachésUseCase(
     dependencies.établissementTerritorialRattachéLoader

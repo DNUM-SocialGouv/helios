@@ -51,10 +51,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
   try {
     const session = await getSession(context);
     const codeRegion = session?.user.codeRegion as string;
+    const codeProfiles = session?.user.codeProfiles as string[];
 
     if (context.params && context.params["numeroFiness"]) {
       const numeroFiness = context.params["numeroFiness"] as string;
-      const entitéJuridiqueEndpoint = (await récupèreLEntitéJuridiqueEndpoint(dependencies, numeroFiness, codeRegion)) as RouterProps;
+      const entitéJuridiqueEndpoint = (await récupèreLEntitéJuridiqueEndpoint(dependencies, numeroFiness, codeRegion, codeProfiles)) as RouterProps;
       const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, numeroFiness, 1);
 
       return {

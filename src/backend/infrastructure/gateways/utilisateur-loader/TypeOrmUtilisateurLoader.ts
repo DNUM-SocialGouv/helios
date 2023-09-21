@@ -30,10 +30,11 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         } else return false;
     }
 
-    async getProfile(): Promise<ProfilModel | null> {
-        const profile = await (await this.orm).getRepository(ProfilModel).findOne({
-            where: { code: '3f0f46f6-f50a-4d92-be71-23e7b76d2f43' },
-        });
-        return profile;
+    async getUserProfiles(codes: string[]): Promise<ProfilModel[] | null> {
+        const profiles = await (await this.orm).getRepository(ProfilModel)
+            .createQueryBuilder("profiles")
+            .where('profiles.profil_code IN (:...codes)', { codes })
+            .getMany();
+        return profiles;
     }
 }

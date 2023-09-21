@@ -44,6 +44,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
   try {
     const session = await getSession(context);
     const codeRegion = session?.user.codeRegion as string;
+    const codeProfiles = session?.user.codeProfiles as string[];
 
     if (context.params && context.params["numeroFiness"]) {
       const numeroFiness = context.params["numeroFiness"] as string;
@@ -51,7 +52,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       const établissementTerritorial = (await récupèreLÉtablissementTerritorialMédicoSocialEndpoint(
         dependencies,
         numeroFiness,
-        codeRegion
+        codeRegion,
+        codeProfiles
       )) as ÉtablissementTerritorialMédicoSocial;
 
       const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, numeroFiness, 1);

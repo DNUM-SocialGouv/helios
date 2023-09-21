@@ -302,3 +302,24 @@ const filterBudgetFinanceEJ = (budgetFinance: any, profil: any) => {
     }
     return budgetFinance;
 }
+
+export const combineProfils = (userProfils: any[]) => {
+    const combinedProfile = userProfils[0];
+    if (userProfils.length > 1) {
+        for (const profile of userProfils) {
+            for (const bloc in profile) {
+                if (profile.hasOwnProperty(bloc)) {
+                    const blocIndicators = profile[bloc];
+
+                    for (const indicator in blocIndicators) {
+                        if (blocIndicators.hasOwnProperty(indicator)) {
+                            const indicatorValue = blocIndicators[indicator];
+                            if (indicatorValue === 'no') combinedProfile[bloc][indicator] = 'no';
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return combinedProfile;
+}
