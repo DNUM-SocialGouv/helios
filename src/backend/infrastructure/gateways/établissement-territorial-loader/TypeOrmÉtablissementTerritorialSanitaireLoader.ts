@@ -33,7 +33,7 @@ import { ÉtablissementTerritorialSanitaireNonTrouvée } from "../../../métier/
 import { ÉtablissementTerritorialSanitaireLoader } from "../../../métier/gateways/ÉtablissementTerritorialSanitaireLoader";
 
 export class TypeOrmÉtablissementTerritorialSanitaireLoader implements ÉtablissementTerritorialSanitaireLoader {
-  constructor(private readonly orm: Promise<DataSource>) {}
+  constructor(private readonly orm: Promise<DataSource>) { }
 
   async chargeActivité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialSanitaireActivité[]> {
     const activitésÉtablissementTerritorialActivitésModel = await this.chargeLesActivitésModel(numéroFinessÉtablissementTerritorial);
@@ -217,6 +217,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.téléphone,
       },
+      codeRegion: établissementTerritorialIdentitéModel.codeRégion
     };
   }
 
