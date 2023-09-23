@@ -361,6 +361,11 @@ export interface Wording {
   readonly DIFFERENT_MOT_PASSE: string;
   readonly WRONG_OLD_MOT_DE_PASSE: string;
 
+  // Parametrage
+  readonly PARAMETRAGE_TITRE: string;
+  readonly PARAMETRAGE_PROFILE: string;
+
+
   //  Profile page
   readonly USER_PROFILE: string;
   readonly FIRSTNAME: string;
