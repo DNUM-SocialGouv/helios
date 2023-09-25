@@ -1,14 +1,11 @@
+import "@gouvfr/dsfr/dist/component/tab/tab.min.css";
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
-import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./ParametrageProfil.module.css";
-import { useParametrageProfil } from "./useParametrageProfil";
-import { useEffect, useState } from "react";
+import { ProfileTabContent } from "./ProfileTabContent";
 
-const expProfile = {
-    
-}
 
 const profile = {
     "autreRegion": {
@@ -65,7 +62,7 @@ const profile = {
 
         //     }
         // },
-        "profilETSanitaire": "ok", 
+        "profilETSanitaire": "ok",
         // {
         //     "Qualité": {
         //         "missions": "ok",
@@ -523,12 +520,13 @@ const profile = {
 
 const ProfileTable = () => {
     const [editableValues, setEditableValues] = useState({});
+    const { wording } = useDependencies();
 
     useEffect(() => {
         // Set the initial state based on the profile object
-        const initialEditableValues = {};
+        const initialEditableValues: any = {};
 
-        const setInitialValues = (obj, prefix = '') => {
+        const setInitialValues = (obj: any, prefix = '') => {
             Object.keys(obj).forEach(key => {
                 const currentKey = prefix ? `${prefix} ${key}` : key;
                 const value = obj[key];
@@ -551,7 +549,6 @@ const ProfileTable = () => {
             [key]: checked ? 'ok' : 'no'
         });
     };
-    console.log("editableValues", editableValues);
 
     const renderRows = (obj, prefix = '') => {
         return Object.keys(obj).map((key, index) => {
@@ -566,9 +563,9 @@ const ProfileTable = () => {
                     <td>
                         {typeof obj[key] === 'string' && (value === 'ok' || value === 'no') &&
                             <input
-                                type="checkbox"
                                 checked={editableValues[currentKey] === 'ok'}
                                 onChange={(e) => handleCheckboxChange(currentKey, e.target.checked)}
+                                type="checkbox"
                             />
                         }
                         {typeof obj[key] !== 'string' && value}
@@ -579,16 +576,33 @@ const ProfileTable = () => {
     };
 
     return (
-        <table>
-            <tbody>
-                {renderRows(profile)}
-            </tbody>
-        </table>)
+        <div className="fr-tabs">
+            <ul aria-label="profiles-tab" className="fr-tabs__list" role="tablist">
+                <li role="presentation">
+                    <button aria-controls="tabpanel-EJ" aria-selected="true" className="fr-tabs__tab fr-tabs__tab--icon-left" id="tabpanel-404" role="tab">
+                        {wording.PARAMETRAGE_EJ_TAB}
+                    </button>
+                </li>
+                <li role="presentation">
+                    <button aria-controls="tabpanel-ET-MS" aria-selected="false" className="fr-tabs__tab fr-tabs__tab--icon-left" id="tabpanel-405" role="tab">
+                        {wording.PARAMETRAGE_ET_MS_TAB}
+                    </button>
+                </li>
+                <li role="presentation">
+                    <button aria-controls="tabpanel-ET-SAN" aria-selected="false" className="fr-tabs__tab fr-tabs__tab--icon-left" id="tabpanel-406" role="tab">
+                        {wording.PARAMETRAGE_ET_SAN_TAB}
+                    </button>
+                </li>
+            </ul>
+            <ProfileTabContent autreRégion="" idTabPanel="tabpanel-EJ" institution="" />
+            <ProfileTabContent autreRégion="" idTabPanel="tabpanel-ET-MS" institution="" />
+            <ProfileTabContent autreRégion="" idTabPanel="tabpanel-ET-SAN" institution="" />
+        </div>
+    )
 }
 
 export const ParametrageProfilPage = () => {
     const { wording } = useDependencies();
-    const { data } = useSession();
     // const { getAllProfiles, profiles } = useParametrage();
     return (
         <main className="fr-container">

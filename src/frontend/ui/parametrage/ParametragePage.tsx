@@ -1,34 +1,19 @@
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
-import { useSession } from "next-auth/react";
-import { useEffect } from "react";
-
-import { formatDateAndHours } from "../../utils/dateUtils";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./Parametrage.module.css";
-import { useParametrage } from "./useParametrage";
-import { ListItem } from "../commun/ListItem/ListItem";
+
 
 const profiles = [{
     name: "profile 1", id: "profile-1", createdAt: "21-09-2023"
 }, {
     name: "profile 2", id: "profile-2", createdAt: "21-09-2023"
-},{
+}, {
     name: "profile 3", id: "profile-3", createdAt: "21-09-2023"
 }];
 
 export const ParametragePage = () => {
     const { wording } = useDependencies();
-    const { data } = useSession();
     // const { getAllProfiles, profiles } = useParametrage();
-
-    const buildLink = (history: any) => {
-        if (history.type === "Médico-social") {
-            return "/etablissement-territorial-medico-social/" + history.finessNumber;
-        } else if (history.type === "Sanitaire") {
-            return "/etablissement-territorial-sanitaire/" + history.finessNumber;
-        }
-        return "/entite-juridique/" + history.finessNumber;
-    };
 
     return (
         <main className="fr-container">
