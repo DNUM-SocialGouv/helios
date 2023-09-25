@@ -314,7 +314,7 @@ export const combineProfils = (userProfils: any[]) => {
                     for (const indicator in blocIndicators) {
                         if (blocIndicators.hasOwnProperty(indicator)) {
                             const indicatorValue = blocIndicators[indicator];
-                            if (indicatorValue === 'no') combinedProfile[bloc][indicator] = 'no';
+                            if (indicatorValue === 'ok') combinedProfile[bloc][indicator] = 'ok';
                         }
                     }
                 }
