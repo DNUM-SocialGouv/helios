@@ -10,4 +10,8 @@ export class TypeOrmProfileLoader implements ProfileLoader {
     async getAllProfiles(): Promise<ProfilModel[]> {
         return await (await this.orm).getRepository(ProfilModel).find();
     }
+
+    async getProfileByCode(code: string): Promise<ProfilModel | null> {
+        return await (await this.orm).getRepository(ProfilModel).findOne({ where: { code: code } })
+    }
 }

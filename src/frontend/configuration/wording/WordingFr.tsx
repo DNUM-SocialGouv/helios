@@ -453,7 +453,7 @@ export class WordingFr implements Wording {
   readonly WRONG_OLD_MOT_DE_PASSE: string = "Ancien mot de passe erroné"
 
   readonly PARAMETRAGE_TITRE: string = "Liste des profils";
-  readonly PARAMETRAGE_PROFILE: string = "Paramètrage des profils";
+  readonly PARAMETRAGE_PROFILE: string = "Paramétrage de profil: ";
   readonly PARAMETRAGE_EJ_TAB: string = "Entité juridique";
   readonly PARAMETRAGE_ET_MS_TAB: string = "Établissement médico-social";
   readonly PARAMETRAGE_ET_SAN_TAB: string = "Établissement sanitaire";

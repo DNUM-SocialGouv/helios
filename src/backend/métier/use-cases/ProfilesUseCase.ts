@@ -7,4 +7,8 @@ export class ProfilesUseCase {
     async getAllProfiles(): Promise<ProfilModel[]> {
         return await this.profileLoader.getAllProfiles();
     }
+
+    async getProfileByCode(code: string): Promise<ProfilModel | null> {
+        return await this.profileLoader.getProfileByCode(code);
+    }
 }

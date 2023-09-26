@@ -33,7 +33,7 @@ export const ParametragePage = () => {
                             {profileContext?.profiles.map((profile: any) => (
                                 <tr key={profile.id}>
                                     <td>
-                                        <a className="fr-raw-link" href={`/parametrage/${profile.id}`}>
+                                        <a className="fr-raw-link" href={`/parametrage/${profile.code}`}>
                                             {profile.label}
                                         </a></td>
                                     <td>{formatDateAndHours(profile.dateCreation)}</td>
