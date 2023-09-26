@@ -370,6 +370,7 @@ export interface Wording {
   readonly PARAMETRAGE_ET_SAN_TAB: string;
   readonly PARAMETRAGE_INSTITUTION: string;
   readonly PARAMETRAGE_AUTRE_REGION: string;
+  readonly CREATION_DATE: string;
 
   //  Profile page
   readonly USER_PROFILE: string;

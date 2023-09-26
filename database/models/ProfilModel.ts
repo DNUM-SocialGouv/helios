@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
 
 export type ProfileValue = Readonly<{
     institution: { profilEJ: object, profilETSanitaire: object, profilMédicoSocial: object };
@@ -18,4 +18,10 @@ export class ProfilModel {
 
     @Column({ name: "profil_value", type: 'jsonb', default: {} })
     public value!: ProfileValue;
+
+    @CreateDateColumn({ name: "profil_date_creation" })
+    public dateCreation!: Date;
+
+    @UpdateDateColumn({ name: "profil_date_modification" })
+    public dateModification!: Date;
 }

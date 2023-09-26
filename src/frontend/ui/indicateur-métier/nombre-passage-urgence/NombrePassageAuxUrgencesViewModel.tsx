@@ -45,7 +45,7 @@ export class NombrePassageAuxUrgencesViewModel {
         années.push(indicateur.année);
       }
 
-      if (indicateur.value !== null) {
+      if (indicateur.value !== null && indicateur.value !== "") {
         valeurs.push(indicateur.value);
       }
     });

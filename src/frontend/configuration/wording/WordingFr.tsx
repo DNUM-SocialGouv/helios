@@ -459,6 +459,7 @@ export class WordingFr implements Wording {
   readonly PARAMETRAGE_ET_SAN_TAB: string = "Établissement sanitaire";
   readonly PARAMETRAGE_INSTITUTION: string = "Institution";
   readonly PARAMETRAGE_AUTRE_REGION: string = "Autre région";
+  readonly CREATION_DATE: string = "Date de création";
 
   //  Profile page
   readonly USER_PROFILE: string = "Profil de l'utilisateur";

@@ -1,40 +1,42 @@
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
+import { useContext, useEffect } from "react";
+
+import { formatDateAndHours } from "../../utils/dateUtils";
+import { ProfileContext } from "../commun/contexts/ProfilContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./Parametrage.module.css";
-
-
-const profiles = [{
-    name: "profile 1", id: "profile-1", createdAt: "21-09-2023"
-}, {
-    name: "profile 2", id: "profile-2", createdAt: "21-09-2023"
-}, {
-    name: "profile 3", id: "profile-3", createdAt: "21-09-2023"
-}];
+import { useParametrage } from "./useParametrage";
 
 export const ParametragePage = () => {
     const { wording } = useDependencies();
-    // const { getAllProfiles, profiles } = useParametrage();
+    const profileContext = useContext(ProfileContext);
+
+    const { getAllProfiles } = useParametrage();
+
+    useEffect(() => {
+        getAllProfiles();
+    }, []);
 
     return (
         <main className="fr-container">
             <h1 className={styles["title"]}>{wording.PARAMETRAGE_TITRE}</h1>
-            {profiles.length === 0 ? (<div className={"fr-mt-8w " + styles["align-text"]}>Vous n&apos;avez aucun profil</div>) : (
+            {profileContext?.profiles.length === 0 ? (<div className={"fr-mt-8w " + styles["align-text"]}>Vous n&apos;avez aucun profil</div>) : (
                 <div className={"fr-table fr-table--blue-ecume fr-mt-8w " + styles["align"]}>
                     <table>
                         <thead>
                             <tr>
-                                <th scope="col">{wording.PARAMETRAGE_PROFILE}</th>
-                                <th scope="col">{wording.DATE}</th>
+                                <th scope="col">{wording.PROFILE}</th>
+                                <th scope="col">{wording.CREATION_DATE}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {profiles.map((profile) => (
+                            {profileContext?.profiles.map((profile: any) => (
                                 <tr key={profile.id}>
                                     <td>
                                         <a className="fr-raw-link" href={`/parametrage/${profile.id}`}>
-                                            {profile.id}
+                                            {profile.label}
                                         </a></td>
-                                    <td>{profile.createdAt}</td>
+                                    <td>{formatDateAndHours(profile.dateCreation)}</td>
                                 </tr>
                             ))}
                         </tbody>

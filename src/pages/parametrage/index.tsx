@@ -1,6 +1,6 @@
 import { useDependencies } from "../../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
-import { ParametragePage } from "../../frontend/ui/parametrage/ParametragePage";
+import { ParametragePage } from "../../frontend/ui/parametrage-profil/ParametragePage";
 
 export default function Parametrage() {
     const { wording } = useDependencies();

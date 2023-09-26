@@ -18,8 +18,6 @@ export const UserContextProvider = ({ children }: UserProviderProps) => {
         setFavoris(prevFavoris => prevFavoris.filter(item => item.numéroFiness !== element.numéroFiness));
     };
 
-
-
     return (
         <UserContext.Provider value={{ favoris, setFavoris, addToFavoris, removeFromFavoris }}>
             {children}

@@ -85,6 +85,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       dateMiseÀJourSource: "2021-07-07",
       value: "0474754800",
     },
+    codeRegion: '84',
   };
   public static activités: ÉtablissementTerritorialSanitaire["activités"] = [
     {

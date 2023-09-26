@@ -45,6 +45,7 @@ export class EntitéJuridiqueViewModelTestBuilder {
       dateMiseÀJourSource: "2021-07-07",
       value: "0296017123",
     },
+    codeRegion: '84',
     activités: [],
     budgetFinance: [],
     autorisationsEtCapacites: {

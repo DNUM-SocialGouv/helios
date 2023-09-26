@@ -9,10 +9,10 @@ import {
 import { StringFormater } from "../../commun/StringFormater";
 
 type DonnéesDeDiagrammeDesJournéesPsyEtSsr = Readonly<{
-  nombreJournéesComplètesPsy: { x: number; y: number | null }[];
-  nombreJournéesComplètesSsr: { x: number; y: number | null }[];
-  nombreJournéesPartiellesPsy: { x: number; y: number | null }[];
-  nombreJournéesPartiellesSsr: { x: number; y: number | null }[];
+  nombreJournéesComplètesPsy: { x: number; y: number | null | "" }[];
+  nombreJournéesComplètesSsr: { x: number; y: number | null | "" }[];
+  nombreJournéesPartiellesPsy: { x: number; y: number | null | "" }[];
+  nombreJournéesPartiellesSsr: { x: number; y: number | null | "" }[];
 }>;
 
 export type ActivitesPsySSR = Pick<
@@ -147,7 +147,7 @@ export class NombreDeJourneesPsySSRViewModel {
     ];
   }
 
-  private valeursDesNombresDeSéjours(nombresSéjours: { x: number; y: number | null }[]): (string | null)[] {
+  private valeursDesNombresDeSéjours(nombresSéjours: { x: number; y: number | null | "" }[]): (string | null)[] {
     return nombresSéjours.map((nombreSéjour) => {
       return nombreSéjour.y ? nombreSéjour.y.toLocaleString("fr") : null;
     });

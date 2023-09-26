@@ -19,6 +19,7 @@ import { TypeOrmFavorisLoader } from "./gateways/favoris-loader/TypeOrmFavorisLo
 import { TypeOrmForgetPasswordLoader } from "./gateways/forget-password-loader/TypeOrmForgetPasswordLoader";
 import { ConsoleLogger } from "./gateways/logger/ConsoleLogger";
 import { typeOrmOrm } from "./gateways/orm/typeOrmOrm";
+import { TypeOrmProfileLoader } from "./gateways/profile-loader/TypeOrmProfileLoader";
 import { TypeOrmRechercheLoader } from "./gateways/recherche-loader/TypeOrmRechercheLoader";
 import { TypeOrmSearchHistoryLoader } from "./gateways/search-history-loader/TypeOrmSearchHistoryLoader";
 import { TypeOrmUtilisateurLoader } from "./gateways/utilisateur-loader/TypeOrmUtilisateurLoader";
@@ -38,7 +39,8 @@ export type Dependencies = Readonly<{
   favorisLoader: FavorisLoader;
   changePasswordLoader: ChangePasswordLoader;
   forgetPasswordLoader: TypeOrmForgetPasswordLoader;
-  searchHistoryLoader: SearchHistoryLoader
+  searchHistoryLoader: SearchHistoryLoader;
+  profileLoader: TypeOrmProfileLoader
 }>;
 
 const createDependencies = (): Dependencies => {
@@ -65,7 +67,8 @@ const createDependencies = (): Dependencies => {
     favorisLoader: new TypeOrmFavorisLoader(orm),
     changePasswordLoader: new TypeOrmChangePasswordLoader(orm),
     forgetPasswordLoader: new TypeOrmForgetPasswordLoader(orm),
-    searchHistoryLoader: new TypeOrmSearchHistoryLoader(orm)
+    searchHistoryLoader: new TypeOrmSearchHistoryLoader(orm),
+    profileLoader: new TypeOrmProfileLoader(orm)
   };
 };
 
