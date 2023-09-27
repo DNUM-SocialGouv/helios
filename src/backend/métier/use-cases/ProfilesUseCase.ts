@@ -1,4 +1,4 @@
-import { ProfilModel } from "../../../../database/models/ProfilModel";
+import { ProfilModel, ProfileValue } from "../../../../database/models/ProfilModel";
 import { ProfileLoader } from "../gateways/ProfileLoader";
 
 export class ProfilesUseCase {
@@ -10,5 +10,9 @@ export class ProfilesUseCase {
 
     async getProfileByCode(code: string): Promise<ProfilModel | null> {
         return await this.profileLoader.getProfileByCode(code);
+    }
+
+    async updateProfile(code: string, value: ProfileValue): Promise<void> {
+        return await this.profileLoader.updateProfileValue(code, value);
     }
 }

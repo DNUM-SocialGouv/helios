@@ -1,11 +1,18 @@
 import { useContext } from "react";
 
+import { ProfileValue } from "../../../../database/models/ProfilModel";
 import { ProfileContext } from "../commun/contexts/ProfilContext";
 
 export function useParametrage() {
     const profileContext = useContext(ProfileContext);
 
-
+    const updateProfile = (code: string, value: ProfileValue) => {
+        fetch("/api/profile/update", {
+            body: JSON.stringify({ code, value }),
+            headers: { "Content-Type": "application/json" },
+            method: "POST",
+        })
+    }
 
     const saveProfile = (title: string, finessNumber: string, type: string) => {
         fetch("/api/profile", {
@@ -16,7 +23,7 @@ export function useParametrage() {
     }
 
     const getAllProfiles = () => {
-        fetch("/api/profiles/get", {
+        fetch("/api/profile/get", {
             headers: { "Content-Type": "application/json" },
             method: "GET",
         })
@@ -29,5 +36,6 @@ export function useParametrage() {
     return {
         getAllProfiles,
         saveProfile,
+        updateProfile
     };
 }

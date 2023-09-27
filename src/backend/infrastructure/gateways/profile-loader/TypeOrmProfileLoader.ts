@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm";
 
-import { ProfilModel } from "../../../../../database/models/ProfilModel";
+import { ProfilModel, ProfileValue } from "../../../../../database/models/ProfilModel";
 import { ProfileLoader } from "../../../métier/gateways/ProfileLoader";
 
 
@@ -13,5 +13,9 @@ export class TypeOrmProfileLoader implements ProfileLoader {
 
     async getProfileByCode(code: string): Promise<ProfilModel | null> {
         return await (await this.orm).getRepository(ProfilModel).findOne({ where: { code: code } })
+    }
+
+    async updateProfileValue(code: string, value: ProfileValue): Promise<void> {
+        await (await this.orm).getRepository(ProfilModel).update({ code: code }, { value: value });
     }
 }

@@ -1,22 +1,22 @@
-import { useState } from "react";
-
 import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./ParametrageProfil.module.css";
 
 type ProfileTabCobntentProps = Readonly<{
     idTabPanel: string;
-    institution: any;
-    autreRégion: object;
+    editableInstitutionValues: any;
+    setEditableInstitutionValues: any;
+    editableAutreRegionValues: any;
+    setEditableAutreRegionValues: any;
 }>;
 
 export const ProfileTabContent = ({
     idTabPanel,
-    institution,
-    autreRégion,
+    editableInstitutionValues,
+    setEditableInstitutionValues,
+    editableAutreRegionValues,
+    setEditableAutreRegionValues,
 }: ProfileTabCobntentProps) => {
     const { wording } = useDependencies();
-    const [editableInstitutionValues, setEditableInstitutionValues] = useState<any>(institution);
-    const [editableAutreRegionValues, setEditableAutreRegionValues] = useState<any>(autreRégion);
 
     const handleCheckboxChange = (source: string, bloc: any, indicator: string, checked: boolean) => {
         if (source === 'INST') {

@@ -9,6 +9,7 @@ type ProfileProviderProps = Readonly<{
 
 export const ProfileContextProvider = ({ children }: ProfileProviderProps) => {
     const [profiles, setProfiles] = useState<ProfilModel[]>([]);
+    const [editedProfile, setEditedProfile] = useState<ProfilModel>();
 
     const addToProfiles = (element: ProfilModel) => {
         setProfiles(prevFavoris => [...prevFavoris, element]);
@@ -19,7 +20,7 @@ export const ProfileContextProvider = ({ children }: ProfileProviderProps) => {
     };
 
     return (
-        <ProfileContext.Provider value={{ profiles, setProfiles, addToProfiles, updateProfiles }}>
+        <ProfileContext.Provider value={{ profiles, setProfiles, editedProfile, setEditedProfile, addToProfiles, updateProfiles }}>
             {children}
         </ProfileContext.Provider>
     );

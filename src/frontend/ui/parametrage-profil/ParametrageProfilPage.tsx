@@ -5,23 +5,21 @@ import { useDependencies } from "../commun/contexts/useDependencies";
 import { ProfileTable } from "./ParamatrageTable";
 import styles from "./ParametrageProfil.module.css";
 
-
 type ParametrageProfilPageProps = Readonly<{
     value: ProfileValue;
     label: string;
+    code: string;
 }>;
 
-export const ParametrageProfilPage = ({ value, label }: ParametrageProfilPageProps) => {
+export const ParametrageProfilPage = ({ value, label, code }: ParametrageProfilPageProps) => {
     const { wording } = useDependencies();
+
     return (
         <main className="fr-container">
             <h1 className={styles["title"]}>{wording.PARAMETRAGE_PROFILE} {label}</h1>
             <div className={"fr-table fr-table--blue-ecume fr-mt-8w " + styles["align"]}>
-                <ProfileTable profileValue={value} />
+                <ProfileTable codeValue={code} profileValue={value} />
             </div>
-            <button className="fr-mt-2v fr-btn">
-                Sauvegarder
-            </button>
         </main >
     );
 };

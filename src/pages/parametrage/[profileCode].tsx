@@ -8,12 +8,13 @@ import { ParametrageProfilPage } from "../../frontend/ui/parametrage-profil/Para
 type RouterProps = Readonly<{
     profileValue: ProfileValue;
     profileLabel: string;
+    profileCode: string;
 }>;
 
-export default function Router({ profileValue, profileLabel }: RouterProps) {
+export default function Router({ profileValue, profileLabel, profileCode }: RouterProps) {
     if (!profileValue || !profileLabel) return null;
 
-    return <ParametrageProfilPage label={profileLabel} value={profileValue} />;
+    return <ParametrageProfilPage code={profileCode} label={profileLabel} value={profileValue} />;
 
 }
 
@@ -35,11 +36,11 @@ export async function getStaticProps({ params }: { params: { profileCode: string
             }
         }
 
-
         return {
             props: {
                 profileValue: profile.value,
-                profileLabel: profile.label
+                profileLabel: profile.label,
+                profileCode: profile.code
             },
             revalidate: Number(environmentVariables.TIME_OF_CACHE_PAGE),
         };
