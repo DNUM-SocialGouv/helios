@@ -1,59 +1,24 @@
 import { EntitéJuridique } from "./métier/entities/entité-juridique/EntitéJuridique";
-import { EntitéJuridiqueActivités } from "./métier/entities/entité-juridique/EntitéJuridiqueActivités";
-import { EntitéJuridiqueAutorisationEtCapacité } from "./métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
-import { EntitéJuridiqueBudgetFinance } from "./métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
-import { MonoÉtablissement } from "./métier/entities/établissement-territorial-médico-social/MonoÉtablissement";
 import { ÉtablissementTerritorialMédicoSocial } from "./métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
-import { ÉtablissementTerritorialMédicoSocialActivité } from "./métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité";
-import { ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from "./métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation";
-import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "./métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
-import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "./métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
-import { EntitéJuridiqueDeRattachement } from "./métier/entities/établissement-territorial-sanitaire/EntitéJuridiqueDeRattachement";
 import { ÉtablissementTerritorialSanitaire } from "./métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
-import { ÉtablissementTerritorialSanitaireActivité } from "./métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
-import { ÉtablissementTerritorialSanitaireAutorisationEtCapacité } from "./métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
-import { ÉtablissementTerritorialIdentité } from "./métier/entities/ÉtablissementTerritorialIdentité";
 
 export const filterEtablissementMedicoSocial = (result: any, profil: any): ÉtablissementTerritorialMédicoSocial => {
-    let identité = {} as ÉtablissementTerritorialIdentité & MonoÉtablissement & EntitéJuridiqueDeRattachement;
-    let activités: ÉtablissementTerritorialMédicoSocialActivité[] = [];
-    let autorisationsEtCapacités = {} as ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité;
-    let budgetEtFinances: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[] = [];
-    let ressourcesHumaines: ÉtablissementTerritorialMédicoSocialRessourcesHumaines[] = [];
-    if (profil.identité.habilité === 'ok') {
-        identité = filterIdentiteMedicoSocial(result.identité, profil.identité);
-    }
-    if (profil.activités.habilité === 'ok') {
-        activités = filterActiviteMedicoSocial(result.activités, profil.activités);
-    }
-    if (profil.autorisationsEtCapacités.habilité === 'ok') {
-        autorisationsEtCapacités = filterAutorisationCapaciteMedicoSocial(result.autorisationsEtCapacités, profil.autorisationsEtCapacités);
-    }
-    if (profil.budgetEtFinances.habilité === 'ok') {
-        budgetEtFinances = filterBudgetFinanceMedicoSocial(result.budgetEtFinances, profil.budgetEtFinances);
-    }
-    if (profil.ressourcesHumaines.habilité === 'ok') {
-        ressourcesHumaines = filterressourcesHumainesMedicoSocial(result.ressourcesHumaines, profil.ressourcesHumaines);
-    }
+
+    const identité = filterIdentiteMedicoSocial(result.identité, profil.identité);
+    const activités = filterActiviteMedicoSocial(result.activités, profil.activités);
+    const autorisationsEtCapacités = filterAutorisationCapaciteMedicoSocial(result.autorisationsEtCapacités, profil.autorisationsEtCapacités);
+    const budgetEtFinances = filterBudgetFinanceMedicoSocial(result.budgetEtFinances, profil.budgetEtFinances);
+    const ressourcesHumaines = filterressourcesHumainesMedicoSocial(result.ressourcesHumaines, profil.ressourcesHumaines);
+
     return { identité: identité, activités: activités, autorisationsEtCapacités: autorisationsEtCapacités, budgetEtFinances: budgetEtFinances, ressourcesHumaines: ressourcesHumaines };
 }
 
 export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): EntitéJuridique => {
-    let activités: EntitéJuridiqueActivités[] = [];
-    let autorisationsEtCapacites = {} as EntitéJuridiqueAutorisationEtCapacité;
-    let budgetFinance: EntitéJuridiqueBudgetFinance[] = [];
 
-    if (profil.activités.habilité === 'ok') {
-        activités = filterActiviteEJ(result.activités, profil.activités);
-    }
+    const activités = filterActiviteEJ(result.activités, profil.activités);
+    const autorisationsEtCapacites = filterAutorisationCapaciteEJ(result.autorisationsEtCapacites, profil.autorisationsEtCapacités);
+    const budgetFinance = filterBudgetFinanceEJ(result.budgetFinance, profil.budgetEtFinance);
 
-    if (profil.autorisationsEtCapacités.habilité === 'ok') {
-        autorisationsEtCapacites = filterAutorisationCapaciteEJ(result.autorisationsEtCapacites, profil.autorisationsEtCapacités);
-    }
-
-    if (profil.budgetEtFinance.habilité === 'ok') {
-        budgetFinance = filterBudgetFinanceEJ(result.budgetFinance, profil.budgetEtFinance);
-    }
 
     return {
         adresseAcheminement: profil.identité.adresse === 'ok' ? result.adresseAcheminement : { 'dateMiseÀJourSource': '', value: '' },
@@ -76,19 +41,9 @@ export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): En
 
 export const filterEtablissementSanitaire = (result: any, profil: any): ÉtablissementTerritorialSanitaire => {
 
-    let identité = {} as ÉtablissementTerritorialIdentité & EntitéJuridiqueDeRattachement;
-    let activités: ÉtablissementTerritorialSanitaireActivité[] = [];
-    let autorisationsEtCapacités = {} as ÉtablissementTerritorialSanitaireAutorisationEtCapacité;
-
-    if (profil.identité.habilité === 'ok') {
-        identité = filterIdentiteSanitaire(result.identité, profil.identité);
-    }
-    if (profil.activités.habilité === 'ok') {
-        activités = filterActiviteSanitaire(result.activités, profil.activités);
-    }
-    if (profil.autorisationsEtCapacités.habilité === 'ok') {
-        autorisationsEtCapacités = filterAutorisationSanitaire(result.autorisationsEtCapacités, profil.autorisationsEtCapacités);
-    }
+    const identité = filterIdentiteSanitaire(result.identité, profil.identité);
+    const activités = filterActiviteSanitaire(result.activités, profil.activités);
+    const autorisationsEtCapacités = filterAutorisationSanitaire(result.autorisationsEtCapacités, profil.autorisationsEtCapacités);
 
     return { identité: identité, activités: activités, autorisationsEtCapacités: autorisationsEtCapacités };
 }

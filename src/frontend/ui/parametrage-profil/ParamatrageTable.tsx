@@ -8,11 +8,12 @@ import { useParametrage } from "./useParametrage";
 type ProfileTableProps = Readonly<{
     codeValue: string,
     profileValue: ProfileValue;
+    creating: boolean;
 }>;
 
-export const ProfileTable = ({ codeValue, profileValue }: ProfileTableProps) => {
+export const ProfileTable = ({ codeValue, profileValue, creating }: ProfileTableProps) => {
     const { wording } = useDependencies();
-    const { updateProfile } = useParametrage();
+    const { updateProfile, saveProfile } = useParametrage();
     const [editableInstitutionEJValues, setEditableInstitutionEJValues] = useState<any>(profileValue.institution.profilEJ);
     const [editableAutreRegionEJValues, setEditableAutreRegionEJValues] = useState<any>(profileValue.autreRegion.profilEJ);
 
@@ -21,6 +22,14 @@ export const ProfileTable = ({ codeValue, profileValue }: ProfileTableProps) => 
 
     const [editableInstitutionETSANValues, setEditableInstitutionETSANValues] = useState<any>(profileValue.institution.profilETSanitaire);
     const [editableAutreRegionETSANValues, setEditableAutreRegionETSANValues] = useState<any>(profileValue.autreRegion.profilETSanitaire);
+
+    const saveButtonClick = () => {
+        if (creating) {
+            saveProfile(codeValue, { institution: { profilEJ: editableInstitutionEJValues, profilMédicoSocial: editableInstitutionETMSValues, profilETSanitaire: editableInstitutionETSANValues }, autreRegion: { profilEJ: editableAutreRegionEJValues, profilMédicoSocial: editableAutreRegionETMSValues, profilETSanitaire: editableAutreRegionETSANValues } })
+        } else {
+            updateProfile(codeValue, { institution: { profilEJ: editableInstitutionEJValues, profilMédicoSocial: editableInstitutionETMSValues, profilETSanitaire: editableInstitutionETSANValues }, autreRegion: { profilEJ: editableAutreRegionEJValues, profilMédicoSocial: editableAutreRegionETMSValues, profilETSanitaire: editableAutreRegionETSANValues } })
+        }
+    }
 
     return (
         <div>
@@ -46,7 +55,7 @@ export const ProfileTable = ({ codeValue, profileValue }: ProfileTableProps) => 
                 <ProfileTabContent editableAutreRegionValues={editableAutreRegionETMSValues} editableInstitutionValues={editableInstitutionETMSValues} idTabPanel="tabpanel-ET-MS" setEditableAutreRegionValues={setEditableAutreRegionETMSValues} setEditableInstitutionValues={setEditableInstitutionETMSValues} />
                 <ProfileTabContent editableAutreRegionValues={editableAutreRegionETSANValues} editableInstitutionValues={editableInstitutionETSANValues} idTabPanel="tabpanel-ET-SAN" setEditableAutreRegionValues={setEditableAutreRegionETSANValues} setEditableInstitutionValues={setEditableInstitutionETSANValues} />
             </div>
-            <button className="fr-mt-2v fr-btn" onClick={() => updateProfile(codeValue, { institution: { profilEJ: editableInstitutionEJValues, profilMédicoSocial: editableInstitutionETMSValues, profilETSanitaire: editableInstitutionETSANValues }, autreRegion: { profilEJ: editableAutreRegionEJValues, profilMédicoSocial: editableAutreRegionETMSValues, profilETSanitaire: editableAutreRegionETSANValues } })}>
+            <button className="fr-mt-2v fr-btn" onClick={() => saveButtonClick()}>
                 Sauvegarder
             </button>
         </div>

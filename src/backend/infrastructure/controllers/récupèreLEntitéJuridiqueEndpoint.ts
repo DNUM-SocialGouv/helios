@@ -21,7 +21,6 @@ export async function récupèreLEntitéJuridiqueEndpoint(dependencies: Dependen
   const profilInCache = appCache.get("userProfile") as object;
   let profil: object;
 
-
   if (profilInCache === undefined) {
     const profiles = await loginUseCase.getUserProfiles(codeProfiles) as ProfilModel[];
     const profilesValues = profiles.map((profile) => entitéJuridique.codeRegion === codeRegion ? profile?.value.institution.profilEJ : profile?.value.autreRegion.profilEJ)
@@ -31,7 +30,10 @@ export async function récupèreLEntitéJuridiqueEndpoint(dependencies: Dependen
     profil = profilInCache;
   }
 
+
+
   const filtredEntitéJuridique = filterEntiteJuridique(entitéJuridique, profil);
+
 
   const récupèreLesÉtablissementsTerritoriauxRattachésUseCase = new RécupèreLesÉtablissementsTerritoriauxRattachésUseCase(
     dependencies.établissementTerritorialRattachéLoader

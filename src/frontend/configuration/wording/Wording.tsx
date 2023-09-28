@@ -371,6 +371,7 @@ export interface Wording {
   readonly PARAMETRAGE_INSTITUTION: string;
   readonly PARAMETRAGE_AUTRE_REGION: string;
   readonly CREATION_DATE: string;
+  readonly PARAMETRAGE_NEW_PROFILE: string;
 
   //  Profile page
   readonly USER_PROFILE: string;

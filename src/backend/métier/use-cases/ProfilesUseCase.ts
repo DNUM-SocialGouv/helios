@@ -15,4 +15,8 @@ export class ProfilesUseCase {
     async updateProfile(code: string, value: ProfileValue): Promise<void> {
         return await this.profileLoader.updateProfileValue(code, value);
     }
+
+    async addNewProfile(label: string, value: ProfileValue): Promise<void> {
+        return await this.profileLoader.addNewProfile(label, value);
+    }
 }

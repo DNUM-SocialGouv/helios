@@ -151,7 +151,7 @@ export const Header = () => {
                       <li className={styles["menu-item"]}>
                         <button
                           onClick={() => {
-                            router.push("/parametrage");
+                            router.push("/settings");
                           }}>
                           Parametrage
                         </button>

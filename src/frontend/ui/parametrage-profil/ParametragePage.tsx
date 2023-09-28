@@ -1,4 +1,5 @@
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
+import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 
 import { formatDateAndHours } from "../../utils/dateUtils";
@@ -10,7 +11,7 @@ import { useParametrage } from "./useParametrage";
 export const ParametragePage = () => {
     const { wording } = useDependencies();
     const profileContext = useContext(ProfileContext);
-
+    const router = useRouter();
     const { getAllProfiles } = useParametrage();
 
     useEffect(() => {
@@ -20,6 +21,12 @@ export const ParametragePage = () => {
     return (
         <main className="fr-container">
             <h1 className={styles["title"]}>{wording.PARAMETRAGE_TITRE}</h1>
+            <button className="fr-mt-2v fr-btn" onClick={() => {
+                router.push("/settings/add-profile");
+            }}>
+                Ajouter un profil
+            </button>
+
             {profileContext?.profiles.length === 0 ? (<div className={"fr-mt-8w " + styles["align-text"]}>Vous n&apos;avez aucun profil</div>) : (
                 <div className={"fr-table fr-table--blue-ecume fr-mt-8w " + styles["align"]}>
                     <table>
@@ -33,7 +40,7 @@ export const ParametragePage = () => {
                             {profileContext?.profiles.map((profile: any) => (
                                 <tr key={profile.id}>
                                     <td>
-                                        <a className="fr-raw-link" href={`/parametrage/${profile.code}`}>
+                                        <a className="fr-raw-link" href={`/settings/${profile.code}`}>
                                             {profile.label}
                                         </a></td>
                                     <td>{formatDateAndHours(profile.dateCreation)}</td>
