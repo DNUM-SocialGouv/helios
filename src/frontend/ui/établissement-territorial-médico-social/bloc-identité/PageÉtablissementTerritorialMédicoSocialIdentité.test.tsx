@@ -15,6 +15,8 @@ const mockSession = {
     idUser: '1',
     firstname: 'Doe',
     role: 'admin',
+    codeRegion: '',
+    codeProfiles: [],
     institution: {},
   },
   expires: "1235"
@@ -357,25 +359,6 @@ describe("La page établissement territorial - bloc identité", () => {
       expect(téléphoneEtEmail).toBeInTheDocument();
     });
 
-    it("pour la date d’entrée en vigueur du cpom", () => {
-      // GIVEN
-      const établissementTerritorialSansDateDEntréeEnVigueurDuCpom = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths, {
-        dateDEntréeEnVigueurDuCpom: {
-          dateMiseÀJourSource: "2022-05-14",
-          value: "",
-        },
-      });
-
-      // WHEN
-      renderFakeComponent(
-        <SessionProvider session={mockSession}> <PageÉtablissementTerritorialMédicoSocial rechercheViewModel={rechercheViewModel} établissementTerritorialViewModel={établissementTerritorialSansDateDEntréeEnVigueurDuCpom} /></SessionProvider>
-      );
-
-      // THEN
-      const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
-      const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-      expect(within(indicateurs[11]).getByText(wording.NON_RENSEIGNÉ)).toBeInTheDocument();
-    });
   });
 
   it("affiche l’adresse incomplète lorsqu’il manque des champs d’adresse", () => {

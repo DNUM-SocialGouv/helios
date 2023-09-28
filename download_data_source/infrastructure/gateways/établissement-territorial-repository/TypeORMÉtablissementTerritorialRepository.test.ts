@@ -213,7 +213,7 @@ describe("Sauvegarde de l’établissement territorial", () => {
     établissementTerritorialAttendu.siret = "26011021800047";
     établissementTerritorialAttendu.typeÉtablissement = "S";
     établissementTerritorialAttendu.téléphone = "0102030405";
-    établissementTerritorialAttendu.codeRégion = "";
+    établissementTerritorialAttendu.codeRégion = "84";
 
     expect(établissementsTerritoriauxSauvés).toStrictEqual([établissementTerritorialAttendu]);
 
