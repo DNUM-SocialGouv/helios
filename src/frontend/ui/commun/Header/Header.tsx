@@ -147,15 +147,16 @@ export const Header = () => {
                           Historique
                         </button>
                       </li>
-
-                      <li className={styles["menu-item"]}>
-                        <button
-                          onClick={() => {
-                            router.push("/settings");
-                          }}>
-                          Parametrage
-                        </button>
-                      </li>
+                      {data.user.role === '1' && (
+                        <li className={styles["menu-item"]}>
+                          <button
+                            onClick={() => {
+                              router.push("/settings");
+                            }}>
+                            Parametrage
+                          </button>
+                        </li>
+                      )}
                       <li className={styles["menu-item"]}>
                         <button onClick={() => {
                           router.push("/profile");

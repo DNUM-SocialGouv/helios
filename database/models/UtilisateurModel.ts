@@ -48,7 +48,7 @@ export class UtilisateurModel {
   public role!: RoleModel;
 
   @Column({ name: "ut_role" })
-  public roleId!: RoleModel;
+  public roleId!: string;
 
   @Column({ name: "ut_password", nullable: true })
   public password!: string;

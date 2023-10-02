@@ -8,9 +8,9 @@ export function useParametrage() {
     const profileContext = useContext(ProfileContext);
     const router = useRouter();
 
-    const updateProfile = (code: string, value: ProfileValue) => {
+    const updateProfile = (userId: string, code: string, value: ProfileValue) => {
         fetch("/api/profile/update", {
-            body: JSON.stringify({ code, value }),
+            body: JSON.stringify({ userId, code, value }),
             headers: { "Content-Type": "application/json" },
             method: "POST",
         }).then((response) => {
@@ -19,9 +19,9 @@ export function useParametrage() {
         })
     }
 
-    const saveProfile = (label: string, profile: ProfileValue) => {
+    const saveProfile = (userId: string, label: string, profile: ProfileValue) => {
         fetch("/api/profile/add", {
-            body: JSON.stringify({ label, value: profile }),
+            body: JSON.stringify({ userId, label, value: profile }),
             headers: { "Content-Type": "application/json" },
             method: "POST",
         }).then((response) => {
@@ -30,14 +30,15 @@ export function useParametrage() {
         })
     }
 
-    const getAllProfiles = () => {
-        fetch("/api/profile/get", {
+    const getAllProfiles = (userId: string) => {
+        const params = { userId: userId };
+        fetch("/api/profile/get/?" + (new URLSearchParams(params)).toString(), {
             headers: { "Content-Type": "application/json" },
             method: "GET",
         })
             .then((response) => response.json())
             .then((data) => {
-                profileContext?.setProfiles(data);
+                profileContext?.setProfiles(data.response);
             })
     }
 

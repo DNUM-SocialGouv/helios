@@ -2,7 +2,7 @@ import { useDependencies } from "../../frontend/ui/commun/contexts/useDependenci
 import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
 import { ParametragePage } from "../../frontend/ui/parametrage-profil/ParametragePage";
 
-export default function Parametrage() {
+const Parametrage = () => {
     const { wording } = useDependencies();
 
     useBreadcrumb([
@@ -13,3 +13,5 @@ export default function Parametrage() {
     ]);
     return <ParametragePage />;
 }
+
+export default Parametrage;

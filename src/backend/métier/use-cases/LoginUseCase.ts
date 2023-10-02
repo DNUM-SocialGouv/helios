@@ -13,6 +13,10 @@ export class LoginUseCase {
     return await this.utilisateurLoader.checkIfEmailExists(email);
   }
 
+  async checkIfAdmin(userId: string): Promise<boolean> {
+    return await this.utilisateurLoader.checkIfAdmin(userId);
+  }
+
   async getUserProfiles(codes: string[]): Promise<ProfilModel[] | null> {
     return await this.utilisateurLoader.getUserProfiles(codes);
   }

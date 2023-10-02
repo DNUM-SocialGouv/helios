@@ -1,9 +1,11 @@
+/* eslint-disable import/no-anonymous-default-export */
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { addProfileEndpoint } from "../../../backend/infrastructure/controllers/addProfileEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
+import { checkAdminRole } from "../../../checkAdminMiddleware";
 
-export default async function handler(request: NextApiRequest, response: NextApiResponse) {
+const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     try {
         if (request.method !== "POST") {
             response.status(405).send("Method not allowed");
@@ -17,3 +19,10 @@ export default async function handler(request: NextApiRequest, response: NextApi
     }
 
 }
+
+
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+    if (await checkAdminRole(req, res)) {
+        await handler(req, res);
+    }
+};

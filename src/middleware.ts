@@ -36,6 +36,7 @@ export const config = {
     "/entite-juridique/:path*",
     "/etablissement-territorial-sanitaire/:path*",
     "/etablissement-territorial-medico-social/:path*",
+    "/settings/:path*",
     "/profile",
     "/favoris",
     "/history",

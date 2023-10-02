@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 import { ProfileValue } from "../../../../database/models/ProfilModel";
 import { useDependencies } from "../commun/contexts/useDependencies";
@@ -13,6 +14,9 @@ type ProfileTableProps = Readonly<{
 
 export const ProfileTable = ({ codeValue, profileValue, creating }: ProfileTableProps) => {
     const { wording } = useDependencies();
+    const { data } = useSession();
+    const [userId, setUserId] = useState('');
+
     const { updateProfile, saveProfile } = useParametrage();
     const [editableInstitutionEJValues, setEditableInstitutionEJValues] = useState<any>(profileValue.institution.profilEJ);
     const [editableAutreRegionEJValues, setEditableAutreRegionEJValues] = useState<any>(profileValue.autreRegion.profilEJ);
@@ -23,11 +27,16 @@ export const ProfileTable = ({ codeValue, profileValue, creating }: ProfileTable
     const [editableInstitutionETSANValues, setEditableInstitutionETSANValues] = useState<any>(profileValue.institution.profilETSanitaire);
     const [editableAutreRegionETSANValues, setEditableAutreRegionETSANValues] = useState<any>(profileValue.autreRegion.profilETSanitaire);
 
+    useEffect(() => {
+        if (data) {
+            setUserId(data.user.idUser);
+        }
+    }, [data])
     const saveButtonClick = () => {
         if (creating) {
-            saveProfile(codeValue, { institution: { profilEJ: editableInstitutionEJValues, profilMédicoSocial: editableInstitutionETMSValues, profilETSanitaire: editableInstitutionETSANValues }, autreRegion: { profilEJ: editableAutreRegionEJValues, profilMédicoSocial: editableAutreRegionETMSValues, profilETSanitaire: editableAutreRegionETSANValues } })
+            saveProfile(userId, codeValue, { institution: { profilEJ: editableInstitutionEJValues, profilMédicoSocial: editableInstitutionETMSValues, profilETSanitaire: editableInstitutionETSANValues }, autreRegion: { profilEJ: editableAutreRegionEJValues, profilMédicoSocial: editableAutreRegionETMSValues, profilETSanitaire: editableAutreRegionETSANValues } })
         } else {
-            updateProfile(codeValue, { institution: { profilEJ: editableInstitutionEJValues, profilMédicoSocial: editableInstitutionETMSValues, profilETSanitaire: editableInstitutionETSANValues }, autreRegion: { profilEJ: editableAutreRegionEJValues, profilMédicoSocial: editableAutreRegionETMSValues, profilETSanitaire: editableAutreRegionETSANValues } })
+            updateProfile(userId, codeValue, { institution: { profilEJ: editableInstitutionEJValues, profilMédicoSocial: editableInstitutionETMSValues, profilETSanitaire: editableInstitutionETSANValues }, autreRegion: { profilEJ: editableAutreRegionEJValues, profilMédicoSocial: editableAutreRegionETMSValues, profilETSanitaire: editableAutreRegionETSANValues } })
         }
     }
 
