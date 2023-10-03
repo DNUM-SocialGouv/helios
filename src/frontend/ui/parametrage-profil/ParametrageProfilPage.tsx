@@ -18,7 +18,7 @@ export const ParametrageProfilPage = ({ value, label, code }: ParametrageProfilP
         <main className="fr-container">
             <h1 className={styles["title"]}>{wording.PARAMETRAGE_PROFILE} {label}</h1>
             <div className={"fr-table fr-table--blue-ecume fr-mt-8w " + styles["align"]}>
-                <ProfileTable codeValue={code} profileValue={value} />
+                <ProfileTable codeValue={code} creating={false} profileValue={value} />
             </div>
         </main >
     );
