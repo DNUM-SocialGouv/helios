@@ -63,6 +63,11 @@ export class WordingFr implements Wording {
   readonly ÉTABLISSEMENT_TERRITORIAUX: string = "Établissements Territoriaux";
   readonly SITE_EN_CONSTRUCTION: string = "Le site est dans sa phase pilote : il est toujours en construction et va évoluer régulièrement.";
 
+  // Inscription
+  readonly REGISTRATION_PAGE_TITLE: string = "Demande d'accès à Helios";
+  readonly SEND: string = 'Envoyer';
+
+
   // Connexion
   readonly CONNEXION_IDENTIFIANT: string = "Identifiant *"
   readonly CONNEXION_MOT_DE_PASSE: string = "Mot de passe *"
