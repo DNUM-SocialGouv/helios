@@ -48,10 +48,13 @@ export class UtilisateurModel {
   public role!: RoleModel;
 
   @Column({ name: "ut_role" })
-  public roleId!: RoleModel;
+  public roleId!: string;
 
   @Column({ name: "ut_password", nullable: true })
   public password!: string;
+
+  @Column('simple-array', { nullable: true, name: "ut_profiles" })
+  public profils: string[] = [];
 
   @CreateDateColumn({ name: "ut_date_creation" })
   public dateCreation!: Date;

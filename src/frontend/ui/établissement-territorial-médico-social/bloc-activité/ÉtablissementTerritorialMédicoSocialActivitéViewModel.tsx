@@ -21,7 +21,9 @@ import { StringFormater } from "../../commun/StringFormater";
 export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
   readonly seuilValeurAtypique = 120;
 
-  constructor(private readonly établissementTerritorialActivité: ÉtablissementTerritorialMédicoSocial["activités"], private wording: Wording) {}
+  constructor(private readonly établissementTerritorialActivité: ÉtablissementTerritorialMédicoSocial["activités"], private wording: Wording) { }
+
+
 
   public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
     return (
@@ -42,6 +44,10 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
 
   public get leTauxOccupationHébergementPermanentEstIlRenseigné(): boolean {
     return this.lIndicateurEstIlRenseigné("tauxOccupationHébergementPermanent");
+  }
+
+  public get leTauxOccupationHébergementPermanentEstIlAutorisé(): boolean {
+    return this.lIndicateurEstIlAutorisé("tauxOccupationHébergementPermanent");
   }
 
   public get tauxOccupationHébergementPermanent(): ReactElement {
@@ -71,6 +77,10 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return this.lIndicateurEstIlRenseigné("tauxOccupationHébergementTemporaire");
   }
 
+  public get leTauxOccupationHébergementTemporaireEstIlAutorisé(): boolean {
+    return this.lIndicateurEstIlAutorisé("tauxOccupationHébergementTemporaire");
+  }
+
   public get tauxOccupationHébergementTemporaire(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxOccupationHébergementTemporaire");
 
@@ -96,6 +106,10 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
 
   public get leTauxOccupationAccueilDeJourEstIlRenseigné(): boolean {
     return this.lIndicateurEstIlRenseigné("tauxOccupationAccueilDeJour");
+  }
+
+  public get leTauxOccupationAccueilDeJourEstIlAutorisé(): boolean {
+    return this.lIndicateurEstIlAutorisé("tauxOccupationAccueilDeJour");
   }
 
   public get tauxOccupationAccueilDeJour(): ReactElement {
@@ -125,6 +139,10 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return this.lIndicateurEstIlRenseigné("tauxRéalisationActivité");
   }
 
+  public get leTauxRéalisationActivitéEstIlAutorisé(): boolean {
+    return this.lIndicateurEstIlAutorisé("tauxRéalisationActivité");
+  }
+
   public get tauxRéalisationActivité(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxRéalisationActivité");
 
@@ -150,6 +168,10 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
 
   public get laFileActivePersonnesAccompagnéesEstElleRenseignée(): boolean {
     return this.lIndicateurEstIlRenseigné("fileActivePersonnesAccompagnées");
+  }
+
+  public get laFileActivePersonnesAccompagnéesEstElleAutorisé(): boolean {
+    return this.lIndicateurEstIlAutorisé("fileActivePersonnesAccompagnées");
   }
 
   public get fileActivePersonnesAccompagnées(): ReactElement {
@@ -178,6 +200,10 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return this.lIndicateurEstIlRenseigné("nombreMoyenJournéesAbsencePersonnesAccompagnées");
   }
 
+  public get leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlAutorisé(): boolean {
+    return this.lIndicateurEstIlAutorisé("nombreMoyenJournéesAbsencePersonnesAccompagnées");
+  }
+
   public get nombreMoyenJournéesAbsencePersonnesAccompagnées(): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs("nombreMoyenJournéesAbsencePersonnesAccompagnées");
 
@@ -202,6 +228,10 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
 
   public get laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée(): boolean {
     return this.lIndicateurEstIlRenseigné("duréeMoyenneSéjourAccompagnementPersonnesSorties");
+  }
+
+  public get laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleAutorisé(): boolean {
+    return this.lIndicateurEstIlAutorisé("duréeMoyenneSéjourAccompagnementPersonnesSorties");
   }
 
   public get duréeMoyenneSéjourAccompagnementPersonnesSorties(): ReactElement {
@@ -273,6 +303,25 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return this.établissementTerritorialActivité.some((activité: ÉtablissementTerritorialMédicoSocialActivité) => activité[indicateur].value !== null);
   }
 
+  private lIndicateurEstIlAutorisé(
+    indicateur: Exclude<keyof ÉtablissementTerritorialMédicoSocialActivité, "année" | "dateMiseÀJourSource" | "numéroFinessÉtablissementTerritorial">
+  ): boolean {
+    return this.établissementTerritorialActivité.some((activité: ÉtablissementTerritorialMédicoSocialActivité) => activité[indicateur].value !== '');
+  }
+
+  public get lesDonnéesActivitésPasAutorisés(): string[] {
+    const nonAutorisés = [];
+    if (!this.leTauxOccupationHébergementPermanentEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT);
+    if (!this.leTauxOccupationHébergementTemporaireEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE);
+    if (!this.leTauxOccupationAccueilDeJourEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR);
+    if (!this.leTauxRéalisationActivitéEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_RÉALISATION_ACTIVITÉ);
+    if (!this.laFileActivePersonnesAccompagnéesEstElleAutorisé) nonAutorisés.push(this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES);
+    if (!this.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlAutorisé) nonAutorisés.push(this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES);
+    if (!this.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleAutorisé) nonAutorisés.push(this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES);
+
+    return nonAutorisés;
+  }
+
   private construisLaCouleurDeLaBarreVerticale = (valeur: number, année: number | string): CouleurHistogramme => {
     let premierPlan = couleurDuFondHistogrammeSecondaire;
     let secondPlan = couleurDuFond;
@@ -292,13 +341,13 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
   private construisLaCouleurDeLaBarreHorizontale = (_valeur: number, année: number | string): CouleurHistogramme => {
     return estCeLAnnéePassée(année)
       ? {
-          premierPlan: couleurDuFondHistogrammePrimaire,
-          secondPlan: couleurDuFond,
-        }
+        premierPlan: couleurDuFondHistogrammePrimaire,
+        secondPlan: couleurDuFond,
+      }
       : {
-          premierPlan: couleurDuFondHistogrammeSecondaire,
-          secondPlan: couleurDuFond,
-        };
+        premierPlan: couleurDuFondHistogrammeSecondaire,
+        secondPlan: couleurDuFond,
+      };
   };
 
   private construisLesLibellésDesValeurs(valeurs: number[]): string[] {

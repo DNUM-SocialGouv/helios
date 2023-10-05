@@ -76,6 +76,7 @@ export const uneEntitéJuridique: EntitéJuridique = {
   siren: "260104631",
   statutJuridique: "1",
   téléphone: "0102030406",
+  codeRégion: "84",
 };
 
 export const uneSecondeEntitéJuridique: EntitéJuridique = {
@@ -93,6 +94,7 @@ export const uneSecondeEntitéJuridique: EntitéJuridique = {
   siren: "260104632",
   statutJuridique: "1",
   téléphone: "0102030405",
+  codeRégion: "84",
 };
 
 export const unÉtablissementMédicoSocial: ÉtablissementTerritorialIdentité = {
@@ -117,6 +119,7 @@ export const unÉtablissementMédicoSocial: ÉtablissementTerritorialIdentité =
   siret: "20003004700017",
   typeÉtablissement: "S",
   téléphone: "0102030405",
+  codeRégion: "84",
 };
 
 export const unÉtablissementSanitaire: ÉtablissementTerritorialIdentité = {
@@ -141,6 +144,7 @@ export const unÉtablissementSanitaire: ÉtablissementTerritorialIdentité = {
   siret: "20003004700018",
   typeÉtablissement: "P",
   téléphone: "0102030406",
+  codeRégion: "84",
 };
 
 export function créerFichierXMLTest(contenu: string, localPath: string, filename: string) {

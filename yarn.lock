@@ -2037,6 +2037,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/next-auth@npm:^3.15.0":
+  version: 3.15.0
+  resolution: "@types/next-auth@npm:3.15.0"
+  dependencies:
+    next-auth: "*"
+  checksum: f37b3574fc619a2d1bef9c1a7c22975b9b73c40adb90d6f764a89153fc945372ed33bfd3afae3fa9a536400dc41fdc2391ad472b5eb0fc470834f94badd2114d
+  languageName: node
+  linkType: hard
+
 "@types/node-fetch@npm:^2.6.2":
   version: 2.6.2
   resolution: "@types/node-fetch@npm:2.6.2"
@@ -3614,6 +3623,13 @@ __metadata:
   dependencies:
     mimic-response: ^1.0.0
   checksum: 2d0e61547fc66276e0903be9654ada422515f5a15741691352000d47e8c00c226061221074ce2c0064d12e975e84a8687cfd35d8b405750cb4e772f87b256eda
+  languageName: node
+  linkType: hard
+
+"clone@npm:2.x":
+  version: 2.1.2
+  resolution: "clone@npm:2.1.2"
+  checksum: aaf106e9bc025b21333e2f4c12da539b568db4925c0501a1bf4070836c9e848c892fa22c35548ce0d1132b08bbbfa17a00144fe58fccdab6fa900fec4250f67d
   languageName: node
   linkType: hard
 
@@ -5921,6 +5937,7 @@ __metadata:
     "@types/jest": ^27.4.1
     "@types/joi": ^17.2.3
     "@types/jsonwebtoken": ^9.0.2
+    "@types/next-auth": ^3.15.0
     "@types/node": 17.0.23
     "@types/node-fetch": ^2.6.2
     "@types/react": 18.0.0
@@ -5954,6 +5971,7 @@ __metadata:
     next: 13
     next-auth: ^4.22.1
     next-router-mock: ^0.7.4
+    node-cache: ^5.1.2
     node-fetch: 2.6.7
     pg: ^8.7.3
     prettier: ^2.8.2
@@ -8372,9 +8390,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-auth@npm:^4.22.1":
-  version: 4.22.1
-  resolution: "next-auth@npm:4.22.1"
+"next-auth@npm:*, next-auth@npm:^4.22.1":
+  version: 4.23.1
+  resolution: "next-auth@npm:4.23.1"
   dependencies:
     "@babel/runtime": ^7.20.13
     "@panva/hkdf": ^1.0.2
@@ -8393,7 +8411,7 @@ __metadata:
   peerDependenciesMeta:
     nodemailer:
       optional: true
-  checksum: 42bae16b62bac4b3d215d991c7c964dfc071a84df32900a28d4cbc20d4b6a65689b3ba9f10633780a22ff0cbc420248d012614a5b0d82918f9bbb56f7f92f7c5
+  checksum: 995114797c257ccf71a82d19fb6316fb7709b552aaaf66444591c505a4b8e00b0cae3f4db4316b63a8cc439076044cc391ab171c4f6ee2e086709c5b3bbfed24
   languageName: node
   linkType: hard
 
@@ -8484,6 +8502,15 @@ __metadata:
   dependencies:
     node-gyp: latest
   checksum: 2508bd2d2981945406243a7bd31362fc7af8b70b8b4d65f869c61731800058fb818cc2fd36c8eac714ddd0e568cc85becf5e165cebbdf7b5024d5151bbc75ea1
+  languageName: node
+  linkType: hard
+
+"node-cache@npm:^5.1.2":
+  version: 5.1.2
+  resolution: "node-cache@npm:5.1.2"
+  dependencies:
+    clone: 2.x
+  checksum: b0bdd81a6fee4754fb984a05246b510bb35dc54721116d465899bf4229ee3287fdafb47da526900ee9924fb402ed5c7d8050049d37d8bf2d26dbafc23a2c3205
   languageName: node
   linkType: hard
 

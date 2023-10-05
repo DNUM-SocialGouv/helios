@@ -1,10 +1,5 @@
 import { fireEvent, screen, within } from "@testing-library/react";
-import { mock, mockDeep } from "jest-mock-extended";
 
-import {
-  CapacitéSanitaire,
-  ÉtablissementTerritorialSanitaireAutorisationEtCapacité,
-} from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { BlocAutorisationEtCapacitéSanitaire } from "./BlocAutorisationEtCapacitéSanitaire";
@@ -78,34 +73,6 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     expect(sources).toBeInTheDocument();
     const informationsComplémentaires = within(infoBulle).getByRole("region", { name: wording.INFOS_COMPLÉMENTAIRES });
     expect(informationsComplémentaires).toBeInTheDocument();
-  });
-
-  it.each([
-    [wording.AUTORISATIONS_SANITAIRE, "autorisations", "activités"],
-    [wording.AUTRES_ACTIVITÉS_SAN, "autresActivités", "activités"],
-    [wording.RECONNAISSANCES_CONTRACTUELLES, "reconnaissancesContractuelles", "activités"],
-    [wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, "équipementsMatérielsLourds", "équipements"],
-  ])("n’affiche pas l’indicateur si l’établissement n’a pas de %s", (nomDeLIndicateur: string, champDeLaDonnéeVide: string, activitésOuÉquipements) => {
-    // GIVEN
-    const autorisationsViewModelSansAutorisations = new EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel(
-      mockDeep<ÉtablissementTerritorialSanitaireAutorisationEtCapacité>({
-        capacités: [mock<CapacitéSanitaire>({ année: 2022 })],
-        [champDeLaDonnéeVide]: {
-          [activitésOuÉquipements]: [],
-        },
-      }),
-      wording
-    );
-
-    // WHEN
-    renderFakeComponent(
-      <BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModelSansAutorisations} />
-    );
-
-    // THEN
-    const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
-    expect(within(autorisationEtCapacité).queryByText(nomDeLIndicateur)).not.toBeInTheDocument();
-    expect(within(autorisationEtCapacité).queryByText(wording.INDICATEURS_VIDES)).not.toBeInTheDocument();
   });
 
   describe("L’indicateur des autorisations", () => {

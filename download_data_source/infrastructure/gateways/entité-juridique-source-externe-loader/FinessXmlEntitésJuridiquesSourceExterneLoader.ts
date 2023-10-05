@@ -1,5 +1,7 @@
 import { readdirSync } from "fs";
+import { DataSource } from "typeorm";
 
+import { RefDepartementRegionModel } from "../../../../database/models/RefDepartementRegionModel";
 import { EntitéJuridique } from "../../../métier/entities/EntitéJuridique";
 import { EntitéJuridiqueSourceExterneLoader } from "../../../métier/gateways/EntitéJuridiqueSourceExterneLoader";
 import { Logger } from "../../../métier/gateways/Logger";
@@ -122,9 +124,9 @@ type EntitéJuridiqueFluxFiness = Readonly<{
 export class FinessXmlEntitésJuridiquesSourceExterneLoader implements EntitéJuridiqueSourceExterneLoader {
   private readonly préfixeDuFichierEntitéJuridique = "finess_cs1400101_stock_";
 
-  constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string, private logger: Logger) {}
+  constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string, private logger: Logger, private readonly orm: Promise<DataSource>) { }
 
-  récupèreLesEntitésJuridiquesOuvertes(): EntitéJuridique[] {
+  async récupèreLesEntitésJuridiquesOuvertes(): Promise<EntitéJuridique[]> {
     const cheminDuFichierEntitéJuridique = this.récupèreLeCheminDuFichierEntitéJuridique(this.localPath);
 
     const entitésJuridiquesFluxFiness = this.convertXmlToJs.exécute<EntitéJuridiqueFluxFiness>(cheminDuFichierEntitéJuridique);
@@ -134,9 +136,7 @@ export class FinessXmlEntitésJuridiquesSourceExterneLoader implements EntitéJu
     const entitésJuridiquesFinessOuvertes = this.conserveLesEntitésJuridiquesOuvertes(entitésJuridiquesFiness);
     this.logger.info(`[FINESS] ${entitésJuridiquesFinessOuvertes.length} entités juridiques sont ouvertes.`);
 
-    return entitésJuridiquesFinessOuvertes.map((entitéJuridiqueFinessOuverte: EntitéJuridiqueFiness) =>
-      this.construisLEntitéJuridique(entitéJuridiqueFinessOuverte)
-    );
+    return this.construisLesEntitéssJuridiques(entitésJuridiquesFinessOuvertes);
   }
 
   récupèreLaDateDeMiseÀJourDuFichierSource(): string {
@@ -148,6 +148,17 @@ export class FinessXmlEntitésJuridiquesSourceExterneLoader implements EntitéJu
     return dateDeMiseAJourDuFichierSource;
   }
 
+  private async construisLesEntitéssJuridiques(établissementsTerritoriauxFinessOuverts: EntitéJuridiqueFiness[]) {
+    const results: EntitéJuridique[] = [];
+
+    for (const établissementTerritorialIdentitéFiness of établissementsTerritoriauxFinessOuverts) {
+      const result = await this.construisLEntitéJuridique(établissementTerritorialIdentitéFiness)
+      results.push(result);
+    }
+    return results;
+  }
+
+
   private conserveLesEntitésJuridiquesOuvertes(entitésJuridiquesFiness: EntitéJuridiqueFiness[]) {
     return entitésJuridiquesFiness.filter((entitéJuridiqueFiness: EntitéJuridiqueFiness) => entitéJuridiqueFiness.datefermeture._text === undefined);
   }
@@ -158,8 +169,10 @@ export class FinessXmlEntitésJuridiquesSourceExterneLoader implements EntitéJu
     return localPath + "/finess/simple/" + fichiersDuRépertoireSimple.filter((fichier) => fichier.includes(this.préfixeDuFichierEntitéJuridique));
   }
 
-  private construisLEntitéJuridique(entitésJuridiquesFiness: EntitéJuridiqueFiness): EntitéJuridique {
+  private async construisLEntitéJuridique(entitésJuridiquesFiness: EntitéJuridiqueFiness): Promise<EntitéJuridique> {
     const valueOrEmpty = (value?: string): string => value || "";
+
+    const ref = await (await this.orm).getRepository(RefDepartementRegionModel).findOne({ where: { codeDepartement: valueOrEmpty(entitésJuridiquesFiness.departement._text) } });
 
     return {
       adresseAcheminement: valueOrEmpty(entitésJuridiquesFiness.ligneacheminement._text),
@@ -177,6 +190,7 @@ export class FinessXmlEntitésJuridiquesSourceExterneLoader implements EntitéJu
       siren: valueOrEmpty(entitésJuridiquesFiness.siren._text),
       statutJuridique: valueOrEmpty(entitésJuridiquesFiness.statutjuridique._text),
       téléphone: valueOrEmpty(entitésJuridiquesFiness.telephone._text),
+      codeRégion: valueOrEmpty(ref?.codeRegion),
     };
   }
 }

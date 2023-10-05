@@ -168,6 +168,6 @@ export class CompteDeResultatViewModel {
   }
 
   public get dateMiseÀJour(): string {
-    return StringFormater.formatDate(this.budgetEtFinancesMédicoSocial[0].tauxDeVétustéConstruction?.dateMiseÀJourSource as string);
+    return StringFormater.formatDate(this.budgetEtFinancesMédicoSocial[0].recettesEtDépenses?.dateMiseÀJourSource as string);
   }
 }

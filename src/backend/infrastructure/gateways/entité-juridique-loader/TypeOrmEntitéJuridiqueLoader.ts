@@ -21,7 +21,7 @@ import { EntitéJuridiqueDeRattachement } from "../../../métier/entities/établ
 import { EntitéJuridiqueLoader } from "../../../métier/gateways/EntitéJuridiqueLoader";
 
 export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
-  constructor(private readonly orm: Promise<DataSource>) {}
+  constructor(private readonly orm: Promise<DataSource>) { }
 
   async chargeIdentité(numéroFiness: string): Promise<EntitéJuridiqueIdentité | EntitéJuridiqueNonTrouvée> {
     const entitéJuridiqueIdentitéModel = await this.chargeLIdentitéModel(numéroFiness);
@@ -31,7 +31,6 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
     }
 
     const dateDeMiseAJourFichierSourceModel = (await this.chargeLaDateDeMiseÀJourFinessCs1400101Model()) as DateMiseÀJourFichierSourceModel;
-
     return this.construisLEntitéJuridique(entitéJuridiqueIdentitéModel, dateDeMiseAJourFichierSourceModel);
   }
 
@@ -170,6 +169,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
         dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
         value: entitéJuridiqueModel.téléphone,
       },
+      codeRegion: entitéJuridiqueModel.codeRégion,
     };
   }
 

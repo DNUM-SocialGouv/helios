@@ -8,6 +8,9 @@ export class InstitutionModel {
   @Column({ name: "inst_code" })
   public code!: string;
 
+  @Column({ name: "inst_code_geo" })
+  public codeGeo!: string;
+
   @Column({ name: "inst_libelle" })
   public libelle!: string;
 }

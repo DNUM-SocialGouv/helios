@@ -2,23 +2,23 @@ export type ÉtablissementTerritorialMédicoSocialRessourcesHumaines = Readonly<
   année: number;
   nombreDEtpRéalisés: Readonly<{
     dateMiseÀJourSource: string;
-    valeur: number | null;
+    valeur: number | null | "";
   }>;
   nombreDeCddDeRemplacement: Readonly<{
     dateMiseÀJourSource: string;
-    valeur: number | null;
+    valeur: number | null | "";
   }>;
   tauxDePrestationsExternes: Readonly<{
     dateMiseÀJourSource: string;
-    valeur: number | null;
+    valeur: number | null | "";
   }>;
   tauxDEtpVacants: Readonly<{
     dateMiseÀJourSource: string;
-    valeur: number | null;
+    valeur: number | null | "";
   }>;
   tauxDeRotationDuPersonnel: Readonly<{
     dateMiseÀJourSource: string;
-    valeur: number | null;
+    valeur: number | null | "";
   }>;
   tauxDAbsentéisme: Readonly<{
     dateMiseÀJourSource: string;

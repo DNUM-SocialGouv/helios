@@ -1,6 +1,6 @@
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
 import { ÉtablissementTerritorialIdentité } from "../../../métier/entities/ÉtablissementTerritorialIdentité";
-import { créerFichierXMLTest, fakeLogger, getFakeDataCrawlerDependencies, supprimerDossier } from "../../../testHelper";
+import { créerFichierXMLTest, fakeLogger, getFakeDataCrawlerDependencies, getOrm, supprimerDossier } from "../../../testHelper";
 import { NodeXmlToJs } from "../xml-to-js/NodeXmlToJs";
 import { FinessXmlÉtablissementTerritorialSourceExterneLoader } from "./FinessXmlÉtablissementTerritorialSourceExterneLoader";
 
@@ -8,6 +8,8 @@ const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies();
 const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_et`;
 const finessLocalPath = `${localPath}/finess/simple`;
 const nomenclatureLocalPath = `${localPath}/finess/nomenclature`;
+const orm = getOrm();
+
 
 describe("Récupération des établissements territoriaux de la source de données FINESS", () => {
   const etOuvert1 = `<structureet>
@@ -21,6 +23,7 @@ describe("Récupération des établissements territoriaux de la source de donné
     <ligneacheminement>01130 NANTUA</ligneacheminement>
     <libcommune>NANTUA</libcommune>
     <libdepartement>AIN</libdepartement>
+    <departement>01</departement>
     <telephone>0474754800</telephone>
     <courriel xsi:nil="true"/>
     <categetab>355</categetab>
@@ -46,6 +49,7 @@ describe("Récupération des établissements territoriaux de la source de donné
     <ligneacheminement>01100 OYONNAX</ligneacheminement>
     <libcommune>OYONNAX</libcommune>
     <libdepartement>AIN</libdepartement>
+    <departement>01</departement>
     <telephone>0474731001</telephone>
     <courriel xsi:nil="true"/>
     <categetab>001</categetab>
@@ -69,7 +73,7 @@ describe("Récupération des établissements territoriaux de la source de donné
     supprimerDossier(localPath);
   });
 
-  it("récupère les établissements territoriaux de la source de données FINESS uniquement s’ils ne sont pas fermés", () => {
+  it("récupère les établissements territoriaux de la source de données FINESS uniquement s’ils ne sont pas fermés", async () => {
     // GIVEN
     const etFermé = `<structureet>
         <nofinesset>010787190</nofinesset>
@@ -82,6 +86,7 @@ describe("Récupération des établissements territoriaux de la source de donné
         <ligneacheminement>01500 AMBERIEU EN BUGEY</ligneacheminement>
         <libcommune>AMBERIEU EN BUGEY</libcommune>
         <libdepartement>AIN</libdepartement>
+        <departement>01</departement>
         <telephone>0474383000</telephone>
         <courriel xsi:nil="true"/>
         <categetab>001</categetab>
@@ -97,10 +102,10 @@ describe("Récupération des établissements territoriaux de la source de donné
         <datefermeture>1993-01-01</datefermeture>
       </structureet>`;
     écritureDuFichierXmlEt([etOuvert1, etOuvert2, etFermé]);
-    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
+    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger, orm);
 
     // WHEN
-    const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts(["010008407", "010000164"]);
+    const établissementsTerritoriaux = await établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts(["010008407", "010000164"]);
 
     // THEN
     expect(établissementsTerritoriaux).toStrictEqual<ÉtablissementTerritorialIdentité[]>([
@@ -126,6 +131,7 @@ describe("Récupération des établissements territoriaux de la source de donné
         siret: "26011021800047",
         typeÉtablissement: "S",
         téléphone: "0474754800",
+        codeRégion: "84"
       },
       {
         adresseAcheminement: "01100 OYONNAX",
@@ -149,11 +155,12 @@ describe("Récupération des établissements territoriaux de la source de donné
         siret: "26011021800013",
         typeÉtablissement: "S",
         téléphone: "0474731001",
+        codeRégion: "84"
       },
     ]);
   });
 
-  it("récupère les établissements territoriaux de la source de données FINESS uniquement s’ils ne sont pas caducs", () => {
+  it("récupère les établissements territoriaux de la source de données FINESS uniquement s’ils ne sont pas caducs", async () => {
     // GIVEN
     const etCaduc = `<structureet>
       <nofinesset>100007012</nofinesset>
@@ -166,6 +173,7 @@ describe("Récupération des établissements territoriaux de la source de donné
       <ligneacheminement>10400 PONT SUR SEINE</ligneacheminement>
       <libcommune>PONT SUR SEINE</libcommune>
       <libdepartement>AUBE</libdepartement>
+      <departement>10</departement>
       <telephone xsi:nil="true"/>
       <courriel xsi:nil="true"/>
       <categetab>001</categetab>
@@ -181,10 +189,10 @@ describe("Récupération des établissements territoriaux de la source de donné
       <datefermeture xsi:nil="true"/>
     </structureet>`;
     écritureDuFichierXmlEt([etOuvert1, etOuvert2, etCaduc]);
-    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
+    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger, orm);
 
     // WHEN
-    const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts(["010008407", "100000983"]);
+    const établissementsTerritoriaux = await établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts(["010008407", "100000983"]);
 
     // THEN
     expect(établissementsTerritoriaux).toStrictEqual<ÉtablissementTerritorialIdentité[]>([
@@ -210,6 +218,7 @@ describe("Récupération des établissements territoriaux de la source de donné
         siret: "26011021800047",
         typeÉtablissement: "S",
         téléphone: "0474754800",
+        codeRégion: "84"
       },
       {
         adresseAcheminement: "01100 OYONNAX",
@@ -233,11 +242,12 @@ describe("Récupération des établissements territoriaux de la source de donné
         siret: "26011021800013",
         typeÉtablissement: "S",
         téléphone: "0474731001",
+        codeRégion: "84"
       },
     ]);
   });
 
-  it("récupère les établissements territoriaux de la source de données FINESS uniquement si leur EJ associée est ouverte donc existe en base", () => {
+  it("récupère les établissements territoriaux de la source de données FINESS uniquement si leur EJ associée est ouverte donc existe en base", async () => {
     // GIVEN
     const numéroFinessDeLEjEnBase = "010008407";
     const numéroFinessDeLEjFermé = "010008408";
@@ -253,6 +263,7 @@ describe("Récupération des établissements territoriaux de la source de donné
         <ligneacheminement>01100 OYONNAX</ligneacheminement>
         <libcommune>OYONNAX</libcommune>
         <libdepartement>AIN</libdepartement>
+        <departement>01</departement>
         <telephone>0474731001</telephone>
         <courriel xsi:nil="true"/>
         <categetab>001</categetab>
@@ -268,10 +279,10 @@ describe("Récupération des établissements territoriaux de la source de donné
         <datefermeture xsi:nil="true"/>
       </structureet>`;
     écritureDuFichierXmlEt([etOuvertAssociéÀLEjExistant, etOuvertAssociéÀUnEjNonExistant]);
-    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
+    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger, orm);
 
     // WHEN
-    const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts([numéroFinessDeLEjEnBase]);
+    const établissementsTerritoriaux = await établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts([numéroFinessDeLEjEnBase]);
 
     // THEN
     expect(établissementsTerritoriaux).toStrictEqual<ÉtablissementTerritorialIdentité[]>([
@@ -297,11 +308,12 @@ describe("Récupération des établissements territoriaux de la source de donné
         siret: "26011021800047",
         typeÉtablissement: "S",
         téléphone: "0474754800",
+        codeRégion: "84"
       },
     ]);
   });
 
-  it("récupère la raison sociale écourtée si la raison sociale longue n’est pas renseignée", () => {
+  it("récupère la raison sociale écourtée si la raison sociale longue n’est pas renseignée", async () => {
     const etSansRaisonSocialeLongue1 = `<structureet>
       <nofinesset>010000040</nofinesset>
       <nofinessej>010008407</nofinessej>
@@ -313,6 +325,7 @@ describe("Récupération des établissements territoriaux de la source de donné
       <ligneacheminement>01130 NANTUA</ligneacheminement>
       <libcommune>NANTUA</libcommune>
       <libdepartement>AIN</libdepartement>
+      <departement>01</departement>
       <telephone>0474754800</telephone>
       <courriel xsi:nil="true"/>
       <categetab>355</categetab>
@@ -338,6 +351,7 @@ describe("Récupération des établissements territoriaux de la source de donné
       <ligneacheminement>01100 OYONNAX</ligneacheminement>
       <libcommune>OYONNAX</libcommune>
       <libdepartement>AIN</libdepartement>
+      <departement>01</departement>
       <telephone>0474731001</telephone>
       <courriel xsi:nil="true"/>
       <categetab>001</categetab>
@@ -353,10 +367,10 @@ describe("Récupération des établissements territoriaux de la source de donné
       <datefermeture xsi:nil="true"/>
     </structureet>`;
     écritureDuFichierXmlEt([etSansRaisonSocialeLongue1, etSansRaisonSocialeLongue2]);
-    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
+    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger, orm);
 
     // WHEN
-    const établissementsTerritoriaux = établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts(["010008407", "010000164"]);
+    const établissementsTerritoriaux = await établissementTerritorialFinessLoader.récupèreLesÉtablissementsTerritoriauxOuverts(["010008407", "010000164"]);
 
     // THEN
     expect(établissementsTerritoriaux).toStrictEqual<ÉtablissementTerritorialIdentité[]>([
@@ -382,6 +396,7 @@ describe("Récupération des établissements territoriaux de la source de donné
         siret: "26011021800047",
         typeÉtablissement: "S",
         téléphone: "0474754800",
+        codeRégion: "84"
       },
       {
         adresseAcheminement: "01100 OYONNAX",
@@ -405,17 +420,18 @@ describe("Récupération des établissements territoriaux de la source de donné
         siret: "26011021800013",
         typeÉtablissement: "S",
         téléphone: "0474731001",
+        codeRégion: "84"
       },
     ]);
   });
 
-  it("récupère la date de mise à jour du fichier source", () => {
+  it("récupère la date de mise à jour du fichier source", async () => {
     // GIVEN
     écritureDuFichierXmlEt();
-    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger);
+    const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger, orm);
 
     // WHEN
-    const dateDeMiseÀJourDuFichierSource = établissementTerritorialFinessLoader.récupèreLaDateDeMiseÀJourDuFichierSource();
+    const dateDeMiseÀJourDuFichierSource = await établissementTerritorialFinessLoader.récupèreLaDateDeMiseÀJourDuFichierSource();
 
     // THEN
     expect(dateDeMiseÀJourDuFichierSource).toBe("20211214");

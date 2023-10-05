@@ -24,7 +24,7 @@ import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from "../../../mét
 import { ÉtablissementTerritorialMédicoSocialLoader } from "../../../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader";
 
 export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements ÉtablissementTerritorialMédicoSocialLoader {
-  constructor(private readonly orm: Promise<DataSource>) {}
+  constructor(private readonly orm: Promise<DataSource>) { }
 
   async chargeActivité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialMédicoSocialActivité[]> {
     const activitésÉtablissementTerritorialActivitésModel = await this.chargeLesActivitésModel(numéroFinessÉtablissementTerritorial);
@@ -232,6 +232,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.téléphone,
       },
+      codeRegion: établissementTerritorialIdentitéModel.codeRégion,
     };
   }
 

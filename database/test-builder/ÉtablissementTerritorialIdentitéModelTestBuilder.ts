@@ -24,6 +24,7 @@ export class ÉtablissementTerritorialIdentitéModelTestBuilder {
     établissementTerritorialModel.raisonSocialeCourte = champsSurchargés?.raisonSocialeCourte || "CH NANTUA";
     établissementTerritorialModel.siret = champsSurchargés?.siret || "26011021800047";
     établissementTerritorialModel.téléphone = champsSurchargés?.téléphone || "0102030405";
+    établissementTerritorialModel.codeRégion = champsSurchargés?.codeRégion || "84";
     établissementTerritorialModel.typeÉtablissement = champsSurchargés?.typeÉtablissement || "S";
     return établissementTerritorialModel;
   }
@@ -51,6 +52,7 @@ export class ÉtablissementTerritorialIdentitéModelTestBuilder {
     établissementTerritorialModel.raisonSocialeCourte = champsSurchargés?.raisonSocialeCourte || "HP VILLENEUVE DASCQ";
     établissementTerritorialModel.siret = champsSurchargés?.siret || "47678033300037";
     établissementTerritorialModel.téléphone = champsSurchargés?.téléphone || "0102030406";
+    établissementTerritorialModel.codeRégion = champsSurchargés?.codeRégion || "84";
     établissementTerritorialModel.typeÉtablissement = champsSurchargés?.typeÉtablissement || "P";
     return établissementTerritorialModel;
   }

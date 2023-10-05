@@ -1,6 +1,7 @@
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurIdentité } from "../../commun/IndicateurIdentité/IndicateurIdentité";
+import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import { Sources } from "../../commun/Sources/Sources";
 import styles from "./BlocIdentitéMédicoSocial.module.css";
 import { ÉtablissementTerritorialMédicoSocialIdentitéViewModel } from "./ÉtablissementTerritorialMédicoSocialIdentitéViewModel";
@@ -14,6 +15,7 @@ export const BlocIdentitéMédicoSocial = ({ établissementTerritorialIdentitéM
 
   return (
     <Bloc isExpandable={false} isMain={true} titre={wording.TITRE_BLOC_IDENTITÉ}>
+      {établissementTerritorialIdentitéMédicoSocialViewModel.lesDonnéesIdentitésPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialIdentitéMédicoSocialViewModel.lesDonnéesIdentitésPasAutorisés} /> : <></>}
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialIdentitéMédicoSocialViewModel.dateDeMiseÀJourDuNomDeLÉtablissementTerritorial}
@@ -92,13 +94,15 @@ export const BlocIdentitéMédicoSocial = ({ établissementTerritorialIdentitéM
         >
           {établissementTerritorialIdentitéMédicoSocialViewModel.principalOuSecondaire}
         </IndicateurIdentité>
-        <IndicateurIdentité
-          dateDeMiseÀJour={établissementTerritorialIdentitéMédicoSocialViewModel.dateDeMiseÀJourDeLEntréeEnVigueurDuCpom}
-          nomDeLIndicateur={wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM}
-          source={Sources(wording.TDB_PERF)}
-        >
-          {établissementTerritorialIdentitéMédicoSocialViewModel.dateDeLEntréeEnVigueurDuCpom}
-        </IndicateurIdentité>
+        {établissementTerritorialIdentitéMédicoSocialViewModel.laDateDeLEntréeEnVigueurDuCpomsEstElleAutorisée ? (
+          <IndicateurIdentité
+            dateDeMiseÀJour={établissementTerritorialIdentitéMédicoSocialViewModel.dateDeMiseÀJourDeLEntréeEnVigueurDuCpom}
+            nomDeLIndicateur={wording.DATE_D_ENTRÉE_EN_VIGUEUR_DU_CPOM}
+            source={Sources(wording.TDB_PERF)}
+          >
+            {établissementTerritorialIdentitéMédicoSocialViewModel.dateDeLEntréeEnVigueurDuCpom}
+          </IndicateurIdentité>
+        ) : <></>}
       </ul>
     </Bloc>
   );

@@ -22,4 +22,5 @@ export type ÉtablissementTerritorialIdentité = Readonly<{
   siret: string;
   téléphone: string;
   typeÉtablissement: string;
+  codeRégion: string;
 }>;

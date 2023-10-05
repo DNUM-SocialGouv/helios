@@ -17,6 +17,7 @@ import "@gouvfr/dsfr/dist/component/badge/badge.min.css";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 import "../frontend/ui/commun/global.css";
 
+import { ProfileContextProvider } from '../frontend/ui/commun/contexts/ProfileContextProvider';
 import { DependenciesProvider } from "../frontend/ui/commun/contexts/useDependencies";
 import { UserContextProvider } from '../frontend/ui/commun/contexts/userContextProvider';
 import { Footer } from "../frontend/ui/commun/Footer/Footer";
@@ -64,18 +65,20 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
   return (
     <SessionProvider session={session}>
       <UserContextProvider>
-        <DependenciesProvider>
-          <Head>
-            <meta charSet="utf-8" />
-            <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
-          </Head>
-          <Header />
-          <Component {...pageProps} />
-          <Footer />
-          <Script src="/dsfr.module.min.js" strategy="lazyOnload" type="module"></Script>
-          <Script noModule src="/dsfr.nomodule.min.js" strategy="lazyOnload" type="text/javascript"></Script>
-          {process.env.NODE_ENV !== "development" && <Script src="/smarttag.js" strategy="beforeInteractive" />}
-        </DependenciesProvider>
+        <ProfileContextProvider>
+          <DependenciesProvider>
+            <Head>
+              <meta charSet="utf-8" />
+              <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
+            </Head>
+            <Header />
+            <Component {...pageProps} />
+            <Footer />
+            <Script src="/dsfr.module.min.js" strategy="lazyOnload" type="module"></Script>
+            <Script noModule src="/dsfr.nomodule.min.js" strategy="lazyOnload" type="text/javascript"></Script>
+            {process.env.NODE_ENV !== "development" && <Script src="/smarttag.js" strategy="beforeInteractive" />}
+          </DependenciesProvider>
+        </ProfileContextProvider>
       </UserContextProvider>
     </SessionProvider>
   );

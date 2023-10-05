@@ -43,10 +43,10 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuToo
 export function HistogrammeVerticalABandes(props: {
   data: {
     datasets: (
-      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null }[]; label: string }
-      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null }[]; label: string }
-      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null }[]; label: string }
-      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null }[]; label: string }
+      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }
+      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }
+      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }
+      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }
     )[];
     labels: number[];
   };

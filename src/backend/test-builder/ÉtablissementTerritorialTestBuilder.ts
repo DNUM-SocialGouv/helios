@@ -81,6 +81,7 @@ export class ÉtablissementTerritorialTestBuilder {
       dateMiseÀJourSource: "2022-02-02",
       value: "0102030405",
     },
+    codeRegion: '84'
   };
 
   private static sanitaire: ÉtablissementTerritorialIdentité = {
@@ -156,6 +157,7 @@ export class ÉtablissementTerritorialTestBuilder {
       dateMiseÀJourSource: "2022-02-02",
       value: "0102030406",
     },
+    codeRegion: '84'
   };
 
   private static activitéMédicoSocial: ÉtablissementTerritorialMédicoSocialActivité = {

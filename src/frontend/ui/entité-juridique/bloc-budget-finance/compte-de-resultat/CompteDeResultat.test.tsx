@@ -61,7 +61,7 @@ describe("CompteDeResultat", () => {
     renderFakeComponent(<CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={budgetFinanceViewModel} />);
 
     // THEN
-    const titre = graphiqueTest.titre(wording.COMPTE_DE_RÉSULTAT);
+    const titre = graphiqueTest.titre(wording.COMPTE_DE_RÉSULTAT_CF);
     expect(titre).toBeInTheDocument();
   });
 
@@ -95,7 +95,7 @@ describe("CompteDeResultat", () => {
       // THEN
       const détails = graphiqueTest.détail;
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      expect(graphiqueTest.titreDétail(wording.COMPTE_DE_RÉSULTAT)).toBeInTheDocument();
+      expect(graphiqueTest.titreDétail(wording.COMPTE_DE_RÉSULTAT_CF)).toBeInTheDocument();
     });
 
     it("ferme l'info bulle en cliquant sur le bouton 'Fermer'", () => {

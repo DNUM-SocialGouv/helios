@@ -1,3 +1,4 @@
+import { ProfilModel } from "../../../../database/models/ProfilModel";
 import { RésultatLogin } from "../entities/Utilisateur/RésultatLogin";
 import { UtilisateurLoader } from "../gateways/UtilisateurLoader";
 
@@ -10,5 +11,13 @@ export class LoginUseCase {
 
   async checkIfEmailExists(email: string): Promise<boolean> {
     return await this.utilisateurLoader.checkIfEmailExists(email);
+  }
+
+  async checkIfAdmin(userId: string): Promise<boolean> {
+    return await this.utilisateurLoader.checkIfAdmin(userId);
+  }
+
+  async getUserProfiles(codes: string[]): Promise<ProfilModel[] | null> {
+    return await this.utilisateurLoader.getUserProfiles(codes);
   }
 }

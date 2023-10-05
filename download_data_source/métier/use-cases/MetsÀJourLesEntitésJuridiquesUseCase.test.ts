@@ -32,7 +32,7 @@ describe("Mise à jour des entités juridiques", () => {
         statutJuridiqueNiv2: "1210",
       };
 
-      jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLesEntitésJuridiquesOuvertes").mockReturnValue([entitéJuridiqueSIH]);
+      jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLesEntitésJuridiquesOuvertes").mockResolvedValue([entitéJuridiqueSIH]);
       jest
         .spyOn(fakeDataCrawlerDependencies.catégorisationSourceExterneLoader, "récupèreLesNiveauxDesStatutsJuridiques")
         .mockReturnValue([niveauStatutJuridiqueSIH]);
@@ -64,7 +64,7 @@ describe("Mise à jour des entités juridiques", () => {
 
       jest
         .spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLesEntitésJuridiquesOuvertes")
-        .mockReturnValue([entitéJuridiqueSyndicat]);
+        .mockResolvedValue([entitéJuridiqueSyndicat]);
       jest
         .spyOn(fakeDataCrawlerDependencies.catégorisationSourceExterneLoader, "récupèreLesNiveauxDesStatutsJuridiques")
         .mockReturnValue([niveauStatutJuridiqueSyndicat]);
@@ -94,7 +94,7 @@ describe("Mise à jour des entités juridiques", () => {
         statutJuridiqueNiv2: "2200",
       };
 
-      jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLesEntitésJuridiquesOuvertes").mockReturnValue([entitéJuridiqueSNC]);
+      jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLesEntitésJuridiquesOuvertes").mockResolvedValue([entitéJuridiqueSNC]);
       jest
         .spyOn(fakeDataCrawlerDependencies.catégorisationSourceExterneLoader, "récupèreLesNiveauxDesStatutsJuridiques")
         .mockReturnValue([niveauStatutJuridiqueSNC]);
@@ -126,7 +126,7 @@ describe("Mise à jour des entités juridiques", () => {
 
       jest
         .spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLesEntitésJuridiquesOuvertes")
-        .mockReturnValue([entitéJuridiqueDroitEtranger]);
+        .mockResolvedValue([entitéJuridiqueDroitEtranger]);
       jest
         .spyOn(fakeDataCrawlerDependencies.catégorisationSourceExterneLoader, "récupèreLesNiveauxDesStatutsJuridiques")
         .mockReturnValue([niveauStatutJuridiqueDroitEtranger]);
@@ -154,7 +154,7 @@ describe("Mise à jour des entités juridiques", () => {
 
       jest
         .spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLesEntitésJuridiquesOuvertes")
-        .mockReturnValue([entitéJuridiqueAvecUnMauvaisStatutJuridique]);
+        .mockResolvedValue([entitéJuridiqueAvecUnMauvaisStatutJuridique]);
       jest.spyOn(fakeDataCrawlerDependencies.catégorisationSourceExterneLoader, "récupèreLesNiveauxDesStatutsJuridiques").mockReturnValue([]);
 
       // WHEN
@@ -168,7 +168,7 @@ describe("Mise à jour des entités juridiques", () => {
 
   it("récupère les entités juridiques des sources de données externes avec la date de mise à jour de leur fichier source", async () => {
     // GIVEN
-    jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLesEntitésJuridiquesOuvertes").mockReturnValue([]);
+    jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLesEntitésJuridiquesOuvertes").mockResolvedValue([]);
 
     // WHEN
     await sauvegarderLesEntitésJuridiques.exécute();
@@ -183,7 +183,7 @@ describe("Mise à jour des entités juridiques", () => {
     // GIVEN
     const entitésJuridiques: EntitéJuridique[] = [uneEntitéJuridique, uneSecondeEntitéJuridique];
     jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLaDateDeMiseÀJourDuFichierSource").mockReturnValue("20200101");
-    jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLesEntitésJuridiquesOuvertes").mockReturnValue(entitésJuridiques);
+    jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLesEntitésJuridiquesOuvertes").mockResolvedValue(entitésJuridiques);
 
     // WHEN
     await sauvegarderLesEntitésJuridiques.exécute();
@@ -203,7 +203,7 @@ describe("Mise à jour des entités juridiques", () => {
     ];
     jest
       .spyOn(fakeDataCrawlerDependencies.entitéJuridiqueSourceExterneLoader, "récupèreLesEntitésJuridiquesOuvertes")
-      .mockReturnValue(entitésJuridiquesOuvertes);
+      .mockResolvedValue(entitésJuridiquesOuvertes);
 
     const entitésJuridiquesEnBase = [numéroFinessEntitéJuridiqueToujoursOuverte, "123456789"];
     jest

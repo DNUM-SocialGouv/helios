@@ -2,6 +2,7 @@ import { compare } from 'bcrypt';
 import { createHash } from 'crypto';
 import { DataSource } from "typeorm";
 
+import { ProfilModel } from '../../../../../database/models/ProfilModel';
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 import { RésultatLogin } from "../../../métier/entities/Utilisateur/RésultatLogin";
 import { UtilisateurLoader } from "../../../métier/gateways/UtilisateurLoader";
@@ -27,5 +28,20 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         if (user) {
             return true
         } else return false;
+    }
+
+    async checkIfAdmin(userId: string): Promise<boolean> {
+        const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ code: userId.trim() });
+        if (user && user.roleId === '1') {
+            return true
+        } else return false;
+    }
+
+    async getUserProfiles(codes: string[]): Promise<ProfilModel[] | null> {
+        const profiles = await (await this.orm).getRepository(ProfilModel)
+            .createQueryBuilder("profiles")
+            .where('profiles.profil_code IN (:...codes)', { codes })
+            .getMany();
+        return profiles;
     }
 }
