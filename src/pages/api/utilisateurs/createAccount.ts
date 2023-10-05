@@ -9,8 +9,6 @@ export default async function handler(request: NextApiRequest, response: NextApi
     }
     try {
         const { firstName, lastName, email, institution } = request.body;
-        // eslint-disable-next-line no-console
-        console.log('make it to api');
         const resp = await createAccountEndpoint(dependencies, firstName, lastName, email, institution);
         return response.status(200).json(resp);
     } catch (error) {

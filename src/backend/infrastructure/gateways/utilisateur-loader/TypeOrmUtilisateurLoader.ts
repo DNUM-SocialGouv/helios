@@ -45,19 +45,21 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
 
             const institutionToSave = await (await this.orm).getRepository(InstitutionModel).findOneBy({ code: institution });
             const roleToSave = await (await this.orm).getRepository(RoleModel).findOneBy({ code: 'USER' });
+            const profileToSave = await (await this.orm).getRepository(ProfilModel).findOneBy({ id: 1 });
 
             const passwordToSave = 'HeliosConnect-' + institutionToSave?.codeGeo;
             const hashing = createHash('sha256');
             hashing.update(passwordToSave);
             const hashedPassword = hashing.digest('hex');
 
-            if (institutionToSave && roleToSave) {
+            if (institutionToSave && roleToSave && profileToSave) {
                 account.nom = lastName;
                 account.prenom = firstName;
                 account.email = email;
                 account.institution = institutionToSave;
                 account.role = roleToSave;
                 account.password = hashedPassword;
+                account.profils = [profileToSave.code];
                 account.actif = true;
                 account.dateCreation = new Date();
             }

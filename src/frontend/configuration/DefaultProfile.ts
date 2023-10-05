@@ -115,7 +115,7 @@ export const DefaultProfile = {
             },
             "autorisationsEtCapacités": {
                 "capacités": "ok",
-                "autorisations": "no"
+                "autorisations": "ok"
             }
         }
     },

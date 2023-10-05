@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 import { Institution } from "../../../backend/métier/entities/Utilisateur/Institution";
 import { useDependencies } from "../commun/contexts/useDependencies";
@@ -17,7 +17,8 @@ export const RegistrationForm = () => {
     const [institutionList, setInstitutionsList] = useState<Institution[]>([]);
     const [institution, setInstitution] = useState(institutionList[0]?.code);
 
-    const createAccount = () => {
+    const createAccount = async (e: FormEvent) => {
+        e.preventDefault()
         fetch("/api/utilisateurs/createAccount", {
             body: JSON.stringify({ firstName, lastName, email, institution }),
             headers: { "Content-Type": "application/json" },
@@ -38,8 +39,6 @@ export const RegistrationForm = () => {
 
     const handleInstitutionChange = (event: ChangeEvent<HTMLSelectElement>) => {
         setInstitution(event.target.value)
-        // eslint-disable-next-line no-console
-        console.log('event.target.value', event.target.value);
     }
 
     useEffect(() => {

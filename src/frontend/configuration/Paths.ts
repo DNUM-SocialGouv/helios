@@ -14,4 +14,6 @@ export class Paths {
   readonly HISTORY: string = "/history"
   readonly FORGET_PASSWORD = '/mot-passe-oublie';
   readonly CHANGE_PASSWORD = '/change-mot-passe';
+  readonly SETTINGS = '/settings';
+  readonly ADD_PROFILE = '/settings/add-profile';
 }
