@@ -429,11 +429,11 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
   }
 
   private extraisLesValeursNombréesDesIndicateurs(indicateur: IndicateurAvecUnNombre): [number[], string[]] {
-    const valeurs: any[] = [];
+    const valeurs: number[] = [];
     const années: string[] = [];
     this.ressourcesHumainesMédicoSocial.forEach((ressourceHumaineMédicoSocial: ÉtablissementTerritorialMédicoSocialRessourcesHumaines) => {
       const valeur = ressourceHumaineMédicoSocial[indicateur].valeur;
-      if (valeur !== null) {
+      if (valeur !== null && valeur !== "") {
         années.push(ressourceHumaineMédicoSocial.année.toString());
         valeurs.push(valeur);
       }
@@ -443,7 +443,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
   }
 
   private extraisLesTauxDesIndicateurs(indicateur: IndicateurAvecUnTaux): number[][] {
-    const valeurs: any[] = [];
+    const valeurs: number[] = [];
     const années: number[] = [];
     this.ressourcesHumainesMédicoSocial.forEach((ressourceHumaineMédicoSocial: ÉtablissementTerritorialMédicoSocialRessourcesHumaines) => {
       const valeur = ressourceHumaineMédicoSocial[indicateur].valeur;

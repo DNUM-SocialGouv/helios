@@ -25,7 +25,7 @@ export async function récupèreLÉtablissementTerritorialMédicoSocialEndpoint(
     numéroFinessÉtablissementTerritorialMédicoSocial
   );
 
-  if (profilInCache === undefined) {
+  if (!profilInCache) {
     const profiles = await loginUseCase.getUserProfiles(codeProfiles) as ProfilModel[];
     const profilesValues = profiles.map((profile) => établissementTerritorialMédicoSocial.identité.codeRegion === codeRegion ? profile?.value.institution.profilMédicoSocial : profile?.value.autreRegion.profilMédicoSocial)
     profil = combineProfils(profilesValues);

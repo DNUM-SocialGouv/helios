@@ -23,7 +23,7 @@ export async function récupèreLÉtablissementTerritorialSanitaireEndpoint(
   const profilInCache = appCache.get("userProfile") as object;
   let profil: object;
 
-  if (profilInCache === undefined) {
+  if (!profilInCache) {
     const profiles = await loginUseCase.getUserProfiles(codeProfiles) as ProfilModel[];
     const profilesValues = profiles.map((profile) => etablissementSanitaire.identité.codeRegion === codeRegion ? profile?.value.institution.profilETSanitaire : profile?.value.autreRegion.profilETSanitaire)
     profil = combineProfils(profilesValues);
