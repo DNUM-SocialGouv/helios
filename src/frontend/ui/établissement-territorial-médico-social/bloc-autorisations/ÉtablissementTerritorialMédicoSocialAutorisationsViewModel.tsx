@@ -12,10 +12,17 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel {
   constructor(
     private readonly établissementTerritorialAutorisations: ÉtablissementTerritorialMédicoSocial["autorisationsEtCapacités"],
     private wording: Wording
-  ) {}
+  ) { }
 
   public get lesDonnéesAutorisationEtCapacitéNeSontPasRenseignées(): boolean {
     return !this.lesAutorisationsSontEllesRenseignées && !this.lesCapacitésSontEllesRenseignées;
+  }
+
+  public get lesDonnéesAutorisationEtCapacitéPasAutorisés(): string[] {
+    const nonAutorisés = [];
+    if (!this.lesCapacitésSontEllesAutorisées) nonAutorisés.push(this.wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS);
+    if (!this.lesAutorisationsSontEllesAutorisées) nonAutorisés.push(this.wording.AUTORISATIONS_MS);
+    return nonAutorisés;
   }
 
   public get autorisations(): ReactElement {
@@ -38,21 +45,18 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel {
                           <TagGroup label="dates-et-capacités">
                             <Tag label={`${clientèle.libellé} [${clientèle.code}]`} size={TAG_SIZE.SM} withArrow />
                             <Tag
-                              label={`${this.wording.DATE_D_AUTORISATION} : ${
-                                datesEtCapacités.dateDAutorisation ? StringFormater.formatDate(datesEtCapacités.dateDAutorisation) : "N/A"
-                              }`}
+                              label={`${this.wording.DATE_D_AUTORISATION} : ${datesEtCapacités.dateDAutorisation ? StringFormater.formatDate(datesEtCapacités.dateDAutorisation) : "N/A"
+                                }`}
                               size={TAG_SIZE.SM}
                             />
                             <Tag
-                              label={`${this.wording.MISE_À_JOUR_AUTORISATION} : ${
-                                datesEtCapacités.dateDeMiseÀJourDAutorisation ? StringFormater.formatDate(datesEtCapacités.dateDeMiseÀJourDAutorisation) : "N/A"
-                              }`}
+                              label={`${this.wording.MISE_À_JOUR_AUTORISATION} : ${datesEtCapacités.dateDeMiseÀJourDAutorisation ? StringFormater.formatDate(datesEtCapacités.dateDeMiseÀJourDAutorisation) : "N/A"
+                                }`}
                               size={TAG_SIZE.SM}
                             />
                             <Tag
-                              label={`${this.wording.DERNIÈRE_INSTALLATION} : ${
-                                datesEtCapacités.dateDeDernièreInstallation ? StringFormater.formatDate(datesEtCapacités.dateDeDernièreInstallation) : "N/A"
-                              }`}
+                              label={`${this.wording.DERNIÈRE_INSTALLATION} : ${datesEtCapacités.dateDeDernièreInstallation ? StringFormater.formatDate(datesEtCapacités.dateDeDernièreInstallation) : "N/A"
+                                }`}
                               size={TAG_SIZE.SM}
                             />
                             <Tag label={`${this.wording.CAPACITÉ_AUTORISÉE} : ${datesEtCapacités.capacitéAutoriséeTotale ?? "N/A"}`} size={TAG_SIZE.SM} />
@@ -73,6 +77,14 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel {
 
   public get lesAutorisationsSontEllesRenseignées(): boolean {
     return this.établissementTerritorialAutorisations.autorisations.disciplines.length !== 0;
+  }
+
+  public get lesAutorisationsSontEllesAutorisées(): boolean {
+    return this.établissementTerritorialAutorisations.autorisations.dateMiseÀJourSource !== '';
+  }
+
+  public get lesCapacitésSontEllesAutorisées(): boolean {
+    return this.établissementTerritorialAutorisations.capacités.dateMiseÀJourSource !== '';
   }
 
   public get dateDeMiseÀJourDesAutorisations(): string {

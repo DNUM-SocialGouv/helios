@@ -291,7 +291,8 @@ export class WordingFr implements Wording {
   readonly TITRE_II: string = "Titre II";
   readonly TITRE_III: string = "Titre III";
   readonly TITRE_IV: string = "Titre IV";
-  readonly COMPTE_DE_RÉSULTAT: string = "Compte de résultat (CF)";
+  readonly COMPTE_DE_RÉSULTAT: string = "Compte de résultat";
+  readonly COMPTE_DE_RÉSULTAT_CF: string = "Compte de résultat (CF)";
   readonly PRODUITS_PRINCIPAUX: string = "Produits principaux";
   readonly PRODUITS_ANNEXES: string = "Produits annexes";
   readonly CHARGES_ANNEXES: string = "Charges annexes";
@@ -455,6 +456,16 @@ export class WordingFr implements Wording {
   readonly REINITIALISATION_MOT_PASSE_DESCRIPTION: string = "Merci de renseigner votre nouveau mot de passe";
   readonly DIFFERENT_MOT_PASSE: string = "Le mot de passe doit être différent du mot de passe actuel";
   readonly WRONG_OLD_MOT_DE_PASSE: string = "Ancien mot de passe erroné"
+
+  readonly PARAMETRAGE_TITRE: string = "Liste des profils";
+  readonly PARAMETRAGE_PROFILE: string = "Paramétrage de profil: ";
+  readonly PARAMETRAGE_EJ_TAB: string = "Entité juridique";
+  readonly PARAMETRAGE_ET_MS_TAB: string = "Établissement médico-social";
+  readonly PARAMETRAGE_ET_SAN_TAB: string = "Établissement sanitaire";
+  readonly PARAMETRAGE_INSTITUTION: string = "Institution";
+  readonly PARAMETRAGE_AUTRE_REGION: string = "Autre région";
+  readonly CREATION_DATE: string = "Date de création";
+  readonly PARAMETRAGE_NEW_PROFILE: string = "Ajouter un nouveau profil";
 
   //  Profile page
   readonly USER_PROFILE: string = "Profil de l'utilisateur";

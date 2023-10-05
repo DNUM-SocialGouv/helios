@@ -2,7 +2,7 @@ import { CatégorisationEnum } from "../../../../backend/métier/entities/entit�
 import { Wording } from "../../../configuration/wording/Wording";
 
 export class CatégorisationViewModel {
-  constructor(private readonly catégorisation: CatégorisationEnum | null, private readonly wording: Wording) {}
+  constructor(private readonly catégorisation: CatégorisationEnum | null | string, private readonly wording: Wording) { }
 
   public get catégorisationWording(): string | null {
     switch (this.catégorisation) {

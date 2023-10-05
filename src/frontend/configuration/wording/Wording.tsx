@@ -214,6 +214,7 @@ export interface Wording {
   readonly RÉSULTAT_NET_COMPTABLE: string;
 
   readonly RATIO_DEPENDANCE_FINANCIERE: string;
+  readonly COMPTE_DE_RÉSULTAT: string;
   readonly COMPTE_DE_RÉSULTAT_ERRD: string;
   readonly COMPTE_DE_RÉSULTAT_CA: string;
   readonly TITRE_BUDGÉTAIRE: string;
@@ -233,7 +234,7 @@ export interface Wording {
   readonly TITRE_II: string;
   readonly TITRE_III: string;
   readonly TITRE_IV: string;
-  readonly COMPTE_DE_RÉSULTAT: string;
+  readonly COMPTE_DE_RÉSULTAT_CF: string;
 
   readonly PRODUITS_PRINCIPAUX: string;
   readonly PRODUITS_ANNEXES: string;
@@ -364,6 +365,17 @@ export interface Wording {
   readonly REINITIALISATION_MOT_PASSE_DESCRIPTION: string;
   readonly DIFFERENT_MOT_PASSE: string;
   readonly WRONG_OLD_MOT_DE_PASSE: string;
+
+  // Parametrage
+  readonly PARAMETRAGE_TITRE: string;
+  readonly PARAMETRAGE_PROFILE: string;
+  readonly PARAMETRAGE_EJ_TAB: string;
+  readonly PARAMETRAGE_ET_MS_TAB: string;
+  readonly PARAMETRAGE_ET_SAN_TAB: string;
+  readonly PARAMETRAGE_INSTITUTION: string;
+  readonly PARAMETRAGE_AUTRE_REGION: string;
+  readonly CREATION_DATE: string;
+  readonly PARAMETRAGE_NEW_PROFILE: string;
 
   //  Profile page
   readonly USER_PROFILE: string;

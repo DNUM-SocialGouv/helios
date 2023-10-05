@@ -41,6 +41,10 @@ import { AjoutTableUtilisateurRoleEtablissement1686646154737 } from "./migration
 import { ModificationTableInstitution1688376404752 } from "./migrations/1688376404752-ModificationTableInstitution";
 import { AjoutTableFavori1691393817990 } from "./migrations/1691393817990-AjoutTableFavori";
 import { AjoutTableSearchHistory1691400360927 } from "./migrations/1691400360927-AjoutTableSearchHistory";
+import { AjoutRefDepartementRegion1694523233904 } from "./migrations/1694523233904-AjoutRefDepartementRegion";
+import { AjoutRégionDansEntitéJuridique1694616724703 } from "./migrations/1694616724703-AjoutRégionDansEntitéJuridique";
+import { AjoutRégionDansEtablissementTerritorial1694617579347 } from "./migrations/1694617579347-AjoutRégionDansEtablissementTerritorial";
+import { ajoutTableProfil1695731844298 } from "./migrations/1695731844278-ajoutTableProfil";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "./models/ActivitéSanitaireEntitéJuridiqueModel";
 import { ActivitéSanitaireModel } from "./models/ActivitéSanitaireModel";
@@ -56,8 +60,10 @@ import { DateMiseÀJourFichierSourceModel } from "./models/DateMiseÀJourFichier
 import { EntitéJuridiqueModel } from "./models/EntitéJuridiqueModel";
 import { FavorisModel } from "./models/FavorisModel";
 import { InstitutionModel } from "./models/InstitutionModel";
+import { ProfilModel } from "./models/ProfilModel";
 import { RechercheModel } from "./models/RechercheModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "./models/ReconnaissanceContractuelleSanitaireModel";
+import { RefDepartementRegionModel } from "./models/RefDepartementRegionModel";
 import { RessourcesHumainesMédicoSocialModel } from "./models/RessourcesHumainesMédicoSocialModel";
 import { RoleModel } from "./models/RoleModel";
 import { SearchHistoryModel } from "./models/SearchHistoryModel";
@@ -94,6 +100,8 @@ export default new DataSource({
     RoleModel,
     InstitutionModel,
     SearchHistoryModel,
+    RefDepartementRegionModel,
+    ProfilModel,
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -136,6 +144,10 @@ export default new DataSource({
     AjoutTableFavori1691393817990,
     AjoutTableUtilisateurRoleEtablissement1686646154737,
     ModificationTableInstitution1688376404752,
+    AjoutRefDepartementRegion1694523233904,
+    AjoutRégionDansEntitéJuridique1694616724703,
+    AjoutRégionDansEtablissementTerritorial1694617579347,
+    ajoutTableProfil1695731844298,
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

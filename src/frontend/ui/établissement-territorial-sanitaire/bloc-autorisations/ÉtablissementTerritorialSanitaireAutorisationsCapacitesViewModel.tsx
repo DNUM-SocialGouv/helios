@@ -17,6 +17,16 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
     this.graphiqueCapacitésParActivitéViewModel = new GraphiqueCapacitésParActivitéViewModel(établissementTerritorialSanitaireAutorisations.capacités, wording);
   }
 
+  public get lesDonnéesAutorisationEtCapacitéPasAutorisés(): string[] {
+    const nonAutorisés = [];
+    if (!this.graphiqueCapacitésParActivitéViewModel.lesCapacitésParActivitésSontEllesAutorisées) nonAutorisés.push(this.wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS);
+    if (!this.lesAutorisationsSontEllesAutorisées) nonAutorisés.push(this.wording.AUTORISATIONS_SANITAIRE);
+    if (!this.lesAutresActivitésSontEllesAutorisées) nonAutorisés.push(this.wording.AUTRES_ACTIVITÉS_SAN);
+    if (!this.lesReconnaissancesContractuellesSontEllesAutorisées) nonAutorisés.push(this.wording.RECONNAISSANCES_CONTRACTUELLES);
+    if (!this.lesÉquipementsMatérielsLourdsSontIlsAutorisés) nonAutorisés.push(this.wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS);
+    return nonAutorisés;
+  }
+
   public get lesDonnéesAutorisationEtCapacitéNeSontPasRenseignées(): boolean {
     return (
       !this.graphiqueCapacitésParActivitéViewModel.lesCapacitésParActivitésSontEllesRenseignées &&
@@ -55,21 +65,18 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
                               size={TAG_SIZE.SM}
                             />
                             <Tag
-                              label={`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${
-                                autorisationSanitaire.dateDeMiseEnOeuvre ? StringFormater.formatDate(autorisationSanitaire.dateDeMiseEnOeuvre) : "N/A"
-                              }`}
+                              label={`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${autorisationSanitaire.dateDeMiseEnOeuvre ? StringFormater.formatDate(autorisationSanitaire.dateDeMiseEnOeuvre) : "N/A"
+                                }`}
                               size={TAG_SIZE.SM}
                             />
                             <Tag
-                              label={`${this.wording.DATE_DE_FIN} : ${
-                                autorisationSanitaire.dateDeFin ? StringFormater.formatDate(autorisationSanitaire.dateDeFin) : "N/A"
-                              }`}
+                              label={`${this.wording.DATE_DE_FIN} : ${autorisationSanitaire.dateDeFin ? StringFormater.formatDate(autorisationSanitaire.dateDeFin) : "N/A"
+                                }`}
                               size={TAG_SIZE.SM}
                             />
                             <Tag
-                              label={`${this.wording.DATE_D_AUTORISATION} : ${
-                                autorisationSanitaire.dateDAutorisation ? StringFormater.formatDate(autorisationSanitaire.dateDAutorisation) : "N/A"
-                              }`}
+                              label={`${this.wording.DATE_D_AUTORISATION} : ${autorisationSanitaire.dateDAutorisation ? StringFormater.formatDate(autorisationSanitaire.dateDAutorisation) : "N/A"
+                                }`}
                               size={TAG_SIZE.SM}
                             />
                           </TagGroup>
@@ -88,6 +95,10 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
 
   public get lesAutorisationsSontEllesRenseignées(): boolean {
     return this.établissementTerritorialSanitaireAutorisations.autorisations.activités.length !== 0;
+  }
+
+  public get lesAutorisationsSontEllesAutorisées(): boolean {
+    return this.établissementTerritorialSanitaireAutorisations.autorisations.dateMiseÀJourSource !== '';
   }
 
   public get dateDeMiseÀJourDesAutorisations(): string {
@@ -118,21 +129,18 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
                           <TagGroup label="autre-activité">
                             <Tag label={`${forme.libellé} [${forme.code}]`} size={TAG_SIZE.SM} withArrow />
                             <Tag
-                              label={`${this.wording.DATE_D_AUTORISATION} : ${
-                                autreActivitéSanitaire.dateDAutorisation ? StringFormater.formatDate(autreActivitéSanitaire.dateDAutorisation) : "N/A"
-                              }`}
+                              label={`${this.wording.DATE_D_AUTORISATION} : ${autreActivitéSanitaire.dateDAutorisation ? StringFormater.formatDate(autreActivitéSanitaire.dateDAutorisation) : "N/A"
+                                }`}
                               size={TAG_SIZE.SM}
                             />
                             <Tag
-                              label={`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${
-                                autreActivitéSanitaire.dateDeMiseEnOeuvre ? StringFormater.formatDate(autreActivitéSanitaire.dateDeMiseEnOeuvre) : "N/A"
-                              }`}
+                              label={`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${autreActivitéSanitaire.dateDeMiseEnOeuvre ? StringFormater.formatDate(autreActivitéSanitaire.dateDeMiseEnOeuvre) : "N/A"
+                                }`}
                               size={TAG_SIZE.SM}
                             />
                             <Tag
-                              label={`${this.wording.DATE_DE_FIN} : ${
-                                autreActivitéSanitaire.dateDeFin ? StringFormater.formatDate(autreActivitéSanitaire.dateDeFin) : "N/A"
-                              }`}
+                              label={`${this.wording.DATE_DE_FIN} : ${autreActivitéSanitaire.dateDeFin ? StringFormater.formatDate(autreActivitéSanitaire.dateDeFin) : "N/A"
+                                }`}
                               size={TAG_SIZE.SM}
                             />
                           </TagGroup>
@@ -155,6 +163,10 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
 
   public get lesAutresActivitésSontEllesRenseignées(): boolean {
     return this.établissementTerritorialSanitaireAutorisations.autresActivités.activités.length !== 0;
+  }
+
+  public get lesAutresActivitésSontEllesAutorisées(): boolean {
+    return this.établissementTerritorialSanitaireAutorisations.autresActivités.dateMiseÀJourSource !== '';
   }
 
   public get reconnaissancesContractuelles(): ReactElement {
@@ -181,9 +193,8 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
                           <TagGroup label="reconnaissance-contractuelle">
                             <Tag label={`${forme.libellé} [${forme.code}]`} size={TAG_SIZE.SM} withArrow />
                             <Tag
-                              label={`${this.wording.NUMÉRO_ARHGOS} : ${
-                                reconnaissancesContractuellesSanitaire.numéroArhgos ? reconnaissancesContractuellesSanitaire.numéroArhgos : "N/A"
-                              }`}
+                              label={`${this.wording.NUMÉRO_ARHGOS} : ${reconnaissancesContractuellesSanitaire.numéroArhgos ? reconnaissancesContractuellesSanitaire.numéroArhgos : "N/A"
+                                }`}
                               size={TAG_SIZE.SM}
                             />
                             <Tag size={TAG_SIZE.SM}>
@@ -192,32 +203,28 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
                             </Tag>
                             <Tag size={TAG_SIZE.SM}>
                               {this.wording.DATE_D_EFFET_ASR}
-                              {`: ${
-                                reconnaissancesContractuellesSanitaire.dateDEffetAsr
-                                  ? StringFormater.formatDate(reconnaissancesContractuellesSanitaire.dateDEffetAsr)
-                                  : "N/A"
-                              }`}
+                              {`: ${reconnaissancesContractuellesSanitaire.dateDEffetAsr
+                                ? StringFormater.formatDate(reconnaissancesContractuellesSanitaire.dateDEffetAsr)
+                                : "N/A"
+                                }`}
                             </Tag>
                             <Tag size={TAG_SIZE.SM}>
                               {this.wording.DATE_D_EFFET_CPOM}
-                              {`: ${
-                                reconnaissancesContractuellesSanitaire.dateDEffetCpom
-                                  ? StringFormater.formatDate(reconnaissancesContractuellesSanitaire.dateDEffetCpom)
-                                  : "N/A"
-                              }`}
+                              {`: ${reconnaissancesContractuellesSanitaire.dateDEffetCpom
+                                ? StringFormater.formatDate(reconnaissancesContractuellesSanitaire.dateDEffetCpom)
+                                : "N/A"
+                                }`}
                             </Tag>
                             <Tag size={TAG_SIZE.SM}>
                               {this.wording.DATE_DE_FIN_CPOM}
-                              {`: ${
-                                reconnaissancesContractuellesSanitaire.dateDeFinCpom
-                                  ? StringFormater.formatDate(reconnaissancesContractuellesSanitaire.dateDeFinCpom)
-                                  : "N/A"
-                              }`}
+                              {`: ${reconnaissancesContractuellesSanitaire.dateDeFinCpom
+                                ? StringFormater.formatDate(reconnaissancesContractuellesSanitaire.dateDeFinCpom)
+                                : "N/A"
+                                }`}
                             </Tag>
                             <Tag
-                              label={`${this.wording.CAPACITÉ_AUTORISÉE} : ${
-                                reconnaissancesContractuellesSanitaire.capacitéAutorisée ? reconnaissancesContractuellesSanitaire.capacitéAutorisée : "N/A"
-                              }`}
+                              label={`${this.wording.CAPACITÉ_AUTORISÉE} : ${reconnaissancesContractuellesSanitaire.capacitéAutorisée ? reconnaissancesContractuellesSanitaire.capacitéAutorisée : "N/A"
+                                }`}
                               size={TAG_SIZE.SM}
                             />
                           </TagGroup>
@@ -242,6 +249,10 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
     return this.établissementTerritorialSanitaireAutorisations.reconnaissancesContractuelles.activités.length !== 0;
   }
 
+  public get lesReconnaissancesContractuellesSontEllesAutorisées(): boolean {
+    return this.établissementTerritorialSanitaireAutorisations.reconnaissancesContractuelles.dateMiseÀJourSource !== '';
+  }
+
   public get équipementsMatérielsLourds(): ReactElement {
     const équipementsMatérielsLourdsDeLÉtablissement = this.établissementTerritorialSanitaireAutorisations.équipementsMatérielsLourds;
 
@@ -256,32 +267,28 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
                   <li key={`forme-${autorisationÉquipementMatérielLourd.numéroArhgos}`}>
                     <TagGroup label="équipement-matériel-lourd">
                       <Tag
-                        label={`${this.wording.NUMÉRO_ARHGOS} : ${
-                          autorisationÉquipementMatérielLourd.numéroArhgos ? autorisationÉquipementMatérielLourd.numéroArhgos : "N/A"
-                        }`}
+                        label={`${this.wording.NUMÉRO_ARHGOS} : ${autorisationÉquipementMatérielLourd.numéroArhgos ? autorisationÉquipementMatérielLourd.numéroArhgos : "N/A"
+                          }`}
                         size={TAG_SIZE.SM}
                         withArrow
                       />
                       <Tag
-                        label={`${this.wording.DATE_D_AUTORISATION} : ${
-                          autorisationÉquipementMatérielLourd.dateDAutorisation
-                            ? StringFormater.formatDate(autorisationÉquipementMatérielLourd.dateDAutorisation)
-                            : "N/A"
-                        }`}
+                        label={`${this.wording.DATE_D_AUTORISATION} : ${autorisationÉquipementMatérielLourd.dateDAutorisation
+                          ? StringFormater.formatDate(autorisationÉquipementMatérielLourd.dateDAutorisation)
+                          : "N/A"
+                          }`}
                         size={TAG_SIZE.SM}
                       />
                       <Tag
-                        label={`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${
-                          autorisationÉquipementMatérielLourd.dateDeMiseEnOeuvre
-                            ? StringFormater.formatDate(autorisationÉquipementMatérielLourd.dateDeMiseEnOeuvre)
-                            : "N/A"
-                        }`}
+                        label={`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${autorisationÉquipementMatérielLourd.dateDeMiseEnOeuvre
+                          ? StringFormater.formatDate(autorisationÉquipementMatérielLourd.dateDeMiseEnOeuvre)
+                          : "N/A"
+                          }`}
                         size={TAG_SIZE.SM}
                       />
                       <Tag
-                        label={`${this.wording.DATE_DE_FIN} : ${
-                          autorisationÉquipementMatérielLourd.dateDeFin ? StringFormater.formatDate(autorisationÉquipementMatérielLourd.dateDeFin) : "N/A"
-                        }`}
+                        label={`${this.wording.DATE_DE_FIN} : ${autorisationÉquipementMatérielLourd.dateDeFin ? StringFormater.formatDate(autorisationÉquipementMatérielLourd.dateDeFin) : "N/A"
+                          }`}
                         size={TAG_SIZE.SM}
                       />
                     </TagGroup>
@@ -301,5 +308,9 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
 
   public get lesÉquipementsMatérielsLourdsSontIlsRenseignés(): boolean {
     return this.établissementTerritorialSanitaireAutorisations.équipementsMatérielsLourds.équipements.length !== 0;
+  }
+
+  public get lesÉquipementsMatérielsLourdsSontIlsAutorisés(): boolean {
+    return this.établissementTerritorialSanitaireAutorisations.équipementsMatérielsLourds.dateMiseÀJourSource !== '';
   }
 }

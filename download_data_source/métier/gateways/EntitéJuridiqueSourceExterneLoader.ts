@@ -1,6 +1,6 @@
 import { EntitéJuridique } from "../entities/EntitéJuridique";
 
 export interface EntitéJuridiqueSourceExterneLoader {
-  récupèreLesEntitésJuridiquesOuvertes(): EntitéJuridique[];
+  récupèreLesEntitésJuridiquesOuvertes(): Promise<EntitéJuridique[]>;
   récupèreLaDateDeMiseÀJourDuFichierSource(): string;
 }

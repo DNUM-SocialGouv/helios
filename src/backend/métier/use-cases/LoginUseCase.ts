@@ -1,3 +1,4 @@
+import { ProfilModel } from "../../../../database/models/ProfilModel";
 import { Institution } from "../entities/Utilisateur/Institution";
 import { RésultatLogin } from "../entities/Utilisateur/RésultatLogin";
 import { UtilisateurLoader } from "../gateways/UtilisateurLoader";
@@ -18,8 +19,15 @@ export class LoginUseCase {
   }
 
   async createAccount(firstName: string, lastName: string, email: string, institution: string): Promise<void> {
-    // eslint-disable-next-line no-console
-    console.log('make it to useCase');
+
     return this.utilisateurLoader.createAccount(firstName, lastName, email, institution);
+  }
+
+  async checkIfAdmin(userId: string): Promise<boolean> {
+    return await this.utilisateurLoader.checkIfAdmin(userId);
+  }
+
+  async getUserProfiles(codes: string[]): Promise<ProfilModel[] | null> {
+    return await this.utilisateurLoader.getUserProfiles(codes);
   }
 }

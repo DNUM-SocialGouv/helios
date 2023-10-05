@@ -11,12 +11,12 @@ import { StringFormater } from "../../commun/StringFormater";
 import { ActivitéMCO } from "./IndicateurDesSejoursMCO";
 
 type IndicateurDesSejoursMCO = Readonly<{
-  nombreSéjoursCompletsMédecine: { x: number; y: number | null }[];
-  nombreSéjoursCompletsChirurgie: { x: number; y: number | null }[];
-  nombreSéjoursCompletsObstétrique: { x: number; y: number | null }[];
-  nombreSéjoursPartielsMédecine: { x: number; y: number | null }[];
-  nombreSéjoursPartielsChirurgie: { x: number; y: number | null }[];
-  nombreSéjoursPartielsObstétrique: { x: number; y: number | null }[];
+  nombreSéjoursCompletsMédecine: { x: number; y: number | null | '' }[];
+  nombreSéjoursCompletsChirurgie: { x: number; y: number | null | '' }[];
+  nombreSéjoursCompletsObstétrique: { x: number; y: number | null | '' }[];
+  nombreSéjoursPartielsMédecine: { x: number; y: number | null | '' }[];
+  nombreSéjoursPartielsChirurgie: { x: number; y: number | null | '' }[];
+  nombreSéjoursPartielsObstétrique: { x: number; y: number | null | '' }[];
 }>;
 export class NombreDeSejourMCOViewModel {
   public NOMBRE_ANNEES = 5;
@@ -34,6 +34,10 @@ export class NombreDeSejourMCOViewModel {
     return this.activitésMCO.some(this.activitesMCORenseignees);
   }
 
+  public get nombreDeSéjoursMCOSontIlsAutorisés(): boolean {
+    return this.activitésMCO.some(this.activitesMCOAutorisees);
+  }
+
   private activitesMCORenseignees(activité: ActivitéMCO): boolean {
     return (
       activité["nombreSéjoursPartielsMédecine"].value !== null ||
@@ -42,6 +46,17 @@ export class NombreDeSejourMCOViewModel {
       activité["nombreSéjoursCompletsChirurgie"].value !== null ||
       activité["nombreSéjoursPartielsObstétrique"].value !== null ||
       activité["nombreSéjoursCompletsObstétrique"].value !== null
+    );
+  }
+
+  private activitesMCOAutorisees(activité: ActivitéMCO): boolean {
+    return (
+      activité["nombreSéjoursPartielsMédecine"].dateMiseÀJourSource !== '' ||
+      activité["nombreSéjoursCompletsMédecine"].dateMiseÀJourSource !== '' ||
+      activité["nombreSéjoursPartielsChirurgie"].dateMiseÀJourSource !== '' ||
+      activité["nombreSéjoursCompletsChirurgie"].dateMiseÀJourSource !== '' ||
+      activité["nombreSéjoursPartielsObstétrique"].dateMiseÀJourSource !== '' ||
+      activité["nombreSéjoursCompletsObstétrique"].dateMiseÀJourSource !== ''
     );
   }
 
@@ -163,7 +178,7 @@ export class NombreDeSejourMCOViewModel {
     ];
   }
 
-  private valeursDesNombresDeSéjours(nombresSéjours: { x: number; y: number | null }[]): (string | null)[] {
+  private valeursDesNombresDeSéjours(nombresSéjours: { x: number; y: number | null | '' }[]): (string | null)[] {
     return nombresSéjours.map((nombreSéjour) => {
       return nombreSéjour.y ? nombreSéjour.y.toLocaleString("fr") : null;
     });

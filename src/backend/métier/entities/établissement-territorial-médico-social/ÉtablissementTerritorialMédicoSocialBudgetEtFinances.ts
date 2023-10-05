@@ -1,6 +1,6 @@
 export type Indicateur = Readonly<{
   dateMiseÀJourSource: string;
-  valeur: number | null;
+  valeur: number | null | '';
 }>;
 export type ÉtablissementTerritorialMédicoSocialBudgetEtFinances = Readonly<{
   année: number;

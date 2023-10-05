@@ -19,6 +19,8 @@ const mockSession = {
     firstname: 'Doe',
     role: 'admin',
     institution: {},
+    codeRegion: '84',
+    codeProfiles: []
   },
   expires: "1235"
 }

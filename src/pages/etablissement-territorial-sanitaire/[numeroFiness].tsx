@@ -1,4 +1,5 @@
-import { GetStaticPathsResult, GetStaticPropsResult } from "next";
+import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
+import { getSession } from "next-auth/react";
 
 import { rechercheParmiLesEntitésEtÉtablissementsEndpoint } from "../../backend/infrastructure/controllers/rechercheEndpoints";
 import { récupèreLÉtablissementTerritorialSanitaireEndpoint } from "../../backend/infrastructure/controllers/récupèreLÉtablissementTerritorialSanitaireEndpoint";
@@ -39,26 +40,29 @@ export default function Router({ rechercheResult, établissementTerritorial }: R
   );
 }
 
-export function getStaticPaths(): GetStaticPathsResult {
-  return {
-    fallback: "blocking",
-    paths: [],
-  };
-}
-
-export async function getStaticProps({ params }: { params: { numeroFiness: string } }): Promise<GetStaticPropsResult<RouterProps>> {
+export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<RouterProps>> {
   try {
-    const { environmentVariables } = dependencies;
-    const établissementTerritorial = (await récupèreLÉtablissementTerritorialSanitaireEndpoint(
-      dependencies,
-      params.numeroFiness
-    )) as ÉtablissementTerritorialSanitaire;
-    const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, params.numeroFiness, 1);
-    return { props: { établissementTerritorial, rechercheResult: rechercheResult }, revalidate: Number(environmentVariables.TIME_OF_CACHE_PAGE) };
+    const session = await getSession(context);
+    const codeRegion = session?.user.codeRegion as string;
+    const codeProfiles = session?.user.codeProfiles as string[];
+
+    if (context.params && context.params["numeroFiness"]) {
+      const numeroFiness = context.params["numeroFiness"] as string;
+      const établissementTerritorial = (await récupèreLÉtablissementTerritorialSanitaireEndpoint(
+        dependencies,
+        numeroFiness,
+        codeRegion,
+        codeProfiles
+      )) as ÉtablissementTerritorialSanitaire;
+      const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, numeroFiness, 1);
+      return { props: { établissementTerritorial, rechercheResult: rechercheResult } };
+    } else {
+      return { notFound: true };
+    }
   } catch (error) {
     if (error instanceof ÉtablissementTerritorialSanitaireNonTrouvée) {
       dependencies.logger.error(error.message);
-      return { notFound: true, revalidate: 1 };
+      return { notFound: true };
     }
     throw error;
   }

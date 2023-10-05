@@ -1,5 +1,7 @@
 import { readdirSync } from "fs";
+import { DataSource } from "typeorm";
 
+import { RefDepartementRegionModel } from "../../../../database/models/RefDepartementRegionModel";
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
 import { ÉtablissementTerritorialIdentité } from "../../../métier/entities/ÉtablissementTerritorialIdentité";
 import { Logger } from "../../../métier/gateways/Logger";
@@ -220,9 +222,9 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
   private readonly préfixeDuFichierÉtablissementTerritorialIdentité = "finess_cs1400102_stock_";
   private readonly préfixeDuFichierCatégorie = "finess_cs1500106_stock_";
 
-  constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string, private logger: Logger) {}
+  constructor(private readonly convertXmlToJs: XmlToJs, private readonly localPath: string, private logger: Logger, private readonly orm: Promise<DataSource>) { }
 
-  récupèreLesÉtablissementsTerritoriauxOuverts(numéroFinessDesEntitésJuridiques: string[]): ÉtablissementTerritorialIdentité[] {
+  async récupèreLesÉtablissementsTerritoriauxOuverts(numéroFinessDesEntitésJuridiques: string[]): Promise<ÉtablissementTerritorialIdentité[]> {
     const cheminDuFichierÉtablissementTerritorialIdentité = this.récupèreLeCheminDuFichierÉtablissementTerritorialIdentité(this.localPath);
 
     const cheminDuFichierCatégorie = this.récupèreLeCheminDuFichierCatégorie(this.localPath);
@@ -241,9 +243,9 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
     );
     this.logger.info(`[FINESS] ${établissementsTerritoriauxFinessOuverts.length} établissements territoriaux sont ouverts.`);
 
-    return établissementsTerritoriauxFinessOuverts.map((établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) =>
-      this.construisÉtablissementTerritorialIdentité(établissementTerritorialIdentitéFiness, catégories)
-    );
+    return this.construisLesÉtablissementsTerritoriaux(établissementsTerritoriauxFinessOuverts, catégories);
+
+
   }
 
   récupèreLaDateDeMiseÀJourDuFichierSource(): string {
@@ -299,11 +301,22 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
     return localPath + "/finess/nomenclature/" + fichiersDuRépertoireCatégorie.filter((fichier) => fichier.includes(this.préfixeDuFichierCatégorie));
   }
 
-  private construisÉtablissementTerritorialIdentité(
+  private async construisLesÉtablissementsTerritoriaux(établissementsTerritoriauxFinessOuverts: ÉtablissementTerritorialIdentitéFiness[], catégories: CatégorieFluxFiness) {
+    const results: ÉtablissementTerritorialIdentité[] = [];
+
+    for (const établissementTerritorialIdentitéFiness of établissementsTerritoriauxFinessOuverts) {
+      const result = await this.construisÉtablissementTerritorialIdentité(établissementTerritorialIdentitéFiness, catégories)
+      results.push(result);
+    }
+    return results;
+  }
+
+  private async construisÉtablissementTerritorialIdentité(
     établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness,
     catégories: CatégorieFluxFiness
-  ): ÉtablissementTerritorialIdentité {
+  ): Promise<ÉtablissementTerritorialIdentité> {
     const valueOrEmpty = (value?: string): string => value || "";
+    const ref = await (await this.orm).getRepository(RefDepartementRegionModel).findOne({ where: { codeDepartement: valueOrEmpty(établissementTerritorialIdentitéFiness.departement._text) } });
 
     return {
       adresseAcheminement: valueOrEmpty(établissementTerritorialIdentitéFiness.ligneacheminement._text),
@@ -329,6 +342,7 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
       siret: valueOrEmpty(établissementTerritorialIdentitéFiness.siret._text),
       typeÉtablissement: valueOrEmpty(établissementTerritorialIdentitéFiness.typeet._text),
       téléphone: valueOrEmpty(établissementTerritorialIdentitéFiness.telephone._text),
+      codeRégion: valueOrEmpty(ref?.codeRegion),
     };
   }
 

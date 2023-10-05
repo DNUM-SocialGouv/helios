@@ -22,7 +22,7 @@ import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";
 
-type TauxDeCaf = Readonly<{ année: number; valeur: number | null }>;
+type TauxDeCaf = Readonly<{ année: number; valeur: number | null | "" }>;
 
 export class TauxDeCafViewModel {
   private readonly seuilDuTauxDeCaf = 2;
@@ -47,7 +47,7 @@ export class TauxDeCafViewModel {
     return new TauxDeCafViewModel(tauxDeCaf, dateMiseÀJourSource, wording);
   }
 
-  constructor(private tauxDeCafParAnnée: TauxDeCaf[], private dateMiseÀJourSource: string, private wording: Wording, private nombreDAnnéesParIndicateur = 5) {}
+  constructor(private tauxDeCafParAnnée: TauxDeCaf[], private dateMiseÀJourSource: string, private wording: Wording, private nombreDAnnéesParIndicateur = 5) { }
 
   public get leTauxDeCafEstIlRenseigné(): boolean {
     const [années] = this.construisLesAnnéesEtSesTaux();
@@ -55,12 +55,18 @@ export class TauxDeCafViewModel {
     return années.length > 0;
   }
 
+  public get leTauxDeCafEstIlAutorisé(): boolean {
+    return this.tauxDeCafParAnnée.some(
+      (taux: TauxDeCaf) => taux.valeur !== ''
+    );
+  }
+
   private construisLesAnnéesEtSesTaux(): number[][] {
     const valeurs: number[] = [];
     const années: number[] = [];
     this.tauxDeCafParAnnée.forEach((tauxDeCaf: TauxDeCaf) => {
       const valeur = tauxDeCaf.valeur;
-      if (valeur !== null) {
+      if (valeur !== null && valeur !== "") {
         années.push(tauxDeCaf.année);
         valeurs.push(StringFormater.transformInRate(valeur));
       }

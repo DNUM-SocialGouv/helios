@@ -8,6 +8,8 @@ declare module "next-auth" {
     prenom: string;
     roleId: string;
     institution: object;
+    codeRegion: string;
+    codeProfiles: string[];
   }
 
   interface Session {
@@ -15,6 +17,8 @@ declare module "next-auth" {
       idUser: string,
       firstname: string,
       role: string,
+      codeRegion: string,
+      codeProfiles: string[],
       institution,
     } & DefaultSession["user"]
   }

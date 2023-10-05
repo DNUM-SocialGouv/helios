@@ -55,28 +55,56 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     return this.budgetEtFinance.every(this.compteResultatVide);
   }
 
+  public get compteDeResultatEstIlAutorisé() {
+    return this.budgetEtFinance.every(this.compteResultatAutorisé);
+  }
+
   private compteResultatVide(budgetFinance: EntitéJuridiqueBudgetFinance): boolean {
     return (
-      !budgetFinance.depensesTitreIPrincipales &&
-      !budgetFinance.depensesTitreIIPrincipales &&
-      !budgetFinance.depensesTitreIIIPrincipales &&
-      !budgetFinance.depensesTitreIVPrincipales &&
-      !budgetFinance.recettesTitreIPrincipales &&
-      !budgetFinance.recettesTitreIIPrincipales &&
-      !budgetFinance.recettesTitreIIIPrincipales &&
-      !budgetFinance.recettesTitreIGlobal &&
-      !budgetFinance.recettesTitreIIGlobal &&
-      !budgetFinance.recettesTitreIIIGlobal &&
-      !budgetFinance.recettesTitreIVGlobal &&
-      !budgetFinance.depensesTitreIGlobal &&
-      !budgetFinance.depensesTitreIIGlobal &&
-      !budgetFinance.depensesTitreIIIGlobal &&
-      !budgetFinance.depensesTitreIVGlobal
+      budgetFinance.depensesTitreIPrincipales === null &&
+      budgetFinance.depensesTitreIIPrincipales === null &&
+      budgetFinance.depensesTitreIIIPrincipales === null &&
+      budgetFinance.depensesTitreIVPrincipales === null &&
+      budgetFinance.recettesTitreIPrincipales === null &&
+      budgetFinance.recettesTitreIIPrincipales === null &&
+      budgetFinance.recettesTitreIIIPrincipales === null &&
+      budgetFinance.recettesTitreIGlobal === null &&
+      budgetFinance.recettesTitreIIGlobal === null &&
+      budgetFinance.recettesTitreIIIGlobal === null &&
+      budgetFinance.recettesTitreIVGlobal === null &&
+      budgetFinance.depensesTitreIGlobal === null &&
+      budgetFinance.depensesTitreIIGlobal === null &&
+      budgetFinance.depensesTitreIIIGlobal === null &&
+      budgetFinance.depensesTitreIVGlobal === null
+    );
+  }
+
+  private compteResultatAutorisé(budgetFinance: EntitéJuridiqueBudgetFinance): boolean {
+    return (
+      budgetFinance.depensesTitreIPrincipales !== "" &&
+      budgetFinance.depensesTitreIIPrincipales !== "" &&
+      budgetFinance.depensesTitreIIIPrincipales !== "" &&
+      budgetFinance.depensesTitreIVPrincipales !== "" &&
+      budgetFinance.recettesTitreIPrincipales !== "" &&
+      budgetFinance.recettesTitreIIPrincipales !== "" &&
+      budgetFinance.recettesTitreIIIPrincipales !== "" &&
+      budgetFinance.recettesTitreIGlobal !== "" &&
+      budgetFinance.recettesTitreIIGlobal !== "" &&
+      budgetFinance.recettesTitreIIIGlobal !== "" &&
+      budgetFinance.recettesTitreIVGlobal !== "" &&
+      budgetFinance.depensesTitreIGlobal !== "" &&
+      budgetFinance.depensesTitreIIGlobal !== "" &&
+      budgetFinance.depensesTitreIIIGlobal !== "" &&
+      budgetFinance.depensesTitreIVGlobal !== ""
     );
   }
 
   public get dateMiseÀJour(): string {
     return StringFormater.formatDate(this.budgetEtFinance[0]?.dateMiseÀJourSource as string);
+  }
+
+  public get compteResultatEstIlAutorisé(): boolean {
+    return true;
   }
 
   public dataGraphiqueCharges(budget: EntitéJuridiqueBudgetFinance): HistogrammeData {
@@ -195,5 +223,14 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
 
   get légendeChart(): string[] {
     return [this.wording.BUDGET_PRINCIPAL, this.wording.BUDGET_ANNEXE];
+  }
+
+  public get lesDonnéesBudgetairePasAutorisés(): string[] {
+    const nonAutorisés = [];
+    if (!this.compteDeResultatEstIlAutorisé) nonAutorisés.push(this.wording.COMPTE_DE_RÉSULTAT_CF);
+    if (!this.resultatNetComptable.resultatNetComptableEstIlAutorisé) nonAutorisés.push(this.wording.RÉSULTAT_NET_COMPTABLE);
+    if (!this.tauxDeCafViewModel.leTauxDeCafEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_DE_CAF);
+    if (!this.ratioDependanceFinanciere.ratioDependanceFinanciereEstIlAutorisé) nonAutorisés.push(this.wording.RATIO_DEPENDANCE_FINANCIERE);
+    return nonAutorisés;
   }
 }

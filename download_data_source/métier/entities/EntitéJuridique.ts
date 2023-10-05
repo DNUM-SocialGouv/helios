@@ -13,6 +13,7 @@ export type EntitéJuridique = Readonly<{
   téléphone: string;
   catégorisation?: Catégorisation;
   statutJuridique: string;
+  codeRégion: string;
 }>;
 
 export enum Catégorisation {

@@ -9,7 +9,7 @@ import {
 } from "../../../commun/Graphique/couleursGraphique";
 import { StringFormater } from "../../../commun/StringFormater";
 
-type RatioDependanceFinanciere = { ratio: number | null; année: number; dateDeMiseÀJour: string };
+type RatioDependanceFinanciere = { ratio: number | null | ''; année: number; dateDeMiseÀJour: string };
 
 export class RatioDependanceFinanciereViewModel {
   readonly NOMBRE_ANNEES = 5;
@@ -33,6 +33,12 @@ export class RatioDependanceFinanciereViewModel {
 
   public auMoinsUnRatioRenseigné() {
     return this.ratioDependanceFinanciere.length > 0 && this.ratioDependanceFinanciere.every(this.ratioRemplis);
+  }
+
+  public get ratioDependanceFinanciereEstIlAutorisé(): boolean {
+    return this.ratioDependanceFinanciere.some(
+      (ratio: RatioDependanceFinanciere) => ratio.ratio !== ''
+    );
   }
 
   private ratioRemplis(ratio: RatioDependanceFinanciere): boolean {
@@ -67,6 +73,6 @@ export class RatioDependanceFinanciereViewModel {
     const ratio = ratioDependanceFinanciere.ratio;
     const RATIO_MAXIMUM = 0.5;
     const RATION_MINIMUM = 0;
-    return ratio === null || ratio > RATIO_MAXIMUM || ratio < RATION_MINIMUM;
+    return ratio === null || ratio === '' || ratio > RATIO_MAXIMUM || ratio < RATION_MINIMUM;
   }
 }
