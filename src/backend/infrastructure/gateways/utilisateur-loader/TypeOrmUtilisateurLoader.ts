@@ -8,6 +8,7 @@ import { UtilisateurModel } from "../../../../../database/models/UtilisateurMode
 import { Institution } from '../../../métier/entities/Utilisateur/Institution';
 import { RésultatLogin } from "../../../métier/entities/Utilisateur/RésultatLogin";
 import { UtilisateurLoader } from "../../../métier/gateways/UtilisateurLoader";
+import { sendEmail } from '../../../sendEmail';
 
 
 export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
@@ -38,37 +39,41 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     }
 
     async createAccount(firstName: string, lastName: string, email: string, institution: string): Promise<void> {
-        const account = new UtilisateurModel();
+        try {
+            const account = new UtilisateurModel();
 
-        const institutionToSave = await (await this.orm).getRepository(InstitutionModel).findOneBy({ code: institution });
-        const roleToSave = await (await this.orm).getRepository(RoleModel).findOneBy({ code: 'USER' });
+            const institutionToSave = await (await this.orm).getRepository(InstitutionModel).findOneBy({ code: institution });
+            const roleToSave = await (await this.orm).getRepository(RoleModel).findOneBy({ code: 'USER' });
 
-        const passwordToSave = 'HeliosConnect-' + institutionToSave?.codeGeo;
-        const hashing = createHash('sha256');
-        hashing.update(passwordToSave);
-        const hashedPassword = hashing.digest('hex');
+            const passwordToSave = 'HeliosConnect-' + institutionToSave?.codeGeo;
+            const hashing = createHash('sha256');
+            hashing.update(passwordToSave);
+            const hashedPassword = hashing.digest('hex');
 
-        if (institutionToSave && roleToSave) {
-            account.nom = lastName;
-            account.prenom = firstName;
-            account.email = email;
-            account.institution = institutionToSave;
-            account.role = roleToSave;
-            account.password = hashedPassword;
-            account.actif = true;
-            account.dateCreation = new Date();
+            if (institutionToSave && roleToSave) {
+                account.nom = lastName;
+                account.prenom = firstName;
+                account.email = email;
+                account.institution = institutionToSave;
+                account.role = roleToSave;
+                account.password = hashedPassword;
+                account.actif = true;
+                account.dateCreation = new Date();
+            }
+
+            (await this.orm).getRepository(UtilisateurModel).save(account)
+                .then(async () => {
+                    sendEmail(email, 'Creation de compte Helios', 'hello')
+                })
+                .catch((error) => {
+                    // eslint-disable-next-line no-console
+                    console.log("error", error);
+                });
+
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.log("error", error);
         }
-
-        // eslint-disable-next-line no-console
-        console.log('make it to typeoarm', institution);
-        (await this.orm).getRepository(UtilisateurModel).save(account)
-            .then(() => {
-                // if saved with no problem, send email
-            })
-            .catch((error) => {
-                // eslint-disable-next-line no-console
-                console.log("error", error);
-            });
-
     }
+
 }

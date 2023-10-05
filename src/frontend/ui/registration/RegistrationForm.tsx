@@ -105,7 +105,7 @@ export const RegistrationForm = () => {
                                 className="fr-input"
                                 onChange={({ target }) => { setEmail(target.value); }}
                                 required
-                                type="text"
+                                type="email"
                                 value={email}
                             />
                         </div>
