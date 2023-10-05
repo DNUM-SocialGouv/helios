@@ -465,6 +465,7 @@ export class WordingFr implements Wording {
   readonly PARAMETRAGE_INSTITUTION: string = "Institution";
   readonly PARAMETRAGE_AUTRE_REGION: string = "Autre région";
   readonly CREATION_DATE: string = "Date de création";
+  readonly PROFILE_CODE: string = "Code de profil";
   readonly PARAMETRAGE_NEW_PROFILE: string = "Ajouter un nouveau profil";
 
   //  Profile page

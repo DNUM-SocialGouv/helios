@@ -39,6 +39,7 @@ export const ParametragePage = () => {
                                 <thead>
                                     <tr>
                                         <th scope="col">{wording.PROFILE}</th>
+                                        <th scope="col">{wording.PROFILE_CODE}</th>
                                         <th scope="col">{wording.CREATION_DATE}</th>
                                     </tr>
                                 </thead>
@@ -48,7 +49,13 @@ export const ParametragePage = () => {
                                             <td>
                                                 <a className="fr-raw-link" href={`/settings/${profile.code}`}>
                                                     {profile.label}
-                                                </a></td>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                {profile.code} <button className="fr-icon-clipboard-line" onClick={() => {
+                                                    navigator.clipboard.writeText(profile.code);
+                                                }} />
+                                            </td>
                                             <td>{formatDateAndHours(profile.dateCreation)}</td>
                                         </tr>
                                     ))}
