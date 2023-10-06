@@ -43,6 +43,7 @@ def modifier_utilisateur(connection: Connection, data: Series, logger: Logger, d
                 ut_institution=institute_id,
                 ut_actif=True,
                 ut_role=role_id,
+                ut_profiles=data["Profils"] ,
                 ut_date_modification=datetime.now()))
 
 def creer_utilisateur(connection: Connection, data: Series, logger: Logger, db_users: Table, db_roles: Table, db_institutions: Table) -> None:

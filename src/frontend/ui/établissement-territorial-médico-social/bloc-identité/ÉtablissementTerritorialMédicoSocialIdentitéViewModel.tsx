@@ -136,7 +136,7 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
   }
 
   public get laDateDeLEntréeEnVigueurDuCpomsEstElleAutorisée(): boolean {
-    return this.établissementTerritorialIdentité.dateDEntréeEnVigueurDuCpom.value !== '';
+    return this.établissementTerritorialIdentité.dateDEntréeEnVigueurDuCpom.dateMiseÀJourSource !== '';
   }
 
   public get lesDonnéesIdentitésPasAutorisés(): (string | ReactElement)[] {

@@ -43,6 +43,19 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
     );
   }
 
+  public get lesDonnéesBudgetairesPasRenseignees(): string[] {
+    const nonRenseignees = [];
+
+    if (!this.compteDeResultatViewModel.leCompteDeRésultatEstIlRenseigné) nonRenseignees.push(this.wording.COMPTE_DE_RÉSULTAT);
+    if (!this.leRésultatNetComptableEstIlRenseigné) nonRenseignees.push(this.wording.RÉSULTAT_NET_COMPTABLE);
+    if (!this.leMontantDeLaContributionAuxFraisDeSiègeEstIlRenseigné) nonRenseignees.push(this.wording.MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE);
+    if (!this.tauxDeCafViewModel.leTauxDeCafEstIlRenseigné) nonRenseignees.push(this.wording.TAUX_DE_CAF);
+    if (!this.leTauxDeVétustéEstIlRenseigné) nonRenseignees.push(this.wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION);
+    if (!this.leFondsDeRoulementEstIlRenseigné) nonRenseignees.push(this.wording.FONDS_DE_ROULEMENT_NET_GLOBAL);
+
+    return nonRenseignees;
+  }
+
   public get montantDeLaContributionAuxFraisDeSiège(): ReactElement {
     const montantDesContributionsAuxFraisDeSiègeParAnnée: { année: number; valeur: string }[] = this.budgetEtFinancesMédicoSocial.reduce(
       (montantParAnnée: { année: number; valeur: string }[], budgetEtFinancesMédicoSocial) => {

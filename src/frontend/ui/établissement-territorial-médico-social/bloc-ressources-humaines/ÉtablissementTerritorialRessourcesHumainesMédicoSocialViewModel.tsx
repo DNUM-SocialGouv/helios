@@ -68,7 +68,19 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     );
   }
 
-  private get leNombreDEtpRéaliséEstIlRenseigné(): boolean {
+  public get lesDonnéesRHPasRenseignees(): (string | ReactElement)[] {
+    const nonRenseignees = [];
+    if (!this.leNombreDEtpRéaliséEstIlRenseigné) nonRenseignees.push(this.wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ);
+    if (!this.leNombreDeCddDeRemplacementEstIlRenseigné) nonRenseignees.push(this.wording.NOMBRE_DE_CDD_DE_REMPLACEMENT);
+    if (!this.leTauxDePrestationsExternesEstIlRenseigné) nonRenseignees.push(this.wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES);
+    if (!this.leTauxDEtpVacantsEstIlRenseigné) nonRenseignees.push(this.wording.TAUX_D_ETP_VACANTS_AU_31_12);
+    if (!this.leTauxDeRotationDuPersonnelEstIlRenseigné) nonRenseignees.push(this.wording.TAUX_DE_ROTATION_DU_PERSONNEL);
+    if (!this.lesTauxDAbsentéismeEstIlRenseigné) nonRenseignees.push(this.wording.TAUX_D_ABSENTÉISME);
+
+    return nonRenseignees;
+  }
+
+  public get leNombreDEtpRéaliséEstIlRenseigné(): boolean {
     return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.nombreDEtpRéalisés.valeur !== null);
   }
 
@@ -101,7 +113,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     return StringFormater.formatDate(this.ressourcesHumainesMédicoSocial[0].nombreDEtpRéalisés.dateMiseÀJourSource);
   }
 
-  private get leNombreDeCddDeRemplacementEstIlRenseigné(): boolean {
+  public get leNombreDeCddDeRemplacementEstIlRenseigné(): boolean {
     return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.nombreDeCddDeRemplacement.valeur !== null);
   }
 
@@ -134,7 +146,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     return StringFormater.formatDate(this.ressourcesHumainesMédicoSocial[0].nombreDeCddDeRemplacement.dateMiseÀJourSource);
   }
 
-  private get leTauxDePrestationsExternesEstIlRenseigné(): boolean {
+  public get leTauxDePrestationsExternesEstIlRenseigné(): boolean {
     return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.tauxDePrestationsExternes.valeur !== null);
   }
 
@@ -193,7 +205,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     return StringFormater.formatDate(this.ressourcesHumainesMédicoSocial[0].tauxDePrestationsExternes.dateMiseÀJourSource);
   }
 
-  private get leTauxDEtpVacantsEstIlRenseigné(): boolean {
+  public get leTauxDEtpVacantsEstIlRenseigné(): boolean {
     return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.tauxDEtpVacants.valeur !== null);
   }
 
@@ -230,7 +242,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     return StringFormater.formatDate(this.ressourcesHumainesMédicoSocial[0].tauxDEtpVacants.dateMiseÀJourSource);
   }
 
-  private get leTauxDeRotationDuPersonnelEstIlRenseigné(): boolean {
+  public get leTauxDeRotationDuPersonnelEstIlRenseigné(): boolean {
     return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.tauxDeRotationDuPersonnel.valeur !== null);
   }
 
@@ -268,7 +280,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     return StringFormater.formatDate(this.ressourcesHumainesMédicoSocial[0].tauxDeRotationDuPersonnel.dateMiseÀJourSource);
   }
 
-  private get lesTauxDAbsentéismeEstIlRenseigné(): boolean {
+  public get lesTauxDAbsentéismeEstIlRenseigné(): boolean {
     return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.tauxDAbsentéisme.horsFormation !== null);
   }
 
