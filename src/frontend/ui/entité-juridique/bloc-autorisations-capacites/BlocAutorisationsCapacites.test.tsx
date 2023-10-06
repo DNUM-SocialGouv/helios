@@ -130,7 +130,7 @@ describe("Bloc Autorisation et activités", () => {
     renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
 
     // THEN
-    const titre = screen.getByText(wording.INDICATEURS_VIDES);
+    const titre = screen.getByText(wording.AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS);
     expect(titre).toBeInTheDocument();
   });
 });

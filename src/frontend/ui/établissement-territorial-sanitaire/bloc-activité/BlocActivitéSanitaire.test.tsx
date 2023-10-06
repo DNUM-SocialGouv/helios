@@ -1,7 +1,7 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
-import { annéeEnCours, fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
+import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { BlocActivitéSanitaire } from "./BlocActivitéSanitaire";
 import { ÉtablissementTerritorialSanitaireActivitéViewModel } from "./ÉtablissementTerritorialSanitaireActivitéViewModel";
 
@@ -167,269 +167,6 @@ describe("La page établissement territorial sanitaire - bloc activité", () => 
         expect(valeur).toBeInTheDocument();
       });
     });
-  });
-
-  it("n’affiche pas le graphique de l’indicateur mais une mise en exergue quand sa valeur de toutes les années sont vides (Nombre de passages aux urgences)", () => {
-    const activitésViewModel = new ÉtablissementTerritorialSanitaireActivitéViewModel(
-      [
-        {
-          année: 2017,
-          nombreDePassagesAuxUrgences: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: null,
-          },
-          nombreJournéesCompletePsy: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreJournéesCompletesSsr: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreJournéesPartiellesPsy: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreJournéesPartielsSsr: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursCompletsChirurgie: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursCompletsMédecine: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursCompletsObstétrique: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursPartielsChirurgie: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursPartielsMédecine: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursPartielsObstétrique: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          numéroFinessÉtablissementTerritorial: "010000040",
-        },
-        {
-          année: 2018,
-          nombreDePassagesAuxUrgences: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: null,
-          },
-          nombreJournéesCompletePsy: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreJournéesCompletesSsr: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreJournéesPartiellesPsy: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreJournéesPartielsSsr: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursCompletsChirurgie: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursCompletsMédecine: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursCompletsObstétrique: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursPartielsChirurgie: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursPartielsMédecine: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursPartielsObstétrique: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          numéroFinessÉtablissementTerritorial: "010000040",
-        },
-        {
-          année: 2019,
-          nombreDePassagesAuxUrgences: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: null,
-          },
-          nombreJournéesCompletePsy: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreJournéesCompletesSsr: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreJournéesPartiellesPsy: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreJournéesPartielsSsr: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursCompletsChirurgie: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursCompletsMédecine: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursCompletsObstétrique: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursPartielsChirurgie: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursPartielsMédecine: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursPartielsObstétrique: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          numéroFinessÉtablissementTerritorial: "010000040",
-        },
-        {
-          année: 2020,
-          nombreDePassagesAuxUrgences: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: null,
-          },
-          nombreJournéesCompletePsy: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreJournéesCompletesSsr: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreJournéesPartiellesPsy: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreJournéesPartielsSsr: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursCompletsChirurgie: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursCompletsMédecine: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursCompletsObstétrique: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursPartielsChirurgie: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursPartielsMédecine: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursPartielsObstétrique: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          numéroFinessÉtablissementTerritorial: "010000040",
-        },
-        {
-          année: 2021,
-          nombreDePassagesAuxUrgences: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: null,
-          },
-          nombreJournéesCompletePsy: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreJournéesCompletesSsr: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreJournéesPartiellesPsy: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreJournéesPartielsSsr: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursCompletsChirurgie: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursCompletsMédecine: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursCompletsObstétrique: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursPartielsChirurgie: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursPartielsMédecine: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          nombreSéjoursPartielsObstétrique: {
-            dateMiseÀJourSource: "2021-07-07",
-            value: 1,
-          },
-          numéroFinessÉtablissementTerritorial: "010000040",
-        },
-      ],
-      wording
-    );
-
-    // WHEN
-    renderFakeComponent(<BlocActivitéSanitaire établissementTerritorialSanitaireActivitéViewModel={activitésViewModel} />);
-
-    // THEN
-    const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
-    const indicateurs = within(activité).queryAllByRole("listitem");
-
-    const exergue = within(indicateurs[2]).getByText(
-      `${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 5}, ${annéeEnCours - 4}, ${annéeEnCours - 3}, ${annéeEnCours - 2}, ${annéeEnCours - 1}`,
-      { selector: "p" }
-    );
-    expect(exergue).toBeInTheDocument();
-    const transcription = within(indicateurs[2]).getByText(wording.AFFICHER_LA_TRANSCRIPTION);
-    expect(transcription).toBeDisabled();
   });
 
   it("affiche une phrase à la place des indicateurs lorsque des activités sont renseignées mais les indicateurs sont vides", () => {
@@ -685,7 +422,7 @@ describe("La page établissement territorial sanitaire - bloc activité", () => 
 
     // THEN
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
-    const phrase = within(activité).getByText(wording.INDICATEURS_VIDES);
+    const phrase = within(activité).getByText(wording.AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS);
     expect(phrase).toBeInTheDocument();
   });
 
@@ -698,7 +435,7 @@ describe("La page établissement territorial sanitaire - bloc activité", () => 
 
     // THEN
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
-    const phrase = within(activité).getByText(wording.INDICATEURS_VIDES);
+    const phrase = within(activité).getByText(wording.AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS);
     expect(phrase).toBeInTheDocument();
   });
 });

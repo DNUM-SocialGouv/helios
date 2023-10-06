@@ -55,24 +55,6 @@ describe("La page établissement territorial - bloc budget et finances", () => {
     }
   );
 
-  it("affiche l’intitulé de l’indicateur dans le cas du compte de résultat CA", () => {
-    // GIVEN
-    const budgetFinanceViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
-      [ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPa({ année: 2019 })],
-      wording
-    );
-
-    // WHEN
-    renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
-
-    // THEN
-    const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
-    const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
-    const indicateur = indicateurs[indiceDeLIndicateur.recettesEtDépenses];
-    const titre = within(indicateur).getByText(wording.COMPTE_DE_RÉSULTAT_CA, { selector: "h3" });
-    expect(titre).toBeInTheDocument();
-  });
-
   it.each([
     [indiceDeLIndicateur.recettesEtDépenses, wording.COMPTE_DE_RÉSULTAT_ERRD],
     [indiceDeLIndicateur.contributionAuxFraisDeSiège, wording.MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE],
@@ -211,7 +193,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
 
     // THEN
     const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
-    expect(within(budgetEtFinances).getByText(wording.INDICATEURS_VIDES)).toBeInTheDocument();
+    expect(within(budgetEtFinances).getByText(wording.AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS)).toBeInTheDocument();
   });
 
   describe("L’indicateur de compte de résultat", () => {

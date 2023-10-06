@@ -16,7 +16,7 @@ describe("Bloc Budget et Finance", () => {
     renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} />);
 
     // THEN
-    const titre = screen.getByText(wording.INDICATEURS_VIDES);
+    const titre = screen.getByText(wording.AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS);
     expect(titre).toBeInTheDocument();
   });
 
