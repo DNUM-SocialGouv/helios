@@ -53,6 +53,10 @@ export interface Wording {
   readonly ÉTABLISSEMENT_TERRITORIAUX: string;
   readonly SITE_EN_CONSTRUCTION: string;
 
+  // Inscription
+  readonly REGISTRATION_PAGE_TITLE: string;
+  readonly SEND: string;
+
   // Connexion
   readonly CONNEXION_IDENTIFIANT: string
   readonly CONNEXION_MOT_DE_PASSE: string
@@ -372,6 +376,7 @@ export interface Wording {
   readonly PARAMETRAGE_INSTITUTION: string;
   readonly PARAMETRAGE_AUTRE_REGION: string;
   readonly CREATION_DATE: string;
+  readonly PROFILE_CODE: string;
   readonly PARAMETRAGE_NEW_PROFILE: string;
 
   //  Profile page

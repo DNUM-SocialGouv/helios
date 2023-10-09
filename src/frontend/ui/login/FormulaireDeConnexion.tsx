@@ -6,16 +6,13 @@ import { useDependencies } from "../commun/contexts/useDependencies";
 import isEmail from "../commun/validation";
 import styles from "./Connexion.module.css";
 
-
-const formsLink = "https://forms.office.com/e/ERQ9ck5sSc"
-
 export const FormulaireDeConnexion = () => {
     const { wording } = useDependencies();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
-    const [errorMsg,setErrorMsg] = useState<string>("");
+    const [errorMsg, setErrorMsg] = useState<string>("");
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
@@ -26,7 +23,7 @@ export const FormulaireDeConnexion = () => {
                 password,
                 redirect: false,
             })
-    
+
             if (res?.error) {
                 setError("L'identifiant et/ou le mot de passe sont incorrects.");
                 setLoading(false);
@@ -35,7 +32,7 @@ export const FormulaireDeConnexion = () => {
                 window.location.href = "/"
             }
         } else {
-             setErrorMsg('Email invalide')
+            setErrorMsg('Email invalide')
         }
     }
 
@@ -56,12 +53,12 @@ export const FormulaireDeConnexion = () => {
                                     className={`fr-input fr-mt-1w ${styles["mb-20"]}`}
                                     id="username-1757"
                                     name="username"
-                                    onChange={({ target }) => { setEmail(target.value) ; setErrorMsg(''); setError("");}}
+                                    onChange={({ target }) => { setEmail(target.value); setErrorMsg(''); setError(""); }}
                                     required
                                     type="email"
                                     value={email}
-                                    />
-                                    {errorMsg && <div className={styles["error"]}> {errorMsg} </div>}
+                                />
+                                {errorMsg && <div className={styles["error"]}> {errorMsg} </div>}
                                 <div aria-live="assertive" className="fr-messages-group" id="username-1757-messages">
                                 </div>
                             </div>
@@ -73,7 +70,7 @@ export const FormulaireDeConnexion = () => {
                                         {wording.CONNEXION_MOT_DE_PASSE}
                                     </label>
                                     <label className="fr-password__checkbox fr-label" htmlFor="password-1758-show">
-                                    <input aria-describedby="password-1758-show-messages" aria-label="Afficher le mot de passe" id="password-1758-show" style={{marginRight: "3px"}} type="checkbox" />
+                                        <input aria-describedby="password-1758-show-messages" aria-label="Afficher le mot de passe" id="password-1758-show" style={{ marginRight: "3px" }} type="checkbox" />
                                         Afficher
                                     </label>
                                 </div>
@@ -101,9 +98,9 @@ export const FormulaireDeConnexion = () => {
                                 </p>
                                 <p>
                                     {wording.CONNEXION_MOT_DE_PASSE_OUBLIE}
-                                    <a className={"fr-link " + styles['links-underline']} href={formsLink}>
+                                    <Link className={"fr-link " + styles['links-underline']} href="/registration">
                                         S&apos;inscrire
-                                    </a>
+                                    </Link>
                                 </p>
                             </div>
                         </div>

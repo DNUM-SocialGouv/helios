@@ -10,23 +10,23 @@ export const DefaultProfile = {
                 "numéroFiness": "ok"
             },
             "activités": {
-                "nombrePassage": "no",
-                "nombreSéjours": "no",
-                "nombreJournées": "no",
-                "nombreSéjoursHad": "no"
+                "nombrePassage": "ok",
+                "nombreSéjours": "ok",
+                "nombreJournées": "ok",
+                "nombreSéjoursHad": "ok"
             },
             "budgetEtFinance": {
-                "tauxDeCafNette": "no",
-                "compteRésultats": "no",
-                "résultatNetComptable": "no",
-                "ratioDépendanceFinancière": "no"
+                "tauxDeCafNette": "ok",
+                "compteRésultats": "ok",
+                "résultatNetComptable": "ok",
+                "ratioDépendanceFinancière": "ok"
             },
             "autorisationsEtCapacités": {
-                "capacités": "no",
-                "autresActivités": "no",
-                "autorisationsActivités": "no",
-                "equipementMaterielLourdsActivités": "no",
-                "reconnaissanceContractuelleActivités": "no"
+                "capacités": "ok",
+                "autresActivités": "ok",
+                "autorisationsActivités": "ok",
+                "equipementMaterielLourdsActivités": "ok",
+                "reconnaissanceContractuelleActivités": "ok"
             }
         },
         "profilETSanitaire": {
@@ -52,16 +52,16 @@ export const DefaultProfile = {
                 "catégorieÉtablissement": "ok"
             },
             "activités": {
-                "nombrePassage": "no",
-                "nombreSéjours": "no",
-                "nombreJournées": "no"
+                "nombrePassage": "ok",
+                "nombreSéjours": "ok",
+                "nombreJournées": "ok"
             },
             "autorisationsEtCapacités": {
-                "capacités": "no",
-                "autresActivités": "no",
-                "autorisationsActivités": "no",
-                "equipementMaterielLourdsActivités": "no",
-                "reconnaissanceContractuelleActivités": "no"
+                "capacités": "ok",
+                "autresActivités": "ok",
+                "autorisationsActivités": "ok",
+                "equipementMaterielLourdsActivités": "ok",
+                "reconnaissanceContractuelleActivités": "ok"
             }
         },
         "profilMédicoSocial": {
@@ -114,8 +114,8 @@ export const DefaultProfile = {
                 "tauxDeRotationDuPersonnel": "no"
             },
             "autorisationsEtCapacités": {
-                "capacités": "no",
-                "autorisations": "no"
+                "capacités": "ok",
+                "autorisations": "ok"
             }
         }
     },
@@ -130,35 +130,35 @@ export const DefaultProfile = {
                 "numéroFiness": "ok"
             },
             "activités": {
-                "nombrePassage": "no",
-                "nombreSéjours": "no",
-                "nombreJournées": "no",
-                "nombreSéjoursHad": "no"
+                "nombrePassage": "ok",
+                "nombreSéjours": "ok",
+                "nombreJournées": "ok",
+                "nombreSéjoursHad": "ok"
             },
             "budgetEtFinance": {
-                "tauxDeCafNette": "no",
-                "compteRésultats": "no",
-                "résultatNetComptable": "no",
-                "ratioDépendanceFinancière": "no"
+                "tauxDeCafNette": "ok",
+                "compteRésultats": "ok",
+                "résultatNetComptable": "ok",
+                "ratioDépendanceFinancière": "ok"
             },
             "autorisationsEtCapacités": {
-                "capacités": "no",
-                "autresActivités": "no",
-                "autorisationsActivités": "no",
-                "equipementMaterielLourdsActivités": "no",
-                "reconnaissanceContractuelleActivités": "no"
+                "capacités": "ok",
+                "autresActivités": "ok",
+                "autorisationsActivités": "ok",
+                "equipementMaterielLourdsActivités": "ok",
+                "reconnaissanceContractuelleActivités": "ok"
             }
         },
         "profilETSanitaire": {
             "Qualité": {
-                "missions": "no",
-                "vignette": "no",
-                "nombre_reclamation": "no",
-                "nombre_incident_encours": "no",
-                "nombre_EIAS/EIGS_encours": "no",
-                "nombre_incident_cloturé": "no",
-                "nombre_reclamation_motif": "no",
-                "nombre_EIAS/EIGS_cloturé": "no"
+                "missions": "ok",
+                "vignette": "ok",
+                "nombre_reclamation": "ok",
+                "nombre_incident_encours": "ok",
+                "nombre_EIAS/EIGS_encours": "ok",
+                "nombre_incident_cloturé": "ok",
+                "nombre_reclamation_motif": "ok",
+                "nombre_EIAS/EIGS_cloturé": "ok"
             },
             "identité": {
                 "nom": "ok",
@@ -172,16 +172,16 @@ export const DefaultProfile = {
                 "catégorieÉtablissement": "ok"
             },
             "activités": {
-                "nombrePassage": "no",
-                "nombreSéjours": "no",
-                "nombreJournées": "no"
+                "nombrePassage": "ok",
+                "nombreSéjours": "ok",
+                "nombreJournées": "ok"
             },
             "autorisationsEtCapacités": {
-                "capacités": "no",
-                "autresActivités": "no",
-                "autorisationsActivités": "no",
-                "equipementMaterielLourdsActivités": "no",
-                "reconnaissanceContractuelleActivités": "no"
+                "capacités": "ok",
+                "autresActivités": "ok",
+                "autorisationsActivités": "ok",
+                "equipementMaterielLourdsActivités": "ok",
+                "reconnaissanceContractuelleActivités": "ok"
             }
         },
         "profilMédicoSocial": {
@@ -209,33 +209,33 @@ export const DefaultProfile = {
                 "dateDEntréeEnVigueurDuCpom": "ok"
             },
             "activités": {
-                "tauxRéalisationActivité": "no",
-                "tauxOccupationAccueilDeJour": "no",
-                "fileActivePersonnesAccompagnées": "no",
-                "tauxOccupationHébergementPermanent": "no",
-                "tauxOccupationHébergementTemporaire": "no",
-                "nombreMoyenJournéesAbsencePersonnesAccompagnées": "no",
-                "duréeMoyenneSéjourAccompagnementPersonnesSorties": "no"
+                "tauxRéalisationActivité": "ok",
+                "tauxOccupationAccueilDeJour": "ok",
+                "fileActivePersonnesAccompagnées": "ok",
+                "tauxOccupationHébergementPermanent": "ok",
+                "tauxOccupationHébergementTemporaire": "ok",
+                "nombreMoyenJournéesAbsencePersonnesAccompagnées": "ok",
+                "duréeMoyenneSéjourAccompagnementPersonnesSorties": "ok"
             },
             "budgetEtFinances": {
-                "tauxDeCafNette": "no",
-                "compteRésultats": "no",
-                "fondsDeRoulement": "no",
-                "résultatNetComptable": "no",
-                "tauxDeVétustéConstruction": "no",
-                "contributionAuxFraisDeSiège": "no"
+                "tauxDeCafNette": "ok",
+                "compteRésultats": "ok",
+                "fondsDeRoulement": "ok",
+                "résultatNetComptable": "ok",
+                "tauxDeVétustéConstruction": "ok",
+                "contributionAuxFraisDeSiège": "ok"
             },
             "ressourcesHumaines": {
-                "tauxDEtpVacants": "no",
-                "tauxDAbsentéisme": "no",
-                "nombreDEtpRéalisés": "no",
-                "nombreDeCddDeRemplacement": "no",
-                "tauxDePrestationsExternes": "no",
-                "tauxDeRotationDuPersonnel": "no"
+                "tauxDEtpVacants": "ok",
+                "tauxDAbsentéisme": "ok",
+                "nombreDEtpRéalisés": "ok",
+                "nombreDeCddDeRemplacement": "ok",
+                "tauxDePrestationsExternes": "ok",
+                "tauxDeRotationDuPersonnel": "ok"
             },
             "autorisationsEtCapacités": {
-                "capacités": "no",
-                "autorisations": "no"
+                "capacités": "ok",
+                "autorisations": "ok"
             }
         }
     }

@@ -53,7 +53,7 @@ export class UtilisateurModel {
   @Column({ name: "ut_password", nullable: true })
   public password!: string;
 
-  @Column('simple-array', { nullable: true, name: "ut_profiles" })
+  @Column("text", { array: true, nullable: true, name: "ut_profiles" })
   public profils: string[] = [];
 
   @CreateDateColumn({ name: "ut_date_creation" })
