@@ -43,6 +43,15 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     );
   }
 
+  public get lesDonnéesBudgetairePasRenseignee(): string[] {
+    const nonRenseignees = [];
+    if (this.compteDeResultatVide()) nonRenseignees.push(this.wording.COMPTE_DE_RÉSULTAT_CF);
+    if (!this.resultatNetComptable.auMoinsUnResultatNetRenseigné()) nonRenseignees.push(this.wording.RÉSULTAT_NET_COMPTABLE);
+    if (!this.tauxDeCafViewModel.leTauxDeCafEstIlRenseigné) nonRenseignees.push(this.wording.TAUX_DE_CAF);
+    if (!this.ratioDependanceFinanciere.auMoinsUnRatioRenseigné()) nonRenseignees.push(this.wording.RATIO_DEPENDANCE_FINANCIERE);
+    return nonRenseignees;
+  }
+
   public lesAnnéesManquantesDuCompteDeRésultat(): number[] {
     return annéesManquantes(this.lesAnnéesEffectivesDuCompteDeRésultat(), this.NOMBRE_ANNEES);
   }
@@ -51,7 +60,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     return this.budgetEtFinance.filter((budgetEtFinance) => !this.compteResultatVide(budgetEtFinance)).map((budgetFinance) => budgetFinance.année);
   }
 
-  private compteDeResultatVide() {
+  public compteDeResultatVide() {
     return this.budgetEtFinance.every(this.compteResultatVide);
   }
 

@@ -2,8 +2,8 @@ import { useState } from "react";
 
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
-import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
+import { NoDataCallout } from "../../commun/NoDataCallout/NoDataCallout";
 import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import { Sources } from "../../commun/Sources/Sources";
 import { ContenuDesTauxDAbsentéismes } from "../InfoBulle/ContenuDesTauxDAbsentéismes";
@@ -25,16 +25,13 @@ export const BlocRessourcesHumainesMédicoSocial = ({
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(établissementTerritorialMédicoSocialRessourcesHumainesViewModel.annéeInitiale);
 
-  if (établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRessourcesHumainesNeSontPasRenseignées) {
-    return <BlocIndicateurVide title={wording.TITRE_BLOC_RESSOURCES_HUMAINES} />;
-  }
-
   return (
     <Bloc isMain={false} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES}>
-      {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasAutorisés} /> : <></>}
+      {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasRenseignees.length !== 0 ? <NoDataCallout indicateurs={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasAutorisés} /> :
+        établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasAutorisés} /> : <></>}
 
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
-        {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.leNombreDEtpRéaliséEstIlAutorisé ? (
+        {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.leNombreDEtpRéaliséEstIlRenseigné && établissementTerritorialMédicoSocialRessourcesHumainesViewModel.leNombreDEtpRéaliséEstIlAutorisé ? (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuDuNombreDEtpRéalisé
@@ -51,7 +48,7 @@ export const BlocRessourcesHumainesMédicoSocial = ({
           </IndicateurGraphique>
         ) : <></>}
 
-        {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.leNombreDeCddDeRemplacementEstIlAutorisé ? (
+        {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.leNombreDeCddDeRemplacementEstIlRenseigné && établissementTerritorialMédicoSocialRessourcesHumainesViewModel.leNombreDeCddDeRemplacementEstIlAutorisé ? (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuDuNombreDeCddDeRemplacement
@@ -69,7 +66,7 @@ export const BlocRessourcesHumainesMédicoSocial = ({
         ) : <></>}
 
 
-        {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.leTauxDePrestationsExternesEstIlAutorisé ? (
+        {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.leTauxDePrestationsExternesEstIlRenseigné && établissementTerritorialMédicoSocialRessourcesHumainesViewModel.leTauxDePrestationsExternesEstIlAutorisé ? (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuDePrestationsExternes
@@ -86,7 +83,7 @@ export const BlocRessourcesHumainesMédicoSocial = ({
           </IndicateurGraphique>
         ) : <></>}
 
-        {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.leTauxDEtpVacantsEstIlAutorisé ? (
+        {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.leTauxDEtpVacantsEstIlRenseigné && établissementTerritorialMédicoSocialRessourcesHumainesViewModel.leTauxDEtpVacantsEstIlAutorisé ? (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuDuTauxDEtpVacants
@@ -103,7 +100,7 @@ export const BlocRessourcesHumainesMédicoSocial = ({
           </IndicateurGraphique>
         ) : <></>}
 
-        {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.leTauxDeRotationDuPersonnelEstIlAutorisé ? (
+        {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.leTauxDeRotationDuPersonnelEstIlRenseigné && établissementTerritorialMédicoSocialRessourcesHumainesViewModel.leTauxDeRotationDuPersonnelEstIlAutorisé ? (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuDuTauxDeRotationDuPersonnel
@@ -120,7 +117,7 @@ export const BlocRessourcesHumainesMédicoSocial = ({
           </IndicateurGraphique>
         ) : <></>}
 
-        {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesTauxDAbsentéismeEstIlAutorisé ? (
+        {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesTauxDAbsentéismeEstIlRenseigné && établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesTauxDAbsentéismeEstIlAutorisé ? (
           <IndicateurGraphique
             années={{
               liste: établissementTerritorialMédicoSocialRessourcesHumainesViewModel.anneesAvecTauxAbsenteisme(),

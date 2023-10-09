@@ -3,7 +3,6 @@ import { ÉtablissementTerritorialMédicoSocial } from "./métier/entities/étab
 import { ÉtablissementTerritorialSanitaire } from "./métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 
 export const filterEtablissementMedicoSocial = (result: any, profil: any): ÉtablissementTerritorialMédicoSocial => {
-
     const identité = filterIdentiteMedicoSocial(result.identité, profil.identité);
     const activités = filterActiviteMedicoSocial(result.activités, profil.activités);
     const autorisationsEtCapacités = filterAutorisationCapaciteMedicoSocial(result.autorisationsEtCapacités, profil.autorisationsEtCapacités);
@@ -72,7 +71,6 @@ const filterIdentiteSanitaire = (identite: any, profil: any) => {
         statutJuridique: profil.statut_EJ === 'ok' ? identite.statutJuridique : { 'dateMiseÀJourSource': '', value: '' },
         codeRegion: identite.codeRegion
     }
-
     return filtredIdentite;
 }
 

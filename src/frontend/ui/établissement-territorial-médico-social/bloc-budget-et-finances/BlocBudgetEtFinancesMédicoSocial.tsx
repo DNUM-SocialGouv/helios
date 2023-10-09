@@ -1,7 +1,7 @@
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
-import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
+import { NoDataCallout } from "../../commun/NoDataCallout/NoDataCallout";
 import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import { TauxDeCaf } from "../../indicateur-métier/taux-de-caf/TauxDeCaf";
 import { ContenuFondDeRoulementNetGlobal } from "../InfoBulle/ContenuFondDeRoulementNetGlobal";
@@ -19,20 +19,17 @@ type BlocBudgetEtFinancesMédicoSocialProps = Readonly<{
 export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMédicoSocialBudgetEtFinancesViewModel }: BlocBudgetEtFinancesMédicoSocialProps) => {
   const { wording } = useDependencies();
 
-  if (établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetEtFinancesNeSontPasRenseignées) {
-    return <BlocIndicateurVide title={wording.TITRE_BLOC_BUDGET_ET_FINANCES} />;
-  }
-
   return (
     <Bloc isMain={false} titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES}>
-      {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetairesPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetairesPasAutorisés} /> : <></>}
+      {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetairesPasRenseignees.length !== 0 ? <NoDataCallout indicateurs={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetairesPasRenseignees} /> :
+        établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetairesPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetairesPasAutorisés} /> : <></>}
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leCompteDeRésultatEstIlAutorisé ?
           <GraphiqueCompteDeResultat compteDeRésultatViewModel={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.compteDeResultatViewModel} />
           : <></>
         }
 
-        {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leRésultatNetComptableEstIlAutorisé ? (
+        {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.compteDeResultatViewModel.leCompteDeRésultatEstIlRenseigné && établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leRésultatNetComptableEstIlAutorisé ? (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuRésultatNetComptable
@@ -49,7 +46,7 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMé
           </IndicateurGraphique>
         ) : <></>}
 
-        {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leMontantDeLaContributionAuxFraisDeSiègeEstIlAutorisé ? (
+        {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leMontantDeLaContributionAuxFraisDeSiègeEstIlRenseigné && établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leMontantDeLaContributionAuxFraisDeSiègeEstIlAutorisé ? (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuMontantDeLaContributionAuxFraisDeSiège
@@ -66,11 +63,11 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMé
           </IndicateurGraphique>
         ) : <></>}
 
-        {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leTauxDeCafEstIlAutorisé ?
+        {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeCafViewModel.leTauxDeCafEstIlRenseigné && établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leTauxDeCafEstIlAutorisé ?
           <TauxDeCaf tauxDeCafViewModel={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeCafViewModel} /> : <></>
         }
 
-        {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leTauxDeVétustéEstIlAutorisé ? (
+        {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leTauxDeVétustéEstIlRenseigné && établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leTauxDeVétustéEstIlAutorisé ? (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuTauxDeVétustéConstruction
@@ -87,7 +84,7 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMé
           </IndicateurGraphique>
         ) : <></>}
 
-        {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leFondsDeRoulementEstIlAutorisé ? (
+        {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leFondsDeRoulementEstIlRenseigné && établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leFondsDeRoulementEstIlAutorisé ? (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuFondDeRoulementNetGlobal

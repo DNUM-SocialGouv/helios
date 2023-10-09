@@ -40,6 +40,15 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel {
     );
   }
 
+  public get lesDonnéesActivitésPasRenseignee(): string[] {
+    const nonRenseignes = [];
+    if (!this.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés) nonRenseignes.push(this.wording.NOMBRE_DE_SÉJOUR_MCO);
+    if (!this.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés) nonRenseignes.push(this.wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR);
+    if (!this.nombreDePassagesAuxUrgencesEstIlRenseigné) nonRenseignes.push(this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES);
+
+    return nonRenseignes;
+  }
+
   public get activitéEstElleRenseignée(): boolean {
     return this.établissementTerritorialSanitaireActivités.length !== 0;
   }

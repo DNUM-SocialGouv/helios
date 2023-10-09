@@ -18,6 +18,13 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel {
     return !this.lesAutorisationsSontEllesRenseignées && !this.lesCapacitésSontEllesRenseignées;
   }
 
+  public get lesDonnéesAutorisationEtCapacitéPasRenseignees(): string[] {
+    const nonRenseignees = [];
+    if (!this.lesCapacitésSontEllesRenseignées) nonRenseignees.push(this.wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS);
+    if (!this.lesAutorisationsSontEllesRenseignées) nonRenseignees.push(this.wording.AUTORISATIONS_MS);
+    return nonRenseignees;
+  }
+
   public get lesDonnéesAutorisationEtCapacitéPasAutorisés(): string[] {
     const nonAutorisés = [];
     if (!this.lesCapacitésSontEllesAutorisées) nonAutorisés.push(this.wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS);

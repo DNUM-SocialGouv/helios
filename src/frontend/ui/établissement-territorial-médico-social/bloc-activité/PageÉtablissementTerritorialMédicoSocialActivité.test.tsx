@@ -3,7 +3,7 @@ import { SessionProvider } from "next-auth/react";
 
 import { RésultatDeRechercheTestBuilder } from "../../../../backend/test-builder/RésultatDeRechercheTestBuilder";
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
-import { annéeEnCours, fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
+import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { PageÉtablissementTerritorialMédicoSocial } from "../PageÉtablissementTerritorialMédicoSocial";
 import { ÉtablissementTerritorialMédicoSocialViewModel } from "../ÉtablissementTerritorialMédicoSocialViewModel";
@@ -443,142 +443,6 @@ describe("La page établissement territorial médico-social - bloc activité", (
     expect(détails).toHaveAttribute("data-fr-opened", "false");
   });
 
-  it.each([
-    [0, null, 1, 1, 1, 1, 1, 1],
-    [1, 1, null, 1, 1, 1, 1, 1],
-    [2, 1, 1, null, 1, 1, 1, 1],
-    [3, 1, 1, 1, null, 1, 1, 1],
-    [4, 1, 1, 1, 1, null, 1, 1],
-    [5, 1, 1, 1, 1, 1, null, 1],
-    [6, 1, 1, 1, 1, 1, 1, null],
-  ])(
-    "n’affiche pas le graphique de l’indicateur mais une mise en exergue quand sa valeur de toutes les années sont vides",
-    (identifiant, indicateur1, indicateur2, indicateur3, indicateur4, indicateur5, indicateur6, indicateur7) => {
-      const établissementTerritorialSansActivité = new ÉtablissementTerritorialMédicoSocialViewModel(
-        {
-          activités: [
-            {
-              année: 2019,
-              duréeMoyenneSéjourAccompagnementPersonnesSorties: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: indicateur7,
-              },
-              fileActivePersonnesAccompagnées: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: indicateur5,
-              },
-              nombreMoyenJournéesAbsencePersonnesAccompagnées: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: indicateur6,
-              },
-              numéroFinessÉtablissementTerritorial: "010000040",
-              tauxOccupationAccueilDeJour: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: indicateur3,
-              },
-              tauxOccupationHébergementPermanent: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: indicateur1,
-              },
-              tauxOccupationHébergementTemporaire: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: indicateur2,
-              },
-              tauxRéalisationActivité: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: indicateur4,
-              },
-            },
-            {
-              année: 2020,
-              duréeMoyenneSéjourAccompagnementPersonnesSorties: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: indicateur7,
-              },
-              fileActivePersonnesAccompagnées: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: indicateur5,
-              },
-              nombreMoyenJournéesAbsencePersonnesAccompagnées: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: indicateur6,
-              },
-              numéroFinessÉtablissementTerritorial: "010000040",
-              tauxOccupationAccueilDeJour: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: indicateur3,
-              },
-              tauxOccupationHébergementPermanent: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: indicateur1,
-              },
-              tauxOccupationHébergementTemporaire: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: indicateur2,
-              },
-              tauxRéalisationActivité: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: indicateur4,
-              },
-            },
-            {
-              année: 2021,
-              duréeMoyenneSéjourAccompagnementPersonnesSorties: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: indicateur7,
-              },
-              fileActivePersonnesAccompagnées: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: indicateur5,
-              },
-              nombreMoyenJournéesAbsencePersonnesAccompagnées: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: indicateur6,
-              },
-              numéroFinessÉtablissementTerritorial: "010000040",
-              tauxOccupationAccueilDeJour: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: indicateur3,
-              },
-              tauxOccupationHébergementPermanent: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: indicateur1,
-              },
-              tauxOccupationHébergementTemporaire: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: indicateur2,
-              },
-              tauxRéalisationActivité: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: indicateur4,
-              },
-            },
-          ],
-          autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
-          budgetEtFinances: [],
-          identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
-          ressourcesHumaines: [],
-        },
-        wording,
-        paths
-      );
-
-      // WHEN
-      renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial rechercheViewModel={rechercheViewModel} établissementTerritorialViewModel={établissementTerritorialSansActivité} /> </SessionProvider>);
-
-      // THEN
-      const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
-      const indicateurs = within(activité).queryAllByRole("listitem");
-      const exergue = within(indicateurs[identifiant]).getByText(
-        `${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 3}, ${annéeEnCours - 2}, ${annéeEnCours - 1}`,
-        { selector: "p" }
-      );
-      expect(exergue).toBeInTheDocument();
-      const transcription = within(indicateurs[identifiant]).getByText(wording.AFFICHER_LA_TRANSCRIPTION);
-      expect(transcription).toBeDisabled();
-    }
-  );
-
   it("affiche une phrase à la place des indicateurs lorsque des activités sont renseignées mais les indicateurs sont vides", () => {
     // GIVEN
     const établissementTerritorialSansActivité = new ÉtablissementTerritorialMédicoSocialViewModel(
@@ -695,7 +559,7 @@ describe("La page établissement territorial médico-social - bloc activité", (
 
     // THEN
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
-    const phrase = within(activité).getByText(wording.INDICATEURS_VIDES);
+    const phrase = within(activité).getByText(wording.AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS);
     expect(phrase).toBeInTheDocument();
   });
 
@@ -718,7 +582,7 @@ describe("La page établissement territorial médico-social - bloc activité", (
 
     // THEN
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
-    const phrase = within(activité).getByText(wording.INDICATEURS_VIDES);
+    const phrase = within(activité).getByText(wording.AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS);
     expect(phrase).toBeInTheDocument();
   });
 });
