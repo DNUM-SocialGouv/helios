@@ -1,4 +1,4 @@
-import { compare } from 'bcrypt';
+import { compare, genSalt, hash } from 'bcrypt';
 import { createHash } from 'crypto';
 import { DataSource } from "typeorm";
 
@@ -48,9 +48,9 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
             const profileToSave = await (await this.orm).getRepository(ProfilModel).findOneBy({ id: 1 });
 
             const passwordToSave = 'HeliosConnect-' + institutionToSave?.codeGeo;
-            const hashing = createHash('sha256');
-            hashing.update(passwordToSave);
-            const hashedPassword = hashing.digest('hex');
+
+            const salt = await genSalt(10);
+            const hashedPassword = await hash(passwordToSave, salt);
 
             if (institutionToSave && roleToSave && profileToSave) {
                 account.nom = lastName;
