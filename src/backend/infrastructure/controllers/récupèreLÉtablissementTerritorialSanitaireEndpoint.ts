@@ -20,18 +20,28 @@ export async function récupèreLÉtablissementTerritorialSanitaireEndpoint(
   const etablissementSanitaire = await récupèreLÉtablissementTerritorialSanitaireUseCase.exécute(numéroFinessÉtablissementTerritorialSanitaire);
 
   const loginUseCase = new LoginUseCase(dependencies.utilisateurLoader);
-  const profilInCache = appCache.get("userProfile") as object;
-  let profil: object;
+  const profileInstitutionInCache = appCache.get("userInstETSanProfile") as object;
+  const profileAutreRegInCache = appCache.get("userAutreRegETSanProfile") as object;
 
-  if (!profilInCache) {
+  let profilInstitution: object;
+  let profilAutreReg: object;
+
+  if (!profileInstitutionInCache || !profileAutreRegInCache) {
     const profiles = await loginUseCase.getUserProfiles(codeProfiles) as ProfilModel[];
-    const profilesValues = profiles.map((profile) => etablissementSanitaire.identité.codeRegion === codeRegion ? profile?.value.institution.profilETSanitaire : profile?.value.autreRegion.profilETSanitaire)
-    profil = combineProfils(profilesValues);
-    appCache.set("userProfile", profil, 3600);
+    const profilesInstitutionValues = profiles.map((profile) => profile?.value.institution.profilETSanitaire)
+    const profilesAutreRegValues = profiles.map((profile) => profile?.value.autreRegion.profilETSanitaire)
+
+    profilInstitution = combineProfils(profilesInstitutionValues);
+    profilAutreReg = combineProfils(profilesAutreRegValues);
+
+    appCache.set("userInstETSanProfile", profilInstitution, 3600);
+    appCache.set("userAutreRegETSanProfile", profilAutreReg, 3600);
+
   } else {
-    profil = profilInCache;
+    profilInstitution = profileInstitutionInCache;
+    profilAutreReg = profileAutreRegInCache;
   }
 
 
-  return filterEtablissementSanitaire(etablissementSanitaire, profil);
+  return filterEtablissementSanitaire(etablissementSanitaire, etablissementSanitaire.identité.codeRegion === codeRegion ? profilInstitution : profilAutreReg);
 }

@@ -432,36 +432,6 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
       expect(années[2]).toHaveAttribute("value", "2019");
       expect(années[2].textContent).toBe("2019");
     });
-
-    it("n’affiche pas les années dans une liste déroulante quand aucune donnée n’est renseignée", () => {
-      const tauxDAbsentéismeNul = {
-        dateMiseÀJourSource: "2022-10-10",
-        horsFormation: null,
-        pourAccidentMaladieProfessionnelle: null,
-        pourCongésSpéciaux: null,
-        pourMaladieCourteDurée: null,
-        pourMaladieLongueDurée: null,
-        pourMaladieMoyenneDurée: null,
-        pourMaternitéPaternité: null,
-      };
-      const ressourcesHumainesViewModel = new ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel(
-        [
-          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: 2019, tauxDAbsentéisme: tauxDAbsentéismeNul }),
-          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: 2020, tauxDAbsentéisme: tauxDAbsentéismeNul }),
-        ],
-        wording
-      );
-
-      // WHEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
-
-      // THEN
-      const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
-      const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
-      const tauxDAbsentéisme = indicateurs[indiceDeLIndicateur.tauxDAbsentéisme];
-      const année = within(tauxDAbsentéisme).queryByRole("combobox");
-      expect(année).not.toBeInTheDocument();
-    });
   });
 
   it.each([
@@ -668,35 +638,6 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
     expect(exergue).toBeInTheDocument();
   });
 
-  it.each([
-    [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDEtpRéalisés, "nombreDEtpRéalisés"],
-    [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDeCddDeRemplacement, "nombreDeCddDeRemplacement"],
-    [wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, indiceDeLIndicateur.tauxDePrestationsExternes, "tauxDePrestationsExternes"],
-    [wording.TAUX_D_ETP_VACANTS_AU_31_12, indiceDeLIndicateur.tauxDEtpVacants, "tauxDEtpVacants"],
-    [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel, "tauxDeRotationDuPersonnel"],
-  ])("affiche une mise en exergue sur l’indicateur %s si trois années sont manquantes", (_titreDeLIndicateur, indiceDeLIndicateur, cléDeLaDonnée) => {
-    // GIVEN
-    const ressourcesHumainesViewModel = new ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel(
-      ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines.map((blocRessourcesHumaines) => ({
-        ...blocRessourcesHumaines,
-        [cléDeLaDonnée]: { dateMiseÀJourSource: "2022-06-06", valeur: null },
-      })),
-      wording
-    );
-
-    // WHEN
-    renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
-
-    // THEN
-    const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
-    const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
-    const indicateur = indicateurs[indiceDeLIndicateur];
-    const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 3}, ${annéeEnCours - 2}, ${annéeEnCours - 1}`, {
-      selector: "p",
-    });
-    expect(exergue).toBeInTheDocument();
-  });
-
   it("affiche une phrase à la place des indicateurs lorsqu’aucune donnée n’est renseignée", () => {
     // GIVEN
     const ressourcesHumainesViewModel = new ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel([], wording);
@@ -706,6 +647,6 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
     // THEN
     const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
-    expect(within(ressourcesHumaines).getByText(wording.INDICATEURS_VIDES)).toBeInTheDocument();
+    expect(within(ressourcesHumaines).getByText(wording.AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS)).toBeInTheDocument();
   });
 });

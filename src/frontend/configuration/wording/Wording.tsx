@@ -109,6 +109,7 @@ export interface Wording {
   readonly ANNÉE: string;
   readonly INDICATEURS_VIDES: string;
   readonly AUCUNE_DONNÉE_RENSEIGNÉE: string;
+  readonly AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS: string;
 
   // Catégorisation
   readonly PRIVÉ_LUCRATIF: string;
