@@ -37,6 +37,16 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
     );
   }
 
+  public get lesDonnéesAutorisationEtCapacitéPasRenseignees(): string[] {
+    const nonRenseignes = [];
+    if (!this.graphiqueCapacitésParActivitéViewModel.lesCapacitésParActivitésSontEllesRenseignées) nonRenseignes.push(this.wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS);
+    if (!this.lesAutorisationsSontEllesRenseignées) nonRenseignes.push(this.wording.AUTORISATIONS_SANITAIRE);
+    if (!this.lesAutresActivitésSontEllesRenseignées) nonRenseignes.push(this.wording.AUTRES_ACTIVITÉS_SAN);
+    if (!this.lesReconnaissancesContractuellesSontEllesRenseignées) nonRenseignes.push(this.wording.RECONNAISSANCES_CONTRACTUELLES);
+    if (!this.lesÉquipementsMatérielsLourdsSontIlsRenseignés) nonRenseignes.push(this.wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS);
+    return nonRenseignes;
+  }
+
   public get autorisations(): ReactElement {
     const autorisationsDeLÉtablissement = this.établissementTerritorialSanitaireAutorisations.autorisations;
 

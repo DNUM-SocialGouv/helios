@@ -17,22 +17,32 @@ export async function récupèreLÉtablissementTerritorialMédicoSocialEndpoint(
     dependencies.entitéJuridiqueLoader
   );
 
-  const loginUseCase = new LoginUseCase(dependencies.utilisateurLoader);
-  const profilInCache = appCache.get("userProfile") as object;
-  let profil: object;
-
   const établissementTerritorialMédicoSocial = await récupèreLÉtablissementTerritorialMédicoSocialUseCase.exécute(
     numéroFinessÉtablissementTerritorialMédicoSocial
   );
 
-  if (!profilInCache) {
+  const loginUseCase = new LoginUseCase(dependencies.utilisateurLoader);
+  const profileInstitutionInCache = appCache.get("userInstETMSProfile") as object;
+  const profileAutreRegInCache = appCache.get("userAutreRegETMSProfile") as object;
+
+  let profilInstitution: object;
+  let profilAutreReg: object;
+
+  if (!profileInstitutionInCache || !profileAutreRegInCache) {
     const profiles = await loginUseCase.getUserProfiles(codeProfiles) as ProfilModel[];
-    const profilesValues = profiles.map((profile) => établissementTerritorialMédicoSocial.identité.codeRegion === codeRegion ? profile?.value.institution.profilMédicoSocial : profile?.value.autreRegion.profilMédicoSocial)
-    profil = combineProfils(profilesValues);
-    appCache.set("userProfile", profil, 3600);
+    const profilesInstitutionValues = profiles.map((profile) => profile?.value.institution.profilMédicoSocial)
+    const profilesAutreRegValues = profiles.map((profile) => profile?.value.autreRegion.profilMédicoSocial)
+
+    profilInstitution = combineProfils(profilesInstitutionValues);
+    profilAutreReg = combineProfils(profilesAutreRegValues);
+
+    appCache.set("userInstETMSProfile", profilInstitution, 3600);
+    appCache.set("userAutreRegETMSProfile", profilAutreReg, 3600);
+
   } else {
-    profil = profilInCache;
+    profilInstitution = profileInstitutionInCache;
+    profilAutreReg = profileAutreRegInCache;
   }
 
-  return filterEtablissementMedicoSocial(établissementTerritorialMédicoSocial, profil);
+  return filterEtablissementMedicoSocial(établissementTerritorialMédicoSocial, établissementTerritorialMédicoSocial.identité.codeRegion === codeRegion ? profilInstitution : profilAutreReg);
 }

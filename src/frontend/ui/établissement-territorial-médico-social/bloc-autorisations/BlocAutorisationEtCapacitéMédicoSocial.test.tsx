@@ -308,7 +308,7 @@ describe("La page établissement territorial médico-social - bloc autorisation 
 
     // THEN
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
-    const phrase = within(activité).getByText(wording.INDICATEURS_VIDES);
+    const phrase = within(activité).getByText(wording.AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS);
     expect(phrase).toBeInTheDocument();
   });
 });

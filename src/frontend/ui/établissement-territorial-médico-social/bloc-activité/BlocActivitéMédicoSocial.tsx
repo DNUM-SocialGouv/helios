@@ -1,7 +1,7 @@
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
-import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
+import { NoDataCallout } from "../../commun/NoDataCallout/NoDataCallout";
 import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import { ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties } from "../InfoBulle/ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties";
 import { ContenuFileActivePersonnesAccompagnées } from "../InfoBulle/ContenuFileActivePersonnesAccompagnées";
@@ -20,15 +20,12 @@ type BlocActivitéMédicoSocialProps = Readonly<{
 export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéMédicoSocialViewModel }: BlocActivitéMédicoSocialProps) => {
   const { wording } = useDependencies();
 
-  if (établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitéNeSontPasRenseignées) {
-    return <BlocIndicateurVide title={wording.TITRE_BLOC_ACTIVITÉ} />;
-  }
-
   return (
     <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
-      {établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitésPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitésPasAutorisés} /> : <></>}
+      {établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitésPasRenseignees.length !== 0 ? <NoDataCallout indicateurs={établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitésPasRenseignees} /> :
+        établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitésPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitésPasAutorisés} /> : <></>}
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
-        {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementPermanentEstIlAutorisé ? (
+        {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementPermanentEstIlRenseigné && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementPermanentEstIlAutorisé ? (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuTauxOccupationHébergementPermanent
@@ -44,7 +41,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéM
             {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationHébergementPermanent}
           </IndicateurGraphique>
         ) : <></>}
-        {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementTemporaireEstIlAutorisé ? (
+        {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementTemporaireEstIlRenseigné && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementTemporaireEstIlAutorisé ? (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuTauxOccupationHébergementTemporaire
@@ -61,7 +58,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéM
           </IndicateurGraphique>
         ) : <></>}
 
-        {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationAccueilDeJourEstIlAutorisé ? (
+        {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationAccueilDeJourEstIlRenseigné && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationAccueilDeJourEstIlAutorisé ? (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuTauxOccupationAccueilDeJour
@@ -77,7 +74,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéM
             {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationAccueilDeJour}
           </IndicateurGraphique>
         ) : <></>}
-        {établissementTerritorialActivitéMédicoSocialViewModel.leTauxRéalisationActivitéEstIlAutorisé ? (
+        {établissementTerritorialActivitéMédicoSocialViewModel.leTauxRéalisationActivitéEstIlRenseigné && établissementTerritorialActivitéMédicoSocialViewModel.leTauxRéalisationActivitéEstIlAutorisé ? (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuTauxRéalisationActivité
@@ -93,7 +90,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéM
             {établissementTerritorialActivitéMédicoSocialViewModel.tauxRéalisationActivité}
           </IndicateurGraphique>
         ) : <></>}
-        {établissementTerritorialActivitéMédicoSocialViewModel.laFileActivePersonnesAccompagnéesEstElleAutorisé ? (
+        {établissementTerritorialActivitéMédicoSocialViewModel.laFileActivePersonnesAccompagnéesEstElleRenseignée && établissementTerritorialActivitéMédicoSocialViewModel.laFileActivePersonnesAccompagnéesEstElleAutorisé ? (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuFileActivePersonnesAccompagnées
@@ -109,7 +106,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéM
             {établissementTerritorialActivitéMédicoSocialViewModel.fileActivePersonnesAccompagnées}
           </IndicateurGraphique>
         ) : <></>}
-        {établissementTerritorialActivitéMédicoSocialViewModel.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlAutorisé ? (
+        {établissementTerritorialActivitéMédicoSocialViewModel.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné && établissementTerritorialActivitéMédicoSocialViewModel.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlAutorisé ? (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées
@@ -126,7 +123,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéM
           </IndicateurGraphique>
         ) : <></>}
 
-        {établissementTerritorialActivitéMédicoSocialViewModel.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleAutorisé ? (<IndicateurGraphique
+        {établissementTerritorialActivitéMédicoSocialViewModel.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée && établissementTerritorialActivitéMédicoSocialViewModel.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleAutorisé ? (<IndicateurGraphique
           contenuInfoBulle={
             <ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties
               dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDeLaDuréeMoyenneSéjourAccompagnementPersonnesSorties}

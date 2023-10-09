@@ -16,23 +16,30 @@ type EntitéJuridiqueEndpoint = Readonly<{
 export async function récupèreLEntitéJuridiqueEndpoint(dependencies: Dependencies, numéroFiness: string, codeRegion: string, codeProfiles: string[]): Promise<EntitéJuridiqueEndpoint> {
   const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(dependencies.entitéJuridiqueLoader);
   const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFiness);
-
   const loginUseCase = new LoginUseCase(dependencies.utilisateurLoader);
-  const profilInCache = appCache.get("userProfile") as object;
-  let profil: object;
+  const profileInstitutionInCache = appCache.get("userInstEJProfile") as object;
+  const profileAutreRegInCache = appCache.get("userAutreRegEJProfile") as object;
 
-  if (profilInCache === undefined) {
+  let profilInstitution: object;
+  let profilAutreReg: object;
+
+  if (!profileInstitutionInCache || !profileAutreRegInCache) {
     const profiles = await loginUseCase.getUserProfiles(codeProfiles) as ProfilModel[];
-    const profilesValues = profiles.map((profile) => entitéJuridique.codeRegion === codeRegion ? profile?.value.institution.profilEJ : profile?.value.autreRegion.profilEJ)
-    profil = combineProfils(profilesValues);
-    appCache.set("userProfile", profil, 3600);
+    const profilesInstitutionValues = profiles.map((profile) => profile?.value.institution.profilEJ)
+    const profilesAutreRegValues = profiles.map((profile) => profile?.value.autreRegion.profilEJ)
+
+    profilInstitution = combineProfils(profilesInstitutionValues);
+    profilAutreReg = combineProfils(profilesAutreRegValues);
+
+    appCache.set("userInstEJProfile", profilInstitution, 3600);
+    appCache.set("userAutreRegEJProfile", profilAutreReg, 3600);
+
   } else {
-    profil = profilInCache;
+    profilInstitution = profileInstitutionInCache;
+    profilAutreReg = profileAutreRegInCache;
   }
 
-
-
-  const filtredEntitéJuridique = filterEntiteJuridique(entitéJuridique, profil);
+  const filtredEntitéJuridique = filterEntiteJuridique(entitéJuridique, entitéJuridique.codeRegion === codeRegion ? profilInstitution : profilAutreReg);
 
 
   const récupèreLesÉtablissementsTerritoriauxRattachésUseCase = new RécupèreLesÉtablissementsTerritoriauxRattachésUseCase(

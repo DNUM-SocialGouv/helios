@@ -1,7 +1,7 @@
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
-import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
+import { NoDataCallout } from "../../commun/NoDataCallout/NoDataCallout";
 import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import { Sources } from "../../commun/Sources/Sources";
 import { ContenuAutorisations } from "../InfoBulle/ContenuAutorisations";
@@ -18,15 +18,12 @@ export const BlocAutorisationEtCapacitéMédicoSocial = ({
 }: BlocAutorisationEtCapacitéMédicoSocialProps) => {
   const { wording } = useDependencies();
 
-  if (établissementTerritorialAutorisationsMédicoSocialViewModel.lesDonnéesAutorisationEtCapacitéNeSontPasRenseignées) {
-    return <BlocIndicateurVide title={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} />;
-  }
-
   return (
     <Bloc isMain={false} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>
-      {établissementTerritorialAutorisationsMédicoSocialViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialAutorisationsMédicoSocialViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés} /> : <></>}
+      {établissementTerritorialAutorisationsMédicoSocialViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees.length !== 0 ? <NoDataCallout indicateurs={établissementTerritorialAutorisationsMédicoSocialViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees} /> :
+        établissementTerritorialAutorisationsMédicoSocialViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialAutorisationsMédicoSocialViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés} /> : <></>}
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
-        {établissementTerritorialAutorisationsMédicoSocialViewModel.lesCapacitésSontEllesAutorisées ? (
+        {établissementTerritorialAutorisationsMédicoSocialViewModel.lesCapacitésSontEllesAutorisées && établissementTerritorialAutorisationsMédicoSocialViewModel.lesCapacitésSontEllesRenseignées ? (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuCapacitéParActivité
@@ -42,7 +39,7 @@ export const BlocAutorisationEtCapacitéMédicoSocial = ({
             {établissementTerritorialAutorisationsMédicoSocialViewModel.capacitéParActivités}
           </IndicateurGraphique>
         ) : <></>}
-        {établissementTerritorialAutorisationsMédicoSocialViewModel.lesAutorisationsSontEllesAutorisées ? (
+        {établissementTerritorialAutorisationsMédicoSocialViewModel.lesAutorisationsSontEllesAutorisées && établissementTerritorialAutorisationsMédicoSocialViewModel.lesAutorisationsSontEllesRenseignées ? (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuAutorisations

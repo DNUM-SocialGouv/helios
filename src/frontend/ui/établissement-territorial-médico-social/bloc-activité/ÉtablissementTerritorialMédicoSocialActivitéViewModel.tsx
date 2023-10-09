@@ -38,6 +38,19 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     );
   }
 
+  public get lesDonnéesActivitésPasRenseignees(): string[] {
+    const nonRenseignee = [];
+    if (!this.leTauxOccupationHébergementPermanentEstIlRenseigné) nonRenseignee.push(this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT);
+    if (!this.leTauxOccupationHébergementTemporaireEstIlRenseigné) nonRenseignee.push(this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE);
+    if (!this.leTauxOccupationAccueilDeJourEstIlRenseigné) nonRenseignee.push(this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR);
+    if (!this.leTauxRéalisationActivitéEstIlRenseigné) nonRenseignee.push(this.wording.TAUX_RÉALISATION_ACTIVITÉ);
+    if (!this.laFileActivePersonnesAccompagnéesEstElleRenseignée) nonRenseignee.push(this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES);
+    if (!this.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné) nonRenseignee.push(this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES);
+    if (!this.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée) nonRenseignee.push(this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES);
+
+    return nonRenseignee;
+  }
+
   public get activitéEstElleRenseignée(): boolean {
     return this.établissementTerritorialActivité.length === 0 ? false : true;
   }
