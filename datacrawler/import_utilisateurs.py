@@ -35,6 +35,7 @@ def modifier_utilisateur(connection: Connection, data: Series, logger: Logger, d
     institute_id = connection.execute(get_institute_by_code).fetchone()[0]
     get_role_by_code = select([db_roles.columns.role_id]).where(db_roles.columns.role_code == data['Code Rôle'])
     role_id = connection.execute(get_role_by_code).fetchone()[0]
+    profils = data["Profils"].split(":")
     connection.execute(
         db_users.update()
         .where(db_users.columns.ut_email == data["E-mail"])
@@ -43,7 +44,7 @@ def modifier_utilisateur(connection: Connection, data: Series, logger: Logger, d
                 ut_institution=institute_id,
                 ut_actif=True,
                 ut_role=role_id,
-                ut_profiles=data["Profils"] ,
+                ut_profiles= profils,
                 ut_date_modification=datetime.now()))
 
 def creer_utilisateur(connection: Connection, data: Series, logger: Logger, db_users: Table, db_roles: Table, db_institutions: Table) -> None:
