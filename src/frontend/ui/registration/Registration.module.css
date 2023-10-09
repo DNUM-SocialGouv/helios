@@ -17,11 +17,11 @@
     background-image: none;
 }
 
-.error {
-    height: fit-content;
-    background-color: #f7d7d4;
-    border: 1px solid #f4c7c2;
-    color: #ce0500;
+.success {
+    height: 40px;
+    background-color: #b8fec9;
+    border: 1px solid #b5eeb7;
+    color: #18753c;
     width: 100%;
     text-align: center;
     display: flex;
