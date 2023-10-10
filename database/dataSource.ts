@@ -44,6 +44,7 @@ import { AjoutTableSearchHistory1691400360927 } from "./migrations/1691400360927
 import { AjoutRefDepartementRegion1694523233904 } from "./migrations/1694523233904-AjoutRefDepartementRegion";
 import { AjoutRégionDansEntitéJuridique1694616724703 } from "./migrations/1694616724703-AjoutRégionDansEntitéJuridique";
 import { AjoutRégionDansEtablissementTerritorial1694617579347 } from "./migrations/1694617579347-AjoutRégionDansEtablissementTerritorial";
+import { AjoutProfilsDansUtilisateurs1696841163367 } from "./migrations/1696841163367-AjoutProfilsDansUtilisateurs";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "./models/ActivitéSanitaireEntitéJuridiqueModel";
@@ -148,6 +149,7 @@ export default new DataSource({
     AjoutRégionDansEntitéJuridique1694616724703,
     AjoutRégionDansEtablissementTerritorial1694617579347,
     ajoutTableProfil1795731844298,
+    AjoutProfilsDansUtilisateurs1696841163367,
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
