@@ -24,7 +24,7 @@ export const BlocAutorisationsCapacites = ({ entitéJuridiqueAutorisationsCapaci
         {(!entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsCapacitesNeSontPasRenseignées) && entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasAutorisées && (
           <GraphiqueCapacitésParActivité
             estEntitéJuridique
-            estSanitaire={false}
+            estSanitaire={true}
             graphiqueCapacitésParActivitéViewModel={entitéJuridiqueAutorisationsCapacitesViewModel.graphiqueCapacitesParActivitesViewModel}
           />)}
         {(!entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasAutorisées && (

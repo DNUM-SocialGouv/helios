@@ -479,7 +479,7 @@ export class WordingFr implements Wording {
   readonly ROLE: string = "Profil";
   readonly SUPER_ADMIN: string = "Super administrateur";
   readonly ADMIN: string = "Administrateur régional";
-  readonly USER: string = "utilisateur";
+  readonly USER: string = "Utilisateur";
   readonly PROFILE: string = "Profil";
 
 }
