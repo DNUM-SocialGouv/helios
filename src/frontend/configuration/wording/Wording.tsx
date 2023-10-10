@@ -56,6 +56,7 @@ export interface Wording {
   // Inscription
   readonly REGISTRATION_PAGE_TITLE: string;
   readonly SEND: string;
+  readonly REGISTRARTION_SUCCESS_MESSAGE: string;
 
   // Connexion
   readonly CONNEXION_IDENTIFIANT: string

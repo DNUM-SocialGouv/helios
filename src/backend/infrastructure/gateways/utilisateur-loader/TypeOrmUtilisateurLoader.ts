@@ -6,10 +6,12 @@ import { InstitutionModel } from '../../../../../database/models/InstitutionMode
 import { ProfilModel } from '../../../../../database/models/ProfilModel';
 import { RoleModel } from '../../../../../database/models/RoleModel';
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
+import { generateToken } from '../../../jwtHelper';
 import { Institution } from '../../../métier/entities/Utilisateur/Institution';
 import { RésultatLogin } from "../../../métier/entities/Utilisateur/RésultatLogin";
 import { UtilisateurLoader } from "../../../métier/gateways/UtilisateurLoader";
 import { sendEmail } from '../../../sendEmail';
+
 
 
 export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
@@ -66,7 +68,25 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
 
             (await this.orm).getRepository(UtilisateurModel).save(account)
                 .then(async () => {
-                    sendEmail(email, 'Creation de compte Helios', 'hello')
+                    const APP_URL = process.env["APP_BASE_URL"]
+                    const token = generateToken(email, '24h')
+                    const body = `
+                    Bonjour,
+                !
+                    <p>Ce courriel confirme la création de votre compte Helios.</p>
+                
+                    <p>Pour vous connecter, cliquer ci-dessous pour définir un mot de passe et accéder à votre espace personnel.</p>
+                
+                    <p><a href="${APP_URL}/reinitialisation-mot-passe?loginToken=${token}">${APP_URL}/reinitialisation-mot-passe?loginToken=${token}</a></p>
+                
+                    <p>Attention, ce lien n'est utilisable qu'une seule fois et n'est valide que 24h à compter de son ouverture.</p>
+                
+                    <p>Si le lien ne fonctionne plus, veuillez revenir à la page d'accueil du portail Helios et cliquer sur le lien 'Mot de passe oublié ?' </p>
+                
+                    <p>Si vous n'êtes pas à l'origine de cette création, veuillez en informer le support Helios : dnum.scn-helios-support@sg.social.gouv.fr</p>
+                
+                    <p>L'équipe Helios</p>`;
+                    sendEmail(email, "Création de votre compte Helios", body);
                 })
                 .catch((error) => {
                     // eslint-disable-next-line no-console
