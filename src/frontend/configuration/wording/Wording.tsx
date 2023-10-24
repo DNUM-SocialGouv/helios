@@ -57,6 +57,7 @@ export interface Wording {
   readonly REGISTRATION_PAGE_TITLE: string;
   readonly SEND: string;
   readonly REGISTRARTION_SUCCESS_MESSAGE: string;
+  readonly EMAIL_ALREADY_USED: string;
 
   // Connexion
   readonly CONNEXION_IDENTIFIANT: string

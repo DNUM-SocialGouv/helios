@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
@@ -8,7 +9,7 @@ import styles from "./Registration.module.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 
 export const RegistrationForm = () => {
-    const { wording } = useDependencies();
+    const { paths, wording } = useDependencies();
     const router = useRouter();
 
     const [firstName, setFirstName] = useState("");
@@ -17,6 +18,7 @@ export const RegistrationForm = () => {
     const [institutionList, setInstitutionsList] = useState<Institution[]>([]);
     const [institution, setInstitution] = useState(institutionList[0]?.code);
     const [emailSent, setEmailSent] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const createAccount = async (e: FormEvent) => {
         e.preventDefault()
@@ -25,12 +27,19 @@ export const RegistrationForm = () => {
             headers: { "Content-Type": "application/json" },
             method: "POST",
         })
-            .then(() => {
-                setInstitution(institutionList[0]?.code);
-                setFirstName("");
-                setLastName("");
-                setEmail("");
-                setEmailSent(true);
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.err === 'Email already used') {
+                    setErrorMessage(wording.EMAIL_ALREADY_USED);
+                    setEmailSent(false);
+                } else {
+                    setInstitution(institutionList[0]?.code);
+                    setFirstName("");
+                    setLastName("");
+                    setEmail("");
+                    setEmailSent(true);
+                    setErrorMessage("");
+                }
             })
             .catch(() => {
                 router.push('/connexion')
@@ -65,6 +74,7 @@ export const RegistrationForm = () => {
             <h1>{wording.REGISTRATION_PAGE_TITLE}</h1>
             <div className="fr-grid-row fr-grid-row--center fr-mt-8w">
                 <div className="fr-col-12 fr-col-md-8 fr-mt-5w">
+                    {errorMessage && <div className={"fr-mb-5w " + styles["error"]}> {wording.EMAIL_ALREADY_USED} <Link className={styles["forget-email-link"]} href={paths.FORGET_PASSWORD}> ici </Link> </div>}
                     {emailSent && <div className={"fr-mb-5w " + styles["success"]}> {wording.REGISTRARTION_SUCCESS_MESSAGE} </div>}
                     <form className="fr-col-12 fr-mt-5w" onSubmit={createAccount} >
                         <div className="fr-grid-row fr-grid-row--center fr-mb-3w">

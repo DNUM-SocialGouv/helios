@@ -29,6 +29,22 @@
     padding: 0 20px;
 }
 
+.error {
+    height: fit-content;
+    background-color: #f7d7d4;
+    border: 1px solid #f4c7c2;
+    color: #ce0500;
+    width: 100%;
+    text-align: center;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.forget-email-link {
+    background-image: none;
+    font-weight: bold;
+}
+
 .mb-20 {
     margin-bottom: 20px;
 }
