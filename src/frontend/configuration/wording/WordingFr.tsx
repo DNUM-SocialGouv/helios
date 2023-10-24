@@ -477,8 +477,8 @@ export class WordingFr implements Wording {
   readonly EMAIL: string = "Email";
   readonly ORGANIZATION: string = "Institution";
   readonly ROLE: string = "Profil";
-  readonly SUPER_ADMIN: string = "Super administrateur";
-  readonly ADMIN: string = "Administrateur régional";
+  readonly SUPER_ADMIN: string = "Administrateur national";
+  readonly ADMIN: string = "Administrateur régional ou en administration centrale";
   readonly USER: string = "Utilisateur";
   readonly PROFILE: string = "Profil";
 
