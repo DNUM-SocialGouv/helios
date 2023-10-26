@@ -39,7 +39,7 @@ describe("Bloc Autorisation et activités", () => {
 
     // THEN
     const titre = screen.getByText(wording.AUTORISATIONS_ACTIVITES, { selector: "h3" });
-    expect(titre).not.toBeInTheDocument();
+    expect(titre).toBeInTheDocument();
   });
 
   it("affiche le Graphique Autres Activite", () => {
@@ -52,7 +52,7 @@ describe("Bloc Autorisation et activités", () => {
 
     // THEN
     const titre = screen.getByText(wording.AUTRES_ACTIVITÉS, { selector: "h3" });
-    expect(titre).not.toBeInTheDocument();
+    expect(titre).toBeInTheDocument();
   });
 
   it("affiche le Graphique Reconnaissance Contractuelles", () => {
@@ -66,7 +66,7 @@ describe("Bloc Autorisation et activités", () => {
 
     // THEN
     const titre = screen.getByText(wording.RECONNAISSANCES_CONTRACTUELLES, { selector: "h3" });
-    expect(titre).not.toBeInTheDocument();
+    expect(titre).toBeInTheDocument();
   });
 
   it("affiche le Graphique Equipement Lourds", () => {
@@ -80,7 +80,7 @@ describe("Bloc Autorisation et activités", () => {
 
     // THEN
     const titre = screen.getByText(wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, { selector: "h3" });
-    expect(titre).not.toBeInTheDocument();
+    expect(titre).toBeInTheDocument();
   });
 
   it("n'affiche pas les autorisations s'il n'y a pas de valeur", () => {
