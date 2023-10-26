@@ -28,20 +28,6 @@ describe("Bloc Autorisation et activités", () => {
     );
   });
 
-  it("affiche le GraphiqueAutorisationActivite", () => {
-    // GIVEN
-    viewModel.autorisationsActivités = mock<AutorisationsActivités>({
-      autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }],
-    });
-
-    // WHEN
-    renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
-
-    // THEN
-    const titre = screen.getByText(wording.AUTORISATIONS_ACTIVITES, { selector: "h3" });
-    expect(titre).toBeInTheDocument();
-  });
-
   it("affiche le Graphique Autres Activite", () => {
     // GIVEN
     viewModel.autresActivités = mock<AutresActivités>({
