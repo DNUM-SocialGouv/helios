@@ -4,9 +4,9 @@ import { Doughnut } from "react-chartjs-2";
 
 import { couleurDeFondDuBloc, couleurDelAbscisse, couleurErreur, CouleurHistogramme } from "./couleursGraphique";
 import styles from "./Donut.module.css";
-import { construisLePluginDeLaLegende } from "./LegendPlugin";
+import { construisLePluginDeLaLegendeDonut } from "./LegendPluginDonut";
 
-ChartJS.register(DoughnutController, ArcElement, Tooltip, Legend, construisLePluginDeTexteAuCentreDuDonut(), construisLePluginDeLaLegende(), ChartDataLabels);
+ChartJS.register(DoughnutController, ArcElement, Tooltip, Legend, construisLePluginDeTexteAuCentreDuDonut(), construisLePluginDeLaLegendeDonut(), ChartDataLabels);
 
 export function Donut(props: {
   valeurs: number[];
@@ -35,7 +35,7 @@ export function Donut(props: {
   return (
     <div className={styles["donut-wrapper"]}>
       <div>
-        <Doughnut data={data} options={optionsDiagrammeDoughnut(props.texteCentral, props.total, props.idDeLaLégende)} />
+        <Doughnut data={data} options={optionsDiagrammeDoughnut(props.texteCentral, props.total, props.idDeLaLégende)} plugins={[construisLePluginDeLaLegendeDonut()]} />
       </div>
       <menu className={styles["légende-donut"]} id={props.idDeLaLégende} />
     </div>
