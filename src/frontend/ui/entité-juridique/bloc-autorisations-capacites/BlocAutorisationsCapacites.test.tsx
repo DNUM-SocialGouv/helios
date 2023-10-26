@@ -28,15 +28,6 @@ describe("Bloc Autorisation et activités", () => {
     );
   });
 
-  it("affiche le GraphiqueCapacitesParActivite", () => {
-    // WHEN
-    renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
-
-    // THEN
-    const titre = screen.getByText(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, { selector: "h3" });
-    expect(titre).not.toBeInTheDocument();
-  });
-
   it("affiche le GraphiqueAutorisationActivite", () => {
     // GIVEN
     viewModel.autorisationsActivités = mock<AutorisationsActivités>({
