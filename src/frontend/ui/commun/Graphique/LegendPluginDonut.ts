@@ -1,7 +1,10 @@
-import { Chart as ChartJS, LegendItem } from "chart.js";
+import { Chart as ChartJS } from "chart.js";
 
-export function construisLePluginDeLaLegende() {
-  function créeLeLibelléPourLaLégende(chart: ChartJS, libellé: LegendItem): HTMLLIElement {
+import { StringFormater } from "../../commun/StringFormater";
+
+
+export function construisLePluginDeLaLegendeDonut() {
+  function créeLeLibelléPourLaLégende(chart: ChartJS, libellé: any): HTMLLIElement {
 
     const conteneur = document.createElement("li");
 
@@ -9,26 +12,30 @@ export function construisLePluginDeLaLegende() {
     caseÀCocher.type = "checkbox";
     caseÀCocher.id = libellé.text;
     caseÀCocher.name = libellé.text;
-    caseÀCocher.checked = chart.isDatasetVisible(libellé.datasetIndex);
+    caseÀCocher.checked = !libellé.hidden;
 
     const libelléCaseÀCocher = document.createElement("label");
     libelléCaseÀCocher.classList.add("fr-label");
     libelléCaseÀCocher.htmlFor = libellé.text;
 
-    libelléCaseÀCocher.onclick = () => {
-      chart.setDatasetVisibility(libellé.datasetIndex, !chart.isDatasetVisible(libellé.datasetIndex));
-      chart.update();
-    };
-
-    caseÀCocher.onkeydown = (event) => {
-      if (event.code === "Space") {
-        event.preventDefault();
-        chart.setDatasetVisibility(libellé.datasetIndex, !chart.isDatasetVisible(libellé.datasetIndex));
-        chart.update();
+    const handleCheckboxChange = () => {
+      chart.toggleDataVisibility(libellé.index);
+      // @ts-ignore
+      const currentSum = StringFormater.removePercent(chart.config.options.elements.center.text);
+      let sum;
+      if (chart.getDataVisibility(libellé.index)) {
         // @ts-ignore
-        document.getElementById(event.target.id).focus();
+        sum = currentSum + chart.data.datasets[0].data[libellé.index]
+      } else {
+        // @ts-ignore
+        sum = currentSum - chart.data.datasets[0].data[libellé.index]
       }
-    };
+      // @ts-ignore
+      chart.config.options.elements.center.text = StringFormater.formatCenterText(sum.toFixed(1));
+      chart.update();
+    }
+
+    caseÀCocher.addEventListener('change', handleCheckboxChange);
 
     const cercleDeCouleur = document.createElement("span");
     cercleDeCouleur.style.background = libellé.fillStyle as string;

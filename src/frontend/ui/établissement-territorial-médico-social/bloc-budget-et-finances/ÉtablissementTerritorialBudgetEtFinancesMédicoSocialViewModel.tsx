@@ -59,7 +59,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
   public get montantDeLaContributionAuxFraisDeSiège(): ReactElement {
     const montantDesContributionsAuxFraisDeSiègeParAnnée: { année: number; valeur: string }[] = this.budgetEtFinancesMédicoSocial.reduce(
       (montantParAnnée: { année: number; valeur: string }[], budgetEtFinancesMédicoSocial) => {
-        if (budgetEtFinancesMédicoSocial.contributionAuxFraisDeSiège.valeur) {
+        if (budgetEtFinancesMédicoSocial.contributionAuxFraisDeSiège.valeur !== null && budgetEtFinancesMédicoSocial.contributionAuxFraisDeSiège.valeur !== "") {
           montantParAnnée.push({
             année: budgetEtFinancesMédicoSocial.année,
             valeur: StringFormater.formatInEuro(budgetEtFinancesMédicoSocial.contributionAuxFraisDeSiège.valeur),
@@ -148,7 +148,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
   public get résultatNetComptable(): ReactElement {
     const résultatNetComptableParAnnée: { année: number; valeur: string }[] = this.budgetEtFinancesMédicoSocial.reduce(
       (résultatNetComptableParAnnée: { année: number; valeur: string }[], budgetEtFinancesMédicoSocial) => {
-        if (budgetEtFinancesMédicoSocial.résultatNetComptable.valeur) {
+        if (budgetEtFinancesMédicoSocial.résultatNetComptable.valeur !== null && budgetEtFinancesMédicoSocial.résultatNetComptable.valeur !== "") {
           résultatNetComptableParAnnée.push({
             année: budgetEtFinancesMédicoSocial.année,
             valeur: StringFormater.formatInEuro(budgetEtFinancesMédicoSocial.résultatNetComptable.valeur),
@@ -180,7 +180,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
     const fondsDeRoulementNetGlobalParAnnée: IndicateurTabulaireProps["valeursParAnnée"] = this.budgetEtFinancesMédicoSocial.reduce(
       (fondsParAnnée: IndicateurTabulaireProps["valeursParAnnée"], budgetEtFinancesMédicoSocial) => {
         if (budgetEtFinancesMédicoSocial.cadreBudgétaire === CadreBudgétaire.ERRD) {
-          if (budgetEtFinancesMédicoSocial.fondsDeRoulement.valeur) {
+          if (budgetEtFinancesMédicoSocial.fondsDeRoulement.valeur !== null && budgetEtFinancesMédicoSocial.fondsDeRoulement.valeur !== "") {
             fondsParAnnée.push({
               année: budgetEtFinancesMédicoSocial.année,
               miseEnForme: budgetEtFinancesMédicoSocial.fondsDeRoulement.valeur < 0 ? "fr-text--bold fr-text-default--error" : "",
