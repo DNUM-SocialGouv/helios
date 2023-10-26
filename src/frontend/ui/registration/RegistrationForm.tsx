@@ -122,7 +122,7 @@ export const RegistrationForm = () => {
                                 </label>
                             </div>
                             <div className="fr-col-11 fr-col-md-8">
-                                <select className="fr-select" id="select" name="select" onChange={handleInstitutionChange} value={institution}>
+                                <select className="fr-select" id="select" name="select" onChange={handleInstitutionChange} required value={institution}>
                                     <option disabled hidden selected value="">Selectionnez votre institution</option>
                                     {institutionList.map((institution) => (
                                         <option key={institution.id} value={institution.code}> {institution.libelle}</option>
