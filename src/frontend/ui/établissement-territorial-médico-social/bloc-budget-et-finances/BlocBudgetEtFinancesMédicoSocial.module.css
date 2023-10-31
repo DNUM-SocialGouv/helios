@@ -2,43 +2,43 @@
   display: grid;
   gap: 1rem;
   grid-template-areas:
-  "graph1 graph1 graph1"
-  "graph2 graph3 graph4"
-  "graph5 graph6 vide";
+    "graph1 graph1 graph1"
+    "graph2 graph3 graph4"
+    "graph5 graph6 vide";
   grid-template-columns: repeat(3, 1fr);
 }
 
-.liste-indicateurs > li {
+.liste-indicateurs>li {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
-.liste-indicateurs > li > div:nth-child(1)  {
+.liste-indicateurs>li>div:nth-child(1) {
   min-height: 6rem;
 }
 
-.liste-indicateurs > li:nth-child(1) {
+.liste-indicateurs>li:nth-child(1) {
   grid-area: graph1;
 }
 
-.liste-indicateurs > li:nth-child(2) {
+.liste-indicateurs>li:nth-child(2) {
   grid-area: graph2;
 }
 
-.liste-indicateurs > li:nth-child(3) {
+.liste-indicateurs>li:nth-child(3) {
   grid-area: graph3;
 }
 
-.liste-indicateurs > li:nth-child(4) {
+.liste-indicateurs>li:nth-child(4) {
   grid-area: graph4;
 }
 
-.liste-indicateurs > li:nth-child(5) {
+.liste-indicateurs>li:nth-child(5) {
   grid-area: graph5;
 }
 
-.liste-indicateurs > li:nth-child(6) {
+.liste-indicateurs>li:nth-child(6) {
   grid-area: graph6;
 }
 
@@ -51,11 +51,11 @@
     display: inherit;
   }
 
-  .liste-indicateurs > li {
+  .liste-indicateurs>li {
     margin-bottom: 1rem;
   }
 
-  .liste-indicateurs > li div:nth-child(1)  {
+  .liste-indicateurs>li div:nth-child(1) {
     min-height: 0;
   }
 }
