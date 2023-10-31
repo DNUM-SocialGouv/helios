@@ -24,7 +24,7 @@ export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): En
         adresseNuméroVoie: profil.identité.adresse === 'ok' ? result.adresseNuméroVoie : { 'dateMiseÀJourSource': '', value: '' },
         adresseTypeVoie: profil.identité.adresse === 'ok' ? result.adresseTypeVoie : { 'dateMiseÀJourSource': '', value: '' },
         adresseVoie: profil.identité.adresse === 'ok' ? result.adresseVoie : { 'dateMiseÀJourSource': '', value: '' },
-        catégorisation: '',
+        catégorisation: result.catégorisation,
         libelléStatutJuridique: profil.identité.statut_EJ === 'ok' ? result.libelléStatutJuridique : { 'dateMiseÀJourSource': '', value: '' },
         numéroFinessEntitéJuridique: result.numéroFinessEntitéJuridique,
         raisonSociale: profil.identité.nom === 'ok' ? result.raisonSociale : { 'dateMiseÀJourSource': '', value: '' },
