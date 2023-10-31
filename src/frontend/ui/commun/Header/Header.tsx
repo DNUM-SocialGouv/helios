@@ -51,7 +51,7 @@ export const Header = () => {
                     <Image alt="" height="80" src="/logo.svg" width="80" />
                   </div>
                   <div className="fr-header__navbar">
-                    {router.pathname !== paths.ACCUEIL && router.pathname !== paths.CONNEXION && (
+                    {router.pathname !== paths.ACCUEIL && router.pathname !== paths.CONNEXION && router.pathname !== paths.REINITIALISATION_PASSWORD && router.pathname !== paths.REGISTRATION && (
                       <button
                         aria-controls="modal-541"
                         className="fr-btn--search fr-btn"
@@ -84,7 +84,7 @@ export const Header = () => {
                 </div>
               </div>
               <div className="fr-header__tools">
-                {router.pathname !== paths.ACCUEIL && router.pathname !== paths.FORGET_PASSWORD && router.pathname !== paths.CHANGE_PASSWORD && router.pathname !== paths.CONNEXION && router.pathname !== paths.SETTINGS && router.pathname !== paths.ADD_PROFILE && router.pathname !== paths.HISTORY && router.pathname !== paths.FAVORIS && (
+                {router.pathname !== paths.ACCUEIL && router.pathname !== paths.FORGET_PASSWORD && router.pathname !== paths.CHANGE_PASSWORD && router.pathname !== paths.CONNEXION && router.pathname !== paths.SETTINGS && router.pathname !== paths.ADD_PROFILE && router.pathname !== paths.HISTORY && router.pathname !== paths.FAVORIS && router.pathname !== paths.REINITIALISATION_PASSWORD && router.pathname !== paths.REGISTRATION && (
                   <div className="fr-header__search fr-modal" id="modal-541">
                     <div className="fr-container fr-container-lg--fluid">
                       <button aria-controls="modal-541" className="fr-btn--close fr-btn" title="Fermer">
