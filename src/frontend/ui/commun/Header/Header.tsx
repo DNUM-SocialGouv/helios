@@ -29,6 +29,16 @@ export const Header = () => {
     setTerme(event.target.value);
   };
 
+  const logOut = () => {
+    fetch("/api/utilisateurs/logout", {
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+    }).then(() => {
+      signOut({ callbackUrl: paths.CONNEXION });
+      setDisplayMenu(false)
+    })
+  }
+
 
   useEffect(() => {
     if (data?.user?.idUser) {
@@ -171,10 +181,7 @@ export const Header = () => {
                       </li>
                       <li className={styles["menu-item"]}>
                         <button
-                          onClick={() => {
-                            signOut({ callbackUrl: paths.CONNEXION });
-                            setDisplayMenu(false)
-                          }}
+                          onClick={logOut}
                         >
                           {wording.DÉCONNEXION}
                         </button>
@@ -196,10 +203,7 @@ export const Header = () => {
               <div className="fr-header__menu-links">
                 <ul>
                   <li>
-                    <button onClick={() => {
-                      signOut({ callbackUrl: paths.CONNEXION });
-                      setDisplayMenu(false)
-                    }}>
+                    <button onClick={logOut}>
                       {wording.DÉCONNEXION}
                     </button>
                   </li>
