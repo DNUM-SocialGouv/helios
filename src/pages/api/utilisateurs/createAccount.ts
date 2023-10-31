@@ -16,8 +16,9 @@ export default async function handler(request: NextApiRequest, response: NextApi
             return response.status(400).send({ err: 'Email already used' })
         }
 
-        const resp = await createAccountEndpoint(dependencies, firstName, lastName, email, institution);
-        return response.status(200).json(resp);
+        await createAccountEndpoint(dependencies, firstName, lastName, email, institution);
+
+        return response.status(200).send({ message: 'user created' });
     } catch (error) {
         return response.status(500);
     }
