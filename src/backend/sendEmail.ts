@@ -1,4 +1,4 @@
-const buildEmailBody = (receiver: string, subject: string, htmlBody: string) => {
+const buildEmailBody = (receiver: string, subject: string, htmlBody: string, imagesArray: any[]) => {
     const body = {
         to: [
             {
@@ -11,19 +11,19 @@ const buildEmailBody = (receiver: string, subject: string, htmlBody: string) => 
                 address: process.env['TIPIMAIL_SENDER_ADDRESS']
             },
             subject: subject,
-            html: htmlBody
-
+            html: htmlBody,
+            images: imagesArray,
         }
     }
     return JSON.stringify(body);
 }
 
-export const sendEmail = async (receiver: string, subject: string, htmlBody: string) => await fetch('https://api.tipimail.com/v1/messages/send', {
+export const sendEmail = async (receiver: string, subject: string, htmlBody: string, imagesArray: any[]) => await fetch('https://api.tipimail.com/v1/messages/send', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
         'X-Tipimail-ApiUser': process.env['TIPIMAIL_APIUSER'] || '',
         'X-Tipimail-ApiKey': process.env['TIPIMAIL_APIKEY'] || ''
     },
-    body: buildEmailBody(receiver, subject, htmlBody)
+    body: buildEmailBody(receiver, subject, htmlBody, imagesArray),
 });
