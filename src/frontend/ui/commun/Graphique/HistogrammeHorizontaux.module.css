@@ -1,11 +1,3 @@
-@media (max-width: 200px),
-(max-width: 700px) {
-    .container {
-        /* Permet de mettre les graphiques l'un en dessous de l'autre en mode print*/
-        display: block !important;
-    }
-}
-
 .container {
     display: flex;
     margin-bottom: 3rem;
