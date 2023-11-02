@@ -1,5 +1,5 @@
 .budget {
-    display:grid;
+    display: grid;
     grid-template:
         "cdr cdr cdr" 1fr
         "rnc tdf rdf" / 1fr 1fr 1fr;
@@ -11,14 +11,26 @@
     grid-area: cdr;
 }
 
-.budget li:nth-child(2){
+.budget li:nth-child(2) {
     grid-area: rnc;
 }
 
-.budget li:nth-child(3){
+.budget li:nth-child(3) {
     grid-area: tdf;
 }
 
-.budget li:nth-child(4){
+.budget li:nth-child(4) {
     grid-area: rdf;
+}
+
+@media print {
+    .budget {
+        display: block !important;
+    }
+
+    .budget li {
+        display: block;
+        margin-bottom: 10px;
+        page-break-inside: avoid;
+    }
 }
