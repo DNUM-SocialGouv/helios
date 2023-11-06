@@ -70,14 +70,14 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
 
             (await this.orm).getRepository(UtilisateurModel).save(account)
                 .then(async () => {
-                    const absolutePath = path.resolve(__dirname, '../../../../../public/logo-helios.png');
+                    const absolutePath = path.resolve(process.cwd(), './public/logo-helios.png');
                     const imageContent = fs.readFileSync(absolutePath, 'base64');
                     const APP_URL = process.env["APP_BASE_URL"];
                     const token = generateToken(email, '24h');
                     const images = [
                         {
                             "contentType": "image/png",
-                            "filename": "ticket",
+                            "filename": "logo-helios",
                             "content": imageContent,
                             "contentId": "logo"
                         }

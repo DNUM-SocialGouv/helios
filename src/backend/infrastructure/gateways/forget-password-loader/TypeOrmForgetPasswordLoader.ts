@@ -16,7 +16,9 @@ export class TypeOrmForgetPasswordLoader implements ForgetPasswordLoader {
     if (user) {
       const APP_URL = process.env["APP_BASE_URL"]
       const token = generateToken(email, '72h')
-      const absolutePath = path.resolve(__dirname, '../../../../public/logo-helios.png');
+      const absolutePath = path.resolve(process.cwd(), './public/logo-helios.png');
+      // eslint-disable-next-line no-console
+      console.log('absolute path', absolutePath, process.cwd());
       const imageContent = fs.readFileSync(absolutePath, 'base64');
 
       const html = `
@@ -52,7 +54,7 @@ export class TypeOrmForgetPasswordLoader implements ForgetPasswordLoader {
           images: [
             {
               "contentType": "image/png",
-              "filename": "ticket",
+              "filename": "logo-helios",
               "content": imageContent,
               "contentId": "logo"
             }
