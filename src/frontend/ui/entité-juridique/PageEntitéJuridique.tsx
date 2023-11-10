@@ -7,6 +7,7 @@ import { RechercheViewModel } from "../home/RechercheViewModel";
 import { BlocActivitéSanitaire } from "./bloc-activité/BlocActivitéSanitaire";
 import { BlocAutorisationsCapacites } from "./bloc-autorisations-capacites/BlocAutorisationsCapacites";
 import { BlocBudgetFinance } from "./bloc-budget-finance/BlocBudgetFinance";
+import { BlocQualité } from "./bloc-qualite/BlocQualite";
 import { Catégorisation } from "./catégorisation/Catégorisation";
 import { EntitéJuridiqueViewModel } from "./EntitéJuridiqueViewModel";
 import { BlocIdentité } from "./fiche-d-identité/BlocIdentité";
@@ -39,6 +40,7 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, rechercheViewM
         <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
         <ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />
         <BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={entitéJuridiqueViewModel.entitéJuridiqueAutorisationsCapacitesViewModel} />
+        <BlocQualité entitéJuridiqueAutorisationsCapacitesViewModel={entitéJuridiqueViewModel.entitéJuridiqueAutorisationsCapacitesViewModel} />
         <SeparatorHorizontal></SeparatorHorizontal>
         <BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel} />
         <SeparatorHorizontal></SeparatorHorizontal>

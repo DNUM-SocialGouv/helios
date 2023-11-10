@@ -189,6 +189,29 @@ export interface Wording {
   readonly NOMBRE_TOTAL_DE_PLACE: string;
   readonly ACTIVITÉ: string;
 
+  // Bloc Qualité
+  readonly TITRE_BLOC_QUALITE: string;
+  readonly RECLAMATIONS : string;
+
+  readonly MOTIF_DES_RECLAMATIONS : string;
+  readonly NOMBRE_TOTAL_RECLAMATIONS : string;
+  readonly NOMBRE_RECLAMATIONS_EN_ENCOURS : string;
+  readonly NOMBRE_RECLAMATIONS_CLOTUREES : string;
+
+  readonly MOTIF_10 : string;
+  readonly MOTIF_11 : string;
+  readonly MOTIF_12 : string;
+  readonly MOTIF_13 : string;
+  readonly MOTIF_14 : string;
+  readonly MOTIF_15 : string;
+  readonly MOTIF_16 : string;
+  readonly MOTIF_17 : string;
+  readonly MOTIF_18 : string;
+  readonly MOTIF_19 : string;
+  readonly MOTIF_155 : string;
+  readonly MOTIF_156 : string;
+
+
   // Bloc Autorisation Sanitaire
   readonly AUTRES_ACTIVITÉS: string;
   readonly AUTRES_ACTIVITÉS_SAN: string;
@@ -286,6 +309,8 @@ export interface Wording {
   readonly SAE_TITLE: string;
   readonly RPU_TITLE: string;
   readonly ANCRE_TITLE: string;
+  readonly SIREC_TITLE: string;
+
   // Sources courtes
   readonly FINESS: ReactElement;
   readonly DIAMANT: ReactElement;
@@ -296,6 +321,8 @@ export interface Wording {
   readonly ARHGOS: ReactElement;
   readonly SAE: ReactElement;
   readonly RPU: ReactElement;
+  readonly SIREC: ReactElement;
+
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string;

@@ -33,6 +33,7 @@ export const GraphiqueCapacitésParActivité = ({ graphiqueCapacitésParActivit�
       nomDeLIndicateur={estSanitaire ? wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE : wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
       source={wording.SAE}
     >
+      test bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
       <HistogrammesHorizontaux
         annéesManquantes={graphiqueCapacitésParActivitéViewModel.annéesManquantes()}
         nom={estSanitaire ? wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE : wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
