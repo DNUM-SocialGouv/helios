@@ -1,15 +1,17 @@
+import  { memo } from "react";
+
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { NoDataCallout } from "../../commun/NoDataCallout/NoDataCallout";
 import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
-import { GraphiqueQualite } from "../../indicateur-métier/qualite/GraphiqueQualite";
+import  GraphiqueQualite  from "../../indicateur-métier/qualite/GraphiqueQualite";
 import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "./EntitéJuridiqueAutorisationsCapacitesViewModel";
 
 type BlocQualitéProps = Readonly<{
   entitéJuridiqueAutorisationsCapacitesViewModel: EntitéJuridiqueAutorisationsCapacitesViewModel;
 }>;
 
-export const BlocQualité = ({ entitéJuridiqueAutorisationsCapacitesViewModel }: BlocQualitéProps) => {
+const BlocQualité = ({ entitéJuridiqueAutorisationsCapacitesViewModel }: BlocQualitéProps) => {
   const { wording } = useDependencies();
 
   return (
@@ -24,8 +26,8 @@ export const BlocQualité = ({ entitéJuridiqueAutorisationsCapacitesViewModel }
               {
                 2019:
                 {
-                  total_clotures : 100,
-                  total_encours : 200,
+                  total_clotures : 389,
+                  total_encours :  297,
                   date_miseAJourSource : '20/10/2019',
                   details:  [
                     {
@@ -41,12 +43,12 @@ export const BlocQualité = ({ entitéJuridiqueAutorisationsCapacitesViewModel }
                     {
                       motif: "MOTIF_12",
                       clot: 11,
-                      encours: 170
+                      encours: 70
                     },
                     {
                       motif: "MOTIF_13",
-                      clot: 140,
-                      encours: 210
+                      clot: 40,
+                      encours: 10
                     } ,
                     {
                       motif: "MOTIF_14",
@@ -65,13 +67,13 @@ export const BlocQualité = ({ entitéJuridiqueAutorisationsCapacitesViewModel }
                     },
                     {
                       motif: "MOTIF_17",
-                      clot: 162,
-                      encours: 122
+                      clot: 62,
+                      encours: 22
                     },
                     {
                       motif: "MOTIF_18",
-                      clot: 101,
-                      encours: 109
+                      clot: 1,
+                      encours: 9
                     },
                     {
                       motif: "MOTIF_19",
@@ -80,20 +82,20 @@ export const BlocQualité = ({ entitéJuridiqueAutorisationsCapacitesViewModel }
                     },
                     {
                       motif: "MOTIF_155",
-                      clot: 259,
+                      clot: 59,
                       encours: 88
                     },
                     {
                       motif: "MOTIF_156",
-                      clot: 562,
+                      clot: 62,
                       encours: 12
                     }    
                   ] 
                 },
                 2020:
                 {
-                  total_clotures : 222,
-                  total_encours :  229,
+                  total_clotures : 1389,
+                  total_encours :  797,
                   date_miseAJourSource : '20/10/2020',
                   details:  [
                     {
@@ -168,3 +170,5 @@ export const BlocQualité = ({ entitéJuridiqueAutorisationsCapacitesViewModel }
     </Bloc>
   );
 };
+
+export default memo(BlocQualité)

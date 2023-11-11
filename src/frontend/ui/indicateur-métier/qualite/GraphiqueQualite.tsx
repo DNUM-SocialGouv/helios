@@ -1,10 +1,10 @@
-import { useState } from "react";
-import styles from "./QualiteParAnnee.module.css"
+import { memo, useState } from "react";
 
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ContenuCapacitéParActivités } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuCapacitéParActivités";
-import { QualiteParAnnee } from "./QualiteParAnnee/QualiteParAnnee";
+
+import  QualiteParAnnee  from "./QualiteParAnnee/QualiteParAnnee";
  
 type GraphiqueQualiteProps = Readonly<{
   data: any;
@@ -12,7 +12,7 @@ type GraphiqueQualiteProps = Readonly<{
   estSanitaire: boolean;
 }>;
 
-export const GraphiqueQualite = ({ data, estEntitéJuridique = false }: GraphiqueQualiteProps) => {
+const GraphiqueQualite = ({ data, estEntitéJuridique = false }: GraphiqueQualiteProps) => {
   const { wording } = useDependencies();
   const annees = Object.keys(data).sort().reverse().map(Number);
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(annees[0]);
@@ -42,3 +42,5 @@ export const GraphiqueQualite = ({ data, estEntitéJuridique = false }: Graphiqu
     </IndicateurGraphique>
   );
 };
+
+export default memo(GraphiqueQualite)

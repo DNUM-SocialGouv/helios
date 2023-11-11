@@ -1,3 +1,5 @@
+import  { memo } from "react";
+
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { HistogrammeHorizontalRow } from "./HistogrammeHorizontalRow/HistogrammeHorizontalRow";
 import { NombreTotaleReclamation } from "./NombreTotaleReclamation/NombreTotaleReclamation";
@@ -16,7 +18,7 @@ type GraphiqueQualiteProps = Readonly<{
     details: rowQualite[];
 }>;
 
-export const QualiteParAnnee = ({total_clotures, total_encours, details }: GraphiqueQualiteProps) => {
+const QualiteParAnnee = ({total_clotures, total_encours, details }: GraphiqueQualiteProps) => {
 
 function trimString(string: string, length: number):string {
 return string.length > length ? 
@@ -50,7 +52,7 @@ return (
                     return (
                         <tr key={i}>
                         <td>{trimString(wording[`${item.motif}`], 45)}</td>
-                        <td> <HistogrammeHorizontalRow color="darkBlue" number={item.clot + item.encours} total={2186}/> </td>
+                        <td> <HistogrammeHorizontalRow color="darkBlue" number={item.clot + item.encours} total={total_clotures + total_encours}/> </td>
                         <td> <HistogrammeHorizontalRow color="lightBlue" number={item.encours} total={item.clot + item.encours} /> </td>
                         <td> <HistogrammeHorizontalRow color="lightBlue" number={item.clot} total={item.clot + item.encours} /> </td>
                     </tr>
@@ -64,5 +66,6 @@ return (
 </div>);
 };
 
+export default memo(QualiteParAnnee)
 
 
