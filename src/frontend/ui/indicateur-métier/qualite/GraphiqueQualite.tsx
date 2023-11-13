@@ -4,8 +4,8 @@ import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ContenuCapacitéParActivités } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuCapacitéParActivités";
 
-import  QualiteParAnnee  from "./QualiteParAnnee/QualiteParAnnee";
- 
+import QualiteParAnnee from "./QualiteParAnnee/QualiteParAnnee";
+
 type GraphiqueQualiteProps = Readonly<{
   data: any;
   estEntitéJuridique?: boolean;
@@ -21,26 +21,20 @@ const GraphiqueQualite = ({ data, estEntitéJuridique = false }: GraphiqueQualit
     <IndicateurGraphique
       années={{ liste: annees, setAnnéeEnCours }}
       contenuInfoBulle={
-        <ContenuCapacitéParActivités
-          dateDeMiseÀJour={data[annéeEnCours].date_miseAJourSource}
-          estEntitéJuridique={estEntitéJuridique}
-          source={wording.SIREC}
-        />
+        <ContenuCapacitéParActivités dateDeMiseÀJour={data[annéeEnCours].date_miseAJourSource} estEntitéJuridique={estEntitéJuridique} source={wording.SIREC} />
       }
       dateDeMiseÀJour={data[annéeEnCours].date_miseAJourSource}
       identifiant="capacite-sanitaire"
       nomDeLIndicateur={wording.RECLAMATIONS}
       source={wording.SIREC}
     >
-
-   <QualiteParAnnee
-      details={data[annéeEnCours].details}
-      total_clotures={data[annéeEnCours].total_clotures}
-      total_encours={data[annéeEnCours].total_encours}
-   />
-  
+      <QualiteParAnnee
+        details={data[annéeEnCours].details}
+        total_clotures={data[annéeEnCours].total_clotures}
+        total_encours={data[annéeEnCours].total_encours}
+      />
     </IndicateurGraphique>
   );
 };
 
-export default memo(GraphiqueQualite)
+export default memo(GraphiqueQualite);
