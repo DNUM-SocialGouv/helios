@@ -70,7 +70,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
 
   public get lesDonnéesRHPasRenseignees(): (string | ReactElement)[] {
     const nonRenseignees = [];
-    if (!this.leNombreDEtpRéaliséEstIlRenseigné) nonRenseignees.push(this.wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ);
+    if (!this.leNombreDEtpRéaliséEstIlRenseigné) nonRenseignees.push(this.wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION);
     if (!this.leNombreDeCddDeRemplacementEstIlRenseigné) nonRenseignees.push(this.wording.NOMBRE_DE_CDD_DE_REMPLACEMENT);
     if (!this.leTauxDePrestationsExternesEstIlRenseigné) nonRenseignees.push(this.wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES);
     if (!this.leTauxDEtpVacantsEstIlRenseigné) nonRenseignees.push(this.wording.TAUX_D_ETP_VACANTS_AU_31_12);
@@ -496,7 +496,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
 
   public get lesDonnéesRHPasAutorisés(): (string | ReactElement)[] {
     const nonAutorisés = [];
-    if (!this.leNombreDEtpRéaliséEstIlAutorisé) nonAutorisés.push(this.wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ);
+    if (!this.leNombreDEtpRéaliséEstIlAutorisé) nonAutorisés.push(this.wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION);
     if (!this.leNombreDeCddDeRemplacementEstIlAutorisé) nonAutorisés.push(this.wording.NOMBRE_DE_CDD_DE_REMPLACEMENT);
     if (!this.leTauxDePrestationsExternesEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES);
     if (!this.leTauxDEtpVacantsEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_D_ETP_VACANTS_AU_31_12);
