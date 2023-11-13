@@ -14,6 +14,7 @@ import { ContenuDuTauxDeRotationDuPersonnel } from "../InfoBulle/ContenuDuTauxDe
 import { ContenuDuTauxDEtpVacants } from "../InfoBulle/ContenuDuTauxDEtpVacants";
 import styles from "./BlocRessourcesHumainesMédicoSocial.module.css";
 import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } from "./ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel";
+import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 
 type BlocRessourcesHumainesMédicoSocialProps = Readonly<{
   établissementTerritorialMédicoSocialRessourcesHumainesViewModel: ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel;
@@ -24,6 +25,10 @@ export const BlocRessourcesHumainesMédicoSocial = ({
 }: BlocRessourcesHumainesMédicoSocialProps) => {
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(établissementTerritorialMédicoSocialRessourcesHumainesViewModel.annéeInitiale);
+
+  if (établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRessourcesHumainesNeSontPasRenseignées) {
+    return <BlocIndicateurVide title={wording.TITRE_BLOC_RESSOURCES_HUMAINES} />;
+  }
 
   return (
     <Bloc isMain={false} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES}>

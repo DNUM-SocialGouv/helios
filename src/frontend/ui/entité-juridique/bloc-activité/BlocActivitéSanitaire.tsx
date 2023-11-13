@@ -1,5 +1,6 @@
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
+import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { NoDataCallout } from "../../commun/NoDataCallout/NoDataCallout";
 import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import { GraphiqueNombreHAD } from "../../indicateur-métier/nombre-de-had/GraphiqueNombreHAD";
@@ -14,6 +15,10 @@ type BlocActivitéSanitaireProps = Readonly<{
 
 export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel }: BlocActivitéSanitaireProps) => {
   const { wording } = useDependencies();
+
+  if (entitéJuridiqueActivitéViewModel.lesDonnéesActivitéNeSontPasRenseignées) {
+    return <BlocIndicateurVide title={wording.TITRE_BLOC_ACTIVITÉ} />;
+  }
 
   return (
     <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
