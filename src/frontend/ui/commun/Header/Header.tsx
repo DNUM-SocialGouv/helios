@@ -159,12 +159,27 @@ export const Header = () => {
                       </li>
                       {(data.user.role === '1' || data.user.role === '2') && (
                         <li className={styles["menu-item"]}>
-                          <button
-                            onClick={() => {
-                              router.push("/settings");
-                            }}>
+                          <button>
                             Parametrage
                           </button>
+                          <ul>
+                            <li className={styles["sub-menu-item"]}>
+                              <button
+                                onClick={() => {
+                                  router.push(paths.USERS_LIST);
+                                }}>
+                                Utilisateurs
+                              </button>
+                            </li>
+                            <li className={styles["sub-menu-item"]}>
+                              <button
+                                onClick={() => {
+                                  router.push(paths.PROFILES_LIST);
+                                }}>
+                                Profils
+                              </button>
+                            </li>
+                          </ul>
                         </li>
                       )}
                       <li className={styles["menu-item"]}>

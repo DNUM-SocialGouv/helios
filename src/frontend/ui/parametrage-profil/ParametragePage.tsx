@@ -15,6 +15,7 @@ export const ParametragePage = () => {
     const profileContext = useContext(ProfileContext);
     const router = useRouter();
     const { getAllProfiles } = useParametrage();
+    const { paths } = useDependencies();
 
     useEffect(() => {
         if (data?.user.idUser) {
@@ -28,7 +29,7 @@ export const ParametragePage = () => {
                 <>
                     <h1 className={styles["title"]}>{wording.PARAMETRAGE_TITRE}</h1>
                     <button className="fr-mt-2v fr-btn" onClick={() => {
-                        router.push("/settings/add-profile");
+                        router.push(paths.ADD_PROFILE);
                     }}>
                         Ajouter un profil
                     </button>

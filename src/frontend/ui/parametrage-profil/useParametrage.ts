@@ -3,10 +3,13 @@ import { useContext } from "react";
 
 import { ProfileValue } from "../../../../database/models/ProfilModel";
 import { ProfileContext } from "../commun/contexts/ProfilContext";
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 export function useParametrage() {
     const profileContext = useContext(ProfileContext);
     const router = useRouter();
+    const { paths } = useDependencies();
+
 
     const updateProfile = (userId: string, code: string, value: ProfileValue) => {
         fetch("/api/profile/update", {
@@ -15,7 +18,7 @@ export function useParametrage() {
             method: "POST",
         }).then((response) => {
             if (response.status === 200)
-                router.push('/settings')
+                router.push(paths.PROFILES_LIST)
         })
     }
 
@@ -26,7 +29,7 @@ export function useParametrage() {
             method: "POST",
         }).then((response) => {
             if (response.status === 200)
-                router.push('/settings')
+                router.push(paths.PROFILES_LIST)
         })
     }
 

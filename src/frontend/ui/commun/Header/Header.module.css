@@ -20,6 +20,10 @@
   width: 150px;
 }
 
+.sub-menu-item {
+  margin-left: 20px;
+}
+
 .menu>li {
   margin: 0;
 

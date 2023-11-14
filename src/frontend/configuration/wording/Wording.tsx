@@ -380,6 +380,8 @@ export interface Wording {
   readonly CREATION_DATE: string;
   readonly PROFILE_CODE: string;
   readonly PARAMETRAGE_NEW_PROFILE: string;
+  readonly USERS_LIST: string;
+
 
   //  Profile page
   readonly USER_PROFILE: string;
