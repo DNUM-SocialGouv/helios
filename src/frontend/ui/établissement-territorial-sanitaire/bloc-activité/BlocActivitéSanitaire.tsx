@@ -22,8 +22,9 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireActiv
 
   return (
     <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
-      {établissementTerritorialSanitaireActivitéViewModel.lesDonnéesActivitésPasRenseignee.length !== 0 ? <NoDataCallout indicateurs={établissementTerritorialSanitaireActivitéViewModel.lesDonnéesActivitésPasRenseignee} /> :
-        établissementTerritorialSanitaireActivitéViewModel.lesDonnéesActivitésPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialSanitaireActivitéViewModel.lesDonnéesActivitésPasAutorisés} /> : <></>}
+      {établissementTerritorialSanitaireActivitéViewModel.lesDonnéesActivitésPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialSanitaireActivitéViewModel.lesDonnéesActivitésPasAutorisés} /> :
+        établissementTerritorialSanitaireActivitéViewModel.lesDonnéesActivitésPasRenseignee.length !== 0 ? <NoDataCallout indicateurs={établissementTerritorialSanitaireActivitéViewModel.lesDonnéesActivitésPasRenseignee} /> :
+          <></>}
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         {établissementTerritorialSanitaireActivitéViewModel.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés && établissementTerritorialSanitaireActivitéViewModel.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsAutorisés ? <GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={établissementTerritorialSanitaireActivitéViewModel.nombreDeSejourMCOViewModel} /> : <></>}
         {établissementTerritorialSanitaireActivitéViewModel.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés && établissementTerritorialSanitaireActivitéViewModel.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsAutorisé ? <GraphiquePsySSR nombreJournéesPsySSRViewModel={établissementTerritorialSanitaireActivitéViewModel.nombreJourneesPsySSRViewModel} /> : <></>}

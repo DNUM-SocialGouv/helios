@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
+import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { NoDataCallout } from "../../commun/NoDataCallout/NoDataCallout";
 import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
@@ -14,7 +15,6 @@ import { ContenuDuTauxDeRotationDuPersonnel } from "../InfoBulle/ContenuDuTauxDe
 import { ContenuDuTauxDEtpVacants } from "../InfoBulle/ContenuDuTauxDEtpVacants";
 import styles from "./BlocRessourcesHumainesMédicoSocial.module.css";
 import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } from "./ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel";
-import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 
 type BlocRessourcesHumainesMédicoSocialProps = Readonly<{
   établissementTerritorialMédicoSocialRessourcesHumainesViewModel: ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel;
@@ -32,8 +32,9 @@ export const BlocRessourcesHumainesMédicoSocial = ({
 
   return (
     <Bloc isMain={false} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES}>
-      {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasRenseignees.length !== 0 ? <NoDataCallout indicateurs={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasAutorisés} /> :
-        établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasAutorisés} /> : <></>}
+      {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasAutorisés} /> :
+        établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasRenseignees.length !== 0 ? <NoDataCallout indicateurs={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasRenseignees} /> :
+          <></>}
 
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.leNombreDEtpRéaliséEstIlRenseigné && établissementTerritorialMédicoSocialRessourcesHumainesViewModel.leNombreDEtpRéaliséEstIlAutorisé ? (
