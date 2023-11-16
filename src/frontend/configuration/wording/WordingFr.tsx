@@ -16,14 +16,12 @@ export class WordingFr implements Wording {
   readonly BACK_TO_CONNEXION: string = "Retour à la page de connexion";
   readonly APPLY: string = "Appliquer";
 
-
   // Messages d'erreur
   readonly MISSING_EMAIL: string = "Veuillez renseigner le champ courriel";
   readonly EMAIL_NOT_VALID: string = "Veuillez saisir une adresse email valide";
   readonly SOMETHING_WENT_WRONG: string = "Quelque chose s'est mal passé. Veuillez réessayer ultérieurement";
   readonly INVALID_REQUEST: string = "veuillez vérifier vos données";
   readonly INVALID_USER: string = "Compte non inscrit sur Helios";
-
 
   // Header
   readonly INTITULÉ_RÉPUBLIQUE_FRANÇAISE: ReactElement = (
@@ -65,18 +63,16 @@ export class WordingFr implements Wording {
 
   // Inscription
   readonly REGISTRATION_PAGE_TITLE: string = "Demande d'accès à Helios";
-  readonly SEND: string = 'Envoyer';
+  readonly SEND: string = "Envoyer";
   readonly REGISTRARTION_SUCCESS_MESSAGE: string = "Un courriel a été envoyé à votre adresse email.";
   readonly EMAIL_ALREADY_USED: string = "L'adresse mail saisie est déjà rattachée à un compte. Si vous avez oublié votre mot de passe, cliquez ";
 
-
   // Connexion
-  readonly CONNEXION_IDENTIFIANT: string = "Identifiant *"
-  readonly CONNEXION_MOT_DE_PASSE: string = "Mot de passe *"
-  readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string = "Vous n'avez pas de compte ? "
-  readonly FORGET_PASSEWORD: string = "Mot de passe oublié ?"
-  readonly CONNEXION_LIBELLE: string = "Connexion"
-
+  readonly CONNEXION_IDENTIFIANT: string = "Identifiant *";
+  readonly CONNEXION_MOT_DE_PASSE: string = "Mot de passe *";
+  readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string = "Vous n'avez pas de compte ? ";
+  readonly FORGET_PASSEWORD: string = "Mot de passe oublié ?";
+  readonly CONNEXION_LIBELLE: string = "Connexion";
 
   // Recherche
   readonly RECHERCHE_DESCRIPTION: ReactElement = (
@@ -458,7 +454,7 @@ export class WordingFr implements Wording {
   readonly REINITIALISATION_MOT_PASSE_TITRE: string = "Réinitialisation de votre mot de passe";
   readonly REINITIALISATION_MOT_PASSE_DESCRIPTION: string = "Merci de renseigner votre nouveau mot de passe";
   readonly DIFFERENT_MOT_PASSE: string = "Le mot de passe doit être différent du mot de passe actuel";
-  readonly WRONG_OLD_MOT_DE_PASSE: string = "Ancien mot de passe erroné"
+  readonly WRONG_OLD_MOT_DE_PASSE: string = "Ancien mot de passe erroné";
 
   readonly PARAMETRAGE_TITRE: string = "Liste des profils";
   readonly PARAMETRAGE_PROFILE: string = "Paramétrage de profil: ";
@@ -469,9 +465,11 @@ export class WordingFr implements Wording {
   readonly PARAMETRAGE_AUTRE_REGION: string = "Autre région";
   readonly CREATION_DATE: string = "Date de création";
   readonly PROFILE_CODE: string = "Code de profil";
+  readonly AJOUTER_UN_PROFIL: string = "Ajouter un profil";
   readonly PARAMETRAGE_NEW_PROFILE: string = "Ajouter un nouveau profil";
-  readonly USERS_LIST: string = "Liste des utilisateurs";
+  readonly VOUS_NAVEZ_AUCUN_PROFIL: string = "Vous n'avez aucun profil";
 
+  readonly USERS_LIST: string = "Liste des utilisateurs";
 
   //  Profile page
   readonly USER_PROFILE: string = "Profil de l'utilisateur";
@@ -484,5 +482,4 @@ export class WordingFr implements Wording {
   readonly ADMIN: string = "Administrateur régional ou en administration centrale";
   readonly USER: string = "Utilisateur";
   readonly PROFILE: string = "Profil";
-
 }
