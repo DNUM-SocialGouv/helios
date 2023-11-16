@@ -1,14 +1,18 @@
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import { useRouter } from "next/router";
 
+import { ProfilModel } from "../../../../database/models/ProfilModel";
 import { formatDateAndHours } from "../../utils/dateUtils";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./Parametrage.module.css";
 
-export const ParametragePage = ({ profiles }: any) => {
+type ParametragePageProps = Readonly<{
+  profiles: ProfilModel[];
+}>;
+
+export const ParametragePage = ({ profiles }: ParametragePageProps) => {
   const { wording } = useDependencies();
   const router = useRouter();
-
   const { paths } = useDependencies();
 
   return (
