@@ -394,4 +394,13 @@ export interface Wording {
   readonly ADMIN: string;
   readonly USER: string;
   readonly PROFILE: string;
+
+  // Utilisateur page
+  readonly STATUS: string;
+  readonly MODIFICATION_DATE: string;
+  readonly PAGE_UTILISATEUR_TITRE: string;
+  readonly AUCUN_ELEMENT_TROUVE: string;
+  readonly ROLE_: string;
+  readonly INSTITUTION: string;
+  readonly PAGE_EDIT_UTILISATEUR_TITRE: string;
 }

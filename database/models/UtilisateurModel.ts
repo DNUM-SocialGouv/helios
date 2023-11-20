@@ -1,14 +1,4 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
-  JoinColumn,
-  BeforeInsert,
-  BeforeUpdate,
-} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, BeforeInsert, BeforeUpdate } from "typeorm";
 
 import { InstitutionModel } from "./InstitutionModel";
 import { RoleModel } from "./RoleModel";
@@ -39,6 +29,9 @@ export class UtilisateurModel {
   @ManyToOne(() => InstitutionModel)
   @JoinColumn({ name: "ut_institution", referencedColumnName: "id" })
   public institution!: InstitutionModel;
+
+  @Column({ name: "ut_institution" })
+  public institution2!: number;
 
   @Column({ name: "ut_actif", default: false })
   public actif!: boolean;

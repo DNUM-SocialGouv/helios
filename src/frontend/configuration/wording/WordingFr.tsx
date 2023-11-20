@@ -482,4 +482,13 @@ export class WordingFr implements Wording {
   readonly ADMIN: string = "Administrateur régional ou en administration centrale";
   readonly USER: string = "Utilisateur";
   readonly PROFILE: string = "Profil";
+
+  // Utilisateur page
+  readonly STATUS: string = "Status";
+  readonly MODIFICATION_DATE: string = "Date de modification";
+  readonly AUCUN_ELEMENT_TROUVE: string = "Aucun élément trouvé";
+  readonly ROLE_: string = "Rôle";
+  readonly PAGE_UTILISATEUR_TITRE: string = "Liste des utilisateurs";
+  readonly INSTITUTION: string = "Institution";
+  readonly PAGE_EDIT_UTILISATEUR_TITRE: string = "Modifier utilisateur";
 }
