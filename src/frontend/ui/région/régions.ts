@@ -31,23 +31,23 @@ export const régions: Régions = {
     source: `${LIEN_OUTRE_MER}`,
   },
   "ARS1": {
-    label: "Carte de ARS 1",
+    label: "Guadeloupe",
     source: `${LIEN_ARS1_GUADELOUPE}`,
   },
   "ARS2": {
-    label: "Carte de ARS 2",
+    label: "Guyane",
     source: `${LIEN_ARS2_GUYANE}`,
   },
   "ARS3": {
-    label: "Carte de ARS 3",
+    label: "La Réunion",
     source: `${LIEN_ARS3_LA_REUNION}`,
   },
   "ARS4": {
-    label: "Carte de ARS 4",
+    label: "Martinique",
     source: `${LIEN_ARS4_MATINIQUE}`,
   },
   "ARS5": {
-    label: "Carte de ARS 5",
+    label: "Mayotte",
     source: `${LIEN_ARS5_MAYOTTE}`,
   },
 };
@@ -55,31 +55,31 @@ export const régions: Régions = {
 export const outreMerRegionsList: OutreMerRegion[] = [
   {
     key: 'ARS1',
-    label: 'Carte de ARS 1',
+    label: 'Guadeloupe',
     source: `${LIEN_ARS1_GUADELOUPE}`,
     text: 'Carte Guadeloupe'
   },
   {
     key: 'ARS2',
-    label: 'Carte de ARS 2',
+    label: 'Guyane',
     source: `${LIEN_ARS2_GUYANE}`,
     text: 'Carte Guyane'
   },
   {
     key: 'ARS3',
-    label: 'Carte de ARS 3',
+    label: 'La Réunion',
     source: `${LIEN_ARS3_LA_REUNION}`,
     text: 'Carte La Réunion'
   },
   {
     key: 'ARS4',
-    label: 'Carte de ARS 4',
+    label: 'Martinique',
     source: `${LIEN_ARS4_MATINIQUE}`,
     text: 'Carte Martinique'
   },
   {
     key: 'ARS5',
-    label: 'Carte de ARS 5',
+    label: 'Mayotte',
     source: `${LIEN_ARS5_MAYOTTE}`,
     text: 'Carte Mayotte'
   }

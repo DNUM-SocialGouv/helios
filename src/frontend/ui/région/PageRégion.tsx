@@ -13,8 +13,8 @@ export const PageRégion = ({ région }: { région: string }) => {
   const { wording } = useDependencies();
   useBreadcrumb([
     {
-      label: wording.régionBreadcrumb(labelDeLaRégion),
-      path: "",
+      label: labelDeLaRégion !== 'France métropolitaine' ? wording.régionBreadcrumb("Outre-mer (DROM-COM)") : wording.régionBreadcrumb(labelDeLaRégion),
+      path: labelDeLaRégion !== 'France métropolitaine' ? "/region/outre-mer" : "",
     },
   ]);
 
