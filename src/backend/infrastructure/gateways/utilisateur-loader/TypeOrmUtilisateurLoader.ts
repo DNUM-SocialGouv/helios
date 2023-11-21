@@ -130,10 +130,16 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
 
     let options = {};
 
+    const conditions = [
+      { nom: ILike("%" + key.toString() + "%") },
+      { prenom: ILike("%" + key.toString() + "%") },
+      { email: ILike("%" + key.toString() + "%") },
+    ];
+
     if (key) {
       options = {
         ...options,
-        where: [{ nom: ILike("%" + key.toString() + "%") }, { prenom: ILike("%" + key.toString() + "%") }, { email: ILike("%" + key.toString() + "%") }],
+        where: conditions,
       };
     }
     /*
@@ -149,16 +155,16 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     const currentPageA: number = parseInt(currentPage as any) || 1;
     const take = 10;
 
-    const total = await utilisateurRepo.countBy([
-      { nom: ILike("%" + key.toString() + "%") },
-      { prenom: ILike("%" + key.toString() + "%") },
-      { email: ILike("%" + key.toString() + "%") },
-    ]);
+    const total = await utilisateurRepo.countBy(conditions);
 
     const data = await utilisateurRepo.find({
       ...options,
       take,
       skip: (currentPageA - 1) * take,
+      relations: {
+        role: true,
+        institution: true,
+      },
     });
 
     return {

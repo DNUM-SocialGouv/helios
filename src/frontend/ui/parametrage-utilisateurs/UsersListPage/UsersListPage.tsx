@@ -36,7 +36,6 @@ export const UsersListPage = ({ users, keyWord }: UsersListPageProps) => {
 
   const { wording } = useDependencies();
 
-  const Roles = ["Admin National", "Admin Regional", "Utilisateur"];
   const Profiles = [
     { profil_label: "Utilisateur lambda", profil_code: "f998021c-9613-4978-be6a-2b4cd9e24ffb" },
     { profil_label: "Equipe projet", profil_code: "4bbf1e31-180a-4d29-9973-54459dc3087d" },
@@ -154,7 +153,7 @@ export const UsersListPage = ({ users, keyWord }: UsersListPageProps) => {
                   </thead>
                   <tbody>
                     {userData.map((user: any) => {
-                      const roleClass = user.roleId === "1" ? "error" : user.roleId === "2" ? "success" : "info";
+                      const roleClass = user.role.id === 1 ? "error" : user.role.id === 2 ? "success" : "info";
 
                       return (
                         <tr key={user.id}>
@@ -171,12 +170,10 @@ export const UsersListPage = ({ users, keyWord }: UsersListPageProps) => {
                           <td className={styles["widthTD-small"]}>{user.email}</td>
 
                           <td>
-                            <span className={`fr-badge fr-badge--${roleClass} fr-badge--no-icon ${styles["text_no_change"]}`}>{Roles[user.roleId - 1]}</span>
+                            <span className={`fr-badge fr-badge--${roleClass} fr-badge--no-icon ${styles["text_no_change"]}`}>{user.role.libelle}</span>
                           </td>
 
-                          <td className={styles["widthTD-small"]}>
-                            {Institutions.filter((item) => item.inst_code_geo === user.institution2)[0]?.inst_libelle || "ARS Guyane"}
-                          </td>
+                          <td className={styles["widthTD-small"]}>{user.institution.libelle}</td>
 
                           <td>
                             {user.profils.map((profil: string) => {

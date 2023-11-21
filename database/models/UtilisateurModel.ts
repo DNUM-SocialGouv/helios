@@ -30,9 +30,6 @@ export class UtilisateurModel {
   @JoinColumn({ name: "ut_institution", referencedColumnName: "id" })
   public institution!: InstitutionModel;
 
-  @Column({ name: "ut_institution" })
-  public institution2!: number;
-
   @Column({ name: "ut_actif", default: false })
   public actif!: boolean;
 
