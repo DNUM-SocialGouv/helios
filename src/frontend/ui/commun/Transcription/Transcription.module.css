@@ -34,4 +34,8 @@
     .indicateur td {
         text-align: center;
     }
+
+    .transcriptionData {
+        font-size: .65rem !important;
+    }
 }
