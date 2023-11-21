@@ -27,7 +27,7 @@ export const BlocRessourcesHumainesMédicoSocial = ({
 
   return (
     <Bloc isMain={false} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES}>
-      {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasRenseignees.length !== 0 ? <NoDataCallout indicateurs={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasAutorisés} /> :
+      {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasRenseignees.length !== 0 ? <NoDataCallout indicateurs={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasRenseignees} /> :
         établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasAutorisés} /> : <></>}
 
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
