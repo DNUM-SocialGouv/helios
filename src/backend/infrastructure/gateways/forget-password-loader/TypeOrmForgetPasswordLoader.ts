@@ -1,5 +1,8 @@
 
+import fs from 'fs';
+import path from 'path';
 import { DataSource } from 'typeorm';
+
 
 import { UtilisateurModel } from '../../../../../database/models/UtilisateurModel';
 import { generateToken } from '../../../jwtHelper';
@@ -13,18 +16,21 @@ export class TypeOrmForgetPasswordLoader implements ForgetPasswordLoader {
     if (user) {
       const APP_URL = process.env["APP_BASE_URL"]
       const token = generateToken(email, '72h')
+      const absolutePath = path.resolve(process.cwd(), './public/logo-helios.png');
+      // eslint-disable-next-line no-console
+      console.log('absolute path', absolutePath, process.cwd());
+      const imageContent = fs.readFileSync(absolutePath, 'base64');
+
       const html = `
-          Bonjour,
-      
+          <img src="cid:logo" alt="helios" >
+          <p>Bonjour,</p>
           <p>Nous avons reçu une demande de réinitialisation de mot de passe pour votre compte.</p>
       
-          <p>Modifiez-le en cliquant sur ce lien</p>
-      
-          <p><a href="${APP_URL}/reinitialisation-mot-passe?loginToken=${token}">${APP_URL}/reinitialisation-mot-passe?loginToken=${token}</a></p>
+          <p>Modifiez-le en cliquant <a href="${APP_URL}/reinitialisation-mot-passe?loginToken=${token}">ici</a> </p>
       
           <p>Si le lien de réinitialisation ne s'affiche pas, copiez et collez-le dans votre navigateur.</p>
       
-          <p>Ce lien reste valide pendant 72 heures après réception du mail. Une erreur 404 apparaitra sur le site Helios en cas d'expiration du lien, dans ce cas, merci de cliquer sur le lien suivant :<span> <a href="${APP_URL}/mot-passe-oublie">ici</a> </span> </p>
+          <p> <b> Ce lien reste valide pendant 72 heures après réception du mail </b>. Une erreur 404 apparaitra sur le site Helios en cas d'expiration du lien, dans ce cas, merci de cliquer sur le lien suivant :<span> <a href="${APP_URL}/mot-passe-oublie">ici</a> </span> </p>
       
           <p>Si vous ne souhaitez pas réinitialiser votre mot de passe, vous pouvez ignorer cet e-mail.</p>
       
@@ -43,9 +49,16 @@ export class TypeOrmForgetPasswordLoader implements ForgetPasswordLoader {
             personalName: process.env['TIPIMAIL_SENDER_NAME'],
             address: process.env['TIPIMAIL_SENDER_ADDRESS']
           },
-          subject: "Demande de réinitialisation de mot de passe Helios",
-          html: html
-
+          subject: "[Helios] Demande de réinitialisation de mot de passe",
+          html: html,
+          images: [
+            {
+              "contentType": "image/png",
+              "filename": "logo-helios",
+              "content": imageContent,
+              "contentId": "logo"
+            }
+          ],
         }
       }
 
