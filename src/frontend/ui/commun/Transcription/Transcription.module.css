@@ -1,11 +1,13 @@
 @media print {
     .indicateur {
         break-inside: avoid;
+        font-size: .3rem;
     }
 
     .indicateur :global(.fr-transcription__footer) {
         display: none;
     }
+
     .indicateur :global(.fr-collapse) {
         --collapse: unset;
         --collapse-max-height: none;
@@ -13,18 +15,22 @@
         display: block !important;
         visibility: visible !important;
     }
+
     .indicateur :global(.fr-modal__body) {
-        max-height:fit-content !important;
+        max-height: fit-content !important;
     }
+
     .indicateur :global(.fr-modal__content) {
-        max-height:fit-content !important;
-        padding:0 !important;
+        max-height: fit-content !important;
+        padding: 0 !important;
     }
+
     .indicateur th {
-        font-size:.7rem;
-        padding:  1rem 0 1rem 0 !important;
+        font-size: .7rem;
+        padding: 1rem 0 1rem 0 !important;
         text-align: center;
     }
+
     .indicateur td {
         text-align: center;
     }
