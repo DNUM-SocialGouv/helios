@@ -27,20 +27,9 @@
   text-align: center;
 }
 
-.pagination_container {
-  margin-top: 30px;
-  float: right;
-}
-
 .filtres-big-container {
 }
 .filtres-container {
-}
-.search-bar-container {
-  float: right;
-}
-.search-bar {
-  width: 350px;
 }
 
 .text_no_change {
@@ -51,6 +40,7 @@
 }
 
 .widthTD-small {
+  height: 90px;
   max-width: 20ch;
   word-wrap: break-word;
 }

@@ -2,7 +2,7 @@ import { compare, genSalt, hash } from "bcrypt";
 import { createHash } from "crypto";
 import fs from "fs";
 import path from "path";
-import { DataSource, Like } from "typeorm";
+import { DataSource, ILike } from "typeorm";
 
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
@@ -133,7 +133,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     if (key) {
       options = {
         ...options,
-        where: [{ nom: Like("%" + key.toString() + "%") }, { prenom: Like("%" + key.toString() + "%") }, { email: Like("%" + key.toString() + "%") }],
+        where: [{ nom: ILike("%" + key.toString() + "%") }, { prenom: ILike("%" + key.toString() + "%") }, { email: ILike("%" + key.toString() + "%") }],
       };
     }
     /*
@@ -159,8 +159,9 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     return {
       data,
       total,
-      pdescrtionA,
-      last_pdescrtion: Math.ceil(total / take),
+      keyWord: key,
+      currentPage: pdescrtionA,
+      lastPage: Math.ceil(total / take),
     };
   }
 }
