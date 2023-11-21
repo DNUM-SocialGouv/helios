@@ -28,6 +28,8 @@ type UsersListPageProps = Readonly<{
 export const UsersListPage = ({ users, keyWord }: UsersListPageProps) => {
   const [userData, setUserData] = useState(users.data);
 
+  const [lastPage, setLastPage] = useState(users.lastPage);
+
   const [key, setKey] = useQueryState("key", parseAsString.withDefault(keyWord));
 
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(users.currentPage));
@@ -73,7 +75,7 @@ export const UsersListPage = ({ users, keyWord }: UsersListPageProps) => {
 
           <div className={styles["filtres-big-container"]}>
             <div className={styles["filtres-container"]}>
-              <KeyWordFilter keyWord={key} setKey={setKey} setUserData={setUserData} setPage={setPage} />
+              <KeyWordFilter keyWord={key} setKey={setKey} setUserData={setUserData} setPage={setPage} setLastPage={setLastPage} />
               <button aria-controls="accordion-106" aria-expanded="false" className={`fr-accordion__btn fr-mt-2v fr-btn ${styles["btn-filtre"]}`}>
                 Filtre
               </button>
@@ -198,7 +200,15 @@ export const UsersListPage = ({ users, keyWord }: UsersListPageProps) => {
                     })}
                   </tbody>
                 </table>
-                <PaginationBtn lastPage={users.lastPage} page={page as number} setPage={setPage} setUserData={setUserData} total={users.total} keyWord={key} />
+                <PaginationBtn
+                  lastPage={lastPage}
+                  page={page as number}
+                  setPage={setPage}
+                  setLastPage={setLastPage}
+                  setUserData={setUserData}
+                  total={users.total}
+                  keyWord={key}
+                />
               </div>
             </div>
           )}

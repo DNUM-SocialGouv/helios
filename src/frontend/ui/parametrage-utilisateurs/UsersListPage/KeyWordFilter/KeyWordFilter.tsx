@@ -15,9 +15,10 @@ type KeyWordFilterProps = Readonly<{
   setKey: () => {};
   setUserData: () => {};
   setPage: () => {};
+  setLastPage: () => {};
 }>;
 
-export const KeyWordFilter = ({ keyWord, setKey, setUserData, setPage }: KeyWordFilterProps) => {
+export const KeyWordFilter = ({ keyWord, setKey, setUserData, setPage, setLastPage }: KeyWordFilterProps) => {
   async function handleChange(e: Event) {
     e.preventDefault();
     setKey(e.target.value);
@@ -31,6 +32,7 @@ export const KeyWordFilter = ({ keyWord, setKey, setUserData, setPage }: KeyWord
       .then((users) => {
         setUserData(users.data);
         setPage(users.currentPage);
+        setLastPage(users.lastPage);
       });
   }
   return (

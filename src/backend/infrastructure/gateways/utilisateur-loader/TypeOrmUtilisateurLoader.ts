@@ -123,12 +123,8 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     return profiles;
   }
 
-  async getUsersListPaginated(key: string, sort: string, currentPage: number): Promise<any> {
+  async getUsersListPaginated(key = "", sort: string, currentPage: number): Promise<any> {
     //  return await (await this.orm).getRepository(UtilisateurModel).find();
-
-    if (key === undefined) {
-      key = "";
-    }
 
     const utilisateurRepo = (await this.orm).getRepository(UtilisateurModel);
 

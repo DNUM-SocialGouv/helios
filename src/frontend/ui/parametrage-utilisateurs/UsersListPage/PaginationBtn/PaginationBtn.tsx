@@ -13,13 +13,14 @@ import styles from "./PaginationBtn.module.css";
 type PaginationBtnProps = Readonly<{
   total: number;
   lastPage: number;
-  setUserData: any;
-  setPage: any;
+  setUserData: () => {};
+  setPage: () => {};
+  setLastPage: () => {};
   page: number;
   keyWord: string;
 }>;
 
-export const PaginationBtn = ({ setUserData, setPage, lastPage, page, keyWord }: PaginationBtnProps) => {
+export const PaginationBtn = ({ setUserData, setPage, lastPage, page, keyWord, setLastPage }: PaginationBtnProps) => {
   const intervalRecursive = (x: number, y: number, accum = []) => {
     if (x + 1 === y) return accum;
     return intervalRecursive(x + 1, y, accum.concat(x + 1));
@@ -37,6 +38,7 @@ export const PaginationBtn = ({ setUserData, setPage, lastPage, page, keyWord }:
       .then((users) => {
         setUserData(users.data);
         setPage(users.currentPage);
+        setLastPage(users.lastPage);
       });
   };
 
