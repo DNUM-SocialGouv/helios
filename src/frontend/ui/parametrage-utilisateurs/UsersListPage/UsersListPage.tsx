@@ -70,69 +70,70 @@ export const UsersListPage = ({ users, keyWord }: UsersListPageProps) => {
         <>
           <h1 className={styles["title"]}>{wording.PAGE_UTILISATEUR_TITRE}</h1>
           <br />
+
+          <div className={styles["filtres-big-container"]}>
+            <div className={styles["filtres-container"]}>
+              <KeyWordFilter keyWord={key} setKey={setKey} setUserData={setUserData} setPage={setPage} />
+              <button aria-controls="accordion-106" aria-expanded="false" className={`fr-accordion__btn fr-mt-2v fr-btn ${styles["btn-filtre"]}`}>
+                Filtre
+              </button>
+            </div>
+
+            <section className="fr-accordion">
+              <div className={`fr-collapse  ${styles["collapseBox"]}`} id="accordion-106">
+                <div className={`${styles["filtre_details"]}`}>
+                  <div className="fr-select-group">
+                    <label className="fr-label" htmlFor="select-hint">
+                      Role
+                    </label>
+                    <select className="fr-select" id="select-hint" name="select-hint">
+                      <option disabled hidden selected value="">
+                        Selectionnez une option
+                      </option>
+                      <option value="1">Admin National</option>
+                      <option value="2">Admin Regional</option>
+                      <option value="3">Utilisateur</option>
+                    </select>
+                  </div>
+
+                  <div className="fr-select-group fr-mt-3w">
+                    <label className="fr-label" htmlFor="select-hint">
+                      Profil
+                    </label>
+                    <select className="fr-select" id="select-hint" name="select-hint">
+                      <option disabled hidden selected value="">
+                        Selectionnez une option
+                      </option>
+                      <option value="1">Utilisateur lambda</option>
+                      <option value="2">Equipe projet</option>
+                    </select>
+                  </div>
+
+                  <div className="fr-select-group fr-mt-3w">
+                    <label className="fr-label" htmlFor="select-hint">
+                      Institution
+                    </label>
+                    <select className="fr-select" id="select-hint" name="select-hint">
+                      <option disabled hidden selected value="">
+                        Selectionnez une option
+                      </option>
+
+                      {Institutions.map((item) => (
+                        <option key={item.inst_code} value={item.inst_code}>
+                          {item.inst_libelle}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+
           {userData.length === 0 ? (
             <div className={"fr-mt-8w " + styles["align-text"]}>{wording.AUCUN_ELEMENT_TROUVE}</div>
           ) : (
             <div>
-              <div className={styles["filtres-big-container"]}>
-                <div className={styles["filtres-container"]}>
-                  <KeyWordFilter keyWord={key} setKey={setKey} setUserData={setUserData} setPage={setPage} />
-                  <button aria-controls="accordion-106" aria-expanded="false" className={`fr-accordion__btn fr-mt-2v fr-btn ${styles["btn-filtre"]}`}>
-                    Filtre
-                  </button>
-                </div>
-
-                <section className="fr-accordion">
-                  <div className={`fr-collapse  ${styles["collapseBox"]}`} id="accordion-106">
-                    <div className={`${styles["filtre_details"]}`}>
-                      <div className="fr-select-group">
-                        <label className="fr-label" htmlFor="select-hint">
-                          Role
-                        </label>
-                        <select className="fr-select" id="select-hint" name="select-hint">
-                          <option disabled hidden selected value="">
-                            Selectionnez une option
-                          </option>
-                          <option value="1">Admin National</option>
-                          <option value="2">Admin Regional</option>
-                          <option value="3">Utilisateur</option>
-                        </select>
-                      </div>
-
-                      <div className="fr-select-group fr-mt-3w">
-                        <label className="fr-label" htmlFor="select-hint">
-                          Profil
-                        </label>
-                        <select className="fr-select" id="select-hint" name="select-hint">
-                          <option disabled hidden selected value="">
-                            Selectionnez une option
-                          </option>
-                          <option value="1">Utilisateur lambda</option>
-                          <option value="2">Equipe projet</option>
-                        </select>
-                      </div>
-
-                      <div className="fr-select-group fr-mt-3w">
-                        <label className="fr-label" htmlFor="select-hint">
-                          Institution
-                        </label>
-                        <select className="fr-select" id="select-hint" name="select-hint">
-                          <option disabled hidden selected value="">
-                            Selectionnez une option
-                          </option>
-
-                          {Institutions.map((item) => (
-                            <option key={item.inst_code} value={item.inst_code}>
-                              {item.inst_libelle}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-              </div>
-
               <div className={"fr-table fr-table--blue-ecume fr-mt-3w " + styles["align"]}>
                 <table>
                   <thead>
@@ -152,7 +153,6 @@ export const UsersListPage = ({ users, keyWord }: UsersListPageProps) => {
                   <tbody>
                     {userData.map((user: any) => {
                       const roleClass = user.roleId === "1" ? "error" : user.roleId === "2" ? "success" : "info";
-                      //  console.log("user.profils", user.profils);
 
                       return (
                         <tr key={user.id}>

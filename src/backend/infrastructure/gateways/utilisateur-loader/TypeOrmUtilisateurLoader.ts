@@ -123,8 +123,12 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     return profiles;
   }
 
-  async getUsersListPaginated(key: string, sort: string, pdescrtion: number): Promise<any> {
+  async getUsersListPaginated(key: string, sort: string, currentPage: number): Promise<any> {
     //  return await (await this.orm).getRepository(UtilisateurModel).find();
+
+    if (key === undefined) {
+      key = "";
+    }
 
     const utilisateurRepo = (await this.orm).getRepository(UtilisateurModel);
 
@@ -146,21 +150,26 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       };
     }*/
 
-    const pdescrtionA: number = parseInt(pdescrtion as any) || 1;
-    const take = 5;
-    const total = await utilisateurRepo.count();
+    const currentPageA: number = parseInt(currentPage as any) || 1;
+    const take = 10;
+
+    const total = await utilisateurRepo.countBy([
+      { nom: ILike("%" + key.toString() + "%") },
+      { prenom: ILike("%" + key.toString() + "%") },
+      { email: ILike("%" + key.toString() + "%") },
+    ]);
 
     const data = await utilisateurRepo.find({
       ...options,
       take,
-      skip: (pdescrtionA - 1) * take,
+      skip: (currentPageA - 1) * take,
     });
 
     return {
       data,
       total,
       keyWord: key,
-      currentPage: pdescrtionA,
+      currentPage: currentPageA,
       lastPage: Math.ceil(total / take),
     };
   }
