@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify';
 import Link from "next/link";
 import "@gouvfr/dsfr/dist/component/sidemenu/sidemenu.min.css";
 import { useRouter } from "next/router";
@@ -11,7 +12,8 @@ export const GroupeBoutonRegions = () => {
   const router = useRouter()
 
   const handleOnChangeOutreMerRegions = (e: ChangeEvent<HTMLSelectElement>) => {
-    router.push(e.target.value);
+    const sanitizedValue = DOMPurify.sanitize(e.target.value);
+    router.push(sanitizedValue);
   }
 
   return (
