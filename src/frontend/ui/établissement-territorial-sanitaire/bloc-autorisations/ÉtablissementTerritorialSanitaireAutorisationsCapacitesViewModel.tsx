@@ -19,7 +19,7 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
 
   public get lesDonnéesAutorisationEtCapacitéPasAutorisés(): string[] {
     const nonAutorisés = [];
-    if (!this.graphiqueCapacitésParActivitéViewModel.lesCapacitésParActivitésSontEllesAutorisées) nonAutorisés.push(this.wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS);
+    if (!this.graphiqueCapacitésParActivitéViewModel.lesCapacitésParActivitésSontEllesAutorisées) nonAutorisés.push(this.wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE);
     if (!this.lesAutorisationsSontEllesAutorisées) nonAutorisés.push(this.wording.AUTORISATIONS_SANITAIRE);
     if (!this.lesAutresActivitésSontEllesAutorisées) nonAutorisés.push(this.wording.AUTRES_ACTIVITÉS_SAN);
     if (!this.lesReconnaissancesContractuellesSontEllesAutorisées) nonAutorisés.push(this.wording.RECONNAISSANCES_CONTRACTUELLES);
@@ -39,7 +39,7 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
 
   public get lesDonnéesAutorisationEtCapacitéPasRenseignees(): string[] {
     const nonRenseignes = [];
-    if (!this.graphiqueCapacitésParActivitéViewModel.lesCapacitésParActivitésSontEllesRenseignées) nonRenseignes.push(this.wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS);
+    if (!this.graphiqueCapacitésParActivitéViewModel.lesCapacitésParActivitésSontEllesRenseignées) nonRenseignes.push(this.wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE);
     if (!this.lesAutorisationsSontEllesRenseignées) nonRenseignes.push(this.wording.AUTORISATIONS_SANITAIRE);
     if (!this.lesAutresActivitésSontEllesRenseignées) nonRenseignes.push(this.wording.AUTRES_ACTIVITÉS_SAN);
     if (!this.lesReconnaissancesContractuellesSontEllesRenseignées) nonRenseignes.push(this.wording.RECONNAISSANCES_CONTRACTUELLES);
