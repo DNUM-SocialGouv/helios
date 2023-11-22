@@ -1904,6 +1904,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/dompurify@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "@types/dompurify@npm:3.0.5"
+  dependencies:
+    "@types/trusted-types": "*"
+  checksum: ffc34eca6a4536e1c8c16a47cce2623c5a118a9785492e71230052d92933ff096d14326ff449031e8dfaac509413222372d8f2b28786a13159de6241df716185
+  languageName: node
+  linkType: hard
+
 "@types/dotenv-defaults@npm:^2.0.1":
   version: 2.0.1
   resolution: "@types/dotenv-defaults@npm:2.0.1"
@@ -2193,6 +2202,13 @@ __metadata:
   version: 4.0.2
   resolution: "@types/tough-cookie@npm:4.0.2"
   checksum: e055556ffdaa39ad85ede0af192c93f93f986f4bd9e9426efdc2948e3e2632db3a4a584d4937dbf6d7620527419bc99e6182d3daf2b08685e710f2eda5291905
+  languageName: node
+  linkType: hard
+
+"@types/trusted-types@npm:*":
+  version: 2.0.7
+  resolution: "@types/trusted-types@npm:2.0.7"
+  checksum: 8e4202766a65877efcf5d5a41b7dd458480b36195e580a3b1085ad21e948bc417d55d6f8af1fd2a7ad008015d4117d5fdfe432731157da3c68678487174e4ba3
   languageName: node
   linkType: hard
 
@@ -4405,6 +4421,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dompurify@npm:^3.0.6":
+  version: 3.0.6
+  resolution: "dompurify@npm:3.0.6"
+  checksum: e5c6cdc5fe972a9d0859d939f1d86320de275be00bbef7bd5591c80b1e538935f6ce236624459a1b0c84ecd7c6a1e248684aa4637512659fccc0ce7c353828a6
+  languageName: node
+  linkType: hard
+
 "dot-prop@npm:^4.1.0":
   version: 4.2.1
   resolution: "dot-prop@npm:4.2.1"
@@ -5933,6 +5956,7 @@ __metadata:
     "@testing-library/jest-dom": ^5.16.4
     "@testing-library/react": ^13.0.1
     "@types/bcrypt": ^5.0.0
+    "@types/dompurify": ^3.0.5
     "@types/dotenv-defaults": ^2.0.1
     "@types/jest": ^27.4.1
     "@types/joi": ^17.2.3
@@ -5953,6 +5977,7 @@ __metadata:
     chartjs-plugin-datalabels: ^2.0.0
     crypto: ^1.0.1
     depcheck: ^1.4.3
+    dompurify: ^3.0.6
     dotenv-defaults: ^5.0.0
     env-cmd: ^10.1.0
     eslint: 8.13.0
