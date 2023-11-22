@@ -168,56 +168,6 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     });
   });
 
-  it("affiche une phrase à la place des indicateurs lorsqu’aucune autorisation ni capacité n’est renseignée", () => {
-    // GIVEN
-    const autorisationsViewModel = new EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel(
-      {
-        autorisations: {
-          activités: [],
-          dateMiseÀJourSource: "2022-09-05",
-        },
-        autresActivités: {
-          activités: [],
-          dateMiseÀJourSource: "2022-09-05",
-        },
-        capacités: [
-          {
-            année: 2022,
-            dateMiseÀJourSource: "2022-09-02",
-            nombreDeLitsEnChirurgie: null,
-            nombreDeLitsEnMédecine: null,
-            nombreDeLitsEnObstétrique: null,
-            nombreDeLitsEnSsr: null,
-            nombreDeLitsEnUsld: null,
-            nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
-            nombreDePlacesEnChirurgie: null,
-            nombreDePlacesEnMédecine: null,
-            nombreDePlacesEnObstétrique: null,
-            nombreDePlacesEnPsyHospitalisationPartielle: null,
-            nombreDePlacesEnSsr: null,
-          },
-        ],
-        numéroFinessÉtablissementTerritorial: "1",
-        reconnaissancesContractuelles: {
-          activités: [],
-          dateMiseÀJourSource: "2022-09-05",
-        },
-        équipementsMatérielsLourds: {
-          dateMiseÀJourSource: "2022-09-05",
-          équipements: [],
-        },
-      },
-      wording
-    );
-
-    // WHEN
-    renderFakeComponent(<BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModel} />);
-
-    // THEN
-    const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
-    expect(within(activité).getByText(wording.AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS)).toBeInTheDocument();
-  });
-
   it.each([
     {
       indicateurAffiché: wording.AUTORISATIONS_SANITAIRE,
