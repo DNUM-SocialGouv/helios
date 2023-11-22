@@ -3,9 +3,6 @@
 /* eslint-disable jsx-a11y/no-redundant-roles */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import "@gouvfr/dsfr/dist/component/pagination/pagination.min.css";
-
-import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 
 import styles from "./KeyWordFilter.module.css";

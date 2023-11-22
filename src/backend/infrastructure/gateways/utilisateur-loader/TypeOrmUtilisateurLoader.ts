@@ -2,7 +2,7 @@ import { compare, genSalt, hash } from "bcrypt";
 import { createHash } from "crypto";
 import fs from "fs";
 import path from "path";
-import { DataSource, ILike } from "typeorm";
+import { DataSource, ILike, Like } from "typeorm";
 
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
@@ -123,42 +123,49 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     return profiles;
   }
 
-  async getUsersListPaginated(key = "", sort: string, currentPage: number): Promise<any> {
+  async getUsersListPaginated(key = "", sort: string, currentPage: number, institutionId: number, roleId: number, profilId: string): Promise<any> {
     //  return await (await this.orm).getRepository(UtilisateurModel).find();
 
     const utilisateurRepo = (await this.orm).getRepository(UtilisateurModel);
+    /*
+    const institutionCondition = { institution: { id: 19 } };
+    const roleCondition = { role: { id: 3 } };
+    const profilCondition = { profils: ["4bbf1e31-180a-4d29-9973-54459dc3087d"] };*/
 
-    let options = {};
+    let institutionCondition = {};
+    if (institutionId) {
+      institutionCondition = { institution: { id: institutionId } };
+    }
+
+    let roleCondition = {};
+    if (profilId) {
+      roleCondition = { role: { id: roleId } };
+    }
+
+    let profilCondition = {};
+    if (profilId) {
+      profilCondition = { profils: [profilId] };
+    }
+
+    const selectConditions = { ...institutionCondition, ...roleCondition, ...profilCondition };
 
     const conditions = [
-      { nom: ILike("%" + key.toString() + "%") },
-      { prenom: ILike("%" + key.toString() + "%") },
-      { email: ILike("%" + key.toString() + "%") },
+      { nom: ILike("%" + key.toString() + "%"), ...selectConditions },
+      { prenom: ILike("%" + key.toString() + "%"), ...selectConditions },
+      { email: ILike("%" + key.toString() + "%"), ...selectConditions },
     ];
 
-    if (key) {
-      options = {
-        ...options,
-        where: conditions,
-      };
-    }
-    /*
-    if (sort) {
-      options = {
-        ...options,
-        order: {
-          libelle: sort.toString().toUpperCase(),
-        },
-      };
-    }*/
-
     const currentPageA: number = parseInt(currentPage as any) || 1;
-    const take = 10;
+    const take = 5;
+
+    console.log("99999999999999999999-----");
+
+    console.log(conditions);
 
     const total = await utilisateurRepo.countBy(conditions);
 
     const data = await utilisateurRepo.find({
-      ...options,
+      where: conditions,
       take,
       skip: (currentPageA - 1) * take,
       relations: {

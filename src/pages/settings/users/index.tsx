@@ -1,6 +1,12 @@
 import { GetStaticPropsResult } from "next";
 
+import { InstitutionModel } from "../../../../database/models/InstitutionModel";
+import { ProfilModel } from "../../../../database/models/ProfilModel";
+import { RoleModel } from "../../../../database/models/RoleModel";
 import { UtilisateurModel } from "../../../../database/models/UtilisateurModel";
+import { getAllProfilesEndpoint } from "../../../backend/infrastructure/controllers/getAllProfilesEndpoint";
+import { getAllRolesEndpoint } from "../../../backend/infrastructure/controllers/getAllRolesEndpoint";
+import { getInstitutionsEndpoint } from "../../../backend/infrastructure/controllers/getInstitutionsEndpoint";
 import { getUsersListPaginatedEndpoint } from "../../../backend/infrastructure/controllers/getUsersListPaginatedEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { useDependencies } from "../../../frontend/ui/commun/contexts/useDependencies";
@@ -15,9 +21,18 @@ interface IUsersPaginatedList {
   lastPage: number;
 }
 
-type RouterProps = Readonly<{ usersPaginatedList: IUsersPaginatedList; keyWord: string }>;
+type RouterProps = Readonly<{
+  usersPaginatedList: IUsersPaginatedList;
+  keyWord: string;
+  institutions: InstitutionModel[];
+  profiles: ProfilModel[];
+  roles: RoleModel[];
+  institution: number;
+  profile: number;
+  role: number;
+}>;
 
-export default function Router({ usersPaginatedList, keyWord }: RouterProps) {
+export default function Router({ usersPaginatedList, keyWord, institutions, profiles, roles, institution, profile, role }: RouterProps) {
   const { wording } = useDependencies();
 
   useBreadcrumb([
@@ -26,20 +41,52 @@ export default function Router({ usersPaginatedList, keyWord }: RouterProps) {
       path: "",
     },
   ]);
-  return <UsersListPage users={usersPaginatedList} keyWord={keyWord} />;
+  return (
+    <UsersListPage
+      institution={institution}
+      institutions={institutions}
+      keyWord={keyWord}
+      profile={profile}
+      profiles={profiles}
+      role={role}
+      roles={roles}
+      users={usersPaginatedList}
+    />
+  );
 }
 
 export async function getServerSideProps(context): Promise<GetStaticPropsResult<RouterProps>> {
   try {
-    let { page, key } = context.query;
+    let { page, key, institution, role, profil, institutionId, roleId, profilId } = context.query;
     page = page as number | 1;
     key = key as string | "";
+    institutionId = institutionId as number | 0;
+    roleId = roleId as number | 0;
+    profilId = profilId as string | "";
 
-    const users = await getUsersListPaginatedEndpoint(dependencies, key, "Desc", page);
-
+    const users = await getUsersListPaginatedEndpoint(dependencies, key, "Desc", page, institutionId, roleId, profilId);
     console.log("--users---", users);
+
+    const institutions = await getInstitutionsEndpoint(dependencies);
+    console.log("--institutions---" /*, institutions*/);
+
+    const profiles = await getAllProfilesEndpoint(dependencies);
+    console.log("--profiles---" /*, profiles*/);
+
+    const roles = await getAllRolesEndpoint(dependencies);
+    console.log("--roles---" /*, roles*/);
+
     return {
-      props: { usersPaginatedList: JSON.parse(JSON.stringify(users)), keyWord: key || "" },
+      props: {
+        usersPaginatedList: JSON.parse(JSON.stringify(users)),
+        keyWord: key || "",
+        institutions: JSON.parse(JSON.stringify(institutions)),
+        profiles: JSON.parse(JSON.stringify(profiles)),
+        roles: JSON.parse(JSON.stringify(roles)),
+        institution: institution || 0,
+        role: role || 0,
+        profil: profil || 0,
+      },
     };
   } catch (error) {
     throw error;

@@ -1,6 +1,7 @@
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import "@gouvfr/dsfr/dist/component/pagination/pagination.min.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
+import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
 import { useRouter } from "next-router-mock";
 
@@ -72,65 +73,23 @@ export const EditUser = ({ user }: UsersListPageProps) => {
           <div>
             <div className={styles["field_container"]}>
               <label className="fr-label">
-                <div className={styles["label-field"]}>Code : </div> {user.code}
-              </label>
-            </div>
-
-            <div className={styles["field_container"]}>
-              <label className="fr-label">
                 <div className={styles["label-field"]}>{wording.LASTNAME} : </div> {user.nom}
               </label>
             </div>
-
             <div className={styles["field_container"]}>
               <label className="fr-label">
                 <div className={styles["label-field"]}>{wording.FIRSTNAME} : </div> {user.prenom}
               </label>
             </div>
-
             <div className={styles["field_container"]}>
               <label className="fr-label">
                 <div className={styles["label-field"]}>{wording.EMAIL} : </div> {user.email}
               </label>
             </div>
-
-            <div className={styles["field_container"]}>
-              <label className="fr-label">
-                <div className={styles["label-field"]}>{wording.INSTITUTION} : </div> ARS Guyane{/*user.institution2*/}
-              </label>
-            </div>
-
             <div className={styles["field_container"]}>
               <label className="fr-label">
                 <div className={styles["label-field"]}>{wording.CREATION_DATE} : </div> {formatDateAndHours(user.dateCreation)}
               </label>
-            </div>
-
-            <div className="fr-select-group">
-              <label className="fr-label" htmlFor="select-hint">
-                Role
-              </label>
-              <select className="fr-select" id="select-hint" name="select-hint">
-                <option disabled hidden selected value="">
-                  Selectionnez une option
-                </option>
-                <option value="1">Admin National</option>
-                <option value="2">Admin Regional</option>
-                <option value="3">Utilisateur</option>
-              </select>
-            </div>
-
-            <div className="fr-select-group fr-mt-3w">
-              <label className="fr-label" htmlFor="select-hint">
-                Profil
-              </label>
-              <select className="fr-select" id="select-hint" name="select-hint">
-                <option disabled hidden selected value="">
-                  Selectionnez une option
-                </option>
-                <option value="1">Utilisateur lambda</option>
-                <option value="2">Equipe projet</option>
-              </select>
             </div>
 
             <div className="fr-select-group fr-mt-3w">
@@ -149,6 +108,47 @@ export const EditUser = ({ user }: UsersListPageProps) => {
                 ))}
               </select>
             </div>
+
+            <div className="fr-select-group fr-mt-3w">
+              <label className="fr-label" htmlFor="select-hint">
+                Role
+              </label>
+              <select className="fr-select" id="select-hint" name="select-hint">
+                <option disabled hidden selected value="">
+                  Selectionnez une option
+                </option>
+                <option value="1">Admin National</option>
+                <option value="2">Admin Regional</option>
+                <option value="3">Utilisateur</option>
+              </select>
+            </div>
+
+            <fieldset className="fr-fieldset" id="checkboxes" aria-labelledby="checkboxes-legend checkboxes-messages">
+              <legend className="fr-fieldset__legend--regular fr-fieldset__legend" id="checkboxes-legend">
+                Profils
+              </legend>
+              <div className="fr-fieldset__element">
+                <div className="fr-checkbox-group">
+                  <input name="checkboxes-1" id="checkboxes-1" type="checkbox" aria-describedby="checkboxes-1-messages" />
+                  <label className="fr-label" htmlFor="checkboxes-1">
+                    Utilisateur lambda
+                  </label>
+                  <div className="fr-messages-group" id="checkboxes-1-messages" aria-live="assertive"></div>
+                </div>
+              </div>
+
+              <div className="fr-fieldset__element">
+                <div className="fr-checkbox-group">
+                  <input name="checkboxes-2" id="checkboxes-2" type="checkbox" aria-describedby="checkboxes-2-messages" />
+                  <label className="fr-label" htmlFor="checkboxes-2">
+                    Equipe projet
+                  </label>
+                  <div className="fr-messages-group" id="checkboxes-2-messages" aria-live="assertive"></div>
+                </div>
+              </div>
+
+              <div className="fr-messages-group" id="checkboxes-messages" aria-live="assertive"></div>
+            </fieldset>
 
             <button className="fr-mt-7v fr-btn " onClick={() => saveButtonClick()}>
               Sauvegarder

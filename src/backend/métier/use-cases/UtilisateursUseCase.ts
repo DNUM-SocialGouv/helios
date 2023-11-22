@@ -4,8 +4,8 @@ import { UtilisateurLoader } from "../gateways/UtilisateurLoader";
 export class UtilisateursUseCase {
   constructor(private utilisateurLoader: UtilisateurLoader) {}
 
-  async getUsersListPaginated(key: string, sort: string, pdescrtion: number): Promise<void> {
-    return await this.utilisateurLoader.getUsersListPaginated(key, sort, pdescrtion);
+  async getUsersListPaginated(key: string, sort: string, pdescrtion: number, institutionId: number, roleId: number, profilId: string): Promise<void> {
+    return await this.utilisateurLoader.getUsersListPaginated(key, sort, pdescrtion, institutionId, roleId, profilId);
   }
 
   async getUserByCode(code: string): Promise<UtilisateurModel | null> {

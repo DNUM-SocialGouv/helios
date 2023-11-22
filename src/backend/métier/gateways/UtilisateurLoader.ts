@@ -10,6 +10,6 @@ export interface UtilisateurLoader {
   createAccount(firstName: string, lastName: string, email: string, institution: string): Promise<void>;
   getUserProfiles(codes: string[]): Promise<ProfilModel[] | null>;
   checkIfAdmin(userId: string): Promise<boolean>;
-  getUsersListPaginated(key: string, sort: string, pdescrtion: number): Promise<void>;
+  getUsersListPaginated(key: string, sort: string, pdescrtion: number, institutionId: number, roleId: number, profilId: string): Promise<void>;
   getUserByCode(code: string): Promise<UtilisateurModel | null>;
 }

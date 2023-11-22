@@ -11,7 +11,15 @@ export default async function handler(request: NextApiRequest, response: NextApi
     const key = request.query["key"] as string | "";
     const sort = request.query["sort"] as string | "";
     const page = request.query["page"] as number | 1;
-    const users = await getUsersListPaginatedEndpoint(dependencies, key, sort, page);
+
+    const institutionId = request.query["institutionId"] as number | 0;
+
+    console.log("777777777777777---->", institutionId);
+    console.log("888888888888888888---->", typeof institutionId);
+    const roleId = request.query["roleId"];
+    const profilId = request.query["profilId"] as string | "";
+
+    const users = await getUsersListPaginatedEndpoint(dependencies, key, sort, page, institutionId, roleId, profilId);
 
     return response.status(200).json(users);
   } catch (error) {
