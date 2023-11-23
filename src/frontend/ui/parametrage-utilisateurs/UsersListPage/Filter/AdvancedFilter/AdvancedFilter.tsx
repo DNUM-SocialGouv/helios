@@ -16,6 +16,8 @@ type KeyWordFilterProps = Readonly<{
   setPage: () => void;
   setLastPage: () => void;
   setRoleId: () => void;
+  setProfileId: () => void;
+  setInstitutionId: () => void;
 
   institutions: InstitutionModel[];
   profiles: ProfilModel[];
@@ -135,8 +137,8 @@ export const AdvancedFilter = ({
         </label>
 
         <select className="fr-select" id="institution" onChange={(e) => handleChangeInstitution(e)}>
-          <option disabled hidden selected={institutionId === 0} value="">
-            Selectionnez une option
+          <option selected={institutionId === 0} value="">
+            Toutes
           </option>
 
           {institutions.map((item) => (
@@ -148,16 +150,16 @@ export const AdvancedFilter = ({
       </div>
       <div className="fr-select-group fr-mt-3w">
         <label className="fr-label" htmlFor="role">
-          Role
+          Rôle
         </label>
 
         <select className="fr-select" id="role" onChange={(e) => handleChangeRole(e)}>
-          <option disabled hidden selected={Number(roleId) === 0 || roleId === null} value="">
-            Selectionnez une option
+          <option selected={roleId === 0 || roleId === null} value="">
+            Tous
           </option>
 
           {roles.map((item) => (
-            <option key={item.id} selected={Number(roleId) === item.id} value={item.id}>
+            <option key={item.id} selected={roleId === item.id} value={item.id}>
               {item.libelle}
             </option>
           ))}
@@ -169,8 +171,8 @@ export const AdvancedFilter = ({
           Profil
         </label>
         <select className="fr-select" id="profil" onChange={(e) => handleChangeProfil(e)}>
-          <option disabled hidden selected={profileId === "" || profileId === null} value="">
-            Selectionnez une option
+          <option selected={profileId === "" || profileId === null} value="">
+            Tous
           </option>
 
           {profiles.map((item) => (
