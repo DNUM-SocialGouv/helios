@@ -48,9 +48,8 @@ export const AdvancedFilter = ({
   async function handleChangeInstitution(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
 
-    //  console.log("onChange TextInput value: " + e.target.value);
     const keyValue = key ? key : "";
-    // console.log("key--------------: " + key);
+
     setInstitutionId(e.target.value);
 
     const institutionCondition = { institutionId: e.target.value };
@@ -65,16 +64,15 @@ export const AdvancedFilter = ({
       profilCondition = { profileId: profileId };
     }
 
-    const params = { key: keyValue, sort: "", page: page, ...institutionCondition, ...roleCondition, ...profilCondition };
+    const params = { key: keyValue, sort: "", page: 1, ...institutionCondition, ...roleCondition, ...profilCondition };
     getUsersAction(params);
   }
 
   async function handleChangeRole(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
 
-    //  console.log("onChange TextInput value: " + e.target.value);
     const keyValue = key ? key : "";
-    // console.log("key--------------: " + key);
+
     setRoleId(e.target.value);
 
     let institutionCondition = {};
@@ -89,7 +87,7 @@ export const AdvancedFilter = ({
       profilCondition = { profileId: profileId };
     }
 
-    const params = { key: keyValue, sort: "", page: page, ...institutionCondition, ...roleCondition, ...profilCondition };
+    const params = { key: keyValue, sort: "", page: 1, ...institutionCondition, ...roleCondition, ...profilCondition };
     getUsersAction(params);
   }
 
@@ -98,7 +96,7 @@ export const AdvancedFilter = ({
 
     console.log("onChange TextInput value:  profil code" + e.target.value);
     const keyValue = key ? key : "";
-    // console.log("key--------------: " + key);
+
     setProfileId(e.target.value);
 
     let institutionCondition = {};
@@ -113,7 +111,7 @@ export const AdvancedFilter = ({
 
     const profilCondition = { profileId: e.target.value };
 
-    const params = { key: keyValue, sort: "", page: page, ...institutionCondition, ...roleCondition, ...profilCondition };
+    const params = { key: keyValue, sort: "", page: 1, ...institutionCondition, ...roleCondition, ...profilCondition };
     getUsersAction(params);
   }
 
@@ -125,7 +123,7 @@ export const AdvancedFilter = ({
       .then((response) => response.json())
       .then((users) => {
         setUserData(users.data);
-        setPage(users.currentPage);
+        setPage(1);
         setLastPage(users.lastPage);
       });
   }
