@@ -2,7 +2,7 @@ import { compare, genSalt, hash } from "bcrypt";
 import { createHash } from "crypto";
 import fs from "fs";
 import path from "path";
-import { DataSource, ILike, Like } from "typeorm";
+import { DataSource, ILike } from "typeorm";
 
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
@@ -138,7 +138,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     }
 
     let roleCondition = {};
-    if (profilId) {
+    if (roleId) {
       roleCondition = { role: { id: roleId } };
     }
 
@@ -156,11 +156,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     ];
 
     const currentPageA: number = parseInt(currentPage as any) || 1;
-    const take = 5;
-
-    console.log("99999999999999999999-----");
-
-    console.log(conditions);
+    const take = 50;
 
     const total = await utilisateurRepo.countBy(conditions);
 

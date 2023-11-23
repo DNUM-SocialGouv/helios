@@ -13,11 +13,11 @@ export default async function handler(request: NextApiRequest, response: NextApi
     const page = request.query["page"] as number | 1;
 
     const institutionId = request.query["institutionId"] as number | 0;
-
-    console.log("777777777777777---->", institutionId);
-    console.log("888888888888888888---->", typeof institutionId);
     const roleId = request.query["roleId"];
-    const profilId = request.query["profilId"] as string | "";
+    const profilId = request.query["profileId"] as string | "";
+
+    console.log("777777777777777---->", profilId);
+    console.log("888888888888888888---->", typeof profilId);
 
     const users = await getUsersListPaginatedEndpoint(dependencies, key, sort, page, institutionId, roleId, profilId);
 

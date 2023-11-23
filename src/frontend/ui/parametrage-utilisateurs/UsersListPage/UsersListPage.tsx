@@ -32,7 +32,7 @@ type UsersListPageProps = Readonly<{
   roles: RoleModel[];
   institution: number;
   profile: number;
-  role: number;
+  role: string;
 }>;
 
 export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, institution, profile, role }: UsersListPageProps) => {
@@ -42,7 +42,7 @@ export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, i
   const [key, setKey] = useQueryState("key", parseAsString.withDefault(keyWord));
   const [institutionId, setInstitutionId] = useQueryState("institutionId", parseAsInteger.withDefault(institution));
   const [profileId, setProfileId] = useQueryState("profileId", parseAsInteger.withDefault(profile));
-  const [roleId, setRoleId] = useQueryState("roleId", parseAsInteger.withDefault(role));
+  const [roleId, setRoleId] = useQueryState("roleId", parseAsString.withDefault(role));
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(users.currentPage));
 
   const { wording } = useDependencies();

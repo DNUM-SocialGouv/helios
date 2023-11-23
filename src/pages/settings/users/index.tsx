@@ -29,7 +29,7 @@ type RouterProps = Readonly<{
   roles: RoleModel[];
   institution: number;
   profile: number;
-  role: number;
+  role: string;
 }>;
 
 export default function Router({ usersPaginatedList, keyWord, institutions, profiles, roles, institution, profile, role }: RouterProps) {
@@ -84,7 +84,7 @@ export async function getServerSideProps(context): Promise<GetStaticPropsResult<
         profiles: JSON.parse(JSON.stringify(profiles)),
         roles: JSON.parse(JSON.stringify(roles)),
         institution: institution || 0,
-        role: role || 0,
+        role: role || "",
         profil: profil || 0,
       },
     };
