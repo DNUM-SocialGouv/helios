@@ -49,6 +49,9 @@ export class UtilisateurModel {
   @Column("text", { array: true, nullable: true, name: "ut_profiles" })
   public profils: string[] = [];
 
+  @Column({ name: "ut_profiles" })
+  public profilsString!: string;
+
   @CreateDateColumn({ name: "ut_date_creation" })
   public dateCreation!: Date;
 

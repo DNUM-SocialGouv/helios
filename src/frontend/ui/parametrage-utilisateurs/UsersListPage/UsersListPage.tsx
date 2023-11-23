@@ -158,6 +158,9 @@ export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, i
                   setPage={setPage}
                   setUserData={setUserData}
                   total={users.total}
+                  institutionId={institutionId}
+                  roleId={roleId}
+                  profileId={profileId}
                 />
               </div>
             </div>

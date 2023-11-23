@@ -22,8 +22,9 @@ type KeyWordFilterProps = Readonly<{
   institutions: InstitutionModel[];
   profiles: ProfilModel[];
   roles: RoleModel[];
-  profileId: string;
+  institutionId: number;
   roleId: number;
+  profileId: string;
 }>;
 
 export const AdvancedFilter = ({
@@ -44,7 +45,7 @@ export const AdvancedFilter = ({
   key,
   page,
 }: KeyWordFilterProps) => {
-  async function handleChangeInstitution(e: React.ChangeEvent<HTMLSelectElement> /*, roleId: number, profileId: string*/) {
+  async function handleChangeInstitution(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
 
     //  console.log("onChange TextInput value: " + e.target.value);
@@ -68,7 +69,7 @@ export const AdvancedFilter = ({
     getUsersAction(params);
   }
 
-  async function handleChangeRole(e: React.ChangeEvent<HTMLSelectElement> /*, institutionId: number, profileId: string*/) {
+  async function handleChangeRole(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
 
     //  console.log("onChange TextInput value: " + e.target.value);
@@ -92,7 +93,7 @@ export const AdvancedFilter = ({
     getUsersAction(params);
   }
 
-  async function handleChangeProfil(e: React.ChangeEvent<HTMLSelectElement> /*, institutionId: number, roleId: number*/) {
+  async function handleChangeProfil(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
 
     console.log("onChange TextInput value:  profil code" + e.target.value);

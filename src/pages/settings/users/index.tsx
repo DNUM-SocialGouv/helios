@@ -57,12 +57,19 @@ export default function Router({ usersPaginatedList, keyWord, institutions, prof
 
 export async function getServerSideProps(context): Promise<GetStaticPropsResult<RouterProps>> {
   try {
-    let { page, key, institution, role, profil, institutionId, roleId, profilId } = context.query;
+    let { page, key, institution, role, profil, institutionId, roleId, profileId } = context.query;
     page = page as number | 1;
     key = key as string | "";
     institutionId = institutionId as number | 0;
     roleId = roleId as number | 0;
-    profilId = profilId as string | "";
+    const profilId = profileId as string | "";
+
+    console.log("---------------CCCC------------");
+    console.log(context.query);
+    console.log("---------------------A-------------------");
+    console.log("institutionId : ", institutionId);
+    console.log("roleId : ", roleId);
+    console.log("profilId : ", profileId);
 
     const users = await getUsersListPaginatedEndpoint(dependencies, key, "Desc", page, institutionId, roleId, profilId);
     console.log("--users---", users);

@@ -18,9 +18,12 @@ type PaginationBtnProps = Readonly<{
   setLastPage: () => {};
   page: number;
   keyWord: string;
+  institutionId: number;
+  roleId: number;
+  profileId: string;
 }>;
 
-export const PaginationBtn = ({ setUserData, setPage, lastPage, page, keyWord, setLastPage }: PaginationBtnProps) => {
+export const PaginationBtn = ({ setUserData, setPage, lastPage, page, keyWord, setLastPage, institutionId, roleId, profileId }: PaginationBtnProps) => {
   const intervalRecursive = (x: number, y: number, accum = []) => {
     if (x + 1 === y) return accum;
     return intervalRecursive(x + 1, y, accum.concat(x + 1));
@@ -29,7 +32,22 @@ export const PaginationBtn = ({ setUserData, setPage, lastPage, page, keyWord, s
   const changePage = async (e: MouseEvent, page: number) => {
     e.preventDefault();
 
-    const params = { key: keyWord, sort: "", page: page };
+    let institutionCondition = {};
+    if (institutionId) {
+      institutionCondition = { institutionId: institutionId };
+    }
+
+    let roleCondition = {};
+    if (roleId) {
+      roleCondition = { roleId: roleId };
+    }
+
+    let profilCondition = {};
+    if (profileId) {
+      profilCondition = { profileId: profileId };
+    }
+
+    const params = { key: keyWord, sort: "", page: page, ...institutionCondition, ...roleCondition, ...profilCondition };
     await fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
       headers: { "Content-Type": "application/json" },
       method: "GET",
