@@ -101,7 +101,10 @@ export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, i
                       <th scope="col">{wording.INSTITUTION}</th>
                       <th scope="col">{wording.ROLE_}</th>
                       <th scope="col">{wording.PROFILE}</th>
-                      <th scope="col">{wording.CREATION_DATE}</th>
+                      <th className={styles["widthTD-date"]} scope="col">
+                        {wording.CREATION_DATE}
+                      </th>
+                      <th scope="col">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -125,7 +128,9 @@ export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, i
                           <td className={styles["widthTD-small"]}>{user.institution.libelle}</td>
 
                           <td>
-                            <span className={`fr-badge fr-badge--${roleClass} fr-badge--no-icon ${styles["text_no_change"]}`}>{user.role.libelle}</span>
+                            <span className={`fr-badge fr-badge--${roleClass} fr-badge--no-icon ${styles["text_no_change"]} ${styles["widthTD-role"]}`}>
+                              {user.role.libelle}
+                            </span>
                           </td>
 
                           <td>
@@ -136,7 +141,7 @@ export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, i
                                   <span
                                     className={`fr-badge fr-badge--${
                                       pr[0].code === "f998021c-9613-4978-be6a-2b4cd9e24ffb" ? "info" : "error"
-                                    } fr-badge--no-icon ${styles["text_no_change"]}`}
+                                    } fr-badge--no-icon ${styles["text_no_change"]} ${styles["widthTD-profil"]}  `}
                                   >
                                     {pr[0].label}
                                   </span>
@@ -144,7 +149,8 @@ export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, i
                               );
                             })}
                           </td>
-                          <td>{formatDateAndHours(user.dateCreation)}</td>
+                          <td className={styles["widthTD-date"]}>{formatDateAndHours(user.dateCreation)}</td>
+                          <td>EDIT delete</td>
                         </tr>
                       );
                     })}

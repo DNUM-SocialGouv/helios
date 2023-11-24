@@ -40,8 +40,23 @@
 }
 
 .widthTD-small {
-  height: 90px;
+  height: 105px;
   max-width: 20ch;
+  word-wrap: break-word;
+}
+
+.widthTD-date {
+  max-width: 12ch;
+  word-wrap: break-word;
+}
+
+.widthTD-role {
+  max-width: 10ch;
+  word-wrap: break-word;
+}
+
+.widthTD-profil {
+  max-width: 11ch;
   word-wrap: break-word;
 }
 

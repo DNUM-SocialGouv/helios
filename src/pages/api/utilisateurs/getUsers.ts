@@ -16,9 +16,6 @@ export default async function handler(request: NextApiRequest, response: NextApi
     const roleId = request.query["roleId"];
     const profilId = request.query["profileId"] as string | "";
 
-    console.log("777777777777777---->", profilId);
-    console.log("888888888888888888---->", typeof profilId);
-
     const users = await getUsersListPaginatedEndpoint(dependencies, key, sort, page, institutionId, roleId, profilId);
 
     return response.status(200).json(users);

@@ -156,7 +156,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     ];
 
     const currentPageA: number = parseInt(currentPage as any) || 1;
-    const take = 5;
+    const take = 10;
 
     const total = await utilisateurRepo.countBy(conditions);
 
