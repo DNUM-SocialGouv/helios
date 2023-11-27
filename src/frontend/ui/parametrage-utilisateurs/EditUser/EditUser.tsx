@@ -3,66 +3,67 @@ import "@gouvfr/dsfr/dist/component/pagination/pagination.min.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
-import { useRouter } from "next-router-mock";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
+import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
+import { ProfilModel } from "../../../../../database/models/ProfilModel";
+import { RoleModel } from "../../../../../database/models/RoleModel";
+import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import styles from "./EditUser.module.css";
 
 type UsersListPageProps = Readonly<{
-  users: any[];
+  users: UtilisateurModel;
+  institutions: InstitutionModel[];
+  profiles: ProfilModel[];
+  roles: RoleModel[];
 }>;
 
-export const EditUser = ({ user }: UsersListPageProps) => {
-  console.log("user ---------data---------", user);
+export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageProps) => {
+  const [userinfo, setUserInfo] = useState({
+    profiles: [...user.profils],
+  });
+
   const { wording } = useDependencies();
-  const router = useRouter();
-  const { paths } = useDependencies();
+  const { push } = useRouter();
 
-  const Roles = ["Admin National", "Admin Regional", "Utilisateur"];
-  const Profiles = [
-    { profil_label: "Utilisateur lambda", profil_code: "f998021c-9613-4978-be6a-2b4cd9e24ffb" },
-    { profil_label: "Equipe projet", profil_code: "4bbf1e31-180a-4d29-9973-54459dc3087d" },
-  ];
+  const handleChange = (e) => {
+    const { value, checked } = e.target;
+    const { profiles } = userinfo;
 
-  const Institutions = [
-    { inst_code_geo: "84", inst_libelle: "ARS Auvergne-Rhône-Alpes", inst_code: "ARS_84" },
-    { inst_code_geo: "27", inst_libelle: "ARS Bourgogne-Franche-Comté", inst_code: "ARS_27" },
-    { inst_code_geo: "53", inst_libelle: "ARS Bretagne", inst_code: "ARS_53" },
-    { inst_code_geo: "24", inst_libelle: "ARS Centre-Val de Loire", inst_code: "ARS_24" },
-    { inst_code_geo: "94", inst_libelle: "ARS Corse", inst_code: "ARS_94" },
-    { inst_code_geo: "44", inst_libelle: "ARS Grand Est", inst_code: "ARS_44" },
-    { inst_code_geo: "1", inst_libelle: "ARS Guadeloupe", inst_code: "ARS_01" },
-    { inst_code_geo: "3", inst_libelle: "ARS Guyane", inst_code: "ARS_03" },
-    { inst_code_geo: "32", inst_libelle: "ARS Hauts-de-France", inst_code: "ARS_32" },
-    { inst_code_geo: "11", inst_libelle: "ARS Île-de-France", inst_code: "ARS_11" },
-    { inst_code_geo: "4", inst_libelle: "ARS La Réunion", inst_code: "ARS_04" },
-    { inst_code_geo: "2", inst_libelle: "ARS Martinique", inst_code: "ARS_02" },
-    { inst_code_geo: "6", inst_libelle: "ARS Mayotte", inst_code: "ARS_06" },
-    { inst_code_geo: "28", inst_libelle: "ARS Normandie", inst_code: "ARS_28" },
-    { inst_code_geo: "75", inst_libelle: "ARS Nouvelle-Aquitaine", inst_code: "ARS_75" },
-    { inst_code_geo: "76", inst_libelle: "ARS Occitanie", inst_code: "ARS_76" },
-    { inst_code_geo: "52", inst_libelle: "ARS Pays de la Loire", inst_code: "ARS_52" },
-    { inst_code_geo: "93", inst_libelle: "ARS Provence-Alpes-Côte d`Azur", inst_code: "ARS_93" },
-    { inst_code_geo: "0", inst_libelle: "DNUM (SCN)", inst_code: "SCN" },
-    { inst_code_geo: "75", inst_libelle: "CAT-AMANIA", inst_code: "CAT" },
-    { inst_code_geo: "44", inst_libelle: "TEST", inst_code: "TEST" },
-  ];
-
-  const saveButtonClick = () => {
-    /*  updateProfile(userId, codeValue, {
-      institution: {
-        profilEJ: editableInstitutionEJValues,
-        profilMédicoSocial: editableInstitutionETMSValues,
-        profilETSanitaire: editableInstitutionETSANValues,
-      },
-      autreRegion: {
-        profilEJ: editableAutreRegionEJValues,
-        profilMédicoSocial: editableAutreRegionETMSValues,
-        profilETSanitaire: editableAutreRegionETSANValues,
-      },
-    });*/
+    if (checked) {
+      setUserInfo({
+        profiles: [...profiles, value],
+      });
+    } else {
+      setUserInfo({
+        profiles: profiles.filter((e) => e !== value),
+      });
+    }
   };
+
+  const handleChangeReset = (e) => {
+    setUserInfo({
+      profiles: [...user.profils],
+    });
+  };
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const { profiles } = userinfo;
+    const { institutionId, roleId } = e.target.elements;
+
+    fetch("/api/utilisateurs/update", {
+      body: JSON.stringify({ institutionCode: institutionId.value, roleCode: roleId.value, profilsCode: profiles }),
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+    }).then((user) => {
+      console.log("user changed  ", user);
+      push("/settings/users?status=edit_successfully");
+    });
+  }
 
   return (
     <main className="fr-container">
@@ -92,67 +93,84 @@ export const EditUser = ({ user }: UsersListPageProps) => {
               </label>
             </div>
 
-            <div className="fr-select-group fr-mt-3w">
-              <label className="fr-label" htmlFor="select-hint">
-                Institution
-              </label>
-              <select className="fr-select" id="select-hint" name="select-hint">
-                <option disabled hidden selected value="">
-                  Selectionnez une option
-                </option>
-
-                {Institutions.map((item) => (
-                  <option key={item.inst_code} value={item.inst_code}>
-                    {item.inst_libelle}
+            <form onSubmit={handleSubmit}>
+              <div className="fr-select-group fr-mt-3w">
+                <label className="fr-label" htmlFor="institutionId">
+                  Institution
+                </label>
+                <select className="fr-select" id="institutionId" name="institutionId">
+                  <option disabled hidden selected value="">
+                    Selectionnez une option
                   </option>
-                ))}
-              </select>
-            </div>
 
-            <div className="fr-select-group fr-mt-3w">
-              <label className="fr-label" htmlFor="select-hint">
-                Role
-              </label>
-              <select className="fr-select" id="select-hint" name="select-hint">
-                <option disabled hidden selected value="">
-                  Selectionnez une option
-                </option>
-                <option value="1">Admin National</option>
-                <option value="2">Admin Regional</option>
-                <option value="3">Utilisateur</option>
-              </select>
-            </div>
-
-            <fieldset className="fr-fieldset" id="checkboxes" aria-labelledby="checkboxes-legend checkboxes-messages">
-              <legend className="fr-fieldset__legend--regular fr-fieldset__legend" id="checkboxes-legend">
-                Profils
-              </legend>
-              <div className="fr-fieldset__element">
-                <div className="fr-checkbox-group">
-                  <input name="checkboxes-1" id="checkboxes-1" type="checkbox" aria-describedby="checkboxes-1-messages" />
-                  <label className="fr-label" htmlFor="checkboxes-1">
-                    Utilisateur lambda
-                  </label>
-                  <div className="fr-messages-group" id="checkboxes-1-messages" aria-live="assertive"></div>
+                  {institutions.map((item) => (
+                    <option key={item.id} selected={user.institutionId === item.id} value={item.code}>
+                      {item.libelle}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="fr-select-group fr-mt-3w">
+                <label className="fr-label" htmlFor="roleId">
+                  Role
+                </label>
+                <select className="fr-select" id="roleId" name="roleId">
+                  <option disabled hidden selected value="">
+                    Selectionnez une option
+                  </option>
+                  {roles.map((item) => (
+                    <option key={item.id} selected={user.roleId === item.id} value={item.code}>
+                      {item.libelle}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="fr-select-group fr-mt-3w">
+                <label className={`fr-label ${userinfo.profiles.length === 0 ? styles["fr-fieldset--error"] : ""}`} htmlFor="select-hint">
+                  Profils
+                </label>
+                <div className={styles["boxSelect"]}>
+                  {profiles.map((item) => (
+                    <div
+                      className={`fr-fieldset__element fr-mt-2w ${styles["boxItem"]} ${userinfo.profiles.length === 0 ? styles["fr-fieldset--error"] : ""}`}
+                      key={item.code}
+                    >
+                      <div className="fr-checkbox-group">
+                        <input
+                          className={`${styles["input--checkbox--error"]} `}
+                          aria-describedby={`checkboxes-${item.code}-messages`}
+                          id={`${item.code}`}
+                          name="profiles"
+                          onChange={handleChange}
+                          value={`${item.code}`}
+                          type="checkbox"
+                          checked={userinfo.profiles && userinfo.profiles.includes(item.code)}
+                        />
+                        <label className="fr-label" htmlFor={`${item.code}`}>
+                          {item.label}
+                        </label>
+                      </div>
+                    </div>
+                  ))}
                 </div>
+                {userinfo.profiles.length === 0 && (
+                  <div className={` fr-mt-2w fr-messages-group  ${styles["fr-fieldset--error"]}`} id="checkboxes-error-messages" aria-live="assertive">
+                    <p className={` fr-message fr-message--error ${styles["fr-fieldset--error"]}`} id="checkboxes-error-message-error">
+                      Champ obligatoire
+                    </p>
+                  </div>
+                )}
               </div>
 
-              <div className="fr-fieldset__element">
-                <div className="fr-checkbox-group">
-                  <input name="checkboxes-2" id="checkboxes-2" type="checkbox" aria-describedby="checkboxes-2-messages" />
-                  <label className="fr-label" htmlFor="checkboxes-2">
-                    Equipe projet
-                  </label>
-                  <div className="fr-messages-group" id="checkboxes-2-messages" aria-live="assertive"></div>
-                </div>
+              <div className={styles["btnForm"]}>
+                <button className="fr-mt-7v fr-mr-7v fr-btn" onClick={handleChangeReset} type="reset">
+                  Annuler
+                </button>
+                <button className="fr-mt-7v fr-btn " disabled={userinfo.profiles.length === 0} type="submit">
+                  Sauvegarder
+                </button>
               </div>
-
-              <div className="fr-messages-group" id="checkboxes-messages" aria-live="assertive"></div>
-            </fieldset>
-
-            <button className="fr-mt-7v fr-btn " onClick={() => saveButtonClick()}>
-              Sauvegarder
-            </button>
+            </form>
           </div>
         </>
       )}

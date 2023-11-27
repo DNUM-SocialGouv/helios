@@ -30,9 +30,10 @@ type RouterProps = Readonly<{
   institution: number;
   profile: number;
   role: string;
+  status: string;
 }>;
 
-export default function Router({ usersPaginatedList, keyWord, institutions, profiles, roles, institution, profile, role }: RouterProps) {
+export default function Router({ usersPaginatedList, keyWord, institutions, profiles, roles, institution, profile, role, status }: RouterProps) {
   const { wording } = useDependencies();
 
   useBreadcrumb([
@@ -57,31 +58,31 @@ export default function Router({ usersPaginatedList, keyWord, institutions, prof
 
 export async function getServerSideProps(context): Promise<GetStaticPropsResult<RouterProps>> {
   try {
-    let { page, key, institution, role, profil, institutionId, roleId, profileId } = context.query;
+    let { page, key, institution, role, profil, institutionId, roleId, profileId, status } = context.query;
     page = page as number | 1;
     key = key as string | "";
     institutionId = institutionId as number | 0;
     roleId = roleId as number | 0;
     const profilId = profileId as string | "";
 
-    console.log("---------------CCCC------------");
-    console.log(context.query);
-    console.log("---------------------A-------------------");
-    console.log("institutionId : ", institutionId);
-    console.log("roleId : ", roleId);
-    console.log("profilId : ", profileId);
+    //   console.log("---------------CCCC------------");
+    //   console.log(context.query);
+    //   console.log("---------------------A-------------------");
+    //   console.log("institutionId : ", institutionId);
+    //   console.log("roleId : ", roleId);
+    //   console.log("profilId : ", profileId);
 
     const users = await getUsersListPaginatedEndpoint(dependencies, key, "Desc", page, institutionId, roleId, profilId);
-    console.log("--users---", users);
+    //console.log("--users---", users);
 
     const institutions = await getInstitutionsEndpoint(dependencies);
-    console.log("--institutions---" /*, institutions*/);
+    // console.log("--institutions---" /*, institutions*/);
 
     const profiles = await getAllProfilesEndpoint(dependencies);
-    console.log("--profiles---" /*, profiles*/);
+    // console.log("--profiles---" /*, profiles*/);
 
     const roles = await getAllRolesEndpoint(dependencies);
-    console.log("--roles---" /*, roles*/);
+    // console.log("--roles---" /*, roles*/);
 
     return {
       props: {
@@ -93,6 +94,7 @@ export async function getServerSideProps(context): Promise<GetStaticPropsResult<
         institution: institution || 0,
         role: role || "",
         profil: profil || 0,
+        status: status || "",
       },
     };
   } catch (error) {

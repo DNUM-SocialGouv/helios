@@ -178,4 +178,33 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       lastPage: Math.ceil(total / take),
     };
   }
+
+  async updateUser(userCode: string, roleCode: string, institutionCode: string, profilsCode: string[]): Promise<UtilisateurModel | null> {
+    try {
+      const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: userCode } });
+
+      const institutionToSave = await (await this.orm).getRepository(InstitutionModel).findOneBy({ code: institutionCode });
+      const roleToSave = await (await this.orm).getRepository(RoleModel).findOneBy({ code: roleCode });
+
+      if (user && institutionToSave && roleToSave && profilsCode && profilsCode.length > 0) {
+        user.institution = institutionToSave;
+        user.role = roleToSave;
+        user.profils = profilsCode;
+      }
+
+      (await this.orm)
+        .getRepository(UtilisateurModel)
+        .save(user as UtilisateurModel)
+        .then(async () => {
+          return user;
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.log("error", error);
+        });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log("error", error);
+    }
+  }
 }

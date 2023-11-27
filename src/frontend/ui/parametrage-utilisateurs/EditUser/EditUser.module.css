@@ -11,3 +11,20 @@
 .field_container {
   margin-bottom: 18px;
 }
+
+.boxSelect {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.boxItem {
+  width: 30%;
+}
+
+.btnForm {
+  float: right;
+}
+
+.fr-fieldset--error {
+  color: #ce0500;
+}

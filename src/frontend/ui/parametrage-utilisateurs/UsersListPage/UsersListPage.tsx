@@ -4,6 +4,8 @@ import "@gouvfr/dsfr/dist/component/table/table.min.css";
 
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 
+import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
+
 import { useQueryState, parseAsInteger, parseAsString } from "next-usequerystate";
 import { useState } from "react";
 
@@ -33,9 +35,10 @@ type UsersListPageProps = Readonly<{
   institution: number;
   profile: string;
   role: number;
+  status: string;
 }>;
 
-export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, institution, profile, role }: UsersListPageProps) => {
+export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, institution, profile, role, status }: UsersListPageProps) => {
   const [userData, setUserData] = useState(users.data);
 
   const [lastPage, setLastPage] = useState(users.lastPage);
@@ -44,6 +47,7 @@ export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, i
   const [roleId, setRoleId] = useQueryState("roleId", parseAsInteger.withDefault(role));
   const [profileId, setProfileId] = useQueryState("profileId", parseAsString.withDefault(profile));
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(users.currentPage));
+  const [statusCode, setStatusCode] = useQueryState("status", parseAsString.withDefault(status));
 
   const { wording } = useDependencies();
 
@@ -51,8 +55,19 @@ export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, i
     <main className="fr-container">
       {userData && (
         <>
-          <h1 className={styles["title"]}>{wording.PAGE_UTILISATEUR_TITRE}</h1>
-          <br />
+          <h1 className={`fr-mb-4w ${styles["title"]}`}>{wording.PAGE_UTILISATEUR_TITRE}</h1>
+
+          {statusCode === "edit_successfully" && (
+            <div class="fr-alert fr-alert--success fr-alert--sm fr-mb-3w ">
+              <p>La modification de l'utilisateur a été effectuée avec succès.</p>
+            </div>
+          )}
+
+          {statusCode === "deleted_successfully" && (
+            <div class="fr-alert fr-alert--success fr-alert--sm fr-mb-3w ">
+              <p>La suppression de l'utilisateur a été effectuée avec succès.</p>
+            </div>
+          )}
 
           <div className={styles["filtres-big-container"]}>
             <div className={styles["filtres-container"]}>
