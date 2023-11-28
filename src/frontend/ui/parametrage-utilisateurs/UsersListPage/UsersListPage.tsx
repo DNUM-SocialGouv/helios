@@ -15,6 +15,7 @@ import { RoleModel } from "../../../../../database/models/RoleModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
+import { ConfirmDeleteModal } from "./ConfirmDeleteModal/ConfirmDeleteModal";
 import { AdvancedFilter } from "./Filter/AdvancedFilter/AdvancedFilter";
 import { KeyWordFilter } from "./Filter/KeyWordFilter/KeyWordFilter";
 import { PaginationBtn } from "./PaginationBtn/PaginationBtn";
@@ -53,6 +54,10 @@ export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, i
 
   return (
     <main className="fr-container">
+      <button aria-controls="fr-modal-2" className="fr-btn" data-fr-opened="false">
+        Modale avec zone d'action
+      </button>
+
       {userData && (
         <>
           <h1 className={`fr-mb-4w ${styles["title"]}`}>{wording.PAGE_UTILISATEUR_TITRE}</h1>
@@ -166,10 +171,14 @@ export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, i
                           <td className={styles["widthTD-date"]}>{formatDateAndHours(user.dateCreation)}</td>
                           <td>
                             <a className="fr-raw-link" href={`/settings/users/${user.code}`}>
-                              <span aria-hidden="true" className="fr-icon-pencil-line"></span>
+                              <button>
+                                <span aria-hidden="true" className="fr-icon-pencil-line"></span>
+                              </button>
                             </a>
 
-                            <span aria-hidden="true" className="fr-icon-delete-line"></span>
+                            <button aria-controls="fr-modal-2" data-fr-opened="false">
+                              <span aria-hidden="true" className="fr-icon-delete-line"></span>
+                            </button>
                           </td>
                         </tr>
                       );
@@ -193,6 +202,7 @@ export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, i
           )}
         </>
       )}
+      <ConfirmDeleteModal />
     </main>
   );
 };
