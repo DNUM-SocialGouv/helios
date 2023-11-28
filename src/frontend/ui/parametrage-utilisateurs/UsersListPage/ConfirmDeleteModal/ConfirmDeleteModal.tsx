@@ -8,11 +8,10 @@ type ConfirmDeleteModalProps = Readonly<{
   institutionId: number;
   roleId: number;
   profileId: string;
+  lastElementInPage: boolean;
 }>;
 
-export const ConfirmDeleteModal = ({ userCode, keyWord, page, institutionId, roleId, profileId }: ConfirmDeleteModalProps) => {
-  const { push } = useRouter();
-
+export const ConfirmDeleteModal = ({ userCode, keyWord, page, institutionId, roleId, profileId, lastElementInPage }: ConfirmDeleteModalProps) => {
   async function deleteUser(userCode: string) {
     let keyWordData = {};
     if (keyWord) {
@@ -22,6 +21,10 @@ export const ConfirmDeleteModal = ({ userCode, keyWord, page, institutionId, rol
     let pageData = {};
     if (page) {
       pageData = { page: page };
+
+      if (lastElementInPage) {
+        pageData = { page: page - 1 };
+      }
     }
 
     let institutionIdData = {};

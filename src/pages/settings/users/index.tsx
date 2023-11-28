@@ -31,9 +31,21 @@ type RouterProps = Readonly<{
   profile: number;
   role: string;
   status: string;
+  lastElementInPage: boolean;
 }>;
 
-export default function Router({ usersPaginatedList, keyWord, institutions, profiles, roles, institution, profile, role, status }: RouterProps) {
+export default function Router({
+  usersPaginatedList,
+  keyWord,
+  institutions,
+  profiles,
+  roles,
+  institution,
+  profile,
+  role,
+  status,
+  lastElementInPage,
+}: RouterProps) {
   const { wording } = useDependencies();
 
   useBreadcrumb([
@@ -52,6 +64,7 @@ export default function Router({ usersPaginatedList, keyWord, institutions, prof
       role={role}
       roles={roles}
       users={usersPaginatedList}
+      lastElementInPage={lastElementInPage}
     />
   );
 }
@@ -72,8 +85,13 @@ export async function getServerSideProps(context): Promise<GetStaticPropsResult<
     //   console.log("roleId : ", roleId);
     //   console.log("profilId : ", profileId);
 
-    const users = await getUsersListPaginatedEndpoint(dependencies, key, "Desc", page, institutionId, roleId, profilId);
+    let users = await getUsersListPaginatedEndpoint(dependencies, key, "Desc", page, institutionId, roleId, profilId);
     //console.log("--users---", users);
+
+    let lastElementInPage = false;
+    if (users.data.length === 1) {
+      lastElementInPage = true;
+    }
 
     const institutions = await getInstitutionsEndpoint(dependencies);
     // console.log("--institutions---" /*, institutions*/);
@@ -95,6 +113,7 @@ export async function getServerSideProps(context): Promise<GetStaticPropsResult<
         role: role || "",
         profil: profil || 0,
         status: status || "",
+        lastElementInPage: lastElementInPage,
       },
     };
   } catch (error) {

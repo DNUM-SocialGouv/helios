@@ -5,7 +5,7 @@ import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 
 import { useQueryState, parseAsInteger, parseAsString } from "next-usequerystate";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
@@ -35,12 +35,14 @@ type UsersListPageProps = Readonly<{
   profile: string;
   role: number;
   status: string;
+  lastElementInPage: boolean;
 }>;
 
-export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, institution, profile, role, status }: UsersListPageProps) => {
+export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, institution, profile, role, status, lastElementInPage }: UsersListPageProps) => {
   const [userData, setUserData] = useState(users.data);
 
   const [lastPage, setLastPage] = useState(users.lastPage);
+
   const [key, setKey] = useQueryState("key", parseAsString.withDefault(keyWord));
   const [institutionId, setInstitutionId] = useQueryState("institutionId", parseAsInteger.withDefault(institution));
   const [roleId, setRoleId] = useQueryState("roleId", parseAsInteger.withDefault(role));
@@ -197,7 +199,15 @@ export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, i
           )}
         </>
       )}
-      <ConfirmDeleteModal institutionId={institutionId} keyWord={key} page={page} profileId={profileId} roleId={roleId} userCode={userToDelete} />
+      <ConfirmDeleteModal
+        institutionId={institutionId}
+        keyWord={key}
+        page={page}
+        profileId={profileId}
+        roleId={roleId}
+        userCode={userToDelete}
+        lastElementInPage={lastElementInPage}
+      />
     </main>
   );
 };
