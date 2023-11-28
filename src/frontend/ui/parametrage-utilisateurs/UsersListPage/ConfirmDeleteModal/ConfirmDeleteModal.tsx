@@ -1,16 +1,59 @@
 "use client";
-
-import { useState } from "react";
-
-import styles from "./UsersListPage.module.css";
+import { useRouter } from "next/navigation";
 
 type ConfirmDeleteModalProps = Readonly<{
+  userCode: string;
   keyWord: string;
+  page: number;
+  institutionId: number;
+  roleId: number;
+  profileId: string;
 }>;
 
-export const ConfirmDeleteModal = ({ keyWord }: ConfirmDeleteModalProps) => {
+export const ConfirmDeleteModal = ({ userCode, keyWord, page, institutionId, roleId, profileId }: ConfirmDeleteModalProps) => {
+  const { push } = useRouter();
+
+  async function deleteUser(userCode: string) {
+    let keyWordData = {};
+    if (keyWord) {
+      keyWordData = { key: keyWord };
+    }
+
+    let pageData = {};
+    if (page) {
+      pageData = { page: page };
+    }
+
+    let institutionIdData = {};
+    if (institutionId) {
+      institutionIdData = { institutionId: institutionId };
+    }
+
+    let roleIdData = {};
+    if (roleId) {
+      roleIdData = { roleId: roleId };
+    }
+
+    let profileIdData = {};
+    if (profileId) {
+      profileIdData = { profileId: profileId };
+    }
+
+    const params = { status: "deleted_successfully", ...keyWordData, ...pageData, ...institutionIdData, ...roleIdData, ...profileIdData };
+
+    const urlparams = new URLSearchParams(params).toString();
+
+    fetch("/api/utilisateurs/delete", {
+      body: JSON.stringify({ userCode: userCode }),
+      headers: { "Content-Type": "application/json" },
+      method: "DELETE",
+    }).then(() => {
+      window.location.href = "/settings/users?" + urlparams;
+    });
+  }
+
   return (
-    <dialog aria-labelledby="fr-modal-2-title" className="fr-modal" id="fr-modal-2" role="dialog">
+    <dialog aria-labelledby="fr-modal-2-title" className="fr-modal" id="fr-modal-2">
       <div className="fr-container fr-container--fluid fr-container-md">
         <div className="fr-grid-row fr-grid-row--center">
           <div className="fr-col-12 fr-col-md-8 fr-col-lg-6">
@@ -25,24 +68,12 @@ export const ConfirmDeleteModal = ({ keyWord }: ConfirmDeleteModalProps) => {
               <div className="fr-modal__footer">
                 <ul className="fr-btns-group fr-btns-group--right fr-btns-group--inline-reverse fr-btns-group--inline-lg fr-btns-group--icon-left">
                   <li>
-                    <button
-                      aria-controls="fr-modal-2"
-                      className="fr-btn"
-                      onClick={() => {
-                        console.log("Supprimer");
-                      }}
-                    >
+                    <button aria-controls="fr-modal-2" className="fr-btn" onClick={() => deleteUser(userCode)}>
                       Supprimer
                     </button>
                   </li>
                   <li>
-                    <button
-                      aria-controls="fr-modal-2"
-                      className="fr-btn fr-btn--secondary"
-                      onClick={() => {
-                        console.log("Annuler");
-                      }}
-                    >
+                    <button aria-controls="fr-modal-2" className="fr-btn fr-btn--secondary">
                       Annuler
                     </button>
                   </li>

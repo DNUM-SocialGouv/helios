@@ -207,4 +207,20 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       console.log("error", error);
     }
   }
+
+  async deleteUser(userCode: string): Promise<string | null> {
+    try {
+      const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: userCode } });
+
+      if (user) {
+        await (await this.orm).getRepository(UtilisateurModel).remove(user);
+        return "User deleted successfully";
+      } else {
+        return "User not found";
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log("error", error);
+    }
+  }
 }

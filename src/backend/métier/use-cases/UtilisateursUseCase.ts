@@ -15,4 +15,8 @@ export class UtilisateursUseCase {
   async updateUser(userCode: string, roleCode: string, institutionCode: string, profilsCode: string[]): Promise<UtilisateurModel | null> {
     return this.utilisateurLoader.updateUser(userCode, roleCode, institutionCode, profilsCode);
   }
+
+  async deleteUser(userCode: string): Promise<string | null> {
+    return this.utilisateurLoader.deleteUser(userCode);
+  }
 }

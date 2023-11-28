@@ -1,9 +1,7 @@
 "use client";
 
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
-
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
-
 import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 
 import { useQueryState, parseAsInteger, parseAsString } from "next-usequerystate";
@@ -49,15 +47,12 @@ export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, i
   const [profileId, setProfileId] = useQueryState("profileId", parseAsString.withDefault(profile));
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(users.currentPage));
   const [statusCode, setStatusCode] = useQueryState("status", parseAsString.withDefault(status));
+  const [userToDelete, setUserToDelete] = useState("");
 
   const { wording } = useDependencies();
 
   return (
     <main className="fr-container">
-      <button aria-controls="fr-modal-2" className="fr-btn" data-fr-opened="false">
-        Modale avec zone d'action
-      </button>
-
       {userData && (
         <>
           <h1 className={`fr-mb-4w ${styles["title"]}`}>{wording.PAGE_UTILISATEUR_TITRE}</h1>
@@ -177,7 +172,7 @@ export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, i
                             </a>
 
                             <button aria-controls="fr-modal-2" data-fr-opened="false">
-                              <span aria-hidden="true" className="fr-icon-delete-line"></span>
+                              <span aria-hidden="true" className="fr-icon-delete-line" onClick={() => setUserToDelete(user.code)}></span>
                             </button>
                           </td>
                         </tr>
@@ -202,7 +197,7 @@ export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, i
           )}
         </>
       )}
-      <ConfirmDeleteModal />
+      <ConfirmDeleteModal institutionId={institutionId} keyWord={key} page={page} profileId={profileId} roleId={roleId} userCode={userToDelete} />
     </main>
   );
 };

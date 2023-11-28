@@ -13,4 +13,5 @@ export interface UtilisateurLoader {
   getUsersListPaginated(key: string, sort: string, pdescrtion: number, institutionId: number, roleId: number, profilId: string): Promise<void>;
   getUserByCode(code: string): Promise<UtilisateurModel | null>;
   updateUser(userCode: string, roleCode: string, institutionCode: string, profilsCode: string[]): Promise<UtilisateurModel | null>;
+  deleteUser(userCode: string): Promise<string | null>;
 }
