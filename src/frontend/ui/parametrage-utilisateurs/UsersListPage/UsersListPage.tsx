@@ -58,13 +58,13 @@ export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, i
           <h1 className={`fr-mb-4w ${styles["title"]}`}>{wording.PAGE_UTILISATEUR_TITRE}</h1>
 
           {statusCode === "edit_successfully" && (
-            <div class="fr-alert fr-alert--success fr-alert--sm fr-mb-3w ">
+            <div className="fr-alert fr-alert--success fr-alert--sm fr-mb-3w ">
               <p>La modification de l'utilisateur a été effectuée avec succès.</p>
             </div>
           )}
 
           {statusCode === "deleted_successfully" && (
-            <div class="fr-alert fr-alert--success fr-alert--sm fr-mb-3w ">
+            <div className="fr-alert fr-alert--success fr-alert--sm fr-mb-3w ">
               <p>La suppression de l'utilisateur a été effectuée avec succès.</p>
             </div>
           )}
@@ -76,13 +76,12 @@ export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, i
                 Filtre
               </button>
             </div>
-
             <section className="fr-accordion">
               <div className={`fr-collapse  ${styles["collapseBox"]}`} id="accordion-106">
                 <AdvancedFilter
                   institutionId={institutionId}
                   institutions={institutions}
-                  key={key}
+                  keyWord={key}
                   page={page}
                   profileId={profileId}
                   profiles={profiles}
@@ -165,23 +164,29 @@ export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, i
                             })}
                           </td>
                           <td className={styles["widthTD-date"]}>{formatDateAndHours(user.dateCreation)}</td>
-                          <td>EDIT delete</td>
+                          <td>
+                            <a className="fr-raw-link" href={`/settings/users/${user.code}`}>
+                              <span aria-hidden="true" className="fr-icon-pencil-line"></span>
+                            </a>
+
+                            <span aria-hidden="true" className="fr-icon-delete-line"></span>
+                          </td>
                         </tr>
                       );
                     })}
                   </tbody>
                 </table>
                 <PaginationBtn
+                  institutionId={institutionId}
                   keyWord={key}
                   lastPage={lastPage}
                   page={page as number}
+                  profileId={profileId}
+                  roleId={roleId}
                   setLastPage={setLastPage}
                   setPage={setPage}
                   setUserData={setUserData}
                   total={users.total}
-                  institutionId={institutionId}
-                  roleId={roleId}
-                  profileId={profileId}
                 />
               </div>
             </div>

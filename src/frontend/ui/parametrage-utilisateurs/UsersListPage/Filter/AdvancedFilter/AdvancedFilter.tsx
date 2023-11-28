@@ -42,14 +42,10 @@ export const AdvancedFilter = ({
   profileId,
   roleId,
   setRoleId,
-  key,
   page,
 }: KeyWordFilterProps) => {
   async function handleChangeInstitution(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
-
-    const keyValue = key ? key : "";
-
     setInstitutionId(e.target.value);
 
     const institutionCondition = { institutionId: e.target.value };
@@ -64,15 +60,12 @@ export const AdvancedFilter = ({
       profilCondition = { profileId: profileId };
     }
 
-    const params = { key: keyValue, sort: "", page: 1, ...institutionCondition, ...roleCondition, ...profilCondition };
+    const params = { key: keyWord, sort: "", page: 1, ...institutionCondition, ...roleCondition, ...profilCondition };
     getUsersAction(params);
   }
 
   async function handleChangeRole(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
-
-    const keyValue = key ? key : "";
-
     setRoleId(e.target.value);
 
     let institutionCondition = {};
@@ -87,16 +80,12 @@ export const AdvancedFilter = ({
       profilCondition = { profileId: profileId };
     }
 
-    const params = { key: keyValue, sort: "", page: 1, ...institutionCondition, ...roleCondition, ...profilCondition };
+    const params = { key: keyWord, sort: "", page: 1, ...institutionCondition, ...roleCondition, ...profilCondition };
     getUsersAction(params);
   }
 
   async function handleChangeProfil(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
-
-    console.log("onChange TextInput value:  profil code" + e.target.value);
-    const keyValue = key ? key : "";
-
     setProfileId(e.target.value);
 
     let institutionCondition = {};
@@ -111,7 +100,7 @@ export const AdvancedFilter = ({
 
     const profilCondition = { profileId: e.target.value };
 
-    const params = { key: keyValue, sort: "", page: 1, ...institutionCondition, ...roleCondition, ...profilCondition };
+    const params = { key: keyWord, sort: "", page: 1, ...institutionCondition, ...roleCondition, ...profilCondition };
     getUsersAction(params);
   }
 
@@ -164,7 +153,6 @@ export const AdvancedFilter = ({
           ))}
         </select>
       </div>
-
       <div className="fr-select-group fr-mt-3w">
         <label className="fr-label" htmlFor="profil">
           Profil
