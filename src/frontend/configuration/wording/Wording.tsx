@@ -358,6 +358,7 @@ export interface Wording {
   readonly MOT_DE_PASSE: string;
   readonly CONFIRMER_MOT_DE_PASSE: string;
   readonly CONFIRM_CHANGE_PASSWORD: string;
+  readonly CONFIRM_CREATE_PASSWORD: string;
 
   // Historique de recherche
   readonly HISTORIQUE_DE_RECHERECHE_TITRE: string;
@@ -365,6 +366,7 @@ export interface Wording {
   readonly DATE: string;
   readonly CONFIRM_UPDATE_PASSWORD: string;
   readonly REINITIALISATION_MOT_PASSE_TITRE: string;
+  readonly CREATION_MOT_PASSE_TITRE: string;
   readonly REINITIALISATION_MOT_PASSE_DESCRIPTION: string;
   readonly DIFFERENT_MOT_PASSE: string;
   readonly WRONG_OLD_MOT_DE_PASSE: string;
