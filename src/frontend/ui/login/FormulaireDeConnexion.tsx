@@ -1,13 +1,16 @@
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import React, { useState, FormEvent } from "react";
+import React, { useState, FormEvent, useContext } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
+import { UserContext } from "../commun/contexts/userContext";
 import isEmail from "../commun/validation";
 import styles from "./Connexion.module.css";
 
 export const FormulaireDeConnexion = () => {
     const { wording } = useDependencies();
+    const userContext = useContext(UserContext);
+
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
@@ -18,6 +21,7 @@ export const FormulaireDeConnexion = () => {
         e.preventDefault()
         if (isEmail(email)) {
             setLoading(true);
+            userContext?.setPasswordCreated(false);
             const res = await signIn("credentials", {
                 email,
                 password,
@@ -39,6 +43,9 @@ export const FormulaireDeConnexion = () => {
     return (
         <div className="fr-grid-row  fr-grid-row--center">
             <section className={"fr-col-6 " + styles["container"]}>
+                {userContext?.passwordCreated && <p>
+                    votre nouveau mot de passe a bien été pris en charge. Merci de saisir vos indentifiant et mot de passe pour vous connecter
+                </p>}
                 <form className="fr-mt-5w" data-testid="login-form" id="login-1760" onSubmit={handleSubmit}>
                     <div className="fr-fieldset__element">
                         <div className="fr-fieldset__element">
