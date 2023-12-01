@@ -19,6 +19,7 @@ import { KeyWordFilter } from "./Filter/KeyWordFilter/KeyWordFilter";
 import { PaginationBtn } from "./Pagination/PaginationBtn/PaginationBtn";
 import styles from "./UsersListPage.module.css";
 import { ItemsPerPage } from "./Pagination/ItemsPerPage/ItemsPerPage";
+import { useSession } from "next-auth/react";
 
 type UsersListPageProps = Readonly<{
   users: {
@@ -53,6 +54,8 @@ export const UsersListPage = ({
   lastElementInPage,
   itemsPerPageValue,
 }: UsersListPageProps) => {
+  const { data } = useSession();
+
   const [userData, setUserData] = useState(users.data);
   const [total, setTotal] = useState(users.total);
   const [lastPage, setLastPage] = useState(users.lastPage);
@@ -105,6 +108,7 @@ export const UsersListPage = ({
               setUserData={setUserData}
               setTotal={setTotal}
               itemsPerPage={itemsPerPage}
+              adminNational={data?.user?.role === 1}
             />
           </div>
           <div className={styles["count-elements"]}>
@@ -129,9 +133,9 @@ export const UsersListPage = ({
                       <th scope="col">{wording.INSTITUTION}</th>
                       <th scope="col">{wording.ROLE_}</th>
                       <th scope="col">{wording.PROFILE}</th>
-                      <th className={styles["widthTD-date"]} scope="col">
+                      {/*<th className={styles["widthTD-date"]} scope="col">
                         {wording.CREATION_DATE}
-                      </th>
+                      </th>*/}
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
@@ -177,7 +181,7 @@ export const UsersListPage = ({
                               );
                             })}
                           </td>
-                          <td className={styles["widthTD-date"]}>{formatDateAndHours(user.dateCreation)}</td>
+                          {/*<td className={styles["widthTD-date"]}>{formatDateAndHours(user.dateCreation)}</td>*/}
                           <td>
                             <a className="fr-raw-link" href={`/settings/users/${user.code}`}>
                               <button>

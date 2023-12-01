@@ -28,6 +28,7 @@ type KeyWordFilterProps = Readonly<{
   roleId: number;
   profileId: string;
   itemsPerPage: number;
+  adminNational: boolean;
 }>;
 
 export const AdvancedFilter = ({
@@ -48,6 +49,7 @@ export const AdvancedFilter = ({
   setRoleId,
   page,
   itemsPerPage,
+  adminNational,
 }: KeyWordFilterProps) => {
   async function handleChangeInstitution(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
@@ -139,23 +141,27 @@ export const AdvancedFilter = ({
           roleId={roleId}
         />
       </div>
-      <div className={`fr-select-group ${styles["filter-item"]}`}>
-        <label className="fr-label" htmlFor="institution">
-          Institution
-        </label>
 
-        <select className="fr-select" id="institution" onChange={(e) => handleChangeInstitution(e)}>
-          <option selected={institutionId === 0} value="">
-            Toutes
-          </option>
+      {adminNational && (
+        <div className={`fr-select-group ${styles["filter-item"]}`}>
+          <label className="fr-label" htmlFor="institution">
+            Institution
+          </label>
 
-          {institutions.map((item) => (
-            <option key={item.id} selected={institutionId === item.id} value={item.id}>
-              {item.libelle}
+          <select className="fr-select" id="institution" onChange={(e) => handleChangeInstitution(e)}>
+            <option selected={institutionId === 0} value="">
+              Toutes
             </option>
-          ))}
-        </select>
-      </div>
+
+            {institutions.map((item) => (
+              <option key={item.id} selected={institutionId === item.id} value={item.id}>
+                {item.libelle}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
       <div className={`fr-select-group ${styles["filter-item"]}`}>
         <label className="fr-label" htmlFor="role">
           Rôle

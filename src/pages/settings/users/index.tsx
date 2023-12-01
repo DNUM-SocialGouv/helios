@@ -1,4 +1,5 @@
 import { GetStaticPropsResult } from "next";
+import { getSession } from "next-auth/react";
 
 import { InstitutionModel } from "../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../database/models/ProfilModel";
@@ -74,11 +75,16 @@ export default function Router({
 
 export async function getServerSideProps(context): Promise<GetStaticPropsResult<RouterProps>> {
   try {
+    const session = await getSession(context);
+    //const codeRegion = session?.user.codeRegion as number;
+    const codeRegion = 20;
+
     let { page, key, institution, role, profil, institutionId, roleId, profileId, status, itemsPerPage } = context.query;
     page = page as number | 1;
     itemsPerPage = itemsPerPage as number | 10;
     key = key as string | "";
     institutionId = institutionId as number | 0;
+    institutionId = codeRegion;
     roleId = roleId as number | 0;
     const profilId = profileId as string | "";
 
@@ -118,7 +124,7 @@ export async function getServerSideProps(context): Promise<GetStaticPropsResult<
         profil: profil || 0,
         status: status || "",
         lastElementInPage: lastElementInPage,
-        itemsPerPage: itemsPerPage,
+        itemsPerPage: itemsPerPage || 10,
       },
     };
   } catch (error) {
