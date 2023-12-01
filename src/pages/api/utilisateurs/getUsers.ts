@@ -15,8 +15,9 @@ export default async function handler(request: NextApiRequest, response: NextApi
     const institutionId = request.query["institutionId"] as number | 0;
     const roleId = request.query["roleId"];
     const profilId = request.query["profileId"] as string | "";
+    const itemsPerPage = request.query["itemsPerPage"] as number;
 
-    const users = await getUsersListPaginatedEndpoint(dependencies, key, sort, page, institutionId, roleId, profilId);
+    const users = await getUsersListPaginatedEndpoint(dependencies, key, sort, page, institutionId, roleId, profilId, itemsPerPage);
 
     return response.status(200).json(users);
   } catch (error) {

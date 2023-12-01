@@ -1,6 +1,7 @@
 .pagination_container {
   margin-top: 30px;
-  float: right;
+
+  user-select: none;
 }
 
 .disabledBtn {

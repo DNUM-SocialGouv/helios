@@ -123,7 +123,15 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     return profiles;
   }
 
-  async getUsersListPaginated(key = "", sort: string, currentPage: number, institutionId: number, roleId: number, profilId: string): Promise<any> {
+  async getUsersListPaginated(
+    key = "",
+    sort: string,
+    currentPage: number,
+    institutionId: number,
+    roleId: number,
+    profilId: string,
+    itemsPerPage: number
+  ): Promise<any> {
     //  return await (await this.orm).getRepository(UtilisateurModel).find();
 
     const utilisateurRepo = (await this.orm).getRepository(UtilisateurModel);
@@ -133,17 +141,17 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     const profilCondition = { profils: ["4bbf1e31-180a-4d29-9973-54459dc3087d"] };*/
 
     let institutionCondition = {};
-    if (institutionId) {
+    if (institutionId > 0) {
       institutionCondition = { institution: { id: institutionId } };
     }
 
     let roleCondition = {};
-    if (roleId) {
+    if (roleId > 0) {
       roleCondition = { role: { id: roleId } };
     }
 
     let profilCondition = {};
-    if (profilId) {
+    if (profilId && profilId.length > 0) {
       profilCondition = { profils: ArrayContains([profilId]) };
     }
 
@@ -156,7 +164,8 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     ];
 
     const currentPageA: number = parseInt(currentPage as any) || 1;
-    const take = 3;
+
+    const take = itemsPerPage || 10;
 
     const total = await utilisateurRepo.countBy(conditions);
 
@@ -176,6 +185,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       keyWord: key,
       currentPage: currentPageA,
       lastPage: Math.ceil(total / take),
+      itemsPerPage: itemsPerPage,
     };
   }
 

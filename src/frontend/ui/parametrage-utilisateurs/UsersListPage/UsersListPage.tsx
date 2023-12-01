@@ -16,8 +16,9 @@ import { useDependencies } from "../../commun/contexts/useDependencies";
 import { ConfirmDeleteModal } from "./ConfirmDeleteModal/ConfirmDeleteModal";
 import { AdvancedFilter } from "./Filter/AdvancedFilter/AdvancedFilter";
 import { KeyWordFilter } from "./Filter/KeyWordFilter/KeyWordFilter";
-import { PaginationBtn } from "./PaginationBtn/PaginationBtn";
+import { PaginationBtn } from "./Pagination/PaginationBtn/PaginationBtn";
 import styles from "./UsersListPage.module.css";
+import { ItemsPerPage } from "./Pagination/ItemsPerPage/ItemsPerPage";
 
 type UsersListPageProps = Readonly<{
   users: {
@@ -36,11 +37,24 @@ type UsersListPageProps = Readonly<{
   role: number;
   status: string;
   lastElementInPage: boolean;
+  itemsPerPageValue: number;
 }>;
 
-export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, institution, profile, role, status, lastElementInPage }: UsersListPageProps) => {
+export const UsersListPage = ({
+  users,
+  keyWord,
+  institutions,
+  profiles,
+  roles,
+  institution,
+  profile,
+  role,
+  status,
+  lastElementInPage,
+  itemsPerPageValue,
+}: UsersListPageProps) => {
   const [userData, setUserData] = useState(users.data);
-
+  const [total, setTotal] = useState(users.total);
   const [lastPage, setLastPage] = useState(users.lastPage);
 
   const [key, setKey] = useQueryState("key", parseAsString.withDefault(keyWord));
@@ -50,6 +64,7 @@ export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, i
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(users.currentPage));
   const [statusCode, setStatusCode] = useQueryState("status", parseAsString.withDefault(status));
   const [userToDelete, setUserToDelete] = useState("");
+  const [itemsPerPage, setItemsPerPage] = useQueryState("itemsPerPage", parseAsInteger.withDefault(itemsPerPageValue));
 
   const { wording } = useDependencies();
 
@@ -71,40 +86,37 @@ export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, i
             </div>
           )}
 
-          <div className={styles["filtres-big-container"]}>
-            <div className={styles["filtres-container"]}>
-              <KeyWordFilter keyWord={key} setKey={setKey} setLastPage={setLastPage} setPage={setPage} setUserData={setUserData} />
-              <button aria-controls="accordion-106" aria-expanded="false" className={`fr-accordion__btn fr-mt-2v fr-btn ${styles["btn-filtre"]}`}>
-                Filtre
-              </button>
-            </div>
-            <section className="fr-accordion">
-              <div className={`fr-collapse  ${styles["collapseBox"]}`} id="accordion-106">
-                <AdvancedFilter
-                  institutionId={institutionId}
-                  institutions={institutions}
-                  keyWord={key}
-                  page={page}
-                  profileId={profileId}
-                  profiles={profiles}
-                  roleId={roleId}
-                  roles={roles}
-                  setInstitutionId={setInstitutionId}
-                  setLastPage={setLastPage}
-                  setPage={setPage}
-                  setProfileId={setProfileId}
-                  setRoleId={setRoleId}
-                  setUserData={setUserData}
-                />
-              </div>
-            </section>
+          <div className={`${styles["filtres-container"]}`}>
+            <AdvancedFilter
+              institutionId={institutionId}
+              institutions={institutions}
+              keyWord={key}
+              setKey={setKey}
+              page={page}
+              profileId={profileId}
+              profiles={profiles}
+              roleId={roleId}
+              roles={roles}
+              setInstitutionId={setInstitutionId}
+              setLastPage={setLastPage}
+              setPage={setPage}
+              setProfileId={setProfileId}
+              setRoleId={setRoleId}
+              setUserData={setUserData}
+              setTotal={setTotal}
+              itemsPerPage={itemsPerPage}
+            />
+          </div>
+          <div className={styles["count-elements"]}>
+            {total > 1 && <>{total} éléments trouvés.</>}
+            {total === 1 && <>{total} élément trouvé.</>}
           </div>
 
           {userData.length === 0 ? (
             <div className={"fr-mt-8w " + styles["align-text"]}>{wording.AUCUN_ELEMENT_TROUVE}</div>
           ) : (
             <div>
-              <div className={"fr-table fr-table--blue-ecume fr-mt-3w " + styles["align"]}>
+              <div className={"fr-table fr-table--blue-ecume fr-mt-2w " + styles["align"]}>
                 <table>
                   <thead>
                     <tr>
@@ -182,18 +194,40 @@ export const UsersListPage = ({ users, keyWord, institutions, profiles, roles, i
                     })}
                   </tbody>
                 </table>
-                <PaginationBtn
-                  institutionId={institutionId}
-                  keyWord={key}
-                  lastPage={lastPage}
-                  page={page as number}
-                  profileId={profileId}
-                  roleId={roleId}
-                  setLastPage={setLastPage}
-                  setPage={setPage}
-                  setUserData={setUserData}
-                  total={users.total}
-                />
+                <div className={`${styles["pagination-container"]}`}>
+                  <div className={`${styles["paginationBtn-container"]}`}>
+                    <PaginationBtn
+                      institutionId={institutionId}
+                      keyWord={key}
+                      lastPage={lastPage}
+                      page={page as number}
+                      profileId={profileId}
+                      roleId={roleId}
+                      setLastPage={setLastPage}
+                      setPage={setPage}
+                      setUserData={setUserData}
+                      total={users.total}
+                      itemsPerPage={itemsPerPage}
+                    />
+                  </div>
+                  <div className={`${styles["itemsPerPage-container"]}`}>
+                    <ItemsPerPage
+                      institutionId={institutionId}
+                      keyWord={key}
+                      lastPage={lastPage}
+                      page={page as number}
+                      profileId={profileId}
+                      roleId={roleId}
+                      setLastPage={setLastPage}
+                      setPage={setPage}
+                      setUserData={setUserData}
+                      total={users.total}
+                      itemsPerPage={itemsPerPage}
+                      setItemsPerPage={setItemsPerPage}
+                      setTotal={setTotal}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           )}

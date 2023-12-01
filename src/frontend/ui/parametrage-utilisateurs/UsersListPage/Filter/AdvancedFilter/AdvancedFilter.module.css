@@ -1,3 +1,11 @@
-.filtre_details {
-  padding: 35px 150px;
+.filter_details {
+  padding: 15px 15px 20px 15px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.filter-item {
+  width: 23%;
 }

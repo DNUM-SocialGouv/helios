@@ -32,6 +32,7 @@ type RouterProps = Readonly<{
   role: string;
   status: string;
   lastElementInPage: boolean;
+  itemsPerPage: number;
 }>;
 
 export default function Router({
@@ -45,6 +46,7 @@ export default function Router({
   role,
   status,
   lastElementInPage,
+  itemsPerPage,
 }: RouterProps) {
   const { wording } = useDependencies();
 
@@ -65,14 +67,16 @@ export default function Router({
       roles={roles}
       users={usersPaginatedList}
       lastElementInPage={lastElementInPage}
+      itemsPerPageValue={itemsPerPage}
     />
   );
 }
 
 export async function getServerSideProps(context): Promise<GetStaticPropsResult<RouterProps>> {
   try {
-    let { page, key, institution, role, profil, institutionId, roleId, profileId, status } = context.query;
+    let { page, key, institution, role, profil, institutionId, roleId, profileId, status, itemsPerPage } = context.query;
     page = page as number | 1;
+    itemsPerPage = itemsPerPage as number | 10;
     key = key as string | "";
     institutionId = institutionId as number | 0;
     roleId = roleId as number | 0;
@@ -85,7 +89,7 @@ export async function getServerSideProps(context): Promise<GetStaticPropsResult<
     //   console.log("roleId : ", roleId);
     //   console.log("profilId : ", profileId);
 
-    let users = await getUsersListPaginatedEndpoint(dependencies, key, "Desc", page, institutionId, roleId, profilId);
+    let users = await getUsersListPaginatedEndpoint(dependencies, key, "Desc", page, institutionId, roleId, profilId, itemsPerPage);
     //console.log("--users---", users);
 
     let lastElementInPage = false;
@@ -114,6 +118,7 @@ export async function getServerSideProps(context): Promise<GetStaticPropsResult<
         profil: profil || 0,
         status: status || "",
         lastElementInPage: lastElementInPage,
+        itemsPerPage: itemsPerPage,
       },
     };
   } catch (error) {

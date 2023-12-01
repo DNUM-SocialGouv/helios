@@ -7,6 +7,7 @@ import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import { InstitutionModel } from "../../../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../../../database/models/RoleModel";
+import { KeyWordFilter } from "../KeyWordFilter/KeyWordFilter";
 import styles from "./AdvancedFilter.module.css";
 
 type KeyWordFilterProps = Readonly<{
@@ -18,6 +19,7 @@ type KeyWordFilterProps = Readonly<{
   setRoleId: () => void;
   setProfileId: () => void;
   setInstitutionId: () => void;
+  setTotal: () => void;
 
   institutions: InstitutionModel[];
   profiles: ProfilModel[];
@@ -25,11 +27,13 @@ type KeyWordFilterProps = Readonly<{
   institutionId: number;
   roleId: number;
   profileId: string;
+  itemsPerPage: number;
 }>;
 
 export const AdvancedFilter = ({
   keyWord,
   setKey,
+  setTotal,
   setUserData,
   setPage,
   setLastPage,
@@ -43,6 +47,7 @@ export const AdvancedFilter = ({
   roleId,
   setRoleId,
   page,
+  itemsPerPage,
 }: KeyWordFilterProps) => {
   async function handleChangeInstitution(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
@@ -60,7 +65,7 @@ export const AdvancedFilter = ({
       profilCondition = { profileId: profileId };
     }
 
-    const params = { key: keyWord, sort: "", page: 1, ...institutionCondition, ...roleCondition, ...profilCondition };
+    const params = { key: keyWord, sort: "", page: 1, itemsPerPage: itemsPerPage, ...institutionCondition, ...roleCondition, ...profilCondition };
     getUsersAction(params);
   }
 
@@ -80,7 +85,7 @@ export const AdvancedFilter = ({
       profilCondition = { profileId: profileId };
     }
 
-    const params = { key: keyWord, sort: "", page: 1, ...institutionCondition, ...roleCondition, ...profilCondition };
+    const params = { key: keyWord, sort: "", page: 1, itemsPerPage: itemsPerPage, ...institutionCondition, ...roleCondition, ...profilCondition };
     getUsersAction(params);
   }
 
@@ -100,7 +105,7 @@ export const AdvancedFilter = ({
 
     const profilCondition = { profileId: e.target.value };
 
-    const params = { key: keyWord, sort: "", page: 1, ...institutionCondition, ...roleCondition, ...profilCondition };
+    const params = { key: keyWord, sort: "", page: 1, itemsPerPage: itemsPerPage, ...institutionCondition, ...roleCondition, ...profilCondition };
     getUsersAction(params);
   }
 
@@ -112,14 +117,29 @@ export const AdvancedFilter = ({
       .then((response) => response.json())
       .then((users) => {
         setUserData(users.data);
+        setTotal(users.total);
         setPage(1);
         setLastPage(users.lastPage);
       });
   }
 
   return (
-    <div className={`${styles["filtre_details"]}`}>
-      <div className="fr-select-group">
+    <div className={`${styles["filter_details"]}`}>
+      <div className={` ${styles["filter-item"]}`}>
+        <KeyWordFilter
+          keyWord={keyWord}
+          setKey={setKey}
+          setLastPage={setLastPage}
+          setPage={setPage}
+          setUserData={setUserData}
+          setTotal={setTotal}
+          itemsPerPage={itemsPerPage}
+          itemsPerPage={itemsPerPage}
+          institutionId={institutionId}
+          roleId={roleId}
+        />
+      </div>
+      <div className={`fr-select-group ${styles["filter-item"]}`}>
         <label className="fr-label" htmlFor="institution">
           Institution
         </label>
@@ -136,7 +156,7 @@ export const AdvancedFilter = ({
           ))}
         </select>
       </div>
-      <div className="fr-select-group fr-mt-3w">
+      <div className={`fr-select-group ${styles["filter-item"]}`}>
         <label className="fr-label" htmlFor="role">
           Rôle
         </label>
@@ -153,7 +173,7 @@ export const AdvancedFilter = ({
           ))}
         </select>
       </div>
-      <div className="fr-select-group fr-mt-3w">
+      <div className={`fr-select-group ${styles["filter-item"]}`}>
         <label className="fr-label" htmlFor="profil">
           Profil
         </label>

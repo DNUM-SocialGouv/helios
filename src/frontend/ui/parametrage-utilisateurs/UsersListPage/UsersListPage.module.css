@@ -27,11 +27,6 @@
   text-align: center;
 }
 
-.filtres-big-container {
-}
-.filtres-container {
-}
-
 .text_no_change {
   text-transform: none;
   font-weight: normal;
@@ -64,7 +59,23 @@
   margin: 0 !important;
 }
 
-.collapseBox {
+.filtres-container {
   margin-top: 25px;
   border: 1px solid #ddd;
+}
+
+.count-elements {
+  margin-top: 15px;
+}
+
+.pagination-container {
+}
+.paginationBtn-container {
+  width: 75%;
+  display: inline-block;
+}
+.itemsPerPage-container {
+  margin-top: 25px;
+  width: 20%;
+  float: right;
 }
