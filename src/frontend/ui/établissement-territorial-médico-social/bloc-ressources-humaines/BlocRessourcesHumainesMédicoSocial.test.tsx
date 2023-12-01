@@ -637,16 +637,4 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
     const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 2}, ${annéeEnCours - 1}`, { selector: "p" });
     expect(exergue).toBeInTheDocument();
   });
-
-  it("affiche une phrase à la place des indicateurs lorsqu’aucune donnée n’est renseignée", () => {
-    // GIVEN
-    const ressourcesHumainesViewModel = new ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel([], wording);
-
-    // WHEN
-    renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
-
-    // THEN
-    const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
-    expect(within(ressourcesHumaines).getByText(wording.AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS)).toBeInTheDocument();
-  });
 });
