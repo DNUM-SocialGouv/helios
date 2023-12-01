@@ -472,7 +472,7 @@ export class WordingFr implements Wording {
   readonly PARAMETRAGE_NEW_PROFILE: string = "Ajouter un nouveau profil";
 
   //  Profile page
-  readonly USER_PROFILE: string = "Profil de l'utilisateur";
+  readonly USER_PROFILE: string = "Mes informations";
   readonly FIRSTNAME: string = "Prénom";
   readonly LASTNAME: string = "Nom";
   readonly EMAIL: string = "Email";

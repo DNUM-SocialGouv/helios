@@ -170,7 +170,7 @@ export const Header = () => {
                       <li className={styles["menu-item"]}>
                         <button onClick={() => {
                           router.push("/profile");
-                        }}>Profil</button>
+                        }}>Mon compte</button>
                       </li>
                       <li className={styles["menu-item"]}>
                         <button
