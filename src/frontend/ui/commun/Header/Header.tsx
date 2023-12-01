@@ -136,7 +136,8 @@ export const Header = () => {
                     onClick={() => {
                       setDisplayMenu(!displayMenu)
                     }}
-                    ref={ref}>
+                    ref={ref}
+                    title="Menu du compte">
                     {data?.user?.firstname} {data?.user?.name}
                   </button>
                   {displayMenu ? (
