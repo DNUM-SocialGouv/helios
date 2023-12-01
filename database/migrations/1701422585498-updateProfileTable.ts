@@ -4,13 +4,13 @@ export class updateProfileTable1701422585498 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
-        UPDATE profil
+        UPDATE public.profil
         SET profil_label = 'Consultation des données non sensibles'
         WHERE profil_label = 'Utilisateur lambda'`);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
-        TRUNCATE TABLE profil`);
+        TRUNCATE TABLE public.profil`);
     }
 }
