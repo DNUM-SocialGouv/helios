@@ -4,56 +4,39 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
-import { InstitutionModel } from "../../../../../../../database/models/InstitutionModel";
-import { ProfilModel } from "../../../../../../../database/models/ProfilModel";
-import { RoleModel } from "../../../../../../../database/models/RoleModel";
+import { iPaginationData } from "../../UsersListPage";
 import { KeyWordFilter } from "../KeyWordFilter/KeyWordFilter";
 import styles from "./AdvancedFilter.module.css";
 
 type KeyWordFilterProps = Readonly<{
-  keyWord: string;
-  setKey: () => void;
-  setUserData: () => void;
-  setPage: () => void;
-  setLastPage: () => void;
-  setRoleId: () => void;
-  setProfileId: () => void;
-  setInstitutionId: () => void;
-  setTotal: () => void;
-
-  institutions: InstitutionModel[];
-  profiles: ProfilModel[];
-  roles: RoleModel[];
-  institutionId: number;
-  roleId: number;
-  profileId: string;
-  itemsPerPage: number;
+  paginationData: iPaginationData;
   adminNational: boolean;
 }>;
 
 export const AdvancedFilter = ({
-  keyWord,
-  setKey,
-  setTotal,
-  setUserData,
-  setPage,
-  setLastPage,
-  institutions,
-  profiles,
-  roles,
-  setInstitutionId,
-  institutionId,
-  setProfileId,
-  profileId,
-  roleId,
-  setRoleId,
-  page,
-  itemsPerPage,
+  paginationData,
+  paginationData: {
+    keyWord,
+    institutions,
+    profiles,
+    roles,
+    institutionId,
+    profileId,
+    roleId,
+    itemsPerPage,
+    setTotal,
+    setUserData,
+    setPage,
+    setLastPage,
+    setInstitutionId,
+    setProfileId,
+    setRoleId,
+  },
   adminNational,
 }: KeyWordFilterProps) => {
   async function handleChangeInstitution(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
-    setInstitutionId(e.target.value);
+    setInstitutionId(e.target.value as unknown as number);
 
     const institutionCondition = { institutionId: e.target.value };
 
@@ -73,7 +56,7 @@ export const AdvancedFilter = ({
 
   async function handleChangeRole(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
-    setRoleId(e.target.value);
+    setRoleId(e.target.value as unknown as number);
 
     let institutionCondition = {};
     if (institutionId) {
@@ -128,18 +111,7 @@ export const AdvancedFilter = ({
   return (
     <div className={`${styles["filter_details"]}`}>
       <div className={` ${styles["filter-item"]}`}>
-        <KeyWordFilter
-          keyWord={keyWord}
-          setKey={setKey}
-          setLastPage={setLastPage}
-          setPage={setPage}
-          setUserData={setUserData}
-          setTotal={setTotal}
-          itemsPerPage={itemsPerPage}
-          itemsPerPage={itemsPerPage}
-          institutionId={institutionId}
-          roleId={roleId}
-        />
+        <KeyWordFilter paginationData={paginationData} />
       </div>
 
       {adminNational && (

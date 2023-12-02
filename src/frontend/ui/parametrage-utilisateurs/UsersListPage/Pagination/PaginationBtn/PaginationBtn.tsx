@@ -8,33 +8,15 @@ import "@gouvfr/dsfr/dist/component/pagination/pagination.min.css";
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 
+import { iPaginationData } from "../../UsersListPage";
 import styles from "./PaginationBtn.module.css";
 
 type PaginationBtnProps = Readonly<{
-  total: number;
-  lastPage: number;
-  setUserData: () => {};
-  setPage: () => {};
-  setLastPage: () => {};
-  page: number;
-  keyWord: string;
-  institutionId: number;
-  roleId: number;
-  profileId: string;
-  itemsPerPage: number;
+  paginationData: iPaginationData;
 }>;
 
 export const PaginationBtn = ({
-  setUserData,
-  setPage,
-  lastPage,
-  page,
-  keyWord,
-  setLastPage,
-  institutionId,
-  roleId,
-  profileId,
-  itemsPerPage,
+  paginationData: { lastPage, page, keyWord, institutionId, roleId, profileId, itemsPerPage, setUserData, setPage, setLastPage },
 }: PaginationBtnProps) => {
   const intervalRecursive = (x: number, y: number, accum = []) => {
     if (x + 1 === y) return accum;
@@ -64,7 +46,7 @@ export const PaginationBtn = ({
       profilCondition = { profileId: profileId };
     }
 
-    const params = { key: keyWord, sort: "", page: page, itemsPerPage: itemsPerPage, ...institutionCondition, ...roleCondition, ...profilCondition };
+    const params = { key: keyWord, sort: "", page: page, ...institutionCondition, ...roleCondition, ...profilCondition, itemsPerPage: itemsPerPage };
     await fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
       headers: { "Content-Type": "application/json" },
       method: "GET",

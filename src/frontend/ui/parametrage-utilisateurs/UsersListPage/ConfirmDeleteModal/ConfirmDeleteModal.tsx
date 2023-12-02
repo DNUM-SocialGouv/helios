@@ -1,17 +1,18 @@
 "use client";
-import { useRouter } from "next/navigation";
+
+import { iPaginationData } from "../UsersListPage";
 
 type ConfirmDeleteModalProps = Readonly<{
+  paginationData: iPaginationData;
   userCode: string;
-  keyWord: string;
-  page: number;
-  institutionId: number;
-  roleId: number;
-  profileId: string;
   lastElementInPage: boolean;
 }>;
 
-export const ConfirmDeleteModal = ({ userCode, keyWord, page, institutionId, roleId, profileId, lastElementInPage }: ConfirmDeleteModalProps) => {
+export const ConfirmDeleteModal = ({
+  paginationData: { keyWord, page, institutionId, roleId, profileId, itemsPerPage },
+  userCode,
+  lastElementInPage,
+}: ConfirmDeleteModalProps) => {
   async function deleteUser(userCode: string) {
     let keyWordData = {};
     if (keyWord) {
@@ -42,7 +43,15 @@ export const ConfirmDeleteModal = ({ userCode, keyWord, page, institutionId, rol
       profileIdData = { profileId: profileId };
     }
 
-    const params = { status: "deleted_successfully", ...keyWordData, ...pageData, ...institutionIdData, ...roleIdData, ...profileIdData };
+    const params = {
+      status: "deleted_successfully",
+      ...keyWordData,
+      ...pageData,
+      ...institutionIdData,
+      ...roleIdData,
+      ...profileIdData,
+      itemsPerPage: itemsPerPage,
+    };
 
     const urlparams = new URLSearchParams(params).toString();
 

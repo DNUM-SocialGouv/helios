@@ -4,37 +4,18 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
-
-import styles from "./KeyWordFilter.module.css";
+import { iPaginationData } from "../../UsersListPage";
 
 type KeyWordFilterProps = Readonly<{
-  keyWord: string;
-  itemsPerPage: number;
-  institutionId: number;
-  roleId: number;
-  profileId: string;
-  setKey: () => void;
-  setUserData: () => void;
-  setPage: () => void;
-  setLastPage: () => void;
-  setTotal: () => void;
+  paginationData: iPaginationData;
 }>;
 
 export const KeyWordFilter = ({
-  keyWord,
-  setKey,
-  setUserData,
-  setPage,
-  setLastPage,
-  setTotal,
-  itemsPerPage,
-  institutionId,
-  roleId,
-  profileId,
+  paginationData: { keyWord, itemsPerPage, institutionId, roleId, profileId, setKey, setUserData, setPage, setLastPage, setTotal },
 }: KeyWordFilterProps) => {
-  async function handleChange(e: Event) {
+  async function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-    setKey(e.target.value);
+    setKey(e.target.value as unknown as string);
 
     let institutionCondition = {};
     if (institutionId) {

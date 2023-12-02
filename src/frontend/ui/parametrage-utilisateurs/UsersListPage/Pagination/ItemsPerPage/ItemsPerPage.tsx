@@ -4,50 +4,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
-import { InstitutionModel } from "../../../../../../../database/models/InstitutionModel";
-import { ProfilModel } from "../../../../../../../database/models/ProfilModel";
-import { RoleModel } from "../../../../../../../database/models/RoleModel";
-import { KeyWordFilter } from "../../Filter/KeyWordFilter/KeyWordFilter";
-import styles from "./ItemsPerPage.module.css";
+import { iPaginationData } from "../../UsersListPage";
 
 type KeyWordFilterProps = Readonly<{
-  keyWord: string;
-  setKey: () => void;
-  setUserData: () => void;
-  setPage: () => void;
-  setLastPage: () => void;
-  setRoleId: () => void;
-  setProfileId: () => void;
-  setInstitutionId: () => void;
-  setTotal: () => void;
-
-  institutions: InstitutionModel[];
-  profiles: ProfilModel[];
-  roles: RoleModel[];
-  institutionId: number;
-  roleId: number;
-  profileId: string;
+  paginationData: iPaginationData;
 }>;
 
 export const ItemsPerPage = ({
-  keyWord,
-  setKey,
-  setTotal,
-  setUserData,
-  setPage,
-  setLastPage,
-  institutions,
-  profiles,
-  roles,
-  setInstitutionId,
-  institutionId,
-  setProfileId,
-  profileId,
-  roleId,
-  setRoleId,
-  page,
-  setItemsPerPage,
-  itemsPerPage,
+  paginationData: { keyWord, institutionId, profileId, roleId, itemsPerPage, setTotal, setUserData, setPage, setLastPage, setItemsPerPage },
 }: KeyWordFilterProps) => {
   const pagesArray = [10, 20, 30, 50, 100];
   async function handleChangeItemsPerPage(e: React.ChangeEvent<HTMLSelectElement>) {

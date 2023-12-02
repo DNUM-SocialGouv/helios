@@ -4,22 +4,44 @@ import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 
+import { useSession } from "next-auth/react";
 import { useQueryState, parseAsInteger, parseAsString } from "next-usequerystate";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../database/models/RoleModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
-import { formatDateAndHours } from "../../../utils/dateUtils";
+//import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { ConfirmDeleteModal } from "./ConfirmDeleteModal/ConfirmDeleteModal";
 import { AdvancedFilter } from "./Filter/AdvancedFilter/AdvancedFilter";
-import { KeyWordFilter } from "./Filter/KeyWordFilter/KeyWordFilter";
+import { ItemsPerPage } from "./Pagination/ItemsPerPage/ItemsPerPage";
 import { PaginationBtn } from "./Pagination/PaginationBtn/PaginationBtn";
 import styles from "./UsersListPage.module.css";
-import { ItemsPerPage } from "./Pagination/ItemsPerPage/ItemsPerPage";
-import { useSession } from "next-auth/react";
+
+export interface iPaginationData {
+  institutionId: number;
+  institutions: InstitutionModel[];
+  keyWord: string;
+  page: number;
+  profileId: string;
+  profiles: ProfilModel[];
+  roleId: number;
+  roles: RoleModel[];
+  itemsPerPage: number;
+  lastPage: number;
+  total: number;
+  setKey: (key: string) => void;
+  setInstitutionId: (institutionId: number) => void;
+  setLastPage: (lastPage: number) => void;
+  setPage: (page: number) => void;
+  setProfileId: (profileId: string) => void;
+  setRoleId: (roleId: number) => void;
+  setUserData: (userData: UtilisateurModel[]) => void;
+  setTotal: (total: number) => void;
+  setItemsPerPage: (itemsPerPage: number) => void;
+}
 
 type UsersListPageProps = Readonly<{
   users: {
@@ -56,20 +78,43 @@ export const UsersListPage = ({
 }: UsersListPageProps) => {
   const { data } = useSession();
 
-  const [userData, setUserData] = useState(users.data);
+  const [userData, setUserData] = useState<UtilisateurModel[]>(users.data);
   const [total, setTotal] = useState(users.total);
   const [lastPage, setLastPage] = useState(users.lastPage);
 
-  const [key, setKey] = useQueryState("key", parseAsString.withDefault(keyWord));
+  const [key, setKey] = useQueryState<string>("key", parseAsString.withDefault(keyWord));
   const [institutionId, setInstitutionId] = useQueryState("institutionId", parseAsInteger.withDefault(institution));
   const [roleId, setRoleId] = useQueryState("roleId", parseAsInteger.withDefault(role));
   const [profileId, setProfileId] = useQueryState("profileId", parseAsString.withDefault(profile));
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(users.currentPage));
-  const [statusCode, setStatusCode] = useQueryState("status", parseAsString.withDefault(status));
+  const [statusCode] = useQueryState("status", parseAsString.withDefault(status));
   const [userToDelete, setUserToDelete] = useState("");
   const [itemsPerPage, setItemsPerPage] = useQueryState("itemsPerPage", parseAsInteger.withDefault(itemsPerPageValue));
 
   const { wording } = useDependencies();
+
+  const paginationData: iPaginationData = {
+    institutionId: institutionId,
+    institutions: institutions,
+    keyWord: key,
+    page: page as number,
+    profileId: profileId,
+    profiles: profiles,
+    roleId: roleId,
+    roles: roles,
+    itemsPerPage: itemsPerPage,
+    lastPage: lastPage,
+    total: users.total,
+    setKey: setKey,
+    setInstitutionId: setInstitutionId,
+    setLastPage: setLastPage,
+    setPage: setPage,
+    setProfileId: setProfileId,
+    setRoleId: setRoleId,
+    setUserData: setUserData,
+    setTotal: setTotal,
+    setItemsPerPage: setItemsPerPage,
+  };
 
   return (
     <main className="fr-container">
@@ -79,37 +124,18 @@ export const UsersListPage = ({
 
           {statusCode === "edit_successfully" && (
             <div className="fr-alert fr-alert--success fr-alert--sm fr-mb-3w ">
-              <p>La modification de l'utilisateur a été effectuée avec succès.</p>
+              <p>La modification de l`utilisateur a été effectuée avec succès.</p>
             </div>
           )}
 
           {statusCode === "deleted_successfully" && (
             <div className="fr-alert fr-alert--success fr-alert--sm fr-mb-3w ">
-              <p>La suppression de l'utilisateur a été effectuée avec succès.</p>
+              <p>La suppression de l`utilisateur a été effectuée avec succès.</p>
             </div>
           )}
 
           <div className={`${styles["filtres-container"]}`}>
-            <AdvancedFilter
-              institutionId={institutionId}
-              institutions={institutions}
-              keyWord={key}
-              setKey={setKey}
-              page={page}
-              profileId={profileId}
-              profiles={profiles}
-              roleId={roleId}
-              roles={roles}
-              setInstitutionId={setInstitutionId}
-              setLastPage={setLastPage}
-              setPage={setPage}
-              setProfileId={setProfileId}
-              setRoleId={setRoleId}
-              setUserData={setUserData}
-              setTotal={setTotal}
-              itemsPerPage={itemsPerPage}
-              adminNational={data?.user?.role === 1}
-            />
+            <AdvancedFilter adminNational={(data?.user?.role as unknown as number) === 1} paginationData={paginationData} />
           </div>
           <div className={styles["count-elements"]}>
             {total > 1 && <>{total} éléments trouvés.</>}
@@ -202,36 +228,10 @@ export const UsersListPage = ({
                 </table>
                 <div className={`${styles["pagination-container"]}`}>
                   <div className={`${styles["paginationBtn-container"]}`}>
-                    <PaginationBtn
-                      institutionId={institutionId}
-                      keyWord={key}
-                      lastPage={lastPage}
-                      page={page as number}
-                      profileId={profileId}
-                      roleId={roleId}
-                      setLastPage={setLastPage}
-                      setPage={setPage}
-                      setUserData={setUserData}
-                      total={users.total}
-                      itemsPerPage={itemsPerPage}
-                    />
+                    <PaginationBtn paginationData={paginationData} />
                   </div>
                   <div className={`${styles["itemsPerPage-container"]}`}>
-                    <ItemsPerPage
-                      institutionId={institutionId}
-                      keyWord={key}
-                      lastPage={lastPage}
-                      page={page as number}
-                      profileId={profileId}
-                      roleId={roleId}
-                      setLastPage={setLastPage}
-                      setPage={setPage}
-                      setUserData={setUserData}
-                      total={users.total}
-                      itemsPerPage={itemsPerPage}
-                      setItemsPerPage={setItemsPerPage}
-                      setTotal={setTotal}
-                    />
+                    <ItemsPerPage paginationData={paginationData} />
                   </div>
                 </div>
               </div>
@@ -239,15 +239,7 @@ export const UsersListPage = ({
           )}
         </>
       )}
-      <ConfirmDeleteModal
-        institutionId={institutionId}
-        keyWord={key}
-        page={page}
-        profileId={profileId}
-        roleId={roleId}
-        userCode={userToDelete}
-        lastElementInPage={lastElementInPage}
-      />
+      <ConfirmDeleteModal lastElementInPage={lastElementInPage} paginationData={paginationData} userCode={userToDelete} />
     </main>
   );
 };
