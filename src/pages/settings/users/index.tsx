@@ -84,7 +84,7 @@ export async function getServerSideProps(context): Promise<GetStaticPropsResult<
     itemsPerPage = itemsPerPage as number | 10;
     key = key as string | "";
     institutionId = institutionId as number | 0;
-    institutionId = codeRegion;
+    //institutionId = codeRegion;
     roleId = roleId as number | 0;
     const profilId = profileId as string | "";
 

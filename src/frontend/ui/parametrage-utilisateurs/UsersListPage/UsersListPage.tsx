@@ -132,7 +132,7 @@ export const UsersListPage = ({
 
                       <th scope="col">{wording.INSTITUTION}</th>
                       <th scope="col">{wording.ROLE_}</th>
-                      <th scope="col">{wording.PROFILE}</th>
+                      <th scope="col">Profils</th>
                       {/*<th className={styles["widthTD-date"]} scope="col">
                         {wording.CREATION_DATE}
                       </th>*/}
