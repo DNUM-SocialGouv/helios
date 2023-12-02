@@ -160,7 +160,9 @@ export const UsersListPage = ({
                           <td className={styles["widthTD-small"]}>{user.institution.libelle}</td>
 
                           <td>
-                            <span className={`fr-badge fr-badge--${roleClass} fr-badge--no-icon ${styles["text_no_change"]} ${styles["widthTD-role"]}`}>
+                            <span
+                              className={`fr-badge fr-badge--${roleClass} fr-badge--no-icon ${styles["text_no_change"]} ${styles["widthTD-role"]}  fr-text--xs`}
+                            >
                               {user.role.libelle}
                             </span>
                           </td>
@@ -173,7 +175,7 @@ export const UsersListPage = ({
                                   <span
                                     className={`fr-badge fr-badge--${
                                       pr[0].code === "f998021c-9613-4978-be6a-2b4cd9e24ffb" ? "info" : "error"
-                                    } fr-badge--no-icon ${styles["text_no_change"]} ${styles["widthTD-profil"]}  `}
+                                    } fr-badge--no-icon ${styles["text_no_change"]} ${styles["widthTD-profil"]}  fr-text--xs  `}
                                   >
                                     {pr[0].label}
                                   </span>
