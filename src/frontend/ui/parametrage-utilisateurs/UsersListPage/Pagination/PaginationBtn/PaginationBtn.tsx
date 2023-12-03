@@ -91,7 +91,7 @@ export const PaginationBtn = ({
           </li>
           {lastPage === 1 && (
             <li>
-              <button className={`fr-pagination__link ${page === 1 && styles["currentPage"]}`} href="#" onClick={(e) => changePage(e, 1, true)} title="Page 1">
+              <button className={`fr-pagination__link ${page === 1 && styles["currentPage"]}`} onClick={(e) => changePage(e, 1, true)} title="Page 1">
                 1
               </button>
             </li>
@@ -100,7 +100,7 @@ export const PaginationBtn = ({
           {lastPage > 1 && (
             <>
               {lastPage <= 11 &&
-                [...Array(lastPage)].map((p, i) => (
+                [...Array(lastPage)].map((_p, i) => (
                   <li key={i}>
                     <button
                       className={`fr-pagination__link ${page === i + 1 && styles["currentPage"]}`}
