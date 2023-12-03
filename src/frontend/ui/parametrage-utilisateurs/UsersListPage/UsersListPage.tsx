@@ -187,7 +187,7 @@ export const UsersListPage = ({
 
                           <td>
                             <span
-                              className={`fr-badge fr-badge--${roleClass} fr-badge--no-icon ${styles["text_no_change"]} ${styles["widthTD-role"]}  fr-text--xs`}
+                              className={`fr-badge fr-badge--${roleClass} fr-badge--no-icon ${styles["text_no_change"]} ${styles["widthTD-role"]} fr-text--xs`}
                             >
                               {user.role.libelle}
                             </span>
@@ -211,12 +211,14 @@ export const UsersListPage = ({
                           </td>
                           {/*<td className={styles["widthTD-date"]}>{formatDateAndHours(user.dateCreation)}</td>*/}
                           <td>
-                            <a className="fr-raw-link" href={`/settings/users/${user.code}`}>
+                            <a
+                              className="fr-raw-link"
+                              href={`/settings/users/${user.code}?page=${page}&itemsPerPage=${itemsPerPage}&key=${key}&institutionId=${institutionId}&roleId=${roleId}&profileId=${profileId}`}
+                            >
                               <button>
                                 <span aria-hidden="true" className="fr-icon-pencil-line"></span>
                               </button>
                             </a>
-
                             <button aria-controls="fr-modal-2" data-fr-opened="false">
                               <span aria-hidden="true" className="fr-icon-delete-line" onClick={() => setUserToDelete(user.code)}></span>
                             </button>

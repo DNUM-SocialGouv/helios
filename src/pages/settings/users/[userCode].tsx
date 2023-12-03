@@ -1,6 +1,6 @@
-import { GetStaticPathsResult, GetStaticPropsResult } from "next";
-import { InstitutionModel } from "../../../../database/models/InstitutionModel";
+import { GetStaticPropsResult } from "next";
 
+import { InstitutionModel } from "../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../database/models/RoleModel";
 import { UtilisateurModel } from "../../../../database/models/UtilisateurModel";
@@ -14,7 +14,7 @@ import { useBreadcrumb } from "../../../frontend/ui/commun/hooks/useBreadcrumb";
 import { EditUser } from "../../../frontend/ui/parametrage-utilisateurs/EditUser/EditUser";
 
 type RouterProps = Readonly<{
-  users: UtilisateurModel;
+  user: UtilisateurModel;
   institutions: InstitutionModel[];
   profiles: ProfilModel[];
   roles: RoleModel[];
@@ -32,17 +32,13 @@ export default function Router({ user, institutions, profiles, roles }: RouterPr
       path: "",
     },
   ]);
-  // return <ParametrageProfilPage code={userCode} />;
-  //return <>okkkkkkkkkkkkk user code est : {userCode}</>;
   return <EditUser institutions={institutions} profiles={profiles} roles={roles} user={user} />;
 }
 
 export async function getServerSideProps({ params }: { params: { userCode: string } }): Promise<GetStaticPropsResult<RouterProps>> {
   try {
-    const { environmentVariables } = dependencies;
     const user = await getUserByCodeEndpoint(dependencies, params.userCode);
 
-    console.log("----user---", user);
     if (!user) {
       return {
         notFound: true,
@@ -50,13 +46,8 @@ export async function getServerSideProps({ params }: { params: { userCode: strin
     }
 
     const institutions = await getInstitutionsEndpoint(dependencies);
-    //console.log("--institutions---", institutions);
-
     const profiles = await getAllProfilesEndpoint(dependencies);
-    // console.log("--profiles---", profiles);
-
     const roles = await getAllRolesEndpoint(dependencies);
-    // console.log("--roles---", roles);
 
     return {
       props: {

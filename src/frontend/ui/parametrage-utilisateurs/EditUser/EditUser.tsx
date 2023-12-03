@@ -1,10 +1,12 @@
+"use client";
+
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import "@gouvfr/dsfr/dist/component/pagination/pagination.min.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { FormEvent, useState } from "react";
 
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
@@ -15,13 +17,15 @@ import { useDependencies } from "../../commun/contexts/useDependencies";
 import styles from "./EditUser.module.css";
 
 type UsersListPageProps = Readonly<{
-  users: UtilisateurModel;
+  user: UtilisateurModel;
   institutions: InstitutionModel[];
   profiles: ProfilModel[];
   roles: RoleModel[];
 }>;
 
 export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageProps) => {
+  const searchParams = useSearchParams();
+
   const [userinfo, setUserInfo] = useState({
     profiles: [...user.profils],
   });
@@ -29,7 +33,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
   const { wording } = useDependencies();
   const { push } = useRouter();
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
     const { profiles } = userinfo;
 
@@ -44,24 +48,24 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
     }
   };
 
-  const handleChangeReset = (e) => {
+  const handleChangeReset = () => {
     setUserInfo({
       profiles: [...user.profils],
     });
   };
 
-  function handleSubmit(e) {
+  function handleSubmit(e: FormEvent) {
     e.preventDefault();
     const { profiles } = userinfo;
+    // @ts-ignore
     const { institutionId, roleId } = e.target.elements;
 
     fetch("/api/utilisateurs/update", {
       body: JSON.stringify({ institutionCode: institutionId.value, roleCode: roleId.value, profilsCode: profiles }),
       headers: { "Content-Type": "application/json" },
       method: "POST",
-    }).then((user) => {
-      console.log("user changed  ", user);
-      push("/settings/users?status=edit_successfully");
+    }).then(() => {
+      push("/settings/users?status=edit_successfully&" + searchParams.toString());
     });
   }
 
@@ -89,7 +93,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
             </div>
             <div className={styles["field_container"]}>
               <label className="fr-label">
-                <div className={styles["label-field"]}>{wording.CREATION_DATE} : </div> {formatDateAndHours(user.dateCreation)}
+                <div className={styles["label-field"]}>{wording.CREATION_DATE} : </div> {formatDateAndHours(user.dateCreation.toString())}
               </label>
             </div>
 
@@ -119,7 +123,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                     Selectionnez une option
                   </option>
                   {roles.map((item) => (
-                    <option key={item.id} selected={user.roleId === item.id} value={item.code}>
+                    <option key={item.id} selected={parseInt(user.roleId) === item.id} value={item.code}>
                       {item.libelle}
                     </option>
                   ))}
@@ -137,14 +141,14 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                     >
                       <div className="fr-checkbox-group">
                         <input
-                          className={`${styles["input--checkbox--error"]} `}
                           aria-describedby={`checkboxes-${item.code}-messages`}
+                          checked={userinfo.profiles && userinfo.profiles.includes(item.code)}
+                          className={`${styles["input--checkbox--error"]} `}
                           id={`${item.code}`}
                           name="profiles"
                           onChange={handleChange}
-                          value={`${item.code}`}
                           type="checkbox"
-                          checked={userinfo.profiles && userinfo.profiles.includes(item.code)}
+                          value={`${item.code}`}
                         />
                         <label className="fr-label" htmlFor={`${item.code}`}>
                           {item.label}
@@ -154,7 +158,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                   ))}
                 </div>
                 {userinfo.profiles.length === 0 && (
-                  <div className={` fr-mt-2w fr-messages-group  ${styles["fr-fieldset--error"]}`} id="checkboxes-error-messages" aria-live="assertive">
+                  <div aria-live="assertive" className={` fr-mt-2w fr-messages-group  ${styles["fr-fieldset--error"]}`} id="checkboxes-error-messages">
                     <p className={` fr-message fr-message--error ${styles["fr-fieldset--error"]}`} id="checkboxes-error-message-error">
                       Champ obligatoire
                     </p>
