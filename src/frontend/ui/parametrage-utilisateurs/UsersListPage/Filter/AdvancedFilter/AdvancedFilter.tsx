@@ -4,8 +4,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
+import { memo, useCallback } from "react";
+
 import { iPaginationData } from "../../UsersListPage";
-import { KeyWordFilter } from "../KeyWordFilter/KeyWordFilter";
+import KeyWordFilter from "../KeyWordFilter/KeyWordFilter";
 import styles from "./AdvancedFilter.module.css";
 
 type KeyWordFilterProps = Readonly<{
@@ -13,7 +15,7 @@ type KeyWordFilterProps = Readonly<{
   adminNational: boolean;
 }>;
 
-export const AdvancedFilter = ({
+const AdvancedFilter = ({
   paginationData,
   paginationData: {
     keyWord,
@@ -34,79 +36,91 @@ export const AdvancedFilter = ({
   },
   adminNational,
 }: KeyWordFilterProps) => {
-  async function handleChangeInstitution(e: React.ChangeEvent<HTMLSelectElement>) {
-    e.preventDefault();
-    setInstitutionId(e.target.value as unknown as number);
+  const handleChangeInstitution = useCallback(
+    async (e: React.ChangeEvent<HTMLSelectElement>) => {
+      e.preventDefault();
+      setInstitutionId(e.target.value as unknown as number);
 
-    const institutionCondition = { institutionId: e.target.value };
+      const institutionCondition = { institutionId: e.target.value };
 
-    let roleCondition = {};
-    if (roleId) {
-      roleCondition = { roleId: roleId };
-    }
+      let roleCondition = {};
+      if (roleId) {
+        roleCondition = { roleId: roleId };
+      }
 
-    let profilCondition = {};
-    if (profileId) {
-      profilCondition = { profileId: profileId };
-    }
+      let profilCondition = {};
+      if (profileId) {
+        profilCondition = { profileId: profileId };
+      }
 
-    const params = { key: keyWord, sort: "", page: 1, itemsPerPage: itemsPerPage, ...institutionCondition, ...roleCondition, ...profilCondition };
-    getUsersAction(params);
-  }
+      const params = { key: keyWord, sort: "", page: 1, itemsPerPage: itemsPerPage, ...institutionCondition, ...roleCondition, ...profilCondition };
+      await getUsersAction(params);
+    },
+    [institutionId, roleId, profileId, itemsPerPage, keyWord]
+  );
 
-  async function handleChangeRole(e: React.ChangeEvent<HTMLSelectElement>) {
-    e.preventDefault();
-    setRoleId(e.target.value as unknown as number);
+  const handleChangeRole = useCallback(
+    async (e: React.ChangeEvent<HTMLSelectElement>) => {
+      e.preventDefault();
+      setRoleId(e.target.value as unknown as number);
 
-    let institutionCondition = {};
-    if (institutionId) {
-      institutionCondition = { institutionId: institutionId };
-    }
+      let institutionCondition = {};
+      if (institutionId) {
+        institutionCondition = { institutionId: institutionId };
+      }
 
-    const roleCondition = { roleId: e.target.value };
+      const roleCondition = { roleId: e.target.value };
 
-    let profilCondition = {};
-    if (profileId) {
-      profilCondition = { profileId: profileId };
-    }
+      let profilCondition = {};
+      if (profileId) {
+        profilCondition = { profileId: profileId };
+      }
 
-    const params = { key: keyWord, sort: "", page: 1, itemsPerPage: itemsPerPage, ...institutionCondition, ...roleCondition, ...profilCondition };
-    getUsersAction(params);
-  }
+      const params = { key: keyWord, sort: "", page: 1, itemsPerPage: itemsPerPage, ...institutionCondition, ...roleCondition, ...profilCondition };
+      await getUsersAction(params);
+    },
+    [institutionId, roleId, profileId, itemsPerPage, keyWord]
+  );
 
-  async function handleChangeProfil(e: React.ChangeEvent<HTMLSelectElement>) {
-    e.preventDefault();
-    setProfileId(e.target.value);
+  const handleChangeProfil = useCallback(
+    async (e: React.ChangeEvent<HTMLSelectElement>) => {
+      e.preventDefault();
+      setProfileId(e.target.value);
 
-    let institutionCondition = {};
-    if (institutionId) {
-      institutionCondition = { institutionId: institutionId };
-    }
+      let institutionCondition = {};
+      if (institutionId) {
+        institutionCondition = { institutionId: institutionId };
+      }
 
-    let roleCondition = {};
-    if (roleId) {
-      roleCondition = { roleId: roleId };
-    }
+      let roleCondition = {};
+      if (roleId) {
+        roleCondition = { roleId: roleId };
+      }
 
-    const profilCondition = { profileId: e.target.value };
+      const profilCondition = { profileId: e.target.value };
 
-    const params = { key: keyWord, sort: "", page: 1, itemsPerPage: itemsPerPage, ...institutionCondition, ...roleCondition, ...profilCondition };
-    getUsersAction(params);
-  }
+      const params = { key: keyWord, sort: "", page: 1, itemsPerPage: itemsPerPage, ...institutionCondition, ...roleCondition, ...profilCondition };
+      await getUsersAction(params);
+    },
+    [institutionId, roleId, profileId, itemsPerPage, keyWord]
+  );
 
-  function getUsersAction(params: {}) {
-    fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
-      headers: { "Content-Type": "application/json" },
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((users) => {
-        setUserData(users.data);
-        setTotal(users.total);
-        setPage(1);
-        setLastPage(users.lastPage);
-      });
-  }
+  const getUsersAction = useCallback(
+    (params: {}) => {
+      fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
+        headers: { "Content-Type": "application/json" },
+        method: "GET",
+      })
+        .then((response) => response.json())
+        .then((users) => {
+          setUserData(users.data);
+          setTotal(users.total);
+          setPage(1);
+          setLastPage(users.lastPage);
+        });
+    },
+    [institutionId, roleId, profileId, itemsPerPage, keyWord]
+  );
 
   return (
     <div className={`${styles["filter_details"]}`}>
@@ -120,7 +134,7 @@ export const AdvancedFilter = ({
             Institution
           </label>
 
-          <select className="fr-select" id="institution" onChange={(e) => handleChangeInstitution(e)}>
+          <select className="fr-select" id="institution" onChange={handleChangeInstitution}>
             <option selected={institutionId === 0} value="">
               Toutes
             </option>
@@ -139,7 +153,7 @@ export const AdvancedFilter = ({
           Rôle
         </label>
 
-        <select className="fr-select" id="role" onChange={(e) => handleChangeRole(e)}>
+        <select className="fr-select" id="role" onChange={handleChangeRole}>
           <option selected={roleId === 0 || roleId === null} value="">
             Tous
           </option>
@@ -155,7 +169,7 @@ export const AdvancedFilter = ({
         <label className="fr-label" htmlFor="profil">
           Profil
         </label>
-        <select className="fr-select" id="profil" onChange={(e) => handleChangeProfil(e)}>
+        <select className="fr-select" id="profil" onChange={handleChangeProfil}>
           <option selected={profileId === "" || profileId === null} value="">
             Tous
           </option>
@@ -170,3 +184,5 @@ export const AdvancedFilter = ({
     </div>
   );
 };
+
+export default memo(AdvancedFilter);

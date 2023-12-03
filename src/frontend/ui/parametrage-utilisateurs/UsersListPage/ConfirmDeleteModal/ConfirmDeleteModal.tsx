@@ -1,5 +1,7 @@
 "use client";
 
+import { memo, useCallback } from "react";
+
 import { iPaginationData } from "../UsersListPage";
 
 type ConfirmDeleteModalProps = Readonly<{
@@ -8,12 +10,12 @@ type ConfirmDeleteModalProps = Readonly<{
   lastElementInPage: boolean;
 }>;
 
-export const ConfirmDeleteModal = ({
+const ConfirmDeleteModal = ({
   paginationData: { keyWord, page, institutionId, roleId, profileId, itemsPerPage },
   userCode,
   lastElementInPage,
 }: ConfirmDeleteModalProps) => {
-  async function deleteUser(userCode: string) {
+  const deleteUser = useCallback(async (userCode: string) => {
     let keyWordData = {};
     if (keyWord) {
       keyWordData = { key: keyWord };
@@ -55,14 +57,14 @@ export const ConfirmDeleteModal = ({
 
     const urlparams = new URLSearchParams(params).toString();
 
-    fetch("/api/utilisateurs/delete", {
+    await fetch("/api/utilisateurs/delete", {
       body: JSON.stringify({ userCode: userCode }),
       headers: { "Content-Type": "application/json" },
       method: "DELETE",
     }).then(() => {
       window.location.href = "/settings/users?" + urlparams;
     });
-  }
+  }, []);
 
   return (
     <dialog aria-labelledby="fr-modal-2-title" className="fr-modal" id="fr-modal-2">
@@ -98,3 +100,5 @@ export const ConfirmDeleteModal = ({
     </dialog>
   );
 };
+
+export default memo(ConfirmDeleteModal);

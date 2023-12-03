@@ -12,12 +12,11 @@ import { InstitutionModel } from "../../../../../database/models/InstitutionMode
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../database/models/RoleModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
-//import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
-import { ConfirmDeleteModal } from "./ConfirmDeleteModal/ConfirmDeleteModal";
-import { AdvancedFilter } from "./Filter/AdvancedFilter/AdvancedFilter";
-import { ItemsPerPage } from "./Pagination/ItemsPerPage/ItemsPerPage";
-import { PaginationBtn } from "./Pagination/PaginationBtn/PaginationBtn";
+import ConfirmDeleteModal from "./ConfirmDeleteModal/ConfirmDeleteModal";
+import AdvancedFilter from "./Filter/AdvancedFilter/AdvancedFilter";
+import ItemsPerPage from "./Pagination/ItemsPerPage/ItemsPerPage";
+import PaginationBtn from "./Pagination/PaginationBtn/PaginationBtn";
 import styles from "./UsersListPage.module.css";
 
 export interface iPaginationData {

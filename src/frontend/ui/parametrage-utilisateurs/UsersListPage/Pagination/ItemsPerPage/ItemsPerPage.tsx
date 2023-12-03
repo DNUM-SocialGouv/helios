@@ -4,51 +4,59 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
+import { memo, useCallback } from "react";
+
 import { iPaginationData } from "../../UsersListPage";
 
 type KeyWordFilterProps = Readonly<{
   paginationData: iPaginationData;
 }>;
 
-export const ItemsPerPage = ({
+const ItemsPerPage = ({
   paginationData: { keyWord, institutionId, profileId, roleId, itemsPerPage, setTotal, setUserData, setPage, setLastPage, setItemsPerPage },
 }: KeyWordFilterProps) => {
   const pagesArray = [10, 20, 30, 50, 100];
-  async function handleChangeItemsPerPage(e: React.ChangeEvent<HTMLSelectElement>) {
-    e.preventDefault();
-    let institutionCondition = {};
-    if (institutionId) {
-      institutionCondition = { institutionId: institutionId };
-    }
+  const handleChangeItemsPerPage = useCallback(
+    async (e: React.ChangeEvent<HTMLSelectElement>) => {
+      e.preventDefault();
+      let institutionCondition = {};
+      if (institutionId) {
+        institutionCondition = { institutionId: institutionId };
+      }
 
-    let roleCondition = {};
-    if (roleId) {
-      roleCondition = { roleId: roleId };
-    }
+      let roleCondition = {};
+      if (roleId) {
+        roleCondition = { roleId: roleId };
+      }
 
-    let profilCondition = {};
-    if (profileId) {
-      profilCondition = { profileId: profileId };
-    }
+      let profilCondition = {};
+      if (profileId) {
+        profilCondition = { profileId: profileId };
+      }
 
-    const params = { key: keyWord, sort: "", page: 1, ...institutionCondition, ...roleCondition, ...profilCondition, itemsPerPage: e.target.value };
-    getUsersAction(params);
-  }
+      const params = { key: keyWord, sort: "", page: 1, ...institutionCondition, ...roleCondition, ...profilCondition, itemsPerPage: e.target.value };
+      await getUsersAction(params);
+    },
+    [institutionId, roleId, profileId, itemsPerPage, keyWord]
+  );
 
-  function getUsersAction(params: {}) {
-    fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
-      headers: { "Content-Type": "application/json" },
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((users) => {
-        setUserData(users.data);
-        setTotal(users.total);
-        setPage(1);
-        setLastPage(users.lastPage);
-        setItemsPerPage(users.itemsPerPage);
-      });
-  }
+  const getUsersAction = useCallback(
+    async (params: {}) => {
+      await fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
+        headers: { "Content-Type": "application/json" },
+        method: "GET",
+      })
+        .then((response) => response.json())
+        .then((users) => {
+          setUserData(users.data);
+          setTotal(users.total);
+          setPage(1);
+          setLastPage(users.lastPage);
+          setItemsPerPage(users.itemsPerPage);
+        });
+    },
+    [institutionId, roleId, profileId, itemsPerPage, keyWord]
+  );
 
   return (
     <div className="fr-select-group">
@@ -62,3 +70,5 @@ export const ItemsPerPage = ({
     </div>
   );
 };
+
+export default memo(ItemsPerPage);

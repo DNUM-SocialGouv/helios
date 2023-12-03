@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-redundant-roles */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { MouseEvent } from "react";
+import { MouseEvent, memo, useCallback } from "react";
 import "@gouvfr/dsfr/dist/component/pagination/pagination.min.css";
 
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
@@ -15,7 +15,7 @@ type PaginationBtnProps = Readonly<{
   paginationData: iPaginationData;
 }>;
 
-export const PaginationBtn = ({
+const PaginationBtn = ({
   paginationData: { lastPage, page, keyWord, institutionId, roleId, profileId, itemsPerPage, setUserData, setPage, setLastPage },
 }: PaginationBtnProps) => {
   const intervalRecursive = (x: number, y: number, accum = []): never[] => {
@@ -23,50 +23,53 @@ export const PaginationBtn = ({
     return intervalRecursive(x + 1, y, accum.concat((x + 1) as never));
   };
 
-  const changePage = async (e: MouseEvent, page: number, disable = false) => {
-    e.preventDefault();
+  const changePage = useCallback(
+    async (e: MouseEvent, page: number, disable = false) => {
+      e.preventDefault();
 
-    if (disable === true) {
-      return null;
-    }
+      if (disable === true) {
+        return null;
+      }
 
-    let institutionCondition = {};
-    if (institutionId) {
-      institutionCondition = { institutionId: institutionId };
-    }
+      let institutionCondition = {};
+      if (institutionId) {
+        institutionCondition = { institutionId: institutionId };
+      }
 
-    let roleCondition = {};
-    if (roleId) {
-      roleCondition = { roleId: roleId };
-    }
+      let roleCondition = {};
+      if (roleId) {
+        roleCondition = { roleId: roleId };
+      }
 
-    let profilCondition = {};
-    if (profileId) {
-      profilCondition = { profileId: profileId };
-    }
+      let profilCondition = {};
+      if (profileId) {
+        profilCondition = { profileId: profileId };
+      }
 
-    const params = {
-      key: keyWord,
-      sort: "",
-      page: page.toString(),
-      ...institutionCondition,
-      ...roleCondition,
-      ...profilCondition,
-      itemsPerPage: itemsPerPage.toString(),
-    };
-    await fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
-      headers: { "Content-Type": "application/json" },
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((users) => {
-        setUserData(users.data);
-        setPage(users.currentPage);
-        setLastPage(users.lastPage);
-      });
+      const params = {
+        key: keyWord,
+        sort: "",
+        page: page.toString(),
+        ...institutionCondition,
+        ...roleCondition,
+        ...profilCondition,
+        itemsPerPage: itemsPerPage.toString(),
+      };
+      await fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
+        headers: { "Content-Type": "application/json" },
+        method: "GET",
+      })
+        .then((response) => response.json())
+        .then((users) => {
+          setUserData(users.data);
+          setPage(users.currentPage);
+          setLastPage(users.lastPage);
+        });
 
-    return true;
-  };
+      return true;
+    },
+    [institutionId, roleId, profileId, itemsPerPage, keyWord, page]
+  );
 
   return (
     <div className={styles["pagination_container"]}>
@@ -166,3 +169,5 @@ export const PaginationBtn = ({
     </div>
   );
 };
+
+export default memo(PaginationBtn);
