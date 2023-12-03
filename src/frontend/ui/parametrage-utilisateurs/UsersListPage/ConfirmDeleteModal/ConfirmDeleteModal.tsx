@@ -50,7 +50,7 @@ export const ConfirmDeleteModal = ({
       ...institutionIdData,
       ...roleIdData,
       ...profileIdData,
-      itemsPerPage: itemsPerPage,
+      itemsPerPage: itemsPerPage.toString(),
     };
 
     const urlparams = new URLSearchParams(params).toString();

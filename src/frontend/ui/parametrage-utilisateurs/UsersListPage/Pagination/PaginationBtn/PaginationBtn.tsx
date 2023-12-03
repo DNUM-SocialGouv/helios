@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-redundant-roles */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-
+import { MouseEvent } from "react";
 import "@gouvfr/dsfr/dist/component/pagination/pagination.min.css";
 
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
@@ -18,16 +18,15 @@ type PaginationBtnProps = Readonly<{
 export const PaginationBtn = ({
   paginationData: { lastPage, page, keyWord, institutionId, roleId, profileId, itemsPerPage, setUserData, setPage, setLastPage },
 }: PaginationBtnProps) => {
-  const intervalRecursive = (x: number, y: number, accum = []) => {
+  const intervalRecursive = (x: number, y: number, accum = []): never[] => {
     if (x + 1 === y) return accum;
-    return intervalRecursive(x + 1, y, accum.concat(x + 1));
+    return intervalRecursive(x + 1, y, accum.concat((x + 1) as never));
   };
 
   const changePage = async (e: MouseEvent, page: number, disable = false) => {
     e.preventDefault();
 
     if (disable === true) {
-      console.log(" disabled");
       return null;
     }
 
@@ -46,7 +45,15 @@ export const PaginationBtn = ({
       profilCondition = { profileId: profileId };
     }
 
-    const params = { key: keyWord, sort: "", page: page, ...institutionCondition, ...roleCondition, ...profilCondition, itemsPerPage: itemsPerPage };
+    const params = {
+      key: keyWord,
+      sort: "",
+      page: page.toString(),
+      ...institutionCondition,
+      ...roleCondition,
+      ...profilCondition,
+      itemsPerPage: itemsPerPage.toString(),
+    };
     await fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
       headers: { "Content-Type": "application/json" },
       method: "GET",
@@ -57,6 +64,8 @@ export const PaginationBtn = ({
         setPage(users.currentPage);
         setLastPage(users.lastPage);
       });
+
+    return true;
   };
 
   return (
@@ -64,27 +73,27 @@ export const PaginationBtn = ({
       <nav aria-label="Pagination" className="fr-pagination" role="navigation">
         <ul className="fr-pagination__list">
           <li>
-            <a
+            <button
               className={`fr-pagination__link fr-pagination__link--first  ${page === 1 ? styles["disabledBtn"] : styles["enabledBtn"]}`}
               onClick={(e) => changePage(e, 1)}
             >
               Première page
-            </a>
+            </button>
           </li>
           <li>
-            <a
+            <button
               className={`fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label 
               ${page === 1 ? styles["disabledBtn"] : styles["enabledBtn"]}`}
               onClick={(e) => changePage(e, page - 1, page === 1)}
             >
               Page précédente
-            </a>
+            </button>
           </li>
           {lastPage === 1 && (
             <li>
-              <a className={`fr-pagination__link ${page === 1 && styles["currentPage"]}`} href="#" onClick={(e) => changePage(e, 1, true)} title="Page 1">
+              <button className={`fr-pagination__link ${page === 1 && styles["currentPage"]}`} href="#" onClick={(e) => changePage(e, 1, true)} title="Page 1">
                 1
-              </a>
+              </button>
             </li>
           )}
 
@@ -93,14 +102,13 @@ export const PaginationBtn = ({
               {lastPage <= 11 &&
                 [...Array(lastPage)].map((p, i) => (
                   <li key={i}>
-                    <a
+                    <button
                       className={`fr-pagination__link ${page === i + 1 && styles["currentPage"]}`}
-                      href="#"
                       onClick={(e) => changePage(e, i + 1)}
                       title={`Page ${i + 1}`}
                     >
                       {i + 1}
-                    </a>
+                    </button>
                   </li>
                 ))}
 
@@ -109,9 +117,9 @@ export const PaginationBtn = ({
                 page < lastPage - 5 &&
                 [page - 4, page - 3, page - 2, page - 1, page, page + 1, page + 2, page + 3, page + 4].map((p, i) => (
                   <li key={i}>
-                    <a className={`fr-pagination__link ${page === p && styles["currentPage"]}`} href="#" onClick={(e) => changePage(e, p)} title={`Page ${p}`}>
+                    <button className={`fr-pagination__link ${page === p && styles["currentPage"]}`} onClick={(e) => changePage(e, p)} title={`Page ${p}`}>
                       {p}
-                    </a>
+                    </button>
                   </li>
                 ))}
 
@@ -119,9 +127,9 @@ export const PaginationBtn = ({
                 page <= 5 &&
                 [...intervalRecursive(0, 10)].map((p, i) => (
                   <li key={i}>
-                    <a className={`fr-pagination__link ${page === p && styles["currentPage"]}`} href="#" onClick={(e) => changePage(e, p)} title={`Page ${p}`}>
+                    <button className={`fr-pagination__link ${page === p && styles["currentPage"]}`} onClick={(e) => changePage(e, p)} title={`Page ${p}`}>
                       {p}
-                    </a>
+                    </button>
                   </li>
                 ))}
 
@@ -129,29 +137,29 @@ export const PaginationBtn = ({
                 page >= lastPage - 5 &&
                 [...intervalRecursive(lastPage - 9, lastPage + 1)].map((p, i) => (
                   <li key={i}>
-                    <a className={`fr-pagination__link ${page === p && styles["currentPage"]}`} href="#" onClick={(e) => changePage(e, p)} title={`Page ${p}`}>
+                    <button className={`fr-pagination__link ${page === p && styles["currentPage"]}`} onClick={(e) => changePage(e, p)} title={`Page ${p}`}>
                       {p}
-                    </a>
+                    </button>
                   </li>
                 ))}
             </>
           )}
           <li>
-            <a
+            <button
               className={`fr-pagination__link fr-pagination__link--next fr-pagination__link--lg-label 
               ${page === lastPage ? styles["disabledBtn"] : styles["enabledBtn"]}`}
               onClick={(e) => changePage(e, page + 1, page === lastPage)}
             >
               Page suivante
-            </a>
+            </button>
           </li>
           <li>
-            <a
+            <button
               className={`fr-pagination__link fr-pagination__link--last ${page === lastPage ? styles["disabledBtn"] : styles["enabledBtn"]}`}
               onClick={(e) => changePage(e, lastPage)}
             >
               Dernière page
-            </a>
+            </button>
           </li>
         </ul>
       </nav>

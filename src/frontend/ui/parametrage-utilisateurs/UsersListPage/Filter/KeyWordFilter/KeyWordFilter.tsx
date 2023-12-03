@@ -32,7 +32,15 @@ export const KeyWordFilter = ({
       profilCondition = { profileId: profileId };
     }
 
-    const params = { key: e.target.value, sort: "", page: 1, itemsPerPage: itemsPerPage, ...institutionCondition, ...roleCondition, ...profilCondition };
+    const params = {
+      key: e.target.value,
+      sort: "",
+      page: "1",
+      itemsPerPage: itemsPerPage.toString(),
+      ...institutionCondition,
+      ...roleCondition,
+      ...profilCondition,
+    };
     await fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
       headers: { "Content-Type": "application/json" },
       method: "GET",
