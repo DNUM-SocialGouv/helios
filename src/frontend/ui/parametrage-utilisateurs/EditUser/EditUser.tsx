@@ -65,7 +65,27 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
       headers: { "Content-Type": "application/json" },
       method: "POST",
     }).then(() => {
-      push("/settings/users?status=edit_successfully&" + searchParams.toString());
+      let queryParams = "";
+      if (searchParams.get("page")) {
+        queryParams += "?page=" + searchParams.get("page");
+      }
+      if (searchParams.get("itemsPerPage")) {
+        queryParams += "&itemsPerPage=" + searchParams.get("itemsPerPage");
+      }
+      if (searchParams.get("key")) {
+        queryParams += "&key=" + searchParams.get("key");
+      }
+      if (parseInt(searchParams.get("institutionId") as string) > 0) {
+        queryParams += "&institutionId=" + searchParams.get("institutionId");
+      }
+      if (parseInt(searchParams.get("roleId") as string) > 0) {
+        queryParams += "&roleId=" + searchParams.get("roleId");
+      }
+      if (parseInt(searchParams.get("profileId") as string) > 0) {
+        queryParams += "&profileId=" + searchParams.get("profileId");
+      }
+
+      push("/settings/users?status=edit_successfully&" + queryParams);
     });
   }
 
@@ -131,7 +151,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
               </div>
               <div className="fr-select-group fr-mt-3w">
                 <label className={`fr-label ${userinfo.profiles.length === 0 ? styles["fr-fieldset--error"] : ""}`} htmlFor="select-hint">
-                  Profils
+                  Autorisations
                 </label>
                 <div className={styles["boxSelect"]}>
                   {profiles.map((item) => (

@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-redundant-roles */
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { useSession } from "next-auth/react";
 import { MouseEvent, memo, useCallback } from "react";
 import "@gouvfr/dsfr/dist/component/pagination/pagination.min.css";
 
@@ -18,6 +19,9 @@ type PaginationBtnProps = Readonly<{
 const PaginationBtn = ({
   paginationData: { lastPage, page, keyWord, institutionId, roleId, profileId, itemsPerPage, setUserData, setPage, setLastPage },
 }: PaginationBtnProps) => {
+  const { data } = useSession();
+  const institutionIdSession = (data?.user?.role as unknown as number) !== 1 ? data?.user.institutionId : 0;
+
   const intervalRecursive = (x: number, y: number, accum = []): never[] => {
     if (x + 1 === y) return accum;
     return intervalRecursive(x + 1, y, accum.concat((x + 1) as never));
@@ -32,8 +36,8 @@ const PaginationBtn = ({
       }
 
       let institutionCondition = {};
-      if (institutionId) {
-        institutionCondition = { institutionId: institutionId };
+      if (institutionIdSession || institutionId) {
+        institutionCondition = { institutionId: institutionIdSession || institutionId };
       }
 
       let roleCondition = {};

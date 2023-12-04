@@ -7,6 +7,7 @@ import { RoleModel } from "../../../../database/models/RoleModel";
 import { UtilisateurModel } from "../../../../database/models/UtilisateurModel";
 import { getAllProfilesEndpoint } from "../../../backend/infrastructure/controllers/getAllProfilesEndpoint";
 import { getAllRolesEndpoint } from "../../../backend/infrastructure/controllers/getAllRolesEndpoint";
+import { getInstitutionByCodeEndpoint } from "../../../backend/infrastructure/controllers/getInstitutionByCodeEndpoint";
 import { getInstitutionsEndpoint } from "../../../backend/infrastructure/controllers/getInstitutionsEndpoint";
 import { getUsersListPaginatedEndpoint } from "../../../backend/infrastructure/controllers/getUsersListPaginatedEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
@@ -34,6 +35,7 @@ type RouterProps = Readonly<{
   status: string;
   lastElementInPage: boolean;
   itemsPerPage: number;
+  userSessionRole: string;
 }>;
 
 export default function Router({
@@ -48,6 +50,7 @@ export default function Router({
   status,
   lastElementInPage,
   itemsPerPage,
+  userSessionRole,
 }: RouterProps) {
   const { wording } = useDependencies();
 
@@ -61,14 +64,15 @@ export default function Router({
     <UsersListPage
       institution={institution}
       institutions={institutions}
+      itemsPerPageValue={itemsPerPage}
       keyWord={keyWord}
+      lastElementInPage={lastElementInPage}
       profile={profile}
       profiles={profiles}
       role={role}
       roles={roles}
+      userSessionRole={userSessionRole}
       users={usersPaginatedList}
-      lastElementInPage={lastElementInPage}
-      itemsPerPageValue={itemsPerPage}
     />
   );
 }
@@ -76,16 +80,35 @@ export default function Router({
 export async function getServerSideProps(context): Promise<GetStaticPropsResult<RouterProps>> {
   try {
     const session = await getSession(context);
-    //const codeRegion = session?.user.codeRegion as number;
-    const codeRegion = 20;
+
+    console.log("session?.user?", session?.user);
+
+    let userSessionRole = "";
+
+    switch (session?.user?.role as unknown as number) {
+      case 1:
+        userSessionRole = "Admin National";
+        break;
+      case 2:
+        userSessionRole = "Admin Regional";
+        break;
+      case 3:
+        userSessionRole = "Utilisateur";
+        break;
+      default:
+        userSessionRole = "Utilisateur";
+    }
 
     let { page, key, institution, role, profil, institutionId, roleId, profileId, status, itemsPerPage } = context.query;
-    page = page as number | 1;
-    itemsPerPage = itemsPerPage as number | 10;
+    page = parseInt(page) | 1;
+    itemsPerPage = parseInt(itemsPerPage) | 10;
     key = key as string | "";
-    institutionId = institutionId as number | 0;
-    //institutionId = codeRegion;
-    roleId = roleId as number | 0;
+
+    institutionId = parseInt(institutionId) | 0;
+    if (userSessionRole === "Admin Regional") {
+      institutionId = session?.user?.institutionId || 0;
+    }
+    roleId = parseInt(roleId) | 0;
     const profilId = profileId as string | "";
 
     //   console.log("---------------CCCC------------");
@@ -95,7 +118,7 @@ export async function getServerSideProps(context): Promise<GetStaticPropsResult<
     //   console.log("roleId : ", roleId);
     //   console.log("profilId : ", profileId);
 
-    let users = await getUsersListPaginatedEndpoint(dependencies, key, "Desc", page, institutionId, roleId, profilId, itemsPerPage);
+    const users = await getUsersListPaginatedEndpoint(dependencies, key, "Desc", page, institutionId, roleId, profilId, itemsPerPage);
     //console.log("--users---", users);
 
     let lastElementInPage = false;
@@ -104,13 +127,13 @@ export async function getServerSideProps(context): Promise<GetStaticPropsResult<
     }
 
     const institutions = await getInstitutionsEndpoint(dependencies);
-    // console.log("--institutions---" /*, institutions*/);
+    // console.log("--institutions---", institutions);
 
     const profiles = await getAllProfilesEndpoint(dependencies);
     // console.log("--profiles---" /*, profiles*/);
 
     const roles = await getAllRolesEndpoint(dependencies);
-    // console.log("--roles---" /*, roles*/);
+    //console.log("--roles---", roles);
 
     return {
       props: {
@@ -125,6 +148,7 @@ export async function getServerSideProps(context): Promise<GetStaticPropsResult<
         status: status || "",
         lastElementInPage: lastElementInPage,
         itemsPerPage: itemsPerPage || 10,
+        userSessionRole: userSessionRole,
       },
     };
   } catch (error) {

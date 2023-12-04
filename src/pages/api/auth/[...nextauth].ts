@@ -29,6 +29,7 @@ export default NextAuth({
             ...utilisateur,
             id: utilisateur.code,
             institution: utilisateur.institution.libelle,
+            institutionId: utilisateur.institution.id,
             codeRegion: utilisateur.institution.codeGeo,
             codeProfiles: utilisateur.profils,
           };
@@ -49,6 +50,7 @@ export default NextAuth({
           firstname: user.prenom,
           role: user.roleId,
           institution: user.institution,
+          institutionId: user.institutionId,
           codeRegion: user.codeRegion,
           codeProfiles: user.codeProfiles,
         };
@@ -60,6 +62,7 @@ export default NextAuth({
       session.user.firstname = token["firstname"] as string;
       session.user.role = token["role"] as string;
       session.user.institution = token["institution"] as string;
+      session.user.institutionId = token["institutionId"] as number;
       session.user.codeRegion = token["codeRegion"] as number;
       session.user.codeProfiles = token["codeProfiles"] as string[];
       return session;

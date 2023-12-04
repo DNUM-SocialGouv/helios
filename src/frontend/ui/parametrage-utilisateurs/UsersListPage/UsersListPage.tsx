@@ -60,6 +60,7 @@ type UsersListPageProps = Readonly<{
   status: string;
   lastElementInPage: boolean;
   itemsPerPageValue: number;
+  userSessionRole: string;
 }>;
 
 export const UsersListPage = ({
@@ -74,9 +75,8 @@ export const UsersListPage = ({
   status,
   lastElementInPage,
   itemsPerPageValue,
+  userSessionRole,
 }: UsersListPageProps) => {
-  const { data } = useSession();
-
   const [userData, setUserData] = useState<UtilisateurModel[]>(users.data);
   const [total, setTotal] = useState(users.total);
   const [lastPage, setLastPage] = useState(users.lastPage);
@@ -134,7 +134,7 @@ export const UsersListPage = ({
           )}
 
           <div className={`${styles["filtres-container"]}`}>
-            <AdvancedFilter adminNational={(data?.user?.role as unknown as number) === 1} paginationData={paginationData} />
+            <AdvancedFilter paginationData={paginationData} userSessionRole={userSessionRole} />
           </div>
           <div className={styles["count-elements"]}>
             {total > 1 && <>{total} éléments trouvés.</>}
@@ -157,7 +157,7 @@ export const UsersListPage = ({
 
                       <th scope="col">{wording.INSTITUTION}</th>
                       <th scope="col">{wording.ROLE_}</th>
-                      <th scope="col">Profils</th>
+                      <th scope="col">Autorisations</th>
                       {/*<th className={styles["widthTD-date"]} scope="col">
                         {wording.CREATION_DATE}
                       </th>*/}

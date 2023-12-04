@@ -1,4 +1,3 @@
-import { UtilisateurModel } from "../../../../database/models/UtilisateurModel";
 import { UtilisateursUseCase } from "../../métier/use-cases/UtilisateursUseCase";
 import { Dependencies } from "../dependencies";
 

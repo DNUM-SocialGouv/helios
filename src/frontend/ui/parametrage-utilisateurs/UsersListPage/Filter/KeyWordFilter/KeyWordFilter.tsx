@@ -4,6 +4,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
+import { useSession } from "next-auth/react";
 import { memo, useCallback } from "react";
 
 import { iPaginationData } from "../../UsersListPage";
@@ -15,14 +16,17 @@ type KeyWordFilterProps = Readonly<{
 const KeyWordFilter = ({
   paginationData: { keyWord, itemsPerPage, institutionId, roleId, profileId, page, setKey, setUserData, setPage, setLastPage, setTotal },
 }: KeyWordFilterProps) => {
+  const { data } = useSession();
+  const institutionIdSession = (data?.user?.role as unknown as number) !== 1 ? data?.user.institutionId : 0;
+
   const handleChange = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       e.preventDefault();
       setKey(e.target.value as unknown as string);
 
       let institutionCondition = {};
-      if (institutionId) {
-        institutionCondition = { institutionId: institutionId };
+      if (institutionIdSession || institutionId) {
+        institutionCondition = { institutionId: institutionIdSession || institutionId };
       }
 
       let roleCondition = {};

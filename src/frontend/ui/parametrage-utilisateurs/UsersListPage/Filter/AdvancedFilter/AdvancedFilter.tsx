@@ -4,6 +4,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
+import { useSession } from "next-auth/react";
 import { memo, useCallback } from "react";
 
 import { iPaginationData } from "../../UsersListPage";
@@ -12,7 +13,7 @@ import styles from "./AdvancedFilter.module.css";
 
 type KeyWordFilterProps = Readonly<{
   paginationData: iPaginationData;
-  adminNational: boolean;
+  userSessionRole: string;
 }>;
 
 const AdvancedFilter = ({
@@ -34,8 +35,11 @@ const AdvancedFilter = ({
     setProfileId,
     setRoleId,
   },
-  adminNational,
+  userSessionRole,
 }: KeyWordFilterProps) => {
+  const { data } = useSession();
+  const institutionIdSession = (data?.user?.role as unknown as number) !== 1 ? data?.user.institutionId : 0;
+
   const handleChangeInstitution = useCallback(
     async (e: React.ChangeEvent<HTMLSelectElement>) => {
       e.preventDefault();
@@ -63,10 +67,9 @@ const AdvancedFilter = ({
     async (e: React.ChangeEvent<HTMLSelectElement>) => {
       e.preventDefault();
       setRoleId(e.target.value as unknown as number);
-
       let institutionCondition = {};
-      if (institutionId) {
-        institutionCondition = { institutionId: institutionId };
+      if (institutionIdSession || institutionId) {
+        institutionCondition = { institutionId: institutionIdSession || institutionId };
       }
 
       const roleCondition = { roleId: e.target.value };
@@ -88,8 +91,8 @@ const AdvancedFilter = ({
       setProfileId(e.target.value);
 
       let institutionCondition = {};
-      if (institutionId) {
-        institutionCondition = { institutionId: institutionId };
+      if (institutionIdSession || institutionId) {
+        institutionCondition = { institutionId: institutionIdSession || institutionId };
       }
 
       let roleCondition = {};
@@ -128,7 +131,7 @@ const AdvancedFilter = ({
         <KeyWordFilter paginationData={paginationData} />
       </div>
 
-      {adminNational && (
+      {userSessionRole === "Admin National" && (
         <div className={`fr-select-group ${styles["filter-item"]}`}>
           <label className="fr-label" htmlFor="institution">
             Institution
@@ -167,7 +170,7 @@ const AdvancedFilter = ({
       </div>
       <div className={`fr-select-group ${styles["filter-item"]}`}>
         <label className="fr-label" htmlFor="profil">
-          Profil
+          Autorisation
         </label>
         <select className="fr-select" id="profil" onChange={handleChangeProfil}>
           <option selected={profileId === "" || profileId === null} value="">
