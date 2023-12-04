@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm"
 
 import { DefaultProfile } from "../../src/frontend/configuration/DefaultProfile";
 
-export class ajoutTableProfil1795731844278 implements MigrationInterface {
+export class ajoutTableProfil1795731844298 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
             CREATE TABLE profil(
