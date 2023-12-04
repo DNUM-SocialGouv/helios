@@ -64,6 +64,7 @@ export interface Wording {
   readonly CONNEXION_MOT_DE_PASSE: string
   readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string
   readonly FORGET_PASSEWORD: string
+  readonly FORGET_PASSEWORD_MESSAGE: string
   readonly CONNEXION_LIBELLE: string
 
   // Recherche
