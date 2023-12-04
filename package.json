@@ -89,7 +89,6 @@
     "jsonwebtoken": "^9.0.0",
     "next": "13",
     "next-auth": "^4.22.1",
-    "node-cache": "^5.1.2",
     "node-fetch": "2.6.7",
     "pg": "^8.7.3",
     "react": "18.0.0",

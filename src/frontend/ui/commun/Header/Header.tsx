@@ -30,13 +30,8 @@ export const Header = () => {
   };
 
   const logOut = () => {
-    fetch("/api/utilisateurs/logout", {
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-    }).then(() => {
-      signOut({ callbackUrl: paths.CONNEXION });
-      setDisplayMenu(false)
-    })
+    signOut({ callbackUrl: paths.CONNEXION });
+    setDisplayMenu(false)
   }
 
 
