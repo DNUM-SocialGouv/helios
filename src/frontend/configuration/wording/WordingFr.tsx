@@ -75,6 +75,7 @@ export class WordingFr implements Wording {
   readonly CONNEXION_MOT_DE_PASSE: string = "Mot de passe *"
   readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string = "Vous n'avez pas de compte ? "
   readonly FORGET_PASSEWORD: string = "Mot de passe oublié ?"
+  readonly FORGET_PASSEWORD_MESSAGE: string = "Merci de saisir votre adresse mail afin de définir un nouveau mot de passe"
   readonly CONNEXION_LIBELLE: string = "Connexion"
 
 
@@ -421,7 +422,7 @@ export class WordingFr implements Wording {
 
   // Données personnelles
   readonly FINALITÉ_ET_FONDEMENT_DU_TRAITEMENT: string = "Finalité et fondement du traitement";
-  readonly PROTECTION_DES_DONNÉES_PERSONNELLES: string = "Protection des données personnelles";
+  readonly PROTECTION_DES_DONNÉES_PERSONNELLES: string = "Vos droits en matière de données personnelles";
 
   // Mentions légales
   readonly ÉDITEUR_DU_SITE: string = "Éditeur du site";
@@ -449,6 +450,8 @@ export class WordingFr implements Wording {
   readonly MOT_DE_PASSE: string = "Nouveau mot de passe";
   readonly CONFIRMER_MOT_DE_PASSE: string = "Confirmation mot de passe";
   readonly CONFIRM_CHANGE_PASSWORD: string = "Confirmer la demande de réinitialisation";
+  readonly CONFIRM_CREATE_PASSWORD: string = "Confirmer la demande de création";
+
 
   // Historique de recherche
   readonly HISTORIQUE_DE_RECHERECHE_TITRE: string = "Historique des derniers établissements consultés suite à une recherche";
@@ -456,6 +459,7 @@ export class WordingFr implements Wording {
   readonly DATE: string = "Date";
   readonly CONFIRM_UPDATE_PASSWORD: string = "Confirmer la modification du mot de passe";
   readonly REINITIALISATION_MOT_PASSE_TITRE: string = "Réinitialisation de votre mot de passe";
+  readonly CREATION_MOT_PASSE_TITRE: string = "Création de votre mot de passe";
   readonly REINITIALISATION_MOT_PASSE_DESCRIPTION: string = "Merci de renseigner votre nouveau mot de passe";
   readonly DIFFERENT_MOT_PASSE: string = "Le mot de passe doit être différent du mot de passe actuel";
   readonly WRONG_OLD_MOT_DE_PASSE: string = "Ancien mot de passe erroné"
@@ -471,7 +475,7 @@ export class WordingFr implements Wording {
   readonly PARAMETRAGE_NEW_PROFILE: string = "Ajouter une autorisation";
 
   //  Profile page
-  readonly USER_PROFILE: string = "Profil de l'utilisateur";
+  readonly USER_PROFILE: string = "Mes informations";
   readonly FIRSTNAME: string = "Prénom";
   readonly LASTNAME: string = "Nom";
   readonly EMAIL: string = "Email";

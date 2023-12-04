@@ -1,12 +1,14 @@
 import { useRouter } from 'next/router';
-import { ChangeEvent, FormEvent, MouseEvent, useState } from "react";
+import { ChangeEvent, FormEvent, MouseEvent, useContext, useState } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
+import { UserContext } from '../commun/contexts/userContext';
 
 
 export function useReinitialisationMdp() {
     const router = useRouter();
     const { wording } = useDependencies();
+    const userContext = useContext(UserContext);
 
     const [passwordValue, setPasswordValue] = useState("");
     const [confirmPasswordValue, setConfirmPasswordValue] = useState("");
@@ -51,6 +53,7 @@ export function useReinitialisationMdp() {
 
                 if (response.status === 200) {
                     setErrorMessage("");
+                    userContext?.setPasswordCreated(true);
                     router.push("/connexion")
                 }
                 if (response.status === 400) {

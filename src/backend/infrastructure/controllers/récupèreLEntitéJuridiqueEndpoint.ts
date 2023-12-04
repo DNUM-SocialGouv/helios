@@ -1,5 +1,4 @@
 import { ProfilModel } from "../../../../database/models/ProfilModel";
-import appCache from "../../cacheProvider";
 import { EntitéJuridique } from "../../métier/entities/entité-juridique/EntitéJuridique";
 import { ÉtablissementTerritorialRattaché } from "../../métier/entities/entité-juridique/ÉtablissementTerritorialRattaché";
 import { LoginUseCase } from "../../métier/use-cases/LoginUseCase";
@@ -17,27 +16,13 @@ export async function récupèreLEntitéJuridiqueEndpoint(dependencies: Dependen
   const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(dependencies.entitéJuridiqueLoader);
   const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFiness);
   const loginUseCase = new LoginUseCase(dependencies.utilisateurLoader);
-  const profileInstitutionInCache = appCache.get("userInstEJProfile") as object;
-  const profileAutreRegInCache = appCache.get("userAutreRegEJProfile") as object;
 
-  let profilInstitution: object;
-  let profilAutreReg: object;
+  const profiles = await loginUseCase.getUserProfiles(codeProfiles) as ProfilModel[];
+  const profilesInstitutionValues = profiles.map((profile) => profile?.value.institution.profilEJ)
+  const profilesAutreRegValues = profiles.map((profile) => profile?.value.autreRegion.profilEJ)
 
-  if (!profileInstitutionInCache || !profileAutreRegInCache) {
-    const profiles = await loginUseCase.getUserProfiles(codeProfiles) as ProfilModel[];
-    const profilesInstitutionValues = profiles.map((profile) => profile?.value.institution.profilEJ)
-    const profilesAutreRegValues = profiles.map((profile) => profile?.value.autreRegion.profilEJ)
-
-    profilInstitution = combineProfils(profilesInstitutionValues);
-    profilAutreReg = combineProfils(profilesAutreRegValues);
-
-    appCache.set("userInstEJProfile", profilInstitution, 3600);
-    appCache.set("userAutreRegEJProfile", profilAutreReg, 3600);
-
-  } else {
-    profilInstitution = profileInstitutionInCache;
-    profilAutreReg = profileAutreRegInCache;
-  }
+  const profilInstitution = combineProfils(profilesInstitutionValues);
+  const profilAutreReg = combineProfils(profilesAutreRegValues);
 
   const filtredEntitéJuridique = filterEntiteJuridique(entitéJuridique, entitéJuridique.codeRegion === codeRegion ? profilInstitution : profilAutreReg);
 

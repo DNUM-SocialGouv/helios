@@ -30,13 +30,8 @@ export const Header = () => {
   };
 
   const logOut = () => {
-    fetch("/api/utilisateurs/logout", {
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-    }).then(() => {
-      signOut({ callbackUrl: paths.CONNEXION });
-      setDisplayMenu(false)
-    })
+    signOut({ callbackUrl: paths.CONNEXION });
+    setDisplayMenu(false)
   }
 
 
@@ -136,7 +131,8 @@ export const Header = () => {
                     onClick={() => {
                       setDisplayMenu(!displayMenu)
                     }}
-                    ref={ref}>
+                    ref={ref}
+                    title="Menu du compte">
                     {data?.user?.firstname} {data?.user?.name}
                   </button>
                   {displayMenu ? (
@@ -157,7 +153,7 @@ export const Header = () => {
                           Historique
                         </button>
                       </li>
-                      {(data.user.role === '1' || data.user.role === '2') && (
+                      {data.user.role === '1' && (
                         <li className={styles["menu-item"]}>
                           <button
                             onClick={() => {
@@ -170,7 +166,7 @@ export const Header = () => {
                       <li className={styles["menu-item"]}>
                         <button onClick={() => {
                           router.push("/profile");
-                        }}>Profil</button>
+                        }}>Mon compte</button>
                       </li>
                       <li className={styles["menu-item"]}>
                         <button
