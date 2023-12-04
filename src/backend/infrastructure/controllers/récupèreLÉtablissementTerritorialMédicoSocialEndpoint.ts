@@ -1,5 +1,4 @@
 import { ProfilModel } from "../../../../database/models/ProfilModel";
-import appCache from "../../cacheProvider";
 import { ÉtablissementTerritorialMédicoSocial } from "../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
 import { LoginUseCase } from "../../métier/use-cases/LoginUseCase";
 import { RécupèreLÉtablissementTerritorialMédicoSocialUseCase } from "../../métier/use-cases/RécupèreLÉtablissementTerritorialMédicoSocialUseCase";
@@ -22,27 +21,14 @@ export async function récupèreLÉtablissementTerritorialMédicoSocialEndpoint(
   );
 
   const loginUseCase = new LoginUseCase(dependencies.utilisateurLoader);
-  const profileInstitutionInCache = appCache.get("userInstETMSProfile") as object;
-  const profileAutreRegInCache = appCache.get("userAutreRegETMSProfile") as object;
 
-  let profilInstitution: object;
-  let profilAutreReg: object;
+  const profiles = await loginUseCase.getUserProfiles(codeProfiles) as ProfilModel[];
+  const profilesInstitutionValues = profiles.map((profile) => profile?.value.institution.profilMédicoSocial)
+  const profilesAutreRegValues = profiles.map((profile) => profile?.value.autreRegion.profilMédicoSocial)
 
-  if (!profileInstitutionInCache || !profileAutreRegInCache) {
-    const profiles = await loginUseCase.getUserProfiles(codeProfiles) as ProfilModel[];
-    const profilesInstitutionValues = profiles.map((profile) => profile?.value.institution.profilMédicoSocial)
-    const profilesAutreRegValues = profiles.map((profile) => profile?.value.autreRegion.profilMédicoSocial)
+  const profilInstitution = combineProfils(profilesInstitutionValues);
+  const profilAutreReg = combineProfils(profilesAutreRegValues);
 
-    profilInstitution = combineProfils(profilesInstitutionValues);
-    profilAutreReg = combineProfils(profilesAutreRegValues);
-
-    appCache.set("userInstETMSProfile", profilInstitution, 3600);
-    appCache.set("userAutreRegETMSProfile", profilAutreReg, 3600);
-
-  } else {
-    profilInstitution = profileInstitutionInCache;
-    profilAutreReg = profileAutreRegInCache;
-  }
 
   return filterEtablissementMedicoSocial(établissementTerritorialMédicoSocial, établissementTerritorialMédicoSocial.identité.codeRegion === codeRegion ? profilInstitution : profilAutreReg);
 }

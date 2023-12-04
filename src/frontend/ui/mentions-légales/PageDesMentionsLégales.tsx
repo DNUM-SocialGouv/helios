@@ -5,16 +5,11 @@ export const PageDesMentionsLégales = () => {
   return (
     <>
       <h1>{wording.MENTIONS_LÉGALES}</h1>
-      <p>
-        <b>Helios – Fiche de synthèse</b> est mis en œuvre par la direction du numérique des solidarités et de la Santé qui a la charge du pilotage et de la
-        mise en œuvre d’un portefeuille de projets <abbr title="Systèmes d’Informations">SI</abbr> mutualisés développés pour le compte de l’ensemble des
-        Agences Régionales de Santé.
-      </p>
       <section aria-label={wording.ÉDITEUR_DU_SITE}>
         <h2>Éditeur du site</h2>
         <p>
           Le site <a href="www.helios.ars.sante.fr">www.helios.ars.sante.fr</a> est édité par les Ministères des Solidarités et de la Santé - 14 avenue Duquesne
-          75007 Paris - 01 40 56 60 00 (standard). Le directeur de publication est Etienne Champion, Secrétaire Général des Ministères Chargés des Affaires
+          75007 Paris - 01 40 56 60 00 (standard). Le directeur de publication est Pierre Pribile, Secrétaire Général des Ministères Chargés des Affaires
           Sociales (SGMCAS).
         </p>
         <p>
@@ -28,11 +23,11 @@ export const PageDesMentionsLégales = () => {
         </p>
         <p>
           La réalisation technique du site est réalisée par : <br />
-          OCTO TECHNOLOGY <br />
-          34 avenue de l’Opéra <br />
-          75002 Paris <br />
-          <a href="https://www.octo.com/" rel="external noopener noreferrer" target="_blank">
-            octo.com
+          Cat-amania  <br />
+          31 rue Bobby Sands <br />
+          44800 Saint Herblain  <br />
+          <a href="https://www.cat-amania.com/" rel="external noopener noreferrer" target="_blank">
+            Cat-amania.com
           </a>
         </p>
         <p>
@@ -87,7 +82,7 @@ export const PageDesMentionsLégales = () => {
         </p>
         <h3>Conditions de bon fonctionnement</h3>
         <p>
-          <b>Helios - Fiche de synthèse</b> a été conçu pour fonctionner sur les navigateurs suivants : Google Chrome, Mozilla Firefox, Microsoft Edge.
+          <b>Helios - Fiche de synthèse</b> a été conçu pour fonctionner sur les navigateurs suivants :Microsoft Edge, Google Chrome, Mozilla Firefox.
         </p>
       </section>
     </>

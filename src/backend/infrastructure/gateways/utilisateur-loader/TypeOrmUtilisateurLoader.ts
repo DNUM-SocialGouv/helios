@@ -83,10 +83,10 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
                         }
                     ];
                     const body = `
-                    <img src="cid:logo" alt="helios" >
+                    <img src="cid:logo" alt="helios" height="75" width="200">
                     <p>Bonjour,</p>
                     <p>L'équipe projet Helios est heureuse de vous accueillir sur l'application Helios. Pour finaliser la création de votre compte, merci de cliquer 
-                    <a href="${APP_URL}/reinitialisation-mot-passe?loginToken=${token}">ici</a> et définir votre mot de passe</p>
+                    <a href="${APP_URL}/creation-mot-passe?loginToken=${token}">ici</a> et définir votre mot de passe</p>
                     <p><b>Attention, la page est accessible une seule fois, et pendant 24h à compter de son ouverture. </b></p>                
                     <p>Si le lien ne fonctionne plus, merci de passer par <a href="${APP_URL}/mot-passe-oublie"> Mot de passe oublié ?</a> présent sur la page de connexion. </p>      
                     <p>L'équipe Helios reste disponible à l'adresse mail suivante : dnum.scn-helios-support@sg.social.gouv.fr</p>
@@ -107,7 +107,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
 
     async checkIfAdmin(userId: string): Promise<boolean> {
         const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ code: userId.trim() });
-        if (user && (user.roleId === '1' || user.roleId === '2')) {
+        if (user && user.roleId === '1') {
             return true
         } else return false;
     }

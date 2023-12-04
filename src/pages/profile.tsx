@@ -7,7 +7,7 @@ export default function Profile() {
 
     useBreadcrumb([
         {
-            label: wording.PROFILE,
+            label: wording.USER_PROFILE,
             path: "",
         },
     ]);
