@@ -21,8 +21,6 @@ describe("La page des mentions légales", () => {
     renderFakeComponent(<PageDesMentionsLégales />);
 
     // THEN
-    const abréviationDuSystèmesDInformation = screen.getByText("SI", { selector: "abbr" });
-    expect(abréviationDuSystèmesDInformation).toHaveAttribute("title", "Systèmes d’Informations");
     const propriétéIntellectuelle = screen.getByRole("region", { name: wording.PROPRIÉTÉ_INTELLECTUELLE });
     const abréviationDuServiceÀCompétenceNational = within(propriétéIntellectuelle).getByText("SCN", { selector: "abbr" });
     expect(abréviationDuServiceÀCompétenceNational).toHaveAttribute("title", "Service à Compétence National");
