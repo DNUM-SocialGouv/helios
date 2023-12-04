@@ -463,16 +463,15 @@ export class WordingFr implements Wording {
   readonly DIFFERENT_MOT_PASSE: string = "Le mot de passe doit être différent du mot de passe actuel";
   readonly WRONG_OLD_MOT_DE_PASSE: string = "Ancien mot de passe erroné"
 
-  readonly PARAMETRAGE_TITRE: string = "Liste des profils";
-  readonly PARAMETRAGE_PROFILE: string = "Paramétrage de profil: ";
+  readonly PARAMETRAGE_TITRE: string = "Paramétrage des autorisations";
   readonly PARAMETRAGE_EJ_TAB: string = "Entité juridique";
   readonly PARAMETRAGE_ET_MS_TAB: string = "Établissement médico-social";
   readonly PARAMETRAGE_ET_SAN_TAB: string = "Établissement sanitaire";
   readonly PARAMETRAGE_INSTITUTION: string = "Institution";
   readonly PARAMETRAGE_AUTRE_REGION: string = "Autre région";
   readonly CREATION_DATE: string = "Date de création";
-  readonly PROFILE_CODE: string = "Code de profil";
-  readonly PARAMETRAGE_NEW_PROFILE: string = "Ajouter un nouveau profil";
+  readonly PROFILE_CODE: string = "Code";
+  readonly PARAMETRAGE_NEW_PROFILE: string = "Ajouter une autorisation";
 
   //  Profile page
   readonly USER_PROFILE: string = "Mes informations";
@@ -484,6 +483,6 @@ export class WordingFr implements Wording {
   readonly SUPER_ADMIN: string = "Administrateur national";
   readonly ADMIN: string = "Administrateur régional ou en administration centrale";
   readonly USER: string = "Utilisateur";
-  readonly PROFILE: string = "Profil";
+  readonly PROFILE: string = "Autorisation";
 
 }

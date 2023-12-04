@@ -164,7 +164,7 @@ export const Header = () => {
                             onClick={() => {
                               router.push("/settings");
                             }}>
-                            Parametrage
+                            Paramétrage
                           </button>
                         </li>
                       )}
