@@ -83,7 +83,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
                         }
                     ];
                     const body = `
-                    <img src="cid:logo" alt="helios" >
+                    <img src="cid:logo" alt="helios" height="75" width="200">
                     <p>Bonjour,</p>
                     <p>L'équipe projet Helios est heureuse de vous accueillir sur l'application Helios. Pour finaliser la création de votre compte, merci de cliquer 
                     <a href="${APP_URL}/creation-mot-passe?loginToken=${token}">ici</a> et définir votre mot de passe</p>
