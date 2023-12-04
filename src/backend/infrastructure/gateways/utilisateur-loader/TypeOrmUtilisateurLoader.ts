@@ -1,5 +1,7 @@
 import { compare, genSalt, hash } from 'bcrypt';
 import { createHash } from 'crypto';
+import fs from 'fs';
+import path from "path";
 import { DataSource } from "typeorm";
 
 import { InstitutionModel } from '../../../../../database/models/InstitutionModel';
@@ -68,25 +70,29 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
 
             (await this.orm).getRepository(UtilisateurModel).save(account)
                 .then(async () => {
-                    const APP_URL = process.env["APP_BASE_URL"]
-                    const token = generateToken(email, '24h')
+                    const absolutePath = path.resolve(process.cwd(), './public/logo-helios.png');
+                    const imageContent = fs.readFileSync(absolutePath, 'base64');
+                    const APP_URL = process.env["APP_BASE_URL"];
+                    const token = generateToken(email, '24h');
+                    const images = [
+                        {
+                            "contentType": "image/png",
+                            "filename": "logo-helios",
+                            "content": imageContent,
+                            "contentId": "logo"
+                        }
+                    ];
                     const body = `
-                    Bonjour,
-                !
-                    <p>Ce courriel confirme la création de votre compte Helios.</p>
-                
-                    <p>Pour vous connecter, cliquer ci-dessous pour définir un mot de passe et accéder à votre espace personnel.</p>
-                
-                    <p><a href="${APP_URL}/reinitialisation-mot-passe?loginToken=${token}">${APP_URL}/reinitialisation-mot-passe?loginToken=${token}</a></p>
-                
-                    <p>Attention, ce lien n'est utilisable qu'une seule fois et n'est valide que 24h à compter de son ouverture.</p>
-                
-                    <p>Si le lien ne fonctionne plus, veuillez revenir à la page d'accueil du portail Helios et cliquer sur le lien 'Mot de passe oublié ?' </p>
-                
-                    <p>Si vous n'êtes pas à l'origine de cette création, veuillez en informer le support Helios : dnum.scn-helios-support@sg.social.gouv.fr</p>
-                
+                    <img src="cid:logo" alt="helios" >
+                    <p>Bonjour,</p>
+                    <p>L'équipe projet Helios est heureuse de vous accueillir sur l'application Helios. Pour finaliser la création de votre compte, merci de cliquer 
+                    <a href="${APP_URL}/reinitialisation-mot-passe?loginToken=${token}">ici</a> et définir votre mot de passe</p>
+                    <p><b>Attention, la page est accessible une seule fois, et pendant 24h à compter de son ouverture. </b></p>                
+                    <p>Si le lien ne fonctionne plus, merci de passer par <a href="${APP_URL}/mot-passe-oublie"> Mot de passe oublié ?</a> présent sur la page de connexion. </p>      
+                    <p>L'équipe Helios reste disponible à l'adresse mail suivante : dnum.scn-helios-support@sg.social.gouv.fr</p>
+                    <p> Cordialement, </p>
                     <p>L'équipe Helios</p>`;
-                    sendEmail(email, "Création de votre compte Helios", body);
+                    sendEmail(email, "[Helios]-Création de votre compte Helios", body, images);
                 })
                 .catch((error) => {
                     // eslint-disable-next-line no-console
@@ -101,7 +107,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
 
     async checkIfAdmin(userId: string): Promise<boolean> {
         const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ code: userId.trim() });
-        if (user && user.roleId === '1') {
+        if (user && (user.roleId === '1' || user.roleId === '2')) {
             return true
         } else return false;
     }

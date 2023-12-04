@@ -36,7 +36,7 @@ export class EntitéJuridiqueAutorisationsCapacitesViewModel {
 
   public get lesDonnéesAutorisationEtCapacitéPasRenseignees(): string[] {
     const nonRenseignees = [];
-    if (this.lesAutorisationsCapacitesNeSontPasRenseignées) nonRenseignees.push(this.wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS);
+    if (this.lesAutorisationsCapacitesNeSontPasRenseignées) nonRenseignees.push(this.wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE);
     if (this.lesAutorisationsActivitesNeSontPasRenseignées()) nonRenseignees.push(this.wording.AUTORISATIONS_ACTIVITES);
     if (this.lesAutresActivitesNeSontPasRenseignées()) nonRenseignees.push(this.wording.AUTRES_ACTIVITÉS);
     if (this.lesReconnaissanceContractuellesNeSontPasRenseignées()) nonRenseignees.push(this.wording.RECONNAISSANCES_CONTRACTUELLES);
@@ -46,7 +46,7 @@ export class EntitéJuridiqueAutorisationsCapacitesViewModel {
 
   public get lesDonnéesAutorisationEtCapacitéPasAutorisés(): string[] {
     const nonAutorisés = [];
-    if (!this.lesAutorisationsActivitesNeSontPasAutorisées) nonAutorisés.push(this.wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS);
+    if (!this.lesAutorisationsActivitesNeSontPasAutorisées) nonAutorisés.push(this.wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE);
     if (!this.lesAutorisationsActivitesNeSontPasAutorisées) nonAutorisés.push(this.wording.AUTORISATIONS_ACTIVITES);
     if (!this.lesAutresActivitesNeSontPasAutorisées) nonAutorisés.push(this.wording.AUTRES_ACTIVITÉS);
     if (!this.lesReconnaissanceContractuellesNeSontPasAutoriséess) nonAutorisés.push(this.wording.RECONNAISSANCES_CONTRACTUELLES);

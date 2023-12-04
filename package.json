@@ -1,6 +1,6 @@
 {
   "name": "helios",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "private": true,
   "scripts": {
     "amibroken": "yarn deadcode && yarn lint && yarn typecheck && yarn test && yarn build",
@@ -77,12 +77,14 @@
     "@next/bundle-analyzer": "^13.2.4",
     "@sentry/nextjs": "7.29.0",
     "@types/bcrypt": "^5.0.0",
+    "@types/dompurify": "^3.0.5",
     "@types/joi": "^17.2.3",
     "@types/next-auth": "^3.15.0",
     "bcrypt": "^5.1.0",
     "chart.js": "^3.8.0",
     "chartjs-plugin-datalabels": "^2.0.0",
     "crypto": "^1.0.1",
+    "dompurify": "^3.0.6",
     "dotenv-defaults": "^5.0.0",
     "husky": "^7.0.4",
     "joi": "^17.9.2",

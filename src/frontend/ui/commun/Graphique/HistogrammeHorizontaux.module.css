@@ -1,13 +1,38 @@
-@media (max-width: 200px ), (max-width: 700px) {
-    .container {
-        /* Permet de mettre les graphiques l'un en dessous de l'autre en mode print*/
-        display:block !important;
-    }
-}
 .container {
     display: flex;
     margin-bottom: 3rem;
 }
-.container > div {
-    flex:1;
+
+.container>div {
+    flex: 1;
+    width: 100%;
+}
+
+.barContainerWidth {
+    width: 100%;
+}
+
+@media print {
+    .container {
+        display: block;
+        margin-bottom: 3rem;
+    }
+
+    .container>div {
+        width: 100% !important;
+    }
+
+    .barContainerWidth {
+        width: 100% !important;
+    }
+
+    .barContainerWidth>canvas {
+        /* Adjust styles for printing */
+        width: 100% !important;
+        height: auto;
+    }
+
+    .print-only {
+        page-break-inside: avoid;
+    }
 }
