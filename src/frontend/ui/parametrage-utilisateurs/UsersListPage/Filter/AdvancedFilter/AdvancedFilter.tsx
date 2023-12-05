@@ -37,6 +37,12 @@ const AdvancedFilter = ({
   },
   userSessionRole,
 }: KeyWordFilterProps) => {
+  const etats = [
+    { id: 1, label: "Actif", code: "actif" },
+    { id: 2, label: "Inactif", code: "inactif" },
+    { id: 3, label: "Supprimé", code: "deleted" },
+  ];
+
   const { data } = useSession();
   const institutionIdSession = (data?.user?.role as unknown as number) !== 1 ? data?.user.institutionId : 0;
 
@@ -178,6 +184,23 @@ const AdvancedFilter = ({
           </option>
 
           {profiles.map((item) => (
+            <option key={item.id} selected={profileId === item.code} value={item.code}>
+              {item.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className={`fr-select-group ${styles["filter-item"]}`}>
+        <label className="fr-label" htmlFor="profil">
+          Etat
+        </label>
+        <select className="fr-select" id="profil" onChange={handleChangeProfil}>
+          <option selected={profileId === "" || profileId === null} value="">
+            Tous
+          </option>
+
+          {etats.map((item) => (
             <option key={item.id} selected={profileId === item.code} value={item.code}>
               {item.label}
             </option>

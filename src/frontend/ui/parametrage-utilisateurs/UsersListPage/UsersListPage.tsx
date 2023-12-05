@@ -19,6 +19,19 @@ import ItemsPerPage from "./Pagination/ItemsPerPage/ItemsPerPage";
 import PaginationBtn from "./Pagination/PaginationBtn/PaginationBtn";
 import styles from "./UsersListPage.module.css";
 
+function greaterThanNMonths(inputDate: Date, n: number): boolean {
+  const NMonthsAgo = new Date();
+  NMonthsAgo.setMonth(new Date().getMonth() - n);
+  return new Date(inputDate) < NMonthsAgo;
+}
+
+function getUserStatus(inputDate: Date): string {
+  if (greaterThanNMonths(inputDate, 3)) {
+    return "InActif";
+  }
+  return "Actif";
+}
+
 export interface iPaginationData {
   institutionId: number;
   institutions: InstitutionModel[];
@@ -151,9 +164,9 @@ export const UsersListPage = ({
                     <tr>
                       <th scope="col">{wording.LASTNAME}</th>
                       <th scope="col">{wording.FIRSTNAME}</th>
-                      <th className={styles["widthTD-small"]} scope="col">
+                      {/*<th className={styles["widthTD-small"]} scope="col">
                         {wording.EMAIL}
-                      </th>
+                      </th>*/}
 
                       <th scope="col">{wording.INSTITUTION}</th>
                       <th scope="col">{wording.ROLE_}</th>
@@ -161,6 +174,7 @@ export const UsersListPage = ({
                       {/*<th className={styles["widthTD-date"]} scope="col">
                         {wording.CREATION_DATE}
                       </th>*/}
+                      <th scope="col">Etat</th>
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
@@ -180,7 +194,7 @@ export const UsersListPage = ({
                               {user.nom}
                             </a>
                           </td>
-                          <td className={styles["widthTD-small"]}>{user.email}</td>
+                          {/*<td className={styles["widthTD-small"]}>{user.email}</td>*/}
 
                           <td className={styles["widthTD-small"]}>{user.institution.libelle}</td>
 
@@ -192,23 +206,25 @@ export const UsersListPage = ({
                             </span>
                           </td>
 
-                          <td>
-                            {user.profils.map((profil: string) => {
+                          <td className={`${styles["widthTD-profil"]}`}>
+                            {user.profils.map((profil: string, i, { length }) => {
                               const pr = profiles.filter((item) => item.code === profil);
+                              let seperator = ", ";
+                              //last element
+                              if (i + 1 === length) {
+                                seperator = "";
+                              }
                               return (
-                                <div key={pr[0].code}>
-                                  <span
-                                    className={`fr-badge fr-badge--${
-                                      pr[0].code === "f998021c-9613-4978-be6a-2b4cd9e24ffb" ? "info" : "error"
-                                    } fr-badge--no-icon ${styles["text_no_change"]} ${styles["widthTD-profil"]}  fr-text--xs  `}
-                                  >
-                                    {pr[0].label}
-                                  </span>
-                                </div>
+                                <span className={`  fr-text--xs  `} key={pr[0].code}>
+                                  {pr[0].label}
+                                  {seperator}
+                                </span>
                               );
                             })}
                           </td>
+
                           {/*<td className={styles["widthTD-date"]}>{formatDateAndHours(user.dateCreation)}</td>*/}
+                          <td className={styles["widthTD-date"]}>{getUserStatus(user.connectionDate)}</td>
                           <td>
                             <a
                               className="fr-raw-link"

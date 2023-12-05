@@ -2,7 +2,7 @@ import { compare, genSalt, hash } from "bcrypt";
 import { createHash } from "crypto";
 import fs from "fs";
 import path from "path";
-import { DataSource, ILike, ArrayContains, ArrayContainedBy, ArrayOverlap } from "typeorm";
+import { DataSource, ILike, ArrayContains } from "typeorm";
 
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
@@ -23,12 +23,25 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   async login(email: string, password: string): Promise<RésultatLogin> {
     const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { email: email.trim().toLowerCase() }, relations: ["institution"] });
 
-    console.log("back login user,", user);
     if (user) {
       const hashing = createHash("sha256");
       hashing.update(password);
       const hashedPassword = hashing.digest("hex");
-      return (await compare(password, user.password)) || hashedPassword === user.password ? { utilisateur: user } : null;
+      const checkPassWord = (await compare(password, user.password)) || hashedPassword === user.password ? { utilisateur: user } : null;
+      if (checkPassWord) {
+        user.connectionDate = new Date();
+        (await this.orm)
+          .getRepository(UtilisateurModel)
+          .save(user as UtilisateurModel)
+          .then(async () => {
+            return user;
+          })
+          .catch((error) => {
+            // eslint-disable-next-line no-console
+            console.log("error", error);
+          });
+      }
+      return checkPassWord;
     } else {
       return null;
     }
@@ -134,13 +147,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     profilId: string,
     itemsPerPage: number
   ): Promise<any> {
-    //  return await (await this.orm).getRepository(UtilisateurModel).find();
-
     const utilisateurRepo = (await this.orm).getRepository(UtilisateurModel);
-    /*
-    const institutionCondition = { institution: { id: 19 } };
-    const roleCondition = { role: { id: 3 } };
-    const profilCondition = { profils: ["4bbf1e31-180a-4d29-9973-54459dc3087d"] };*/
 
     let institutionCondition = {};
     if (institutionId > 0) {
@@ -191,7 +198,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     };
   }
 
-  async updateUser(userCode: string, roleCode: string, institutionCode: string, profilsCode: string[]): Promise<UtilisateurModel | null> {
+  async updateUser(userCode: string, roleCode: string, institutionCode: string, profilsCode: string[]): Promise<void> {
     try {
       const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: userCode } });
 
@@ -220,7 +227,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     }
   }
 
-  async deleteUser(userCode: string): Promise<string | null> {
+  async deleteUser(userCode: string): Promise<string | undefined | void> {
     try {
       const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: userCode } });
 
