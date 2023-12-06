@@ -9,11 +9,12 @@ export async function getUsersListPaginatedEndpoint(
   institutionId: number,
   roleId: number,
   profilId: string,
+  etatId: string,
   itemsPerPage: number
 ): Promise<any> {
   try {
     const UtilisateurUseCase = new UtilisateursUseCase(dependencies.utilisateurLoader);
-    return await UtilisateurUseCase.getUsersListPaginated(key, sort, pdescrtion, institutionId, roleId, profilId, itemsPerPage);
+    return await UtilisateurUseCase.getUsersListPaginated(key, sort, pdescrtion, institutionId, roleId, profilId, etatId, itemsPerPage);
   } catch (error) {
     dependencies.logger.error(error);
     throw error;

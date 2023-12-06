@@ -37,9 +37,10 @@ export default async function handler(request: NextApiRequest, response: NextApi
     const institutionId = request.query["institutionId"] as unknown as number | 0;
     const roleId = request.query["roleId"] as unknown as number | 0;
     const profilId = request.query["profileId"] as string | "";
+    const etatId = request.query["etatId"] as string | "";
     const itemsPerPage = request.query["itemsPerPage"] as unknown as number;
 
-    const users = await getUsersListPaginatedEndpoint(dependencies, key, sort, page, institutionId, roleId, profilId, itemsPerPage);
+    const users = await getUsersListPaginatedEndpoint(dependencies, key, sort, page, institutionId, roleId, profilId, etatId, itemsPerPage);
 
     return response.status(200).json(users);
   } catch (error) {

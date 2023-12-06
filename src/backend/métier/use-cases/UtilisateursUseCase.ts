@@ -11,9 +11,10 @@ export class UtilisateursUseCase {
     institutionId: number,
     roleId: number,
     profilId: string,
+    etatId: string,
     itemsPerPage: number
   ): Promise<void> {
-    return await this.utilisateurLoader.getUsersListPaginated(key, sort, pdescrtion, institutionId, roleId, profilId, itemsPerPage);
+    return await this.utilisateurLoader.getUsersListPaginated(key, sort, pdescrtion, institutionId, roleId, profilId, etatId, itemsPerPage);
   }
 
   async getUserByCode(code: string): Promise<UtilisateurModel | null> {

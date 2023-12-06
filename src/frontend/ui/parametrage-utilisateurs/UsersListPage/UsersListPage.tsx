@@ -4,7 +4,6 @@ import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 
-import { useSession } from "next-auth/react";
 import { useQueryState, parseAsInteger, parseAsString } from "next-usequerystate";
 import { useState } from "react";
 
@@ -40,6 +39,7 @@ export interface iPaginationData {
   profileId: string;
   profiles: ProfilModel[];
   roleId: number;
+  etatId: string;
   roles: RoleModel[];
   itemsPerPage: number;
   lastPage: number;
@@ -53,6 +53,7 @@ export interface iPaginationData {
   setUserData: (userData: UtilisateurModel[]) => void;
   setTotal: (total: number) => void;
   setItemsPerPage: (itemsPerPage: number) => void;
+  setEtatId: (etatId: string) => void;
 }
 
 type UsersListPageProps = Readonly<{
@@ -71,6 +72,7 @@ type UsersListPageProps = Readonly<{
   profile: string;
   role: number;
   status: string;
+  etat: string;
   lastElementInPage: boolean;
   itemsPerPageValue: number;
   userSessionRole: string;
@@ -86,6 +88,7 @@ export const UsersListPage = ({
   profile,
   role,
   status,
+  etat,
   lastElementInPage,
   itemsPerPageValue,
   userSessionRole,
@@ -98,6 +101,7 @@ export const UsersListPage = ({
   const [institutionId, setInstitutionId] = useQueryState("institutionId", parseAsInteger.withDefault(institution));
   const [roleId, setRoleId] = useQueryState("roleId", parseAsInteger.withDefault(role));
   const [profileId, setProfileId] = useQueryState("profileId", parseAsString.withDefault(profile));
+  const [etatId, setEtatId] = useQueryState("etatId", parseAsString.withDefault(etat));
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(users.currentPage));
   const [statusCode] = useQueryState("status", parseAsString.withDefault(status));
   const [userToDelete, setUserToDelete] = useState("");
@@ -113,6 +117,7 @@ export const UsersListPage = ({
     profileId: profileId,
     profiles: profiles,
     roleId: roleId,
+    etatId: etatId,
     roles: roles,
     itemsPerPage: itemsPerPage,
     lastPage: lastPage,
@@ -126,6 +131,7 @@ export const UsersListPage = ({
     setUserData: setUserData,
     setTotal: setTotal,
     setItemsPerPage: setItemsPerPage,
+    setEtatId: setEtatId,
   };
 
   return (
@@ -224,7 +230,7 @@ export const UsersListPage = ({
                           </td>
 
                           {/*<td className={styles["widthTD-date"]}>{formatDateAndHours(user.dateCreation)}</td>*/}
-                          <td className={styles["widthTD-date"]}>{getUserStatus(user.connectionDate)}</td>
+                          <td className={styles["widthTD-date"]}>{getUserStatus(user.lastConnectionDate)}</td>
                           <td>
                             <a
                               className="fr-raw-link"

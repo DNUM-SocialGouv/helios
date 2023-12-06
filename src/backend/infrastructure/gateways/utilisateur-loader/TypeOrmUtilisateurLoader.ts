@@ -1,8 +1,9 @@
 import { compare, genSalt, hash } from "bcrypt";
 import { createHash } from "crypto";
+import { format } from "date-fns";
 import fs from "fs";
 import path from "path";
-import { DataSource, ILike, ArrayContains } from "typeorm";
+import { DataSource, ILike, ArrayContains, LessThan, MoreThan, IsNull } from "typeorm";
 
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
@@ -29,7 +30,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       const hashedPassword = hashing.digest("hex");
       const checkPassWord = (await compare(password, user.password)) || hashedPassword === user.password ? { utilisateur: user } : null;
       if (checkPassWord) {
-        user.connectionDate = new Date();
+        user.lastConnectionDate = new Date();
         (await this.orm)
           .getRepository(UtilisateurModel)
           .save(user as UtilisateurModel)
@@ -145,9 +146,16 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     institutionId: number,
     roleId: number,
     profilId: string,
+    etatId: string,
     itemsPerPage: number
   ): Promise<any> {
     const utilisateurRepo = (await this.orm).getRepository(UtilisateurModel);
+
+    const NMonthsAgo = new Date();
+    NMonthsAgo.setMonth(new Date().getMonth() - 3);
+
+    const MoreThanDate = (date: Date) => MoreThan(format(date, "yyyy-MM-dd HH:MM:ss"));
+    const LessThanDate = (date: Date) => LessThan(format(date, "yyyy-MM-dd HH:MM:ss"));
 
     let institutionCondition = {};
     if (institutionId > 0) {
@@ -164,12 +172,29 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       profilCondition = { profils: ArrayContains([profilId]) };
     }
 
-    const selectConditions = { ...institutionCondition, ...roleCondition, ...profilCondition };
+    let EtatCondition = {};
+    let EtatCondition2 = {};
+    if (etatId === "actif") {
+      EtatCondition = { lastConnectionDate: MoreThanDate(NMonthsAgo) };
+    }
+    if (etatId === "inactif") {
+      EtatCondition = { lastConnectionDate: LessThanDate(NMonthsAgo) };
+      EtatCondition2 = { lastConnectionDate: IsNull() };
+    }
+
+    /* { lastConnectionDate: IsNull() },
+      { lastConnectionDate: LessThanDate(NMonthsAgo) },*/
+
+    const selectConditions = { ...institutionCondition, ...roleCondition, ...profilCondition, ...EtatCondition, ...EtatCondition2 };
 
     const conditions = [
       { nom: ILike("%" + key.toString() + "%"), ...selectConditions },
       { prenom: ILike("%" + key.toString() + "%"), ...selectConditions },
       { email: ILike("%" + key.toString() + "%"), ...selectConditions },
+      /*  { lastConnectionDate: IsNull() },
+      { lastConnectionDate: LessThanDate(NMonthsAgo) },*/
+
+      /* { lastConnectionDate: MoreThanDate(NMonthsAgo) },*/
     ];
 
     const currentPageA: number = parseInt(currentPage as any) || 1;

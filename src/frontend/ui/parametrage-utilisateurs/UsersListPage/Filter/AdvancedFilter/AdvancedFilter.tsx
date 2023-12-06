@@ -26,6 +26,7 @@ const AdvancedFilter = ({
     institutionId,
     profileId,
     roleId,
+    etatId,
     itemsPerPage,
     setTotal,
     setUserData,
@@ -34,6 +35,7 @@ const AdvancedFilter = ({
     setInstitutionId,
     setProfileId,
     setRoleId,
+    setEtatId,
   },
   userSessionRole,
 }: KeyWordFilterProps) => {
@@ -63,10 +65,24 @@ const AdvancedFilter = ({
         profilCondition = { profileId: profileId };
       }
 
-      const params = { key: keyWord, sort: "", page: 1, itemsPerPage: itemsPerPage, ...institutionCondition, ...roleCondition, ...profilCondition };
+      let etatCondition = {};
+      if (etatId) {
+        etatCondition = { etatId: etatId };
+      }
+
+      const params = {
+        key: keyWord,
+        sort: "",
+        page: 1,
+        itemsPerPage: itemsPerPage,
+        ...institutionCondition,
+        ...roleCondition,
+        ...profilCondition,
+        ...etatCondition,
+      };
       await getUsersAction(params);
     },
-    [institutionId, roleId, profileId, itemsPerPage, keyWord]
+    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord]
   );
 
   const handleChangeRole = useCallback(
@@ -85,10 +101,24 @@ const AdvancedFilter = ({
         profilCondition = { profileId: profileId };
       }
 
-      const params = { key: keyWord, sort: "", page: 1, itemsPerPage: itemsPerPage, ...institutionCondition, ...roleCondition, ...profilCondition };
+      let etatCondition = {};
+      if (etatId) {
+        etatCondition = { etatId: etatId };
+      }
+
+      const params = {
+        key: keyWord,
+        sort: "",
+        page: 1,
+        itemsPerPage: itemsPerPage,
+        ...institutionCondition,
+        ...roleCondition,
+        ...profilCondition,
+        ...etatCondition,
+      };
       await getUsersAction(params);
     },
-    [institutionId, roleId, profileId, itemsPerPage, keyWord]
+    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord]
   );
 
   const handleChangeProfil = useCallback(
@@ -108,10 +138,60 @@ const AdvancedFilter = ({
 
       const profilCondition = { profileId: e.target.value };
 
-      const params = { key: keyWord, sort: "", page: 1, itemsPerPage: itemsPerPage, ...institutionCondition, ...roleCondition, ...profilCondition };
+      let etatCondition = {};
+      if (etatId) {
+        etatCondition = { etatId: etatId };
+      }
+
+      const params = {
+        key: keyWord,
+        sort: "",
+        page: 1,
+        itemsPerPage: itemsPerPage,
+        ...institutionCondition,
+        ...roleCondition,
+        ...profilCondition,
+        ...etatCondition,
+      };
       await getUsersAction(params);
     },
-    [institutionId, roleId, profileId, itemsPerPage, keyWord]
+    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord]
+  );
+
+  const handleChangeEtat = useCallback(
+    async (e: React.ChangeEvent<HTMLSelectElement>) => {
+      e.preventDefault();
+      setEtatId(e.target.value);
+      let institutionCondition = {};
+      if (institutionIdSession || institutionId) {
+        institutionCondition = { institutionId: institutionIdSession || institutionId };
+      }
+
+      let roleCondition = {};
+      if (roleId) {
+        roleCondition = { roleId: roleId };
+      }
+
+      let profilCondition = {};
+      if (profileId) {
+        profilCondition = { profileId: profileId };
+      }
+
+      const etatCondition = { etatId: e.target.value };
+
+      const params = {
+        key: keyWord,
+        sort: "",
+        page: 1,
+        itemsPerPage: itemsPerPage,
+        ...institutionCondition,
+        ...roleCondition,
+        ...profilCondition,
+        ...etatCondition,
+      };
+      await getUsersAction(params);
+    },
+    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord]
   );
 
   const getUsersAction = useCallback(
@@ -192,16 +272,16 @@ const AdvancedFilter = ({
       </div>
 
       <div className={`fr-select-group ${styles["filter-item"]}`}>
-        <label className="fr-label" htmlFor="profil">
+        <label className="fr-label" htmlFor="etat">
           Etat
         </label>
-        <select className="fr-select" id="profil" onChange={handleChangeProfil}>
-          <option selected={profileId === "" || profileId === null} value="">
+        <select className="fr-select" id="etat" onChange={handleChangeEtat}>
+          <option selected={etatId === "" || etatId === null} value="">
             Tous
           </option>
 
           {etats.map((item) => (
-            <option key={item.id} selected={profileId === item.code} value={item.code}>
+            <option key={item.id} selected={etatId === item.code} value={item.code}>
               {item.label}
             </option>
           ))}

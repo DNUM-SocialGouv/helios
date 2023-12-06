@@ -9,7 +9,6 @@ import {
   BeforeInsert,
   BeforeUpdate,
   DeleteDateColumn,
-  Timestamp,
 } from "typeorm";
 
 import { InstitutionModel } from "./InstitutionModel";
@@ -71,7 +70,7 @@ export class UtilisateurModel {
   public deletedDate!: Date;
 
   @Column({ name: "ut_date_last_connection" })
-  public connectionDate!: Date;
+  public lastConnectionDate!: Date;
 
   @Column({ name: "ut_cree_par", nullable: true })
   public creePar!: number;

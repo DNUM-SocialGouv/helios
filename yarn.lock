@@ -4095,7 +4095,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:^2.29.3":
+"date-fns@npm:^2.29.3, date-fns@npm:^2.30.0":
   version: 2.30.0
   resolution: "date-fns@npm:2.30.0"
   dependencies:
@@ -5987,6 +5987,7 @@ __metadata:
     chart.js: ^3.8.0
     chartjs-plugin-datalabels: ^2.0.0
     crypto: ^1.0.1
+    date-fns: ^2.30.0
     depcheck: ^1.4.3
     dotenv-defaults: ^5.0.0
     env-cmd: ^10.1.0

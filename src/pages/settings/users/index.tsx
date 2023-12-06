@@ -7,7 +7,6 @@ import { RoleModel } from "../../../../database/models/RoleModel";
 import { UtilisateurModel } from "../../../../database/models/UtilisateurModel";
 import { getAllProfilesEndpoint } from "../../../backend/infrastructure/controllers/getAllProfilesEndpoint";
 import { getAllRolesEndpoint } from "../../../backend/infrastructure/controllers/getAllRolesEndpoint";
-import { getInstitutionByCodeEndpoint } from "../../../backend/infrastructure/controllers/getInstitutionByCodeEndpoint";
 import { getInstitutionsEndpoint } from "../../../backend/infrastructure/controllers/getInstitutionsEndpoint";
 import { getUsersListPaginatedEndpoint } from "../../../backend/infrastructure/controllers/getUsersListPaginatedEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
@@ -32,6 +31,7 @@ type RouterProps = Readonly<{
   institution: number;
   profile: number;
   role: string;
+  etat: string;
   status: string;
   lastElementInPage: boolean;
   itemsPerPage: number;
@@ -47,6 +47,7 @@ export default function Router({
   institution,
   profile,
   role,
+  etat,
   status,
   lastElementInPage,
   itemsPerPage,
@@ -70,6 +71,7 @@ export default function Router({
       profile={profile}
       profiles={profiles}
       role={role}
+      etat={etat}
       roles={roles}
       userSessionRole={userSessionRole}
       users={usersPaginatedList}
@@ -80,8 +82,6 @@ export default function Router({
 export async function getServerSideProps(context): Promise<GetStaticPropsResult<RouterProps>> {
   try {
     const session = await getSession(context);
-
-    console.log("session?.user?", session?.user);
 
     let userSessionRole = "";
 
@@ -99,7 +99,7 @@ export async function getServerSideProps(context): Promise<GetStaticPropsResult<
         userSessionRole = "Utilisateur";
     }
 
-    let { page, key, institution, role, profil, institutionId, roleId, profileId, status, itemsPerPage } = context.query;
+    let { page, key, institution, role, etat, profil, institutionId, roleId, etatId, profileId, status, itemsPerPage } = context.query;
     page = parseInt(page) | 1;
     itemsPerPage = parseInt(itemsPerPage) | 10;
     key = key as string | "";
@@ -111,14 +111,7 @@ export async function getServerSideProps(context): Promise<GetStaticPropsResult<
     roleId = parseInt(roleId) | 0;
     const profilId = profileId as string | "";
 
-    //   console.log("---------------CCCC------------");
-    //   console.log(context.query);
-    //   console.log("---------------------A-------------------");
-    //   console.log("institutionId : ", institutionId);
-    //   console.log("roleId : ", roleId);
-    //   console.log("profilId : ", profileId);
-
-    const users = await getUsersListPaginatedEndpoint(dependencies, key, "Desc", page, institutionId, roleId, profilId, itemsPerPage);
+    const users = await getUsersListPaginatedEndpoint(dependencies, key, "Desc", page, institutionId, roleId, profilId, etatId, itemsPerPage);
     //console.log("--users---", users);
 
     let lastElementInPage = false;
@@ -145,6 +138,7 @@ export async function getServerSideProps(context): Promise<GetStaticPropsResult<
         institution: institution || 0,
         role: role || "",
         profil: profil || 0,
+        etat: etat || "",
         status: status || "",
         lastElementInPage: lastElementInPage,
         itemsPerPage: itemsPerPage || 10,

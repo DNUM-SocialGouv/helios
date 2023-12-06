@@ -17,6 +17,7 @@ export interface UtilisateurLoader {
     institutionId: number,
     roleId: number,
     profilId: string,
+    etatId: string,
     itemsPerPage: number
   ): Promise<void>;
   getUserByCode(code: string): Promise<UtilisateurModel | null>;
