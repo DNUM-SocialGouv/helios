@@ -18,4 +18,5 @@ export class Paths {
   readonly ADD_PROFILE = '/settings/add-profile';
   readonly REGISTRATION = '/registration';
   readonly REINITIALISATION_PASSWORD = '/reinitialisation-mot-passe';
+  readonly CREATE_PASSWORD = '/creation-mot-passe';
 }

@@ -44,7 +44,7 @@ export const FormulaireDeConnexion = () => {
         <div className="fr-grid-row  fr-grid-row--center">
             <section className={"fr-col-6 " + styles["container"]}>
                 {userContext?.passwordCreated && <div className="fr-grid-row  fr-grid-row--center">
-                    <span>  Votre nouveau mot de passe a bien été pris en charge. </span>
+                    <span>  Votre nouveau mot de passe a bien été pris en compte. </span>
                     <br />
                     <span>Merci de saisir vos identifiant et mot de passe pour vous connecter</span>
                 </div>}
