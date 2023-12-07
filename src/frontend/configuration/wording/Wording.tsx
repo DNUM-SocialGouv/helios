@@ -64,6 +64,7 @@ export interface Wording {
   readonly CONNEXION_MOT_DE_PASSE: string
   readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string
   readonly FORGET_PASSEWORD: string
+  readonly FORGET_PASSEWORD_MESSAGE: string
   readonly CONNEXION_LIBELLE: string
 
   // Recherche
@@ -373,7 +374,6 @@ export interface Wording {
 
   // Parametrage
   readonly PARAMETRAGE_TITRE: string;
-  readonly PARAMETRAGE_PROFILE: string;
   readonly PARAMETRAGE_EJ_TAB: string;
   readonly PARAMETRAGE_ET_MS_TAB: string;
   readonly PARAMETRAGE_ET_SAN_TAB: string;

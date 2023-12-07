@@ -43,11 +43,17 @@ export const FormulaireDeConnexion = () => {
     return (
         <div className="fr-grid-row  fr-grid-row--center">
             <section className={"fr-col-6 " + styles["container"]}>
+<<<<<<< HEAD
                 {userContext?.passwordCreated && <div className="fr-grid-row  fr-grid-row--center">
                     <span>  Votre nouveau mot de passe a bien été pris en charge. </span>
                     <br />
                     <span>Merci de saisir vos identifiant et mot de passe pour vous connecter</span>
                 </div>}
+=======
+                {userContext?.passwordCreated && <p>
+                    votre nouveau mot de passe a bien été pris en charge. Merci de saisir vos indentifiant et mot de passe pour vous connecter
+                </p>}
+>>>>>>> origin/develop
                 <form className="fr-mt-5w" data-testid="login-form" id="login-1760" onSubmit={handleSubmit}>
                     <div className="fr-fieldset__element">
                         <div className="fr-fieldset__element">
