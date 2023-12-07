@@ -22,7 +22,8 @@ export const BlocBudgetFinance = ({ entitéJuridiqueBudgetFinanceViewModel }: Bl
 
   return (
     <Bloc titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES}>
-      {entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasAutorisés.length !== 0 ? <NotAUthorized indicateurs={entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasAutorisés} /> : entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasRenseignee.length !== 0 ? <NoDataCallout indicateurs={entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasRenseignee} /> : <></>}
+      {entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasAutorisés.length !== 0 ? <NotAUthorized indicateurs={entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasAutorisés} />
+        : entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasRenseignee.length !== 0 ? <NoDataCallout indicateurs={entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasRenseignee} /> : <></>}
       <ul className={"indicateurs " + styles["budget"]}>
         {!entitéJuridiqueBudgetFinanceViewModel.compteDeResultatVide() && entitéJuridiqueBudgetFinanceViewModel.compteDeResultatEstIlAutorisé ? <CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueBudgetFinanceViewModel} /> : <></>}
         {entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable.auMoinsUnResultatNetRenseigné() && entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable.resultatNetComptableEstIlAutorisé ? <ResultatNetComptable estEntitéJuridique={true} resultatNetComptableViewModel={entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable} /> : <></>}
