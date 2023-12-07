@@ -24,7 +24,7 @@ export const GroupeBoutonRegions = () => {
         </Link>
       </li>
       <li>
-        <select className="fr-btn" onChange={handleOnChangeOutreMerRegions}>
+        <select className="fr-btn" onChange={handleOnChangeOutreMerRegions} title='Cartes Outre-mer'>
           <option disabled hidden selected value="">{régions["outre-mer"].label}</option>
           <option style={{ backgroundColor: 'white', color: 'black' }} value="/region/outre-mer">{régions["outre-mer"].label}</option>
           {outreMerRegionsList.map((region) => (

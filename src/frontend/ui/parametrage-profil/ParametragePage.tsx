@@ -30,7 +30,7 @@ export const ParametragePage = () => {
                     <button className="fr-mt-2v fr-btn" onClick={() => {
                         router.push("/settings/add-profile");
                     }}>
-                        Ajouter un profil
+                        Ajouter une autorisation
                     </button>
 
                     {profileContext?.profiles.length === 0 ? (<div className={"fr-mt-8w " + styles["align-text"]}>Vous n&apos;avez aucun profil</div>) : (

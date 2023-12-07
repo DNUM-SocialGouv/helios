@@ -3,7 +3,7 @@ export const PageAccessibilite = () => {
     <>
       <h1>Accessibilité</h1>
       <p>
-        <i> Dernière mise à jour : 26 avril 2023</i>
+        <i> Dernière mise à jour : 04 décembre 2023</i>
       </p>
       <div className="fr-mb-5w">
         <h2 className="fr-h6">Qu’est-ce que l’accessibilité numérique ?</h2>
