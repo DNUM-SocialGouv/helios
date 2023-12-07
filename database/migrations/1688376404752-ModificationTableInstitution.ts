@@ -24,7 +24,6 @@ export class ModificationTableInstitution1688376404752 implements MigrationInter
 
         await queryRunner.query("insert into public.institution(inst_code, inst_libelle, inst_code_geo) values('SCN', 'DNUM (SCN)', '00');");
         await queryRunner.query("insert into public.institution(inst_code, inst_libelle, inst_code_geo) values('CAT', 'CAT-AMANIA', '75');");
-        await queryRunner.query("insert into public.institution(inst_code, inst_libelle, inst_code_geo) values('TEST', 'TEST', '44');");
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
