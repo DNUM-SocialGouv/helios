@@ -66,7 +66,7 @@ export class UtilisateurModel {
   @UpdateDateColumn({ name: "ut_date_modification" })
   public dateModification!: Date;
 
-  @DeleteDateColumn({ name: "ut_date_soft_delete" })
+  @Column({ name: "ut_date_soft_delete" })
   public deletedDate!: Date;
 
   @Column({ name: "ut_date_last_connection" })

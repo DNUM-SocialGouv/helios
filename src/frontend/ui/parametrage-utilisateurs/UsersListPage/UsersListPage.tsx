@@ -24,8 +24,11 @@ function greaterThanNMonths(inputDate: Date, n: number): boolean {
   return new Date(inputDate) < NMonthsAgo;
 }
 
-function getUserStatus(inputDate: Date): string {
-  if (greaterThanNMonths(inputDate, 3)) {
+function getUserStatus(lastConnectionDate: Date, deletedDate: Date): string {
+  if (deletedDate) {
+    return "Supprimé";
+  }
+  if (greaterThanNMonths(lastConnectionDate, 3) || lastConnectionDate === null) {
     return "InActif";
   }
   return "Actif";
@@ -193,8 +196,6 @@ export const UsersListPage = ({
                           <td className={styles["widthTD-small"]}>
                             <a className="fr-raw-link" href={`/settings/users/${user.code}`}>
                               {user.id} {user.prenom}
-                              <br />
-                              {user.code}
                             </a>
                           </td>
                           <td className={styles["widthTD-small"]}>
@@ -231,8 +232,7 @@ export const UsersListPage = ({
                             })}
                           </td>
 
-                          {/*<td className={styles["widthTD-date"]}>{formatDateAndHours(user.dateCreation)}</td>*/}
-                          <td className={styles["widthTD-date"]}>{getUserStatus(user.lastConnectionDate)}</td>
+                          <td className={styles["widthTD-date"]}>{getUserStatus(user.lastConnectionDate, user.deletedDate)}</td>
                           <td>
                             <a
                               className="fr-raw-link"

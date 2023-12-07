@@ -3,7 +3,7 @@ import { createHash } from "crypto";
 import { format } from "date-fns";
 import fs from "fs";
 import path from "path";
-import { DataSource, ILike, ArrayContains, LessThan, MoreThan, IsNull } from "typeorm";
+import { DataSource, ILike, ArrayContains, LessThan, MoreThan, IsNull, Not } from "typeorm";
 
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
@@ -174,24 +174,27 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     }
 
     let EtatCondition = {};
-    let EtatCondition2 = {};
+
     if (etatId === "actif") {
-      EtatCondition = { lastConnectionDate: MoreThanDate(NMonthsAgo) };
+      EtatCondition = { lastConnectionDate: MoreThanDate(NMonthsAgo), deletedDate: IsNull() };
     }
     if (etatId === "inactif") {
-      EtatCondition = { lastConnectionDate: LessThanDate(NMonthsAgo) };
-      EtatCondition2 = { lastConnectionDate: IsNull() };
+      EtatCondition = { lastConnectionDate: LessThanDate(NMonthsAgo), deletedDate: IsNull() };
+    }
+    if (etatId === "deleted") {
+      EtatCondition = { deletedDate: Not(IsNull()) };
     }
 
     /* { lastConnectionDate: IsNull() },
       { lastConnectionDate: LessThanDate(NMonthsAgo) },*/
 
-    const selectConditions = { ...institutionCondition, ...roleCondition, ...profilCondition, ...EtatCondition, ...EtatCondition2 };
+    const selectConditions = { ...institutionCondition, ...roleCondition, ...profilCondition, ...EtatCondition };
 
     const conditions = [
       { nom: ILike("%" + key.toString() + "%"), ...selectConditions },
       { prenom: ILike("%" + key.toString() + "%"), ...selectConditions },
       { email: ILike("%" + key.toString() + "%"), ...selectConditions },
+
       /*  { lastConnectionDate: IsNull() },
       { lastConnectionDate: LessThanDate(NMonthsAgo) },*/
 
@@ -228,10 +231,6 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     try {
       const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: userCode } });
 
-      console.log("userCode input   : ", userCode);
-      console.log("userCode output  : ", user?.code);
-      console.log("user -----------------------------------> ", user);
-
       const institutionToSave = await (await this.orm).getRepository(InstitutionModel).findOneBy({ code: institutionCode });
       const roleToSave = await (await this.orm).getRepository(RoleModel).findOneBy({ code: roleCode });
 
@@ -247,7 +246,6 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         .getRepository(UtilisateurModel)
         .save(user as UtilisateurModel)
         .then(async () => {
-          console.log("user after update", user);
           return user;
         })
         .catch((error) => {
