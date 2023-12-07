@@ -61,7 +61,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
     const { institutionId, roleId } = e.target.elements;
 
     fetch("/api/utilisateurs/update", {
-      body: JSON.stringify({ institutionCode: institutionId.value, roleCode: roleId.value, profilsCode: profiles }),
+      body: JSON.stringify({ userCode: user.code, institutionCode: institutionId.value, roleCode: roleId.value, profilsCode: profiles }),
       headers: { "Content-Type": "application/json" },
       method: "POST",
     }).then(() => {
@@ -81,8 +81,11 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
       if (parseInt(searchParams.get("roleId") as string) > 0) {
         queryParams += "&roleId=" + searchParams.get("roleId");
       }
-      if (parseInt(searchParams.get("profileId") as string) > 0) {
+      if (searchParams.get("profileId")) {
         queryParams += "&profileId=" + searchParams.get("profileId");
+      }
+      if (searchParams.get("etatId")) {
+        queryParams += "&etatId=" + searchParams.get("etatId");
       }
 
       push("/settings/users?status=edit_successfully&" + queryParams);

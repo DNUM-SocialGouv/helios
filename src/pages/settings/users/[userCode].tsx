@@ -21,6 +21,7 @@ type RouterProps = Readonly<{
 }>;
 
 export default function Router({ user, institutions, profiles, roles }: RouterProps) {
+  console.log("user*user*user", user);
   const { wording } = useDependencies();
   useBreadcrumb([
     {

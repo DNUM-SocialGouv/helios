@@ -17,7 +17,7 @@ type PaginationBtnProps = Readonly<{
 }>;
 
 const PaginationBtn = ({
-  paginationData: { lastPage, page, keyWord, institutionId, roleId, profileId, itemsPerPage, setUserData, setPage, setLastPage },
+  paginationData: { lastPage, page, keyWord, institutionId, roleId, profileId, etatId, itemsPerPage, setUserData, setPage, setLastPage },
 }: PaginationBtnProps) => {
   const { data } = useSession();
   const institutionIdSession = (data?.user?.role as unknown as number) !== 1 ? data?.user.institutionId : 0;
@@ -50,6 +50,11 @@ const PaginationBtn = ({
         profilCondition = { profileId: profileId };
       }
 
+      let etatCondition = {};
+      if (etatId) {
+        etatCondition = { etatId: etatId };
+      }
+
       const params = {
         key: keyWord,
         sort: "",
@@ -57,6 +62,7 @@ const PaginationBtn = ({
         ...institutionCondition,
         ...roleCondition,
         ...profilCondition,
+        ...etatCondition,
         itemsPerPage: itemsPerPage.toString(),
       };
       await fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
@@ -72,7 +78,7 @@ const PaginationBtn = ({
 
       return true;
     },
-    [institutionId, roleId, profileId, itemsPerPage, keyWord, page]
+    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page]
   );
 
   return (

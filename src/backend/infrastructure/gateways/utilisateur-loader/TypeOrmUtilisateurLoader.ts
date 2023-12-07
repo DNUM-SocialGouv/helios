@@ -83,6 +83,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         account.profils = [profileToSave.code];
         account.actif = true;
         account.dateCreation = new Date();
+        account.lastConnectionDate = new Date();
       }
 
       (await this.orm)
@@ -227,12 +228,18 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     try {
       const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: userCode } });
 
+      console.log("userCode input   : ", userCode);
+      console.log("userCode output  : ", user?.code);
+      console.log("user -----------------------------------> ", user);
+
       const institutionToSave = await (await this.orm).getRepository(InstitutionModel).findOneBy({ code: institutionCode });
       const roleToSave = await (await this.orm).getRepository(RoleModel).findOneBy({ code: roleCode });
 
       if (user && institutionToSave && roleToSave && profilsCode && profilsCode.length > 0) {
         user.institution = institutionToSave;
+        user.institutionId = institutionToSave.id;
         user.role = roleToSave;
+        user.roleId = roleToSave.id.toString();
         user.profils = profilsCode;
       }
 
@@ -240,6 +247,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         .getRepository(UtilisateurModel)
         .save(user as UtilisateurModel)
         .then(async () => {
+          console.log("user after update", user);
           return user;
         })
         .catch((error) => {
@@ -257,7 +265,21 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: userCode } });
 
       if (user) {
-        await (await this.orm).getRepository(UtilisateurModel).remove(user);
+        // await (await this.orm).getRepository(UtilisateurModel).remove(user);
+
+        user.deletedDate = new Date();
+
+        (await this.orm)
+          .getRepository(UtilisateurModel)
+          .save(user as UtilisateurModel)
+          .then(async () => {
+            return user;
+          })
+          .catch((error) => {
+            // eslint-disable-next-line no-console
+            console.log("error", error);
+          });
+
         return "User deleted successfully";
       } else {
         return "User not found";

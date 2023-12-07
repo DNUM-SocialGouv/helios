@@ -192,7 +192,9 @@ export const UsersListPage = ({
                         <tr key={user.id}>
                           <td className={styles["widthTD-small"]}>
                             <a className="fr-raw-link" href={`/settings/users/${user.code}`}>
-                              {user.prenom}
+                              {user.id} {user.prenom}
+                              <br />
+                              {user.code}
                             </a>
                           </td>
                           <td className={styles["widthTD-small"]}>
@@ -234,7 +236,11 @@ export const UsersListPage = ({
                           <td>
                             <a
                               className="fr-raw-link"
-                              href={`/settings/users/${user.code}?page=${page}&itemsPerPage=${itemsPerPage}&key=${key}&institutionId=${institutionId}&roleId=${roleId}&profileId=${profileId}`}
+                              href={`/settings/users/${
+                                user.code
+                              }?page=${page}&itemsPerPage=${itemsPerPage}&key=${key}&institutionId=${institutionId}&roleId=${roleId}&profileId=${
+                                profileId || ""
+                              }`}
                             >
                               <button>
                                 <span aria-hidden="true" className="fr-icon-pencil-line"></span>

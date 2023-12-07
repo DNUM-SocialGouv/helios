@@ -14,7 +14,7 @@ type KeyWordFilterProps = Readonly<{
 }>;
 
 const KeyWordFilter = ({
-  paginationData: { keyWord, itemsPerPage, institutionId, roleId, profileId, page, setKey, setUserData, setPage, setLastPage, setTotal },
+  paginationData: { keyWord, itemsPerPage, institutionId, roleId, profileId, etatId, page, setKey, setUserData, setPage, setLastPage, setTotal },
 }: KeyWordFilterProps) => {
   const { data } = useSession();
   const institutionIdSession = (data?.user?.role as unknown as number) !== 1 ? data?.user.institutionId : 0;
@@ -39,6 +39,11 @@ const KeyWordFilter = ({
         profilCondition = { profileId: profileId };
       }
 
+      let etatCondition = {};
+      if (etatId) {
+        etatCondition = { etatId: etatId };
+      }
+
       const params = {
         key: e.target.value,
         sort: "",
@@ -47,6 +52,7 @@ const KeyWordFilter = ({
         ...institutionCondition,
         ...roleCondition,
         ...profilCondition,
+        ...etatCondition,
       };
       await fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
         headers: { "Content-Type": "application/json" },
@@ -60,7 +66,7 @@ const KeyWordFilter = ({
           setLastPage(users.lastPage);
         });
     },
-    [institutionId, roleId, profileId, itemsPerPage, keyWord, page]
+    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page]
   );
   return (
     <div>

@@ -14,7 +14,7 @@ type KeyWordFilterProps = Readonly<{
 }>;
 
 const ItemsPerPage = ({
-  paginationData: { keyWord, institutionId, profileId, roleId, itemsPerPage, setTotal, setUserData, setPage, setLastPage, setItemsPerPage },
+  paginationData: { keyWord, institutionId, profileId, roleId, itemsPerPage, etatId, setTotal, setUserData, setPage, setLastPage, setItemsPerPage },
 }: KeyWordFilterProps) => {
   const { data } = useSession();
   const institutionIdSession = (data?.user?.role as unknown as number) !== 1 ? data?.user.institutionId : 0;
@@ -38,10 +38,24 @@ const ItemsPerPage = ({
         profilCondition = { profileId: profileId };
       }
 
-      const params = { key: keyWord, sort: "", page: 1, ...institutionCondition, ...roleCondition, ...profilCondition, itemsPerPage: e.target.value };
+      let etatCondition = {};
+      if (etatId) {
+        etatCondition = { etatId: etatId };
+      }
+
+      const params = {
+        key: keyWord,
+        sort: "",
+        page: 1,
+        ...institutionCondition,
+        ...roleCondition,
+        ...profilCondition,
+        ...etatCondition,
+        itemsPerPage: e.target.value,
+      };
       await getUsersAction(params);
     },
-    [institutionId, roleId, profileId, itemsPerPage, keyWord]
+    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord]
   );
 
   const getUsersAction = useCallback(
