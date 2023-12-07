@@ -22,7 +22,7 @@ export class TypeOrmForgetPasswordLoader implements ForgetPasswordLoader {
       const imageContent = fs.readFileSync(absolutePath, 'base64');
 
       const html = `
-          <img src="cid:logo" alt="helios" height="75" width="200">
+          <img src="cid:logo" alt="helios" height="auto" width="200">
           <p>Bonjour,</p>
           <p>Nous avons reçu une demande de réinitialisation de mot de passe pour votre compte.</p>
       
