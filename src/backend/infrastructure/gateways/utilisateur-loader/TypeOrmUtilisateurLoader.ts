@@ -175,7 +175,21 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
 
     let EtatCondition = {};
 
-    if (etatId === "actif") {
+    switch (etatId) {
+      case "actif":
+        EtatCondition = { lastConnectionDate: MoreThanDate(NMonthsAgo), deletedDate: IsNull() };
+        break;
+      case "inactif":
+        EtatCondition = { lastConnectionDate: LessThanDate(NMonthsAgo), deletedDate: IsNull() };
+        break;
+      case "deleted":
+        EtatCondition = { deletedDate: Not(IsNull()) };
+        break;
+      default:
+        EtatCondition = {};
+    }
+
+    /* if (etatId === "actif") {
       EtatCondition = { lastConnectionDate: MoreThanDate(NMonthsAgo), deletedDate: IsNull() };
     }
     if (etatId === "inactif") {
@@ -183,7 +197,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     }
     if (etatId === "deleted") {
       EtatCondition = { deletedDate: Not(IsNull()) };
-    }
+    }*/
 
     /* { lastConnectionDate: IsNull() },
       { lastConnectionDate: LessThanDate(NMonthsAgo) },*/

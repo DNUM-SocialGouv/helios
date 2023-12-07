@@ -29,6 +29,18 @@ export default async function handler(request: NextApiRequest, response: NextApi
         userSessionRole = "Utilisateur";
     }
 */
+    //  console.log("request", request.headers.cookie);
+
+    const resp = await fetch("http://localhost:3000/api/auth/session", {
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: request.headers.cookie,
+      },
+
+      method: "GET",
+    });
+
+    console.log("resp", await resp.json());
 
     const key = request.query["key"] as string | "";
     const sort = request.query["sort"] as string | "";
