@@ -1,0 +1,10 @@
+.unclickable-area {
+  pointer-events: none !important;
+  display: grid;
+}
+.cookies-modal {
+  position: absolute;
+  bottom: 50px;
+  left: 70px;
+  width: 1200px;
+}
