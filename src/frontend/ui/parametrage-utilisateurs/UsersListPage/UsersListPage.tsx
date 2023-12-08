@@ -5,7 +5,7 @@ import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 
 import { useQueryState, parseAsInteger, parseAsString } from "next-usequerystate";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
@@ -58,6 +58,7 @@ export interface iPaginationData {
   setTotal: (total: number) => void;
   setItemsPerPage: (itemsPerPage: number) => void;
   setEtatId: (etatId: string) => void;
+  getUsersAndRefresh: (params: any, setUserData: any, setPage: any, setLastPage: any, setTotal: any) => void;
 }
 
 type UsersListPageProps = Readonly<{
@@ -113,6 +114,29 @@ export const UsersListPage = ({
 
   const { wording } = useDependencies();
 
+  const getUsersAndRefresh = useCallback(
+    async (
+      params: string | string[][] | Record<string, string> | URLSearchParams | undefined,
+      setUserData: (arg0: any) => void,
+      setPage: (arg0: any) => void,
+      setLastPage: (arg0: any) => void,
+      setTotal: (arg0: any) => void
+    ) => {
+      fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
+        headers: { "Content-Type": "application/json" },
+        method: "GET",
+      })
+        .then((response) => response.json())
+        .then((users) => {
+          setUserData(users.data);
+          setPage(users.currentPage);
+          setLastPage(users.lastPage);
+          setTotal(users.total);
+        });
+    },
+    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page]
+  );
+
   const paginationData: iPaginationData = {
     institutionId: institutionId,
     institutions: institutions,
@@ -136,6 +160,7 @@ export const UsersListPage = ({
     setTotal: setTotal,
     setItemsPerPage: setItemsPerPage,
     setEtatId: setEtatId,
+    getUsersAndRefresh: getUsersAndRefresh,
   };
 
   return (
@@ -218,7 +243,7 @@ export const UsersListPage = ({
                           </td>
 
                           <td className={`${styles["widthTD-profil"]}`}>
-                            {user.profils.map((profil: string, i, { length }) => {
+                            {user.profils.map((profil: string, i: number, { length }: any) => {
                               const pr = profiles.filter((item) => item.code === profil);
                               let seperator = ", ";
                               //last element

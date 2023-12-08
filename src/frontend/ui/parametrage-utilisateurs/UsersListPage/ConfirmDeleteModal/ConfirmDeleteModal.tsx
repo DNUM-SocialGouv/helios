@@ -11,73 +11,77 @@ type ConfirmDeleteModalProps = Readonly<{
 }>;
 
 const ConfirmDeleteModal = ({
-  paginationData: { keyWord, page, institutionId, roleId, profileId, etatId, itemsPerPage, setUserData, setPage, setLastPage },
+  paginationData: { keyWord, page, institutionId, roleId, profileId, etatId, itemsPerPage, setUserData, setPage, setLastPage, setTotal, getUsersAndRefresh },
   userCode,
   lastElementInPage,
 }: ConfirmDeleteModalProps) => {
-  const deleteUser = useCallback(async (userCode: string) => {
-    let keyWordData = {};
-    if (keyWord) {
-      keyWordData = { key: keyWord };
-    }
-
-    let pageData = {};
-    if (page) {
-      pageData = { page: page };
-
-      if (lastElementInPage) {
-        pageData = { page: page - 1 };
+  const deleteUser = useCallback(
+    async (userCode: string) => {
+      let keyWordData = {};
+      if (keyWord) {
+        keyWordData = { key: keyWord };
       }
-    }
 
-    let institutionIdData = {};
-    if (institutionId) {
-      institutionIdData = { institutionId: institutionId };
-    }
+      let pageData = {};
+      if (page) {
+        pageData = { page: page };
 
-    let roleIdData = {};
-    if (roleId) {
-      roleIdData = { roleId: roleId };
-    }
+        if (lastElementInPage) {
+          pageData = { page: page - 1 };
+        }
+      }
 
-    let profileIdData = {};
-    if (profileId) {
-      profileIdData = { profileId: profileId };
-    }
+      let institutionIdData = {};
+      if (institutionId) {
+        institutionIdData = { institutionId: institutionId };
+      }
 
-    let etatCondition = {};
-    if (etatId) {
-      etatCondition = { etatId: etatId };
-    }
+      let roleIdData = {};
+      if (roleId) {
+        roleIdData = { roleId: roleId };
+      }
 
-    const params = {
-      status: "deleted_successfully",
-      ...keyWordData,
-      ...pageData,
-      ...institutionIdData,
-      ...roleIdData,
-      ...profileIdData,
-      ...etatCondition,
-      itemsPerPage: itemsPerPage.toString(),
-    };
+      let profileIdData = {};
+      if (profileId) {
+        profileIdData = { profileId: profileId };
+      }
 
-    await fetch("/api/utilisateurs/delete", {
-      body: JSON.stringify({ userCode: userCode }),
-      headers: { "Content-Type": "application/json" },
-      method: "DELETE",
-    }).then(async () => {
-      await fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
+      let etatCondition = {};
+      if (etatId) {
+        etatCondition = { etatId: etatId };
+      }
+
+      const params = {
+        status: "deleted_successfully",
+        ...keyWordData,
+        ...pageData,
+        ...institutionIdData,
+        ...roleIdData,
+        ...profileIdData,
+        ...etatCondition,
+        itemsPerPage: itemsPerPage.toString(),
+      };
+
+      await fetch("/api/utilisateurs/delete", {
+        body: JSON.stringify({ userCode: userCode }),
         headers: { "Content-Type": "application/json" },
-        method: "GET",
-      })
-        .then((response) => response.json())
-        .then((users) => {
-          setUserData(users.data);
-          setPage(users.currentPage);
-          setLastPage(users.lastPage);
-        });
-    });
-  }, []);
+        method: "DELETE",
+      }).then(async () => {
+        getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
+        /*await fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
+          headers: { "Content-Type": "application/json" },
+          method: "GET",
+        })
+          .then((response) => response.json())
+          .then((users) => {
+            setUserData(users.data);
+            setPage(users.currentPage);
+            setLastPage(users.lastPage);
+          });*/
+      });
+    },
+    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page]
+  );
 
   return (
     <dialog aria-labelledby="fr-modal-2-title" className="fr-modal" id="fr-modal-2">

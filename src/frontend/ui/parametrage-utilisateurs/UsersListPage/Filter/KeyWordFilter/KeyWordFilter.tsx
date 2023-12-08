@@ -14,7 +14,21 @@ type KeyWordFilterProps = Readonly<{
 }>;
 
 const KeyWordFilter = ({
-  paginationData: { keyWord, itemsPerPage, institutionId, roleId, profileId, etatId, page, setKey, setUserData, setPage, setLastPage, setTotal },
+  paginationData: {
+    keyWord,
+    itemsPerPage,
+    institutionId,
+    roleId,
+    profileId,
+    etatId,
+    page,
+    setKey,
+    setUserData,
+    setPage,
+    setLastPage,
+    setTotal,
+    getUsersAndRefresh,
+  },
 }: KeyWordFilterProps) => {
   const { data } = useSession();
   const institutionIdSession = (data?.user?.role as unknown as number) !== 1 ? data?.user.institutionId : 0;
@@ -54,7 +68,8 @@ const KeyWordFilter = ({
         ...profilCondition,
         ...etatCondition,
       };
-      await fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
+      getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
+      /*await fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
         headers: { "Content-Type": "application/json" },
         method: "GET",
       })
@@ -64,7 +79,7 @@ const KeyWordFilter = ({
           setPage(users.currentPage);
           setTotal(users.total);
           setLastPage(users.lastPage);
-        });
+        });*/
     },
     [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page]
   );

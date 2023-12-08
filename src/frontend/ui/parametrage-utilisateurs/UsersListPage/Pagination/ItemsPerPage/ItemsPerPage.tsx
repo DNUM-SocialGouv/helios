@@ -14,7 +14,20 @@ type KeyWordFilterProps = Readonly<{
 }>;
 
 const ItemsPerPage = ({
-  paginationData: { keyWord, institutionId, profileId, roleId, itemsPerPage, etatId, setTotal, setUserData, setPage, setLastPage, setItemsPerPage },
+  paginationData: {
+    keyWord,
+    institutionId,
+    profileId,
+    roleId,
+    itemsPerPage,
+    etatId,
+    setTotal,
+    setUserData,
+    setPage,
+    setLastPage,
+    setItemsPerPage,
+    getUsersAndRefresh,
+  },
 }: KeyWordFilterProps) => {
   const { data } = useSession();
   const institutionIdSession = (data?.user?.role as unknown as number) !== 1 ? data?.user.institutionId : 0;
@@ -53,12 +66,13 @@ const ItemsPerPage = ({
         ...etatCondition,
         itemsPerPage: e.target.value,
       };
-      await getUsersAction(params);
+      // await getUsersAction(params);
+      await getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
     },
     [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord]
   );
 
-  const getUsersAction = useCallback(
+  /*const getUsersAction = useCallback(
     async (params: {}) => {
       await fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
         headers: { "Content-Type": "application/json" },
@@ -74,7 +88,7 @@ const ItemsPerPage = ({
         });
     },
     [institutionId, roleId, profileId, itemsPerPage, keyWord]
-  );
+  );*/
 
   return (
     <div className="fr-select-group">

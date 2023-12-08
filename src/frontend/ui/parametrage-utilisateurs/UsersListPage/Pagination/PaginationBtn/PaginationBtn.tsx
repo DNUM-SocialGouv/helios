@@ -17,7 +17,21 @@ type PaginationBtnProps = Readonly<{
 }>;
 
 const PaginationBtn = ({
-  paginationData: { lastPage, page, keyWord, institutionId, roleId, profileId, etatId, itemsPerPage, setUserData, setPage, setLastPage },
+  paginationData: {
+    lastPage,
+    page,
+    keyWord,
+    institutionId,
+    roleId,
+    profileId,
+    etatId,
+    itemsPerPage,
+    setUserData,
+    setPage,
+    setLastPage,
+    setTotal,
+    getUsersAndRefresh,
+  },
 }: PaginationBtnProps) => {
   const { data } = useSession();
   const institutionIdSession = (data?.user?.role as unknown as number) !== 1 ? data?.user.institutionId : 0;
@@ -65,7 +79,8 @@ const PaginationBtn = ({
         ...etatCondition,
         itemsPerPage: itemsPerPage.toString(),
       };
-      await fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
+      getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
+      /*await fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
         headers: { "Content-Type": "application/json" },
         method: "GET",
       })
@@ -74,7 +89,7 @@ const PaginationBtn = ({
           setUserData(users.data);
           setPage(users.currentPage);
           setLastPage(users.lastPage);
-        });
+        });*/
 
       return true;
     },

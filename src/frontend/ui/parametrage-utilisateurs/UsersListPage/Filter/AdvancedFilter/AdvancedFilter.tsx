@@ -36,6 +36,7 @@ const AdvancedFilter = ({
     setProfileId,
     setRoleId,
     setEtatId,
+    getUsersAndRefresh,
   },
   userSessionRole,
 }: KeyWordFilterProps) => {
@@ -196,7 +197,8 @@ const AdvancedFilter = ({
 
   const getUsersAction = useCallback(
     (params: {}) => {
-      fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
+      getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
+      /*fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
         headers: { "Content-Type": "application/json" },
         method: "GET",
       })
@@ -206,7 +208,7 @@ const AdvancedFilter = ({
           setTotal(users.total);
           setPage(1);
           setLastPage(users.lastPage);
-        });
+        });*/
     },
     [institutionId, roleId, profileId, itemsPerPage, keyWord]
   );
