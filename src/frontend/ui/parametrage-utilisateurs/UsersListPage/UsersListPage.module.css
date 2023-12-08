@@ -44,6 +44,16 @@
   max-width: 12ch;
   word-wrap: break-word;
 }
+/***********************/
+.widthTD-actions {
+  min-width: 11ch;
+  word-wrap: break-word;
+}
+
+.widthTD-etat {
+  min-width: 10ch;
+  word-wrap: break-word;
+}
 
 .widthTD-role {
   max-width: 17ch;

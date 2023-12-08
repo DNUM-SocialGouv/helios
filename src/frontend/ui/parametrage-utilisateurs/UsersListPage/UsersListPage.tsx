@@ -16,6 +16,7 @@ import ConfirmDeleteModal from "./ConfirmDeleteModal/ConfirmDeleteModal";
 import AdvancedFilter from "./Filter/AdvancedFilter/AdvancedFilter";
 import ItemsPerPage from "./Pagination/ItemsPerPage/ItemsPerPage";
 import PaginationBtn from "./Pagination/PaginationBtn/PaginationBtn";
+import Reactivate from "./Reactivate/Reactivate";
 import styles from "./UsersListPage.module.css";
 
 function greaterThanNMonths(inputDate: Date, n: number): boolean {
@@ -190,6 +191,7 @@ export const UsersListPage = ({
                   <tbody>
                     {userData.map((user: any) => {
                       const roleClass = user.role.id === 1 ? "error" : user.role.id === 2 ? "success" : "info";
+                      const userStatus = getUserStatus(user.lastConnectionDate, user.deletedDate);
 
                       return (
                         <tr key={user.id}>
@@ -224,7 +226,7 @@ export const UsersListPage = ({
                                 seperator = "";
                               }
                               return (
-                                <span className={`  fr-text--xs  `} key={pr[0].code}>
+                                <span className={`fr-text--xs `} key={pr[0].code}>
                                   {pr[0].label}
                                   {seperator}
                                 </span>
@@ -232,23 +234,32 @@ export const UsersListPage = ({
                             })}
                           </td>
 
-                          <td className={styles["widthTD-date"]}>{getUserStatus(user.lastConnectionDate, user.deletedDate)}</td>
-                          <td>
-                            <a
-                              className="fr-raw-link"
-                              href={`/settings/users/${
-                                user.code
-                              }?page=${page}&itemsPerPage=${itemsPerPage}&key=${key}&institutionId=${institutionId}&roleId=${roleId}&profileId=${
-                                profileId || ""
-                              }`}
-                            >
-                              <button>
-                                <span aria-hidden="true" className="fr-icon-pencil-line"></span>
-                              </button>
-                            </a>
-                            <button aria-controls="fr-modal-2" data-fr-opened="false">
-                              <span aria-hidden="true" className="fr-icon-delete-line" onClick={() => setUserToDelete(user.code)}></span>
-                            </button>
+                          <td className={styles["widthTD-etat"]}>{userStatus}</td>
+
+                          <td className={styles["widthTD-actions"]}>
+                            {userStatus !== "Supprimé" && (
+                              <>
+                                <a
+                                  className="fr-raw-link"
+                                  href={`/settings/users/${
+                                    user.code
+                                  }?page=${page}&itemsPerPage=${itemsPerPage}&key=${key}&institutionId=${institutionId}&roleId=${roleId}&profileId=${
+                                    profileId || ""
+                                  }`}
+                                  title="Modifier"
+                                >
+                                  <button>
+                                    <span aria-hidden="true" className="fr-icon-pencil-line"></span>
+                                  </button>
+                                </a>
+                                <button aria-controls="fr-modal-2" data-fr-opened="false" title="Supprimer">
+                                  <span aria-hidden="true" className="fr-icon-delete-line" onClick={() => setUserToDelete(user.code)}></span>
+                                </button>
+                              </>
+                            )}
+                            {userStatus === "Supprimé" && (
+                              <Reactivate lastElementInPage={lastElementInPage} paginationData={paginationData} userCode={user.code} />
+                            )}
                           </td>
                         </tr>
                       );

@@ -28,4 +28,8 @@ export class UtilisateursUseCase {
   async deleteUser(userCode: string): Promise<string | null> {
     return this.utilisateurLoader.deleteUser(userCode);
   }
+
+  async reactivateUser(userCode: string): Promise<string | null> {
+    return this.utilisateurLoader.reactivateUser(userCode);
+  }
 }

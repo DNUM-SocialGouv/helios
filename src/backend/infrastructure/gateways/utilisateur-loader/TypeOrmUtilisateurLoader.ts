@@ -189,30 +189,12 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         EtatCondition = {};
     }
 
-    /* if (etatId === "actif") {
-      EtatCondition = { lastConnectionDate: MoreThanDate(NMonthsAgo), deletedDate: IsNull() };
-    }
-    if (etatId === "inactif") {
-      EtatCondition = { lastConnectionDate: LessThanDate(NMonthsAgo), deletedDate: IsNull() };
-    }
-    if (etatId === "deleted") {
-      EtatCondition = { deletedDate: Not(IsNull()) };
-    }*/
-
-    /* { lastConnectionDate: IsNull() },
-      { lastConnectionDate: LessThanDate(NMonthsAgo) },*/
-
     const selectConditions = { ...institutionCondition, ...roleCondition, ...profilCondition, ...EtatCondition };
 
     const conditions = [
       { nom: ILike("%" + key.toString() + "%"), ...selectConditions },
       { prenom: ILike("%" + key.toString() + "%"), ...selectConditions },
       { email: ILike("%" + key.toString() + "%"), ...selectConditions },
-
-      /*  { lastConnectionDate: IsNull() },
-      { lastConnectionDate: LessThanDate(NMonthsAgo) },*/
-
-      /* { lastConnectionDate: MoreThanDate(NMonthsAgo) },*/
     ];
 
     const currentPageA: number = parseInt(currentPage as any) || 1;
@@ -223,6 +205,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
 
     const data = await utilisateurRepo.find({
       where: conditions,
+      order: { nom: "DESC", prenom: "DESC" },
       take,
       skip: (currentPageA - 1) * take,
       relations: {
@@ -280,6 +263,36 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         // await (await this.orm).getRepository(UtilisateurModel).remove(user);
 
         user.deletedDate = new Date();
+
+        (await this.orm)
+          .getRepository(UtilisateurModel)
+          .save(user as UtilisateurModel)
+          .then(async () => {
+            return user;
+          })
+          .catch((error) => {
+            // eslint-disable-next-line no-console
+            console.log("error", error);
+          });
+
+        return "User deleted successfully";
+      } else {
+        return "User not found";
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log("error", error);
+    }
+  }
+
+  async reactivateUser(userCode: string): Promise<string | undefined | void> {
+    try {
+      const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: userCode } });
+
+      if (user) {
+        // await (await this.orm).getRepository(UtilisateurModel).remove(user);
+
+        user.deletedDate = null;
 
         (await this.orm)
           .getRepository(UtilisateurModel)
