@@ -1,10 +1,9 @@
-import { SessionProvider } from 'next-auth/react';
+import { SessionProvider } from "next-auth/react";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Script from "next/script";
 import { useEffect } from "react";
-
 
 import "@gouvfr/dsfr/dist/core/core.min.css";
 import "@gouvfr/dsfr/dist/utility/icons/icons-system/icons-system.min.css";
@@ -16,11 +15,12 @@ import "@gouvfr/dsfr/dist/component/input/input.min.css";
 import "@gouvfr/dsfr/dist/component/search/search.min.css";
 import "@gouvfr/dsfr/dist/component/badge/badge.min.css";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
+import "@gouvfr/dsfr/dist/component/radio/radio.min.css";
 import "../frontend/ui/commun/global.css";
 
-import { ProfileContextProvider } from '../frontend/ui/commun/contexts/ProfileContextProvider';
+import { ProfileContextProvider } from "../frontend/ui/commun/contexts/ProfileContextProvider";
 import { DependenciesProvider } from "../frontend/ui/commun/contexts/useDependencies";
-import { UserContextProvider } from '../frontend/ui/commun/contexts/userContextProvider';
+import { UserContextProvider } from "../frontend/ui/commun/contexts/userContextProvider";
 import { Footer } from "../frontend/ui/commun/Footer/Footer";
 import { Header } from "../frontend/ui/commun/Header/Header";
 import { resizeChartOnPrint } from "../plugins/resizeChartAtPrint";
@@ -56,11 +56,11 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
       };
     };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
-      window.addEventListener('beforeunload', handleBeforeUnload);
-    }
+      window.addEventListener("beforeunload", handleBeforeUnload);
+    };
   }, []);
 
   return (
