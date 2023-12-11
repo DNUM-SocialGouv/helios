@@ -1,6 +1,5 @@
 .unclickable-area {
   pointer-events: none !important;
-  display: grid;
 }
 .cookies-modal {
   position: absolute;
@@ -85,14 +84,19 @@
 .row-input {
   display: flow-root;
 }
-.row-input-sep {
+.row-input-sep,
+.row-input-sep-2 {
   border-bottom: 1px solid #c2c9d6;
   margin-bottom: 3rem;
   padding-bottom: 1rem;
+}
+
+.row-input-sep-2 {
+  padding-bottom: 2.25rem;
 }
 .textBold {
   font-weight: 900;
 }
 .fr-modal__title {
-  font-size: 1.75rem;
+  font-size: 1.6rem;
 }
