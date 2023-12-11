@@ -27,6 +27,7 @@
   flex-wrap: wrap;
   margin: 0 -0.75rem 1rem 1rem;
   float: right;
+  padding-top: 0px;
 }
 
 .fr-fieldset__element {
@@ -86,9 +87,12 @@
 }
 .row-input-sep {
   border-bottom: 1px solid #c2c9d6;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   padding-bottom: 1rem;
 }
 .textBold {
   font-weight: 900;
+}
+.fr-modal__title {
+  font-size: 1.75rem;
 }

@@ -61,7 +61,7 @@ export const Cookies = () => {
                 </div>
                 <div className="fr-modal__content">
                   <div className={`${styles["row-input"]} ${styles["row-input-sep"]}`}>
-                    <h2 className="fr-modal__title">Panneau de gestion des cookies</h2>
+                    <h2 className={`fr-modal__title ${styles["fr-modal__title"]} }`}>Panneau de gestion des cookies</h2>
 
                     <fieldset aria-labelledby="radio-inline-legend radio-inline-messages" className={styles["fr-fieldset"]}>
                       <div className={`${styles["fr-fieldset__element"]} ${styles["fr-fieldset__element--inline"]}`}>
@@ -88,7 +88,7 @@ export const Cookies = () => {
                   </div>
 
                   <div className={`${styles["row-input"]} ${styles["row-input-sep"]}`}>
-                    <h2 className="fr-modal__title">Cookies obligatoires</h2>
+                    <h2 className={`fr-modal__title ${styles["fr-modal__title"]} }`}>Cookies obligatoires</h2>
 
                     <fieldset aria-labelledby="radio-inline-legend radio-inline-messages" className={styles["fr-fieldset"]}>
                       <div className={`${styles["fr-fieldset__element"]} ${styles["fr-fieldset__element--inline"]}`}>
@@ -108,7 +108,7 @@ export const Cookies = () => {
                   </div>
 
                   <div className={styles["row-input"]}>
-                    <h2 className="fr-modal__title">Mesure d'audience</h2>
+                    <h2 className={`fr-modal__title ${styles["fr-modal__title"]} }`}>Mesure d'audience</h2>
 
                     <fieldset aria-labelledby="radio-inline-legend radio-inline-messages" className={styles["fr-fieldset"]}>
                       <div className={`${styles["fr-fieldset__element"]} ${styles["fr-fieldset__element--inline"]}`}>
@@ -132,7 +132,7 @@ export const Cookies = () => {
                       </div>
                     </fieldset>
                     <p className={styles["label_input"]}>
-                      <span className="textBold">AT internet</span>
+                      <span className={`${styles["textBold"]} `}>AT internet</span>
                       <br />
                       refusé / autorisé
                       <br />
