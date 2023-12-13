@@ -1,5 +1,6 @@
 import { useDependencies } from "../commun/contexts/useDependencies";
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
+import { Cookies } from "../cookies/Cookies";
 
 export const PageDesDonnéesPersonnelles = () => {
   const { wording } = useDependencies();
@@ -23,8 +24,11 @@ export const PageDesDonnéesPersonnelles = () => {
       </section>
       <section aria-label={wording.PROTECTION_DES_DONNÉES_PERSONNELLES}>
         <h2>Vos droits en matière de données personnelles</h2>
-        <p>Conformément à la loi n° 78-17 du 6 janvier 1978 relative à l&apos;informatique, aux fichiers et aux libertés et au RGPD, vous disposez d&apos;un droit d&apos;accès et de rectification aux données vous concernant.
-          Vous pouvez également demander la limitation du traitement de vos données et vous opposer, pour des raisons tenant à votre situation particulière, au traitement des données vous concernant. </p>
+        <p>
+          Conformément à la loi n° 78-17 du 6 janvier 1978 relative à l&apos;informatique, aux fichiers et aux libertés et au RGPD, vous disposez d&apos;un
+          droit d&apos;accès et de rectification aux données vous concernant. Vous pouvez également demander la limitation du traitement de vos données et vous
+          opposer, pour des raisons tenant à votre situation particulière, au traitement des données vous concernant. 
+        </p>
         <p>En fonction de votre région, vous pouvez exercer ces droits en vous adressant au responsable de traitement de la région concernée :</p>
       </section>
       <table className="fr-table">
@@ -110,14 +114,14 @@ export const PageDesDonnéesPersonnelles = () => {
         </tbody>
       </table>
       <p>
-        Au sein du ministère des solidarités et de la santé,
-        vous pouvez vous adresser à Mme la Déléguée à la protection des données des ministères sociaux - 14,
-        avenue Duquesne, 75007 PARIS.
+        Au sein du ministère des solidarités et de la santé, vous pouvez vous adresser à Mme la Déléguée à la protection des données des ministères sociaux -
+        14, avenue Duquesne, 75007 PARIS.
       </p>
       <p>
-        Enfin, si vous estimez, après nous avoir contactés, que vos droits sur vos données ne sont pas respectés,
-        vous pouvez adresser une réclamation auprès de la Commission nationale de l’informatique et des libertés.
+        Enfin, si vous estimez, après nous avoir contactés, que vos droits sur vos données ne sont pas respectés, vous pouvez adresser une réclamation auprès de
+        la Commission nationale de l’informatique et des libertés.
       </p>
+      <Cookies />
     </>
   );
 };
