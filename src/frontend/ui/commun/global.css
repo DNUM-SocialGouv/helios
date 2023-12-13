@@ -122,10 +122,3 @@ iframe {
     display: grid;
   }
 }
-/* to fix overlay modal cookies
-.fr-header,
-.fr-footer,
-.fr-container {
-  pointer-events: none !important;
-  user-select: none;
-}*/

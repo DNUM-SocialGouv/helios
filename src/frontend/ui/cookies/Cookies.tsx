@@ -9,24 +9,41 @@ import styles from "./Cookies.module.css";
 export const Cookies = () => {
   const [allowCookies, setAllowCookies] = useState("");
   const [condition, setCondition] = useState<string | boolean>("");
+  const [currentModal, setCurrentModal] = useState(1);
 
   const onAccept = () => {
     setCookie("allowed-cookies", "true");
+    setCurrentModal(3);
   };
 
   const onDeny = () => {
     setCookie("allowed-cookies", "false");
+    setCurrentModal(3);
   };
 
   const onOptionChange = (e: ChangeEvent<HTMLInputElement>) => {
     setAllowCookies(e.target.value);
   };
 
+  const onClickModal1 = (e: MouseEvent) => {
+    if (!e.currentTarget.classList.contains("fr-modal--opened")) {
+      e.currentTarget.className += " fr-modal--opened";
+    }
+  };
+
   const onClickModal2 = (e: MouseEvent) => {
     if (!e.currentTarget.classList.contains("fr-modal--opened")) {
-      setCookie("allowed-cookies", "false");
-      if (allowCookies === "true") {
-        setCookie("allowed-cookies", "true");
+      setCookie("allowed-cookies", allowCookies);
+      e.currentTarget.className += " fr-modal--opened";
+    }
+  };
+
+  const closeModal2 = () => {
+    if (allowCookies === "") {
+      setCurrentModal(1);
+    } else {
+      {
+        setCurrentModal(3);
       }
     }
   };
@@ -35,11 +52,26 @@ export const Cookies = () => {
     setCondition(getCookie("allowed-cookies") === undefined);
   }, []);
 
+  {
+    /*  console.log("currentModal: ", currentModal);
+    console.log("condition: ", condition);*/
+  }
+
   return (
     <>
-      {/*<div suppressHydrationWarning>{getCookie("allowed-cookies")}</div>
-      ----{allowCookies}*/}
-      <dialog aria-labelledby="fr-modal-cookies-title" className={`fr-modal  ${styles["unclickable-area"]}`} id="fr-modal-cookies">
+      {/* A*<div suppressHydrationWarning>{getCookie("allowed-cookies")}</div>
+      <br />
+      *----{allowCookies}
+      <br />
+      *-----------{currentModal}
+      <br />
+         */}
+      <dialog
+        aria-labelledby="fr-modal-cookies-title"
+        className={`fr-modal ${currentModal === 1 && condition ? " fr-modal--opened " : ""} `}
+        id="fr-modal-cookies"
+        onClick={onClickModal1}
+      >
         <div className="fr-container fr-container--fluid fr-container-md ">
           <div className={"fr-grid-row fr-grid-row--left " + styles["cookies-modal"]}>
             <div className="fr-col-12 fr-col-md-8 fr-col-lg-6">
@@ -62,7 +94,12 @@ export const Cookies = () => {
                       </button>
                     </li>
                     <li>
-                      <button aria-controls="fr-modal-privacyPolicy" className="fr-btn  fr-btn--secondary" {...(condition ? { "data-fr-opened": "true" } : {})}>
+                      <button
+                        aria-controls="fr-modal-privacyPolicy"
+                        className="fr-btn  fr-btn--secondary"
+                        {...(condition ? { "data-fr-opened": "true" } : {})}
+                        onClick={() => setCurrentModal(2)}
+                      >
                         Personnaliser
                       </button>
                     </li>
@@ -78,11 +115,7 @@ export const Cookies = () => {
           </div>
         </div>
       </dialog>
-      <dialog
-        className={`fr-modal ${allowCookies === "" ? styles["unclickable-area"] : "fr-modal--opened"} `}
-        id="fr-modal-privacyPolicy"
-        onClick={onClickModal2}
-      >
+      <dialog className={`fr-modal ${currentModal === 2 ? "fr-modal--opened" : ""}  `} id="fr-modal-privacyPolicy" onClick={onClickModal2}>
         <div className="fr-container fr-container--fluid fr-container-md">
           <div className="fr-grid-row fr-grid-row--center">
             <div className="fr-col-12 fr-col-md-8">
@@ -93,6 +126,7 @@ export const Cookies = () => {
                     className="fr-btn--close fr-btn"
                     title="Fermer la fenêtre modale"
                     {...(condition ? { "data-fr-opened": "true" } : {})}
+                    onClick={closeModal2}
                   >
                     Fermer
                   </button>

@@ -4,7 +4,6 @@ import React, { useState, FormEvent } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
 import isEmail from "../commun/validation";
-import { Cookies } from "../cookies/Cookies";
 import styles from "./Connexion.module.css";
 
 export const FormulaireDeConnexion = () => {
@@ -129,7 +128,6 @@ export const FormulaireDeConnexion = () => {
           <div aria-live="assertive" className="fr-messages-group" id="login-1760-fieldset-messages"></div>
         </form>
       </section>
-      <Cookies />
     </div>
   );
 };

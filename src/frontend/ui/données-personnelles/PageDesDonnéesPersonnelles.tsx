@@ -1,6 +1,5 @@
 import { useDependencies } from "../commun/contexts/useDependencies";
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
-import { Cookies } from "../cookies/Cookies";
 
 export const PageDesDonnéesPersonnelles = () => {
   const { wording } = useDependencies();
@@ -121,7 +120,6 @@ export const PageDesDonnéesPersonnelles = () => {
         Enfin, si vous estimez, après nous avoir contactés, que vos droits sur vos données ne sont pas respectés, vous pouvez adresser une réclamation auprès de
         la Commission nationale de l’informatique et des libertés.
       </p>
-      <Cookies />
     </>
   );
 };
