@@ -1,0 +1,33 @@
+.title {
+    text-align: center;
+    margin-top: 2rem;
+    color: #000091;
+}
+
+.ejStyle {
+    background-color: #dddddd;
+    color: #777777;
+    font-weight: 700;
+    width: fit-content;
+    font-size: 1.3rem;
+}
+
+.ejStyle span {
+    padding: 1rem;
+}
+
+.sanitaireStyle {
+    background-color: #ffe9e9;
+    color: #cb5555;
+    font-weight: 700;
+}
+
+.socialStyle {
+    background-color: #b8fec9;
+    color: #478558;
+    font-weight: 700;
+}
+
+.tuiles {
+    list-style: none;
+}

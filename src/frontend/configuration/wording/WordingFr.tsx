@@ -9,6 +9,22 @@ export class WordingFr implements Wording {
   readonly ASR_TITLE: string = "Activités Soumises à Reconnaissance contractuelle";
   readonly ASR: ReactElement = (<abbr title={this.ASR_TITLE}>ASR</abbr>);
 
+  // Commun
+  readonly CANCEL: string = "Annuler";
+  readonly SEND_EMAIL: string = "Confirmer la demande de renouvellement";
+  readonly RESEND_EMAIL: string = "Envoyer à nouveau";
+  readonly BACK_TO_CONNEXION: string = "Retour à la page de connexion";
+  readonly APPLY: string = "Appliquer";
+
+
+  // Messages d'erreur
+  readonly MISSING_EMAIL: string = "Veuillez renseigner le champ courriel";
+  readonly EMAIL_NOT_VALID: string = "Veuillez saisir une adresse email valide";
+  readonly SOMETHING_WENT_WRONG: string = "Quelque chose s'est mal passé. Veuillez réessayer ultérieurement";
+  readonly INVALID_REQUEST: string = "veuillez vérifier vos données";
+  readonly INVALID_USER: string = "Compte non inscrit sur Helios";
+
+
   // Header
   readonly INTITULÉ_RÉPUBLIQUE_FRANÇAISE: ReactElement = (
     <>
@@ -21,10 +37,11 @@ export class WordingFr implements Wording {
   readonly MENU: string = "Menu";
   readonly DÉCONNEXION: string = "Déconnexion";
   readonly FERMER: string = "Fermer";
-  readonly TITRE_DU_SITE: string = "Fiche de synthèse - Helios";
+  readonly TITRE_DU_SITE: string = "Bienvenue sur Helios !";
 
   // Titre des pages
   readonly TITRE_PAGE_ACCUEIL: string = "Accueil - Helios";
+  readonly TITRE_PAGE_CONNEXION: string = "Connexion - Helios";
   readonly TITRE_PAGE_PLAN_DU_SITE: string = "Plan du site - Helios";
   readonly TITRE_PAGE_ACCESSIBILITÉ: string = "Accessibilité - Helios";
   readonly TITRE_PAGE_MENTIONS_LÉGALES: string = "Mentions légales - Helios";
@@ -46,8 +63,23 @@ export class WordingFr implements Wording {
   readonly ÉTABLISSEMENT_TERRITORIAUX: string = "Établissements Territoriaux";
   readonly SITE_EN_CONSTRUCTION: string = "Le site est dans sa phase pilote : il est toujours en construction et va évoluer régulièrement.";
 
+  // Inscription
+  readonly REGISTRATION_PAGE_TITLE: string = "Demande d'accès à Helios";
+  readonly SEND: string = 'Envoyer';
+  readonly REGISTRARTION_SUCCESS_MESSAGE: string = "Un courriel a été envoyé à votre adresse email.";
+  readonly EMAIL_ALREADY_USED: string = "L'adresse mail saisie est déjà rattachée à un compte. Si vous avez oublié votre mot de passe, cliquez ";
+
+
+  // Connexion
+  readonly CONNEXION_IDENTIFIANT: string = "Identifiant *"
+  readonly CONNEXION_MOT_DE_PASSE: string = "Mot de passe *"
+  readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string = "Vous n'avez pas de compte ? "
+  readonly FORGET_PASSEWORD: string = "Mot de passe oublié ?"
+  readonly FORGET_PASSEWORD_MESSAGE: string = "Merci de saisir votre adresse mail afin de définir un nouveau mot de passe"
+  readonly CONNEXION_LIBELLE: string = "Connexion"
+
+
   // Recherche
-  readonly RECHERCHE_TITRE: string = "Bienvenue sur Helios !";
   readonly RECHERCHE_DESCRIPTION: ReactElement = (
     <>
       Accédez rapidement et simplement à la fiche de synthèse d’un établissement géographique
@@ -65,6 +97,7 @@ export class WordingFr implements Wording {
   readonly ERREUR_TECHNIQUE: string =
     "Veuillez nous excuser, nous venons de rencontrer une erreur technique. Nous vous invitons à effectuer une nouvelle recherche plus tard.";
   readonly VOIR_PLUS_RÉSULTATS: string = "Voir plus de résultats";
+  readonly RECHERCHE_TITRE: string = "";
 
   // Cartographie
   readonly CARTOGRAPHIE: string = "Cartographie";
@@ -105,6 +138,7 @@ export class WordingFr implements Wording {
   readonly ANNÉE: string = "Année";
   readonly INDICATEURS_VIDES: string = "Aucune donnée pour cet établissement.";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE: string = "Aucune donnée renseignée pour les années suivantes :";
+  readonly AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS: string = "Aucune donnée n'est renseignée pour les indicateurs suivants :";
 
   // Catégorisation
   readonly PRIVÉ_LUCRATIF = "PRIVÉ LUCRATIF";
@@ -184,13 +218,14 @@ export class WordingFr implements Wording {
   readonly MISE_À_JOUR_AUTORISATION: string = "Mise à jour d’autorisation";
   readonly DERNIÈRE_INSTALLATION: string = "Dernière installation";
   readonly CAPACITÉ_INSTALLÉE: string = "Capacité installée";
-  readonly CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS: string = "Capacité installée par activités sanitaires";
+  readonly CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS: string = "Capacité installée par activités médico-sociales";
   readonly NOMBRE_TOTAL_DE_PLACE: string = "Nombre total de places";
   readonly ACTIVITÉ: string = "Activité";
 
   // Bloc Autorisation Sanitaire
   readonly AUTRES_ACTIVITÉS: string = "Autres activités";
   readonly AUTRES_ACTIVITÉS_SAN: string = "Autres activités de soins";
+  readonly CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE: string = "Capacité installée par activités sanitaires";
   readonly RECONNAISSANCES_CONTRACTUELLES: string = "Reconnaissances contractuelles";
   readonly ÉQUIPEMENTS_MATÉRIELS_LOURDS: string = "Équipements matériels lourds";
   readonly DATE_DE_FIN: string = "Date de fin";
@@ -260,7 +295,8 @@ export class WordingFr implements Wording {
   readonly TITRE_II: string = "Titre II";
   readonly TITRE_III: string = "Titre III";
   readonly TITRE_IV: string = "Titre IV";
-  readonly COMPTE_DE_RÉSULTAT: string = "Compte de résultat (CF)";
+  readonly COMPTE_DE_RÉSULTAT: string = "Compte de résultat";
+  readonly COMPTE_DE_RÉSULTAT_CF: string = "Compte de résultat (CF)";
   readonly PRODUITS_PRINCIPAUX: string = "Produits principaux";
   readonly PRODUITS_ANNEXES: string = "Produits annexes";
   readonly CHARGES_ANNEXES: string = "Charges annexes";
@@ -386,7 +422,7 @@ export class WordingFr implements Wording {
 
   // Données personnelles
   readonly FINALITÉ_ET_FONDEMENT_DU_TRAITEMENT: string = "Finalité et fondement du traitement";
-  readonly PROTECTION_DES_DONNÉES_PERSONNELLES: string = "Protection des données personnelles";
+  readonly PROTECTION_DES_DONNÉES_PERSONNELLES: string = "Vos droits en matière de données personnelles";
 
   // Mentions légales
   readonly ÉDITEUR_DU_SITE: string = "Éditeur du site";
@@ -394,4 +430,60 @@ export class WordingFr implements Wording {
   readonly LIMITES_DE_RESPONSABILITÉ: string = "Limites de responsabilité";
 
   readonly EN_CONSTRUCTION: string = "Demander à Daisy ce que l’on doit écrire.";
+
+  // Favoris
+  readonly FAVORIS_LIST: string = "Liste des favoris";
+  readonly EJ_SECTION_TITLE: string = "Entités juridiques";
+  readonly SANITAIRE_SECTION_TITLE: string = "Etablissements sanitaires";
+  readonly SOCIAL_SECTION_TITLE: string = "Etablissements sociaux et médico-sociaux";
+
+  // Mot de passe oublié
+  readonly MOT_PASSE_OUBLIE_TITRE: string = "Vous avez oublié votre mot de passe ?";
+  readonly MOT_PASSE_OUBLIE_LABEL: string = "Courriel";
+  readonly MOT_PASSE_OUBLIE_SUCCESS_MESSAGE: string = "Un courriel a été envoyé à ";
+
+  // Changement de mot de passe
+  readonly CHANGEMENT_MOT_PASSE_TITRE: string = "Changement de mot de passe";
+  readonly CHANGEMENT_MOT_PASSE_DESCRIPTION: string = "Pour modifier votre mot de passe actuel, merci de renseigner les champs suivants";
+  readonly OLD_MOT_DE_PASSE: string = "Ancien mot de passe";
+  readonly OLD_MOT_DE_PASSE_REINITIALISATION: string = "Mot de passe précédemment utilisé. Merci de renseigner un nouveau mot de passe unique.";
+  readonly MOT_DE_PASSE: string = "Nouveau mot de passe";
+  readonly CONFIRMER_MOT_DE_PASSE: string = "Confirmation mot de passe";
+  readonly CONFIRM_CHANGE_PASSWORD: string = "Confirmer la demande de réinitialisation";
+  readonly CONFIRM_CREATE_PASSWORD: string = "Confirmer la demande de création";
+
+
+  // Historique de recherche
+  readonly HISTORIQUE_DE_RECHERECHE_TITRE: string = "Historique des derniers établissements consultés suite à une recherche";
+  readonly ETABLISSEMENT_CONSULTE: string = "Etablissements consultés";
+  readonly DATE: string = "Date";
+  readonly CONFIRM_UPDATE_PASSWORD: string = "Confirmer la modification du mot de passe";
+  readonly REINITIALISATION_MOT_PASSE_TITRE: string = "Réinitialisation de votre mot de passe";
+  readonly CREATION_MOT_PASSE_TITRE: string = "Création de votre mot de passe";
+  readonly REINITIALISATION_MOT_PASSE_DESCRIPTION: string = "Merci de renseigner votre nouveau mot de passe";
+  readonly DIFFERENT_MOT_PASSE: string = "Le mot de passe doit être différent du mot de passe actuel";
+  readonly WRONG_OLD_MOT_DE_PASSE: string = "Ancien mot de passe erroné"
+
+  readonly PARAMETRAGE_TITRE: string = "Paramétrage des autorisations";
+  readonly PARAMETRAGE_EJ_TAB: string = "Entité juridique";
+  readonly PARAMETRAGE_ET_MS_TAB: string = "Établissement médico-social";
+  readonly PARAMETRAGE_ET_SAN_TAB: string = "Établissement sanitaire";
+  readonly PARAMETRAGE_INSTITUTION: string = "Institution";
+  readonly PARAMETRAGE_AUTRE_REGION: string = "Autre région";
+  readonly CREATION_DATE: string = "Date de création";
+  readonly PROFILE_CODE: string = "Code";
+  readonly PARAMETRAGE_NEW_PROFILE: string = "Ajouter une autorisation";
+
+  //  Profile page
+  readonly USER_PROFILE: string = "Mes informations";
+  readonly FIRSTNAME: string = "Prénom";
+  readonly LASTNAME: string = "Nom";
+  readonly EMAIL: string = "Email";
+  readonly ORGANIZATION: string = "Institution";
+  readonly ROLE: string = "Rôle";
+  readonly SUPER_ADMIN: string = "Administrateur national";
+  readonly ADMIN: string = "Administrateur régional ou en administration centrale";
+  readonly USER: string = "Utilisateur";
+  readonly PROFILE: string = "Autorisation";
+
 }

@@ -2,6 +2,7 @@ import { Chart as ChartJS, LegendItem } from "chart.js";
 
 export function construisLePluginDeLaLegende() {
   function créeLeLibelléPourLaLégende(chart: ChartJS, libellé: LegendItem): HTMLLIElement {
+
     const conteneur = document.createElement("li");
 
     const caseÀCocher = document.createElement("input");
@@ -54,9 +55,9 @@ export function construisLePluginDeLaLegende() {
       }
 
       // @ts-ignore
-      const libellésDeLaLégende = chart.options.plugins?.legend?.labels.generateLabels(chart) || [];
+      const libellésDeLaLégende = chart.options.plugins?.legend?.labels.generateLabels(chart);
 
-      libellésDeLaLégende.forEach((libellé) => {
+      libellésDeLaLégende?.forEach((libellé) => {
         const libelléDeLégende = créeLeLibelléPourLaLégende(chart, libellé);
         légende.appendChild(libelléDeLégende);
       });

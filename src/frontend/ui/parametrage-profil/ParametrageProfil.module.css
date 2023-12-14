@@ -1,0 +1,28 @@
+.title {
+    text-align: center;
+    margin-top: 2rem;
+    color: #000091;
+}
+
+.tab-title {
+    color: #000091;
+    font-weight: 900;
+    display: flex;
+    justify-content: center;
+}
+
+.section-title {
+    font-weight: 900;
+}
+
+.td-text {
+    word-wrap: break-word;
+}
+
+.align table {
+    display: table;
+}
+
+.align-text {
+    text-align: center;
+}

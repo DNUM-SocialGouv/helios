@@ -68,8 +68,24 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     );
   }
 
-  private get leNombreDEtpRéaliséEstIlRenseigné(): boolean {
+  public get lesDonnéesRHPasRenseignees(): (string | ReactElement)[] {
+    const nonRenseignees = [];
+    if (!this.leNombreDEtpRéaliséEstIlRenseigné) nonRenseignees.push(this.wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION);
+    if (!this.leNombreDeCddDeRemplacementEstIlRenseigné) nonRenseignees.push(this.wording.NOMBRE_DE_CDD_DE_REMPLACEMENT);
+    if (!this.leTauxDePrestationsExternesEstIlRenseigné) nonRenseignees.push(this.wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES);
+    if (!this.leTauxDEtpVacantsEstIlRenseigné) nonRenseignees.push(this.wording.TAUX_D_ETP_VACANTS_AU_31_12);
+    if (!this.leTauxDeRotationDuPersonnelEstIlRenseigné) nonRenseignees.push(this.wording.TAUX_DE_ROTATION_DU_PERSONNEL);
+    if (!this.lesTauxDAbsentéismeEstIlRenseigné) nonRenseignees.push(this.wording.TAUX_D_ABSENTÉISME);
+
+    return nonRenseignees;
+  }
+
+  public get leNombreDEtpRéaliséEstIlRenseigné(): boolean {
     return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.nombreDEtpRéalisés.valeur !== null);
+  }
+
+  public get leNombreDEtpRéaliséEstIlAutorisé(): boolean {
+    return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.nombreDEtpRéalisés.valeur !== '');
   }
 
   public get nombreDEtpRéalisé(): ReactElement {
@@ -97,8 +113,12 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     return StringFormater.formatDate(this.ressourcesHumainesMédicoSocial[0].nombreDEtpRéalisés.dateMiseÀJourSource);
   }
 
-  private get leNombreDeCddDeRemplacementEstIlRenseigné(): boolean {
+  public get leNombreDeCddDeRemplacementEstIlRenseigné(): boolean {
     return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.nombreDeCddDeRemplacement.valeur !== null);
+  }
+
+  public get leNombreDeCddDeRemplacementEstIlAutorisé(): boolean {
+    return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.nombreDeCddDeRemplacement.valeur !== '');
   }
 
   public get nombreDeCddDeRemplacement(): ReactElement {
@@ -126,8 +146,12 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     return StringFormater.formatDate(this.ressourcesHumainesMédicoSocial[0].nombreDeCddDeRemplacement.dateMiseÀJourSource);
   }
 
-  private get leTauxDePrestationsExternesEstIlRenseigné(): boolean {
+  public get leTauxDePrestationsExternesEstIlRenseigné(): boolean {
     return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.tauxDePrestationsExternes.valeur !== null);
+  }
+
+  public get leTauxDePrestationsExternesEstIlAutorisé(): boolean {
+    return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.tauxDePrestationsExternes.valeur !== '');
   }
 
   private construisLaCouleurDeLaBarreDeLHistogramme(valeur: number, année: string | number, estEnErreur: (valeur: number) => boolean) {
@@ -181,8 +205,12 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     return StringFormater.formatDate(this.ressourcesHumainesMédicoSocial[0].tauxDePrestationsExternes.dateMiseÀJourSource);
   }
 
-  private get leTauxDEtpVacantsEstIlRenseigné(): boolean {
+  public get leTauxDEtpVacantsEstIlRenseigné(): boolean {
     return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.tauxDEtpVacants.valeur !== null);
+  }
+
+  public get leTauxDEtpVacantsEstIlAutorisé(): boolean {
+    return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.tauxDEtpVacants.valeur !== '');
   }
 
   public get tauxDEtpVacants(): JSX.Element {
@@ -214,9 +242,14 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     return StringFormater.formatDate(this.ressourcesHumainesMédicoSocial[0].tauxDEtpVacants.dateMiseÀJourSource);
   }
 
-  private get leTauxDeRotationDuPersonnelEstIlRenseigné(): boolean {
+  public get leTauxDeRotationDuPersonnelEstIlRenseigné(): boolean {
     return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.tauxDeRotationDuPersonnel.valeur !== null);
   }
+
+  public get leTauxDeRotationDuPersonnelEstIlAutorisé(): boolean {
+    return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.tauxDeRotationDuPersonnel.valeur !== '');
+  }
+
 
   public get tauxDeRotationDuPersonnel(): JSX.Element {
     const [valeurs, années] = this.extraisLesTauxDesIndicateurs("tauxDeRotationDuPersonnel");
@@ -247,8 +280,12 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     return StringFormater.formatDate(this.ressourcesHumainesMédicoSocial[0].tauxDeRotationDuPersonnel.dateMiseÀJourSource);
   }
 
-  private get lesTauxDAbsentéismeEstIlRenseigné(): boolean {
+  public get lesTauxDAbsentéismeEstIlRenseigné(): boolean {
     return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.tauxDAbsentéisme.horsFormation !== null);
+  }
+
+  public get lesTauxDAbsentéismeEstIlAutorisé(): boolean {
+    return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.tauxDAbsentéisme.dateMiseÀJourSource !== '');
   }
 
   public tauxDAbsentéisme(annéeEnCours: number): ReactElement {
@@ -408,7 +445,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     const années: string[] = [];
     this.ressourcesHumainesMédicoSocial.forEach((ressourceHumaineMédicoSocial: ÉtablissementTerritorialMédicoSocialRessourcesHumaines) => {
       const valeur = ressourceHumaineMédicoSocial[indicateur].valeur;
-      if (valeur !== null) {
+      if (valeur !== null && valeur !== "") {
         années.push(ressourceHumaineMédicoSocial.année.toString());
         valeurs.push(valeur);
       }
@@ -422,7 +459,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     const années: number[] = [];
     this.ressourcesHumainesMédicoSocial.forEach((ressourceHumaineMédicoSocial: ÉtablissementTerritorialMédicoSocialRessourcesHumaines) => {
       const valeur = ressourceHumaineMédicoSocial[indicateur].valeur;
-      if (valeur !== null) {
+      if (valeur !== null && valeur !== "") {
         années.push(ressourceHumaineMédicoSocial.année);
         valeurs.push(StringFormater.transformInRate(valeur));
       }
@@ -455,5 +492,17 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
 
   private construisLesCouleursLibellésDeTaux(valeursDesTaux: number[]): string[] {
     return valeursDesTaux.map((valeur) => (valeur > 20 ? couleurDuFond : valeur < 0 ? couleurDuFond : couleurIdentifiant));
+  }
+
+  public get lesDonnéesRHPasAutorisés(): (string | ReactElement)[] {
+    const nonAutorisés = [];
+    if (!this.leNombreDEtpRéaliséEstIlAutorisé) nonAutorisés.push(this.wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION);
+    if (!this.leNombreDeCddDeRemplacementEstIlAutorisé) nonAutorisés.push(this.wording.NOMBRE_DE_CDD_DE_REMPLACEMENT);
+    if (!this.leTauxDePrestationsExternesEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES);
+    if (!this.leTauxDEtpVacantsEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_D_ETP_VACANTS_AU_31_12);
+    if (!this.leTauxDeRotationDuPersonnelEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_DE_ROTATION_DU_PERSONNEL);
+    if (!this.lesTauxDAbsentéismeEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_D_ABSENTÉISME);
+
+    return nonAutorisés;
   }
 }

@@ -121,5 +121,6 @@ export function useRecherche() {
     résultats: state.résultats,
     terme: state.terme,
     termeFixe: state.termeFixe,
+    rechercher,
   };
 }

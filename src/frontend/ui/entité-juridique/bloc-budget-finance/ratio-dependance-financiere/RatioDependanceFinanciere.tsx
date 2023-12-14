@@ -71,6 +71,8 @@ export function RatioDependanceFinanciere({ ratioDependanceFinanciereViewModel }
   const infoBulleContenu = <ContenuRatioDependanceFinancière dateDeMiseÀJour={ratioDependanceFinanciereViewModel.dateMiseÀJour} source={wording.ANCRE} />;
   const sourceName = wording.ANCRE;
 
+
+
   return ratioDependanceFinanciereViewModel.auMoinsUnRatioRenseigné() ? (
     <IndicateurGraphique
       contenuInfoBulle={infoBulleContenu}

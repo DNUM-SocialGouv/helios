@@ -39,6 +39,7 @@ yarn-error.log*
 data_test
 data_set/.ssh
 sshd_config
+ssh_key
 
 # Lighthouse CI
 .lighthouseci/
@@ -65,3 +66,8 @@ reports
 !**/.yarn/sdks
 !**/.yarn/versions
 **/.pnp.*
+dnum_ssh_key
+sftp_local
+sftp_local.pub
+ssh_key
+**/.vscode/*

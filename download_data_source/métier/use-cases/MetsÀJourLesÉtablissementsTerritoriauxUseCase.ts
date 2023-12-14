@@ -12,14 +12,15 @@ export class MetsÀJourLesÉtablissementsTerritoriauxUseCase {
     private readonly établissementTerritorialHeliosRepository: ÉtablissementTerritorialRepository,
     private readonly entitéJuridiqueHeliosLoader: EntitéJuridiqueHeliosLoader,
     private readonly établissementTerritorialHeliosLoader: ÉtablissementTerritorialHeliosLoader
-  ) {}
+  ) { }
 
   async exécute(): Promise<void> {
     try {
-      const numéroFinessDesEntitésJuridiques = await this.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques();
       const dateDeMiseAJourDuFichierSource = this.établissementTerritorialSourceExterneLoader.récupèreLaDateDeMiseÀJourDuFichierSource();
+      const numéroFinessDesEntitésJuridiques = await this.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques();
+
       const établissementsTerritoriauxOuverts =
-        this.établissementTerritorialSourceExterneLoader.récupèreLesÉtablissementsTerritoriauxOuverts(numéroFinessDesEntitésJuridiques);
+        await this.établissementTerritorialSourceExterneLoader.récupèreLesÉtablissementsTerritoriauxOuverts(numéroFinessDesEntitésJuridiques);
 
       const établissementsTerritoriauxSauvegardés = await this.établissementTerritorialHeliosLoader.récupèreLeNuméroFinessDesÉtablissementsTerritoriaux();
 

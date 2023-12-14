@@ -1,4 +1,5 @@
 import { fireEvent, screen, waitForElementToBeRemoved, within } from "@testing-library/react";
+import { SessionProvider } from "next-auth/react";
 import mockRouter from "next-router-mock";
 
 import { Résultat, RésultatDeRecherche } from "../../../backend/métier/entities/RésultatDeRecherche";
@@ -10,11 +11,24 @@ import { PageRecherche } from "./PageRecherche";
 jest.mock("next/router", () => require("next-router-mock"));
 
 const { paths, wording } = fakeFrontDependencies;
+const mockSession = {
+  name: "john",
+  email: "test@test.fr",
+  user: {
+    idUser: '1',
+    firstname: 'Doe',
+    role: 'admin',
+    institution: {},
+    codeRegion: '84',
+    codeProfiles: []
+  },
+  expires: "1235"
+}
 
 describe("La page de d’accueil", () => {
   it("n'affiche pas un bandeau d’information mentionnant le développement du site", () => {
     // WHEN
-    renderFakeComponent(<PageRecherche />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageRecherche /></SessionProvider>);
 
     // THEN
     expect(screen.queryByText(wording.SITE_EN_CONSTRUCTION)).not.toBeInTheDocument();
@@ -22,11 +36,9 @@ describe("La page de d’accueil", () => {
 
   it("affiche le formulaire", () => {
     // WHEN
-    renderFakeComponent(<PageRecherche />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageRecherche /></SessionProvider>);
 
     // THEN
-    const titre = screen.getByRole("heading", { level: 1, name: wording.RECHERCHE_TITRE });
-    expect(titre).toBeInTheDocument();
     const description = screen.getByText(htmlNodeAndReactElementMatcher(wording.RECHERCHE_DESCRIPTION), { selector: "p" });
     expect(description).toBeInTheDocument();
     const formulaire = screen.getByRole("search");
@@ -40,7 +52,7 @@ describe("La page de d’accueil", () => {
 
   it("affiche la cartographie", () => {
     // WHEN
-    renderFakeComponent(<PageRecherche />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageRecherche /></SessionProvider>);
 
     // THEN
     const cartographie = screen.getByLabelText(wording.CARTOGRAPHIE);
@@ -51,8 +63,6 @@ describe("La page de d’accueil", () => {
     const listeRégions = within(cartographie).getAllByRole("listitem");
     const franceMetropole = within(listeRégions[0]).getByRole("link", { name: régions["france-metropolitaine"].label });
     expect(franceMetropole).toHaveAttribute("href", paths.RÉGION + "/france-metropolitaine");
-    const outreMer = within(listeRégions[1]).getByRole("link", { name: régions["outre-mer"].label });
-    expect(outreMer).toHaveAttribute("href", paths.RÉGION + "/outre-mer");
   });
 
   it('affiche les résultats après avoir cliqué sur le bouton "Rechercher"', async () => {
@@ -89,7 +99,7 @@ describe("La page de d’accueil", () => {
           résultats,
         }),
     });
-    renderFakeComponent(<PageRecherche />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageRecherche /></SessionProvider>);
     const terme = "hospitalier";
     const formulaire = screen.getByRole("search");
     const rechercher = within(formulaire).getByRole("button", { name: wording.RECHERCHE_LABEL });
@@ -139,7 +149,7 @@ describe("La page de d’accueil", () => {
           résultats,
         }),
     });
-    renderFakeComponent(<PageRecherche />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageRecherche /></SessionProvider>);
     const terme = "hospitalier";
     const formulaire = screen.getByRole("search");
     const rechercher = within(formulaire).getByRole("button", { name: wording.RECHERCHE_LABEL });
@@ -174,7 +184,7 @@ describe("La page de d’accueil", () => {
           résultats,
         }),
     });
-    renderFakeComponent(<PageRecherche />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageRecherche /></SessionProvider>);
     const terme = "hospitalier";
     const formulaire = screen.getByRole("search");
     const rechercher = within(formulaire).getByRole("button", { name: wording.RECHERCHE_LABEL });
@@ -234,7 +244,7 @@ describe("La page de d’accueil", () => {
             résultats: résultatsSecondePage,
           }),
       });
-    renderFakeComponent(<PageRecherche />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageRecherche /></SessionProvider>);
     const terme = "hospitalier";
     const formulaire = screen.getByRole("search");
     const rechercher = within(formulaire).getByRole("button", { name: wording.RECHERCHE_LABEL });
@@ -303,7 +313,7 @@ describe("La page de d’accueil", () => {
             résultats: résultatsSecondeRecherche,
           }),
       });
-    renderFakeComponent(<PageRecherche />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageRecherche /></SessionProvider>);
     const termeDeLaPremièreRecherche = "hospitalier";
     const formulaire = screen.getByRole("search");
     const boutonRechercher = within(formulaire).getByRole("button", { name: wording.RECHERCHE_LABEL });
@@ -341,7 +351,7 @@ describe("La page de d’accueil", () => {
           résultats: [],
         }),
     });
-    renderFakeComponent(<PageRecherche />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageRecherche /></SessionProvider>);
     const terme = "hospitalier";
     const formulaire = screen.getByRole("search");
     const rechercher = within(formulaire).getByRole("button", { name: wording.RECHERCHE_LABEL });
@@ -362,7 +372,7 @@ describe("La page de d’accueil", () => {
   it("affiche une phrase explicite si le backend ne répond plus", async () => {
     // GIVEN
     jest.spyOn(global, "fetch").mockRejectedValue("API is down");
-    renderFakeComponent(<PageRecherche />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageRecherche /></SessionProvider>);
     const terme = "hospitalier";
     const formulaire = screen.getByRole("search");
     const rechercher = within(formulaire).getByRole("button", { name: wording.RECHERCHE_LABEL });
@@ -418,7 +428,7 @@ describe("La page de d’accueil", () => {
     });
 
     // WHEN
-    renderFakeComponent(<PageRecherche />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageRecherche /></SessionProvider>);
 
     // THEN
     const formulaire = screen.getByRole("search");

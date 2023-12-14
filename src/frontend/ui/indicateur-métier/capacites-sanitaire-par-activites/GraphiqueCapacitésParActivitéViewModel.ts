@@ -15,7 +15,7 @@ export interface AnneeModifiable {
 export class GraphiqueCapacitésParActivitéViewModel implements AnneeModifiable {
   public NOMBRE_ANNEES = 5;
 
-  constructor(private readonly capacitésSanitaire: CapacitéSanitaire[], private wording: Wording) {}
+  constructor(private readonly capacitésSanitaire: CapacitéSanitaire[], private wording: Wording) { }
 
   public get annéeInitiale() {
     return this.annéesAvecDonnées()[0];
@@ -45,6 +45,10 @@ export class GraphiqueCapacitésParActivitéViewModel implements AnneeModifiable
 
   public get lesCapacitésParActivitésSontEllesRenseignées(): boolean {
     return this.filtreLesCapacitésRenseignées().length > 0;
+  }
+
+  public get lesCapacitésParActivitésSontEllesAutorisées(): boolean {
+    return this.capacitésSanitaire[0]?.dateMiseÀJourSource !== '';
   }
 
   public get dateDeMiseÀJourDeLaCapacitéInstalléeParActivités(): string {

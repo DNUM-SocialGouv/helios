@@ -1,5 +1,7 @@
 import { screen, within } from "@testing-library/react";
+import { SessionProvider } from "next-auth/react";
 
+import { RésultatDeRechercheTestBuilder } from "../../../../backend/test-builder/RésultatDeRechercheTestBuilder";
 import PageDAccueil from "../../../../pages";
 import Accessibilité from "../../../../pages/accessibilite";
 import DonnéesPersonnelles from "../../../../pages/donnees-personnelles";
@@ -10,6 +12,7 @@ import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../.
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { PageEntitéJuridique } from "../../entité-juridique/PageEntitéJuridique";
+import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { PageRégion } from "../../région/PageRégion";
 import { régions } from "../../région/régions";
 import { PageÉtablissementTerritorialMédicoSocial } from "../../établissement-territorial-médico-social/PageÉtablissementTerritorialMédicoSocial";
@@ -18,6 +21,22 @@ import { Breadcrumb } from "./Breadcrumb";
 
 jest.mock("next/router", () => require("next-router-mock"));
 const { paths, wording } = fakeFrontDependencies;
+const mockSession = {
+  name: "john",
+  email: "test@test.fr",
+  user: {
+    idUser: '1',
+    firstname: 'Doe',
+    role: 'admin',
+    institution: {},
+    codeRegion: '84',
+    codeProfiles: []
+  },
+  expires: "1235"
+}
+
+const result = RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({ numéroFiness: "000000000" });
+const rechercheViewModel = new RechercheViewModel(result, paths);
 
 describe("Le fil d’Ariane (breadcrumb)", () => {
   it("ne s’affiche pas sur la page d’accueil", () => {
@@ -69,11 +88,14 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
     // WHEN
     renderFakeComponent(
       <>
-        <Breadcrumb />
-        <PageEntitéJuridique
-          entitéJuridiqueViewModel={entitéJuridiqueViewModel}
-          établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
-        />
+        <SessionProvider session={mockSession}>
+          <Breadcrumb />
+          <PageEntitéJuridique
+            entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+            rechercheViewModel={rechercheViewModel}
+            établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
+          />
+        </SessionProvider>
       </>
     );
 
@@ -97,8 +119,12 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
     // WHEN
     renderFakeComponent(
       <>
-        <Breadcrumb />
-        <PageÉtablissementTerritorialMédicoSocial établissementTerritorialViewModel={établissementTerritorialMédicoSocialViewModel} />
+        <SessionProvider session={mockSession}>
+          <Breadcrumb />
+          <PageÉtablissementTerritorialMédicoSocial
+            rechercheViewModel={rechercheViewModel}
+            établissementTerritorialViewModel={établissementTerritorialMédicoSocialViewModel} />
+        </SessionProvider>
       </>
     );
 
@@ -126,8 +152,13 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
     // WHEN
     renderFakeComponent(
       <>
-        <Breadcrumb />
-        <PageÉtablissementTerritorialSanitaire établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} />
+        <SessionProvider session={mockSession}>
+          <Breadcrumb />
+          <PageÉtablissementTerritorialSanitaire
+            rechercheViewModel={rechercheViewModel}
+            établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
+          />
+        </SessionProvider>
       </>
     );
 

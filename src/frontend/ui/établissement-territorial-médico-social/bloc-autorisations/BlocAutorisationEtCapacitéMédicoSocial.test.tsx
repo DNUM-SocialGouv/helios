@@ -1,12 +1,8 @@
 import { fireEvent, screen, within } from "@testing-library/react";
-import { mock } from "jest-mock-extended";
 
-import { ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation";
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
-import { ÉtablissementTerritorialMédicoSocialViewModel } from "../ÉtablissementTerritorialMédicoSocialViewModel";
 import { BlocAutorisationEtCapacitéMédicoSocial } from "./BlocAutorisationEtCapacitéMédicoSocial";
-import { ÉtablissementTerritorialMédicoSocialAutorisationsViewModel } from "./ÉtablissementTerritorialMédicoSocialAutorisationsViewModel";
 
 const { paths, wording } = fakeFrontDependencies;
 
@@ -276,58 +272,5 @@ describe("La page établissement territorial médico-social - bloc autorisation 
     expect(tags[3].textContent).toBe(`${wording.DERNIÈRE_INSTALLATION} : N/A`);
     expect(tags[4].textContent).toBe(`${wording.CAPACITÉ_AUTORISÉE} : 10`);
     expect(tags[5].textContent).toBe(`${wording.CAPACITÉ_INSTALLÉE} : 0`);
-  });
-
-  it("affiche une phrase à la place des indicateurs lorsqu’aucune autorisation n’est renseignée", () => {
-    // GIVEN
-    const établissementTerritorialSansAutorisation = new ÉtablissementTerritorialMédicoSocialViewModel(
-      {
-        activités: [],
-        autorisationsEtCapacités: {
-          autorisations: {
-            dateMiseÀJourSource: "2022-05-14",
-            disciplines: [],
-          },
-          capacités: {
-            capacitéParActivité: [],
-            dateMiseÀJourSource: "2022-08-18",
-          },
-          numéroFinessÉtablissementTerritorial: "010000040",
-        },
-        budgetEtFinances: [],
-        identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
-        ressourcesHumaines: [],
-      },
-      wording,
-      paths
-    );
-
-    // WHEN
-    renderFakeComponent(
-      <BlocAutorisationEtCapacitéMédicoSocial
-        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialSansAutorisation.autorisationsViewModel}
-      />
-    );
-
-    // THEN
-    const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
-    const phrase = within(activité).getByText(wording.INDICATEURS_VIDES);
-    expect(phrase).toBeInTheDocument();
-  });
-
-  it("n'affiche pas les autorisations s'il n'y en a pas", () => {
-    const autorisationsCapacites = { ...ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations, autorisations: { disciplines: [] } };
-    const etablissementMedicoSocialAutorisationsViewModel = new ÉtablissementTerritorialMédicoSocialAutorisationsViewModel(
-      mock<ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité>(autorisationsCapacites),
-      wording
-    );
-    // WHEN
-    renderFakeComponent(
-      <BlocAutorisationEtCapacitéMédicoSocial établissementTerritorialAutorisationsMédicoSocialViewModel={etablissementMedicoSocialAutorisationsViewModel} />
-    );
-
-    // THEN
-    const titre = screen.queryByText(wording.AUTORISATIONS_MS, { selector: "h3" });
-    expect(titre).not.toBeInTheDocument();
   });
 });

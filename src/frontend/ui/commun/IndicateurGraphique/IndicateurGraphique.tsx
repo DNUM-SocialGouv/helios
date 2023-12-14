@@ -21,24 +21,23 @@ export const IndicateurGraphique = ({ années, children, contenuInfoBulle, dateD
   const [estCeOuvert, setEstCeOuvert] = useState(false);
 
   return (
-    <li>
-      <div>
-        <h3 className={`fr-m-0 fr-text--bold ${styles["intitule"]} fr-h6`}>
-          {nomDeLIndicateur}
-          {années ? <SelectionAnnee annees={années.liste} id={identifiant} setAnnéeEnCours={années.setAnnéeEnCours} /> : <></>}
-        </h3>
-        <div className={styles["mise-a-jour-source"]}>
-          <p className={`fr-text--xs ${styles["titraille"]}`}>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
-          <button
-            aria-controls={`nom-info-bulle-${identifiant}`}
-            className="fr-btn fr-fi-information-line fr-btn--icon-left fr-btn--tertiary-no-outline fr-btn--sm"
-            data-fr-opened={estCeOuvert}
-            onClick={() => setEstCeOuvert(true)}
-            type="button"
-          >
-            {wording.DÉTAILS}
-          </button>
-        </div>
+    <li className={styles["print-only"]}>
+      <h3 className={`fr-m-0 fr-text--bold ${styles["intitule"]} fr-h6`}>
+        {nomDeLIndicateur}
+        {années ? <SelectionAnnee annees={années.liste} id={identifiant} setAnnéeEnCours={années.setAnnéeEnCours} /> : <></>}
+      </h3>
+      <div className={styles["mise-a-jour-source"]}>
+        <p className={`fr-text--xs ${styles["titraille"]}`}>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+        <button
+          aria-controls={`nom-info-bulle-${identifiant}`}
+          className="fr-btn fr-fi-information-line fr-btn--icon-left fr-btn--tertiary-no-outline fr-btn--sm"
+          data-fr-opened={estCeOuvert}
+          onClick={() => setEstCeOuvert(true)}
+          title="Détails de l'indicateur"
+          type="button"
+        >
+          {wording.DÉTAILS}
+        </button>
       </div>
       <div className={styles["graphe"]}>{children}</div>
       <InfoBulle estCeOuvert={estCeOuvert} identifiant={identifiant} setEstCeOuvert={setEstCeOuvert} titre={nomDeLIndicateur}>

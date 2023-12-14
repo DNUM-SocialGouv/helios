@@ -37,6 +37,16 @@ import { RenommerColonnePassageUrgenceActivitesEntiteJuridique1675867340170 } fr
 import { AjouterBlocBudgetFinanceEJ1677495763184 } from "./migrations/1677495763184-AjouterBlocBugetFinanceEJ";
 import { AjouteHAD1680014929754 } from "./migrations/1680014929754-AjouteHAD";
 import { AjoutCapacitesSanitaireEJ1680076022425 } from "./migrations/1680076022425-AjoutCapacitesSanitaireEJ";
+import { AjoutTableUtilisateurRoleEtablissement1686646154737 } from "./migrations/1686646154737-AjoutTableUtilisateurRoleEtablissement";
+import { ModificationTableInstitution1688376404752 } from "./migrations/1688376404752-ModificationTableInstitution";
+import { AjoutTableFavori1691393817990 } from "./migrations/1691393817990-AjoutTableFavori";
+import { AjoutTableSearchHistory1691400360927 } from "./migrations/1691400360927-AjoutTableSearchHistory";
+import { AjoutRefDepartementRegion1694523233904 } from "./migrations/1694523233904-AjoutRefDepartementRegion";
+import { AjoutRégionDansEntitéJuridique1694616724703 } from "./migrations/1694616724703-AjoutRégionDansEntitéJuridique";
+import { AjoutRégionDansEtablissementTerritorial1694617579347 } from "./migrations/1694617579347-AjoutRégionDansEtablissementTerritorial";
+import { AjoutProfilsDansUtilisateurs1696841163367 } from "./migrations/1696841163367-AjoutProfilsDansUtilisateurs";
+import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
+import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "./models/ActivitéSanitaireEntitéJuridiqueModel";
 import { ActivitéSanitaireModel } from "./models/ActivitéSanitaireModel";
@@ -50,15 +60,25 @@ import { CapacitéAutorisationSanitaireModel } from "./models/CapacitéAutorisat
 import { CpomModel } from "./models/CpomModel";
 import { DateMiseÀJourFichierSourceModel } from "./models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "./models/EntitéJuridiqueModel";
+import { FavorisModel } from "./models/FavorisModel";
+import { InstitutionModel } from "./models/InstitutionModel";
+import { ProfilModel } from "./models/ProfilModel";
 import { RechercheModel } from "./models/RechercheModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "./models/ReconnaissanceContractuelleSanitaireModel";
+import { RefDepartementRegionModel } from "./models/RefDepartementRegionModel";
 import { RessourcesHumainesMédicoSocialModel } from "./models/RessourcesHumainesMédicoSocialModel";
+import { RoleModel } from "./models/RoleModel";
+import { SearchHistoryModel } from "./models/SearchHistoryModel";
+import { UtilisateurModel } from "./models/UtilisateurModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "./models/ÉquipementMatérielLourdSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "./models/ÉtablissementTerritorialIdentitéModel";
 
 const logger = new ConsoleLogger();
 dotEnvConfig();
 const environmentVariables = new NodeEnvironmentVariables(logger);
+
+// eslint-disable-next-line no-console
+console.log('environmentVariables.DATABASE_URL', environmentVariables.DATABASE_URL);
 
 export default new DataSource({
   entities: [
@@ -74,12 +94,19 @@ export default new DataSource({
     CpomModel,
     DateMiseÀJourFichierSourceModel,
     EntitéJuridiqueModel,
+    FavorisModel,
     ÉquipementMatérielLourdSanitaireModel,
     ÉtablissementTerritorialIdentitéModel,
     RechercheModel,
     ReconnaissanceContractuelleSanitaireModel,
     RessourcesHumainesMédicoSocialModel,
     ActivitéSanitaireEntitéJuridiqueModel,
+    UtilisateurModel,
+    RoleModel,
+    InstitutionModel,
+    SearchHistoryModel,
+    RefDepartementRegionModel,
+    ProfilModel,
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -118,6 +145,16 @@ export default new DataSource({
     AjouterBlocBudgetFinanceEJ1677495763184,
     AjoutCapacitesSanitaireEJ1680076022425,
     AjouteHAD1680014929754,
+    AjoutTableSearchHistory1691400360927,
+    AjoutTableFavori1691393817990,
+    AjoutTableUtilisateurRoleEtablissement1686646154737,
+    ModificationTableInstitution1688376404752,
+    AjoutRefDepartementRegion1694523233904,
+    AjoutRégionDansEntitéJuridique1694616724703,
+    AjoutRégionDansEtablissementTerritorial1694617579347,
+    ajoutTableProfil1795731844298,
+    AjoutProfilsDansUtilisateurs1696841163367,
+    updateProfileTable1796422585498,
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

@@ -1,0 +1,13 @@
+.title {
+    text-align: center;
+    margin-top: 2rem;
+    color: #000091;
+}
+
+.align table {
+    display: table;
+}
+
+.align-text {
+    text-align: center;
+}

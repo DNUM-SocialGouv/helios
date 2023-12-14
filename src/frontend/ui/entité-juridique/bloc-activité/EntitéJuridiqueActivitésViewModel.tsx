@@ -64,6 +64,24 @@ export class EntitéJuridiqueActivitésViewModel {
     );
   }
 
+  public get lesDonnéesActivitéPasAutorisés(): string[] {
+    const nonAutorisés = [];
+    if (!this.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsAutorisés) nonAutorisés.push(this.wording.NOMBRE_DE_SÉJOUR_MCO);
+    if (!this.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsAutorisé) nonAutorisés.push(this.wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR);
+    if (!this.nombreHADEstIlAutorisé) nonAutorisés.push(this.wording.NOMBRE_DE_HAD);
+    if (!this.nombrePassageUrgenceEstIlAutorisé) nonAutorisés.push(this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES);
+    return nonAutorisés;
+  }
+
+  public get lesDonnéesActivitéPasRenseignees(): string[] {
+    const nonRenseignees = [];
+    if (!this.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés) nonRenseignees.push(this.wording.NOMBRE_DE_SÉJOUR_MCO);
+    if (!this.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés) nonRenseignees.push(this.wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR);
+    if (!this.nombreHADEstIlRenseigné()) nonRenseignees.push(this.wording.NOMBRE_DE_HAD);
+    if (!this.nombrePassageUrgenceEstIlRenseigné()) nonRenseignees.push(this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES);
+    return nonRenseignees;
+  }
+
   public get activitéEstElleRenseignée(): boolean {
     return this.entitéJuridiqueActivités.length > 0;
   }
@@ -76,6 +94,18 @@ export class EntitéJuridiqueActivitésViewModel {
   public nombreHADEstIlRenseigné(): boolean {
     return this.entitéJuridiqueActivités.some(
       (activité: EntitéJuridiqueActivités) => activité.nombreSéjoursHad.value !== null && activité.nombreSéjoursHad.value !== undefined
+    );
+  }
+
+  public get nombrePassageUrgenceEstIlAutorisé(): boolean {
+    return this.entitéJuridiqueActivités.some(
+      (activité: EntitéJuridiqueActivités) => activité.nombreDePassagesAuxUrgences.dateMiseÀJourSource !== ''
+    );
+  }
+
+  public get nombreHADEstIlAutorisé(): boolean {
+    return this.entitéJuridiqueActivités.some(
+      (activité: EntitéJuridiqueActivités) => activité.nombreSéjoursHad.dateMiseÀJourSource !== ''
     );
   }
 }

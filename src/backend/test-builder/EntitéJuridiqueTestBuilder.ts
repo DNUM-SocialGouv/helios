@@ -43,6 +43,7 @@ export class EntitéJuridiqueTestBuilder {
       dateMiseÀJourSource: "2022-05-14",
       value: "0102030406",
     },
+    codeRegion: '84',
   };
 
   public static créeEntitéJuridiqueIdentité(champsSurchargés?: Partial<EntitéJuridiqueIdentité>): EntitéJuridiqueIdentité {

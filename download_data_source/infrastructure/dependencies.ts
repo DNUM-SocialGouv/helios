@@ -75,7 +75,7 @@ const createDependencies = (): Dependencies => {
     ),
     entitéJuridiqueHeliosLoader: typeOrmEntitéJuridiqueHeliosLoader,
     entitéJuridiqueHeliosRepository: new TypeOrmEntitéJuridiqueHeliosRepository(orm, logger),
-    entitéJuridiqueSourceExterneLoader: new FinessXmlEntitésJuridiquesSourceExterneLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH, logger),
+    entitéJuridiqueSourceExterneLoader: new FinessXmlEntitésJuridiquesSourceExterneLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH, logger, orm),
     environmentVariables,
     finessDownloadRawData: new FinessSftpDownloadRawData(new Ssh2SftpClient(), finessSftpPath, finessLocalPath, environmentVariables, logger),
     logger,
@@ -85,7 +85,8 @@ const createDependencies = (): Dependencies => {
     établissementTerritorialSourceExterneLoader: new FinessXmlÉtablissementTerritorialSourceExterneLoader(
       xmlToJs,
       environmentVariables.SFTP_LOCAL_PATH,
-      logger
+      logger,
+      orm
     ),
   };
 };

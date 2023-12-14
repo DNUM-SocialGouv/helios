@@ -46,6 +46,7 @@ describe("Sauvegarde de l’établissement territorial", () => {
     entitéJuridique1.raisonSociale = "fake";
     entitéJuridique1.siren = "fake";
     entitéJuridique1.téléphone = "fake";
+    entitéJuridique1.codeRégion = "fake";
 
     const entitéJuridique2 = new EntitéJuridiqueModel();
     entitéJuridique2.adresseAcheminement = "fake";
@@ -59,6 +60,8 @@ describe("Sauvegarde de l’établissement territorial", () => {
     entitéJuridique2.raisonSociale = "fake";
     entitéJuridique2.siren = "fake";
     entitéJuridique2.téléphone = "fake";
+    entitéJuridique2.codeRégion = "fake";
+
     await entitéJuridiqueRepository.insert([entitéJuridique1, entitéJuridique2]);
 
     const établissementTerritorialIdentité1 = new ÉtablissementTerritorialIdentitéModel();
@@ -82,6 +85,7 @@ describe("Sauvegarde de l’établissement territorial", () => {
     établissementTerritorialIdentité1.siret = "fake";
     établissementTerritorialIdentité1.typeÉtablissement = "F";
     établissementTerritorialIdentité1.téléphone = "fake";
+    établissementTerritorialIdentité1.codeRégion = "84";
     await établissementTerritorialIdentitéRepository.insert([établissementTerritorialIdentité1]);
     await dateMiseÀJourFichierSourceRepository.insert([
       {
@@ -121,6 +125,7 @@ describe("Sauvegarde de l’établissement territorial", () => {
     établissementTerritorial1MisAJourAttendu.siret = "20003004700017";
     établissementTerritorial1MisAJourAttendu.typeÉtablissement = "S";
     établissementTerritorial1MisAJourAttendu.téléphone = "0102030405";
+    établissementTerritorial1MisAJourAttendu.codeRégion = "84";
     const établissementTerritorial2MisAJourAttendu = new ÉtablissementTerritorialIdentitéModel();
     établissementTerritorial2MisAJourAttendu.adresseAcheminement = "59650 VILLENEUVE D ASCQ";
     établissementTerritorial2MisAJourAttendu.adresseNuméroVoie = "20";
@@ -143,6 +148,7 @@ describe("Sauvegarde de l’établissement territorial", () => {
     établissementTerritorial2MisAJourAttendu.siret = "20003004700018";
     établissementTerritorial2MisAJourAttendu.typeÉtablissement = "P";
     établissementTerritorial2MisAJourAttendu.téléphone = "0102030406";
+    établissementTerritorial2MisAJourAttendu.codeRégion = "84";
 
     expect(établissementsTerritoriauxSauvés).toStrictEqual([établissementTerritorial1MisAJourAttendu, établissementTerritorial2MisAJourAttendu]);
     const dateMiseÀJourFichierSourceSauvée = await dateMiseÀJourFichierSourceRepository.find({ where: { fichier: FichierSource.FINESS_CS1400102 } });
@@ -207,6 +213,7 @@ describe("Sauvegarde de l’établissement territorial", () => {
     établissementTerritorialAttendu.siret = "26011021800047";
     établissementTerritorialAttendu.typeÉtablissement = "S";
     établissementTerritorialAttendu.téléphone = "0102030405";
+    établissementTerritorialAttendu.codeRégion = "84";
 
     expect(établissementsTerritoriauxSauvés).toStrictEqual([établissementTerritorialAttendu]);
 

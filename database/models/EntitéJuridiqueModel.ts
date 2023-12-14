@@ -40,6 +40,13 @@ export class EntitéJuridiqueModel {
 
   @Column({
     length: 255,
+    name: "code_region",
+    default: ''
+  })
+  public codeRégion!: string;
+
+  @Column({
+    length: 255,
     name: "libelle_statut_juridique",
   })
   public libelléStatutJuridique!: string;

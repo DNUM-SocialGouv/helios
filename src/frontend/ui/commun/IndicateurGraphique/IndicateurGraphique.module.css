@@ -22,3 +22,9 @@
 .graphe {
   width: 99%;
 }
+
+@media print {
+  .print-only {
+    page-break-inside: avoid;
+  }
+}

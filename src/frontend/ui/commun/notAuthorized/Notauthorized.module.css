@@ -1,0 +1,5 @@
+.not-authorized-message {
+    color: #ce0500;
+    justify-content: center;
+    display: flex;
+}

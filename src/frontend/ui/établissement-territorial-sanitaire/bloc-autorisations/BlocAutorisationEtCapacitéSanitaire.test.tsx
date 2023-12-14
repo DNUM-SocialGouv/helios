@@ -1,10 +1,5 @@
 import { fireEvent, screen, within } from "@testing-library/react";
-import { mock, mockDeep } from "jest-mock-extended";
 
-import {
-  CapacitéSanitaire,
-  ÉtablissementTerritorialSanitaireAutorisationEtCapacité,
-} from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { BlocAutorisationEtCapacitéSanitaire } from "./BlocAutorisationEtCapacitéSanitaire";
@@ -78,34 +73,6 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     expect(sources).toBeInTheDocument();
     const informationsComplémentaires = within(infoBulle).getByRole("region", { name: wording.INFOS_COMPLÉMENTAIRES });
     expect(informationsComplémentaires).toBeInTheDocument();
-  });
-
-  it.each([
-    [wording.AUTORISATIONS_SANITAIRE, "autorisations", "activités"],
-    [wording.AUTRES_ACTIVITÉS_SAN, "autresActivités", "activités"],
-    [wording.RECONNAISSANCES_CONTRACTUELLES, "reconnaissancesContractuelles", "activités"],
-    [wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, "équipementsMatérielsLourds", "équipements"],
-  ])("n’affiche pas l’indicateur si l’établissement n’a pas de %s", (nomDeLIndicateur: string, champDeLaDonnéeVide: string, activitésOuÉquipements) => {
-    // GIVEN
-    const autorisationsViewModelSansAutorisations = new EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel(
-      mockDeep<ÉtablissementTerritorialSanitaireAutorisationEtCapacité>({
-        capacités: [mock<CapacitéSanitaire>({ année: 2022 })],
-        [champDeLaDonnéeVide]: {
-          [activitésOuÉquipements]: [],
-        },
-      }),
-      wording
-    );
-
-    // WHEN
-    renderFakeComponent(
-      <BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModelSansAutorisations} />
-    );
-
-    // THEN
-    const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
-    expect(within(autorisationEtCapacité).queryByText(nomDeLIndicateur)).not.toBeInTheDocument();
-    expect(within(autorisationEtCapacité).queryByText(wording.INDICATEURS_VIDES)).not.toBeInTheDocument();
   });
 
   describe("L’indicateur des autorisations", () => {
@@ -201,56 +168,6 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     });
   });
 
-  it("affiche une phrase à la place des indicateurs lorsqu’aucune autorisation ni capacité n’est renseignée", () => {
-    // GIVEN
-    const autorisationsViewModel = new EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel(
-      {
-        autorisations: {
-          activités: [],
-          dateMiseÀJourSource: "2022-09-05",
-        },
-        autresActivités: {
-          activités: [],
-          dateMiseÀJourSource: "2022-09-05",
-        },
-        capacités: [
-          {
-            année: 2022,
-            dateMiseÀJourSource: "2022-09-02",
-            nombreDeLitsEnChirurgie: null,
-            nombreDeLitsEnMédecine: null,
-            nombreDeLitsEnObstétrique: null,
-            nombreDeLitsEnSsr: null,
-            nombreDeLitsEnUsld: null,
-            nombreDeLitsOuPlacesEnPsyHospitalisationComplète: null,
-            nombreDePlacesEnChirurgie: null,
-            nombreDePlacesEnMédecine: null,
-            nombreDePlacesEnObstétrique: null,
-            nombreDePlacesEnPsyHospitalisationPartielle: null,
-            nombreDePlacesEnSsr: null,
-          },
-        ],
-        numéroFinessÉtablissementTerritorial: "1",
-        reconnaissancesContractuelles: {
-          activités: [],
-          dateMiseÀJourSource: "2022-09-05",
-        },
-        équipementsMatérielsLourds: {
-          dateMiseÀJourSource: "2022-09-05",
-          équipements: [],
-        },
-      },
-      wording
-    );
-
-    // WHEN
-    renderFakeComponent(<BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModel} />);
-
-    // THEN
-    const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
-    expect(within(activité).getByText(wording.INDICATEURS_VIDES)).toBeInTheDocument();
-  });
-
   it.each([
     {
       indicateurAffiché: wording.AUTORISATIONS_SANITAIRE,
@@ -322,7 +239,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
       }),
     },
     {
-      indicateurAffiché: wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS,
+      indicateurAffiché: wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE,
       viewModel: ÉtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(wording, paths, {
         autorisations: {
           activités: [],
@@ -418,7 +335,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     // THEN
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
     expect(within(activité).getByText(indicateurAffiché, { selector: "h1" })).toBeInTheDocument();
-    expect(within(activité).queryByText(wording.INDICATEURS_VIDES)).not.toBeInTheDocument();
+    expect(within(activité).getByText(wording.AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS)).toBeInTheDocument();
   });
 
   describe("L’indicateur des reconnaissances contractuelles", () => {
@@ -518,7 +435,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     // THEN
     const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
     const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
-    const itemCapacitéParActivités = sélectionneLIndicateur(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS, indicateurs);
+    const itemCapacitéParActivités = sélectionneLIndicateur(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE, indicateurs);
     const indexPartieCapacitéParActivités = indicateurs.indexOf(itemCapacitéParActivités);
     const itemAutorisations = sélectionneLIndicateur(wording.AUTORISATIONS_SANITAIRE, indicateurs);
     const indexPartieAutorisations = indicateurs.indexOf(itemAutorisations);

@@ -1,5 +1,6 @@
 export class Paths {
   readonly ACCUEIL: string = "/";
+  readonly CONNEXION: string = "/connexion";
   readonly ACCESSIBILITÉ: string = "/accessibilite";
   readonly MENTIONS_LÉGALES: string = "/mentions-legales";
   readonly DONNÉES_PERSONNELLES: string = "/donnees-personnelles";
@@ -9,4 +10,13 @@ export class Paths {
   readonly RÉGION: string = "/region";
   readonly ECO_CONCEPTION: string = "/eco-conception";
   readonly GESTION_DES_COOKIES: string = "/gestion-des-cookies";
+  readonly FAVORIS: string = "/favoris"
+  readonly HISTORY: string = "/history"
+  readonly FORGET_PASSWORD = '/mot-passe-oublie';
+  readonly CHANGE_PASSWORD = '/change-mot-passe';
+  readonly SETTINGS = '/settings';
+  readonly ADD_PROFILE = '/settings/add-profile';
+  readonly REGISTRATION = '/registration';
+  readonly REINITIALISATION_PASSWORD = '/reinitialisation-mot-passe';
+  readonly CREATE_PASSWORD = '/creation-mot-passe';
 }

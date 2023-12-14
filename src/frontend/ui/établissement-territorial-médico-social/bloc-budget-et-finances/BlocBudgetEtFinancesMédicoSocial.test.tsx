@@ -1,6 +1,5 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 
-import { CadreBudgétaire } from "../../../../backend/métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
 import { textMatch, fakeFrontDependencies, renderFakeComponent, annéeEnCours } from "../../../test-helpers/testHelper";
@@ -54,24 +53,6 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       expect(détails).toHaveAttribute("data-fr-opened", "false");
     }
   );
-
-  it("affiche l’intitulé de l’indicateur dans le cas du compte de résultat CA", () => {
-    // GIVEN
-    const budgetFinanceViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
-      [ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPa({ année: 2019 })],
-      wording
-    );
-
-    // WHEN
-    renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
-
-    // THEN
-    const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
-    const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
-    const indicateur = indicateurs[indiceDeLIndicateur.recettesEtDépenses];
-    const titre = within(indicateur).getByText(wording.COMPTE_DE_RÉSULTAT_CA, { selector: "h3" });
-    expect(titre).toBeInTheDocument();
-  });
 
   it.each([
     [indiceDeLIndicateur.recettesEtDépenses, wording.COMPTE_DE_RÉSULTAT_ERRD],
@@ -158,60 +139,6 @@ describe("La page établissement territorial - bloc budget et finances", () => {
     const indicateur = indicateurs[indiceDeLIndicateur];
     const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 1}`, { selector: "p" });
     expect(exergue).toBeInTheDocument();
-  });
-
-  it("affiche une phrase à la place des indicateurs lorsqu’aucune donnée n’est renseignée", () => {
-    // GIVEN
-    const budgetFinanceViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
-      [
-        {
-          année: 2019,
-          cadreBudgétaire: CadreBudgétaire.ERRD,
-          chargesEtProduits: {
-            charges: null,
-            dateMiseÀJourSource: "2022-01-01",
-            produits: null,
-          },
-          contributionAuxFraisDeSiège: {
-            dateMiseÀJourSource: "2022-01-01",
-            valeur: null,
-          },
-          fondsDeRoulement: {
-            dateMiseÀJourSource: "2022-03-03",
-            valeur: null,
-          },
-          recettesEtDépenses: {
-            dateMiseÀJourSource: "2022-01-01",
-            dépensesGroupe1: null,
-            dépensesGroupe2: null,
-            dépensesGroupe3: null,
-            recettesGroupe1: null,
-            recettesGroupe2: null,
-            recettesGroupe3: null,
-          },
-          résultatNetComptable: {
-            dateMiseÀJourSource: "2022-01-01",
-            valeur: null,
-          },
-          tauxDeCafNette: {
-            dateMiseÀJourSource: "2022-03-03",
-            valeur: null,
-          },
-          tauxDeVétustéConstruction: {
-            dateMiseÀJourSource: "2022-03-03",
-            valeur: null,
-          },
-        },
-      ],
-      wording
-    );
-
-    // WHEN
-    renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
-
-    // THEN
-    const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
-    expect(within(budgetEtFinances).getByText(wording.INDICATEURS_VIDES)).toBeInTheDocument();
   });
 
   describe("L’indicateur de compte de résultat", () => {

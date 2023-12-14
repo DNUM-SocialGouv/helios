@@ -7,6 +7,21 @@ export interface Wording {
   readonly ASR_TITLE: string;
   readonly ASR: ReactElement;
 
+  // Commun
+  readonly CANCEL: string;
+  readonly SEND_EMAIL: string;
+  readonly RESEND_EMAIL: string;
+  readonly BACK_TO_CONNEXION: string;
+  readonly APPLY: string;
+
+
+  // Messages d'erreur
+  readonly MISSING_EMAIL: string;
+  readonly EMAIL_NOT_VALID: string;
+  readonly SOMETHING_WENT_WRONG: string;
+  readonly INVALID_REQUEST: string;
+  readonly INVALID_USER: string;
+
   // Header
   readonly INTITULÉ_RÉPUBLIQUE_FRANÇAISE: ReactElement;
   readonly ACCUEIL: string;
@@ -17,6 +32,7 @@ export interface Wording {
 
   // Titre des pages
   readonly TITRE_PAGE_ACCUEIL: string;
+  readonly TITRE_PAGE_CONNEXION: string;
   readonly TITRE_PAGE_ACCESSIBILITÉ: string;
   readonly TITRE_PAGE_MENTIONS_LÉGALES: string;
   readonly TITRE_PAGE_DONNÉES_PERSONNELLES: string;
@@ -37,8 +53,21 @@ export interface Wording {
   readonly ÉTABLISSEMENT_TERRITORIAUX: string;
   readonly SITE_EN_CONSTRUCTION: string;
 
+  // Inscription
+  readonly REGISTRATION_PAGE_TITLE: string;
+  readonly SEND: string;
+  readonly REGISTRARTION_SUCCESS_MESSAGE: string;
+  readonly EMAIL_ALREADY_USED: string;
+
+  // Connexion
+  readonly CONNEXION_IDENTIFIANT: string
+  readonly CONNEXION_MOT_DE_PASSE: string
+  readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string
+  readonly FORGET_PASSEWORD: string
+  readonly FORGET_PASSEWORD_MESSAGE: string
+  readonly CONNEXION_LIBELLE: string
+
   // Recherche
-  readonly RECHERCHE_TITRE: string;
   readonly RECHERCHE_DESCRIPTION: ReactElement;
   readonly RECHERCHE_PLACEHOLDER: string;
   readonly RECHERCHE_LABEL: string;
@@ -48,6 +77,7 @@ export interface Wording {
   readonly aucunRésultat: (terme: string) => string;
   readonly ERREUR_TECHNIQUE: string;
   readonly VOIR_PLUS_RÉSULTATS: string;
+  readonly RECHERCHE_TITRE: string;
 
   // Cartographie
   readonly CARTOGRAPHIE: string;
@@ -82,6 +112,7 @@ export interface Wording {
   readonly ANNÉE: string;
   readonly INDICATEURS_VIDES: string;
   readonly AUCUNE_DONNÉE_RENSEIGNÉE: string;
+  readonly AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS: string;
 
   // Catégorisation
   readonly PRIVÉ_LUCRATIF: string;
@@ -144,6 +175,7 @@ export interface Wording {
 
   // Bloc Autorisation
   readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string;
+  readonly CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE: string;
   readonly AUTORISATIONS_SANITAIRE: string;
   readonly AUTORISATIONS_MS: string;
   readonly AUTORISATIONS_ACTIVITES: string;
@@ -186,6 +218,7 @@ export interface Wording {
   readonly RÉSULTAT_NET_COMPTABLE: string;
 
   readonly RATIO_DEPENDANCE_FINANCIERE: string;
+  readonly COMPTE_DE_RÉSULTAT: string;
   readonly COMPTE_DE_RÉSULTAT_ERRD: string;
   readonly COMPTE_DE_RÉSULTAT_CA: string;
   readonly TITRE_BUDGÉTAIRE: string;
@@ -205,7 +238,7 @@ export interface Wording {
   readonly TITRE_II: string;
   readonly TITRE_III: string;
   readonly TITRE_IV: string;
-  readonly COMPTE_DE_RÉSULTAT: string;
+  readonly COMPTE_DE_RÉSULTAT_CF: string;
 
   readonly PRODUITS_PRINCIPAUX: string;
   readonly PRODUITS_ANNEXES: string;
@@ -307,4 +340,58 @@ export interface Wording {
   readonly LIMITES_DE_RESPONSABILITÉ: string;
 
   readonly EN_CONSTRUCTION: string;
+
+  // Favoris
+  readonly FAVORIS_LIST: string;
+  readonly EJ_SECTION_TITLE: string;
+  readonly SANITAIRE_SECTION_TITLE: string;
+  readonly SOCIAL_SECTION_TITLE: string;
+  // Mot de passe oublié
+  readonly MOT_PASSE_OUBLIE_TITRE: string;
+  readonly MOT_PASSE_OUBLIE_LABEL: string;
+  readonly MOT_PASSE_OUBLIE_SUCCESS_MESSAGE: string;
+
+  // Changement de mot de passe
+  readonly CHANGEMENT_MOT_PASSE_TITRE: string;
+  readonly CHANGEMENT_MOT_PASSE_DESCRIPTION: string;
+  readonly OLD_MOT_DE_PASSE_REINITIALISATION: string;
+  readonly OLD_MOT_DE_PASSE: string;
+  readonly MOT_DE_PASSE: string;
+  readonly CONFIRMER_MOT_DE_PASSE: string;
+  readonly CONFIRM_CHANGE_PASSWORD: string;
+  readonly CONFIRM_CREATE_PASSWORD: string;
+
+  // Historique de recherche
+  readonly HISTORIQUE_DE_RECHERECHE_TITRE: string;
+  readonly ETABLISSEMENT_CONSULTE: string;
+  readonly DATE: string;
+  readonly CONFIRM_UPDATE_PASSWORD: string;
+  readonly REINITIALISATION_MOT_PASSE_TITRE: string;
+  readonly CREATION_MOT_PASSE_TITRE: string;
+  readonly REINITIALISATION_MOT_PASSE_DESCRIPTION: string;
+  readonly DIFFERENT_MOT_PASSE: string;
+  readonly WRONG_OLD_MOT_DE_PASSE: string;
+
+  // Parametrage
+  readonly PARAMETRAGE_TITRE: string;
+  readonly PARAMETRAGE_EJ_TAB: string;
+  readonly PARAMETRAGE_ET_MS_TAB: string;
+  readonly PARAMETRAGE_ET_SAN_TAB: string;
+  readonly PARAMETRAGE_INSTITUTION: string;
+  readonly PARAMETRAGE_AUTRE_REGION: string;
+  readonly CREATION_DATE: string;
+  readonly PROFILE_CODE: string;
+  readonly PARAMETRAGE_NEW_PROFILE: string;
+
+  //  Profile page
+  readonly USER_PROFILE: string;
+  readonly FIRSTNAME: string;
+  readonly LASTNAME: string;
+  readonly EMAIL: string;
+  readonly ORGANIZATION: string;
+  readonly ROLE: string;
+  readonly SUPER_ADMIN: string;
+  readonly ADMIN: string;
+  readonly USER: string;
+  readonly PROFILE: string;
 }

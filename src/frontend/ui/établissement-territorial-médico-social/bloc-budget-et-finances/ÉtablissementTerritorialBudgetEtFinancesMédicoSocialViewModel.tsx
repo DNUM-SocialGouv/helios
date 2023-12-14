@@ -43,10 +43,23 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
     );
   }
 
+  public get lesDonnéesBudgetairesPasRenseignees(): string[] {
+    const nonRenseignees = [];
+
+    if (!this.compteDeResultatViewModel.leCompteDeRésultatEstIlRenseigné) nonRenseignees.push(this.wording.COMPTE_DE_RÉSULTAT);
+    if (!this.leRésultatNetComptableEstIlRenseigné) nonRenseignees.push(this.wording.RÉSULTAT_NET_COMPTABLE);
+    if (!this.leMontantDeLaContributionAuxFraisDeSiègeEstIlRenseigné) nonRenseignees.push(this.wording.MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE);
+    if (!this.tauxDeCafViewModel.leTauxDeCafEstIlRenseigné) nonRenseignees.push(this.wording.TAUX_DE_CAF);
+    if (!this.leTauxDeVétustéEstIlRenseigné) nonRenseignees.push(this.wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION);
+    if (!this.leFondsDeRoulementEstIlRenseigné) nonRenseignees.push(this.wording.FONDS_DE_ROULEMENT_NET_GLOBAL);
+
+    return nonRenseignees;
+  }
+
   public get montantDeLaContributionAuxFraisDeSiège(): ReactElement {
     const montantDesContributionsAuxFraisDeSiègeParAnnée: { année: number; valeur: string }[] = this.budgetEtFinancesMédicoSocial.reduce(
       (montantParAnnée: { année: number; valeur: string }[], budgetEtFinancesMédicoSocial) => {
-        if (budgetEtFinancesMédicoSocial.contributionAuxFraisDeSiège.valeur) {
+        if (budgetEtFinancesMédicoSocial.contributionAuxFraisDeSiège.valeur !== null && budgetEtFinancesMédicoSocial.contributionAuxFraisDeSiège.valeur !== "") {
           montantParAnnée.push({
             année: budgetEtFinancesMédicoSocial.année,
             valeur: StringFormater.formatInEuro(budgetEtFinancesMédicoSocial.contributionAuxFraisDeSiège.valeur),
@@ -71,13 +84,21 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
   }
 
   public get leMontantDeLaContributionAuxFraisDeSiègeEstIlRenseigné(): boolean {
-    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.contributionAuxFraisDeSiège.valeur);
+    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.contributionAuxFraisDeSiège.valeur !== null);
+  }
+
+  public get leMontantDeLaContributionAuxFraisDeSiègeEstIlAutorisé(): boolean {
+    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.contributionAuxFraisDeSiège.dateMiseÀJourSource !== "");
   }
 
   public get leTauxDeVétustéEstIlRenseigné(): boolean {
     const [années] = this.construisLesAnnéesEtSesTaux("tauxDeVétustéConstruction");
 
     return années.length > 0;
+  }
+
+  public get leTauxDeVétustéEstIlAutorisé(): boolean {
+    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.tauxDeVétustéConstruction.dateMiseÀJourSource !== "")
   }
 
   private construisLaCouleurDeLaBarre(valeur: number, année: number | string): CouleurHistogramme {
@@ -127,7 +148,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
   public get résultatNetComptable(): ReactElement {
     const résultatNetComptableParAnnée: { année: number; valeur: string }[] = this.budgetEtFinancesMédicoSocial.reduce(
       (résultatNetComptableParAnnée: { année: number; valeur: string }[], budgetEtFinancesMédicoSocial) => {
-        if (budgetEtFinancesMédicoSocial.résultatNetComptable.valeur) {
+        if (budgetEtFinancesMédicoSocial.résultatNetComptable.valeur !== null && budgetEtFinancesMédicoSocial.résultatNetComptable.valeur !== "") {
           résultatNetComptableParAnnée.push({
             année: budgetEtFinancesMédicoSocial.année,
             valeur: StringFormater.formatInEuro(budgetEtFinancesMédicoSocial.résultatNetComptable.valeur),
@@ -148,15 +169,18 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
   }
 
   public get leRésultatNetComptableEstIlRenseigné(): boolean {
-    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.résultatNetComptable.valeur);
+    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.résultatNetComptable.valeur !== null);
   }
 
+  public get leRésultatNetComptableEstIlAutorisé(): boolean {
+    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.résultatNetComptable.dateMiseÀJourSource !== "");
+  }
   public get fondDeRoulementNetGlobal(): ReactElement {
     const annéesSousCadreAutreQueErrd: number[] = [];
     const fondsDeRoulementNetGlobalParAnnée: IndicateurTabulaireProps["valeursParAnnée"] = this.budgetEtFinancesMédicoSocial.reduce(
       (fondsParAnnée: IndicateurTabulaireProps["valeursParAnnée"], budgetEtFinancesMédicoSocial) => {
         if (budgetEtFinancesMédicoSocial.cadreBudgétaire === CadreBudgétaire.ERRD) {
-          if (budgetEtFinancesMédicoSocial.fondsDeRoulement.valeur) {
+          if (budgetEtFinancesMédicoSocial.fondsDeRoulement.valeur !== null && budgetEtFinancesMédicoSocial.fondsDeRoulement.valeur !== "") {
             fondsParAnnée.push({
               année: budgetEtFinancesMédicoSocial.année,
               miseEnForme: budgetEtFinancesMédicoSocial.fondsDeRoulement.valeur < 0 ? "fr-text--bold fr-text-default--error" : "",
@@ -182,7 +206,11 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
   }
 
   public get leFondsDeRoulementEstIlRenseigné(): boolean {
-    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.fondsDeRoulement.valeur);
+    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.fondsDeRoulement.valeur !== null);
+  }
+
+  public get leFondsDeRoulementEstIlAutorisé(): boolean {
+    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.fondsDeRoulement.dateMiseÀJourSource !== '');
   }
 
   private construisLesAnnéesEtSesTaux(
@@ -192,12 +220,33 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
     const années: number[] = [];
     this.budgetEtFinancesMédicoSocial.forEach((budgetEtFinancesMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances) => {
       const valeur = budgetEtFinancesMédicoSocial[indicateur].valeur;
-      if (valeur !== null) {
+      if (valeur !== null && valeur !== "") {
         années.push(budgetEtFinancesMédicoSocial.année);
         valeurs.push(StringFormater.transformInRate(valeur));
       }
     });
 
     return [valeurs, années];
+  }
+
+  public get leTauxDeCafEstIlAutorisé(): boolean {
+    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.tauxDeCafNette.dateMiseÀJourSource !== '');
+  }
+
+  public get leCompteDeRésultatEstIlAutorisé(): boolean {
+    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.recettesEtDépenses.dateMiseÀJourSource !== '');
+  }
+
+  public get lesDonnéesBudgetairesPasAutorisés(): string[] {
+    const nonAutorisés = [];
+
+    if (!this.leCompteDeRésultatEstIlAutorisé) nonAutorisés.push(this.wording.COMPTE_DE_RÉSULTAT);
+    if (!this.leRésultatNetComptableEstIlAutorisé) nonAutorisés.push(this.wording.RÉSULTAT_NET_COMPTABLE);
+    if (!this.leMontantDeLaContributionAuxFraisDeSiègeEstIlAutorisé) nonAutorisés.push(this.wording.MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE);
+    if (!this.leTauxDeCafEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_DE_CAF);
+    if (!this.leTauxDeVétustéEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION);
+    if (!this.leFondsDeRoulementEstIlAutorisé) nonAutorisés.push(this.wording.FONDS_DE_ROULEMENT_NET_GLOBAL);
+
+    return nonAutorisés;
   }
 }

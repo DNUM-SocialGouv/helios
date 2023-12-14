@@ -51,4 +51,10 @@ export class ResultatNetComptableViewModel {
   private resultatNetComptableRemplis(budget: EntitéJuridiqueBudgetFinance): boolean {
     return !!budget.resultatNetComptable;
   }
+
+  public get resultatNetComptableEstIlAutorisé(): boolean {
+    return this.resultatNetComptable().some(
+      (resultat: { année: number; valeur: string }) => resultat.valeur !== ''
+    );
+  }
 }

@@ -15,6 +15,7 @@ export class EntitéJuridiqueAutorisationsCapacitesViewModel {
   public reconnaissanceActivités: ReconnaissanceContractuelleActivités;
   public equipementsLourds: EquipementsMateriauxLourdsActivités;
   public dateMiseAJourAutorisationActivités: string;
+  public wording: any;
 
   constructor(
     private capacites: CapacitéSanitaire[],
@@ -28,12 +29,50 @@ export class EntitéJuridiqueAutorisationsCapacitesViewModel {
     this.autorisationsActivités = autorisationsSanitaire;
     this.autresActivités = autresActivitesSanitaire;
     this.reconnaissanceActivités = reconnaissancesContractuellesSanitaire;
+    this.wording = wording;
     this.equipementsLourds = equipementsLourdsSanitaire;
     this.dateMiseAJourAutorisationActivités = autorisationsSanitaire.dateMiseÀJourSource;
   }
 
+  public get lesDonnéesAutorisationEtCapacitéPasRenseignees(): string[] {
+    const nonRenseignees = [];
+    if (this.lesAutorisationsCapacitesNeSontPasRenseignées) nonRenseignees.push(this.wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE);
+    if (this.lesAutorisationsActivitesNeSontPasRenseignées()) nonRenseignees.push(this.wording.AUTORISATIONS_ACTIVITES);
+    if (this.lesAutresActivitesNeSontPasRenseignées()) nonRenseignees.push(this.wording.AUTRES_ACTIVITÉS);
+    if (this.lesReconnaissanceContractuellesNeSontPasRenseignées()) nonRenseignees.push(this.wording.RECONNAISSANCES_CONTRACTUELLES);
+    if (this.lesEquipementsLourdsNeSontPasRenseignées()) nonRenseignees.push(this.wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS);
+    return nonRenseignees;
+  }
+
+  public get lesDonnéesAutorisationEtCapacitéPasAutorisés(): string[] {
+    const nonAutorisés = [];
+    if (!this.lesAutorisationsActivitesNeSontPasAutorisées) nonAutorisés.push(this.wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE);
+    if (!this.lesAutorisationsActivitesNeSontPasAutorisées) nonAutorisés.push(this.wording.AUTORISATIONS_ACTIVITES);
+    if (!this.lesAutresActivitesNeSontPasAutorisées) nonAutorisés.push(this.wording.AUTRES_ACTIVITÉS);
+    if (!this.lesReconnaissanceContractuellesNeSontPasAutoriséess) nonAutorisés.push(this.wording.RECONNAISSANCES_CONTRACTUELLES);
+    if (!this.lesEquipementsLourdsNeSontPasAutorisées) nonAutorisés.push(this.wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS);
+    return nonAutorisés;
+  }
+
   public get lesAutorisationsCapacitesNeSontPasRenseignées() {
     return !(this.capacites && this.capacites.length > 0);
+  }
+
+  public get lesAutorisationsCapacitesNeSontPasAutorisées(): boolean {
+    return this.capacites[0].dateMiseÀJourSource !== '';
+  }
+
+  public get lesAutorisationsActivitesNeSontPasAutorisées(): boolean {
+    return this.autorisationsActivités.dateMiseÀJourSource !== '';
+  }
+  public get lesAutresActivitesNeSontPasAutorisées(): boolean {
+    return this.autresActivités.dateMiseÀJourSource !== '';
+  }
+  public get lesReconnaissanceContractuellesNeSontPasAutoriséess(): boolean {
+    return this.reconnaissanceActivités.dateMiseÀJourSource !== '';
+  }
+  public get lesEquipementsLourdsNeSontPasAutorisées(): boolean {
+    return this.equipementsLourds.dateMiseÀJourSource !== '';
   }
 
   public lesAutorisationsActivitesNeSontPasRenseignées(): boolean {

@@ -1,0 +1,33 @@
+.container {
+    text-align: center;
+    margin-top: 6rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.success {
+    height: 40px;
+    background-color: #b8fec9;
+    border: 1px solid #b5eeb7;
+    color: #18753c;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.error {
+    height: 40px;
+    background-color: #f7d7d4;
+    border: 1px solid #f4c7c2;
+    color: #ce0500;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}

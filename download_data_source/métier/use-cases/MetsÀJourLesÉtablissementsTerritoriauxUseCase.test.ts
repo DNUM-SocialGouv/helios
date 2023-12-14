@@ -14,7 +14,7 @@ describe("Mise à jour des établissements territoriaux", () => {
       fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader
     );
     jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, "récupèreLaDateDeMiseÀJourDuFichierSource").mockReturnValue("");
-    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, "récupèreLesÉtablissementsTerritoriauxOuverts").mockReturnValue([]);
+    jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, "récupèreLesÉtablissementsTerritoriauxOuverts").mockResolvedValue([]);
     jest.spyOn(fakeDataCrawlerDependencies.entitéJuridiqueHeliosLoader, "récupèreLeNuméroFinessDesEntitésJuridiques").mockResolvedValue(["123456789"]);
     jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader, "récupèreLeNuméroFinessDesÉtablissementsTerritoriaux").mockResolvedValue([]);
 
@@ -40,7 +40,7 @@ describe("Mise à jour des établissements territoriaux", () => {
     jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, "récupèreLaDateDeMiseÀJourDuFichierSource").mockReturnValue("20220728");
     jest
       .spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, "récupèreLesÉtablissementsTerritoriauxOuverts")
-      .mockReturnValue(établissementsTerritoriaux);
+      .mockResolvedValue(établissementsTerritoriaux);
     jest.spyOn(fakeDataCrawlerDependencies.établissementTerritorialHeliosLoader, "récupèreLeNuméroFinessDesÉtablissementsTerritoriaux").mockResolvedValue([]);
 
     // WHEN
@@ -68,7 +68,7 @@ describe("Mise à jour des établissements territoriaux", () => {
     ];
     jest
       .spyOn(fakeDataCrawlerDependencies.établissementTerritorialSourceExterneLoader, "récupèreLesÉtablissementsTerritoriauxOuverts")
-      .mockReturnValue(établissementTerritorialOuvert);
+      .mockResolvedValue(établissementTerritorialOuvert);
 
     const numérosFinessDesÉtablissementsEnBase = [numéroFinessÉtablissementTerritorialToujoursOuvert, "123456789"];
     jest
