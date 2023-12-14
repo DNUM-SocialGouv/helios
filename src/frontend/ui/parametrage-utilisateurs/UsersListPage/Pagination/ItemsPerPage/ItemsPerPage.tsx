@@ -29,16 +29,13 @@ const ItemsPerPage = ({
     getUsersAndRefresh,
   },
 }: KeyWordFilterProps) => {
-  const { data } = useSession();
-  const institutionIdSession = (data?.user?.role as unknown as number) !== 1 ? data?.user.institutionId : 0;
-
   const pagesArray = [10, 20, 30, 50, 100];
   const handleChangeItemsPerPage = useCallback(
     async (e: React.ChangeEvent<HTMLSelectElement>) => {
       e.preventDefault();
       let institutionCondition = {};
-      if (institutionIdSession || institutionId) {
-        institutionCondition = { institutionId: institutionIdSession || institutionId };
+      if (institutionId) {
+        institutionCondition = { institutionId: institutionId };
       }
 
       let roleCondition = {};
@@ -66,29 +63,11 @@ const ItemsPerPage = ({
         ...etatCondition,
         itemsPerPage: e.target.value,
       };
-      // await getUsersAction(params);
+
       await getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
     },
     [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord]
   );
-
-  /*const getUsersAction = useCallback(
-    async (params: {}) => {
-      await fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
-        headers: { "Content-Type": "application/json" },
-        method: "GET",
-      })
-        .then((response) => response.json())
-        .then((users) => {
-          setUserData(users.data);
-          setTotal(users.total);
-          setPage(1);
-          setLastPage(users.lastPage);
-          setItemsPerPage(users.itemsPerPage);
-        });
-    },
-    [institutionId, roleId, profileId, itemsPerPage, keyWord]
-  );*/
 
   return (
     <div className="fr-select-group">

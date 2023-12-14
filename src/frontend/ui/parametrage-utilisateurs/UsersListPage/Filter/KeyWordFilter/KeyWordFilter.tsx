@@ -30,17 +30,14 @@ const KeyWordFilter = ({
     getUsersAndRefresh,
   },
 }: KeyWordFilterProps) => {
-  const { data } = useSession();
-  const institutionIdSession = (data?.user?.role as unknown as number) !== 1 ? data?.user.institutionId : 0;
-
   const handleChange = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       e.preventDefault();
       setKey(e.target.value as unknown as string);
 
       let institutionCondition = {};
-      if (institutionIdSession || institutionId) {
-        institutionCondition = { institutionId: institutionIdSession || institutionId };
+      if (institutionId) {
+        institutionCondition = { institutionId: institutionId };
       }
 
       let roleCondition = {};
@@ -69,17 +66,6 @@ const KeyWordFilter = ({
         ...etatCondition,
       };
       getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
-      /*await fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
-        headers: { "Content-Type": "application/json" },
-        method: "GET",
-      })
-        .then((response) => response.json())
-        .then((users) => {
-          setUserData(users.data);
-          setPage(users.currentPage);
-          setTotal(users.total);
-          setLastPage(users.lastPage);
-        });*/
     },
     [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page]
   );

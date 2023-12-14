@@ -33,9 +33,6 @@ const PaginationBtn = ({
     getUsersAndRefresh,
   },
 }: PaginationBtnProps) => {
-  const { data } = useSession();
-  const institutionIdSession = (data?.user?.role as unknown as number) !== 1 ? data?.user.institutionId : 0;
-
   const intervalRecursive = (x: number, y: number, accum = []): never[] => {
     if (x + 1 === y) return accum;
     return intervalRecursive(x + 1, y, accum.concat((x + 1) as never));
@@ -50,8 +47,8 @@ const PaginationBtn = ({
       }
 
       let institutionCondition = {};
-      if (institutionIdSession || institutionId) {
-        institutionCondition = { institutionId: institutionIdSession || institutionId };
+      if (institutionId) {
+        institutionCondition = { institutionId: institutionId };
       }
 
       let roleCondition = {};
@@ -80,16 +77,6 @@ const PaginationBtn = ({
         itemsPerPage: itemsPerPage.toString(),
       };
       getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
-      /*await fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
-        headers: { "Content-Type": "application/json" },
-        method: "GET",
-      })
-        .then((response) => response.json())
-        .then((users) => {
-          setUserData(users.data);
-          setPage(users.currentPage);
-          setLastPage(users.lastPage);
-        });*/
 
       return true;
     },

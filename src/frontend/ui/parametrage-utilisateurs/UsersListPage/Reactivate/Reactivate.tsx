@@ -67,20 +67,6 @@ const Reactivate = ({
         headers: { "Content-Type": "application/json" },
         method: "POST",
       }).then(async () => {
-        /* await fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
-          headers: { "Content-Type": "application/json" },
-          method: "GET",
-        })
-          .then((response) => response.json())
-          .then((users) => {
-            setUserData(users.data);
-            setPage(users.currentPage);
-            setLastPage(users.lastPage);
-            setTotal(users.total);
-          });
-
-          */
-
         getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
       });
     },

@@ -68,16 +68,6 @@ const ConfirmDeleteModal = ({
         method: "DELETE",
       }).then(async () => {
         getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
-        /*await fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
-          headers: { "Content-Type": "application/json" },
-          method: "GET",
-        })
-          .then((response) => response.json())
-          .then((users) => {
-            setUserData(users.data);
-            setPage(users.currentPage);
-            setLastPage(users.lastPage);
-          });*/
       });
     },
     [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page]

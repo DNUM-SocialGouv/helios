@@ -1,10 +1,4 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-redundant-roles */
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
-import { useSession } from "next-auth/react";
 import { memo, useCallback } from "react";
 
 import { iPaginationData } from "../../UsersListPage";
@@ -45,9 +39,6 @@ const AdvancedFilter = ({
     { id: 2, label: "Inactif", code: "inactif" },
     { id: 3, label: "Supprimé", code: "deleted" },
   ];
-
-  const { data } = useSession();
-  const institutionIdSession = (data?.user?.role as unknown as number) !== 1 ? data?.user.institutionId : 0;
 
   const handleChangeInstitution = useCallback(
     async (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -91,8 +82,8 @@ const AdvancedFilter = ({
       e.preventDefault();
       setRoleId(e.target.value as unknown as number);
       let institutionCondition = {};
-      if (institutionIdSession || institutionId) {
-        institutionCondition = { institutionId: institutionIdSession || institutionId };
+      if (institutionId) {
+        institutionCondition = { institutionId: institutionId };
       }
 
       const roleCondition = { roleId: e.target.value };
@@ -128,8 +119,8 @@ const AdvancedFilter = ({
       setProfileId(e.target.value);
 
       let institutionCondition = {};
-      if (institutionIdSession || institutionId) {
-        institutionCondition = { institutionId: institutionIdSession || institutionId };
+      if (institutionId) {
+        institutionCondition = { institutionId: institutionId };
       }
 
       let roleCondition = {};
@@ -164,8 +155,8 @@ const AdvancedFilter = ({
       e.preventDefault();
       setEtatId(e.target.value);
       let institutionCondition = {};
-      if (institutionIdSession || institutionId) {
-        institutionCondition = { institutionId: institutionIdSession || institutionId };
+      if (institutionId) {
+        institutionCondition = { institutionId: institutionId };
       }
 
       let roleCondition = {};
@@ -198,17 +189,6 @@ const AdvancedFilter = ({
   const getUsersAction = useCallback(
     (params: {}) => {
       getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
-      /*fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
-        headers: { "Content-Type": "application/json" },
-        method: "GET",
-      })
-        .then((response) => response.json())
-        .then((users) => {
-          setUserData(users.data);
-          setTotal(users.total);
-          setPage(1);
-          setLastPage(users.lastPage);
-        });*/
     },
     [institutionId, roleId, profileId, itemsPerPage, keyWord]
   );
