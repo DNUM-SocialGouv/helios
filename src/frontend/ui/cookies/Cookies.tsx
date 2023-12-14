@@ -60,19 +60,8 @@ export const Cookies = () => {
     setCondition(getCookie("allowed-cookies") === undefined);
   }, []);
 
-  {
-    /*  console.log("currentModal: ", currentModal);
-    console.log("condition: ", condition);*/
-  }
-
   return (
     <>
-      *A*<div suppressHydrationWarning>{getCookie("allowed-cookies")}</div>
-      <br />
-      *----{allowCookies}
-      <br />
-      *-----------{currentModal}
-      <br />
       <dialog
         aria-labelledby="fr-modal-cookies-title"
         className={`fr-modal ${currentModal === 1 && condition ? " fr-modal--opened " : ""} `}
