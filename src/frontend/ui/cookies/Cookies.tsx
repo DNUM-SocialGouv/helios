@@ -33,8 +33,17 @@ export const Cookies = () => {
 
   const onClickModal2 = (e: MouseEvent) => {
     if (!e.currentTarget.classList.contains("fr-modal--opened")) {
-      setCookie("allowed-cookies", allowCookies);
-      e.currentTarget.className += " fr-modal--opened";
+      if (allowCookies) {
+        setCookie("allowed-cookies", allowCookies);
+      } else {
+        e.currentTarget.className += " fr-modal--opened";
+      }
+    } else {
+      if (allowCookies) {
+        setCookie("allowed-cookies", allowCookies);
+        e.currentTarget.className = "fr-modal";
+      } else {
+      }
     }
   };
 
@@ -59,13 +68,12 @@ export const Cookies = () => {
 
   return (
     <>
-      {/* A*<div suppressHydrationWarning>{getCookie("allowed-cookies")}</div>
+      {/*A*<div suppressHydrationWarning>{getCookie("allowed-cookies")}</div>
       <br />
       *----{allowCookies}
       <br />
-      *-----------{currentModal}
+      *-----------{currentModal*/}
       <br />
-         */}
       <dialog
         aria-labelledby="fr-modal-cookies-title"
         className={`fr-modal ${currentModal === 1 && condition ? " fr-modal--opened " : ""} `}
