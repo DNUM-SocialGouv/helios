@@ -68,7 +68,7 @@ export default function Router({
       itemsPerPageValue={itemsPerPage}
       keyWord={keyWord}
       lastElementInPage={lastElementInPage}
-      profile={profile.toString()}
+      profile={profile?.toString()}
       profiles={profiles}
       role={parseInt(role)}
       roles={roles}
@@ -81,6 +81,16 @@ export default function Router({
 export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<RouterProps>> {
   try {
     const session = await getSession(context);
+
+    // if current user has role 'utilisateur lamda' redirect to page inaccessible
+    if (session?.user?.role === 3) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/inaccessible",
+        },
+      };
+    }
 
     let userSessionRole = "";
 

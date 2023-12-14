@@ -1,22 +1,14 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from "next";
 
-import { checkIfAdminEndpoint } from './backend/infrastructure/controllers/checkIfAdminEndpoint';
-import { dependencies } from "./backend/infrastructure/dependencies";
+import { getUserSessionBack } from "./frontend/utils/getUserSessionBack";
 
 export async function checkAdminRole(req: NextApiRequest, res: NextApiResponse): Promise<boolean> {
-    let userId = "";
-    if (req.method === "GET") {
-        userId = req.query["userId"] as string;
-    } else {
-        userId = req.body.userId;
-    }
+  const userSession = await getUserSessionBack(req);
 
-    const isAdmin = await checkIfAdminEndpoint(dependencies, userId);
-
-    if (isAdmin) {
-        return true;
-    } else {
-        res.status(401).json({ error: 'Non autorisé' });
-        return false;
-    }
+  if (userSession && (userSession?.user?.role === 1 || userSession?.user?.role === 2)) {
+    return true;
+  } else {
+    res.status(401).json({ error: "Non autorisé" });
+    return false;
+  }
 }

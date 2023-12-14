@@ -17,7 +17,7 @@ declare module "next-auth" {
     user: {
       idUser: string;
       firstname: string;
-      role: string;
+      role: number;
       codeRegion: number;
       codeProfiles: string[];
       institution;

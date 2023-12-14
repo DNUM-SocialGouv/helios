@@ -61,6 +61,7 @@ const PaginationBtn = ({
         etatCondition = { etatId: etatId };
       }
 
+      console.log("page : ", page);
       const params = {
         key: keyWord,
         sort: "",

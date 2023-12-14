@@ -1,35 +1,18 @@
+/* eslint-disable import/no-anonymous-default-export */
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { getUsersListPaginatedEndpoint } from "../../../backend/infrastructure/controllers/getUsersListPaginatedEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
+import { checkAdminRole } from "../../../checkAdminMiddleware";
+import { getUserSessionBack } from "../../../frontend/utils/getUserSessionBack";
 
-function getBasePath(request: NextApiRequest) {
-  const nextRequestMeta = request[Reflect.ownKeys(request).find((s) => String(s) === "Symbol(NextRequestMeta)")];
-
-  let protocole = "https://";
-  if (nextRequestMeta.__NEXT_INIT_URL.includes("http://")) {
-    protocole = "http://";
-  }
-  return protocole + request.headers.host;
-}
-
-export default async function handler(request: NextApiRequest, response: NextApiResponse) {
+const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   try {
-    const basePath = getBasePath(request);
-
     if (request.method !== "GET") {
       response.status(405).send("Method not allowed");
     }
 
-    const resp = await fetch(`${basePath}/api/auth/session`, {
-      headers: {
-        "Content-Type": "application/json",
-        Cookie: request.headers.cookie,
-      },
-
-      method: "GET",
-    });
-    const userSession = await resp.json();
+    const userSession = await getUserSessionBack(request);
 
     //if current user is not Admin => forced institutionId_fiter to be institutionId of current user
     const institutionIdSession = (userSession.user.role as unknown as number) !== 1 ? userSession?.user.institutionId : 0;
@@ -50,4 +33,10 @@ export default async function handler(request: NextApiRequest, response: NextApi
   } catch (error) {
     return response.status(500);
   }
-}
+};
+
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+  if (await checkAdminRole(req, res)) {
+    await handler(req, res);
+  }
+};

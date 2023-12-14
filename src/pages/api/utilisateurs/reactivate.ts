@@ -19,7 +19,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  //if (await checkAdminRole(req, res)) {
-  await handler(req, res);
-  // }
+  if (await checkAdminRole(req, res)) {
+    await handler(req, res);
+  }
 };

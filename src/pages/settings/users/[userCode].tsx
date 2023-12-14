@@ -1,4 +1,5 @@
-import { GetStaticPropsResult } from "next";
+import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
+import { getSession } from "next-auth/react";
 
 import { InstitutionModel } from "../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../database/models/ProfilModel";
@@ -35,8 +36,22 @@ export default function Router({ user, institutions, profiles, roles }: RouterPr
   return <EditUser institutions={institutions} profiles={profiles} roles={roles} user={user} />;
 }
 
-export async function getServerSideProps({ params }: { params: { userCode: string } }): Promise<GetStaticPropsResult<RouterProps>> {
+//export async function getServerSideProps({ params }: { params: { userCode: string } }): Promise<GetStaticPropsResult<RouterProps>> {
+export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<RouterProps>> {
   try {
+    const { params } = context;
+    const session = await getSession(context);
+
+    // if current user has role 'utilisateur lamda' redirect to page inaccessible
+    if (session?.user?.role === 3) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/inaccessible",
+        },
+      };
+    }
+
     const user = await getUserByCodeEndpoint(dependencies, params.userCode);
 
     if (!user) {

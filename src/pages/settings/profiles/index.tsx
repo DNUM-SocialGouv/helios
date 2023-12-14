@@ -1,6 +1,7 @@
-import { GetStaticPropsResult } from "next";
-import { ProfilModel } from "../../../../database/models/ProfilModel";
+import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
+import { getSession } from "next-auth/react";
 
+import { ProfilModel } from "../../../../database/models/ProfilModel";
 import { getAllProfilesEndpoint } from "../../../backend/infrastructure/controllers/getAllProfilesEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { useDependencies } from "../../../frontend/ui/commun/contexts/useDependencies";
@@ -22,8 +23,20 @@ export default function Router({ profiles }: RouterProps) {
   return <ParametragePage profiles={profiles} />;
 }
 
-export async function getServerSideProps(): Promise<GetStaticPropsResult<RouterProps>> {
+export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<RouterProps>> {
   try {
+    const session = await getSession(context);
+
+    // if current user has role 'utilisateur lamda' redirect to page inaccessible
+    if (session?.user?.role === 3) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/inaccessible",
+        },
+      };
+    }
+
     const profiles = await getAllProfilesEndpoint(dependencies);
     return {
       props: { profiles: JSON.parse(JSON.stringify(profiles)) },

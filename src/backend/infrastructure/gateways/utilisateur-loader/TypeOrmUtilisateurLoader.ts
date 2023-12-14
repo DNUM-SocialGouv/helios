@@ -125,8 +125,11 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   }
 
   async checkIfAdmin(userId: string): Promise<boolean> {
-    const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ code: userId.trim() });
-    if (user && (user.roleId === "1" || user.roleId === "2")) {
+    console.log("code::::::", userId);
+    const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ code: userId?.trim() });
+    console.log("user check :", user);
+    console.log("user?.roleId : ", user?.roleId);
+    if (user && (user?.roleId === "1" || user?.roleId === "2")) {
       return true;
     } else return false;
   }
