@@ -41,8 +41,7 @@ export const Cookies = () => {
     } else {
       if (allowCookies) {
         setCookie("allowed-cookies", allowCookies);
-        e.currentTarget.className = "fr-modal";
-      } else {
+        //e.currentTarget.className = "fr-modal";
       }
     }
   };
@@ -68,11 +67,11 @@ export const Cookies = () => {
 
   return (
     <>
-      {/*A*<div suppressHydrationWarning>{getCookie("allowed-cookies")}</div>
+      *A*<div suppressHydrationWarning>{getCookie("allowed-cookies")}</div>
       <br />
       *----{allowCookies}
       <br />
-      *-----------{currentModal*/}
+      *-----------{currentModal}
       <br />
       <dialog
         aria-labelledby="fr-modal-cookies-title"
