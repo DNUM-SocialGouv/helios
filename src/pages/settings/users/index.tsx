@@ -1,4 +1,4 @@
-import { GetStaticPropsResult } from "next";
+import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
 import { getSession } from "next-auth/react";
 
 import { InstitutionModel } from "../../../../database/models/InstitutionModel";
@@ -12,7 +12,7 @@ import { getUsersListPaginatedEndpoint } from "../../../backend/infrastructure/c
 import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { useDependencies } from "../../../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../../../frontend/ui/commun/hooks/useBreadcrumb";
-import { UsersListPage } from "../../../frontend/ui/parametrage-utilisateurs/UsersListPage/UsersListPage";
+import UsersListPage from "../../../frontend/ui/parametrage-utilisateurs/UsersListPage/UsersListPage";
 
 interface IUsersPaginatedList {
   data: UtilisateurModel[];
@@ -48,7 +48,6 @@ export default function Router({
   profile,
   role,
   etat,
-  status,
   lastElementInPage,
   itemsPerPage,
   userSessionRole,
@@ -63,15 +62,15 @@ export default function Router({
   ]);
   return (
     <UsersListPage
+      etat={etat.toString()}
       institution={institution}
       institutions={institutions}
       itemsPerPageValue={itemsPerPage}
       keyWord={keyWord}
       lastElementInPage={lastElementInPage}
-      profile={profile}
+      profile={profile.toString()}
       profiles={profiles}
-      role={role}
-      etat={etat}
+      role={parseInt(role)}
       roles={roles}
       userSessionRole={userSessionRole}
       users={usersPaginatedList}
@@ -79,7 +78,7 @@ export default function Router({
   );
 }
 
-export async function getServerSideProps(context): Promise<GetStaticPropsResult<RouterProps>> {
+export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<RouterProps>> {
   try {
     const session = await getSession(context);
 
@@ -99,7 +98,9 @@ export async function getServerSideProps(context): Promise<GetStaticPropsResult<
         userSessionRole = "Utilisateur";
     }
 
-    let { page, key, institution, role, etat, profil, institutionId, roleId, etatId, profileId, status, itemsPerPage } = context.query;
+    let { page, key, institutionId, roleId, itemsPerPage } = context.query;
+    const { institution, role, etat, profil, etatId, profileId, status } = context.query;
+
     page = parseInt(page) | 1;
     itemsPerPage = parseInt(itemsPerPage) | 10;
     key = key as string | "";

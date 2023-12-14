@@ -1,10 +1,4 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-redundant-roles */
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
-import { useSession } from "next-auth/react";
 import { memo, useCallback } from "react";
 
 import { iPaginationData } from "../../UsersListPage";

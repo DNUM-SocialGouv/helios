@@ -1,10 +1,4 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-redundant-roles */
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
-import { useSession } from "next-auth/react";
 import { memo, useCallback } from "react";
 
 import { iPaginationData } from "../../UsersListPage";
@@ -14,20 +8,7 @@ type KeyWordFilterProps = Readonly<{
 }>;
 
 const ItemsPerPage = ({
-  paginationData: {
-    keyWord,
-    institutionId,
-    profileId,
-    roleId,
-    itemsPerPage,
-    etatId,
-    setTotal,
-    setUserData,
-    setPage,
-    setLastPage,
-    setItemsPerPage,
-    getUsersAndRefresh,
-  },
+  paginationData: { keyWord, institutionId, profileId, roleId, itemsPerPage, etatId, setTotal, setUserData, setPage, setLastPage, getUsersAndRefresh },
 }: KeyWordFilterProps) => {
   const pagesArray = [10, 20, 30, 50, 100];
   const handleChangeItemsPerPage = useCallback(

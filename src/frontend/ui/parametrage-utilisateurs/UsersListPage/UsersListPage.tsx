@@ -76,14 +76,14 @@ type UsersListPageProps = Readonly<{
   institution: number;
   profile: string;
   role: number;
-  status: string;
+  status?: string;
   etat: string;
   lastElementInPage: boolean;
   itemsPerPageValue: number;
   userSessionRole: string;
 }>;
 
-export const UsersListPage = ({
+const UsersListPage = ({
   users,
   keyWord,
   institutions,
@@ -308,3 +308,8 @@ export const UsersListPage = ({
     </main>
   );
 };
+UsersListPage.defaultProps = {
+  status: "",
+};
+
+export default UsersListPage;
