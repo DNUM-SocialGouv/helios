@@ -4,6 +4,7 @@ import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 
+import { useSession } from "next-auth/react";
 import { useQueryState, parseAsInteger, parseAsString } from "next-usequerystate";
 import { useCallback, useState } from "react";
 
@@ -98,6 +99,8 @@ const UsersListPage = ({
   itemsPerPageValue,
   userSessionRole,
 }: UsersListPageProps) => {
+  const { data } = useSession();
+
   const [userData, setUserData] = useState<UtilisateurModel[]>(users.data);
   const [total, setTotal] = useState(users.total);
   const [lastPage, setLastPage] = useState(users.lastPage);
@@ -214,9 +217,10 @@ const UsersListPage = ({
                     </tr>
                   </thead>
                   <tbody>
-                    {userData.map((user: any) => {
+                    {userData.map((user: UtilisateurModel) => {
                       const roleClass = user.role.id === 1 ? "error" : user.role.id === 2 ? "success" : "info";
                       const userStatus = getUserStatus(user.lastConnectionDate, user.deletedDate);
+                      const detailRow = data?.user?.idUser === user.code && data?.user?.role !== 1;
 
                       return (
                         <tr key={user.id}>
@@ -264,22 +268,45 @@ const UsersListPage = ({
                           <td className={styles["widthTD-actions"]}>
                             {userStatus !== "Supprimé" && (
                               <>
-                                <a
-                                  className="fr-raw-link"
-                                  href={`/settings/users/${
-                                    user.code
-                                  }?page=${page}&itemsPerPage=${itemsPerPage}&key=${key}&institutionId=${institutionId}&roleId=${roleId}&profileId=${
-                                    profileId || ""
-                                  }`}
-                                  title="Modifier"
-                                >
-                                  <button>
-                                    <span aria-hidden="true" className="fr-icon-pencil-line"></span>
-                                  </button>
-                                </a>
-                                <button aria-controls="fr-modal-2" data-fr-opened="false" title="Supprimer">
-                                  <span aria-hidden="true" className="fr-icon-delete-line" onClick={() => setUserToDelete(user.code)}></span>
-                                </button>
+                                {detailRow && (
+                                  <>
+                                    <a
+                                      className="fr-raw-link"
+                                      href={`/settings/users/${
+                                        user.code
+                                      }?page=${page}&itemsPerPage=${itemsPerPage}&key=${key}&institutionId=${institutionId}&roleId=${roleId}&profileId=${
+                                        profileId || ""
+                                      }`}
+                                      title="Détails "
+                                    >
+                                      <button>
+                                        <span aria-hidden="true" className="fr-icon-file-text-line"></span>
+                                      </button>
+                                    </a>
+                                  </>
+                                )}
+                                {!detailRow && (
+                                  <>
+                                    <a
+                                      className="fr-raw-link"
+                                      href={`/settings/users/${
+                                        user.code
+                                      }?page=${page}&itemsPerPage=${itemsPerPage}&key=${key}&institutionId=${institutionId}&roleId=${roleId}&profileId=${
+                                        profileId || ""
+                                      }`}
+                                      title="Modifier"
+                                    >
+                                      <button>
+                                        <span aria-hidden="true" className="fr-icon-pencil-line"></span>
+                                      </button>
+                                    </a>
+                                    {data?.user?.idUser !== user.code && (
+                                      <button aria-controls="fr-modal-2" data-fr-opened="false" title="Supprimer">
+                                        <span aria-hidden="true" className="fr-icon-delete-line" onClick={() => setUserToDelete(user.code)}></span>
+                                      </button>
+                                    )}
+                                  </>
+                                )}
                               </>
                             )}
                             {userStatus === "Supprimé" && (

@@ -5,6 +5,7 @@ import "@gouvfr/dsfr/dist/component/pagination/pagination.min.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
+import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 
@@ -15,6 +16,7 @@ import { UtilisateurModel } from "../../../../../database/models/UtilisateurMode
 import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import styles from "./EditUser.module.css";
+import Link from "next/link";
 
 type UsersListPageProps = Readonly<{
   user: UtilisateurModel;
@@ -24,6 +26,8 @@ type UsersListPageProps = Readonly<{
 }>;
 
 export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageProps) => {
+  const { data } = useSession();
+
   const searchParams = useSearchParams();
 
   const [userinfo, setUserInfo] = useState({
@@ -54,6 +58,33 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
     });
   };
 
+  const redirectPage = (url: string) => {
+    let queryParams = "";
+    if (searchParams.get("page")) {
+      queryParams += "?page=" + searchParams.get("page");
+    }
+    if (searchParams.get("itemsPerPage")) {
+      queryParams += "&itemsPerPage=" + searchParams.get("itemsPerPage");
+    }
+    if (searchParams.get("key")) {
+      queryParams += "&key=" + searchParams.get("key");
+    }
+    if (parseInt(searchParams.get("institutionId") as string) > 0) {
+      queryParams += "&institutionId=" + searchParams.get("institutionId");
+    }
+    if (parseInt(searchParams.get("roleId") as string) > 0) {
+      queryParams += "&roleId=" + searchParams.get("roleId");
+    }
+    if (searchParams.get("profileId")) {
+      queryParams += "&profileId=" + searchParams.get("profileId");
+    }
+    if (searchParams.get("etatId")) {
+      queryParams += "&etatId=" + searchParams.get("etatId");
+    }
+
+    push(url + queryParams);
+  };
+
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     const { profiles } = userinfo;
@@ -65,38 +96,15 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
       headers: { "Content-Type": "application/json" },
       method: "POST",
     }).then(() => {
-      let queryParams = "";
-      if (searchParams.get("page")) {
-        queryParams += "?page=" + searchParams.get("page");
-      }
-      if (searchParams.get("itemsPerPage")) {
-        queryParams += "&itemsPerPage=" + searchParams.get("itemsPerPage");
-      }
-      if (searchParams.get("key")) {
-        queryParams += "&key=" + searchParams.get("key");
-      }
-      if (parseInt(searchParams.get("institutionId") as string) > 0) {
-        queryParams += "&institutionId=" + searchParams.get("institutionId");
-      }
-      if (parseInt(searchParams.get("roleId") as string) > 0) {
-        queryParams += "&roleId=" + searchParams.get("roleId");
-      }
-      if (searchParams.get("profileId")) {
-        queryParams += "&profileId=" + searchParams.get("profileId");
-      }
-      if (searchParams.get("etatId")) {
-        queryParams += "&etatId=" + searchParams.get("etatId");
-      }
-
-      push("/settings/users?status=edit_successfully&" + queryParams);
+      redirectPage("/settings/users?status=edit_successfully&");
     });
   }
-
+  const pageDetails = data?.user?.idUser === user.code && data?.user?.role !== 1;
   return (
     <main className="fr-container">
       {user && (
         <>
-          <h1 className={styles["title"]}>{wording.PAGE_EDIT_UTILISATEUR_TITRE}</h1>
+          <h1 className={styles["title"]}>{`${pageDetails ? "Détails" : "Modifier"} utilisateur`}</h1>
           <br />
           <div>
             <div className={styles["field_container"]}>
@@ -125,7 +133,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                 <label className="fr-label" htmlFor="institutionId">
                   Institution
                 </label>
-                <select className="fr-select" id="institutionId" name="institutionId">
+                <select className="fr-select" disabled={pageDetails} id="institutionId" name="institutionId">
                   <option disabled hidden selected value="">
                     Selectionnez une option
                   </option>
@@ -141,7 +149,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                 <label className="fr-label" htmlFor="roleId">
                   Role
                 </label>
-                <select className="fr-select" id="roleId" name="roleId">
+                <select className="fr-select" disabled={pageDetails} id="roleId" name="roleId">
                   <option disabled hidden selected value="">
                     Selectionnez une option
                   </option>
@@ -167,6 +175,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                           aria-describedby={`checkboxes-${item.code}-messages`}
                           checked={userinfo.profiles && userinfo.profiles.includes(item.code)}
                           className={`${styles["input--checkbox--error"]} `}
+                          disabled={pageDetails}
                           id={`${item.code}`}
                           name="profiles"
                           onChange={handleChange}
@@ -190,12 +199,27 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
               </div>
 
               <div className={styles["btnForm"]}>
-                <button className="fr-mt-7v fr-mr-7v fr-btn" onClick={handleChangeReset} type="reset">
-                  Annuler
-                </button>
-                <button className="fr-mt-7v fr-btn " disabled={userinfo.profiles.length === 0} type="submit">
-                  Sauvegarder
-                </button>
+                {pageDetails && (
+                  <button
+                    className="fr-mt-7v fr-btn "
+                    onClick={() => {
+                      redirectPage("/settings/users?");
+                    }}
+                    type="button"
+                  >
+                    Retour
+                  </button>
+                )}
+                {!pageDetails && (
+                  <>
+                    <button className="fr-mt-7v fr-mr-7v fr-btn" onClick={handleChangeReset} type="reset">
+                      Annuler
+                    </button>
+                    <button className="fr-mt-7v fr-btn " disabled={userinfo.profiles.length === 0} type="submit">
+                      Sauvegarder
+                    </button>
+                  </>
+                )}
               </div>
             </form>
           </div>

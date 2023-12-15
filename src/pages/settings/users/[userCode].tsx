@@ -15,21 +15,23 @@ import { useBreadcrumb } from "../../../frontend/ui/commun/hooks/useBreadcrumb";
 import { EditUser } from "../../../frontend/ui/parametrage-utilisateurs/EditUser/EditUser";
 
 type RouterProps = Readonly<{
+  sessionUser: any;
   user: UtilisateurModel;
   institutions: InstitutionModel[];
   profiles: ProfilModel[];
   roles: RoleModel[];
 }>;
 
-export default function Router({ user, institutions, profiles, roles }: RouterProps) {
+export default function Router({ user, institutions, profiles, roles, sessionUser }: RouterProps) {
   const { wording } = useDependencies();
+
   useBreadcrumb([
     {
       label: wording.USERS_LIST,
       path: "/settings/users",
     },
     {
-      label: wording.PAGE_EDIT_UTILISATEUR_TITRE,
+      label: `${sessionUser.idUser === user.code && sessionUser.role !== 1 ? "Détails" : "Modifier"} utilisateur`,
       path: "",
     },
   ]);
@@ -66,6 +68,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
 
     return {
       props: {
+        sessionUser: JSON.parse(JSON.stringify(session?.user)),
         user: JSON.parse(JSON.stringify(user)),
         institutions: JSON.parse(JSON.stringify(institutions)),
         profiles: JSON.parse(JSON.stringify(profiles)),

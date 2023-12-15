@@ -14,7 +14,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const userSession = await getUserSessionBack(request);
 
-    //if current user is not Admin => forced institutionId_fiter to be institutionId of current user
+    //if current user is not Admin National => forced institutionId_fiter to be institutionId of current user
     const institutionIdSession = (userSession.user.role as unknown as number) !== 1 ? userSession?.user.institutionId : 0;
 
     const key = request.query["key"] as string | "";
