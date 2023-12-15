@@ -220,7 +220,9 @@ const UsersListPage = ({
                     {userData.map((user: UtilisateurModel) => {
                       const roleClass = user.role.id === 1 ? "error" : user.role.id === 2 ? "success" : "info";
                       const userStatus = getUserStatus(user.lastConnectionDate, user.deletedDate);
-                      const detailRow = data?.user?.idUser === user.code && data?.user?.role !== 1;
+
+                      //only "Admin national" can update itself || Admin regional cant update, delete, reactivate to (Admin National And/or Admin Regional)
+                      const detailRow = (data?.user?.idUser === user.code && data?.user?.role !== 1) || (data?.user?.role as number) >= parseInt(user.roleId);
 
                       return (
                         <tr key={user.id}>

@@ -1,9 +1,11 @@
 /* eslint-disable import/no-anonymous-default-export */
 import { NextApiRequest, NextApiResponse } from "next";
 
+import { getUserByCodeEndpoint } from "../../../backend/infrastructure/controllers/getUserByCodeEndpoint";
 import { updateUserEndpoint } from "../../../backend/infrastructure/controllers/updateUserEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { checkAdminRole } from "../../../checkAdminMiddleware";
+import { getUserSessionBack } from "../../../frontend/utils/getUserSessionBack";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   try {
@@ -11,6 +13,16 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
       response.status(405).send("Method not allowed");
     }
     const { userCode, roleCode, institutionCode, profilsCode } = request.body;
+
+    const userBeforeChange = await getUserByCodeEndpoint(dependencies, userCode);
+
+    const userSession = await getUserSessionBack(request);
+
+    //only "Admin national" can update itself || Admin regional cant update, delete, reactivate to (Admin National And/or Admin Regional)
+    if ((userSession?.user?.idUser === userCode && userSession?.user?.role !== 1) || (userSession?.user?.role as number) >= parseInt(userBeforeChange.roleId)) {
+      return response.status(405).send("Method not allowed");
+    }
+
     const recherche = await updateUserEndpoint(dependencies, userCode, roleCode, institutionCode, profilsCode);
     return response.status(200).json(recherche);
   } catch (error) {

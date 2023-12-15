@@ -99,7 +99,9 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
       redirectPage("/settings/users?status=edit_successfully&");
     });
   }
-  const pageDetails = data?.user?.idUser === user.code && data?.user?.role !== 1;
+  //only "Admin national" can update itself || Admin regional cant update, delete, reactivate to (Admin National And/or Admin Regional)
+  const pageDetails = (data?.user?.idUser === user.code && data?.user?.role !== 1) || (data?.user?.role as number) >= parseInt(user.roleId);
+
   return (
     <main className="fr-container">
       {user && (
