@@ -9,3 +9,10 @@
 .filter-item {
   width: 18%;
 }
+
+.reset-filter-container {
+  padding: 25px 0 0 0;
+}
+.reset-filter-btn {
+  padding: 0;
+}

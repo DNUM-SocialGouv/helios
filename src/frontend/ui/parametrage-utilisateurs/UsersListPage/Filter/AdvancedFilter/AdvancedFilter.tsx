@@ -31,6 +31,7 @@ const AdvancedFilter = ({
     setRoleId,
     setEtatId,
     getUsersAndRefresh,
+    setKey,
   },
   userSessionRole,
 }: KeyWordFilterProps) => {
@@ -186,6 +187,21 @@ const AdvancedFilter = ({
     [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord]
   );
 
+  const handleResetFilter = useCallback(async () => {
+    setKey("");
+    setInstitutionId(0);
+    setProfileId("");
+    setEtatId("");
+    setRoleId(0);
+
+    const params = {
+      sort: "",
+      page: 1,
+      itemsPerPage: itemsPerPage,
+    };
+    await getUsersAction(params);
+  }, [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord]);
+
   const getUsersAction = useCallback(
     (params: {}) => {
       getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
@@ -268,6 +284,11 @@ const AdvancedFilter = ({
             </option>
           ))}
         </select>
+      </div>
+      <div className={`fr-select-group ${styles["reset-filter-container"]}`}>
+        <button className={`${styles["reset-filter-btn"]}`} onClick={handleResetFilter} title="Réinitialiser les filtres">
+          <span aria-hidden="true" className="fr-icon-refresh-line  fr-btn "></span>
+        </button>
       </div>
     </div>
   );

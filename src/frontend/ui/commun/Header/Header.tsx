@@ -180,7 +180,7 @@ export const Header = () => {
                                   router.push(paths.USERS_LIST);
                                 }}
                               >
-                                Utilisateurs
+                                Console d’administration
                               </button>
                             </li>
                             <li className={styles["sub-menu-item"]}>

@@ -74,7 +74,7 @@ const Reactivate = ({
   );
 
   return (
-    <button title="Réactivé">
+    <button title="Réactiver">
       <span aria-hidden="true" className="fr-icon-refresh-line" onClick={() => reactivateUser(userCode)}></span>
     </button>
   );
