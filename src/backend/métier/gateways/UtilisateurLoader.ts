@@ -21,7 +21,14 @@ export interface UtilisateurLoader {
     itemsPerPage: number
   ): Promise<void>;
   getUserByCode(code: string): Promise<UtilisateurModel | null>;
-  updateUser(userCode: string, roleCode: string, institutionCode: string, profilsCode: string[]): Promise<UtilisateurModel | null>;
+  updateUser(
+    userCode: string,
+    roleCode: string,
+    institutionCode: string,
+    profilsCode: string[],
+    firstname: string,
+    lastname: string
+  ): Promise<UtilisateurModel | null>;
   deleteUser(userCode: string): Promise<string | null>;
   reactivateUser(userCode: string): Promise<string | null>;
 }

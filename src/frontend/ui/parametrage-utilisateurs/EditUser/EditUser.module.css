@@ -2,6 +2,7 @@
   text-align: center;
   margin-top: 2rem;
   color: #000091;
+  text-transform: capitalize;
 }
 
 .label-field {

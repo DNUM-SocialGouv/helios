@@ -31,7 +31,7 @@ export default function Router({ user, institutions, profiles, roles, sessionUse
       path: "/settings/users",
     },
     {
-      label: `${sessionUser.idUser === user.code && sessionUser.role !== 1 ? "Détails" : "Modifier"} utilisateur`,
+      label: `${user.prenom} ${user.nom}`,
       path: "",
     },
   ]);

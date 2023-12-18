@@ -19,6 +19,7 @@ import ItemsPerPage from "./Pagination/ItemsPerPage/ItemsPerPage";
 import PaginationBtn from "./Pagination/PaginationBtn/PaginationBtn";
 import Reactivate from "./Reactivate/Reactivate";
 import styles from "./UsersListPage.module.css";
+import { formatDateAndHours } from "../../../utils/dateUtils";
 
 function greaterThanNMonths(inputDate: Date, n: number): boolean {
   const NMonthsAgo = new Date();
@@ -30,7 +31,7 @@ function getUserStatus(lastConnectionDate: Date, deletedDate: Date): string {
   if (deletedDate) {
     return "Supprimé";
   }
-  if (greaterThanNMonths(lastConnectionDate, 3) || lastConnectionDate === null) {
+  if (greaterThanNMonths(lastConnectionDate, 6) || lastConnectionDate === null) {
     return "InActif";
   }
   return "Actif";
@@ -202,16 +203,18 @@ const UsersListPage = ({
                     <tr>
                       <th scope="col">{wording.LASTNAME}</th>
                       <th scope="col">{wording.FIRSTNAME}</th>
-                      {/*<th className={styles["widthTD-small"]} scope="col">
+                      <th className={styles["widthTD-small"]} scope="col">
                         {wording.EMAIL}
-                      </th>*/}
+                      </th>
 
                       <th scope="col">{wording.INSTITUTION}</th>
                       <th scope="col">{wording.ROLE_}</th>
                       <th scope="col">Autorisations</th>
-                      {/*<th className={styles["widthTD-date"]} scope="col">
-                        {wording.CREATION_DATE}
-                      </th>*/}
+
+                      <th className={styles["widthTD-date"]} scope="col">
+                        Date de dernière connexion
+                      </th>
+
                       <th scope="col">Etat</th>
                       <th scope="col">Actions</th>
                     </tr>
@@ -222,7 +225,9 @@ const UsersListPage = ({
                       const userStatus = getUserStatus(user.lastConnectionDate, user.deletedDate);
 
                       //only "Admin national" can update itself || Admin regional cant update, delete, reactivate to (Admin National And/or Admin Regional)
-                      const detailRow = (data?.user?.idUser === user.code && data?.user?.role !== 1) || (data?.user?.role as number) >= parseInt(user.roleId);
+                      const detailRow =
+                        (data?.user?.idUser === user.code && data?.user?.role !== 1) ||
+                        ((data?.user?.role as number) >= parseInt(user.roleId) && data?.user?.idUser !== user.code);
 
                       return (
                         <tr key={user.id}>
@@ -236,8 +241,11 @@ const UsersListPage = ({
                               {user.nom}
                             </a>
                           </td>
-                          {/*<td className={styles["widthTD-small"]}>{user.email}</td>*/}
-
+                          <td className={styles["widthTD-small"]}>
+                            <a className="fr-raw-link" href={`/settings/users/${user.code}`}>
+                              {user.email}
+                            </a>
+                          </td>
                           <td className={styles["widthTD-small"]}>{user.institution.libelle}</td>
 
                           <td>
@@ -247,7 +255,6 @@ const UsersListPage = ({
                               {user.role.libelle}
                             </span>
                           </td>
-
                           <td className={`${styles["widthTD-profil"]}`}>
                             {user.profils.map((profil: string, i: number, { length }: any) => {
                               const pr = profiles.filter((item) => item.code === profil);
@@ -264,9 +271,8 @@ const UsersListPage = ({
                               );
                             })}
                           </td>
-
+                          <td className={styles["widthTD-date"]}>{user?.dateModification && formatDateAndHours(user?.dateModification?.toString())}</td>
                           <td className={styles["widthTD-etat"]}>{userStatus}</td>
-
                           <td className={styles["widthTD-actions"]}>
                             {userStatus !== "Supprimé" && (
                               <>

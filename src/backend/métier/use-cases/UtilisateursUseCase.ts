@@ -21,8 +21,15 @@ export class UtilisateursUseCase {
     return await this.utilisateurLoader.getUserByCode(code);
   }
 
-  async updateUser(userCode: string, roleCode: string, institutionCode: string, profilsCode: string[]): Promise<UtilisateurModel | null> {
-    return this.utilisateurLoader.updateUser(userCode, roleCode, institutionCode, profilsCode);
+  async updateUser(
+    userCode: string,
+    roleCode: string,
+    institutionCode: string,
+    profilsCode: string[],
+    firstname: string,
+    lastname: string
+  ): Promise<UtilisateurModel | null> {
+    return this.utilisateurLoader.updateUser(userCode, roleCode, institutionCode, profilsCode, firstname, lastname);
   }
 
   async deleteUser(userCode: string): Promise<string | null> {

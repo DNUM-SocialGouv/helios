@@ -7,11 +7,13 @@ export async function updateUserEndpoint(
   userCode: string,
   roleCode: string,
   institutionCode: string,
-  profilsCode: string[]
+  profilsCode: string[],
+  firstname: string,
+  lastname: string
 ): Promise<UtilisateurModel | null> {
   try {
     const UtilisateurUseCase = new UtilisateursUseCase(dependencies.utilisateurLoader);
-    return await UtilisateurUseCase.updateUser(userCode, roleCode, institutionCode, profilsCode);
+    return await UtilisateurUseCase.updateUser(userCode, roleCode, institutionCode, profilsCode, firstname, lastname);
   } catch (error) {
     dependencies.logger.error(error);
     throw error;

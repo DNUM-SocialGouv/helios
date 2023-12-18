@@ -125,10 +125,8 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   }
 
   async checkIfAdmin(userId: string): Promise<boolean> {
-    console.log("code::::::", userId);
     const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ code: userId?.trim() });
-    console.log("user check :", user);
-    console.log("user?.roleId : ", user?.roleId);
+
     if (user && (user?.roleId === "1" || user?.roleId === "2")) {
       return true;
     } else return false;
@@ -156,7 +154,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     const utilisateurRepo = (await this.orm).getRepository(UtilisateurModel);
 
     const NMonthsAgo = new Date();
-    NMonthsAgo.setMonth(new Date().getMonth() - 3);
+    NMonthsAgo.setMonth(new Date().getMonth() - 6);
 
     const MoreThanDate = (date: Date) => MoreThan(format(date, "yyyy-MM-dd HH:MM:ss"));
     const LessThanDate = (date: Date) => LessThan(format(date, "yyyy-MM-dd HH:MM:ss"));
@@ -178,6 +176,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
 
     let EtatCondition = {};
 
+    /* softDelete
     switch (etatId) {
       case "actif":
         EtatCondition = { lastConnectionDate: MoreThanDate(NMonthsAgo), deletedDate: IsNull() };
@@ -190,6 +189,18 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         break;
       default:
         EtatCondition = {};
+    }
+    */
+    // without soft delete
+    switch (etatId) {
+      case "actif":
+        EtatCondition = { lastConnectionDate: MoreThanDate(NMonthsAgo), deletedDate: IsNull() };
+        break;
+      case "inactif":
+        EtatCondition = { lastConnectionDate: LessThanDate(NMonthsAgo), deletedDate: IsNull() };
+        break;
+      default:
+        EtatCondition = { deletedDate: IsNull() };
     }
 
     const selectConditions = { ...institutionCondition, ...roleCondition, ...profilCondition, ...EtatCondition };
@@ -227,7 +238,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     };
   }
 
-  async updateUser(userCode: string, roleCode: string, institutionCode: string, profilsCode: string[]): Promise<void> {
+  async updateUser(userCode: string, roleCode: string, institutionCode: string, profilsCode: string[], firstname: string, lastname: string): Promise<void> {
     try {
       const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: userCode } });
 
@@ -240,6 +251,8 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         user.role = roleToSave;
         user.roleId = roleToSave.id.toString();
         user.profils = profilsCode;
+        user.prenom = firstname;
+        user.nom = lastname;
       }
 
       (await this.orm)

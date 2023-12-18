@@ -38,7 +38,7 @@ const AdvancedFilter = ({
   const etats = [
     { id: 1, label: "Actif", code: "actif" },
     { id: 2, label: "Inactif", code: "inactif" },
-    { id: 3, label: "Supprimé", code: "deleted" },
+    /* { id: 3, label: "Supprimé", code: "deleted" },*/
   ];
 
   const handleChangeInstitution = useCallback(

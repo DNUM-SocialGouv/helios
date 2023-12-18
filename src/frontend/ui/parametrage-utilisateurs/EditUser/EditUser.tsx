@@ -6,6 +6,7 @@ import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 
@@ -16,7 +17,6 @@ import { UtilisateurModel } from "../../../../../database/models/UtilisateurMode
 import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import styles from "./EditUser.module.css";
-import Link from "next/link";
 
 type UsersListPageProps = Readonly<{
   user: UtilisateurModel;
@@ -29,6 +29,9 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
   const { data } = useSession();
 
   const searchParams = useSearchParams();
+
+  const [firstname, setFirstname] = useState(user.prenom);
+  const [lastname, setLastname] = useState(user.nom);
 
   const [userinfo, setUserInfo] = useState({
     profiles: [...user.profils],
@@ -92,7 +95,14 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
     const { institutionId, roleId } = e.target.elements;
 
     fetch("/api/utilisateurs/update", {
-      body: JSON.stringify({ userCode: user.code, institutionCode: institutionId.value, roleCode: roleId.value, profilsCode: profiles }),
+      body: JSON.stringify({
+        userCode: user.code,
+        institutionCode: institutionId.value,
+        roleCode: roleId.value,
+        profilsCode: profiles,
+        firstname: firstname,
+        lastname: lastname,
+      }),
       headers: { "Content-Type": "application/json" },
       method: "POST",
     }).then(() => {
@@ -100,25 +110,60 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
     });
   }
   //only "Admin national" can update itself || Admin regional cant update, delete, reactivate to (Admin National And/or Admin Regional)
-  const pageDetails = (data?.user?.idUser === user.code && data?.user?.role !== 1) || (data?.user?.role as number) >= parseInt(user.roleId);
+  const pageDetails =
+    (data?.user?.idUser === user.code && data?.user?.role !== 1) || ((data?.user?.role as number) >= parseInt(user.roleId) && data?.user?.idUser !== user.code);
 
   return (
     <main className="fr-container">
       {user && (
         <>
-          <h1 className={styles["title"]}>{`${pageDetails ? "Détails" : "Modifier"} utilisateur`}</h1>
+          <h1 className={styles["title"]}>
+            {user.prenom} {user.nom}
+          </h1>
           <br />
           <div>
-            <div className={styles["field_container"]}>
-              <label className="fr-label">
-                <div className={styles["label-field"]}>{wording.LASTNAME} : </div> {user.nom}
-              </label>
+            <div className="fr-mb-2w">
+              <div className="fr-input-group">
+                <label className={`fr-label ${firstname.length === 0 ? styles["fr-fieldset--error"] : ""}`} htmlFor="input-firstname">
+                  Prénom
+                </label>
+                <input
+                  className="fr-input fr-mb-1w"
+                  id="input-firstname"
+                  name="firstname"
+                  onChange={(e) => setFirstname(e.target.value)}
+                  type="text"
+                  value={firstname}
+                />
+              </div>
+
+              {firstname.length === 0 && (
+                <div aria-live="assertive" className={`fr-messages-group ${styles["fr-fieldset--error"]}`} id="name-1-fieldset-messages">
+                  Champ obligatoire
+                </div>
+              )}
             </div>
-            <div className={styles["field_container"]}>
-              <label className="fr-label">
-                <div className={styles["label-field"]}>{wording.FIRSTNAME} : </div> {user.prenom}
-              </label>
+            <div className="fr-mb-2w">
+              <div className="fr-input-group">
+                <label className={`fr-label ${lastname.length === 0 ? styles["fr-fieldset--error"] : ""}`} htmlFor="input-lastname">
+                  Nom
+                </label>
+                <input
+                  className="fr-input fr-mb-1w"
+                  id="input-lastname"
+                  name="lastname"
+                  onChange={(e) => setLastname(e.target.value)}
+                  type="text"
+                  value={lastname}
+                />
+              </div>
+              {lastname.length === 0 && (
+                <div aria-live="assertive" className={`fr-messages-group ${styles["fr-fieldset--error"]}`} id="name-1-fieldset-messages">
+                  Champ obligatoire
+                </div>
+              )}
             </div>
+
             <div className={styles["field_container"]}>
               <label className="fr-label">
                 <div className={styles["label-field"]}>{wording.EMAIL} : </div> {user.email}
@@ -127,6 +172,12 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
             <div className={styles["field_container"]}>
               <label className="fr-label">
                 <div className={styles["label-field"]}>{wording.CREATION_DATE} : </div> {formatDateAndHours(user.dateCreation.toString())}
+              </label>
+            </div>
+
+            <div className={styles["field_container"]}>
+              <label className="fr-label">
+                <div className={styles["label-field"]}>Date de dernière modification : </div> {formatDateAndHours(user.dateModification.toString())}
               </label>
             </div>
 
@@ -217,7 +268,11 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                     <button className="fr-mt-7v fr-mr-7v fr-btn" onClick={handleChangeReset} type="reset">
                       Annuler
                     </button>
-                    <button className="fr-mt-7v fr-btn " disabled={userinfo.profiles.length === 0} type="submit">
+                    <button
+                      className="fr-mt-7v fr-btn "
+                      disabled={userinfo.profiles.length === 0 || firstname.length === 0 || lastname.length === 0}
+                      type="submit"
+                    >
                       Sauvegarder
                     </button>
                   </>
