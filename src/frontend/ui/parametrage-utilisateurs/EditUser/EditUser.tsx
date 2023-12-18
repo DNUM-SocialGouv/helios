@@ -6,7 +6,6 @@ import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 
@@ -16,6 +15,7 @@ import { RoleModel } from "../../../../../database/models/RoleModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
+import ConfirmDeleteModalEditPage from "../UsersListPage/ConfirmDeleteModal/ConfirmDeleteModalEditPage";
 import styles from "./EditUser.module.css";
 
 type UsersListPageProps = Readonly<{
@@ -55,16 +55,20 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
     }
   };
 
-  const handleChangeReset = () => {
+  /*const handleChangeReset = () => {
     setUserInfo({
       profiles: [...user.profils],
     });
-  };
+  };*/
 
   const redirectPage = (url: string) => {
-    let queryParams = "";
+    redirectPage;
+    let queryParams = "?";
+    if (url.includes("?")) {
+      queryParams = "&";
+    }
     if (searchParams.get("page")) {
-      queryParams += "?page=" + searchParams.get("page");
+      queryParams += "page=" + searchParams.get("page");
     }
     if (searchParams.get("itemsPerPage")) {
       queryParams += "&itemsPerPage=" + searchParams.get("itemsPerPage");
@@ -84,7 +88,6 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
     if (searchParams.get("etatId")) {
       queryParams += "&etatId=" + searchParams.get("etatId");
     }
-
     push(url + queryParams);
   };
 
@@ -129,6 +132,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                 </label>
                 <input
                   className="fr-input fr-mb-1w"
+                  disabled={pageDetails}
                   id="input-firstname"
                   name="firstname"
                   onChange={(e) => setFirstname(e.target.value)}
@@ -150,6 +154,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                 </label>
                 <input
                   className="fr-input fr-mb-1w"
+                  disabled={pageDetails}
                   id="input-lastname"
                   name="lastname"
                   onChange={(e) => setLastname(e.target.value)}
@@ -177,7 +182,8 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
 
             <div className={styles["field_container"]}>
               <label className="fr-label">
-                <div className={styles["label-field"]}>Date de dernière modification : </div> {formatDateAndHours(user.dateModification.toString())}
+                <div className={styles["label-field"]}>Date de dernière modification : </div>
+                {user.dateModification && formatDateAndHours(user.dateModification.toString())}
               </label>
             </div>
 
@@ -256,7 +262,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                   <button
                     className="fr-mt-7v fr-btn "
                     onClick={() => {
-                      redirectPage("/settings/users?");
+                      redirectPage("/settings/users");
                     }}
                     type="button"
                   >
@@ -265,7 +271,13 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                 )}
                 {!pageDetails && (
                   <>
-                    <button className="fr-mt-7v fr-mr-7v fr-btn" onClick={handleChangeReset} type="reset">
+                    <button
+                      className="fr-mt-7v fr-mr-7v fr-btn"
+                      onClick={() => {
+                        redirectPage("/settings/users");
+                      }}
+                      type="button"
+                    >
                       Annuler
                     </button>
                     <button
@@ -275,6 +287,12 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                     >
                       Sauvegarder
                     </button>
+
+                    {data?.user?.idUser !== user.code && (
+                      <button className="fr-mt-7v fr-btn fr-ml-7v " aria-controls="fr-modal-2" data-fr-opened="false" title="Supprimer" type="button">
+                        Supprimer
+                      </button>
+                    )}
                   </>
                 )}
               </div>
@@ -282,6 +300,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
           </div>
         </>
       )}
+      <ConfirmDeleteModalEditPage redirectPage={redirectPage} userCode={user.code} />
     </main>
   );
 };

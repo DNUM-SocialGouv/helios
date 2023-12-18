@@ -469,7 +469,7 @@ export class WordingFr implements Wording {
   readonly PARAMETRAGE_NEW_PROFILE: string = "Ajouter un nouveau profil";
   readonly VOUS_NAVEZ_AUCUN_PROFIL: string = "Vous n'avez aucun profil";
 
-  readonly USERS_LIST: string = "Liste des utilisateurs";
+  readonly USERS_LIST: string = "Console d’administration";
 
   //  Profile page
   readonly USER_PROFILE: string = "Profil de l'utilisateur";
@@ -488,7 +488,7 @@ export class WordingFr implements Wording {
   readonly MODIFICATION_DATE: string = "Date de modification";
   readonly AUCUN_ELEMENT_TROUVE: string = "Aucun élément trouvé";
   readonly ROLE_: string = "Rôle";
-  readonly PAGE_UTILISATEUR_TITRE: string = "Liste des utilisateurs";
+  readonly PAGE_UTILISATEUR_TITRE: string = "Console d’administration";
   readonly INSTITUTION: string = "Institution";
   readonly PAGE_EDIT_UTILISATEUR_TITRE: string = "Modifier utilisateur";
 }
