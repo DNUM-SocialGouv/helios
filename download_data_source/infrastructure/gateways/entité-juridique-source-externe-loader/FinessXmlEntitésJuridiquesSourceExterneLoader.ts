@@ -169,10 +169,28 @@ export class FinessXmlEntitésJuridiquesSourceExterneLoader implements EntitéJu
     return localPath + "/finess/simple/" + fichiersDuRépertoireSimple.filter((fichier) => fichier.includes(this.préfixeDuFichierEntitéJuridique));
   }
 
+  private getOutreMerDepartement(departementCode: string) {
+    switch (departementCode) {
+      case '9A':
+        return '971';
+      case '9B':
+        return '972';
+      case '9C':
+        return '973';
+      case '9D':
+        return '974';
+      case '9F':
+        return '976';
+      default:
+        return departementCode;
+    }
+  }
+
   private async construisLEntitéJuridique(entitésJuridiquesFiness: EntitéJuridiqueFiness): Promise<EntitéJuridique> {
     const valueOrEmpty = (value?: string): string => value || "";
 
-    const ref = await (await this.orm).getRepository(RefDepartementRegionModel).findOne({ where: { codeDepartement: valueOrEmpty(entitésJuridiquesFiness.departement._text) } });
+    const codeDepartement = this.getOutreMerDepartement(valueOrEmpty(entitésJuridiquesFiness.departement._text));
+    const ref = await (await this.orm).getRepository(RefDepartementRegionModel).findOne({ where: { codeDepartement: codeDepartement } });
 
     return {
       adresseAcheminement: valueOrEmpty(entitésJuridiquesFiness.ligneacheminement._text),
