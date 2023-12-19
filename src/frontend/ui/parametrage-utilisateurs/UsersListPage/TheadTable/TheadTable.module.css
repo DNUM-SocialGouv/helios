@@ -1,0 +1,11 @@
+.widthTD-date {
+  max-width: 20ch;
+  word-wrap: break-word;
+}
+.th {
+  cursor: pointer;
+  user-select: none;
+}
+.no-sort {
+  pointer-events: none;
+}

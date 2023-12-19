@@ -6,15 +6,16 @@ export class UtilisateursUseCase {
 
   async getUsersListPaginated(
     key: string,
-    sort: string,
     pdescrtion: number,
     institutionId: number,
     roleId: number,
     profilId: string,
     etatId: string,
-    itemsPerPage: number
+    itemsPerPage: number,
+    orderBy: string,
+    sortDir: string
   ): Promise<void> {
-    return await this.utilisateurLoader.getUsersListPaginated(key, sort, pdescrtion, institutionId, roleId, profilId, etatId, itemsPerPage);
+    return await this.utilisateurLoader.getUsersListPaginated(key, pdescrtion, institutionId, roleId, profilId, etatId, itemsPerPage, orderBy, sortDir);
   }
 
   async getUserByCode(code: string): Promise<UtilisateurModel | null> {

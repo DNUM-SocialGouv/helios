@@ -36,6 +36,8 @@ type RouterProps = Readonly<{
   lastElementInPage: boolean;
   itemsPerPage: number;
   userSessionRole: string;
+  orderByPage: string;
+  sortDirPage: string;
 }>;
 
 export default function Router({
@@ -51,6 +53,8 @@ export default function Router({
   lastElementInPage,
   itemsPerPage,
   userSessionRole,
+  orderByPage,
+  sortDirPage,
 }: RouterProps) {
   const { wording } = useDependencies();
 
@@ -74,6 +78,8 @@ export default function Router({
       roles={roles}
       userSessionRole={userSessionRole}
       users={usersPaginatedList}
+      orderByPage={orderByPage}
+      sortDirPage={sortDirPage}
     />
   );
 }
@@ -108,7 +114,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
         userSessionRole = "Utilisateur";
     }
 
-    let { page, key, institutionId, roleId, itemsPerPage } = context.query;
+    let { page, key, institutionId, roleId, itemsPerPage, orderBy, sortDir } = context.query;
     const { institution, role, etat, profil, etatId, profileId, status } = context.query;
 
     page = parseInt(page) | 1;
@@ -122,7 +128,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     roleId = parseInt(roleId) | 0;
     const profilId = profileId as string | "";
 
-    const users = await getUsersListPaginatedEndpoint(dependencies, key, "Desc", page, institutionId, roleId, profilId, etatId, itemsPerPage);
+    orderBy = orderBy || "nom";
+    sortDir = sortDir || "DESC";
+
+    const users = await getUsersListPaginatedEndpoint(dependencies, key, page, institutionId, roleId, profilId, etatId, itemsPerPage, orderBy, sortDir);
     //console.log("--users---", users);
 
     let lastElementInPage = false;
@@ -154,6 +163,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
         lastElementInPage: lastElementInPage,
         itemsPerPage: itemsPerPage || 10,
         userSessionRole: userSessionRole,
+        orderByPage: orderBy,
+        sortDirPage: sortDir,
       },
     };
   } catch (error) {

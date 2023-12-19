@@ -4,17 +4,18 @@ import { Dependencies } from "../dependencies";
 export async function getUsersListPaginatedEndpoint(
   dependencies: Dependencies,
   key: string,
-  sort: string,
   pdescrtion: number,
   institutionId: number,
   roleId: number,
   profilId: string,
   etatId: string,
-  itemsPerPage: number
+  itemsPerPage: number,
+  orderBy: string,
+  sortDir: string
 ): Promise<any> {
   try {
     const UtilisateurUseCase = new UtilisateursUseCase(dependencies.utilisateurLoader);
-    return await UtilisateurUseCase.getUsersListPaginated(key, sort, pdescrtion, institutionId, roleId, profilId, etatId, itemsPerPage);
+    return await UtilisateurUseCase.getUsersListPaginated(key, pdescrtion, institutionId, roleId, profilId, etatId, itemsPerPage, orderBy, sortDir);
   } catch (error) {
     dependencies.logger.error(error);
     throw error;

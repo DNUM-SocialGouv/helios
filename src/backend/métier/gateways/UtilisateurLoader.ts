@@ -12,13 +12,14 @@ export interface UtilisateurLoader {
   checkIfAdmin(userId: string): Promise<boolean>;
   getUsersListPaginated(
     key: string,
-    sort: string,
     pdescrtion: number,
     institutionId: number,
     roleId: number,
     profilId: string,
     etatId: string,
-    itemsPerPage: number
+    itemsPerPage: number,
+    orderBy: string,
+    sortDir: string
   ): Promise<void>;
   getUserByCode(code: string): Promise<UtilisateurModel | null>;
   updateUser(

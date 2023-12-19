@@ -18,7 +18,8 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     const institutionIdSession = (userSession.user.role as unknown as number) !== 1 ? userSession?.user.institutionId : 0;
 
     const key = request.query["key"] as string | "";
-    const sort = request.query["sort"] as string | "";
+    const orderBy = request.query["orderBy"] as string | "";
+    const sortDir = request.query["sortDir"] as string | "";
     const page = request.query["page"] as unknown as number | 1;
 
     const institutionId = institutionIdSession || (request.query["institutionId"] as unknown as number | 0);
@@ -27,7 +28,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     const etatId = request.query["etatId"] as string | "";
     const itemsPerPage = request.query["itemsPerPage"] as unknown as number;
 
-    const users = await getUsersListPaginatedEndpoint(dependencies, key, sort, page, institutionId, roleId, profilId, etatId, itemsPerPage);
+    const users = await getUsersListPaginatedEndpoint(dependencies, key, page, institutionId, roleId, profilId, etatId, itemsPerPage, orderBy, sortDir);
 
     return response.status(200).json(users);
   } catch (error) {

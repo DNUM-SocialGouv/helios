@@ -145,13 +145,14 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
 
   async getUsersListPaginated(
     key = "",
-    sort: string,
     currentPage: number,
     institutionId: number,
     roleId: number,
     profilId: string,
     etatId: string,
-    itemsPerPage: number
+    itemsPerPage: number,
+    orderBy: "nom",
+    sortDir: "DESC"
   ): Promise<any> {
     const utilisateurRepo = (await this.orm).getRepository(UtilisateurModel);
 
@@ -219,9 +220,41 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
 
     const total = await utilisateurRepo.countBy(conditions);
 
+    let orders = {};
+
+    switch (orderBy) {
+      case "nom":
+        orders = { nom: sortDir };
+        break;
+      case "prenom":
+        orders = { prenom: sortDir };
+        break;
+      case "email":
+        orders = { email: sortDir };
+        break;
+      case "institution.libelle":
+        orders = { institution: { libelle: sortDir } };
+        break;
+      case "role.libelle":
+        orders = { role: { libelle: sortDir } };
+        break;
+      case "lastConnectionDate":
+        orders = { lastConnectionDate: sortDir };
+        break;
+      default:
+        orders = { nom: "DESC", prenom: "DESC" };
+    }
+
+    console.log("orders 123", orders);
+
     const data = await utilisateurRepo.find({
       where: conditions,
-      order: { nom: "DESC", prenom: "DESC" },
+      //  order: { nom: "DESC", prenom: "DESC", email: "DESC" },
+      //  order: { institution: { libelle: "ASC" } },
+      // order: { role: { libelle: "ASC" } },
+      // order: { lastConnectionDate: "DESC" },
+      // order: { email: "DESC" },
+      order: orders,
       take,
       skip: (currentPageA - 1) * take,
       relations: {

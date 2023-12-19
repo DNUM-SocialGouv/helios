@@ -20,6 +20,7 @@ import PaginationBtn from "./Pagination/PaginationBtn/PaginationBtn";
 import Reactivate from "./Reactivate/Reactivate";
 import styles from "./UsersListPage.module.css";
 import { formatDateAndHours } from "../../../utils/dateUtils";
+import TheadTable from "./TheadTable/TheadTable";
 
 function greaterThanNMonths(inputDate: Date, n: number): boolean {
   const NMonthsAgo = new Date();
@@ -83,6 +84,8 @@ type UsersListPageProps = Readonly<{
   lastElementInPage: boolean;
   itemsPerPageValue: number;
   userSessionRole: string;
+  orderByPage: string;
+  sortDirPage: string;
 }>;
 
 const UsersListPage = ({
@@ -99,6 +102,8 @@ const UsersListPage = ({
   lastElementInPage,
   itemsPerPageValue,
   userSessionRole,
+  orderByPage,
+  sortDirPage,
 }: UsersListPageProps) => {
   const { data } = useSession();
 
@@ -115,6 +120,9 @@ const UsersListPage = ({
   const [statusCode] = useQueryState("status", parseAsString.withDefault(status));
   const [userToDelete, setUserToDelete] = useState("");
   const [itemsPerPage, setItemsPerPage] = useQueryState("itemsPerPage", parseAsInteger.withDefault(itemsPerPageValue));
+
+  const [orderBy, setOrderBy] = useQueryState("orderBy", parseAsString.withDefault(orderByPage));
+  const [sortDir, setSortDir] = useQueryState("sortDir", parseAsString.withDefault(sortDirPage));
 
   const { wording } = useDependencies();
 
@@ -174,13 +182,13 @@ const UsersListPage = ({
           <h1 className={`fr-mb-4w ${styles["title"]}`}>{wording.PAGE_UTILISATEUR_TITRE}</h1>
 
           {statusCode === "edit_successfully" && (
-            <div className="fr-alert fr-alert--success fr-alert--sm fr-mb-3w ">
+            <div className="fr-alert fr-alert--success fr-alert--sm fr-mb-3w">
               <p>La modification de l`utilisateur a été effectuée avec succès.</p>
             </div>
           )}
 
           {statusCode === "deleted_successfully" && (
-            <div className="fr-alert fr-alert--success fr-alert--sm fr-mb-3w ">
+            <div className="fr-alert fr-alert--success fr-alert--sm fr-mb-3w">
               <p>La suppression de l`utilisateur a été effectuée avec succès.</p>
             </div>
           )}
@@ -199,26 +207,7 @@ const UsersListPage = ({
             <div>
               <div className={"fr-table fr-table--blue-ecume fr-mt-2w " + styles["align"]}>
                 <table>
-                  <thead>
-                    <tr>
-                      <th scope="col">{wording.LASTNAME}</th>
-                      <th scope="col">{wording.FIRSTNAME}</th>
-                      <th className={styles["widthTD-small"]} scope="col">
-                        {wording.EMAIL}
-                      </th>
-
-                      <th scope="col">{wording.INSTITUTION}</th>
-                      <th scope="col">{wording.ROLE_}</th>
-                      <th scope="col">Autorisations</th>
-
-                      <th className={styles["widthTD-date"]} scope="col">
-                        Date de dernière connexion
-                      </th>
-
-                      <th scope="col">Etat</th>
-                      <th scope="col">Actions</th>
-                    </tr>
-                  </thead>
+                  <TheadTable paginationData={paginationData} />
                   <tbody>
                     {userData.map((user: UtilisateurModel) => {
                       const roleClass = user.role.id === 1 ? "error" : user.role.id === 2 ? "success" : "info";
@@ -233,12 +222,12 @@ const UsersListPage = ({
                         <tr key={user.id}>
                           <td className={styles["widthTD-small"]}>
                             <a className="fr-raw-link" href={`/settings/users/${user.code}`}>
-                              {user.id} {user.prenom}
+                              {user.nom}
                             </a>
                           </td>
                           <td className={styles["widthTD-small"]}>
                             <a className="fr-raw-link" href={`/settings/users/${user.code}`}>
-                              {user.nom}
+                              {user.prenom}
                             </a>
                           </td>
                           <td className={styles["widthTD-small"]}>
