@@ -64,6 +64,12 @@ export interface Wording {
   readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string;
   readonly FORGET_PASSEWORD: string;
   readonly CONNEXION_LIBELLE: string;
+  readonly CONNEXION_IDENTIFIANT: string;
+  readonly CONNEXION_MOT_DE_PASSE: string;
+  readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string;
+  readonly FORGET_PASSEWORD: string;
+  readonly FORGET_PASSEWORD_MESSAGE: string;
+  readonly CONNEXION_LIBELLE: string;
 
   // Recherche
   readonly RECHERCHE_DESCRIPTION: ReactElement;
@@ -357,6 +363,7 @@ export interface Wording {
   readonly MOT_DE_PASSE: string;
   readonly CONFIRMER_MOT_DE_PASSE: string;
   readonly CONFIRM_CHANGE_PASSWORD: string;
+  readonly CONFIRM_CREATE_PASSWORD: string;
 
   // Historique de recherche
   readonly HISTORIQUE_DE_RECHERECHE_TITRE: string;
@@ -364,13 +371,13 @@ export interface Wording {
   readonly DATE: string;
   readonly CONFIRM_UPDATE_PASSWORD: string;
   readonly REINITIALISATION_MOT_PASSE_TITRE: string;
+  readonly CREATION_MOT_PASSE_TITRE: string;
   readonly REINITIALISATION_MOT_PASSE_DESCRIPTION: string;
   readonly DIFFERENT_MOT_PASSE: string;
   readonly WRONG_OLD_MOT_DE_PASSE: string;
 
   // Parametrage
   readonly PARAMETRAGE_TITRE: string;
-  readonly PARAMETRAGE_PROFILE: string;
   readonly PARAMETRAGE_EJ_TAB: string;
   readonly PARAMETRAGE_ET_MS_TAB: string;
   readonly PARAMETRAGE_ET_SAN_TAB: string;

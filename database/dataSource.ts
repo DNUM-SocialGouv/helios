@@ -47,6 +47,7 @@ import { AjoutRégionDansEtablissementTerritorial1694617579347 } from "./migrati
 import { AjoutProfilsDansUtilisateurs1696841163367 } from "./migrations/1696841163367-AjoutProfilsDansUtilisateurs";
 import { AjouterSoftDeleteUtilisateur1701782042926 } from "./migrations/1701782042926-AjouterSoftDeleteUtilisateur";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
+import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "./models/ActivitéSanitaireEntitéJuridiqueModel";
 import { ActivitéSanitaireModel } from "./models/ActivitéSanitaireModel";
@@ -76,6 +77,9 @@ import { ÉtablissementTerritorialIdentitéModel } from "./models/Établissement
 const logger = new ConsoleLogger();
 dotEnvConfig();
 const environmentVariables = new NodeEnvironmentVariables(logger);
+
+// eslint-disable-next-line no-console
+console.log("environmentVariables.DATABASE_URL", environmentVariables.DATABASE_URL);
 
 export default new DataSource({
   entities: [
@@ -152,6 +156,7 @@ export default new DataSource({
     ajoutTableProfil1795731844298,
     AjoutProfilsDansUtilisateurs1696841163367,
     AjouterSoftDeleteUtilisateur1701782042926,
+    updateProfileTable1796422585498,
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

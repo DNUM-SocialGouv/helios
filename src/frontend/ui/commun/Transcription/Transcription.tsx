@@ -58,7 +58,7 @@ export const Transcription = ({ disabled = false, entêteLibellé, identifiants,
                             <tr key={libellé}>
                               <td>{libellé}</td>
                               {valeurs.map((valeur, index2) => (
-                                <td key={valeur[index] + index2.toString()}>
+                                <td className={styles["transcriptionData"]} key={valeur[index] + index2.toString()}>
                                   {/* @ts-ignore */}
                                   {valeur[index] === null ? wording.NON_RENSEIGNÉ : valeur[index]}
                                 </td>

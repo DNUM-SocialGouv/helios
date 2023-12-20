@@ -3,7 +3,7 @@ import { createHash } from "crypto";
 import { format } from "date-fns";
 import fs from "fs";
 import path from "path";
-import { DataSource, ILike, ArrayContains, LessThan, MoreThan, IsNull, Not } from "typeorm";
+import { DataSource, ILike, ArrayContains, LessThan, MoreThan, IsNull } from "typeorm";
 
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
@@ -22,29 +22,12 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   }
 
   async login(email: string, password: string): Promise<RésultatLogin> {
-    const user = await (await this.orm)
-      .getRepository(UtilisateurModel)
-      .findOne({ where: { email: email.trim().toLowerCase(), deletedDate: IsNull() }, relations: ["institution"] });
-
+    const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { email: email.trim().toLowerCase() }, relations: ["institution"] });
     if (user) {
       const hashing = createHash("sha256");
       hashing.update(password);
       const hashedPassword = hashing.digest("hex");
-      const checkPassWord = (await compare(password, user.password)) || hashedPassword === user.password ? { utilisateur: user } : null;
-      if (checkPassWord) {
-        user.lastConnectionDate = new Date();
-        (await this.orm)
-          .getRepository(UtilisateurModel)
-          .save(user as UtilisateurModel)
-          .then(async () => {
-            return user;
-          })
-          .catch((error) => {
-            // eslint-disable-next-line no-console
-            console.log("error", error);
-          });
-      }
-      return checkPassWord;
+      return (await compare(password, user.password)) || hashedPassword === user.password ? { utilisateur: user } : null;
     } else {
       return null;
     }
@@ -85,7 +68,6 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         account.profils = [profileToSave.code];
         account.actif = true;
         account.dateCreation = new Date();
-        account.lastConnectionDate = new Date();
       }
 
       (await this.orm)
@@ -105,15 +87,15 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
             },
           ];
           const body = `
-                    <img src="cid:logo" alt="helios" >
-                    <p>Bonjour,</p>
-                    <p>L'équipe projet Helios est heureuse de vous accueillir sur l'application Helios. Pour finaliser la création de votre compte, merci de cliquer 
-                    <a href="${APP_URL}/reinitialisation-mot-passe?loginToken=${token}">ici</a> et définir votre mot de passe</p>
-                    <p><b>Attention, la page est accessible une seule fois, et pendant 24h à compter de son ouverture. </b></p>                
-                    <p>Si le lien ne fonctionne plus, merci de passer par <a href="${APP_URL}/mot-passe-oublie"> Mot de passe oublié ?</a> présent sur la page de connexion. </p>      
-                    <p>L'équipe Helios reste disponible à l'adresse mail suivante : dnum.scn-helios-support@sg.social.gouv.fr</p>
-                    <p> Cordialement, </p>
-                    <p>L'équipe Helios</p>`;
+                <img src="cid:logo" alt="helios" height="auto" width="200">
+                <p>Bonjour,</p>
+                <p>L'équipe projet Helios est heureuse de vous accueillir sur l'application Helios. Pour finaliser la création de votre compte, merci de cliquer 
+                <a href="${APP_URL}/creation-mot-passe?loginToken=${token}">ici</a> et définir votre mot de passe</p>
+                <p><b>Attention, la page est accessible une seule fois, et pendant 24h à compter de son ouverture. </b></p>                
+                <p>Si le lien ne fonctionne plus, merci de passer par <a href="${APP_URL}/mot-passe-oublie"> Mot de passe oublié ?</a> présent sur la page de connexion. </p>      
+                <p>L'équipe Helios reste disponible à l'adresse mail suivante : dnum.scn-helios-support@sg.social.gouv.fr</p>
+                <p> Cordialement, </p>
+                <p>L'équipe Helios</p>`;
           sendEmail(email, "[Helios]-Création de votre compte Helios", body, images);
         })
         .catch((error) => {

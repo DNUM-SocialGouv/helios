@@ -1,36 +1,43 @@
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useContext, useEffect } from "react";
 
-import { ProfilModel } from "../../../../database/models/ProfilModel";
 import { formatDateAndHours } from "../../utils/dateUtils";
+import { ProfileContext } from "../commun/contexts/ProfilContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./Parametrage.module.css";
+import { useParametrage } from "./useParametrage";
 
-type ParametragePageProps = Readonly<{
-  profiles: ProfilModel[];
-}>;
-
-export const ParametragePage = ({ profiles }: ParametragePageProps) => {
+export const ParametragePage = () => {
   const { wording } = useDependencies();
+  const { data } = useSession();
+  const profileContext = useContext(ProfileContext);
   const router = useRouter();
-  const { paths } = useDependencies();
+  const { getAllProfiles } = useParametrage();
+
+  useEffect(() => {
+    if (data?.user.idUser) {
+      getAllProfiles(data.user.idUser);
+    }
+  }, [data]);
 
   return (
     <main className="fr-container">
-      {profiles && (
+      {profileContext?.profiles && (
         <>
           <h1 className={styles["title"]}>{wording.PARAMETRAGE_TITRE}</h1>
           <button
             className="fr-mt-2v fr-btn"
             onClick={() => {
-              router.push(paths.ADD_PROFILE);
+              router.push("/settings/add-profile");
             }}
           >
-            {wording.AJOUTER_UN_PROFIL}
+            Ajouter une autorisation
           </button>
 
-          {profiles.length === 0 ? (
-            <div className={"fr-mt-8w " + styles["align-text"]}>{wording.VOUS_NAVEZ_AUCUN_PROFIL}</div>
+          {profileContext?.profiles.length === 0 ? (
+            <div className={"fr-mt-8w " + styles["align-text"]}>Vous n&apos;avez aucun profil</div>
           ) : (
             <div className={"fr-table fr-table--blue-ecume fr-mt-8w " + styles["align"]}>
               <table>
@@ -42,10 +49,10 @@ export const ParametragePage = ({ profiles }: ParametragePageProps) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {profiles.map((profile: any) => (
+                  {profileContext?.profiles.map((profile: any) => (
                     <tr key={profile.id}>
                       <td>
-                        <a className="fr-raw-link" href={`/settings/profiles/${profile.code}`}>
+                        <a className="fr-raw-link" href={`/settings/${profile.code}`}>
                           {profile.label}
                         </a>
                       </td>
