@@ -241,19 +241,17 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       case "lastConnectionDate":
         orders = { lastConnectionDate: sortDir };
         break;
+      case "etat":
+        orders = { lastConnectionDate: sortDir };
+        break;
       default:
-        orders = { nom: "DESC", prenom: "DESC" };
+        orders = { nom: "ASC" };
     }
 
-    console.log("orders 123", orders);
+    console.log("---->orders 123", orders);
 
     const data = await utilisateurRepo.find({
       where: conditions,
-      //  order: { nom: "DESC", prenom: "DESC", email: "DESC" },
-      //  order: { institution: { libelle: "ASC" } },
-      // order: { role: { libelle: "ASC" } },
-      // order: { lastConnectionDate: "DESC" },
-      // order: { email: "DESC" },
       order: orders,
       take,
       skip: (currentPageA - 1) * take,

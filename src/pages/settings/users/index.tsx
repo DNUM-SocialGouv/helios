@@ -129,7 +129,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     const profilId = profileId as string | "";
 
     orderBy = orderBy || "nom";
-    sortDir = sortDir || "DESC";
+    sortDir = sortDir || "ASC";
 
     const users = await getUsersListPaginatedEndpoint(dependencies, key, page, institutionId, roleId, profilId, etatId, itemsPerPage, orderBy, sortDir);
     //console.log("--users---", users);

@@ -1,22 +1,34 @@
 "use client";
 
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 
 import { iPaginationData } from "../UsersListPage";
 import styles from "./TheadTable.module.css";
 
 type TheadTableProps = Readonly<{
   paginationData: iPaginationData;
-  userCode: string;
 }>;
 
 const TheadTable = ({
-  paginationData: { keyWord, page, institutionId, roleId, profileId, etatId, itemsPerPage, setUserData, setPage, setLastPage, setTotal, getUsersAndRefresh },
-  userCode,
+  paginationData: {
+    keyWord,
+    page,
+    institutionId,
+    roleId,
+    profileId,
+    etatId,
+    itemsPerPage,
+    orderBy,
+    sortDir,
+    setUserData,
+    setPage,
+    setLastPage,
+    setTotal,
+    getUsersAndRefresh,
+    setOrderBy,
+    setSortDir,
+  },
 }: TheadTableProps) => {
-  const [orderBy, setOrderBy] = useState("nom");
-  const [sortDir, setSortDir] = useState("DESC");
-
   const thData = [
     {
       name: "Nom",
@@ -50,7 +62,7 @@ const TheadTable = ({
     },
     {
       name: "Etat",
-      slug: "Etat-no-sort",
+      slug: "etat",
     },
     {
       name: "Actions",
@@ -59,29 +71,101 @@ const TheadTable = ({
     },
   ];
 
+  useEffect(() => {
+    console.log("---------useEffect orderby = ", orderBy);
+
+    let orderByData = {};
+    if (orderBy) {
+      orderByData = { orderBy: orderBy };
+    }
+
+    let sortDirdData = {};
+    if (sortDir) {
+      sortDirdData = { sortDir: sortDir };
+    }
+
+    let keyWordData = {};
+    if (keyWord) {
+      keyWordData = { key: keyWord };
+    }
+
+    let pageData = {};
+    if (page) {
+      pageData = { page: page };
+    }
+
+    let institutionIdData = {};
+    if (institutionId) {
+      institutionIdData = { institutionId: institutionId };
+    }
+
+    let roleIdData = {};
+    if (roleId) {
+      roleIdData = { roleId: roleId };
+    }
+
+    let profileIdData = {};
+    if (profileId) {
+      profileIdData = { profileId: profileId };
+    }
+
+    let etatCondition = {};
+    if (etatId) {
+      etatCondition = { etatId: etatId };
+    }
+
+    const params = {
+      ...keyWordData,
+      ...pageData,
+      ...institutionIdData,
+      ...roleIdData,
+      ...profileIdData,
+      ...etatCondition,
+      ...orderByData,
+      ...sortDirdData,
+      itemsPerPage: itemsPerPage.toString(),
+    };
+    getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
+  }, [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page, sortDir, orderBy]);
+
   const orderByFn = useCallback(
     async (slug: string) => {
+      setOrderBy(slug);
+
       if (orderBy === slug) {
-        if (sortDir === "ASC") {
-          setSortDir("DESC");
-        } else {
+        if (sortDir === "DESC") {
           setSortDir("ASC");
+        } else {
+          setSortDir("DESC");
         }
       } else {
-        setOrderBy(slug);
-        if (sortDir === "ASC") {
+        setSortDir("ASC");
+      }
+
+      /*
+      let sortDirV = "";
+
+      if (orderBy === slug) {
+        if (sortDir === "DESC") {
+          setSortDir("ASC");
+          sortDirV = "ASC";
+        } else {
           setSortDir("DESC");
+          sortDirV = "DESC";
         }
+      } else {
+        setSortDir("ASC");
+        sortDirV = "ASC";
       }
 
       let orderByData = {};
       if (orderBy) {
-        orderByData = { orderBy: orderBy };
+        orderByData = { orderBy: slug };
       }
 
       let sortDirdData = {};
-      if (sortDir) {
-        sortDirdData = { sortDir: sortDir };
+      if (sortDirV) {
+        sortDirdData = { sortDir: sortDirV };
       }
 
       let keyWordData = {};
@@ -115,7 +199,6 @@ const TheadTable = ({
       }
 
       const params = {
-        status: "deleted_successfully",
         ...keyWordData,
         ...pageData,
         ...institutionIdData,
@@ -127,6 +210,7 @@ const TheadTable = ({
         itemsPerPage: itemsPerPage.toString(),
       };
       getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
+      */
     },
     [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page, sortDir, orderBy]
   );
@@ -137,7 +221,7 @@ const TheadTable = ({
         {thData.map((item) => (
           <th className={`${styles["th"]} ${item.className && styles[item.className]}`} key={item.slug} onClick={() => orderByFn(item.slug)} scope="col">
             {item.name} {sortDir === "Des"}
-            {orderBy === item.slug && <span aria-hidden="true" className={`fr-icon-arrow-${sortDir === "DESC" ? "down" : "up"}-line`}></span>}
+            {orderBy === item.slug && <span aria-hidden="true" className={`fr-icon-arrow-${sortDir === "ASC" ? "down" : "up"}-line`}></span>}
           </th>
         ))}
       </tr>

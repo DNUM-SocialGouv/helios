@@ -11,7 +11,22 @@ type ReactivateProps = Readonly<{
 }>;
 
 const Reactivate = ({
-  paginationData: { keyWord, page, institutionId, roleId, profileId, etatId, itemsPerPage, setUserData, setPage, setLastPage, setTotal, getUsersAndRefresh },
+  paginationData: {
+    keyWord,
+    page,
+    institutionId,
+    roleId,
+    profileId,
+    etatId,
+    itemsPerPage,
+    orderBy,
+    sortDir,
+    setUserData,
+    setPage,
+    setLastPage,
+    setTotal,
+    getUsersAndRefresh,
+  },
   userCode,
   lastElementInPage,
 }: ReactivateProps) => {
@@ -51,6 +66,16 @@ const Reactivate = ({
         etatCondition = { etatId: etatId };
       }
 
+      let orderByData = {};
+      if (orderBy) {
+        orderByData = { orderBy: orderBy };
+      }
+
+      let sortDirdData = {};
+      if (sortDir) {
+        sortDirdData = { sortDir: orderBy };
+      }
+
       const params = {
         status: "deleted_successfully",
         ...keyWordData,
@@ -59,6 +84,8 @@ const Reactivate = ({
         ...roleIdData,
         ...profileIdData,
         ...etatCondition,
+        ...orderByData,
+        ...sortDirdData,
         itemsPerPage: itemsPerPage.toString(),
       };
 

@@ -12,15 +12,15 @@ import { InstitutionModel } from "../../../../../database/models/InstitutionMode
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../database/models/RoleModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
+import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import ConfirmDeleteModal from "./ConfirmDeleteModal/ConfirmDeleteModal";
 import AdvancedFilter from "./Filter/AdvancedFilter/AdvancedFilter";
 import ItemsPerPage from "./Pagination/ItemsPerPage/ItemsPerPage";
 import PaginationBtn from "./Pagination/PaginationBtn/PaginationBtn";
 import Reactivate from "./Reactivate/Reactivate";
-import styles from "./UsersListPage.module.css";
-import { formatDateAndHours } from "../../../utils/dateUtils";
 import TheadTable from "./TheadTable/TheadTable";
+import styles from "./UsersListPage.module.css";
 
 function greaterThanNMonths(inputDate: Date, n: number): boolean {
   const NMonthsAgo = new Date();
@@ -51,6 +51,8 @@ export interface iPaginationData {
   itemsPerPage: number;
   lastPage: number;
   total: number;
+  orderBy: string;
+  sortDir: string;
   setKey: (key: string) => void;
   setInstitutionId: (institutionId: number) => void;
   setLastPage: (lastPage: number) => void;
@@ -62,6 +64,8 @@ export interface iPaginationData {
   setItemsPerPage: (itemsPerPage: number) => void;
   setEtatId: (etatId: string) => void;
   getUsersAndRefresh: (params: any, setUserData: any, setPage: any, setLastPage: any, setTotal: any) => void;
+  setOrderBy: (orderBy: string) => void;
+  setSortDir: (sortDir: string) => void;
 }
 
 type UsersListPageProps = Readonly<{
@@ -162,6 +166,8 @@ const UsersListPage = ({
     itemsPerPage: itemsPerPage,
     lastPage: lastPage,
     total: users.total,
+    orderBy: orderBy,
+    sortDir: sortDir,
     setKey: setKey,
     setInstitutionId: setInstitutionId,
     setLastPage: setLastPage,
@@ -173,6 +179,8 @@ const UsersListPage = ({
     setItemsPerPage: setItemsPerPage,
     setEtatId: setEtatId,
     getUsersAndRefresh: getUsersAndRefresh,
+    setOrderBy: setOrderBy,
+    setSortDir: setSortDir,
   };
 
   return (

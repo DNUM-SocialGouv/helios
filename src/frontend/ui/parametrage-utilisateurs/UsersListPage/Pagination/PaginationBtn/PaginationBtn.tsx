@@ -21,6 +21,8 @@ const PaginationBtn = ({
     profileId,
     etatId,
     itemsPerPage,
+    orderBy,
+    sortDir,
     setUserData,
     setPage,
     setLastPage,
@@ -61,15 +63,26 @@ const PaginationBtn = ({
         etatCondition = { etatId: etatId };
       }
 
+      let orderByData = {};
+      if (orderBy) {
+        orderByData = { orderBy: orderBy };
+      }
+
+      let sortDirdData = {};
+      if (sortDir) {
+        sortDirdData = { sortDir: orderBy };
+      }
+
       console.log("page : ", page);
       const params = {
         key: keyWord,
-        sort: "",
         page: page.toString(),
         ...institutionCondition,
         ...roleCondition,
         ...profilCondition,
         ...etatCondition,
+        ...orderByData,
+        ...sortDirdData,
         itemsPerPage: itemsPerPage.toString(),
       };
       getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);

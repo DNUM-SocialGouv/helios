@@ -22,6 +22,8 @@ const AdvancedFilter = ({
     roleId,
     etatId,
     itemsPerPage,
+    orderBy,
+    sortDir,
     setTotal,
     setUserData,
     setPage,
@@ -63,6 +65,16 @@ const AdvancedFilter = ({
         etatCondition = { etatId: etatId };
       }
 
+      let orderByData = {};
+      if (orderBy) {
+        orderByData = { orderBy: orderBy };
+      }
+
+      let sortDirdData = {};
+      if (sortDir) {
+        sortDirdData = { sortDir: orderBy };
+      }
+
       const params = {
         key: keyWord,
         sort: "",
@@ -72,6 +84,8 @@ const AdvancedFilter = ({
         ...roleCondition,
         ...profilCondition,
         ...etatCondition,
+        ...orderByData,
+        ...sortDirdData,
       };
       await getUsersAction(params);
     },
@@ -99,6 +113,16 @@ const AdvancedFilter = ({
         etatCondition = { etatId: etatId };
       }
 
+      let orderByData = {};
+      if (orderBy) {
+        orderByData = { orderBy: orderBy };
+      }
+
+      let sortDirdData = {};
+      if (sortDir) {
+        sortDirdData = { sortDir: orderBy };
+      }
+
       const params = {
         key: keyWord,
         sort: "",
@@ -108,6 +132,8 @@ const AdvancedFilter = ({
         ...roleCondition,
         ...profilCondition,
         ...etatCondition,
+        ...orderByData,
+        ...sortDirdData,
       };
       await getUsersAction(params);
     },
@@ -136,6 +162,16 @@ const AdvancedFilter = ({
         etatCondition = { etatId: etatId };
       }
 
+      let orderByData = {};
+      if (orderBy) {
+        orderByData = { orderBy: orderBy };
+      }
+
+      let sortDirdData = {};
+      if (sortDir) {
+        sortDirdData = { sortDir: orderBy };
+      }
+
       const params = {
         key: keyWord,
         sort: "",
@@ -145,6 +181,8 @@ const AdvancedFilter = ({
         ...roleCondition,
         ...profilCondition,
         ...etatCondition,
+        ...orderByData,
+        ...sortDirdData,
       };
       await getUsersAction(params);
     },
@@ -172,6 +210,16 @@ const AdvancedFilter = ({
 
       const etatCondition = { etatId: e.target.value };
 
+      let orderByData = {};
+      if (orderBy) {
+        orderByData = { orderBy: orderBy };
+      }
+
+      let sortDirdData = {};
+      if (sortDir) {
+        sortDirdData = { sortDir: orderBy };
+      }
+
       const params = {
         key: keyWord,
         sort: "",
@@ -181,10 +229,12 @@ const AdvancedFilter = ({
         ...roleCondition,
         ...profilCondition,
         ...etatCondition,
+        ...orderByData,
+        ...sortDirdData,
       };
       await getUsersAction(params);
     },
-    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord]
+    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, sortDir, orderBy]
   );
 
   const handleResetFilter = useCallback(async () => {

@@ -16,6 +16,8 @@ const KeyWordFilter = ({
     profileId,
     etatId,
     page,
+    orderBy,
+    sortDir,
     setKey,
     setUserData,
     setPage,
@@ -49,6 +51,16 @@ const KeyWordFilter = ({
         etatCondition = { etatId: etatId };
       }
 
+      let orderByData = {};
+      if (orderBy) {
+        orderByData = { orderBy: orderBy };
+      }
+
+      let sortDirdData = {};
+      if (sortDir) {
+        sortDirdData = { sortDir: orderBy };
+      }
+
       const params = {
         key: e.target.value,
         sort: "",
@@ -58,6 +70,8 @@ const KeyWordFilter = ({
         ...roleCondition,
         ...profilCondition,
         ...etatCondition,
+        ...orderByData,
+        ...sortDirdData,
       };
       getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
     },
