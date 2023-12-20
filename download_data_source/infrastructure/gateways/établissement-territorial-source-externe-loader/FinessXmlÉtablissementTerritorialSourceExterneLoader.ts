@@ -272,6 +272,23 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
     });
   }
 
+  private getOutreMerDepartement(departementCode: string) {
+    switch (departementCode) {
+      case '9A':
+        return '971';
+      case '9B':
+        return '972';
+      case '9C':
+        return '973';
+      case '9D':
+        return '974';
+      case '9F':
+        return '976';
+      default:
+        return departementCode;
+    }
+  }
+
   private établissementTerritorialEstCaduc(établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness) {
     return établissementTerritorialIdentitéFiness.indcaduc._text === "O";
   }
@@ -316,7 +333,8 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
     catégories: CatégorieFluxFiness
   ): Promise<ÉtablissementTerritorialIdentité> {
     const valueOrEmpty = (value?: string): string => value || "";
-    const ref = await (await this.orm).getRepository(RefDepartementRegionModel).findOne({ where: { codeDepartement: valueOrEmpty(établissementTerritorialIdentitéFiness.departement._text) } });
+    const codeDepartement = this.getOutreMerDepartement(valueOrEmpty(établissementTerritorialIdentitéFiness.departement._text));
+    const ref = await (await this.orm).getRepository(RefDepartementRegionModel).findOne({ where: { codeDepartement: codeDepartement } });
 
     return {
       adresseAcheminement: valueOrEmpty(établissementTerritorialIdentitéFiness.ligneacheminement._text),
