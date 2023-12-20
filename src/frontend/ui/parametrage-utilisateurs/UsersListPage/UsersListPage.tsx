@@ -6,7 +6,7 @@ import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 
 import { useSession } from "next-auth/react";
 import { useQueryState, parseAsInteger, parseAsString } from "next-usequerystate";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
@@ -15,12 +15,13 @@ import { UtilisateurModel } from "../../../../../database/models/UtilisateurMode
 import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import ConfirmDeleteModal from "./ConfirmDeleteModal/ConfirmDeleteModal";
-import AdvancedFilter from "./Filter/AdvancedFilter/AdvancedFilter";
+
 import ItemsPerPage from "./Pagination/ItemsPerPage/ItemsPerPage";
 import PaginationBtn from "./Pagination/PaginationBtn/PaginationBtn";
+import TheadTable from "./Pagination/TheadTable/TheadTable";
 import Reactivate from "./Reactivate/Reactivate";
-import TheadTable from "./TheadTable/TheadTable";
 import styles from "./UsersListPage.module.css";
+import AdvancedFilter from "./Pagination/Filter/AdvancedFilter/AdvancedFilter";
 
 function greaterThanNMonths(inputDate: Date, n: number): boolean {
   const NMonthsAgo = new Date();
@@ -150,7 +151,7 @@ const UsersListPage = ({
           setTotal(users.total);
         });
     },
-    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page]
+    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page, sortDir, orderBy]
   );
 
   const paginationData: iPaginationData = {
@@ -182,6 +183,61 @@ const UsersListPage = ({
     setOrderBy: setOrderBy,
     setSortDir: setSortDir,
   };
+
+  useEffect(() => {
+    let orderByData = {};
+    if (orderBy) {
+      orderByData = { orderBy: orderBy };
+    }
+
+    let sortDirdData = {};
+    if (sortDir) {
+      sortDirdData = { sortDir: sortDir };
+    }
+
+    let keyWordData = {};
+    if (keyWord) {
+      keyWordData = { key: keyWord };
+    }
+
+    let pageData = {};
+    if (page) {
+      pageData = { page: page };
+    }
+
+    let institutionIdData = {};
+    if (institutionId) {
+      institutionIdData = { institutionId: institutionId };
+    }
+
+    let roleIdData = {};
+    if (roleId) {
+      roleIdData = { roleId: roleId };
+    }
+
+    let profileIdData = {};
+    if (profileId) {
+      profileIdData = { profileId: profileId };
+    }
+
+    let etatCondition = {};
+    if (etatId) {
+      etatCondition = { etatId: etatId };
+    }
+
+    const params = {
+      ...keyWordData,
+      ...pageData,
+      ...institutionIdData,
+      ...roleIdData,
+      ...profileIdData,
+      ...etatCondition,
+      ...orderByData,
+      ...sortDirdData,
+      itemsPerPage: itemsPerPage.toString(),
+    };
+    getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
+  }, [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page, sortDir, orderBy]);
 
   return (
     <main className="fr-container">

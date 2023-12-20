@@ -1,7 +1,7 @@
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import { memo, useCallback } from "react";
 
-import { iPaginationData } from "../../UsersListPage";
+import { iPaginationData } from "../../../UsersListPage";
 import KeyWordFilter from "../KeyWordFilter/KeyWordFilter";
 import styles from "./AdvancedFilter.module.css";
 
@@ -47,47 +47,7 @@ const AdvancedFilter = ({
     async (e: React.ChangeEvent<HTMLSelectElement>) => {
       e.preventDefault();
       setInstitutionId(e.target.value as unknown as number);
-
-      const institutionCondition = { institutionId: e.target.value };
-
-      let roleCondition = {};
-      if (roleId) {
-        roleCondition = { roleId: roleId };
-      }
-
-      let profilCondition = {};
-      if (profileId) {
-        profilCondition = { profileId: profileId };
-      }
-
-      let etatCondition = {};
-      if (etatId) {
-        etatCondition = { etatId: etatId };
-      }
-
-      let orderByData = {};
-      if (orderBy) {
-        orderByData = { orderBy: orderBy };
-      }
-
-      let sortDirdData = {};
-      if (sortDir) {
-        sortDirdData = { sortDir: orderBy };
-      }
-
-      const params = {
-        key: keyWord,
-        sort: "",
-        page: 1,
-        itemsPerPage: itemsPerPage,
-        ...institutionCondition,
-        ...roleCondition,
-        ...profilCondition,
-        ...etatCondition,
-        ...orderByData,
-        ...sortDirdData,
-      };
-      await getUsersAction(params);
+      setPage(1);
     },
     [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord]
   );
@@ -96,46 +56,7 @@ const AdvancedFilter = ({
     async (e: React.ChangeEvent<HTMLSelectElement>) => {
       e.preventDefault();
       setRoleId(e.target.value as unknown as number);
-      let institutionCondition = {};
-      if (institutionId) {
-        institutionCondition = { institutionId: institutionId };
-      }
-
-      const roleCondition = { roleId: e.target.value };
-
-      let profilCondition = {};
-      if (profileId) {
-        profilCondition = { profileId: profileId };
-      }
-
-      let etatCondition = {};
-      if (etatId) {
-        etatCondition = { etatId: etatId };
-      }
-
-      let orderByData = {};
-      if (orderBy) {
-        orderByData = { orderBy: orderBy };
-      }
-
-      let sortDirdData = {};
-      if (sortDir) {
-        sortDirdData = { sortDir: orderBy };
-      }
-
-      const params = {
-        key: keyWord,
-        sort: "",
-        page: 1,
-        itemsPerPage: itemsPerPage,
-        ...institutionCondition,
-        ...roleCondition,
-        ...profilCondition,
-        ...etatCondition,
-        ...orderByData,
-        ...sortDirdData,
-      };
-      await getUsersAction(params);
+      setPage(1);
     },
     [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord]
   );
@@ -144,47 +65,7 @@ const AdvancedFilter = ({
     async (e: React.ChangeEvent<HTMLSelectElement>) => {
       e.preventDefault();
       setProfileId(e.target.value);
-
-      let institutionCondition = {};
-      if (institutionId) {
-        institutionCondition = { institutionId: institutionId };
-      }
-
-      let roleCondition = {};
-      if (roleId) {
-        roleCondition = { roleId: roleId };
-      }
-
-      const profilCondition = { profileId: e.target.value };
-
-      let etatCondition = {};
-      if (etatId) {
-        etatCondition = { etatId: etatId };
-      }
-
-      let orderByData = {};
-      if (orderBy) {
-        orderByData = { orderBy: orderBy };
-      }
-
-      let sortDirdData = {};
-      if (sortDir) {
-        sortDirdData = { sortDir: orderBy };
-      }
-
-      const params = {
-        key: keyWord,
-        sort: "",
-        page: 1,
-        itemsPerPage: itemsPerPage,
-        ...institutionCondition,
-        ...roleCondition,
-        ...profilCondition,
-        ...etatCondition,
-        ...orderByData,
-        ...sortDirdData,
-      };
-      await getUsersAction(params);
+      setPage(1);
     },
     [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord]
   );
@@ -193,46 +74,7 @@ const AdvancedFilter = ({
     async (e: React.ChangeEvent<HTMLSelectElement>) => {
       e.preventDefault();
       setEtatId(e.target.value);
-      let institutionCondition = {};
-      if (institutionId) {
-        institutionCondition = { institutionId: institutionId };
-      }
-
-      let roleCondition = {};
-      if (roleId) {
-        roleCondition = { roleId: roleId };
-      }
-
-      let profilCondition = {};
-      if (profileId) {
-        profilCondition = { profileId: profileId };
-      }
-
-      const etatCondition = { etatId: e.target.value };
-
-      let orderByData = {};
-      if (orderBy) {
-        orderByData = { orderBy: orderBy };
-      }
-
-      let sortDirdData = {};
-      if (sortDir) {
-        sortDirdData = { sortDir: orderBy };
-      }
-
-      const params = {
-        key: keyWord,
-        sort: "",
-        page: 1,
-        itemsPerPage: itemsPerPage,
-        ...institutionCondition,
-        ...roleCondition,
-        ...profilCondition,
-        ...etatCondition,
-        ...orderByData,
-        ...sortDirdData,
-      };
-      await getUsersAction(params);
+      setPage(1);
     },
     [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, sortDir, orderBy]
   );
@@ -243,21 +85,14 @@ const AdvancedFilter = ({
     setProfileId("");
     setEtatId("");
     setRoleId(0);
+    setPage(1);
 
     const params = {
-      sort: "",
       page: 1,
       itemsPerPage: itemsPerPage,
     };
-    await getUsersAction(params);
+    await getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
   }, [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord]);
-
-  const getUsersAction = useCallback(
-    (params: {}) => {
-      getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
-    },
-    [institutionId, roleId, profileId, itemsPerPage, keyWord]
-  );
 
   return (
     <div className={`${styles["filter_details"]}`}>

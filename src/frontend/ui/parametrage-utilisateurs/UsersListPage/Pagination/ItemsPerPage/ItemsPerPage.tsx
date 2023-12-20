@@ -14,38 +14,7 @@ const ItemsPerPage = ({
   const handleChangeItemsPerPage = useCallback(
     async (e: React.ChangeEvent<HTMLSelectElement>) => {
       e.preventDefault();
-      let institutionCondition = {};
-      if (institutionId) {
-        institutionCondition = { institutionId: institutionId };
-      }
-
-      let roleCondition = {};
-      if (roleId) {
-        roleCondition = { roleId: roleId };
-      }
-
-      let profilCondition = {};
-      if (profileId) {
-        profilCondition = { profileId: profileId };
-      }
-
-      let etatCondition = {};
-      if (etatId) {
-        etatCondition = { etatId: etatId };
-      }
-
-      const params = {
-        key: keyWord,
-        sort: "",
-        page: 1,
-        ...institutionCondition,
-        ...roleCondition,
-        ...profilCondition,
-        ...etatCondition,
-        itemsPerPage: e.target.value,
-      };
-
-      await getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
+      setPage(1);
     },
     [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord]
   );

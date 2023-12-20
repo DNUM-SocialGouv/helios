@@ -12,23 +12,7 @@ type PaginationBtnProps = Readonly<{
 }>;
 
 const PaginationBtn = ({
-  paginationData: {
-    lastPage,
-    page,
-    keyWord,
-    institutionId,
-    roleId,
-    profileId,
-    etatId,
-    itemsPerPage,
-    orderBy,
-    sortDir,
-    setUserData,
-    setPage,
-    setLastPage,
-    setTotal,
-    getUsersAndRefresh,
-  },
+  paginationData: { lastPage, page, keyWord, institutionId, roleId, profileId, etatId, itemsPerPage, setPage },
 }: PaginationBtnProps) => {
   const intervalRecursive = (x: number, y: number, accum = []): never[] => {
     if (x + 1 === y) return accum;
@@ -42,50 +26,7 @@ const PaginationBtn = ({
       if (disable === true) {
         return null;
       }
-
-      let institutionCondition = {};
-      if (institutionId) {
-        institutionCondition = { institutionId: institutionId };
-      }
-
-      let roleCondition = {};
-      if (roleId) {
-        roleCondition = { roleId: roleId };
-      }
-
-      let profilCondition = {};
-      if (profileId) {
-        profilCondition = { profileId: profileId };
-      }
-
-      let etatCondition = {};
-      if (etatId) {
-        etatCondition = { etatId: etatId };
-      }
-
-      let orderByData = {};
-      if (orderBy) {
-        orderByData = { orderBy: orderBy };
-      }
-
-      let sortDirdData = {};
-      if (sortDir) {
-        sortDirdData = { sortDir: orderBy };
-      }
-
-      console.log("page : ", page);
-      const params = {
-        key: keyWord,
-        page: page.toString(),
-        ...institutionCondition,
-        ...roleCondition,
-        ...profilCondition,
-        ...etatCondition,
-        ...orderByData,
-        ...sortDirdData,
-        itemsPerPage: itemsPerPage.toString(),
-      };
-      getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
+      setPage(page);
 
       return true;
     },
