@@ -30,9 +30,8 @@ export const Header = () => {
 
   const logOut = () => {
     signOut({ callbackUrl: paths.CONNEXION });
-    setDisplayMenu(false)
-  }
-
+    setDisplayMenu(false);
+  };
 
   useEffect(() => {
     if (data?.user?.idUser) {
@@ -55,18 +54,22 @@ export const Header = () => {
                     <Image alt="" height="80" src="/logo.svg" width="80" />
                   </div>
                   <div className="fr-header__navbar">
-                    {router.pathname !== paths.ACCUEIL && router.pathname !== paths.CREATE_PASSWORD && router.pathname !== paths.CONNEXION && router.pathname !== paths.REINITIALISATION_PASSWORD && router.pathname !== paths.REGISTRATION && (
-                      <button
-                        aria-controls="modal-541"
-                        className="fr-btn--search fr-btn"
-                        data-fr-opened="false"
-                        id="button-542"
-                        title={wording.RECHERCHE_LABEL}
-                      >
-                        {wording.RECHERCHE_LABEL}
-                      </button>
-                    )}
-                    {status !== "unauthenticated" &&
+                    {router.pathname !== paths.ACCUEIL &&
+                      router.pathname !== paths.CREATE_PASSWORD &&
+                      router.pathname !== paths.CONNEXION &&
+                      router.pathname !== paths.REINITIALISATION_PASSWORD &&
+                      router.pathname !== paths.REGISTRATION && (
+                        <button
+                          aria-controls="modal-541"
+                          className="fr-btn--search fr-btn"
+                          data-fr-opened="false"
+                          id="button-542"
+                          title={wording.RECHERCHE_LABEL}
+                        >
+                          {wording.RECHERCHE_LABEL}
+                        </button>
+                      )}
+                    {status !== "unauthenticated" && (
                       <button
                         aria-controls="modal-833"
                         aria-haspopup="menu"
@@ -88,35 +91,21 @@ export const Header = () => {
                 </div>
               </div>
               <div className="fr-header__tools">
-                {router.pathname !== paths.ACCUEIL && router.pathname !== paths.CREATE_PASSWORD && router.pathname !== paths.FORGET_PASSWORD && router.pathname !== paths.CHANGE_PASSWORD && router.pathname !== paths.CONNEXION && router.pathname !== paths.SETTINGS && router.pathname !== paths.ADD_PROFILE && router.pathname !== paths.HISTORY && router.pathname !== paths.FAVORIS && router.pathname !== paths.REINITIALISATION_PASSWORD && router.pathname !== paths.REGISTRATION && (
-                  <div className="fr-header__search fr-modal" id="modal-541">
-                    <div className="fr-container fr-container-lg--fluid">
-                      <button aria-controls="modal-541" className="fr-btn--close fr-btn" title="Fermer">
-                        {wording.FERMER}
-                      </button>
-                      <form action="/recherche" className="fr-search-bar" id="search-540" role="search">
-                        <label className="fr-label" htmlFor="search-540-input">
-                          {wording.RECHERCHE_LABEL}
-                        </label>
-                        <input
-                          className="fr-input"
-                          id="search-540-input"
-                          name="terme"
-                          onChange={rechercheOnChange}
-                          placeholder={wording.RECHERCHE_LABEL}
-                          type="search"
-                          value={terme}
-                        />
-                        <button
-                          className="fr-btn"
-                          onClick={(event) => {
-                            event.preventDefault();
-                            router.push(paths.ACCUEIL + "?terme=" + terme, paths.ACCUEIL);
-                          }}
-                          title="Rechercher"
-                          type="submit"
-                        >
-                          {wording.RECHERCHE_LABEL}
+                {router.pathname !== paths.ACCUEIL &&
+                  router.pathname !== paths.CREATE_PASSWORD &&
+                  router.pathname !== paths.FORGET_PASSWORD &&
+                  router.pathname !== paths.CHANGE_PASSWORD &&
+                  router.pathname !== paths.CONNEXION &&
+                  router.pathname !== paths.SETTINGS &&
+                  router.pathname !== paths.ADD_PROFILE &&
+                  router.pathname !== paths.HISTORY &&
+                  router.pathname !== paths.FAVORIS &&
+                  router.pathname !== paths.REINITIALISATION_PASSWORD &&
+                  router.pathname !== paths.REGISTRATION && (
+                    <div className="fr-header__search fr-modal" id="modal-541">
+                      <div className="fr-container fr-container-lg--fluid">
+                        <button aria-controls="modal-541" className="fr-btn--close fr-btn" title="Fermer">
+                          {wording.FERMER}
                         </button>
                         <form action="/recherche" className="fr-search-bar" id="search-540" role="search">
                           <label className="fr-label" htmlFor="search-540-input">
@@ -155,7 +144,8 @@ export const Header = () => {
                       setDisplayMenu(!displayMenu);
                     }}
                     ref={ref}
-                    title="Menu du compte">
+                    title="Menu du compte"
+                  >
                     {data?.user?.firstname} {data?.user?.name}
                   </button>
                   {displayMenu ? (
