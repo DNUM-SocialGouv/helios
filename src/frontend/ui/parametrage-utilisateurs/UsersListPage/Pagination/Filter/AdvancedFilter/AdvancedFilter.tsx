@@ -34,6 +34,8 @@ const AdvancedFilter = ({
     setEtatId,
     getUsersAndRefresh,
     setKey,
+    setOrderBy,
+    setSortDir,
   },
   userSessionRole,
 }: KeyWordFilterProps) => {
@@ -86,6 +88,8 @@ const AdvancedFilter = ({
     setEtatId("");
     setRoleId(0);
     setPage(1);
+    setOrderBy("nom");
+    setSortDir("ASC");
 
     const params = {
       page: 1,
@@ -172,7 +176,7 @@ const AdvancedFilter = ({
       </div>
       <div className={`fr-select-group ${styles["reset-filter-container"]}`}>
         <button className={`${styles["reset-filter-btn"]}`} onClick={handleResetFilter} title="Réinitialiser les filtres">
-          <span aria-hidden="true" className="fr-icon-refresh-line  fr-btn "></span>
+          <span aria-hidden="true" className="fr-icon-refresh-line fr-btn"></span>
         </button>
       </div>
     </div>

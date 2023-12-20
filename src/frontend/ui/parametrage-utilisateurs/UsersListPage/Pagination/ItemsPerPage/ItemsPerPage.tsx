@@ -7,9 +7,7 @@ type KeyWordFilterProps = Readonly<{
   paginationData: iPaginationData;
 }>;
 
-const ItemsPerPage = ({
-  paginationData: { keyWord, institutionId, profileId, roleId, itemsPerPage, etatId, setTotal, setUserData, setPage, setLastPage, getUsersAndRefresh },
-}: KeyWordFilterProps) => {
+const ItemsPerPage = ({ paginationData: { keyWord, institutionId, profileId, roleId, itemsPerPage, etatId, setPage } }: KeyWordFilterProps) => {
   const pagesArray = [10, 20, 30, 50, 100];
   const handleChangeItemsPerPage = useCallback(
     async (e: React.ChangeEvent<HTMLSelectElement>) => {

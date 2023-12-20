@@ -171,12 +171,14 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
 
             <div className={styles["field_container"]}>
               <label className="fr-label">
-                <div className={styles["label-field"]}>{wording.EMAIL} : </div> {user.email}
+                <div className={styles["label-field"]}>{wording.EMAIL} : </div>
+                {user.email}
               </label>
             </div>
             <div className={styles["field_container"]}>
               <label className="fr-label">
-                <div className={styles["label-field"]}>{wording.CREATION_DATE} : </div> {formatDateAndHours(user.dateCreation.toString())}
+                <div className={styles["label-field"]}>{wording.CREATION_DATE} : </div>
+                {formatDateAndHours(user.dateCreation.toString())}
               </label>
             </div>
 
