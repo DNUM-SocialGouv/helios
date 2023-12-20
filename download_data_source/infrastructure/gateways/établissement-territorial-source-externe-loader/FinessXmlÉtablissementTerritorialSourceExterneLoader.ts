@@ -328,7 +328,6 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
     return results;
   }
 
-
   private async construisÉtablissementTerritorialIdentité(
     établissementTerritorialIdentitéFiness: ÉtablissementTerritorialIdentitéFiness,
     catégories: CatégorieFluxFiness
