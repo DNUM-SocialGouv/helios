@@ -22,7 +22,9 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   }
 
   async login(email: string, password: string): Promise<RésultatLogin> {
-    const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { email: email.trim().toLowerCase() }, relations: ["institution"] });
+    const user = await (await this.orm)
+      .getRepository(UtilisateurModel)
+      .findOne({ where: { email: email.trim().toLowerCase(), deletedDate: IsNull() }, relations: ["institution"] });
     if (user) {
       const hashing = createHash("sha256");
       hashing.update(password);
