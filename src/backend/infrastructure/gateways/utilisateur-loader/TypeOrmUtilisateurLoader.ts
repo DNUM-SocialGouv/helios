@@ -25,14 +25,49 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     const user = await (await this.orm)
       .getRepository(UtilisateurModel)
       .findOne({ where: { email: email.trim().toLowerCase(), deletedDate: IsNull() }, relations: ["institution"] });
+
     if (user) {
       const hashing = createHash("sha256");
       hashing.update(password);
       const hashedPassword = hashing.digest("hex");
-      return (await compare(password, user.password)) || hashedPassword === user.password ? { utilisateur: user } : null;
+      const result = (await compare(password, user.password)) || hashedPassword === user.password ? { utilisateur: user } : null;
+
+      if (result) {
+        //update lastConnectionDate for current user
+        user.lastConnectionDate = new Date();
+
+        (await this.orm)
+          .getRepository(UtilisateurModel)
+          .save(user as UtilisateurModel)
+          .then(async () => {
+            return user;
+          })
+          .catch((error) => {
+            // eslint-disable-next-line no-console
+            console.log("error", error);
+          });
+      }
+
+      return result;
     } else {
       return null;
     }
+  }
+
+  async checkUserIsNotAdminAndInactif(email: string): Promise<boolean> {
+    const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email });
+
+    // if user is not addmin
+    if (user && ![1, 2].includes(parseInt(user.roleId))) {
+      const NMonthsAgo = new Date();
+      NMonthsAgo.setMonth(new Date().getMonth() - 6);
+      //if lastConnectionDate More than 6 months
+      if (format(user.lastConnectionDate, "yyyy-MM-dd HH:MM:ss") < format(NMonthsAgo, "yyyy-MM-dd HH:MM:ss")) {
+        //login failed && user have to change password
+        return true;
+      }
+    }
+    return false;
   }
 
   async checkIfEmailExists(email: string): Promise<boolean> {

@@ -43,7 +43,7 @@ export interface iPaginationData {
   institutionId: number;
   institutions: InstitutionModel[];
   keyWord: string;
-  key: key;
+  key: string;
   page: number;
   profileId: string;
   profiles: ProfilModel[];
