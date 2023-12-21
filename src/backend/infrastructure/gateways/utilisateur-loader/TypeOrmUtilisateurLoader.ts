@@ -232,8 +232,6 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         orders = { nom: "ASC" };
     }
 
-    console.log("---->orders 123", orders);
-
     const data = await utilisateurRepo.find({
       where: conditions,
       order: orders,

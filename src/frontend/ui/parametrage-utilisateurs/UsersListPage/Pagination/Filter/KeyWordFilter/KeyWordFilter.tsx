@@ -7,14 +7,16 @@ type KeyWordFilterProps = Readonly<{
   paginationData: iPaginationData;
 }>;
 
-const KeyWordFilter = ({ paginationData: { keyWord, itemsPerPage, institutionId, roleId, profileId, etatId, page, setKey, setPage } }: KeyWordFilterProps) => {
+const KeyWordFilter = ({
+  paginationData: { key, itemsPerPage, institutionId, roleId, profileId, etatId, page, orderBy, sortDir, setKey, setPage },
+}: KeyWordFilterProps) => {
   const handleChange = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       e.preventDefault();
-      setKey(e.target.value as unknown as string);
+      setKey(e.target.value);
       setPage(1);
     },
-    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page]
+    [institutionId, roleId, profileId, etatId, itemsPerPage, key, page, sortDir, orderBy]
   );
   return (
     <div>
@@ -22,7 +24,7 @@ const KeyWordFilter = ({ paginationData: { keyWord, itemsPerPage, institutionId,
         Nom, Prénom, Email
       </label>
       <div className="fr-search-bar" id="header-search" role="search">
-        <input className="fr-input" onChange={handleChange} placeholder="Rechercher" type="search" value={keyWord} />
+        <input className="fr-input" onChange={handleChange} placeholder="Rechercher" type="search" value={key} />
         <button className="fr-btn" title="Rechercher">
           Rechercher
         </button>

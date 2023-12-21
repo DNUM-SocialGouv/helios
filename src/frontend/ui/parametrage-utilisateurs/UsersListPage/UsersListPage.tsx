@@ -43,6 +43,7 @@ export interface iPaginationData {
   institutionId: number;
   institutions: InstitutionModel[];
   keyWord: string;
+  key: key;
   page: number;
   profileId: string;
   profiles: ProfilModel[];
@@ -158,6 +159,7 @@ const UsersListPage = ({
     institutionId: institutionId,
     institutions: institutions,
     keyWord: key,
+    key: key,
     page: page as number,
     profileId: profileId,
     profiles: profiles,
@@ -196,8 +198,8 @@ const UsersListPage = ({
     }
 
     let keyWordData = {};
-    if (keyWord) {
-      keyWordData = { key: keyWord };
+    if (key) {
+      keyWordData = { key: key };
     }
 
     let pageData = {};
@@ -237,7 +239,7 @@ const UsersListPage = ({
       itemsPerPage: itemsPerPage.toString(),
     };
     getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
-  }, [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page, sortDir, orderBy]);
+  }, [institutionId, roleId, profileId, etatId, itemsPerPage, key, page, sortDir, orderBy]);
 
   return (
     <main className="fr-container">

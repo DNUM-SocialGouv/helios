@@ -51,7 +51,7 @@ const AdvancedFilter = ({
       setInstitutionId(e.target.value as unknown as number);
       setPage(1);
     },
-    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord]
+    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, sortDir, orderBy]
   );
 
   const handleChangeRole = useCallback(
@@ -60,7 +60,7 @@ const AdvancedFilter = ({
       setRoleId(e.target.value as unknown as number);
       setPage(1);
     },
-    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord]
+    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, sortDir, orderBy]
   );
 
   const handleChangeProfil = useCallback(
@@ -69,7 +69,7 @@ const AdvancedFilter = ({
       setProfileId(e.target.value);
       setPage(1);
     },
-    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord]
+    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, sortDir, orderBy]
   );
 
   const handleChangeEtat = useCallback(
