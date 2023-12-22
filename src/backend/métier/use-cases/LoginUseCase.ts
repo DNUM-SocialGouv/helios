@@ -14,6 +14,10 @@ export class LoginUseCase {
     return await this.utilisateurLoader.checkUserIsNotAdminAndInactif(email);
   }
 
+  async updateLastConnectionDate(email: string): Promise<boolean> {
+    return await this.utilisateurLoader.updateLastConnectionDate(email);
+  }
+
   async checkIfEmailExists(email: string): Promise<boolean> {
     return await this.utilisateurLoader.checkIfEmailExists(email);
   }

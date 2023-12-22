@@ -30,33 +30,33 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       const hashing = createHash("sha256");
       hashing.update(password);
       const hashedPassword = hashing.digest("hex");
-      const result = (await compare(password, user.password)) || hashedPassword === user.password ? { utilisateur: user } : null;
-
-      if (result) {
-        //update lastConnectionDate for current user
-        user.lastConnectionDate = new Date();
-
-        (await this.orm)
-          .getRepository(UtilisateurModel)
-          .save(user as UtilisateurModel)
-          .then(async () => {
-            return user;
-          })
-          .catch((error) => {
-            // eslint-disable-next-line no-console
-            console.log("error", error);
-          });
-      }
-
-      return result;
+      return (await compare(password, user.password)) || hashedPassword === user.password ? { utilisateur: user } : null;
     } else {
       return null;
     }
   }
 
+  async updateLastConnectionDate(email: string): Promise<boolean> {
+    const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email });
+    if (user) {
+      user.lastConnectionDate = new Date();
+      return (await this.orm)
+        .getRepository(UtilisateurModel)
+        .save(user)
+        .then(async () => {
+          return true;
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.log("error", error);
+          return false;
+        });
+    }
+    return false;
+  }
+
   async checkUserIsNotAdminAndInactif(email: string): Promise<boolean> {
     const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email });
-
     // if user is not addmin
     if (user && ![1, 2].includes(parseInt(user.roleId))) {
       const NMonthsAgo = new Date();
@@ -64,10 +64,10 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       //if lastConnectionDate More than 6 months
       if (format(user.lastConnectionDate, "yyyy-MM-dd HH:MM:ss") < format(NMonthsAgo, "yyyy-MM-dd HH:MM:ss")) {
         //login failed && user have to change password
-        return true;
+        return false;
       }
     }
-    return false;
+    return true;
   }
 
   async checkIfEmailExists(email: string): Promise<boolean> {

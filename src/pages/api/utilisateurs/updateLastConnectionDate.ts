@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { checkUserIsNotAdminAndInactifEndpoint } from "../../../backend/infrastructure/controllers/checkUserIsNotAdminAndInactifEndpoints";
+import { updateLastConnectionDateEndpoint } from "../../../backend/infrastructure/controllers/updateLastConnectionDateEndpoints";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
@@ -9,7 +9,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
   }
   try {
     const { email } = request.body;
-    const resp = await checkUserIsNotAdminAndInactifEndpoint(dependencies, email);
+    const resp = await updateLastConnectionDateEndpoint(dependencies, email);
 
     if (resp) {
       return response.status(200).json({ status: true });

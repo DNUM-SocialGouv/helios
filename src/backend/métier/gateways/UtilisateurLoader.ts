@@ -11,6 +11,7 @@ export interface UtilisateurLoader {
   getUserProfiles(codes: string[]): Promise<ProfilModel[] | null>;
   checkIfAdmin(userId: string): Promise<boolean>;
   checkUserIsNotAdminAndInactif(email: string): Promise<boolean>;
+  updateLastConnectionDate(email: string): Promise<boolean>;
   getUsersListPaginated(
     key: string,
     pdescrtion: number,

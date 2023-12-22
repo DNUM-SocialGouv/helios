@@ -28,7 +28,6 @@ export const FormulaireDeConnexion = () => {
         redirect: false,
       });
 
-      console.log("res?.error : ", res?.error);
       if (res?.error) {
         setError("L'identifiant et/ou le mot de passe sont incorrects.");
         setLoading(false);
@@ -37,14 +36,24 @@ export const FormulaireDeConnexion = () => {
           body: JSON.stringify({ email: email }),
           headers: { "Content-Type": "application/json" },
           method: "POST",
-        }).then((rep) => {
-          if (rep.status === 200) {
+        }).then(async (rep) => {
+          if (rep.status === 401) {
             setError(`Votre compte est désactivé.
             Merci de régénérer un mot de passe via Mot de passe oublié ?`);
             setLoading(false);
           } else {
             setError(null);
-            window.location.href = "/";
+            await fetch("/api/utilisateurs/updateLastConnectionDate", {
+              body: JSON.stringify({ email: email }),
+              headers: { "Content-Type": "application/json" },
+              method: "POST",
+            }).then(async (rep) => {
+              if (rep.status === 200) {
+                window.location.href = "/";
+              } else {
+                //console.log("error updateLastConnectionDate");
+              }
+            });
           }
         });
       }
