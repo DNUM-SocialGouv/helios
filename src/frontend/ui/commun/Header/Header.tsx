@@ -98,6 +98,7 @@ export const Header = () => {
                   router.pathname !== paths.CONNEXION &&
                   router.pathname !== paths.SETTINGS &&
                   router.pathname !== paths.ADD_PROFILE &&
+                  router.pathname !== paths.PROFILES_LIST &&
                   router.pathname !== paths.USERS_LIST &&
                   router.pathname !== paths.HISTORY &&
                   router.pathname !== paths.FAVORIS &&

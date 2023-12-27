@@ -10,7 +10,7 @@ import styles from "./Parametrage.module.css";
 import { useParametrage } from "./useParametrage";
 
 export const ParametragePage = () => {
-  const { wording } = useDependencies();
+  const { wording, paths } = useDependencies();
   const { data } = useSession();
   const profileContext = useContext(ProfileContext);
   const router = useRouter();
@@ -30,7 +30,7 @@ export const ParametragePage = () => {
           <button
             className="fr-mt-2v fr-btn"
             onClick={() => {
-              router.push("/settings/add-profile");
+              router.push(paths.ADD_PROFILE);
             }}
           >
             Ajouter une autorisation
