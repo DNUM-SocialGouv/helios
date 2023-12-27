@@ -170,27 +170,20 @@ export const Header = () => {
                       </li>
                       {(data.user.role === 1 || data.user.role === 2) && (
                         <li className={styles["menu-item"]}>
-                          <button>Parametrage</button>
-                          <ul>
-                            <li className={styles["sub-menu-item"]}>
-                              <button
-                                onClick={() => {
-                                  router.push(paths.USERS_LIST);
-                                }}
-                              >
-                                Console d’administration
-                              </button>
-                            </li>
-                            <li className={styles["sub-menu-item"]}>
-                              <button
-                                onClick={() => {
-                                  router.push(paths.PROFILES_LIST);
-                                }}
-                              >
-                                Profils
-                              </button>
-                            </li>
-                          </ul>
+                          <button onClick={() => {
+                            router.push(paths.PROFILES_LIST);
+                          }}>Paramétrage</button>
+                        </li>
+                      )}
+                      {(data.user.role === 1 || data.user.role === 2) && (
+                        <li className={styles["menu-item"]}>
+                          <button
+                            onClick={() => {
+                              router.push(paths.USERS_LIST);
+                            }}
+                          >
+                            Console d’administration
+                          </button>
                         </li>
                       )}
                       <li className={styles["menu-item"]}>
@@ -199,7 +192,7 @@ export const Header = () => {
                             router.push("/profile");
                           }}
                         >
-                          Profil
+                          Mon compte
                         </button>
                       </li>
                       <li className={styles["menu-item"]}>
