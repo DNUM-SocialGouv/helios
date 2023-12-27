@@ -73,12 +73,7 @@ export class WordingFr implements Wording {
   readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string = "Vous n'avez pas de compte ? ";
   readonly FORGET_PASSEWORD: string = "Mot de passe oublié ?";
   readonly CONNEXION_LIBELLE: string = "Connexion";
-  readonly CONNEXION_IDENTIFIANT: string = "Identifiant *";
-  readonly CONNEXION_MOT_DE_PASSE: string = "Mot de passe *";
-  readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string = "Vous n'avez pas de compte ? ";
-  readonly FORGET_PASSEWORD: string = "Mot de passe oublié ?";
   readonly FORGET_PASSEWORD_MESSAGE: string = "Merci de saisir votre adresse mail afin de définir un nouveau mot de passe";
-  readonly CONNEXION_LIBELLE: string = "Connexion";
 
   // Recherche
   readonly RECHERCHE_DESCRIPTION: ReactElement = (
@@ -470,15 +465,10 @@ export class WordingFr implements Wording {
   readonly PARAMETRAGE_ET_SAN_TAB: string = "Établissement sanitaire";
   readonly PARAMETRAGE_INSTITUTION: string = "Institution";
   readonly PARAMETRAGE_AUTRE_REGION: string = "Autre région";
-  readonly CREATION_DATE: string = "Date de création";
-  readonly PROFILE_CODE: string = "Code de profil";
-  readonly AJOUTER_UN_PROFIL: string = "Ajouter un profil";
-  readonly PARAMETRAGE_NEW_PROFILE: string = "Ajouter un nouveau profil";
-  readonly VOUS_NAVEZ_AUCUN_PROFIL: string = "Vous n'avez aucun profil";
-
-  readonly USERS_LIST: string = "Console d’administration";
-  readonly PROFILE_CODE: string = "Code";
   readonly PARAMETRAGE_NEW_PROFILE: string = "Ajouter une autorisation";
+  readonly CREATION_DATE: string = "Date de création";
+  readonly PROFILE_CODE: string = "Code";
+  readonly VOUS_NAVEZ_AUCUN_PROFIL: string = "Vous n'avez aucun profil";
 
   //  Profile page
   readonly USER_PROFILE: string = "Mes informations";
@@ -497,7 +487,8 @@ export class WordingFr implements Wording {
   readonly MODIFICATION_DATE: string = "Date de modification";
   readonly AUCUN_ELEMENT_TROUVE: string = "Aucun élément trouvé";
   readonly ROLE_: string = "Rôle";
-  readonly PAGE_UTILISATEUR_TITRE: string = "Console d’administration";
+  readonly PAGE_UTILISATEUR_TITRE: string = "Liste des utilisateurs";
   readonly INSTITUTION: string = "Institution";
   readonly PAGE_EDIT_UTILISATEUR_TITRE: string = "Modifier utilisateur";
+  readonly ADMIN_PAGE: string = "Console d’administration";
 }

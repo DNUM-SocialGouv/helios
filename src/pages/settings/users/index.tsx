@@ -60,7 +60,7 @@ export default function Router({
 
   useBreadcrumb([
     {
-      label: wording.USERS_LIST,
+      label: wording.PAGE_UTILISATEUR_TITRE,
       path: "",
     },
   ]);
@@ -72,14 +72,14 @@ export default function Router({
       itemsPerPageValue={itemsPerPage}
       keyWord={keyWord}
       lastElementInPage={lastElementInPage}
+      orderByPage={orderByPage}
       profile={profile?.toString()}
       profiles={profiles}
       role={parseInt(role)}
       roles={roles}
+      sortDirPage={sortDirPage}
       userSessionRole={userSessionRole}
       users={usersPaginatedList}
-      orderByPage={orderByPage}
-      sortDirPage={sortDirPage}
     />
   );
 }
@@ -132,7 +132,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     sortDir = sortDir || "ASC";
 
     const users = await getUsersListPaginatedEndpoint(dependencies, key, page, institutionId, roleId, profilId, etatId, itemsPerPage, orderBy, sortDir);
-    //console.log("--users---", users);
 
     let lastElementInPage = false;
     if (users.data.length === 1) {
@@ -140,13 +139,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     }
 
     const institutions = await getInstitutionsEndpoint(dependencies);
-    // console.log("--institutions---", institutions);
-
     const profiles = await getAllProfilesEndpoint(dependencies);
-    // console.log("--profiles---" /*, profiles*/);
-
     const roles = await getAllRolesEndpoint(dependencies);
-    //console.log("--roles---", roles);
 
     return {
       props: {

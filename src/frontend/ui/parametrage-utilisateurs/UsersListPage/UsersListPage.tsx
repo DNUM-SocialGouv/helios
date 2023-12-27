@@ -4,7 +4,6 @@ import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 
-import { useSession } from "next-auth/react";
 import { useQueryState, parseAsInteger, parseAsString } from "next-usequerystate";
 import { useCallback, useEffect, useState } from "react";
 
@@ -14,14 +13,11 @@ import { RoleModel } from "../../../../../database/models/RoleModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
-import ConfirmDeleteModal from "./ConfirmDeleteModal/ConfirmDeleteModal";
-
+import AdvancedFilter from "./Pagination/Filter/AdvancedFilter/AdvancedFilter";
 import ItemsPerPage from "./Pagination/ItemsPerPage/ItemsPerPage";
 import PaginationBtn from "./Pagination/PaginationBtn/PaginationBtn";
 import TheadTable from "./Pagination/TheadTable/TheadTable";
-import Reactivate from "./Reactivate/Reactivate";
 import styles from "./UsersListPage.module.css";
-import AdvancedFilter from "./Pagination/Filter/AdvancedFilter/AdvancedFilter";
 
 function greaterThanNMonths(inputDate: Date, n: number): boolean {
   const NMonthsAgo = new Date();
@@ -29,12 +25,9 @@ function greaterThanNMonths(inputDate: Date, n: number): boolean {
   return new Date(inputDate) < NMonthsAgo;
 }
 
-function getUserStatus(lastConnectionDate: Date, deletedDate: Date): string {
-  if (deletedDate) {
-    return "Supprimé";
-  }
+function getUserStatus(lastConnectionDate: Date): string {
   if (greaterThanNMonths(lastConnectionDate, 6) || lastConnectionDate === null) {
-    return "InActif";
+    return "Inactif";
   }
   return "Actif";
 }
@@ -43,7 +36,7 @@ export interface iPaginationData {
   institutionId: number;
   institutions: InstitutionModel[];
   keyWord: string;
-  key: key;
+  key: any;
   page: number;
   profileId: string;
   profiles: ProfilModel[];
@@ -52,7 +45,6 @@ export interface iPaginationData {
   roles: RoleModel[];
   itemsPerPage: number;
   lastPage: number;
-  total: number;
   orderBy: string;
   sortDir: string;
   setKey: (key: string) => void;
@@ -62,10 +54,9 @@ export interface iPaginationData {
   setProfileId: (profileId: string) => void;
   setRoleId: (roleId: number) => void;
   setUserData: (userData: UtilisateurModel[]) => void;
-  setTotal: (total: number) => void;
   setItemsPerPage: (itemsPerPage: number) => void;
   setEtatId: (etatId: string) => void;
-  getUsersAndRefresh: (params: any, setUserData: any, setPage: any, setLastPage: any, setTotal: any) => void;
+  getUsersAndRefresh: (params: any, setUserData: any, setPage: any, setLastPage: any) => void;
   setOrderBy: (orderBy: string) => void;
   setSortDir: (sortDir: string) => void;
 }
@@ -105,16 +96,13 @@ const UsersListPage = ({
   role,
   status,
   etat,
-  lastElementInPage,
   itemsPerPageValue,
   userSessionRole,
   orderByPage,
   sortDirPage,
 }: UsersListPageProps) => {
-  const { data } = useSession();
 
   const [userData, setUserData] = useState<UtilisateurModel[]>(users.data);
-  const [total, setTotal] = useState(users.total);
   const [lastPage, setLastPage] = useState(users.lastPage);
 
   const [key, setKey] = useQueryState<string>("key", parseAsString.withDefault(keyWord));
@@ -124,7 +112,6 @@ const UsersListPage = ({
   const [etatId, setEtatId] = useQueryState("etatId", parseAsString.withDefault(etat));
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(users.currentPage));
   const [statusCode] = useQueryState("status", parseAsString.withDefault(status));
-  const [userToDelete, setUserToDelete] = useState("");
   const [itemsPerPage, setItemsPerPage] = useQueryState("itemsPerPage", parseAsInteger.withDefault(itemsPerPageValue));
 
   const [orderBy, setOrderBy] = useQueryState("orderBy", parseAsString.withDefault(orderByPage));
@@ -138,7 +125,6 @@ const UsersListPage = ({
       setUserData: (arg0: any) => void,
       setPage: (arg0: any) => void,
       setLastPage: (arg0: any) => void,
-      setTotal: (arg0: any) => void
     ) => {
       fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
         headers: { "Content-Type": "application/json" },
@@ -149,7 +135,6 @@ const UsersListPage = ({
           setUserData(users.data);
           setPage(users.currentPage);
           setLastPage(users.lastPage);
-          setTotal(users.total);
         });
     },
     [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page, sortDir, orderBy]
@@ -168,7 +153,6 @@ const UsersListPage = ({
     roles: roles,
     itemsPerPage: itemsPerPage,
     lastPage: lastPage,
-    total: users.total,
     orderBy: orderBy,
     sortDir: sortDir,
     setKey: setKey,
@@ -178,7 +162,6 @@ const UsersListPage = ({
     setProfileId: setProfileId,
     setRoleId: setRoleId,
     setUserData: setUserData,
-    setTotal: setTotal,
     setItemsPerPage: setItemsPerPage,
     setEtatId: setEtatId,
     getUsersAndRefresh: getUsersAndRefresh,
@@ -238,7 +221,7 @@ const UsersListPage = ({
       ...sortDirdData,
       itemsPerPage: itemsPerPage.toString(),
     };
-    getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
+    getUsersAndRefresh(params, setUserData, setPage, setLastPage);
   }, [institutionId, roleId, profileId, etatId, itemsPerPage, key, page, sortDir, orderBy]);
 
   return (
@@ -262,10 +245,6 @@ const UsersListPage = ({
           <div className={`${styles["filtres-container"]}`}>
             <AdvancedFilter paginationData={paginationData} userSessionRole={userSessionRole} />
           </div>
-          <div className={styles["count-elements"]}>
-            {total > 1 && <>{total} éléments trouvés.</>}
-            {total === 1 && <>{total} élément trouvé.</>}
-          </div>
 
           {userData.length === 0 ? (
             <div className={"fr-mt-8w " + styles["align-text"]}>{wording.AUCUN_ELEMENT_TROUVE}</div>
@@ -277,13 +256,7 @@ const UsersListPage = ({
                   <tbody>
                     {userData.map((user: UtilisateurModel) => {
                       const roleClass = user.role.id === 1 ? "error" : user.role.id === 2 ? "success" : "info";
-                      const userStatus = getUserStatus(user.lastConnectionDate, user.deletedDate);
-
-                      //only "Admin national" can update itself || Admin regional cant update, delete, reactivate to (Admin National And/or Admin Regional)
-                      const detailRow =
-                        (data?.user?.idUser === user.code && data?.user?.role !== 1) ||
-                        ((data?.user?.role as number) >= parseInt(user.roleId) && data?.user?.idUser !== user.code);
-
+                      const userStatus = getUserStatus(user.lastConnectionDate);
                       return (
                         <tr key={user.id}>
                           <td className={styles["widthTD-small"]}>
@@ -328,54 +301,6 @@ const UsersListPage = ({
                           </td>
                           <td className={styles["widthTD-date"]}>{user?.dateModification && formatDateAndHours(user?.dateModification?.toString())}</td>
                           <td className={styles["widthTD-etat"]}>{userStatus}</td>
-                          <td className={styles["widthTD-actions"]}>
-                            {userStatus !== "Supprimé" && (
-                              <>
-                                {detailRow && (
-                                  <>
-                                    <a
-                                      className="fr-raw-link"
-                                      href={`/settings/users/${
-                                        user.code
-                                      }?page=${page}&itemsPerPage=${itemsPerPage}&key=${key}&institutionId=${institutionId}&roleId=${roleId}&profileId=${
-                                        profileId || ""
-                                      }`}
-                                      title="Détails "
-                                    >
-                                      <button>
-                                        <span aria-hidden="true" className="fr-icon-file-text-line"></span>
-                                      </button>
-                                    </a>
-                                  </>
-                                )}
-                                {!detailRow && (
-                                  <>
-                                    <a
-                                      className="fr-raw-link"
-                                      href={`/settings/users/${
-                                        user.code
-                                      }?page=${page}&itemsPerPage=${itemsPerPage}&key=${key}&institutionId=${institutionId}&roleId=${roleId}&profileId=${
-                                        profileId || ""
-                                      }`}
-                                      title="Modifier"
-                                    >
-                                      <button>
-                                        <span aria-hidden="true" className="fr-icon-pencil-line"></span>
-                                      </button>
-                                    </a>
-                                    {data?.user?.idUser !== user.code && (
-                                      <button aria-controls="fr-modal-2" data-fr-opened="false" title="Supprimer">
-                                        <span aria-hidden="true" className="fr-icon-delete-line" onClick={() => setUserToDelete(user.code)}></span>
-                                      </button>
-                                    )}
-                                  </>
-                                )}
-                              </>
-                            )}
-                            {userStatus === "Supprimé" && (
-                              <Reactivate lastElementInPage={lastElementInPage} paginationData={paginationData} userCode={user.code} />
-                            )}
-                          </td>
                         </tr>
                       );
                     })}
@@ -394,7 +319,6 @@ const UsersListPage = ({
           )}
         </>
       )}
-      <ConfirmDeleteModal lastElementInPage={lastElementInPage} paginationData={paginationData} userCode={userToDelete} />
     </main>
   );
 };

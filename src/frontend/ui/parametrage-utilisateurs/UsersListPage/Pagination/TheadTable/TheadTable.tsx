@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback } from "react";
 
 import { iPaginationData } from "../../UsersListPage";
 import styles from "./TheadTable.module.css";
@@ -34,7 +34,7 @@ const TheadTable = ({
       slug: "role.libelle",
     },
     {
-      name: "Autorisations",
+      name: "Autorisation",
       slug: "autorisations-no-sort",
       className: "no-sort",
     },
@@ -44,13 +44,8 @@ const TheadTable = ({
       className: "widthTD-date",
     },
     {
-      name: "Etat",
+      name: "Statut",
       slug: "etat",
-    },
-    {
-      name: "Actions",
-      slug: "Actions-no-sort",
-      className: "no-sort",
     },
   ];
 
