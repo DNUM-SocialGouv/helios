@@ -1,30 +1,22 @@
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useContext, useEffect } from "react";
 
+import { ProfilModel } from "../../../../database/models/ProfilModel";
 import { formatDateAndHours } from "../../utils/dateUtils";
-import { ProfileContext } from "../commun/contexts/ProfilContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./Parametrage.module.css";
-import { useParametrage } from "./useParametrage";
 
-export const ParametragePage = () => {
+type ParametragePageProps = Readonly<{
+  profiles: ProfilModel[];
+}>;
+
+export const ParametragePage = ({ profiles }: ParametragePageProps) => {
   const { wording, paths } = useDependencies();
-  const { data } = useSession();
-  const profileContext = useContext(ProfileContext);
   const router = useRouter();
-  const { getAllProfiles } = useParametrage();
-
-  useEffect(() => {
-    if (data?.user.idUser) {
-      getAllProfiles(data.user.idUser);
-    }
-  }, [data]);
 
   return (
     <main className="fr-container">
-      {profileContext?.profiles && (
+      {profiles && (
         <>
           <h1 className={styles["title"]}>{wording.PARAMETRAGE_TITRE}</h1>
           <button
@@ -36,7 +28,7 @@ export const ParametragePage = () => {
             Ajouter une autorisation
           </button>
 
-          {profileContext?.profiles.length === 0 ? (
+          {profiles && profiles.length === 0 ? (
             <div className={"fr-mt-8w " + styles["align-text"]}>Vous n&apos;avez aucun profil</div>
           ) : (
             <div className={"fr-table fr-table--blue-ecume fr-mt-8w " + styles["align"]}>
@@ -49,7 +41,7 @@ export const ParametragePage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {profileContext?.profiles.map((profile: any) => (
+                  {profiles?.map((profile: any) => (
                     <tr key={profile.id}>
                       <td>
                         <a className="fr-raw-link" href={`/settings/${profile.code}`}>

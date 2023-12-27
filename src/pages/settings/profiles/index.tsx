@@ -19,7 +19,6 @@ export default function Router({ profiles }: RouterProps) {
       path: "",
     },
   ]);
-
   return <ParametragePage profiles={profiles} />;
 }
 
