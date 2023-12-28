@@ -29,7 +29,7 @@ export interface UtilisateurLoader {
     profilsCode: string[],
     firstname: string,
     lastname: string
-  ): Promise<UtilisateurModel | null>;
-  deleteUser(userCode: string): Promise<string | null>;
-  reactivateUser(userCode: string): Promise<string | null>;
+  ): Promise<void>;
+  deleteUser(userCode: string): Promise<string | void>;
+  reactivateUser(userCode: string): Promise<string | void>;
 }

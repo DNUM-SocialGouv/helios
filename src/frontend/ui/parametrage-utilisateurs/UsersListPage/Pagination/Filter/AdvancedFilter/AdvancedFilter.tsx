@@ -98,87 +98,90 @@ const AdvancedFilter = ({
   }, [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord]);
 
   return (
-    <div className={`${styles["filter_details"]}`}>
-      <div className={` ${styles["filter-item"]}`}>
+    <>
+      <div>
         <KeyWordFilter paginationData={paginationData} />
       </div>
+      <div className={`${styles["filtres-container"]}`}>
+        <div className={`${styles["filter_details"]}`}>
+          {userSessionRole === "Admin National" && (
+            <div className={`fr-select-group ${styles["filter-item"]}`}>
+              <label className="fr-label" htmlFor="institution">
+                Institution
+              </label>
 
-      {userSessionRole === "Admin National" && (
-        <div className={`fr-select-group ${styles["filter-item"]}`}>
-          <label className="fr-label" htmlFor="institution">
-            Institution
-          </label>
+              <select className="fr-select" id="institution" onChange={handleChangeInstitution}>
+                <option selected={institutionId === 0} value="">
+                  Toutes
+                </option>
 
-          <select className="fr-select" id="institution" onChange={handleChangeInstitution}>
-            <option selected={institutionId === 0} value="">
-              Toutes
-            </option>
+                {institutions.map((item) => (
+                  <option key={item.id} selected={institutionId === item.id} value={item.id}>
+                    {item.libelle}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
-            {institutions.map((item) => (
-              <option key={item.id} selected={institutionId === item.id} value={item.id}>
-                {item.libelle}
+          <div className={`fr-select-group ${styles["filter-item"]}`}>
+            <label className="fr-label" htmlFor="role">
+              Rôle
+            </label>
+
+            <select className="fr-select" id="role" onChange={handleChangeRole}>
+              <option selected={roleId === 0 || roleId === null} value="">
+                Tous
               </option>
-            ))}
-          </select>
+
+              {roles.map((item) => (
+                <option key={item.id} selected={roleId === item.id} value={item.id}>
+                  {item.libelle}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className={`fr-select-group ${styles["filter-item"]}`}>
+            <label className="fr-label" htmlFor="profil">
+              Autorisation
+            </label>
+            <select className="fr-select" id="profil" onChange={handleChangeProfil}>
+              <option selected={profileId === "" || profileId === null} value="">
+                Tous
+              </option>
+
+              {profiles.map((item) => (
+                <option key={item.id} selected={profileId === item.code} value={item.code}>
+                  {item.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className={`fr-select-group ${styles["filter-item"]}`}>
+            <label className="fr-label" htmlFor="etat">
+              Statut
+            </label>
+            <select className="fr-select" id="etat" onChange={handleChangeEtat}>
+              <option selected={etatId === "" || etatId === null} value="">
+                Tous
+              </option>
+
+              {etats.map((item) => (
+                <option key={item.id} selected={etatId === item.code} value={item.code}>
+                  {item.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className={`fr-select-group ${styles["reset-filter-container"]}`}>
+            <button className={`${styles["reset-filter-btn"]}`} onClick={handleResetFilter} title="Réinitialiser les filtres">
+              <span aria-hidden="true" className="fr-icon-refresh-line fr-btn"></span>
+            </button>
+          </div>
         </div>
-      )}
-
-      <div className={`fr-select-group ${styles["filter-item"]}`}>
-        <label className="fr-label" htmlFor="role">
-          Rôle
-        </label>
-
-        <select className="fr-select" id="role" onChange={handleChangeRole}>
-          <option selected={roleId === 0 || roleId === null} value="">
-            Tous
-          </option>
-
-          {roles.map((item) => (
-            <option key={item.id} selected={roleId === item.id} value={item.id}>
-              {item.libelle}
-            </option>
-          ))}
-        </select>
       </div>
-      <div className={`fr-select-group ${styles["filter-item"]}`}>
-        <label className="fr-label" htmlFor="profil">
-          Autorisation
-        </label>
-        <select className="fr-select" id="profil" onChange={handleChangeProfil}>
-          <option selected={profileId === "" || profileId === null} value="">
-            Tous
-          </option>
-
-          {profiles.map((item) => (
-            <option key={item.id} selected={profileId === item.code} value={item.code}>
-              {item.label}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className={`fr-select-group ${styles["filter-item"]}`}>
-        <label className="fr-label" htmlFor="etat">
-          Etat
-        </label>
-        <select className="fr-select" id="etat" onChange={handleChangeEtat}>
-          <option selected={etatId === "" || etatId === null} value="">
-            Tous
-          </option>
-
-          {etats.map((item) => (
-            <option key={item.id} selected={etatId === item.code} value={item.code}>
-              {item.label}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className={`fr-select-group ${styles["reset-filter-container"]}`}>
-        <button className={`${styles["reset-filter-btn"]}`} onClick={handleResetFilter} title="Réinitialiser les filtres">
-          <span aria-hidden="true" className="fr-icon-refresh-line fr-btn"></span>
-        </button>
-      </div>
-    </div>
+    </>
   );
 };
 

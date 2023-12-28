@@ -242,7 +242,7 @@ const UsersListPage = ({
             </div>
           )}
 
-          <div className={`${styles["filtres-container"]}`}>
+          <div>
             <AdvancedFilter paginationData={paginationData} userSessionRole={userSessionRole} />
           </div>
 

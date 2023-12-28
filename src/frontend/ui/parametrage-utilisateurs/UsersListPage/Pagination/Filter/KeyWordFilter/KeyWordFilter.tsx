@@ -20,13 +20,10 @@ const KeyWordFilter = ({
   );
   return (
     <div>
-      <label className="fr-label" htmlFor="profil">
-        Nom, Prénom, Email
-      </label>
       <div className="fr-search-bar" id="header-search" role="search">
-        <input className="fr-input" onChange={handleChange} placeholder="Rechercher" type="search" value={key} />
+        <input className="fr-input" onChange={handleChange} placeholder="un nom, un prénom ou une adresse mail" type="search" value={key} />
         <button className="fr-btn" title="Rechercher">
-          Rechercher
+          un nom, un prénom ou une adresse mail
         </button>
       </div>
     </div>

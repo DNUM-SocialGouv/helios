@@ -16,7 +16,7 @@ import { UtilisateurLoader } from "../../../métier/gateways/UtilisateurLoader";
 import { sendEmail } from "../../../sendEmail";
 
 export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
-  constructor(private readonly orm: Promise<DataSource>) {}
+  constructor(private readonly orm: Promise<DataSource>) { }
   async getUserByCode(code: string): Promise<UtilisateurModel | null> {
     return await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: code } });
   }
@@ -29,7 +29,12 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       const hashing = createHash("sha256");
       hashing.update(password);
       const hashedPassword = hashing.digest("hex");
-      return (await compare(password, user.password)) || hashedPassword === user.password ? { utilisateur: user } : null;
+      if ((await compare(password, user.password)) || hashedPassword === user.password) {
+        user.lastConnectionDate = new Date();
+        await (await this.orm).getRepository(UtilisateurModel).save(user);
+        return { utilisateur: user }
+      }
+      else return null;
     } else {
       return null;
     }
@@ -135,8 +140,8 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     profilId: string,
     etatId: string,
     itemsPerPage: number,
-    orderBy: "nom",
-    sortDir: "DESC"
+    orderBy: string = "nom",
+    sortDir: string = "DESC"
   ): Promise<any> {
     const utilisateurRepo = (await this.orm).getRepository(UtilisateurModel);
 
@@ -162,23 +167,6 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     }
 
     let EtatCondition = {};
-
-    /* softDelete
-    switch (etatId) {
-      case "actif":
-        EtatCondition = { lastConnectionDate: MoreThanDate(NMonthsAgo), deletedDate: IsNull() };
-        break;
-      case "inactif":
-        EtatCondition = { lastConnectionDate: LessThanDate(NMonthsAgo), deletedDate: IsNull() };
-        break;
-      case "deleted":
-        EtatCondition = { deletedDate: Not(IsNull()) };
-        break;
-      default:
-        EtatCondition = {};
-    }
-    */
-    // without soft delete
     switch (etatId) {
       case "actif":
         EtatCondition = { lastConnectionDate: MoreThanDate(NMonthsAgo), deletedDate: IsNull() };
@@ -286,7 +274,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     }
   }
 
-  async deleteUser(userCode: string): Promise<string | undefined | void> {
+  async deleteUser(userCode: string): Promise<string | void> {
     try {
       const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: userCode } });
 
@@ -316,7 +304,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     }
   }
 
-  async reactivateUser(userCode: string): Promise<string | undefined | void> {
+  async reactivateUser(userCode: string): Promise<string | void> {
     try {
       const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: userCode } });
 
