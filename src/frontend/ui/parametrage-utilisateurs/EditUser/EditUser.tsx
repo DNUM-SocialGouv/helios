@@ -55,12 +55,6 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
     }
   };
 
-  /*const handleChangeReset = () => {
-    setUserInfo({
-      profiles: [...user.profils],
-    });
-  };*/
-
   const redirectPage = (url: string) => {
     redirectPage;
     let queryParams = "?";
@@ -291,7 +285,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                     </button>
 
                     {data?.user?.idUser !== user.code && (
-                      <button className="fr-mt-7v fr-btn fr-ml-7v " aria-controls="fr-modal-2" data-fr-opened="false" title="Supprimer" type="button">
+                      <button aria-controls="fr-modal-2" className="fr-mt-7v fr-btn fr-ml-7v " data-fr-opened="false" title="Supprimer" type="button">
                         Supprimer
                       </button>
                     )}

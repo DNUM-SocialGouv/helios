@@ -24,7 +24,6 @@ const AdvancedFilter = ({
     itemsPerPage,
     orderBy,
     sortDir,
-    setTotal,
     setUserData,
     setPage,
     setLastPage,
@@ -95,7 +94,7 @@ const AdvancedFilter = ({
       page: 1,
       itemsPerPage: itemsPerPage,
     };
-    await getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
+    await getUsersAndRefresh(params, setUserData, setPage, setLastPage);
   }, [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord]);
 
   return (

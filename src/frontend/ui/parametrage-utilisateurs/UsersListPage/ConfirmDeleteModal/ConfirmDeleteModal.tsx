@@ -24,7 +24,6 @@ const ConfirmDeleteModal = ({
     setUserData,
     setPage,
     setLastPage,
-    setTotal,
     getUsersAndRefresh,
   },
   userCode,
@@ -94,7 +93,7 @@ const ConfirmDeleteModal = ({
         headers: { "Content-Type": "application/json" },
         method: "DELETE",
       }).then(async () => {
-        getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
+        getUsersAndRefresh(params, setUserData, setPage, setLastPage);
       });
     },
     [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page]

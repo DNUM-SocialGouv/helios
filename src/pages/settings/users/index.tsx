@@ -88,7 +88,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
   try {
     const session = await getSession(context);
 
-    // if current user has role 'utilisateur lamda' redirect to page inaccessible
+    // if current user has role 'utilisateur' redirect to page inaccessible
     if (session?.user?.role === 3) {
       return {
         redirect: {
@@ -114,24 +114,25 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
         userSessionRole = "Utilisateur";
     }
 
-    let { page, key, institutionId, roleId, itemsPerPage, orderBy, sortDir } = context.query;
-    const { institution, role, etat, profil, etatId, profileId, status } = context.query;
+    let { key, orderBy, sortDir } = context.query;
+    const { page, itemsPerPage, institutionId, institution, roleId, role, etat, profil, etatId, profileId, status } = context.query;
 
-    page = parseInt(page) | 1;
-    itemsPerPage = parseInt(itemsPerPage) | 10;
+    const pageNumber = parseInt(page as string) | 1;
+    const itemsPerOnePage = parseInt(itemsPerPage as string) | 10;
     key = key as string | "";
 
-    institutionId = parseInt(institutionId) | 0;
+    let institutionCode = parseInt(institutionId as string) | 0;
     if (userSessionRole === "Admin Regional") {
-      institutionId = session?.user?.institutionId || 0;
+      institutionCode = session?.user?.institutionId || 0;
     }
-    roleId = parseInt(roleId) | 0;
+    const roleCode = parseInt(roleId as string) | 0;
     const profilId = profileId as string | "";
+    const etatCode = etatId as string | "";
 
-    orderBy = orderBy || "nom";
-    sortDir = sortDir || "ASC";
+    orderBy = orderBy as string || "nom";
+    sortDir = sortDir as string || "ASC";
 
-    const users = await getUsersListPaginatedEndpoint(dependencies, key, page, institutionId, roleId, profilId, etatId, itemsPerPage, orderBy, sortDir);
+    const users = await getUsersListPaginatedEndpoint(dependencies, key, pageNumber, institutionCode, roleCode, profilId, etatCode, itemsPerOnePage, orderBy, sortDir);
 
     let lastElementInPage = false;
     if (users.data.length === 1) {
@@ -149,13 +150,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
         institutions: JSON.parse(JSON.stringify(institutions)),
         profiles: JSON.parse(JSON.stringify(profiles)),
         roles: JSON.parse(JSON.stringify(roles)),
-        institution: institution || 0,
-        role: role || "",
-        profil: profil || 0,
-        etat: etat || "",
-        status: status || "",
+        institution: parseInt(institution as string) || 0,
+        role: role as string || "",
+        profile: parseInt(profil as string) || 0,
+        etat: etat as string || "",
+        status: status as string || "",
         lastElementInPage: lastElementInPage,
-        itemsPerPage: itemsPerPage || 10,
+        itemsPerPage: itemsPerOnePage || 10,
         userSessionRole: userSessionRole,
         orderByPage: orderBy,
         sortDirPage: sortDir,

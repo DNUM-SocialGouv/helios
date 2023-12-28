@@ -111,7 +111,7 @@ const UsersListPage = ({
   const [profileId, setProfileId] = useQueryState("profileId", parseAsString.withDefault(profile));
   const [etatId, setEtatId] = useQueryState("etatId", parseAsString.withDefault(etat));
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(users.currentPage));
-  const [statusCode] = useQueryState("status", parseAsString.withDefault(status));
+  const [statusCode] = useQueryState("status", parseAsString.withDefault(status ? status : ""));
   const [itemsPerPage, setItemsPerPage] = useQueryState("itemsPerPage", parseAsInteger.withDefault(itemsPerPageValue));
 
   const [orderBy, setOrderBy] = useQueryState("orderBy", parseAsString.withDefault(orderByPage));
@@ -256,7 +256,6 @@ const UsersListPage = ({
                   <tbody>
                     {userData.map((user: UtilisateurModel) => {
                       const roleClass = user.role.id === 1 ? "error" : user.role.id === 2 ? "success" : "info";
-                      const userStatus = getUserStatus(user.lastConnectionDate);
                       return (
                         <tr key={user.id}>
                           <td className={styles["widthTD-small"]}>
@@ -300,7 +299,7 @@ const UsersListPage = ({
                             })}
                           </td>
                           <td className={styles["widthTD-date"]}>{user?.dateModification && formatDateAndHours(user?.dateModification?.toString())}</td>
-                          <td className={styles["widthTD-etat"]}>{userStatus}</td>
+                          <td className={styles["widthTD-etat"]}>{getUserStatus(user.lastConnectionDate)}</td>
                         </tr>
                       );
                     })}
