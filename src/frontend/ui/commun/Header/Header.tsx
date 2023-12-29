@@ -170,7 +170,7 @@ export const Header = () => {
                           Historique
                         </button>
                       </li>
-                      {(data.user.role === 1 || data.user.role === 2) && (
+                      {(data.user.role === 1) && (
                         <li className={styles["menu-item"]}>
                           <button onClick={() => {
                             router.push(paths.PROFILES_LIST);

@@ -9,7 +9,6 @@ export interface UtilisateurLoader {
   getInstitutions(): Promise<Institution[]>;
   createAccount(firstName: string, lastName: string, email: string, institution: string): Promise<void>;
   getUserProfiles(codes: string[]): Promise<ProfilModel[] | null>;
-  checkIfAdmin(userId: string): Promise<boolean>;
   getUsersListPaginated(
     key: string,
     pdescrtion: number,

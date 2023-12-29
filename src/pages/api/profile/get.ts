@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { getAllProfilesEndpoint } from "../../../backend/infrastructure/controllers/getAllProfilesEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
-import { checkAdminRole } from "../../../checkAdminMiddleware";
+import { checkNationalAdminRole } from "../../../checkNationalAdminMiddleware";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     try {
@@ -21,7 +21,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-    if (await checkAdminRole(req, res)) {
+    if (await checkNationalAdminRole(req, res)) {
         await handler(req, res);
     }
 };
