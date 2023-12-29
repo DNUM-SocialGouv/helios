@@ -23,16 +23,20 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
       return response.status(405).send("Method not allowed");
     }
 
-    //only "Admin national" can update itself || Admin regional cant update, delete, reactivate to (Admin National And/or Admin Regional)
-    if (
-      (userSession?.user?.idUser === userCode && userSession?.user?.role !== 1) ||
-      ((userSession?.user?.role as number) >= parseInt(userBeforeChange.roleId) && userSession?.user?.idUser !== userCode)
-    ) {
-      return response.status(405).send("Method not allowed");
-    }
+    if (!userBeforeChange) {
+      response.status(405).send("User not found");
+    } else {
+      //only "Admin national" can update itself || Admin regional cant update, delete, reactivate to (Admin National And/or Admin Regional)
+      if (
+        (userSession?.user?.idUser === userCode && userSession?.user?.role !== 1) ||
+        ((userSession?.user?.role as number) >= parseInt(userBeforeChange.roleId) && userSession?.user?.idUser !== userCode)
+      ) {
+        return response.status(405).send("Method not allowed");
+      }
 
-    const recherche = await reactivateUserEndpoint(dependencies, userCode);
-    return response.status(200).json(recherche);
+      const recherche = await reactivateUserEndpoint(dependencies, userCode);
+      return response.status(200).json(recherche);
+    }
   } catch (error) {
     return response.status(500);
   }

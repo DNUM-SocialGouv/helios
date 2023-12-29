@@ -2,7 +2,7 @@ import { UtilisateurModel } from "../../../../database/models/UtilisateurModel";
 import { UtilisateurLoader } from "../gateways/UtilisateurLoader";
 
 export class UtilisateursUseCase {
-  constructor(private utilisateurLoader: UtilisateurLoader) {}
+  constructor(private utilisateurLoader: UtilisateurLoader) { }
 
   async getUsersListPaginated(
     key: string,
@@ -29,15 +29,15 @@ export class UtilisateursUseCase {
     profilsCode: string[],
     firstname: string,
     lastname: string
-  ): Promise<UtilisateurModel | null> {
+  ): Promise<void> {
     return this.utilisateurLoader.updateUser(userCode, roleCode, institutionCode, profilsCode, firstname, lastname);
   }
 
-  async deleteUser(userCode: string): Promise<string | null> {
+  async deleteUser(userCode: string): Promise<string | void> {
     return this.utilisateurLoader.deleteUser(userCode);
   }
 
-  async reactivateUser(userCode: string): Promise<string | null> {
+  async reactivateUser(userCode: string): Promise<string | void> {
     return this.utilisateurLoader.reactivateUser(userCode);
   }
 }

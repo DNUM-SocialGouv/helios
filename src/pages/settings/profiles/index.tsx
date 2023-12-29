@@ -26,8 +26,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
   try {
     const session = await getSession(context);
 
-    // if current user has role 'utilisateur lamda' redirect to page inaccessible
-    if (session?.user?.role === 3) {
+    if (session?.user?.role === 3 || session?.user?.role === 2) {
       return {
         redirect: {
           permanent: false,

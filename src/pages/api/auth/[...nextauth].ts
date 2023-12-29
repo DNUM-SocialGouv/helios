@@ -60,7 +60,7 @@ export default NextAuth({
     async session({ session, token }) {
       session.user.idUser = token["idUser"] as string;
       session.user.firstname = token["firstname"] as string;
-      session.user.role = token["role"] as string;
+      session.user.role = token["role"] as number;
       session.user.institution = token["institution"] as string;
       session.user.institutionId = token["institutionId"] as number;
       session.user.codeRegion = token["codeRegion"] as number;

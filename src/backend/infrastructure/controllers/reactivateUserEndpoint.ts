@@ -1,7 +1,7 @@
 import { UtilisateursUseCase } from "../../métier/use-cases/UtilisateursUseCase";
 import { Dependencies } from "../dependencies";
 
-export async function reactivateUserEndpoint(dependencies: Dependencies, userCode: string): Promise<string | null> {
+export async function reactivateUserEndpoint(dependencies: Dependencies, userCode: string): Promise<string | void> {
   try {
     const UtilisateurUseCase = new UtilisateursUseCase(dependencies.utilisateurLoader);
     return await UtilisateurUseCase.reactivateUser(userCode);

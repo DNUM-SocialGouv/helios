@@ -31,15 +31,15 @@ export const ProfilePage = () => {
           <fieldset className="fr-fieldset fr-mt-4w">
             <legend className="fr-fieldset__legend--regular fr-fieldset__legend">{wording.ROLE}</legend>
             <div className="fr-fieldset__element">
-              <input checked={data?.user?.role === "1"} readOnly type="checkbox" value={wording.SUPER_ADMIN} />
+              <input checked={data?.user?.role === 1} readOnly type="checkbox" value={wording.SUPER_ADMIN} />
               <label> {wording.SUPER_ADMIN}</label>
             </div>
             <div className="fr-fieldset__element">
-              <input checked={data?.user?.role === "2"} readOnly type="checkbox" value={wording.ADMIN} />
+              <input checked={data?.user?.role === 2} readOnly type="checkbox" value={wording.ADMIN} />
               <label> {wording.ADMIN}</label>
             </div>
             <div className="fr-fieldset__element">
-              <input checked={data?.user?.role === "3"} readOnly type="checkbox" value={wording.USER} />
+              <input checked={data?.user?.role === 3} readOnly type="checkbox" value={wording.USER} />
               <label> {wording.USER}</label>
             </div>
           </fieldset>

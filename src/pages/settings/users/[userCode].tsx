@@ -22,12 +22,12 @@ type RouterProps = Readonly<{
   roles: RoleModel[];
 }>;
 
-export default function Router({ user, institutions, profiles, roles, sessionUser }: RouterProps) {
+export default function Router({ user, institutions, profiles, roles }: RouterProps) {
   const { wording } = useDependencies();
 
   useBreadcrumb([
     {
-      label: wording.USERS_LIST,
+      label: wording.PAGE_UTILISATEUR_TITRE,
       path: "/settings/users",
     },
     {
@@ -44,7 +44,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     const { params } = context;
     const session = await getSession(context);
 
-    // if current user has role 'utilisateur lamda' redirect to page inaccessible
+    // if current user has role 'utilisateur' redirect to page inaccessible
     if (session?.user?.role === 3) {
       return {
         redirect: {
@@ -54,7 +54,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       };
     }
 
-    const user = await getUserByCodeEndpoint(dependencies, params.userCode);
+    if (!params) {
+      return {
+        notFound: true,
+      };
+    }
+
+    const user = await getUserByCodeEndpoint(dependencies, params['userCode'] as string);
 
     if (!user) {
       return {

@@ -1,4 +1,3 @@
-import { UtilisateurModel } from "../../../../database/models/UtilisateurModel";
 import { UtilisateursUseCase } from "../../métier/use-cases/UtilisateursUseCase";
 import { Dependencies } from "../dependencies";
 
@@ -10,7 +9,7 @@ export async function updateUserEndpoint(
   profilsCode: string[],
   firstname: string,
   lastname: string
-): Promise<UtilisateurModel | null> {
+): Promise<void> {
   try {
     const UtilisateurUseCase = new UtilisateursUseCase(dependencies.utilisateurLoader);
     return await UtilisateurUseCase.updateUser(userCode, roleCode, institutionCode, profilsCode, firstname, lastname);
