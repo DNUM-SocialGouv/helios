@@ -202,7 +202,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
               </div>
               <div className="fr-select-group fr-mt-3w">
                 <label className="fr-label" htmlFor="roleId">
-                  Role
+                  Rôle
                 </label>
                 <select className="fr-select" disabled={pageDetails} id="roleId" name="roleId">
                   <option disabled hidden selected value="">

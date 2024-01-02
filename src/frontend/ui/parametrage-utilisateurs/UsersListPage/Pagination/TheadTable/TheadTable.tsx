@@ -72,8 +72,7 @@ const TheadTable = ({
         {thData.map((item) => (
           <th className={`${styles["th"]} ${item.className && styles[item.className]}`} key={item.slug} onClick={() => orderByFn(item.slug)} scope="col">
             {item.name} {sortDir === "Des"}
-            <span aria-hidden="true" className={`fr-icon-arrow-${sortDir === "ASC" ? "down" : "up"}-line`}></span>
-            {/* {orderBy === item.slug && <span aria-hidden="true" className={`fr-icon-arrow-${sortDir === "ASC" ? "down" : "up"}-line`}></span>} */}
+            {orderBy === item.slug && <span aria-hidden="true" className={`fr-icon-arrow-${sortDir === "ASC" ? "down" : "up"}-line`}></span>}
           </th>
         ))}
       </tr>
