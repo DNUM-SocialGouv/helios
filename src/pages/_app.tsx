@@ -16,6 +16,7 @@ import "@gouvfr/dsfr/dist/component/input/input.min.css";
 import "@gouvfr/dsfr/dist/component/search/search.min.css";
 import "@gouvfr/dsfr/dist/component/badge/badge.min.css";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
+import "@gouvfr/dsfr/dist/component/radio/radio.min.css";
 import "../frontend/ui/commun/global.css";
 
 import { ProfileContextProvider } from "../frontend/ui/commun/contexts/ProfileContextProvider";
@@ -24,6 +25,7 @@ import { UserContextProvider } from "../frontend/ui/commun/contexts/userContextP
 import { Footer } from "../frontend/ui/commun/Footer/Footer";
 import { Header } from "../frontend/ui/commun/Header/Header";
 import { resizeChartOnPrint } from "../plugins/resizeChartAtPrint";
+import { Cookies } from "../frontend/ui/cookies/Cookies";
 
 export default function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const router = useRouter();
@@ -75,6 +77,7 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
             <Header />
             <Component {...pageProps} />
             <Footer />
+            <Cookies />
             <Script src="/dsfr.module.min.js" strategy="lazyOnload" type="module"></Script>
             <Script noModule src="/dsfr.nomodule.min.js" strategy="lazyOnload" type="text/javascript"></Script>
             {process.env.NODE_ENV !== "development" && <Script src="/smarttag.js" strategy="beforeInteractive" />}
