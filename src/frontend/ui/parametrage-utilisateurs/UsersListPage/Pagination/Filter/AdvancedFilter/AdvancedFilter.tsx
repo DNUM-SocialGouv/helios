@@ -35,6 +35,7 @@ const AdvancedFilter = ({
     setKey,
     setOrderBy,
     setSortDir,
+    setTotal,
   },
   userSessionRole,
 }: KeyWordFilterProps) => {
@@ -94,7 +95,7 @@ const AdvancedFilter = ({
       page: 1,
       itemsPerPage: itemsPerPage,
     };
-    await getUsersAndRefresh(params, setUserData, setPage, setLastPage);
+    await getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
   }, [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord]);
 
   return (

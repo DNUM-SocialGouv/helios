@@ -47,16 +47,18 @@ export interface iPaginationData {
   lastPage: number;
   orderBy: string;
   sortDir: string;
+  total: number;
   setKey: (key: string) => void;
   setInstitutionId: (institutionId: number) => void;
   setLastPage: (lastPage: number) => void;
   setPage: (page: number) => void;
   setProfileId: (profileId: string) => void;
   setRoleId: (roleId: number) => void;
+  setTotal: (total: number) => void;
   setUserData: (userData: UtilisateurModel[]) => void;
   setItemsPerPage: (itemsPerPage: number) => void;
   setEtatId: (etatId: string) => void;
-  getUsersAndRefresh: (params: any, setUserData: any, setPage: any, setLastPage: any) => void;
+  getUsersAndRefresh: (params: any, setUserData: any, setPage: any, setLastPage: any, setTotal: any) => void;
   setOrderBy: (orderBy: string) => void;
   setSortDir: (sortDir: string) => void;
 }
@@ -102,6 +104,7 @@ const UsersListPage = ({
   sortDirPage,
 }: UsersListPageProps) => {
   const [userData, setUserData] = useState<UtilisateurModel[]>(users.data);
+  const [total, setTotal] = useState(users.total);
   const [lastPage, setLastPage] = useState(users.lastPage);
 
   const [key, setKey] = useQueryState<string>("key", parseAsString.withDefault(keyWord));
@@ -123,7 +126,8 @@ const UsersListPage = ({
       params: string | string[][] | Record<string, string> | URLSearchParams | undefined,
       setUserData: (arg0: any) => void,
       setPage: (arg0: any) => void,
-      setLastPage: (arg0: any) => void
+      setLastPage: (arg0: any) => void,
+      setTotal: (arg0: any) => void
     ) => {
       fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
         headers: { "Content-Type": "application/json" },
@@ -134,6 +138,7 @@ const UsersListPage = ({
           setUserData(users.data);
           setPage(users.currentPage);
           setLastPage(users.lastPage);
+          setTotal(users.total);
         });
     },
     [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page, sortDir, orderBy]
@@ -154,6 +159,7 @@ const UsersListPage = ({
     lastPage: lastPage,
     orderBy: orderBy,
     sortDir: sortDir,
+    total: users.total,
     setKey: setKey,
     setInstitutionId: setInstitutionId,
     setLastPage: setLastPage,
@@ -166,6 +172,7 @@ const UsersListPage = ({
     getUsersAndRefresh: getUsersAndRefresh,
     setOrderBy: setOrderBy,
     setSortDir: setSortDir,
+    setTotal: setTotal,
   };
 
   useEffect(() => {
@@ -220,7 +227,7 @@ const UsersListPage = ({
       ...sortDirdData,
       itemsPerPage: itemsPerPage.toString(),
     };
-    getUsersAndRefresh(params, setUserData, setPage, setLastPage);
+    getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
   }, [institutionId, roleId, profileId, etatId, itemsPerPage, key, page, sortDir, orderBy]);
 
   return (
@@ -243,6 +250,11 @@ const UsersListPage = ({
 
           <div>
             <AdvancedFilter paginationData={paginationData} userSessionRole={userSessionRole} />
+          </div>
+
+          <div className={styles["count-elements"]}>
+            {total > 1 && <>{total} éléments trouvés.</>}
+            {total === 1 && <>{total} élément trouvé.</>}
           </div>
 
           {userData.length === 0 ? (

@@ -24,6 +24,7 @@ const Reactivate = ({
     setUserData,
     setPage,
     setLastPage,
+    setTotal,
     getUsersAndRefresh,
   },
   userCode,
@@ -93,7 +94,7 @@ const Reactivate = ({
         headers: { "Content-Type": "application/json" },
         method: "POST",
       }).then(async () => {
-        getUsersAndRefresh(params, setUserData, setPage, setLastPage);
+        getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
       });
     },
     [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page, sortDir, orderBy]
