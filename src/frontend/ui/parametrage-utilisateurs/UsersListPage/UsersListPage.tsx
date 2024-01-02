@@ -36,7 +36,7 @@ export interface iPaginationData {
   institutionId: number;
   institutions: InstitutionModel[];
   keyWord: string;
-  key: any;
+  key: string;
   page: number;
   profileId: string;
   profiles: ProfilModel[];
@@ -101,7 +101,6 @@ const UsersListPage = ({
   orderByPage,
   sortDirPage,
 }: UsersListPageProps) => {
-
   const [userData, setUserData] = useState<UtilisateurModel[]>(users.data);
   const [lastPage, setLastPage] = useState(users.lastPage);
 
@@ -124,7 +123,7 @@ const UsersListPage = ({
       params: string | string[][] | Record<string, string> | URLSearchParams | undefined,
       setUserData: (arg0: any) => void,
       setPage: (arg0: any) => void,
-      setLastPage: (arg0: any) => void,
+      setLastPage: (arg0: any) => void
     ) => {
       fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
         headers: { "Content-Type": "application/json" },

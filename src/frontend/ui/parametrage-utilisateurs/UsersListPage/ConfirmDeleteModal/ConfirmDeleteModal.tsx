@@ -96,7 +96,7 @@ const ConfirmDeleteModal = ({
         getUsersAndRefresh(params, setUserData, setPage, setLastPage);
       });
     },
-    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page]
+    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page, sortDir, orderBy]
   );
 
   return (
