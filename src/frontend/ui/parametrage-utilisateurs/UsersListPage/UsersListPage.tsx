@@ -298,7 +298,7 @@ const UsersListPage = ({
                               );
                             })}
                           </td>
-                          <td className={styles["widthTD-date"]}>{user?.dateModification && formatDateAndHours(user?.dateModification?.toString())}</td>
+                          <td className={styles["widthTD-date"]}>{user?.lastConnectionDate && formatDateAndHours(user?.lastConnectionDate?.toString())}</td>
                           <td className={styles["widthTD-etat"]}>{getUserStatus(user.lastConnectionDate)}</td>
                         </tr>
                       );

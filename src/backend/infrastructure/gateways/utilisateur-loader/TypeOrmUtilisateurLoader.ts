@@ -159,6 +159,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     }
 
     let EtatCondition = {};
+
     switch (etatId) {
       case "actif":
         EtatCondition = { lastConnectionDate: MoreThanDate(NMonthsAgo), deletedDate: IsNull() };
