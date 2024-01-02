@@ -9,6 +9,8 @@ export interface UtilisateurLoader {
   getInstitutions(): Promise<Institution[]>;
   createAccount(firstName: string, lastName: string, email: string, institution: string): Promise<void>;
   getUserProfiles(codes: string[]): Promise<ProfilModel[] | null>;
+  checkUserIsNotAdminAndInactif(email: string): Promise<boolean>;
+  updateLastConnectionDate(email: string): Promise<boolean>;
   getUsersListPaginated(
     key: string,
     pdescrtion: number,
@@ -21,14 +23,7 @@ export interface UtilisateurLoader {
     sortDir: string
   ): Promise<void>;
   getUserByCode(code: string): Promise<UtilisateurModel | null>;
-  updateUser(
-    userCode: string,
-    roleCode: string,
-    institutionCode: string,
-    profilsCode: string[],
-    firstname: string,
-    lastname: string
-  ): Promise<void>;
+  updateUser(userCode: string, roleCode: string, institutionCode: string, profilsCode: string[], firstname: string, lastname: string): Promise<void>;
   deleteUser(userCode: string): Promise<string | void>;
   reactivateUser(userCode: string): Promise<string | void>;
 }

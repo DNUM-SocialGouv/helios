@@ -1,12 +1,12 @@
 .container {
-    margin-top: 3.5rem;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
+  margin-top: 3.5rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
 .error-message {
-  width: 15rem;
+  width: 16rem;
   color: #cd3939;
 }
 
@@ -31,6 +31,6 @@
   padding: 0 20px;
 }
 
-.mb-20{
+.mb-20 {
   margin-bottom: 20px;
 }

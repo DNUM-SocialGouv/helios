@@ -16,7 +16,7 @@ import { UtilisateurLoader } from "../../../métier/gateways/UtilisateurLoader";
 import { sendEmail } from "../../../sendEmail";
 
 export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
-  constructor(private readonly orm: Promise<DataSource>) { }
+  constructor(private readonly orm: Promise<DataSource>) {}
   async getUserByCode(code: string): Promise<UtilisateurModel | null> {
     return await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: code } });
   }
@@ -25,19 +25,49 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     const user = await (await this.orm)
       .getRepository(UtilisateurModel)
       .findOne({ where: { email: email.trim().toLowerCase(), deletedDate: IsNull() }, relations: ["institution"] });
+
     if (user) {
       const hashing = createHash("sha256");
       hashing.update(password);
       const hashedPassword = hashing.digest("hex");
-      if ((await compare(password, user.password)) || hashedPassword === user.password) {
-        user.lastConnectionDate = new Date();
-        await (await this.orm).getRepository(UtilisateurModel).save(user);
-        return { utilisateur: user }
-      }
-      else return null;
+      return (await compare(password, user.password)) || hashedPassword === user.password ? { utilisateur: user } : null;
     } else {
       return null;
     }
+  }
+
+  async updateLastConnectionDate(email: string): Promise<boolean> {
+    const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email });
+    if (user) {
+      user.lastConnectionDate = new Date();
+      return (await this.orm)
+        .getRepository(UtilisateurModel)
+        .save(user)
+        .then(async () => {
+          return true;
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.log("error", error);
+          return false;
+        });
+    }
+    return false;
+  }
+
+  async checkUserIsNotAdminAndInactif(email: string): Promise<boolean> {
+    const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email });
+    // if user is not addmin
+    if (user && ![1, 2].includes(parseInt(user.roleId))) {
+      const NMonthsAgo = new Date();
+      NMonthsAgo.setMonth(new Date().getMonth() - 6);
+      //if lastConnectionDate More than 6 months
+      if (format(user.lastConnectionDate, "yyyy-MM-dd HH:MM:ss") < format(NMonthsAgo, "yyyy-MM-dd HH:MM:ss")) {
+        //login failed && user have to change password
+        return false;
+      }
+    }
+    return true;
   }
 
   async checkIfEmailExists(email: string): Promise<boolean> {
