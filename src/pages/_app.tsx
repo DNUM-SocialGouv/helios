@@ -10,6 +10,7 @@ import "@gouvfr/dsfr/dist/utility/icons/icons-system/icons-system.min.css";
 import "@gouvfr/dsfr/dist/utility/icons/icons-design/icons-design.min.css";
 import "@gouvfr/dsfr/dist/utility/icons/icons-user/icons-user.min.css";
 import "@gouvfr/dsfr/dist/utility/icons/icons-document/icons-document.min.css";
+import "@gouvfr/dsfr/dist/utility/icons/icons-design/icons-design.min.css";
 import "@gouvfr/dsfr/dist/utility/colors/colors.min.css";
 import "@gouvfr/dsfr/dist/component/button/button.min.css";
 import "@gouvfr/dsfr/dist/component/input/input.min.css";

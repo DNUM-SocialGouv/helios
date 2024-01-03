@@ -3,6 +3,8 @@ import { GetStaticPathsResult, GetStaticPropsResult } from "next";
 import { ProfileValue } from "../../../../database/models/ProfilModel";
 import { getProfileByCodeEndpoint } from "../../../backend/infrastructure/controllers/getProfileByCodeEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
+import { useDependencies } from "../../../frontend/ui/commun/contexts/useDependencies";
+import { useBreadcrumb } from "../../../frontend/ui/commun/hooks/useBreadcrumb";
 import { ParametrageProfilPage } from "../../../frontend/ui/parametrage-profil/ParametrageProfilPage";
 
 type RouterProps = Readonly<{
@@ -12,8 +14,18 @@ type RouterProps = Readonly<{
 }>;
 
 export default function Router({ profileValue, profileLabel, profileCode }: RouterProps) {
+    const { wording, paths } = useDependencies();
+    useBreadcrumb([
+        {
+            label: wording.PARAMETRAGE_TITRE,
+            path: paths.PROFILES_LIST,
+        },
+        {
+            label: `${profileLabel}`,
+            path: "",
+        },
+    ]);
     if (!profileValue || !profileLabel) return null;
-
     return <ParametrageProfilPage code={profileCode} label={profileLabel} value={profileValue} />;
 
 }

@@ -32,7 +32,7 @@ export const NewProfileSettingsPage = () => {
                 </div>
             </div>
             <div className={"fr-table fr-table--blue-ecume fr-mt-8w " + styles["align"]}>
-                <ProfileTable codeValue={profileLabel} creating profileValue={DefaultProfile} />
+                <ProfileTable codeValue={profileLabel} creating name={profileLabel} profileValue={DefaultProfile} />
             </div>
         </main >
     );

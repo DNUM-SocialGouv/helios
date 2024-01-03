@@ -10,8 +10,8 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         if (request.method !== "POST") {
             response.status(405).send("Method not allowed");
         }
-        const { code, value } = request.body;
-        const recherche = await updateProfileEndpoint(dependencies, code, value);
+        const { code, value, name } = request.body;
+        const recherche = await updateProfileEndpoint(dependencies, code, value, name);
         return response.status(200).json(recherche);
 
     } catch (error) {

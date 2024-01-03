@@ -15,8 +15,8 @@ export class TypeOrmProfileLoader implements ProfileLoader {
         return await (await this.orm).getRepository(ProfilModel).findOne({ where: { code: code } })
     }
 
-    async updateProfileValue(code: string, value: ProfileValue): Promise<void> {
-        await (await this.orm).getRepository(ProfilModel).update({ code: code }, { value: value });
+    async updateProfileValue(code: string, value: ProfileValue, name: string): Promise<void> {
+        await (await this.orm).getRepository(ProfilModel).update({ code: code }, { value: value, label: name });
     }
 
     async addNewProfile(label: string, value: ProfileValue): Promise<void> {

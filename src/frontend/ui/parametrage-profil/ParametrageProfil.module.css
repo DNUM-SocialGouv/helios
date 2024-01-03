@@ -26,3 +26,7 @@
 .align-text {
     text-align: center;
 }
+
+.edit-icon:hover {
+    background-color: white !important;
+}

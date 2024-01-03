@@ -378,6 +378,7 @@ export interface Wording {
   readonly PARAMETRAGE_ET_SAN_TAB: string;
   readonly PARAMETRAGE_INSTITUTION: string;
   readonly PARAMETRAGE_AUTRE_REGION: string;
+  readonly CREATED_BY: string;
   readonly CREATION_DATE: string;
   readonly PROFILE_CODE: string;
   readonly PARAMETRAGE_NEW_PROFILE: string;
