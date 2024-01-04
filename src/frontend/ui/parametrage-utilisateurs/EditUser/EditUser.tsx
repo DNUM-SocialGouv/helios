@@ -253,10 +253,10 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                 )}
               </div>
 
-              <div className={styles["btnForm"]}>
+              <div className="fr-mt-7v">
                 {pageDetails && (
                   <button
-                    className="fr-mt-7v fr-btn "
+                    className="fr-btn "
                     onClick={() => {
                       redirectPage("/settings/users");
                     }}
@@ -267,8 +267,22 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                 )}
                 {!pageDetails && (
                   <>
+                    {data?.user?.idUser !== user.code && (
+                      <button aria-controls="fr-modal-2" className="fr-btn" data-fr-opened="false" title="Supprimer" type="button">
+                        Supprimer
+                      </button>
+                    )}
+
                     <button
-                      className="fr-mt-7v fr-mr-7v fr-btn"
+                      className={`fr-btn ${styles["float-right"]}`}
+                      disabled={userinfo.profiles.length === 0 || firstname.length === 0 || lastname.length === 0}
+                      type="submit"
+                    >
+                      Sauvegarder
+                    </button>
+
+                    <button
+                      className={`fr-mr-7v fr-btn ${styles["float-right"]}`}
                       onClick={() => {
                         redirectPage("/settings/users");
                       }}
@@ -276,19 +290,6 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                     >
                       Annuler
                     </button>
-                    <button
-                      className="fr-mt-7v fr-btn "
-                      disabled={userinfo.profiles.length === 0 || firstname.length === 0 || lastname.length === 0}
-                      type="submit"
-                    >
-                      Sauvegarder
-                    </button>
-
-                    {data?.user?.idUser !== user.code && (
-                      <button aria-controls="fr-modal-2" className="fr-mt-7v fr-btn fr-ml-7v " data-fr-opened="false" title="Supprimer" type="button">
-                        Supprimer
-                      </button>
-                    )}
                   </>
                 )}
               </div>
