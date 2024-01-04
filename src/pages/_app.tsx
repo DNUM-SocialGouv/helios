@@ -26,8 +26,6 @@ import { Footer } from "../frontend/ui/commun/Footer/Footer";
 import { Header } from "../frontend/ui/commun/Header/Header";
 import { resizeChartOnPrint } from "../plugins/resizeChartAtPrint";
 
-/* import { Cookies } from "../frontend/ui/cookies/Cookies"; */
-
 export default function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const router = useRouter();
 
@@ -78,7 +76,6 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
             <Header />
             <Component {...pageProps} />
             <Footer />
-            {/* <Cookies /> */}
             <Script src="/dsfr.module.min.js" strategy="lazyOnload" type="module"></Script>
             <Script noModule src="/dsfr.nomodule.min.js" strategy="lazyOnload" type="text/javascript"></Script>
             {process.env.NODE_ENV !== "development" && <Script src="/smarttag.js" strategy="beforeInteractive" />}
