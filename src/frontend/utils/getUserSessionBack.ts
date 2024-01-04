@@ -7,7 +7,7 @@ function getBasePath(request: NextApiRequest) {
   // if (nextRequestMeta.__NEXT_INIT_URL.includes("http://")) {
   //   protocole = "http://";
   // }
-  const protocole = "http://";
+  const protocole = "https://";
   return protocole + request.headers.host;
 }
 
