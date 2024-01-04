@@ -1,0 +1,24 @@
+.filtres-container {
+  margin-top: 25px;
+  border: 1px solid #ddd;
+}
+
+.filter_details {
+  padding: 15px 15px 20px 15px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.filter-item {
+  width: 18%;
+}
+
+.reset-filter-container {
+  padding: 25px 0 0 0;
+}
+
+.reset-filter-btn {
+  padding: 0;
+}

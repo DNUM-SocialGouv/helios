@@ -17,10 +17,12 @@ import { TypeOrmEntitéJuridiqueLoader } from "./gateways/entité-juridique-load
 import { NodeEnvironmentVariables } from "./gateways/environnement-variables/NodeEnvironmentVariables";
 import { TypeOrmFavorisLoader } from "./gateways/favoris-loader/TypeOrmFavorisLoader";
 import { TypeOrmForgetPasswordLoader } from "./gateways/forget-password-loader/TypeOrmForgetPasswordLoader";
+import { TypeOrmInstitutionLoader } from "./gateways/institution-loader/TypeOrmInstitutionLoader";
 import { ConsoleLogger } from "./gateways/logger/ConsoleLogger";
 import { typeOrmOrm } from "./gateways/orm/typeOrmOrm";
 import { TypeOrmProfileLoader } from "./gateways/profile-loader/TypeOrmProfileLoader";
 import { TypeOrmRechercheLoader } from "./gateways/recherche-loader/TypeOrmRechercheLoader";
+import { TypeOrmRoleLoader } from "./gateways/role-loader/TypeOrmRoleLoader";
 import { TypeOrmSearchHistoryLoader } from "./gateways/search-history-loader/TypeOrmSearchHistoryLoader";
 import { TypeOrmUtilisateurLoader } from "./gateways/utilisateur-loader/TypeOrmUtilisateurLoader";
 import { TypeOrmÉtablissementTerritorialMédicoSocialLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialMédicoSocialLoader";
@@ -40,7 +42,9 @@ export type Dependencies = Readonly<{
   changePasswordLoader: ChangePasswordLoader;
   forgetPasswordLoader: TypeOrmForgetPasswordLoader;
   searchHistoryLoader: SearchHistoryLoader;
-  profileLoader: TypeOrmProfileLoader
+  profileLoader: TypeOrmProfileLoader;
+  roleLoader: TypeOrmRoleLoader;
+  institutionLoader: TypeOrmInstitutionLoader;
 }>;
 
 const createDependencies = (): Dependencies => {
@@ -68,7 +72,9 @@ const createDependencies = (): Dependencies => {
     changePasswordLoader: new TypeOrmChangePasswordLoader(orm),
     forgetPasswordLoader: new TypeOrmForgetPasswordLoader(orm),
     searchHistoryLoader: new TypeOrmSearchHistoryLoader(orm),
-    profileLoader: new TypeOrmProfileLoader(orm)
+    profileLoader: new TypeOrmProfileLoader(orm),
+    roleLoader: new TypeOrmRoleLoader(orm),
+    institutionLoader: new TypeOrmInstitutionLoader(orm),
   };
 };
 

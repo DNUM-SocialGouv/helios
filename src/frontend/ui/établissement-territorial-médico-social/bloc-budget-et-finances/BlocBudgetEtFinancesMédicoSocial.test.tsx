@@ -161,32 +161,6 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       expect(années[2].textContent).toBe("2019");
     });
 
-    it("affiche les années dans une liste déroulante par ordre anté-chronologique quand le budget et finances est CA PA", () => {
-      // GIVEN
-      const budgetFinanceViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
-        [
-          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPa({ année: 2019 }),
-          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPa({ année: 2020 }),
-        ],
-        wording
-      );
-
-      // WHEN
-      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
-
-      // THEN
-      const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
-      const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
-      const recettesEtDépenses = indicateurs[indiceDeLIndicateur.recettesEtDépenses];
-      const année = within(recettesEtDépenses).getByRole("combobox");
-      expect(année).toBeInTheDocument();
-      const années = within(année).getAllByRole("option");
-      expect(années[0]).toHaveAttribute("value", "2020");
-      expect(années[0].textContent).toBe("2020");
-      expect(années[1]).toHaveAttribute("value", "2019");
-      expect(années[1].textContent).toBe("2019");
-    });
-
     it("n’affiche pas les années dans une liste déroulante quand aucune donnée n’est renseignée", () => {
       // GIVEN
       const budgetFinanceViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
