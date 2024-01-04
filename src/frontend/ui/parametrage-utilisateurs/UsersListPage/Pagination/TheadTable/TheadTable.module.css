@@ -12,11 +12,10 @@
 .defaultArrows {
   display: inline-flex;
   flex-direction: column;
-  zoom: 0.8;
 }
 
 .defaultArrowUp {
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 .defaultArrowDown {
