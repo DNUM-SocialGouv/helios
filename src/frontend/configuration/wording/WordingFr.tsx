@@ -469,6 +469,7 @@ export class WordingFr implements Wording {
   readonly CREATED_BY: string = "Créée par";
   readonly CREATION_DATE: string = "Date de création";
   readonly PROFILE_CODE: string = "Code";
+  readonly PROFILE_TITLE: string = "Libellé de l'autorisation"
   readonly VOUS_NAVEZ_AUCUN_PROFIL: string = "Vous n'avez aucun profil";
 
   //  Profile page

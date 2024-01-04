@@ -382,6 +382,7 @@ export interface Wording {
   readonly CREATION_DATE: string;
   readonly PROFILE_CODE: string;
   readonly PARAMETRAGE_NEW_PROFILE: string;
+  readonly PROFILE_TITLE: string;
   readonly VOUS_NAVEZ_AUCUN_PROFIL: string;
 
   //  Profile page

@@ -3,6 +3,7 @@ import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import { ChangeEvent, useState } from "react";
 
 import { ProfileValue } from "../../../../database/models/ProfilModel";
+import { useDependencies } from "../commun/contexts/useDependencies";
 import { ProfileTable } from "./ParamatrageTable";
 import styles from "./ParametrageProfil.module.css";
 
@@ -16,6 +17,7 @@ export const ParametrageProfilPage = ({ value, label, code }: ParametrageProfilP
 
     const [changeTitle, setChangeTitle] = useState(false);
     const [newTitle, setNewTitle] = useState(label);
+    const { wording } = useDependencies();
 
     const changeTitleClick = () => {
         setChangeTitle(true);
@@ -29,7 +31,7 @@ export const ParametrageProfilPage = ({ value, label, code }: ParametrageProfilP
         <main className="fr-container">
             {changeTitle ?
                 <>
-                    <label className="fr-label fr-mt-8w" htmlFor="text-input">Libellé de l&apos;autorisation</label>
+                    <label className="fr-label fr-mt-8w" htmlFor="text-input">{wording.PROFILE_TITLE}</label>
                     <input className="fr-input" id="text-input" name="text-input" onChange={(e) => onChangeNewTitle(e)} type="text" value={newTitle} />
                 </>
                 :
