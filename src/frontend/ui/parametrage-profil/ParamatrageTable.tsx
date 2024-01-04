@@ -64,7 +64,8 @@ export const ProfileTable = ({ codeValue, profileValue, creating, name }: Profil
                     profilMédicoSocial: editableAutreRegionETMSValues,
                     profilETSanitaire: editableAutreRegionETSANValues,
                 },
-            });
+            },
+                name);
         }
     };
 
@@ -101,15 +102,21 @@ export const ProfileTable = ({ codeValue, profileValue, creating, name }: Profil
                 <ProfileTabContent editableAutreRegionValues={editableAutreRegionETSANValues} editableInstitutionValues={editableInstitutionETSANValues} idTabPanel="tabpanel-ET-SAN" setEditableAutreRegionValues={setEditableAutreRegionETSANValues} setEditableInstitutionValues={setEditableInstitutionETSANValues} />
             </div>
             <div className="fr-grid-row fr-mt-2w">
-                <button className="fr-btn fr-mr-2w" onClick={() => saveButtonClick()}>
-                    Sauvegarder
-                </button>
-                <button className="fr-btn fr-mr-2w" onClick={() => cancelButtonClick()}>
-                    Annuler
-                </button>
-                <button className="fr-btn" onClick={() => deleteButtonClick()}>
-                    Supprimer l&apos;autorisation
-                </button>
+                <div className="fr-col">
+                    <button className="fr-btn fr-mr-2w" onClick={() => saveButtonClick()}>
+                        Sauvegarder
+                    </button>
+                    <button className="fr-btn fr-btn--secondary fr-mr-2w" onClick={() => cancelButtonClick()}>
+                        Annuler
+                    </button>
+                </div>
+                {!creating && (
+                    <div className="fr-col--right">
+                        <button className="fr-btn" onClick={() => deleteButtonClick()}>
+                            Supprimer l&apos;autorisation
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     )

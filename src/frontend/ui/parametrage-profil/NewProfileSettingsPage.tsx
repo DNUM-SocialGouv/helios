@@ -19,7 +19,7 @@ export const NewProfileSettingsPage = () => {
             <div className="fr-grid-row fr-grid-row--center fr-mt-5w">
                 <div className="fr-col-12 fr-col-md-3">
                     <label className="fr-label">
-                        libellé de profil
+                        Libellé de l&apos;autorisation
                     </label>
                 </div>
                 <div className="fr-col-11 fr-col-md-3">

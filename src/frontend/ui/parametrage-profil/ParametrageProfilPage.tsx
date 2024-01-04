@@ -29,7 +29,7 @@ export const ParametrageProfilPage = ({ value, label, code }: ParametrageProfilP
         <main className="fr-container">
             {changeTitle ?
                 <>
-                    <label className="fr-label fr-mt-8w" htmlFor="text-input">Nom de l&apos;autorisation</label>
+                    <label className="fr-label fr-mt-8w" htmlFor="text-input">Libellé de l&apos;autorisation</label>
                     <input className="fr-input" id="text-input" name="text-input" onChange={(e) => onChangeNewTitle(e)} type="text" value={newTitle} />
                 </>
                 :

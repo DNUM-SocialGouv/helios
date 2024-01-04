@@ -17,7 +17,7 @@ export function useParametrage() {
             method: "POST",
         }).then((response) => {
             if (response.status === 200)
-                router.push('/settings')
+                router.push(paths.PROFILES_LIST)
         })
     }
 
