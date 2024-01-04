@@ -198,7 +198,7 @@ export const Cookies = () => {
                   </div>
 
                   <div className={styles["row-input"]}>
-                    <h2 className={`fr-modal__title ${styles["fr-modal__title"]} }`}>Mesure d'audience</h2>
+                    <h2 className={`fr-modal__title ${styles["fr-modal__title"]} }`}>Mesure d&apos;audience</h2>
 
                     <fieldset aria-labelledby="radio-inline-legend radio-inline-messages" className={styles["fr-fieldset"]}>
                       <div className={`${styles["fr-fieldset__element"]} ${styles["fr-fieldset__element--inline"]}`}>

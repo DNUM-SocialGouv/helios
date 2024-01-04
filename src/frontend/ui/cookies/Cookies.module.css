@@ -23,7 +23,7 @@
   flex-wrap: wrap;
   margin: 0 -0.75rem 1rem 1rem;
   float: right;
-  padding-top: 0px;
+  padding-top: 0;
 }
 
 .fr-fieldset__element {

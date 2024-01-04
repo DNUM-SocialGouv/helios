@@ -64,7 +64,7 @@ export default function Router({
       path: "",
     },
   ]);
-  console.log("orderByPage :", orderByPage);
+
   return (
     <UsersListPage
       etat={etat.toString()}
