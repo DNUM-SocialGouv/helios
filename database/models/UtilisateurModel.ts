@@ -55,9 +55,6 @@ export class UtilisateurModel {
   @UpdateDateColumn({ name: "ut_date_modification" })
   public dateModification!: Date;
 
-  @Column({ type: "date", name: "ut_date_soft_delete", nullable: true })
-  public deletedDate!: Date | null;
-
   @Column({ name: "ut_date_last_connection" })
   public lastConnectionDate!: Date;
 
