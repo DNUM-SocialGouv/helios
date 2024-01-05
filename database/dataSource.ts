@@ -48,6 +48,7 @@ import { AjoutProfilsDansUtilisateurs1696841163367 } from "./migrations/16968411
 import { AjouterSoftDeleteUtilisateur1701782042926 } from "./migrations/1701782042926-AjouterSoftDeleteUtilisateur";
 import { UpdateInstitutionsTable1704363653168 } from "./migrations/1704363653168-update-institutions-table";
 import { UpdateUsersLastConnexionDate1704366840880 } from "./migrations/1704366840880-UpdateUsersLastConnexionDate";
+import { RemoveDuplicatedEmailAndMakeItUnique1704467337579 } from "./migrations/1704467337579-RemoveDuplicatedEmailAndMakeItUnique";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
@@ -161,6 +162,7 @@ export default new DataSource({
     updateProfileTable1796422585498,
     UpdateUsersLastConnexionDate1704366840880,
     UpdateInstitutionsTable1704363653168,
+    RemoveDuplicatedEmailAndMakeItUnique1704467337579,
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
