@@ -193,11 +193,12 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                     Selectionnez une option
                   </option>
 
-                  {institutions.map((item) => (
-                    <option key={item.id} selected={user.institutionId === item.id} value={item.code}>
-                      {item.libelle}
-                    </option>
-                  ))}
+                  {institutions &&
+                    institutions.map((item) => (
+                      <option key={item.id} selected={user.institutionId === item.id} value={item.code}>
+                        {item.libelle}
+                      </option>
+                    ))}
                 </select>
               </div>
               <div className="fr-select-group fr-mt-3w">
@@ -208,11 +209,12 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                   <option disabled hidden selected value="">
                     Selectionnez une option
                   </option>
-                  {roles.map((item) => (
-                    <option key={item.id} selected={parseInt(user.roleId) === item.id} value={item.code}>
-                      {item.libelle}
-                    </option>
-                  ))}
+                  {roles &&
+                    roles.map((item) => (
+                      <option key={item.id} selected={parseInt(user.roleId) === item.id} value={item.code}>
+                        {item.libelle}
+                      </option>
+                    ))}
                 </select>
               </div>
               <div className="fr-select-group fr-mt-3w">
@@ -220,29 +222,30 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                   Autorisations
                 </label>
                 <div className={styles["boxSelect"]}>
-                  {profiles.map((item) => (
-                    <div
-                      className={`fr-fieldset__element fr-mt-2w ${styles["boxItem"]} ${userinfo.profiles.length === 0 ? styles["fr-fieldset--error"] : ""}`}
-                      key={item.code}
-                    >
-                      <div className="fr-checkbox-group">
-                        <input
-                          aria-describedby={`checkboxes-${item.code}-messages`}
-                          checked={userinfo.profiles && userinfo.profiles.includes(item.code)}
-                          className={`${styles["input--checkbox--error"]} `}
-                          disabled={pageDetails}
-                          id={`${item.code}`}
-                          name="profiles"
-                          onChange={handleChange}
-                          type="checkbox"
-                          value={`${item.code}`}
-                        />
-                        <label className="fr-label" htmlFor={`${item.code}`}>
-                          {item.label}
-                        </label>
+                  {profiles &&
+                    profiles.map((item) => (
+                      <div
+                        className={`fr-fieldset__element fr-mt-2w ${styles["boxItem"]} ${userinfo.profiles.length === 0 ? styles["fr-fieldset--error"] : ""}`}
+                        key={item.code}
+                      >
+                        <div className="fr-checkbox-group">
+                          <input
+                            aria-describedby={`checkboxes-${item.code}-messages`}
+                            checked={userinfo.profiles && userinfo.profiles.includes(item.code)}
+                            className={`${styles["input--checkbox--error"]} `}
+                            disabled={pageDetails}
+                            id={`${item.code}`}
+                            name="profiles"
+                            onChange={handleChange}
+                            type="checkbox"
+                            value={`${item.code}`}
+                          />
+                          <label className="fr-label" htmlFor={`${item.code}`}>
+                            {item.label}
+                          </label>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
                 {userinfo.profiles.length === 0 && (
                   <div aria-live="assertive" className={` fr-mt-2w fr-messages-group  ${styles["fr-fieldset--error"]}`} id="checkboxes-error-messages">

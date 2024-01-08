@@ -22,11 +22,12 @@ const ItemsPerPage = ({
   return (
     <div className="fr-select-group">
       <select className="fr-select" id="itemsPerPage" onChange={(e) => handleChangeItemsPerPage(e)}>
-        {pagesArray.map((item) => (
-          <option key={item} selected={itemsPerPage === item} value={item}>
-            {item} / page
-          </option>
-        ))}
+        {pagesArray &&
+          pagesArray.map((item) => (
+            <option key={item} selected={itemsPerPage === item} value={item}>
+              {item} / page
+            </option>
+          ))}
       </select>
     </div>
   );
