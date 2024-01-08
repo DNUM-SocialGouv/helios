@@ -313,11 +313,12 @@ const UsersListPage = ({
                                     }
                                     return (
                                       <>
-                                        <span className={`fr-text--xs `} key={pr[0].code}>
-                                          {pr[0].label}
-                                          {seperator}
-                                        </span>
-                                        <span className={`fr-text--xs `}>debug</span>
+                                        {pr && pr[0] && (
+                                          <span className={`fr-text--xs `} key={pr[0].code}>
+                                            {pr[0].label}
+                                            {seperator}
+                                          </span>
+                                        )}
                                       </>
                                     );
                                   })}
