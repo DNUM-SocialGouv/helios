@@ -232,7 +232,7 @@ const UsersListPage = ({
 
   return (
     <main className="fr-container">
-      test debug 08
+      test debug 09
       {userData && (
         <>
           <h1 className={`fr-mb-4w ${styles["title"]}`}>{wording.PAGE_UTILISATEUR_TITRE}</h1>
@@ -297,9 +297,12 @@ const UsersListPage = ({
                             </td>
                             <td className={`${styles["widthTD-profil"]}`}>
                               {user.profils &&
-                                user.profils.map((/*profil: string, i: number, { length }: any*/) => {
-                                  /*const pr = profiles.filter((item) => item.code === profil);
-                                  let seperator = ", ";
+                                user.profils.map((profil: string /*, i: number, { length }: any*/) => {
+                                  const pr = profiles.filter((item) => item.code === profil);
+
+                                  /* eslint-disable no-console */
+                                  console.log("debug pr -> ", pr);
+                                  /* let seperator = ", ";
                                   //last element
                                   if (i + 1 === length) {
                                     seperator = "";
