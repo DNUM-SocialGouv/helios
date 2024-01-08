@@ -16,7 +16,7 @@ import { useDependencies } from "../../commun/contexts/useDependencies";
 import AdvancedFilter from "./Pagination/Filter/AdvancedFilter/AdvancedFilter";
 import ItemsPerPage from "./Pagination/ItemsPerPage/ItemsPerPage";
 import PaginationBtn from "./Pagination/PaginationBtn/PaginationBtn";
-//import TheadTable from "./Pagination/TheadTable/TheadTable";
+import TheadTable from "./Pagination/TheadTable/TheadTable";
 import styles from "./UsersListPage.module.css";
 
 /*function greaterThanNMonths(inputDate: Date, n: number): boolean {
@@ -232,7 +232,7 @@ const UsersListPage = ({
 
   return (
     <main className="fr-container">
-      test debug 02
+      test debug 03
       {userData && (
         <>
           <h1 className={`fr-mb-4w ${styles["title"]}`}>{wording.PAGE_UTILISATEUR_TITRE}</h1>
@@ -263,7 +263,7 @@ const UsersListPage = ({
           ) : (
             <div>
               <div className={"fr-table fr-table--blue-ecume fr-mt-2w " + styles["align"]}>
-                {/*<table>
+                <table>
                   <TheadTable paginationData={paginationData} />
                   <tbody>
                     {userData &&
@@ -296,7 +296,7 @@ const UsersListPage = ({
                               </span>
                             </td>
                             <td className={`${styles["widthTD-profil"]}`}>
-                              {user &&
+                              {/*user &&
                                 user.profils.map((profil: string, i: number, { length }: any) => {
                                   const pr = profiles.filter((item) => item.code === profil);
                                   let seperator = ", ";
@@ -310,16 +310,18 @@ const UsersListPage = ({
                                       {seperator}
                                     </span>
                                   );
-                                })}
+                                })*/}
                             </td>
-                            <td className={styles["widthTD-date"]}>{user?.lastConnectionDate && formatDateAndHours(user?.lastConnectionDate?.toString())}</td>
-                            <td className={styles["widthTD-etat"]}>{getUserStatus(user.lastConnectionDate)}</td>
+                            <td className={styles["widthTD-date"]}>
+                              {/*user?.lastConnectionDate && formatDateAndHours(user?.lastConnectionDate?.toString())*/}
+                            </td>
+                            <td className={styles["widthTD-etat"]}>{/*getUserStatus(user.lastConnectionDate)*/}</td>
                           </tr>
                         );
                       })}
                   </tbody>
                 </table>
-                    */}
+
                 <div className={`${styles["pagination-container"]}`}>
                   <div className={`${styles["paginationBtn-container"]}`}>
                     <PaginationBtn paginationData={paginationData} />
