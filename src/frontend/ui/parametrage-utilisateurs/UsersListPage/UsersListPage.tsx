@@ -232,7 +232,7 @@ const UsersListPage = ({
 
   return (
     <main className="fr-container">
-      test debug 10
+      test debug 11
       {userData && (
         <>
           <h1 className={`fr-mb-4w ${styles["title"]}`}>{wording.PAGE_UTILISATEUR_TITRE}</h1>
@@ -270,11 +270,6 @@ const UsersListPage = ({
                       userData.map((user: UtilisateurModel) => {
                         const roleClass = user.role.id === 1 ? "error" : user.role.id === 2 ? "success" : "info";
 
-                        let userProfils = user.profils;
-                        if (Array.isArray(userProfils)) {
-                          userProfils = userProfils.map((x) => x.replace(/^([{]*)/g, "").replace(/([}]*)$/g, ""));
-                        }
-
                         return (
                           <tr key={user.id}>
                             <td className={styles["widthTD-small"]}>
@@ -302,31 +297,37 @@ const UsersListPage = ({
                               </span>
                             </td>
                             <td className={`${styles["widthTD-profil"]}`}>
-                              {userProfils &&
-                                userProfils.map((profil: string, i: number, { length }: any) => {
-                                  const pr = profiles.filter((item) => item.code === profil);
-
-                                  /* eslint-disable no-console */
-                                  console.log("debug pr -> ", pr);
-                                  let seperator = ", ";
-                                  //last element
-                                  if (i + 1 === length) {
-                                    seperator = "";
-                                  }
-                                  return (
-                                    <>
-                                      <span className={`fr-text--xs `} key={pr[0].code}>
-                                        {pr[0].label}
-                                        {seperator}
-                                      </span>
-                                      {
-                                        /* eslint-disable no-console */
-                                        console.log("debug user.profils -> ", user.profils)
-                                      }
-                                      <span className={`fr-text--xs `}>debug</span>
-                                    </>
-                                  );
-                                })}
+                              {user.profils &&
+                                user.profils
+                                  .filter(function (item) {
+                                    if (item.includes("{")) {
+                                      return false; // skip
+                                    }
+                                    return true;
+                                  })
+                                  .map((profil: string, i: number, { length }: any) => {
+                                    const pr = profiles.filter((item) => item.code === profil);
+                                    /* eslint-disable no-console */
+                                    console.log("debug pr -> ", pr);
+                                    let seperator = ", ";
+                                    //last element
+                                    if (i + 1 === length) {
+                                      seperator = "";
+                                    }
+                                    return (
+                                      <>
+                                        <span className={`fr-text--xs `} key={pr[0].code}>
+                                          {pr[0].label}
+                                          {seperator}
+                                        </span>
+                                        {
+                                          /* eslint-disable no-console */
+                                          console.log("debug user.profils -> ", user.profils)
+                                        }
+                                        <span className={`fr-text--xs `}>debug</span>
+                                      </>
+                                    );
+                                  })}
                             </td>
                             <td className={styles["widthTD-date"]}>
                               {/*user?.lastConnectionDate && formatDateAndHours(user?.lastConnectionDate?.toString())*/}
