@@ -3,7 +3,7 @@ import { createHash } from "crypto";
 import { format } from "date-fns";
 import fs from "fs";
 import path from "path";
-import { DataSource, ILike, ArrayContains, LessThan, MoreThan, IsNull } from "typeorm";
+import { DataSource, ILike, ArrayContains, LessThan, MoreThan } from "typeorm";
 
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
@@ -312,8 +312,9 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     }
   }
 
-  async reactivateUser(userCode: string): Promise<string | void> {
+  async reactivateUser(/*userCode: string*/): Promise<string | void> {
     try {
+      /*
       const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: userCode } });
 
       if (user) {
@@ -336,6 +337,8 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       } else {
         return "User not found";
       }
+      */
+      return "reactivateUser";
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log("error", error);
