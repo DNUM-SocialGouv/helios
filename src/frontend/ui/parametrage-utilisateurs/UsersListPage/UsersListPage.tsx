@@ -4,33 +4,33 @@ import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 
-import { useQueryState, parseAsInteger, parseAsString } from "next-usequerystate";
-import { useCallback, useEffect, useState } from "react";
+/*import { useQueryState, parseAsInteger, parseAsString } from "next-usequerystate";
+import { useCallback, useEffect, useState } from "react";*/
 
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../database/models/RoleModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
-import { formatDateAndHours } from "../../../utils/dateUtils";
+/*import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import AdvancedFilter from "./Pagination/Filter/AdvancedFilter/AdvancedFilter";
 import ItemsPerPage from "./Pagination/ItemsPerPage/ItemsPerPage";
 import PaginationBtn from "./Pagination/PaginationBtn/PaginationBtn";
 import TheadTable from "./Pagination/TheadTable/TheadTable";
-import styles from "./UsersListPage.module.css";
+import styles from "./UsersListPage.module.css";*/
 
-function greaterThanNMonths(inputDate: Date, n: number): boolean {
+/*function greaterThanNMonths(inputDate: Date, n: number): boolean {
   const NMonthsAgo = new Date();
   NMonthsAgo.setMonth(new Date().getMonth() - n);
   return new Date(inputDate) < NMonthsAgo;
-}
+}*/
 
-function getUserStatus(lastConnectionDate: Date): string {
+/*function getUserStatus(lastConnectionDate: Date): string {
   if (greaterThanNMonths(lastConnectionDate, 6) || lastConnectionDate === null) {
     return "Inactif";
   }
   return "Actif";
-}
+}*/
 
 export interface iPaginationData {
   institutionId: number;
@@ -87,8 +87,7 @@ type UsersListPageProps = Readonly<{
   sortDirPage: string;
 }>;
 
-const UsersListPage = ({
-  users,
+const UsersListPage = ({}: /*users,
   keyWord,
   institutions,
   profiles,
@@ -101,27 +100,27 @@ const UsersListPage = ({
   itemsPerPageValue,
   userSessionRole,
   orderByPage,
-  sortDirPage,
-}: UsersListPageProps) => {
-  const [userData, setUserData] = useState<UtilisateurModel[]>(users.data);
+  sortDirPage,*/
+UsersListPageProps) => {
+  /*const [userData, setUserData] = useState<UtilisateurModel[]>(users.data);
   const [total, setTotal] = useState(users.total);
   const [lastPage, setLastPage] = useState(users.lastPage);
 
-  const [key, setKey] = useQueryState<string>("key", parseAsString.withDefault(keyWord));
-  const [institutionId, setInstitutionId] = useQueryState("institutionId", parseAsInteger.withDefault(institution));
-  const [roleId, setRoleId] = useQueryState("roleId", parseAsInteger.withDefault(role));
-  const [profileId, setProfileId] = useQueryState("profileId", parseAsString.withDefault(profile));
-  const [etatId, setEtatId] = useQueryState("etatId", parseAsString.withDefault(etat));
+  const [key , setKey] = useQueryState<string>("key", parseAsString.withDefault(keyWord));
+  const [institutionId , setInstitutionId] = useQueryState("institutionId", parseAsInteger.withDefault(institution));
+  const [roleId , setRoleId] = useQueryState("roleId", parseAsInteger.withDefault(role));
+  const [profileId , setProfileId] = useQueryState("profileId", parseAsString.withDefault(profile));
+  const [etatId , setEtatId] = useQueryState("etatId", parseAsString.withDefault(etat));
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(users.currentPage));
-  const [statusCode] = useQueryState("status", parseAsString.withDefault(status ? status : ""));
-  const [itemsPerPage, setItemsPerPage] = useQueryState("itemsPerPage", parseAsInteger.withDefault(itemsPerPageValue));
+ const [statusCode] = useQueryState("status", parseAsString.withDefault(status ? status : ""));
+  const [itemsPerPage , setItemsPerPage] = useQueryState("itemsPerPage", parseAsInteger.withDefault(itemsPerPageValue));
 
-  const [orderBy, setOrderBy] = useQueryState("orderBy", parseAsString.withDefault(orderByPage));
-  const [sortDir, setSortDir] = useQueryState("sortDir", parseAsString.withDefault(sortDirPage));
+  const [orderBy , setOrderBy] = useQueryState("orderBy", parseAsString.withDefault(orderByPage));
+  const [sortDir , setSortDir] = useQueryState("sortDir", parseAsString.withDefault(sortDirPage));
+*/
+  //const { wording } = useDependencies();
 
-  const { wording } = useDependencies();
-
-  const getUsersAndRefresh = useCallback(
+  /* const getUsersAndRefresh = useCallback(
     async (
       params: string | string[][] | Record<string, string> | URLSearchParams | undefined,
       setUserData: (arg0: any) => void,
@@ -142,8 +141,8 @@ const UsersListPage = ({
         });
     },
     [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page, sortDir, orderBy]
-  );
-
+  );*/
+  /*
   const paginationData: iPaginationData = {
     institutionId: institutionId,
     institutions: institutions,
@@ -173,9 +172,9 @@ const UsersListPage = ({
     setOrderBy: setOrderBy,
     setSortDir: setSortDir,
     setTotal: setTotal,
-  };
+  };*/
 
-  useEffect(() => {
+  /*  useEffect(() => {
     let orderByData = {};
     if (orderBy) {
       orderByData = { orderBy: orderBy };
@@ -228,11 +227,12 @@ const UsersListPage = ({
       itemsPerPage: itemsPerPage.toString(),
     };
     getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
-  }, [institutionId, roleId, profileId, etatId, itemsPerPage, key, page, sortDir, orderBy]);
+  }, [institutionId, roleId, profileId, etatId, itemsPerPage, key, page, sortDir, orderBy]);*/
 
   return (
     <main className="fr-container">
-      {userData && (
+      test débogage 01
+      {/*userData && (
         <>
           <h1 className={`fr-mb-4w ${styles["title"]}`}>{wording.PAGE_UTILISATEUR_TITRE}</h1>
 
@@ -330,7 +330,7 @@ const UsersListPage = ({
             </div>
           )}
         </>
-      )}
+                    )*/}
     </main>
   );
 };
