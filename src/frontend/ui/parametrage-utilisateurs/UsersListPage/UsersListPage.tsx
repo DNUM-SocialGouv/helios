@@ -11,7 +11,7 @@ import { InstitutionModel } from "../../../../../database/models/InstitutionMode
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../database/models/RoleModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
-//import { formatDateAndHours } from "../../../utils/dateUtils";
+import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import AdvancedFilter from "./Pagination/Filter/AdvancedFilter/AdvancedFilter";
 import ItemsPerPage from "./Pagination/ItemsPerPage/ItemsPerPage";
@@ -19,18 +19,18 @@ import PaginationBtn from "./Pagination/PaginationBtn/PaginationBtn";
 import TheadTable from "./Pagination/TheadTable/TheadTable";
 import styles from "./UsersListPage.module.css";
 
-/*function greaterThanNMonths(inputDate: Date, n: number): boolean {
+function greaterThanNMonths(inputDate: Date, n: number): boolean {
   const NMonthsAgo = new Date();
   NMonthsAgo.setMonth(new Date().getMonth() - n);
   return new Date(inputDate) < NMonthsAgo;
-}*/
+}
 
-/*function getUserStatus(lastConnectionDate: Date): string {
+function getUserStatus(lastConnectionDate: Date): string {
   if (greaterThanNMonths(lastConnectionDate, 6) || lastConnectionDate === null) {
     return "Inactif";
   }
   return "Actif";
-}*/
+}
 
 export interface iPaginationData {
   institutionId: number;
@@ -232,7 +232,6 @@ const UsersListPage = ({
 
   return (
     <main className="fr-container">
-      test debug 11
       {userData && (
         <>
           <h1 className={`fr-mb-4w ${styles["title"]}`}>{wording.PAGE_UTILISATEUR_TITRE}</h1>
@@ -307,8 +306,6 @@ const UsersListPage = ({
                                   })
                                   .map((profil: string, i: number, { length }: any) => {
                                     const pr = profiles.filter((item) => item.code === profil);
-                                    /* eslint-disable no-console */
-                                    console.log("debug pr -> ", pr);
                                     let seperator = ", ";
                                     //last element
                                     if (i + 1 === length) {
@@ -320,19 +317,13 @@ const UsersListPage = ({
                                           {pr[0].label}
                                           {seperator}
                                         </span>
-                                        {
-                                          /* eslint-disable no-console */
-                                          console.log("debug user.profils -> ", user.profils)
-                                        }
                                         <span className={`fr-text--xs `}>debug</span>
                                       </>
                                     );
                                   })}
                             </td>
-                            <td className={styles["widthTD-date"]}>
-                              {/*user?.lastConnectionDate && formatDateAndHours(user?.lastConnectionDate?.toString())*/}
-                            </td>
-                            <td className={styles["widthTD-etat"]}>{/*getUserStatus(user.lastConnectionDate)*/}</td>
+                            <td className={styles["widthTD-date"]}>{user?.lastConnectionDate && formatDateAndHours(user?.lastConnectionDate?.toString())}</td>
+                            <td className={styles["widthTD-etat"]}>{getUserStatus(user.lastConnectionDate)}</td>
                           </tr>
                         );
                       })}
