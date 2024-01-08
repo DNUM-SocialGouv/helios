@@ -87,7 +87,8 @@ type UsersListPageProps = Readonly<{
   sortDirPage: string;
 }>;
 
-const UsersListPage = ({ users,
+const UsersListPage = ({
+  users,
   keyWord,
   institutions,
   profiles,
@@ -101,26 +102,26 @@ const UsersListPage = ({ users,
   userSessionRole,
   orderByPage,
   sortDirPage,
-  }:UsersListPageProps) => {
+}: UsersListPageProps) => {
   const [userData, setUserData] = useState<UtilisateurModel[]>(users.data);
   const [total, setTotal] = useState(users.total);
   const [lastPage, setLastPage] = useState(users.lastPage);
 
-  const [key , setKey] = useQueryState<string>("key", parseAsString.withDefault(keyWord));
-  const [institutionId , setInstitutionId] = useQueryState("institutionId", parseAsInteger.withDefault(institution));
-  const [roleId , setRoleId] = useQueryState("roleId", parseAsInteger.withDefault(role));
-  const [profileId , setProfileId] = useQueryState("profileId", parseAsString.withDefault(profile));
-  const [etatId , setEtatId] = useQueryState("etatId", parseAsString.withDefault(etat));
+  const [key, setKey] = useQueryState<string>("key", parseAsString.withDefault(keyWord));
+  const [institutionId, setInstitutionId] = useQueryState("institutionId", parseAsInteger.withDefault(institution));
+  const [roleId, setRoleId] = useQueryState("roleId", parseAsInteger.withDefault(role));
+  const [profileId, setProfileId] = useQueryState("profileId", parseAsString.withDefault(profile));
+  const [etatId, setEtatId] = useQueryState("etatId", parseAsString.withDefault(etat));
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(users.currentPage));
- const [statusCode] = useQueryState("status", parseAsString.withDefault(status ? status : ""));
-  const [itemsPerPage , setItemsPerPage] = useQueryState("itemsPerPage", parseAsInteger.withDefault(itemsPerPageValue));
+  const [statusCode] = useQueryState("status", parseAsString.withDefault(status ? status : ""));
+  const [itemsPerPage, setItemsPerPage] = useQueryState("itemsPerPage", parseAsInteger.withDefault(itemsPerPageValue));
 
-  const [orderBy , setOrderBy] = useQueryState("orderBy", parseAsString.withDefault(orderByPage));
-  const [sortDir , setSortDir] = useQueryState("sortDir", parseAsString.withDefault(sortDirPage));
+  const [orderBy, setOrderBy] = useQueryState("orderBy", parseAsString.withDefault(orderByPage));
+  const [sortDir, setSortDir] = useQueryState("sortDir", parseAsString.withDefault(sortDirPage));
 
   const { wording } = useDependencies();
 
-   const getUsersAndRefresh = useCallback(
+  const getUsersAndRefresh = useCallback(
     async (
       params: string | string[][] | Record<string, string> | URLSearchParams | undefined,
       setUserData: (arg0: any) => void,
@@ -142,7 +143,7 @@ const UsersListPage = ({ users,
     },
     [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page, sortDir, orderBy]
   );
-  
+
   const paginationData: iPaginationData = {
     institutionId: institutionId,
     institutions: institutions,
@@ -174,7 +175,7 @@ const UsersListPage = ({ users,
     setTotal: setTotal,
   };
 
-    useEffect(() => {
+  useEffect(() => {
     let orderByData = {};
     if (orderBy) {
       orderByData = { orderBy: orderBy };
@@ -227,7 +228,7 @@ const UsersListPage = ({ users,
       itemsPerPage: itemsPerPage.toString(),
     };
     getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
-  }, [institutionId, roleId, profileId, etatId, itemsPerPage, key, page, sortDir, orderBy]);*/
+  }, [institutionId, roleId, profileId, etatId, itemsPerPage, key, page, sortDir, orderBy]);
 
   return (
     <main className="fr-container">
