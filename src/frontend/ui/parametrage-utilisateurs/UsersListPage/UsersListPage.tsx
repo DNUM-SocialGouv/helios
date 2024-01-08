@@ -232,7 +232,7 @@ const UsersListPage = ({
 
   return (
     <main className="fr-container">
-      test debug 07
+      test debug 08
       {userData && (
         <>
           <h1 className={`fr-mb-4w ${styles["title"]}`}>{wording.PAGE_UTILISATEUR_TITRE}</h1>
@@ -310,6 +310,10 @@ const UsersListPage = ({
                                       {pr[0].label}
                                       {seperator}
                                   </span>*/}
+                                      {
+                                        /* eslint-disable no-console */
+                                        console.log("debug user.profils -> ", user.profils)
+                                      }
                                       <span className={`fr-text--xs `}>debug</span>
                                     </>
                                   );
