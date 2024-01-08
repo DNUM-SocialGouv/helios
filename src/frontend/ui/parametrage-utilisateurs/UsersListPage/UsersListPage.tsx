@@ -4,20 +4,20 @@ import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 
-/*import { useQueryState, parseAsInteger, parseAsString } from "next-usequerystate";
-import { useCallback, useEffect, useState } from "react";*/
+import { useQueryState, parseAsInteger, parseAsString } from "next-usequerystate";
+import { useCallback, useEffect, useState } from "react";
 
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../database/models/RoleModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
-/*import { formatDateAndHours } from "../../../utils/dateUtils";
+//import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import AdvancedFilter from "./Pagination/Filter/AdvancedFilter/AdvancedFilter";
 import ItemsPerPage from "./Pagination/ItemsPerPage/ItemsPerPage";
 import PaginationBtn from "./Pagination/PaginationBtn/PaginationBtn";
-import TheadTable from "./Pagination/TheadTable/TheadTable";
-import styles from "./UsersListPage.module.css";*/
+//import TheadTable from "./Pagination/TheadTable/TheadTable";
+import styles from "./UsersListPage.module.css";
 
 /*function greaterThanNMonths(inputDate: Date, n: number): boolean {
   const NMonthsAgo = new Date();
@@ -87,7 +87,7 @@ type UsersListPageProps = Readonly<{
   sortDirPage: string;
 }>;
 
-const UsersListPage = ({}: /*users,
+const UsersListPage = ({ users,
   keyWord,
   institutions,
   profiles,
@@ -100,9 +100,9 @@ const UsersListPage = ({}: /*users,
   itemsPerPageValue,
   userSessionRole,
   orderByPage,
-  sortDirPage,*/
-UsersListPageProps) => {
-  /*const [userData, setUserData] = useState<UtilisateurModel[]>(users.data);
+  sortDirPage,
+  }:UsersListPageProps) => {
+  const [userData, setUserData] = useState<UtilisateurModel[]>(users.data);
   const [total, setTotal] = useState(users.total);
   const [lastPage, setLastPage] = useState(users.lastPage);
 
@@ -117,10 +117,10 @@ UsersListPageProps) => {
 
   const [orderBy , setOrderBy] = useQueryState("orderBy", parseAsString.withDefault(orderByPage));
   const [sortDir , setSortDir] = useQueryState("sortDir", parseAsString.withDefault(sortDirPage));
-*/
-  //const { wording } = useDependencies();
 
-  /* const getUsersAndRefresh = useCallback(
+  const { wording } = useDependencies();
+
+   const getUsersAndRefresh = useCallback(
     async (
       params: string | string[][] | Record<string, string> | URLSearchParams | undefined,
       setUserData: (arg0: any) => void,
@@ -141,8 +141,8 @@ UsersListPageProps) => {
         });
     },
     [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page, sortDir, orderBy]
-  );*/
-  /*
+  );
+  
   const paginationData: iPaginationData = {
     institutionId: institutionId,
     institutions: institutions,
@@ -172,9 +172,9 @@ UsersListPageProps) => {
     setOrderBy: setOrderBy,
     setSortDir: setSortDir,
     setTotal: setTotal,
-  };*/
+  };
 
-  /*  useEffect(() => {
+    useEffect(() => {
     let orderByData = {};
     if (orderBy) {
       orderByData = { orderBy: orderBy };
@@ -231,8 +231,8 @@ UsersListPageProps) => {
 
   return (
     <main className="fr-container">
-      test débogage 01
-      {/*userData && (
+      test debug 02
+      {userData && (
         <>
           <h1 className={`fr-mb-4w ${styles["title"]}`}>{wording.PAGE_UTILISATEUR_TITRE}</h1>
 
@@ -262,7 +262,7 @@ UsersListPageProps) => {
           ) : (
             <div>
               <div className={"fr-table fr-table--blue-ecume fr-mt-2w " + styles["align"]}>
-                <table>
+                {/*<table>
                   <TheadTable paginationData={paginationData} />
                   <tbody>
                     {userData &&
@@ -318,6 +318,7 @@ UsersListPageProps) => {
                       })}
                   </tbody>
                 </table>
+                    */}
                 <div className={`${styles["pagination-container"]}`}>
                   <div className={`${styles["paginationBtn-container"]}`}>
                     <PaginationBtn paginationData={paginationData} />
@@ -330,7 +331,7 @@ UsersListPageProps) => {
             </div>
           )}
         </>
-                    )*/}
+      )}
     </main>
   );
 };
