@@ -5,9 +5,11 @@ import fs from "fs";
 import path from "path";
 import { DataSource, ILike, ArrayContains, LessThan, MoreThan } from "typeorm";
 
+import { FavorisModel } from "../../../../../database/models/FavorisModel";
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../database/models/RoleModel";
+import { SearchHistoryModel } from "../../../../../database/models/SearchHistoryModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 import { generateToken } from "../../../jwtHelper";
 import { Institution } from "../../../métier/entities/Utilisateur/Institution";
@@ -299,7 +301,9 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     try {
       const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: userCode } });
 
-      if (user) {
+      if (user && user.id) {
+        await (await this.orm).getRepository(FavorisModel).delete({ userId: user?.code as unknown as string });
+        await (await this.orm).getRepository(SearchHistoryModel).delete({ userId: user?.code as unknown as string });
         await (await this.orm).getRepository(UtilisateurModel).remove(user);
 
         return "User deleted successfully";

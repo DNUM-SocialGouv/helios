@@ -37,8 +37,6 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  // eslint-disable-next-line no-console
-  console.log('call check admin');
   if (await checkAdminRole(req, res)) {
     await handler(req, res);
   }
