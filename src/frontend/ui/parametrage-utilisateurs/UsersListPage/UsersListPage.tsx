@@ -238,13 +238,13 @@ const UsersListPage = ({
 
           {statusCode === "edit_successfully" && (
             <div className="fr-alert fr-alert--success fr-alert--sm fr-mb-3w">
-              <p>La modification de l`utilisateur a été effectuée avec succès.</p>
+              <p>La modification de l&apos;utilisateur a été effectuée avec succès.</p>
             </div>
           )}
 
           {statusCode === "deleted_successfully" && (
             <div className="fr-alert fr-alert--success fr-alert--sm fr-mb-3w">
-              <p>La suppression de l`utilisateur a été effectuée avec succès.</p>
+              <p>La suppression de l&apos;utilisateur a été effectuée avec succès.</p>
             </div>
           )}
 
