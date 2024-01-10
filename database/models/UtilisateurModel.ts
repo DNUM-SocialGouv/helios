@@ -17,7 +17,7 @@ export class UtilisateurModel {
   @Column({ name: "ut_prenom" })
   public prenom!: string;
 
-  @Column({ name: "ut_email" })
+  @Column({ name: "ut_email", unique: true })
   public email!: string;
 
   @BeforeInsert()
