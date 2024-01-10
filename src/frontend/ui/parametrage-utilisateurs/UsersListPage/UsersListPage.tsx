@@ -14,7 +14,6 @@ import { UtilisateurModel } from "../../../../../database/models/UtilisateurMode
 import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import AdvancedFilter from "./Pagination/Filter/AdvancedFilter/AdvancedFilter";
-import ItemsPerPage from "./Pagination/ItemsPerPage/ItemsPerPage";
 import PaginationBtn from "./Pagination/PaginationBtn/PaginationBtn";
 import TheadTable from "./Pagination/TheadTable/TheadTable";
 import styles from "./UsersListPage.module.css";
@@ -335,9 +334,7 @@ const UsersListPage = ({
                   <div className={`${styles["paginationBtn-container"]}`}>
                     <PaginationBtn paginationData={paginationData} />
                   </div>
-                  <div className={`${styles["itemsPerPage-container"]}`}>
-                    <ItemsPerPage paginationData={paginationData} />
-                  </div>
+                  <div className={`${styles["itemsPerPage-container"]}`}>{/*<ItemsPerPage paginationData={paginationData} />*/}</div>
                 </div>
               </div>
             </div>

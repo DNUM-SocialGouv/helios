@@ -41,9 +41,8 @@ export const RegistrationForm = () => {
           setEmail("");
           setEmailSent(true);
           setErrorMessage("");
-
-          setClickBtnSend(false);
         }
+        setClickBtnSend(false);
       })
       .catch(() => {
         router.push("/connexion");
