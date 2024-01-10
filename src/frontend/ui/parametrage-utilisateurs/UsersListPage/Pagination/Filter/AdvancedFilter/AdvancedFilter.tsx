@@ -116,11 +116,12 @@ const AdvancedFilter = ({
                   Toutes
                 </option>
 
-                {institutions.map((item) => (
-                  <option key={item.id} selected={institutionId === item.id} value={item.id}>
-                    {item.libelle}
-                  </option>
-                ))}
+                {institutions &&
+                  institutions.map((item) => (
+                    <option key={item.id} selected={institutionId === item.id} value={item.id}>
+                      {item.libelle}
+                    </option>
+                  ))}
               </select>
             </div>
           )}
@@ -135,11 +136,12 @@ const AdvancedFilter = ({
                 Tous
               </option>
 
-              {roles.map((item) => (
-                <option key={item.id} selected={roleId === item.id} value={item.id}>
-                  {item.libelle}
-                </option>
-              ))}
+              {roles &&
+                roles.map((item) => (
+                  <option key={item.id} selected={roleId === item.id} value={item.id}>
+                    {item.libelle}
+                  </option>
+                ))}
             </select>
           </div>
           <div className={`fr-select-group ${styles["filter-item"]}`}>
@@ -151,11 +153,12 @@ const AdvancedFilter = ({
                 Tous
               </option>
 
-              {profiles.map((item) => (
-                <option key={item.id} selected={profileId === item.code} value={item.code}>
-                  {item.label}
-                </option>
-              ))}
+              {profiles &&
+                profiles.map((item) => (
+                  <option key={item.id} selected={profileId === item.code} value={item.code}>
+                    {item.label}
+                  </option>
+                ))}
             </select>
           </div>
 
@@ -168,11 +171,12 @@ const AdvancedFilter = ({
                 Tous
               </option>
 
-              {etats.map((item) => (
-                <option key={item.id} selected={etatId === item.code} value={item.code}>
-                  {item.label}
-                </option>
-              ))}
+              {etats &&
+                etats.map((item) => (
+                  <option key={item.id} selected={etatId === item.code} value={item.code}>
+                    {item.label}
+                  </option>
+                ))}
             </select>
           </div>
           <div className={`fr-select-group ${styles["reset-filter-container"]}`}>
