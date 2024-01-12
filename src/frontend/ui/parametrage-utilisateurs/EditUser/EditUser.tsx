@@ -183,6 +183,13 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
               </label>
             </div>
 
+            <div className={styles["field_container"]}>
+              <label className="fr-label">
+                <div className={styles["label-field"]}>Date de dernière connexion : </div>
+                {user.lastConnectionDate && formatDateAndHours(user.lastConnectionDate.toString())}
+              </label>
+            </div>
+
             <form onSubmit={handleSubmit}>
               <div className="fr-select-group fr-mt-3w">
                 <label className="fr-label" htmlFor="institutionId">
