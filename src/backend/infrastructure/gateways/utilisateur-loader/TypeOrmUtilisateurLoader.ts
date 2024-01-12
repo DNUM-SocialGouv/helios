@@ -3,7 +3,7 @@ import { createHash } from "crypto";
 import { format } from "date-fns";
 import fs from "fs";
 import path from "path";
-import { DataSource, ILike, ArrayContains, LessThan, MoreThan } from "typeorm";
+import { DataSource, ILike, ArrayContains, LessThan, MoreThan, IsNull } from "typeorm";
 
 import { FavorisModel } from "../../../../../database/models/FavorisModel";
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
@@ -207,12 +207,19 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       { nom: ILike("%" + key.toString() + "%"), ...selectConditions },
       { prenom: ILike("%" + key.toString() + "%"), ...selectConditions },
       { email: ILike("%" + key.toString() + "%"), ...selectConditions },
+
+      etatId === "inactif" && [
+        { nom: ILike("%" + key.toString() + "%"), ...selectConditions, lastConnectionDate: IsNull() },
+        { prenom: ILike("%" + key.toString() + "%"), ...selectConditions, lastConnectionDate: IsNull() },
+        { email: ILike("%" + key.toString() + "%"), ...selectConditions, lastConnectionDate: IsNull() },
+      ],
     ];
 
     const currentPageA: number = parseInt(currentPage as any) || 1;
 
     const take = itemsPerPage || 10;
 
+    // @ts-ignore
     const total = await utilisateurRepo.countBy(conditions);
 
     let orders = {};
@@ -244,6 +251,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     }
 
     const data = await utilisateurRepo.find({
+      // @ts-ignore
       where: conditions,
       order: orders,
       take,
