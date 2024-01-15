@@ -15,6 +15,7 @@ import { RoleModel } from "../../../../../database/models/RoleModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
+import { useBreadcrumb } from "../../commun/hooks/useBreadcrumb";
 import ConfirmDeleteModalEditPage from "../UsersListPage/ConfirmDeleteModal/ConfirmDeleteModalEditPage";
 import styles from "./EditUser.module.css";
 
@@ -37,7 +38,6 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
     profiles: [...user.profils],
   });
 
-  const { wording } = useDependencies();
   const { push } = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,8 +55,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
     }
   };
 
-  const redirectPage = (url: string) => {
-    redirectPage;
+  const redirectPage = (url: string, getOnly = false) => {
     let queryParams = "?";
     if (url.includes("?")) {
       queryParams = "&";
@@ -82,8 +81,25 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
     if (searchParams.get("etatId")) {
       queryParams += "&etatId=" + searchParams.get("etatId");
     }
-    push(url + queryParams);
+    if (getOnly) {
+      return url + queryParams;
+    } else {
+      push(url + queryParams);
+      return url + queryParams;
+    }
   };
+
+  const { wording } = useDependencies();
+  useBreadcrumb([
+    {
+      label: wording.PAGE_UTILISATEUR_TITRE,
+      path: redirectPage("/settings/users", true),
+    },
+    {
+      label: `${user.prenom} ${user.nom}`,
+      path: "",
+    },
+  ]);
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -103,7 +119,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
       headers: { "Content-Type": "application/json" },
       method: "POST",
     }).then(() => {
-      redirectPage("/settings/users?status=edit_successfully&");
+      redirectPage("/settings/users?status=edit_successfully");
     });
   }
   //only "Admin national" can update itself || Admin regional cant update, delete, reactivate to (Admin National And/or Admin Regional)

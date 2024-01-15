@@ -25,7 +25,7 @@ type RouterProps = Readonly<{
 export default function Router({ user, institutions, profiles, roles }: RouterProps) {
   const { wording } = useDependencies();
 
-  useBreadcrumb([
+  /*useBreadcrumb([
     {
       label: wording.PAGE_UTILISATEUR_TITRE,
       path: "/settings/users",
@@ -34,7 +34,7 @@ export default function Router({ user, institutions, profiles, roles }: RouterPr
       label: `${user.prenom} ${user.nom}`,
       path: "",
     },
-  ]);
+  ]);*/
   return <EditUser institutions={institutions} profiles={profiles} roles={roles} user={user} />;
 }
 
@@ -60,7 +60,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       };
     }
 
-    const user = await getUserByCodeEndpoint(dependencies, params['userCode'] as string);
+    const user = await getUserByCodeEndpoint(dependencies, params["userCode"] as string);
 
     if (!user) {
       return {
