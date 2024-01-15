@@ -10,8 +10,6 @@ import { getAllRolesEndpoint } from "../../../backend/infrastructure/controllers
 import { getInstitutionsEndpoint } from "../../../backend/infrastructure/controllers/getInstitutionsEndpoint";
 import { getUserByCodeEndpoint } from "../../../backend/infrastructure/controllers/getUserByCodeEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
-import { useDependencies } from "../../../frontend/ui/commun/contexts/useDependencies";
-import { useBreadcrumb } from "../../../frontend/ui/commun/hooks/useBreadcrumb";
 import { EditUser } from "../../../frontend/ui/parametrage-utilisateurs/EditUser/EditUser";
 
 type RouterProps = Readonly<{
@@ -23,18 +21,6 @@ type RouterProps = Readonly<{
 }>;
 
 export default function Router({ user, institutions, profiles, roles }: RouterProps) {
-  const { wording } = useDependencies();
-
-  /*useBreadcrumb([
-    {
-      label: wording.PAGE_UTILISATEUR_TITRE,
-      path: "/settings/users",
-    },
-    {
-      label: `${user.prenom} ${user.nom}`,
-      path: "",
-    },
-  ]);*/
   return <EditUser institutions={institutions} profiles={profiles} roles={roles} user={user} />;
 }
 
