@@ -287,6 +287,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         user.profils = profilsCode;
         user.prenom = firstname;
         user.nom = lastname;
+        user.dateModification = new Date();
       }
 
       (await this.orm)

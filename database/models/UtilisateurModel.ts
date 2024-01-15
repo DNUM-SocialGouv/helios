@@ -52,7 +52,7 @@ export class UtilisateurModel {
   @CreateDateColumn({ name: "ut_date_creation" })
   public dateCreation!: Date;
 
-  @UpdateDateColumn({ name: "ut_date_modification" })
+  @Column({ name: "ut_date_modification" })
   public dateModification!: Date;
 
   @Column({ name: "ut_date_last_connection" })
