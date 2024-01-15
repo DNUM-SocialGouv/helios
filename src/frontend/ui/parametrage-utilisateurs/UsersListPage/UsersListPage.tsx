@@ -5,7 +5,6 @@ import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 
 import { useQueryState, parseAsInteger, parseAsString } from "next-usequerystate";
-import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
@@ -175,37 +174,7 @@ const UsersListPage = ({
     setTotal: setTotal,
   };
 
-  const searchParams = useSearchParams();
-
   const getQueryParams = () => {
-    let queryParams = "";
-
-    if (searchParams.get("page")) {
-      queryParams += "page=" + searchParams.get("page");
-    }
-    if (searchParams.get("itemsPerPage")) {
-      queryParams += "&itemsPerPage=" + searchParams.get("itemsPerPage");
-    }
-    if (searchParams.get("key")) {
-      queryParams += "&key=" + searchParams.get("key");
-    }
-    if (parseInt(searchParams.get("institutionId") as string) > 0) {
-      queryParams += "&institutionId=" + searchParams.get("institutionId");
-    }
-    if (parseInt(searchParams.get("roleId") as string) > 0) {
-      queryParams += "&roleId=" + searchParams.get("roleId");
-    }
-    if (searchParams.get("profileId")) {
-      queryParams += "&profileId=" + searchParams.get("profileId");
-    }
-    if (searchParams.get("etatId")) {
-      queryParams += "&etatId=" + searchParams.get("etatId");
-    }
-
-    return queryParams;
-  };
-
-  useEffect(() => {
     let orderByData = {};
     if (orderBy) {
       orderByData = { orderBy: orderBy };
@@ -257,6 +226,13 @@ const UsersListPage = ({
       ...sortDirdData,
       itemsPerPage: itemsPerPage.toString(),
     };
+
+    return params;
+  };
+  const queryParams = new URLSearchParams(getQueryParams());
+
+  useEffect(() => {
+    const params = getQueryParams();
     getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
   }, [institutionId, roleId, profileId, etatId, itemsPerPage, key, page, sortDir, orderBy]);
 
@@ -302,17 +278,17 @@ const UsersListPage = ({
                         return (
                           <tr key={user.id}>
                             <td className={styles["widthTD-small"]}>
-                              <a className="fr-raw-link" href={`/settings/users/${user.code}?${getQueryParams()}`}>
+                              <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`}>
                                 {user.nom}
                               </a>
                             </td>
                             <td className={styles["widthTD-small"]}>
-                              <a className="fr-raw-link" href={`/settings/users/${user.code}?${getQueryParams()}`}>
+                              <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`}>
                                 {user.prenom}
                               </a>
                             </td>
                             <td className={styles["widthTD-small"]}>
-                              <a className="fr-raw-link" href={`/settings/users/${user.code}?${getQueryParams()}`}>
+                              <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`}>
                                 {user.email}
                               </a>
                             </td>

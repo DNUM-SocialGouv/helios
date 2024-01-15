@@ -46,6 +46,7 @@ const TheadTable = ({
     {
       name: "Statut",
       slug: "etat",
+      className: "no-sort",
     },
   ];
 

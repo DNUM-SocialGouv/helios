@@ -245,6 +245,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         break;
       case "etat":
         orders = { lastConnectionDate: sortDir };
+
         break;
       default:
         orders = { nom: "ASC" };
