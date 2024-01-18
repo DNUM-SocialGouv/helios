@@ -3,7 +3,7 @@ import { createHash } from "crypto";
 import { format } from "date-fns";
 import fs from "fs";
 import path from "path";
-import { DataSource, ILike, ArrayContains, LessThan, MoreThan, IsNull } from "typeorm";
+import { DataSource, ILike, ArrayContains, LessThan, MoreThan, IsNull, Not } from "typeorm";
 
 import { FavorisModel } from "../../../../../database/models/FavorisModel";
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
@@ -198,7 +198,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         EtatCondition = { lastConnectionDate: LessThanDate(NMonthsAgo) };
         break;
       default:
-        EtatCondition = {};
+        EtatCondition = { lastConnectionDate: Not(IsNull()) };
     }
 
     const selectConditions = { ...institutionCondition, ...roleCondition, ...profilCondition, ...EtatCondition };
@@ -207,12 +207,6 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       { nom: ILike("%" + key.toString() + "%"), ...selectConditions },
       { prenom: ILike("%" + key.toString() + "%"), ...selectConditions },
       { email: ILike("%" + key.toString() + "%"), ...selectConditions },
-
-      etatId === "inactif" && [
-        { nom: ILike("%" + key.toString() + "%"), ...selectConditions, lastConnectionDate: IsNull() },
-        { prenom: ILike("%" + key.toString() + "%"), ...selectConditions, lastConnectionDate: IsNull() },
-        { email: ILike("%" + key.toString() + "%"), ...selectConditions, lastConnectionDate: IsNull() },
-      ],
     ];
 
     const currentPageA: number = parseInt(currentPage as any) || 1;
