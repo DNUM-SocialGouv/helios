@@ -216,22 +216,22 @@ describe("La page établissement territorial - bloc budget et finances", () => {
 
       const titresBudgétairesEtDépensesEtRecettes = [
         {
-          dépense: "−3 254 417 €",
+          dépense: "3 254 418 €",
           recette: "3 540 117 €",
           titreBudgétaire: wording.TOTAL,
         },
         {
-          dépense: "−129 491 €",
+          dépense: "129 491 €",
           recette: "3 388 394 €",
           titreBudgétaire: wording.GROUPE_I,
         },
         {
-          dépense: "−2 718 457 €",
+          dépense: "2 718 457 €",
           recette: "22 231 €",
           titreBudgétaire: wording.GROUPE_II,
         },
         {
-          dépense: "−406 469 €",
+          dépense: "406 469 €",
           recette: "129 491 €",
           titreBudgétaire: wording.GROUPE_III,
         },
@@ -272,7 +272,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       const lignes = within(tbody).getAllByRole("row");
       const colonne1Ligne1 = within(lignes[0]).getByRole("cell", { name: wording.TOTAL });
       expect(colonne1Ligne1).toBeInTheDocument();
-      const colonne2Ligne1 = within(lignes[0]).getByRole("cell", { name: "−1 613 142 €" });
+      const colonne2Ligne1 = within(lignes[0]).getByRole("cell", { name: "1 613 142 €" });
       expect(colonne2Ligne1).toBeInTheDocument();
       const colonne3Ligne1 = within(lignes[0]).getByRole("cell", { name: "1 633 422 €" });
       expect(colonne3Ligne1).toBeInTheDocument();
@@ -294,19 +294,19 @@ describe("La page établissement territorial - bloc budget et finances", () => {
 
       const dépensesEtRecettes = [
         {
-          dépense: "−1 392 795 €",
+          dépense: "1 392 795 €",
           recette: "1 400 085 €",
         },
         {
-          dépense: "−161 786 €",
+          dépense: "161 786 €",
           recette: "1 376 745 €",
         },
         {
-          dépense: "−1 222 577 €",
+          dépense: "1 222 577 €",
           recette: "23 340 €",
         },
         {
-          dépense: "−8 433 €",
+          dépense: "8 433 €",
           recette: "0 €",
         },
       ];

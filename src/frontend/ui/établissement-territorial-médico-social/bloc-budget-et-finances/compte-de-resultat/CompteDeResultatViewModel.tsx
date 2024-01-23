@@ -54,13 +54,13 @@ export class CompteDeResultatViewModel {
     const dépensesOuCharges = [];
     if (budgetEtFinance.cadreBudgétaire === CadreBudgétaire.CA_PA) {
       const totalDesCharges = budgetEtFinance.chargesEtProduits.charges as number;
-      dépensesOuCharges.push(totalDesCharges);
+      dépensesOuCharges.push(Math.abs(totalDesCharges));
     } else {
       const dépensesGroupeI = budgetEtFinance.recettesEtDépenses.dépensesGroupe1 as number;
       const dépensesGroupeII = budgetEtFinance.recettesEtDépenses.dépensesGroupe2 as number;
       const dépensesGroupeIII = budgetEtFinance.recettesEtDépenses.dépensesGroupe3 as number;
       const totalDesDépenses = dépensesGroupeI + dépensesGroupeII + dépensesGroupeIII;
-      dépensesOuCharges.push(totalDesDépenses, dépensesGroupeI, dépensesGroupeII, dépensesGroupeIII);
+      dépensesOuCharges.push(Math.abs(totalDesDépenses), Math.abs(dépensesGroupeI), Math.abs(dépensesGroupeII), Math.abs(dépensesGroupeIII));
     }
 
     return new HistogrammeData(
@@ -72,7 +72,7 @@ export class CompteDeResultatViewModel {
           data: dépensesOuCharges,
           backgroundColor: this.getLineColors(),
           label: this.entêtesDesAutresColonnes(budgetEtFinance)[0],
-          isError: dépensesOuCharges.map((depenses) => depenses > 0),
+          // isError: dépensesOuCharges.map((depenses) => depenses > 0),
         },
       ],
       StringFormater.formatInEuro
