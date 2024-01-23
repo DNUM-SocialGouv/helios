@@ -25,7 +25,10 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   }
 
   public get annéeInitiale() {
-    return this.budgetEtFinance[this.budgetEtFinance.length - 1]?.année;
+    const years = this.budgetEtFinance.filter((budgetEtFinance) => !this.compteResultatVide(budgetEtFinance)).map((budgetFinance) => budgetFinance.année);
+    const anneesTriees = years.sort((année1, année2) => année2 - année1);
+    return anneesTriees[0];
+    //return this.budgetEtFinance[this.budgetEtFinance.length - 1]?.année;
   }
 
   budgetEtFinanceEnCours(annéeEnCours: number): EntitéJuridiqueBudgetFinance {
