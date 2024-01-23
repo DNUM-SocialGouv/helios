@@ -1,0 +1,99 @@
+.cookies-modal {
+  position: absolute;
+  bottom: 50px;
+  left: 70px;
+  width: 1200px;
+}
+
+.fr-modal__footer {
+  padding: 8px 2rem 1rem 2rem;
+  margin-top: -2.5rem;
+}
+.politique_link {
+  padding: 0 2rem 1rem 2rem;
+}
+.label_input {
+  margin-bottom: 0;
+}
+.fr-fieldset {
+  align-items: flex-end;
+  border: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0 -12px 1rem 1rem;
+  float: right;
+  padding-top: 0px;
+}
+
+.fr-fieldset__element {
+  flex: 1 1 100%;
+  margin: 0 8px 1rem 8px;
+  max-width: 100%;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.fr-fieldset__element--inline {
+  flex: 0 0 auto;
+}
+.fr-fieldset__sep {
+  border-left: 1px solid #c2c9d6;
+  color: white;
+  user-select: none;
+  padding: 0;
+}
+
+.fr-radio-group {
+  max-width: -moz-max-content;
+  max-width: max-content;
+  position: relative;
+}
+
+.fr-radio-groupInputRadioLabel {
+  -webkit-tap-highlight-color: transparent;
+  align-items: flex-start;
+  background-image: radial-gradient(transparent 10px, #000091 11px, transparent 12px);
+  background-image: radial-gradient(transparent 10px, var(--background-action-high-blue-france) 11px, transparent 12px);
+  background-position: calc(-4px + 1px) calc(-4px + 1px), calc(-4px + 1px) calc(-4px + 1px);
+  background-repeat: no-repeat, no-repeat;
+  background-size: 1.875rem 1.875rem, 1.875rem 1.875rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-left: 2rem;
+}
+
+.fr-radio-groupInputRadio {
+  height: 1.5rem;
+  margin: 0;
+  opacity: 0;
+  position: absolute;
+  width: 1.5rem;
+}
+
+.InputRadioChecked {
+  background-image: radial-gradient(transparent 10px, #000091 11px, transparent 12px), radial-gradient(#000091 5px, transparent 6px);
+  background-image: radial-gradient(transparent 10px, var(--background-action-high-blue-france) 11px, transparent 12px),
+    radial-gradient(var(--background-action-high-blue-france) 5px, transparent 6px);
+}
+
+.row-input {
+  display: flow-root;
+}
+.row-input-sep,
+.row-input-sep-2 {
+  border-bottom: 1px solid #c2c9d6;
+  margin-bottom: 1.4rem;
+  padding-bottom: 1rem;
+}
+
+.row-input-sep-2 {
+  padding-bottom: 10.4px;
+}
+.textBold {
+  font-weight: 900;
+}
+.fr-modal__title {
+  font-size: 1.6rem;
+}
