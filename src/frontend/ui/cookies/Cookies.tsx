@@ -198,7 +198,7 @@ export const Cookies = () => {
                   </div>
 
                   <div className={styles["row-input"]}>
-                    <h2 className={`fr-modal__title ${styles["fr-modal__title"]} }`}>Mesure d'audience</h2>
+                    <h2 className={`fr-modal__title ${styles["fr-modal__title"]} }`}>Mesure d&apos;audience</h2>
 
                     <fieldset aria-labelledby="radio-inline-legend radio-inline-messages" className={styles["fr-fieldset"]}>
                       <div className={`${styles["fr-fieldset__element"]} ${styles["fr-fieldset__element--inline"]}`}>
@@ -245,7 +245,7 @@ export const Cookies = () => {
                       <span className={`${styles["textBold"]} `}>AT internet</span>
                       <br />
                       {allowCookies === "true" ? "interdit" : "autorisé"}
-                      <br />- {allowCookies === "true" ? "Ce service n'a installé aucun cookie" : "Ce service peut installer 4 cookies."}
+                      <br />- {allowCookies === "true" ? "Ce service n'a installé aucun cookie" : "Ce service peut déposer 4 cookies."}
                       <br />
                       <Link className="fr-mr-1w" href="https://tarteaucitron.io/en/service/atinternet" target="_blank">
                         En savoir plus
