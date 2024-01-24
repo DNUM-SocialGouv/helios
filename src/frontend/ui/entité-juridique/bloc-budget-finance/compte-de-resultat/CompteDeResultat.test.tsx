@@ -21,11 +21,11 @@ describe("CompteDeResultat", () => {
         {
           année: 2022,
           dateMiseÀJourSource: "2022-01-20",
-          depensesTitreIGlobal: -100,
+          depensesTitreIGlobal: -101,
           depensesTitreIIGlobal: -200,
           depensesTitreIIIGlobal: -300,
           depensesTitreIVGlobal: -400,
-          totalDepensesGlobal: -1000,
+          totalDepensesGlobal: -1001,
           recettesTitreIGlobal: 100,
           recettesTitreIIGlobal: 200,
           recettesTitreIIIGlobal: 300,
@@ -139,9 +139,9 @@ describe("CompteDeResultat", () => {
       expect(transcriptionTable.getByText(wording.PRODUITS_PRINCIPAUX)).toBeInTheDocument();
       expect(transcriptionTable.getByText(wording.PRODUITS_ANNEXES)).toBeInTheDocument();
       expect(transcriptionTable.getByText(wording.PRODUITS)).toBeInTheDocument();
-      expect(transcriptionTable.getByText("−900 €")).toBeInTheDocument();
-      expect(transcriptionTable.getByText("−110 €")).toBeInTheDocument();
-      expect(transcriptionTable.getByText("−1 000 €")).toBeInTheDocument();
+      expect(transcriptionTable.getByText("900 €")).toBeInTheDocument();
+      expect(transcriptionTable.getByText("110 €")).toBeInTheDocument();
+      expect(transcriptionTable.getByText("1 001 €")).toBeInTheDocument();
       expect(transcriptionTable.getByText("940 €")).toBeInTheDocument();
       expect(transcriptionTable.getByText("1 000 €")).toBeInTheDocument();
       expect(transcriptionTable.getByText("60 €")).toBeInTheDocument();
