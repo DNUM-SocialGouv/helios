@@ -6050,6 +6050,7 @@ __metadata:
     ssh2-sftp-client: ^8.0.0
     stylelint: ^14.9.1
     stylelint-order: ^5.0.0
+    tarteaucitronjs: ^1.16.1
     ts-node: ^10.9.1
     ts-prune: ^0.10.3
     typeorm: ^0.3.6
@@ -11016,6 +11017,13 @@ __metadata:
     mkdirp: ^1.0.3
     yallist: ^4.0.0
   checksum: a04c07bb9e2d8f46776517d4618f2406fb977a74d914ad98b264fc3db0fe8224da5bec11e5f8902c5b9bcb8ace22d95fbe3c7b36b8593b7dfc8391a25898f32f
+  languageName: node
+  linkType: hard
+
+"tarteaucitronjs@npm:^1.16.1":
+  version: 1.16.1
+  resolution: "tarteaucitronjs@npm:1.16.1"
+  checksum: 919ee11764662ef6c593e0ecf5ce56980260cf1d524880b163322b79694ec7a56cc3ad0e4a1fbe26a4ade28f6dc453233370e59d54191c38f027e6435a71ce92
   languageName: node
   linkType: hard
 

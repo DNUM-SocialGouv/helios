@@ -101,6 +101,7 @@
     "react-dom": "18.0.0",
     "ssh2": "^1.9.0",
     "ssh2-sftp-client": "^8.0.0",
+    "tarteaucitronjs": "^1.16.1",
     "ts-node": "^10.9.1",
     "typeorm": "^0.3.6",
     "typescript": "^4.8.4",
