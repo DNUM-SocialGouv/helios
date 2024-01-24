@@ -24,6 +24,7 @@ import { DependenciesProvider } from "../frontend/ui/commun/contexts/useDependen
 import { UserContextProvider } from "../frontend/ui/commun/contexts/userContextProvider";
 import { Footer } from "../frontend/ui/commun/Footer/Footer";
 import { Header } from "../frontend/ui/commun/Header/Header";
+import { Cookies } from "../frontend/ui/cookies/Cookies";
 import { resizeChartOnPrint } from "../plugins/resizeChartAtPrint";
 
 export default function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
@@ -63,7 +64,6 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
       window.addEventListener("beforeunload", handleBeforeUnload);
     };
   }, []);
-
   return (
     <SessionProvider session={session}>
       <UserContextProvider>
@@ -72,10 +72,13 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
             <Head>
               <meta charSet="utf-8" />
               <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
+              {/*<script src="/tarteaucitron.min.js"></script>
+              <script src="/tarteaucitron.init.js"></script>*/}
             </Head>
             <Header />
             <Component {...pageProps} />
             <Footer />
+            <Cookies />
             <Script src="/dsfr.module.min.js" strategy="lazyOnload" type="module"></Script>
             <Script noModule src="/dsfr.nomodule.min.js" strategy="lazyOnload" type="text/javascript"></Script>
             {process.env.NODE_ENV !== "development" && <Script src="/smarttag.js" strategy="beforeInteractive" />}
