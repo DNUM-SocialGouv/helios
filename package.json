@@ -1,6 +1,6 @@
 {
   "name": "helios",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "private": true,
   "scripts": {
     "amibroken": "yarn deadcode && yarn lint && yarn typecheck && yarn test && yarn build",
@@ -61,7 +61,7 @@
     "test:accessibility": "lhci autorun",
     "test:mutation": "env-cmd -f .env.test npx stryker run",
     "test:typescript": "NODE_ENV=test yarn migrations:up && jest --runInBand",
-    "test:typescript:back": "NODE_ENV=test yarn migrations:up && jest --coverage --testMatch '<rootDir>/(src/backend|download_data_source)/**/*(*.)@(test).ts' --runInBand --colors",
+    "test:typescript:back": "NODE_ENV=test yarn migrations:up && jest --coverage --testMatch '<rootDir>/(src/backend|download_data_source)/**/*(*.)@(test).ts' --runInBand --colors --detectOpenHandles",
     "test:typescript:front": "NODE_ENV=test yarn migrations:up && jest --coverage --testMatch '<rootDir>/src/frontend/**/*(*.)@(test).ts?(x)' --max-workers 4 --colors",
     "test:typescript:watch": "yarn test:typescript --watch",
     "test:typescript:coverage": "yarn test:typescript --coverage",
@@ -83,6 +83,7 @@
     "bcrypt": "^5.1.0",
     "chart.js": "^3.8.0",
     "chartjs-plugin-datalabels": "^2.0.0",
+    "cookies-next": "^4.1.0",
     "crypto": "^1.0.1",
     "date-fns": "^2.30.0",
     "dompurify": "^3.0.6",
@@ -100,6 +101,7 @@
     "react-dom": "18.0.0",
     "ssh2": "^1.9.0",
     "ssh2-sftp-client": "^8.0.0",
+    "tarteaucitronjs": "^1.16.1",
     "ts-node": "^10.9.1",
     "typeorm": "^0.3.6",
     "typescript": "^4.8.4",
