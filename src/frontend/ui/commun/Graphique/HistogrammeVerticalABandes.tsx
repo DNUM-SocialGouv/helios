@@ -7,8 +7,6 @@ import stylesBlocActivité from "../../établissement-territorial-sanitaire/bloc
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
-import { couleurDelAbscisse } from "./couleursGraphique";
-
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
 function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuTooltip: Function, wording: Wording): ChartOptions<"bar"> {
@@ -16,7 +14,16 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuToo
     animation: false,
     elements: { bar: { borderWidth: 2 } },
     plugins: {
-      datalabels: { display: false },
+      datalabels: {
+        display: true,
+        color: "black",
+        formatter: (value) => {
+          return value.y;
+        },
+        anchor: "end",
+        align: "top",
+        offset: -6,
+      },
       // @ts-ignore
       htmlLegend: { containerID: idDeLaLégende },
       legend: { display: false },
@@ -24,18 +31,13 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuToo
     },
     responsive: true,
     scales: {
-      x: {
-        grid: { drawOnChartArea: false },
-        ticks: { color: "var(--text-default-grey)" },
-      },
-      y: {
-        grid: {
-          color: couleurDelAbscisse,
-          drawBorder: false,
+      y: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
         },
-        stacked: true,
-        ticks: { color: "var(--text-default-grey)" },
-      },
+      ],
     },
   };
 }
