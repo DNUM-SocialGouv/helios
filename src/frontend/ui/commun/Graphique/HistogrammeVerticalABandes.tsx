@@ -8,6 +8,7 @@ import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
+import { couleurDelAbscisse } from "./couleursGraphique";
 
 function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuTooltip: Function, wording: Wording): ChartOptions<"bar"> {
   return {
@@ -30,6 +31,20 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuToo
       tooltip: { callbacks: { label: créeLeLibelléDuTooltip(wording) } },
     },
     responsive: true,
+    scales: {
+      x: {
+        grid: { drawOnChartArea: false },
+        ticks: { color: "var(--text-default-grey)" },
+      },
+      y: {
+        grid: {
+          color: couleurDelAbscisse,
+          drawBorder: false,
+        },
+        stacked: true,
+        ticks: { color: "var(--text-default-grey)" },
+      },
+    },
   };
 }
 
