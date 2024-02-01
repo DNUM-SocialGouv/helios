@@ -30,15 +30,6 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuToo
       tooltip: { callbacks: { label: créeLeLibelléDuTooltip(wording) } },
     },
     responsive: true,
-    scales: {
-      y: [
-        {
-          ticks: {
-            beginAtZero: true,
-          },
-        },
-      ],
-    },
   };
 }
 
