@@ -4,19 +4,19 @@ import { loginEndpoint } from "../../../backend/infrastructure/controllers/login
 import { dependencies } from "../../../backend/infrastructure/dependencies";
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
-    if (request.method !== "POST") {
-        response.status(405).send("Method not allowed");
+  if (request.method !== "POST") {
+    return response.status(405).send("Method not allowed");
+  }
+  try {
+    const { email, password } = request.body;
+    const resp = await loginEndpoint(dependencies, email, password);
+    if (resp) {
+      delete resp.utilisateur?.password;
+      return response.status(200).json(resp);
+    } else {
+      return response.status(400).json(resp);
     }
-    try {
-        const { email, password } = request.body;
-        const resp = await loginEndpoint(dependencies, email, password);
-        if (resp) {
-            delete resp.utilisateur?.password;
-            return response.status(200).json(resp);
-        } else {
-            return response.status(400).json(resp);
-        }
-    } catch (error) {
-        return response.status(500);
-    }
+  } catch (error) {
+    return response.status(500);
+  }
 }

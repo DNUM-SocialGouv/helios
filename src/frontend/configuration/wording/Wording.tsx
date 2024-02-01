@@ -14,7 +14,6 @@ export interface Wording {
   readonly BACK_TO_CONNEXION: string;
   readonly APPLY: string;
 
-
   // Messages d'erreur
   readonly MISSING_EMAIL: string;
   readonly EMAIL_NOT_VALID: string;
@@ -60,12 +59,12 @@ export interface Wording {
   readonly EMAIL_ALREADY_USED: string;
 
   // Connexion
-  readonly CONNEXION_IDENTIFIANT: string
-  readonly CONNEXION_MOT_DE_PASSE: string
-  readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string
-  readonly FORGET_PASSEWORD: string
-  readonly FORGET_PASSEWORD_MESSAGE: string
-  readonly CONNEXION_LIBELLE: string
+  readonly CONNEXION_LIBELLE: string;
+  readonly CONNEXION_IDENTIFIANT: string;
+  readonly CONNEXION_MOT_DE_PASSE: string;
+  readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string;
+  readonly FORGET_PASSEWORD: string;
+  readonly FORGET_PASSEWORD_MESSAGE: string;
 
   // Recherche
   readonly RECHERCHE_DESCRIPTION: ReactElement;
@@ -382,6 +381,7 @@ export interface Wording {
   readonly CREATION_DATE: string;
   readonly PROFILE_CODE: string;
   readonly PARAMETRAGE_NEW_PROFILE: string;
+  readonly VOUS_NAVEZ_AUCUN_PROFIL: string;
 
   //  Profile page
   readonly USER_PROFILE: string;
@@ -394,4 +394,13 @@ export interface Wording {
   readonly ADMIN: string;
   readonly USER: string;
   readonly PROFILE: string;
+
+  // Utilisateur page
+  readonly STATUS: string;
+  readonly MODIFICATION_DATE: string;
+  readonly PAGE_UTILISATEUR_TITRE: string;
+  readonly AUCUN_ELEMENT_TROUVE: string;
+  readonly ROLE_: string;
+  readonly INSTITUTION: string;
+  readonly PAGE_EDIT_UTILISATEUR_TITRE: string;
 }

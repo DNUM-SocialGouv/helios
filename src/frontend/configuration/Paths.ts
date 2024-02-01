@@ -15,7 +15,9 @@ export class Paths {
   readonly FORGET_PASSWORD = '/mot-passe-oublie';
   readonly CHANGE_PASSWORD = '/change-mot-passe';
   readonly SETTINGS = '/settings';
-  readonly ADD_PROFILE = '/settings/add-profile';
+  readonly PROFILES_LIST = '/settings/profiles';
+  readonly ADD_PROFILE = '/settings/profiles/add-profile';
+  readonly USERS_LIST = '/settings/users';
   readonly REGISTRATION = '/registration';
   readonly REINITIALISATION_PASSWORD = '/reinitialisation-mot-passe';
   readonly CREATE_PASSWORD = '/creation-mot-passe';

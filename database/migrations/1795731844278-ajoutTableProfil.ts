@@ -1,11 +1,11 @@
-import { MigrationInterface, QueryRunner } from "typeorm"
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { DefaultProfile } from "../../src/frontend/configuration/DefaultProfile";
 
 export class ajoutTableProfil1795731844298 implements MigrationInterface {
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
-            CREATE TABLE profil(
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
+            CREATE TABLE public.profil(
                 profil_id bigserial NOT NULL,
                 profil_code uuid NOT NULL default gen_random_uuid(),
                 profil_label character varying(255) NOT NULL,
@@ -15,17 +15,16 @@ export class ajoutTableProfil1795731844298 implements MigrationInterface {
                 PRIMARY KEY (profil_id)
             );`);
 
-        await queryRunner.query(
-            `INSERT INTO profil(profil_label, profil_value, profil_date_creation) VALUES ($1, $2, $3)`,
-            ['Utilisateur lambda', DefaultProfile, new Date()]
-        );
+    await queryRunner.query(`INSERT INTO public.profil(profil_label, profil_value, profil_date_creation) VALUES ($1, $2, $3)`, [
+      "Utilisateur lambda",
+      DefaultProfile,
+      new Date(),
+    ]);
+  }
 
-    }
-
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
-            DROP TABLE profil;
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
+            DROP TABLE public.profil;
         `);
-    }
-
+  }
 }

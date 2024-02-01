@@ -14,10 +14,11 @@ const mockSession = {
   user: {
     idUser: '1',
     firstname: 'Doe',
-    role: 'admin',
-    codeRegion: '',
-    codeProfiles: [],
+    role: 1,
     institution: {},
+    institutionId: 1,
+    codeRegion: 84,
+    codeProfiles: [""]
   },
   expires: "1235"
 }

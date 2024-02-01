@@ -25,7 +25,10 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   }
 
   public get annéeInitiale() {
-    return this.budgetEtFinance[this.budgetEtFinance.length - 1]?.année;
+    const years = this.budgetEtFinance.filter((budgetEtFinance) => !this.compteResultatVide(budgetEtFinance)).map((budgetFinance) => budgetFinance.année);
+    const anneesTriees = years.sort((année1, année2) => année2 - année1);
+    return anneesTriees[0];
+    //return this.budgetEtFinance[this.budgetEtFinance.length - 1]?.année;
   }
 
   budgetEtFinanceEnCours(annéeEnCours: number): EntitéJuridiqueBudgetFinance {
@@ -125,7 +128,8 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       budget?.depensesTitreIVGlobal,
     ]
       .map(Number)
-      .map(Math.round);
+      .map(Math.round)
+      .map(Math.abs);
     const depensesPrincipales = [
       budget.totalDepensesPrincipales,
       budget?.depensesTitreIPrincipales,
@@ -134,7 +138,8 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       budget?.depensesTitreIVPrincipales,
     ]
       .map(Number)
-      .map(Math.round);
+      .map(Math.round)
+      .map(Math.abs);
     const depensesAnnexes = [
       budget.totalDepensesAnnexe,
       budget?.depensesTitreIAnnexe,
@@ -143,7 +148,8 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       budget?.depensesTitreIVAnnexe,
     ]
       .map(Number)
-      .map(Math.round);
+      .map(Math.round)
+      .map(Math.abs);
     return new HistogrammeData(
       this.wording.CHARGES,
       [this.wording.TOTAL, this.wording.TITRE_I, this.wording.TITRE_II, this.wording.TITRE_III, this.wording.TITRE_IV],
@@ -152,14 +158,14 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
         {
           backgroundColor: this.getBackgroundColorBudgetPrincipal(),
           data: depensesPrincipales,
-          isError: depensesPrincipales.map((depense) => depense > 0),
+          // isError: depensesPrincipales.map((depense) => depense > 0),
           label: this.wording.CHARGES_PRINCIPALES,
         },
         {
           label: this.wording.CHARGES_ANNEXES,
           data: depensesAnnexes,
           backgroundColor: this.getBackgroundColorBudgetSecondaire(),
-          isError: depensesAnnexes.map((depense) => depense > 0),
+          // isError: depensesAnnexes.map((depense) => depense > 0),
         },
       ],
       StringFormater.formatInEuro

@@ -50,7 +50,7 @@ export default function Router({ rechercheResult, entitéJuridique, établisseme
 export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<RouterProps>> {
   try {
     const session = await getSession(context);
-    const codeRegion = session?.user.codeRegion as string;
+    const codeRegion = session?.user.codeRegion as unknown as string;
     const codeProfiles = session?.user.codeProfiles as string[];
 
     if (context.params && context.params["numeroFiness"]) {
