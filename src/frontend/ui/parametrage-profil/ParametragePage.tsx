@@ -37,7 +37,7 @@ export const ParametragePage = ({ profiles }: ParametragePageProps) => {
                                     <tr>
                                         <th scope="col">{wording.PROFILE}</th>
                                         <th scope="col">{wording.PROFILE_CODE}</th>
-                                        <th scope="col">{wording.CREATION_DATE}</th>
+                                        <th scope="col">{wording.CREATED_BY}</th>
                                         <th scope="col">{wording.CREATION_DATE}</th>
                                     </tr>
                                 </thead>
