@@ -58,7 +58,7 @@ export const ParametragePage = ({ profiles }: ParametragePageProps) => {
                                                     }}
                                                 />
                                             </td>
-                                            <td>Jhon Doe</td>
+                                            <td>{profile.createdBy ? profile.createdBy.email : wording.PROJECT_TEAM}</td>
                                             <td>{formatDateAndHours(profile.dateCreation)}</td>
                                         </tr>
                                     ))}

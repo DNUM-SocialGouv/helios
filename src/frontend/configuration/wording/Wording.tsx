@@ -384,6 +384,7 @@ export interface Wording {
   readonly PARAMETRAGE_NEW_PROFILE: string;
   readonly PROFILE_TITLE: string;
   readonly VOUS_NAVEZ_AUCUN_PROFIL: string;
+  readonly PROJECT_TEAM: string;
 
   //  Profile page
   readonly USER_PROFILE: string;

@@ -471,6 +471,8 @@ export class WordingFr implements Wording {
   readonly PROFILE_CODE: string = "Code";
   readonly PROFILE_TITLE: string = "Libellé de l'autorisation"
   readonly VOUS_NAVEZ_AUCUN_PROFIL: string = "Vous n'avez aucun profil";
+  readonly PROJECT_TEAM: string = "Équipe projet";
+
 
   //  Profile page
   readonly USER_PROFILE: string = "Mes informations";

@@ -8,7 +8,11 @@ export class TypeOrmProfileLoader implements ProfileLoader {
     constructor(private readonly orm: Promise<DataSource>) { }
 
     async getAllProfiles(): Promise<ProfilModel[]> {
-        return await (await this.orm).getRepository(ProfilModel).find();
+        return await (await this.orm).getRepository(ProfilModel).find({
+            relations: {
+                createdBy: true,
+            },
+        });
     }
 
     async getProfileByCode(code: string): Promise<ProfilModel | null> {
