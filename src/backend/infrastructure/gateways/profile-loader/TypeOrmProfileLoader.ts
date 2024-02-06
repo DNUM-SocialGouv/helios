@@ -23,12 +23,17 @@ export class TypeOrmProfileLoader implements ProfileLoader {
         await (await this.orm).getRepository(ProfilModel).update({ code: code }, { value: value, label: name });
     }
 
-    async addNewProfile(label: string, value: ProfileValue): Promise<void> {
-        const profile = new ProfilModel();
-        profile.dateCreation = new Date();
-        profile.label = label;
-        profile.value = value;
-        await (await this.orm).getRepository(ProfilModel).save(profile);
+    async addNewProfile(label: string, value: ProfileValue, userId: string): Promise<void> {
+        // get connected user
+        const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: userId } });
+        if (user) {
+            const profile = new ProfilModel();
+            profile.dateCreation = new Date();
+            profile.label = label;
+            profile.value = value;
+            profile.createdBy = user;
+            await (await this.orm).getRepository(ProfilModel).save(profile);
+        }
     }
 
     async deleteProfile(idProfile: number): Promise<string> {

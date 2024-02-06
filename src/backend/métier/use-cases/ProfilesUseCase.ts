@@ -20,7 +20,7 @@ export class ProfilesUseCase {
         return await this.profileLoader.deleteProfile(idProfile);
     }
 
-    async addNewProfile(label: string, value: ProfileValue): Promise<void> {
-        return await this.profileLoader.addNewProfile(label, value);
+    async addNewProfile(label: string, value: ProfileValue, userId: string): Promise<void> {
+        return await this.profileLoader.addNewProfile(label, value, userId);
     }
 }
