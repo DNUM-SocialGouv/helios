@@ -6,19 +6,30 @@ import { ChangeEvent, useState, useEffect, MouseEvent } from "react";
 
 import styles from "./Cookies.module.css";
 
-export const Cookies = () => {
+export const Cookies = ({
+  currentModal,
+  openModal,
+  setCurrentModal,
+  setOpenModal,
+}: {
+  currentModal: number;
+  openModal: boolean;
+  setCurrentModal: any;
+  setOpenModal: any;
+}) => {
   const [allowCookies, setAllowCookies] = useState("");
   const [condition, setCondition] = useState<string | boolean>("");
-  const [currentModal, setCurrentModal] = useState(1);
 
   const onAccept = () => {
     setCookie("allowed-cookies", "true");
     setCurrentModal(3);
+    setOpenModal(false);
   };
 
   const onDeny = () => {
     setCookie("allowed-cookies", "false");
     setCurrentModal(3);
+    setOpenModal(false);
   };
 
   const onOptionChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -52,19 +63,23 @@ export const Cookies = () => {
     } else {
       {
         setCurrentModal(3);
+        setOpenModal(false);
       }
     }
   };
 
   useEffect(() => {
     setCondition(getCookie("allowed-cookies") === undefined);
+    if (openModal) {
+      setCurrentModal(1);
+    }
   }, []);
 
   return (
     <>
       <dialog
         aria-labelledby="fr-modal-cookies-title"
-        className={`fr-modal ${currentModal === 1 && condition ? " fr-modal--opened " : ""} `}
+        className={`fr-modal ${currentModal === 1 && (condition || openModal) ? " fr-modal--opened " : ""} `}
         id="fr-modal-cookies"
         onClick={onClickModal1}
       >

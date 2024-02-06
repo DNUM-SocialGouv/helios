@@ -72,15 +72,6 @@ describe("Le pied de page", () => {
     expect(ecoConception).toHaveAttribute("href", paths.ECO_CONCEPTION);
   });
 
-  it("affiche un lien pour accéder aux des gestions des cookies", () => {
-    // WHEN
-    renderFakeComponent(<Footer />);
-
-    // THEN
-    const ecoConception = screen.getByRole("link", { name: wording.COOKIES });
-    expect(ecoConception).toHaveAttribute("href", paths.GESTION_DES_COOKIES);
-  });
-
   it("affiche un lien pour accéder à la page d’informations relatives aux données personnelles", () => {
     // WHEN
     renderFakeComponent(<Footer />);
