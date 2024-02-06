@@ -1,11 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 import "@gouvfr/dsfr/dist/component/footer/footer.min.css";
+import { Cookies } from "../../cookies/Cookies";
 import { useDependencies } from "../contexts/useDependencies";
 
 export const Footer = () => {
   const { paths, wording } = useDependencies();
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [currentModal, setCurrentModal] = useState(1);
 
   return (
     <footer className="fr-footer fr-mt-6w">
@@ -89,7 +93,15 @@ export const Footer = () => {
               </Link>
             </li>
             <li className="fr-footer__bottom-item">
-              <Link className="fr-footer__bottom-link" href={paths.GESTION_DES_COOKIES} passHref>
+              <Link
+                className="fr-footer__bottom-link"
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setOpenModal(true);
+                  setCurrentModal(1);
+                }}
+              >
                 {wording.COOKIES}
               </Link>
             </li>
@@ -117,6 +129,7 @@ export const Footer = () => {
           </div>
         </div>
       </div>
+      <Cookies currentModal={currentModal} openModal={openModal} setCurrentModal={setCurrentModal} setOpenModal={setOpenModal} />
     </footer>
   );
 };

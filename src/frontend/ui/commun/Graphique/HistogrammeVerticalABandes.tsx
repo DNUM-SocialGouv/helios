@@ -18,12 +18,22 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuToo
       datalabels: {
         display: true,
         color: "black",
+        backgroundColor: "white",
+        borderRadius: 2,
+        padding: {
+          top: -1,
+          bottom: -2,
+        },
         formatter: (value) => {
           return value.y;
         },
+        font: {
+          weight: "bolder",
+        },
         anchor: "end",
         align: "top",
-        offset: -6,
+        offset: -2,
+        clamp: true,
       },
       // @ts-ignore
       htmlLegend: { containerID: idDeLaLégende },
