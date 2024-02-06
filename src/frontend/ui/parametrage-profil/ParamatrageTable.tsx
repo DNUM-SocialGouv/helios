@@ -108,7 +108,7 @@ export const ProfileTable = ({ codeValue, profileValue, creating, name, profileI
                         Annuler
                     </button>
                 </div>
-                {!creating && (
+                {!creating && profileId !== 1 && (
                     <div className="fr-col--right">
                         <button aria-controls="fr-modal-delete-profile" className="fr-mt-7v fr-btn fr-ml-7v " data-fr-opened="false" title="Supprimer" type="button">
                             Supprimer l&apos;autorisation
@@ -116,7 +116,7 @@ export const ProfileTable = ({ codeValue, profileValue, creating, name, profileI
                     </div>
                 )}
             </div>
-            {profileId && <DeleteProfileModal profileId={profileId} />}
+            {profileId && profileId !== 1 && <DeleteProfileModal profileId={profileId} />}
         </div>
     )
 }
