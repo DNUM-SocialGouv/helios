@@ -11,9 +11,10 @@ type RouterProps = Readonly<{
     profileValue: ProfileValue;
     profileLabel: string;
     profileCode: string;
+    profileId: number;
 }>;
 
-export default function Router({ profileValue, profileLabel, profileCode }: RouterProps) {
+export default function Router({ profileValue, profileLabel, profileCode, profileId }: RouterProps) {
     const { wording, paths } = useDependencies();
     useBreadcrumb([
         {
@@ -26,7 +27,7 @@ export default function Router({ profileValue, profileLabel, profileCode }: Rout
         },
     ]);
     if (!profileValue || !profileLabel) return null;
-    return <ParametrageProfilPage code={profileCode} label={profileLabel} value={profileValue} />;
+    return <ParametrageProfilPage code={profileCode} id={profileId} label={profileLabel} value={profileValue} />;
 
 }
 
@@ -52,7 +53,8 @@ export async function getStaticProps({ params }: { params: { profileCode: string
             props: {
                 profileValue: profile.value,
                 profileLabel: profile.label,
-                profileCode: profile.code
+                profileCode: profile.code,
+                profileId: profile.id,
             },
             revalidate: Number(environmentVariables.TIME_OF_CACHE_PAGE),
         };

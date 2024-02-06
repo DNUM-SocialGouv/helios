@@ -11,9 +11,10 @@ type ParametrageProfilPageProps = Readonly<{
     value: ProfileValue;
     label: string;
     code: string;
+    id: number;
 }>;
 
-export const ParametrageProfilPage = ({ value, label, code }: ParametrageProfilPageProps) => {
+export const ParametrageProfilPage = ({ value, label, code, id }: ParametrageProfilPageProps) => {
 
     const [changeTitle, setChangeTitle] = useState(false);
     const [newTitle, setNewTitle] = useState(label);
@@ -42,7 +43,7 @@ export const ParametrageProfilPage = ({ value, label, code }: ParametrageProfilP
             }
 
             <div className={"fr-table fr-table--blue-ecume fr-mt-8w " + styles["align"]}>
-                <ProfileTable codeValue={code} creating={false} name={newTitle} profileValue={value} />
+                <ProfileTable codeValue={code} creating={false} name={newTitle} profileId={id} profileValue={value} />
             </div>
         </main >
     );

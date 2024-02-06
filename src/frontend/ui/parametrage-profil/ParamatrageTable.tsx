@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import { ProfileValue } from "../../../../database/models/ProfilModel";
 import { useDependencies } from "../commun/contexts/useDependencies";
+import DeleteProfileModal from "./DeleteProfileModal";
 import { ProfileTabContent } from "./ProfileTabContent";
 import { useParametrage } from "./useParametrage";
 
@@ -13,9 +14,10 @@ type ProfileTableProps = Readonly<{
     profileValue: ProfileValue;
     creating: boolean;
     name: string;
+    profileId?: number;
 }>;
 
-export const ProfileTable = ({ codeValue, profileValue, creating, name }: ProfileTableProps) => {
+export const ProfileTable = ({ codeValue, profileValue, creating, name, profileId }: ProfileTableProps) => {
     const { wording, paths } = useDependencies();
     const { data } = useSession();
     const router = useRouter();
@@ -73,10 +75,6 @@ export const ProfileTable = ({ codeValue, profileValue, creating, name }: Profil
         router.push(paths.PROFILES_LIST);
     }
 
-    const deleteButtonClick = () => {
-
-    }
-
     return (
         <div>
             <div className="fr-tabs">
@@ -112,12 +110,13 @@ export const ProfileTable = ({ codeValue, profileValue, creating, name }: Profil
                 </div>
                 {!creating && (
                     <div className="fr-col--right">
-                        <button className="fr-btn" onClick={() => deleteButtonClick()}>
+                        <button aria-controls="fr-modal-delete-profile" className="fr-mt-7v fr-btn fr-ml-7v " data-fr-opened="false" title="Supprimer" type="button">
                             Supprimer l&apos;autorisation
                         </button>
                     </div>
                 )}
             </div>
+            {profileId && <DeleteProfileModal profileId={profileId} />}
         </div>
     )
 }
