@@ -78,9 +78,6 @@ const logger = new ConsoleLogger();
 dotEnvConfig();
 const environmentVariables = new NodeEnvironmentVariables(logger);
 
-// eslint-disable-next-line no-console
-console.log("environmentVariables.DATABASE_URL", environmentVariables.DATABASE_URL);
-
 export default new DataSource({
   entities: [
     ActivitéMédicoSocialModel,

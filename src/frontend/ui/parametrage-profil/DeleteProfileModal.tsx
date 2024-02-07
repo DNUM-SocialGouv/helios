@@ -1,6 +1,7 @@
-"use client";
-
+import { useRouter } from "next/router";
 import { memo, useCallback } from "react";
+
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 type DeleteProfileModalProps = Readonly<{
     profileId: number;
@@ -9,6 +10,10 @@ type DeleteProfileModalProps = Readonly<{
 const DeleteProfileModal = (
     { profileId }: DeleteProfileModalProps
 ) => {
+    const { paths } = useDependencies();
+
+    const router = useRouter();
+
     const deleteProfile = useCallback(
         async (profileId: number) => {
             await fetch("/api/profile/delete", {
@@ -16,8 +21,7 @@ const DeleteProfileModal = (
                 headers: { "Content-Type": "application/json" },
                 method: "DELETE",
             }).then(async () => {
-                // eslint-disable-next-line no-console
-                console.log('deleteProfile');
+                router.push(paths.PROFILES_LIST);
             });
         },
         [profileId]
