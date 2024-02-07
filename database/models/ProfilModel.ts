@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm";
+
+import { UtilisateurModel } from "./UtilisateurModel";
 
 export type ProfileValue = Readonly<{
   institution: { profilEJ: object; profilETSanitaire: object; profilMédicoSocial: object };
@@ -18,6 +20,10 @@ export class ProfilModel {
 
   @Column({ name: "profil_value", type: "jsonb", default: {} })
   public value!: ProfileValue;
+
+  @ManyToOne(() => UtilisateurModel)
+  @JoinColumn({ name: "created_by", referencedColumnName: "id" })
+  public createdBy!: UtilisateurModel;
 
   @CreateDateColumn({ name: "profil_date_creation" })
   public dateCreation!: Date;

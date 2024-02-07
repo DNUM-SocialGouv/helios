@@ -10,15 +10,16 @@ export function useParametrage() {
   const router = useRouter();
   const { paths } = useDependencies();
 
-  const updateProfile = (userId: string, code: string, value: ProfileValue) => {
+  const updateProfile = (userId: string, code: string, value: ProfileValue, name: string) => {
     fetch("/api/profile/update", {
-      body: JSON.stringify({ userId, code, value }),
+      body: JSON.stringify({ userId, code, value, name }),
       headers: { "Content-Type": "application/json" },
       method: "POST",
     }).then((response) => {
-      if (response.status === 200) router.push(paths.PROFILES_LIST);
-    });
-  };
+      if (response.status === 200)
+        router.push(paths.PROFILES_LIST)
+    })
+  }
 
   const saveProfile = (userId: string, label: string, profile: ProfileValue) => {
     fetch("/api/profile/add", {

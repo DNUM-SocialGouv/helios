@@ -9,12 +9,15 @@
   padding: 8px 2rem 1rem 2rem;
   margin-top: -2.5rem;
 }
+
 .politique_link {
   padding: 0 2rem 1rem 2rem;
 }
+
 .label_input {
   margin-bottom: 0;
 }
+
 .fr-fieldset {
   align-items: flex-end;
   border: 0;
@@ -37,6 +40,7 @@
 .fr-fieldset__element--inline {
   flex: 0 0 auto;
 }
+
 .fr-fieldset__sep {
   border-left: 1px solid #c2c9d6;
   color: white;
@@ -81,6 +85,7 @@
 .row-input {
   display: flow-root;
 }
+
 .row-input-sep,
 .row-input-sep-2 {
   border-bottom: 1px solid #c2c9d6;
@@ -91,9 +96,11 @@
 .row-input-sep-2 {
   padding-bottom: 10.4px;
 }
+
 .textBold {
   font-weight: 900;
 }
+
 .fr-modal__title {
   font-size: 1.6rem;
 }
