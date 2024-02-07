@@ -133,8 +133,8 @@ export class WordingFr implements Wording {
   readonly TITRE_TRANSCRIPTION: string = "Transcription du graphique";
   readonly ANNÉE: string = "Année";
   readonly INDICATEURS_VIDES: string = "Aucune donnée pour cet établissement.";
-  readonly AUCUNE_DONNÉE_RENSEIGNÉE: string = "Aucune donnée renseignée pour les années suivantes :";
-  readonly AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS: string = "Aucune donnée n'est renseignée pour les indicateurs suivants :";
+  readonly AUCUNE_DONNÉE_RENSEIGNÉE: string = "Aucune donnée pour les années suivantes :";
+  readonly AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS: string = "Aucune donnée pour les indicateurs suivants :";
 
   // Catégorisation
   readonly PRIVÉ_LUCRATIF = "PRIVÉ LUCRATIF";

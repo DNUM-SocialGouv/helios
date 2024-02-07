@@ -21,7 +21,7 @@ const KeyWordFilter = ({
   return (
     <div>
       <div className="fr-search-bar" id="header-search" role="search">
-        <input className="fr-input" onChange={handleChange} placeholder="un nom, un prénom ou une adresse mail" type="search" value={key} />
+        <input className="fr-input" onChange={handleChange} placeholder="Rechercher un nom, un prénom ou une adresse mail" type="search" value={key} />
         <button className="fr-btn" title="Rechercher">
           un nom, un prénom ou une adresse mail
         </button>

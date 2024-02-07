@@ -14,7 +14,6 @@ import { UtilisateurModel } from "../../../../../database/models/UtilisateurMode
 import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import AdvancedFilter from "./Pagination/Filter/AdvancedFilter/AdvancedFilter";
-import ItemsPerPage from "./Pagination/ItemsPerPage/ItemsPerPage";
 import PaginationBtn from "./Pagination/PaginationBtn/PaginationBtn";
 import TheadTable from "./Pagination/TheadTable/TheadTable";
 import styles from "./UsersListPage.module.css";
@@ -175,7 +174,7 @@ const UsersListPage = ({
     setTotal: setTotal,
   };
 
-  useEffect(() => {
+  const getQueryParams = () => {
     let orderByData = {};
     if (orderBy) {
       orderByData = { orderBy: orderBy };
@@ -227,6 +226,13 @@ const UsersListPage = ({
       ...sortDirdData,
       itemsPerPage: itemsPerPage.toString(),
     };
+
+    return params;
+  };
+  const queryParams = new URLSearchParams(getQueryParams());
+
+  useEffect(() => {
+    const params = getQueryParams();
     getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
   }, [institutionId, roleId, profileId, etatId, itemsPerPage, key, page, sortDir, orderBy]);
 
@@ -238,13 +244,13 @@ const UsersListPage = ({
 
           {statusCode === "edit_successfully" && (
             <div className="fr-alert fr-alert--success fr-alert--sm fr-mb-3w">
-              <p>La modification de l`utilisateur a été effectuée avec succès.</p>
+              <p>La modification de l&apos;utilisateur a été effectuée avec succès.</p>
             </div>
           )}
 
           {statusCode === "deleted_successfully" && (
             <div className="fr-alert fr-alert--success fr-alert--sm fr-mb-3w">
-              <p>La suppression de l`utilisateur a été effectuée avec succès.</p>
+              <p>La suppression de l&apos;utilisateur a été effectuée avec succès.</p>
             </div>
           )}
 
@@ -265,64 +271,77 @@ const UsersListPage = ({
                 <table>
                   <TheadTable paginationData={paginationData} />
                   <tbody>
-                    {userData.map((user: UtilisateurModel) => {
-                      const roleClass = user.role.id === 1 ? "error" : user.role.id === 2 ? "success" : "info";
-                      return (
-                        <tr key={user.id}>
-                          <td className={styles["widthTD-small"]}>
-                            <a className="fr-raw-link" href={`/settings/users/${user.code}`}>
-                              {user.nom}
-                            </a>
-                          </td>
-                          <td className={styles["widthTD-small"]}>
-                            <a className="fr-raw-link" href={`/settings/users/${user.code}`}>
-                              {user.prenom}
-                            </a>
-                          </td>
-                          <td className={styles["widthTD-small"]}>
-                            <a className="fr-raw-link" href={`/settings/users/${user.code}`}>
-                              {user.email}
-                            </a>
-                          </td>
-                          <td className={styles["widthTD-small"]}>{user.institution.libelle}</td>
+                    {userData &&
+                      userData.map((user: UtilisateurModel) => {
+                        const roleClass = user.role.id === 1 ? "error" : user.role.id === 2 ? "success" : "info";
 
-                          <td>
-                            <span
-                              className={`fr-badge fr-badge--${roleClass} fr-badge--no-icon ${styles["text_no_change"]} ${styles["widthTD-role"]} fr-text--xs`}
-                            >
-                              {user.role.libelle}
-                            </span>
-                          </td>
-                          <td className={`${styles["widthTD-profil"]}`}>
-                            {user.profils.map((profil: string, i: number, { length }: any) => {
-                              const pr = profiles.filter((item) => item.code === profil);
-                              let seperator = ", ";
-                              //last element
-                              if (i + 1 === length) {
-                                seperator = "";
-                              }
-                              return (
-                                <span className={`fr-text--xs `} key={pr[0].code}>
-                                  {pr[0].label}
-                                  {seperator}
-                                </span>
-                              );
-                            })}
-                          </td>
-                          <td className={styles["widthTD-date"]}>{user?.lastConnectionDate && formatDateAndHours(user?.lastConnectionDate?.toString())}</td>
-                          <td className={styles["widthTD-etat"]}>{getUserStatus(user.lastConnectionDate)}</td>
-                        </tr>
-                      );
-                    })}
+                        return (
+                          <tr key={user.id}>
+                            <td className={styles["widthTD-small"]}>
+                              <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`}>
+                                {user.nom}
+                              </a>
+                            </td>
+                            <td className={styles["widthTD-small"]}>
+                              <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`}>
+                                {user.prenom}
+                              </a>
+                            </td>
+                            <td className={styles["widthTD-small"]}>
+                              <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`}>
+                                {user.email}
+                              </a>
+                            </td>
+                            <td className={styles["widthTD-small"]}>{user.institution.libelle}</td>
+
+                            <td>
+                              <span
+                                className={`fr-badge fr-badge--${roleClass} fr-badge--no-icon ${styles["text_no_change"]} ${styles["widthTD-role"]} fr-text--xs`}
+                              >
+                                {user.role.libelle}
+                              </span>
+                            </td>
+                            <td className={`${styles["widthTD-profil"]}`}>
+                              {user.profils &&
+                                user.profils
+                                  .filter(function (item) {
+                                    if (item.includes("{")) {
+                                      return false; // skip
+                                    }
+                                    return true;
+                                  })
+                                  .map((profil: string, i: number, { length }: any) => {
+                                    const pr = profiles.filter((item) => item.code === profil);
+                                    let seperator = ", ";
+                                    //last element
+                                    if (i + 1 === length) {
+                                      seperator = "";
+                                    }
+                                    return (
+                                      <>
+                                        {pr && pr[0] && (
+                                          <span className={`fr-text--xs `} key={pr[0].code}>
+                                            {pr[0].label}
+                                            {seperator}
+                                          </span>
+                                        )}
+                                      </>
+                                    );
+                                  })}
+                            </td>
+                            <td className={styles["widthTD-date"]}>{user?.lastConnectionDate && formatDateAndHours(user?.lastConnectionDate?.toString())}</td>
+                            <td className={styles["widthTD-etat"]}>{getUserStatus(user.lastConnectionDate)}</td>
+                          </tr>
+                        );
+                      })}
                   </tbody>
                 </table>
+
                 <div className={`${styles["pagination-container"]}`}>
                   <div className={`${styles["paginationBtn-container"]}`}>
                     <PaginationBtn paginationData={paginationData} />
                   </div>
-                  <div className={`${styles["itemsPerPage-container"]}`}>
-                    <ItemsPerPage paginationData={paginationData} />
-                  </div>
+                  <div className={`${styles["itemsPerPage-container"]}`}>{/*<ItemsPerPage paginationData={paginationData} />*/}</div>
                 </div>
               </div>
             </div>

@@ -46,6 +46,7 @@ const TheadTable = ({
     {
       name: "Statut",
       slug: "etat",
+      className: "no-sort",
     },
   ];
 
@@ -69,12 +70,19 @@ const TheadTable = ({
   return (
     <thead>
       <tr>
-        {thData.map((item) => (
-          <th className={`${styles["th"]} ${item.className && styles[item.className]}`} key={item.slug} onClick={() => orderByFn(item.slug)} scope="col">
-            {item.name} {sortDir === "Des"}
-            {orderBy === item.slug && <span aria-hidden="true" className={`fr-icon-arrow-${sortDir === "ASC" ? "down" : "up"}-line`}></span>}
-          </th>
-        ))}
+        {thData &&
+          thData.map((item) => (
+            <th className={`${styles["th"]} ${item.className && styles[item.className]}`} key={item.slug} onClick={() => orderByFn(item.slug)} scope="col">
+              {item.name} {sortDir === "Des"}
+              {orderBy === item.slug && <span aria-hidden="true" className={`fr-icon-arrow-${sortDir === "ASC" ? "down" : "up"}-s-fill`}></span>}
+              {orderBy === "default" && !item.className?.includes("no-sort") && (
+                <span className={styles["defaultArrows"]}>
+                  <span aria-hidden="true" className={`fr-icon-arrow-up-s-fill ${styles["defaultArrowUp"]}`}></span>
+                  <span aria-hidden="true" className={`fr-icon-arrow-down-s-fill ${styles["defaultArrowDown"]}`}></span>
+                </span>
+              )}
+            </th>
+          ))}
       </tr>
     </thead>
   );

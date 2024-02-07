@@ -9,6 +9,7 @@
   min-width: 280px;
   display: inline-block;
 }
+
 .field_container {
   margin-bottom: 18px;
 }
@@ -22,7 +23,7 @@
   width: 30%;
 }
 
-.btnForm {
+.float-right {
   float: right;
 }
 

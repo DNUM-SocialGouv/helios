@@ -129,10 +129,21 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     const profilId = profileId as string | "";
     const etatCode = etatId as string | "";
 
-    orderBy = orderBy as string || "nom";
-    sortDir = sortDir as string || "ASC";
+    orderBy = (orderBy as string) || "default";
+    sortDir = (sortDir as string) || "ASC";
 
-    const users = await getUsersListPaginatedEndpoint(dependencies, key, pageNumber, institutionCode, roleCode, profilId, etatCode, itemsPerOnePage, orderBy, sortDir);
+    const users = await getUsersListPaginatedEndpoint(
+      dependencies,
+      key,
+      pageNumber,
+      institutionCode,
+      roleCode,
+      profilId,
+      etatCode,
+      itemsPerOnePage,
+      orderBy,
+      sortDir
+    );
 
     let lastElementInPage = false;
     if (users.data.length === 1) {
@@ -151,10 +162,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
         profiles: JSON.parse(JSON.stringify(profiles)),
         roles: JSON.parse(JSON.stringify(roles)),
         institution: parseInt(institution as string),
-        role: role as string || "",
+        role: (role as string) || "",
         profile: parseInt(profil as string),
-        etat: etat as string || "",
-        status: status as string || "",
+        etat: (etat as string) || "",
+        status: (status as string) || "",
         lastElementInPage: lastElementInPage,
         itemsPerPage: itemsPerOnePage || 10,
         userSessionRole: userSessionRole,

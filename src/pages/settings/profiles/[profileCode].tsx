@@ -3,9 +3,9 @@ import { GetStaticPathsResult, GetStaticPropsResult } from "next";
 import { ProfileValue } from "../../../../database/models/ProfilModel";
 import { getProfileByCodeEndpoint } from "../../../backend/infrastructure/controllers/getProfileByCodeEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
+import { ParametrageProfilPage } from "../../../frontend/ui/parametrage-profil/ParametrageProfilPage";
 import { useDependencies } from "../../../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../../../frontend/ui/commun/hooks/useBreadcrumb";
-import { ParametrageProfilPage } from "../../../frontend/ui/parametrage-profil/ParametrageProfilPage";
 
 type RouterProps = Readonly<{
     profileValue: ProfileValue;

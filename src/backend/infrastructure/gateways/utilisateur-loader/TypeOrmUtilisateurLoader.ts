@@ -3,11 +3,13 @@ import { createHash } from "crypto";
 import { format } from "date-fns";
 import fs from "fs";
 import path from "path";
-import { DataSource, ILike, ArrayContains, LessThan, MoreThan, IsNull } from "typeorm";
+import { DataSource, ILike, ArrayContains, LessThan, MoreThan, IsNull, Not } from "typeorm";
 
+import { FavorisModel } from "../../../../../database/models/FavorisModel";
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../database/models/RoleModel";
+import { SearchHistoryModel } from "../../../../../database/models/SearchHistoryModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 import { generateToken } from "../../../jwtHelper";
 import { Institution } from "../../../métier/entities/Utilisateur/Institution";
@@ -22,9 +24,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   }
 
   async login(email: string, password: string): Promise<RésultatLogin> {
-    const user = await (await this.orm)
-      .getRepository(UtilisateurModel)
-      .findOne({ where: { email: email.trim().toLowerCase(), deletedDate: IsNull() }, relations: ["institution"] });
+    const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { email: email.trim().toLowerCase() }, relations: ["institution"] });
 
     if (user) {
       const hashing = createHash("sha256");
@@ -126,10 +126,10 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
           const body = `
                 <img src="cid:logo" alt="helios" height="auto" width="200">
                 <p>Bonjour,</p>
-                <p>L'équipe projet Helios est heureuse de vous accueillir sur l'application Helios. Pour finaliser la création de votre compte, merci de cliquer 
+                <p>L'équipe projet Helios est heureuse de vous accueillir sur l'application Helios. Pour finaliser la création de votre compte, merci de cliquer
                 <a href="${APP_URL}/creation-mot-passe?loginToken=${token}">ici</a> et définir votre mot de passe</p>
-                <p><b>Attention, la page est accessible une seule fois, et pendant 24h à compter de son ouverture. </b></p>                
-                <p>Si le lien ne fonctionne plus, merci de passer par <a href="${APP_URL}/mot-passe-oublie"> Mot de passe oublié ?</a> présent sur la page de connexion. </p>      
+                <p><b>Attention, la page est accessible une seule fois, et pendant 24h à compter de son ouverture. </b></p>
+                <p>Si le lien ne fonctionne plus, merci de passer par <a href="${APP_URL}/mot-passe-oublie"> Mot de passe oublié ?</a> présent sur la page de connexion. </p>
                 <p>L'équipe Helios reste disponible à l'adresse mail suivante : dnum.scn-helios-support@sg.social.gouv.fr</p>
                 <p> Cordialement, </p>
                 <p>L'équipe Helios</p>`;
@@ -192,13 +192,13 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
 
     switch (etatId) {
       case "actif":
-        EtatCondition = { lastConnectionDate: MoreThanDate(NMonthsAgo), deletedDate: IsNull() };
+        EtatCondition = { lastConnectionDate: MoreThanDate(NMonthsAgo) };
         break;
       case "inactif":
-        EtatCondition = { lastConnectionDate: LessThanDate(NMonthsAgo), deletedDate: IsNull() };
+        EtatCondition = { lastConnectionDate: LessThanDate(NMonthsAgo) };
         break;
       default:
-        EtatCondition = { deletedDate: IsNull() };
+        EtatCondition = { lastConnectionDate: Not(IsNull()) };
     }
 
     const selectConditions = { ...institutionCondition, ...roleCondition, ...profilCondition, ...EtatCondition };
@@ -213,6 +213,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
 
     const take = itemsPerPage || 10;
 
+    // @ts-ignore
     const total = await utilisateurRepo.countBy(conditions);
 
     let orders = {};
@@ -238,12 +239,14 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         break;
       case "etat":
         orders = { lastConnectionDate: sortDir };
+
         break;
       default:
         orders = { nom: "ASC" };
     }
 
     const data = await utilisateurRepo.find({
+      // @ts-ignore
       where: conditions,
       order: orders,
       take,
@@ -279,6 +282,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         user.profils = profilsCode;
         user.prenom = firstname;
         user.nom = lastname;
+        user.dateModification = new Date();
       }
 
       (await this.orm)
@@ -301,21 +305,10 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     try {
       const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: userCode } });
 
-      if (user) {
-        // await (await this.orm).getRepository(UtilisateurModel).remove(user);
-
-        user.deletedDate = new Date();
-
-        (await this.orm)
-          .getRepository(UtilisateurModel)
-          .save(user as UtilisateurModel)
-          .then(async () => {
-            return user;
-          })
-          .catch((error) => {
-            // eslint-disable-next-line no-console
-            console.log("error", error);
-          });
+      if (user && user.id) {
+        await (await this.orm).getRepository(FavorisModel).delete({ userId: user?.code as unknown as string });
+        await (await this.orm).getRepository(SearchHistoryModel).delete({ userId: user?.code as unknown as string });
+        await (await this.orm).getRepository(UtilisateurModel).remove(user);
 
         return "User deleted successfully";
       } else {
@@ -327,8 +320,9 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     }
   }
 
-  async reactivateUser(userCode: string): Promise<string | void> {
+  async reactivateUser(/*userCode: string*/): Promise<string | void> {
     try {
+      /*
       const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: userCode } });
 
       if (user) {
@@ -351,6 +345,8 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       } else {
         return "User not found";
       }
+      */
+      return "reactivateUser";
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log("error", error);

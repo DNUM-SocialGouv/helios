@@ -15,7 +15,6 @@ declare module "next-auth" {
 
   interface Session {
     user: {
-<<<<<<< Updated upstream
       idUser: string;
       firstname: string;
       role: number;
@@ -24,14 +23,5 @@ declare module "next-auth" {
       institution;
       institutionId: number;
     } & DefaultSession["user"];
-=======
-      idUser: string,
-      firstname: string,
-      role: number,
-      codeRegion: string,
-      codeProfiles: string[],
-      institution,
-    } & DefaultSession["user"]
->>>>>>> Stashed changes
   }
 }

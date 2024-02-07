@@ -64,7 +64,6 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
       window.addEventListener("beforeunload", handleBeforeUnload);
     };
   }, []);
-
   return (
     <SessionProvider session={session}>
       <UserContextProvider>
@@ -73,6 +72,8 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
             <Head>
               <meta charSet="utf-8" />
               <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
+              {/*<script src="/tarteaucitron.min.js"></script>
+              <script src="/tarteaucitron.init.js"></script>*/}
             </Head>
             <Header />
             <Component {...pageProps} />

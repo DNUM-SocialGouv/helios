@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, BeforeInsert, BeforeUpdate } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn, BeforeInsert, BeforeUpdate } from "typeorm";
 
 import { InstitutionModel } from "./InstitutionModel";
 import { RoleModel } from "./RoleModel";
@@ -17,7 +17,7 @@ export class UtilisateurModel {
   @Column({ name: "ut_prenom" })
   public prenom!: string;
 
-  @Column({ name: "ut_email" })
+  @Column({ name: "ut_email", unique: true })
   public email!: string;
 
   @BeforeInsert()
@@ -52,11 +52,8 @@ export class UtilisateurModel {
   @CreateDateColumn({ name: "ut_date_creation" })
   public dateCreation!: Date;
 
-  @UpdateDateColumn({ name: "ut_date_modification" })
+  @Column({ name: "ut_date_modification" })
   public dateModification!: Date;
-
-  @Column({ type: "date", name: "ut_date_soft_delete", nullable: true })
-  public deletedDate!: Date | null;
 
   @Column({ name: "ut_date_last_connection" })
   public lastConnectionDate!: Date;

@@ -6,19 +6,30 @@ import { ChangeEvent, useState, useEffect, MouseEvent } from "react";
 
 import styles from "./Cookies.module.css";
 
-export const Cookies = () => {
+export const Cookies = ({
+  currentModal,
+  openModal,
+  setCurrentModal,
+  setOpenModal,
+}: {
+  currentModal: number;
+  openModal: boolean;
+  setCurrentModal: any;
+  setOpenModal: any;
+}) => {
   const [allowCookies, setAllowCookies] = useState("");
   const [condition, setCondition] = useState<string | boolean>("");
-  const [currentModal, setCurrentModal] = useState(1);
 
   const onAccept = () => {
     setCookie("allowed-cookies", "true");
     setCurrentModal(3);
+    setOpenModal(false);
   };
 
   const onDeny = () => {
     setCookie("allowed-cookies", "false");
     setCurrentModal(3);
+    setOpenModal(false);
   };
 
   const onOptionChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -52,19 +63,23 @@ export const Cookies = () => {
     } else {
       {
         setCurrentModal(3);
+        setOpenModal(false);
       }
     }
   };
 
   useEffect(() => {
     setCondition(getCookie("allowed-cookies") === undefined);
+    if (openModal) {
+      setCurrentModal(1);
+    }
   }, []);
 
   return (
     <>
       <dialog
         aria-labelledby="fr-modal-cookies-title"
-        className={`fr-modal ${currentModal === 1 && condition ? " fr-modal--opened " : ""} `}
+        className={`fr-modal ${currentModal === 1 && (condition || openModal) ? " fr-modal--opened " : ""} `}
         id="fr-modal-cookies"
         onClick={onClickModal1}
       >
@@ -198,7 +213,7 @@ export const Cookies = () => {
                   </div>
 
                   <div className={styles["row-input"]}>
-                    <h2 className={`fr-modal__title ${styles["fr-modal__title"]} }`}>Mesure d'audience</h2>
+                    <h2 className={`fr-modal__title ${styles["fr-modal__title"]} }`}>Mesure d&apos;audience</h2>
 
                     <fieldset aria-labelledby="radio-inline-legend radio-inline-messages" className={styles["fr-fieldset"]}>
                       <div className={`${styles["fr-fieldset__element"]} ${styles["fr-fieldset__element--inline"]}`}>
@@ -245,7 +260,7 @@ export const Cookies = () => {
                       <span className={`${styles["textBold"]} `}>AT internet</span>
                       <br />
                       {allowCookies === "true" ? "interdit" : "autorisé"}
-                      <br />- {allowCookies === "true" ? "Ce service n'a pas installé de cookies." : "Ce service peut déposer 4 cookies."}
+                      <br />- {allowCookies === "true" ? "Ce service n'a installé aucun cookie" : "Ce service peut déposer 4 cookies."}
                       <br />
                       <Link className="fr-mr-1w" href="https://tarteaucitron.io/en/service/atinternet" target="_blank">
                         En savoir plus
