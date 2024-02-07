@@ -2,8 +2,8 @@ import csvParser from "csv-parser";
 import fs from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { createReclamationEndpoint } from "../../../backend/infrastructure/controllers/createReclamationEndpoint";
-import { dependencies } from "../../../backend/infrastructure/dependencies";
+//import { createReclamationEndpoint } from "../../../backend/infrastructure/controllers/createReclamationEndpoint";
+//import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { containsCommaOrDotNumbers } from "../utils/containsCommaOrDotNumbers";
 import { containsNegativeNumbers } from "../utils/containsNegativeNumbers";
 import { isValidFinessRpps } from "../utils/isValidFinessRpps";
@@ -199,11 +199,77 @@ function verifValeursManquantes(row: iRow) {
   return true;
 }
 
+interface MotifDetail {
+  motif: string;
+  clot: number;
+  encours: number;
+}
+
+interface YearData {
+  totalClotures: number;
+  totalEncours: number;
+  dateMiseAJourSource: string;
+  details: MotifDetail[];
+}
+
+function transformData(data: iRow[]) {
+  const result: Record<number, YearData> = {};
+
+  data.forEach((row) => {
+    const year: number = parseInt(row.ANNEE_DE_RECEPTION);
+    if (!result[year]) {
+      result[year] = {
+        totalClotures: 0,
+        totalEncours: 0,
+        dateMiseAJourSource: "20/10/" + year,
+        details: Array(12)
+          .fill({ motif: "", clot: 0, encours: 0 })
+          .map((_, i) => ({
+            motif: `MOTIF_${i + 10}`,
+            clot: 0,
+            encours: 0,
+          })),
+      };
+    }
+
+    // Mettre à jour les totaux
+    const totalClotures: number = parseInt(row.CLOT_NB_RECLA_TOTAL);
+    const totalEncours: number = parseInt(row.ENCOURS_NB_RECLA_TOTAL);
+
+    result[year].totalClotures += totalClotures;
+    result[year].totalEncours += totalEncours;
+
+    // Mettre à jour les détails des motifs
+    for (let i = 10; i <= 19; i++) {
+      const motifKey: string = `ENCOURS_NB_RECLA_MOTIF_${i}`;
+      const clotKey: string = `CLOT_NB_RECLA_MOTIF_${i}`;
+      // const motif: string = `MOTIF_${i}`;
+      const clot: number = parseInt(row[clotKey]);
+      const encours: number = parseInt(row[motifKey]);
+      result[year].details[i - 10].clot += clot;
+      result[year].details[i - 10].encours += encours;
+    }
+
+    // Mettre à jour les détails pour les motifs 155 et 156
+    const clot155: number = parseInt(row["CLOT_NB_RECLA_MOTIF_155"]);
+    const encours155: number = parseInt(row["ENCOURS_NB_RECLA_MOTIF_155"]);
+    result[year].details[10].clot += clot155;
+    result[year].details[10].encours += encours155;
+
+    const clot156: number = parseInt(row["CLOT_NB_RECLA_MOTIF_156"]);
+    const encours156: number = parseInt(row["ENCOURS_NB_RECLA_MOTIF_156"]);
+    result[year].details[11].clot += clot156;
+    result[year].details[11].encours += encours156;
+  });
+
+  return result;
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
     // const { filePath } = req.query;
-    // const filePath = __dirname + "/../../../../../SIREC/sirec_202401231233_mini.csv";
-    const filePath = __dirname + "/../../../../../SIREC/sirec_202401231233.csv";
+    const filePath = __dirname + "/../../../../../SIREC/sirec_202401231233_mini.csv";
+    //const filePath = __dirname + "/../../../../../SIREC/sirec_202401231233.csv";
 
     if (!filePath || typeof filePath !== "string") {
       return res.status(400).json({ error: "Invalid file path" });
@@ -223,8 +289,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           }
 
           // Vérifier les dates qu’on a (priorité sur les 3 dernières années, 2021 à 2023 + l’année en cours)
-          const year = parseInt(row["ANNEE_DE_RECEPTION"]);
-          if (!isValidYear(year)) {
+          const year1 = parseInt(row["ANNEE_DE_RECEPTION"]);
+          if (!isValidYear(year1)) {
             return; // Ignorer la ligne
           }
 
@@ -275,10 +341,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return; // Ignorer la ligne
           }
 
+          /***************************************************** */
+          // Convertir les données en JSON selon le format requis
+
           // Process each row and push it to jsonData array
           jsonData.push(row);
 
-          const rowDB = {
+          /*const rowDB = {
             id_reclamation: row.IDENTIFIANT,
             ndeg_finess_rpps: row.NDEG_FINESS_RPPS,
             annee_de_reception: parseInt(row.ANNEE_DE_RECEPTION),
@@ -310,11 +379,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             clot_motif_156: parseInt(row.CLOT_NB_RECLA_MOTIF_156) || 0,
           };
 
-          await createReclamationEndpoint(dependencies, rowDB);
+          await createReclamationEndpoint(dependencies, rowDB);*/
         })
         .on("end", () => {
           // Send the JSON response containing data
-          res.status(200).json(jsonData);
+
+          // Convertir les données en JSON selon le format requis
+          res.status(200).json(transformData(jsonData));
+          //res.status(200).json(jsonData);
         });
     } catch (error) {
       res.status(500).json({ error: "Internal Server Error" });
