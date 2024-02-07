@@ -511,15 +511,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.21.0":
-  version: 7.23.4
-  resolution: "@babel/runtime@npm:7.23.4"
-  dependencies:
-    regenerator-runtime: ^0.14.0
-  checksum: 8eb6a6b2367f7d60e7f7dd83f477cc2e2fdb169e5460694d7614ce5c730e83324bcf29251b70940068e757ad1ee56ff8073a372260d90cad55f18a825caf97cd
-  languageName: node
-  linkType: hard
-
 "@babel/template@npm:^7.18.10, @babel/template@npm:^7.3.3":
   version: 7.18.10
   resolution: "@babel/template@npm:7.18.10"
@@ -3657,13 +3648,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clone@npm:2.x":
-  version: 2.1.2
-  resolution: "clone@npm:2.1.2"
-  checksum: aaf106e9bc025b21333e2f4c12da539b568db4925c0501a1bf4070836c9e848c892fa22c35548ce0d1132b08bbbfa17a00144fe58fccdab6fa900fec4250f67d
-  languageName: node
-  linkType: hard
-
 "clone@npm:^1.0.2":
   version: 1.0.4
   resolution: "clone@npm:1.0.4"
@@ -5783,19 +5767,6 @@ __metadata:
     minimatch: ^5.0.1
     once: ^1.3.0
   checksum: 50bcdea19d8e79d8de5f460b1939ffc2b3299eac28deb502093fdca22a78efebc03e66bf54f0abc3d3d07d8134d19a32850288b7440d77e072aa55f9d33b18c5
-  languageName: node
-  linkType: hard
-
-"glob@npm:^8.1.0":
-  version: 8.1.0
-  resolution: "glob@npm:8.1.0"
-  dependencies:
-    fs.realpath: ^1.0.0
-    inflight: ^1.0.4
-    inherits: 2
-    minimatch: ^5.0.1
-    once: ^1.3.0
-  checksum: 92fbea3221a7d12075f26f0227abac435de868dd0736a17170663783296d0dd8d3d532a5672b4488a439bf5d7fb85cdd07c11185d6cd39184f0385cbdfb86a47
   languageName: node
   linkType: hard
 
@@ -8481,15 +8452,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^3.3.6":
-  version: 3.3.7
-  resolution: "nanoid@npm:3.3.7"
-  bin:
-    nanoid: bin/nanoid.cjs
-  checksum: d36c427e530713e4ac6567d488b489a36582ef89da1d6d4e3b87eded11eb10d7042a877958c6f104929809b2ab0bafa17652b076cdf84324aa75b30b722204f2
-  languageName: node
-  linkType: hard
-
 "natural-compare@npm:^1.4.0":
   version: 1.4.0
   resolution: "natural-compare@npm:1.4.0"
@@ -8611,15 +8573,6 @@ __metadata:
   dependencies:
     node-gyp: latest
   checksum: 2508bd2d2981945406243a7bd31362fc7af8b70b8b4d65f869c61731800058fb818cc2fd36c8eac714ddd0e568cc85becf5e165cebbdf7b5024d5151bbc75ea1
-  languageName: node
-  linkType: hard
-
-"node-cache@npm:^5.1.2":
-  version: 5.1.2
-  resolution: "node-cache@npm:5.1.2"
-  dependencies:
-    clone: 2.x
-  checksum: b0bdd81a6fee4754fb984a05246b510bb35dc54721116d465899bf4229ee3287fdafb47da526900ee9924fb402ed5c7d8050049d37d8bf2d26dbafc23a2c3205
   languageName: node
   linkType: hard
 
@@ -11353,13 +11306,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.5.0":
-  version: 2.6.2
-  resolution: "tslib@npm:2.6.2"
-  checksum: 329ea56123005922f39642318e3d1f0f8265d1e7fcb92c633e0809521da75eeaca28d2cf96d7248229deb40e5c19adf408259f4b9640afd20d13aecc1430f3ad
-  languageName: node
-  linkType: hard
-
 "tsutils@npm:^3.21.0":
   version: 3.21.0
   resolution: "tsutils@npm:3.21.0"
@@ -12266,13 +12212,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs-parser@npm:^21.1.1":
-  version: 21.1.1
-  resolution: "yargs-parser@npm:21.1.1"
-  checksum: ed2d96a616a9e3e1cc7d204c62ecc61f7aaab633dcbfab2c6df50f7f87b393993fe6640d017759fe112d0cb1e0119f2b4150a87305cc873fd90831c6a58ccf1c
-  languageName: node
-  linkType: hard
-
 "yargs@npm:^15.4.1":
   version: 15.4.1
   resolution: "yargs@npm:15.4.1"
@@ -12308,21 +12247,6 @@ __metadata:
   linkType: hard
 
 "yargs@npm:^17.3.1, yargs@npm:^17.6.2":
-  version: 17.7.2
-  resolution: "yargs@npm:17.7.2"
-  dependencies:
-    cliui: ^8.0.1
-    escalade: ^3.1.1
-    get-caller-file: ^2.0.5
-    require-directory: ^2.1.1
-    string-width: ^4.2.3
-    y18n: ^5.0.5
-    yargs-parser: ^21.1.1
-  checksum: 73b572e863aa4a8cbef323dd911d79d193b772defd5a51aab0aca2d446655216f5002c42c5306033968193bdbf892a7a4c110b0d77954a7fdf563e653967b56a
-  languageName: node
-  linkType: hard
-
-"yargs@npm:^17.6.2":
   version: 17.7.2
   resolution: "yargs@npm:17.7.2"
   dependencies:
