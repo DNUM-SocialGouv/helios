@@ -2,6 +2,8 @@ import csvParser from "csv-parser";
 import fs from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
 
+import { createReclamationEndpoint } from "../../../backend/infrastructure/controllers/createReclamationEndpoint";
+import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { containsCommaOrDotNumbers } from "../utils/containsCommaOrDotNumbers";
 import { containsNegativeNumbers } from "../utils/containsNegativeNumbers";
 import { isValidFinessRpps } from "../utils/isValidFinessRpps";
@@ -200,7 +202,8 @@ function verifValeursManquantes(row: iRow) {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
     // const { filePath } = req.query;
-    const filePath = __dirname + "/../../../../../SIREC/sirec_202401231233_mini.csv";
+    // const filePath = __dirname + "/../../../../../SIREC/sirec_202401231233_mini.csv";
+    const filePath = __dirname + "/../../../../../SIREC/sirec_202401231233.csv";
 
     if (!filePath || typeof filePath !== "string") {
       return res.status(400).json({ error: "Invalid file path" });
@@ -211,7 +214,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       fs.createReadStream(filePath)
         .pipe(csvParser({ separator: ";" })) // Spécifier le délimiteur
-        .on("data", (row) => {
+        .on("data", async (row) => {
           // Vérification des noms de colonnes
           const rowKeys = Object.keys(row);
           const isValidColumnNames = predefinedColumnNames.every((key) => rowKeys.includes(key));
@@ -274,6 +277,40 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
           // Process each row and push it to jsonData array
           jsonData.push(row);
+
+          const rowDB = {
+            id_reclamation: row.IDENTIFIANT,
+            ndeg_finess_rpps: row.NDEG_FINESS_RPPS,
+            annee_de_reception: parseInt(row.ANNEE_DE_RECEPTION),
+            encours_total: parseInt(row.ENCOURS_NB_RECLA_TOTAL) || 0,
+            encours_motif_10: parseInt(row.ENCOURS_NB_RECLA_MOTIF_10) || 0,
+            encours_motif_11: parseInt(row.ENCOURS_NB_RECLA_MOTIF_11) || 0,
+            encours_motif_12: parseInt(row.ENCOURS_NB_RECLA_MOTIF_12) || 0,
+            encours_motif_13: parseInt(row.ENCOURS_NB_RECLA_MOTIF_13) || 0,
+            encours_motif_14: parseInt(row.ENCOURS_NB_RECLA_MOTIF_14) || 0,
+            encours_motif_15: parseInt(row.ENCOURS_NB_RECLA_MOTIF_15) || 0,
+            encours_motif_16: parseInt(row.ENCOURS_NB_RECLA_MOTIF_16) || 0,
+            encours_motif_17: parseInt(row.ENCOURS_NB_RECLA_MOTIF_17) || 0,
+            encours_motif_18: parseInt(row.ENCOURS_NB_RECLA_MOTIF_18) || 0,
+            encours_motif_19: parseInt(row.ENCOURS_NB_RECLA_MOTIF_19) || 0,
+            encours_motif_155: parseInt(row.ENCOURS_NB_RECLA_MOTIF_155) || 0,
+            encours_motif_156: parseInt(row.ENCOURS_NB_RECLA_MOTIF_156) || 0,
+            clot_total: parseInt(row.CLOT_NB_RECLA_TOTAL) || 0,
+            clot_motif_10: parseInt(row.CLOT_NB_RECLA_MOTIF_10) || 0,
+            clot_motif_11: parseInt(row.CLOT_NB_RECLA_MOTIF_11) || 0,
+            clot_motif_12: parseInt(row.CLOT_NB_RECLA_MOTIF_12) || 0,
+            clot_motif_13: parseInt(row.CLOT_NB_RECLA_MOTIF_13) || 0,
+            clot_motif_14: parseInt(row.CLOT_NB_RECLA_MOTIF_14) || 0,
+            clot_motif_15: parseInt(row.CLOT_NB_RECLA_MOTIF_15) || 0,
+            clot_motif_16: parseInt(row.CLOT_NB_RECLA_MOTIF_16) || 0,
+            clot_motif_17: parseInt(row.CLOT_NB_RECLA_MOTIF_17) || 0,
+            clot_motif_18: parseInt(row.CLOT_NB_RECLA_MOTIF_18) || 0,
+            clot_motif_19: parseInt(row.CLOT_NB_RECLA_MOTIF_19) || 0,
+            clot_motif_155: parseInt(row.CLOT_NB_RECLA_MOTIF_155) || 0,
+            clot_motif_156: parseInt(row.CLOT_NB_RECLA_MOTIF_156) || 0,
+          };
+
+          await createReclamationEndpoint(dependencies, rowDB);
         })
         .on("end", () => {
           // Send the JSON response containing data

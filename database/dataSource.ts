@@ -50,6 +50,7 @@ import { UpdateInstitutionsTable1704363653168 } from "./migrations/1704363653168
 import { UpdateUsersLastConnexionDate1704366840880 } from "./migrations/1704366840880-UpdateUsersLastConnexionDate";
 import { RemoveDuplicatedEmailAndMakeItUnique1704467337579 } from "./migrations/1704467337579-RemoveDuplicatedEmailAndMakeItUnique";
 import { ModificationDesValeursDuChampRole1706794831872 } from "./migrations/1706794831872-ModificationDesValeursDuChampRole";
+import { AjoutReclamation1707314842081 } from "./migrations/1707314842081-AjoutReclamation";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
@@ -69,6 +70,7 @@ import { FavorisModel } from "./models/FavorisModel";
 import { InstitutionModel } from "./models/InstitutionModel";
 import { ProfilModel } from "./models/ProfilModel";
 import { RechercheModel } from "./models/RechercheModel";
+import { ReclamationModel } from "./models/ReclamationModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "./models/ReconnaissanceContractuelleSanitaireModel";
 import { RefDepartementRegionModel } from "./models/RefDepartementRegionModel";
 import { RessourcesHumainesMédicoSocialModel } from "./models/RessourcesHumainesMédicoSocialModel";
@@ -109,6 +111,7 @@ export default new DataSource({
     SearchHistoryModel,
     RefDepartementRegionModel,
     ProfilModel,
+    ReclamationModel,
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -162,6 +165,7 @@ export default new DataSource({
     UpdateInstitutionsTable1704363653168,
     RemoveDuplicatedEmailAndMakeItUnique1704467337579,
     ModificationDesValeursDuChampRole1706794831872,
+    AjoutReclamation1707314842081,
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
