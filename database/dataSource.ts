@@ -49,6 +49,7 @@ import { AjouterSoftDeleteUtilisateur1701782042926 } from "./migrations/17017820
 import { UpdateInstitutionsTable1704363653168 } from "./migrations/1704363653168-update-institutions-table";
 import { UpdateUsersLastConnexionDate1704366840880 } from "./migrations/1704366840880-UpdateUsersLastConnexionDate";
 import { RemoveDuplicatedEmailAndMakeItUnique1704467337579 } from "./migrations/1704467337579-RemoveDuplicatedEmailAndMakeItUnique";
+import { AddCreatedByToProfileTable1706792910177 } from "./migrations/1706792910177-AddCreatedByToProfileTable";
 import { ModificationDesValeursDuChampRole1706794831872 } from "./migrations/1706794831872-ModificationDesValeursDuChampRole";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
@@ -162,6 +163,7 @@ export default new DataSource({
     UpdateInstitutionsTable1704363653168,
     RemoveDuplicatedEmailAndMakeItUnique1704467337579,
     ModificationDesValeursDuChampRole1706794831872,
+    AddCreatedByToProfileTable1706792910177,
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
