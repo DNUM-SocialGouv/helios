@@ -4,10 +4,6 @@ import { créerFichierXMLTest, fakeLogger, getFakeDataCrawlerDependencies, getOr
 import { NodeXmlToJs } from "../xml-to-js/NodeXmlToJs";
 import { FinessXmlÉtablissementTerritorialSourceExterneLoader } from "./FinessXmlÉtablissementTerritorialSourceExterneLoader";
 
-const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies();
-const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_et`;
-const finessLocalPath = `${localPath}/finess/simple`;
-const nomenclatureLocalPath = `${localPath}/finess/nomenclature`;
 const orm = getOrm();
 
 
@@ -66,14 +62,17 @@ describe("Récupération des établissements territoriaux de la source de donné
   </structureet>`;
 
   beforeEach(async () => {
-    créationDuFichierXmlEj();
+    await créationDuFichierXmlEj();
   });
 
-  afterEach(() => {
-    supprimerDossier(localPath);
+  afterAll(async () => {
+    await (await orm).destroy();
   });
 
   it("récupère les établissements territoriaux de la source de données FINESS uniquement s’ils ne sont pas fermés", async () => {
+    const fakeDataCrawlerDependencies = await getFakeDataCrawlerDependencies();
+    const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_et`;
+
     // GIVEN
     const etFermé = `<structureet>
         <nofinesset>010787190</nofinesset>
@@ -101,7 +100,7 @@ describe("Récupération des établissements territoriaux de la source de donné
         <indcaduc xsi:nil="true"/>
         <datefermeture>1993-01-01</datefermeture>
       </structureet>`;
-    écritureDuFichierXmlEt([etOuvert1, etOuvert2, etFermé]);
+    await écritureDuFichierXmlEt([etOuvert1, etOuvert2, etFermé]);
     const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger, orm);
 
     // WHEN
@@ -158,9 +157,13 @@ describe("Récupération des établissements territoriaux de la source de donné
         codeRégion: "84"
       },
     ]);
+    supprimerDossier(localPath);
   });
 
   it("récupère les établissements territoriaux de la source de données FINESS uniquement s’ils ne sont pas caducs", async () => {
+    const fakeDataCrawlerDependencies = await getFakeDataCrawlerDependencies();
+    const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_et`;
+
     // GIVEN
     const etCaduc = `<structureet>
       <nofinesset>100007012</nofinesset>
@@ -188,7 +191,7 @@ describe("Récupération des établissements territoriaux de la source de donné
       <indcaduc>O</indcaduc>
       <datefermeture xsi:nil="true"/>
     </structureet>`;
-    écritureDuFichierXmlEt([etOuvert1, etOuvert2, etCaduc]);
+    await écritureDuFichierXmlEt([etOuvert1, etOuvert2, etCaduc]);
     const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger, orm);
 
     // WHEN
@@ -245,9 +248,13 @@ describe("Récupération des établissements territoriaux de la source de donné
         codeRégion: "84"
       },
     ]);
+    supprimerDossier(localPath);
   });
 
   it("récupère les établissements territoriaux de la source de données FINESS uniquement si leur EJ associée est ouverte donc existe en base", async () => {
+    const fakeDataCrawlerDependencies = await getFakeDataCrawlerDependencies();
+    const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_et`;
+
     // GIVEN
     const numéroFinessDeLEjEnBase = "010008407";
     const numéroFinessDeLEjFermé = "010008408";
@@ -278,7 +285,7 @@ describe("Récupération des établissements territoriaux de la source de donné
         <indcaduc xsi:nil="true"/>
         <datefermeture xsi:nil="true"/>
       </structureet>`;
-    écritureDuFichierXmlEt([etOuvertAssociéÀLEjExistant, etOuvertAssociéÀUnEjNonExistant]);
+    await écritureDuFichierXmlEt([etOuvertAssociéÀLEjExistant, etOuvertAssociéÀUnEjNonExistant]);
     const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger, orm);
 
     // WHEN
@@ -311,9 +318,12 @@ describe("Récupération des établissements territoriaux de la source de donné
         codeRégion: "84"
       },
     ]);
+    supprimerDossier(localPath);
   });
 
   it("récupère la raison sociale écourtée si la raison sociale longue n’est pas renseignée", async () => {
+    const fakeDataCrawlerDependencies = await getFakeDataCrawlerDependencies();
+    const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_et`;
     const etSansRaisonSocialeLongue1 = `<structureet>
       <nofinesset>010000040</nofinesset>
       <nofinessej>010008407</nofinessej>
@@ -366,7 +376,7 @@ describe("Récupération des établissements territoriaux de la source de donné
       <indcaduc xsi:nil="true"/>
       <datefermeture xsi:nil="true"/>
     </structureet>`;
-    écritureDuFichierXmlEt([etSansRaisonSocialeLongue1, etSansRaisonSocialeLongue2]);
+    await écritureDuFichierXmlEt([etSansRaisonSocialeLongue1, etSansRaisonSocialeLongue2]);
     const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger, orm);
 
     // WHEN
@@ -423,11 +433,15 @@ describe("Récupération des établissements territoriaux de la source de donné
         codeRégion: "84"
       },
     ]);
+    supprimerDossier(localPath);
   });
 
   it("récupère la date de mise à jour du fichier source", async () => {
+    const fakeDataCrawlerDependencies = await getFakeDataCrawlerDependencies();
+    const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_et`;
+
     // GIVEN
-    écritureDuFichierXmlEt();
+    await écritureDuFichierXmlEt();
     const établissementTerritorialFinessLoader = new FinessXmlÉtablissementTerritorialSourceExterneLoader(new NodeXmlToJs(), localPath, fakeLogger, orm);
 
     // WHEN
@@ -435,14 +449,21 @@ describe("Récupération des établissements territoriaux de la source de donné
 
     // THEN
     expect(dateDeMiseÀJourDuFichierSource).toBe("20211214");
+    supprimerDossier(localPath);
   });
 });
 
-function écritureDuFichierXmlEt(xmlEt: string[] = []): void {
+async function écritureDuFichierXmlEt(xmlEt: string[] = []): Promise<void> {
+  const fakeDataCrawlerDependencies = await getFakeDataCrawlerDependencies();
+  const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_et`;
+  const finessLocalPath = `${localPath}/finess/simple`;
   créerFichierXMLTest(xmlEt.join(), finessLocalPath, "finess_cs1400102_stock_20211214-0336");
 }
 
-function créationDuFichierXmlEj(): void {
+async function créationDuFichierXmlEj(): Promise<void> {
+  const fakeDataCrawlerDependencies = await getFakeDataCrawlerDependencies();
+  const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_et`;
+  const nomenclatureLocalPath = `${localPath}/finess/nomenclature`;
   const nomenclCategorieETAvecAgr = `<nomenclcategorieETavecagr>
       <code>355</code>
       <libelle>Centre Hospitalier (C.H.)</libelle>
