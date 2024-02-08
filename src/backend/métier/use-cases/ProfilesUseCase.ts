@@ -2,7 +2,7 @@ import { ProfilModel, ProfileValue } from "../../../../database/models/ProfilMod
 import { ProfileLoader } from "../gateways/ProfileLoader";
 
 export class ProfilesUseCase {
-  constructor(private profileLoader: ProfileLoader) {}
+  constructor(private profileLoader: ProfileLoader) { }
 
   async getAllProfiles(): Promise<ProfilModel[]> {
     return await this.profileLoader.getAllProfiles();
@@ -12,11 +12,15 @@ export class ProfilesUseCase {
     return await this.profileLoader.getProfileByCode(code);
   }
 
-  async updateProfile(code: string, value: ProfileValue): Promise<void> {
-    return await this.profileLoader.updateProfileValue(code, value);
+  async updateProfile(code: string, value: ProfileValue, name: string): Promise<void> {
+    return await this.profileLoader.updateProfileValue(code, value, name);
   }
 
-  async addNewProfile(label: string, value: ProfileValue): Promise<void> {
-    return await this.profileLoader.addNewProfile(label, value);
+  async deleteProfile(idProfile: number): Promise<string> {
+    return await this.profileLoader.deleteProfile(idProfile);
+  }
+
+  async addNewProfile(label: string, value: ProfileValue, userId: string): Promise<void> {
+    return await this.profileLoader.addNewProfile(label, value, userId);
   }
 }

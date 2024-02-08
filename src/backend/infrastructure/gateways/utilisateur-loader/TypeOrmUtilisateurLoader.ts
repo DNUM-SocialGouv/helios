@@ -18,7 +18,7 @@ import { UtilisateurLoader } from "../../../métier/gateways/UtilisateurLoader";
 import { sendEmail } from "../../../sendEmail";
 
 export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
-  constructor(private readonly orm: Promise<DataSource>) {}
+  constructor(private readonly orm: Promise<DataSource>) { }
   async getUserByCode(code: string): Promise<UtilisateurModel | null> {
     return await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: code } });
   }
@@ -126,10 +126,10 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
           const body = `
                 <img src="cid:logo" alt="helios" height="auto" width="200">
                 <p>Bonjour,</p>
-                <p>L'équipe projet Helios est heureuse de vous accueillir sur l'application Helios. Pour finaliser la création de votre compte, merci de cliquer 
+                <p>L'équipe projet Helios est heureuse de vous accueillir sur l'application Helios. Pour finaliser la création de votre compte, merci de cliquer
                 <a href="${APP_URL}/creation-mot-passe?loginToken=${token}">ici</a> et définir votre mot de passe</p>
-                <p><b>Attention, la page est accessible une seule fois, et pendant 24h à compter de son ouverture. </b></p>                
-                <p>Si le lien ne fonctionne plus, merci de passer par <a href="${APP_URL}/mot-passe-oublie"> Mot de passe oublié ?</a> présent sur la page de connexion. </p>      
+                <p><b>Attention, la page est accessible une seule fois, et pendant 24h à compter de son ouverture. </b></p>
+                <p>Si le lien ne fonctionne plus, merci de passer par <a href="${APP_URL}/mot-passe-oublie"> Mot de passe oublié ?</a> présent sur la page de connexion. </p>
                 <p>L'équipe Helios reste disponible à l'adresse mail suivante : dnum.scn-helios-support@sg.social.gouv.fr</p>
                 <p> Cordialement, </p>
                 <p>L'équipe Helios</p>`;

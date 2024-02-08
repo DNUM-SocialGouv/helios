@@ -64,7 +64,6 @@ export default function Router({
       path: "",
     },
   ]);
-
   return (
     <UsersListPage
       etat={etat.toString()}
