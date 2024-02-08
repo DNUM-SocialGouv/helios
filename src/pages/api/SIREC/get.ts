@@ -2,8 +2,8 @@ import csvParser from "csv-parser";
 import fs from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
 
-//import { createReclamationEndpoint } from "../../../backend/infrastructure/controllers/createReclamationEndpoint";
-//import { dependencies } from "../../../backend/infrastructure/dependencies";
+// import { createReclamationEndpoint } from "../../../backend/infrastructure/controllers/createReclamationEndpoint";
+// import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { containsCommaOrDotNumbers } from "../utils/containsCommaOrDotNumbers";
 import { containsNegativeNumbers } from "../utils/containsNegativeNumbers";
 import { isValidFinessRpps } from "../utils/isValidFinessRpps";
@@ -199,6 +199,7 @@ function verifValeursManquantes(row: iRow) {
   return true;
 }
 
+/*
 interface MotifDetail {
   motif: string;
   clot: number;
@@ -210,9 +211,26 @@ interface YearData {
   totalEncours: number;
   dateMiseAJourSource: string;
   details: MotifDetail[];
-}
+}*/
 
-function transformData(data: iRow[]) {
+/*function transformDataUniqueObject(data: iRow[]): iRow[] {
+  const uniqueObjects = Object.values(
+    data.reduce((acc, obj) => {
+      // eslint-disable-next-line
+      acc[obj.IDENTIFIANT] = obj;
+      return acc;
+    }, {})
+  );
+
+  return uniqueObjects as iRow[];
+}*/
+
+/*function transformData(data: iRow[]) {
+  //const data = transformDataUniqueObject(dataInput);
+
+  /* eslint-disable no-console * /
+  console.log(data.length);
+
   const result: Record<number, YearData> = {};
 
   data.forEach((row) => {
@@ -263,13 +281,13 @@ function transformData(data: iRow[]) {
   });
 
   return result;
-}
+}*/
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
     // const { filePath } = req.query;
-    const filePath = __dirname + "/../../../../../SIREC/sirec_202401231233_mini.csv";
-    //const filePath = __dirname + "/../../../../../SIREC/sirec_202401231233.csv";
+    //const filePath = __dirname + "/../../../../../SIREC/sirec_202401231233_mini.csv";
+    const filePath = __dirname + "/../../../../../SIREC/sirec_202401231233.csv";
 
     if (!filePath || typeof filePath !== "string") {
       return res.status(400).json({ error: "Invalid file path" });
@@ -342,12 +360,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           }
 
           /***************************************************** */
-          // Convertir les données en JSON selon le format requis
 
           // Process each row and push it to jsonData array
           jsonData.push(row);
-
-          /*const rowDB = {
+          /*
+          const rowDB = {
             id_reclamation: row.IDENTIFIANT,
             ndeg_finess_rpps: row.NDEG_FINESS_RPPS,
             annee_de_reception: parseInt(row.ANNEE_DE_RECEPTION),
@@ -383,10 +400,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         })
         .on("end", () => {
           // Send the JSON response containing data
-
           // Convertir les données en JSON selon le format requis
-          res.status(200).json(transformData(jsonData));
-          //res.status(200).json(jsonData);
+          // res.status(200).json(transformData(jsonData));
+
+          /* eslint-disable no-console */
+          console.log(jsonData.length);
+
+          res.status(200).json(jsonData);
         });
     } catch (error) {
       res.status(500).json({ error: "Internal Server Error" });
