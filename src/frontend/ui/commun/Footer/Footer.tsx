@@ -99,7 +99,7 @@ export const Footer = () => {
                 onClick={(e) => {
                   e.preventDefault();
                   setOpenModal(true);
-                  setCurrentModal(1);
+                  setCurrentModal(2);
                 }}
               >
                 {wording.COOKIES}
