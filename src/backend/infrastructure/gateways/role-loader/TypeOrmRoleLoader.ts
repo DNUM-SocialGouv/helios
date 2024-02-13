@@ -7,6 +7,10 @@ export class TypeOrmRoleLoader implements RoleLoader {
   constructor(private readonly orm: Promise<DataSource>) {}
 
   async getAllRoles(): Promise<RoleModel[]> {
-    return await (await this.orm).getRepository(RoleModel).find();
+    return await (await this.orm).getRepository(RoleModel).find({
+      order: {
+        id: "ASC",
+      },
+    });
   }
 }
