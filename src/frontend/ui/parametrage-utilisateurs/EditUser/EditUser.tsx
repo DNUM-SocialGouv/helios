@@ -127,7 +127,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
     (data?.user?.idUser === user.code && data?.user?.role !== 1) || ((data?.user?.role as number) > parseInt(user.roleId) && data?.user?.idUser !== user.code);
 
   let rolesF = roles;
-  if (pageDetails) {
+  if (data?.user?.role === 1) {
     rolesF = roles;
   } else {
     rolesF = roles.filter((obj) => obj.code !== "ADMIN_NAT");
