@@ -122,12 +122,12 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
       redirectPage("/settings/users?status=edit_successfully");
     });
   }
-  //only "Admin national" can update itself || Admin regional cant update, delete, reactivate to (Admin National And/or Admin Regional)
+  //only "Admin national" can update it self || Admin regional cant update, delete, to (Admin National)
   const pageDetails =
-    (data?.user?.idUser === user.code && data?.user?.role !== 1) || ((data?.user?.role as number) >= parseInt(user.roleId) && data?.user?.idUser !== user.code);
+    (data?.user?.idUser === user.code && data?.user?.role !== 1) || ((data?.user?.role as number) > parseInt(user.roleId) && data?.user?.idUser !== user.code);
 
   let rolesF = roles;
-  if (pageDetails) {
+  if (data?.user?.role === 1) {
     rolesF = roles;
   } else {
     rolesF = roles.filter((obj) => obj.code !== "ADMIN_NAT");

@@ -21,10 +21,10 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     } else {
       const userSession = await getUserSessionBack(request);
 
-      //only "Admin national" can update itself || Admin regional cant update, delete, reactivate to (Admin National And/or Admin Regional)
+      //only "Admin national" can update it self || Admin regional cant update, delete (Admin National)
       if (
         (userSession?.user?.idUser === userCode && userSession?.user?.role !== 1) ||
-        ((userSession?.user?.role as number) >= parseInt(userBeforeChange.roleId) && userSession?.user?.idUser !== userCode)
+        ((userSession?.user?.role as number) > parseInt(userBeforeChange.roleId) && userSession?.user?.idUser !== userCode)
       ) {
         return response.status(405).send("Method not allowed");
       }
@@ -33,11 +33,9 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 
       return response.status(200).json(recherche);
     }
-
   } catch (error) {
     return response.status(500);
   }
-
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
