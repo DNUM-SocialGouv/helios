@@ -1,11 +1,11 @@
-import { GetStaticPathsResult, GetStaticPropsResult } from "next";
+import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
 
 import { ProfileValue } from "../../../../database/models/ProfilModel";
 import { getProfileByCodeEndpoint } from "../../../backend/infrastructure/controllers/getProfileByCodeEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
-import { ParametrageProfilPage } from "../../../frontend/ui/parametrage-profil/ParametrageProfilPage";
 import { useDependencies } from "../../../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../../../frontend/ui/commun/hooks/useBreadcrumb";
+import { ParametrageProfilPage } from "../../../frontend/ui/parametrage-profil/ParametrageProfilPage";
 
 type RouterProps = Readonly<{
     profileValue: ProfileValue;
@@ -31,33 +31,31 @@ export default function Router({ profileValue, profileLabel, profileCode, profil
 
 }
 
-export function getStaticPaths(): GetStaticPathsResult {
-    return {
-        fallback: "blocking",
-        paths: [],
-    };
-}
-
-export async function getStaticProps({ params }: { params: { profileCode: string } }): Promise<GetStaticPropsResult<RouterProps>> {
+export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<RouterProps>> {
     try {
-        const { environmentVariables } = dependencies;
-        const profile = (await getProfileByCodeEndpoint(dependencies, params.profileCode));
+        const { params } = context;
+        if (params && params["profileCode"]) {
+            const profile = (await getProfileByCodeEndpoint(dependencies, params["profileCode"] as string));
 
-        if (!profile) {
+            if (!profile) {
+                return {
+                    notFound: true,
+                }
+            }
+
+            return {
+                props: {
+                    profileValue: profile.value,
+                    profileLabel: profile.label,
+                    profileCode: profile.code,
+                    profileId: profile.id,
+                },
+            };
+        } else {
             return {
                 notFound: true,
             }
         }
-
-        return {
-            props: {
-                profileValue: profile.value,
-                profileLabel: profile.label,
-                profileCode: profile.code,
-                profileId: profile.id,
-            },
-            revalidate: Number(environmentVariables.TIME_OF_CACHE_PAGE),
-        };
     } catch (error) {
         throw error;
     }
