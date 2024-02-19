@@ -7,16 +7,34 @@ import stylesBlocActivité from "../../établissement-territorial-sanitaire/bloc
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
-import { couleurDelAbscisse } from "./couleursGraphique";
-
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
+import { couleurDelAbscisse } from "./couleursGraphique";
 
 function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuTooltip: Function, wording: Wording): ChartOptions<"bar"> {
   return {
     animation: false,
     elements: { bar: { borderWidth: 2 } },
     plugins: {
-      datalabels: { display: false },
+      datalabels: {
+        display: true,
+        color: "black",
+        backgroundColor: "white",
+        borderRadius: 2,
+        padding: {
+          top: -1,
+          bottom: -2,
+        },
+        formatter: (value) => {
+          return value.y;
+        },
+        font: {
+          weight: "bolder",
+        },
+        anchor: "end",
+        align: "top",
+        offset: -2,
+        clamp: true,
+      },
       // @ts-ignore
       htmlLegend: { containerID: idDeLaLégende },
       legend: { display: false },

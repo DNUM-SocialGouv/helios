@@ -122,9 +122,16 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
       redirectPage("/settings/users?status=edit_successfully");
     });
   }
-  //only "Admin national" can update itself || Admin regional cant update, delete, reactivate to (Admin National And/or Admin Regional)
+  //only "Admin national" can update it self || Admin regional cant update, delete, to (Admin National)
   const pageDetails =
-    (data?.user?.idUser === user.code && data?.user?.role !== 1) || ((data?.user?.role as number) >= parseInt(user.roleId) && data?.user?.idUser !== user.code);
+    (data?.user?.idUser === user.code && data?.user?.role !== 1) || ((data?.user?.role as number) > parseInt(user.roleId) && data?.user?.idUser !== user.code);
+
+  let rolesF = roles;
+  if (data?.user?.role === 1) {
+    rolesF = roles;
+  } else {
+    rolesF = roles.filter((obj) => obj.code !== "ADMIN_NAT");
+  }
 
   return (
     <main className="fr-container">
@@ -232,8 +239,8 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                   <option disabled hidden selected value="">
                     Selectionnez une option
                   </option>
-                  {roles &&
-                    roles.map((item) => (
+                  {rolesF &&
+                    rolesF.map((item) => (
                       <option key={item.id} selected={parseInt(user.roleId) === item.id} value={item.code}>
                         {item.libelle}
                       </option>
@@ -256,7 +263,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                             aria-describedby={`checkboxes-${item.code}-messages`}
                             checked={userinfo.profiles && userinfo.profiles.includes(item.code)}
                             className={`${styles["input--checkbox--error"]} `}
-                            disabled={pageDetails}
+                            disabled={pageDetails || (item.label === "Consultation administrateur national" && data?.user?.role !== 1)}
                             id={`${item.code}`}
                             name="profiles"
                             onChange={handleChange}

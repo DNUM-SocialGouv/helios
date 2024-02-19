@@ -4,16 +4,16 @@ import { NodeXmlToJs } from "../xml-to-js/NodeXmlToJs";
 import { FinessXmlEntitésJuridiquesSourceExterneLoader } from "./FinessXmlEntitésJuridiquesSourceExterneLoader";
 
 describe("Récupération des entités juridiques de la source de données FINESS", () => {
-  const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies();
-  const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_ej`;
-  const finessLocalPath = `${localPath}/finess/simple`;
   const orm = getOrm();
 
-  afterEach(() => {
-    supprimerDossier(localPath);
+  afterAll(async () => {
+    await (await orm).destroy();
   });
 
   it("récupère uniquement les entités juridiques ouvertes de la source de données FINESS", async () => {
+    const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies();
+    const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_ej`;
+    const finessLocalPath = `${localPath}/finess/simple`;
     // GIVEN
     const ejOuverte1 = `<structureej>
         <nofiness>010008407</nofiness>
@@ -110,9 +110,13 @@ describe("Récupération des entités juridiques de la source de données FINESS
         codeRégion: "32",
       },
     ]);
+    supprimerDossier(localPath);
   });
 
   it("ne renvoie pas de valeur lorsque la valeur d’un champ n’est pas renseignée", async () => {
+    const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies();
+    const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_ej`;
+    const finessLocalPath = `${localPath}/finess/simple`;
     // GIVEN
     const structureEJXml = ` <structureej>
         <nofiness>010008407</nofiness>
@@ -228,9 +232,13 @@ describe("Récupération des entités juridiques de la source de données FINESS
         codeRégion: "32",
       },
     ]);
+    supprimerDossier(localPath);
   });
 
   it("récupère la raison sociale écourtée si la raison sociale longue n’est pas renseignée", async () => {
+    const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies();
+    const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_ej`;
+    const finessLocalPath = `${localPath}/finess/simple`;
     // GIVEN
     const entitéSansRaisonSocialeLongue1 = `<structureej>
         <nofiness>010008407</nofiness>
@@ -310,9 +318,13 @@ describe("Récupération des entités juridiques de la source de données FINESS
         codeRégion: "32",
       },
     ]);
+    supprimerDossier(localPath);
   });
 
   it("récupère la date de mise à jour du fichier source", () => {
+    const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies();
+    const localPath = `${fakeDataCrawlerDependencies.environmentVariables.SFTP_LOCAL_PATH}/fake_finess_ej`;
+    const finessLocalPath = `${localPath}/finess/simple`;
     // GIVEN
     créerFichierXMLTest("empty file", finessLocalPath, "finess_cs1400101_stock_20211214-0333");
 
@@ -323,5 +335,6 @@ describe("Récupération des entités juridiques de la source de données FINESS
 
     // THEN
     expect(dateDeMiseÀJourDuFichierSource).toBe("20211214");
+    supprimerDossier(localPath);
   });
 });

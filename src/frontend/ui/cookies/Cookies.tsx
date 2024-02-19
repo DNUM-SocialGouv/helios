@@ -6,19 +6,30 @@ import { ChangeEvent, useState, useEffect, MouseEvent } from "react";
 
 import styles from "./Cookies.module.css";
 
-export const Cookies = () => {
+export const Cookies = ({
+  currentModal,
+  openModal,
+  setCurrentModal,
+  setOpenModal,
+}: {
+  currentModal: number;
+  openModal: boolean;
+  setCurrentModal: any;
+  setOpenModal: any;
+}) => {
   const [allowCookies, setAllowCookies] = useState("");
   const [condition, setCondition] = useState<string | boolean>("");
-  const [currentModal, setCurrentModal] = useState(1);
 
   const onAccept = () => {
     setCookie("allowed-cookies", "true");
     setCurrentModal(3);
+    setOpenModal(false);
   };
 
   const onDeny = () => {
     setCookie("allowed-cookies", "false");
     setCurrentModal(3);
+    setOpenModal(false);
   };
 
   const onOptionChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -52,19 +63,23 @@ export const Cookies = () => {
     } else {
       {
         setCurrentModal(3);
+        setOpenModal(false);
       }
     }
   };
 
   useEffect(() => {
     setCondition(getCookie("allowed-cookies") === undefined);
+    if (openModal) {
+      setCurrentModal(1);
+    }
   }, []);
 
   return (
     <>
       <dialog
         aria-labelledby="fr-modal-cookies-title"
-        className={`fr-modal ${currentModal === 1 && condition ? " fr-modal--opened " : ""} `}
+        className={`fr-modal ${currentModal === 1 && (condition || openModal) ? " fr-modal--opened " : ""} `}
         id="fr-modal-cookies"
         onClick={onClickModal1}
       >
@@ -215,7 +230,7 @@ export const Cookies = () => {
                             className={`${styles["fr-radio-groupInputRadioLabel"]}  ${allowCookies === "true" ? styles["InputRadioChecked"] : ""}`}
                             htmlFor="radio-inline-1"
                           >
-                            Tout accepter
+                            Autoriser
                           </label>
                         </div>
                       </div>
@@ -236,7 +251,7 @@ export const Cookies = () => {
                             className={`${styles["fr-radio-groupInputRadioLabel"]}  ${allowCookies === "false" ? styles["InputRadioChecked"] : ""}`}
                             htmlFor="radio-inline-2"
                           >
-                            Tout refuser
+                            Interdire
                           </label>
                         </div>
                       </div>
@@ -244,7 +259,7 @@ export const Cookies = () => {
                     <p className={styles["label_input"]}>
                       <span className={`${styles["textBold"]} `}>AT internet</span>
                       <br />
-                      {allowCookies === "true" ? "interdit" : "autorisé"}
+                      {allowCookies === "true" ? "autorisé" : "interdit"}
                       <br />- {allowCookies === "true" ? "Ce service n'a installé aucun cookie" : "Ce service peut déposer 4 cookies."}
                       <br />
                       <Link className="fr-mr-1w" href="https://tarteaucitron.io/en/service/atinternet" target="_blank">
