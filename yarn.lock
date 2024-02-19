@@ -4083,17 +4083,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"csv-parser@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "csv-parser@npm:3.0.0"
-  dependencies:
-    minimist: ^1.2.0
-  bin:
-    csv-parser: bin/csv-parser
-  checksum: adc9d67d9f185249825570778c24d13004625301655330f6b735a052b9fdfbe1a239a014afb1f89939e0626ee573718f71f9f14164db7c17e4bcb2f38d6a162b
-  languageName: node
-  linkType: hard
-
 "damerau-levenshtein@npm:^1.0.7, damerau-levenshtein@npm:^1.0.8":
   version: 1.0.8
   resolution: "damerau-levenshtein@npm:1.0.8"
@@ -5524,13 +5513,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs@npm:^0.0.1-security":
-  version: 0.0.1-security
-  resolution: "fs@npm:0.0.1-security"
-  checksum: 53c6230e1faae9fa32c1df82c16a84b51b1243d20f3da2b64bd110bb472b73b9185169b703e008356e3cdc92d155088b617d9d39a63b5227a30b3621baad7f5d
-  languageName: node
-  linkType: hard
-
 "fsevents@npm:^2.3.2, fsevents@npm:~2.3.2":
   version: 2.3.2
   resolution: "fsevents@npm:2.3.2"
@@ -6027,7 +6009,6 @@ __metadata:
     chartjs-plugin-datalabels: ^2.0.0
     cookies-next: ^4.1.0
     crypto: ^1.0.1
-    csv-parser: ^3.0.0
     date-fns: ^2.30.0
     depcheck: ^1.4.3
     dompurify: ^3.0.6
@@ -6040,7 +6021,6 @@ __metadata:
     eslint-plugin-jest-formatting: ^3.1.0
     eslint-plugin-jsx-a11y: ^6.7.1
     eslint-plugin-testing-library: ^5.3.0
-    fs: ^0.0.1-security
     husky: ^7.0.4
     jest: ^28.0.2
     jest-environment-jsdom: ^28.0.2
