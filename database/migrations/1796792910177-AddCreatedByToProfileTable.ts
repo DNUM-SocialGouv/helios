@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm"
 
-export class AddCreatedByToProfileTable1706792910177 implements MigrationInterface {
+export class AddCreatedByToProfileTable1796792910177 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
