@@ -12,4 +12,5 @@ export type ÉtablissementTerritorialMédicoSocial = Readonly<{
   budgetEtFinances: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[];
   identité: ÉtablissementTerritorialIdentité & MonoÉtablissement & EntitéJuridiqueDeRattachement;
   ressourcesHumaines: ÉtablissementTerritorialMédicoSocialRessourcesHumaines[];
+  qualite: any;
 }>;

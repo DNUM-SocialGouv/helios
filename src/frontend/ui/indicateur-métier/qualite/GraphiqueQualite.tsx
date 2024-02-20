@@ -3,7 +3,6 @@ import { memo, useState } from "react";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ContenuCapacitéParActivités } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuCapacitéParActivités";
-
 import QualiteParAnnee from "./QualiteParAnnee/QualiteParAnnee";
 
 type GraphiqueQualiteProps = Readonly<{
