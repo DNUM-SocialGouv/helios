@@ -4,6 +4,7 @@ import { ActivitéMédicoSocialModel } from "../../../../../database/models/Acti
 import { AutorisationMédicoSocialModel } from "../../../../../database/models/AutorisationMédicoSocialModel";
 import { BudgetEtFinancesMédicoSocialModel } from "../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
+import { ReclamationMedicoSocialModel } from "../../../../../database/models/ReclamationMedicoSocialModel";
 import { RessourcesHumainesMédicoSocialModel } from "../../../../../database/models/RessourcesHumainesMédicoSocialModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
@@ -18,6 +19,7 @@ import {
   ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité,
 } from "../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation";
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
+import { ÉtablissementTerritorialMédicoSocialQualite } from "../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialQualite";
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
 import { ÉtablissementTerritorialIdentité } from "../../../métier/entities/ÉtablissementTerritorialIdentité";
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from "../../../métier/entities/ÉtablissementTerritorialMédicoSocialNonTrouvée";
@@ -152,6 +154,15 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       .find({ order: { année: "DESC" }, select: { cadreBudgétaire: true }, where: { numéroFinessÉtablissementTerritorial } });
 
     return budgetEtFinancesModel.length > 0 ? budgetEtFinancesModel[0].cadreBudgétaire : CadreBudgétaire.ERRD;
+  }
+
+  async chargeQualite(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialMédicoSocialQualite[]> {
+    const reclamations = await (await this.orm)
+      .getRepository(ReclamationMedicoSocialModel)
+      .find({ where: { numéroFinessÉtablissementTerritorial } });
+    return this.construitsQualite(
+      reclamations
+    );
   }
 
   private construisIdentité(
@@ -373,6 +384,80 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       dateDeMiseÀJourDAutorisation: autorisationModel.dateDeMiseÀJourDAutorisation,
       estInstallée: autorisationModel.estInstallée,
     };
+  }
+
+  private construitsQualite(
+    reclamations: ReclamationMedicoSocialModel[]
+  ): ÉtablissementTerritorialMédicoSocialQualite[] {
+    return reclamations.map((reclamation) => {
+      return {
+        numéroFinessÉtablissementTerritorial: reclamation.numéroFinessÉtablissementTerritorial,
+        année: reclamation.annee,
+        totalClotures: reclamation.clotTotal,
+        totalEncours: reclamation.encoursTotal,
+        dateMiseÀJourSource: "",
+        details: [{
+          motif: "MOTIF_10",
+          clot: reclamation.clotMotif10,
+          encours: reclamation.encoursMotif10,
+        },
+        {
+          motif: "MOTIF_11",
+          clot: reclamation.clotMotif11,
+          encours: reclamation.encoursMotif11,
+        },
+        {
+          motif: "MOTIF_12",
+          clot: reclamation.clotMotif12,
+          encours: reclamation.encoursMotif12,
+        },
+        {
+          motif: "MOTIF_13",
+          clot: reclamation.clotMotif13,
+          encours: reclamation.encoursMotif13,
+        },
+        {
+          motif: "MOTIF_14",
+          clot: reclamation.clotMotif14,
+          encours: reclamation.encoursMotif14,
+        },
+        {
+          motif: "MOTIF_15",
+          clot: reclamation.clotMotif15,
+          encours: reclamation.encoursMotif15,
+        },
+        {
+          motif: "MOTIF_16",
+          clot: reclamation.clotMotif16,
+          encours: reclamation.encoursMotif16,
+        },
+        {
+          motif: "MOTIF_17",
+          clot: reclamation.clotMotif17,
+          encours: reclamation.encoursMotif17,
+        },
+        {
+          motif: "MOTIF_18",
+          clot: reclamation.clotMotif18,
+          encours: reclamation.encoursMotif18,
+        },
+        {
+          motif: "MOTIF_19",
+          clot: reclamation.clotMotif19,
+          encours: reclamation.encoursMotif19,
+        },
+        {
+          motif: "MOTIF_155",
+          clot: reclamation.clotMotif155,
+          encours: reclamation.encoursMotif155,
+        },
+        {
+          motif: "MOTIF_156",
+          clot: reclamation.clotMotif156,
+          encours: reclamation.encoursMotif156,
+        },],
+      }
+    })
   }
 
   private construisLeBudgetEtFinances(
