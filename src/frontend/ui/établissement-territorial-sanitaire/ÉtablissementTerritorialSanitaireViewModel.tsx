@@ -6,11 +6,13 @@ import { Wording } from "../../configuration/wording/Wording";
 import { ÉtablissementTerritorialSanitaireActivitéViewModel } from "./bloc-activité/ÉtablissementTerritorialSanitaireActivitéViewModel";
 import { EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel } from "./bloc-autorisations/ÉtablissementTerritorialSanitaireAutorisationsCapacitesViewModel";
 import { ÉtablissementTerritorialSanitaireIdentitéViewModel } from "./bloc-identité/ÉtablissementTerritorialSanitaireIdentitéViewModel";
+import { ÉtablissementTerritorialQualiteSanitaireViewModel } from "./bloc-qualite/ÉtablissementTerritorialQualiteSanitaireViewModel";
 
 export class ÉtablissementTerritorialSanitaireViewModel {
   private établissementTerritorialSanitaireIdentitéViewModel: ÉtablissementTerritorialSanitaireIdentitéViewModel;
   private établissementTerritorialSanitaireActivitésViewModel: ÉtablissementTerritorialSanitaireActivitéViewModel;
   private établissementTerritorialSanitaireAutorisationsViewModel: EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel;
+  private etablissementTerritorialSanitaireQualiteViewModel: ÉtablissementTerritorialQualiteSanitaireViewModel;
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, private readonly wording: Wording, paths: Paths) {
     this.établissementTerritorialSanitaireIdentitéViewModel = new ÉtablissementTerritorialSanitaireIdentitéViewModel(
@@ -26,6 +28,10 @@ export class ÉtablissementTerritorialSanitaireViewModel {
       établissementTerritorial.autorisationsEtCapacités,
       wording
     );
+    this.etablissementTerritorialSanitaireQualiteViewModel = new ÉtablissementTerritorialQualiteSanitaireViewModel(
+      wording,
+      établissementTerritorial.qualite,
+    )
   }
 
   public get titre(): string {
@@ -56,6 +62,10 @@ export class ÉtablissementTerritorialSanitaireViewModel {
 
   public get autorisationsViewModel(): EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
     return this.établissementTerritorialSanitaireAutorisationsViewModel;
+  }
+
+  public get qualiteViewModel(): ÉtablissementTerritorialQualiteSanitaireViewModel {
+    return this.etablissementTerritorialSanitaireQualiteViewModel;
   }
 
   private formateLeTitreDeLEntitéJuridiqueDeRattachement() {
