@@ -5,7 +5,7 @@ export const PageEcoConception = () => {
         Déclaration d’éco-conception <abbr title="Référentiel général d'écoconception de services numériquesx">RGESN</abbr>
       </h1>
       <p>
-        <i> Dernière mise à jour : 29 mars 2023</i>
+        <i> Dernière mise à jour : 04 décembre 2023</i>
       </p>
       <p>
         Soucieux d’homogénéiser les pratiques et les SI, le service des systèmes d’information mutualisés des ARS (SCN-SIM) de la DNUM des Ministères Sociaux a

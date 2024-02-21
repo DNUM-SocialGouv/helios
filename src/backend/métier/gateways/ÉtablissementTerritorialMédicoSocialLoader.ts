@@ -5,6 +5,7 @@ import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../entit
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
 import { ÉtablissementTerritorialIdentité } from "../entities/ÉtablissementTerritorialIdentité";
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from "../entities/ÉtablissementTerritorialMédicoSocialNonTrouvée";
+import { ÉtablissementTerritorialQualite } from "../entities/ÉtablissementTerritorialQualite";
 
 export interface ÉtablissementTerritorialMédicoSocialLoader {
   chargeActivité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialMédicoSocialActivité[]>;
@@ -12,5 +13,6 @@ export interface ÉtablissementTerritorialMédicoSocialLoader {
   chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité>;
   chargeBudgetEtFinances(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialMédicoSocialBudgetEtFinances[]>;
   chargeRessourcesHumaines(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialMédicoSocialRessourcesHumaines[]>;
+  chargeQualite(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialQualite[]>;
   estUnMonoÉtablissement(numéroFinessEntitéJuridique: string): Promise<MonoÉtablissement>;
 }

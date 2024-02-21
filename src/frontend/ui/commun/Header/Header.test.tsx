@@ -13,15 +13,14 @@ const mockSession = {
   user: {
     idUser: '1',
     firstname: 'Doe',
-    role: 'admin',
+    role: 1,
     institution: {},
-    codeRegion: '84',
-    codeProfiles: []
+    institutionId: 1,
+    codeRegion: 84,
+    codeProfiles: [""]
   },
   expires: "1235"
 }
-
-
 
 describe("En-tête de page", () => {
   it("affiche un lien pour accéder à la page d’accueil", () => {

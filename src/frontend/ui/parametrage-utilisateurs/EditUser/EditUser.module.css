@@ -1,0 +1,32 @@
+.title {
+  text-align: center;
+  margin-top: 2rem;
+  color: #000091;
+  text-transform: capitalize;
+}
+
+.label-field {
+  min-width: 280px;
+  display: inline-block;
+}
+
+.field_container {
+  margin-bottom: 18px;
+}
+
+.boxSelect {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.boxItem {
+  width: 30%;
+}
+
+.float-right {
+  float: right;
+}
+
+.fr-fieldset--error {
+  color: #ce0500;
+}

@@ -19,7 +19,7 @@ export const NewProfileSettingsPage = () => {
             <div className="fr-grid-row fr-grid-row--center fr-mt-5w">
                 <div className="fr-col-12 fr-col-md-3">
                     <label className="fr-label">
-                        libellé de profil
+                        {wording.PROFILE_TITLE}
                     </label>
                 </div>
                 <div className="fr-col-11 fr-col-md-3">
@@ -32,7 +32,7 @@ export const NewProfileSettingsPage = () => {
                 </div>
             </div>
             <div className={"fr-table fr-table--blue-ecume fr-mt-8w " + styles["align"]}>
-                <ProfileTable codeValue={profileLabel} creating profileValue={DefaultProfile} />
+                <ProfileTable codeValue={profileLabel} creating name={profileLabel} profileValue={DefaultProfile} />
             </div>
         </main >
     );

@@ -1,0 +1,92 @@
+.title {
+  text-align: center;
+  margin-top: 2rem;
+  color: #000091;
+}
+
+.tab-title {
+  color: #000091;
+  font-weight: 900;
+  display: flex;
+  justify-content: center;
+}
+
+.section-title {
+  font-weight: 900;
+}
+
+.td-text {
+  word-wrap: break-word;
+}
+
+.align table {
+  display: table;
+}
+
+.align-text {
+  text-align: center;
+}
+
+.text_no_change {
+  text-transform: none;
+  font-weight: normal;
+  border: 1px solid #fff;
+  margin-bottom: 1.5px;
+}
+
+.widthTD-small {
+  height: 105px;
+  max-width: 20ch;
+  word-wrap: break-word;
+}
+
+.widthTD-date {
+  max-width: 13ch;
+  word-wrap: break-word;
+}
+/***********************/
+.widthTD-actions {
+  min-width: 11ch;
+  word-wrap: break-word;
+}
+
+.widthTD-etat {
+  min-width: 10ch;
+  word-wrap: break-word;
+}
+
+.widthTD-role {
+  max-width: 17ch;
+  word-wrap: break-word;
+}
+
+.widthTD-profil {
+  max-width: 30ch;
+  word-wrap: break-word;
+}
+
+.btn-filtre {
+  margin: 0 !important;
+}
+
+.filtres-container {
+  margin-top: 25px;
+  border: 1px solid #ddd;
+}
+
+.count-elements {
+  margin-top: 15px;
+  margin-left: 15px;
+}
+
+.pagination-container {
+}
+.paginationBtn-container {
+  width: 75%;
+  display: inline-block;
+}
+.itemsPerPage-container {
+  margin-top: 25px;
+  width: 20%;
+  float: right;
+}

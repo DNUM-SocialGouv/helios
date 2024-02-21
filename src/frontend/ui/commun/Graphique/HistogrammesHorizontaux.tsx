@@ -15,6 +15,7 @@ function useChartData(charts: HistogrammeData[]) {
   const [chartsData, setChartsData] = useState(charts);
   useEffect(() => setChartsData(charts), charts);
 
+
   return {
     histogrammes: chartsData.map((chartData) => ({
       transcriptionTitles: chartData.transcriptionTitles,
@@ -213,7 +214,7 @@ export const HistogrammesHorizontaux = ({
       {!aucuneDonnées && (
         <div className={styles["container"]}>
           {histogrammes.map((histogramme) => (
-            <div key={histogramme.nom}>
+            <div className={styles["barContainerWidth"]} key={histogramme.nom}>
               {/*
                  // @ts-ignore */}
               <Bar data={histogramme.chartData} options={{ ...histogramme.optionsHistogramme, aspectRatio }} />

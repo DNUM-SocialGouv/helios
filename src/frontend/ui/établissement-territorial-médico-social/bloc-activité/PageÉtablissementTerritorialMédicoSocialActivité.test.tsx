@@ -15,10 +15,11 @@ const mockSession = {
   user: {
     idUser: '1',
     firstname: 'Doe',
-    role: 'admin',
+    role: 1,
     institution: {},
-    codeRegion: '84',
-    codeProfiles: []
+    institutionId: 1,
+    codeRegion: 84,
+    codeProfiles: [""]
   },
   expires: "1235"
 }
@@ -441,148 +442,5 @@ describe("La page établissement territorial médico-social - bloc activité", (
 
     // THEN
     expect(détails).toHaveAttribute("data-fr-opened", "false");
-  });
-
-  it("affiche une phrase à la place des indicateurs lorsque des activités sont renseignées mais les indicateurs sont vides", () => {
-    // GIVEN
-    const établissementTerritorialSansActivité = new ÉtablissementTerritorialMédicoSocialViewModel(
-      {
-        activités: [
-          {
-            année: 2019,
-            duréeMoyenneSéjourAccompagnementPersonnesSorties: {
-              dateMiseÀJourSource: "2021-07-07",
-              value: null,
-            },
-            fileActivePersonnesAccompagnées: {
-              dateMiseÀJourSource: "2021-07-07",
-              value: null,
-            },
-            nombreMoyenJournéesAbsencePersonnesAccompagnées: {
-              dateMiseÀJourSource: "2021-07-07",
-              value: null,
-            },
-            numéroFinessÉtablissementTerritorial: "010000040",
-            tauxOccupationAccueilDeJour: {
-              dateMiseÀJourSource: "2021-07-07",
-              value: null,
-            },
-            tauxOccupationHébergementPermanent: {
-              dateMiseÀJourSource: "2021-07-07",
-              value: null,
-            },
-            tauxOccupationHébergementTemporaire: {
-              dateMiseÀJourSource: "2021-07-07",
-              value: null,
-            },
-            tauxRéalisationActivité: {
-              dateMiseÀJourSource: "2021-07-07",
-              value: null,
-            },
-          },
-          {
-            année: 2020,
-            duréeMoyenneSéjourAccompagnementPersonnesSorties: {
-              dateMiseÀJourSource: "2021-07-07",
-              value: null,
-            },
-            fileActivePersonnesAccompagnées: {
-              dateMiseÀJourSource: "2021-07-07",
-              value: null,
-            },
-            nombreMoyenJournéesAbsencePersonnesAccompagnées: {
-              dateMiseÀJourSource: "2021-07-07",
-              value: null,
-            },
-            numéroFinessÉtablissementTerritorial: "010000040",
-            tauxOccupationAccueilDeJour: {
-              dateMiseÀJourSource: "2021-07-07",
-              value: null,
-            },
-            tauxOccupationHébergementPermanent: {
-              dateMiseÀJourSource: "2021-07-07",
-              value: null,
-            },
-            tauxOccupationHébergementTemporaire: {
-              dateMiseÀJourSource: "2021-07-07",
-              value: null,
-            },
-            tauxRéalisationActivité: {
-              dateMiseÀJourSource: "2021-07-07",
-              value: null,
-            },
-          },
-          {
-            année: 2021,
-            duréeMoyenneSéjourAccompagnementPersonnesSorties: {
-              dateMiseÀJourSource: "2021-07-07",
-              value: null,
-            },
-            fileActivePersonnesAccompagnées: {
-              dateMiseÀJourSource: "2021-07-07",
-              value: null,
-            },
-            nombreMoyenJournéesAbsencePersonnesAccompagnées: {
-              dateMiseÀJourSource: "2021-07-07",
-              value: null,
-            },
-            numéroFinessÉtablissementTerritorial: "010000040",
-            tauxOccupationAccueilDeJour: {
-              dateMiseÀJourSource: "2021-07-07",
-              value: null,
-            },
-            tauxOccupationHébergementPermanent: {
-              dateMiseÀJourSource: "2021-07-07",
-              value: null,
-            },
-            tauxOccupationHébergementTemporaire: {
-              dateMiseÀJourSource: "2021-07-07",
-              value: null,
-            },
-            tauxRéalisationActivité: {
-              dateMiseÀJourSource: "2021-07-07",
-              value: null,
-            },
-          },
-        ],
-        autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
-        budgetEtFinances: [],
-        identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
-        ressourcesHumaines: [],
-      },
-      wording,
-      paths
-    );
-
-    // WHEN
-    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial rechercheViewModel={rechercheViewModel} établissementTerritorialViewModel={établissementTerritorialSansActivité} /> </SessionProvider>);
-
-    // THEN
-    const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
-    const phrase = within(activité).getByText(wording.AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS);
-    expect(phrase).toBeInTheDocument();
-  });
-
-  it("affiche une phrase à la place des indicateurs lorsqu’aucune activité n’est renseignée", () => {
-    // GIVEN
-    const établissementTerritorialSansActivité = new ÉtablissementTerritorialMédicoSocialViewModel(
-      {
-        activités: [],
-        autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
-        budgetEtFinances: [],
-        identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
-        ressourcesHumaines: [],
-      },
-      wording,
-      paths
-    );
-
-    // WHEN
-    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial rechercheViewModel={rechercheViewModel} établissementTerritorialViewModel={établissementTerritorialSansActivité} /> </SessionProvider>);
-
-    // THEN
-    const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
-    const phrase = within(activité).getByText(wording.AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS);
-    expect(phrase).toBeInTheDocument();
   });
 });

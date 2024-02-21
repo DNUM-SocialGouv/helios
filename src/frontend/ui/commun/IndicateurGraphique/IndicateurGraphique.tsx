@@ -33,6 +33,7 @@ export const IndicateurGraphique = ({ années, children, contenuInfoBulle, dateD
           className="fr-btn fr-fi-information-line fr-btn--icon-left fr-btn--tertiary-no-outline fr-btn--sm"
           data-fr-opened={estCeOuvert}
           onClick={() => setEstCeOuvert(true)}
+          title="Détails de l'indicateur"
           type="button"
         >
           {wording.DÉTAILS}

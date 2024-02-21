@@ -14,7 +14,6 @@ import { useDependencies } from "../contexts/useDependencies";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 import styles from "./Header.module.css";
 
-
 export const Header = () => {
   const { paths, wording } = useDependencies();
   const router = useRouter();
@@ -30,15 +29,9 @@ export const Header = () => {
   };
 
   const logOut = () => {
-    fetch("/api/utilisateurs/logout", {
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-    }).then(() => {
-      signOut({ callbackUrl: paths.CONNEXION });
-      setDisplayMenu(false)
-    })
-  }
-
+    signOut({ callbackUrl: paths.CONNEXION });
+    setDisplayMenu(false);
+  };
 
   useEffect(() => {
     if (data?.user?.idUser) {
@@ -61,18 +54,22 @@ export const Header = () => {
                     <Image alt="" height="80" src="/logo.svg" width="80" />
                   </div>
                   <div className="fr-header__navbar">
-                    {router.pathname !== paths.ACCUEIL && router.pathname !== paths.CONNEXION && router.pathname !== paths.REINITIALISATION_PASSWORD && router.pathname !== paths.REGISTRATION && (
-                      <button
-                        aria-controls="modal-541"
-                        className="fr-btn--search fr-btn"
-                        data-fr-opened="false"
-                        id="button-542"
-                        title={wording.RECHERCHE_LABEL}
-                      >
-                        {wording.RECHERCHE_LABEL}
-                      </button>
-                    )}
-                    {status !== "unauthenticated" &&
+                    {router.pathname !== paths.ACCUEIL &&
+                      router.pathname !== paths.CREATE_PASSWORD &&
+                      router.pathname !== paths.CONNEXION &&
+                      router.pathname !== paths.REINITIALISATION_PASSWORD &&
+                      router.pathname !== paths.REGISTRATION && (
+                        <button
+                          aria-controls="modal-541"
+                          className="fr-btn--search fr-btn"
+                          data-fr-opened="false"
+                          id="button-542"
+                          title={wording.RECHERCHE_LABEL}
+                        >
+                          {wording.RECHERCHE_LABEL}
+                        </button>
+                      )}
+                    {status !== "unauthenticated" && (
                       <button
                         aria-controls="modal-833"
                         aria-haspopup="menu"
@@ -84,7 +81,7 @@ export const Header = () => {
                       >
                         {wording.MENU}
                       </button>
-                    }
+                    )}
                   </div>
                 </div>
                 <div className="fr-header__service">
@@ -94,49 +91,63 @@ export const Header = () => {
                 </div>
               </div>
               <div className="fr-header__tools">
-                {router.pathname !== paths.ACCUEIL && router.pathname !== paths.FORGET_PASSWORD && router.pathname !== paths.CHANGE_PASSWORD && router.pathname !== paths.CONNEXION && router.pathname !== paths.SETTINGS && router.pathname !== paths.ADD_PROFILE && router.pathname !== paths.HISTORY && router.pathname !== paths.FAVORIS && router.pathname !== paths.REINITIALISATION_PASSWORD && router.pathname !== paths.REGISTRATION && (
-                  <div className="fr-header__search fr-modal" id="modal-541">
-                    <div className="fr-container fr-container-lg--fluid">
-                      <button aria-controls="modal-541" className="fr-btn--close fr-btn" title="Fermer">
-                        {wording.FERMER}
-                      </button>
-                      <form action="/recherche" className="fr-search-bar" id="search-540" role="search">
-                        <label className="fr-label" htmlFor="search-540-input">
-                          {wording.RECHERCHE_LABEL}
-                        </label>
-                        <input
-                          className="fr-input"
-                          id="search-540-input"
-                          name="terme"
-                          onChange={rechercheOnChange}
-                          placeholder={wording.RECHERCHE_LABEL}
-                          type="search"
-                          value={terme}
-                        />
-                        <button
-                          className="fr-btn"
-                          onClick={(event) => {
-                            event.preventDefault();
-                            router.push(paths.ACCUEIL + "?terme=" + terme, paths.ACCUEIL);
-                          }}
-                          title="Rechercher"
-                          type="submit"
-                        >
-                          {wording.RECHERCHE_LABEL}
+                {router.pathname !== paths.ACCUEIL &&
+                  router.pathname !== paths.CREATE_PASSWORD &&
+                  router.pathname !== paths.FORGET_PASSWORD &&
+                  router.pathname !== paths.CHANGE_PASSWORD &&
+                  router.pathname !== paths.CONNEXION &&
+                  router.pathname !== paths.SETTINGS &&
+                  router.pathname !== paths.ADD_PROFILE &&
+                  router.pathname !== paths.PROFILES_LIST &&
+                  router.pathname !== paths.USERS_LIST &&
+                  router.pathname !== paths.HISTORY &&
+                  router.pathname !== paths.FAVORIS &&
+                  router.pathname !== paths.REINITIALISATION_PASSWORD &&
+                  router.pathname !== paths.REGISTRATION && (
+                    <div className="fr-header__search fr-modal" id="modal-541">
+                      <div className="fr-container fr-container-lg--fluid">
+                        <button aria-controls="modal-541" className="fr-btn--close fr-btn" title="Fermer">
+                          {wording.FERMER}
                         </button>
-                      </form>
+                        <form action="/recherche" className="fr-search-bar" id="search-540" role="search">
+                          <label className="fr-label" htmlFor="search-540-input">
+                            {wording.RECHERCHE_LABEL}
+                          </label>
+                          <input
+                            className="fr-input"
+                            id="search-540-input"
+                            name="terme"
+                            onChange={rechercheOnChange}
+                            placeholder={wording.RECHERCHE_LABEL}
+                            type="search"
+                            value={terme}
+                          />
+                          <button
+                            className="fr-btn"
+                            onClick={(event) => {
+                              event.preventDefault();
+                              router.push(paths.ACCUEIL + "?terme=" + terme, paths.ACCUEIL);
+                            }}
+                            title="Rechercher"
+                            type="submit"
+                          >
+                            {wording.RECHERCHE_LABEL}
+                          </button>
+                        </form>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
               </div>
               {status === "authenticated" && paths.CONNEXION !== router.pathname ? (
                 <div className={styles["dropdown"]}>
                   <button
                     className={"fr-icon-account-line " + styles["account-logo"]}
                     onClick={() => {
-                      setDisplayMenu(!displayMenu)
+                      setDisplayMenu(!displayMenu);
                     }}
-                    ref={ref}>
+                    ref={ref}
+                    title="Menu du compte"
+                  >
                     {data?.user?.firstname} {data?.user?.name}
                   </button>
                   {displayMenu ? (
@@ -145,7 +156,8 @@ export const Header = () => {
                         <button
                           onClick={() => {
                             router.push("/favoris");
-                          }}>
+                          }}
+                        >
                           Favoris
                         </button>
                       </li>
@@ -153,42 +165,52 @@ export const Header = () => {
                         <button
                           onClick={() => {
                             router.push("/history");
-                          }}>
+                          }}
+                        >
                           Historique
                         </button>
                       </li>
-                      {data.user.role === '1' && (
+                      {(data.user.role === 1) && (
+                        <li className={styles["menu-item"]}>
+                          <button onClick={() => {
+                            router.push(paths.PROFILES_LIST);
+                          }}>Paramétrage</button>
+                        </li>
+                      )}
+                      {(data.user.role === 1 || data.user.role === 2) && (
                         <li className={styles["menu-item"]}>
                           <button
                             onClick={() => {
-                              router.push("/settings");
-                            }}>
-                            Parametrage
+                              router.push(paths.USERS_LIST);
+                            }}
+                          >
+                            Console d’administration
                           </button>
                         </li>
                       )}
                       <li className={styles["menu-item"]}>
-                        <button onClick={() => {
-                          router.push("/profile");
-                        }}>Profil</button>
+                        <button
+                          onClick={() => {
+                            router.push("/profile");
+                          }}
+                        >
+                          Mon compte
+                        </button>
                       </li>
                       <li className={styles["menu-item"]}>
                         <button
                           onClick={() => {
                             router.push("/change-mot-passe");
                           }}
-                        >Mot de passe</button>
+                        >
+                          Mot de passe
+                        </button>
                       </li>
                       <li className={styles["menu-item"]}>
-                        <button
-                          onClick={logOut}
-                        >
-                          {wording.DÉCONNEXION}
-                        </button>
+                        <button onClick={logOut}>{wording.DÉCONNEXION}</button>
                       </li>
                     </ul>
                   ) : null}
-
                 </div>
               ) : null}
             </div>
@@ -203,9 +225,7 @@ export const Header = () => {
               <div className="fr-header__menu-links">
                 <ul>
                   <li>
-                    <button onClick={logOut}>
-                      {wording.DÉCONNEXION}
-                    </button>
+                    <button onClick={logOut}>{wording.DÉCONNEXION}</button>
                   </li>
                 </ul>
               </div>

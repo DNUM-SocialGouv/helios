@@ -3,26 +3,23 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { addProfileEndpoint } from "../../../backend/infrastructure/controllers/addProfileEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
-import { checkAdminRole } from "../../../checkAdminMiddleware";
+import { checkNationalAdminRole } from "../../../checkNationalAdminMiddleware";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
-    try {
-        if (request.method !== "POST") {
-            response.status(405).send("Method not allowed");
-        }
-        const { label, value } = request.body;
-        const recherche = await addProfileEndpoint(dependencies, label, value);
-        return response.status(200).json(recherche);
-
-    } catch (error) {
-        return response.status(500);
+  try {
+    if (request.method !== "POST") {
+      response.status(405).send("Method not allowed");
     }
-
-}
-
+    const { label, value, userId } = request.body;
+    const recherche = await addProfileEndpoint(dependencies, label, value, userId);
+    return response.status(200).json(recherche);
+  } catch (error) {
+    return response.status(500);
+  }
+};
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-    if (await checkAdminRole(req, res)) {
-        await handler(req, res);
-    }
+  if (await checkNationalAdminRole(req, res)) {
+    await handler(req, res);
+  }
 };

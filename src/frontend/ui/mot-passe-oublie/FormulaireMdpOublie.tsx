@@ -22,6 +22,9 @@ export const FormulaireMdpOublie = ({ annuler, emailSent, emailValue, emailValue
       <div className="fr-grid-row fr-grid-row--center">
         <h2>{wording.MOT_PASSE_OUBLIE_TITRE}</h2>
       </div>
+      <div className="fr-grid-row fr-grid-row--center">
+        <p>{wording.FORGET_PASSEWORD_MESSAGE}</p>
+      </div>
       <div className="fr-grid-row fr-grid-row--center fr-mt-8w">
         {emailSent ?
           (

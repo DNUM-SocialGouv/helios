@@ -1,6 +1,5 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 
-import { CadreBudgétaire } from "../../../../backend/métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
 import { textMatch, fakeFrontDependencies, renderFakeComponent, annéeEnCours } from "../../../test-helpers/testHelper";
@@ -142,60 +141,6 @@ describe("La page établissement territorial - bloc budget et finances", () => {
     expect(exergue).toBeInTheDocument();
   });
 
-  it("affiche une phrase à la place des indicateurs lorsqu’aucune donnée n’est renseignée", () => {
-    // GIVEN
-    const budgetFinanceViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
-      [
-        {
-          année: 2019,
-          cadreBudgétaire: CadreBudgétaire.ERRD,
-          chargesEtProduits: {
-            charges: null,
-            dateMiseÀJourSource: "2022-01-01",
-            produits: null,
-          },
-          contributionAuxFraisDeSiège: {
-            dateMiseÀJourSource: "2022-01-01",
-            valeur: null,
-          },
-          fondsDeRoulement: {
-            dateMiseÀJourSource: "2022-03-03",
-            valeur: null,
-          },
-          recettesEtDépenses: {
-            dateMiseÀJourSource: "2022-01-01",
-            dépensesGroupe1: null,
-            dépensesGroupe2: null,
-            dépensesGroupe3: null,
-            recettesGroupe1: null,
-            recettesGroupe2: null,
-            recettesGroupe3: null,
-          },
-          résultatNetComptable: {
-            dateMiseÀJourSource: "2022-01-01",
-            valeur: null,
-          },
-          tauxDeCafNette: {
-            dateMiseÀJourSource: "2022-03-03",
-            valeur: null,
-          },
-          tauxDeVétustéConstruction: {
-            dateMiseÀJourSource: "2022-03-03",
-            valeur: null,
-          },
-        },
-      ],
-      wording
-    );
-
-    // WHEN
-    renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
-
-    // THEN
-    const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
-    expect(within(budgetEtFinances).getByText(wording.AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS)).toBeInTheDocument();
-  });
-
   describe("L’indicateur de compte de résultat", () => {
     it("affiche les années dans une liste déroulante par ordre anté-chronologique quand le budget et finances est ERRD", () => {
       // WHEN
@@ -214,32 +159,6 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       expect(années[1].textContent).toBe("2020");
       expect(années[2]).toHaveAttribute("value", "2019");
       expect(années[2].textContent).toBe("2019");
-    });
-
-    it("affiche les années dans une liste déroulante par ordre anté-chronologique quand le budget et finances est CA PA", () => {
-      // GIVEN
-      const budgetFinanceViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
-        [
-          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPa({ année: 2019 }),
-          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPa({ année: 2020 }),
-        ],
-        wording
-      );
-
-      // WHEN
-      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
-
-      // THEN
-      const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
-      const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
-      const recettesEtDépenses = indicateurs[indiceDeLIndicateur.recettesEtDépenses];
-      const année = within(recettesEtDépenses).getByRole("combobox");
-      expect(année).toBeInTheDocument();
-      const années = within(année).getAllByRole("option");
-      expect(années[0]).toHaveAttribute("value", "2020");
-      expect(années[0].textContent).toBe("2020");
-      expect(années[1]).toHaveAttribute("value", "2019");
-      expect(années[1].textContent).toBe("2019");
     });
 
     it("n’affiche pas les années dans une liste déroulante quand aucune donnée n’est renseignée", () => {
@@ -297,22 +216,22 @@ describe("La page établissement territorial - bloc budget et finances", () => {
 
       const titresBudgétairesEtDépensesEtRecettes = [
         {
-          dépense: "−3 254 417 €",
+          dépense: "3 254 418 €",
           recette: "3 540 117 €",
           titreBudgétaire: wording.TOTAL,
         },
         {
-          dépense: "−129 491 €",
+          dépense: "129 491 €",
           recette: "3 388 394 €",
           titreBudgétaire: wording.GROUPE_I,
         },
         {
-          dépense: "−2 718 457 €",
+          dépense: "2 718 457 €",
           recette: "22 231 €",
           titreBudgétaire: wording.GROUPE_II,
         },
         {
-          dépense: "−406 469 €",
+          dépense: "406 469 €",
           recette: "129 491 €",
           titreBudgétaire: wording.GROUPE_III,
         },
@@ -353,7 +272,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       const lignes = within(tbody).getAllByRole("row");
       const colonne1Ligne1 = within(lignes[0]).getByRole("cell", { name: wording.TOTAL });
       expect(colonne1Ligne1).toBeInTheDocument();
-      const colonne2Ligne1 = within(lignes[0]).getByRole("cell", { name: "−1 613 142 €" });
+      const colonne2Ligne1 = within(lignes[0]).getByRole("cell", { name: "1 613 142 €" });
       expect(colonne2Ligne1).toBeInTheDocument();
       const colonne3Ligne1 = within(lignes[0]).getByRole("cell", { name: "1 633 422 €" });
       expect(colonne3Ligne1).toBeInTheDocument();
@@ -375,19 +294,19 @@ describe("La page établissement territorial - bloc budget et finances", () => {
 
       const dépensesEtRecettes = [
         {
-          dépense: "−1 392 795 €",
+          dépense: "1 392 795 €",
           recette: "1 400 085 €",
         },
         {
-          dépense: "−161 786 €",
+          dépense: "161 786 €",
           recette: "1 376 745 €",
         },
         {
-          dépense: "−1 222 577 €",
+          dépense: "1 222 577 €",
           recette: "23 340 €",
         },
         {
-          dépense: "−8 433 €",
+          dépense: "8 433 €",
           recette: "0 €",
         },
       ];

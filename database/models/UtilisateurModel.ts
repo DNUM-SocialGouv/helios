@@ -1,14 +1,4 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
-  JoinColumn,
-  BeforeInsert,
-  BeforeUpdate,
-} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn, BeforeInsert, BeforeUpdate } from "typeorm";
 
 import { InstitutionModel } from "./InstitutionModel";
 import { RoleModel } from "./RoleModel";
@@ -27,7 +17,7 @@ export class UtilisateurModel {
   @Column({ name: "ut_prenom" })
   public prenom!: string;
 
-  @Column({ name: "ut_email" })
+  @Column({ name: "ut_email", unique: true })
   public email!: string;
 
   @BeforeInsert()
@@ -39,6 +29,9 @@ export class UtilisateurModel {
   @ManyToOne(() => InstitutionModel)
   @JoinColumn({ name: "ut_institution", referencedColumnName: "id" })
   public institution!: InstitutionModel;
+
+  @Column({ name: "ut_institution" })
+  public institutionId!: number;
 
   @Column({ name: "ut_actif", default: false })
   public actif!: boolean;
@@ -59,8 +52,11 @@ export class UtilisateurModel {
   @CreateDateColumn({ name: "ut_date_creation" })
   public dateCreation!: Date;
 
-  @UpdateDateColumn({ name: "ut_date_modification" })
+  @Column({ name: "ut_date_modification" })
   public dateModification!: Date;
+
+  @Column({ name: "ut_date_last_connection" })
+  public lastConnectionDate!: Date;
 
   @Column({ name: "ut_cree_par", nullable: true })
   public creePar!: number;
