@@ -2,6 +2,7 @@ import { memo } from "react";
 
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
+import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { NoDataCallout } from "../../commun/NoDataCallout/NoDataCallout";
 import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import GraphiqueQualite from "../../indicateur-métier/qualite/GraphiqueQualite";
@@ -13,6 +14,12 @@ type BlocQualitéProps = Readonly<{
 
 const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel }: BlocQualitéProps) => {
   const { wording } = useDependencies();
+
+  if (
+    etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasRenseignées
+  ) {
+    return <BlocIndicateurVide title={wording.TITRE_BLOC_QUALITE} />;
+  }
 
   return (
     <Bloc titre={wording.TITRE_BLOC_QUALITE}>
@@ -26,7 +33,7 @@ const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel }:
 
       <ul className="indicateurs">
         {!etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasRenseignées &&
-          etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasAutorisées && (
+          !etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasAutorisées && (
             <GraphiqueQualite
               data={{
                 2019: {

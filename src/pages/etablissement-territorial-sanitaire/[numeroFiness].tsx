@@ -23,8 +23,6 @@ export default function Router({ rechercheResult, établissementTerritorial }: R
   if (!établissementTerritorial) return null;
 
   const établissementTerritorialSanitaireViewModel = new ÉtablissementTerritorialSanitaireViewModel(établissementTerritorial, wording, paths);
-  // eslint-disable-next-line no-console
-  console.log('result établissementTerritorial', établissementTerritorial);
   const rechercheViewModel = new RechercheViewModel(rechercheResult.résultats[0], paths);
 
   return (

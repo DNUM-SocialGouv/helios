@@ -21,8 +21,7 @@ type RouterProps = Readonly<{
 export default function Router({ rechercheResult, établissementTerritorial }: RouterProps) {
   const { paths, wording } = useDependencies();
   if (!établissementTerritorial) return null;
-  // eslint-disable-next-line no-console
-  console.log('result établissementTerritorial', établissementTerritorial);
+
   const établissementTerritorialViewModel = new ÉtablissementTerritorialMédicoSocialViewModel(établissementTerritorial, wording, paths);
   const rechercheViewModel = new RechercheViewModel(rechercheResult.résultats[0], paths);
 

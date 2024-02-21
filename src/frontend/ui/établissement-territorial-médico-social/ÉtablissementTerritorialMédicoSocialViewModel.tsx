@@ -41,7 +41,8 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
       wording
     );
     this.établissementTerritorialQualiteMédicoSocialViewModel = new ÉtablissementTerritorialQualiteMédicoSocialViewModel(
-      wording
+      wording,
+      établissementTerritorial.qualite
     )
   }
 
