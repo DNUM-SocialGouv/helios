@@ -3,15 +3,15 @@ import { memo, useState } from "react";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ContenuCapacitéParActivités } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuCapacitéParActivités";
-import QualiteParAnnee from "./QualiteParAnnee/QualiteParAnnee";
+import ReclamationsParAnnee from "./ReclamationsParAnnee/ReclamationsParAnnee";
 
-type GraphiqueQualiteProps = Readonly<{
+type GraphiqueReclamationsProps = Readonly<{
   data: any;
   estEntitéJuridique?: boolean;
   estSanitaire: boolean;
 }>;
 
-const GraphiqueQualite = ({ data, estEntitéJuridique = false }: GraphiqueQualiteProps) => {
+const GraphiqueReclamations = ({ data, estEntitéJuridique = false }: GraphiqueReclamationsProps) => {
   const { wording } = useDependencies();
   const annees = Object.keys(data).sort().reverse().map(Number);
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(annees[0]);
@@ -27,7 +27,7 @@ const GraphiqueQualite = ({ data, estEntitéJuridique = false }: GraphiqueQualit
       nomDeLIndicateur={wording.RECLAMATIONS}
       source={wording.SIREC}
     >
-      <QualiteParAnnee
+      <ReclamationsParAnnee
         details={data[annéeEnCours].details}
         total_clotures={data[annéeEnCours].total_clotures}
         total_encours={data[annéeEnCours].total_encours}
@@ -36,4 +36,4 @@ const GraphiqueQualite = ({ data, estEntitéJuridique = false }: GraphiqueQualit
   );
 };
 
-export default memo(GraphiqueQualite);
+export default memo(GraphiqueReclamations);

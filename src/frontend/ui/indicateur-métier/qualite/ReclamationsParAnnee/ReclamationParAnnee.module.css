@@ -1,13 +1,10 @@
-.qualite_par_annee_container {
+.reclamations_par_annee_container {
   display: flex;
   flex-direction: row;
   gap: 30px;
 }
 
-.nombre_totale_reclamation_container {
-}
-
-.table_qualite_Container {
+.table_reclamations_Container {
   font-size: small;
 }
 
@@ -20,12 +17,14 @@
 }
 
 @media (max-width: 800px) {
-  .qualite_par_annee_container {
+  .reclamations_par_annee_container {
     flex-direction: column;
   }
+
   .motif_width {
     width: auto;
   }
+
   .histogramme_width {
     width: auto;
   }

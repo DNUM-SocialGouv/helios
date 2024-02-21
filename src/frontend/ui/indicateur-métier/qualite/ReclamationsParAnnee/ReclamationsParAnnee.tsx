@@ -3,36 +3,56 @@ import { memo } from "react";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { HistogrammeHorizontalRow } from "./HistogrammeHorizontalRow/HistogrammeHorizontalRow";
 import { NombreTotaleReclamation } from "./NombreTotaleReclamation/NombreTotaleReclamation";
-import styles from "./QualiteParAnnee.module.css";
+import styles from "./ReclamationParAnnee.module.css";
 
-interface rowQualite {
+interface rowReclamation {
   motif: string;
   clot: number;
   encours: number;
 }
 
-type GraphiqueQualiteProps = Readonly<{
+type GraphiqueReclamationsProps = Readonly<{
   total_clotures: number;
   total_encours: number;
-  details: rowQualite[];
+  details: rowReclamation[];
 }>;
 
-const QualiteParAnnee = ({ total_clotures, total_encours, details }: GraphiqueQualiteProps) => {
+const ReclamationsParAnnee = ({ total_clotures, total_encours, details }: GraphiqueReclamationsProps) => {
   function trimString(string: string, length: number): string {
     return string.length > length ? string.substring(0, length) + "..." : string;
+  }
+
+  const getMotifWording = (motif: string) => {
+    let motifWording = '';
+    switch (motif) {
+      case "MOTIF_10": motifWording = wording.MOTIF_10; break;
+      case "MOTIF_11": motifWording = wording.MOTIF_11; break;
+      case "MOTIF_12": motifWording = wording.MOTIF_12; break;
+      case "MOTIF_13": motifWording = wording.MOTIF_13; break;
+      case "MOTIF_14": motifWording = wording.MOTIF_14; break;
+      case "MOTIF_15": motifWording = wording.MOTIF_15; break;
+      case "MOTIF_16": motifWording = wording.MOTIF_16; break;
+      case "MOTIF_17": motifWording = wording.MOTIF_17; break;
+      case "MOTIF_18": motifWording = wording.MOTIF_18; break;
+      case "MOTIF_19": motifWording = wording.MOTIF_19; break;
+      case "MOTIF_155": motifWording = wording.MOTIF_155; break;
+      case "MOTIF_156": motifWording = wording.MOTIF_156; break;
+      default: motifWording = ""
+    }
+    return trimString(motifWording, 45);
   }
 
   const { wording } = useDependencies();
 
   return (
-    <div className={styles["qualite_par_annee_container"]}>
+    <div className={styles["reclamations_par_annee_container"]}>
       <div className={styles["nombre_totale_reclamation_container"]}>
         <NombreTotaleReclamation label="Nombre total de réclamation" number={total_clotures + total_encours} size="big" />
         <NombreTotaleReclamation label="Cloturés" number={total_clotures} size="small" />
         <NombreTotaleReclamation label="En cours" number={total_encours} size="small" />
       </div>
 
-      <div className={styles["table_qualite_Container"]}>
+      <div className={styles["table_reclamations_Container"]}>
         <table>
           <thead>
             <tr>
@@ -55,7 +75,7 @@ const QualiteParAnnee = ({ total_clotures, total_encours, details }: GraphiqueQu
               details.map((item, i) => {
                 return (
                   <tr key={i}>
-                    <td>{trimString(wording[`${item.motif}`], 45)}</td>
+                    <td>{getMotifWording(item.motif)}</td>
                     <td>
                       <HistogrammeHorizontalRow color="darkBlue" number={item.clot + item.encours} total={total_clotures + total_encours} />
                     </td>
@@ -75,4 +95,4 @@ const QualiteParAnnee = ({ total_clotures, total_encours, details }: GraphiqueQu
   );
 };
 
-export default memo(QualiteParAnnee);
+export default memo(ReclamationsParAnnee);

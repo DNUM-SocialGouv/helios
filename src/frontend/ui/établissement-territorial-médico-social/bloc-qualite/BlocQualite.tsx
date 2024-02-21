@@ -5,7 +5,7 @@ import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { NoDataCallout } from "../../commun/NoDataCallout/NoDataCallout";
 import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
-import GraphiqueQualite from "../../indicateur-métier/qualite/GraphiqueQualite";
+import GraphiqueReclamations from "../../indicateur-métier/qualite/GraphiqueReclamations";
 import { ÉtablissementTerritorialQualiteMédicoSocialViewModel } from "./ÉtablissementTerritorialQualiteMédicoSocialViewModel";
 
 type BlocQualitéProps = Readonly<{
@@ -34,7 +34,7 @@ const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel }:
       <ul className="indicateurs">
         {!etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasRenseignées &&
           !etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasAutorisées && (
-            <GraphiqueQualite
+            <GraphiqueReclamations
               data={{
                 2019: {
                   total_clotures: 389,
