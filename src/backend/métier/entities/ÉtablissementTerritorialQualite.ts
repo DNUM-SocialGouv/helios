@@ -4,7 +4,7 @@ export type ReclamationDetails = Readonly<{
     encours: number;
 }>;
 
-export type ÉtablissementTerritorialMédicoSocialQualite = Readonly<{
+export type ÉtablissementTerritorialQualite = Readonly<{
     numéroFinessÉtablissementTerritorial: string;
     année: number;
     totalClotures: number;

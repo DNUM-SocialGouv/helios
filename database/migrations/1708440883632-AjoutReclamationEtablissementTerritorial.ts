@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner } from "typeorm"
 
-export class AjoutReclamationMedicoSocial1708440883632 implements MigrationInterface {
+export class AjoutReclamationET1708440883632 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-          CREATE TABLE reclamation_medico_social (
+          CREATE TABLE reclamation_etablissement_territorial (
             annee INTEGER NOT NULL,
             numero_finess_etablissement_territorial VARCHAR(9) NOT NULL,
             encours_total INTEGER,
@@ -36,7 +36,7 @@ export class AjoutReclamationMedicoSocial1708440883632 implements MigrationInter
             
             PRIMARY KEY (annee, numero_finess_etablissement_territorial),
 
-            CONSTRAINT reclamation_medico_social_etablissement_territorial_finess_foreign_key
+            CONSTRAINT reclamation_etablissement_territorial_finess_foreign_key
             FOREIGN KEY (numero_finess_etablissement_territorial)
             REFERENCES etablissement_territorial (numero_finess_etablissement_territorial)
             ON DELETE CASCADE

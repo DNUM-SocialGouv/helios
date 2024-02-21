@@ -4,7 +4,7 @@ import { MonoÉtablissement } from "./MonoÉtablissement";
 import { ÉtablissementTerritorialMédicoSocialActivité } from "./ÉtablissementTerritorialMédicoSocialActivité";
 import { ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from "./ÉtablissementTerritorialMédicoSocialAutorisation";
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "./ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
-import { ÉtablissementTerritorialMédicoSocialQualite } from "./ÉtablissementTerritorialMédicoSocialQualite";
+import { ÉtablissementTerritorialMédicoSocialQualite } from "../ÉtablissementTerritorialQualite";
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "./ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
 
 export type ÉtablissementTerritorialMédicoSocial = Readonly<{

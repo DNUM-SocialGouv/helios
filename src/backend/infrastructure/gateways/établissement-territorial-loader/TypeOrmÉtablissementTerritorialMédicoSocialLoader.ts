@@ -4,7 +4,7 @@ import { ActivitéMédicoSocialModel } from "../../../../../database/models/Acti
 import { AutorisationMédicoSocialModel } from "../../../../../database/models/AutorisationMédicoSocialModel";
 import { BudgetEtFinancesMédicoSocialModel } from "../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
-import { ReclamationMedicoSocialModel } from "../../../../../database/models/ReclamationMedicoSocialModel";
+import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { RessourcesHumainesMédicoSocialModel } from "../../../../../database/models/RessourcesHumainesMédicoSocialModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
@@ -19,10 +19,10 @@ import {
   ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité,
 } from "../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation";
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
-import { ÉtablissementTerritorialMédicoSocialQualite } from "../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialQualite";
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
 import { ÉtablissementTerritorialIdentité } from "../../../métier/entities/ÉtablissementTerritorialIdentité";
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from "../../../métier/entities/ÉtablissementTerritorialMédicoSocialNonTrouvée";
+import { ÉtablissementTerritorialQualite } from "../../../métier/entities/ÉtablissementTerritorialQualite";
 import { ÉtablissementTerritorialMédicoSocialLoader } from "../../../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader";
 
 export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements ÉtablissementTerritorialMédicoSocialLoader {
@@ -156,9 +156,9 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     return budgetEtFinancesModel.length > 0 ? budgetEtFinancesModel[0].cadreBudgétaire : CadreBudgétaire.ERRD;
   }
 
-  async chargeQualite(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialMédicoSocialQualite[]> {
+  async chargeQualite(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialQualite[]> {
     const reclamations = await (await this.orm)
-      .getRepository(ReclamationMedicoSocialModel)
+      .getRepository(ReclamationETModel)
       .find({ where: { numéroFinessÉtablissementTerritorial } });
     return this.construitsQualite(
       reclamations
@@ -387,8 +387,8 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
   }
 
   private construitsQualite(
-    reclamations: ReclamationMedicoSocialModel[]
-  ): ÉtablissementTerritorialMédicoSocialQualite[] {
+    reclamations: ReclamationETModel[]
+  ): ÉtablissementTerritorialQualite[] {
     return reclamations.map((reclamation) => {
       return {
         numéroFinessÉtablissementTerritorial: reclamation.numéroFinessÉtablissementTerritorial,
