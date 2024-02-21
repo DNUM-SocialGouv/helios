@@ -8,8 +8,9 @@ export const filterEtablissementMedicoSocial = (result: any, profil: any): Étab
     const autorisationsEtCapacités = filterAutorisationCapaciteMedicoSocial(result.autorisationsEtCapacités, profil.autorisationsEtCapacités);
     const budgetEtFinances = filterBudgetFinanceMedicoSocial(result.budgetEtFinances, profil.budgetEtFinances);
     const ressourcesHumaines = filterressourcesHumainesMedicoSocial(result.ressourcesHumaines, profil.ressourcesHumaines);
+    const qualite = filterQualiteMedicoSocial(result.qualite, profil.Qualité);
 
-    return { identité: identité, activités: activités, autorisationsEtCapacités: autorisationsEtCapacités, budgetEtFinances: budgetEtFinances, ressourcesHumaines: ressourcesHumaines };
+    return { identité: identité, activités: activités, autorisationsEtCapacités: autorisationsEtCapacités, budgetEtFinances: budgetEtFinances, ressourcesHumaines: ressourcesHumaines, qualite: qualite };
 }
 
 export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): EntitéJuridique => {
@@ -39,12 +40,12 @@ export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): En
 }
 
 export const filterEtablissementSanitaire = (result: any, profil: any): ÉtablissementTerritorialSanitaire => {
-
     const identité = filterIdentiteSanitaire(result.identité, profil.identité);
     const activités = filterActiviteSanitaire(result.activités, profil.activités);
     const autorisationsEtCapacités = filterAutorisationSanitaire(result.autorisationsEtCapacités, profil.autorisationsEtCapacités);
+    const qualite = filterQualiteSanitaire(result.qualite, profil.Qualité);
 
-    return { identité: identité, activités: activités, autorisationsEtCapacités: autorisationsEtCapacités };
+    return { identité: identité, activités: activités, autorisationsEtCapacités: autorisationsEtCapacités, qualite: qualite };
 }
 
 const filterIdentiteSanitaire = (identite: any, profil: any) => {
@@ -103,6 +104,13 @@ const filterAutorisationSanitaire = (autorisationCapacite: any, profil: any) => 
         numéroFinessÉtablissementTerritorial: autorisationCapacite.numéroFinessÉtablissementTerritorial
     }
     return filtredAutorisationCapacite;
+}
+
+const filterQualiteSanitaire = (qualite: any, profil: any) => {
+    const filtredQualite = {
+        reclamations: profil.nombre_reclamation === 'ok' ? qualite.reclamations : [],
+    }
+    return filtredQualite;
 }
 
 const filterIdentiteMedicoSocial = (identite: any, profil: any) => {
@@ -179,6 +187,15 @@ const filterressourcesHumainesMedicoSocial = (ressourcesHumaines: any, profil: a
         ressource.tauxDeRotationDuPersonnel = profil.tauxDeRotationDuPersonnel === 'ok' ? ressource.tauxDeRotationDuPersonnel : { 'dateMiseÀJourSource': '', valeur: '' };
     }
     return ressourcesHumaines;
+}
+
+const filterQualiteMedicoSocial = (qualite: any, profil: any) => {
+    const filtredQualite = {
+        reclamations: profil.nombre_reclamation === 'ok' ? qualite.reclamations : [],
+    }
+    // eslint-disable-next-line no-console
+    console.log('profil', profil);
+    return filtredQualite;
 }
 
 const filterActiviteEJ = (activites: any, profil: any) => {

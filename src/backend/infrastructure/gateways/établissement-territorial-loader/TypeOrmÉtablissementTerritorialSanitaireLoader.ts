@@ -30,7 +30,7 @@ import {
   CapacitéSanitaire,
 } from "../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 import { ÉtablissementTerritorialIdentité } from "../../../métier/entities/ÉtablissementTerritorialIdentité";
-import { ÉtablissementTerritorialQualite } from "../../../métier/entities/ÉtablissementTerritorialQualite";
+import { Reclamations, ÉtablissementTerritorialQualite } from "../../../métier/entities/ÉtablissementTerritorialQualite";
 import { ÉtablissementTerritorialSanitaireNonTrouvée } from "../../../métier/entities/ÉtablissementTerritorialSanitaireNonTrouvée";
 import { ÉtablissementTerritorialSanitaireLoader } from "../../../métier/gateways/ÉtablissementTerritorialSanitaireLoader";
 
@@ -84,7 +84,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     };
   }
 
-  async chargeQualite(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialQualite[]> {
+  async chargeQualite(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialQualite> {
     const reclamations = await (await this.orm)
       .getRepository(ReclamationETModel)
       .find({ where: { numéroFinessÉtablissementTerritorial } });
@@ -107,9 +107,15 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     });
   }
 
-  private construitsQualite(
+  private construitsQualite(reclamations: ReclamationETModel[]): ÉtablissementTerritorialQualite {
+    return {
+      reclamations: this.construitsReclamations(reclamations)
+    }
+  }
+
+  private construitsReclamations(
     reclamations: ReclamationETModel[]
-  ): ÉtablissementTerritorialQualite[] {
+  ): Reclamations[] {
     return reclamations.map((reclamation) => {
       return {
         numéroFinessÉtablissementTerritorial: reclamation.numéroFinessÉtablissementTerritorial,

@@ -7,6 +7,6 @@ import { ÉtablissementTerritorialSanitaireAutorisationEtCapacité } from "./Ét
 export type ÉtablissementTerritorialSanitaire = Readonly<{
   activités: ÉtablissementTerritorialSanitaireActivité[];
   autorisationsEtCapacités: ÉtablissementTerritorialSanitaireAutorisationEtCapacité;
-  qualite: ÉtablissementTerritorialQualite[],
+  qualite: ÉtablissementTerritorialQualite,
   identité: ÉtablissementTerritorialIdentité & EntitéJuridiqueDeRattachement;
 }>;

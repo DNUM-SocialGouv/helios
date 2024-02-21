@@ -22,7 +22,7 @@ import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../..
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
 import { ÉtablissementTerritorialIdentité } from "../../../métier/entities/ÉtablissementTerritorialIdentité";
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from "../../../métier/entities/ÉtablissementTerritorialMédicoSocialNonTrouvée";
-import { ÉtablissementTerritorialQualite } from "../../../métier/entities/ÉtablissementTerritorialQualite";
+import { Reclamations, ÉtablissementTerritorialQualite } from "../../../métier/entities/ÉtablissementTerritorialQualite";
 import { ÉtablissementTerritorialMédicoSocialLoader } from "../../../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader";
 
 export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements ÉtablissementTerritorialMédicoSocialLoader {
@@ -156,7 +156,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     return budgetEtFinancesModel.length > 0 ? budgetEtFinancesModel[0].cadreBudgétaire : CadreBudgétaire.ERRD;
   }
 
-  async chargeQualite(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialQualite[]> {
+  async chargeQualite(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialQualite> {
     const reclamations = await (await this.orm)
       .getRepository(ReclamationETModel)
       .find({ where: { numéroFinessÉtablissementTerritorial } });
@@ -386,9 +386,15 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     };
   }
 
-  private construitsQualite(
+  private construitsQualite(reclamations: ReclamationETModel[]): ÉtablissementTerritorialQualite {
+    return {
+      reclamations: this.construitsReclamations(reclamations)
+    }
+  }
+
+  private construitsReclamations(
     reclamations: ReclamationETModel[]
-  ): ÉtablissementTerritorialQualite[] {
+  ): Reclamations[] {
     return reclamations.map((reclamation) => {
       return {
         numéroFinessÉtablissementTerritorial: reclamation.numéroFinessÉtablissementTerritorial,
