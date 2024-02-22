@@ -32,4 +32,14 @@ export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
     if (this.lesReclamationsNeSontPasAutorisées) nonAutorisés.push(this.wording.RECLAMATIONS);
     return nonAutorisés;
   }
+
+  public get buildReclamationsData(): any {
+    const reclamationData: { [key: number]: any } = {};
+    for (const reclamation of this.etablissementTerritorialQualiteMédicoSocial.reclamations) {
+      const key = reclamation.année;
+      const value = { total_clotures: reclamation.totalClotures, total_encours: reclamation.totalEncours, date_miseAJourSource: reclamation.dateMiseÀJourSource, details: reclamation.details };
+      reclamationData[key] = value;
+    };
+    return reclamationData;
+  }
 }
