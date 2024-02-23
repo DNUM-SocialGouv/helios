@@ -160,8 +160,14 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     const reclamations = await (await this.orm)
       .getRepository(ReclamationETModel)
       .find({ where: { numéroFinessÉtablissementTerritorial } });
+
+    const dateMisAJour = (await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.SIREC })) as DateMiseÀJourFichierSourceModel;
+
     return this.construitsQualite(
-      reclamations
+      reclamations,
+      dateMisAJour.dernièreMiseÀJour
     );
   }
 
@@ -386,14 +392,15 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     };
   }
 
-  private construitsQualite(reclamations: ReclamationETModel[]): ÉtablissementTerritorialQualite {
+  private construitsQualite(reclamations: ReclamationETModel[], dateMisAJour: string): ÉtablissementTerritorialQualite {
     return {
-      reclamations: this.construitsReclamations(reclamations)
+      reclamations: this.construitsReclamations(reclamations, dateMisAJour)
     }
   }
 
   private construitsReclamations(
-    reclamations: ReclamationETModel[]
+    reclamations: ReclamationETModel[],
+    dateMisAJour: string
   ): Reclamations[] {
     return reclamations.map((reclamation) => {
       return {
@@ -401,7 +408,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
         année: reclamation.annee,
         totalClotures: reclamation.clotTotal,
         totalEncours: reclamation.encoursTotal,
-        dateMiseÀJourSource: "",
+        dateMiseÀJourSource: dateMisAJour,
         details: [{
           motif: "MOTIF_10",
           clot: reclamation.clotMotif10,

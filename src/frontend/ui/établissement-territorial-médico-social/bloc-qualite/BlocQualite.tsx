@@ -36,8 +36,6 @@ const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel }:
           !etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasAutorisées && (
             <GraphiqueReclamations
               data={etablissementTerritorialQualiteMédicoSocialViewModel.buildReclamationsData}
-              estEntitéJuridique
-              estSanitaire={true}
             />
           )}
       </ul>

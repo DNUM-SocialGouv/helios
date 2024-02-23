@@ -37,7 +37,7 @@ export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
     const reclamationData: { [key: number]: any } = {};
     for (const reclamation of this.etablissementTerritorialQualiteMédicoSocial.reclamations) {
       const key = reclamation.année;
-      const value = { total_clotures: reclamation.totalClotures, total_encours: reclamation.totalEncours, date_miseAJourSource: reclamation.dateMiseÀJourSource, details: reclamation.details };
+      const value = { total_clotures: reclamation.totalClotures, total_encours: reclamation.totalEncours, dateMiseAJourSource: reclamation.dateMiseÀJourSource, details: reclamation.details };
       reclamationData[key] = value;
     };
     return reclamationData;
