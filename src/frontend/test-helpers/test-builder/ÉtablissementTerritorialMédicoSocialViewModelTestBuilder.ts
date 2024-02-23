@@ -518,6 +518,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     },
   ];
 
+  public static qualite: ÉtablissementTerritorialMédicoSocial["qualite"] = {
+    reclamations: []
+  };
+
   public static crée(
     wording: Wording,
     paths: Paths,
@@ -528,6 +532,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
         activités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.activités,
         autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
         budgetEtFinances: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.budgetEtFinances,
+        qualite: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.qualite,
         identité: {
           ...ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
           ...champsSurchargés,

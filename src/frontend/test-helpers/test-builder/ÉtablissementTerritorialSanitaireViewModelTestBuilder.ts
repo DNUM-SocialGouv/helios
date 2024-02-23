@@ -500,6 +500,17 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     },
   };
 
+  public static qualite: ÉtablissementTerritorialSanitaire["qualite"] = {
+    reclamations: [{
+      numéroFinessÉtablissementTerritorial: "",
+      année: 2020,
+      totalClotures: 100,
+      totalEncours: 100,
+      dateMiseÀJourSource: "2023-07-07",
+      details: []
+    }]
+  }
+
   public static crée(
     wording: Wording,
     paths: Paths,
@@ -509,6 +520,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       {
         activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
         autorisationsEtCapacités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
+        qualite: ÉtablissementTerritorialSanitaireViewModelTestBuilder.qualite,
         identité: {
           ...ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
           ...champsSurchargés,
@@ -531,6 +543,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
           ...ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
           ...champsSurchargés,
         },
+        qualite: ÉtablissementTerritorialSanitaireViewModelTestBuilder.qualite,
         identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
       },
       wording,
