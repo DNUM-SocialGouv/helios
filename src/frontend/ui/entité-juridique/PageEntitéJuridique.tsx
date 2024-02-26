@@ -35,7 +35,9 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, rechercheViewM
       </Head>
       <>
         <Catégorisation catégorisationViewModel={entitéJuridiqueViewModel.catégorisationViewModel} />
-        <Titre logo={LogoEntitéJuridique} rechercheViewModel={rechercheViewModel}>{entitéJuridiqueViewModel.titre}</Titre>
+        <Titre logo={LogoEntitéJuridique} rechercheViewModel={rechercheViewModel}>
+          {entitéJuridiqueViewModel.titre}
+        </Titre>
         <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
         <ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />
         <BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={entitéJuridiqueViewModel.entitéJuridiqueAutorisationsCapacitesViewModel} />

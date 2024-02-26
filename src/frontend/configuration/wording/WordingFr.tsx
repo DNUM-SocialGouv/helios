@@ -210,6 +210,28 @@ export class WordingFr implements Wording {
   readonly DATE_D_AUTORISATION: string = "Date d’autorisation";
   readonly CAPACITÉ_AUTORISÉE: string = "Capacité autorisée";
 
+  // Bloc Qualité
+  readonly TITRE_BLOC_QUALITE: string = "qualité";
+  readonly RECLAMATIONS : string = "Réclamations";
+
+  readonly MOTIF_DES_RECLAMATIONS : string = "Motif des réclamations";
+  readonly NOMBRE_TOTAL_RECLAMATIONS : string = "Nombre total de réclamations concernées";
+  readonly NOMBRE_RECLAMATIONS_EN_ENCOURS : string = "Nombre de réclamations en cours concernées";
+  readonly NOMBRE_RECLAMATIONS_CLOTUREES : string = "Nombre de réclamations clôturées concernées";
+    
+  readonly MOTIF_10 : string = "Hôtellerie-locaux-restauration";
+  readonly MOTIF_11 : string = "Problème d'organisation ou de fonctionnement de l'établissement ou du service";
+  readonly MOTIF_12 : string = "Problème de qualité des soins médicaux";
+  readonly MOTIF_13 : string = "Problème de qualité des soins paramédicaux";
+  readonly MOTIF_14 : string = "Recherche d'établissement ou d'un professionnel";
+  readonly MOTIF_15 : string = "Mise en cause attitude des professionnels";
+  readonly MOTIF_16 : string = "Informations et droits des usagers";
+  readonly MOTIF_17 : string = "Facturation et honoraires";
+  readonly MOTIF_18 : string = "Santé-environnementale";
+  readonly MOTIF_19 : string = "Activités d'esthétique réglementées";
+  readonly MOTIF_155 : string = "À renseigner";
+  readonly MOTIF_156 : string = "COVID-19";
+
   // Bloc Autorisation médico-social
   readonly MISE_À_JOUR_AUTORISATION: string = "Mise à jour d’autorisation";
   readonly DERNIÈRE_INSTALLATION: string = "Dernière installation";
@@ -358,6 +380,8 @@ export class WordingFr implements Wording {
   readonly ARHGOS_TITLE: string = "Agence Régionale Hospitalière Gestion des Objectifs Sanitaires";
   readonly SAE_TITLE: string = "Statistique Annuelle des Établissements de santé";
   readonly RPU_TITLE: string = "Résumé de Passage aux Urgences";
+  readonly SIREC_TITLE : string = "Portal de signalement des indés";
+  
   // Sources courtes
   readonly FINESS: ReactElement = (<abbr title={this.FINESS_TITLE}>FINESS</abbr>);
   readonly DIAMANT: ReactElement = (<abbr title={this.DIAMANT_TITLE}>DIAMANT</abbr>);
@@ -368,6 +392,7 @@ export class WordingFr implements Wording {
   readonly ARHGOS: ReactElement = (<abbr title={this.ARHGOS_TITLE}>ARHGOS</abbr>);
   readonly SAE: ReactElement = (<abbr title={this.SAE_TITLE}>SAE</abbr>);
   readonly RPU: ReactElement = (<abbr title={this.RPU_TITLE}>RPU</abbr>);
+  readonly SIREC: ReactElement = (<abbr title={this.SIREC_TITLE}>SIREC</abbr>);
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string = "Accès refusé";

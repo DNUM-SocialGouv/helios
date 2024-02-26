@@ -49,6 +49,7 @@ describe("La récupération d’un établissement territorial médico-social", (
       chargeBudgetEtFinances: jest.fn(),
       chargeIdentité: mockedChargeIdentité,
       chargeRessourcesHumaines: jest.fn(),
+      chargeQualite: jest.fn(),
       estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
     };
 
@@ -94,6 +95,7 @@ describe("La récupération d’un établissement territorial médico-social", (
       chargeBudgetEtFinances: jest.fn(),
       chargeIdentité: mockedChargeParNuméroFiness,
       chargeRessourcesHumaines: jest.fn(),
+      chargeQualite: jest.fn(),
       estUnMonoÉtablissement: jest.fn(),
     };
 
@@ -154,6 +156,7 @@ describe("La récupération d’un établissement territorial médico-social", (
       chargeBudgetEtFinances: jest.fn(),
       chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
       chargeRessourcesHumaines: jest.fn(),
+      chargeQualite: jest.fn(),
       estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
     };
 
@@ -203,6 +206,7 @@ describe("La récupération d’un établissement territorial médico-social", (
       chargeBudgetEtFinances: jest.fn(),
       chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
       chargeRessourcesHumaines: jest.fn(),
+      chargeQualite: jest.fn(),
       estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
     };
 
@@ -254,6 +258,7 @@ describe("La récupération d’un établissement territorial médico-social", (
       chargeBudgetEtFinances: mockedChargeBudgetEtFinances,
       chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
       chargeRessourcesHumaines: jest.fn(),
+      chargeQualite: jest.fn(),
       estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
     };
 
@@ -305,6 +310,7 @@ describe("La récupération d’un établissement territorial médico-social", (
       chargeBudgetEtFinances: jest.fn(),
       chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
       chargeRessourcesHumaines: mockedChargeRessourcesHumaines,
+      chargeQualite: jest.fn(),
       estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
     };
 

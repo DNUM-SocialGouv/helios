@@ -7,6 +7,7 @@ import { ÉtablissementTerritorialMédicoSocialActivitéViewModel } from "./bloc
 import { ÉtablissementTerritorialMédicoSocialAutorisationsViewModel } from "./bloc-autorisations/ÉtablissementTerritorialMédicoSocialAutorisationsViewModel";
 import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from "./bloc-budget-et-finances/ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel";
 import { ÉtablissementTerritorialMédicoSocialIdentitéViewModel } from "./bloc-identité/ÉtablissementTerritorialMédicoSocialIdentitéViewModel";
+import { ÉtablissementTerritorialQualiteMédicoSocialViewModel } from "./bloc-qualite/ÉtablissementTerritorialQualiteMédicoSocialViewModel";
 import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } from "./bloc-ressources-humaines/ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel";
 
 export class ÉtablissementTerritorialMédicoSocialViewModel {
@@ -15,6 +16,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   private établissementTerritorialAutorisationsMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialAutorisationsViewModel;
   private établissementTerritorialBudgetEtFinancesMédicoSocialViewModel: ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel;
   private établissementTerritorialRessourcesHumainesMédicoSocialViewModel: ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel;
+  private établissementTerritorialQualiteMédicoSocialViewModel: ÉtablissementTerritorialQualiteMédicoSocialViewModel;
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialMédicoSocial, private readonly wording: Wording, paths: Paths) {
     this.établissementTerritorialIdentitéMédicoSocialViewModel = new ÉtablissementTerritorialMédicoSocialIdentitéViewModel(
@@ -38,6 +40,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
       établissementTerritorial.ressourcesHumaines,
       wording
     );
+    this.établissementTerritorialQualiteMédicoSocialViewModel = new ÉtablissementTerritorialQualiteMédicoSocialViewModel(
+      wording,
+      établissementTerritorial.qualite
+    )
   }
 
   public get titre(): string {
@@ -81,5 +87,9 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
 
   public get ressourcesHumainesViewModel(): ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     return this.établissementTerritorialRessourcesHumainesMédicoSocialViewModel;
+  }
+
+  public get qualiteViewModel(): ÉtablissementTerritorialQualiteMédicoSocialViewModel {
+    return this.établissementTerritorialQualiteMédicoSocialViewModel;
   }
 }
