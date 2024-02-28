@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from logging import Logger
 
 from datacrawler import filtre_les_données_sur_les_n_dernières_années
@@ -13,7 +14,6 @@ def transform_les_donnees_reclamations_etablissements(
 ) -> pd.DataFrame:
     est_dans_sirec = donnees_reclamations["NDEG_FINESS_RPPS"].isin(numéros_finess_des_établissements_connus["numero_finess_etablissement_territorial"])
     logger.info(f"[SIREC] {est_dans_sirec.sum()} réclamations sont liées à un ET trouvé en base dans le fichier sirec")
-
     return (
         donnees_reclamations[est_dans_sirec]
         .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(equivalences_sirec_reclamations_helios))
@@ -22,5 +22,4 @@ def transform_les_donnees_reclamations_etablissements(
         .sort_values(by=["annee"], ascending=False)
         .set_index(index_reclamations)
     )
-8
     
