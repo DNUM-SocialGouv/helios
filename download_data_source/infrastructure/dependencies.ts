@@ -57,7 +57,6 @@ const createDependencies = (): Dependencies => {
   const cheminDesFichiersSourcesDiamantSurLeSftpDnum = "DIAMANT/incoming";
 
   const cheminDesFichiersSourcesSirecSurLeSftpDnum = "SIREC";
-  const sirecLocalPath = "sirec_repertoireDeDestination";
 
   const logger = new ConsoleLogger();
   const environmentVariables = new NodeEnvironmentVariables(logger);
@@ -85,7 +84,7 @@ const createDependencies = (): Dependencies => {
       new Ssh2SftpClient(),
       environmentVariables,
       cheminDesFichiersSourcesSirecSurLeSftpDnum,
-      sirecLocalPath,
+      environmentVariables.SIREC_DATA_PATH,
       logger
     ),
     entitéJuridiqueHeliosLoader: typeOrmEntitéJuridiqueHeliosLoader,

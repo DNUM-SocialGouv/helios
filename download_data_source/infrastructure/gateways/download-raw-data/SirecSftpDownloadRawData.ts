@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, rmSync } from "fs";
+import { mkdirSync, readFileSync } from "fs";
 import path from "path";
 import { FileInfo } from "ssh2-sftp-client";
 
@@ -9,26 +9,14 @@ import { HeliosError } from "../../HeliosError";
 import { ClientSftp } from "./ClientSftp";
 
 export class SirecSftpDownloadRawData implements DownloadRawData {
-  private readonly extensionDeFichierChiffré = "*.csv";
-
   constructor(
     private readonly clientSftp: ClientSftp,
     private readonly environmentVariables: EnvironmentVariables,
     private readonly cheminDesFichiersSourcesSurLeSftp: string,
-    private readonly répertoireDeDestination: string,
+    private readonly repertoireDeDestination: string,
     private readonly logger: Logger,
-    private readonly préfixeDesFichiersÀTélécharger: string[] = [
-      "ANN_CA_EJ_ET",
-      "ANN_ERRD_EJ",
-      "ANN_ERRD_EJ_ET",
-      "ANN_MS_TDP_ET",
-      "ANN_PER_ERRD_EPRD",
-      "ANN_RPU",
-      "ANN_SAE",
-      "MEN_PMSI_ANNUEL",
-      "QUO_SAN_FINANCE",
-    ]
-  ) {}
+    private readonly prefixeDesFichiersATelecharger: string = "sirec_"
+  ) { }
 
   async exécute(): Promise<void> {
     this.recréeLeRépertoireDeDestination();
@@ -39,27 +27,24 @@ export class SirecSftpDownloadRawData implements DownloadRawData {
       const fichiersSurLeSftp = await this.listeLesFichiersDuSftp();
 
       console.log("fichiersSurLeSftp ::::", fichiersSurLeSftp);
+      const fichierATelecharger = this.trouveLeFichierLePlusRecentPortantLePrefixe(this.prefixeDesFichiersATelecharger, fichiersSurLeSftp);
 
-      /*   for (const préfixeDuFichier of this.préfixeDesFichiersÀTélécharger) {
-        const fichierÀTélécharger = this.trouveLeFichierLePlusRécentPortantLePréfixe(préfixeDuFichier, fichiersSurLeSftp);
-
-        if (fichierÀTélécharger) {
-          await this.téléchargeLeFichier(fichierÀTélécharger.name);
-        } else {
-          this.logger.error(`[DIAMANT] Le fichier ${préfixeDuFichier} n’est pas présent sur le sftp.`);
-        }
+      if (fichierATelecharger) {
+        await this.telechargeLeFichier(fichierATelecharger.name);
+      } else {
+        this.logger.error(`[SIREC] Le fichier ${this.prefixeDesFichiersATelecharger} n’est pas présent sur le sftp.`);
       }
 
-      await this.déconnexionDuSftp();
-      */
+
+      await this.deconnexionDuSftp();
+
     } catch (erreur) {
       throw new HeliosError(`[Sirec] Une erreur est survenue lors de la connexion au SFTP : ${erreur.message}`);
     }
   }
 
   private recréeLeRépertoireDeDestination() {
-    rmSync(this.répertoireDeDestination, { force: true, recursive: true });
-    mkdirSync(this.répertoireDeDestination, { recursive: true });
+    mkdirSync(this.repertoireDeDestination, { recursive: true });
   }
 
   private async connexionAuSftp() {
@@ -70,36 +55,35 @@ export class SirecSftpDownloadRawData implements DownloadRawData {
       username: this.environmentVariables.DNUM_SFTP_USERNAME,
     });
 
-    this.logger.info("[Sirec] La connexion au SFTP est ouverte. AAA");
+    this.logger.info("[Sirec] La connexion au SFTP est ouverte.");
   }
 
   private async listeLesFichiersDuSftp() {
-    return await this.clientSftp.list(this.cheminDesFichiersSourcesSurLeSftp, this.extensionDeFichierChiffré);
+    return await this.clientSftp.list(this.cheminDesFichiersSourcesSurLeSftp);
   }
 
-  private async déconnexionDuSftp() {
+  private async deconnexionDuSftp() {
     await this.clientSftp.end();
     this.logger.info("[Sirec] La connexion au SFTP est fermée.");
   }
 
-  private async téléchargeLeFichier(fichierÀTélécharger: string) {
+  private async telechargeLeFichier(fichierATelecharger: string) {
     await this.clientSftp.fastGet(
-      path.join(this.cheminDesFichiersSourcesSurLeSftp, fichierÀTélécharger),
-      path.join(this.répertoireDeDestination, fichierÀTélécharger),
+      path.join(this.cheminDesFichiersSourcesSurLeSftp, fichierATelecharger),
+      path.join(this.repertoireDeDestination, fichierATelecharger),
       {
         chunkSize: 1000000,
         concurrency: 2,
       }
     );
-    this.logger.info(`[Sirec] Le fichier DIAMANT ${fichierÀTélécharger} a été téléchargé.`);
+    this.logger.info(`[Sirec] Le fichier SIREC ${fichierATelecharger} a été téléchargé.`);
   }
 
-  private trouveLeFichierLePlusRécentPortantLePréfixe(préfixeDuFichierÀTélécharger: string, fichiersSurLeSftp: FileInfo[]) {
-    const formatDuNomDeFichier = new RegExp(`^${préfixeDuFichierÀTélécharger}_\\d{4}_\\d{2}_\\d{2}.CSV.gpg`);
-
-    const fichiersPertinentsTriésParDate = fichiersSurLeSftp.filter((file: FileInfo) => formatDuNomDeFichier.test(file.name)).sort(this.sortByLastDate);
-
-    return fichiersPertinentsTriésParDate[0];
+  private trouveLeFichierLePlusRecentPortantLePrefixe(prefixeDesFichiersATelecharger: string, fichiersSurLeSftp: FileInfo[]) {
+    const formatDuNomDeFichier = new RegExp(`^${prefixeDesFichiersATelecharger}`);
+    const fichiersPertinentsTriesParDate = fichiersSurLeSftp.filter((file: FileInfo) => formatDuNomDeFichier.test(file.name)).sort(this.sortByLastDate);
+    this.logger.info(`[Sirec] Le fichier SIREC ${fichiersPertinentsTriesParDate} a été téléchargé.`);
+    return fichiersPertinentsTriesParDate[0];
   }
 
   private sortByLastDate(a: FileInfo, b: FileInfo) {
