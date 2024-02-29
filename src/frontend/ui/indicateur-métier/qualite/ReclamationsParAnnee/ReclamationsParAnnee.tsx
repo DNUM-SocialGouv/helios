@@ -80,10 +80,10 @@ const ReclamationsParAnnee = ({ total_clotures, total_encours, details }: Graphi
                       <HistogrammeHorizontalRow color="darkBlue" number={item.clot + item.encours} total={total_clotures + total_encours} />
                     </td>
                     <td>
-                      <HistogrammeHorizontalRow color="lightBlue" number={item.encours} total={item.clot + item.encours} />
+                      <HistogrammeHorizontalRow color="lightBlue" number={item.encours} total={total_encours} />
                     </td>
                     <td>
-                      <HistogrammeHorizontalRow color="lightBlue" number={item.clot} total={item.clot + item.encours} />
+                      <HistogrammeHorizontalRow color="lightBlue" number={item.clot} total={total_clotures} />
                     </td>
                   </tr>
                 );
