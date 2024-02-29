@@ -230,7 +230,7 @@ export const Cookies = ({
                             className={`${styles["fr-radio-groupInputRadioLabel"]}  ${allowCookies === "true" ? styles["InputRadioChecked"] : ""}`}
                             htmlFor="radio-inline-1"
                           >
-                            Tout accepter
+                            Autoriser
                           </label>
                         </div>
                       </div>
@@ -251,7 +251,7 @@ export const Cookies = ({
                             className={`${styles["fr-radio-groupInputRadioLabel"]}  ${allowCookies === "false" ? styles["InputRadioChecked"] : ""}`}
                             htmlFor="radio-inline-2"
                           >
-                            Tout refuser
+                            Interdire
                           </label>
                         </div>
                       </div>
@@ -259,7 +259,7 @@ export const Cookies = ({
                     <p className={styles["label_input"]}>
                       <span className={`${styles["textBold"]} `}>AT internet</span>
                       <br />
-                      {allowCookies === "true" ? "interdit" : "autorisé"}
+                      {allowCookies === "true" ? "autorisé" : "interdit"}
                       <br />- {allowCookies === "true" ? "Ce service n'a installé aucun cookie" : "Ce service peut déposer 4 cookies."}
                       <br />
                       <Link className="fr-mr-1w" href="https://tarteaucitron.io/en/service/atinternet" target="_blank">

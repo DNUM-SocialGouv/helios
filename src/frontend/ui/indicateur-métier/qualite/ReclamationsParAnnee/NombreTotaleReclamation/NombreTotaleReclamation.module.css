@@ -1,0 +1,30 @@
+.nombreTotaleReclamationContainer {
+  padding: 18px;
+  border: 2px solid #eee;
+  text-align: center;
+  border-bottom: 3px solid var(--blue-france-sun-113-625);
+  margin-bottom: 20px;
+  width: 135px;
+}
+
+.number {
+  font-weight: bold;
+  line-height: normal;
+}
+
+.numberSize_big {
+  font-size: xx-large;
+}
+.numberSize_small {
+  font-size: x-large;
+}
+
+.label {
+  font-size: 15px;
+}
+
+@media (max-width: 800px) {
+  .nombreTotaleReclamationContainer {
+    width: 100%;
+  }
+}

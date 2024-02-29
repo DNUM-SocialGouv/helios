@@ -7,7 +7,7 @@ export class RécupèreLÉtablissementTerritorialMédicoSocialUseCase {
   constructor(
     private établissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader,
     private entitéJuridiqueLoader: EntitéJuridiqueLoader
-  ) {}
+  ) { }
 
   async exécute(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialMédicoSocial> {
     const établissementTerritorialMédicoSocialOuErreur = await this.établissementTerritorialMédicoSocialLoader.chargeIdentité(
@@ -42,6 +42,10 @@ export class RécupèreLÉtablissementTerritorialMédicoSocialUseCase {
       numéroFinessÉtablissementTerritorial
     );
 
+    const établissementTerritorialMédicoSocialQualite = await this.établissementTerritorialMédicoSocialLoader.chargeQualite(
+      numéroFinessÉtablissementTerritorial
+    );
+
     return {
       activités: établissementTerritorialMédicoSocialActivité,
       autorisationsEtCapacités: établissementTerritorialMédicoSocialAutorisation,
@@ -52,6 +56,7 @@ export class RécupèreLÉtablissementTerritorialMédicoSocialUseCase {
         estMonoÉtablissement,
       },
       ressourcesHumaines: établissementTerritorialMédicoSocialRessourcesHumaines,
+      qualite: établissementTerritorialMédicoSocialQualite
     };
   }
 }

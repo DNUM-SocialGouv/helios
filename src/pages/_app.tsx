@@ -24,6 +24,7 @@ import { DependenciesProvider } from "../frontend/ui/commun/contexts/useDependen
 import { UserContextProvider } from "../frontend/ui/commun/contexts/userContextProvider";
 import { Footer } from "../frontend/ui/commun/Footer/Footer";
 import { Header } from "../frontend/ui/commun/Header/Header";
+// import { Cookies } from "../frontend/ui/cookies/Cookies";
 import { resizeChartOnPrint } from "../plugins/resizeChartAtPrint";
 // import { Cookies } from "../frontend/ui/cookies/Cookies";
 

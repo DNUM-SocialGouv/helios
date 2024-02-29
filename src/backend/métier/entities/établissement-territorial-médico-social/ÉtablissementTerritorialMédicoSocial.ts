@@ -1,4 +1,5 @@
 import { ÉtablissementTerritorialIdentité } from "../ÉtablissementTerritorialIdentité";
+import { ÉtablissementTerritorialQualite } from "../ÉtablissementTerritorialQualite";
 import { EntitéJuridiqueDeRattachement } from "./EntitéJuridiqueDeRattachement";
 import { MonoÉtablissement } from "./MonoÉtablissement";
 import { ÉtablissementTerritorialMédicoSocialActivité } from "./ÉtablissementTerritorialMédicoSocialActivité";
@@ -12,4 +13,5 @@ export type ÉtablissementTerritorialMédicoSocial = Readonly<{
   budgetEtFinances: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[];
   identité: ÉtablissementTerritorialIdentité & MonoÉtablissement & EntitéJuridiqueDeRattachement;
   ressourcesHumaines: ÉtablissementTerritorialMédicoSocialRessourcesHumaines[];
+  qualite: ÉtablissementTerritorialQualite;
 }>;

@@ -1,6 +1,6 @@
 {
   "name": "helios",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "private": true,
   "scripts": {
     "amibroken": "yarn deadcode && yarn lint && yarn typecheck && yarn test && yarn build",
@@ -62,7 +62,7 @@
     "test:accessibility": "lhci autorun",
     "test:mutation": "env-cmd -f .env.test npx stryker run",
     "test:typescript": "NODE_ENV=test yarn migrations:up && jest --runInBand",
-    "test:typescript:back": "NODE_ENV=test yarn migrations:up && jest --coverage --testMatch '<rootDir>/(src/backend|download_data_source)/**/*(*.)@(test).ts' --runInBand --colors",
+    "test:typescript:back": "NODE_ENV=test yarn migrations:up && jest --coverage --testMatch '<rootDir>/(src/backend|download_data_source)/**/*(*.)@(test).ts' --runInBand --colors --detectOpenHandles",
     "test:typescript:front": "NODE_ENV=test yarn migrations:up && jest --coverage --testMatch '<rootDir>/src/frontend/**/*(*.)@(test).ts?(x)' --max-workers 4 --colors",
     "test:typescript:watch": "yarn test:typescript --watch",
     "test:typescript:coverage": "yarn test:typescript --coverage",
