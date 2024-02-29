@@ -7,9 +7,10 @@ import ReclamationsParAnnee from "./ReclamationsParAnnee/ReclamationsParAnnee";
 
 type GraphiqueReclamationsProps = Readonly<{
   data: any;
+  dateMiseAJour: string;
 }>;
 
-const GraphiqueReclamations = ({ data }: GraphiqueReclamationsProps) => {
+const GraphiqueReclamations = ({ data, dateMiseAJour }: GraphiqueReclamationsProps) => {
   const { wording } = useDependencies();
   const annees = Object.keys(data).sort().reverse().map(Number);
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(annees[0]);
@@ -18,9 +19,9 @@ const GraphiqueReclamations = ({ data }: GraphiqueReclamationsProps) => {
     <IndicateurGraphique
       années={{ liste: annees, setAnnéeEnCours }}
       contenuInfoBulle={
-        <ContenuReclamations dateDeMiseÀJour={data[annéeEnCours].dateMiseAJourSource} source={wording.SIREC} />
+        <ContenuReclamations dateDeMiseÀJour={dateMiseAJour} source={wording.SIREC} />
       }
-      dateDeMiseÀJour={data[annéeEnCours].dateMiseAJourSource}
+      dateDeMiseÀJour={dateMiseAJour}
       identifiant={wording.RECLAMATIONS}
       nomDeLIndicateur={wording.RECLAMATIONS}
       source={wording.SIREC}
