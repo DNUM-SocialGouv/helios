@@ -38,6 +38,7 @@ yarn-error.log*
 # Helios
 data_test
 data_set/.ssh
+data_set/sirec
 sshd_config
 ssh_key
 
