@@ -6,6 +6,7 @@ import { EnvironmentVariables } from "../métier/gateways/EnvironmentVariables";
 import { FavorisLoader } from "../métier/gateways/FavorisLoader";
 import { Logger } from "../métier/gateways/Logger";
 import { RechercheLoader } from "../métier/gateways/RechercheLoader";
+import { ReclamationLoader } from "../métier/gateways/ReclamationLoader";
 import { SearchHistoryLoader } from "../métier/gateways/SearchHistoryLoader";
 import { UtilisateurLoader } from "../métier/gateways/UtilisateurLoader";
 import { ÉtablissementTerritorialMédicoSocialLoader } from "../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader";
@@ -22,6 +23,7 @@ import { ConsoleLogger } from "./gateways/logger/ConsoleLogger";
 import { typeOrmOrm } from "./gateways/orm/typeOrmOrm";
 import { TypeOrmProfileLoader } from "./gateways/profile-loader/TypeOrmProfileLoader";
 import { TypeOrmRechercheLoader } from "./gateways/recherche-loader/TypeOrmRechercheLoader";
+import { TypeOrmReclamationLoader } from "./gateways/reclamation-loader/TypeOrmReclamationLoader";
 import { TypeOrmRoleLoader } from "./gateways/role-loader/TypeOrmRoleLoader";
 import { TypeOrmSearchHistoryLoader } from "./gateways/search-history-loader/TypeOrmSearchHistoryLoader";
 import { TypeOrmUtilisateurLoader } from "./gateways/utilisateur-loader/TypeOrmUtilisateurLoader";
@@ -35,6 +37,7 @@ export type Dependencies = Readonly<{
   logger: Logger;
   utilisateurLoader: UtilisateurLoader;
   rechercheLoader: RechercheLoader;
+  reclamationLoader: ReclamationLoader;
   établissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader;
   établissementTerritorialRattachéLoader: ÉtablissementTerritorialRattachéLoader;
   établissementTerritorialSanitaireLoader: ÉtablissementTerritorialSanitaireLoader;
@@ -65,6 +68,7 @@ const createDependencies = (): Dependencies => {
     logger,
     utilisateurLoader: new TypeOrmUtilisateurLoader(orm),
     rechercheLoader: new TypeOrmRechercheLoader(orm),
+    reclamationLoader: new TypeOrmReclamationLoader(orm),
     établissementTerritorialMédicoSocialLoader: new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm),
     établissementTerritorialRattachéLoader: new TypeOrmÉtablissementTerritorialRattachéLoader(orm),
     établissementTerritorialSanitaireLoader: new TypeOrmÉtablissementTerritorialSanitaireLoader(orm),
