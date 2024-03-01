@@ -392,7 +392,7 @@ export class WordingFr implements Wording {
   readonly ARHGOS: ReactElement = (<abbr title={this.ARHGOS_TITLE}>ARHGOS</abbr>);
   readonly SAE: ReactElement = (<abbr title={this.SAE_TITLE}>SAE</abbr>);
   readonly RPU: ReactElement = (<abbr title={this.RPU_TITLE}>RPU</abbr>);
-  readonly SIREC: ReactElement = (<abbr title={this.SIREC_TITLE}>Système d&apos;Information Réclamations (SI REC)</abbr>);
+  readonly SIREC: ReactElement = (<abbr title={this.SIREC_TITLE}>SIREC</abbr>);
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string = "Accès refusé";
