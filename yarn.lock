@@ -2065,6 +2065,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/papaparse@npm:^5.3.14":
+  version: 5.3.14
+  resolution: "@types/papaparse@npm:5.3.14"
+  dependencies:
+    "@types/node": "*"
+  checksum: fbf942ed92179eeb824d4e544cc701468157a4ce3f6f668f8b17692d9886fea92ccff5e56965615ff64f049efa01ff95ddb7d30c67e0186bc802a6cc8ef26e63
+  languageName: node
+  linkType: hard
+
 "@types/parse-json@npm:^4.0.0":
   version: 4.0.0
   resolution: "@types/parse-json@npm:4.0.0"
@@ -6014,6 +6023,7 @@ __metadata:
     "@types/next-auth": ^3.15.0
     "@types/node": 17.0.23
     "@types/node-fetch": ^2.6.2
+    "@types/papaparse": ^5.3.14
     "@types/react": 18.0.0
     "@types/react-dom": 18.0.0
     "@types/ssh2": ^0.5.52
@@ -6052,6 +6062,7 @@ __metadata:
     next-router-mock: ^0.7.4
     next-usequerystate: ^1.12.2
     node-fetch: 2.6.7
+    papaparse: ^5.4.1
     pg: ^8.7.3
     prettier: ^2.8.2
     react: 18.0.0
@@ -9104,6 +9115,13 @@ __metadata:
   version: 1.0.0
   resolution: "packet-reader@npm:1.0.0"
   checksum: 0b7516f0cbf3e322aad591bed29ba544220088c53943145c0d9121a6f59182ad811f7fd6785a8979a34356aca69d97653689029964c5998dc02645633d88ffd7
+  languageName: node
+  linkType: hard
+
+"papaparse@npm:^5.4.1":
+  version: 5.4.1
+  resolution: "papaparse@npm:5.4.1"
+  checksum: fc9e52f7158dca3517c229e3309065b1ab5da6c7194572fba4f31ff138bc43e3c91182cc40365cc828f97fe10d0aca416068fd731661058bea0f69ddb84a411a
   languageName: node
   linkType: hard
 

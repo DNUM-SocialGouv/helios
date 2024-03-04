@@ -1,6 +1,7 @@
 import * as Sentry from "@sentry/nextjs";
 import Ssh2SftpClient from "ssh2-sftp-client";
 
+import { ControleDonneesSirecLoader } from "../métier/gateways/ControleDonnesSirecLoader";
 import { DownloadRawData } from "../métier/gateways/DownloadRawData";
 import { EntitéJuridiqueHeliosLoader } from "../métier/gateways/EntitéJuridiqueHeliosLoader";
 import { EntitéJuridiqueHeliosRepository } from "../métier/gateways/EntitéJuridiqueHeliosRepository";
@@ -21,6 +22,7 @@ import { FinessXmlEntitésJuridiquesSourceExterneLoader } from "./gateways/entit
 import { NodeEnvironmentVariables } from "./gateways/environnement-variables/NodeEnvironmentVariables";
 import { ConsoleLogger } from "./gateways/logger/ConsoleLogger";
 import { typeOrmOrm } from "./gateways/orm/typeOrmOrm";
+import { SirecSourceExterneLoader } from "./gateways/sirec-soure-externe-loader/sirecSourceExterneLoader";
 import { XMLStatutsJuridiquesSourceExterneLoader } from "./gateways/statuts-juridiques-source-externe-loader/StatutsJuridiquesSourceExterneLoader";
 import { GunzipUnzipRawData } from "./gateways/unzip-raw-data/GunzipUnzipRawData";
 import { NodeXmlToJs } from "./gateways/xml-to-js/NodeXmlToJs";
@@ -41,6 +43,7 @@ export type Dependencies = Readonly<{
   établissementTerritorialHeliosRepository: ÉtablissementTerritorialRepository;
   unzipRawData: UnzipRawData;
   catégorisationSourceExterneLoader: StatutsJuridiquesSourceExterneLoader;
+  controleDonneesSirecLoader: ControleDonneesSirecLoader;
   logger: Logger;
 }>;
 
@@ -78,6 +81,7 @@ const createDependencies = (): Dependencies => {
     entitéJuridiqueSourceExterneLoader: new FinessXmlEntitésJuridiquesSourceExterneLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH, logger, orm),
     environmentVariables,
     finessDownloadRawData: new FinessSftpDownloadRawData(new Ssh2SftpClient(), finessSftpPath, finessLocalPath, environmentVariables, logger),
+    controleDonneesSirecLoader: new SirecSourceExterneLoader(environmentVariables.SIREC_DATA_PATH, environmentVariables.CHECKED_SIREC_DATA_PATH, logger),
     logger,
     unzipRawData: new GunzipUnzipRawData(environmentVariables, logger),
     établissementTerritorialHeliosLoader: new TypeOrmÉtablissementTerritorialHeliosLoader(orm),
