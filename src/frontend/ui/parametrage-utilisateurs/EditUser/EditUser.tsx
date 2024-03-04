@@ -133,13 +133,6 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
     rolesF = roles.filter((obj) => obj.code !== "ADMIN_NAT");
   }
 
-  let rolesF = roles;
-  if (pageDetails) {
-    rolesF = roles;
-  } else {
-    rolesF = roles.filter((obj) => obj.code !== "ADMIN_NAT");
-  }
-
   return (
     <main className="fr-container">
       {user && (
