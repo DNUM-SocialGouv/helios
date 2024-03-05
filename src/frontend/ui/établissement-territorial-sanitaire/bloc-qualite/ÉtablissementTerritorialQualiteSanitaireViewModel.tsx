@@ -2,6 +2,7 @@ import { ÉtablissementTerritorialQualite } from "../../../../backend/métier/en
 import { Wording } from "../../../configuration/wording/Wording";
 import { StringFormater } from "../../commun/StringFormater";
 
+
 export class ÉtablissementTerritorialQualiteSanitaireViewModel {
 
   public wording: Wording;
@@ -47,4 +48,5 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
   public get dateMiseAJour(): string {
     return StringFormater.formatDate(this.etablissementTerritorialQualiteSanitaire.reclamations[0]?.dateMiseÀJourSource as string);
   }
+
 }

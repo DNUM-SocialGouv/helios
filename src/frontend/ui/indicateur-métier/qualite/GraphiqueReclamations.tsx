@@ -30,6 +30,7 @@ const GraphiqueReclamations = ({ data, dateMiseAJour }: GraphiqueReclamationsPro
     wording.MOTIF_155,
     wording.MOTIF_156,
   ]
+  
   const getvalues = () => {
     const totals: any[] = [];
     const encours: any[] = [];

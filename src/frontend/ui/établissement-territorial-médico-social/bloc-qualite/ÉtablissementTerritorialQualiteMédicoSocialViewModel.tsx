@@ -2,6 +2,7 @@ import { ÉtablissementTerritorialQualite } from "../../../../backend/métier/en
 import { Wording } from "../../../configuration/wording/Wording";
 import { StringFormater } from "../../commun/StringFormater";
 
+
 export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
 
   public wording: Wording;

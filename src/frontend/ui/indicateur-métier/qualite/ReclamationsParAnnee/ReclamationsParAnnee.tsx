@@ -41,8 +41,6 @@ const ReclamationsParAnnee = ({ total_clotures, total_encours, details }: Graphi
     }
     return motifWording;
   }
-
-
   const { wording } = useDependencies();
 
   return (
@@ -77,6 +75,7 @@ const ReclamationsParAnnee = ({ total_clotures, total_encours, details }: Graphi
                 return (
                   <tr key={i}>
                     <td title={getMotifWording(item.motif)}>{trimString(getMotifWording(item.motif), 45)}</td>
+
                     <td>
                       <HistogrammeHorizontalRow color="darkBlue" number={item.clot + item.encours} total={total_clotures + total_encours} />
                     </td>

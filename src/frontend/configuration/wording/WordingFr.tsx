@@ -381,7 +381,6 @@ export class WordingFr implements Wording {
   readonly SAE_TITLE: string = "Statistique Annuelle des Établissements de santé";
   readonly RPU_TITLE: string = "Résumé de Passage aux Urgences";
   readonly SIREC_TITLE: string = "Système d'Information Réclamations (SI REC)";
-
   // Sources courtes
   readonly FINESS: ReactElement = (<abbr title={this.FINESS_TITLE}>FINESS</abbr>);
   readonly DIAMANT: ReactElement = (<abbr title={this.DIAMANT_TITLE}>DIAMANT</abbr>);

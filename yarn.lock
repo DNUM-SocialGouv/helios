@@ -2065,6 +2065,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/papaparse@npm:^5.3.14":
+  version: 5.3.14
+  resolution: "@types/papaparse@npm:5.3.14"
+  dependencies:
+    "@types/node": "*"
+  checksum: fbf942ed92179eeb824d4e544cc701468157a4ce3f6f668f8b17692d9886fea92ccff5e56965615ff64f049efa01ff95ddb7d30c67e0186bc802a6cc8ef26e63
+  languageName: node
+  linkType: hard
+
 "@types/parse-json@npm:^4.0.0":
   version: 4.0.0
   resolution: "@types/parse-json@npm:4.0.0"
@@ -2909,7 +2918,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"asn1@npm:^0.2.4":
+"asn1@npm:^0.2.6":
   version: 0.2.6
   resolution: "asn1@npm:0.2.6"
   dependencies:
@@ -3244,10 +3253,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"buildcheck@npm:0.0.3":
-  version: 0.0.3
-  resolution: "buildcheck@npm:0.0.3"
-  checksum: baf30605c56e80c2ca0502e40e18f2ebc7075bb4a861c941c0b36cd468b27957ed11a62248003ce99b9e5f91a7dfa859b30aad4fa50f0090c77a6f596ba20e6d
+"buildcheck@npm:~0.0.6":
+  version: 0.0.6
+  resolution: "buildcheck@npm:0.0.6"
+  checksum: ad61759dc98d62e931df2c9f54ccac7b522e600c6e13bdcfdc2c9a872a818648c87765ee209c850f022174da4dd7c6a450c00357c5391705d26b9c5807c2a076
   languageName: node
   linkType: hard
 
@@ -3935,14 +3944,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cpu-features@npm:~0.0.4":
-  version: 0.0.4
-  resolution: "cpu-features@npm:0.0.4"
+"cpu-features@npm:~0.0.9":
+  version: 0.0.9
+  resolution: "cpu-features@npm:0.0.9"
   dependencies:
-    buildcheck: 0.0.3
-    nan: ^2.15.0
+    buildcheck: ~0.0.6
+    nan: ^2.17.0
     node-gyp: latest
-  checksum: a20d58e41e63182b34753dfe23bd1d967944ec13d84b70849b5d334fb4a558b7e71e7f955ed86c8e75dd65b5c5b882f1c494174d342cb6d8a062d77f79d39596
+  checksum: 1ff6045a16d32d9667d5dd69c7d485944494d3378ac9381c52bca772bd0c948812eaeda55a76ef09212b0c0e0c575e5d53221899ce51692b1196089452c5aef1
   languageName: node
   linkType: hard
 
@@ -4080,6 +4089,17 @@ __metadata:
   version: 3.0.11
   resolution: "csstype@npm:3.0.11"
   checksum: 95e56abfe9ca219ae065acb4e43f61771a03170eed919127f558dfa168240867aba7629c8d98a201a0dd06d9a5ce82686f0570031c928516c61816adbc7c877f
+  languageName: node
+  linkType: hard
+
+"csv-parser@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "csv-parser@npm:3.0.0"
+  dependencies:
+    minimist: ^1.2.0
+  bin:
+    csv-parser: bin/csv-parser
+  checksum: adc9d67d9f185249825570778c24d13004625301655330f6b735a052b9fdfbe1a239a014afb1f89939e0626ee573718f71f9f14164db7c17e4bcb2f38d6a162b
   languageName: node
   linkType: hard
 
@@ -4458,12 +4478,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv-defaults@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "dotenv-defaults@npm:5.0.0"
+"dotenv-defaults@npm:^5.0.2":
+  version: 5.0.2
+  resolution: "dotenv-defaults@npm:5.0.2"
   dependencies:
     dotenv: ^14.0.0
-  checksum: 16661a1a69d21ce9bd4f0bb66ebe936f79f94d830ef4e98872d8a4444bae07c465b07c39f0d646a7de92829bb06c99d664cedf7c294556881801b7b428c87955
+  checksum: a45b1c56d037f1606ce0bbc9097f42c044a22c76acf10b94c2e2506bf7cac8ab633b5b1c654217040e172f87acd1620054258b9df48120258ccb7f8352cfbbce
   languageName: node
   linkType: hard
 
@@ -5513,6 +5533,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fs@npm:^0.0.1-security":
+  version: 0.0.1-security
+  resolution: "fs@npm:0.0.1-security"
+  checksum: 53c6230e1faae9fa32c1df82c16a84b51b1243d20f3da2b64bd110bb472b73b9185169b703e008356e3cdc92d155088b617d9d39a63b5227a30b3621baad7f5d
+  languageName: node
+  linkType: hard
+
 "fsevents@npm:^2.3.2, fsevents@npm:~2.3.2":
   version: 2.3.2
   resolution: "fsevents@npm:2.3.2"
@@ -5996,6 +6023,7 @@ __metadata:
     "@types/next-auth": ^3.15.0
     "@types/node": 17.0.23
     "@types/node-fetch": ^2.6.2
+    "@types/papaparse": ^5.3.14
     "@types/react": 18.0.0
     "@types/react-dom": 18.0.0
     "@types/ssh2": ^0.5.52
@@ -6009,10 +6037,11 @@ __metadata:
     chartjs-plugin-datalabels: ^2.0.0
     cookies-next: ^4.1.0
     crypto: ^1.0.1
+    csv-parser: ^3.0.0
     date-fns: ^2.30.0
     depcheck: ^1.4.3
     dompurify: ^3.0.6
-    dotenv-defaults: ^5.0.0
+    dotenv-defaults: ^5.0.2
     env-cmd: ^10.1.0
     eslint: 8.13.0
     eslint-config-next: 12.1.4
@@ -6021,6 +6050,7 @@ __metadata:
     eslint-plugin-jest-formatting: ^3.1.0
     eslint-plugin-jsx-a11y: ^6.7.1
     eslint-plugin-testing-library: ^5.3.0
+    fs: ^0.0.1-security
     husky: ^7.0.4
     jest: ^28.0.2
     jest-environment-jsdom: ^28.0.2
@@ -6032,13 +6062,14 @@ __metadata:
     next-router-mock: ^0.7.4
     next-usequerystate: ^1.12.2
     node-fetch: 2.6.7
+    papaparse: ^5.4.1
     pg: ^8.7.3
     prettier: ^2.8.2
     react: 18.0.0
     react-chartjs-2: ^4.2.0
     react-dom: 18.0.0
     ssh2: ^1.9.0
-    ssh2-sftp-client: ^8.0.0
+    ssh2-sftp-client: ^10.0.3
     stylelint: ^14.9.1
     stylelint-order: ^5.0.0
     tarteaucitronjs: ^1.16.1
@@ -8434,12 +8465,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nan@npm:^2.15.0":
-  version: 2.15.0
-  resolution: "nan@npm:2.15.0"
+"nan@npm:^2.17.0, nan@npm:^2.18.0":
+  version: 2.18.0
+  resolution: "nan@npm:2.18.0"
   dependencies:
     node-gyp: latest
-  checksum: 33e1bb4dfca447fe37d4bb5889be55de154828632c8d38646db67293a21afd61ed9909cdf1b886214a64707d935926c4e60e2b09de9edfc2ad58de31d6ce8f39
+  checksum: 4fe42f58456504eab3105c04a5cffb72066b5f22bd45decf33523cb17e7d6abc33cca2a19829407b9000539c5cb25f410312d4dc5b30220167a3594896ea6a0a
   languageName: node
   linkType: hard
 
@@ -9084,6 +9115,13 @@ __metadata:
   version: 1.0.0
   resolution: "packet-reader@npm:1.0.0"
   checksum: 0b7516f0cbf3e322aad591bed29ba544220088c53943145c0d9121a6f59182ad811f7fd6785a8979a34356aca69d97653689029964c5998dc02645633d88ffd7
+  languageName: node
+  linkType: hard
+
+"papaparse@npm:^5.4.1":
+  version: 5.4.1
+  resolution: "papaparse@npm:5.4.1"
+  checksum: fc9e52f7158dca3517c229e3309065b1ab5da6c7194572fba4f31ff138bc43e3c91182cc40365cc828f97fe10d0aca416068fd731661058bea0f69ddb84a411a
   languageName: node
   linkType: hard
 
@@ -10512,31 +10550,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ssh2-sftp-client@npm:^8.0.0":
-  version: 8.0.0
-  resolution: "ssh2-sftp-client@npm:8.0.0"
+"ssh2-sftp-client@npm:^10.0.3":
+  version: 10.0.3
+  resolution: "ssh2-sftp-client@npm:10.0.3"
   dependencies:
     concat-stream: ^2.0.0
     promise-retry: ^2.0.1
-    ssh2: ^1.9.0
-  checksum: a8c9a466e2f18bd396ecbd5960532b4982460d981f2bda62b4d0d0118d99ecf17ac91209fbb4737fc3241f2e7f9bdabb0a4498fd53461cd13dfea6071952c7e9
+    ssh2: ^1.15.0
+  checksum: 060d1303c631764dc518c75fc8de960f0696277b8db3994643c5cef369862adcec6a779b53345bc86c5db0a2d21c4549bcf7e62d6a8357908345031c8ef3fb0c
   languageName: node
   linkType: hard
 
-"ssh2@npm:^1.9.0":
-  version: 1.10.0
-  resolution: "ssh2@npm:1.10.0"
+"ssh2@npm:^1.15.0, ssh2@npm:^1.9.0":
+  version: 1.15.0
+  resolution: "ssh2@npm:1.15.0"
   dependencies:
-    asn1: ^0.2.4
+    asn1: ^0.2.6
     bcrypt-pbkdf: ^1.0.2
-    cpu-features: ~0.0.4
-    nan: ^2.15.0
+    cpu-features: ~0.0.9
+    nan: ^2.18.0
   dependenciesMeta:
     cpu-features:
       optional: true
     nan:
       optional: true
-  checksum: d5ad6a458d5400593279b9f30ca0882681409904ed35e28b1f7c1f12a7a8c8cfa7a123733a45064d89154d0352170dde792cd4a349272cf75a14c1808fdab155
+  checksum: 56baa07dc0dd8d97aefa05033b8a95d220a34b2f203aa9116173d7adc5e9fd46be22d7cfed99cdd9f5548862ae44abd1ec136e20ea856d5c470a0df0e5aea9d1
   languageName: node
   linkType: hard
 
