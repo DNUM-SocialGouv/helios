@@ -146,7 +146,7 @@ export class SirecSourceExterneLoader implements ControleDonneesSirecLoader {
             })
 
             readStream.on("end", () => {
-                const filteredCsv = Papa.unparse(jsonData);
+                const filteredCsv = Papa.unparse(jsonData, { delimiter: ";" });
                 fs.writeFile(cheminDuFichierSirecTaite, filteredCsv, err => {
                     if (err) {
                         // eslint-disable-next-line no-console

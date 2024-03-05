@@ -47,7 +47,7 @@ if __name__ == "__main__":
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_données_helios = create_engine(variables_d_environnement["DATABASE_URL"])
 
-    sirec_data_path = variables_d_environnement["SIREC_DATA_PATH"]
+    sirec_data_path = variables_d_environnement["CHECKED_SIREC_DATA_PATH"]
     fichiers = os.listdir(sirec_data_path)
 
     chemin_local_du_fichier_reclamations = os.path.join(
