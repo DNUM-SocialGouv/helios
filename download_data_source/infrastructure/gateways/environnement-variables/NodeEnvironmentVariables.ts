@@ -2,7 +2,7 @@ import { EnvironmentVariables } from "../../../métier/gateways/EnvironmentVaria
 import { Logger } from "../../../métier/gateways/Logger";
 
 export class NodeEnvironmentVariables implements EnvironmentVariables {
-  constructor(readonly logger: Logger) {}
+  constructor(readonly logger: Logger) { }
 
   readonly ORM_DEBUG: string = this.getOrElse("ORM_DEBUG");
 
@@ -25,6 +25,8 @@ export class NodeEnvironmentVariables implements EnvironmentVariables {
   readonly DNUM_SFTP_PORT: string = this.getOrElse("DNUM_SFTP_PORT");
   readonly DNUM_SFTP_PRIVATE_KEY: string = this.getOrElse("DNUM_SFTP_PRIVATE_KEY");
   readonly DNUM_SFTP_USERNAME: string = this.getOrElse("DNUM_SFTP_USERNAME");
+
+  readonly SIREC_DATA_PATH: string = this.getOrElse("SIREC_DATA_PATH");
 
   private getOrElse(key: string): string {
     if (process.env[key] === "toBeSet") {

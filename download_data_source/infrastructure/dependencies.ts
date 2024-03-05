@@ -15,6 +15,7 @@ import { ÉtablissementTerritorialSourceExterneLoader } from "../métier/gateway
 import { dotEnvConfig } from "./gateways/dot-env/dotEnvConfig";
 import { DnumSftpDownloadRawData } from "./gateways/download-raw-data/DnumSftpDownloadRawData";
 import { FinessSftpDownloadRawData } from "./gateways/download-raw-data/FinessSftpDownloadRawData";
+import { SirecSftpDownloadRawData } from "./gateways/download-raw-data/SirecSftpDownloadRawData";
 import { TypeOrmEntitéJuridiqueHeliosLoader } from "./gateways/entité-juridique-helios-loader/TypeOrmEntitéJuridiqueHeliosLoader";
 import { TypeOrmEntitéJuridiqueHeliosRepository } from "./gateways/entité-juridique-helios-repository/TypeOrmEntitéJuridiqueHeliosRepository";
 import { FinessXmlEntitésJuridiquesSourceExterneLoader } from "./gateways/entité-juridique-source-externe-loader/FinessXmlEntitésJuridiquesSourceExterneLoader";
@@ -36,6 +37,7 @@ export type Dependencies = Readonly<{
   entitéJuridiqueHeliosRepository: EntitéJuridiqueHeliosRepository;
   entitéJuridiqueHeliosLoader: EntitéJuridiqueHeliosLoader;
   finessDownloadRawData: DownloadRawData;
+  sirecDownloadRawData: DownloadRawData;
   établissementTerritorialSourceExterneLoader: ÉtablissementTerritorialSourceExterneLoader;
   établissementTerritorialHeliosLoader: ÉtablissementTerritorialHeliosLoader;
   établissementTerritorialHeliosRepository: ÉtablissementTerritorialRepository;
@@ -49,7 +51,12 @@ const createDependencies = (): Dependencies => {
   const finessSftpPath = "/flux_finess";
   const finessLocalPath = "finess";
 
+  /*const sirecSftpPath = "/flux_sirec";
+  const sirecLocalPath = "sirec";*/
+
   const cheminDesFichiersSourcesDiamantSurLeSftpDnum = "DIAMANT/incoming";
+
+  const cheminDesFichiersSourcesSirecSurLeSftpDnum = "SIREC";
 
   const logger = new ConsoleLogger();
   const environmentVariables = new NodeEnvironmentVariables(logger);
@@ -73,11 +80,19 @@ const createDependencies = (): Dependencies => {
       environmentVariables.DIAMANT_ENCRYPTED_DATA_PATH,
       logger
     ),
+    sirecDownloadRawData: new SirecSftpDownloadRawData(
+      new Ssh2SftpClient(),
+      environmentVariables,
+      cheminDesFichiersSourcesSirecSurLeSftpDnum,
+      environmentVariables.SIREC_DATA_PATH,
+      logger
+    ),
     entitéJuridiqueHeliosLoader: typeOrmEntitéJuridiqueHeliosLoader,
     entitéJuridiqueHeliosRepository: new TypeOrmEntitéJuridiqueHeliosRepository(orm, logger),
     entitéJuridiqueSourceExterneLoader: new FinessXmlEntitésJuridiquesSourceExterneLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH, logger, orm),
     environmentVariables,
     finessDownloadRawData: new FinessSftpDownloadRawData(new Ssh2SftpClient(), finessSftpPath, finessLocalPath, environmentVariables, logger),
+
     logger,
     unzipRawData: new GunzipUnzipRawData(environmentVariables, logger),
     établissementTerritorialHeliosLoader: new TypeOrmÉtablissementTerritorialHeliosLoader(orm),
