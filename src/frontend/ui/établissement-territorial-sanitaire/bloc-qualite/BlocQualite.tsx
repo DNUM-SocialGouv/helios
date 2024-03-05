@@ -36,6 +36,7 @@ const BlocQualité = ({ etablissementTerritorialQualiteSanitairelViewModel }: Bl
           !etablissementTerritorialQualiteSanitairelViewModel.lesReclamationsNeSontPasAutorisées && (
             <GraphiqueReclamations
               data={etablissementTerritorialQualiteSanitairelViewModel.buildReclamationsData}
+              dateMiseAJour={etablissementTerritorialQualiteSanitairelViewModel.dateMiseAJour}
             />
           )}
       </ul>

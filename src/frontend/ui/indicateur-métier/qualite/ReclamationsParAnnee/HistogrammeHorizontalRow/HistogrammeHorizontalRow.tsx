@@ -7,7 +7,8 @@ type HistogrammeHorizontalRowProps = Readonly<{
 }>;
 
 export const HistogrammeHorizontalRow = ({ number, total, color }: HistogrammeHorizontalRowProps) => {
-  const percent = (number * 100) / total;
+  const percent = total === 0 ? 0 : (number * 100) / total;
+
   const minus = percent / 3;
 
   return (
