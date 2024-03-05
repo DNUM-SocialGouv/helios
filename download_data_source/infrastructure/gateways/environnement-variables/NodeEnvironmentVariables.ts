@@ -27,6 +27,8 @@ export class NodeEnvironmentVariables implements EnvironmentVariables {
   readonly DNUM_SFTP_USERNAME: string = this.getOrElse("DNUM_SFTP_USERNAME");
 
   readonly SIREC_DATA_PATH: string = this.getOrElse("SIREC_DATA_PATH");
+  readonly CHECKED_SIREC_DATA_PATH: string = this.getOrElse("CHECKED_SIREC_DATA_PATH");
+
 
   private getOrElse(key: string): string {
     if (process.env[key] === "toBeSet") {
