@@ -1,5 +1,7 @@
 import { ÉtablissementTerritorialQualite } from "../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
 import { Wording } from "../../../configuration/wording/Wording";
+import { StringFormater } from "../../commun/StringFormater";
+
 
 export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
 
@@ -42,4 +44,9 @@ export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
     };
     return reclamationData;
   }
+
+  public get dateMiseAJour(): string {
+    return StringFormater.formatDate(this.etablissementTerritorialQualiteMédicoSocial.reclamations[0]?.dateMiseÀJourSource as string);
+  }
+
 }
