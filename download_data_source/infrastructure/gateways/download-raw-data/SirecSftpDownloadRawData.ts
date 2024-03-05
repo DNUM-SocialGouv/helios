@@ -25,8 +25,6 @@ export class SirecSftpDownloadRawData implements DownloadRawData {
       await this.connexionAuSftp();
 
       const fichiersSurLeSftp = await this.listeLesFichiersDuSftp();
-
-      console.log("fichiersSurLeSftp ::::", fichiersSurLeSftp);
       const fichierATelecharger = this.trouveLeFichierLePlusRecentPortantLePrefixe(this.prefixeDesFichiersATelecharger, fichiersSurLeSftp);
 
       if (fichierATelecharger) {
