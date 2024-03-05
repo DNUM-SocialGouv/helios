@@ -73,3 +73,4 @@ sftp_local
 sftp_local.pub
 ssh_key
 **/.vscode/*
+helios.log
