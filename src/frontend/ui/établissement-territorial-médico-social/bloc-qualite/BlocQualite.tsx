@@ -6,6 +6,7 @@ import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicat
 import { NoDataCallout } from "../../commun/NoDataCallout/NoDataCallout";
 import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import GraphiqueReclamations from "../../indicateur-métier/qualite/GraphiqueReclamations";
+import { GraphiqueEvenementsIndesirables } from "./evenements-indesirables/GraphiqueEvenementsIndesirables";
 import { ÉtablissementTerritorialQualiteMédicoSocialViewModel } from "./ÉtablissementTerritorialQualiteMédicoSocialViewModel";
 
 type BlocQualitéProps = Readonly<{
@@ -30,7 +31,6 @@ const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel }:
       ) : (
         <></>
       )}
-
       <ul className="indicateurs">
         {!etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasRenseignées &&
           !etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasAutorisées && (
@@ -38,6 +38,12 @@ const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel }:
               data={etablissementTerritorialQualiteMédicoSocialViewModel.buildReclamationsData}
               dateMiseAJour={etablissementTerritorialQualiteMédicoSocialViewModel.dateMiseAJour}
             />
+          )}
+      </ul>
+      <ul className="indicateurs">
+        {!etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasRenseignées &&
+          !etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasAutorisées && (
+            <GraphiqueEvenementsIndesirables />
           )}
       </ul>
     </Bloc>

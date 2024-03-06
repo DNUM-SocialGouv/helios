@@ -13,6 +13,13 @@ export type Reclamations = Readonly<{
     details: ReclamationDetails[];
 }>;
 
+export type EvenementsIndesirables = {
+    libelle: string;
+    total: number;
+    evenementsEncours: any[];
+    evenementsClotures: any[];
+};
+
 export type ÉtablissementTerritorialQualite = Readonly<{
     reclamations: Reclamations[];
 }>;

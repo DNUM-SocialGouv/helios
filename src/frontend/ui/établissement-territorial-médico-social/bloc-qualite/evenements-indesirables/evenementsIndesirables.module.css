@@ -1,0 +1,8 @@
+.total_events {
+    display: flex;
+    font-weight: 500;
+}
+
+.total_events_text {
+    width: 30%;
+}
