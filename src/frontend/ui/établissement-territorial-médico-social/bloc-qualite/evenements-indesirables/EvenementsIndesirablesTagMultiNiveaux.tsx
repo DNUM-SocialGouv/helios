@@ -1,6 +1,8 @@
 import { ReactElement } from "react";
 
 import { EvenementsIndesirables } from "../../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
+import { couleurDuFondHistogrammeBleuFoncé, couleurDuFondHistogrammeOrange } from "../../../commun/Graphique/couleursGraphique";
+import { HistogrammeHorizontalWithToggle, HistogrammeWithToggleData } from "../../../commun/Graphique/HistogrammeHorizontalWithToggle";
 import { Tag, TagCliquable } from "../../../commun/Tag";
 import { TagWithLink } from "../../../commun/Tag/TagWithLink";
 import styles from "./evenementsIndesirables.module.css";
@@ -48,13 +50,35 @@ export const EvenementsIndesirablesTagMultiNiveaux = ({ evenementsIndesirablesAs
     );
 };
 
+const valeursDesHistogrammes: HistogrammeWithToggleData[] = [
+    new HistogrammeWithToggleData(
+        "",
+        ["Nombre total EIGAS"],
+        [10],
+        [
+            {
+                backgroundColor: [couleurDuFondHistogrammeBleuFoncé],
+                data: [8],
+                label: "EIGS",
+            },
+            {
+                label: "Non EIGS",
+                data: [2],
+                backgroundColor: [couleurDuFondHistogrammeOrange],
+            },
+        ],
+    )
+];
+
 const EventTag = ({ events }: EventTagProps): ReactElement => {
     return (
         <li key="evenement-1">
             <TagCliquable for={`evenement-accordion-${events.libelle}`} titre={`${events.libelle} (${events.total})`} />
-            <ul className="fr-collapse niveau1 " id={`evenement-accordion-${events.libelle}`}>
+            <div className="fr-collapse niveau1 fr-mb-2w" id={`evenement-accordion-${events.libelle}`}>
+                <HistogrammeHorizontalWithToggle légende={["EIGS", "Non EIGS"]} valeursDesHistogrammes={valeursDesHistogrammes} />
+
                 <EventNaturesAndStatus evenementsClotures={events.evenementsClotures} evenementsEncours={events.evenementsEncours} libelle={events.libelle} />
-            </ul>
+            </div>
         </li>
     )
 }
