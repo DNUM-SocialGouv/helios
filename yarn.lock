@@ -6069,7 +6069,7 @@ __metadata:
     react-chartjs-2: ^4.2.0
     react-dom: 18.0.0
     ssh2: ^1.9.0
-    ssh2-sftp-client: ^10.0.3
+    ssh2-sftp-client: ^8.0.0
     stylelint: ^14.9.1
     stylelint-order: ^5.0.0
     tarteaucitronjs: ^1.16.1
@@ -10550,18 +10550,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ssh2-sftp-client@npm:^10.0.3":
-  version: 10.0.3
-  resolution: "ssh2-sftp-client@npm:10.0.3"
+"ssh2-sftp-client@npm:^8.0.0":
+  version: 8.1.0
+  resolution: "ssh2-sftp-client@npm:8.1.0"
   dependencies:
     concat-stream: ^2.0.0
     promise-retry: ^2.0.1
-    ssh2: ^1.15.0
-  checksum: 060d1303c631764dc518c75fc8de960f0696277b8db3994643c5cef369862adcec6a779b53345bc86c5db0a2d21c4549bcf7e62d6a8357908345031c8ef3fb0c
+    ssh2: ^1.10.0
+  checksum: 8ba1bdea4d92e40c13cbadc155dbc05b8fbb53092730272ecd637a4261656a7de7f53855ff2dfe189d798ff01bce571cf33e31498425a4c6db40bc36385af0dd
   languageName: node
   linkType: hard
 
-"ssh2@npm:^1.15.0, ssh2@npm:^1.9.0":
+"ssh2@npm:^1.10.0, ssh2@npm:^1.9.0":
   version: 1.15.0
   resolution: "ssh2@npm:1.15.0"
   dependencies:

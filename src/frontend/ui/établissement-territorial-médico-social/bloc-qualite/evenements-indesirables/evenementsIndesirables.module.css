@@ -6,3 +6,15 @@
 .total_events_text {
     width: 30%;
 }
+
+.list-style {
+    list-style: inside !important;
+}
+
+.list-element-style {
+    padding-bottom: .25rem !important;
+}
+
+.list-element-style p {
+    margin-right: .25rem;
+}
