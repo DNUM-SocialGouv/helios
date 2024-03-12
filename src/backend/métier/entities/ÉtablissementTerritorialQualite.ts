@@ -22,4 +22,5 @@ export type EvenementsIndesirables = {
 
 export type ÉtablissementTerritorialQualite = Readonly<{
     reclamations: Reclamations[];
+    evenementsIndesirables: EvenementsIndesirables[];
 }>;

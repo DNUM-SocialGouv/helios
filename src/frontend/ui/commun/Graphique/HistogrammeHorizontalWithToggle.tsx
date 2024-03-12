@@ -12,8 +12,6 @@ function useChartData(charts: HistogrammeWithToggleData[]) {
     const [chartsData, setChartsData] = useState(charts);
     useEffect(() => setChartsData(charts), charts);
 
-    // eslint-disable-next-line no-console
-    console.log('chartsData', chartsData);
     return {
         histogrammes: chartsData.map((chartData) => ({
             chartData: chartData.chartData,
@@ -165,11 +163,13 @@ type HistogrammeHorizontalWithToggleNewProps = {
     valeursDesHistogrammes: HistogrammeWithToggleData[];
     légende?: string[];
     epaisseur?: "FIN" | "EPAIS";
+    filterEventsEIGS: (index: number, isVisible: boolean) => void;
 };
 export const HistogrammeHorizontalWithToggle = ({
     valeursDesHistogrammes,
     légende,
     epaisseur = "EPAIS",
+    filterEventsEIGS,
 }: HistogrammeHorizontalWithToggleNewProps): ReactElement => {
     const { histogrammes, toggleStackVisibility } = useChartData(valeursDesHistogrammes);
 
@@ -191,6 +191,7 @@ export const HistogrammeHorizontalWithToggle = ({
                 <LegendeHistogrammes
                     areStacksVisible={histogrammes[0].areStacksVisible}
                     color={histogrammes[0].legendColors}
+                    filterEventsEIGS={filterEventsEIGS}
                     legend={légende}
                     toggleStackVisibility={toggleStackVisibility}
                 />
@@ -204,14 +205,17 @@ function LegendeHistogrammes({
     color,
     toggleStackVisibility,
     areStacksVisible,
+    filterEventsEIGS
 }: {
     legend: string[];
     color: string[];
     toggleStackVisibility: (index: number, isVisible: boolean) => void;
     areStacksVisible: boolean[];
+    filterEventsEIGS: (index: number, isVisible: boolean) => void
 }) {
 
     const onChangeToggleVisibility = (index: number, isVisible: boolean) => {
+        filterEventsEIGS(index, isVisible)
         toggleStackVisibility(index, isVisible);
     }
 

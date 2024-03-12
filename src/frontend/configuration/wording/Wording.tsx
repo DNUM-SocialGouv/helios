@@ -212,7 +212,10 @@ export interface Wording {
   readonly MOTIF_156: string;
 
   readonly EVENEMENTS_INDESIRABLES: string;
+  readonly EVENEMENTS_INDESIRABLES_NON_RENSEIGNES: string;
   readonly EVENTS_TOTAL_NUMBER: string;
+  readonly EVENEMENTS_ASSOCIE_AUX_SOINS: string;
+  readonly EVENEMENTS_DANS_ET: string;
 
   // Bloc Autorisation Sanitaire
   readonly AUTRES_ACTIVITÉS: string;

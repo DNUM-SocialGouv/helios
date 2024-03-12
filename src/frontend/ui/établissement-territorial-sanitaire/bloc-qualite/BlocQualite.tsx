@@ -17,7 +17,7 @@ const BlocQualité = ({ etablissementTerritorialQualiteSanitairelViewModel }: Bl
   const { wording } = useDependencies();
 
   if (
-    etablissementTerritorialQualiteSanitairelViewModel.lesReclamationsNeSontPasRenseignées
+    etablissementTerritorialQualiteSanitairelViewModel.lesDonneesQualiteNeSontPasRenseignées
   ) {
     return <BlocIndicateurVide title={wording.TITRE_BLOC_QUALITE} />;
   }
@@ -42,8 +42,8 @@ const BlocQualité = ({ etablissementTerritorialQualiteSanitairelViewModel }: Bl
           )}
       </ul>
       <ul className="indicateurs">
-        {!etablissementTerritorialQualiteSanitairelViewModel.lesReclamationsNeSontPasRenseignées &&
-          !etablissementTerritorialQualiteSanitairelViewModel.lesReclamationsNeSontPasAutorisées && (
+        {!etablissementTerritorialQualiteSanitairelViewModel.lesEvenementsIndesirablesNeSontPasRenseignées &&
+          !etablissementTerritorialQualiteSanitairelViewModel.lesEvenementsIndesirablesNeSontPasAutorisées && (
             <GraphiqueEvenementsIndesirables />
           )}
       </ul>

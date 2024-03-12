@@ -28,14 +28,14 @@ export const ContenuEvenementsIndesirables = ({ dateDeMiseÀJour, source }: Cont
                 pathologie de la personne et dont les conséquences sont le décès, la mise en jeu du pronostic vital, la
                 survenue probable d&apos;un déficit fonctionnel permanent, y compris une anomalie ou une malformation congénitale.
             </p>
-            <p>
-                Les EIGS sont soumis à des obligations réglementaires de signalement et d&apos;analyse par les professionnels de santé.
-                La déclaration est réalisée en 2 parties :
-                <ul>
-                    <li>un premier volet correspondant au signalement, à adresser « sans délai ».</li>
-                    <li>un deuxième volet précisant la gestion qui a été faite de l&apos;événement, à adresser au plus tard dans les 3 mois.</li>
-                </ul>
-            </p>
+            <br />
+            Les EIGS sont soumis à des obligations réglementaires de signalement et d&apos;analyse par les professionnels de santé.
+            La déclaration est réalisée en 2 parties :
+            <ul>
+                <li>un premier volet correspondant au signalement, à adresser « sans délai ».</li>
+                <li>un deuxième volet précisant la gestion qui a été faite de l&apos;événement, à adresser au plus tard dans les 3 mois.</li>
+            </ul>
+            <br />
             <p>
                 Un <b>évènement/incident structure (EIS)</b> est un évènement/incident dans un établissement ou un organisme est un évènement non lié
                 aux soins pouvant avoir un impact sur la prise en charge des résidents/patients.

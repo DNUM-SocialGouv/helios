@@ -233,7 +233,10 @@ export class WordingFr implements Wording {
   readonly MOTIF_156: string = "COVID-19";
 
   readonly EVENEMENTS_INDESIRABLES: string = "Evènements indésirables";
+  readonly EVENEMENTS_INDESIRABLES_NON_RENSEIGNES: string = "Evènements indésirables. ⚠ L'absence de signalement d'événements indésirables nuit à la prise de mesures correctives appropriées.";
   readonly EVENTS_TOTAL_NUMBER: string = "Nombre total d'évènements:";
+  readonly EVENEMENTS_ASSOCIE_AUX_SOINS: string = "Evènements indésirables/graves associés aux soins";
+  readonly EVENEMENTS_DANS_ET: string = "Evènements/incidents dans un établissement ou organisme";
 
   // Bloc Autorisation médico-social
   readonly MISE_À_JOUR_AUTORISATION: string = "Mise à jour d’autorisation";

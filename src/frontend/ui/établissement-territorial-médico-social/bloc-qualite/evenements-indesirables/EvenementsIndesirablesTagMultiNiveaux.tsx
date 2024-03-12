@@ -1,6 +1,7 @@
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 
 import { EvenementsIndesirables } from "../../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
+import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { couleurDuFondHistogrammeBleuFoncé, couleurDuFondHistogrammeOrange } from "../../../commun/Graphique/couleursGraphique";
 import { HistogrammeHorizontalWithToggle, HistogrammeWithToggleData } from "../../../commun/Graphique/HistogrammeHorizontalWithToggle";
 import { StringFormater } from "../../../commun/StringFormater";
@@ -59,12 +60,12 @@ const valeursDesHistogrammes: HistogrammeWithToggleData[] = [
         [
             {
                 backgroundColor: [couleurDuFondHistogrammeBleuFoncé],
-                data: [8],
+                data: [5],
                 label: "EIGS",
             },
             {
                 label: "Non EIGS",
-                data: [2],
+                data: [5],
                 backgroundColor: [couleurDuFondHistogrammeOrange],
             },
         ],
@@ -73,12 +74,47 @@ const valeursDesHistogrammes: HistogrammeWithToggleData[] = [
 ];
 
 const EventTag = ({ events }: EventTagProps): ReactElement => {
+    const { wording } = useDependencies();
+
+    const [filtredClosedEvents, setFiltredClosedEvents] = useState(events.evenementsClotures);
+    const [filtredPenddingEvents, setFiltredPenddingEvents] = useState(events.evenementsEncours);
+
+    const removeDataFromEvents = (isEIGS: boolean) => {
+        const newClosedEvents = filtredClosedEvents.filter((event) => event.est_EIGS === !isEIGS);
+        const newPenddingEvents = filtredPenddingEvents.filter((event) => event.est_EIGS === !isEIGS);
+        setFiltredClosedEvents(newClosedEvents);
+        setFiltredPenddingEvents(newPenddingEvents);
+    }
+
+    const addDataToEvents = (isEIGS: boolean) => {
+        const closedEventsToAdd = events.evenementsClotures.filter((event) => event.est_EIGS === isEIGS);
+        const penddingEventsToAdd = events.evenementsEncours.filter((event) => event.est_EIGS === isEIGS);
+        setFiltredClosedEvents([...filtredClosedEvents, ...closedEventsToAdd]);
+        setFiltredPenddingEvents([...filtredPenddingEvents, ...penddingEventsToAdd]);
+    }
+
+    const filterEventsEIGS = (index: number, isVisible: boolean) => {
+        if (isVisible) {
+            if (index === 0) {
+                addDataToEvents(true);
+            } else {
+                addDataToEvents(false);
+            }
+        } else {
+            if (index === 0) {
+                removeDataFromEvents(true);
+            } else {
+                removeDataFromEvents(false);
+            }
+        }
+    }
+
     return (
         <li key="evenement-1">
             <TagCliquable for={`evenement-accordion-${events.libelle}`} titre={`${events.libelle} (${events.total})`} />
             <div className="fr-collapse niveau1 fr-mb-2w" id={`evenement-accordion-${events.libelle}`}>
-                <HistogrammeHorizontalWithToggle légende={["EIGS", "Non EIGS"]} valeursDesHistogrammes={valeursDesHistogrammes} />
-                <EventNaturesAndStatus evenementsClotures={events.evenementsClotures} evenementsEncours={events.evenementsEncours} libelle={events.libelle} />
+                {events.libelle === wording.EVENEMENTS_ASSOCIE_AUX_SOINS && <HistogrammeHorizontalWithToggle filterEventsEIGS={filterEventsEIGS} légende={["EIGS", "Non EIGS"]} valeursDesHistogrammes={valeursDesHistogrammes} />}
+                <EventNaturesAndStatus evenementsClotures={filtredClosedEvents} evenementsEncours={filtredPenddingEvents} libelle={events.libelle} />
             </div>
         </li>
     )
@@ -87,22 +123,22 @@ const EventTag = ({ events }: EventTagProps): ReactElement => {
 const EventNaturesAndStatus = ({ evenementsEncours, evenementsClotures, libelle }: EventNaturesAndStatusProps): ReactElement => {
     return (
         <ul>
-            <li>
-                <TagCliquable for={`evenement-encours-accordion-${libelle}`} titre={`${libelle} en cours (${evenementsEncours.length})`} />
-                {evenementsEncours.length !== 0 && (
-                    <ul className="fr-collapse niveau1 " id={`evenement-encours-accordion-${libelle}`}>
+            {evenementsEncours.length !== 0 && (
+                <li>
+                    <TagCliquable for={`evenement-encours-accordion-${libelle}`} titre={`${libelle} en cours (${evenementsEncours.length})`} />
+                    <ul className="fr-collapse " id={`evenement-encours-accordion-${libelle}`}>
                         <EventNatures events={evenementsEncours} isClosed={false} libelle={libelle} />
                     </ul>
-                )}
-            </li>
-            <li>
-                <TagCliquable for={`evenement-clotures-accordion-${libelle}`} titre={`${libelle} clôturés (${evenementsClotures.length})`} />
-                {evenementsClotures.length !== 0 && (
-                    <ul className="fr-collapse niveau1 " id={`evenement-clotures-accordion-${libelle}`}>
+                </li>
+            )}
+            {evenementsClotures.length !== 0 && (
+                <li>
+                    <TagCliquable for={`evenement-clotures-accordion-${libelle}`} titre={`${libelle} clôturés (${evenementsClotures.length})`} />
+                    <ul className="fr-collapse " id={`evenement-clotures-accordion-${libelle}`}>
                         <EventNatures events={evenementsClotures} isClosed={true} libelle={libelle} />
                     </ul>
-                )}
-            </li>
+                </li>
+            )}
         </ul>
     )
 }

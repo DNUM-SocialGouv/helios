@@ -9,23 +9,24 @@ export const GraphiqueEvenementsIndesirables = () => {
     const { wording } = useDependencies();
     const evenementsIndesirablesAssociesAuxSoins =
     {
-        libelle: "Evènements indésirables/graves associés aux soins",
+        libelle: wording.EVENEMENTS_ASSOCIE_AUX_SOINS,
         total: 10,
         evenementsEncours: [
             { nature: "Maltraitance", est_EIGS: true, numeroSIVSS: 484045 },
-            { nature: "Maltraitance", est_EIGS: true, numeroSIVSS: 484046 },
+            { nature: "Maltraitance", est_EIGS: false, numeroSIVSS: 484046 },
             { nature: "Maltraitance", est_EIGS: true, numeroSIVSS: 484047 },
-            { nature: "Fausse route", est_EIGS: true, numeroSIVSS: 484048 },
+            { nature: "Fausse route", est_EIGS: false, numeroSIVSS: 484048 },
             { nature: "Fausse route", est_EIGS: true, numeroSIVSS: 484049 },
-            { nature: "Fausse route", est_EIGS: true, numeroSIVSS: 484044 },
+            { nature: "Fausse route", est_EIGS: false, numeroSIVSS: 484044 },
             { nature: "Brûlure accidentelle", est_EIGS: true, numeroSIVSS: 484043 },
-            { nature: "Brûlure accidentelle", est_EIGS: true, numeroSIVSS: 484042 },
+            { nature: "Brûlure accidentelle", est_EIGS: false, numeroSIVSS: 484042 },
             { nature: "Tentative de suicide", est_EIGS: true, numeroSIVSS: 484041 },
         ],
-        evenementsClotures: [{ nature: "IRA - Infection Respiratoire Aigue", est_EIGS: true, numeroSIVSS: 384045, clotDate: "05/05/2012", clotMotif: "motif de test" },]
+        evenementsClotures: [{ nature: "IRA - Infection Respiratoire Aigue", est_EIGS: false, numeroSIVSS: 384045, clotDate: "05/05/2012", clotMotif: "motif de test" },]
     };
     const evenementsIndesirablesDansET = {
-        libelle: "Evènements/incidents dans un établissement ou organisme", total: 7,
+        libelle: wording.EVENEMENTS_DANS_ET,
+        total: 7,
         evenementsEncours: [
             { nature: "Fausse route", est_EIGS: true, numeroSIVSS: 484145 },
             { nature: "Fausse route", est_EIGS: true, numeroSIVSS: 484245 },

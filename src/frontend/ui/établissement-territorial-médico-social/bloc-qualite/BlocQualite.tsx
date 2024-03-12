@@ -17,7 +17,7 @@ const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel }:
   const { wording } = useDependencies();
 
   if (
-    etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasRenseignées
+    etablissementTerritorialQualiteMédicoSocialViewModel.lesDonneesQualiteNeSontPasRenseignées
   ) {
     return <BlocIndicateurVide title={wording.TITRE_BLOC_QUALITE} />;
   }
@@ -41,8 +41,8 @@ const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel }:
           )}
       </ul>
       <ul className="indicateurs">
-        {!etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasRenseignées &&
-          !etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasAutorisées && (
+        {!etablissementTerritorialQualiteMédicoSocialViewModel.lesEvenementsIndesirablesNeSontPasRenseignées &&
+          !etablissementTerritorialQualiteMédicoSocialViewModel.lesEvenementsIndesirablesNeSontPasAutorisées && (
             <GraphiqueEvenementsIndesirables />
           )}
       </ul>
