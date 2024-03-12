@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
 import { HistogrammeHorizontalRow } from "../../../indicateur-métier/qualite/ReclamationsParAnnee/HistogrammeHorizontalRow/HistogrammeHorizontalRow";
@@ -7,6 +9,11 @@ import { EvenementsIndesirablesTagMultiNiveaux } from "./EvenementsIndesirablesT
 
 export const GraphiqueEvenementsIndesirables = () => {
     const { wording } = useDependencies();
+    const [annéeEnCours, setAnnéeEnCours] = useState<number>(2022);
+
+    // eslint-disable-next-line no-console
+    console.log('annéeEnCours', annéeEnCours);
+
     const evenementsIndesirablesAssociesAuxSoins =
     {
         libelle: wording.EVENEMENTS_ASSOCIE_AUX_SOINS,
@@ -41,6 +48,7 @@ export const GraphiqueEvenementsIndesirables = () => {
     };
     return (
         <IndicateurGraphique
+            années={{ liste: [2022, 2021, 2020], setAnnéeEnCours }}
             contenuInfoBulle={<ContenuEvenementsIndesirables dateDeMiseÀJour="13/02/2024" source={wording.SIVSS} />}
             dateDeMiseÀJour="13/02/2024"
             identifiant="qualite-evenements-indesirables"
