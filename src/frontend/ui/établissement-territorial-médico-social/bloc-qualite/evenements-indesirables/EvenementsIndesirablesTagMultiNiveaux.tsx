@@ -110,9 +110,9 @@ const EventTag = ({ events }: EventTagProps): ReactElement => {
     }
 
     return (
-        <li key="evenement-1">
+        <li key={events.libelle} >
             <TagCliquable for={`evenement-accordion-${events.libelle}`} titre={`${events.libelle} (${events.total})`} />
-            <div className="fr-collapse niveau1 fr-mb-2w" id={`evenement-accordion-${events.libelle}`}>
+            <div className="fr-collapse niveau1 fr-mb-2w " id={`evenement-accordion-${events.libelle}`}>
                 {events.libelle === wording.EVENEMENTS_ASSOCIE_AUX_SOINS && <HistogrammeHorizontalWithToggle filterEventsEIGS={filterEventsEIGS} légende={["EIGS", "Non EIGS"]} valeursDesHistogrammes={valeursDesHistogrammes} />}
                 <EventNaturesAndStatus evenementsClotures={filtredClosedEvents} evenementsEncours={filtredPenddingEvents} libelle={events.libelle} />
             </div>
@@ -124,7 +124,7 @@ const EventNaturesAndStatus = ({ evenementsEncours, evenementsClotures, libelle 
     return (
         <ul>
             {evenementsEncours.length !== 0 && (
-                <li>
+                <li className="fr-ml-2w">
                     <TagCliquable for={`evenement-encours-accordion-${libelle}`} titre={`${libelle} en cours (${evenementsEncours.length})`} />
                     <ul className="fr-collapse " id={`evenement-encours-accordion-${libelle}`}>
                         <EventNatures events={evenementsEncours} isClosed={false} libelle={libelle} />
@@ -132,7 +132,7 @@ const EventNaturesAndStatus = ({ evenementsEncours, evenementsClotures, libelle 
                 </li>
             )}
             {evenementsClotures.length !== 0 && (
-                <li>
+                <li className="fr-ml-2w">
                     <TagCliquable for={`evenement-clotures-accordion-${libelle}`} titre={`${libelle} clôturés (${evenementsClotures.length})`} />
                     <ul className="fr-collapse " id={`evenement-clotures-accordion-${libelle}`}>
                         <EventNatures events={evenementsClotures} isClosed={true} libelle={libelle} />
@@ -149,12 +149,12 @@ const EventNatures = ({ events, isClosed, libelle }: EventsProps): ReactElement 
     return (
         <ul>
             {natures.map((nature) => (
-                <li key={`${libelle}-${nature}`}>
+                <li className="fr-ml-4w" key={`${libelle}-${nature}`}>
                     <TagWithLink for={`events-nature-accordion-${libelle}-${nature}`} titre={`${nature} (${eventsByNature[nature].length})`} />
                     {eventsByNature[nature].length !== 0 && (
                         <ul className={"fr-collapse niveau1 " + styles["list-style"]} id={`events-nature-accordion-${libelle}-${nature}`}>
                             {eventsByNature[nature].map((natureDetails: any) => (
-                                <li className={styles["list-element-style"]} key={`${libelle}-${nature}-${natureDetails.numeroSIVSS}`}>
+                                <li className={"fr-ml-6w " + styles["list-element-style"]} key={`${libelle}-${nature}-${natureDetails.numeroSIVSS}`}>
                                     <Tag label={`Numéro SIVSS : ${natureDetails.numeroSIVSS}`} />
                                     {isClosed && <Tag label={`Date de clôture  : ${natureDetails.clotDate}`} />}
                                     {isClosed && <Tag label={`Motif de clôture : ${natureDetails.clotMotif}`} />}
