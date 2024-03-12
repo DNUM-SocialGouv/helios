@@ -1,4 +1,5 @@
 import { ChartData } from "chart.js";
+import { Context } from "chartjs-plugin-datalabels";
 import { ReactElement, useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
@@ -49,6 +50,7 @@ export class HistogrammeWithToggleData {
         public labels: string[],
         private totals: number[],
         private stacks: Stack[],
+        private valueFormatter: (value: number) => string = (value) => value?.toString()
     ) {
         this.areStacksVisible = this.makeAllStacksVisible(stacks);
         this.setDefaultErrorStatut();
@@ -145,6 +147,12 @@ export class HistogrammeWithToggleData {
                     align: "end",
                     anchor: "end",
                     font: { family: "Marianne", size: 12, weight: "700" },
+                    formatter: (_: number, _context: Context): string => {
+                        const hasMultipleStacks = this.visibleStacks.length > 1;
+                        const sum = hasMultipleStacks ? this.totals[_context.dataIndex] : this.visibleStacks[0].data[_context.dataIndex];
+                        const isLastStack = _context.datasetIndex === _context.chart.data.datasets.length - 1;
+                        return isLastStack ? this.valueFormatter(sum) : "";
+                    },
                 },
                 legend: { display: false },
                 tooltip: { enabled: false },
@@ -170,9 +178,9 @@ export const HistogrammeHorizontalWithToggle = ({
 
     return (
         <>
-            <div className={styles["container"]}>
+            <div>
                 {histogrammes.map((histogramme) => (
-                    <div className={styles["barContainerWidth"]} key={histogramme.nom}>
+                    <div className={styles["barWithToggleWidth"]} key={histogramme.nom}>
                         {/*
                  // @ts-ignore */}
                         <Bar data={histogramme.chartData} options={{ ...histogramme.optionsHistogramme, aspectRatio }} />
@@ -202,6 +210,11 @@ function LegendeHistogrammes({
     toggleStackVisibility: (index: number, isVisible: boolean) => void;
     areStacksVisible: boolean[];
 }) {
+
+    const onChangeToggleVisibility = (index: number, isVisible: boolean) => {
+        toggleStackVisibility(index, isVisible);
+    }
+
     return (
         <div aria-hidden="true" className="fr-checkbox-group " style={{ display: "flex", marginLeft: "2rem", marginBottom: "2rem" }}>
             {legend.map((légende, index) => (
@@ -210,7 +223,7 @@ function LegendeHistogrammes({
                         checked={areStacksVisible[index]}
                         id={"checkboxes-" + légende}
                         name={"checkboxes-" + légende}
-                        onChange={(event) => toggleStackVisibility(index, event.target.checked)}
+                        onChange={(event) => onChangeToggleVisibility(index, event.target.checked)}
                         type="checkbox"
                     />
                     <label className="fr-label" htmlFor={"checkboxes-" + légende}>

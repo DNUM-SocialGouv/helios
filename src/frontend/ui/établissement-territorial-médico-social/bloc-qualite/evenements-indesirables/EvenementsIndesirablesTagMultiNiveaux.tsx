@@ -3,6 +3,7 @@ import { ReactElement } from "react";
 import { EvenementsIndesirables } from "../../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
 import { couleurDuFondHistogrammeBleuFoncé, couleurDuFondHistogrammeOrange } from "../../../commun/Graphique/couleursGraphique";
 import { HistogrammeHorizontalWithToggle, HistogrammeWithToggleData } from "../../../commun/Graphique/HistogrammeHorizontalWithToggle";
+import { StringFormater } from "../../../commun/StringFormater";
 import { Tag, TagCliquable } from "../../../commun/Tag";
 import { TagWithLink } from "../../../commun/Tag/TagWithLink";
 import styles from "./evenementsIndesirables.module.css";
@@ -67,6 +68,7 @@ const valeursDesHistogrammes: HistogrammeWithToggleData[] = [
                 backgroundColor: [couleurDuFondHistogrammeOrange],
             },
         ],
+        StringFormater.formatInFrench
     )
 ];
 
@@ -76,7 +78,6 @@ const EventTag = ({ events }: EventTagProps): ReactElement => {
             <TagCliquable for={`evenement-accordion-${events.libelle}`} titre={`${events.libelle} (${events.total})`} />
             <div className="fr-collapse niveau1 fr-mb-2w" id={`evenement-accordion-${events.libelle}`}>
                 <HistogrammeHorizontalWithToggle légende={["EIGS", "Non EIGS"]} valeursDesHistogrammes={valeursDesHistogrammes} />
-
                 <EventNaturesAndStatus evenementsClotures={events.evenementsClotures} evenementsEncours={events.evenementsEncours} libelle={events.libelle} />
             </div>
         </li>
