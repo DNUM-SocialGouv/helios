@@ -12,7 +12,11 @@ type GraphiqueCapacitésParActivitéProps = Readonly<{
   estSanitaire: boolean;
 }>;
 
-export const GraphiqueCapacitésParActivité = ({ graphiqueCapacitésParActivitéViewModel, estEntitéJuridique = false, estSanitaire }: GraphiqueCapacitésParActivitéProps) => {
+export const GraphiqueCapacitésParActivité = ({
+  graphiqueCapacitésParActivitéViewModel,
+  estEntitéJuridique = false,
+  estSanitaire,
+}: GraphiqueCapacitésParActivitéProps) => {
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(graphiqueCapacitésParActivitéViewModel.annéeInitiale);
 
