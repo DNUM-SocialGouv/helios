@@ -15,9 +15,9 @@ export type Reclamations = Readonly<{
 
 export type EvenementsIndesirables = {
     libelle: string;
-    total: number;
     evenementsEncours: any[];
     evenementsClotures: any[];
+    dateMiseAJourSource: string;
 };
 
 export type ÉtablissementTerritorialQualite = Readonly<{

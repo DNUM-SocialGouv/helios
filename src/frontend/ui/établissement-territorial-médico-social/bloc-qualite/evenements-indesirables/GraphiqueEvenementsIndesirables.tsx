@@ -17,7 +17,7 @@ export const GraphiqueEvenementsIndesirables = () => {
     const evenementsIndesirablesAssociesAuxSoins =
     {
         libelle: wording.EVENEMENTS_ASSOCIE_AUX_SOINS,
-        total: 10,
+        dateMiseAJourSource: '2024-03-15',
         evenementsEncours: [
             { nature: "Maltraitance", est_EIGS: true, numeroSIVSS: 484045 },
             { nature: "Maltraitance", est_EIGS: false, numeroSIVSS: 484046 },
@@ -33,7 +33,7 @@ export const GraphiqueEvenementsIndesirables = () => {
     };
     const evenementsIndesirablesDansET = {
         libelle: wording.EVENEMENTS_DANS_ET,
-        total: 7,
+        dateMiseAJourSource: '2024-03-15',
         evenementsEncours: [
             { nature: "Fausse route", est_EIGS: true, numeroSIVSS: 484145 },
             { nature: "Fausse route", est_EIGS: true, numeroSIVSS: 484245 },
