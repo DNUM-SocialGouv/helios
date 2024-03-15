@@ -12,6 +12,10 @@
     width: 100%;
 }
 
+.barWithToggleWidth {
+    width: 450px;
+}
+
 @media print {
     .container {
         display: block;
