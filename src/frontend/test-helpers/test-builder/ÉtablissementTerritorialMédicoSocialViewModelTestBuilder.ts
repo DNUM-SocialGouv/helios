@@ -519,7 +519,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
   ];
 
   public static qualite: ÉtablissementTerritorialMédicoSocial["qualite"] = {
-    reclamations: []
+    reclamations: [], evenementsIndesirables: []
   };
 
   public static crée(
