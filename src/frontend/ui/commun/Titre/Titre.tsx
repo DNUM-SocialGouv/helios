@@ -1,30 +1,28 @@
-import Image, { StaticImageData } from "next/image";
 import { ReactElement } from "react";
 
 import { RechercheViewModel } from "../../home/RechercheViewModel";
-import { useDependencies } from "../contexts/useDependencies";
 import { StarButton } from "../StarButton/StarButton";
 import styles from "./Titre.module.css";
 
 type TitreProps = Readonly<{
-  logo: StaticImageData;
+  logo: ReactElement;
   children: ReactElement | string;
   rechercheViewModel: RechercheViewModel | undefined;
+  downloadPDF?: any;
 }>;
 
-export const Titre = ({ logo, children, rechercheViewModel }: TitreProps) => {
-  const { wording } = useDependencies();
-  const imprimer = () => window.print();
-
+export const Titre = ({ logo, children, rechercheViewModel, downloadPDF }: TitreProps) => {
   return (
     <div className={styles["titre"]}>
-      <Image alt="" height="27" src={logo} width="27" />
-      <h1>{children} <StarButton favorite={rechercheViewModel} parent="titre" /> </h1>
-      <div>
-        <button className="fr-btn fr-btn--secondary fr-fi-download-line fr-btn--icon-left" name={wording.TÉLÉCHARGER_EN_PDF} onClick={imprimer} title={wording.TÉLÉCHARGER_EN_PDF} type="button">
-          {wording.TÉLÉCHARGER_EN_PDF}
-        </button>
-      </div>
+      <span className="logoContainer">{logo}</span>
+
+      <h1>
+        {children}
+        <span className="hiddenPdf">
+          <StarButton favorite={rechercheViewModel} parent="titre" />
+        </span>
+      </h1>
+      {downloadPDF && <div className="hiddenPdf">{downloadPDF}</div>}
     </div>
   );
 };

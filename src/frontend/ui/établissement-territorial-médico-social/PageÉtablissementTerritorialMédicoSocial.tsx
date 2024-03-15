@@ -1,5 +1,8 @@
 import Head from "next/head";
+import { useRef, useCallback, useEffect } from "react";
+import { useReactToPrint } from "react-to-print";
 
+import { BtnDownloadPDF } from "../commun/BtnDownloadPDF/BtnDownloadPDF";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { SeparatorHorizontal } from "../commun/Separateur/SeparatorHorizontal";
@@ -10,7 +13,7 @@ import { BlocAutorisationEtCapacitéMédicoSocial } from "./bloc-autorisations/B
 import { BlocBudgetEtFinancesMédicoSocial } from "./bloc-budget-et-finances/BlocBudgetEtFinancesMédicoSocial";
 import { BlocIdentitéMédicoSocial } from "./bloc-identité/BlocIdentitéMédicoSocial";
 import { BlocRessourcesHumainesMédicoSocial } from "./bloc-ressources-humaines/BlocRessourcesHumainesMédicoSocial";
-import LogoÉtablissementTerritorial from "./logo-établissement-territorial-médico-social.svg";
+import { LogoÉtablissementTerritorial } from "./logo-établissement-territorial-médico-social";
 import { ÉtablissementTerritorialMédicoSocialViewModel } from "./ÉtablissementTerritorialMédicoSocialViewModel";
 
 type ÉtablissementTerritorialProps = Readonly<{
@@ -32,13 +35,43 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
     },
   ]);
 
+  const componentRef = useRef(null);
+
+  const onBeforeGetContentResolve = useRef<any>(null);
+
+  const handleOnBeforeGetContent = useCallback(() => {
+    return new Promise<void>((resolve) => {
+      onBeforeGetContentResolve.current = resolve;
+      resolve();
+    });
+  }, []);
+
+  const reactToPrintContent = useCallback(() => {
+    return componentRef.current;
+  }, [componentRef.current]);
+
+  const handlePrint = useReactToPrint({
+    content: reactToPrintContent,
+    documentTitle: établissementTerritorialViewModel.titre,
+    onBeforeGetContent: handleOnBeforeGetContent,
+    removeAfterPrint: true,
+  });
+
+  useEffect(() => {
+    if (typeof onBeforeGetContentResolve.current === "function") {
+      onBeforeGetContentResolve.current();
+    }
+  }, [onBeforeGetContentResolve.current]);
+
   return (
     <main className="fr-container">
       <Head>
         <title>{établissementTerritorialViewModel.titre}</title>
       </Head>
-      <>
-        <Titre logo={LogoÉtablissementTerritorial} rechercheViewModel={rechercheViewModel}>{établissementTerritorialViewModel.titre}</Titre>
+      <div className="print-content" ref={componentRef}>
+        <Titre downloadPDF={<BtnDownloadPDF handlePrint={handlePrint} />} logo={LogoÉtablissementTerritorial} rechercheViewModel={rechercheViewModel}>
+          {établissementTerritorialViewModel.titre}
+        </Titre>
         <BlocIdentitéMédicoSocial établissementTerritorialIdentitéMédicoSocialViewModel={établissementTerritorialViewModel.identitéViewModel} />
         <BlocAutorisationEtCapacitéMédicoSocial
           établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialViewModel.autorisationsViewModel}
@@ -51,8 +84,9 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
         />
         <SeparatorHorizontal></SeparatorHorizontal>
         <BlocBudgetEtFinancesMédicoSocial
-          établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={établissementTerritorialViewModel.budgetEtFinancesViewModel} />
-      </>
+          établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={établissementTerritorialViewModel.budgetEtFinancesViewModel}
+        />
+      </div>
     </main>
   );
 };

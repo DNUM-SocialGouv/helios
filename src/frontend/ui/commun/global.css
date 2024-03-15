@@ -90,6 +90,19 @@ iframe {
 
 /* Impression */
 @media print {
+  @page {
+    size: A4;
+    margin: 10mm 0mm;
+  }
+  .print-content {
+    min-width: 1200px;
+    max-width: 1200px;
+    padding: 0 30px;
+  }
+  .hiddenPdf {
+    visibility: hidden;
+  }
+
   .fr-header__brand-top,
   .fr-header__tools,
   .fr-footer,
