@@ -109,6 +109,7 @@ const filterAutorisationSanitaire = (autorisationCapacite: any, profil: any) => 
 const filterQualiteSanitaire = (qualite: any, profil: any) => {
     const filtredQualite = {
         reclamations: profil.nombre_reclamation === 'ok' ? qualite.reclamations : [{ 'details': [] }],
+        evenementsIndesirables: []
     }
     return filtredQualite;
 }
@@ -192,6 +193,7 @@ const filterressourcesHumainesMedicoSocial = (ressourcesHumaines: any, profil: a
 const filterQualiteMedicoSocial = (qualite: any, profil: any) => {
     const filtredQualite = {
         reclamations: profil.nombre_reclamation === 'ok' ? qualite.reclamations : [{ 'details': [] }],
+        evenementsIndesirables: []
     }
     return filtredQualite;
 }
