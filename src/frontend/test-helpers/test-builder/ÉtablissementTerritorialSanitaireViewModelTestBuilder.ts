@@ -508,7 +508,8 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       totalEncours: 100,
       dateMiseÀJourSource: "2023-07-07",
       details: []
-    }]
+    }],
+    evenementsIndesirables: []
   }
 
   public static crée(

@@ -394,7 +394,8 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
 
   private construitsQualite(reclamations: ReclamationETModel[], dateMisAJour: string): ÉtablissementTerritorialQualite {
     return {
-      reclamations: this.construitsReclamations(reclamations, dateMisAJour)
+      reclamations: this.construitsReclamations(reclamations, dateMisAJour),
+      evenementsIndesirables: []
     }
   }
 
