@@ -111,7 +111,7 @@ const EventTag = ({ events }: EventTagProps): ReactElement => {
 
     return (
         <li key={events.libelle} >
-            <TagCliquable for={`evenement-accordion-${events.libelle}`} titre={`${events.libelle} (${events.total})`} />
+            <TagCliquable for={`evenement-accordion-${events.libelle}`} titre={`${events.libelle} (${events.evenementsClotures.length + events.evenementsEncours.length})`} />
             <div className="fr-collapse niveau1 fr-mb-2w " id={`evenement-accordion-${events.libelle}`}>
                 {events.libelle === wording.EVENEMENTS_ASSOCIE_AUX_SOINS && <HistogrammeHorizontalWithToggle filterEventsEIGS={filterEventsEIGS} légende={["EIGS", "Non EIGS"]} valeursDesHistogrammes={valeursDesHistogrammes} />}
                 <EventNaturesAndStatus evenementsClotures={filtredClosedEvents} evenementsEncours={filtredPenddingEvents} libelle={events.libelle} />
