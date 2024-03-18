@@ -10,7 +10,7 @@ type Stack = { label?: string; data: number[]; backgroundColor: string[]; isErro
 
 function useChartData(charts: HistogrammeWithToggleData[]) {
     const [chartsData, setChartsData] = useState(charts);
-    useEffect(() => setChartsData(charts), charts);
+    useEffect(() => setChartsData(charts), chartsData);
 
     return {
         histogrammes: chartsData.map((chartData) => ({

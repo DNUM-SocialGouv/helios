@@ -24,10 +24,13 @@ const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel }:
 
   return (
     <Bloc titre={wording.TITRE_BLOC_QUALITE}>
+      {etablissementTerritorialQualiteMédicoSocialViewModel.lesDonnéesQualitePasAutorisés.length !== 0 ? (
+        <NotAUthorized indicateurs={etablissementTerritorialQualiteMédicoSocialViewModel.lesDonnéesQualitePasAutorisés} />
+      ) : (
+        <></>
+      )}
       {etablissementTerritorialQualiteMédicoSocialViewModel.lesDonnéesQualitePasRenseignees.length !== 0 ? (
         <NoDataCallout indicateurs={etablissementTerritorialQualiteMédicoSocialViewModel.lesDonnéesQualitePasRenseignees} />
-      ) : etablissementTerritorialQualiteMédicoSocialViewModel.lesDonnéesQualitePasAutorisés.length !== 0 ? (
-        <NotAUthorized indicateurs={etablissementTerritorialQualiteMédicoSocialViewModel.lesDonnéesQualitePasAutorisés} />
       ) : (
         <></>
       )}
@@ -43,7 +46,9 @@ const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel }:
       <ul className="indicateurs">
         {!etablissementTerritorialQualiteMédicoSocialViewModel.lesEvenementsIndesirablesNeSontPasRenseignées &&
           !etablissementTerritorialQualiteMédicoSocialViewModel.lesEvenementsIndesirablesNeSontPasAutorisées && (
-            <GraphiqueEvenementsIndesirables />
+            <GraphiqueEvenementsIndesirables
+              data={etablissementTerritorialQualiteMédicoSocialViewModel.etablissementTerritorialQualiteMédicoSocial.evenementsIndesirables}
+              total={etablissementTerritorialQualiteMédicoSocialViewModel.totalAssocieAuxsoins + etablissementTerritorialQualiteMédicoSocialViewModel.totalDansET} />
           )}
       </ul>
     </Bloc>

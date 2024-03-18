@@ -13,7 +13,7 @@ export const TagWithLink = ({ for: identifiant, titre }: TagWithLinkProps) => {
     return (
         <div className="fr-mb-1w">
             <div
-                className={`fr-tag fr-text-label--grey ` + styles["tag-green"]}
+                className={`fr-tag fr-text-label--grey ` + styles["accordion"]}
             >
                 {titre}
             </div>

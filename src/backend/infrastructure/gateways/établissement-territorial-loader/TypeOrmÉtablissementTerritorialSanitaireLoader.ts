@@ -212,13 +212,26 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     })
   }
 
+  private constuisLevenementIndesirable = (evenement: EvenementIndesirableETModel) => {
+    return {
+      famille: evenement.famillePrincipale,
+      nature: evenement.naturePrincipale,
+      numeroSIVSS: evenement.numeroSIVSS,
+      annee: evenement.annee,
+      etat: evenement.etat,
+      clotDate: evenement.dateCloture,
+      clotMotif: evenement.motifCloture,
+      est_EIGS: evenement.isEIGS
+    }
+  }
+
   private construitsEvenementsIndesirables(
     evenementsIndesirables: EvenementIndesirableETModel[],
     dateMisAJour: string,
   ): EvenementsIndesirables[] {
     const evenementsIndesirableAssocieAuxSoins: EvenementsIndesirables = {
       dateMiseAJourSource: dateMisAJour,
-      libelle: 'Evénements indésirables associés aux soins',
+      libelle: 'Evènements indésirables/graves associés aux soins',
       evenementsEncours: [],
       evenementsClotures: []
     };
@@ -229,12 +242,12 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       evenementsClotures: []
     };
     evenementsIndesirables.forEach(evenement => {
-      if (evenement.famillePrincipale === evenementsIndesirableAssocieAuxSoins.libelle) {
-        if (evenement.etat === 'EN_COURS') evenementsIndesirableAssocieAuxSoins.evenementsEncours.push(evenement);
-        else evenementsIndesirableAssocieAuxSoins.evenementsClotures.push(evenement);
+      if (evenement.famillePrincipale === 'Evénements indésirables associés aux soins') {
+        if (evenement.etat === 'EN_COURS') evenementsIndesirableAssocieAuxSoins.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
+        else evenementsIndesirableAssocieAuxSoins.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
       } else {
-        if (evenement.etat === 'EN_COURS') evenementsIndesirableParET.evenementsEncours.push(evenement);
-        else evenementsIndesirableParET.evenementsClotures.push(evenement);
+        if (evenement.etat === 'EN_COURS') evenementsIndesirableParET.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
+        else evenementsIndesirableParET.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
       }
     });
     return [evenementsIndesirableAssocieAuxSoins, evenementsIndesirableParET]

@@ -23,14 +23,23 @@ export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
       this.etablissementTerritorialQualiteMédicoSocial.reclamations[0].details.length === 0;
   }
 
+  public get totalAssocieAuxsoins(): number {
+    return this.etablissementTerritorialQualiteMédicoSocial.evenementsIndesirables[0].evenementsClotures.length +
+      this.etablissementTerritorialQualiteMédicoSocial.evenementsIndesirables[0].evenementsEncours.length;
+  }
+
+  public get totalDansET(): number {
+    return this.etablissementTerritorialQualiteMédicoSocial.evenementsIndesirables[1].evenementsClotures.length +
+      this.etablissementTerritorialQualiteMédicoSocial.evenementsIndesirables[1].evenementsEncours.length;
+  }
+
   public get lesEvenementsIndesirablesNeSontPasRenseignées(): boolean {
-    // return this.etablissementTerritorialQualiteMédicoSocial.evenementsIndesirables[0].total === 0
-    //   && this.etablissementTerritorialQualiteMédicoSocial.evenementsIndesirables[1].total === 0;
-    return true;
+    return this.etablissementTerritorialQualiteMédicoSocial.evenementsIndesirables.length === 2 && this.totalAssocieAuxsoins === 0
+      && this.totalDansET === 0;
   }
 
   public get lesEvenementsIndesirablesNeSontPasAutorisées(): boolean {
-    return true;
+    return this.etablissementTerritorialQualiteMédicoSocial.evenementsIndesirables.length === 0;
   }
 
   public get lesDonneesQualiteNeSontPasRenseignées(): boolean {

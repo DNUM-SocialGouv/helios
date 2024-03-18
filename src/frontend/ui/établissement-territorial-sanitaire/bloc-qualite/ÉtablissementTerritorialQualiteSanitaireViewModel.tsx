@@ -23,14 +23,23 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
       this.etablissementTerritorialQualiteSanitaire.reclamations[0].details.length === 0;
   }
 
+  public get totalAssocieAuxsoins(): number {
+    return this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[0].evenementsClotures.length +
+      this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[0].evenementsEncours.length;
+  }
+
+  public get totalDansET(): number {
+    return this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[1].evenementsClotures.length +
+      this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[1].evenementsEncours.length;
+  }
+
   public get lesEvenementsIndesirablesNeSontPasRenseignées(): boolean {
-    // return this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[0].total === 0
-    //   && this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[1].total === 0;
-    return false;
+    return this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables.length === 2 && this.totalAssocieAuxsoins === 0
+      && this.totalDansET === 0;
   }
 
   public get lesEvenementsIndesirablesNeSontPasAutorisées(): boolean {
-    return false;
+    return this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables.length === 0;
   }
 
 

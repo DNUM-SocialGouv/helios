@@ -52,30 +52,33 @@ export const EvenementsIndesirablesTagMultiNiveaux = ({ evenementsIndesirablesAs
     );
 };
 
-const valeursDesHistogrammes: HistogrammeWithToggleData[] = [
-    new HistogrammeWithToggleData(
-        "",
-        ["Nombre total EIGAS"],
-        [10],
-        [
-            {
-                backgroundColor: [couleurDuFondHistogrammeBleuFoncé],
-                data: [5],
-                label: "EIGS",
-            },
-            {
-                label: "Non EIGS",
-                data: [5],
-                backgroundColor: [couleurDuFondHistogrammeOrange],
-            },
-        ],
-        StringFormater.formatInFrench
-    )
-];
 
 const EventTag = ({ events }: EventTagProps): ReactElement => {
     const { wording } = useDependencies();
 
+    const EIGSTotal = events.evenementsEncours.filter((event) => event.est_EIGS).length + events.evenementsClotures.filter((event) => event.est_EIGS).length;
+    const nonEIGSTotal = events.evenementsEncours.filter((event) => !event.est_EIGS).length + events.evenementsClotures.filter((event) => !event.est_EIGS).length;
+
+    const valeursDesHistogrammes: HistogrammeWithToggleData[] = [
+        new HistogrammeWithToggleData(
+            "",
+            ["Nombre total EIGAS"],
+            [events.evenementsClotures.length + events.evenementsEncours.length],
+            [
+                {
+                    backgroundColor: [couleurDuFondHistogrammeBleuFoncé],
+                    data: [EIGSTotal],
+                    label: "EIGS",
+                },
+                {
+                    label: "Non EIGS",
+                    data: [nonEIGSTotal],
+                    backgroundColor: [couleurDuFondHistogrammeOrange],
+                },
+            ],
+            StringFormater.formatInFrench
+        )
+    ];
     const [filtredClosedEvents, setFiltredClosedEvents] = useState(events.evenementsClotures);
     const [filtredPenddingEvents, setFiltredPenddingEvents] = useState(events.evenementsEncours);
 
