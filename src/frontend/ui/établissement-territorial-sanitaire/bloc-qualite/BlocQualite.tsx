@@ -48,8 +48,9 @@ const BlocQualité = ({ etablissementTerritorialQualiteSanitairelViewModel }: Bl
         {!etablissementTerritorialQualiteSanitairelViewModel.lesEvenementsIndesirablesNeSontPasRenseignées &&
           !etablissementTerritorialQualiteSanitairelViewModel.lesEvenementsIndesirablesNeSontPasAutorisées && (
             <GraphiqueEvenementsIndesirables
-              data={etablissementTerritorialQualiteSanitairelViewModel.etablissementTerritorialQualiteSanitaire.evenementsIndesirables}
-              total={etablissementTerritorialQualiteSanitairelViewModel.totalAssocieAuxsoins + etablissementTerritorialQualiteSanitairelViewModel.totalDansET}
+              annees={etablissementTerritorialQualiteSanitairelViewModel.anneesEIs}
+              data={etablissementTerritorialQualiteSanitairelViewModel.buildEIsData}
+              dateMiseAJour={etablissementTerritorialQualiteSanitairelViewModel.dateMiseAJourEvenementsIndesirables}
             />
           )}
       </ul>

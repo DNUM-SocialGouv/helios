@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useMemo, useState } from "react";
 
 import { EvenementsIndesirables } from "../../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
@@ -55,32 +55,40 @@ export const EvenementsIndesirablesTagMultiNiveaux = ({ evenementsIndesirablesAs
 
 const EventTag = ({ events }: EventTagProps): ReactElement => {
     const { wording } = useDependencies();
-
-    const EIGSTotal = events.evenementsEncours.filter((event) => event.est_EIGS).length + events.evenementsClotures.filter((event) => event.est_EIGS).length;
-    const nonEIGSTotal = events.evenementsEncours.filter((event) => !event.est_EIGS).length + events.evenementsClotures.filter((event) => !event.est_EIGS).length;
-
-    const valeursDesHistogrammes: HistogrammeWithToggleData[] = [
-        new HistogrammeWithToggleData(
-            "",
-            ["Nombre total EIGAS"],
-            [events.evenementsClotures.length + events.evenementsEncours.length],
-            [
-                {
-                    backgroundColor: [couleurDuFondHistogrammeBleuFoncé],
-                    data: [EIGSTotal],
-                    label: "EIGS",
-                },
-                {
-                    label: "Non EIGS",
-                    data: [nonEIGSTotal],
-                    backgroundColor: [couleurDuFondHistogrammeOrange],
-                },
-            ],
-            StringFormater.formatInFrench
-        )
-    ];
     const [filtredClosedEvents, setFiltredClosedEvents] = useState(events.evenementsClotures);
     const [filtredPenddingEvents, setFiltredPenddingEvents] = useState(events.evenementsEncours);
+    const [EIGSTotal, setEIGSTotal] = useState(0);
+    const [nonEIGSTotal, setNonEIGSTotal] = useState(0);
+
+    useEffect(() => {
+        setFiltredClosedEvents(events.evenementsClotures);
+        setFiltredPenddingEvents(events.evenementsEncours);
+        setEIGSTotal(events.evenementsEncours.filter((event) => event.est_EIGS).length + events.evenementsClotures.filter((event) => event.est_EIGS).length);
+        setNonEIGSTotal(events.evenementsEncours.filter((event) => !event.est_EIGS).length + events.evenementsClotures.filter((event) => !event.est_EIGS).length);
+    }, [events])
+
+    const valeursDesHistogrammes: HistogrammeWithToggleData[] = useMemo(() => {
+        return [
+            new HistogrammeWithToggleData(
+                "",
+                ["Nombre total EIGAS"],
+                [events.evenementsClotures.length + events.evenementsEncours.length],
+                [
+                    {
+                        backgroundColor: [couleurDuFondHistogrammeBleuFoncé],
+                        data: [EIGSTotal],
+                        label: "EIGS",
+                    },
+                    {
+                        label: "Non EIGS",
+                        data: [nonEIGSTotal],
+                        backgroundColor: [couleurDuFondHistogrammeOrange],
+                    },
+                ],
+                StringFormater.formatInFrench
+            )
+        ]
+    }, [EIGSTotal, nonEIGSTotal, events]);
 
     const removeDataFromEvents = (isEIGS: boolean) => {
         const newClosedEvents = filtredClosedEvents.filter((event) => event.est_EIGS === !isEIGS);
@@ -111,12 +119,23 @@ const EventTag = ({ events }: EventTagProps): ReactElement => {
             }
         }
     }
+    const [showHistogramme, setShowHistogramme] = useState(true);
+
+    useEffect(() => {
+        setShowHistogramme(false);
+        const id = setTimeout(() => {
+            setShowHistogramme(true);
+        }, 10)
+        return () => {
+            clearTimeout(id);
+        }
+    }, [valeursDesHistogrammes])
 
     return (
         <li key={events.libelle} >
             <TagCliquable for={`evenement-accordion-${events.libelle}`} titre={`${events.libelle} (${events.evenementsClotures.length + events.evenementsEncours.length})`} />
             <div className="fr-collapse niveau1 fr-mb-2w " id={`evenement-accordion-${events.libelle}`}>
-                {events.libelle === wording.EVENEMENTS_ASSOCIE_AUX_SOINS && <HistogrammeHorizontalWithToggle filterEventsEIGS={filterEventsEIGS} légende={["EIGS", "Non EIGS"]} valeursDesHistogrammes={valeursDesHistogrammes} />}
+                {events.libelle === wording.EVENEMENTS_ASSOCIE_AUX_SOINS && showHistogramme && <HistogrammeHorizontalWithToggle filterEventsEIGS={filterEventsEIGS} légende={["EIGS", "Non EIGS"]} valeursDesHistogrammes={valeursDesHistogrammes} />}
                 <EventNaturesAndStatus evenementsClotures={filtredClosedEvents} evenementsEncours={filtredPenddingEvents} libelle={events.libelle} />
             </div>
         </li>
@@ -130,7 +149,7 @@ const EventNaturesAndStatus = ({ evenementsEncours, evenementsClotures, libelle 
                 <li className="fr-ml-2w">
                     <TagCliquable for={`evenement-encours-accordion-${libelle}`} titre={`${libelle} en cours (${evenementsEncours.length})`} />
                     <ul className="fr-collapse " id={`evenement-encours-accordion-${libelle}`}>
-                        <EventNatures events={evenementsEncours} isClosed={false} libelle={libelle} />
+                        <EventNatures events={evenementsEncours} isClosed={false} libelle={`${libelle}-en-cours`} />
                     </ul>
                 </li>
             )}
@@ -138,7 +157,7 @@ const EventNaturesAndStatus = ({ evenementsEncours, evenementsClotures, libelle 
                 <li className="fr-ml-2w">
                     <TagCliquable for={`evenement-clotures-accordion-${libelle}`} titre={`${libelle} clôturés (${evenementsClotures.length})`} />
                     <ul className="fr-collapse " id={`evenement-clotures-accordion-${libelle}`}>
-                        <EventNatures events={evenementsClotures} isClosed={true} libelle={libelle} />
+                        <EventNatures events={evenementsClotures} isClosed={true} libelle={`${libelle}-clot`} />
                     </ul>
                 </li>
             )}
