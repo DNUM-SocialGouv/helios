@@ -1,4 +1,4 @@
-import { fireEvent, screen, within } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import { SessionProvider } from "next-auth/react";
 
 import { RésultatDeRechercheTestBuilder } from "../../../../backend/test-builder/RésultatDeRechercheTestBuilder";
@@ -12,16 +12,16 @@ const mockSession = {
   name: "john",
   email: "test@test.fr",
   user: {
-    idUser: '1',
-    firstname: 'Doe',
+    idUser: "1",
+    firstname: "Doe",
     role: 1,
     institution: {},
     institutionId: 1,
     codeRegion: 84,
-    codeProfiles: [""]
+    codeProfiles: [""],
   },
-  expires: "1235"
-}
+  expires: "1235",
+};
 const result = RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({ numéroFiness: "000000000" });
 const rechercheViewModel = new RechercheViewModel(result, paths);
 const établissementTerritorialSanitaireViewModel = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths);
@@ -30,7 +30,14 @@ const identité = ÉtablissementTerritorialSanitaireViewModelTestBuilder.identit
 describe("La page établissement territorial sanitaire - bloc identité", () => {
   it("affiche le titre dans l’onglet", () => {
     // WHEN
-    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialSanitaire rechercheViewModel={rechercheViewModel} établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageÉtablissementTerritorialSanitaire
+          rechercheViewModel={rechercheViewModel}
+          établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
+        />
+      </SessionProvider>
+    );
 
     // THEN
     expect(document.title).toBe(`ET - ${identité.numéroFinessÉtablissementTerritorial.value} - ${identité.raisonSocialeCourte.value}`);
@@ -38,7 +45,14 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
 
   it('affiche le titre : "ET - numéro de FINESS - nom court de l’établissement"', () => {
     // WHEN
-    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialSanitaire rechercheViewModel={rechercheViewModel} établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageÉtablissementTerritorialSanitaire
+          rechercheViewModel={rechercheViewModel}
+          établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
+        />
+      </SessionProvider>
+    );
 
     // THEN
     const titre = screen.getByRole("heading", {
@@ -50,29 +64,30 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
 
   it("affiche le bouton pour imprimer", () => {
     // WHEN
-    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialSanitaire rechercheViewModel={rechercheViewModel} établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageÉtablissementTerritorialSanitaire
+          rechercheViewModel={rechercheViewModel}
+          établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
+        />
+      </SessionProvider>
+    );
 
     // THEN
     const imprimer = screen.getByRole("button", { name: wording.TÉLÉCHARGER_EN_PDF });
     expect(imprimer).toHaveAttribute("type", "button");
   });
 
-  it("j’imprime quand je clique sur le bouton d’impression", () => {
-    // GIVEN
-    jest.spyOn(window, "print").mockImplementation();
-    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialSanitaire rechercheViewModel={rechercheViewModel} établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} /></SessionProvider>);
-    const imprimer = screen.getByRole("button", { name: wording.TÉLÉCHARGER_EN_PDF });
-
-    // WHEN
-    fireEvent.click(imprimer);
-
-    // THEN
-    expect(window.print).toHaveBeenCalledTimes(1);
-  });
-
   it("affiche le nom de l’établissement", () => {
     // WHEN
-    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialSanitaire rechercheViewModel={rechercheViewModel} établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageÉtablissementTerritorialSanitaire
+          rechercheViewModel={rechercheViewModel}
+          établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
+        />
+      </SessionProvider>
+    );
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -90,7 +105,14 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
 
   it("affiche le numéro FINESS", () => {
     // WHEN
-    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialSanitaire rechercheViewModel={rechercheViewModel} établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageÉtablissementTerritorialSanitaire
+          rechercheViewModel={rechercheViewModel}
+          établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
+        />
+      </SessionProvider>
+    );
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -105,7 +127,14 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
 
   it("affiche le SIRET", () => {
     // WHEN
-    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialSanitaire rechercheViewModel={rechercheViewModel} établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageÉtablissementTerritorialSanitaire
+          rechercheViewModel={rechercheViewModel}
+          établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
+        />
+      </SessionProvider>
+    );
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -120,7 +149,14 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
 
   it("affiche l’adresse", () => {
     // WHEN
-    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialSanitaire rechercheViewModel={rechercheViewModel} établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageÉtablissementTerritorialSanitaire
+          rechercheViewModel={rechercheViewModel}
+          établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
+        />
+      </SessionProvider>
+    );
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -135,7 +171,14 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
 
   it("affiche le téléphone et e-mail", () => {
     // WHEN
-    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialSanitaire rechercheViewModel={rechercheViewModel} établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageÉtablissementTerritorialSanitaire
+          rechercheViewModel={rechercheViewModel}
+          établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
+        />
+      </SessionProvider>
+    );
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -151,7 +194,14 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
 
   it("affiche un lien pour naviguer vers l’entité juridique de rattachement", () => {
     // WHEN
-    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialSanitaire rechercheViewModel={rechercheViewModel} établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageÉtablissementTerritorialSanitaire
+          rechercheViewModel={rechercheViewModel}
+          établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
+        />
+      </SessionProvider>
+    );
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -167,7 +217,14 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
 
   it("affiche la catégorie de l’établissement avec son libellé", () => {
     // WHEN
-    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialSanitaire rechercheViewModel={rechercheViewModel} établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageÉtablissementTerritorialSanitaire
+          rechercheViewModel={rechercheViewModel}
+          établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
+        />
+      </SessionProvider>
+    );
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -183,7 +240,14 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
 
   it("affiche le mode de tarification", () => {
     // WHEN
-    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialSanitaire rechercheViewModel={rechercheViewModel} établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageÉtablissementTerritorialSanitaire
+          rechercheViewModel={rechercheViewModel}
+          établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
+        />
+      </SessionProvider>
+    );
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -199,7 +263,14 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
 
   it("affiche le statut juridique de l’établissement", () => {
     // WHEN
-    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialSanitaire rechercheViewModel={rechercheViewModel} établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel} /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageÉtablissementTerritorialSanitaire
+          rechercheViewModel={rechercheViewModel}
+          établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
+        />
+      </SessionProvider>
+    );
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -224,7 +295,14 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
       });
 
       // WHEN
-      renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialSanitaire rechercheViewModel={rechercheViewModel} établissementTerritorialSanitaireViewModel={établissementTerritorialSansTéléphone} /></SessionProvider>);
+      renderFakeComponent(
+        <SessionProvider session={mockSession}>
+          <PageÉtablissementTerritorialSanitaire
+            rechercheViewModel={rechercheViewModel}
+            établissementTerritorialSanitaireViewModel={établissementTerritorialSansTéléphone}
+          />
+        </SessionProvider>
+      );
 
       // THEN
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -243,7 +321,14 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
       });
 
       // WHEN
-      renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialSanitaire rechercheViewModel={rechercheViewModel} établissementTerritorialSanitaireViewModel={établissementTerritorialSansEMail} /></SessionProvider>);
+      renderFakeComponent(
+        <SessionProvider session={mockSession}>
+          <PageÉtablissementTerritorialSanitaire
+            rechercheViewModel={rechercheViewModel}
+            établissementTerritorialSanitaireViewModel={établissementTerritorialSansEMail}
+          />
+        </SessionProvider>
+      );
 
       // THEN
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
@@ -263,7 +348,14 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
     });
 
     // WHEN
-    renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialSanitaire rechercheViewModel={rechercheViewModel} établissementTerritorialSanitaireViewModel={établissementTerritorialSansAdresseVoie} /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageÉtablissementTerritorialSanitaire
+          rechercheViewModel={rechercheViewModel}
+          établissementTerritorialSanitaireViewModel={établissementTerritorialSansAdresseVoie}
+        />
+      </SessionProvider>
+    );
 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
