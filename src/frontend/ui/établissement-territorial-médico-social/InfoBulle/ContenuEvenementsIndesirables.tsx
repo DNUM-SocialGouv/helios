@@ -67,12 +67,16 @@ export const ContenuEvenementsIndesirables = ({ dateDeMiseÀJour, source }: Cont
             Année de référence = date de réception du signal.
             <br />
             <br />
-            <p><b>Fréquence : </b> trimestrielle</p>
-            <p><b>Source(s): </b> Système d&apos;Information de Veille et de Sécurité Sanitaire (SI VSS)</p>
-            Le système dd&apos;information de veille et de sécurité sanitaire (SI VSS) a été mis en œuvre pour favoriser le partage
-            dd&apos;informations et faciliter la coordination de la veille et de la sécurité sanitaire. Le SI VSS est un outil utilisé
-            par les agents des ARS, et plus particulièrement par les équipes des points focaux régionaux (PFR) et les cellules
-            de veille et dd&apos;alerte.
+            <section aria-label={wording.FRÉQUENCE}>
+                <p><b>Fréquence : </b> trimestrielle</p>
+            </section>
+            <section aria-label={wording.SOURCES}>
+                <p><b>Source(s): </b> Système d&apos;Information de Veille et de Sécurité Sanitaire (SI VSS)</p>
+                Le système dd&apos;information de veille et de sécurité sanitaire (SI VSS) a été mis en œuvre pour favoriser le partage
+                dd&apos;informations et faciliter la coordination de la veille et de la sécurité sanitaire. Le SI VSS est un outil utilisé
+                par les agents des ARS, et plus particulièrement par les équipes des points focaux régionaux (PFR) et les cellules
+                de veille et dd&apos;alerte.
+            </section>
         </>
     );
 };

@@ -519,8 +519,40 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
   ];
 
   public static qualite: ÉtablissementTerritorialMédicoSocial["qualite"] = {
-    reclamations: [],
-    evenementsIndesirables: []
+    reclamations: [
+      {
+        numéroFinessÉtablissementTerritorial: '010005239',
+        année: 2021,
+        totalClotures: 2,
+        totalEncours: 1,
+        dateMiseÀJourSource: '2024-03-15',
+        details: [{
+          motif: 'Hôtellerie-locaux-restauration',
+          clot: 2,
+          encours: 1,
+        }]
+      }
+    ],
+    evenementsIndesirables: [{
+      libelle: 'Evènements indésirables/graves associés aux soins',
+      evenementsEncours: [],
+      evenementsClotures: [{
+        famille: 'Evènements indésirables/graves associés aux soins',
+        nature: 'Maltraitance',
+        numeroSIVSS: 123456,
+        annee: 2021,
+        etat: 'CLOTURE',
+        clotDate: 2019,
+        clotMotif: 'motif de test',
+        est_EIGS: true
+      }],
+      dateMiseAJourSource: '2024-03-15'
+    }, {
+      libelle: 'Evénements/incidents dans un établissement ou organisme',
+      evenementsEncours: [],
+      evenementsClotures: [],
+      dateMiseAJourSource: '2024-03-15'
+    }]
   };
 
   public static crée(

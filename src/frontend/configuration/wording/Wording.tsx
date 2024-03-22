@@ -315,6 +315,7 @@ export interface Wording {
   readonly RPU_TITLE: string;
   readonly ANCRE_TITLE: string;
   readonly SIREC_TITLE: string;
+  readonly SIVSS_TITLE: string;
 
   // Sources courtes
   readonly FINESS: ReactElement;

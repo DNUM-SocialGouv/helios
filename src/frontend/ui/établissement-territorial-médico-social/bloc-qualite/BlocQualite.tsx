@@ -42,8 +42,6 @@ const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel }:
               dateMiseAJour={etablissementTerritorialQualiteMédicoSocialViewModel.dateMiseAJour}
             />
           )}
-      </ul>
-      <ul className="indicateurs">
         {!etablissementTerritorialQualiteMédicoSocialViewModel.lesEvenementsIndesirablesNeSontPasRenseignées &&
           !etablissementTerritorialQualiteMédicoSocialViewModel.lesEvenementsIndesirablesNeSontPasAutorisées && (
             <GraphiqueEvenementsIndesirables
