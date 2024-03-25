@@ -242,12 +242,12 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       evenementsClotures: []
     };
     evenementsIndesirables.forEach(evenement => {
-      if (evenement.famillePrincipale === 'Evénements indésirables associés aux soins') {
-        if (evenement.etat === 'EN_COURS') evenementsIndesirableAssocieAuxSoins.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
-        else evenementsIndesirableAssocieAuxSoins.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
-      } else {
+      if (evenement.famillePrincipale === evenementsIndesirableParET.libelle) {
         if (evenement.etat === 'EN_COURS') evenementsIndesirableParET.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
         else evenementsIndesirableParET.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
+      } else {
+        if (evenement.etat === 'EN_COURS') evenementsIndesirableAssocieAuxSoins.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
+        else evenementsIndesirableAssocieAuxSoins.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
       }
     });
     return [evenementsIndesirableAssocieAuxSoins, evenementsIndesirableParET]
