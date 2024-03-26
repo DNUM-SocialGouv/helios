@@ -30,6 +30,7 @@ import { NodeXmlToJs } from "./gateways/xml-to-js/NodeXmlToJs";
 import { TypeOrmÉtablissementTerritorialHeliosLoader } from "./gateways/établissement-territorial-helios-loader/TypeOrmÉtablissementTerritorialHeliosLoader";
 import { TypeOrmÉtablissementTerritorialRepository } from "./gateways/établissement-territorial-repository/TypeOrmÉtablissementTerritorialRepository";
 import { FinessXmlÉtablissementTerritorialSourceExterneLoader } from "./gateways/établissement-territorial-source-externe-loader/FinessXmlÉtablissementTerritorialSourceExterneLoader";
+import { SivssSftpDownloadRawData } from "./gateways/download-raw-data/SivssSftpDownloadRawData";
 
 export type Dependencies = Readonly<{
   dnumDownloadRawData: DownloadRawData;
@@ -40,6 +41,7 @@ export type Dependencies = Readonly<{
   entitéJuridiqueHeliosLoader: EntitéJuridiqueHeliosLoader;
   finessDownloadRawData: DownloadRawData;
   sirecDownloadRawData: DownloadRawData;
+  sivssDownloadRawData: DownloadRawData;
   établissementTerritorialSourceExterneLoader: ÉtablissementTerritorialSourceExterneLoader;
   établissementTerritorialHeliosLoader: ÉtablissementTerritorialHeliosLoader;
   établissementTerritorialHeliosRepository: ÉtablissementTerritorialRepository;
@@ -60,6 +62,7 @@ const createDependencies = (): Dependencies => {
   const cheminDesFichiersSourcesDiamantSurLeSftpDnum = "DIAMANT/incoming";
 
   const cheminDesFichiersSourcesSirecSurLeSftpDnum = "SIREC";
+  const cheminDesFichiersSourcesSivssSurLeSftpDnum = "SIVSS";
 
   const logger = new ConsoleLogger();
   const environmentVariables = new NodeEnvironmentVariables(logger);
@@ -88,6 +91,13 @@ const createDependencies = (): Dependencies => {
       environmentVariables,
       cheminDesFichiersSourcesSirecSurLeSftpDnum,
       environmentVariables.SIREC_DATA_PATH,
+      logger
+    ),
+    sivssDownloadRawData: new SivssSftpDownloadRawData(
+      new Ssh2SftpClient(),
+      environmentVariables,
+      cheminDesFichiersSourcesSivssSurLeSftpDnum,
+      environmentVariables.SIVSS_DATA_PATH,
       logger
     ),
     entitéJuridiqueHeliosLoader: typeOrmEntitéJuridiqueHeliosLoader,

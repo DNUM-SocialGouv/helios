@@ -9,14 +9,14 @@ services:
         published: 24
     volumes:
       - type: bind
-        source: $PWD/data_set
+        source: ${PWD}/data_set
         target: /home/finess/usr_finess
       - type: bind
-        source: $HOME/.ssh/sftp_local.pub
+        source: ${HOME}/.ssh/sftp_local.pub
         target: /home/finess/.ssh/keys/sftp_local.pub
         read_only: true
       - type: bind
-        source: $PWD/sshd_config/sshd_config
+        source: ${PWD}/sshd_config/sshd_config
         target: /etc/ssh/sshd_config
         read_only: true
     command: finess::1001
@@ -29,13 +29,16 @@ services:
         published: 23
     volumes:
       - type: bind
-        source: $PWD/data_set/diamant_chiffré
+        source: ${PWD}/data_set/diamant_chiffré
         target: /home/HELIOS/DIAMANT/incoming
       - type: bind
-        source: $PWD/data_set/flux_sirec
+        source: ${PWD}/data_set/flux_sirec
         target: /home/HELIOS/SIREC
       - type: bind
-        source: $HOME/.ssh/sftp_local.pub
+        source: ${PWD}/data_set/flux_sivss
+        target: /home/HELIOS/SIVSS
+      - type: bind
+        source: ${HOME}/.ssh/sftp_local.pub
         target: /home/HELIOS/.ssh/keys/sftp_local.pub
         read_only: true
     command: HELIOS::1001
