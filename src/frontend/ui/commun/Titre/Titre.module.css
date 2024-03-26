@@ -20,20 +20,25 @@
   min-width: 14rem;
 }
 
+.logoContainer {
+  height: 27px;
+  width: 27px;
+}
+
 @media (max-width: 36em) {
   .titre button {
     max-height: 2.5rem !important;
     max-width: 2.5rem !important;
     min-width: unset;
     overflow: hidden !important;
-    padding-left: .5rem;
-    padding-right: .5rem;
+    padding-left: 8px;
+    padding-right: 8px;
     white-space: nowrap;
   }
 
   .titre button::before {
     font-size: 1.5rem !important;
     margin-left: 0 !important;
-    margin-right: .5rem !important;
+    margin-right: 8px !important;
   }
 }
