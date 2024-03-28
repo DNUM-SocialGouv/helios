@@ -17,6 +17,7 @@ import { dotEnvConfig } from "./gateways/dot-env/dotEnvConfig";
 import { DnumSftpDownloadRawData } from "./gateways/download-raw-data/DnumSftpDownloadRawData";
 import { FinessSftpDownloadRawData } from "./gateways/download-raw-data/FinessSftpDownloadRawData";
 import { SirecSftpDownloadRawData } from "./gateways/download-raw-data/SirecSftpDownloadRawData";
+import { SivssSftpDownloadRawData } from "./gateways/download-raw-data/SivssSftpDownloadRawData";
 import { TypeOrmEntitéJuridiqueHeliosLoader } from "./gateways/entité-juridique-helios-loader/TypeOrmEntitéJuridiqueHeliosLoader";
 import { TypeOrmEntitéJuridiqueHeliosRepository } from "./gateways/entité-juridique-helios-repository/TypeOrmEntitéJuridiqueHeliosRepository";
 import { FinessXmlEntitésJuridiquesSourceExterneLoader } from "./gateways/entité-juridique-source-externe-loader/FinessXmlEntitésJuridiquesSourceExterneLoader";
@@ -30,7 +31,6 @@ import { NodeXmlToJs } from "./gateways/xml-to-js/NodeXmlToJs";
 import { TypeOrmÉtablissementTerritorialHeliosLoader } from "./gateways/établissement-territorial-helios-loader/TypeOrmÉtablissementTerritorialHeliosLoader";
 import { TypeOrmÉtablissementTerritorialRepository } from "./gateways/établissement-territorial-repository/TypeOrmÉtablissementTerritorialRepository";
 import { FinessXmlÉtablissementTerritorialSourceExterneLoader } from "./gateways/établissement-territorial-source-externe-loader/FinessXmlÉtablissementTerritorialSourceExterneLoader";
-import { SivssSftpDownloadRawData } from "./gateways/download-raw-data/SivssSftpDownloadRawData";
 
 export type Dependencies = Readonly<{
   dnumDownloadRawData: DownloadRawData;

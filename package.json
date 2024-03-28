@@ -62,6 +62,8 @@
     "checkReclamationsEtablissements": "ts-node -T download_data_source/infrastructure/controllers/controleLesDonnesSirecCron.ts",
     "retreieveAndCheckAndUpdateReclamations": "yarn retrieveSirec && yarn checkReclamationsEtablissements && yarn updateReclamationsEtablissements",
     "retreieveAndCheckAndUpdateReclamations:local": "yarn retrieveSirec && yarn checkReclamationsEtablissements && yarn updateReclamationsEtablissements:local",
+    "updateEvenementsIndesirables": "python -m datacrawler.import_evenements_indesirables",
+    "updateEvenementsIndesirables:local": "pipenv run populate_evenements_indesirables",
     "start": "next start",
     "start:db": "docker-compose down && docker-compose up -d && bash -c \"while ! docker-compose logs | grep -q 'listening on IPv4 address'; do echo 'Waiting for database'; sleep 0.5; done\"; yarn migrations:up",
     "test": "yarn test:typescript && yarn test:python",
