@@ -72,7 +72,6 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
           <Titre downloadPDF={<BtnDownloadPDF handlePrint={handlePrint} />} logo={LogoÉtablissementTerritorial} rechercheViewModel={rechercheViewModel}>
             {établissementTerritorialSanitaireViewModel.titre}
           </Titre>
-
           <BlocIdentitéSanitaire établissementTerritorialSanitaireIdentitéViewModel={établissementTerritorialSanitaireViewModel.identitéViewModel} />
           <BlocAutorisationEtCapacitéSanitaire
             établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
