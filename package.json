@@ -34,6 +34,7 @@
     "retrieveFiness": "ts-node -T download_data_source/infrastructure/controllers/téléchargeLesDonnéesBrutesDeFinessCron.ts",
     "retrieveDiamant": "ts-node -T download_data_source/infrastructure/controllers/téléchargeLesDonnéesBrutesDiamantCron.ts",
     "retrieveSirec": "ts-node -T download_data_source/infrastructure/controllers/téléchargeLesDonnéesBrutesSirecCron.ts",
+    "retrieveSiicea": "ts-node -T download_data_source/infrastructure/controllers/téléchargeLesDonnéesBrutesSiiceaCron.ts",
     "updateEJ": "TS_NODE_TRANSPILE_ONLY=true node --loader ts-node/esm --max-old-space-size=8192 download_data_source/infrastructure/controllers/metsÀJourLesEntitésJuridiquesCron.ts",
     "updateET": "TS_NODE_TRANSPILE_ONLY=true node --loader ts-node/esm --max-old-space-size=8192 download_data_source/infrastructure/controllers/metsÀJourLesÉtablissementsTerritoriauxCron.ts",
     "updateActivitésMédicoSociaux": "python -m datacrawler.ajoute_les_activités_des_établissements_médico_sociaux",

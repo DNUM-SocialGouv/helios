@@ -17,6 +17,7 @@ import { dotEnvConfig } from "./gateways/dot-env/dotEnvConfig";
 import { DnumSftpDownloadRawData } from "./gateways/download-raw-data/DnumSftpDownloadRawData";
 import { FinessSftpDownloadRawData } from "./gateways/download-raw-data/FinessSftpDownloadRawData";
 import { SirecSftpDownloadRawData } from "./gateways/download-raw-data/SirecSftpDownloadRawData";
+import { SiiceaSftpDownloadRawData } from "./gateways/download-raw-data/SiiceaSftpDownloadRawData";
 import { TypeOrmEntitéJuridiqueHeliosLoader } from "./gateways/entité-juridique-helios-loader/TypeOrmEntitéJuridiqueHeliosLoader";
 import { TypeOrmEntitéJuridiqueHeliosRepository } from "./gateways/entité-juridique-helios-repository/TypeOrmEntitéJuridiqueHeliosRepository";
 import { FinessXmlEntitésJuridiquesSourceExterneLoader } from "./gateways/entité-juridique-source-externe-loader/FinessXmlEntitésJuridiquesSourceExterneLoader";
@@ -40,6 +41,7 @@ export type Dependencies = Readonly<{
   entitéJuridiqueHeliosLoader: EntitéJuridiqueHeliosLoader;
   finessDownloadRawData: DownloadRawData;
   sirecDownloadRawData: DownloadRawData;
+  siiceaDownloadRawData: DownloadRawData;
   établissementTerritorialSourceExterneLoader: ÉtablissementTerritorialSourceExterneLoader;
   établissementTerritorialHeliosLoader: ÉtablissementTerritorialHeliosLoader;
   établissementTerritorialHeliosRepository: ÉtablissementTerritorialRepository;
@@ -60,6 +62,7 @@ const createDependencies = (): Dependencies => {
   const cheminDesFichiersSourcesDiamantSurLeSftpDnum = "DIAMANT/incoming";
 
   const cheminDesFichiersSourcesSirecSurLeSftpDnum = "SIREC";
+  const cheminDesFichiersSourcesSiiceaSurLeSftpDnum = "SIICEA";
 
   const logger = new ConsoleLogger();
   const environmentVariables = new NodeEnvironmentVariables(logger);
@@ -88,6 +91,13 @@ const createDependencies = (): Dependencies => {
       environmentVariables,
       cheminDesFichiersSourcesSirecSurLeSftpDnum,
       environmentVariables.SIREC_DATA_PATH,
+      logger
+    ),
+    siiceaDownloadRawData: new SiiceaSftpDownloadRawData(
+      new Ssh2SftpClient(),
+      environmentVariables,
+      cheminDesFichiersSourcesSiiceaSurLeSftpDnum,
+      environmentVariables.SIICEA_DATA_PATH,
       logger
     ),
     entitéJuridiqueHeliosLoader: typeOrmEntitéJuridiqueHeliosLoader,
