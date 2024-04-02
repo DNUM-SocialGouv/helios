@@ -17,6 +17,7 @@ import AdvancedFilter from "./Pagination/Filter/AdvancedFilter/AdvancedFilter";
 import PaginationBtn from "./Pagination/PaginationBtn/PaginationBtn";
 import TheadTable from "./Pagination/TheadTable/TheadTable";
 import styles from "./UsersListPage.module.css";
+import ExportExcel from "./Pagination/ExportExcel/ExportExcel";
 
 function greaterThanNMonths(inputDate: Date, n: number): boolean {
   const NMonthsAgo = new Date();
@@ -24,7 +25,7 @@ function greaterThanNMonths(inputDate: Date, n: number): boolean {
   return new Date(inputDate) < NMonthsAgo;
 }
 
-function getUserStatus(lastConnectionDate: Date): string {
+export function getUserStatus(lastConnectionDate: Date): string {
   if (greaterThanNMonths(lastConnectionDate, 6) || lastConnectionDate === null) {
     return "Inactif";
   }
@@ -229,6 +230,7 @@ const UsersListPage = ({
 
     return params;
   };
+
   const queryParams = new URLSearchParams(getQueryParams());
 
   useEffect(() => {
@@ -261,6 +263,7 @@ const UsersListPage = ({
           <div className={styles["count-elements"]}>
             {total > 1 && <>{total} éléments trouvés.</>}
             {total === 1 && <>{total} élément trouvé.</>}
+            {total > 0 && <ExportExcel getQueryParams={() => getQueryParams()} profiles={profiles} />}
           </div>
 
           {userData.length === 0 ? (
