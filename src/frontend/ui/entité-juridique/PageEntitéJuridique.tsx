@@ -64,19 +64,23 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, rechercheViewM
       <Head>
         <title>{entitéJuridiqueViewModel.titre}</title>
       </Head>
-      <div className="print-content" ref={componentRef}>
-        <Catégorisation catégorisationViewModel={entitéJuridiqueViewModel.catégorisationViewModel} />
-        <Titre downloadPDF={<BtnDownloadPDF handlePrint={handlePrint} />} logo={LogoEntitéJuridique} rechercheViewModel={rechercheViewModel}>
-          {entitéJuridiqueViewModel.titre}
-        </Titre>
-        <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
-        <ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />
-        <BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={entitéJuridiqueViewModel.entitéJuridiqueAutorisationsCapacitesViewModel} />
-        <SeparatorHorizontal></SeparatorHorizontal>
-        <BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel} />
-        <SeparatorHorizontal></SeparatorHorizontal>
-        <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} />
-      </div>
+      <>
+        <div className="print-content" ref={componentRef}>
+          <Catégorisation catégorisationViewModel={entitéJuridiqueViewModel.catégorisationViewModel} />
+          <Titre downloadPDF={<BtnDownloadPDF handlePrint={handlePrint} />} logo={LogoEntitéJuridique} rechercheViewModel={rechercheViewModel}>
+            {entitéJuridiqueViewModel.titre}
+          </Titre>
+          <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
+          <ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />
+          <BlocAutorisationsCapacites
+            entitéJuridiqueAutorisationsCapacitesViewModel={entitéJuridiqueViewModel.entitéJuridiqueAutorisationsCapacitesViewModel}
+          />
+          <SeparatorHorizontal></SeparatorHorizontal>
+          <BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel} />
+          <SeparatorHorizontal></SeparatorHorizontal>
+          <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} />
+        </div>
+      </>
     </main>
   );
 };

@@ -12,6 +12,7 @@ import { BlocActivitéMédicoSocial } from "./bloc-activité/BlocActivitéMédic
 import { BlocAutorisationEtCapacitéMédicoSocial } from "./bloc-autorisations/BlocAutorisationEtCapacitéMédicoSocial";
 import { BlocBudgetEtFinancesMédicoSocial } from "./bloc-budget-et-finances/BlocBudgetEtFinancesMédicoSocial";
 import { BlocIdentitéMédicoSocial } from "./bloc-identité/BlocIdentitéMédicoSocial";
+import BlocQualite from "./bloc-qualite/BlocQualite";
 import { BlocRessourcesHumainesMédicoSocial } from "./bloc-ressources-humaines/BlocRessourcesHumainesMédicoSocial";
 import { LogoÉtablissementTerritorial } from "./logo-établissement-territorial-médico-social";
 import { ÉtablissementTerritorialMédicoSocialViewModel } from "./ÉtablissementTerritorialMédicoSocialViewModel";
@@ -68,25 +69,29 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
       <Head>
         <title>{établissementTerritorialViewModel.titre}</title>
       </Head>
-      <div className="print-content" ref={componentRef}>
-        <Titre downloadPDF={<BtnDownloadPDF handlePrint={handlePrint} />} logo={LogoÉtablissementTerritorial} rechercheViewModel={rechercheViewModel}>
-          {établissementTerritorialViewModel.titre}
-        </Titre>
-        <BlocIdentitéMédicoSocial établissementTerritorialIdentitéMédicoSocialViewModel={établissementTerritorialViewModel.identitéViewModel} />
-        <BlocAutorisationEtCapacitéMédicoSocial
-          établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialViewModel.autorisationsViewModel}
-        />
-        <SeparatorHorizontal></SeparatorHorizontal>
-        <BlocActivitéMédicoSocial établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialViewModel.activitésViewModel} />
-        <SeparatorHorizontal></SeparatorHorizontal>
-        <BlocRessourcesHumainesMédicoSocial
-          établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialViewModel.ressourcesHumainesViewModel}
-        />
-        <SeparatorHorizontal></SeparatorHorizontal>
-        <BlocBudgetEtFinancesMédicoSocial
-          établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={établissementTerritorialViewModel.budgetEtFinancesViewModel}
-        />
-      </div>
+      <>
+        <div className="print-content" ref={componentRef}>
+          <Titre downloadPDF={<BtnDownloadPDF handlePrint={handlePrint} />} logo={LogoÉtablissementTerritorial} rechercheViewModel={rechercheViewModel}>
+            {établissementTerritorialViewModel.titre}
+          </Titre>
+
+          <BlocIdentitéMédicoSocial établissementTerritorialIdentitéMédicoSocialViewModel={établissementTerritorialViewModel.identitéViewModel} />
+          <BlocAutorisationEtCapacitéMédicoSocial
+            établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialViewModel.autorisationsViewModel}
+          />
+          <SeparatorHorizontal></SeparatorHorizontal>
+          <BlocActivitéMédicoSocial établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialViewModel.activitésViewModel} />
+          <SeparatorHorizontal></SeparatorHorizontal>
+          <BlocRessourcesHumainesMédicoSocial
+            établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialViewModel.ressourcesHumainesViewModel}
+          />
+          <SeparatorHorizontal></SeparatorHorizontal>
+          <BlocBudgetEtFinancesMédicoSocial
+            établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={établissementTerritorialViewModel.budgetEtFinancesViewModel}
+          />
+          <BlocQualite etablissementTerritorialQualiteMédicoSocialViewModel={établissementTerritorialViewModel.qualiteViewModel} />
+        </div>
+      </>
     </main>
   );
 };

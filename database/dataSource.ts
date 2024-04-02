@@ -50,6 +50,8 @@ import { UpdateInstitutionsTable1704363653168 } from "./migrations/1704363653168
 import { UpdateUsersLastConnexionDate1704366840880 } from "./migrations/1704366840880-UpdateUsersLastConnexionDate";
 import { RemoveDuplicatedEmailAndMakeItUnique1704467337579 } from "./migrations/1704467337579-RemoveDuplicatedEmailAndMakeItUnique";
 import { ModificationDesValeursDuChampRole1706794831872 } from "./migrations/1706794831872-ModificationDesValeursDuChampRole";
+import { AjoutReclamationET1708440883632 } from "./migrations/1708440883632-AjoutReclamationEtablissementTerritorial";
+import { AjoutFichierSourceSirec1708679781472 } from "./migrations/1708679781472-AjoutFichierSourceSirec";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
@@ -70,6 +72,7 @@ import { FavorisModel } from "./models/FavorisModel";
 import { InstitutionModel } from "./models/InstitutionModel";
 import { ProfilModel } from "./models/ProfilModel";
 import { RechercheModel } from "./models/RechercheModel";
+import { ReclamationETModel } from "./models/ReclamationETModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "./models/ReconnaissanceContractuelleSanitaireModel";
 import { RefDepartementRegionModel } from "./models/RefDepartementRegionModel";
 import { RessourcesHumainesMédicoSocialModel } from "./models/RessourcesHumainesMédicoSocialModel";
@@ -110,6 +113,7 @@ export default new DataSource({
     SearchHistoryModel,
     RefDepartementRegionModel,
     ProfilModel,
+    ReclamationETModel,
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -164,6 +168,8 @@ export default new DataSource({
     RemoveDuplicatedEmailAndMakeItUnique1704467337579,
     ModificationDesValeursDuChampRole1706794831872,
     AddCreatedByToProfileTable1796792910177,
+    AjoutReclamationET1708440883632,
+    AjoutFichierSourceSirec1708679781472,
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

@@ -29,6 +29,5 @@ export async function récupèreLÉtablissementTerritorialMédicoSocialEndpoint(
   const profilInstitution = combineProfils(profilesInstitutionValues);
   const profilAutreReg = combineProfils(profilesAutreRegValues);
 
-
   return filterEtablissementMedicoSocial(établissementTerritorialMédicoSocial, établissementTerritorialMédicoSocial.identité.codeRegion === codeRegion ? profilInstitution : profilAutreReg);
 }

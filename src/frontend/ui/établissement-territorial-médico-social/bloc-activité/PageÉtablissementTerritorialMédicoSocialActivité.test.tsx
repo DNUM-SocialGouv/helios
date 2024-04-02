@@ -224,6 +224,7 @@ describe("La page établissement territorial médico-social - bloc activité", (
           budgetEtFinances: [],
           identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
           ressourcesHumaines: [],
+          qualite: { reclamations: [] }
         },
         wording,
         paths
@@ -359,6 +360,7 @@ describe("La page établissement territorial médico-social - bloc activité", (
           budgetEtFinances: [],
           identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
           ressourcesHumaines: [],
+          qualite: { reclamations: [] }
         },
         wording,
         paths

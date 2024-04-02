@@ -1,0 +1,31 @@
+.reclamations_par_annee_container {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.table_reclamations_Container {
+  font-size: small;
+}
+
+.motif_width {
+  width: 380px;
+}
+
+.histogramme_width {
+  width: 230px;
+}
+
+@media (max-width: 800px) {
+  .reclamations_par_annee_container {
+    flex-direction: column;
+  }
+
+  .motif_width {
+    width: auto;
+  }
+
+  .histogramme_width {
+    width: auto;
+  }
+}

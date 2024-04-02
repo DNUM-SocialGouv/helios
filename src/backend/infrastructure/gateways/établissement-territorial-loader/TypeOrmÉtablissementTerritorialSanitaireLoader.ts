@@ -5,6 +5,7 @@ import { AutorisationSanitaireModel } from "../../../../../database/models/Autor
 import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
 import { CapacitéAutorisationSanitaireModel } from "../../../../../database/models/CapacitéAutorisationSanitaireModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
+import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
@@ -29,6 +30,7 @@ import {
   CapacitéSanitaire,
 } from "../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 import { ÉtablissementTerritorialIdentité } from "../../../métier/entities/ÉtablissementTerritorialIdentité";
+import { Reclamations, ÉtablissementTerritorialQualite } from "../../../métier/entities/ÉtablissementTerritorialQualite";
 import { ÉtablissementTerritorialSanitaireNonTrouvée } from "../../../métier/entities/ÉtablissementTerritorialSanitaireNonTrouvée";
 import { ÉtablissementTerritorialSanitaireLoader } from "../../../métier/gateways/ÉtablissementTerritorialSanitaireLoader";
 
@@ -82,6 +84,21 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     };
   }
 
+  async chargeQualite(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialQualite> {
+    const reclamations = await (await this.orm)
+      .getRepository(ReclamationETModel)
+      .find({ where: { numéroFinessÉtablissementTerritorial } });
+
+    const dateMisAJour = (await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.SIREC })) as DateMiseÀJourFichierSourceModel;
+
+    return this.construitsQualite(
+      reclamations,
+      dateMisAJour.dernièreMiseÀJour
+    );
+  }
+
   private async chargeLesCapacitésModel(numéroFinessÉtablissementTerritorial: string): Promise<CapacitéAutorisationSanitaireModel[]> {
     return await (await this.orm).getRepository(CapacitéAutorisationSanitaireModel).find({ where: { numéroFinessÉtablissementTerritorial } });
   }
@@ -94,6 +111,87 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       },
       where: { numéroFinessÉtablissementTerritorial },
     });
+  }
+
+  private construitsQualite(reclamations: ReclamationETModel[], dateMisAJour: string): ÉtablissementTerritorialQualite {
+    return {
+      reclamations: this.construitsReclamations(reclamations, dateMisAJour)
+    }
+  }
+
+  private construitsReclamations(
+    reclamations: ReclamationETModel[],
+    dateMisAJour: string
+  ): Reclamations[] {
+    return reclamations.map((reclamation) => {
+      return {
+        numéroFinessÉtablissementTerritorial: reclamation.numéroFinessÉtablissementTerritorial,
+        année: reclamation.annee,
+        totalClotures: reclamation.clotTotal,
+        totalEncours: reclamation.encoursTotal,
+        dateMiseÀJourSource: dateMisAJour,
+        details: [{
+          motif: "MOTIF_10",
+          clot: reclamation.clotMotif10,
+          encours: reclamation.encoursMotif10,
+        },
+        {
+          motif: "MOTIF_11",
+          clot: reclamation.clotMotif11,
+          encours: reclamation.encoursMotif11,
+        },
+        {
+          motif: "MOTIF_12",
+          clot: reclamation.clotMotif12,
+          encours: reclamation.encoursMotif12,
+        },
+        {
+          motif: "MOTIF_13",
+          clot: reclamation.clotMotif13,
+          encours: reclamation.encoursMotif13,
+        },
+        {
+          motif: "MOTIF_14",
+          clot: reclamation.clotMotif14,
+          encours: reclamation.encoursMotif14,
+        },
+        {
+          motif: "MOTIF_15",
+          clot: reclamation.clotMotif15,
+          encours: reclamation.encoursMotif15,
+        },
+        {
+          motif: "MOTIF_16",
+          clot: reclamation.clotMotif16,
+          encours: reclamation.encoursMotif16,
+        },
+        {
+          motif: "MOTIF_17",
+          clot: reclamation.clotMotif17,
+          encours: reclamation.encoursMotif17,
+        },
+        {
+          motif: "MOTIF_18",
+          clot: reclamation.clotMotif18,
+          encours: reclamation.encoursMotif18,
+        },
+        {
+          motif: "MOTIF_19",
+          clot: reclamation.clotMotif19,
+          encours: reclamation.encoursMotif19,
+        },
+        {
+          motif: "MOTIF_155",
+          clot: reclamation.clotMotif155,
+          encours: reclamation.encoursMotif155,
+        },
+        {
+          motif: "MOTIF_156",
+          clot: reclamation.clotMotif156,
+          encours: reclamation.encoursMotif156,
+        },],
+      }
+    })
   }
 
   private async chargeLesReconnaissancesContractuellesModel(

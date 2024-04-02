@@ -13,27 +13,27 @@
 }
 
 /*@media print {
-    .container {
-      background-color: chocolate;
-      display: block;
-      margin-bottom: 3rem;
-    }
-  
-    .container > div {
-      width: 100% !important;
-    }
-  
-    .barContainerWidth {
-      width: 100% !important;
-    }
-  
-    .barContainerWidth > canvas {
-      /* Adjust styles for printing * /
-      width: 100% !important;
-      height: auto;
-    }
-  
-    .print-only {
-      page-break-inside: avoid;
-    }
-  }*/
+  .container {
+    background-color: chocolate;
+    display: block;
+    margin-bottom: 3rem;
+  }
+
+  .container > div {
+    width: 100% !important;
+  }
+
+  .barContainerWidth {
+    width: 100% !important;
+  }
+
+  .barContainerWidth > canvas {
+    /* Adjust styles for printing * /
+    width: 100% !important;
+    height: auto;
+  }
+
+  .print-only {
+    page-break-inside: avoid;
+  }
+}*/

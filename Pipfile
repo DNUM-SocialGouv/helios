@@ -46,6 +46,7 @@ populate_ressoures_humaines_medico_social = 'python -m datacrawler.ajoute_le_blo
 populate_activites_sanitaire_entites_juridiques = 'python -m datacrawler.agrégation_activité_sanitaire'
 populate_capacites_sanitaire_entites_juridiques = 'python -m datacrawler.agrégation_capacité_sanitaire'
 populate_app_users = 'python -m datacrawler.import_utilisateurs'
+populate_reclamations = 'python -m datacrawler.import_reclamations'
 test = 'pytest --tb=short'
 test_coverage = 'pytest --tb=short --cov=datacrawler --cov-report=xml'
 test_watch = 'ptw'

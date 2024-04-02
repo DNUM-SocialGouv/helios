@@ -4,7 +4,7 @@ import { EntitéJuridiqueLoader } from "../gateways/EntitéJuridiqueLoader";
 import { ÉtablissementTerritorialSanitaireLoader } from "../gateways/ÉtablissementTerritorialSanitaireLoader";
 
 export class RécupèreLÉtablissementTerritorialSanitaireUseCase {
-  constructor(private établissementTerritorialSanitaireLoader: ÉtablissementTerritorialSanitaireLoader, private entitéJuridiqueLoader: EntitéJuridiqueLoader) {}
+  constructor(private établissementTerritorialSanitaireLoader: ÉtablissementTerritorialSanitaireLoader, private entitéJuridiqueLoader: EntitéJuridiqueLoader) { }
 
   async exécute(numéroFinessÉtablissementTerritorialSanitaire: string): Promise<ÉtablissementTerritorialSanitaire> {
     const établissementTerritorialSanitaireOuErreur = await this.établissementTerritorialSanitaireLoader.chargeIdentité(
@@ -27,9 +27,14 @@ export class RécupèreLÉtablissementTerritorialSanitaireUseCase {
       numéroFinessÉtablissementTerritorialSanitaire
     );
 
+    const établissementTerritorialSanitaireQualite = await this.établissementTerritorialSanitaireLoader.chargeQualite(
+      numéroFinessÉtablissementTerritorialSanitaire
+    );
+
     return {
       activités: établissementTerritorialSanitaireActivités,
       autorisationsEtCapacités: établissementTerritorialSanitaireAutorisations,
+      qualite: établissementTerritorialSanitaireQualite,
       identité: {
         ...établissementTerritorialSanitaireOuErreur,
         ...entitéJuridiqueDeRattachement,

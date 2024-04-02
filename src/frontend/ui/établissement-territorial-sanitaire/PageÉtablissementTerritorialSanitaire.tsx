@@ -11,6 +11,7 @@ import { RechercheViewModel } from "../home/RechercheViewModel";
 import { BlocActivitéSanitaire } from "./bloc-activité/BlocActivitéSanitaire";
 import { BlocAutorisationEtCapacitéSanitaire } from "./bloc-autorisations/BlocAutorisationEtCapacitéSanitaire";
 import { BlocIdentitéSanitaire } from "./bloc-identité/BlocIdentitéSanitaire";
+import BlocQualite from "./bloc-qualite/BlocQualite";
 import { LogoÉtablissementTerritorial } from "./logo-établissement-territorial-sanitaire";
 import { ÉtablissementTerritorialSanitaireViewModel } from "./ÉtablissementTerritorialSanitaireViewModel";
 
@@ -77,6 +78,7 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
           />
           <SeparatorHorizontal></SeparatorHorizontal>
           <BlocActivitéSanitaire établissementTerritorialSanitaireActivitéViewModel={établissementTerritorialSanitaireViewModel.activitésViewModel} />
+          <BlocQualite etablissementTerritorialQualiteSanitairelViewModel={établissementTerritorialSanitaireViewModel.qualiteViewModel} />
         </div>
       </>
     </main>

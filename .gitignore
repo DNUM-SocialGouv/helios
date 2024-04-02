@@ -38,6 +38,8 @@ yarn-error.log*
 # Helios
 data_test
 data_set/.ssh
+data_set/sirec
+data_set/checked_sirec
 sshd_config
 ssh_key
 
@@ -71,3 +73,4 @@ sftp_local
 sftp_local.pub
 ssh_key
 **/.vscode/*
+helios.log
