@@ -8,8 +8,9 @@ class ColonneHelios(TypedDict):
 EquivalencesSivssHelios = Dict[str, ColonneHelios]
 
 equivalences_sivss_evenements_indesirables_helios: EquivalencesSivssHelios = {
-    "FINESS": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
-    "ANNEE_RECEPTION": ColonneHelios(nom="annee", type=int),
+    "SCC_ORGANISME_FINESS": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+    "DECLARANT_ORGANISME_NUMERO_FINESS": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+    "DATE_RECEPTION": ColonneHelios(nom="annee", type=str),
     "FAMILLE_PRINCIPALE": ColonneHelios(nom="famille_principale", type=str),
     "NATURE_PRINCIPALE": ColonneHelios(nom="nature_principale", type=str),
     "NUMERO_SIVSS": ColonneHelios(nom="numero_sivss", type=str),
