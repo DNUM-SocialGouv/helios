@@ -12,6 +12,7 @@ from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichie
 from datacrawler.load.nom_des_tables import TABLES_DES_EVENEMENTS_INDESIRABLES, FichierSource
 from datacrawler.transform.transform_les_donnees_evenements_indesirables_etablissements.transforme_les_donnees_evenements_indesirables_etablissements import (
     transform_les_donnees_evenements_indesirables_etablissements,
+    reforme_les_donnees_indesirables,
 )
 from datacrawler.transform.equivalences_sivss_helios import (
     colonnes_a_lire_bloc_qualite_evenements_indesirables,
@@ -22,14 +23,12 @@ from datacrawler.transform.equivalences_sivss_helios import (
 
 def import_evenements_indesirables(chemin_local_du_fichier_evenements_indesirables: str, base_de_données: Engine, logger: Logger) -> None:
     types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(equivalences_sivss_evenements_indesirables_helios)
-
     donnees_evenements_indesirables = lis_le_fichier_csv(chemin_local_du_fichier_evenements_indesirables, colonnes_a_lire_bloc_qualite_evenements_indesirables, types_des_colonnes)
     numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)
+    donnees_evenements_indesirables_reforme = reforme_les_donnees_indesirables(donnees_evenements_indesirables, logger)
     transform_donnees_evenements_indesirables = transform_les_donnees_evenements_indesirables_etablissements(
-        donnees_evenements_indesirables, numéros_finess_des_établissements_connus, logger
+        donnees_evenements_indesirables_reforme, numéros_finess_des_établissements_connus, logger
     )
-
-    logger.info(f"[donnees_evenements_indesirables] {transform_donnees_evenements_indesirables}")
 
     date_du_fichier_sivss = extrais_la_date_du_nom_de_fichier_sirec_sivss(chemin_local_du_fichier_evenements_indesirables)
 

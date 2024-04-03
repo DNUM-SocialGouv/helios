@@ -20,6 +20,18 @@ equivalences_sivss_evenements_indesirables_helios: EquivalencesSivssHelios = {
     "MOTIF_CLOTURE": ColonneHelios(nom="motif_cloture", type=str),
 }
 
+equivalences_sivss_evenements_indesirables_helios_base: EquivalencesSivssHelios = {
+    "FINESS": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+    "DATE_RECEPTION": ColonneHelios(nom="annee", type=str),
+    "FAMILLE_PRINCIPALE": ColonneHelios(nom="famille_principale", type=str),
+    "NATURE_PRINCIPALE": ColonneHelios(nom="nature_principale", type=str),
+    "NUMERO_SIVSS": ColonneHelios(nom="numero_sivss", type=str),
+    "EST_EIGS": ColonneHelios(nom="est_eigs", type=bool),
+    "ETAT": ColonneHelios(nom="etat", type=str),
+    "DATE_CLOTURE": ColonneHelios(nom="date_cloture", type=str),
+    "MOTIF_CLOTURE": ColonneHelios(nom="motif_cloture", type=str),
+}
+
 colonnes_a_lire_bloc_qualite_evenements_indesirables: List[str] = list(equivalences_sivss_evenements_indesirables_helios.keys())
 
 index_evenement_indesirable: List[str] = [
