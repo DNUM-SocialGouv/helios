@@ -49,8 +49,8 @@ function transformData(users: UtilisateurModel[], profiles: ProfilModel[]): (str
   return [];
 }
 
-export function ExportToExcel(headers: string[], data: (string | Number)[][]) {
-  const ws = XLSX.utils.aoa_to_sheet([headers, ...data]);
+export function ExportToExcel(headerRecherche: string[], headers: string[], data: (string | Number)[][]) {
+  const ws = XLSX.utils.aoa_to_sheet([headerRecherche, [""], headers, ...data]);
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
   XLSX.writeFile(wb, "export.xls");
@@ -76,8 +76,9 @@ const ExportExcel = ({ getQueryParams, profiles }: IExportExcel) => {
     const users = await getUsersData(params);
     const dataTransormed = transformData(users.data, profiles);
 
+    const headerRecherche = ["Recherche : sss"];
     const headers = ["Nom", "Prénom", "Email", "Institution", "Rôle", "Autorisation", "Date de création", "Date de dernière connexion", "Statut"];
-    ExportToExcel(headers, dataTransormed);
+    ExportToExcel(headerRecherche, headers, dataTransormed);
   }, []);
 
   return (

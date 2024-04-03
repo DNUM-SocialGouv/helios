@@ -13,11 +13,11 @@ import { RoleModel } from "../../../../../database/models/RoleModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
+import ExportExcel from "./Pagination/ExportExcel/ExportExcel";
 import AdvancedFilter from "./Pagination/Filter/AdvancedFilter/AdvancedFilter";
 import PaginationBtn from "./Pagination/PaginationBtn/PaginationBtn";
 import TheadTable from "./Pagination/TheadTable/TheadTable";
 import styles from "./UsersListPage.module.css";
-import ExportExcel from "./Pagination/ExportExcel/ExportExcel";
 
 function greaterThanNMonths(inputDate: Date, n: number): boolean {
   const NMonthsAgo = new Date();
