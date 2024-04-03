@@ -1,12 +1,14 @@
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
-import { memo, useCallback, useEffect } from "react";
+import { memo, useCallback } from "react";
 import * as XLSX from "xlsx";
 
-import styles from "./ExportExcel.module.css";
+import { ProfilModel } from "../../../../../../../database/models/ProfilModel";
+import { UtilisateurModel } from "../../../../../../../database/models/UtilisateurModel";
 import { formatDateAndHours } from "../../../../../utils/dateUtils";
 import { getUserStatus } from "../../UsersListPage";
+import styles from "./ExportExcel.module.css";
 
-function generateProfilsString(user, profiles) {
+function generateProfilsString(user: UtilisateurModel, profiles: ProfilModel[]) {
   return user.profils
     .filter(function (item) {
       if (item.includes("{")) {
@@ -26,9 +28,8 @@ function generateProfilsString(user, profiles) {
     .join("");
 }
 
-function transformDataRow(user, profiles) {
+function transformDataRow(user: UtilisateurModel, profiles: ProfilModel[]) {
   return [
-    user.id,
     user.nom,
     user.prenom,
     user.email,
@@ -41,16 +42,26 @@ function transformDataRow(user, profiles) {
   ];
 }
 
-function transformData(users, profiles) {
-  console.log("user innnnnnnnnnnnnnnnnn", users);
-  console.log("ppppppppppppppppp");
+function transformData(users: UtilisateurModel[], profiles: ProfilModel[]): (string | Number)[][] {
   if (users) {
     return users.map((user) => transformDataRow(user, profiles));
   }
   return [];
 }
 
-const ExportExcel = ({ getQueryParams, profiles }) => {
+export function ExportToExcel(headers: string[], data: (string | Number)[][]) {
+  const ws = XLSX.utils.aoa_to_sheet([headers, ...data]);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+  XLSX.writeFile(wb, "export.xls");
+}
+
+interface IExportExcel {
+  getQueryParams: () => any;
+  profiles: ProfilModel[];
+}
+
+const ExportExcel = ({ getQueryParams, profiles }: IExportExcel) => {
   async function getUsersData(params: string | string[][] | Record<string, string> | URLSearchParams | undefined) {
     const response = await fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
       headers: { "Content-Type": "application/json" },
@@ -62,39 +73,20 @@ const ExportExcel = ({ getQueryParams, profiles }) => {
   const generateAndExportExcel = useCallback(async () => {
     const params = getQueryParams();
     params.itemsPerPage = "10000";
-    console.log("params --- >>>>", params);
-
     const users = await getUsersData(params);
-
-    console.log("---->>>>>>data users", users.data);
-
-    console.log("after transform /////////////////////////////////////////", transformData(users.data, profiles));
     const dataTransormed = transformData(users.data, profiles);
 
-    const headers = [
-      "ID",
-      "Nom",
-      "Prénom",
-      "Email",
-      "Institution",
-      "Email",
-      "Rôle",
-      "Autorisation",
-      "Date de création",
-      "Date de dernière connexion",
-      "Statut",
-    ];
-
-    const ws = XLSX.utils.aoa_to_sheet([headers, ...dataTransormed]);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-    XLSX.writeFile(wb, "export.xls");
+    const headers = ["Nom", "Prénom", "Email", "Institution", "Rôle", "Autorisation", "Date de création", "Date de dernière connexion", "Statut"];
+    ExportToExcel(headers, dataTransormed);
   }, []);
 
   return (
-    <button className={`fr-btn ${styles["export-excel"]}`} onClick={() => generateAndExportExcel()}>
-      Exporter vers Excel
-    </button>
+    <button
+      aria-hidden="true"
+      className={`fr-btn ${styles["export-excel"]} fr-icon-download-line`}
+      onClick={() => generateAndExportExcel()}
+      title="Exporter vers Excel"
+    ></button>
   );
 };
 
