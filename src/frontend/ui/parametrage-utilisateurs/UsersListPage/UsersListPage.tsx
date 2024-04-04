@@ -63,6 +63,18 @@ export interface iPaginationData {
   setSortDir: (sortDir: string) => void;
 }
 
+export interface IQueryParams {
+  key?: string;
+  page?: string | number;
+  institutionId?: string | number;
+  roleId?: string | number;
+  profileId?: string;
+  etatId?: string;
+  orderBy?: string | number;
+  sortDir?: string | number;
+  itemsPerPage: string | number;
+}
+
 type UsersListPageProps = Readonly<{
   users: {
     data: UtilisateurModel[];
@@ -76,6 +88,7 @@ type UsersListPageProps = Readonly<{
   profiles: ProfilModel[];
   roles: RoleModel[];
   institution: number;
+  institutionSessionCode: number;
   profile: string;
   role: number;
   status?: string;
@@ -102,6 +115,7 @@ const UsersListPage = ({
   userSessionRole,
   orderByPage,
   sortDirPage,
+  institutionSessionCode,
 }: UsersListPageProps) => {
   const [userData, setUserData] = useState<UtilisateurModel[]>(users.data);
   const [total, setTotal] = useState(users.total);
@@ -118,62 +132,6 @@ const UsersListPage = ({
 
   const [orderBy, setOrderBy] = useQueryState("orderBy", parseAsString.withDefault(orderByPage));
   const [sortDir, setSortDir] = useQueryState("sortDir", parseAsString.withDefault(sortDirPage));
-
-  const { wording } = useDependencies();
-
-  const getUsersAndRefresh = useCallback(
-    async (
-      params: string | string[][] | Record<string, string> | URLSearchParams | undefined,
-      setUserData: (arg0: any) => void,
-      setPage: (arg0: any) => void,
-      setLastPage: (arg0: any) => void,
-      setTotal: (arg0: any) => void
-    ) => {
-      fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
-        headers: { "Content-Type": "application/json" },
-        method: "GET",
-      })
-        .then((response) => response.json())
-        .then((users) => {
-          setUserData(users.data);
-          setPage(users.currentPage);
-          setLastPage(users.lastPage);
-          setTotal(users.total);
-        });
-    },
-    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page, sortDir, orderBy]
-  );
-
-  const paginationData: iPaginationData = {
-    institutionId: institutionId,
-    institutions: institutions,
-    keyWord: key,
-    key: key,
-    page: page as number,
-    profileId: profileId,
-    profiles: profiles,
-    roleId: roleId,
-    etatId: etatId,
-    roles: roles,
-    itemsPerPage: itemsPerPage,
-    lastPage: lastPage,
-    orderBy: orderBy,
-    sortDir: sortDir,
-    total: users.total,
-    setKey: setKey,
-    setInstitutionId: setInstitutionId,
-    setLastPage: setLastPage,
-    setPage: setPage,
-    setProfileId: setProfileId,
-    setRoleId: setRoleId,
-    setUserData: setUserData,
-    setItemsPerPage: setItemsPerPage,
-    setEtatId: setEtatId,
-    getUsersAndRefresh: getUsersAndRefresh,
-    setOrderBy: setOrderBy,
-    setSortDir: setSortDir,
-    setTotal: setTotal,
-  };
 
   const getQueryParams = () => {
     let orderByData = {};
@@ -231,10 +189,69 @@ const UsersListPage = ({
     return params;
   };
 
+  const [filterParams, setFilterParams] = useState(getQueryParams());
+
+  const { wording } = useDependencies();
+
+  const getUsersAndRefresh = useCallback(
+    async (
+      params: string | string[][] | Record<string, string> | URLSearchParams | undefined,
+      setUserData: (arg0: any) => void,
+      setPage: (arg0: any) => void,
+      setLastPage: (arg0: any) => void,
+      setTotal: (arg0: any) => void
+    ) => {
+      fetch("/api/utilisateurs/getUsers?" + new URLSearchParams(params).toString(), {
+        headers: { "Content-Type": "application/json" },
+        method: "GET",
+      })
+        .then((response) => response.json())
+        .then((users) => {
+          setUserData(users.data);
+          setPage(users.currentPage);
+          setLastPage(users.lastPage);
+          setTotal(users.total);
+        });
+    },
+    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page, sortDir, orderBy]
+  );
+
+  const paginationData: iPaginationData = {
+    institutionId: institutionId,
+    institutions: institutions,
+    keyWord: key,
+    key: key,
+    page: page as number,
+    profileId: profileId,
+    profiles: profiles,
+    roleId: roleId,
+    etatId: etatId,
+    roles: roles,
+    itemsPerPage: itemsPerPage,
+    lastPage: lastPage,
+    orderBy: orderBy,
+    sortDir: sortDir,
+    total: users.total,
+    setKey: setKey,
+    setInstitutionId: setInstitutionId,
+    setLastPage: setLastPage,
+    setPage: setPage,
+    setProfileId: setProfileId,
+    setRoleId: setRoleId,
+    setUserData: setUserData,
+    setItemsPerPage: setItemsPerPage,
+    setEtatId: setEtatId,
+    getUsersAndRefresh: getUsersAndRefresh,
+    setOrderBy: setOrderBy,
+    setSortDir: setSortDir,
+    setTotal: setTotal,
+  };
+
   const queryParams = new URLSearchParams(getQueryParams());
 
   useEffect(() => {
     const params = getQueryParams();
+    setFilterParams(params);
     getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
   }, [institutionId, roleId, profileId, etatId, itemsPerPage, key, page, sortDir, orderBy]);
 
@@ -263,7 +280,15 @@ const UsersListPage = ({
           <div className={styles["count-elements"]}>
             {total > 1 && <>{total} éléments trouvés.</>}
             {total === 1 && <>{total} élément trouvé.</>}
-            {total > 0 && <ExportExcel getQueryParams={() => getQueryParams()} profiles={profiles} />}
+            {total > 0 && (
+              <ExportExcel
+                filterParams={filterParams}
+                institutionSessionCode={institutionSessionCode}
+                institutions={institutions}
+                profiles={profiles}
+                roles={roles}
+              />
+            )}
           </div>
 
           {userData.length === 0 ? (
@@ -280,31 +305,33 @@ const UsersListPage = ({
 
                         return (
                           <tr key={user.id}>
-                            <td className={styles["widthTD-small"]}>
+                            <td className={styles["widthTD-small"]} key={`${user.id}-nom`}>
                               <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`}>
                                 {user.nom}
                               </a>
                             </td>
-                            <td className={styles["widthTD-small"]}>
+                            <td className={styles["widthTD-small"]} key={`${user.id}-prenom`}>
                               <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`}>
                                 {user.prenom}
                               </a>
                             </td>
-                            <td className={styles["widthTD-small"]}>
+                            <td className={styles["widthTD-small"]} key={`${user.id}-email`}>
                               <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`}>
                                 {user.email}
                               </a>
                             </td>
-                            <td className={styles["widthTD-small"]}>{user.institution.libelle}</td>
+                            <td className={styles["widthTD-small"]} key={`${user.id}-institution`}>
+                              {user.institution.libelle}
+                            </td>
 
-                            <td>
+                            <td key={`${user.id}-role`}>
                               <span
                                 className={`fr-badge fr-badge--${roleClass} fr-badge--no-icon ${styles["text_no_change"]} ${styles["widthTD-role"]} fr-text--xs`}
                               >
                                 {user.role.libelle}
                               </span>
                             </td>
-                            <td className={`${styles["widthTD-profil"]}`}>
+                            <td className={`${styles["widthTD-profil"]}`} key={`${user.id}-profils`}>
                               {user.profils &&
                                 user.profils
                                   .filter(function (item) {
@@ -332,8 +359,12 @@ const UsersListPage = ({
                                     );
                                   })}
                             </td>
-                            <td className={styles["widthTD-date"]}>{user?.lastConnectionDate && formatDateAndHours(user?.lastConnectionDate?.toString())}</td>
-                            <td className={styles["widthTD-etat"]}>{getUserStatus(user.lastConnectionDate)}</td>
+                            <td className={styles["widthTD-date"]} key={`${user.id}-lastConnectionDate`}>
+                              {user?.lastConnectionDate && formatDateAndHours(user?.lastConnectionDate?.toString())}
+                            </td>
+                            <td className={styles["widthTD-etat"]} key={`${user.id}-status`}>
+                              {getUserStatus(user.lastConnectionDate)}
+                            </td>
                           </tr>
                         );
                       })}
