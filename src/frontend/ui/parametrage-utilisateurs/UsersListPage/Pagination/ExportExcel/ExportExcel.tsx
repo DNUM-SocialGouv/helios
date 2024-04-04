@@ -99,7 +99,6 @@ export function getSelectedRole(id: number | string, roles: RoleModel[]) {
 }
 
 export function getSelectedInstitution(id: number | string, institutions: InstitutionModel[]) {
-  console.log("institutions", institutions);
   const resultFilter = institutions.filter((obj) => obj["id"] === Number(id));
 
   if (resultFilter.length > 0) {
