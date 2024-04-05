@@ -47,6 +47,8 @@ populate_activites_sanitaire_entites_juridiques = 'python -m datacrawler.agréga
 populate_capacites_sanitaire_entites_juridiques = 'python -m datacrawler.agrégation_capacité_sanitaire'
 populate_app_users = 'python -m datacrawler.import_utilisateurs'
 populate_reclamations = 'python -m datacrawler.import_reclamations'
+populate_evenements_indesirables = 'python -m datacrawler.import_evenements_indesirables'
+check_downloaded_sivss_file = 'python -m datacrawler.check_downloaded_sivss_file'
 test = 'pytest --tb=short'
 test_coverage = 'pytest --tb=short --cov=datacrawler --cov-report=xml'
 test_watch = 'ptw'

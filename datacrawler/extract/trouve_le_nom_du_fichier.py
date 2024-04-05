@@ -22,7 +22,7 @@ def trouve_le_nom_du_fichier(fichiers: List[str], préfixe_du_fichier_recherché
 
     return fichiers_correspondants[0]
 
-def trouve_le_nom_du_fichier_sirec(fichiers: List[str], préfixe_du_fichier_recherché: str, logger: Logger) -> str:
+def trouve_le_nom_du_fichier_sirec_sivss(fichiers: List[str], préfixe_du_fichier_recherché: str, logger: Logger) -> str:
     fichiers_correspondants = [
         nom_de_fichier for nom_de_fichier in fichiers if re.match(f"{préfixe_du_fichier_recherché}_" + r"\d{12}", nom_de_fichier)
     ]

@@ -32,7 +32,6 @@ export class NodeEnvironmentVariables implements EnvironmentVariables {
   readonly SIVSS_DATA_PATH: string = this.getOrElse("SIVSS_DATA_PATH");
   readonly CHECKED_SIVSS_DATA_PATH: string = this.getOrElse("CHECKED_SIVSS_DATA_PATH");
 
-
   private getOrElse(key: string): string {
     if (process.env[key] === "toBeSet") {
       this.logger.error(`----- WARNING ----- La variable d’environnement "${key}" est manquante.`);
