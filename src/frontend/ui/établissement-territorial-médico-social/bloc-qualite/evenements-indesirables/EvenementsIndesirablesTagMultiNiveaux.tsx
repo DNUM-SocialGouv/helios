@@ -43,6 +43,16 @@ const groupByEventsNature = (events: any[]): any => {
     }, {});
 }
 
+const sortEventsNature = (events: object): object => {
+    const sortedEvents = Object.fromEntries(
+        Object.entries(events).sort(([, arr1], [, arr2]) => arr2.length - arr1.length)
+    );
+    for (const nature in sortedEvents) {
+        sortedEvents[nature].sort((a: any, b: any) => b.numeroSIVSS - a.numeroSIVSS);
+    }
+    return sortedEvents;
+}
+
 export const EvenementsIndesirablesTagMultiNiveaux = ({ evenementsIndesirablesAssociesAuxSoins, evenementsIndesirablesDansET }: TagMultiNiveauxProps): ReactElement => {
     return (
         <ul>
@@ -167,22 +177,22 @@ const EventNaturesAndStatus = ({ evenementsEncours, evenementsClotures, libelle 
 
 const EventNatures = ({ events, isClosed, libelle }: EventsProps): ReactElement => {
     const eventsByNature = groupByEventsNature(events);
-    const natures = Object.keys(eventsByNature);
+    const natures = Object.keys(sortEventsNature(eventsByNature));
+
     return (
         <ul>
             {natures.map((nature) => (
                 <li className="fr-ml-4w" key={`${libelle}-${nature}`}>
-                    <TagWithLink for={`events-nature-accordion-${libelle}-${nature}`} titre={`${nature} (${eventsByNature[nature].length})`} />
+                    <TagWithLink for={`events-nature-accordion-${libelle}-${nature}`} titre={`${nature === 'null' ? 'Non renseigné' : nature} (${eventsByNature[nature].length})`} />
                     {eventsByNature[nature].length !== 0 && (
                         <ul className={"fr-collapse niveau1 " + styles["list-style"]} id={`events-nature-accordion-${libelle}-${nature}`}>
                             {eventsByNature[nature].map((natureDetails: any) => (
                                 <li className={"fr-ml-6w " + styles["list-element-style"]} key={`${libelle}-${nature}-${natureDetails.numeroSIVSS}`}>
                                     <Tag label={`Numéro SIVSS : ${natureDetails.numeroSIVSS}`} />
-                                    {isClosed && <Tag label={`Date de clôture  : ${natureDetails.clotDate}`} />}
+                                    {isClosed && <Tag label={`Date de clôture  : ${StringFormater.formatDate(natureDetails.clotDate)}`} />}
                                     {isClosed && <Tag label={`Motif de clôture : ${natureDetails.clotMotif}`} />}
                                 </li>
                             ))}
-
                         </ul>
                     )}
                 </li>
