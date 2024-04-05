@@ -1,7 +1,7 @@
 import os
 import datetime
 
-from logging import Logger
+import pandas as pd
 
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_sirec_sivss
@@ -27,11 +27,14 @@ def filter_motif(motif):
 def filter_etat(etat):
      return (etat != 'Interco')
 
+def filter_evenements_indesirables(donnees_evenements_indesirables: pd.DataFrame):
+    current_year = int(datetime.date.today().strftime("%Y"))
+    return  donnees_evenements_indesirables[(donnees_evenements_indesirables['MOTIF_CLOTURE'].apply(filter_motif)) & (donnees_evenements_indesirables['ETAT'].apply(filter_etat)) & (donnees_evenements_indesirables['FAMILLE_PRINCIPALE'].apply(filter_famille)) & (donnees_evenements_indesirables['DATE_RECEPTION'].apply(get_year_from_date).le(current_year)) & (donnees_evenements_indesirables['DATE_RECEPTION'].apply(get_year_from_date).ge(current_year - 3)) & (donnees_evenements_indesirables['NUMERO_SIVSS'].astype(str).str.len() == 6) & (donnees_evenements_indesirables['DECLARANT_ORGANISME_NUMERO_FINESS'].astype(str).apply(check_finess_number)) & (donnees_evenements_indesirables['SCC_ORGANISME_FINESS'].astype(str).apply(check_finess_number))]
+
 def check_downloaded_sivss_file(chemin_local_du_fichier_evenements_indesirables: str, fichier_sivss_traite: str) -> None:
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(equivalences_sivss_evenements_indesirables_helios)
         donnees_evenements_indesirables = lis_le_fichier_csv(chemin_local_du_fichier_evenements_indesirables, colonnes_a_lire_bloc_qualite_evenements_indesirables, types_des_colonnes)
-        current_year = int(datetime.date.today().strftime("%Y"))
-        donnees_evenements_indesirables_filtrees = donnees_evenements_indesirables[(donnees_evenements_indesirables['MOTIF_CLOTURE'].apply(filter_motif)) & (donnees_evenements_indesirables['ETAT'].apply(filter_etat)) & (donnees_evenements_indesirables['FAMILLE_PRINCIPALE'].apply(filter_famille)) & (donnees_evenements_indesirables['DATE_RECEPTION'].apply(get_year_from_date).le(current_year)) & (donnees_evenements_indesirables['DATE_RECEPTION'].apply(get_year_from_date).ge(current_year - 3)) & (donnees_evenements_indesirables['NUMERO_SIVSS'].astype(str).str.len() == 6) & (donnees_evenements_indesirables['DECLARANT_ORGANISME_NUMERO_FINESS'].astype(str).apply(check_finess_number)) & (donnees_evenements_indesirables['SCC_ORGANISME_FINESS'].astype(str).apply(check_finess_number))]      
+        donnees_evenements_indesirables_filtrees = filter_evenements_indesirables(donnees_evenements_indesirables)
         donnees_evenements_indesirables_filtrees.to_csv(fichier_sivss_traite, index=False, sep=';')
     
 if __name__ == "__main__":

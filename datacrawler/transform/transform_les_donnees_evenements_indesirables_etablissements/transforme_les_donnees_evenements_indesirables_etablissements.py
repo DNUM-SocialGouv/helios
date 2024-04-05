@@ -32,8 +32,6 @@ def formate_la_date_de_cloture(données: pd.DataFrame, logger: Logger) -> pd.Dat
         return datetime.strptime(date_du_cpom, "%d/%m/%Y").strftime("%Y-%m-%d")
 
     dates_formatees_de_cloture = données.copy()
-    logger.info(f"[donnees_evenements_indesirables] {dates_formatees_de_cloture}")
-
     dates_formatees_de_cloture["date_cloture"] = données["date_cloture"].map(
         formate_la_date, na_action="ignore"
     )
