@@ -348,14 +348,14 @@ const UsersListPage = ({
                                       seperator = "";
                                     }
                                     return (
-                                      <>
+                                      <span key={`${user.id}-profiles-${i}`}>
                                         {pr && pr[0] && (
                                           <span className={`fr-text--xs `} key={pr[0].code}>
                                             {pr[0].label}
                                             {seperator}
                                           </span>
                                         )}
-                                      </>
+                                      </span>
                                     );
                                   })}
                             </td>
