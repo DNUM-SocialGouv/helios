@@ -155,22 +155,20 @@ const EventTag = ({ events }: EventTagProps): ReactElement => {
 const EventNaturesAndStatus = ({ evenementsEncours, evenementsClotures, libelle }: EventNaturesAndStatusProps): ReactElement => {
     return (
         <ul>
-            {evenementsEncours.length !== 0 && (
-                <li className="fr-ml-2w">
-                    <TagCliquable for={`evenement-encours-accordion-${libelle}`} titre={`${libelle} en cours (${evenementsEncours.length})`} />
-                    <ul className="fr-collapse " id={`evenement-encours-accordion-${libelle}`}>
-                        <EventNatures events={evenementsEncours} isClosed={false} libelle={`${libelle}-en-cours`} />
-                    </ul>
-                </li>
-            )}
-            {evenementsClotures.length !== 0 && (
-                <li className="fr-ml-2w">
-                    <TagCliquable for={`evenement-clotures-accordion-${libelle}`} titre={`${libelle} clôturés (${evenementsClotures.length})`} />
-                    <ul className="fr-collapse " id={`evenement-clotures-accordion-${libelle}`}>
-                        <EventNatures events={evenementsClotures} isClosed={true} libelle={`${libelle}-clot`} />
-                    </ul>
-                </li>
-            )}
+            <li className="fr-ml-2w fr-mb-1w">
+                <TagCliquable for={`evenement-encours-accordion-${libelle}`} titre={`${libelle} en cours (${evenementsEncours.length})`} />
+                {evenementsEncours.length !== 0 && (<ul className="fr-collapse " id={`evenement-encours-accordion-${libelle}`}>
+                    <EventNatures events={evenementsEncours} isClosed={false} libelle={`${libelle}-en-cours`} />
+                </ul>
+                )}
+            </li>
+            <li className="fr-ml-2w fr-mb-1w">
+                <TagCliquable for={`evenement-clotures-accordion-${libelle}`} titre={`${libelle} clôturés (${evenementsClotures.length})`} />
+                {evenementsClotures.length !== 0 && (<ul className="fr-collapse " id={`evenement-clotures-accordion-${libelle}`}>
+                    <EventNatures events={evenementsClotures} isClosed={true} libelle={`${libelle}-clot`} />
+                </ul>
+                )}
+            </li>
         </ul>
     )
 }
