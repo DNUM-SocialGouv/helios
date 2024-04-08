@@ -59,6 +59,7 @@ htmlcov
 .stryker-tmp
 jest-for-mutation-testing.json
 reports
+jestGeneratedFiles/*
 
 # yarn
 **/.yarn/*
