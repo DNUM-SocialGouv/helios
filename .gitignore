@@ -61,7 +61,6 @@ jest-for-mutation-testing.json
 reports
 
 
-
 # yarn
 **/.yarn/*
 !**/.yarn/patches
