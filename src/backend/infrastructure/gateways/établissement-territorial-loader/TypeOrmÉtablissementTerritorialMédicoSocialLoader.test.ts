@@ -6,10 +6,13 @@ import { BudgetEtFinancesMédicoSocialModel } from "../../../../../database/mode
 import { CpomModel } from "../../../../../database/models/CpomModel";
 import { DateMiseÀJourFichierSourceModel } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
+import { EvenementIndesirableETModel } from "../../../../../database/models/EvenementIndesirableModel";
+import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { RessourcesHumainesMédicoSocialModel } from "../../../../../database/models/RessourcesHumainesMédicoSocialModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { DateMiseÀJourFichierSourceModelTestBuilder } from "../../../../../database/test-builder/DateMiseÀJourFichierSourceModelTestBuilder";
 import { EntitéJuridiqueModelTestBuilder } from "../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder";
+import { ÉtablissementTerritorialQualitéModelTestBuilder } from "../../../../../database/test-builder/EtablissementTerritorialQualiteModelTestBuilder";
 import { ÉtablissementTerritorialActivitéModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialActivitéModelTestBuilder";
 import { ÉtablissementTerritorialAutorisationModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialAutorisationModelTestBuilder";
 import { ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder";
@@ -22,6 +25,7 @@ import { ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from ".
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from "../../../métier/entities/ÉtablissementTerritorialMédicoSocialNonTrouvée";
+import { ÉtablissementTerritorialQualite } from "../../../métier/entities/ÉtablissementTerritorialQualite";
 import { ÉtablissementTerritorialTestBuilder } from "../../../test-builder/ÉtablissementTerritorialTestBuilder";
 import { clearAllTables, getOrm, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from "../../../testHelper";
 import { TypeOrmÉtablissementTerritorialMédicoSocialLoader } from "./TypeOrmÉtablissementTerritorialMédicoSocialLoader";
@@ -36,6 +40,8 @@ describe("Établissement territorial médico-social loader", () => {
   let cpomModelRepository: Repository<CpomModel>;
   let budgetEtFinancesModelRepository: Repository<BudgetEtFinancesMédicoSocialModel>;
   let ressourcesHumainesModelRepository: Repository<RessourcesHumainesMédicoSocialModel>;
+  let reclamtionsModelRepository: Repository<ReclamationETModel>;
+  let evenementsIndesirablesModelRepository: Repository<EvenementIndesirableETModel>;
 
   beforeAll(async () => {
     activitéMédicoSocialModelRepository = (await orm).getRepository(ActivitéMédicoSocialModel);
@@ -46,6 +52,8 @@ describe("Établissement territorial médico-social loader", () => {
     cpomModelRepository = (await orm).getRepository(CpomModel);
     budgetEtFinancesModelRepository = (await orm).getRepository(BudgetEtFinancesMédicoSocialModel);
     ressourcesHumainesModelRepository = (await orm).getRepository(RessourcesHumainesMédicoSocialModel);
+    reclamtionsModelRepository = (await orm).getRepository(ReclamationETModel);
+    evenementsIndesirablesModelRepository = (await orm).getRepository(EvenementIndesirableETModel);
   });
 
   beforeEach(async () => {
@@ -532,4 +540,28 @@ describe("Établissement territorial médico-social loader", () => {
       ]);
     });
   });
+
+  describe("Charge les données du bloc qualité d'un établissement médico-social", () => {
+    it("charge les indicateurs du bloc qualité sur la dernière années d’un établissement", async () => {
+      // GIVEN
+      await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }));
+      await établissementTerritorialIdentitéRepository.insert(
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
+      );
+      await reclamtionsModelRepository.insert([
+        ÉtablissementTerritorialQualitéModelTestBuilder.créeReclamations({ annee: 2023, numéroFinessÉtablissementTerritorial })
+      ]);
+
+      await evenementsIndesirablesModelRepository.insert([
+        ÉtablissementTerritorialQualitéModelTestBuilder.créeEvenementsIndesirables({ annee: 2023, numéroFinessÉtablissementTerritorial })
+      ]);
+
+      const typeOrmÉtablissementTerritorialMédicoSocialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm);
+
+      // WHEN
+      const qualite = await typeOrmÉtablissementTerritorialMédicoSocialLoader.chargeQualite(numéroFinessÉtablissementTerritorial)
+      expect(qualite).toStrictEqual<ÉtablissementTerritorialQualite>(ÉtablissementTerritorialTestBuilder.créeUnBlocQualité());
+    });
+  })
+
 });

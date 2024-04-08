@@ -31,6 +31,7 @@ export const couleurDuFondHistogrammeRougeClair = "#FEE9E6";
 export const couleurDuFondHistogrammeRougeFoncé = "#A94645";
 export const couleurDuFondHistogrammeVertClair = "#DFFDF7";
 export const couleurDuFondHistogrammeVertFoncé = "#006A6F";
+export const couleurDuFondHistogrammeOrange = "#FA794A";
 export const couleurDuSeuil = "#18753C";
 export type TaillePoliceTick = "bold" | "normal";
 export type CouleurHistogramme = Readonly<{

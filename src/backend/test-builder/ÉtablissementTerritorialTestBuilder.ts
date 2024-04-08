@@ -6,6 +6,7 @@ import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../mé
 import { ÉtablissementTerritorialSanitaireActivité } from "../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
 import { ÉtablissementTerritorialSanitaireAutorisationEtCapacité } from "../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 import { ÉtablissementTerritorialIdentité } from "../métier/entities/ÉtablissementTerritorialIdentité";
+import { ÉtablissementTerritorialQualite } from "../métier/entities/ÉtablissementTerritorialQualite";
 
 export class ÉtablissementTerritorialTestBuilder {
   private static médicoSocial: ÉtablissementTerritorialIdentité = {
@@ -556,6 +557,104 @@ export class ÉtablissementTerritorialTestBuilder {
     },
   };
 
+  private static qualite: ÉtablissementTerritorialQualite = {
+    reclamations: [
+      {
+        "année": 2023,
+        "dateMiseÀJourSource": "2022-02-02",
+        "details": [
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_10",
+          },
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_11",
+          },
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_12",
+          },
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_13",
+          },
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_14",
+          },
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_15",
+          },
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_16",
+          },
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_17",
+          },
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_18",
+          },
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_19",
+          },
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_155",
+          },
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_156",
+          },
+        ],
+        "numéroFinessÉtablissementTerritorial": "010000040",
+        "totalClotures": 12,
+        "totalEncours": 12,
+      },
+    ],
+    evenementsIndesirables: [
+      {
+        "dateMiseAJourSource": "2022-02-02",
+        "evenementsClotures": [
+          {
+            "annee": 2023,
+            "clotDate": null,
+            "clotMotif": null,
+            "est_EIGS": false,
+            "etat": "CLOTURE",
+            "famille": "Evènements indésirables/graves associés aux soins",
+            "nature": "Maltraitance",
+            "numeroSIVSS": "123456",
+          }
+        ],
+        "evenementsEncours": [],
+        "libelle": "Evènements indésirables/graves associés aux soins",
+      }, {
+        "dateMiseAJourSource": "2022-02-02",
+        "evenementsEncours": [],
+        "evenementsClotures": [],
+        "libelle": "Evénements/incidents dans un établissement ou organisme",
+      }
+    ]
+  }
+
   public static créeUneIdentitéMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialIdentité>): ÉtablissementTerritorialIdentité {
     return {
       ...ÉtablissementTerritorialTestBuilder.médicoSocial,
@@ -628,6 +727,13 @@ export class ÉtablissementTerritorialTestBuilder {
   public static créeUnBlocRessourcesHumainesMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialRessourcesHumaines>) {
     return {
       ...ÉtablissementTerritorialTestBuilder.ressourcesHumainesMédicoSocial,
+      ...champsSurchargés,
+    };
+  }
+
+  public static créeUnBlocQualité(champsSurchargés?: Partial<ÉtablissementTerritorialQualite>) {
+    return {
+      ...ÉtablissementTerritorialTestBuilder.qualite,
       ...champsSurchargés,
     };
   }
