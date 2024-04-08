@@ -16,13 +16,13 @@ describe("ExportToExcel function", () => {
 
     // Appel de la fonction ExportToExcel avec les données de test
     const headerRecherche = [`Recherche : `];
-    ExportToExcel(headerRecherche, headers, data, "jestGeneratedFiles/Helios_liste_utilisateurs.xlsx");
+    ExportToExcel(headerRecherche, headers, data, "jestGeneratedFiles/Users/Helios_liste_utilisateurs.xlsx");
 
     // Vérification si le fichier Excel a été correctement créé
-    expect(fs.existsSync("jestGeneratedFiles/Helios_liste_utilisateurs.xlsx")).toBeTruthy();
+    expect(fs.existsSync("jestGeneratedFiles/Users/Helios_liste_utilisateurs.xlsx")).toBeTruthy();
 
     // Lecture du fichier Excel
-    const workbook = XLSX.readFile("jestGeneratedFiles/Helios_liste_utilisateurs.xlsx");
+    const workbook = XLSX.readFile("jestGeneratedFiles/Users/Helios_liste_utilisateurs.xlsx");
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
     const dataFromExcel = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
