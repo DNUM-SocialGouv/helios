@@ -4,7 +4,7 @@ import Papa from 'papaparse';
 
 import { ControleDonneesSirecLoader } from "../../../métier/gateways/ControleDonnesSirecLoader";
 import { Logger } from "../../../métier/gateways/Logger";
-import { containsCommaOrDotNumbers, containsNegativeNumbers, isValidFinessRpps, isValidYear, verifierSommeEnCoursSupOuEgaleTotal, verifierSommeClotSupOuEgaleTotal } from "../../utils/sirecSourceExternalLoaderUtils";
+import { containsCommaOrDotNumbers, containsNegativeNumbers, isValidFinessRpps, isValidYear } from "../../utils/sirecSourceExternalLoaderUtils";
 
 
 export class SirecSourceExterneLoader implements ControleDonneesSirecLoader {
@@ -119,12 +119,6 @@ export class SirecSourceExterneLoader implements ControleDonneesSirecLoader {
                     return; // Ignorer la ligne
                 }
 
-                if (!verifierSommeEnCoursSupOuEgaleTotal(row)) {
-                    return; // Ignorer la ligne
-                }
-                if (!verifierSommeClotSupOuEgaleTotal(row)) {
-                    return; // Ignorer la ligne
-                }
                 jsonData.push(row);
             })
 
