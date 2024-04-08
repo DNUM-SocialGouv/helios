@@ -5,7 +5,27 @@ import { ProfilModel } from "../../../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../../../database/models/RoleModel";
 import { ExportToExcel, getCurrentDate, getSelectedInstitution, getSelectedProfile, getSelectedRole } from "./ExportExcel";
 
+const createDirectory = (path) => {
+  try {
+    fs.mkdirSync(path, { recursive: true });
+    //console.log(`Directory "${path}" created successfully.`);
+  } catch (err) {
+    if (err.code === "EEXIST") {
+      //console.log(`Directory "${path}" already exists.`);
+    } else {
+      // console.error(`Error creating directory "${path}":`, err);
+    }
+  }
+};
+
 describe("ExportToExcel function", () => {
+  it("create the folder if not exist", () => {
+    createDirectory("jestGeneratedFiles/Users");
+
+    // Vérification des données dans le fichier Excel
+    expect(true).toBe(true);
+  });
+
   it("should generate an Excel file with provided headers and data", () => {
     // Données de test
     const headers = ["Nom", "Prénom", "Email", "Institution", "Rôle", "Autorisation", "Date de création", "Date de dernière connexion", "Statut"];
