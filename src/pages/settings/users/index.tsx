@@ -29,6 +29,7 @@ type RouterProps = Readonly<{
   profiles: ProfilModel[];
   roles: RoleModel[];
   institution: number;
+  institutionSessionCode: number;
   profile: number;
   role: string;
   etat: string;
@@ -47,6 +48,7 @@ export default function Router({
   profiles,
   roles,
   institution,
+  institutionSessionCode,
   profile,
   role,
   etat,
@@ -68,6 +70,7 @@ export default function Router({
     <UsersListPage
       etat={etat.toString()}
       institution={institution}
+      institutionSessionCode={institutionSessionCode}
       institutions={institutions}
       itemsPerPageValue={itemsPerPage}
       keyWord={keyWord}
@@ -162,6 +165,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
         profiles: JSON.parse(JSON.stringify(profiles)),
         roles: JSON.parse(JSON.stringify(roles)),
         institution: parseInt(institution as string),
+        institutionSessionCode: institutionCode,
         role: (role as string) || "",
         profile: parseInt(profil as string),
         etat: (etat as string) || "",

@@ -111,14 +111,12 @@ const AdvancedFilter = ({
                 Institution
               </label>
 
-              <select className="fr-select" id="institution" onChange={handleChangeInstitution}>
-                <option selected={institutionId === 0} value="">
-                  Toutes
-                </option>
+              <select className="fr-select" id="institution" onChange={handleChangeInstitution} value={institutionId || ""}>
+                <option value="">Toutes</option>
 
                 {institutions &&
                   institutions.map((item) => (
-                    <option key={item.id} selected={institutionId === item.id} value={item.id}>
+                    <option key={item.id} value={item.id}>
                       {item.libelle}
                     </option>
                   ))}
@@ -131,14 +129,12 @@ const AdvancedFilter = ({
               Rôle
             </label>
 
-            <select className="fr-select" id="role" onChange={handleChangeRole}>
-              <option selected={roleId === 0 || roleId === null} value="">
-                Tous
-              </option>
+            <select className="fr-select" id="role" onChange={handleChangeRole} value={roleId || ""}>
+              <option value="">Tous</option>
 
               {roles &&
                 roles.map((item) => (
-                  <option key={item.id} selected={roleId === item.id} value={item.id}>
+                  <option key={item.id} value={item.id}>
                     {item.libelle}
                   </option>
                 ))}
@@ -148,14 +144,12 @@ const AdvancedFilter = ({
             <label className="fr-label" htmlFor="profil">
               Autorisation
             </label>
-            <select className="fr-select" id="profil" onChange={handleChangeProfil}>
-              <option selected={profileId === "" || profileId === null} value="">
-                Tous
-              </option>
+            <select className="fr-select" id="profil" onChange={handleChangeProfil} value={profileId || ""}>
+              <option value="">Tous</option>
 
               {profiles &&
                 profiles.map((item) => (
-                  <option key={item.id} selected={profileId === item.code} value={item.code}>
+                  <option key={item.id} value={item.code}>
                     {item.label}
                   </option>
                 ))}
@@ -166,14 +160,12 @@ const AdvancedFilter = ({
             <label className="fr-label" htmlFor="etat">
               Statut
             </label>
-            <select className="fr-select" id="etat" onChange={handleChangeEtat}>
-              <option selected={etatId === "" || etatId === null} value="">
-                Tous
-              </option>
+            <select className="fr-select" id="etat" onChange={handleChangeEtat} value={etatId || ""}>
+              <option value="">Tous</option>
 
               {etats &&
                 etats.map((item) => (
-                  <option key={item.id} selected={etatId === item.code} value={item.code}>
+                  <option key={item.id} value={item.code}>
                     {item.label}
                   </option>
                 ))}
