@@ -39,10 +39,16 @@ const TheadTable = ({
       className: "no-sort",
     },
     {
+      name: "Date de création",
+      slug: "dateCreation",
+      className: "widthTD-date",
+    },
+    {
       name: "Date de dernière connexion",
       slug: "lastConnectionDate",
       className: "widthTD-date",
     },
+
     {
       name: "Statut",
       slug: "etat",
