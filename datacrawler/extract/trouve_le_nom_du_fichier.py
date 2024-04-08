@@ -29,5 +29,5 @@ def trouve_le_nom_du_fichier_sirec_sivss(fichiers: List[str], préfixe_du_fichie
     if not fichiers_correspondants:
         logger.fatal(f"Le fichier {préfixe_du_fichier_recherché} est introuvable parmi les fichiers téléchargés.")
         raise FileNotFoundError()
-
+    fichiers_correspondants.sort(reverse=True)
     return fichiers_correspondants[0]

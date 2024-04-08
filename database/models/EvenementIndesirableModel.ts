@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryColumn } from "typeorm";
 
 export enum EtatSignal {
     EN_COURS = "EN_COURS",
@@ -8,13 +8,10 @@ export enum EtatSignal {
 @Entity({ name: "evenement_indesirable_etablissement_territorial" })
 export class EvenementIndesirableETModel {
 
-    @PrimaryGeneratedColumn({ name: "evenement_indesirable_id" })
-    public id!: number;
-
-    @Column({ name: "annee", type: "int" })
+    @PrimaryColumn({ name: "annee", type: "int" })
     public annee!: number;
 
-    @Column({ length: 9, name: "numero_finess_etablissement_territorial" })
+    @PrimaryColumn({ length: 9, name: "numero_finess_etablissement_territorial" })
     public numéroFinessÉtablissementTerritorial!: string;
 
     @Column({ name: "famille_principale" })
@@ -23,7 +20,7 @@ export class EvenementIndesirableETModel {
     @Column({ name: "nature_principale" })
     public naturePrincipale!: string;
 
-    @Column({ length: 6, name: "numero_sivss" })
+    @PrimaryColumn({ length: 6, name: "numero_sivss" })
     public numeroSIVSS!: string;
 
     @Column({ name: "est_eigs" })

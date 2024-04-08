@@ -12,6 +12,15 @@ from datacrawler.transform.equivalences_sivss_helios import (
     equivalences_sivss_evenements_indesirables_helios,
 )
 
+def delete_files_in_directory(directory):
+    # Get the list of files in the directory
+    file_list = os.listdir(directory)
+    
+    # Iterate through each file and delete it
+    for file_name in file_list:
+        file_path = os.path.join(directory, file_name)
+        os.remove(file_path)
+
 def get_year_from_date(date_to_convert):
     return int(datetime.datetime.strptime(date_to_convert, '%d/%m/%Y').strftime("%Y"))
 
@@ -45,7 +54,8 @@ if __name__ == "__main__":
 
     if not os.path.exists(checked_sivss_data_path):
         os.makedirs(checked_sivss_data_path)
-
+        
+    delete_files_in_directory(checked_sivss_data_path)
     fichiers = os.listdir(sivss_data_path)
 
     chemin_local_du_fichier_sivss = os.path.join(
@@ -56,4 +66,4 @@ if __name__ == "__main__":
         checked_sivss_data_path, trouve_le_nom_du_fichier_sirec_sivss(fichiers, "sivss", logger_helios)
     )
 
-    check_downloaded_sivss_file(chemin_local_du_fichier_sivss, fichier_sivss_traite, logger_helios)
+    check_downloaded_sivss_file(chemin_local_du_fichier_sivss, fichier_sivss_traite)

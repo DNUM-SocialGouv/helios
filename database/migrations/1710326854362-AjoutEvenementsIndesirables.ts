@@ -10,18 +10,17 @@ export class AjoutEvenementsIndesirables1710326854362 implements MigrationInterf
         ADD VALUE IF NOT EXISTS 'sivss';
 
         CREATE TABLE evenement_indesirable_etablissement_territorial (
-          evenement_indesirable_id bigserial NOT NULL,
           annee INTEGER NOT NULL,
           numero_finess_etablissement_territorial VARCHAR(9) NOT NULL,
           numero_sivss VARCHAR(6) NOT NULL, 
           famille_principale VARCHAR(255) NOT NULL, 
-          nature_principale VARCHAR(255) NOT NULL,
+          nature_principale VARCHAR(255),
           est_eigs BOOLEAN NOT NULL,
           etat etat_signal NOT NULL,
           date_cloture DATE,
           motif_cloture VARCHAR(255),
 
-          PRIMARY KEY (evenement_indesirable_id),
+          PRIMARY KEY (annee, numero_finess_etablissement_territorial, numero_sivss),
 
           CONSTRAINT evenement_indesirable_etablissement_territorial_finess_foreign_key
           FOREIGN KEY (numero_finess_etablissement_territorial)

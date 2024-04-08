@@ -66,6 +66,8 @@
     "updateEvenementsIndesirables:local": "pipenv run populate_evenements_indesirables",
     "checkEvenementsIndesirables": "python -m datacrawler.check_downloaded_sivss_file",
     "checkEvenementsIndesirables:local": "pipenv run check_downloaded_sivss_file",
+    "retreieveAndCheckAndUpdateEvenementsIndesirables": "yarn retrieveSivss && yarn checkEvenementsIndesirables && yarn updateEvenementsIndesirables",
+    "retreieveAndCheckAndUpdateEvenementsIndesirables:local": "yarn retrieveSivss && yarn checkEvenementsIndesirables:local && yarn updateEvenementsIndesirables:local",
     "start": "next start",
     "start:db": "docker-compose down && docker-compose up -d && bash -c \"while ! docker-compose logs | grep -q 'listening on IPv4 address'; do echo 'Waiting for database'; sleep 0.5; done\"; yarn migrations:up",
     "test": "yarn test:typescript && yarn test:python",
