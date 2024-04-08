@@ -11,7 +11,7 @@ export function isValidYear(year: number): boolean {
 
 // Fonction pour vérifier si NDEG_FINESS_RPPS contient un nombre de 9 chiffres
 export function isValidFinessRpps(value: string): boolean {
-    return /^\d{9}$/.test(value);
+    return /^([a-zA-Z0-9_-]){9}$/.test(value);
 }
 
 export function containsNegativeNumbers(row: Record<string, any>): boolean {
