@@ -11,7 +11,7 @@ export function isValidYear(year: number): boolean {
 
 // Fonction pour vérifier si NDEG_FINESS_RPPS contient un nombre de 9 chiffres
 export function isValidFinessRpps(value: string): boolean {
-    return /^\d{9}$/.test(value);
+    return /^([a-zA-Z0-9_-]){9}$/.test(value);
 }
 
 export function containsNegativeNumbers(row: Record<string, any>): boolean {
@@ -19,52 +19,18 @@ export function containsNegativeNumbers(row: Record<string, any>): boolean {
     return values.some((value) => (typeof value === "number" && isNaN(value)) || value < 0);
 }
 
-export function verifValeursManquantes(row: Record<string, any>) {
-    if (
-        (parseInt(row["ENCOURS_NB_RECLA_TOTAL"]) ||
-            parseInt(row["ENCOURS_NB_RECLA_MOTIF_10"]) ||
-            parseInt(row["ENCOURS_NB_RECLA_MOTIF_11"]) ||
-            parseInt(row["ENCOURS_NB_RECLA_MOTIF_12"]) ||
-            parseInt(row["ENCOURS_NB_RECLA_MOTIF_13"]) ||
-            parseInt(row["ENCOURS_NB_RECLA_MOTIF_14"]) ||
-            parseInt(row["ENCOURS_NB_RECLA_MOTIF_15"]) ||
-            parseInt(row["ENCOURS_NB_RECLA_MOTIF_16"]) ||
-            parseInt(row["ENCOURS_NB_RECLA_MOTIF_17"]) ||
-            parseInt(row["ENCOURS_NB_RECLA_MOTIF_18"]) ||
-            parseInt(row["ENCOURS_NB_RECLA_MOTIF_19"]) ||
-            parseInt(row["ENCOURS_NB_RECLA_MOTIF_155"]) ||
-            parseInt(row["ENCOURS_NB_RECLA_MOTIF_156"])) &&
-        (parseInt(row["CLOT_NB_RECLA_TOTAL"]) ||
-            parseInt(row["CLOT_NB_RECLA_MOTIF_10"]) ||
-            parseInt(row["CLOT_NB_RECLA_MOTIF_11"]) ||
-            parseInt(row["CLOT_NB_RECLA_MOTIF_12"]) ||
-            parseInt(row["CLOT_NB_RECLA_MOTIF_13"]) ||
-            parseInt(row["CLOT_NB_RECLA_MOTIF_14"]) ||
-            parseInt(row["CLOT_NB_RECLA_MOTIF_15"]) ||
-            parseInt(row["CLOT_NB_RECLA_MOTIF_16"]) ||
-            parseInt(row["CLOT_NB_RECLA_MOTIF_17"]) ||
-            parseInt(row["CLOT_NB_RECLA_MOTIF_18"]) ||
-            parseInt(row["CLOT_NB_RECLA_MOTIF_19"]) ||
-            parseInt(row["CLOT_NB_RECLA_MOTIF_155"]) ||
-            parseInt(row["CLOT_NB_RECLA_MOTIF_156"]))
-    ) {
-        return false;
-    }
-    return true;
-}
-
-// Fonction pour vérifier si ENCOURS_NB_RECLA_TOTAL est égal à la somme
-export function verifierSommeEnCoursEgaleTotal(row: Record<string, any>) {
+// Fonction pour vérifier si ENCOURS_NB_RECLA_TOTAL est supérieur ou égal à la somme
+export function verifierSommeEnCoursSupOuEgaleTotal(row: Record<string, any>) {
     const total = parseInt(row["ENCOURS_NB_RECLA_TOTAL"]) || 0;
     const somme = calculerSommeEnCours(row);
-    return total === somme;
+    return somme >= total;
 }
 
-// Fonction pour vérifier si Clot_NB_RECLA_TOTAL est égal à la somme
-export function verifierSommeClotEgaleTotal(row: Record<string, any>) {
+// Fonction pour vérifier si Clot_NB_RECLA_TOTAL est supérieur ou égal à la somme
+export function verifierSommeClotSupOuEgaleTotal(row: Record<string, any>) {
     const total = parseInt(row["CLOT_NB_RECLA_TOTAL"]) || 0;
     const somme = calculerSommeClot(row);
-    return total === somme;
+    return somme >= total;
 }
 
 

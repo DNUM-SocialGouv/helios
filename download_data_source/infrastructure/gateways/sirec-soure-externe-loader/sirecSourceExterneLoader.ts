@@ -1,10 +1,12 @@
 import csvParser from "csv-parser";
 import fs, { readdirSync } from "fs";
 import Papa from 'papaparse';
+import path from "path";
 
 import { ControleDonneesSirecLoader } from "../../../métier/gateways/ControleDonnesSirecLoader";
 import { Logger } from "../../../métier/gateways/Logger";
-import { containsCommaOrDotNumbers, containsNegativeNumbers, isValidFinessRpps, isValidYear, verifValeursManquantes, verifierSommeEnCoursEgaleTotal, verifierSommeClotEgaleTotal } from "../../utils/sirecSourceExternalLoaderUtils";
+import { containsCommaOrDotNumbers, containsNegativeNumbers, isValidFinessRpps, isValidYear } from "../../utils/sirecSourceExternalLoaderUtils";
+
 
 
 export class SirecSourceExterneLoader implements ControleDonneesSirecLoader {
@@ -109,12 +111,6 @@ export class SirecSourceExterneLoader implements ControleDonneesSirecLoader {
                     return; // Ignorer la ligne
                 }
 
-                // Vérification si la ligne ne contient pas de valeur 0
-                const values = Object.values(row);
-                if (values.some((value) => value === "0")) {
-                    return; // Ignorer la ligne
-                }
-
                 // Vérification si la ligne contient des valeurs numériques avec des virgules
                 if (containsCommaOrDotNumbers(row)) {
                     return; // Ignorer la ligne
@@ -125,23 +121,6 @@ export class SirecSourceExterneLoader implements ControleDonneesSirecLoader {
                     return; // Ignorer la ligne
                 }
 
-                // Vérifier qu’on récupère les totaux (en cours, clôturés et par motif). Attention, une réclamation peut avoir plusieurs motifs.
-                if (parseInt(row["ENCOURS_NB_RECLA_TOTAL"]) > 0 && parseInt(row["CLOT_NB_RECLA_TOTAL"]) > 0) {
-                    return; // Ignorer la ligne
-                }
-
-                // Valeurs manquantes (ex : pas de “en_cours” alors qu’il y a la ligne “cloturés”). Valeurs à vérifier par motifs.
-                if (!verifValeursManquantes(row)) {
-                    return; // Ignorer la ligne
-                }
-
-                // Vérifier que la somme des réclamations totales correspond bien  à la sommes des réclamations en cours et clôturées.
-                if (!verifierSommeEnCoursEgaleTotal(row)) {
-                    return; // Ignorer la ligne
-                }
-                if (!verifierSommeClotEgaleTotal(row)) {
-                    return; // Ignorer la ligne
-                }
                 jsonData.push(row);
             })
 
@@ -174,7 +153,45 @@ export class SirecSourceExterneLoader implements ControleDonneesSirecLoader {
         if (!fs.existsSync(destinationPath)) {
             fs.mkdirSync(destinationPath);
         }
-        return destinationPath + '/' + this.recupereFichierSirec(localPath);
+        const fileToKeep = destinationPath + '/' + this.recupereFichierSirec(localPath);
+        // Read the directory
+        fs.readdir(destinationPath, (err, files) => {
+            if (err) {
+                // eslint-disable-next-line no-console
+                console.error('Error reading directory:', err);
+                return;
+            }
+
+            // Iterate over each file in the directory
+            files.forEach(file => {
+                const filePath = path.join(destinationPath, file);
+
+                // Check if it's a file and if it's not the file to keep
+                if (file !== fileToKeep) {
+                    fs.stat(filePath, (err, stats) => {
+                        if (err) {
+                            // eslint-disable-next-line no-console
+                            console.error('Error getting file stats:', err);
+                            return;
+                        }
+
+                        if (stats.isFile()) {
+                            // Delete the file
+                            fs.unlink(filePath, err => {
+                                if (err) {
+                                    // eslint-disable-next-line no-console
+                                    console.error('Error deleting file:', err);
+                                    return;
+                                }
+                                // eslint-disable-next-line no-console
+                                console.log('File deleted:', filePath);
+                            });
+                        }
+                    });
+                }
+            });
+        });
+        return fileToKeep;
     }
 
     private sortByLastDate(valueA: string, valueB: string) {

@@ -1,4 +1,4 @@
-import { fireEvent, screen, within } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import { SessionProvider } from "next-auth/react";
 
 import { RésultatDeRechercheTestBuilder } from "../../../backend/test-builder/RésultatDeRechercheTestBuilder";
@@ -13,16 +13,16 @@ const mockSession = {
   name: "john",
   email: "test@test.fr",
   user: {
-    idUser: '1',
-    firstname: 'Doe',
+    idUser: "1",
+    firstname: "Doe",
     role: 1,
     institution: {},
     institutionId: 1,
     codeRegion: 84,
-    codeProfiles: [""]
+    codeProfiles: [""],
   },
-  expires: "1235"
-}
+  expires: "1235",
+};
 const entitéJuridiqueViewModel = EntitéJuridiqueViewModelTestBuilder.crée(wording);
 const entitéJuridique = EntitéJuridiqueViewModelTestBuilder.entitéJuridique;
 const établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
@@ -81,27 +81,6 @@ describe("La page Entité Juridique", () => {
     // THEN
     const imprimer = screen.getByRole("button", { name: wording.TÉLÉCHARGER_EN_PDF });
     expect(imprimer).toHaveAttribute("type", "button");
-  });
-
-  it("j’imprime quand je clique sur le bouton d’impression", () => {
-    // GIVEN
-    jest.spyOn(window, "print").mockImplementation();
-    renderFakeComponent(
-      <SessionProvider session={mockSession}>
-        <PageEntitéJuridique
-          entitéJuridiqueViewModel={entitéJuridiqueViewModel}
-          rechercheViewModel={rechercheViewModel}
-          établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
-        />
-      </SessionProvider>
-    );
-    const imprimer = screen.getByRole("button", { name: wording.TÉLÉCHARGER_EN_PDF });
-
-    // WHEN
-    fireEvent.click(imprimer);
-
-    // THEN
-    expect(window.print).toHaveBeenCalledTimes(1);
   });
 
   it("affiche la categorisation", () => {

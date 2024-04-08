@@ -1,42 +1,43 @@
 .container {
-    display: flex;
-    margin-bottom: 3rem;
+  display: flex;
+  margin-bottom: 3rem;
 }
 
-.container>div {
-    flex: 1;
-    width: 100%;
+.container > div {
+  flex: 1;
+  width: 100%;
 }
 
 .barContainerWidth {
-    width: 100%;
+  width: 100%;
 }
 
 .barWithToggleWidth {
     width: 450px;
 }
 
-@media print {
-    .container {
-        display: block;
-        margin-bottom: 3rem;
-    }
+/*@media print {
+  .container {
+    background-color: chocolate;
+    display: block;
+    margin-bottom: 3rem;
+  }
 
-    .container>div {
-        width: 100% !important;
-    }
+  .container > div {
+    width: 100% !important;
+  }
 
-    .barContainerWidth {
-        width: 100% !important;
-    }
+  .barContainerWidth {
+    width: 100% !important;
+  }
 
-    .barContainerWidth>canvas {
-        /* Adjust styles for printing */
-        width: 100% !important;
-        height: auto;
-    }
+  .barContainerWidth > canvas {
+    /* Adjust styles for printing * /
+    width: 100% !important;
+    height: auto;
+  }
 
-    .print-only {
-        page-break-inside: avoid;
-    }
-}
+  .print-only {
+    page-break-inside: avoid;
+  }
+}*/
