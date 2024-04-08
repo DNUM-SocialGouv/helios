@@ -25,7 +25,7 @@ def import_evenements_indesirables(chemin_local_du_fichier_evenements_indesirabl
     types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(equivalences_sivss_evenements_indesirables_helios)
     donnees_evenements_indesirables = lis_le_fichier_csv(chemin_local_du_fichier_evenements_indesirables, colonnes_a_lire_bloc_qualite_evenements_indesirables, types_des_colonnes)
     numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)
-    donnees_evenements_indesirables_reforme = reforme_les_donnees_indesirables(donnees_evenements_indesirables, logger)
+    donnees_evenements_indesirables_reforme = reforme_les_donnees_indesirables(donnees_evenements_indesirables)
     transform_donnees_evenements_indesirables = transform_les_donnees_evenements_indesirables_etablissements(
         donnees_evenements_indesirables_reforme, numéros_finess_des_établissements_connus, logger
     )

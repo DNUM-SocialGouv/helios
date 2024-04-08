@@ -24,9 +24,6 @@ def delete_files_in_directory(directory):
 def get_year_from_date(date_to_convert):
     return int(datetime.datetime.strptime(date_to_convert, '%d/%m/%Y').strftime("%Y"))
 
-def check_finess_number(finess):
-    return (len(finess) == 9) | (finess == 'nan')
-
 def filter_famille(famille):
     return (famille == 'Evénements indésirables/graves associés aux soins') | (famille == 'Evénements/incidents dans un établissement ou organisme')
 
@@ -38,7 +35,7 @@ def filter_etat(etat):
 
 def filter_evenements_indesirables(donnees_evenements_indesirables: pd.DataFrame):
     current_year = int(datetime.date.today().strftime("%Y"))
-    return  donnees_evenements_indesirables[(donnees_evenements_indesirables['MOTIF_CLOTURE'].apply(filter_motif)) & (donnees_evenements_indesirables['ETAT'].apply(filter_etat)) & (donnees_evenements_indesirables['FAMILLE_PRINCIPALE'].apply(filter_famille)) & (donnees_evenements_indesirables['DATE_RECEPTION'].apply(get_year_from_date).le(current_year)) & (donnees_evenements_indesirables['DATE_RECEPTION'].apply(get_year_from_date).ge(current_year - 3)) & (donnees_evenements_indesirables['NUMERO_SIVSS'].astype(str).str.len() == 6) & (donnees_evenements_indesirables['DECLARANT_ORGANISME_NUMERO_FINESS'].astype(str).apply(check_finess_number)) & (donnees_evenements_indesirables['SCC_ORGANISME_FINESS'].astype(str).apply(check_finess_number))]
+    return  donnees_evenements_indesirables[(donnees_evenements_indesirables['MOTIF_CLOTURE'].apply(filter_motif)) & (donnees_evenements_indesirables['ETAT'].apply(filter_etat)) & (donnees_evenements_indesirables['FAMILLE_PRINCIPALE'].apply(filter_famille)) & (donnees_evenements_indesirables['DATE_RECEPTION'].apply(get_year_from_date).le(current_year)) & (donnees_evenements_indesirables['DATE_RECEPTION'].apply(get_year_from_date).ge(current_year - 3)) & (donnees_evenements_indesirables['NUMERO_SIVSS'].astype(str).str.len() == 6)]
 
 def check_downloaded_sivss_file(chemin_local_du_fichier_evenements_indesirables: str, fichier_sivss_traite: str) -> None:
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(equivalences_sivss_evenements_indesirables_helios)
@@ -54,7 +51,7 @@ if __name__ == "__main__":
 
     if not os.path.exists(checked_sivss_data_path):
         os.makedirs(checked_sivss_data_path)
-        
+
     delete_files_in_directory(checked_sivss_data_path)
     fichiers = os.listdir(sivss_data_path)
 

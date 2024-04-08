@@ -14,12 +14,16 @@ from datacrawler.check_downloaded_sivss_file import (
 )
 
 def build_finess(row):
+    if('§' in str(row['SCC_ORGANISME_FINESS'])):
+        row['SCC_ORGANISME_FINESS'] = row['SCC_ORGANISME_FINESS'][:9]
+    if('§' in str(row['DECLARANT_ORGANISME_NUMERO_FINESS'])):
+        row['DECLARANT_ORGANISME_NUMERO_FINESS'] = row['DECLARANT_ORGANISME_NUMERO_FINESS'][:9]
     if pd.notna(row['SCC_ORGANISME_FINESS']):
         return row['SCC_ORGANISME_FINESS']
     else:
         return row['DECLARANT_ORGANISME_NUMERO_FINESS']
 
-def reforme_les_donnees_indesirables(donnees_evenements_indesirables: pd.DataFrame, logger: Logger) -> pd.DataFrame:
+def reforme_les_donnees_indesirables(donnees_evenements_indesirables: pd.DataFrame) -> pd.DataFrame:
     year_column = donnees_evenements_indesirables['DATE_RECEPTION'].apply(get_year_from_date)
     donnees_evenements_indesirables["FINESS"] = donnees_evenements_indesirables.apply(build_finess, axis=1)
     donnees_evenements_indesirables.drop(columns=["DECLARANT_ORGANISME_NUMERO_FINESS", "SCC_ORGANISME_FINESS"], inplace=True)
@@ -27,7 +31,7 @@ def reforme_les_donnees_indesirables(donnees_evenements_indesirables: pd.DataFra
     donnees_evenements_indesirables['ETAT'].replace({'Initial': 'EN_COURS', 'En gestion': 'EN_COURS', 'A qualifier': 'EN_COURS', 'A réguler': 'EN_COURS', 'A valider':'EN_COURS', 'Clôturé': 'CLOTURE' }, inplace=True)
     return donnees_evenements_indesirables
 
-def formate_la_date_de_cloture(données: pd.DataFrame, logger: Logger) -> pd.DataFrame:
+def formate_la_date_de_cloture(données: pd.DataFrame) -> pd.DataFrame:
     def formate_la_date(date_du_cpom: str) -> str:
         return datetime.strptime(date_du_cpom, "%d/%m/%Y").strftime("%Y-%m-%d")
 
@@ -49,6 +53,6 @@ def transform_les_donnees_evenements_indesirables_etablissements(
         .drop_duplicates(subset=index_evenement_indesirable)
         .sort_values(by=["annee"], ascending=False)
     )
-    return formate_la_date_de_cloture(donnees_evenements_indesirables_transforme, logger).set_index(index_evenement_indesirable)
+    return formate_la_date_de_cloture(donnees_evenements_indesirables_transforme).set_index(index_evenement_indesirable)
 
     
