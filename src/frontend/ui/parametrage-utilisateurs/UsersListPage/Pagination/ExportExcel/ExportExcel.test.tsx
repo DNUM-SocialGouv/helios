@@ -5,7 +5,7 @@ import { ProfilModel } from "../../../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../../../database/models/RoleModel";
 import { ExportToExcel, getCurrentDate, getSelectedInstitution, getSelectedProfile, getSelectedRole } from "./ExportExcel";
 
-const createDirectory = (path) => {
+const createDirectory = (path: string) => {
   try {
     fs.mkdirSync(path, { recursive: true });
     //console.log(`Directory "${path}" created successfully.`);
