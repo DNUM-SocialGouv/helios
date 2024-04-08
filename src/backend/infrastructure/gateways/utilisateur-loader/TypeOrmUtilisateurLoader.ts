@@ -18,7 +18,7 @@ import { UtilisateurLoader } from "../../../métier/gateways/UtilisateurLoader";
 import { sendEmail } from "../../../sendEmail";
 
 export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
-  constructor(private readonly orm: Promise<DataSource>) { }
+  constructor(private readonly orm: Promise<DataSource>) {}
   async getUserByCode(code: string): Promise<UtilisateurModel | null> {
     return await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: code } });
   }
@@ -236,6 +236,9 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         break;
       case "lastConnectionDate":
         orders = { lastConnectionDate: sortDir };
+        break;
+      case "dateCreation":
+        orders = { dateCreation: sortDir };
         break;
       case "etat":
         orders = { lastConnectionDate: sortDir };
