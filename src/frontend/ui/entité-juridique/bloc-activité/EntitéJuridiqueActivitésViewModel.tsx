@@ -98,14 +98,10 @@ export class EntitéJuridiqueActivitésViewModel {
   }
 
   public get nombrePassageUrgenceEstIlAutorisé(): boolean {
-    return this.entitéJuridiqueActivités.some(
-      (activité: EntitéJuridiqueActivités) => activité.nombreDePassagesAuxUrgences.dateMiseÀJourSource !== ''
-    );
+    return this.entitéJuridiqueActivités.some((activité: EntitéJuridiqueActivités) => activité.nombreDePassagesAuxUrgences.dateMiseÀJourSource !== "");
   }
 
   public get nombreHADEstIlAutorisé(): boolean {
-    return this.entitéJuridiqueActivités.some(
-      (activité: EntitéJuridiqueActivités) => activité.nombreSéjoursHad.dateMiseÀJourSource !== ''
-    );
+    return this.entitéJuridiqueActivités.some((activité: EntitéJuridiqueActivités) => activité.nombreSéjoursHad.dateMiseÀJourSource !== "");
   }
 }

@@ -26,6 +26,7 @@ import { Footer } from "../frontend/ui/commun/Footer/Footer";
 import { Header } from "../frontend/ui/commun/Header/Header";
 // import { Cookies } from "../frontend/ui/cookies/Cookies";
 import { resizeChartOnPrint } from "../plugins/resizeChartAtPrint";
+// import { Cookies } from "../frontend/ui/cookies/Cookies";
 
 export default function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const router = useRouter();
