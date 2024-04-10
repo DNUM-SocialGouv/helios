@@ -1,5 +1,7 @@
 .histogramme_horizontal_row_container {
+  width: 100%;
 }
+
 .histogramme_horizontal_row_container ul {
   margin: 3px 0 0 0;
 }
@@ -17,6 +19,7 @@
   user-select: none;
   height: 23px;
 }
+
 .motif_number {
   font-weight: bold;
 }
