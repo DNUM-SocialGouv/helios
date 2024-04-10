@@ -35,6 +35,10 @@ services:
         source: ${PWD}/data_set/flux_sirec
         target: /home/HELIOS/SIREC
       - type: bind
+        source: $PWD/data_set/flux_siicea
+        target: /home/HELIOS/SIICEA
+      - type: bind
+        source: $HOME/.ssh/sftp_local.pub
         source: ${PWD}/data_set/flux_sivss
         target: /home/HELIOS/SIVSS
       - type: bind

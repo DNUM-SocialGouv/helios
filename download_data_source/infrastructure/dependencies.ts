@@ -17,6 +17,7 @@ import { dotEnvConfig } from "./gateways/dot-env/dotEnvConfig";
 import { DnumSftpDownloadRawData } from "./gateways/download-raw-data/DnumSftpDownloadRawData";
 import { FinessSftpDownloadRawData } from "./gateways/download-raw-data/FinessSftpDownloadRawData";
 import { SirecSftpDownloadRawData } from "./gateways/download-raw-data/SirecSftpDownloadRawData";
+import { SiiceaSftpDownloadRawData } from "./gateways/download-raw-data/SiiceaSftpDownloadRawData";
 import { SivssSftpDownloadRawData } from "./gateways/download-raw-data/SivssSftpDownloadRawData";
 import { TypeOrmEntitéJuridiqueHeliosLoader } from "./gateways/entité-juridique-helios-loader/TypeOrmEntitéJuridiqueHeliosLoader";
 import { TypeOrmEntitéJuridiqueHeliosRepository } from "./gateways/entité-juridique-helios-repository/TypeOrmEntitéJuridiqueHeliosRepository";
@@ -41,6 +42,7 @@ export type Dependencies = Readonly<{
   entitéJuridiqueHeliosLoader: EntitéJuridiqueHeliosLoader;
   finessDownloadRawData: DownloadRawData;
   sirecDownloadRawData: DownloadRawData;
+  siiceaDownloadRawData: DownloadRawData;
   sivssDownloadRawData: DownloadRawData;
   établissementTerritorialSourceExterneLoader: ÉtablissementTerritorialSourceExterneLoader;
   établissementTerritorialHeliosLoader: ÉtablissementTerritorialHeliosLoader;
@@ -62,6 +64,7 @@ const createDependencies = (): Dependencies => {
   const cheminDesFichiersSourcesDiamantSurLeSftpDnum = "DIAMANT/incoming";
 
   const cheminDesFichiersSourcesSirecSurLeSftpDnum = "SIREC";
+  const cheminDesFichiersSourcesSiiceaSurLeSftpDnum = "SIICEA";
   const cheminDesFichiersSourcesSivssSurLeSftpDnum = "SIVSS";
 
   const logger = new ConsoleLogger();
@@ -93,6 +96,11 @@ const createDependencies = (): Dependencies => {
       environmentVariables.SIREC_DATA_PATH,
       logger
     ),
+    siiceaDownloadRawData: new SiiceaSftpDownloadRawData(
+      new Ssh2SftpClient(),
+      environmentVariables,
+      cheminDesFichiersSourcesSiiceaSurLeSftpDnum,
+      environmentVariables.SIICEA_DATA_PATH,
     sivssDownloadRawData: new SivssSftpDownloadRawData(
       new Ssh2SftpClient(),
       environmentVariables,
