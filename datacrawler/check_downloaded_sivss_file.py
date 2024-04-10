@@ -5,21 +5,13 @@ import pandas as pd
 
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_sirec_sivss
+from datacrawler.extract.delete_files_in_directory import delete_files_in_directory
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.transform.equivalences_sivss_helios import (
     colonnes_a_lire_bloc_qualite_evenements_indesirables,
     extrais_l_equivalence_des_types_des_colonnes,
     equivalences_sivss_evenements_indesirables_helios,
 )
-
-def delete_files_in_directory(directory):
-    # Get the list of files in the directory
-    file_list = os.listdir(directory)
-    
-    # Iterate through each file and delete it
-    for file_name in file_list:
-        file_path = os.path.join(directory, file_name)
-        os.remove(file_path)
 
 def get_year_from_date(date_to_convert):
     return int(datetime.datetime.strptime(date_to_convert, '%d/%m/%Y').strftime("%Y"))
