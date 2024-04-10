@@ -16,8 +16,8 @@ import { ÉtablissementTerritorialSourceExterneLoader } from "../métier/gateway
 import { dotEnvConfig } from "./gateways/dot-env/dotEnvConfig";
 import { DnumSftpDownloadRawData } from "./gateways/download-raw-data/DnumSftpDownloadRawData";
 import { FinessSftpDownloadRawData } from "./gateways/download-raw-data/FinessSftpDownloadRawData";
-import { SirecSftpDownloadRawData } from "./gateways/download-raw-data/SirecSftpDownloadRawData";
 import { SiiceaSftpDownloadRawData } from "./gateways/download-raw-data/SiiceaSftpDownloadRawData";
+import { SirecSftpDownloadRawData } from "./gateways/download-raw-data/SirecSftpDownloadRawData";
 import { SivssSftpDownloadRawData } from "./gateways/download-raw-data/SivssSftpDownloadRawData";
 import { TypeOrmEntitéJuridiqueHeliosLoader } from "./gateways/entité-juridique-helios-loader/TypeOrmEntitéJuridiqueHeliosLoader";
 import { TypeOrmEntitéJuridiqueHeliosRepository } from "./gateways/entité-juridique-helios-repository/TypeOrmEntitéJuridiqueHeliosRepository";
@@ -101,6 +101,8 @@ const createDependencies = (): Dependencies => {
       environmentVariables,
       cheminDesFichiersSourcesSiiceaSurLeSftpDnum,
       environmentVariables.SIICEA_DATA_PATH,
+      logger
+    ),
     sivssDownloadRawData: new SivssSftpDownloadRawData(
       new Ssh2SftpClient(),
       environmentVariables,
