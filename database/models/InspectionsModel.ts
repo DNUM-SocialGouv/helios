@@ -1,9 +1,12 @@
-import { Entity, Column, PrimaryColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: "inspections_controles_etablissement_territorial" })
 export class InspectionsControlesETModel {
 
-    @PrimaryColumn({ length: 9, name: "numero_finess_etablissement_territorial" })
+    @PrimaryGeneratedColumn({ name: "inspection_id" })
+    public id!: number;
+
+    @Column({ length: 9, name: "numero_finess_etablissement_territorial" })
     public numéroFinessÉtablissementTerritorial!: string;
 
     @Column({ name: "type_mission" })

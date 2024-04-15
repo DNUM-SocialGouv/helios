@@ -8,6 +8,7 @@ export class AjoutTableInspectionsControles1712743083892 implements MigrationInt
         ADD VALUE IF NOT EXISTS 'siicea';
 
         CREATE TABLE inspections_controles_etablissement_territorial (
+          inspection_id bigserial NOT NULL,
           numero_finess_etablissement_territorial VARCHAR(9) NOT NULL,
           type_mission VARCHAR(255), 
           theme_regional VARCHAR(255), 
@@ -25,9 +26,9 @@ export class AjoutTableInspectionsControles1712743083892 implements MigrationInt
           saisine_parquet INTEGER,
           saisine_autre INTEGER,
 
-          PRIMARY KEY (numero_finess_etablissement_territorial),
+          PRIMARY KEY (inspection_id),
 
-          CONSTRAINT evenement_indesirable_etablissement_territorial_finess_foreign_key
+          CONSTRAINT inspection_etablissement_territorial_finess_foreign_key
           FOREIGN KEY (numero_finess_etablissement_territorial)
           REFERENCES etablissement_territorial (numero_finess_etablissement_territorial)
           ON DELETE CASCADE
@@ -37,7 +38,7 @@ export class AjoutTableInspectionsControles1712743083892 implements MigrationInt
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
-        DROP TABLE evenement_indesirable_etablissement_territorial;
+        DROP TABLE inspections_controles_etablissement_territorial;
         `);
     }
 
