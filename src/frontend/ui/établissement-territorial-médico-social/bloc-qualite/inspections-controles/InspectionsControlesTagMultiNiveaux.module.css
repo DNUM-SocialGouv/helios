@@ -1,0 +1,38 @@
+.total_events {
+  display: flex;
+  font-weight: 500;
+}
+
+.total_events_text {
+  width: 30%;
+}
+
+.list-style {
+  list-style: inside !important;
+}
+
+.list-element-style {
+  padding-bottom: 0.25rem !important;
+}
+
+.list-element-style p {
+  margin-right: 0.25rem;
+}
+
+.iconeTitle {
+  zoom: 0.7;
+  margin-top: -2px;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-top: 15px;
+}
+
+.readMoreContainer {
+  display: block;
+  width: 100%;
+  text-align: center;
+}

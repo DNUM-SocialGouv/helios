@@ -2,9 +2,7 @@ import { EvenementsIndesirables, ÉtablissementTerritorialQualite } from "../../
 import { Wording } from "../../../configuration/wording/Wording";
 import { StringFormater } from "../../commun/StringFormater";
 
-
 export class ÉtablissementTerritorialQualiteSanitaireViewModel {
-
   public wording: Wording;
   public etablissementTerritorialQualiteSanitaire: ÉtablissementTerritorialQualite;
 
@@ -13,35 +11,38 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
     this.etablissementTerritorialQualiteSanitaire = etablissementTerritorialQualiteSanitaire;
   }
 
-
   public get lesReclamationsNeSontPasRenseignées(): boolean {
     return this.etablissementTerritorialQualiteSanitaire.reclamations.length === 0;
   }
 
   public get lesReclamationsNeSontPasAutorisées(): boolean {
-    return this.etablissementTerritorialQualiteSanitaire.reclamations.length === 1 &&
-      this.etablissementTerritorialQualiteSanitaire.reclamations[0].details.length === 0;
+    return (
+      this.etablissementTerritorialQualiteSanitaire.reclamations.length === 1 &&
+      this.etablissementTerritorialQualiteSanitaire.reclamations[0].details.length === 0
+    );
   }
 
   public get totalAssocieAuxsoins(): number {
-    return this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[0].evenementsClotures.length +
-      this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[0].evenementsEncours.length;
+    return (
+      this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[0].evenementsClotures.length +
+      this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[0].evenementsEncours.length
+    );
   }
 
   public get totalDansET(): number {
-    return this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[1].evenementsClotures.length +
-      this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[1].evenementsEncours.length;
+    return (
+      this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[1].evenementsClotures.length +
+      this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[1].evenementsEncours.length
+    );
   }
 
   public get lesEvenementsIndesirablesNeSontPasRenseignées(): boolean {
-    return this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables.length === 2 && this.totalAssocieAuxsoins === 0
-      && this.totalDansET === 0;
+    return this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables.length === 2 && this.totalAssocieAuxsoins === 0 && this.totalDansET === 0;
   }
 
   public get lesEvenementsIndesirablesNeSontPasAutorisées(): boolean {
     return this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables.length === 0;
   }
-
 
   public get lesDonneesQualiteNeSontPasRenseignées(): boolean {
     return this.lesReclamationsNeSontPasRenseignées && this.lesEvenementsIndesirablesNeSontPasRenseignées;
@@ -50,14 +51,14 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
   public get lesDonnéesQualitePasRenseignees(): string[] {
     const nonRenseignees: string[] = [];
     if (this.lesReclamationsNeSontPasRenseignées) nonRenseignees.push(this.wording.RECLAMATIONS);
-    if (this.lesEvenementsIndesirablesNeSontPasRenseignées) nonRenseignees.push(this.wording.EVENEMENTS_INDESIRABLES_NON_RENSEIGNES)
+    if (this.lesEvenementsIndesirablesNeSontPasRenseignées) nonRenseignees.push(this.wording.EVENEMENTS_INDESIRABLES_NON_RENSEIGNES);
     return nonRenseignees;
   }
 
   public get lesDonnéesQualitePasAutorisés(): string[] {
     const nonAutorisés: string[] = [];
     if (this.lesReclamationsNeSontPasAutorisées) nonAutorisés.push(this.wording.RECLAMATIONS);
-    if (this.lesEvenementsIndesirablesNeSontPasAutorisées) nonAutorisés.push(this.wording.EVENEMENTS_INDESIRABLES)
+    if (this.lesEvenementsIndesirablesNeSontPasAutorisées) nonAutorisés.push(this.wording.EVENEMENTS_INDESIRABLES);
     return nonAutorisés;
   }
 
@@ -65,9 +66,14 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
     const reclamationData: { [key: number]: any } = {};
     for (const reclamation of this.etablissementTerritorialQualiteSanitaire.reclamations) {
       const key = reclamation.année;
-      const value = { total_clotures: reclamation.totalClotures, total_encours: reclamation.totalEncours, dateMiseAJourSource: reclamation.dateMiseÀJourSource, details: reclamation.details };
+      const value = {
+        total_clotures: reclamation.totalClotures,
+        total_encours: reclamation.totalEncours,
+        dateMiseAJourSource: reclamation.dateMiseÀJourSource,
+        details: reclamation.details,
+      };
       reclamationData[key] = value;
-    };
+    }
     return reclamationData;
   }
 
@@ -81,18 +87,21 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
 
   public get buildEIsData(): any {
     const evenementsIndesirables: { [key: number]: EvenementsIndesirables[] } = {};
-    this.anneesEIs.forEach(key => {
-      evenementsIndesirables[key] = [{
-        libelle: this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[0].libelle,
-        evenementsEncours: [],
-        evenementsClotures: [],
-        dateMiseAJourSource: this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[0].dateMiseAJourSource,
-      }, {
-        libelle: this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[1].libelle,
-        evenementsEncours: [],
-        evenementsClotures: [],
-        dateMiseAJourSource: this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[1].dateMiseAJourSource,
-      }];
+    this.anneesEIs.forEach((key) => {
+      evenementsIndesirables[key] = [
+        {
+          libelle: this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[0].libelle,
+          evenementsEncours: [],
+          evenementsClotures: [],
+          dateMiseAJourSource: this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[0].dateMiseAJourSource,
+        },
+        {
+          libelle: this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[1].libelle,
+          evenementsEncours: [],
+          evenementsClotures: [],
+          dateMiseAJourSource: this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[1].dateMiseAJourSource,
+        },
+      ];
     });
 
     for (let index = 0; index < this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables.length; index++) {
@@ -107,18 +116,16 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
     return evenementsIndesirables;
   }
 
-
   public get anneesEIs(): number[] {
     const annees: number[] = [];
     for (let index = 0; index < this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables.length; index++) {
       for (const event of this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[index].evenementsEncours) {
-        if (!annees.includes(event.annee)) annees.push(event.annee)
+        if (!annees.includes(event.annee)) annees.push(event.annee);
       }
       for (const event of this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[index].evenementsClotures) {
-        if (!annees.includes(event.annee)) annees.push(event.annee)
+        if (!annees.includes(event.annee)) annees.push(event.annee);
       }
     }
     return annees.sort().reverse();
   }
-
 }

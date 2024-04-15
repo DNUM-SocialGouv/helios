@@ -16,9 +16,7 @@ type BlocQualitéProps = Readonly<{
 const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel }: BlocQualitéProps) => {
   const { wording } = useDependencies();
 
-  if (
-    etablissementTerritorialQualiteMédicoSocialViewModel.lesDonneesQualiteNeSontPasRenseignées
-  ) {
+  if (etablissementTerritorialQualiteMédicoSocialViewModel.lesDonneesQualiteNeSontPasRenseignées) {
     return <BlocIndicateurVide title={wording.TITRE_BLOC_QUALITE} />;
   }
 
@@ -34,6 +32,7 @@ const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel }:
       ) : (
         <></>
       )}
+      888888888888888888888888888888888
       <ul className="indicateurs">
         {!etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasRenseignées &&
           !etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasAutorisées && (

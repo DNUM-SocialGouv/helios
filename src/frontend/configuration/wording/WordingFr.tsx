@@ -232,8 +232,11 @@ export class WordingFr implements Wording {
   readonly MOTIF_155: string = "À renseigner";
   readonly MOTIF_156: string = "COVID-19";
 
+  readonly INSPECTIONS_CONTROLES: string = "Inspections / Contrôles";
+
   readonly EVENEMENTS_INDESIRABLES: string = "Evènements indésirables";
-  readonly EVENEMENTS_INDESIRABLES_NON_RENSEIGNES: string = "Evènements indésirables. ⚠ L'absence de signalement d'événements indésirables nuit à la prise de mesures correctives appropriées.";
+  readonly EVENEMENTS_INDESIRABLES_NON_RENSEIGNES: string =
+    "Evènements indésirables. ⚠ L'absence de signalement d'événements indésirables nuit à la prise de mesures correctives appropriées.";
   readonly EVENTS_TOTAL_NUMBER: string = "Nombre total d'évènements:";
   readonly EVENEMENTS_ASSOCIE_AUX_SOINS: string = "Evènements indésirables/graves associés aux soins";
   readonly EVENEMENTS_DANS_ET: string = "Evènements/incidents dans un établissement ou organisme";
@@ -501,10 +504,9 @@ export class WordingFr implements Wording {
   readonly CREATED_BY: string = "Créée par";
   readonly CREATION_DATE: string = "Date de création";
   readonly PROFILE_CODE: string = "Code";
-  readonly PROFILE_TITLE: string = "Libellé de l'autorisation"
+  readonly PROFILE_TITLE: string = "Libellé de l'autorisation";
   readonly VOUS_NAVEZ_AUCUN_PROFIL: string = "Vous n'avez aucun profil";
   readonly PROJECT_TEAM: string = "Équipe projet";
-
 
   //  Profile page
   readonly USER_PROFILE: string = "Mes informations";

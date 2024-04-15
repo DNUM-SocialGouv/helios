@@ -217,6 +217,8 @@ export interface Wording {
   readonly EVENEMENTS_ASSOCIE_AUX_SOINS: string;
   readonly EVENEMENTS_DANS_ET: string;
 
+  readonly INSPECTIONS_CONTROLES: string;
+
   // Bloc Autorisation Sanitaire
   readonly AUTRES_ACTIVITÉS: string;
   readonly AUTRES_ACTIVITÉS_SAN: string;
@@ -329,7 +331,6 @@ export interface Wording {
   readonly RPU: ReactElement;
   readonly SIREC: ReactElement;
   readonly SIVSS: ReactElement;
-
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string;
