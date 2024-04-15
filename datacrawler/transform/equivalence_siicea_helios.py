@@ -28,7 +28,7 @@ equivalences_siicea_helios: EquivalencesSiiceaHelios = {
 
 colonnes_a_lire_bloc_qualite_inspections: List[str] = list(equivalences_siicea_helios.keys())
 
-index_evenement_indesirable: List[str] = [
+index_inspections_controles: List[str] = [
     "numero_finess_etablissement_territorial"
 ]
 

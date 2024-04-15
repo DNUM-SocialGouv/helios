@@ -552,7 +552,8 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       evenementsEncours: [],
       evenementsClotures: [],
       dateMiseAJourSource: '2024-03-15'
-    }]
+    }],
+    inspectionsEtControles: { dateMiseAJourSource: '2023-02-02', inspectionsEtControles: [] }
   };
 
   public static crée(

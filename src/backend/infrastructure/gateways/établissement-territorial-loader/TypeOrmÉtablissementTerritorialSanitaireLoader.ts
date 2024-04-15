@@ -6,6 +6,7 @@ import { AutreActivitéSanitaireModel } from "../../../../../database/models/Aut
 import { CapacitéAutorisationSanitaireModel } from "../../../../../database/models/CapacitéAutorisationSanitaireModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EvenementIndesirableETModel } from "../../../../../database/models/EvenementIndesirableModel";
+import { InspectionsControlesETModel } from "../../../../../database/models/InspectionsModel";
 import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
@@ -102,11 +103,21 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       .getRepository(DateMiseÀJourFichierSourceModel)
       .findOneBy({ fichier: FichierSource.SIREC })) as DateMiseÀJourFichierSourceModel;
 
+    const inspectionsEtControles = await (await this.orm)
+      .getRepository(InspectionsControlesETModel)
+      .find({ where: { numéroFinessÉtablissementTerritorial } });
+
+    const dateMiseAjourSIICEA = (await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.SIICEA })) as DateMiseÀJourFichierSourceModel;
+
     return this.construitsQualite(
       reclamations,
       dateMisAJour.dernièreMiseÀJour,
       evenementsIndesirables,
-      dateMiseAjourSIVSS.dernièreMiseÀJour
+      dateMiseAjourSIVSS.dernièreMiseÀJour,
+      inspectionsEtControles,
+      dateMiseAjourSIICEA.dernièreMiseÀJour
     );
   }
 
@@ -128,12 +139,15 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     reclamations: ReclamationETModel[],
     dateMisAJour: string,
     evenementsIndesirables: EvenementIndesirableETModel[],
-    dateMiseAjourSIVSS: string
+    dateMiseAjourSIVSS: string,
+    inspections: InspectionsControlesETModel[],
+    dateMiseAjourSiicea: string
 
   ): ÉtablissementTerritorialQualite {
     return {
       reclamations: this.construitsReclamations(reclamations, dateMisAJour),
-      evenementsIndesirables: this.construitsEvenementsIndesirables(evenementsIndesirables, dateMiseAjourSIVSS)
+      evenementsIndesirables: this.construitsEvenementsIndesirables(evenementsIndesirables, dateMiseAjourSIVSS),
+      inspectionsEtControles: this.construisInspections(inspections, dateMiseAjourSiicea)
     }
   }
 
@@ -251,6 +265,29 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       }
     });
     return [evenementsIndesirableAssocieAuxSoins, evenementsIndesirableParET]
+  }
+
+  private construisInspections = (inspections: InspectionsControlesETModel[], dateMisAJour: string) => {
+    const inspectionsEtControles = inspections.map((inspection: InspectionsControlesETModel) => {
+      return {
+        typeMission: inspection.typeMission,
+        themeRegional: inspection.themeRegional,
+        typePlannification: inspection.typePlannification,
+        statutMission: inspection.statutMission,
+        dateVisite: inspection.dateVisite,
+        dateRapport: inspection.dateRapport,
+        nombreEcart: inspection.nombreEcart,
+        nombreRemarque: inspection.nombreRemarque,
+        injonction: inspection.injonction,
+        prescription: inspection.prescription,
+        recommandation: inspection.recommandation,
+        saisineCng: inspection.saisineCng,
+        saisineJuridiction: inspection.saisineJuridiction,
+        saisineParquet: inspection.saisineParquet,
+        saisineAutre: inspection.saisineAutre
+      }
+    })
+    return { dateMiseAJourSource: dateMisAJour, inspectionsEtControles: inspectionsEtControles };
   }
 
   private async chargeLesReconnaissancesContractuellesModel(
