@@ -21,18 +21,19 @@ describe("La page établissement territorial - bloc qualité", () => {
                 evenementsEncours: [],
                 evenementsClotures: [],
                 dateMiseAJourSource: '2024-03-15'
-            }]
+            }],
+            inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] }
         },
     );
 
     const qualiteEIViewModel = new ÉtablissementTerritorialQualiteMédicoSocialViewModel(
         wording,
-        { reclamations: [], evenementsIndesirables: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.qualite.evenementsIndesirables },
+        { reclamations: [], evenementsIndesirables: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.qualite.evenementsIndesirables, inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] } },
     );
 
     const qualiteRecViewModel = new ÉtablissementTerritorialQualiteMédicoSocialViewModel(
         wording,
-        { reclamations: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.qualite.reclamations, evenementsIndesirables: [] },
+        { reclamations: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.qualite.reclamations, evenementsIndesirables: [], inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] } },
     );
 
     it("affiche aucune donnée pour cet établissement", () => {

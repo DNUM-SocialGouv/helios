@@ -652,7 +652,8 @@ export class ÉtablissementTerritorialTestBuilder {
         "evenementsClotures": [],
         "libelle": "Evénements/incidents dans un établissement ou organisme",
       }
-    ]
+    ],
+    inspectionsEtControles: { dateMiseAJourSource: '2022-02-02', inspectionsEtControles: [] }
   }
 
   public static créeUneIdentitéMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialIdentité>): ÉtablissementTerritorialIdentité {

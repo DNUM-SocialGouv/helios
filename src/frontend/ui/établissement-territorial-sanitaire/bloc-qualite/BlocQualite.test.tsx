@@ -11,7 +11,8 @@ describe("La page établissement territorial Sanitaire - bloc qualité", () => {
     const qualiteViewModel = new ÉtablissementTerritorialQualiteSanitaireViewModel(
         wording,
         {
-            reclamations: [], evenementsIndesirables: [{
+            reclamations: [],
+            evenementsIndesirables: [{
                 libelle: 'Evènements indésirables/graves associés aux soins',
                 evenementsEncours: [],
                 evenementsClotures: [],
@@ -21,18 +22,19 @@ describe("La page établissement territorial Sanitaire - bloc qualité", () => {
                 evenementsEncours: [],
                 evenementsClotures: [],
                 dateMiseAJourSource: '2024-03-15'
-            }]
+            }],
+            inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] }
         },
     );
 
     const qualiteEIViewModel = new ÉtablissementTerritorialQualiteSanitaireViewModel(
         wording,
-        { reclamations: [], evenementsIndesirables: ÉtablissementTerritorialSanitaireViewModelTestBuilder.qualite.evenementsIndesirables },
+        { reclamations: [], evenementsIndesirables: ÉtablissementTerritorialSanitaireViewModelTestBuilder.qualite.evenementsIndesirables, inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] } },
     );
 
     const qualiteRecViewModel = new ÉtablissementTerritorialQualiteSanitaireViewModel(
         wording,
-        { reclamations: ÉtablissementTerritorialSanitaireViewModelTestBuilder.qualite.reclamations, evenementsIndesirables: [] },
+        { reclamations: ÉtablissementTerritorialSanitaireViewModelTestBuilder.qualite.reclamations, evenementsIndesirables: [], inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] } },
     );
 
     it("affiche aucune donnée pour cet établissement", () => {
