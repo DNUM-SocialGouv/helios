@@ -30,8 +30,6 @@ def transform_les_donnees_inspections_etablissements(
     donnees_inspections_transforme = (
         donnees_inspections_controles[est_dans_siicea]
         .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(equivalences_siicea_helios))
-        .dropna(subset=index_inspections_controles)
-        .drop_duplicates(subset=index_inspections_controles)
     )
     return formate_les_dates(donnees_inspections_transforme).set_index(index_inspections_controles)
 
