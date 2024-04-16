@@ -11,6 +11,7 @@ equivalences_siicea_helios: EquivalencesSiiceaHelios = {
     "Code FINESS": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
     "Type de mission": ColonneHelios(nom="type_mission", type=str),
     "Thème régional": ColonneHelios(nom="theme_regional", type=str),
+    "Modalité de la mission": ColonneHelios(nom="modalite_mission", type=str),
     "Type de planification": ColonneHelios(nom="type_plannification", type=str),
     "Date réelle Visite": ColonneHelios(nom="date_visite", type=str),
     "Date réelle Rapport": ColonneHelios(nom="date_rapport", type=str),

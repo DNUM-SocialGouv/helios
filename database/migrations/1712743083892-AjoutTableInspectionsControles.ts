@@ -13,6 +13,7 @@ export class AjoutTableInspectionsControles1712743083892 implements MigrationInt
           type_mission VARCHAR(255), 
           theme_regional VARCHAR(255), 
           type_plannification VARCHAR(255),
+          modalite_mission VARCHAR(255),
           statut_mission VARCHAR(255),
           date_visite DATE,
           date_rapport DATE,

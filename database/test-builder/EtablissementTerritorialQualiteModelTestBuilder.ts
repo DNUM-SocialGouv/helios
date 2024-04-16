@@ -55,6 +55,7 @@ export class ÉtablissementTerritorialQualitéModelTestBuilder {
         établissementTerritorialICModel.dateVisite = champsSurchargés?.dateVisite || '2023-03-02';
         établissementTerritorialICModel.themeRegional = champsSurchargés?.themeRegional || 'Contrôles sur pièces - PLAN EHPAD 2022 2024';
         établissementTerritorialICModel.typeMission = champsSurchargés?.typeMission || 'Contrôle sur pièces';
+        établissementTerritorialICModel.modaliteMission = champsSurchargés?.modaliteMission || 'Inopinée';
         établissementTerritorialICModel.typePlannification = champsSurchargés?.typePlannification || 'Hors programme';
         établissementTerritorialICModel.statutMission = champsSurchargés?.statutMission || 'Clôturé';
         établissementTerritorialICModel.nombreEcart = champsSurchargés?.nombreEcart || 1;
