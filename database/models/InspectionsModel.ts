@@ -18,6 +18,9 @@ export class InspectionsControlesETModel {
     @Column({ name: "type_plannification" })
     public typePlannification!: string;
 
+    @Column({ name: "modalite_mission" })
+    public modaliteMission!: string;
+
     @Column({ name: "date_visite", type: "date" })
     public dateVisite!: string;
 

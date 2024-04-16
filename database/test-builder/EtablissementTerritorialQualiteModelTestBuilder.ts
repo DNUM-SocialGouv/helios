@@ -1,4 +1,5 @@
 import { EtatSignal, EvenementIndesirableETModel } from "../models/EvenementIndesirableModel";
+import { InspectionsControlesETModel } from "../models/InspectionsModel";
 import { ReclamationETModel } from "../models/ReclamationETModel";
 
 export class ÉtablissementTerritorialQualitéModelTestBuilder {
@@ -45,5 +46,28 @@ export class ÉtablissementTerritorialQualitéModelTestBuilder {
         établissementTerritorialEIModel.etat = champsSurchargés?.etat || EtatSignal.CLOTURE;
         établissementTerritorialEIModel.numeroSIVSS = champsSurchargés?.numeroSIVSS || '123456'
         return établissementTerritorialEIModel;
+    }
+
+    public static créeLesInspectionsEtControles(champsSurchargés?: Partial<InspectionsControlesETModel>): InspectionsControlesETModel {
+        const établissementTerritorialICModel = new InspectionsControlesETModel();
+        établissementTerritorialICModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '010000040';
+        établissementTerritorialICModel.dateRapport = champsSurchargés?.dateRapport || '2023-03-02';
+        établissementTerritorialICModel.dateVisite = champsSurchargés?.dateVisite || '2023-03-02';
+        établissementTerritorialICModel.themeRegional = champsSurchargés?.themeRegional || 'Contrôles sur pièces - PLAN EHPAD 2022 2024';
+        établissementTerritorialICModel.typeMission = champsSurchargés?.typeMission || 'Contrôle sur pièces';
+        établissementTerritorialICModel.modaliteMission = champsSurchargés?.modaliteMission || 'Inopinée';
+        établissementTerritorialICModel.typePlannification = champsSurchargés?.typePlannification || 'Hors programme';
+        établissementTerritorialICModel.statutMission = champsSurchargés?.statutMission || 'Clôturé';
+        établissementTerritorialICModel.nombreEcart = champsSurchargés?.nombreEcart || 1;
+        établissementTerritorialICModel.nombreRemarque = champsSurchargés?.nombreRemarque || 1;
+        établissementTerritorialICModel.injonction = champsSurchargés?.injonction || 1;
+        établissementTerritorialICModel.prescription = champsSurchargés?.prescription || 1;
+        établissementTerritorialICModel.recommandation = champsSurchargés?.recommandation || 1;
+        établissementTerritorialICModel.saisineCng = champsSurchargés?.saisineCng || 1;
+        établissementTerritorialICModel.saisineJuridiction = champsSurchargés?.saisineJuridiction || 1;
+        établissementTerritorialICModel.saisineParquet = champsSurchargés?.saisineParquet || 1;
+        établissementTerritorialICModel.saisineAutre = champsSurchargés?.saisineAutre || 1;
+
+        return établissementTerritorialICModel;
     }
 }

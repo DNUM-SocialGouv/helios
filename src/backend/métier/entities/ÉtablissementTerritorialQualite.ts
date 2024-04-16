@@ -25,6 +25,7 @@ export type Inspection = Readonly<{
     themeRegional: string;
     typePlannification: string;
     statutMission: string;
+    modaliteMission: string;
     dateVisite: string;
     dateRapport: string;
     nombreEcart: number;

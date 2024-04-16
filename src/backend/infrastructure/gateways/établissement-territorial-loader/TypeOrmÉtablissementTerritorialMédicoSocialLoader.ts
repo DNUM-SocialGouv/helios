@@ -546,6 +546,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
         themeRegional: inspection.themeRegional,
         typePlannification: inspection.typePlannification,
         statutMission: inspection.statutMission,
+        modaliteMission: inspection.modaliteMission,
         dateVisite: inspection.dateVisite,
         dateRapport: inspection.dateRapport,
         nombreEcart: inspection.nombreEcart,
