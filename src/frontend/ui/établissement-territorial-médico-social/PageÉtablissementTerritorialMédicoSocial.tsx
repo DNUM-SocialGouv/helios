@@ -63,7 +63,6 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
       onBeforeGetContentResolve.current();
     }
   }, [onBeforeGetContentResolve.current]);
-
   return (
     <main className="fr-container">
       <Head>
@@ -89,6 +88,7 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
           <BlocBudgetEtFinancesMédicoSocial
             établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={établissementTerritorialViewModel.budgetEtFinancesViewModel}
           />
+
           <BlocQualite etablissementTerritorialQualiteMédicoSocialViewModel={établissementTerritorialViewModel.qualiteViewModel} />
         </div>
       </>

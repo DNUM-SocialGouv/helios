@@ -14,58 +14,62 @@ export const ContenuInspectionsControles = ({ dateDeMiseÀJour, source }: Conten
     <>
       <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
       <p>
-        test 77777777777777777777777777777777777777777777777 88888888888888888888888888888888888888 Hélios restitue les données de SIVSS sur les deux «familles»
-        de signaux suivants: les évènements indésirables/graves associé aux soins (EIAS/EIGS) et les évènements/incidents dans un établissement ou un organisme.
+        Les ARS mènent des missions d’inspection, contrôle et évaluation sur l’ensemble de leurs champs de compétence. Ces contrôles et inspections visent à
+        constater un dysfonctionnement, un écart à la réglementation et aux bonnes pratiques puis ordonner ou recommander des solutions pour y remédier.
       </p>
       <p>
-        Un <b>évènement indésirable associé aux soins (EIAS)</b> est un évènement ou une circonstance associé(e) aux soins qui aurait pu entrainer ou a entrainé
-        une atteinte pour un patient et dont on souhaite qu&apos;il ne se produise pas de nouveau.
+        <u>Type de mission:</u>
+      </p>
+
+      <p>
+        Inspection : contrôle spécifique réalisé à partir d’une démarche sur place. Elle est notamment diligentée lorsqu'il existe des présomptions de
+        dysfonctionnement et ses recommandations sont essentiellement de nature corrective.
       </p>
       <p>
-        Un <b>évènement indésirable grave (EIGS)</b> est un évènement inattendu au regard de l&apos;état de santé et de la pathologie de la personne et dont les
-        conséquences sont le décès, la mise en jeu du pronostic vital, la survenue probable d&apos;un déficit fonctionnel permanent, y compris une anomalie ou
-        une malformation congénitale.
-      </p>
-      <br />
-      Les EIGS sont soumis à des obligations réglementaires de signalement et d&apos;analyse par les professionnels de santé. La déclaration est réalisée en 2
-      parties :
-      <ul>
-        <li>un premier volet correspondant au signalement, à adresser « sans délai ».</li>
-        <li>un deuxième volet précisant la gestion qui a été faite de l&apos;événement, à adresser au plus tard dans les 3 mois.</li>
-      </ul>
-      <br />
-      <p>
-        Un <b>évènement/incident structure (EIS)</b> est un évènement/incident dans un établissement ou un organisme est un évènement non lié aux soins pouvant
-        avoir un impact sur la prise en charge des résidents/patients.
+        Contrôle : il vise à s'assurer qu’un service, un établissement ou un organisme se trouve dans une situation conforme à l'ensemble des normes qui
+        constituent le référentiel d'organisation et de fonctionnement qui correspond à son statut. Le contrôle s'appuie sur deux modes d'investigation qui sont
+        cumulables : le contrôle sur pièces et le contrôle sur site.
       </p>
       <p>
-        Il est important de souligner que la déclaration des événements indésirables ne doit pas être perçue comme une preuve de mauvaise gestion de la part
-        d&apos;un établissement, mais plutôt comme un outil permettant d&apos;identifier les problèmes et d&apos;améliorer continuellement la qualité des soins.
+        Evaluation : démarche qui permet d’apprécier si les moyens mis en œuvre permettent de répondre aux attendus. Elle ne donne pas lieu à des mesures
+        coercitives.
       </p>
-      <u>Mode de calcul:</u>
-      <br />
-      <br />
-      Nb d&apos;événements/incidents déclarés en cours par nature principale:
-      <br />
-      · Etat du signal = Initial, en gestion, à qualifier, à réguler, à valider.
-      <br />
-      Les évènements à l&apos;état «Interco» provenant d&apos;un autre système d&apos;information et qui n&apos;ont pas été classifiés par les ARS ne sont pas
-      comptabilisés.
-      <br />
-      Nb d&apos;événements/incidents déclarés clôturés par nature principale:
-      <br />
-      · Etat du signal = Clôturé
-      <br />
-      · Motif de clôture = Géré, ne nécessitant pas de gestion, sans menace pour la santé publique, signal transféré.
-      <br />
-      Les évènements non validés dans SIVSS ne sont pas comptabilisés.
-      <br />
-      Identification de l&apos;établissement = numéro FINESS de l&apos;ET où est survenu l&apos;évènement, ou à défaut de renseignement de ce champ dans SIVSS,
-      numéro FINESS de l&apos;ET déclarant. NB: si le déclarant a souhaité être anonyme, le signalement ne ressortira donc pas dans ces statistiques.
-      <br />
-      Année de référence = date de réception du signal.
-      <br />
-      <br />
+      <p>
+        Audit : examen formel, systématique et indépendant visant à s’assurer qu'un produit, un processus ou un système respecte les dispositions établies. Il
+        permet d’identifier les écarts par rapport à un référentiel donné.
+      </p>
+      <p>
+        Enquête administrative : contrôle dans le but d'enquêter sur la conduite d’un agent ou d’un groupe d'agents ou sur les mesures qu’ils ont prises à
+        l'occasion d'une situation ou d'un événement ponctuel.
+      </p>
+      <p>Autres types de mission : visite de conformité, enquête médico-administrative, enquête autorisation Pharma-Bio, … </p>
+      <p>
+        <u>Titre de la mission :</u> thème régional de l’IC.
+      </p>
+      <p>
+        <u>Type de planification Programmée/Hors programme :</u> Mission inscrite ou non au programme annuel d'inspection et de contrôle en fonction des
+        orientations nationales et des priorités retenues par le PRS.
+      </p>
+      <p>
+        <u>Nombre d’écarts et remarques :</u>
+
+        <ul>
+          <li>Ecarts : les écarts traduisent une non-conformité à une référence juridique opposable ;</li>
+          <li>Remarques : les remarques traduisent des dysfonctionnements porteurs de risque. </li>
+        </ul>
+      </p>
+      <p>
+        <u>Nombre et types de décisions :</u>
+
+        <ul>
+          <li>Injonction : mesure corrective obligatoire </li>
+          <li>Recommandation : mesure corrective conseillées </li>
+          <li>Saisine : recours à une juridiction (juridiction ordinale, parquet, ...)</li>
+        </ul>
+      </p>
+
+      <p>Historique : 3 ans et année en cours ou les dernières données disponibles si elles remontent à plus de 3 ans. </p>
+
       <section aria-label={wording.FRÉQUENCE}>
         <p>
           <b>Fréquence : </b> trimestrielle
@@ -73,11 +77,10 @@ export const ContenuInspectionsControles = ({ dateDeMiseÀJour, source }: Conten
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
-          <b>Source(s): </b> Système d&apos;Information de Veille et de Sécurité Sanitaire (SI VSS)
+          <b>Source(s): </b> Système d’Information pour les Inspections Contrôles Evaluations et Audits (SIICEA).
         </p>
-        Le système dd&apos;information de veille et de sécurité sanitaire (SI VSS) a été mis en œuvre pour favoriser le partage dd&apos;informations et
-        faciliter la coordination de la veille et de la sécurité sanitaire. Le SI VSS est un outil utilisé par les agents des ARS, et plus particulièrement par
-        les équipes des points focaux régionaux (PFR) et les cellules de veille et dd&apos;alerte.
+        SIICEA a pour objectifs de permettre un suivi de l'ensemble des missions (Inspection, Contrôle, Evaluation, Audit) sur les champs d'intervention des ARS
+        (Sanitaire, Médico-Social et Santé Environnement).
       </section>
     </>
   );

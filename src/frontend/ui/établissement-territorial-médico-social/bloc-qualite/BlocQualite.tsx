@@ -32,7 +32,6 @@ const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel }:
       ) : (
         <></>
       )}
-      888888888888888888888888888888888
       <ul className="indicateurs">
         {!etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasRenseignées &&
           !etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasAutorisées && (

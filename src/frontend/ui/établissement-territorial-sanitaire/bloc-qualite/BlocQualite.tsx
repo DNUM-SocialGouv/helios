@@ -9,275 +9,290 @@ import GraphiqueReclamations from "../../indicateur-métier/qualite/GraphiqueRec
 import { GraphiqueEvenementsIndesirables } from "../../établissement-territorial-médico-social/bloc-qualite/evenements-indesirables/GraphiqueEvenementsIndesirables";
 import { GraphiqueInspectionsControles } from "../../établissement-territorial-médico-social/bloc-qualite/inspections-controles/GraphiqueInspectionsControles";
 import { ÉtablissementTerritorialQualiteSanitaireViewModel } from "./ÉtablissementTerritorialQualiteSanitaireViewModel";
+import { convertDate } from "../../établissement-territorial-médico-social/bloc-qualite/inspections-controles/card-inspection-controle/CardInspectionControle";
 
 type BlocQualitéProps = Readonly<{
   etablissementTerritorialQualiteSanitairelViewModel: ÉtablissementTerritorialQualiteSanitaireViewModel;
 }>;
 
-export const staticDataToReplace = [
+const staticDataToReplace = [
   {
-    libelleTheme: "Evaluation",
+    typeMission: "Evaluation",
+    themeRegional: "1 Gestion des risques sanitaires liées aux batiments dans les ESMS",
+    dateVisite: "2022-12-19",
+    dateRapport: "2022-12-22",
 
-    data: [
-      {
-        typeMission: "Evaluation",
-        themeRegional: "1 Gestion des risques sanitaires liées aux batiments dans les ESMS",
-        dateVisite: "17/11/2021",
-        dateRapport: "03/12/2021",
+    nombreEcart: 0,
+    nombreRemarque: 0,
 
-        nombreEcart: 4,
-        nombreRemarque: 12,
+    injonction: 0,
+    recommandation: 0,
+    prescription: 0,
+    saisineCng: 0,
+    saisineJuridiction: 0,
+    saisineParquet: 0,
+    saisineAutre: 0,
 
-        injonction: 3,
-        recommandation: 2,
-        prescription: 0,
-        saisineCng: 8,
-        nb_saisines_juridiction_CN: 8,
-        saisineJuridiction: 8,
-        saisineParquet: 9,
-        saisineAutre: 0,
+    typePlannification: "Programmé",
+    modaliteMission: "Inopinée",
+  },
+  {
+    typeMission: "Evaluation",
+    themeRegional: "2 Thème régionale 2",
+    dateVisite: "2020-12-19",
+    dateRapport: "2022-12-22",
 
-        typePlannification: "Programmé",
-        modaliteMission: "Inopinée",
-      },
-      {
-        typeMission: "Evaluation",
-        themeRegional: "2 Thème régionale 2",
-        dateVisite: "17/11/2021",
-        dateRapport: "03/12/2021",
+    nombreEcart: 5,
+    nombreRemarque: 0,
 
-        nombreEcart: 5,
-        nombreRemarque: 0,
+    injonction: 1,
+    recommandation: 1,
+    prescription: 1,
+    saisineCng: 1,
+    saisineJuridiction: 1,
+    saisineParquet: 1,
+    saisineAutre: 1,
 
-        injonction: 1,
-        recommandation: 1,
-        prescription: 1,
-        saisineCng: 1,
-        saisineJuridiction: 1,
-        saisineParquet: 1,
-        saisineAutre: 1,
+    typePlannification: "Programmé",
+    modaliteMission: "Inopinée",
+  },
+  {
+    typeMission: "Evaluation",
+    themeRegional: "3 Thème régionale 3",
+    dateVisite: "2025-12-19",
+    dateRapport: "2022-12-22",
 
-        typePlannification: "Programmé",
-        modaliteMission: "Inopinée",
-      },
-      {
-        typeMission: "Evaluation",
-        themeRegional: "3 Thème régionale 3",
-        dateVisite: "17/11/2021",
-        dateRapport: "03/12/2021",
+    nombreEcart: 0,
+    nombreRemarque: 0,
 
-        nombreEcart: 0,
-        nombreRemarque: 0,
+    injonction: 0,
+    recommandation: 2,
+    prescription: 0,
+    saisineCng: 8,
+    saisineJuridiction: 8,
+    saisineParquet: 0,
+    saisineAutre: 0,
 
-        injonction: 0,
-        recommandation: 2,
-        prescription: 0,
-        saisineCng: 8,
-        saisineJuridiction: 8,
-        saisineParquet: 0,
-        saisineAutre: 0,
+    typePlannification: "Programmé",
+    modaliteMission: "Annocée",
+  },
+  {
+    typeMission: "Evaluation",
 
-        typePlannification: "Programmé",
-        modaliteMission: "Annocée",
-      },
-      {
-        typeMission: "Evaluation",
+    themeRegional: "4 Thème régionale 4",
+    dateVisite: "2028-12-19",
+    dateRapport: "2022-12-22",
 
-        themeRegional: "4 Thème régionale 4",
-        dateVisite: "17/11/2021",
-        dateRapport: "03/12/2021",
+    nombreEcart: 5,
+    nombreRemarque: 0,
 
-        nombreEcart: 5,
-        nombreRemarque: 0,
+    injonction: 3,
+    recommandation: 2,
+    prescription: 0,
+    saisineCng: 0,
+    saisineJuridiction: 8,
+    saisineParquet: 9,
+    saisineAutre: 0,
 
-        injonction: 3,
-        recommandation: 2,
-        prescription: 0,
-        saisineCng: 0,
-        saisineJuridiction: 8,
-        saisineParquet: 9,
-        saisineAutre: 0,
+    typePlannification: "Hors programme",
+    modaliteMission: "",
+  },
+  {
+    typeMission: "Evaluation",
 
-        typePlannification: "Hors programme",
-        modaliteMission: "",
-      },
-      {
-        typeMission: "Evaluation",
+    themeRegional: "5 Thème régionale 4",
+    dateVisite: "2021-12-19",
+    dateRapport: "2022-12-22",
 
-        themeRegional: "5 Thème régionale 4",
-        dateVisite: "17/11/2021",
-        dateRapport: "03/12/2021",
+    nombreEcart: 5,
+    nombreRemarque: 0,
 
-        nombreEcart: 5,
-        nombreRemarque: 0,
+    injonction: 3,
+    recommandation: 2,
+    prescription: 0,
+    saisineCng: 0,
+    saisineJuridiction: 8,
+    saisineParquet: 9,
+    saisineAutre: 0,
 
-        injonction: 3,
-        recommandation: 2,
-        prescription: 0,
-        saisineCng: 0,
-        saisineJuridiction: 8,
-        saisineParquet: 9,
-        saisineAutre: 0,
+    typePlannification: "Programmé",
+    modaliteMission: "Hors programme",
+  },
+  {
+    typeMission: "Evaluation",
 
-        typePlannification: "Programmé",
-        modaliteMission: "Hors programme",
-      },
-      {
-        typeMission: "Evaluation",
+    themeRegional: "6 Thème régionale 4",
+    dateVisite: "2020-12-19",
+    dateRapport: "2022-12-22",
 
-        themeRegional: "6 Thème régionale 4",
-        dateVisite: "17/11/2021",
-        dateRapport: "03/12/2021",
+    nombreEcart: 5,
+    nombreRemarque: 0,
 
-        nombreEcart: 5,
-        nombreRemarque: 0,
+    injonction: 3,
+    recommandation: 2,
+    prescription: 0,
+    saisineCng: 0,
+    saisineJuridiction: 8,
+    saisineParquet: 9,
+    saisineAutre: 0,
 
-        injonction: 3,
-        recommandation: 2,
-        prescription: 0,
-        saisineCng: 0,
-        saisineJuridiction: 8,
-        saisineParquet: 9,
-        saisineAutre: 0,
+    typePlannification: "Programmé",
+    modaliteMission: "Hors programme",
+  },
+  {
+    typeMission: "Evaluation",
 
-        typePlannification: "Programmé",
-        modaliteMission: "Hors programme",
-      },
-      {
-        typeMission: "Evaluation",
+    themeRegional: "7 Thème régionale 4",
+    dateVisite: "2022-12-19",
+    dateRapport: "2022-12-22",
 
-        themeRegional: "7 Thème régionale 4",
-        dateVisite: "17/11/2021",
-        dateRapport: "03/12/2021",
+    nombreEcart: 5,
+    nombreRemarque: 0,
 
-        nombreEcart: 5,
-        nombreRemarque: 0,
+    injonction: 3,
+    recommandation: 2,
+    prescription: 0,
+    saisineCng: 0,
+    saisineJuridiction: 8,
+    saisineParquet: 9,
+    saisineAutre: 0,
 
-        injonction: 3,
-        recommandation: 2,
-        prescription: 0,
-        saisineCng: 0,
-        saisineJuridiction: 8,
-        saisineParquet: 9,
-        saisineAutre: 0,
+    typePlannification: "Programmé",
+    modaliteMission: "Hors programme",
+  },
+  {
+    typeMission: "Evaluation",
 
-        typePlannification: "Programmé",
-        modaliteMission: "Hors programme",
-      },
-      {
-        typeMission: "Evaluation",
+    themeRegional: "8 Thème régionale 4",
+    dateVisite: "2022-12-19",
+    dateRapport: "2022-12-22",
 
-        themeRegional: "8 Thème régionale 4",
-        dateVisite: "17/11/2021",
-        dateRapport: "03/12/2021",
+    nombreEcart: 5,
+    nombreRemarque: 0,
 
-        nombreEcart: 5,
-        nombreRemarque: 0,
+    injonction: 3,
+    recommandation: 2,
+    prescription: 0,
+    saisineCng: 0,
+    saisineJuridiction: 8,
+    saisineParquet: 9,
+    saisineAutre: 0,
 
-        injonction: 3,
-        recommandation: 2,
-        prescription: 0,
-        saisineCng: 0,
-        saisineJuridiction: 8,
-        saisineParquet: 9,
-        saisineAutre: 0,
+    typePlannification: "Programmé",
+    modaliteMission: "Hors programme",
+  },
+  {
+    typeMission: "Evaluation",
 
-        typePlannification: "Programmé",
-        modaliteMission: "Hors programme",
-      },
-      {
-        typeMission: "Evaluation",
+    themeRegional: "9 Thème régionale 4",
+    dateVisite: "2022-12-19",
+    dateRapport: "2022-12-22",
 
-        themeRegional: "9 Thème régionale 4",
-        dateVisite: "17/11/2021",
-        dateRapport: "03/12/2021",
+    nombreEcart: 5,
+    nombreRemarque: 0,
 
-        nombreEcart: 5,
-        nombreRemarque: 0,
+    injonction: 3,
+    recommandation: 2,
+    prescription: 0,
+    saisineCng: 0,
+    saisineJuridiction: 8,
+    saisineParquet: 9,
+    saisineAutre: 0,
 
-        injonction: 3,
-        recommandation: 2,
-        prescription: 0,
-        saisineCng: 0,
-        saisineJuridiction: 8,
-        saisineParquet: 9,
-        saisineAutre: 0,
+    typePlannification: "Programmé",
+    modaliteMission: "Hors programme",
+  },
+  {
+    typeMission: "Evaluation",
 
-        typePlannification: "Programmé",
-        modaliteMission: "Hors programme",
-      },
-      {
-        typeMission: "Evaluation",
+    themeRegional: "10 Thème régionale 4",
+    dateVisite: "2022-12-19",
+    dateRapport: "2022-12-22",
 
-        themeRegional: "10 Thème régionale 4",
-        dateVisite: "17/11/2021",
-        dateRapport: "03/12/2021",
+    nombreEcart: 5,
+    nombreRemarque: 0,
 
-        nombreEcart: 5,
-        nombreRemarque: 0,
+    injonction: 3,
+    recommandation: 2,
+    prescription: 0,
+    saisineCng: 0,
+    saisineJuridiction: 8,
+    saisineParquet: 9,
+    saisineAutre: 0,
 
-        injonction: 3,
-        recommandation: 2,
-        prescription: 0,
-        saisineCng: 0,
-        saisineJuridiction: 8,
-        saisineParquet: 9,
-        saisineAutre: 0,
-
-        typePlannification: "Programmé",
-        modaliteMission: "Hors programme",
-      },
-    ],
+    typePlannification: "Programmé",
+    modaliteMission: "Hors programme",
   },
 
   {
-    libelleTheme: "Inspection",
-    data: [
-      {
-        typeMission: "Inspection",
-        themeRegional: "Thème régionale A",
-        dateVisite: "17/11/2021",
-        dateRapport: "03/12/2021",
+    typeMission: "Inspection",
+    themeRegional: "Thème régionale A",
+    dateVisite: "2022-12-19",
+    dateRapport: "2022-12-22",
 
-        nombreEcart: 5,
-        nombreRemarque: 0,
+    nombreEcart: 5,
+    nombreRemarque: 0,
 
-        injonction: 3,
-        recommandation: 2,
-        prescription: 0,
-        saisineCng: 0,
-        saisineJuridiction: 8,
-        saisineParquet: 9,
-        saisineAutre: 0,
+    injonction: 3,
+    recommandation: 2,
+    prescription: 0,
+    saisineCng: 0,
+    saisineJuridiction: 8,
+    saisineParquet: 9,
+    saisineAutre: 0,
 
-        typePlannification: "Programmé",
-        modaliteMission: "Hors programme",
-      },
-      {
-        typeMission: "Inspection",
-        themeRegional: "Thème régionale B",
-        dateVisite: "17/11/2021",
-        dateRapport: "03/12/2021",
-
-        injonction: 0,
-        recommandation: 2,
-        prescription: 0,
-        saisineCng: 1,
-        saisineJuridiction: 8,
-        saisineParquet: 9,
-        saisineAutre: 0,
-
-        typePlannification: "Programmé",
-        modaliteMission: "Hors programme",
-      },
-    ],
+    typePlannification: "Programmé",
+    modaliteMission: "Hors programme",
   },
-
   {
-    libelleTheme: "Controle sur pièce",
-    data: [],
+    typeMission: "Inspection22",
+    themeRegional: "Thème régionale B",
+    dateVisite: "2022-12-19",
+    dateRapport: "2022-12-22",
+
+    injonction: 0,
+    recommandation: 2,
+    prescription: 0,
+    saisineCng: 1,
+    saisineJuridiction: 8,
+    saisineParquet: 9,
+    saisineAutre: 0,
+
+    typePlannification: "Programmé",
+    modaliteMission: "Hors programme",
   },
 ];
+
+function transformDataInspections(data) {
+  console.log("data Before transform :::", data);
+  const groupedData = {};
+
+  // Parcours de chaque élément et regroupement par typeMission
+  data.forEach((item) => {
+    if (!(item.typeMission in groupedData)) {
+      groupedData[item.typeMission] = {
+        libelleTheme: item.typeMission,
+        data: [],
+      };
+    }
+    // Ajout de l'élément dans le tableau correspondant
+    groupedData[item.typeMission].data.push(item);
+  });
+
+  // Tri des éléments par dateVisite
+  for (const key in groupedData) {
+    groupedData[key].data.sort((a, b) => {
+      const dateA = new Date(a.dateVisite);
+      const dateB = new Date(b.dateVisite);
+      return dateB - dateA;
+    });
+  }
+
+  // Conversion du dictionnaire en tableau
+  const result = Object.values(groupedData);
+  console.log("data after transform :::", result);
+  return result;
+}
 
 const BlocQualité = ({ etablissementTerritorialQualiteSanitairelViewModel }: BlocQualitéProps) => {
   const { wording } = useDependencies();
@@ -291,7 +306,11 @@ const BlocQualité = ({ etablissementTerritorialQualiteSanitairelViewModel }: Bl
       <ul className="indicateurs">
         {!etablissementTerritorialQualiteSanitairelViewModel.lesEvenementsIndesirablesNeSontPasRenseignées &&
           !etablissementTerritorialQualiteSanitairelViewModel.lesEvenementsIndesirablesNeSontPasAutorisées && (
-            <GraphiqueInspectionsControles data={staticDataToReplace} dateMiseAJour="22/01/2027" />
+            <GraphiqueInspectionsControles
+              data={transformDataInspections(staticDataToReplace)}
+              //data={transformDataInspections(etablissementTerritorialQualiteSanitairelViewModel.getInspectionsEtControles.inspectionsEtControles)}
+              dateMiseAJour={convertDate(etablissementTerritorialQualiteSanitairelViewModel.getInspectionsEtControles.dateMiseAJourSource)}
+            />
           )}
       </ul>
       index 1 ---

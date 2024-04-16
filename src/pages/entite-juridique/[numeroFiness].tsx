@@ -1,5 +1,5 @@
 import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
-import { getSession } from 'next-auth/react';
+import { getSession } from "next-auth/react";
 
 import { rechercheParmiLesEntitésEtÉtablissementsEndpoint } from "../../backend/infrastructure/controllers/rechercheEndpoints";
 import { récupèreLEntitéJuridiqueEndpoint } from "../../backend/infrastructure/controllers/récupèreLEntitéJuridiqueEndpoint";
@@ -14,7 +14,6 @@ import { EtablissementsTerritoriauxRattachésViewModel } from "../../frontend/ui
 import { PageEntitéJuridique } from "../../frontend/ui/entité-juridique/PageEntitéJuridique";
 import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
 
-
 type RouterProps = Readonly<{
   entitéJuridique: EntitéJuridique;
   établissementsTerritoriauxRattachés: ÉtablissementTerritorialRattaché[];
@@ -23,7 +22,6 @@ type RouterProps = Readonly<{
 
 export default function Router({ rechercheResult, entitéJuridique, établissementsTerritoriauxRattachés }: RouterProps) {
   const { wording, paths } = useDependencies();
-
 
   if (!établissementsTerritoriauxRattachés || !entitéJuridique) return null;
 
@@ -42,7 +40,6 @@ export default function Router({ rechercheResult, entitéJuridique, établisseme
       ) : (
         <Spinner />
       )}
-
     </>
   );
 }
@@ -65,8 +62,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
           rechercheResult: rechercheResult,
         },
       };
-    }
-    else {
+    } else {
       return {
         notFound: true,
       };

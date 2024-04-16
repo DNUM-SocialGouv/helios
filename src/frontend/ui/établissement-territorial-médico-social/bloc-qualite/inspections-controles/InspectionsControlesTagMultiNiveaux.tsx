@@ -54,7 +54,6 @@ export const InspectionsControlesTagMultiNiveaux = ({ data }: InspectionsControl
       {data.map((item) => (
         <li key={`li-${item.libelleTheme}`}>
           <TagCliquable colorTiltle="blue" for={`istn-accordion-${item.libelleTheme}`} titre={`Type de mission : ${item.libelleTheme} [${item.data.length}]`} />
-          item.libelleTheme : {item.libelleTheme}
           {item.data && item.data.length > 0 && <InspectionsControlesRow libelleTheme={item.libelleTheme} row={item.data} />}
         </li>
       ))}

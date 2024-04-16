@@ -11,6 +11,10 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
     this.etablissementTerritorialQualiteSanitaire = etablissementTerritorialQualiteSanitaire;
   }
 
+  public get getInspectionsEtControles(): any {
+    return this.etablissementTerritorialQualiteSanitaire.inspectionsEtControles;
+  }
+
   public get lesReclamationsNeSontPasRenseignées(): boolean {
     return this.etablissementTerritorialQualiteSanitaire.reclamations.length === 0;
   }

@@ -1,11 +1,12 @@
 .card-inspection-controle {
-  padding: 18px;
+  padding: 15px;
   border: 2px solid var(--grey-1000-50-active);
 
   flex: 1 0 calc(50% - 20px); /* Each box takes up 50% minus the gap */
   min-width: 550px; /* Minimum width to display two elements per row */
 
   box-sizing: border-box;
+  max-width: 570px;
 }
 .iconeType {
   zoom: 0.6;
@@ -29,11 +30,11 @@
   margin-bottom: 0px;
 }
 .card-sum-2 {
-  margin-bottom: 12px;
+  margin-bottom: 0px;
 }
 
 .card-type {
-  margin-bottom: 0px;
+  margin-top: 12px;
 }
 
 .modaliteMission {
