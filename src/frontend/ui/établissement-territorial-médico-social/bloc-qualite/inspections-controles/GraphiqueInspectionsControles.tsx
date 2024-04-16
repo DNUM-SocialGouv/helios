@@ -1,11 +1,11 @@
-import { InspectionControleData, InspectionsEtControlesByTheme } from "../../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
+import { InspectionControleDataTheme } from "../../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { IndicateurGraphiqueNoYears } from "../../../commun/IndicateurGraphiqueNoYears/IndicateurGraphiqueNoYears";
 import { ContenuInspectionsControles } from "../../InfoBulle/ContenuInspectionsControles";
 import { InspectionsControlesTagMultiNiveaux } from "./InspectionsControlesTagMultiNiveaux";
 
 type GraphiqueInspectionsControlesProps = Readonly<{
-  data: InspectionsEtControlesByTheme;
+  data: InspectionControleDataTheme[];
   dateMiseAJour: string;
 }>;
 
@@ -20,10 +20,7 @@ export const GraphiqueInspectionsControles = ({ data, dateMiseAJour }: Graphique
       nomDeLIndicateur={wording.INSPECTIONS_CONTROLES}
       source={wording.SIVSS}
     >
-      <>
-        index 2 ---
-        <InspectionsControlesTagMultiNiveaux data={data} />
-      </>
+      <InspectionsControlesTagMultiNiveaux data={data} />
     </IndicateurGraphiqueNoYears>
   );
 };

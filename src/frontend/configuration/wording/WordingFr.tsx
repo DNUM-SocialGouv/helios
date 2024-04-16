@@ -241,6 +241,14 @@ export class WordingFr implements Wording {
   readonly EVENEMENTS_ASSOCIE_AUX_SOINS: string = "Evènements indésirables/graves associés aux soins";
   readonly EVENEMENTS_DANS_ET: string = "Evènements/incidents dans un établissement ou organisme";
 
+  readonly DATE_REELLE_DE_VISITE: string = "Date réelle de visite";
+  readonly DATE_REELLE_DE_RAPPORT: string = "Date réelle de rapport";
+  readonly TYPE_DE_PLANIFICATION: string = "Type de planification";
+  readonly MODALITE_DE_LA_MISSION: string = "Modalité de la mission";
+  readonly TYPE_DE_MISSION: string = "Type de mission";
+  readonly AFFICHER_PLUS: string = "Aficher plus";
+  readonly AFFICHER_MOINS: string = "Afficher moins";
+
   // Bloc Autorisation médico-social
   readonly MISE_À_JOUR_AUTORISATION: string = "Mise à jour d’autorisation";
   readonly DERNIÈRE_INSTALLATION: string = "Dernière installation";

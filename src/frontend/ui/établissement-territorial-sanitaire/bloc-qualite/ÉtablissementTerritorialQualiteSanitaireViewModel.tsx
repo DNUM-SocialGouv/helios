@@ -1,6 +1,43 @@
-import { EvenementsIndesirables, ÉtablissementTerritorialQualite } from "../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
+import {
+  EvenementsIndesirables,
+  Inspection,
+  InspectionControleDataTheme,
+  ÉtablissementTerritorialQualite,
+} from "../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
 import { Wording } from "../../../configuration/wording/Wording";
 import { StringFormater } from "../../commun/StringFormater";
+
+function transformDataInspections(data: Inspection[]) {
+  const groupedData: InspectionControleDataTheme[] = [];
+
+  // Parcours de chaque élément et regroupement par typeMission
+  data.length &&
+    data.forEach((item: Inspection) => {
+      if (!(item.typeMission in groupedData)) {
+        groupedData[item.typeMission as any] = {
+          libelleTheme: item.typeMission,
+          data: [],
+        };
+      }
+      // Ajout de l'élément dans le tableau correspondant
+      groupedData[item.typeMission as any].data.push(item);
+    });
+
+  // Tri des éléments par dateVisite
+  for (const key in groupedData) {
+    groupedData[key].data.sort((a, b) => {
+      const dateA = new Date(a.dateVisite);
+      const dateB = new Date(b.dateVisite);
+      // @ts-ignore
+      return dateB - dateA;
+    });
+  }
+
+  // Conversion du dictionnaire en tableau
+  const result = Object.values(groupedData);
+
+  return result;
+}
 
 export class ÉtablissementTerritorialQualiteSanitaireViewModel {
   public wording: Wording;
@@ -12,7 +49,11 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
   }
 
   public get getInspectionsEtControles(): any {
-    return this.etablissementTerritorialQualiteSanitaire.inspectionsEtControles;
+    return transformDataInspections(this.etablissementTerritorialQualiteSanitaire.inspectionsEtControles.inspectionsEtControles);
+  }
+
+  public get dateMiseAJourSourceInspectionsEtControles(): string {
+    return this.etablissementTerritorialQualiteSanitaire.inspectionsEtControles.dateMiseAJourSource;
   }
 
   public get lesReclamationsNeSontPasRenseignées(): boolean {

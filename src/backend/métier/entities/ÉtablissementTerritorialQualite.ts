@@ -20,40 +20,6 @@ export type EvenementsIndesirables = Readonly<{
   dateMiseAJourSource: string;
 }>;
 
-export type InspectionControleData = {
-  typeMission: string;
-
-  themeRegional: string;
-  dateVisite: string;
-  dateRapport: string;
-  nombreEcart: number;
-  nombreRemarque: number;
-  injonction: number;
-  recommandation: number;
-  prescription: number;
-  saisineCng: number;
-  saisineJuridiction: number;
-  saisineParquet: number;
-  saisineAutre: number;
-  typePlannification: string;
-  modaliteMission: string;
-};
-
-export type InspectionControleDataTheme = {
-  libelleTheme: string;
-  data: InspectionControleData[];
-};
-
-export type InspectionsEtControles = Readonly<{
-  data: InspectionControleData[];
-  dateMiseAJourSource: string;
-}>;
-
-export type InspectionsEtControlesByTheme = Readonly<{
-  data: InspectionControleDataTheme[];
-  dateMiseAJourSource: string;
-}>;
-
 export type Inspection = Readonly<{
   typeMission: string;
   themeRegional: string;
@@ -70,6 +36,7 @@ export type Inspection = Readonly<{
   saisineJuridiction: number;
   saisineParquet: number;
   saisineAutre: number;
+  modaliteMission: string;
 }>;
 
 export type InspectionsEtControles = Readonly<{
@@ -82,3 +49,8 @@ export type ÉtablissementTerritorialQualite = Readonly<{
   evenementsIndesirables: EvenementsIndesirables[];
   inspectionsEtControles: InspectionsEtControles;
 }>;
+
+export type InspectionControleDataTheme = {
+  libelleTheme: string;
+  data: Inspection[];
+};

@@ -219,6 +219,14 @@ export interface Wording {
 
   readonly INSPECTIONS_CONTROLES: string;
 
+  readonly DATE_REELLE_DE_VISITE: string;
+  readonly DATE_REELLE_DE_RAPPORT: string;
+  readonly TYPE_DE_PLANIFICATION: string;
+  readonly MODALITE_DE_LA_MISSION: string;
+  readonly TYPE_DE_MISSION: string;
+  readonly AFFICHER_PLUS: string;
+  readonly AFFICHER_MOINS: string;
+
   // Bloc Autorisation Sanitaire
   readonly AUTRES_ACTIVITÉS: string;
   readonly AUTRES_ACTIVITÉS_SAN: string;
