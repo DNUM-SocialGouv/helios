@@ -21,22 +21,22 @@ export type EvenementsIndesirables = Readonly<{
 }>;
 
 export type Inspection = Readonly<{
-  typeMission: string;
-  themeRegional: string;
-  typePlannification: string;
-  statutMission: string;
-  dateVisite: string;
-  dateRapport: string;
-  nombreEcart: number;
-  nombreRemarque: number;
-  injonction: number;
-  prescription: number;
-  recommandation: number;
-  saisineCng: number;
-  saisineJuridiction: number;
-  saisineParquet: number;
-  saisineAutre: number;
-  modaliteMission: string;
+    typeMission: string;
+    themeRegional: string;
+    typePlannification: string;
+    statutMission: string;
+    modaliteMission: string;
+    dateVisite: string;
+    dateRapport: string;
+    nombreEcart: number;
+    nombreRemarque: number;
+    injonction: number;
+    prescription: number;
+    recommandation: number;
+    saisineCng: number;
+    saisineJuridiction: number;
+    saisineParquet: number;
+    saisineAutre: number;
 }>;
 
 export type InspectionsEtControles = Readonly<{
