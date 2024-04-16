@@ -12,15 +12,15 @@
 }
 
 .list-element-style {
-  padding-bottom: 0.25rem !important;
+  padding-bottom: 4px !important;
 }
 
 .list-element-style p {
-  margin-right: 0.25rem;
+  margin-right: 4px;
 }
 
 .iconeTitle {
-  zoom: 0.7;
+  zoom: .7;
   margin-top: -2px;
 }
 

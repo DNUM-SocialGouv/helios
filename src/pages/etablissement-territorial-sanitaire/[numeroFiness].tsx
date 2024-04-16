@@ -23,7 +23,6 @@ export default function Router({ rechercheResult, établissementTerritorial }: R
   if (!établissementTerritorial) return null;
 
   const établissementTerritorialSanitaireViewModel = new ÉtablissementTerritorialSanitaireViewModel(établissementTerritorial, wording, paths);
-  console.log("111111111111111111111", établissementTerritorialSanitaireViewModel.etablissementTerritorialQualiteSanitaire);
   const rechercheViewModel = new RechercheViewModel(rechercheResult.résultats[0], paths);
 
   return (
@@ -42,8 +41,6 @@ export default function Router({ rechercheResult, établissementTerritorial }: R
 
 export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<RouterProps>> {
   try {
-    console.log("CCCCCCCCCCCCCCCCCCCCCCCCccc");
-
     const session = await getSession(context);
     const codeRegion = session?.user.codeRegion as unknown as string;
     const codeProfiles = session?.user.codeProfiles as string[];
@@ -57,7 +54,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
         codeProfiles
       )) as ÉtablissementTerritorialSanitaire;
 
-      console.log("qualite : ", établissementTerritorial.qualite.inspectionsEtControles);
       const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, numeroFiness, 1);
       return { props: { établissementTerritorial, rechercheResult: rechercheResult } };
     } else {

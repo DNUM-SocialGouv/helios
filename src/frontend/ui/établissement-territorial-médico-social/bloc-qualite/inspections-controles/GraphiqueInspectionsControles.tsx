@@ -2,7 +2,7 @@ import { InspectionControleDataTheme } from "../../../../../backend/métier/enti
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { IndicateurGraphiqueNoYears } from "../../../commun/IndicateurGraphiqueNoYears/IndicateurGraphiqueNoYears";
 import { ContenuInspectionsControles } from "../../InfoBulle/ContenuInspectionsControles";
-import { InspectionsControlesTagMultiNiveaux } from "./InspectionsControlesTagMultiNiveaux";
+import InspectionsControlesTagMultiNiveaux from "./InspectionsControlesTagMultiNiveaux";
 
 type GraphiqueInspectionsControlesProps = Readonly<{
   data: InspectionControleDataTheme[];

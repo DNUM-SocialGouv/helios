@@ -1,9 +1,9 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useState, memo } from "react";
 
 import { Inspection, InspectionControleDataTheme } from "../../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { TagCliquable } from "../../../commun/Tag";
-import { CardInspectionControle } from "./card-inspection-controle/CardInspectionControle";
+import CardInspectionControle from "./card-inspection-controle/CardInspectionControle";
 import styles from "./InspectionsControlesTagMultiNiveaux.module.css";
 
 export const InspectionsControlesRow = ({ row, libelleTheme }: { row: Inspection[]; libelleTheme: string }): ReactElement => {
@@ -58,7 +58,7 @@ type InspectionsControlesTagMultiNiveauxProps = {
   data: InspectionControleDataTheme[];
 };
 
-export const InspectionsControlesTagMultiNiveaux = ({ data }: InspectionsControlesTagMultiNiveauxProps): ReactElement => {
+  const InspectionsControlesTagMultiNiveaux = ({ data }: InspectionsControlesTagMultiNiveauxProps): ReactElement => {
   const { wording } = useDependencies();
 
   return (
@@ -76,3 +76,5 @@ export const InspectionsControlesTagMultiNiveaux = ({ data }: InspectionsControl
     </>
   );
 };
+
+export default memo(InspectionsControlesTagMultiNiveaux);

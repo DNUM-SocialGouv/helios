@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ReactElement } from "react";
 
 import styles from "./TagCliquable.module.css";
 

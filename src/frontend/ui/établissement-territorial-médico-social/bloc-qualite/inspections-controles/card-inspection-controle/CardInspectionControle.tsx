@@ -1,101 +1,109 @@
-import { ReactElement } from "react";
+import { ReactElement, memo, useCallback } from "react";
 
-import { InspectionControleData } from "../../../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
+import { Inspection } from "../../../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
 import { convertDateDDMMYYYY } from "../../../../../utils/dateUtils";
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import styles from "./CardInspectionControle.module.css";
 
 type CardInspectionControleProps = {
-  data: InspectionControleData;
+  data: Inspection;
 };
 
-function getSumCardEcartRemarqueText(data: InspectionControleData) {
-  const sumCardEcartRemarque = [];
 
-  if (data.nombreEcart > 1) {
-    sumCardEcartRemarque.push({ nb: data.nombreEcart, label: "ecarts" });
-  } else {
-    sumCardEcartRemarque.push({ nb: data.nombreEcart, label: "ecart" });
-  }
-
-  if (data.nombreRemarque > 1) {
-    sumCardEcartRemarque.push({ nb: data.nombreRemarque, label: "remarques" });
-  } else {
-    sumCardEcartRemarque.push({ nb: data.nombreRemarque, label: "remarque" });
-  }
-
-  const sumCardEcartRemarqueText = sumCardEcartRemarque.map((item) => {
-    return `${item.nb} ${item.label}`;
-  });
-  return sumCardEcartRemarqueText.join(", ");
-}
-
-function getMissions(data: InspectionControleData) {
-  const sumCard = [];
-  if (data.injonction > 0) {
-    if (data.injonction === 1) {
-      sumCard.push({ nb: 1, label: "injonction" });
-    } else {
-      sumCard.push({ nb: data.injonction, label: "injonctions" });
-    }
-  }
-  if (data.prescription > 0) {
-    if (data.prescription === 1) {
-      sumCard.push({ nb: 1, label: "prescription" });
-    } else {
-      sumCard.push({ nb: data.prescription, label: "prescriptions" });
-    }
-  }
-  if (data.recommandation > 0) {
-    if (data.recommandation === 1) {
-      sumCard.push({ nb: 1, label: "recomandation" });
-    } else {
-      sumCard.push({ nb: data.recommandation, label: "recomandations" });
-    }
-  }
-  if (data.saisineCng > 0) {
-    if (data.saisineCng === 1) {
-      sumCard.push({ nb: 1, label: "saisine CNG" });
-    } else {
-      sumCard.push({ nb: data.saisineCng, label: "saisines CNG" });
-    }
-  }
-  if (data.saisineJuridiction > 0) {
-    if (data.saisineJuridiction === 1) {
-      sumCard.push({ nb: 1, label: "saisine juridiction/ordinale" });
-    } else {
-      sumCard.push({ nb: data.saisineJuridiction, label: "saisines juridiction/ordinale" });
-    }
-  }
-  if (data.saisineParquet > 0) {
-    if (data.saisineParquet === 1) {
-      sumCard.push({ nb: 1, label: "saisine parquet" });
-    } else {
-      sumCard.push({ nb: data.saisineParquet, label: "saisines parquet" });
-    }
-  }
-  if (data.saisineAutre > 0) {
-    if (data.saisineAutre === 1) {
-      sumCard.push({ nb: 1, label: "autre parquet" });
-    } else {
-      sumCard.push({ nb: data.saisineAutre, label: "autres parquets" });
-    }
-  }
-
-  const sumCardText = sumCard.map((item) => {
-    return `${item.nb} ${item.label}`;
-  });
-  return sumCardText.join(", ");
-}
-
-export const CardInspectionControle = ({ data }: CardInspectionControleProps): ReactElement => {
+const CardInspectionControle = ({ data }: CardInspectionControleProps): ReactElement => {
   const { wording } = useDependencies();
 
+  const getSumCardEcartRemarqueText = useCallback(
+    (data: Inspection) => {
+    const sumCardEcartRemarque = [];
+  
+    if (data.nombreEcart > 1) {
+      sumCardEcartRemarque.push({ nb: data.nombreEcart, label: "ecarts" });
+    } else {
+      sumCardEcartRemarque.push({ nb: data.nombreEcart, label: "ecart" });
+    }
+  
+    if (data.nombreRemarque > 1) {
+      sumCardEcartRemarque.push({ nb: data.nombreRemarque, label: "remarques" });
+    } else {
+      sumCardEcartRemarque.push({ nb: data.nombreRemarque, label: "remarque" });
+    }
+  
+    const sumCardEcartRemarqueText = sumCardEcartRemarque.map((item) => {
+      return `${item.nb} ${item.label}`;
+    });
+    return sumCardEcartRemarqueText.join(", ");
+  },
+  [data]
+);
+
+  const getMissions = useCallback(
+    (data: Inspection) => {
+      const sumCard = [];
+      if (data.injonction > 0) {
+        if (data.injonction === 1) {
+          sumCard.push({ nb: 1, label: "injonction" });
+        } else {
+          sumCard.push({ nb: data.injonction, label: "injonctions" });
+        }
+      }
+      if (data.prescription > 0) {
+        if (data.prescription === 1) {
+          sumCard.push({ nb: 1, label: "prescription" });
+        } else {
+          sumCard.push({ nb: data.prescription, label: "prescriptions" });
+        }
+      }
+      if (data.recommandation > 0) {
+        if (data.recommandation === 1) {
+          sumCard.push({ nb: 1, label: "recomandation" });
+        } else {
+          sumCard.push({ nb: data.recommandation, label: "recomandations" });
+        }
+      }
+      if (data.saisineCng > 0) {
+        if (data.saisineCng === 1) {
+          sumCard.push({ nb: 1, label: "saisine CNG" });
+        } else {
+          sumCard.push({ nb: data.saisineCng, label: "saisines CNG" });
+        }
+      }
+      if (data.saisineJuridiction > 0) {
+        if (data.saisineJuridiction === 1) {
+          sumCard.push({ nb: 1, label: "saisine juridiction/ordinale" });
+        } else {
+          sumCard.push({ nb: data.saisineJuridiction, label: "saisines juridiction/ordinale" });
+        }
+      }
+      if (data.saisineParquet > 0) {
+        if (data.saisineParquet === 1) {
+          sumCard.push({ nb: 1, label: "saisine parquet" });
+        } else {
+          sumCard.push({ nb: data.saisineParquet, label: "saisines parquet" });
+        }
+      }
+      if (data.saisineAutre > 0) {
+        if (data.saisineAutre === 1) {
+          sumCard.push({ nb: 1, label: "autre parquet" });
+        } else {
+          sumCard.push({ nb: data.saisineAutre, label: "autres parquets" });
+        }
+      }
+    
+      const sumCardText = sumCard.map((item) => {
+        return `${item.nb} ${item.label}`;
+      });
+      return sumCardText.join(", ");
+    },
+    [data]
+  );
+  
   const missions = getMissions(data);
   const sumCardEcartRemarqueText = getSumCardEcartRemarqueText(data);
 
   return (
     <div className={styles["card-inspection-controle"]}>
+ 
       <div className="card-dates">
         <ul className="fr-badge-group">
           {data.dateVisite && (
@@ -132,3 +140,5 @@ export const CardInspectionControle = ({ data }: CardInspectionControleProps): R
     </div>
   );
 };
+
+export default memo(CardInspectionControle);
