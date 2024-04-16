@@ -24,25 +24,29 @@ const BlocQualité = ({ etablissementTerritorialQualiteSanitairelViewModel }: Bl
 
   return (
     <Bloc titre={wording.TITRE_BLOC_QUALITE}>
-      <ul className="indicateurs">
-        {!etablissementTerritorialQualiteSanitairelViewModel.lesEvenementsIndesirablesNeSontPasRenseignées &&
-          !etablissementTerritorialQualiteSanitairelViewModel.lesEvenementsIndesirablesNeSontPasAutorisées && (
-            <GraphiqueInspectionsControles
-              data={etablissementTerritorialQualiteSanitairelViewModel.getInspectionsEtControles}
-              dateMiseAJour={convertDateDDMMYYYY(etablissementTerritorialQualiteSanitairelViewModel.dateMiseAJourSourceInspectionsEtControles)}
-            />
-          )}
-      </ul>
+ 
       {etablissementTerritorialQualiteSanitairelViewModel.lesDonnéesQualitePasAutorisés.length !== 0 ? (
         <NotAUthorized indicateurs={etablissementTerritorialQualiteSanitairelViewModel.lesDonnéesQualitePasAutorisés} />
       ) : (
         <></>
       )}
-      {etablissementTerritorialQualiteSanitairelViewModel.lesDonnéesQualitePasRenseignees.length !== 0 ? (
+      {etablissementTerritorialQualiteSanitairelViewModel.getInspectionsEtControles.length === 0 ? (
         <NoDataCallout indicateurs={etablissementTerritorialQualiteSanitairelViewModel.lesDonnéesQualitePasRenseignees} />
       ) : (
         <></>
       )}
+
+      <ul className="indicateurs">
+        {etablissementTerritorialQualiteSanitairelViewModel.getInspectionsEtControles.length > 0 && (
+          <>
+            <GraphiqueInspectionsControles
+              data={etablissementTerritorialQualiteSanitairelViewModel.getInspectionsEtControles}
+              dateMiseAJour={convertDateDDMMYYYY(etablissementTerritorialQualiteSanitairelViewModel.dateMiseAJourSourceInspectionsEtControles)}
+            />
+            </>
+          )}
+      </ul>
+
       <ul className="indicateurs">
         {!etablissementTerritorialQualiteSanitairelViewModel.lesReclamationsNeSontPasRenseignées &&
           !etablissementTerritorialQualiteSanitairelViewModel.lesReclamationsNeSontPasAutorisées && (

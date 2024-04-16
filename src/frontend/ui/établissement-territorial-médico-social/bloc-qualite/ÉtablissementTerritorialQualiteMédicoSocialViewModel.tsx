@@ -1,5 +1,6 @@
 import { EvenementsIndesirables, ÉtablissementTerritorialQualite } from "../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
 import { Wording } from "../../../configuration/wording/Wording";
+import { transformDataInspections } from "../../../utils/transformDataInspections";
 import { StringFormater } from "../../commun/StringFormater";
 
 
@@ -13,6 +14,17 @@ export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
     this.etablissementTerritorialQualiteMédicoSocial = etablissementTerritorialQualiteMédicoSocial;
   }
 
+  public get getInspectionsEtControles(): any {
+    return transformDataInspections(this.etablissementTerritorialQualiteMédicoSocial.inspectionsEtControles.inspectionsEtControles);
+  }
+
+  public get dateMiseAJourSourceInspectionsEtControles(): string {
+    return this.etablissementTerritorialQualiteMédicoSocial.inspectionsEtControles.dateMiseAJourSource;
+  }
+
+  public get lesInspectionsEtControlesNeSontPasRenseignées(): boolean {
+    return this.etablissementTerritorialQualiteMédicoSocial.inspectionsEtControles.inspectionsEtControles.length === 0;
+  }
 
   public get lesReclamationsNeSontPasRenseignées(): boolean {
     return this.etablissementTerritorialQualiteMédicoSocial.reclamations.length === 0;
@@ -49,6 +61,7 @@ export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
 
   public get lesDonnéesQualitePasRenseignees(): string[] {
     const nonRenseignees: string[] = [];
+    if (this.lesInspectionsEtControlesNeSontPasRenseignées) nonRenseignees.push(this.wording.INSPECTIONS_CONTROLES);
     if (this.lesReclamationsNeSontPasRenseignées) nonRenseignees.push(this.wording.RECLAMATIONS);
     if (this.lesEvenementsIndesirablesNeSontPasRenseignées) nonRenseignees.push(this.wording.EVENEMENTS_INDESIRABLES_NON_RENSEIGNES)
     return nonRenseignees;

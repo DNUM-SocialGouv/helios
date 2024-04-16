@@ -1,5 +1,6 @@
 import { memo } from "react";
 
+import { convertDateDDMMYYYY } from "../../../utils/dateUtils";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
@@ -7,6 +8,7 @@ import { NoDataCallout } from "../../commun/NoDataCallout/NoDataCallout";
 import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import GraphiqueReclamations from "../../indicateur-métier/qualite/GraphiqueReclamations";
 import { GraphiqueEvenementsIndesirables } from "./evenements-indesirables/GraphiqueEvenementsIndesirables";
+import { GraphiqueInspectionsControles } from "./inspections-controles/GraphiqueInspectionsControles";
 import { ÉtablissementTerritorialQualiteMédicoSocialViewModel } from "./ÉtablissementTerritorialQualiteMédicoSocialViewModel";
 
 type BlocQualitéProps = Readonly<{
@@ -22,6 +24,18 @@ const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel }:
 
   return (
     <Bloc titre={wording.TITRE_BLOC_QUALITE}>
+
+      {etablissementTerritorialQualiteMédicoSocialViewModel.lesDonnéesQualitePasAutorisés.length !== 0 ? (
+        <NotAUthorized indicateurs={etablissementTerritorialQualiteMédicoSocialViewModel.lesDonnéesQualitePasAutorisés} />
+      ) : (
+        <></>
+      )}
+      {etablissementTerritorialQualiteMédicoSocialViewModel.getInspectionsEtControles.length === 0 ? (
+        <NoDataCallout indicateurs={etablissementTerritorialQualiteMédicoSocialViewModel.lesDonnéesQualitePasRenseignees} />
+      ) : (
+        <></>
+      )}
+
       {etablissementTerritorialQualiteMédicoSocialViewModel.lesDonnéesQualitePasAutorisés.length !== 0 ? (
         <NotAUthorized indicateurs={etablissementTerritorialQualiteMédicoSocialViewModel.lesDonnéesQualitePasAutorisés} />
       ) : (
@@ -32,6 +46,19 @@ const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel }:
       ) : (
         <></>
       )}
+
+
+      <ul className="indicateurs">
+        {etablissementTerritorialQualiteMédicoSocialViewModel.getInspectionsEtControles.length > 0 && (
+          <>
+            <GraphiqueInspectionsControles
+              data={etablissementTerritorialQualiteMédicoSocialViewModel.getInspectionsEtControles}
+              dateMiseAJour={convertDateDDMMYYYY(etablissementTerritorialQualiteMédicoSocialViewModel.dateMiseAJourSourceInspectionsEtControles)}
+            />
+            </>
+          )}
+      </ul>
+
       <ul className="indicateurs">
         {!etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasRenseignées &&
           !etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasAutorisées && (

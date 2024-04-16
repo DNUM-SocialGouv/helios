@@ -21,7 +21,7 @@ export const IndicateurGraphiqueNoYears = ({ années, children, contenuInfoBulle
   const [estCeOuvert, setEstCeOuvert] = useState(false);
 
   return (
-    <li className={styles["print-only"]}>
+    <li className={`${styles["indicateurGraphiqueNoYearsContainer"]} ${styles["print-only"]}`}>
       <h3 className={`fr-m-0 fr-text--bold ${styles["intitule"]} fr-h6`}>
         {nomDeLIndicateur}
         {années ? <SelectionAnnee annees={années.liste} id={identifiant} setAnnéeEnCours={années.setAnnéeEnCours} /> : <></>}
