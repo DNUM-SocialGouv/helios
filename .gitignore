@@ -42,7 +42,6 @@ data_set/sirec
 data_set/checked_sirec
 data_set/sivss
 data_set/checked_sivss
-data_set/checked_siicea
 sshd_config
 ssh_key
 
