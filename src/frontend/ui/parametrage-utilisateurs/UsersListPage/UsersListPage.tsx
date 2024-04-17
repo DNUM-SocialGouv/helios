@@ -359,6 +359,7 @@ const UsersListPage = ({
                                     );
                                   })}
                             </td>
+                            <td className={styles["widthTD-date"]}>{user?.dateCreation && formatDateAndHours(user?.dateCreation?.toString())}</td>
                             <td className={styles["widthTD-date"]} key={`${user.id}-lastConnectionDate`}>
                               {user?.lastConnectionDate && formatDateAndHours(user?.lastConnectionDate?.toString())}
                             </td>
