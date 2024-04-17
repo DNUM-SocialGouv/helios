@@ -360,7 +360,11 @@ describe("La page établissement territorial médico-social - bloc activité", (
           budgetEtFinances: [],
           identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
           ressourcesHumaines: [],
+<<<<<<< HEAD
           qualite: { reclamations: [], evenementsIndesirables: [], inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] } }
+=======
+          qualite: { reclamations: [] }
+>>>>>>> hel-605/parametrage-autorisations
         },
         wording,
         paths

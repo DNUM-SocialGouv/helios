@@ -24,7 +24,7 @@ const BlocQualité = ({ etablissementTerritorialQualiteSanitairelViewModel }: Bl
 
   return (
     <Bloc titre={wording.TITRE_BLOC_QUALITE}>
- 
+
       {etablissementTerritorialQualiteSanitairelViewModel.lesDonnéesQualitePasAutorisés.length !== 0 ? (
         <NotAUthorized indicateurs={etablissementTerritorialQualiteSanitairelViewModel.lesDonnéesQualitePasAutorisés} />
       ) : (
@@ -43,8 +43,8 @@ const BlocQualité = ({ etablissementTerritorialQualiteSanitairelViewModel }: Bl
               data={etablissementTerritorialQualiteSanitairelViewModel.getInspectionsEtControles}
               dateMiseAJour={convertDateDDMMYYYY(etablissementTerritorialQualiteSanitairelViewModel.dateMiseAJourSourceInspectionsEtControles)}
             />
-            </>
-          )}
+          </>
+        )}
       </ul>
 
       <ul className="indicateurs">

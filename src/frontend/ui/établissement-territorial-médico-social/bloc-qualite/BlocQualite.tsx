@@ -55,8 +55,8 @@ const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel }:
               data={etablissementTerritorialQualiteMédicoSocialViewModel.getInspectionsEtControles}
               dateMiseAJour={convertDateDDMMYYYY(etablissementTerritorialQualiteMédicoSocialViewModel.dateMiseAJourSourceInspectionsEtControles)}
             />
-            </>
-          )}
+          </>
+        )}
       </ul>
 
       <ul className="indicateurs">

@@ -88,7 +88,6 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
           <BlocBudgetEtFinancesMédicoSocial
             établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={établissementTerritorialViewModel.budgetEtFinancesViewModel}
           />
-
           <BlocQualite etablissementTerritorialQualiteMédicoSocialViewModel={établissementTerritorialViewModel.qualiteViewModel} />
         </div>
       </>
