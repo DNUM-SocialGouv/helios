@@ -31,14 +31,9 @@ export const DefaultProfile = {
         },
         "profilETSanitaire": {
             "Qualité": {
-                "missions": "no",
-                "vignette": "no",
-                "nombre_reclamation": "no",
-                "nombre_incident_encours": "no",
-                "nombre_EIAS/EIGS_encours": "no",
-                "nombre_incident_cloturé": "no",
-                "nombre_reclamation_motif": "no",
-                "nombre_EIAS/EIGS_cloturé": "no"
+                "DonnéesSirec": "no",
+                "DonnéesSivss": "no",
+                "DonnéesSiicea": "no"
             },
             "identité": {
                 "nom": "ok",
@@ -66,13 +61,9 @@ export const DefaultProfile = {
         },
         "profilMédicoSocial": {
             "Qualité": {
-                "missions": "no",
-                "vignette": "no",
-                "nombre_EIAS/EIGS": "no",
-                "nombre_reclamation": "no",
-                "nombre_incident_encours": "no",
-                "nombre_incident_cloturé": "no",
-                "nombre_reclamation_motif": "no"
+                "DonnéesSirec": "no",
+                "DonnéesSivss": "no",
+                "DonnéesSiicea": "no"
             },
             "identité": {
                 "nom": "ok",
@@ -151,14 +142,9 @@ export const DefaultProfile = {
         },
         "profilETSanitaire": {
             "Qualité": {
-                "missions": "ok",
-                "vignette": "ok",
-                "nombre_reclamation": "ok",
-                "nombre_incident_encours": "ok",
-                "nombre_EIAS/EIGS_encours": "ok",
-                "nombre_incident_cloturé": "ok",
-                "nombre_reclamation_motif": "ok",
-                "nombre_EIAS/EIGS_cloturé": "ok"
+                "DonnéesSirec": "ok",
+                "DonnéesSivss": "ok",
+                "DonnéesSiicea": "ok"
             },
             "identité": {
                 "nom": "ok",
@@ -186,13 +172,9 @@ export const DefaultProfile = {
         },
         "profilMédicoSocial": {
             "Qualité": {
-                "missions": "no",
-                "vignette": "no",
-                "nombre_EIAS/EIGS": "no",
-                "nombre_reclamation": "no",
-                "nombre_incident_encours": "no",
-                "nombre_incident_cloturé": "no",
-                "nombre_reclamation_motif": "no"
+                "DonnéesSirec": "ok",
+                "DonnéesSivss": "ok",
+                "DonnéesSiicea": "ok"
             },
             "identité": {
                 "nom": "ok",
