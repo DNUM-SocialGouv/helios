@@ -14,11 +14,11 @@ export const GraphiqueInspectionsControles = ({ data, dateMiseAJour }: Graphique
 
   return (
     <IndicateurGraphiqueNoYears
-      contenuInfoBulle={<ContenuInspectionsControles dateDeMiseÀJour={dateMiseAJour} source={wording.SIVSS} />}
+      contenuInfoBulle={<ContenuInspectionsControles dateDeMiseÀJour={dateMiseAJour} source={wording.SIICEA} />}
       dateDeMiseÀJour={dateMiseAJour}
       identifiant="qualite-inspections-controles"
       nomDeLIndicateur={wording.INSPECTIONS_CONTROLES}
-      source={wording.SIVSS}
+      source={wording.SIICEA}
     >
       <InspectionsControlesTagMultiNiveaux data={data} />
     </IndicateurGraphiqueNoYears>
