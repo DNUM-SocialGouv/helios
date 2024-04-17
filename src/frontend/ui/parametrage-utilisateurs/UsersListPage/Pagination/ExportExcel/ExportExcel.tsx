@@ -157,11 +157,14 @@ interface IExportExcel {
 const ExportExcel = ({ filterParams, profiles, institutions, institutionSessionCode, roles }: IExportExcel) => {
   return (
     <button
-      aria-hidden="true"
-      className={`fr-btn ${styles["export-excel"]} fr-icon-download-line`}
-      onClick={() => generateAndExportExcel(filterParams, profiles, institutions, institutionSessionCode, roles)}
-      title="Exporter vers Excel"
-    ></button>
+    className={`fr-btn fr-btn--secondary fr-fi-download-line fr-btn--icon-left  ${styles["export-excel"]}`}
+    name="Exporter"
+    onClick={() => generateAndExportExcel(filterParams, profiles, institutions, institutionSessionCode, roles)}
+    title="Exporter"
+    type="button"
+  >
+    Exporter
+  </button>
   );
 };
 
