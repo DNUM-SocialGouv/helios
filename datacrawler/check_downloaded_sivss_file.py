@@ -27,7 +27,8 @@ def filter_etat(etat):
 
 def filter_evenements_indesirables(donnees_evenements_indesirables: pd.DataFrame):
     current_year = int(datetime.date.today().strftime("%Y"))
-    return  donnees_evenements_indesirables[(donnees_evenements_indesirables['MOTIF_CLOTURE'].apply(filter_motif)) & (donnees_evenements_indesirables['ETAT'].apply(filter_etat)) & (donnees_evenements_indesirables['FAMILLE_PRINCIPALE'].apply(filter_famille)) & (donnees_evenements_indesirables['DATE_RECEPTION'].apply(get_year_from_date).le(current_year)) & (donnees_evenements_indesirables['DATE_RECEPTION'].apply(get_year_from_date).ge(current_year - 3)) & (donnees_evenements_indesirables['NUMERO_SIVSS'].astype(str).str.len() == 6)]
+    date_regex = r'((((0[1-9])|([12][0-9])|(3[01]))\/((0[0-9])|(1[012]))\/((20[012]\d|19\d\d)))|)'
+    return  donnees_evenements_indesirables[(donnees_evenements_indesirables['DATE_CLOTURE'].str.fullmatch(date_regex, na=True)) & (donnees_evenements_indesirables['MOTIF_CLOTURE'].apply(filter_motif)) & (donnees_evenements_indesirables['ETAT'].apply(filter_etat)) & (donnees_evenements_indesirables['FAMILLE_PRINCIPALE'].apply(filter_famille)) & (donnees_evenements_indesirables['DATE_RECEPTION'].apply(get_year_from_date).le(current_year)) & (donnees_evenements_indesirables['DATE_RECEPTION'].apply(get_year_from_date).ge(current_year - 3)) & (donnees_evenements_indesirables['NUMERO_SIVSS'].astype(str).str.len() == 6)]
 
 def check_downloaded_sivss_file(chemin_local_du_fichier_evenements_indesirables: str, fichier_sivss_traite: str) -> None:
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(equivalences_sivss_evenements_indesirables_helios)
