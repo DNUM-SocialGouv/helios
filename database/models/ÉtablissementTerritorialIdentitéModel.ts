@@ -87,4 +87,7 @@ export class ÉtablissementTerritorialIdentitéModel {
   @OneToOne(() => CpomModel, { nullable: true })
   @JoinColumn({ name: "numero_finess_etablissement_territorial", referencedColumnName: "numéroFinessÉtablissementTerritorial" })
   public cpom!: CpomModel;
+
+  @Column({ type: 'date', name: "date_ouverture" , nullable: true })
+  public dateOuverture!: string;
 }

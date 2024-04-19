@@ -122,6 +122,7 @@ export interface Wording {
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string;
   readonly NOM_DE_L_ÉTABLISSEMENT: string;
+  readonly DATE_D_OUVERTURE: string;
   readonly NUMÉRO_FINESS: string;
   readonly SIREN: string;
   readonly SIRET: string;

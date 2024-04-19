@@ -43,6 +43,10 @@ export class EntitéJuridiqueTestBuilder {
       dateMiseÀJourSource: "2022-05-14",
       value: "0102030406",
     },
+    dateOuverture: {
+      dateMiseÀJourSource: "2022-02-02",
+      value: "2022-05-14",
+    },
     codeRegion: '84',
   };
 

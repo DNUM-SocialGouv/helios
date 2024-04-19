@@ -145,6 +145,7 @@ export class WordingFr implements Wording {
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string = "fiche d’identité";
   readonly NOM_DE_L_ÉTABLISSEMENT: string = "Nom de l’établissement";
+  readonly DATE_D_OUVERTURE: string = "Date d’ouverture";
   readonly NUMÉRO_FINESS: string = "Numéro FINESS";
   readonly SIREN: string = "SIREN";
   readonly SIRET: string = "SIRET";

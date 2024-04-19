@@ -260,6 +260,10 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.téléphone,
       },
+      dateOuverture: {
+        dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.dateOuverture,
+      },
       codeRegion: établissementTerritorialIdentitéModel.codeRégion,
     };
   }

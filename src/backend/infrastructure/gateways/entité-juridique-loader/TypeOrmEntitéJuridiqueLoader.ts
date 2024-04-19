@@ -169,6 +169,10 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
         dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
         value: entitéJuridiqueModel.téléphone,
       },
+      dateOuverture: {
+        dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
+        value: entitéJuridiqueModel.dateOuverture,
+      },
       codeRegion: entitéJuridiqueModel.codeRégion,
     };
   }
