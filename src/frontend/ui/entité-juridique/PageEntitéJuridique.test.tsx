@@ -193,11 +193,11 @@ describe("La page Entité Juridique", () => {
       // THEN
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
       const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-      const labelNuméroFiness = within(indicateurs[1]).getByText(textMatch(`${wording.NUMÉRO_FINESS} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`), {
+      const labelNuméroFiness = within(indicateurs[2]).getByText(textMatch(`${wording.NUMÉRO_FINESS} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`), {
         selector: "p",
       });
       expect(labelNuméroFiness).toBeInTheDocument();
-      const numéroFiness = within(indicateurs[1]).getByText(entitéJuridique.numéroFinessEntitéJuridique.value, { selector: "p" });
+      const numéroFiness = within(indicateurs[2]).getByText(entitéJuridique.numéroFinessEntitéJuridique.value, { selector: "p" });
       expect(numéroFiness).toBeInTheDocument();
     });
 
@@ -216,11 +216,11 @@ describe("La page Entité Juridique", () => {
       // THEN
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
       const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-      const labelNuméroSiren = within(indicateurs[2]).getByText(textMatch(`${wording.SIREN} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`), {
+      const labelNuméroSiren = within(indicateurs[3]).getByText(textMatch(`${wording.SIREN} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`), {
         selector: "p",
       });
       expect(labelNuméroSiren).toBeInTheDocument();
-      const siren = within(indicateurs[2]).getByText(entitéJuridique.siren.value, { selector: "p" });
+      const siren = within(indicateurs[3]).getByText(entitéJuridique.siren.value, { selector: "p" });
       expect(siren).toBeInTheDocument();
     });
 
@@ -239,11 +239,11 @@ describe("La page Entité Juridique", () => {
       // THEN
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
       const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-      const labelAdresse = within(indicateurs[3]).getByText(textMatch(`${wording.ADRESSE} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`), {
+      const labelAdresse = within(indicateurs[4]).getByText(textMatch(`${wording.ADRESSE} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`), {
         selector: "p",
       });
       expect(labelAdresse).toBeInTheDocument();
-      const adresse = within(indicateurs[3]).getByText("10 Rue Marcel Proust 22023 ST BRIEUC CEDEX 1", { selector: "p" });
+      const adresse = within(indicateurs[4]).getByText("10 Rue Marcel Proust 22023 ST BRIEUC CEDEX 1", { selector: "p" });
       expect(adresse).toBeInTheDocument();
     });
 
@@ -262,11 +262,11 @@ describe("La page Entité Juridique", () => {
       // THEN
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
       const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-      const labelTéléphone = within(indicateurs[4]).getByText(textMatch(`${wording.TÉLÉPHONE} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`), {
+      const labelTéléphone = within(indicateurs[5]).getByText(textMatch(`${wording.TÉLÉPHONE} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`), {
         selector: "p",
       });
       expect(labelTéléphone).toBeInTheDocument();
-      const téléphone = within(indicateurs[4]).getByText("02 96 01 71 23", { selector: "p" });
+      const téléphone = within(indicateurs[5]).getByText("02 96 01 71 23", { selector: "p" });
       expect(téléphone).toBeInTheDocument();
     });
 
@@ -285,12 +285,12 @@ describe("La page Entité Juridique", () => {
       // THEN
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
       const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-      const labelStatutÉtablissement = within(indicateurs[5]).getByText(
+      const labelStatutÉtablissement = within(indicateurs[6]).getByText(
         textMatch(`${wording.STATUT_JURIDIQUE} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`),
         { selector: "p" }
       );
       expect(labelStatutÉtablissement).toBeInTheDocument();
-      const statutÉtablissement = within(indicateurs[5]).getByText(entitéJuridique.libelléStatutJuridique.value, { selector: "p" });
+      const statutÉtablissement = within(indicateurs[6]).getByText(entitéJuridique.libelléStatutJuridique.value, { selector: "p" });
       expect(statutÉtablissement).toBeInTheDocument();
     });
 
@@ -317,7 +317,7 @@ describe("La page Entité Juridique", () => {
       // THEN
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
       const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-      const téléphone = within(indicateurs[4]).getByText(wording.NON_RENSEIGNÉ, { selector: "p" });
+      const téléphone = within(indicateurs[5]).getByText(wording.NON_RENSEIGNÉ, { selector: "p" });
       expect(téléphone).toBeInTheDocument();
     });
 
@@ -344,7 +344,7 @@ describe("La page Entité Juridique", () => {
       // THEN
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
       const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-      const adresseIncomplète = within(indicateurs[3]).getByText("10 Marcel Proust 22023 ST BRIEUC CEDEX 1", { selector: "p" });
+      const adresseIncomplète = within(indicateurs[4]).getByText("10 Marcel Proust 22023 ST BRIEUC CEDEX 1", { selector: "p" });
       expect(adresseIncomplète).toBeInTheDocument();
     });
   });
