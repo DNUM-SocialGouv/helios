@@ -110,7 +110,7 @@ const filterQualiteSanitaire = (qualite: any, profil: any) => {
     const filtredQualite = {
         reclamations: profil.DonnéesSirec === 'ok' ? qualite.reclamations : [{ 'details': [] }],
         evenementsIndesirables: profil.DonnéesSivss === 'ok' ? qualite.evenementsIndesirables : [],
-        inspectionsEtControles: profil.DonnéesSiicea === 'ok' ? qualite.inspectionsEtControles : {},
+        inspectionsEtControles: profil.DonnéesSiicea === 'ok' ? qualite.inspectionsEtControles : { dateMiseAJourSource: "", inspectionsEtControles: [] },
     }
     return filtredQualite;
 }
@@ -195,7 +195,7 @@ const filterQualiteMedicoSocial = (qualite: any, profil: any) => {
     const filtredQualite = {
         reclamations: profil.DonnéesSirec === 'ok' ? qualite.reclamations : [{ 'details': [] }],
         evenementsIndesirables: profil.DonnéesSivss === 'ok' ? qualite.evenementsIndesirables : [],
-        inspectionsEtControles: profil.DonnéesSiicea === 'ok' ? qualite.inspectionsEtControles : {},
+        inspectionsEtControles: profil.DonnéesSiicea === 'ok' ? qualite.inspectionsEtControles : { dateMiseAJourSource: "", inspectionsEtControles: [] },
     }
     return filtredQualite;
 }

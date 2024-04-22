@@ -25,10 +25,11 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
   }
 
   public get lesInspectionsEtControlesNeSontPasRenseignées(): boolean {
-    if(typeof this.etablissementTerritorialQualiteSanitaire.inspectionsEtControles.inspectionsEtControles !== 'undefined') {
-      return (this.etablissementTerritorialQualiteSanitaire.inspectionsEtControles.inspectionsEtControles.length === 0);
-    }
-    return true
+    return this.etablissementTerritorialQualiteSanitaire.inspectionsEtControles.inspectionsEtControles.length === 0 && this.etablissementTerritorialQualiteSanitaire.inspectionsEtControles.dateMiseAJourSource !== "";
+  }
+
+  public get lesInspectionsEtControlesNeSontPasAutorisées(): boolean {
+    return this.etablissementTerritorialQualiteSanitaire.inspectionsEtControles.dateMiseAJourSource === "";
   }
 
   public get lesReclamationsNeSontPasRenseignées(): boolean {
@@ -65,7 +66,7 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
   }
 
   public get lesDonneesQualiteNeSontPasRenseignées(): boolean {
-    return this.lesReclamationsNeSontPasRenseignées && this.lesEvenementsIndesirablesNeSontPasRenseignées;
+    return this.lesReclamationsNeSontPasRenseignées && this.lesEvenementsIndesirablesNeSontPasRenseignées && this.lesInspectionsEtControlesNeSontPasRenseignées;
   }
 
   public get lesDonnéesQualitePasRenseignees(): string[] {
@@ -78,6 +79,7 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
 
   public get lesDonnéesQualitePasAutorisés(): string[] {
     const nonAutorisés: string[] = [];
+    if (this.lesInspectionsEtControlesNeSontPasAutorisées) nonAutorisés.push(this.wording.INSPECTIONS_CONTROLES);
     if (this.lesReclamationsNeSontPasAutorisées) nonAutorisés.push(this.wording.RECLAMATIONS);
     if (this.lesEvenementsIndesirablesNeSontPasAutorisées) nonAutorisés.push(this.wording.EVENEMENTS_INDESIRABLES);
     return nonAutorisés;

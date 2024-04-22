@@ -30,21 +30,20 @@ const BlocQualité = ({ etablissementTerritorialQualiteSanitairelViewModel }: Bl
       ) : (
         <></>
       )}
-      {etablissementTerritorialQualiteSanitairelViewModel.getInspectionsEtControles.length === 0 ? (
+      {etablissementTerritorialQualiteSanitairelViewModel.lesDonnéesQualitePasRenseignees.length !== 0 ? (
         <NoDataCallout indicateurs={etablissementTerritorialQualiteSanitairelViewModel.lesDonnéesQualitePasRenseignees} />
       ) : (
         <></>
       )}
 
       <ul className="indicateurs">
-        {etablissementTerritorialQualiteSanitairelViewModel.getInspectionsEtControles.length > 0 && (
-          <>
+        {!etablissementTerritorialQualiteSanitairelViewModel.lesInspectionsEtControlesNeSontPasRenseignées &&
+          !etablissementTerritorialQualiteSanitairelViewModel.lesInspectionsEtControlesNeSontPasAutorisées && (
             <GraphiqueInspectionsControles
               data={etablissementTerritorialQualiteSanitairelViewModel.getInspectionsEtControles}
               dateMiseAJour={convertDateDDMMYYYY(etablissementTerritorialQualiteSanitairelViewModel.dateMiseAJourSourceInspectionsEtControles)}
             />
-          </>
-        )}
+          )}
       </ul>
 
       <ul className="indicateurs">

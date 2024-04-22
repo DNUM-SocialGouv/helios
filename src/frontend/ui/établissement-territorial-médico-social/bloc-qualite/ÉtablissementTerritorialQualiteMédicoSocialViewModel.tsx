@@ -22,11 +22,8 @@ export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
     return this.etablissementTerritorialQualiteMédicoSocial.inspectionsEtControles.dateMiseAJourSource;
   }
 
-   public get lesInspectionsEtControlesNeSontPasRenseignées(): boolean {
-    if(typeof this.etablissementTerritorialQualiteMédicoSocial.inspectionsEtControles.inspectionsEtControles !== 'undefined') {
-      return (this.etablissementTerritorialQualiteMédicoSocial.inspectionsEtControles.inspectionsEtControles.length === 0);
-    }
-    return true
+  public get lesInspectionsEtControlesNeSontPasRenseignées(): boolean {
+    return this.etablissementTerritorialQualiteMédicoSocial.inspectionsEtControles.inspectionsEtControles.length === 0 && this.etablissementTerritorialQualiteMédicoSocial.inspectionsEtControles.dateMiseAJourSource !== "";
   }
 
   public get lesReclamationsNeSontPasRenseignées(): boolean {
@@ -36,6 +33,10 @@ export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
   public get lesReclamationsNeSontPasAutorisées(): boolean {
     return this.etablissementTerritorialQualiteMédicoSocial.reclamations.length === 1 &&
       this.etablissementTerritorialQualiteMédicoSocial.reclamations[0].details.length === 0;
+  }
+
+  public get lesInspectionsEtControlesNeSontPasAutorisées(): boolean {
+    return this.etablissementTerritorialQualiteMédicoSocial.inspectionsEtControles.dateMiseAJourSource === "";
   }
 
   public get totalAssocieAuxsoins(): number {
@@ -58,7 +59,7 @@ export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
   }
 
   public get lesDonneesQualiteNeSontPasRenseignées(): boolean {
-    return this.lesReclamationsNeSontPasRenseignées && this.lesEvenementsIndesirablesNeSontPasRenseignées;
+    return this.lesReclamationsNeSontPasRenseignées && this.lesEvenementsIndesirablesNeSontPasRenseignées && this.lesInspectionsEtControlesNeSontPasRenseignées;
   }
 
 
@@ -72,6 +73,7 @@ export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
 
   public get lesDonnéesQualitePasAutorisés(): string[] {
     const nonAutorisés: string[] = [];
+    if (this.lesInspectionsEtControlesNeSontPasAutorisées) nonAutorisés.push(this.wording.INSPECTIONS_CONTROLES);
     if (this.lesReclamationsNeSontPasAutorisées) nonAutorisés.push(this.wording.RECLAMATIONS);
     if (this.lesEvenementsIndesirablesNeSontPasAutorisées) nonAutorisés.push(this.wording.EVENEMENTS_INDESIRABLES)
     return nonAutorisés;

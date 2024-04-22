@@ -30,7 +30,7 @@ const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel }:
       ) : (
         <></>
       )}
-  
+
       {etablissementTerritorialQualiteMédicoSocialViewModel.lesDonnéesQualitePasRenseignees.length !== 0 ? (
         <NoDataCallout indicateurs={etablissementTerritorialQualiteMédicoSocialViewModel.lesDonnéesQualitePasRenseignees} />
       ) : (
@@ -38,17 +38,13 @@ const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel }:
       )}
 
       <ul className="indicateurs">
-        {etablissementTerritorialQualiteMédicoSocialViewModel.getInspectionsEtControles.length > 0 && (
-          <>
+        {!etablissementTerritorialQualiteMédicoSocialViewModel.lesInspectionsEtControlesNeSontPasRenseignées &&
+          !etablissementTerritorialQualiteMédicoSocialViewModel.lesInspectionsEtControlesNeSontPasAutorisées && (
             <GraphiqueInspectionsControles
               data={etablissementTerritorialQualiteMédicoSocialViewModel.getInspectionsEtControles}
               dateMiseAJour={convertDateDDMMYYYY(etablissementTerritorialQualiteMédicoSocialViewModel.dateMiseAJourSourceInspectionsEtControles)}
             />
-          </>
-        )}
-      </ul>
-
-      <ul className="indicateurs">
+          )}
         {!etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasRenseignées &&
           !etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasAutorisées && (
             <GraphiqueReclamations
