@@ -108,8 +108,9 @@ const filterAutorisationSanitaire = (autorisationCapacite: any, profil: any) => 
 
 const filterQualiteSanitaire = (qualite: any, profil: any) => {
     const filtredQualite = {
-        reclamations: profil.nombre_reclamation === 'ok' ? qualite.reclamations : [{ 'details': [] }],
-        evenementsIndesirables: (profil["nombre_EIAS/EIGS_encours"] === 'ok' && profil["nombre_EIAS/EIGS_cloturé"] === 'ok') ? qualite.evenementsIndesirables : [],
+        reclamations: profil.DonnéesSirec === 'ok' ? qualite.reclamations : [{ 'details': [] }],
+        evenementsIndesirables: profil.DonnéesSivss === 'ok' ? qualite.evenementsIndesirables : [],
+        inspectionsEtControles: profil.DonnéesSiicea === 'ok' ? qualite.inspectionsEtControles : { dateMiseAJourSource: "", inspectionsEtControles: [] },
     }
     return filtredQualite;
 }
@@ -192,8 +193,9 @@ const filterressourcesHumainesMedicoSocial = (ressourcesHumaines: any, profil: a
 
 const filterQualiteMedicoSocial = (qualite: any, profil: any) => {
     const filtredQualite = {
-        reclamations: profil.nombre_reclamation === 'ok' ? qualite.reclamations : [{ 'details': [] }],
-        evenementsIndesirables: profil["nombre_EIAS/EIGS"] === 'ok' ? qualite.evenementsIndesirables : [],
+        reclamations: profil.DonnéesSirec === 'ok' ? qualite.reclamations : [{ 'details': [] }],
+        evenementsIndesirables: profil.DonnéesSivss === 'ok' ? qualite.evenementsIndesirables : [],
+        inspectionsEtControles: profil.DonnéesSiicea === 'ok' ? qualite.inspectionsEtControles : { dateMiseAJourSource: "", inspectionsEtControles: [] },
     }
     return filtredQualite;
 }

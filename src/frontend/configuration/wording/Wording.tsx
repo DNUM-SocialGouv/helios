@@ -217,6 +217,16 @@ export interface Wording {
   readonly EVENEMENTS_ASSOCIE_AUX_SOINS: string;
   readonly EVENEMENTS_DANS_ET: string;
 
+  readonly INSPECTIONS_CONTROLES: string;
+
+  readonly DATE_REELLE_DE_VISITE: string;
+  readonly DATE_REELLE_DE_RAPPORT: string;
+  readonly TYPE_DE_PLANIFICATION: string;
+  readonly MODALITE_DE_LA_MISSION: string;
+  readonly TYPE_DE_MISSION: string;
+  readonly AFFICHER_PLUS: string;
+  readonly AFFICHER_MOINS: string;
+
   // Bloc Autorisation Sanitaire
   readonly AUTRES_ACTIVITÉS: string;
   readonly AUTRES_ACTIVITÉS_SAN: string;
@@ -316,6 +326,7 @@ export interface Wording {
   readonly ANCRE_TITLE: string;
   readonly SIREC_TITLE: string;
   readonly SIVSS_TITLE: string;
+  readonly SIICEA_TITLE: string;
 
   // Sources courtes
   readonly FINESS: ReactElement;
@@ -329,8 +340,8 @@ export interface Wording {
   readonly RPU: ReactElement;
   readonly SIREC: ReactElement;
   readonly SIVSS: ReactElement;
-
-
+  readonly SIICEA: ReactElement;
+  
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string;
 

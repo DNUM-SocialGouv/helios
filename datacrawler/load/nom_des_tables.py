@@ -17,6 +17,7 @@ TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE = "budget_et_finances_entite_jur
 TABLES_DES_RESSOURCES_HUMAINES_MÉDICO_SOCIAL = "ressources_humaines_medico_social"
 TABLES_DES_RECLAMATIONS = "reclamation_etablissement_territorial"
 TABLES_DES_EVENEMENTS_INDESIRABLES = "evenement_indesirable_etablissement_territorial"
+TABLES_DES_INSPECTIONS_ET_CONTROLES = "inspections_controles_etablissement_territorial"
 
 
 class FichierSource(Enum):
@@ -35,3 +36,4 @@ class FichierSource(Enum):
     FINESS_CS1600102 = "finess_cs1600102"
     SIREC = "sirec"
     SIVSS = "sivss"
+    SIICEA = "siicea"

@@ -183,4 +183,46 @@ describe("La récupération d’un établissement territorial sanitaire", () => 
     expect(mockedChargeAutorisations).toHaveBeenCalledTimes(1);
     expect(établissementTerritorialSanitaire.autorisationsEtCapacités).toStrictEqual(autorisations);
   });
+
+  it("récupère les indicateurs qualité de l’établissement territorial sanitaire", async () => {
+    // GIVEN
+    const fakeIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestBuilder.créeUneIdentitéSanitaire({
+      numéroFinessEntitéJuridique: {
+        dateMiseÀJourSource: "2022-05-14",
+        value: numéroFinessEntitéJuridique,
+      },
+      numéroFinessÉtablissementTerritorial: {
+        dateMiseÀJourSource: "2022-05-14",
+        value: numéroFinessÉtablissementTerritorial,
+      },
+    });
+
+    const donneesQualiteDeLÉtablissement = [
+      ÉtablissementTerritorialTestBuilder.créeUnBlocQualité(),
+      ÉtablissementTerritorialTestBuilder.créeUnBlocQualité(),
+      ÉtablissementTerritorialTestBuilder.créeUnBlocQualité(),
+    ];
+    const mockedDonnesQualite = jest.fn().mockResolvedValueOnce(donneesQualiteDeLÉtablissement);
+
+    const mockedÉtablissementTerritorialSanitaireLoader: ÉtablissementTerritorialSanitaireLoader = {
+      chargeActivité: jest.fn(),
+      chargeAutorisationsEtCapacités: jest.fn(),
+      chargeQualite: mockedDonnesQualite,
+      chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
+    };
+
+    const récupèreLÉtablissementTerritorialUseCase = new RécupèreLÉtablissementTerritorialSanitaireUseCase(
+      mockedÉtablissementTerritorialSanitaireLoader,
+      mock<EntitéJuridiqueLoader>()
+    );
+
+    // WHEN
+    const établissementTerritorialSanitaire = await récupèreLÉtablissementTerritorialUseCase.exécute(numéroFinessÉtablissementTerritorial);
+
+    // THEN
+    expect(mockedDonnesQualite).toHaveBeenCalledWith(numéroFinessÉtablissementTerritorial);
+    expect(mockedDonnesQualite).toHaveBeenCalledTimes(1);
+    expect(établissementTerritorialSanitaire.qualite).toStrictEqual(donneesQualiteDeLÉtablissement);
+
+  });
 });

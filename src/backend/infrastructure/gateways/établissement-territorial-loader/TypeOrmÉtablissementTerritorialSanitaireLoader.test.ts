@@ -7,6 +7,7 @@ import { CapacitéAutorisationSanitaireModel } from "../../../../../database/mod
 import { DateMiseÀJourFichierSourceModel } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { EvenementIndesirableETModel } from "../../../../../database/models/EvenementIndesirableModel";
+import { InspectionsControlesETModel } from "../../../../../database/models/InspectionsModel";
 import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
@@ -38,6 +39,7 @@ describe("Établissement territorial sanitaire loader", () => {
   let capacitéSanitaireRepository: Repository<CapacitéAutorisationSanitaireModel>;
   let reclamtionsModelRepository: Repository<ReclamationETModel>;
   let evenementsIndesirablesModelRepository: Repository<EvenementIndesirableETModel>;
+  let inspectionsEtControlesModelRepository: Repository<InspectionsControlesETModel>;
 
   beforeAll(async () => {
     activitéSanitaireModelRepository = (await orm).getRepository(ActivitéSanitaireModel);
@@ -51,6 +53,7 @@ describe("Établissement territorial sanitaire loader", () => {
     capacitéSanitaireRepository = (await orm).getRepository(CapacitéAutorisationSanitaireModel);
     reclamtionsModelRepository = (await orm).getRepository(ReclamationETModel);
     evenementsIndesirablesModelRepository = (await orm).getRepository(EvenementIndesirableETModel);
+    inspectionsEtControlesModelRepository = (await orm).getRepository(InspectionsControlesETModel);
   });
 
   beforeEach(async () => {
@@ -759,6 +762,34 @@ describe("Établissement territorial sanitaire loader", () => {
 
       await evenementsIndesirablesModelRepository.insert([
         ÉtablissementTerritorialQualitéModelTestBuilder.créeEvenementsIndesirables({ annee: 2023, numéroFinessÉtablissementTerritorial })
+      ]);
+
+      await inspectionsEtControlesModelRepository.insert([
+        ÉtablissementTerritorialQualitéModelTestBuilder.créeLesInspectionsEtControles({
+          numéroFinessÉtablissementTerritorial,
+          dateVisite: '2022-12-19',
+          dateRapport: '2023-02-20',
+          nombreEcart: 5,
+          nombreRemarque: 6,
+          injonction: 2,
+          prescription: 8,
+          saisineCng: 7,
+        })
+      ]);
+
+      await inspectionsEtControlesModelRepository.insert([
+        ÉtablissementTerritorialQualitéModelTestBuilder.créeLesInspectionsEtControles({
+          numéroFinessÉtablissementTerritorial,
+          typeMission: 'Inspection',
+          themeRegional: 'P23 Contrôle de la sécurité et de la qualité de la prise en charge médicamenteuse des résidents en EHPAD',
+          dateVisite: '2022-12-19',
+          dateRapport: '2023-02-20',
+          nombreRemarque: 6,
+          saisineCng: 7,
+          saisineJuridiction: 3,
+          saisineParquet: 3,
+          saisineAutre: 3,
+        })
       ]);
 
       const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm);

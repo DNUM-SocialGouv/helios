@@ -1,5 +1,6 @@
 import { EvenementsIndesirables, ÉtablissementTerritorialQualite } from "../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
 import { Wording } from "../../../configuration/wording/Wording";
+import { transformDataInspections } from "../../../utils/transformDataInspections";
 import { StringFormater } from "../../commun/StringFormater";
 
 
@@ -13,6 +14,17 @@ export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
     this.etablissementTerritorialQualiteMédicoSocial = etablissementTerritorialQualiteMédicoSocial;
   }
 
+  public get getInspectionsEtControles(): any {
+    return transformDataInspections(this.etablissementTerritorialQualiteMédicoSocial.inspectionsEtControles.inspectionsEtControles);
+  }
+
+  public get dateMiseAJourSourceInspectionsEtControles(): string {
+    return this.etablissementTerritorialQualiteMédicoSocial.inspectionsEtControles.dateMiseAJourSource;
+  }
+
+  public get lesInspectionsEtControlesNeSontPasRenseignées(): boolean {
+    return this.etablissementTerritorialQualiteMédicoSocial.inspectionsEtControles.inspectionsEtControles.length === 0 && this.etablissementTerritorialQualiteMédicoSocial.inspectionsEtControles.dateMiseAJourSource !== "";
+  }
 
   public get lesReclamationsNeSontPasRenseignées(): boolean {
     return this.etablissementTerritorialQualiteMédicoSocial.reclamations.length === 0;
@@ -21,6 +33,10 @@ export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
   public get lesReclamationsNeSontPasAutorisées(): boolean {
     return this.etablissementTerritorialQualiteMédicoSocial.reclamations.length === 1 &&
       this.etablissementTerritorialQualiteMédicoSocial.reclamations[0].details.length === 0;
+  }
+
+  public get lesInspectionsEtControlesNeSontPasAutorisées(): boolean {
+    return this.etablissementTerritorialQualiteMédicoSocial.inspectionsEtControles.dateMiseAJourSource === "";
   }
 
   public get totalAssocieAuxsoins(): number {
@@ -43,12 +59,13 @@ export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
   }
 
   public get lesDonneesQualiteNeSontPasRenseignées(): boolean {
-    return this.lesReclamationsNeSontPasRenseignées && this.lesEvenementsIndesirablesNeSontPasRenseignées;
+    return this.lesReclamationsNeSontPasRenseignées && this.lesEvenementsIndesirablesNeSontPasRenseignées && this.lesInspectionsEtControlesNeSontPasRenseignées;
   }
 
 
   public get lesDonnéesQualitePasRenseignees(): string[] {
     const nonRenseignees: string[] = [];
+    if (this.lesInspectionsEtControlesNeSontPasRenseignées) nonRenseignees.push(this.wording.INSPECTIONS_CONTROLES);
     if (this.lesReclamationsNeSontPasRenseignées) nonRenseignees.push(this.wording.RECLAMATIONS);
     if (this.lesEvenementsIndesirablesNeSontPasRenseignées) nonRenseignees.push(this.wording.EVENEMENTS_INDESIRABLES_NON_RENSEIGNES)
     return nonRenseignees;
@@ -56,6 +73,7 @@ export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
 
   public get lesDonnéesQualitePasAutorisés(): string[] {
     const nonAutorisés: string[] = [];
+    if (this.lesInspectionsEtControlesNeSontPasAutorisées) nonAutorisés.push(this.wording.INSPECTIONS_CONTROLES);
     if (this.lesReclamationsNeSontPasAutorisées) nonAutorisés.push(this.wording.RECLAMATIONS);
     if (this.lesEvenementsIndesirablesNeSontPasAutorisées) nonAutorisés.push(this.wording.EVENEMENTS_INDESIRABLES)
     return nonAutorisés;
