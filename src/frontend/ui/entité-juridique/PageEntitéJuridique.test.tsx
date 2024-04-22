@@ -5,6 +5,7 @@ import { RésultatDeRechercheTestBuilder } from "../../../backend/test-builder/R
 import { EntitéJuridiqueViewModelTestBuilder } from "../../test-helpers/test-builder/EntitéJuridiqueViewModelTestBuilder";
 import { EtablissementsTerritoriauxRattachésTestBuilder } from "../../test-helpers/test-builder/EtablissementsTerritoriauxRattachésTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../test-helpers/testHelper";
+import { StringFormater } from "../commun/StringFormater";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 import { PageEntitéJuridique } from "./PageEntitéJuridique";
 
@@ -30,7 +31,7 @@ const result = RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntit�
 const rechercheViewModel = new RechercheViewModel(result, paths);
 
 describe("La page Entité Juridique", () => {
-  it("affiche le titre court dans l’onglet", () => {
+   it("affiche le titre court dans l’onglet", () => {
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
@@ -149,10 +150,10 @@ describe("La page Entité Juridique", () => {
     // THEN
     const blocAutorisationCapacites = screen.getByText(wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ);
     expect(blocAutorisationCapacites).toBeInTheDocument();
-  });
+  }); 
 
   describe("affiche le bloc identité de l’entité juridique", () => {
-    it("affiche le nom de l’établissement", () => {
+   it("affiche le nom de l’établissement", () => {
       // WHEN
       renderFakeComponent(
         <SessionProvider session={mockSession}>
@@ -178,7 +179,34 @@ describe("La page Entité Juridique", () => {
       expect(nomDeLÉtablissement).toBeInTheDocument();
     });
 
-    it("affiche le numéro FINESS", () => {
+    it("affiche la date d’ouverture", () => {
+      // WHEN
+      renderFakeComponent(
+        <SessionProvider session={mockSession}>
+          <PageEntitéJuridique
+            entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+            rechercheViewModel={rechercheViewModel}
+            établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
+          />
+        </SessionProvider>
+      );
+  
+      // THENs
+      const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
+      const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
+ 
+      const labelÉtablissement = within(indicateurs[1]).getByText(
+        textMatch(`${wording.DATE_D_OUVERTURE} - ${wording.miseÀJour("02/02/2022")} - Source : FINESS`),
+        { selector: "p" }
+      );
+      expect(labelÉtablissement).toBeInTheDocument();
+      const abréviationFiness = within(indicateurs[1]).getByText("FINESS", { selector: "abbr" });
+      expect(abréviationFiness).toHaveAttribute("title", wording.FINESS_TITLE);
+      const nomDeLÉtablissement = within(indicateurs[1]).getByText(StringFormater.formatDate(entitéJuridique.dateOuverture.value), { selector: "p" });
+      expect(nomDeLÉtablissement).toBeInTheDocument();
+    });
+
+     it("affiche le numéro FINESS", () => {
       // WHEN
       renderFakeComponent(
         <SessionProvider session={mockSession}>

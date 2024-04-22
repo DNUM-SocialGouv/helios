@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner } from "typeorm"
 export class AjoutDateOuverture1713452627276 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+            await queryRunner.query(`
             ALTER TABLE entite_juridique
             ADD date_ouverture VARCHAR(11) NULL;
             `);
