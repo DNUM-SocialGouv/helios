@@ -1,6 +1,6 @@
 import { InspectionControleDataTheme } from "../../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
-import { IndicateurGraphiqueNoYears } from "../../../commun/IndicateurGraphiqueNoYears/IndicateurGraphiqueNoYears";
+import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ContenuInspectionsControles } from "../../InfoBulle/ContenuInspectionsControles";
 import InspectionsControlesTagMultiNiveaux from "./InspectionsControlesTagMultiNiveaux";
 
@@ -13,7 +13,7 @@ export const GraphiqueInspectionsControles = ({ data, dateMiseAJour }: Graphique
   const { wording } = useDependencies();
 
   return (
-    <IndicateurGraphiqueNoYears
+    <IndicateurGraphique
       contenuInfoBulle={<ContenuInspectionsControles dateDeMiseÀJour={dateMiseAJour} source={wording.SIICEA} />}
       dateDeMiseÀJour={dateMiseAJour}
       identifiant="qualite-inspections-controles"
@@ -21,6 +21,6 @@ export const GraphiqueInspectionsControles = ({ data, dateMiseAJour }: Graphique
       source={wording.SIICEA}
     >
       <InspectionsControlesTagMultiNiveaux data={data} />
-    </IndicateurGraphiqueNoYears>
+    </IndicateurGraphique>
   );
 };
