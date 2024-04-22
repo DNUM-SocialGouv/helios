@@ -22,8 +22,11 @@ export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
     return this.etablissementTerritorialQualiteMédicoSocial.inspectionsEtControles.dateMiseAJourSource;
   }
 
-  public get lesInspectionsEtControlesNeSontPasRenseignées(): boolean {
-    return this.etablissementTerritorialQualiteMédicoSocial.inspectionsEtControles.inspectionsEtControles.length === 0;
+   public get lesInspectionsEtControlesNeSontPasRenseignées(): boolean {
+    if(typeof this.etablissementTerritorialQualiteMédicoSocial.inspectionsEtControles.inspectionsEtControles !== 'undefined') {
+      return (this.etablissementTerritorialQualiteMédicoSocial.inspectionsEtControles.inspectionsEtControles.length === 0);
+    }
+    return true
   }
 
   public get lesReclamationsNeSontPasRenseignées(): boolean {

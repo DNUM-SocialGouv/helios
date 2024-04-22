@@ -25,7 +25,10 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
   }
 
   public get lesInspectionsEtControlesNeSontPasRenseignées(): boolean {
-    return this.etablissementTerritorialQualiteSanitaire.inspectionsEtControles.inspectionsEtControles.length === 0;
+    if(typeof this.etablissementTerritorialQualiteSanitaire.inspectionsEtControles.inspectionsEtControles !== 'undefined') {
+      return (this.etablissementTerritorialQualiteSanitaire.inspectionsEtControles.inspectionsEtControles.length === 0);
+    }
+    return true
   }
 
   public get lesReclamationsNeSontPasRenseignées(): boolean {

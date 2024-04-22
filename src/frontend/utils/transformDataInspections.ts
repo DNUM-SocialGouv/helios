@@ -1,6 +1,9 @@
 import { Inspection, InspectionControleDataTheme } from "../../backend/métier/entities/ÉtablissementTerritorialQualite";
 
 export function transformDataInspections(data: Inspection[]) {
+
+  if(data)
+  {
     const groupedData: InspectionControleDataTheme[] = [];
   
     // Parcours de chaque élément et regroupement par typeMission
@@ -28,7 +31,16 @@ export function transformDataInspections(data: Inspection[]) {
   
     // Conversion du dictionnaire en tableau
     const result = Object.values(groupedData);
-  
+
+    // Tri du résultat par libelleTheme alphabétiquement de A à Z
+    result.sort((a, b) => {
+      if (a.libelleTheme < b.libelleTheme) return -1;
+      if (a.libelleTheme > b.libelleTheme) return 1;
+      return 0;
+    });
+
     return result;
+  }
+  return [];
   }
   

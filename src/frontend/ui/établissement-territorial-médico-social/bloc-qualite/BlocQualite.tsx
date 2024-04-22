@@ -30,23 +30,12 @@ const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel }:
       ) : (
         <></>
       )}
-      {etablissementTerritorialQualiteMédicoSocialViewModel.getInspectionsEtControles.length === 0 ? (
-        <NoDataCallout indicateurs={etablissementTerritorialQualiteMédicoSocialViewModel.lesDonnéesQualitePasRenseignees} />
-      ) : (
-        <></>
-      )}
-
-      {etablissementTerritorialQualiteMédicoSocialViewModel.lesDonnéesQualitePasAutorisés.length !== 0 ? (
-        <NotAUthorized indicateurs={etablissementTerritorialQualiteMédicoSocialViewModel.lesDonnéesQualitePasAutorisés} />
-      ) : (
-        <></>
-      )}
+  
       {etablissementTerritorialQualiteMédicoSocialViewModel.lesDonnéesQualitePasRenseignees.length !== 0 ? (
         <NoDataCallout indicateurs={etablissementTerritorialQualiteMédicoSocialViewModel.lesDonnéesQualitePasRenseignees} />
       ) : (
         <></>
       )}
-
 
       <ul className="indicateurs">
         {etablissementTerritorialQualiteMédicoSocialViewModel.getInspectionsEtControles.length > 0 && (
