@@ -57,6 +57,7 @@ import { AjoutTableInspectionsControles1712743083892 } from "./migrations/171274
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
+import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "./models/ActivitéSanitaireEntitéJuridiqueModel";
 import { ActivitéSanitaireModel } from "./models/ActivitéSanitaireModel";
@@ -178,6 +179,7 @@ export default new DataSource({
     AjoutFichierSourceSirec1708679781472,
     AjoutEvenementsIndesirables1710326854362,
     AjoutTableInspectionsControles1712743083892,
+    ModificationValeurProfil1797341938070
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
