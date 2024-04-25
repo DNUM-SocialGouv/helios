@@ -50,6 +50,7 @@ const BlocQualité = ({ etablissementTerritorialQualiteSanitairelViewModel }: Bl
         {!etablissementTerritorialQualiteSanitairelViewModel.lesReclamationsNeSontPasRenseignées &&
           !etablissementTerritorialQualiteSanitairelViewModel.lesReclamationsNeSontPasAutorisées && (
             <GraphiqueReclamations
+              annéesTotales={5}
               data={etablissementTerritorialQualiteSanitairelViewModel.buildReclamationsData}
               dateMiseAJour={etablissementTerritorialQualiteSanitairelViewModel.dateMiseAJour}
             />
@@ -60,6 +61,7 @@ const BlocQualité = ({ etablissementTerritorialQualiteSanitairelViewModel }: Bl
           !etablissementTerritorialQualiteSanitairelViewModel.lesEvenementsIndesirablesNeSontPasAutorisées && (
             <GraphiqueEvenementsIndesirables
               annees={etablissementTerritorialQualiteSanitairelViewModel.anneesEIs}
+              annéesTotales={5}
               data={etablissementTerritorialQualiteSanitairelViewModel.buildEIsData}
               dateMiseAJour={etablissementTerritorialQualiteSanitairelViewModel.dateMiseAJourEvenementsIndesirables}
             />
