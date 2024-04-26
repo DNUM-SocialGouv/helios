@@ -6,7 +6,6 @@ import { AutreActivitéSanitaireModel } from "../../../../../database/models/Aut
 import { CapacitéAutorisationSanitaireModel } from "../../../../../database/models/CapacitéAutorisationSanitaireModel";
 import { DateMiseÀJourFichierSourceModel } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
-import { EvenementIndesirableETModel } from "../../../../../database/models/EvenementIndesirableModel";
 import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
@@ -37,7 +36,6 @@ describe("Établissement territorial sanitaire loader", () => {
   let reconnaissanceContractuelleSanitaireRepository: Repository<ReconnaissanceContractuelleSanitaireModel>;
   let capacitéSanitaireRepository: Repository<CapacitéAutorisationSanitaireModel>;
   let reclamtionsModelRepository: Repository<ReclamationETModel>;
-  let evenementsIndesirablesModelRepository: Repository<EvenementIndesirableETModel>;
 
   beforeAll(async () => {
     activitéSanitaireModelRepository = (await orm).getRepository(ActivitéSanitaireModel);
@@ -50,7 +48,6 @@ describe("Établissement territorial sanitaire loader", () => {
     reconnaissanceContractuelleSanitaireRepository = (await orm).getRepository(ReconnaissanceContractuelleSanitaireModel);
     capacitéSanitaireRepository = (await orm).getRepository(CapacitéAutorisationSanitaireModel);
     reclamtionsModelRepository = (await orm).getRepository(ReclamationETModel);
-    evenementsIndesirablesModelRepository = (await orm).getRepository(EvenementIndesirableETModel);
   });
 
   beforeEach(async () => {
@@ -755,10 +752,6 @@ describe("Établissement territorial sanitaire loader", () => {
       );
       await reclamtionsModelRepository.insert([
         ÉtablissementTerritorialQualitéModelTestBuilder.créeReclamations({ annee: 2023, numéroFinessÉtablissementTerritorial })
-      ]);
-
-      await evenementsIndesirablesModelRepository.insert([
-        ÉtablissementTerritorialQualitéModelTestBuilder.créeEvenementsIndesirables({ annee: 2023, numéroFinessÉtablissementTerritorial })
       ]);
 
       const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm);

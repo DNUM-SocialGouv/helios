@@ -45,10 +45,6 @@ export const getFakeDataCrawlerDependencies = (): Dependencies => {
     environmentVariables,
     finessDownloadRawData: { exécute: jest.fn() },
     sirecDownloadRawData: { exécute: jest.fn() },
-<<<<<<< HEAD
-    sivssDownloadRawData: { exécute: jest.fn() },
-=======
->>>>>>> origin/MEP-v1.1.12
     logger: fakeLogger,
     unzipRawData: { exécute: jest.fn() },
     établissementTerritorialHeliosLoader: { récupèreLeNuméroFinessDesÉtablissementsTerritoriaux: jest.fn() },

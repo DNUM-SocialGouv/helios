@@ -1,4 +1,3 @@
-import { EtatSignal, EvenementIndesirableETModel } from "../models/EvenementIndesirableModel";
 import { ReclamationETModel } from "../models/ReclamationETModel";
 
 export class ÉtablissementTerritorialQualitéModelTestBuilder {
@@ -33,17 +32,5 @@ export class ÉtablissementTerritorialQualitéModelTestBuilder {
         établissementTerritorialRéclamationsModel.clotTotal = champsSurchargés?.clotTotal || 12;
         établissementTerritorialRéclamationsModel.encoursTotal = champsSurchargés?.encoursTotal || 12;
         return établissementTerritorialRéclamationsModel;
-    }
-
-    public static créeEvenementsIndesirables(champsSurchargés?: Partial<EvenementIndesirableETModel>): EvenementIndesirableETModel {
-        const établissementTerritorialEIModel = new EvenementIndesirableETModel();
-        établissementTerritorialEIModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '010000040';
-        établissementTerritorialEIModel.annee = champsSurchargés?.annee || 2023;
-        établissementTerritorialEIModel.famillePrincipale = champsSurchargés?.famillePrincipale || 'Evènements indésirables/graves associés aux soins';
-        établissementTerritorialEIModel.naturePrincipale = champsSurchargés?.naturePrincipale || 'Maltraitance';
-        établissementTerritorialEIModel.isEIGS = champsSurchargés?.isEIGS || false;
-        établissementTerritorialEIModel.etat = champsSurchargés?.etat || EtatSignal.CLOTURE;
-        établissementTerritorialEIModel.numeroSIVSS = champsSurchargés?.numeroSIVSS || '123456'
-        return établissementTerritorialEIModel;
     }
 }

@@ -629,30 +629,6 @@ export class ÉtablissementTerritorialTestBuilder {
         "totalEncours": 12,
       },
     ],
-    evenementsIndesirables: [
-      {
-        "dateMiseAJourSource": "2022-02-02",
-        "evenementsClotures": [
-          {
-            "annee": 2023,
-            "clotDate": null,
-            "clotMotif": null,
-            "est_EIGS": false,
-            "etat": "CLOTURE",
-            "famille": "Evènements indésirables/graves associés aux soins",
-            "nature": "Maltraitance",
-            "numeroSIVSS": "123456",
-          }
-        ],
-        "evenementsEncours": [],
-        "libelle": "Evènements indésirables/graves associés aux soins",
-      }, {
-        "dateMiseAJourSource": "2022-02-02",
-        "evenementsEncours": [],
-        "evenementsClotures": [],
-        "libelle": "Evénements/incidents dans un établissement ou organisme",
-      }
-    ]
   }
 
   public static créeUneIdentitéMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialIdentité>): ÉtablissementTerritorialIdentité {

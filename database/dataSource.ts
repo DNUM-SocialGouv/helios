@@ -68,7 +68,6 @@ import { CapacitéAutorisationSanitaireModel } from "./models/CapacitéAutorisat
 import { CpomModel } from "./models/CpomModel";
 import { DateMiseÀJourFichierSourceModel } from "./models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "./models/EntitéJuridiqueModel";
-import { EvenementIndesirableETModel } from "./models/EvenementIndesirableModel";
 import { FavorisModel } from "./models/FavorisModel";
 import { InstitutionModel } from "./models/InstitutionModel";
 import { ProfilModel } from "./models/ProfilModel";
