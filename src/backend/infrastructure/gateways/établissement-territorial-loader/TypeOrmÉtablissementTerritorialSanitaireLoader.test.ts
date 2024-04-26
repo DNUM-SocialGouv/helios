@@ -6,16 +6,19 @@ import { AutreActivitéSanitaireModel } from "../../../../../database/models/Aut
 import { CapacitéAutorisationSanitaireModel } from "../../../../../database/models/CapacitéAutorisationSanitaireModel";
 import { DateMiseÀJourFichierSourceModel } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
+import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { DateMiseÀJourFichierSourceModelTestBuilder } from "../../../../../database/test-builder/DateMiseÀJourFichierSourceModelTestBuilder";
 import { EntitéJuridiqueModelTestBuilder } from "../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder";
+import { ÉtablissementTerritorialQualitéModelTestBuilder } from "../../../../../database/test-builder/EtablissementTerritorialQualiteModelTestBuilder";
 import { ÉtablissementTerritorialActivitéModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialActivitéModelTestBuilder";
 import { ÉtablissementTerritorialAutorisationModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialAutorisationModelTestBuilder";
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder";
 import { ÉtablissementTerritorialSanitaireActivité } from "../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
 import { ÉtablissementTerritorialSanitaireAutorisationEtCapacité } from "../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
+import { ÉtablissementTerritorialQualite } from "../../../métier/entities/ÉtablissementTerritorialQualite";
 import { ÉtablissementTerritorialSanitaireNonTrouvée } from "../../../métier/entities/ÉtablissementTerritorialSanitaireNonTrouvée";
 import { ÉtablissementTerritorialTestBuilder } from "../../../test-builder/ÉtablissementTerritorialTestBuilder";
 import { clearAllTables, getOrm, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from "../../../testHelper";
@@ -32,6 +35,7 @@ describe("Établissement territorial sanitaire loader", () => {
   let autreActivitéSanitaireRepository: Repository<AutreActivitéSanitaireModel>;
   let reconnaissanceContractuelleSanitaireRepository: Repository<ReconnaissanceContractuelleSanitaireModel>;
   let capacitéSanitaireRepository: Repository<CapacitéAutorisationSanitaireModel>;
+  let reclamtionsModelRepository: Repository<ReclamationETModel>;
 
   beforeAll(async () => {
     activitéSanitaireModelRepository = (await orm).getRepository(ActivitéSanitaireModel);
@@ -43,6 +47,7 @@ describe("Établissement territorial sanitaire loader", () => {
     autreActivitéSanitaireRepository = (await orm).getRepository(AutreActivitéSanitaireModel);
     reconnaissanceContractuelleSanitaireRepository = (await orm).getRepository(ReconnaissanceContractuelleSanitaireModel);
     capacitéSanitaireRepository = (await orm).getRepository(CapacitéAutorisationSanitaireModel);
+    reclamtionsModelRepository = (await orm).getRepository(ReclamationETModel);
   });
 
   beforeEach(async () => {
@@ -737,4 +742,24 @@ describe("Établissement territorial sanitaire loader", () => {
       expect(capacités).toStrictEqual([]);
     });
   });
+
+  describe("Charge les données du bloc qualité d'un établissement sanitaire", () => {
+    it("charge les indicateurs du bloc qualité sur la dernière années d’un établissement", async () => {
+      // GIVEN
+      await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }));
+      await établissementTerritorialIdentitéRepository.insert(
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
+      );
+      await reclamtionsModelRepository.insert([
+        ÉtablissementTerritorialQualitéModelTestBuilder.créeReclamations({ annee: 2023, numéroFinessÉtablissementTerritorial })
+      ]);
+
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm);
+
+      // WHEN
+      const qualite = await typeOrmÉtablissementTerritorialLoader.chargeQualite(numéroFinessÉtablissementTerritorial);
+      expect(qualite).toStrictEqual<ÉtablissementTerritorialQualite>(ÉtablissementTerritorialTestBuilder.créeUnBlocQualité());
+    });
+  })
+
 });

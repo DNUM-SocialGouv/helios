@@ -19,16 +19,16 @@
   justify-content: center;
   min-width: 14rem;
 }
-.logoContainer {
-  height: 27px;
-  width: 27px;
-}
 
 .logoContainer {
   height: 27px;
   width: 27px;
 }
 
+.logoContainer {
+  height: 27px;
+  width: 27px;
+}
 
 @media (max-width: 36em) {
   .titre button {

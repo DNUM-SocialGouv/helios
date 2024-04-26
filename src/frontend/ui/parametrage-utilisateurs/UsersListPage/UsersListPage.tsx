@@ -13,6 +13,7 @@ import { RoleModel } from "../../../../../database/models/RoleModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
+import ExportExcel from "./Pagination/ExportExcel/ExportExcel";
 import AdvancedFilter from "./Pagination/Filter/AdvancedFilter/AdvancedFilter";
 import PaginationBtn from "./Pagination/PaginationBtn/PaginationBtn";
 import TheadTable from "./Pagination/TheadTable/TheadTable";
@@ -24,7 +25,7 @@ function greaterThanNMonths(inputDate: Date, n: number): boolean {
   return new Date(inputDate) < NMonthsAgo;
 }
 
-function getUserStatus(lastConnectionDate: Date): string {
+export function getUserStatus(lastConnectionDate: Date): string {
   if (greaterThanNMonths(lastConnectionDate, 6) || lastConnectionDate === null) {
     return "Inactif";
   }
@@ -62,6 +63,18 @@ export interface iPaginationData {
   setSortDir: (sortDir: string) => void;
 }
 
+export interface IQueryParams {
+  key?: string;
+  page?: string | number;
+  institutionId?: string | number;
+  roleId?: string | number;
+  profileId?: string;
+  etatId?: string;
+  orderBy?: string | number;
+  sortDir?: string | number;
+  itemsPerPage: string | number;
+}
+
 type UsersListPageProps = Readonly<{
   users: {
     data: UtilisateurModel[];
@@ -75,6 +88,7 @@ type UsersListPageProps = Readonly<{
   profiles: ProfilModel[];
   roles: RoleModel[];
   institution: number;
+  institutionSessionCode: number;
   profile: string;
   role: number;
   status?: string;
@@ -101,6 +115,7 @@ const UsersListPage = ({
   userSessionRole,
   orderByPage,
   sortDirPage,
+  institutionSessionCode,
 }: UsersListPageProps) => {
   const [userData, setUserData] = useState<UtilisateurModel[]>(users.data);
   const [total, setTotal] = useState(users.total);
@@ -117,6 +132,64 @@ const UsersListPage = ({
 
   const [orderBy, setOrderBy] = useQueryState("orderBy", parseAsString.withDefault(orderByPage));
   const [sortDir, setSortDir] = useQueryState("sortDir", parseAsString.withDefault(sortDirPage));
+
+  const getQueryParams = () => {
+    let orderByData = {};
+    if (orderBy) {
+      orderByData = { orderBy: orderBy };
+    }
+
+    let sortDirdData = {};
+    if (sortDir) {
+      sortDirdData = { sortDir: sortDir };
+    }
+
+    let keyWordData = {};
+    if (key) {
+      keyWordData = { key: key };
+    }
+
+    let pageData = {};
+    if (page) {
+      pageData = { page: page };
+    }
+
+    let institutionIdData = {};
+    if (institutionId) {
+      institutionIdData = { institutionId: institutionId };
+    }
+
+    let roleIdData = {};
+    if (roleId) {
+      roleIdData = { roleId: roleId };
+    }
+
+    let profileIdData = {};
+    if (profileId) {
+      profileIdData = { profileId: profileId };
+    }
+
+    let etatCondition = {};
+    if (etatId) {
+      etatCondition = { etatId: etatId };
+    }
+
+    const params = {
+      ...keyWordData,
+      ...pageData,
+      ...institutionIdData,
+      ...roleIdData,
+      ...profileIdData,
+      ...etatCondition,
+      ...orderByData,
+      ...sortDirdData,
+      itemsPerPage: itemsPerPage.toString(),
+    };
+
+    return params;
+  };
+
+  const [filterParams, setFilterParams] = useState(getQueryParams());
 
   const { wording } = useDependencies();
 
@@ -174,65 +247,11 @@ const UsersListPage = ({
     setTotal: setTotal,
   };
 
-  const getQueryParams = () => {
-    let orderByData = {};
-    if (orderBy) {
-      orderByData = { orderBy: orderBy };
-    }
-
-    let sortDirdData = {};
-    if (sortDir) {
-      sortDirdData = { sortDir: sortDir };
-    }
-
-    let keyWordData = {};
-    if (key) {
-      keyWordData = { key: key };
-    }
-
-    let pageData = {};
-    if (page) {
-      pageData = { page: page };
-    }
-
-    let institutionIdData = {};
-    if (institutionId) {
-      institutionIdData = { institutionId: institutionId };
-    }
-
-    let roleIdData = {};
-    if (roleId) {
-      roleIdData = { roleId: roleId };
-    }
-
-    let profileIdData = {};
-    if (profileId) {
-      profileIdData = { profileId: profileId };
-    }
-
-    let etatCondition = {};
-    if (etatId) {
-      etatCondition = { etatId: etatId };
-    }
-
-    const params = {
-      ...keyWordData,
-      ...pageData,
-      ...institutionIdData,
-      ...roleIdData,
-      ...profileIdData,
-      ...etatCondition,
-      ...orderByData,
-      ...sortDirdData,
-      itemsPerPage: itemsPerPage.toString(),
-    };
-
-    return params;
-  };
   const queryParams = new URLSearchParams(getQueryParams());
 
   useEffect(() => {
     const params = getQueryParams();
+    setFilterParams(params);
     getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
   }, [institutionId, roleId, profileId, etatId, itemsPerPage, key, page, sortDir, orderBy]);
 
@@ -261,6 +280,15 @@ const UsersListPage = ({
           <div className={styles["count-elements"]}>
             {total > 1 && <>{total} éléments trouvés.</>}
             {total === 1 && <>{total} élément trouvé.</>}
+            {total > 0 && (
+              <ExportExcel
+                filterParams={filterParams}
+                institutionSessionCode={institutionSessionCode}
+                institutions={institutions}
+                profiles={profiles}
+                roles={roles}
+              />
+            )}
           </div>
 
           {userData.length === 0 ? (
@@ -277,31 +305,33 @@ const UsersListPage = ({
 
                         return (
                           <tr key={user.id}>
-                            <td className={styles["widthTD-small"]}>
+                            <td className={styles["widthTD-small"]} key={`${user.id}-nom`}>
                               <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`}>
                                 {user.nom}
                               </a>
                             </td>
-                            <td className={styles["widthTD-small"]}>
+                            <td className={styles["widthTD-small"]} key={`${user.id}-prenom`}>
                               <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`}>
                                 {user.prenom}
                               </a>
                             </td>
-                            <td className={styles["widthTD-small"]}>
+                            <td className={styles["widthTD-small"]} key={`${user.id}-email`}>
                               <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`}>
                                 {user.email}
                               </a>
                             </td>
-                            <td className={styles["widthTD-small"]}>{user.institution.libelle}</td>
+                            <td className={styles["widthTD-small"]} key={`${user.id}-institution`}>
+                              {user.institution.libelle}
+                            </td>
 
-                            <td>
+                            <td key={`${user.id}-role`}>
                               <span
                                 className={`fr-badge fr-badge--${roleClass} fr-badge--no-icon ${styles["text_no_change"]} ${styles["widthTD-role"]} fr-text--xs`}
                               >
                                 {user.role.libelle}
                               </span>
                             </td>
-                            <td className={`${styles["widthTD-profil"]}`}>
+                            <td className={`${styles["widthTD-profil"]}`} key={`${user.id}-profils`}>
                               {user.profils &&
                                 user.profils
                                   .filter(function (item) {
@@ -318,20 +348,24 @@ const UsersListPage = ({
                                       seperator = "";
                                     }
                                     return (
-                                      <>
+                                      <span key={`${user.id}-profiles-${i}`}>
                                         {pr && pr[0] && (
                                           <span className={`fr-text--xs `} key={pr[0].code}>
                                             {pr[0].label}
                                             {seperator}
                                           </span>
                                         )}
-                                      </>
+                                      </span>
                                     );
                                   })}
                             </td>
                             <td className={styles["widthTD-date"]}>{user?.dateCreation && formatDateAndHours(user?.dateCreation?.toString())}</td>
-                            <td className={styles["widthTD-date"]}>{user?.lastConnectionDate && formatDateAndHours(user?.lastConnectionDate?.toString())}</td>
-                            <td className={styles["widthTD-etat"]}>{getUserStatus(user.lastConnectionDate)}</td>
+                            <td className={styles["widthTD-date"]} key={`${user.id}-lastConnectionDate`}>
+                              {user?.lastConnectionDate && formatDateAndHours(user?.lastConnectionDate?.toString())}
+                            </td>
+                            <td className={styles["widthTD-etat"]} key={`${user.id}-status`}>
+                              {getUserStatus(user.lastConnectionDate)}
+                            </td>
                           </tr>
                         );
                       })}

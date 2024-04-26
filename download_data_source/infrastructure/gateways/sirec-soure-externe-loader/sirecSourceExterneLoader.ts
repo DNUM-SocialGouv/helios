@@ -152,7 +152,6 @@ export class SirecSourceExterneLoader implements ControleDonneesSirecLoader {
         if (!fs.existsSync(destinationPath)) {
             fs.mkdirSync(destinationPath);
         }
-
         const fileToKeep = destinationPath + '/' + this.recupereFichierSirec(localPath);
         // Read the directory
         fs.readdir(destinationPath, (err, files) => {

@@ -45,7 +45,7 @@ export class AjoutReclamationET1708440883632 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query("DROP TABLE reclamation");
+    await queryRunner.query("DROP TABLE reclamation_etablissement_territorial");
   }
 
 }
