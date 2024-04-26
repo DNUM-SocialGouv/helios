@@ -237,6 +237,9 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       case "lastConnectionDate":
         orders = { lastConnectionDate: sortDir };
         break;
+      case "dateCreation":
+        orders = { dateCreation: sortDir };
+        break;
       case "etat":
         orders = { lastConnectionDate: sortDir };
 

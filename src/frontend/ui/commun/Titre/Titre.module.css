@@ -29,6 +29,7 @@
   width: 27px;
 }
 
+
 @media (max-width: 36em) {
   .titre button {
     max-height: 2.5rem !important;

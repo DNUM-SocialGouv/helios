@@ -8,7 +8,6 @@ import { Logger } from "../../../métier/gateways/Logger";
 import { containsCommaOrDotNumbers, containsNegativeNumbers, isValidFinessRpps, isValidYear } from "../../utils/sirecSourceExternalLoaderUtils";
 
 
-
 export class SirecSourceExterneLoader implements ControleDonneesSirecLoader {
     private readonly prefixeDuFichierSirec = "sirec_";
 
@@ -153,6 +152,7 @@ export class SirecSourceExterneLoader implements ControleDonneesSirecLoader {
         if (!fs.existsSync(destinationPath)) {
             fs.mkdirSync(destinationPath);
         }
+
         const fileToKeep = destinationPath + '/' + this.recupereFichierSirec(localPath);
         // Read the directory
         fs.readdir(destinationPath, (err, files) => {
