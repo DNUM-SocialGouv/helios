@@ -2,30 +2,20 @@
 // import { fireEvent, screen, within } from "@testing-library/react";
 
 // import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
-// import { textMatch, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
-// import BlocQualite from "./BlocQualite";
-// import { ÉtablissementTerritorialQualiteSanitaireViewModel } from "./ÉtablissementTerritorialQualiteSanitaireViewModel";
+import { fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
+import BlocQualite from "./BlocQualite";
+import { ÉtablissementTerritorialQualiteSanitaireViewModel } from "./ÉtablissementTerritorialQualiteSanitaireViewModel";
 
-// const { wording } = fakeFrontDependencies;
+const { wording } = fakeFrontDependencies;
 
 
 describe("La page établissement territorial Sanitaire - bloc qualité", () => {
-    //     const qualiteViewModel = new ÉtablissementTerritorialQualiteSanitaireViewModel(
-    //         wording,
-    //         {
-    //             reclamations: [], evenementsIndesirables: [{
-    //                 libelle: 'Evènements indésirables/graves associés aux soins',
-    //                 evenementsEncours: [],
-    //                 evenementsClotures: [],
-    //                 dateMiseAJourSource: '2024-03-15'
-    //             }, {
-    //                 libelle: 'Evénements/incidents dans un établissement ou organisme',
-    //                 evenementsEncours: [],
-    //                 evenementsClotures: [],
-    //                 dateMiseAJourSource: '2024-03-15'
-    //             }]
-    //         },
-    //     );
+    const qualiteViewModel = new ÉtablissementTerritorialQualiteSanitaireViewModel(
+        wording,
+        {
+            reclamations: [],
+        },
+    );
 
     //     const qualiteEIViewModel = new ÉtablissementTerritorialQualiteSanitaireViewModel(
     //         wording,
@@ -38,7 +28,7 @@ describe("La page établissement territorial Sanitaire - bloc qualité", () => {
     //     );
 
     it("affiche aucune donnée pour cet établissement", () => {
-        // renderFakeComponent(<BlocQualite etablissementTerritorialQualiteSanitairelViewModel={qualiteViewModel} />);
+        renderFakeComponent(<BlocQualite etablissementTerritorialQualiteSanitairelViewModel={qualiteViewModel} />);
         // const qualite = screen.getByRole("region", { name: wording.TITRE_BLOC_QUALITE });
         // const message = within(qualite).getByText(wording.INDICATEURS_VIDES);
         // expect(message).toBeInTheDocument();
