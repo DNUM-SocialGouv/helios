@@ -361,6 +361,8 @@ export class FinessXmlÉtablissementTerritorialSourceExterneLoader implements É
       typeÉtablissement: valueOrEmpty(établissementTerritorialIdentitéFiness.typeet._text),
       téléphone: valueOrEmpty(établissementTerritorialIdentitéFiness.telephone._text),
       codeRégion: valueOrEmpty(ref?.codeRegion),
+      dateOuverture: valueOrEmpty(établissementTerritorialIdentitéFiness.dateouv._text)
+
     };
   }
 

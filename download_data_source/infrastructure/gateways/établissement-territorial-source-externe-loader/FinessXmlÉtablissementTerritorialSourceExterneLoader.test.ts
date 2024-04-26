@@ -31,6 +31,7 @@ describe("Récupération des établissements territoriaux de la source de donné
     <codemft>03</codemft>
     <libmft>ARS établissements Publics de santé dotation globale</libmft>
     <nofinessppal>010000057</nofinessppal>
+    <dateouv>1901-02-02</dateouv>
     <indcaduc xsi:nil="true"/>
     <datefermeture xsi:nil="true"/>
   </structureet>`;
@@ -55,6 +56,7 @@ describe("Récupération des établissements territoriaux de la source de donné
     <typeet>S</typeet>
     <siret>26011021800013</siret>
     <codemft>03</codemft>
+    <dateouv>1901-02-02</dateouv>
     <libmft>ARS établissements Publics de santé dotation globale</libmft>
     <nofinessppal>010005239</nofinessppal>
     <indcaduc xsi:nil="true"/>
@@ -89,6 +91,7 @@ describe("Récupération des établissements territoriaux de la source de donné
         <telephone>0474383000</telephone>
         <courriel xsi:nil="true"/>
         <categetab>001</categetab>
+        <dateouv>1901-02-02</dateouv>
         <libcategetab>Unité Mobile Hospitalière</libcategetab>
         <libcourtcategetab>Unité Mobile Hosp.</libcourtcategetab>
         <categagretab>1204</categagretab>
@@ -130,7 +133,8 @@ describe("Récupération des établissements territoriaux de la source de donné
         siret: "26011021800047",
         typeÉtablissement: "S",
         téléphone: "0474754800",
-        codeRégion: "84"
+        codeRégion: "84",
+        dateOuverture: "1901-02-02"
       },
       {
         adresseAcheminement: "01100 OYONNAX",
@@ -154,7 +158,8 @@ describe("Récupération des établissements territoriaux de la source de donné
         siret: "26011021800013",
         typeÉtablissement: "S",
         téléphone: "0474731001",
-        codeRégion: "84"
+        codeRégion: "84",
+        dateOuverture: "1901-02-02"
       },
     ]);
     supprimerDossier(localPath);
@@ -186,6 +191,7 @@ describe("Récupération des établissements territoriaux de la source de donné
       <typeet>P</typeet>
       <siret xsi:nil="true"/>
       <codemft>01</codemft>
+      <dateouv>1901-02-02</dateouv>
       <libmft>Etablissement Tarif Libre</libmft>
       <nofinessppal xsi:nil="true"/>
       <indcaduc>O</indcaduc>
@@ -221,7 +227,8 @@ describe("Récupération des établissements territoriaux de la source de donné
         siret: "26011021800047",
         typeÉtablissement: "S",
         téléphone: "0474754800",
-        codeRégion: "84"
+        codeRégion: "84",
+        dateOuverture: "1901-02-02"
       },
       {
         adresseAcheminement: "01100 OYONNAX",
@@ -245,7 +252,8 @@ describe("Récupération des établissements territoriaux de la source de donné
         siret: "26011021800013",
         typeÉtablissement: "S",
         téléphone: "0474731001",
-        codeRégion: "84"
+        codeRégion: "84",
+        dateOuverture: "1901-02-02"
       },
     ]);
     supprimerDossier(localPath);
@@ -315,7 +323,8 @@ describe("Récupération des établissements territoriaux de la source de donné
         siret: "26011021800047",
         typeÉtablissement: "S",
         téléphone: "0474754800",
-        codeRégion: "84"
+        codeRégion: "84",
+        dateOuverture: "1901-02-02"
       },
     ]);
     supprimerDossier(localPath);
@@ -347,6 +356,7 @@ describe("Récupération des établissements territoriaux de la source de donné
       <codemft>03</codemft>
       <libmft>ARS établissements Publics de santé dotation globale</libmft>
       <nofinessppal>010000057</nofinessppal>
+      <dateouv>1901-01-01</dateouv>
       <indcaduc xsi:nil="true"/>
       <datefermeture xsi:nil="true"/>
     </structureet>`;
@@ -370,6 +380,7 @@ describe("Récupération des établissements territoriaux de la source de donné
       <categagretab>1102</categagretab>
       <typeet>S</typeet>
       <siret>26011021800013</siret>
+      <dateouv>1901-01-01</dateouv>
       <codemft>03</codemft>
       <libmft>ARS établissements Publics de santé dotation globale</libmft>
       <nofinessppal>010005239</nofinessppal>
@@ -406,7 +417,8 @@ describe("Récupération des établissements territoriaux de la source de donné
         siret: "26011021800047",
         typeÉtablissement: "S",
         téléphone: "0474754800",
-        codeRégion: "84"
+        codeRégion: "84",
+        dateOuverture: "1901-01-01"
       },
       {
         adresseAcheminement: "01100 OYONNAX",
@@ -430,7 +442,8 @@ describe("Récupération des établissements territoriaux de la source de donné
         siret: "26011021800013",
         typeÉtablissement: "S",
         téléphone: "0474731001",
-        codeRégion: "84"
+        codeRégion: "84",
+        dateOuverture: "1901-01-01"
       },
     ]);
     supprimerDossier(localPath);

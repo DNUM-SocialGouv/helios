@@ -18,6 +18,7 @@ export class EntitéJuridiqueModelTestBuilder {
     entitéJuridique.téléphone = champsSurchargés?.téléphone || "0102030406";
     entitéJuridique.catégorisation = champsSurchargés?.catégorisation || "public";
     entitéJuridique.codeRégion = champsSurchargés?.codeRégion || "84";
+    entitéJuridique.dateOuverture = champsSurchargés?.dateOuverture || "1901-02-02";
     return entitéJuridique;
   }
 

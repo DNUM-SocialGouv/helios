@@ -23,4 +23,5 @@ export type ÉtablissementTerritorialIdentité = Readonly<{
   téléphone: string;
   typeÉtablissement: string;
   codeRégion: string;
+  dateOuverture: string;
 }>;

@@ -128,7 +128,6 @@ export class FinessXmlEntitésJuridiquesSourceExterneLoader implements EntitéJu
 
   async récupèreLesEntitésJuridiquesOuvertes(): Promise<EntitéJuridique[]> {
     const cheminDuFichierEntitéJuridique = this.récupèreLeCheminDuFichierEntitéJuridique(this.localPath);
-
     const entitésJuridiquesFluxFiness = this.convertXmlToJs.exécute<EntitéJuridiqueFluxFiness>(cheminDuFichierEntitéJuridique);
     const entitésJuridiquesFiness = entitésJuridiquesFluxFiness.fluxfiness.structureej;
     this.logger.info(`[FINESS] ${entitésJuridiquesFiness.length} entités juridiques récupérées depuis FINESS.`);
@@ -141,7 +140,6 @@ export class FinessXmlEntitésJuridiquesSourceExterneLoader implements EntitéJu
 
   récupèreLaDateDeMiseÀJourDuFichierSource(): string {
     const cheminDuFichierEntitéJuridique = this.récupèreLeCheminDuFichierEntitéJuridique(this.localPath);
-
     const dateDeMiseAJourDuFichierSource = cheminDuFichierEntitéJuridique.split(this.préfixeDuFichierEntitéJuridique)[1].slice(0, 8);
     this.logger.info(`[FINESS] Date de mise à jour des fichiers FINESS des entités juridiques : ${dateDeMiseAJourDuFichierSource}`);
 
@@ -209,6 +207,7 @@ export class FinessXmlEntitésJuridiquesSourceExterneLoader implements EntitéJu
       statutJuridique: valueOrEmpty(entitésJuridiquesFiness.statutjuridique._text),
       téléphone: valueOrEmpty(entitésJuridiquesFiness.telephone._text),
       codeRégion: valueOrEmpty(ref?.codeRegion),
+      dateOuverture: valueOrEmpty(entitésJuridiquesFiness.datecrea._text)
     };
   }
 }

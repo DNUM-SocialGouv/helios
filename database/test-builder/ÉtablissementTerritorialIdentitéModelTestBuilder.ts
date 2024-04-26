@@ -26,6 +26,7 @@ export class ÉtablissementTerritorialIdentitéModelTestBuilder {
     établissementTerritorialModel.téléphone = champsSurchargés?.téléphone || "0102030405";
     établissementTerritorialModel.codeRégion = champsSurchargés?.codeRégion || "84";
     établissementTerritorialModel.typeÉtablissement = champsSurchargés?.typeÉtablissement || "S";
+    établissementTerritorialModel.dateOuverture = champsSurchargés?.dateOuverture || "2001-01-01";
     return établissementTerritorialModel;
   }
 
@@ -54,6 +55,7 @@ export class ÉtablissementTerritorialIdentitéModelTestBuilder {
     établissementTerritorialModel.téléphone = champsSurchargés?.téléphone || "0102030406";
     établissementTerritorialModel.codeRégion = champsSurchargés?.codeRégion || "84";
     établissementTerritorialModel.typeÉtablissement = champsSurchargés?.typeÉtablissement || "P";
+    établissementTerritorialModel.dateOuverture = champsSurchargés?.dateOuverture || "2001-01-01";
     return établissementTerritorialModel;
   }
 }

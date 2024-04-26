@@ -44,8 +44,8 @@ export class EntitéJuridiqueTestBuilder {
       value: "0102030406",
     },
     dateOuverture: {
-      dateMiseÀJourSource: "2022-02-02",
-      value: "2022-05-14",
+      dateMiseÀJourSource: "2022-05-14",
+      value: "1901-02-02",
     },
     codeRegion: '84',
   };
