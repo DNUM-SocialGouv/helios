@@ -8,7 +8,6 @@ import { Logger } from "../../../métier/gateways/Logger";
 import { containsCommaOrDotNumbers, containsNegativeNumbers, isValidFinessRpps, isValidYear } from "../../utils/sirecSourceExternalLoaderUtils";
 
 
-
 export class SirecSourceExterneLoader implements ControleDonneesSirecLoader {
     private readonly prefixeDuFichierSirec = "sirec_";
 

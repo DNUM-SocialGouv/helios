@@ -224,7 +224,7 @@ describe("La page établissement territorial médico-social - bloc activité", (
           budgetEtFinances: [],
           identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
           ressourcesHumaines: [],
-          qualite: { reclamations: [], evenementsIndesirables: [] }
+          qualite: { reclamations: [] }
         },
         wording,
         paths
@@ -360,7 +360,11 @@ describe("La page établissement territorial médico-social - bloc activité", (
           budgetEtFinances: [],
           identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
           ressourcesHumaines: [],
+<<<<<<< HEAD
           qualite: { reclamations: [], evenementsIndesirables: [] }
+=======
+          qualite: { reclamations: [] }
+>>>>>>> origin/MEP-v1.1.12
         },
         wording,
         paths

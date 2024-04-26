@@ -50,14 +50,10 @@ export const ContenuReclamations = ({ dateDeMiseÀJour, source }: ContenuReclama
             Année de référence = date de réception à l&apos;ARS.
             <br />
             <br />
-            <section aria-label={wording.FRÉQUENCE}>
-                <p><span className="fr-text--bold">Fréquence : </span> trimestrielle</p>
-            </section>
-            <section aria-label={wording.SOURCES}>
-                <p><span className="fr-text--bold">Source(s): </span> Système d&apos;Information Réclamations (SI REC)</p>
-                Le Système d&apos;Information Réclamations est l&apos;outil de gestion des réclamations
-                d’usagers qui apporte une visibilité sur le suivi et le traitement de la réclamation en ARS.
-            </section>
+            <p><span className="fr-text--bold">Fréquence : </span> trimestrielle</p>
+            <p><span className="fr-text--bold">Source(s): </span> Système d&apos;Information Réclamations (SI REC)</p>
+            Le Système d&apos;Information Réclamations est l&apos;outil de gestion des réclamations
+            d’usagers qui apporte une visibilité sur le suivi et le traitement de la réclamation en ARS.
         </>
     );
 };

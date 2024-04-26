@@ -4,7 +4,6 @@ import { ActivitéMédicoSocialModel } from "../../../../../database/models/Acti
 import { AutorisationMédicoSocialModel } from "../../../../../database/models/AutorisationMédicoSocialModel";
 import { BudgetEtFinancesMédicoSocialModel } from "../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
-import { EvenementIndesirableETModel } from "../../../../../database/models/EvenementIndesirableModel";
 import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { RessourcesHumainesMédicoSocialModel } from "../../../../../database/models/RessourcesHumainesMédicoSocialModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
@@ -23,7 +22,7 @@ import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../..
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
 import { ÉtablissementTerritorialIdentité } from "../../../métier/entities/ÉtablissementTerritorialIdentité";
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from "../../../métier/entities/ÉtablissementTerritorialMédicoSocialNonTrouvée";
-import { EvenementsIndesirables, Reclamations, ÉtablissementTerritorialQualite } from "../../../métier/entities/ÉtablissementTerritorialQualite";
+import { Reclamations, ÉtablissementTerritorialQualite } from "../../../métier/entities/ÉtablissementTerritorialQualite";
 import { ÉtablissementTerritorialMédicoSocialLoader } from "../../../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader";
 
 export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements ÉtablissementTerritorialMédicoSocialLoader {
@@ -166,19 +165,9 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       .getRepository(DateMiseÀJourFichierSourceModel)
       .findOneBy({ fichier: FichierSource.SIREC })) as DateMiseÀJourFichierSourceModel;
 
-    const evenementsIndesirables = await (await this.orm)
-      .getRepository(EvenementIndesirableETModel)
-      .find({ where: { numéroFinessÉtablissementTerritorial } });
-
-    const dateMiseAjourSIVSS = (await (await this.orm)
-      .getRepository(DateMiseÀJourFichierSourceModel)
-      .findOneBy({ fichier: FichierSource.SIVSS })) as DateMiseÀJourFichierSourceModel;
-
     return this.construitsQualite(
       reclamations,
-      dateMisAJour.dernièreMiseÀJour,
-      evenementsIndesirables,
-      dateMiseAjourSIVSS.dernièreMiseÀJour
+      dateMisAJour.dernièreMiseÀJour
     );
   }
 
@@ -403,10 +392,9 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     };
   }
 
-  private construitsQualite(reclamations: ReclamationETModel[], dateMisAJour: string, evenementsIndesirables: EvenementIndesirableETModel[], dateMiseAjourSIVSS: string): ÉtablissementTerritorialQualite {
+  private construitsQualite(reclamations: ReclamationETModel[], dateMisAJour: string): ÉtablissementTerritorialQualite {
     return {
-      reclamations: this.construitsReclamations(reclamations, dateMisAJour),
-      evenementsIndesirables: this.construitsEvenementsIndesirables(evenementsIndesirables, dateMiseAjourSIVSS)
+      reclamations: this.construitsReclamations(reclamations, dateMisAJour)
     }
   }
 
@@ -483,48 +471,6 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
         },],
       }
     })
-  }
-
-  private construitsEvenementsIndesirables(
-    evenementsIndesirables: EvenementIndesirableETModel[],
-    dateMisAJour: string,
-  ): EvenementsIndesirables[] {
-
-    const evenementsIndesirableAssocieAuxSoins: EvenementsIndesirables = {
-      dateMiseAJourSource: dateMisAJour,
-      libelle: 'Evènements indésirables/graves associés aux soins',
-      evenementsEncours: [],
-      evenementsClotures: []
-    };
-    const evenementsIndesirableParET: EvenementsIndesirables = {
-      dateMiseAJourSource: dateMisAJour,
-      libelle: 'Evénements/incidents dans un établissement ou organisme',
-      evenementsEncours: [],
-      evenementsClotures: []
-    };
-    evenementsIndesirables.forEach(evenement => {
-      if (evenement.famillePrincipale === evenementsIndesirableParET.libelle) {
-        if (evenement.etat === 'EN_COURS') evenementsIndesirableParET.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
-        else evenementsIndesirableParET.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
-      } else {
-        if (evenement.etat === 'EN_COURS') evenementsIndesirableAssocieAuxSoins.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
-        else evenementsIndesirableAssocieAuxSoins.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
-      }
-    });
-    return [evenementsIndesirableAssocieAuxSoins, evenementsIndesirableParET]
-  }
-
-  private constuisLevenementIndesirable = (evenement: EvenementIndesirableETModel) => {
-    return {
-      famille: evenement.famillePrincipale,
-      nature: evenement.naturePrincipale,
-      numeroSIVSS: evenement.numeroSIVSS,
-      annee: evenement.annee,
-      etat: evenement.etat,
-      clotDate: evenement.dateCloture,
-      clotMotif: evenement.motifCloture,
-      est_EIGS: evenement.isEIGS
-    }
   }
 
   private construisLeBudgetEtFinances(

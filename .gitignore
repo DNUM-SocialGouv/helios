@@ -40,8 +40,6 @@ data_test
 data_set/.ssh
 data_set/sirec
 data_set/checked_sirec
-data_set/sivss
-data_set/checked_sivss
 sshd_config
 ssh_key
 

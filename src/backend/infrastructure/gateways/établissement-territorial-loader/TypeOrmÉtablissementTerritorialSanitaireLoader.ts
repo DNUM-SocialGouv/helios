@@ -5,7 +5,6 @@ import { AutorisationSanitaireModel } from "../../../../../database/models/Autor
 import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
 import { CapacitéAutorisationSanitaireModel } from "../../../../../database/models/CapacitéAutorisationSanitaireModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
-import { EvenementIndesirableETModel } from "../../../../../database/models/EvenementIndesirableModel";
 import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
@@ -31,7 +30,7 @@ import {
   CapacitéSanitaire,
 } from "../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 import { ÉtablissementTerritorialIdentité } from "../../../métier/entities/ÉtablissementTerritorialIdentité";
-import { EvenementsIndesirables, Reclamations, ÉtablissementTerritorialQualite } from "../../../métier/entities/ÉtablissementTerritorialQualite";
+import { Reclamations, ÉtablissementTerritorialQualite } from "../../../métier/entities/ÉtablissementTerritorialQualite";
 import { ÉtablissementTerritorialSanitaireNonTrouvée } from "../../../métier/entities/ÉtablissementTerritorialSanitaireNonTrouvée";
 import { ÉtablissementTerritorialSanitaireLoader } from "../../../métier/gateways/ÉtablissementTerritorialSanitaireLoader";
 
@@ -90,23 +89,13 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       .getRepository(ReclamationETModel)
       .find({ where: { numéroFinessÉtablissementTerritorial } });
 
-    const evenementsIndesirables = await (await this.orm)
-      .getRepository(EvenementIndesirableETModel)
-      .find({ where: { numéroFinessÉtablissementTerritorial } });
-
-    const dateMiseAjourSIVSS = (await (await this.orm)
-      .getRepository(DateMiseÀJourFichierSourceModel)
-      .findOneBy({ fichier: FichierSource.SIVSS })) as DateMiseÀJourFichierSourceModel;
-
     const dateMisAJour = (await (await this.orm)
       .getRepository(DateMiseÀJourFichierSourceModel)
       .findOneBy({ fichier: FichierSource.SIREC })) as DateMiseÀJourFichierSourceModel;
 
     return this.construitsQualite(
       reclamations,
-      dateMisAJour.dernièreMiseÀJour,
-      evenementsIndesirables,
-      dateMiseAjourSIVSS.dernièreMiseÀJour
+      dateMisAJour.dernièreMiseÀJour
     );
   }
 
@@ -124,22 +113,15 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     });
   }
 
-  private construitsQualite(
-    reclamations: ReclamationETModel[],
-    dateMisAJour: string,
-    evenementsIndesirables: EvenementIndesirableETModel[],
-    dateMiseAjourSIVSS: string
-
-  ): ÉtablissementTerritorialQualite {
+  private construitsQualite(reclamations: ReclamationETModel[], dateMisAJour: string): ÉtablissementTerritorialQualite {
     return {
-      reclamations: this.construitsReclamations(reclamations, dateMisAJour),
-      evenementsIndesirables: this.construitsEvenementsIndesirables(evenementsIndesirables, dateMiseAjourSIVSS)
+      reclamations: this.construitsReclamations(reclamations, dateMisAJour)
     }
   }
 
   private construitsReclamations(
     reclamations: ReclamationETModel[],
-    dateMisAJour: string,
+    dateMisAJour: string
   ): Reclamations[] {
     return reclamations.map((reclamation) => {
       return {
@@ -210,47 +192,6 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
         },],
       }
     })
-  }
-
-  private constuisLevenementIndesirable = (evenement: EvenementIndesirableETModel) => {
-    return {
-      famille: evenement.famillePrincipale,
-      nature: evenement.naturePrincipale,
-      numeroSIVSS: evenement.numeroSIVSS,
-      annee: evenement.annee,
-      etat: evenement.etat,
-      clotDate: evenement.dateCloture,
-      clotMotif: evenement.motifCloture,
-      est_EIGS: evenement.isEIGS
-    }
-  }
-
-  private construitsEvenementsIndesirables(
-    evenementsIndesirables: EvenementIndesirableETModel[],
-    dateMisAJour: string,
-  ): EvenementsIndesirables[] {
-    const evenementsIndesirableAssocieAuxSoins: EvenementsIndesirables = {
-      dateMiseAJourSource: dateMisAJour,
-      libelle: 'Evènements indésirables/graves associés aux soins',
-      evenementsEncours: [],
-      evenementsClotures: []
-    };
-    const evenementsIndesirableParET: EvenementsIndesirables = {
-      dateMiseAJourSource: dateMisAJour,
-      libelle: 'Evénements/incidents dans un établissement ou organisme',
-      evenementsEncours: [],
-      evenementsClotures: []
-    };
-    evenementsIndesirables.forEach(evenement => {
-      if (evenement.famillePrincipale === evenementsIndesirableParET.libelle) {
-        if (evenement.etat === 'EN_COURS') evenementsIndesirableParET.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
-        else evenementsIndesirableParET.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
-      } else {
-        if (evenement.etat === 'EN_COURS') evenementsIndesirableAssocieAuxSoins.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
-        else evenementsIndesirableAssocieAuxSoins.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
-      }
-    });
-    return [evenementsIndesirableAssocieAuxSoins, evenementsIndesirableParET]
   }
 
   private async chargeLesReconnaissancesContractuellesModel(

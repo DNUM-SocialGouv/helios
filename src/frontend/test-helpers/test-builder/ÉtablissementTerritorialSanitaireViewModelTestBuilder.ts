@@ -507,31 +507,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       totalClotures: 100,
       totalEncours: 100,
       dateMiseÀJourSource: "2023-07-07",
-      details: [{
-        motif: 'Hôtellerie-locaux-restauration',
-        clot: 2,
-        encours: 1,
-      }]
-    }],
-    evenementsIndesirables: [{
-      libelle: 'Evènements indésirables/graves associés aux soins',
-      evenementsEncours: [],
-      evenementsClotures: [{
-        famille: 'Evènements indésirables/graves associés aux soins',
-        nature: 'Maltraitance',
-        numeroSIVSS: 123456,
-        annee: 2021,
-        etat: 'CLOTURE',
-        clotDate: 2019,
-        clotMotif: 'motif de test',
-        est_EIGS: true
-      }],
-      dateMiseAJourSource: '2024-03-15'
-    }, {
-      libelle: 'Evénements/incidents dans un établissement ou organisme',
-      evenementsEncours: [],
-      evenementsClotures: [],
-      dateMiseAJourSource: '2024-03-15'
+      details: []
     }]
   }
 

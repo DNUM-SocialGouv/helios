@@ -232,12 +232,6 @@ export class WordingFr implements Wording {
   readonly MOTIF_155: string = "À renseigner";
   readonly MOTIF_156: string = "COVID-19";
 
-  readonly EVENEMENTS_INDESIRABLES: string = "Evènements indésirables";
-  readonly EVENEMENTS_INDESIRABLES_NON_RENSEIGNES: string = "Evènements indésirables. ⚠ L'absence de signalement d'événements indésirables nuit à la prise de mesures correctives appropriées.";
-  readonly EVENTS_TOTAL_NUMBER: string = "Nombre total d'évènements:";
-  readonly EVENEMENTS_ASSOCIE_AUX_SOINS: string = "Evènements indésirables/graves associés aux soins";
-  readonly EVENEMENTS_DANS_ET: string = "Evènements/incidents dans un établissement ou organisme";
-
   // Bloc Autorisation médico-social
   readonly MISE_À_JOUR_AUTORISATION: string = "Mise à jour d’autorisation";
   readonly DERNIÈRE_INSTALLATION: string = "Dernière installation";
@@ -387,7 +381,6 @@ export class WordingFr implements Wording {
   readonly SAE_TITLE: string = "Statistique Annuelle des Établissements de santé";
   readonly RPU_TITLE: string = "Résumé de Passage aux Urgences";
   readonly SIREC_TITLE: string = "Système d'Information Réclamations (SI REC)";
-  readonly SIVSS_TITLE: string = "Système d'Information de Veille et de Sécurité Sanitaire (SI VSS)";
   // Sources courtes
   readonly FINESS: ReactElement = (<abbr title={this.FINESS_TITLE}>FINESS</abbr>);
   readonly DIAMANT: ReactElement = (<abbr title={this.DIAMANT_TITLE}>DIAMANT</abbr>);
@@ -399,7 +392,6 @@ export class WordingFr implements Wording {
   readonly SAE: ReactElement = (<abbr title={this.SAE_TITLE}>SAE</abbr>);
   readonly RPU: ReactElement = (<abbr title={this.RPU_TITLE}>RPU</abbr>);
   readonly SIREC: ReactElement = (<abbr title={this.SIREC_TITLE}>SIREC</abbr>);
-  readonly SIVSS: ReactElement = (<abbr title={this.SIVSS_TITLE}>SIVSS</abbr>);
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string = "Accès refusé";
