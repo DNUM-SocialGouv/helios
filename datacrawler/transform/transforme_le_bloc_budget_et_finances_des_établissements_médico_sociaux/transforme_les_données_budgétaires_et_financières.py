@@ -25,6 +25,7 @@ def transforme_les_données_budgétaires_et_financières(
     indicateurs_budgétaires_et_taux_des_établissements_ca = transforme_les_données_budgétaires_et_financières_des_établissements_ca(
         données_ann_ca_ej_et, numéros_finess_connus, logger
     )
+    logger.info(f"indicateurs_budgétaires_et_taux_des_établissements_errd  : {indicateurs_budgétaires_et_taux_des_établissements_errd}] indicateurs_budgétaires_et_taux_des_établissements_ca: {indicateurs_budgétaires_et_taux_des_établissements_ca}")
     return (
         pd.concat([indicateurs_budgétaires_et_taux_des_établissements_errd, indicateurs_budgétaires_et_taux_des_établissements_ca], join="outer")
         .drop_duplicates(subset=index_du_bloc_budget_et_finances)
