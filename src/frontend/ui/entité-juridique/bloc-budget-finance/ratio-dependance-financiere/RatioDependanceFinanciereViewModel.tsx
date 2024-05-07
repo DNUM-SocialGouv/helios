@@ -16,7 +16,7 @@ export class RatioDependanceFinanciereViewModel {
   private ratioDependanceFinanciere: RatioDependanceFinanciere[];
 
   constructor(budgetFinance: EntitéJuridiqueBudgetFinance[]) {
-    this.ratioDependanceFinanciere = budgetFinance.map((budget) => ({
+    this.ratioDependanceFinanciere = budgetFinance && budgetFinance.map((budget) => ({
       année: budget.année,
       ratio: budget.ratioDependanceFinanciere,
       dateDeMiseÀJour: budget.dateMiseÀJourSource,

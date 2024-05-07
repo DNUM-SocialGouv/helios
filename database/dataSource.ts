@@ -54,6 +54,7 @@ import { AjoutReclamationET1708440883632 } from "./migrations/1708440883632-Ajou
 import { AjoutFichierSourceSirec1708679781472 } from "./migrations/1708679781472-AjoutFichierSourceSirec";
 import { AjoutEvenementsIndesirables1710326854362 } from "./migrations/1710326854362-AjoutEvenementsIndesirables";
 import { AjoutTableInspectionsControles1712743083892 } from "./migrations/1712743083892-AjoutTableInspectionsControles";
+import { AjouterTableBudgetEtFinancesSanitaire1714055066913 } from "./migrations/1714055066913-AjouterTableBudget_et_finances_sanitaire";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
@@ -66,6 +67,7 @@ import { AutorisationSanitaireModel } from "./models/AutorisationSanitaireModel"
 import { AutreActivitéSanitaireModel } from "./models/AutreActivitéSanitaireModel";
 import { BudgetEtFinancesEntiteJuridiqueModel } from "./models/BudgetEtFinancesEntiteJuridiqueModel";
 import { BudgetEtFinancesMédicoSocialModel } from "./models/BudgetEtFinancesMédicoSocialModel";
+import { BudgetEtFinancesSanitaireModel } from "./models/BudgetEtFinancesSanitaireModel";
 import { CapacitesSanitaireEntiteJuridiqueModel } from "./models/CapacitesSanitaireEntiteJuridiqueModel";
 import { CapacitéAutorisationSanitaireModel } from "./models/CapacitéAutorisationSanitaireModel";
 import { CpomModel } from "./models/CpomModel";
@@ -99,6 +101,7 @@ export default new DataSource({
     AutorisationSanitaireModel,
     AutreActivitéSanitaireModel,
     BudgetEtFinancesMédicoSocialModel,
+    BudgetEtFinancesSanitaireModel,
     BudgetEtFinancesEntiteJuridiqueModel,
     CapacitéAutorisationSanitaireModel,
     CapacitesSanitaireEntiteJuridiqueModel,
@@ -179,6 +182,7 @@ export default new DataSource({
     AjoutFichierSourceSirec1708679781472,
     AjoutEvenementsIndesirables1710326854362,
     AjoutTableInspectionsControles1712743083892,
+    AjouterTableBudgetEtFinancesSanitaire1714055066913,
     ModificationValeurProfil1797341938070
   ],
   type: "postgres",

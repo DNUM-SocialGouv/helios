@@ -14,6 +14,7 @@ TABLES_DES_CAPACITÉS_DES_ENTITES_JURIDIQUES = "capacite_autorisation_entite_jur
 TABLES_DES_CPOM = "cpom"
 TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL = "budget_et_finances_medico_social"
 TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE = "budget_et_finances_entite_juridique"
+TABLES_DES_BUDGETS_ET_FINANCES_ETABLISSEMENT_TERRITORIAL = "budget_et_finances_sanitaire"
 TABLES_DES_RESSOURCES_HUMAINES_MÉDICO_SOCIAL = "ressources_humaines_medico_social"
 TABLES_DES_RECLAMATIONS = "reclamation_etablissement_territorial"
 TABLES_DES_EVENEMENTS_INDESIRABLES = "evenement_indesirable_etablissement_territorial"

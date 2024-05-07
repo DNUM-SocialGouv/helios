@@ -7,6 +7,7 @@ import { useDependencies } from "../commun/contexts/useDependencies";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { SeparatorHorizontal } from "../commun/Separateur/SeparatorHorizontal";
 import { Titre } from "../commun/Titre/Titre";
+import { BlocBudgetFinance } from "../entité-juridique/bloc-budget-finance/BlocBudgetFinance";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 import { BlocActivitéSanitaire } from "./bloc-activité/BlocActivitéSanitaire";
 import { BlocAutorisationEtCapacitéSanitaire } from "./bloc-autorisations/BlocAutorisationEtCapacitéSanitaire";
@@ -79,6 +80,9 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
           <SeparatorHorizontal></SeparatorHorizontal>
           <BlocActivitéSanitaire établissementTerritorialSanitaireActivitéViewModel={établissementTerritorialSanitaireViewModel.activitésViewModel} />
           <BlocQualite etablissementTerritorialQualiteSanitairelViewModel={établissementTerritorialSanitaireViewModel.qualiteViewModel} />
+          AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+          {établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif && <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} /> }
+          
         </div>
       </>
     </main>

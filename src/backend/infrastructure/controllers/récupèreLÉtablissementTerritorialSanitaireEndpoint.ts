@@ -9,7 +9,7 @@ export async function récupèreLÉtablissementTerritorialSanitaireEndpoint(
   dependencies: Dependencies,
   numéroFinessÉtablissementTerritorialSanitaire: string,
   codeRegion: string,
-  codeProfiles: string[]
+  codeProfiles: string[],
 ): Promise<ÉtablissementTerritorialSanitaire> {
   const récupèreLÉtablissementTerritorialSanitaireUseCase = new RécupèreLÉtablissementTerritorialSanitaireUseCase(
     dependencies.établissementTerritorialSanitaireLoader,
@@ -26,7 +26,6 @@ export async function récupèreLÉtablissementTerritorialSanitaireEndpoint(
 
   const profilInstitution = combineProfils(profilesInstitutionValues);
   const profilAutreReg = combineProfils(profilesAutreRegValues);
-
 
   return filterEtablissementSanitaire(etablissementSanitaire, etablissementSanitaire.identité.codeRegion === codeRegion ? profilInstitution : profilAutreReg);
 }

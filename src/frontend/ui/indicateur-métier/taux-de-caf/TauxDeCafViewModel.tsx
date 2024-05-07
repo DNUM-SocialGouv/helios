@@ -30,20 +30,20 @@ export class TauxDeCafViewModel {
   private readonly seuilMaximalDuTauxDeCaf = 21;
 
   static fromBudgetFinanceMedicoSocial(budgetFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[], wording: Wording) {
-    const tauxDeCaf: TauxDeCaf[] = budgetFinance.map((budget) => ({
+    const tauxDeCaf: TauxDeCaf[] = budgetFinance && budgetFinance.map((budget) => ({
       année: budget.année,
       valeur: budget.tauxDeCafNette.valeur,
     }));
-    const dateMiseÀJourSource = budgetFinance.length > 0 ? budgetFinance[0].tauxDeCafNette?.dateMiseÀJourSource : "";
+    const dateMiseÀJourSource = budgetFinance && budgetFinance.length > 0 ? budgetFinance[0].tauxDeCafNette?.dateMiseÀJourSource : "";
     return new TauxDeCafViewModel(tauxDeCaf, dateMiseÀJourSource, wording, 3);
   }
 
   static fromBudgetFinanceEntiteJuridique(budgetFinance: EntitéJuridiqueBudgetFinance[], wording: Wording) {
-    const tauxDeCaf: TauxDeCaf[] = budgetFinance.map((budget) => ({
+    const tauxDeCaf: TauxDeCaf[] = budgetFinance && budgetFinance.map((budget) => ({
       année: budget.année,
       valeur: budget.tauxDeCafNetSan,
     }));
-    const dateMiseÀJourSource = budgetFinance.length > 0 ? budgetFinance[0].dateMiseÀJourSource : "";
+    const dateMiseÀJourSource = budgetFinance && budgetFinance.length > 0 ? budgetFinance[0].dateMiseÀJourSource : "";
     return new TauxDeCafViewModel(tauxDeCaf, dateMiseÀJourSource, wording);
   }
 

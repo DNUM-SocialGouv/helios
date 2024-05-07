@@ -187,6 +187,7 @@ colonnes_à_lire_bloc_ressources_humaines_ann_ca_ej_et: List[str] = list(équiva
 
 équivalences_diamant_quo_san_finance_buget_finance_helios: ÉquivalencesDiamantHelios = {
     "Finess EJ": ColonneHelios(nom="numero_finess_entite_juridique", type=str),
+    "Finess ET": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
     "Année": ColonneHelios(nom="annee", type=int),
     "Dépenses Titre I Budget global": ColonneHelios(nom="depenses_titre_i_global", type=float),
     "Dépenses Titre II Budget global": ColonneHelios(nom="depenses_titre_ii_global", type=float),
