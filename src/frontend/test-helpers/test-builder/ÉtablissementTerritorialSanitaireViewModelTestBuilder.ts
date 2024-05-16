@@ -550,7 +550,8 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
           ...ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
           ...champsSurchargés,
         },
-      },
+        budgetFinance:[],
+      } as any,
       wording,
       paths
     );
@@ -570,7 +571,8 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
         },
         qualite: ÉtablissementTerritorialSanitaireViewModelTestBuilder.qualite,
         identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
-      },
+        budgetFinance:[],
+      } as any,
       wording,
       paths
     );

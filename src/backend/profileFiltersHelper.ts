@@ -50,9 +50,7 @@ export const filterEtablissementSanitaire = (result: any, profil: any): Établis
   const autorisationsEtCapacités = filterAutorisationSanitaire(result.autorisationsEtCapacités, profil.autorisationsEtCapacités);
   const qualite = filterQualiteSanitaire(result.qualite, profil.Qualité);
 
-  console.log("ACL TEST");
-  //  const budgetFinance = filterBudgetFinanceEJ(result.budgetFinance, profil.budgetEtFinance);
-  const budgetFinance = filterBudgetFinanceEJ(result.budgetFinance, { compteRésultats: "ok" });
+  const budgetFinance = filterBudgetFinanceEJ(result.budgetFinance, profil.budgetEtFinance);
 
   return {
     identité: identité,

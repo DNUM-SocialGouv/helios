@@ -80,7 +80,7 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
           <SeparatorHorizontal></SeparatorHorizontal>
           <BlocActivitéSanitaire établissementTerritorialSanitaireActivitéViewModel={établissementTerritorialSanitaireViewModel.activitésViewModel} />
           <BlocQualite etablissementTerritorialQualiteSanitairelViewModel={établissementTerritorialSanitaireViewModel.qualiteViewModel} />
-          AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
           {établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif && <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} /> }
           
         </div>
