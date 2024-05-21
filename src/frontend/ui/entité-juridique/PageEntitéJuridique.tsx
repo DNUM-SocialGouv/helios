@@ -25,7 +25,7 @@ type EntitéJuridiqueProps = Readonly<{
 }>;
 
 export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, rechercheViewModel, établissementsTerritoriauxRattachésViewModels }: EntitéJuridiqueProps) => {
-  const { setIsInfoPage } = useContext(BackToSearchContext) as BackToSearchContextValue;
+  const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
 
   useBreadcrumb([
     {
@@ -57,8 +57,9 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, rechercheViewM
   });
 
   useEffect(() => {
-    setIsInfoPage(true);
-  }, [])
+    if (backToSearchContext)
+      backToSearchContext.setIsInfoPage(true);
+  }, [backToSearchContext])
 
   useEffect(() => {
     if (typeof onBeforeGetContentResolve.current === "function") {

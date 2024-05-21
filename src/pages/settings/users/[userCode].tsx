@@ -26,12 +26,14 @@ type RouterProps = Readonly<{
 
 export default function Router({ user, institutions, profiles, roles }: RouterProps) {
   const { wording } = useDependencies();
-  const { setIsInfoPage } = useContext(BackToSearchContext) as BackToSearchContextValue;
+  const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
 
   useEffect(() => {
-    setIsInfoPage(false);
-    localStorage.clear();
-  }, [])
+    if (backToSearchContext) {
+      backToSearchContext.setIsInfoPage(false);
+      localStorage.clear();
+    }
+  }, [backToSearchContext])
 
   useBreadcrumb([
     {

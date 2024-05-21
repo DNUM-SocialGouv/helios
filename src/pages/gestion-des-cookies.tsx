@@ -8,7 +8,7 @@ import { PageGestionDeCookies } from "../frontend/ui/gestion-de-cookies/PageGest
 
 export default function GestionDesCookies() {
   const { wording } = useDependencies();
-  const { setIsInfoPage } = useContext(BackToSearchContext) as BackToSearchContextValue;
+  const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
 
   useBreadcrumb([
     {
@@ -18,9 +18,11 @@ export default function GestionDesCookies() {
   ]);
 
   useEffect(() => {
-    setIsInfoPage(false);
-    localStorage.clear();
-  }, []);
+    if (backToSearchContext) {
+      backToSearchContext.setIsInfoPage(false);
+      localStorage.clear();
+    }
+  }, [backToSearchContext])
 
   return (
     <main className="fr-container">

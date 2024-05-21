@@ -7,7 +7,7 @@ import { NewProfileSettingsPage } from "../../../frontend/ui/parametrage-profil/
 
 const Parametrage = () => {
     const { wording, paths } = useDependencies();
-    const { setIsInfoPage } = useContext(BackToSearchContext) as BackToSearchContextValue;
+    const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
 
     useBreadcrumb([
         {
@@ -21,9 +21,11 @@ const Parametrage = () => {
     ]);
 
     useEffect(() => {
-        setIsInfoPage(false);
-        localStorage.clear();
-    }, [])
+        if (backToSearchContext) {
+            backToSearchContext.setIsInfoPage(false);
+            localStorage.clear();
+        }
+    }, [backToSearchContext])
 
     return <NewProfileSettingsPage />;
 }

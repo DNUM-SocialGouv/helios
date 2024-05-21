@@ -5,13 +5,15 @@ import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
 import { PageDeRecette } from "../frontend/ui/recette/PageDeRecette";
 
 export default function Recette() {
-  const { setIsInfoPage } = useContext(BackToSearchContext) as BackToSearchContextValue;
+  const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
 
   useBreadcrumb([]);
   useEffect(() => {
-    setIsInfoPage(false);
-    localStorage.clear();
-  }, [])
+    if (backToSearchContext) {
+      backToSearchContext.setIsInfoPage(false);
+      localStorage.clear();
+    }
+  }, [backToSearchContext])
 
   return <PageDeRecette />;
 }

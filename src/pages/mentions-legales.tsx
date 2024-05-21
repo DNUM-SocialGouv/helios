@@ -8,7 +8,7 @@ import { PageDesMentionsLégales } from "../frontend/ui/mentions-légales/PageDe
 
 export default function MentionsLégales() {
   const { wording } = useDependencies();
-  const { setIsInfoPage } = useContext(BackToSearchContext) as BackToSearchContextValue;
+  const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
 
   useBreadcrumb([
     {
@@ -18,9 +18,11 @@ export default function MentionsLégales() {
   ]);
 
   useEffect(() => {
-    setIsInfoPage(false);
-    localStorage.clear();
-  }, []);
+    if (backToSearchContext) {
+      backToSearchContext.setIsInfoPage(false);
+      localStorage.clear();
+    }
+  }, [backToSearchContext])
 
   return (
     <main className="fr-container">

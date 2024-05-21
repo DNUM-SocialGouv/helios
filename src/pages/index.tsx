@@ -6,11 +6,14 @@ import { PageRecherche } from "../frontend/ui/home/PageRecherche";
 
 export default function PageDAccueil() {
   useBreadcrumb([]);
-  const { setIsInfoPage } = useContext(BackToSearchContext) as BackToSearchContextValue;
+  const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
 
   useEffect(() => {
-    setIsInfoPage(false);
-  }, [])
+    if (backToSearchContext) {
+      backToSearchContext.setIsInfoPage(false);
+      localStorage.clear();
+    }
+  }, [backToSearchContext])
 
   return <PageRecherche />;
 }

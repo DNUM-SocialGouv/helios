@@ -18,7 +18,7 @@ type RouterProps = Readonly<{
 
 export default function Router({ profileValue, profileLabel, profileCode, profileId }: RouterProps) {
     const { wording, paths } = useDependencies();
-    const { setIsInfoPage } = useContext(BackToSearchContext) as BackToSearchContextValue;
+    const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
 
     useBreadcrumb([
         {
@@ -32,9 +32,11 @@ export default function Router({ profileValue, profileLabel, profileCode, profil
     ]);
 
     useEffect(() => {
-        setIsInfoPage(false);
-        localStorage.clear();
-    }, [])
+        if (backToSearchContext) {
+            backToSearchContext.setIsInfoPage(false);
+            localStorage.clear();
+        }
+    }, [backToSearchContext])
 
     if (!profileValue || !profileLabel) return null;
     return <ParametrageProfilPage code={profileCode} id={profileId} label={profileLabel} value={profileValue} />;

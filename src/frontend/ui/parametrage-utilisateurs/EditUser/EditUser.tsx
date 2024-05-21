@@ -29,7 +29,7 @@ type UsersListPageProps = Readonly<{
 
 export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageProps) => {
   const { data } = useSession();
-  const { setIsInfoPage } = useContext(BackToSearchContext) as BackToSearchContextValue;
+  const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
 
   const searchParams = useSearchParams();
 
@@ -104,9 +104,11 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
   ]);
 
   useEffect(() => {
-    setIsInfoPage(false);
-    localStorage.clear();
-  }, [])
+    if (backToSearchContext) {
+      backToSearchContext.setIsInfoPage(false);
+      localStorage.clear();
+    }
+  }, [backToSearchContext])
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();

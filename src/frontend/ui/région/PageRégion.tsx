@@ -12,7 +12,7 @@ export const PageRégion = ({ région }: { région: string }) => {
   const labelDeLaRégion = régions[région].label;
   const [arsRegions, setArsRegions] = useState(outreMerRegionsList);
   const { wording } = useDependencies();
-  const { setIsInfoPage } = useContext(BackToSearchContext) as BackToSearchContextValue;
+  const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
 
   useBreadcrumb([
     {
@@ -22,9 +22,11 @@ export const PageRégion = ({ région }: { région: string }) => {
   ]);
 
   useEffect(() => {
-    setIsInfoPage(false);
-    localStorage.clear();
-  }, [])
+    if (backToSearchContext) {
+      backToSearchContext.setIsInfoPage(false);
+      localStorage.clear();
+    }
+  }, [backToSearchContext])
 
   useEffect(() => {
     const filtredList = outreMerRegionsList.filter((region) => region.label !== labelDeLaRégion);

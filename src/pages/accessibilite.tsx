@@ -8,7 +8,7 @@ import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
 
 export default function Accessibilité() {
   const { wording } = useDependencies();
-  const { setIsInfoPage } = useContext(BackToSearchContext) as BackToSearchContextValue;
+  const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
 
   useBreadcrumb([
     {
@@ -18,9 +18,9 @@ export default function Accessibilité() {
   ]);
 
   useEffect(() => {
-    setIsInfoPage(false);
-    localStorage.clear();
-  }, [])
+    if (backToSearchContext)
+      backToSearchContext.setIsInfoPage(false);
+  }, [backToSearchContext])
 
   return (
     <main className="fr-container">

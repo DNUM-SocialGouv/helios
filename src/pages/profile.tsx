@@ -7,7 +7,7 @@ import { ProfilePage } from "../frontend/ui/profile/ProfilePage";
 
 export default function Profile() {
     const { wording } = useDependencies();
-    const { setIsInfoPage } = useContext(BackToSearchContext) as BackToSearchContextValue;
+    const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
 
     useBreadcrumb([
         {
@@ -17,9 +17,11 @@ export default function Profile() {
     ]);
 
     useEffect(() => {
-        setIsInfoPage(false);
-        localStorage.clear();
-    }, []);
+        if (backToSearchContext) {
+            backToSearchContext.setIsInfoPage(false);
+            localStorage.clear();
+        }
+    }, [backToSearchContext])
 
     return <ProfilePage />;
 }

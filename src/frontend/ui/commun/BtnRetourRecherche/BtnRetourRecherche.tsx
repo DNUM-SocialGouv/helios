@@ -11,7 +11,7 @@ type BtnRetourRechercheProps = Readonly<{
 
 export const BtnRetourRecherche = ({ }: BtnRetourRechercheProps) => {
   const { wording } = useDependencies();
-  const { isInfoPage } = React.useContext(BackToSearchContext) as BackToSearchContextValue;
+  const backToSearchContext = React.useContext(BackToSearchContext) as BackToSearchContextValue;
 
   const setItisClicked = () => {
     localStorage.setItem('FromBackToSearch', 'true');
@@ -19,7 +19,7 @@ export const BtnRetourRecherche = ({ }: BtnRetourRechercheProps) => {
 
   return (
     <div className={styles["btnRetourRechercheStyle"]}>
-      {isInfoPage && localStorage.getItem('searchItem') !== null ? (
+      {backToSearchContext && backToSearchContext.isInfoPage && localStorage.getItem('searchItem') !== null ? (
         <Link className="fr-link fr-breadcrumb" href="/" onClick={setItisClicked} title={wording.BACK_TO_SEARCH}>
           {wording.BACK_TO_SEARCH}
         </Link>

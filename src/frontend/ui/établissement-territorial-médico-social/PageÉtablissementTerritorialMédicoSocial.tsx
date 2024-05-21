@@ -25,7 +25,7 @@ type ÉtablissementTerritorialProps = Readonly<{
 
 export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel, établissementTerritorialViewModel }: ÉtablissementTerritorialProps) => {
   const { paths } = useDependencies();
-  const { setIsInfoPage } = useContext(BackToSearchContext) as BackToSearchContextValue;
+  const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
 
   useBreadcrumb([
     {
@@ -66,8 +66,9 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
     }
   }, [onBeforeGetContentResolve.current]);
   useEffect(() => {
-    setIsInfoPage(true);
-  }, []);
+    if (backToSearchContext)
+      backToSearchContext.setIsInfoPage(true);
+  }, [backToSearchContext])
   return (
     <main className="fr-container">
       <Head>
