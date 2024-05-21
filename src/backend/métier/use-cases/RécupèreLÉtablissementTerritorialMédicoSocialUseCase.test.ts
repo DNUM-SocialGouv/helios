@@ -327,4 +327,56 @@ describe("La récupération d’un établissement territorial médico-social", (
     expect(mockedChargeRessourcesHumaines).toHaveBeenCalledTimes(1);
     expect(établissementTerritorialMédicoSocial.ressourcesHumaines).toStrictEqual(ressourcesHumainesDeLÉtablissement);
   });
+
+  it("récupère les indicateurs qualité de l’établissement territorial médico-social", async () => {
+    // GIVEN
+    const fakeEstUnMonoÉtablissement: MonoÉtablissement = {
+      estMonoÉtablissement: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: false,
+      },
+    };
+    const mockedEstUnMonoÉtablissement = jest.fn().mockResolvedValueOnce(fakeEstUnMonoÉtablissement);
+
+    const fakeIdentitéÉtablissementTerritorial = ÉtablissementTerritorialTestBuilder.créeUneIdentitéMédicoSocial({
+      numéroFinessEntitéJuridique: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: numéroFinessEntitéJuridique,
+      },
+      numéroFinessÉtablissementTerritorial: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: numéroFinessÉtablissementTerritorial,
+      },
+    });
+
+    const donneesQualiteDeLÉtablissement = [
+      ÉtablissementTerritorialTestBuilder.créeUnBlocQualité(),
+      ÉtablissementTerritorialTestBuilder.créeUnBlocQualité(),
+      ÉtablissementTerritorialTestBuilder.créeUnBlocQualité(),
+    ];
+    const mockedDonnesQualite = jest.fn().mockResolvedValueOnce(donneesQualiteDeLÉtablissement);
+
+    const mockedÉtablissementTerritorialMédicoSocialLoader: ÉtablissementTerritorialMédicoSocialLoader = {
+      chargeActivité: jest.fn(),
+      chargeAutorisationsEtCapacités: jest.fn(),
+      chargeBudgetEtFinances: jest.fn(),
+      chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
+      chargeRessourcesHumaines: jest.fn(),
+      chargeQualite: mockedDonnesQualite,
+      estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
+    };
+
+    const récupèreLÉtablissementTerritorialMédicoSocialUseCase = new RécupèreLÉtablissementTerritorialMédicoSocialUseCase(
+      mockedÉtablissementTerritorialMédicoSocialLoader,
+      mock<EntitéJuridiqueLoader>()
+    );
+
+    // WHEN
+    const établissementTerritorialMédicoSocial = await récupèreLÉtablissementTerritorialMédicoSocialUseCase.exécute(numéroFinessÉtablissementTerritorial);
+
+    // THEN
+    expect(mockedDonnesQualite).toHaveBeenCalledWith(numéroFinessÉtablissementTerritorial);
+    expect(mockedDonnesQualite).toHaveBeenCalledTimes(1);
+    expect(établissementTerritorialMédicoSocial.qualite).toStrictEqual(donneesQualiteDeLÉtablissement);
+  });
 });

@@ -233,11 +233,22 @@ export class WordingFr implements Wording {
   readonly MOTIF_155: string = "À renseigner";
   readonly MOTIF_156: string = "COVID-19";
 
+  readonly INSPECTIONS_CONTROLES: string = "Inspections / Contrôles";
+
   readonly EVENEMENTS_INDESIRABLES: string = "Evènements indésirables";
-  readonly EVENEMENTS_INDESIRABLES_NON_RENSEIGNES: string = "Evènements indésirables. ⚠ L'absence de signalement d'événements indésirables nuit à la prise de mesures correctives appropriées.";
+  readonly EVENEMENTS_INDESIRABLES_NON_RENSEIGNES: string =
+    "Evènements indésirables. ⚠ L'absence de signalement d'événements indésirables nuit à la prise de mesures correctives appropriées.";
   readonly EVENTS_TOTAL_NUMBER: string = "Nombre total d'évènements:";
   readonly EVENEMENTS_ASSOCIE_AUX_SOINS: string = "Evènements indésirables/graves associés aux soins";
   readonly EVENEMENTS_DANS_ET: string = "Evènements/incidents dans un établissement ou organisme";
+
+  readonly DATE_REELLE_DE_VISITE: string = "Date réelle de visite";
+  readonly DATE_REELLE_DE_RAPPORT: string = "Date réelle de rapport";
+  readonly TYPE_DE_PLANIFICATION: string = "Type de planification";
+  readonly MODALITE_DE_LA_MISSION: string = "Modalité de la mission";
+  readonly TYPE_DE_MISSION: string = "Type de mission";
+  readonly AFFICHER_PLUS: string = "Aficher plus";
+  readonly AFFICHER_MOINS: string = "Afficher moins";
 
   // Bloc Autorisation médico-social
   readonly MISE_À_JOUR_AUTORISATION: string = "Mise à jour d’autorisation";
@@ -389,6 +400,7 @@ export class WordingFr implements Wording {
   readonly RPU_TITLE: string = "Résumé de Passage aux Urgences";
   readonly SIREC_TITLE: string = "Système d'Information Réclamations (SI REC)";
   readonly SIVSS_TITLE: string = "Système d'Information de Veille et de Sécurité Sanitaire (SI VSS)";
+  readonly SIICEA_TITLE: string = "Système d'Information pour les Inspections Contrôles Evaluations et Audits (SIICEA)";
   // Sources courtes
   readonly FINESS: ReactElement = (<abbr title={this.FINESS_TITLE}>FINESS</abbr>);
   readonly DIAMANT: ReactElement = (<abbr title={this.DIAMANT_TITLE}>DIAMANT</abbr>);
@@ -401,6 +413,7 @@ export class WordingFr implements Wording {
   readonly RPU: ReactElement = (<abbr title={this.RPU_TITLE}>RPU</abbr>);
   readonly SIREC: ReactElement = (<abbr title={this.SIREC_TITLE}>SIREC</abbr>);
   readonly SIVSS: ReactElement = (<abbr title={this.SIVSS_TITLE}>SIVSS</abbr>);
+  readonly SIICEA: ReactElement = (<abbr title={this.SIICEA_TITLE}>SIICEA</abbr>);
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string = "Accès refusé";
@@ -502,10 +515,9 @@ export class WordingFr implements Wording {
   readonly CREATED_BY: string = "Créée par";
   readonly CREATION_DATE: string = "Date de création";
   readonly PROFILE_CODE: string = "Code";
-  readonly PROFILE_TITLE: string = "Libellé de l'autorisation"
+  readonly PROFILE_TITLE: string = "Libellé de l'autorisation";
   readonly VOUS_NAVEZ_AUCUN_PROFIL: string = "Vous n'avez aucun profil";
   readonly PROJECT_TEAM: string = "Équipe projet";
-
 
   //  Profile page
   readonly USER_PROFILE: string = "Mes informations";

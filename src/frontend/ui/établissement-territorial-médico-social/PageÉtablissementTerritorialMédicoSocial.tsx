@@ -63,7 +63,6 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
       onBeforeGetContentResolve.current();
     }
   }, [onBeforeGetContentResolve.current]);
-
   return (
     <main className="fr-container">
       <Head>

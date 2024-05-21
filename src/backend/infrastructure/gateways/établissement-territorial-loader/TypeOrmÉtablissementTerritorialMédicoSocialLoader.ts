@@ -5,6 +5,7 @@ import { AutorisationMédicoSocialModel } from "../../../../../database/models/A
 import { BudgetEtFinancesMédicoSocialModel } from "../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EvenementIndesirableETModel } from "../../../../../database/models/EvenementIndesirableModel";
+import { InspectionsControlesETModel } from "../../../../../database/models/InspectionsModel";
 import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { RessourcesHumainesMédicoSocialModel } from "../../../../../database/models/RessourcesHumainesMédicoSocialModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
@@ -174,11 +175,21 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       .getRepository(DateMiseÀJourFichierSourceModel)
       .findOneBy({ fichier: FichierSource.SIVSS })) as DateMiseÀJourFichierSourceModel;
 
+    const inspectionsEtControles = await (await this.orm)
+      .getRepository(InspectionsControlesETModel)
+      .find({ where: { numéroFinessÉtablissementTerritorial } });
+
+    const dateMiseAjourSIICEA = (await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.SIICEA })) as DateMiseÀJourFichierSourceModel;
+
     return this.construitsQualite(
       reclamations,
       dateMisAJour.dernièreMiseÀJour,
       evenementsIndesirables,
-      dateMiseAjourSIVSS.dernièreMiseÀJour
+      dateMiseAjourSIVSS.dernièreMiseÀJour,
+      inspectionsEtControles,
+      dateMiseAjourSIICEA.dernièreMiseÀJour
     );
   }
 
@@ -407,10 +418,11 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     };
   }
 
-  private construitsQualite(reclamations: ReclamationETModel[], dateMisAJour: string, evenementsIndesirables: EvenementIndesirableETModel[], dateMiseAjourSIVSS: string): ÉtablissementTerritorialQualite {
+  private construitsQualite(reclamations: ReclamationETModel[], dateMisAJour: string, evenementsIndesirables: EvenementIndesirableETModel[], dateMiseAjourSIVSS: string, inspections: InspectionsControlesETModel[], dateMiseAjourSiicea: string): ÉtablissementTerritorialQualite {
     return {
       reclamations: this.construitsReclamations(reclamations, dateMisAJour),
-      evenementsIndesirables: this.construitsEvenementsIndesirables(evenementsIndesirables, dateMiseAjourSIVSS)
+      evenementsIndesirables: this.construitsEvenementsIndesirables(evenementsIndesirables, dateMiseAjourSIVSS),
+      inspectionsEtControles: this.construisInspections(inspections, dateMiseAjourSiicea)
     }
   }
 
@@ -529,6 +541,30 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       clotMotif: evenement.motifCloture,
       est_EIGS: evenement.isEIGS
     }
+  }
+
+  private construisInspections = (inspections: InspectionsControlesETModel[], dateMisAJour: string) => {
+    const inspectionsEtControles = inspections.map((inspection: InspectionsControlesETModel) => {
+      return {
+        typeMission: inspection.typeMission,
+        themeRegional: inspection.themeRegional,
+        typePlannification: inspection.typePlannification,
+        statutMission: inspection.statutMission,
+        modaliteMission: inspection.modaliteMission,
+        dateVisite: inspection.dateVisite,
+        dateRapport: inspection.dateRapport,
+        nombreEcart: inspection.nombreEcart,
+        nombreRemarque: inspection.nombreRemarque,
+        injonction: inspection.injonction,
+        prescription: inspection.prescription,
+        recommandation: inspection.recommandation,
+        saisineCng: inspection.saisineCng,
+        saisineJuridiction: inspection.saisineJuridiction,
+        saisineParquet: inspection.saisineParquet,
+        saisineAutre: inspection.saisineAutre
+      }
+    })
+    return { dateMiseAJourSource: dateMisAJour, inspectionsEtControles: inspectionsEtControles };
   }
 
   private construisLeBudgetEtFinances(

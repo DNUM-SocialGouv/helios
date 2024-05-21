@@ -29,6 +29,7 @@ export class NodeEnvironmentVariables implements EnvironmentVariables {
   readonly SIREC_DATA_PATH: string = this.getOrElse("SIREC_DATA_PATH");
   readonly CHECKED_SIREC_DATA_PATH: string = this.getOrElse("CHECKED_SIREC_DATA_PATH");
 
+  readonly SIICEA_DATA_PATH: string = this.getOrElse("SIICEA_DATA_PATH");
   readonly SIVSS_DATA_PATH: string = this.getOrElse("SIVSS_DATA_PATH");
   readonly CHECKED_SIVSS_DATA_PATH: string = this.getOrElse("CHECKED_SIVSS_DATA_PATH");
 

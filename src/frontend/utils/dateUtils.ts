@@ -23,3 +23,13 @@ export function formatDateAndHours(date: string): string {
   });
   return formated.replace(":", "h").replace(" ", " - ").replace(",", "");
 }
+
+export function convertDateDDMMYYYY(dateString: string) {
+  const parts = dateString.split("-");
+  if (parts.length === 3) {
+    return `${parts[2]}/${parts[1]}/${parts[0]}`;
+  } else {
+    // Gérer les erreurs ou les formats de date incorrects
+    return "Format de date incorrect";
+  }
+}
