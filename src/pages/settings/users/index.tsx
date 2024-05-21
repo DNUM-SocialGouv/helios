@@ -1,5 +1,6 @@
 import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
 import { getSession } from "next-auth/react";
+import { useContext, useEffect } from "react";
 
 import { InstitutionModel } from "../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../database/models/ProfilModel";
@@ -10,6 +11,7 @@ import { getAllRolesEndpoint } from "../../../backend/infrastructure/controllers
 import { getInstitutionsEndpoint } from "../../../backend/infrastructure/controllers/getInstitutionsEndpoint";
 import { getUsersListPaginatedEndpoint } from "../../../backend/infrastructure/controllers/getUsersListPaginatedEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
+import { BackToSearchContext, BackToSearchContextValue } from "../../../frontend/ui/commun/contexts/BackToSearchContext";
 import { useDependencies } from "../../../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../../../frontend/ui/commun/hooks/useBreadcrumb";
 import UsersListPage from "../../../frontend/ui/parametrage-utilisateurs/UsersListPage/UsersListPage";
@@ -59,6 +61,7 @@ export default function Router({
   sortDirPage,
 }: RouterProps) {
   const { wording } = useDependencies();
+  const { setIsInfoPage } = useContext(BackToSearchContext) as BackToSearchContextValue;
 
   useBreadcrumb([
     {
@@ -66,6 +69,12 @@ export default function Router({
       path: "",
     },
   ]);
+
+  useEffect(() => {
+    setIsInfoPage(false);
+    localStorage.clear();
+  }, [])
+
   return (
     <UsersListPage
       etat={etat.toString()}

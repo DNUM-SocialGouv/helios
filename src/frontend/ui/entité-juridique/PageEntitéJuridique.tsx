@@ -1,8 +1,9 @@
 import Head from "next/head";
-import { useRef, useCallback, useEffect } from "react";
+import { useRef, useCallback, useEffect, useContext } from "react";
 import { useReactToPrint } from "react-to-print";
 
 import { BtnDownloadPDF } from "../commun/BtnDownloadPDF/BtnDownloadPDF";
+import { BackToSearchContext, BackToSearchContextValue } from "../commun/contexts/BackToSearchContext";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { SeparatorHorizontal } from "../commun/Separateur/SeparatorHorizontal";
 import { Titre } from "../commun/Titre/Titre";
@@ -24,6 +25,8 @@ type EntitéJuridiqueProps = Readonly<{
 }>;
 
 export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, rechercheViewModel, établissementsTerritoriauxRattachésViewModels }: EntitéJuridiqueProps) => {
+  const { setIsInfoPage } = useContext(BackToSearchContext) as BackToSearchContextValue;
+
   useBreadcrumb([
     {
       label: entitéJuridiqueViewModel.titreAccessible,
@@ -52,6 +55,10 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, rechercheViewM
     onBeforeGetContent: handleOnBeforeGetContent,
     removeAfterPrint: true,
   });
+
+  useEffect(() => {
+    setIsInfoPage(true);
+  }, [])
 
   useEffect(() => {
     if (typeof onBeforeGetContentResolve.current === "function") {

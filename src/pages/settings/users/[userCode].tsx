@@ -1,5 +1,6 @@
 import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
 import { getSession } from "next-auth/react";
+import { useContext, useEffect } from "react";
 
 import { InstitutionModel } from "../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../database/models/ProfilModel";
@@ -10,6 +11,7 @@ import { getAllRolesEndpoint } from "../../../backend/infrastructure/controllers
 import { getInstitutionsEndpoint } from "../../../backend/infrastructure/controllers/getInstitutionsEndpoint";
 import { getUserByCodeEndpoint } from "../../../backend/infrastructure/controllers/getUserByCodeEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
+import { BackToSearchContext, BackToSearchContextValue } from "../../../frontend/ui/commun/contexts/BackToSearchContext";
 import { useDependencies } from "../../../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../../../frontend/ui/commun/hooks/useBreadcrumb";
 import { EditUser } from "../../../frontend/ui/parametrage-utilisateurs/EditUser/EditUser";
@@ -24,6 +26,12 @@ type RouterProps = Readonly<{
 
 export default function Router({ user, institutions, profiles, roles }: RouterProps) {
   const { wording } = useDependencies();
+  const { setIsInfoPage } = useContext(BackToSearchContext) as BackToSearchContextValue;
+
+  useEffect(() => {
+    setIsInfoPage(false);
+    localStorage.clear();
+  }, [])
 
   useBreadcrumb([
     {

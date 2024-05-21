@@ -1,17 +1,26 @@
 import Head from "next/head";
+import { useContext, useEffect } from "react";
 
 import { PageAccessibilite } from "../frontend/ui/accessibilite/PageAccessibilite";
+import { BackToSearchContext, BackToSearchContextValue } from "../frontend/ui/commun/contexts/BackToSearchContext";
 import { useDependencies } from "../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
 
 export default function Accessibilité() {
   const { wording } = useDependencies();
+  const { setIsInfoPage } = useContext(BackToSearchContext) as BackToSearchContextValue;
+
   useBreadcrumb([
     {
       label: wording.ACCESSIBILITÉ,
       path: "",
     },
   ]);
+
+  useEffect(() => {
+    setIsInfoPage(false);
+    localStorage.clear();
+  }, [])
 
   return (
     <main className="fr-container">
