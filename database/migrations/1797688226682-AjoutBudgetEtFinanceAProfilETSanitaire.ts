@@ -49,6 +49,4 @@ export class AjoutBudgetEtFinanceAProfilETSanitaire1797688226682 implements Migr
         UPDATE profil
         SET profil_value = $1`, [DefaultProfile]);
     }
-
-
 }
