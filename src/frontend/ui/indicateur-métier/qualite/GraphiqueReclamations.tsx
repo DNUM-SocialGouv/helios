@@ -1,7 +1,9 @@
 import { memo, useState } from "react";
 
+import { annéesManquantes } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
+import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../../commun/Transcription/Transcription";
 import { ContenuReclamations } from "./ContenuReclamations";
 import ReclamationsParAnnee from "./ReclamationsParAnnee/ReclamationsParAnnee";
@@ -9,12 +11,14 @@ import ReclamationsParAnnee from "./ReclamationsParAnnee/ReclamationsParAnnee";
 type GraphiqueReclamationsProps = Readonly<{
   data: any;
   dateMiseAJour: string;
+  annéesTotales: number;
 }>;
 
-const GraphiqueReclamations = ({ data, dateMiseAJour }: GraphiqueReclamationsProps) => {
+const GraphiqueReclamations = ({ data, dateMiseAJour, annéesTotales }: GraphiqueReclamationsProps) => {
   const { wording } = useDependencies();
   const annees = Object.keys(data).sort().reverse().map(Number);
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(annees[0]);
+  const listeAnnéesManquantes = annéesManquantes(annees, annéesTotales);
   const identifiants = ["Nombre total de réclamations concernées", "Nombre de réclamations en cours concernées", "Nombre de réclamations clôturées concernées"];
   const libelles = [
     wording.MOTIF_10,
@@ -30,7 +34,7 @@ const GraphiqueReclamations = ({ data, dateMiseAJour }: GraphiqueReclamationsPro
     wording.MOTIF_155,
     wording.MOTIF_156,
   ]
-  
+
   const getvalues = () => {
     const totals: any[] = [];
     const encours: any[] = [];
@@ -64,6 +68,7 @@ const GraphiqueReclamations = ({ data, dateMiseAJour }: GraphiqueReclamationsPro
           total_encours={data[annéeEnCours].total_encours}
         />
       </IndicateurGraphique>
+      {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
       <Transcription entêteLibellé={wording.RECLAMATIONS} identifiants={identifiants} libellés={libelles} valeurs={getvalues()} />
     </>
   );
