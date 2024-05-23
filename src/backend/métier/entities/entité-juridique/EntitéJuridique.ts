@@ -44,6 +44,10 @@ export type EntitéJuridiqueIdentité = {
     dateMiseÀJourSource: string;
     value: string;
   }>;
+  dateOuverture: Readonly<{
+    dateMiseÀJourSource: string;
+    value: string;
+  }>;
   codeRegion: string;
 };
 

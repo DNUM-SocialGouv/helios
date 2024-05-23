@@ -14,6 +14,7 @@ export type EntitéJuridique = Readonly<{
   catégorisation?: Catégorisation;
   statutJuridique: string;
   codeRégion: string;
+  dateOuverture: string;
 }>;
 
 export enum Catégorisation {

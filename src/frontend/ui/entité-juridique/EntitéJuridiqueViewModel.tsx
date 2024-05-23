@@ -56,6 +56,22 @@ export class EntitéJuridiqueViewModel {
     return StringFormater.formatDate(this.entitéJuridique.raisonSociale.dateMiseÀJourSource);
   }
 
+  public get dateOuvertureEntitéJuridique(): string {
+    if(this.entitéJuridique.dateOuverture && this.entitéJuridique.dateOuverture.value)
+    {
+      return StringFormater.formatDate(this.entitéJuridique.dateOuverture.value);
+    }
+    return "Non renseigné"
+  }
+
+  public get dateDeMiseÀJourOuvertureEntitéJuridique(): string {
+    if(this.entitéJuridique.dateOuverture && this.entitéJuridique.dateOuverture.dateMiseÀJourSource)
+    {
+      return StringFormater.formatDate(this.entitéJuridique.dateOuverture.dateMiseÀJourSource);
+    }
+    return "Non renseigné"
+  }
+
   public get numéroFiness(): string {
     return this.entitéJuridique.numéroFinessEntitéJuridique.value;
   }

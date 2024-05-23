@@ -5,6 +5,7 @@ import { RésultatDeRechercheTestBuilder } from "../../../backend/test-builder/R
 import { EntitéJuridiqueViewModelTestBuilder } from "../../test-helpers/test-builder/EntitéJuridiqueViewModelTestBuilder";
 import { EtablissementsTerritoriauxRattachésTestBuilder } from "../../test-helpers/test-builder/EtablissementsTerritoriauxRattachésTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../test-helpers/testHelper";
+import { StringFormater } from "../commun/StringFormater";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 import { PageEntitéJuridique } from "./PageEntitéJuridique";
 
@@ -30,7 +31,7 @@ const result = RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntit�
 const rechercheViewModel = new RechercheViewModel(result, paths);
 
 describe("La page Entité Juridique", () => {
-  it("affiche le titre court dans l’onglet", () => {
+   it("affiche le titre court dans l’onglet", () => {
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
@@ -149,10 +150,10 @@ describe("La page Entité Juridique", () => {
     // THEN
     const blocAutorisationCapacites = screen.getByText(wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ);
     expect(blocAutorisationCapacites).toBeInTheDocument();
-  });
+  }); 
 
   describe("affiche le bloc identité de l’entité juridique", () => {
-    it("affiche le nom de l’établissement", () => {
+   it("affiche le nom de l’établissement", () => {
       // WHEN
       renderFakeComponent(
         <SessionProvider session={mockSession}>
@@ -178,7 +179,34 @@ describe("La page Entité Juridique", () => {
       expect(nomDeLÉtablissement).toBeInTheDocument();
     });
 
-    it("affiche le numéro FINESS", () => {
+    it("affiche la date d’ouverture", () => {
+      // WHEN
+      renderFakeComponent(
+        <SessionProvider session={mockSession}>
+          <PageEntitéJuridique
+            entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+            rechercheViewModel={rechercheViewModel}
+            établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
+          />
+        </SessionProvider>
+      );
+  
+      // THENs
+      const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
+      const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
+ 
+      const labelÉtablissement = within(indicateurs[1]).getByText(
+        textMatch(`${wording.DATE_D_OUVERTURE} - ${wording.miseÀJour("02/02/2022")} - Source : FINESS`),
+        { selector: "p" }
+      );
+      expect(labelÉtablissement).toBeInTheDocument();
+      const abréviationFiness = within(indicateurs[1]).getByText("FINESS", { selector: "abbr" });
+      expect(abréviationFiness).toHaveAttribute("title", wording.FINESS_TITLE);
+      const nomDeLÉtablissement = within(indicateurs[1]).getByText(StringFormater.formatDate(entitéJuridique.dateOuverture.value), { selector: "p" });
+      expect(nomDeLÉtablissement).toBeInTheDocument();
+    });
+
+     it("affiche le numéro FINESS", () => {
       // WHEN
       renderFakeComponent(
         <SessionProvider session={mockSession}>
@@ -193,11 +221,11 @@ describe("La page Entité Juridique", () => {
       // THEN
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
       const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-      const labelNuméroFiness = within(indicateurs[1]).getByText(textMatch(`${wording.NUMÉRO_FINESS} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`), {
+      const labelNuméroFiness = within(indicateurs[2]).getByText(textMatch(`${wording.NUMÉRO_FINESS} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`), {
         selector: "p",
       });
       expect(labelNuméroFiness).toBeInTheDocument();
-      const numéroFiness = within(indicateurs[1]).getByText(entitéJuridique.numéroFinessEntitéJuridique.value, { selector: "p" });
+      const numéroFiness = within(indicateurs[2]).getByText(entitéJuridique.numéroFinessEntitéJuridique.value, { selector: "p" });
       expect(numéroFiness).toBeInTheDocument();
     });
 
@@ -216,11 +244,11 @@ describe("La page Entité Juridique", () => {
       // THEN
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
       const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-      const labelNuméroSiren = within(indicateurs[2]).getByText(textMatch(`${wording.SIREN} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`), {
+      const labelNuméroSiren = within(indicateurs[3]).getByText(textMatch(`${wording.SIREN} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`), {
         selector: "p",
       });
       expect(labelNuméroSiren).toBeInTheDocument();
-      const siren = within(indicateurs[2]).getByText(entitéJuridique.siren.value, { selector: "p" });
+      const siren = within(indicateurs[3]).getByText(entitéJuridique.siren.value, { selector: "p" });
       expect(siren).toBeInTheDocument();
     });
 
@@ -239,11 +267,11 @@ describe("La page Entité Juridique", () => {
       // THEN
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
       const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-      const labelAdresse = within(indicateurs[3]).getByText(textMatch(`${wording.ADRESSE} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`), {
+      const labelAdresse = within(indicateurs[4]).getByText(textMatch(`${wording.ADRESSE} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`), {
         selector: "p",
       });
       expect(labelAdresse).toBeInTheDocument();
-      const adresse = within(indicateurs[3]).getByText("10 Rue Marcel Proust 22023 ST BRIEUC CEDEX 1", { selector: "p" });
+      const adresse = within(indicateurs[4]).getByText("10 Rue Marcel Proust 22023 ST BRIEUC CEDEX 1", { selector: "p" });
       expect(adresse).toBeInTheDocument();
     });
 
@@ -262,11 +290,11 @@ describe("La page Entité Juridique", () => {
       // THEN
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
       const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-      const labelTéléphone = within(indicateurs[4]).getByText(textMatch(`${wording.TÉLÉPHONE} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`), {
+      const labelTéléphone = within(indicateurs[5]).getByText(textMatch(`${wording.TÉLÉPHONE} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`), {
         selector: "p",
       });
       expect(labelTéléphone).toBeInTheDocument();
-      const téléphone = within(indicateurs[4]).getByText("02 96 01 71 23", { selector: "p" });
+      const téléphone = within(indicateurs[5]).getByText("02 96 01 71 23", { selector: "p" });
       expect(téléphone).toBeInTheDocument();
     });
 
@@ -285,12 +313,12 @@ describe("La page Entité Juridique", () => {
       // THEN
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
       const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-      const labelStatutÉtablissement = within(indicateurs[5]).getByText(
+      const labelStatutÉtablissement = within(indicateurs[6]).getByText(
         textMatch(`${wording.STATUT_JURIDIQUE} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`),
         { selector: "p" }
       );
       expect(labelStatutÉtablissement).toBeInTheDocument();
-      const statutÉtablissement = within(indicateurs[5]).getByText(entitéJuridique.libelléStatutJuridique.value, { selector: "p" });
+      const statutÉtablissement = within(indicateurs[6]).getByText(entitéJuridique.libelléStatutJuridique.value, { selector: "p" });
       expect(statutÉtablissement).toBeInTheDocument();
     });
 
@@ -317,7 +345,7 @@ describe("La page Entité Juridique", () => {
       // THEN
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
       const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-      const téléphone = within(indicateurs[4]).getByText(wording.NON_RENSEIGNÉ, { selector: "p" });
+      const téléphone = within(indicateurs[5]).getByText(wording.NON_RENSEIGNÉ, { selector: "p" });
       expect(téléphone).toBeInTheDocument();
     });
 
@@ -344,7 +372,7 @@ describe("La page Entité Juridique", () => {
       // THEN
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
       const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-      const adresseIncomplète = within(indicateurs[3]).getByText("10 Marcel Proust 22023 ST BRIEUC CEDEX 1", { selector: "p" });
+      const adresseIncomplète = within(indicateurs[4]).getByText("10 Marcel Proust 22023 ST BRIEUC CEDEX 1", { selector: "p" });
       expect(adresseIncomplète).toBeInTheDocument();
     });
   });

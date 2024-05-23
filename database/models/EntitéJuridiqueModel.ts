@@ -86,4 +86,8 @@ export class EntitéJuridiqueModel {
     name: "categorisation",
   })
   public catégorisation!: string;
+
+
+  @Column({ type: 'date', name: "date_ouverture" , nullable: true })
+  public dateOuverture!: string;
 }

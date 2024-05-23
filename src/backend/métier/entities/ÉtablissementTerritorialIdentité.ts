@@ -71,5 +71,9 @@ export type ÉtablissementTerritorialIdentité = Readonly<{
     dateMiseÀJourSource: string;
     value: string;
   }>;
+  dateOuverture: Readonly<{
+    dateMiseÀJourSource: string;
+    value: string;
+  }>;
   codeRegion: string
 }>;
