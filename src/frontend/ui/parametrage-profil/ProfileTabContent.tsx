@@ -45,7 +45,7 @@ export const ProfileTabContent = ({
                     <div className={"fr-mb-3w " + styles["tab-title"]}>{wording.PARAMETRAGE_INSTITUTION}</div>
                     {Object.keys(editableInstitutionValues).map((bloc: string) => (
                         <div className="fr-table fr-table--layout-fixed" key={"inst-" + bloc}>
-                            <div className={"fr-mb-3w " + styles["section-title"]}>{bloc}</div>
+                            <div className={"fr-mb-3w " + styles["section-title"]}>{bloc} {idTabPanel ==="tabpanel-ET-SAN" && bloc ==="budgetEtFinance" && "(EBNL / ESPIC)"}</div>
                             <table>
                                 <tbody>
                                     {Object.keys(editableInstitutionValues[bloc]).map((indicator) => (
@@ -70,7 +70,7 @@ export const ProfileTabContent = ({
                     <div className={"fr-mb-3w " + styles["tab-title"]}> {wording.PARAMETRAGE_AUTRE_REGION} </div>
                     {Object.keys(editableAutreRegionValues).map((bloc: string) => (
                         <div className="fr-table fr-table--layout-fixed" key={"inst-" + bloc}>
-                            <div className={"fr-mb-3w " + styles["section-title"]}>{bloc}</div>
+                            <div className={"fr-mb-3w " + styles["section-title"]}>{bloc} {idTabPanel ==="tabpanel-ET-SAN" && bloc ==="budgetEtFinance" && "(EBNL / ESPIC)"}</div>
                             <table>
                                 <tbody>
                                     {Object.keys(editableAutreRegionValues[bloc]).map((indicator) => (
