@@ -13,6 +13,10 @@
   min-width: 3rem;
 }
 
+.hideArrow::after {
+  content: none;
+}
+
 .description {
   text-transform: capitalize;
 }
