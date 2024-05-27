@@ -77,6 +77,7 @@ export interface Wording {
   readonly ERREUR_TECHNIQUE: string;
   readonly VOIR_PLUS_RÉSULTATS: string;
   readonly RECHERCHE_TITRE: string;
+  readonly BACK_TO_SEARCH: string;
 
   // Cartographie
   readonly CARTOGRAPHIE: string;
@@ -342,7 +343,7 @@ export interface Wording {
   readonly SIREC: ReactElement;
   readonly SIVSS: ReactElement;
   readonly SIICEA: ReactElement;
-  
+
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string;
 

@@ -10,6 +10,7 @@ import "@gouvfr/dsfr/dist/component/link/link.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 import { useFavoris } from "../../favoris/useFavoris";
 import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
+import { BtnRetourRecherche } from "../BtnRetourRecherche/BtnRetourRecherche";
 import { useDependencies } from "../contexts/useDependencies";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 import styles from "./Header.module.css";
@@ -233,7 +234,11 @@ export const Header = () => {
           </div>
         )}
       </header>
-      <Breadcrumb />
+      <div className="fr-grid-row fr-container" >
+        <Breadcrumb />
+        <BtnRetourRecherche />
+      </div>
+
     </>
   );
 };

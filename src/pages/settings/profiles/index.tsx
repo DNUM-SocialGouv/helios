@@ -1,9 +1,11 @@
 import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
 import { getSession } from "next-auth/react";
+import { useContext, useEffect } from "react";
 
 import { ProfilModel } from "../../../../database/models/ProfilModel";
 import { getAllProfilesEndpoint } from "../../../backend/infrastructure/controllers/getAllProfilesEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
+import { BackToSearchContext, BackToSearchContextValue } from "../../../frontend/ui/commun/contexts/BackToSearchContext";
 import { useDependencies } from "../../../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../../../frontend/ui/commun/hooks/useBreadcrumb";
 import { ParametragePage } from "../../../frontend/ui/parametrage-profil/ParametragePage";
@@ -12,6 +14,14 @@ type RouterProps = Readonly<{ profiles: ProfilModel[] }>;
 
 export default function Router({ profiles }: RouterProps) {
   const { wording } = useDependencies();
+  const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
+
+  useEffect(() => {
+    if (backToSearchContext) {
+      backToSearchContext.setIsInfoPage(false);
+      localStorage.clear();
+    }
+  }, [backToSearchContext])
 
   useBreadcrumb([
     {
