@@ -11,7 +11,6 @@ export default function PageDAccueil() {
   useEffect(() => {
     if (backToSearchContext) {
       backToSearchContext.setIsInfoPage(false);
-      localStorage.clear();
     }
   }, [backToSearchContext])
 

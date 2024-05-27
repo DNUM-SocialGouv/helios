@@ -20,7 +20,7 @@ export const BtnRetourRecherche = ({ }: BtnRetourRechercheProps) => {
   return (
     <div className={styles["btnRetourRechercheStyle"]}>
       {backToSearchContext && backToSearchContext.isInfoPage && localStorage.getItem('searchItem') !== null ? (
-        <Link className="fr-link fr-breadcrumb" href="/" onClick={setItisClicked} title={wording.BACK_TO_SEARCH}>
+        <Link className="fr-link" href="/" onClick={setItisClicked} title={wording.BACK_TO_SEARCH}>
           {wording.BACK_TO_SEARCH}
         </Link>
       ) : null}
