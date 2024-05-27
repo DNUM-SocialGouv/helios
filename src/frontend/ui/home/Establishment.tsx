@@ -24,7 +24,7 @@ export const Establishment = ({
       <div className="fr-tile fr-tile--horizontal-md">
         <div className="fr-tile__body fr-enlarge-link">
           <h2 className="fr-tile__title">
-            <a className={"fr-tile__link " + styles["hideArrow"]} href={résultatViewModel.construisLeLien()} onClick={saveToHistory} rel="noreferrer" target="_blank">
+            <a className="fr-tile__link" href={résultatViewModel.construisLeLien()} onClick={saveToHistory} rel="noreferrer">
               {résultatViewModel.titre}
             </a>
           </h2>

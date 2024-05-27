@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { EvenementsIndesirables } from "../../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
-import { annéesManquantes } from "../../../../utils/dateUtils";
+import { annéesManquantesQualite } from "../../../../utils/dateUtils";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
 import { MiseEnExergue } from "../../../commun/MiseEnExergue/MiseEnExergue";
@@ -21,7 +21,7 @@ export const GraphiqueEvenementsIndesirables = ({ data, dateMiseAJour, annees, a
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(annees[0]);
   const [total, setTotal] = useState<number>(0);
-  const listeAnnéesManquantes = annéesManquantes(annees, annéesTotales);
+  const listeAnnéesManquantes = annéesManquantesQualite(annees, annéesTotales);
 
 
   useEffect(() => {

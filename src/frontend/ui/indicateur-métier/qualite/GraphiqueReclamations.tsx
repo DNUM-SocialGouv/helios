@@ -1,6 +1,6 @@
 import { memo, useState } from "react";
 
-import { annéesManquantes } from "../../../utils/dateUtils";
+import { annéesManquantesQualite } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
@@ -18,7 +18,7 @@ const GraphiqueReclamations = ({ data, dateMiseAJour, annéesTotales }: Graphiqu
   const { wording } = useDependencies();
   const annees = Object.keys(data).sort().reverse().map(Number);
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(annees[0]);
-  const listeAnnéesManquantes = annéesManquantes(annees, annéesTotales);
+  const listeAnnéesManquantes = annéesManquantesQualite(annees, annéesTotales);
   const identifiants = ["Nombre total de réclamations concernées", "Nombre de réclamations en cours concernées", "Nombre de réclamations clôturées concernées"];
   const libelles = [
     wording.MOTIF_10,
