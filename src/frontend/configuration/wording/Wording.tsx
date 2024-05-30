@@ -77,6 +77,7 @@ export interface Wording {
   readonly ERREUR_TECHNIQUE: string;
   readonly VOIR_PLUS_RÉSULTATS: string;
   readonly RECHERCHE_TITRE: string;
+  readonly BACK_TO_SEARCH: string;
 
   // Cartographie
   readonly CARTOGRAPHIE: string;
@@ -122,6 +123,7 @@ export interface Wording {
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string;
   readonly NOM_DE_L_ÉTABLISSEMENT: string;
+  readonly DATE_D_OUVERTURE: string;
   readonly NUMÉRO_FINESS: string;
   readonly SIREN: string;
   readonly SIRET: string;
@@ -341,7 +343,7 @@ export interface Wording {
   readonly SIREC: ReactElement;
   readonly SIVSS: ReactElement;
   readonly SIICEA: ReactElement;
-  
+
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string;
 

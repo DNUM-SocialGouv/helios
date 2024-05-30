@@ -1,6 +1,7 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
+import { BackToSearchContext, BackToSearchContextValue } from "../commun/contexts/BackToSearchContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { BandeauCookies } from "../home/Bandeau/BandeauCookies";
@@ -11,12 +12,21 @@ export const PageRégion = ({ région }: { région: string }) => {
   const labelDeLaRégion = régions[région].label;
   const [arsRegions, setArsRegions] = useState(outreMerRegionsList);
   const { wording } = useDependencies();
+  const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
+
   useBreadcrumb([
     {
       label: labelDeLaRégion !== 'France métropolitaine' ? wording.régionBreadcrumb("Outre-mer (DROM-COM)") : wording.régionBreadcrumb(labelDeLaRégion),
       path: labelDeLaRégion !== 'France métropolitaine' ? "/region/outre-mer" : "",
     },
   ]);
+
+  useEffect(() => {
+    if (backToSearchContext) {
+      backToSearchContext.setIsInfoPage(false);
+      localStorage.clear();
+    }
+  }, [backToSearchContext])
 
   useEffect(() => {
     const filtredList = outreMerRegionsList.filter((region) => region.label !== labelDeLaRégion);

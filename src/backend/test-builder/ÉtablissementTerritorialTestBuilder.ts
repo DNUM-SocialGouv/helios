@@ -82,6 +82,10 @@ export class ÉtablissementTerritorialTestBuilder {
       dateMiseÀJourSource: "2022-02-02",
       value: "0102030405",
     },
+    dateOuverture: {
+      dateMiseÀJourSource: "2022-02-02",
+      value: "2001-01-01",
+    },
     codeRegion: '84'
   };
 
@@ -157,6 +161,10 @@ export class ÉtablissementTerritorialTestBuilder {
     téléphone: {
       dateMiseÀJourSource: "2022-02-02",
       value: "0102030406",
+    },
+    dateOuverture: {
+      dateMiseÀJourSource: "2022-02-02",
+      value: "2001-01-01",
     },
     codeRegion: '84'
   };

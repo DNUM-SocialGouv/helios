@@ -12,6 +12,16 @@ export function annéesManquantes(années: (number | string)[], annéesTotales: 
     .filter((année) => !années.map(Number).includes(année));
 }
 
+export function annéesManquantesQualite(années: (number | string)[], annéesTotales: number = 3): number[] {
+  const annéeEnCours = new Date().getFullYear() + 1;
+
+  return Array(annéesTotales + 1)
+    .fill(annéeEnCours)
+    .map((annéeÀAvoir, index) => annéeÀAvoir - index - 1)
+    .reverse()
+    .filter((année) => !années.map(Number).includes(année));
+}
+
 // format DD/MM/AAAA - HHhMM
 export function formatDateAndHours(date: string): string {
   const formated = new Date(date).toLocaleDateString("fr-FR", {

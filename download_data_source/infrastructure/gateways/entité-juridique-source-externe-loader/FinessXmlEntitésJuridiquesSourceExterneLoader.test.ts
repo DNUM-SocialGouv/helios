@@ -30,6 +30,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
         <libstatutjuridique>Etablissement Public Intercommunal d'Hospitalisation</libstatutjuridique>
         <statutjuridique>14</statutjuridique>
         <categetab>355</categetab>
+        <datecrea>2001-01-01</datecrea>
         <siren>260104631</siren>
         <datefermeture xsi:nil="true"/>
       </structureej>`;
@@ -47,6 +48,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
         <telephone>0826666900</telephone>
         <libstatutjuridique>Société Anonyme (S.A.)</libstatutjuridique>
         <statutjuridique>73</statutjuridique>
+        <datecrea>2001-01-01</datecrea>
         <categetab xsi:nil="true"/>
         <siren>260104632</siren>
         <datefermeture xsi:nil="true"/>
@@ -66,6 +68,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
         <statutjuridique>72</statutjuridique>
         <categetab xsi:nil="true"/>
         <siren>260104630</siren>
+        <datecrea>2001-01-01</datecrea>
         <datefermeture>2002-07-10</datefermeture>
       </structureej>`;
     const toutesLesEJ = [ejOuverte1, ejOuverte2, ejFermée];
@@ -92,6 +95,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
         statutJuridique: "14",
         téléphone: "0474731001",
         codeRégion: "84",
+        dateOuverture: "2001-01-01"
       },
       {
         adresseAcheminement: "59650 VILLENEUVE D ASCQ",
@@ -108,6 +112,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
         statutJuridique: "73",
         téléphone: "0826666900",
         codeRégion: "32",
+        dateOuverture: "2001-01-01"
       },
     ]);
     supprimerDossier(localPath);
@@ -214,6 +219,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
         statutJuridique: "14",
         téléphone: "",
         codeRégion: "84",
+        dateOuverture: "2001-01-01"
       },
       {
         adresseAcheminement: "59650 VILLENEUVE D ASCQ",
@@ -230,6 +236,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
         statutJuridique: "73",
         téléphone: "0826666900",
         codeRégion: "32",
+        dateOuverture: "2001-01-01"
       },
     ]);
     supprimerDossier(localPath);
@@ -255,6 +262,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
         <libstatutjuridique>Etablissement Public Intercommunal d'Hospitalisation</libstatutjuridique>
         <statutjuridique>14</statutjuridique>
         <categetab>355</categetab>
+        <datecrea>2001-01-01</datecrea>
         <siren>260104631</siren>
         <datefermeture xsi:nil="true"/>
       </structureej>`;
@@ -273,6 +281,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
         <libstatutjuridique>Société Anonyme (S.A.)</libstatutjuridique>
         <statutjuridique>73</statutjuridique>
         <categetab xsi:nil="true"/>
+        <datecrea>2001-01-01</datecrea>
         <siren>260104632</siren>
         <datefermeture xsi:nil="true"/>
       </structureej>`;
@@ -300,6 +309,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
         statutJuridique: "14",
         téléphone: "0474731001",
         codeRégion: "84",
+        dateOuverture: "2001-01-01"
       },
       {
         adresseAcheminement: "59650 VILLENEUVE D ASCQ",
@@ -316,6 +326,7 @@ describe("Récupération des entités juridiques de la source de données FINESS
         statutJuridique: "73",
         téléphone: "0826666900",
         codeRégion: "32",
+        dateOuverture: "2001-01-01"
       },
     ]);
     supprimerDossier(localPath);

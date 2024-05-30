@@ -22,7 +22,6 @@ export class MetsÀJourLesEntitésJuridiquesUseCase {
       const dateDeMiseAJourDuFichierSource = this.entitéJuridiqueSourceExterneLoader.récupèreLaDateDeMiseÀJourDuFichierSource();
       const entitésJuridiquesOuvertes = await this.entitéJuridiqueSourceExterneLoader.récupèreLesEntitésJuridiquesOuvertes();
       const entitéJuridiquesSauvegardées = await this.entitéJuridiqueHeliosLoader.récupèreLeNuméroFinessDesEntitésJuridiques();
-
       const entitésJuridiquesÀSupprimer = this.extraisLesEntitésJuridiquesRécemmentFermées(entitésJuridiquesOuvertes, entitéJuridiquesSauvegardées);
       const entitésJuridiqueCatégorisées = this.associeLaCatégorisation(entitésJuridiquesOuvertes);
 

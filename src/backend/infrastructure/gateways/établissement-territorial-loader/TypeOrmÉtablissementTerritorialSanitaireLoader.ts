@@ -414,6 +414,10 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.téléphone,
       },
+      dateOuverture: {
+        dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.dateOuverture,
+      },
       codeRegion: établissementTerritorialIdentitéModel.codeRégion
     };
   }

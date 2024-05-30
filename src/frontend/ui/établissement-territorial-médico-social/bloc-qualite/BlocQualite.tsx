@@ -48,6 +48,7 @@ const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel }:
         {!etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasRenseignées &&
           !etablissementTerritorialQualiteMédicoSocialViewModel.lesReclamationsNeSontPasAutorisées && (
             <GraphiqueReclamations
+              annéesTotales={3}
               data={etablissementTerritorialQualiteMédicoSocialViewModel.buildReclamationsData}
               dateMiseAJour={etablissementTerritorialQualiteMédicoSocialViewModel.dateMiseAJour}
             />
@@ -56,6 +57,7 @@ const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel }:
           !etablissementTerritorialQualiteMédicoSocialViewModel.lesEvenementsIndesirablesNeSontPasAutorisées && (
             <GraphiqueEvenementsIndesirables
               annees={etablissementTerritorialQualiteMédicoSocialViewModel.anneesEIs}
+              annéesTotales={3}
               data={etablissementTerritorialQualiteMédicoSocialViewModel.buildEIsData}
               dateMiseAJour={etablissementTerritorialQualiteMédicoSocialViewModel.dateMiseAJourEvenementsIndesirables}
             />

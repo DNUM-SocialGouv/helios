@@ -28,4 +28,8 @@ export class ÉquipementMatérielLourdSanitaireModel {
 
   @Column({ length: 9, name: "numero_finess_etablissement_territorial" })
   public numéroFinessÉtablissementTerritorial!: string;
+
+ @Column({ type: 'date', name: "date_ouverture" , nullable: true })
+  public dateOuverture!: string;
+  
 }

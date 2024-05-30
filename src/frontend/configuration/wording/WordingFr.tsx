@@ -94,6 +94,8 @@ export class WordingFr implements Wording {
     "Veuillez nous excuser, nous venons de rencontrer une erreur technique. Nous vous invitons à effectuer une nouvelle recherche plus tard.";
   readonly VOIR_PLUS_RÉSULTATS: string = "Voir plus de résultats";
   readonly RECHERCHE_TITRE: string = "";
+  readonly BACK_TO_SEARCH: string = "Retour aux résultats de la recherche";
+
 
   // Cartographie
   readonly CARTOGRAPHIE: string = "Cartographie";
@@ -145,6 +147,7 @@ export class WordingFr implements Wording {
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string = "fiche d’identité";
   readonly NOM_DE_L_ÉTABLISSEMENT: string = "Nom de l’établissement";
+  readonly DATE_D_OUVERTURE: string = "Date d’ouverture";
   readonly NUMÉRO_FINESS: string = "Numéro FINESS";
   readonly SIREN: string = "SIREN";
   readonly SIRET: string = "SIRET";

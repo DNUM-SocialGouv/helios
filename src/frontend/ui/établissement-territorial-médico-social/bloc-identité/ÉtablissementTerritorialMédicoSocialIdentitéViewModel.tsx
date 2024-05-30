@@ -25,6 +25,22 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
     return StringFormater.formatDate(this.établissementTerritorialIdentité.raisonSociale.dateMiseÀJourSource);
   }
 
+  public get dateOuvertureÉtablissementTerritorial(): string {
+    if(this.établissementTerritorialIdentité.dateOuverture && this.établissementTerritorialIdentité.dateOuverture.value)
+    {
+      return StringFormater.formatDate(this.établissementTerritorialIdentité.dateOuverture.value);
+    }
+    return "Non renseigné"
+  }
+
+  public get dateDeMiseÀJourOuvertureÉtablissementTerritorial(): string {
+    if(this.établissementTerritorialIdentité.dateOuverture && this.établissementTerritorialIdentité.dateOuverture.dateMiseÀJourSource)
+    {
+      return StringFormater.formatDate(this.établissementTerritorialIdentité.dateOuverture.dateMiseÀJourSource);
+    }
+    return "Non renseigné"
+  }
+
   public get numéroFinessÉtablissementTerritorial(): string {
     return this.établissementTerritorialIdentité.numéroFinessÉtablissementTerritorial.value;
   }
