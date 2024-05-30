@@ -206,7 +206,7 @@ colonnes_à_lire_bloc_ressources_humaines_ann_ca_ej_et: List[str] = list(équiva
     "Recettes Titre III Budget H": ColonneHelios(nom="recettes_titre_iii_h", type=float),
     "SAN Résultat net comptable": ColonneHelios(nom="resultat_net_comptable_san", type=float),
     "SAN Taux de CAF nette": ColonneHelios(nom="taux_de_caf_nette_san", type=float),
-    "Ration de dépendance financière": ColonneHelios(nom="ratio_dependance_financiere", type=float),
+    "Ratio de dépendance financière": ColonneHelios(nom="ratio_dependance_financiere", type=float),
 }
 
 colonnes_a_lire_bloc_budget_finance_entite_juridique: List[str] = list(équivalences_diamant_quo_san_finance_buget_finance_helios.keys())
