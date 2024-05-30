@@ -65,6 +65,8 @@
     "retreieveAndCheckAndUpdateReclamations:local": "yarn retrieveSirec && yarn checkReclamationsEtablissements && yarn updateReclamationsEtablissements:local",
     "updateEvenementsIndesirables": "python -m datacrawler.import_evenements_indesirables",
     "updateEvenementsIndesirables:local": "pipenv run populate_evenements_indesirables",
+    "updateAllocationRessource": "python -m datacrawler.import_allocation_ressource",
+    "updateAllocationRessource:local": "pipenv run populate_allocation_ressource",
     "checkEvenementsIndesirables": "python -m datacrawler.check_downloaded_sivss_file",
     "checkEvenementsIndesirables:local": "pipenv run check_downloaded_sivss_file",
     "retreieveAndCheckAndUpdateEvenementsIndesirables": "yarn retrieveSivss && yarn checkEvenementsIndesirables && yarn updateEvenementsIndesirables",
