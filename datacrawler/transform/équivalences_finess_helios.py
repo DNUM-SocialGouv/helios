@@ -10,6 +10,7 @@ from typing import List
     "datemajaut": "date_mise_a_jour_autorisation",
     "de": "discipline_equipement",
     "indsupinst": "est_installee",
+    "indsupaut": "est_autorisee",
     "libta": "libelle_activite",
     "libclient": "libelle_clientele",
     "libde": "libelle_discipline_equipement",
