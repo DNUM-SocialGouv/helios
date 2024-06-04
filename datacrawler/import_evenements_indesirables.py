@@ -5,7 +5,7 @@ from sqlalchemy.engine import Engine, create_engine
 
 from datacrawler import écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
-from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_sivss_siicea
+from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_sirec
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_sirec
@@ -30,7 +30,7 @@ def import_evenements_indesirables(chemin_local_du_fichier_evenements_indesirabl
         donnees_evenements_indesirables_reforme, numéros_finess_des_établissements_connus, logger
     )
 
-    date_du_fichier_sivss = extrais_la_date_du_nom_de_fichier_sivss_siicea(chemin_local_du_fichier_evenements_indesirables)
+    date_du_fichier_sivss = extrais_la_date_du_nom_de_fichier_sirec(chemin_local_du_fichier_evenements_indesirables)
 
     with base_de_données.begin() as connection:
         écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
