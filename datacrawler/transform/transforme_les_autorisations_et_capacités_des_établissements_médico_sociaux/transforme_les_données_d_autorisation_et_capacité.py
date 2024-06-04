@@ -9,7 +9,7 @@ from datacrawler.transform.équivalences_finess_helios import (
 )
 
 def filtrer_les_autorisations(autorisations: pd.DataFrame) -> pd.DataFrame:
-    return autorisations[~((autorisations['indsupinst'] == "O") & (autorisations['indsupaut'] == "O"))]
+    return autorisations[((autorisations['indsupinst'] == "N") | (autorisations['indsupaut'] == "N"))]
 
 def détermine_l_installation_de_l_autorisation(autorisations: pd.DataFrame) -> pd.DataFrame:
     autorisations_avec_installation = autorisations.copy()
