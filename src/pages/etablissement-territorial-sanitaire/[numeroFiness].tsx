@@ -23,6 +23,7 @@ export default function Router({ rechercheResult, établissementTerritorial }: R
   if (!établissementTerritorial) return null;
 
   const établissementTerritorialSanitaireViewModel = new ÉtablissementTerritorialSanitaireViewModel(établissementTerritorial, wording, paths);
+
   const rechercheViewModel = new RechercheViewModel(rechercheResult.résultats[0], paths);
 
   return (
@@ -53,7 +54,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
         codeRegion,
         codeProfiles
       )) as ÉtablissementTerritorialSanitaire;
-
       const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, numeroFiness, 1);
       return { props: { établissementTerritorial, rechercheResult: rechercheResult } };
     } else {

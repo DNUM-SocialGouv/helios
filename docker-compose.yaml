@@ -10,7 +10,7 @@ services:
     volumes:
       - type: bind
         source: ${PWD}/data_set
-        target: /home/finess/usr_finess
+        target: /home/finess/
       - type: bind
         source: ${HOME}/.ssh/sftp_local.pub
         target: /home/finess/.ssh/keys/sftp_local.pub
