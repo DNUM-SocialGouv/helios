@@ -55,10 +55,12 @@ import { AjoutFichierSourceSirec1708679781472 } from "./migrations/1708679781472
 import { AjoutEvenementsIndesirables1710326854362 } from "./migrations/1710326854362-AjoutEvenementsIndesirables";
 import { AjoutDateOuverture1713452627276 } from "./migrations/1713452627276-AjoutDateOuverture";
 import { AjoutTableInspectionsControles1712743083892 } from "./migrations/1712743083892-AjoutTableInspectionsControles";
+import { AjouterTableBudgetEtFinancesSanitaire1714055066913 } from "./migrations/1714055066913-AjouterTableBudget_et_finances_sanitaire";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
+import { AjoutBudgetEtFinanceAProfilETSanitaire1797688226682 } from "./migrations/1797688226682-AjoutBudgetEtFinanceAProfilETSanitaire";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "./models/ActivitéSanitaireEntitéJuridiqueModel";
 import { ActivitéSanitaireModel } from "./models/ActivitéSanitaireModel";
@@ -67,6 +69,7 @@ import { AutorisationSanitaireModel } from "./models/AutorisationSanitaireModel"
 import { AutreActivitéSanitaireModel } from "./models/AutreActivitéSanitaireModel";
 import { BudgetEtFinancesEntiteJuridiqueModel } from "./models/BudgetEtFinancesEntiteJuridiqueModel";
 import { BudgetEtFinancesMédicoSocialModel } from "./models/BudgetEtFinancesMédicoSocialModel";
+import { BudgetEtFinancesSanitaireModel } from "./models/BudgetEtFinancesSanitaireModel";
 import { CapacitesSanitaireEntiteJuridiqueModel } from "./models/CapacitesSanitaireEntiteJuridiqueModel";
 import { CapacitéAutorisationSanitaireModel } from "./models/CapacitéAutorisationSanitaireModel";
 import { CpomModel } from "./models/CpomModel";
@@ -100,6 +103,7 @@ export default new DataSource({
     AutorisationSanitaireModel,
     AutreActivitéSanitaireModel,
     BudgetEtFinancesMédicoSocialModel,
+    BudgetEtFinancesSanitaireModel,
     BudgetEtFinancesEntiteJuridiqueModel,
     CapacitéAutorisationSanitaireModel,
     CapacitesSanitaireEntiteJuridiqueModel,
@@ -181,6 +185,8 @@ export default new DataSource({
     AjoutEvenementsIndesirables1710326854362,
     AjoutDateOuverture1713452627276,
     AjoutTableInspectionsControles1712743083892,
+    AjouterTableBudgetEtFinancesSanitaire1714055066913,
+    AjoutBudgetEtFinanceAProfilETSanitaire1797688226682,
     ModificationValeurProfil1797341938070
   ],
   type: "postgres",

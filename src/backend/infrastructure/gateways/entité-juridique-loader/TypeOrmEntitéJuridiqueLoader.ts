@@ -41,6 +41,11 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
     return this.construisLEntitéJuridiqueDeRattachement(entitéJuridiqueModel, dateDeMiseAJourFichierSourceModel);
   }
 
+  async chargeRattachementCategorieEstPriveNonLucratif(numéroFiness: string): Promise<boolean> {
+    const entitéJuridiqueModel = (await this.chargeLIdentitéModel(numéroFiness)) as EntitéJuridiqueModel;
+    return (entitéJuridiqueModel.catégorisation === 'prive_non_lucratif'); 
+  }
+
   private async chargeLaDateDeMiseÀJourFinessCs1400101Model(): Promise<DateMiseÀJourFichierSourceModel | null> {
     return await (await this.orm).getRepository(DateMiseÀJourFichierSourceModel).findOneBy({ fichier: FichierSource.FINESS_CS1400101 });
   }

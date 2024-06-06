@@ -40,6 +40,7 @@ export class EtablissementsTerritoriauxRattachésViewModel {
   public get établissementSanitairesPaginés(): ÉtablissementTerritorialRattachéViewModel[] {
     return this.établissementsPaginés(this.établissementSanitaires);
   }
+
   public get établissementMédicoSociauxPaginés(): ÉtablissementTerritorialRattachéViewModel[] {
     return this.établissementsPaginés(this.établissementMedicauxSociaux);
   }

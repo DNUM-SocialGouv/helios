@@ -51,6 +51,12 @@ export const DefaultProfile = {
                 "nombreSéjours": "ok",
                 "nombreJournées": "ok"
             },
+            "budgetEtFinance": {
+                "tauxDeCafNette": "ok",
+                "compteRésultats": "ok",
+                "résultatNetComptable": "ok",
+                "ratioDépendanceFinancière": "ok"
+            },
             "autorisationsEtCapacités": {
                 "capacités": "ok",
                 "autresActivités": "ok",
@@ -161,6 +167,12 @@ export const DefaultProfile = {
                 "nombrePassage": "ok",
                 "nombreSéjours": "ok",
                 "nombreJournées": "ok"
+            },
+            "budgetEtFinance": {
+                "tauxDeCafNette": "ok",
+                "compteRésultats": "ok",
+                "résultatNetComptable": "ok",
+                "ratioDépendanceFinancière": "ok"
             },
             "autorisationsEtCapacités": {
                 "capacités": "ok",
