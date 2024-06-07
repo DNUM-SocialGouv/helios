@@ -3,17 +3,10 @@ export function containsCommaOrDotNumbers(row: Record<string, any>): boolean {
     return values.some((value) => typeof value === "string" && /^(\d+,\d+|\d+\.\d+)$/.test(value));
 }
 
-<<<<<<< HEAD
 // Fonction pour vérifier si une année est valide (l'année en cours ou les 5 dernières années)
 export function isValidYear(year: number): boolean {
     const currentYear = new Date().getFullYear();
     return year >= currentYear - 5 && year <= currentYear;
-=======
-// Fonction pour vérifier si une année est valide (l'année en cours ou les 3 dernières années)
-export function isValidYear(year: number): boolean {
-    const currentYear = new Date().getFullYear();
-    return year >= currentYear - 4 && year <= currentYear;
->>>>>>> origin/master
 }
 
 // Fonction pour vérifier si NDEG_FINESS_RPPS contient un nombre de 9 chiffres

@@ -16,13 +16,9 @@ import { ÉtablissementTerritorialSourceExterneLoader } from "../métier/gateway
 import { dotEnvConfig } from "./gateways/dot-env/dotEnvConfig";
 import { DnumSftpDownloadRawData } from "./gateways/download-raw-data/DnumSftpDownloadRawData";
 import { FinessSftpDownloadRawData } from "./gateways/download-raw-data/FinessSftpDownloadRawData";
-<<<<<<< HEAD
 import { SiiceaSftpDownloadRawData } from "./gateways/download-raw-data/SiiceaSftpDownloadRawData";
 import { SirecSftpDownloadRawData } from "./gateways/download-raw-data/SirecSftpDownloadRawData";
 import { SivssSftpDownloadRawData } from "./gateways/download-raw-data/SivssSftpDownloadRawData";
-=======
-import { SirecSftpDownloadRawData } from "./gateways/download-raw-data/SirecSftpDownloadRawData";
->>>>>>> origin/master
 import { TypeOrmEntitéJuridiqueHeliosLoader } from "./gateways/entité-juridique-helios-loader/TypeOrmEntitéJuridiqueHeliosLoader";
 import { TypeOrmEntitéJuridiqueHeliosRepository } from "./gateways/entité-juridique-helios-repository/TypeOrmEntitéJuridiqueHeliosRepository";
 import { FinessXmlEntitésJuridiquesSourceExterneLoader } from "./gateways/entité-juridique-source-externe-loader/FinessXmlEntitésJuridiquesSourceExterneLoader";
@@ -46,11 +42,8 @@ export type Dependencies = Readonly<{
   entitéJuridiqueHeliosLoader: EntitéJuridiqueHeliosLoader;
   finessDownloadRawData: DownloadRawData;
   sirecDownloadRawData: DownloadRawData;
-<<<<<<< HEAD
   siiceaDownloadRawData: DownloadRawData;
   sivssDownloadRawData: DownloadRawData;
-=======
->>>>>>> origin/master
   établissementTerritorialSourceExterneLoader: ÉtablissementTerritorialSourceExterneLoader;
   établissementTerritorialHeliosLoader: ÉtablissementTerritorialHeliosLoader;
   établissementTerritorialHeliosRepository: ÉtablissementTerritorialRepository;
@@ -71,11 +64,8 @@ const createDependencies = (): Dependencies => {
   const cheminDesFichiersSourcesDiamantSurLeSftpDnum = "DIAMANT/incoming";
 
   const cheminDesFichiersSourcesSirecSurLeSftpDnum = "SIREC";
-<<<<<<< HEAD
   const cheminDesFichiersSourcesSiiceaSurLeSftpDnum = "SIICEA";
   const cheminDesFichiersSourcesSivssSurLeSftpDnum = "SIVSS";
-=======
->>>>>>> origin/master
 
   const logger = new ConsoleLogger();
   const environmentVariables = new NodeEnvironmentVariables(logger);
@@ -106,7 +96,6 @@ const createDependencies = (): Dependencies => {
       environmentVariables.SIREC_DATA_PATH,
       logger
     ),
-<<<<<<< HEAD
     siiceaDownloadRawData: new SiiceaSftpDownloadRawData(
       new Ssh2SftpClient(),
       environmentVariables,
@@ -121,8 +110,6 @@ const createDependencies = (): Dependencies => {
       environmentVariables.SIVSS_DATA_PATH,
       logger
     ),
-=======
->>>>>>> origin/master
     entitéJuridiqueHeliosLoader: typeOrmEntitéJuridiqueHeliosLoader,
     entitéJuridiqueHeliosRepository: new TypeOrmEntitéJuridiqueHeliosRepository(orm, logger),
     entitéJuridiqueSourceExterneLoader: new FinessXmlEntitésJuridiquesSourceExterneLoader(xmlToJs, environmentVariables.SFTP_LOCAL_PATH, logger, orm),

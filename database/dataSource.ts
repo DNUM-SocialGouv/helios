@@ -53,8 +53,8 @@ import { ModificationDesValeursDuChampRole1706794831872 } from "./migrations/170
 import { AjoutReclamationET1708440883632 } from "./migrations/1708440883632-AjoutReclamationEtablissementTerritorial";
 import { AjoutFichierSourceSirec1708679781472 } from "./migrations/1708679781472-AjoutFichierSourceSirec";
 import { AjoutEvenementsIndesirables1710326854362 } from "./migrations/1710326854362-AjoutEvenementsIndesirables";
-import { AjoutDateOuverture1713452627276 } from "./migrations/1713452627276-AjoutDateOuverture";
 import { AjoutTableInspectionsControles1712743083892 } from "./migrations/1712743083892-AjoutTableInspectionsControles";
+import { AjoutDateOuverture1713452627276 } from "./migrations/1713452627276-AjoutDateOuverture";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
