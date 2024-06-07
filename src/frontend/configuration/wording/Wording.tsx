@@ -77,6 +77,7 @@ export interface Wording {
   readonly ERREUR_TECHNIQUE: string;
   readonly VOIR_PLUS_RÉSULTATS: string;
   readonly RECHERCHE_TITRE: string;
+  readonly BACK_TO_SEARCH: string;
 
   // Cartographie
   readonly CARTOGRAPHIE: string;
@@ -122,6 +123,7 @@ export interface Wording {
   // Bloc Identité
   readonly TITRE_BLOC_IDENTITÉ: string;
   readonly NOM_DE_L_ÉTABLISSEMENT: string;
+  readonly DATE_D_OUVERTURE: string;
   readonly NUMÉRO_FINESS: string;
   readonly SIREN: string;
   readonly SIRET: string;
@@ -211,6 +213,21 @@ export interface Wording {
   readonly MOTIF_155: string;
   readonly MOTIF_156: string;
 
+  readonly EVENEMENTS_INDESIRABLES: string;
+  readonly EVENEMENTS_INDESIRABLES_NON_RENSEIGNES: string;
+  readonly EVENTS_TOTAL_NUMBER: string;
+  readonly EVENEMENTS_ASSOCIE_AUX_SOINS: string;
+  readonly EVENEMENTS_DANS_ET: string;
+
+  readonly INSPECTIONS_CONTROLES: string;
+
+  readonly DATE_REELLE_DE_VISITE: string;
+  readonly DATE_REELLE_DE_RAPPORT: string;
+  readonly TYPE_DE_PLANIFICATION: string;
+  readonly MODALITE_DE_LA_MISSION: string;
+  readonly TYPE_DE_MISSION: string;
+  readonly AFFICHER_PLUS: string;
+  readonly AFFICHER_MOINS: string;
 
   // Bloc Autorisation Sanitaire
   readonly AUTRES_ACTIVITÉS: string;
@@ -310,6 +327,8 @@ export interface Wording {
   readonly RPU_TITLE: string;
   readonly ANCRE_TITLE: string;
   readonly SIREC_TITLE: string;
+  readonly SIVSS_TITLE: string;
+  readonly SIICEA_TITLE: string;
 
   // Sources courtes
   readonly FINESS: ReactElement;
@@ -322,7 +341,8 @@ export interface Wording {
   readonly SAE: ReactElement;
   readonly RPU: ReactElement;
   readonly SIREC: ReactElement;
-
+  readonly SIVSS: ReactElement;
+  readonly SIICEA: ReactElement;
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string;

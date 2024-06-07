@@ -25,6 +25,22 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
     return StringFormater.formatDate(this.établissementTerritorialSanitaireIdentité.raisonSociale.dateMiseÀJourSource);
   }
 
+  public get dateOuvertureÉtablissementTerritorial(): string {
+    if(this.établissementTerritorialSanitaireIdentité.dateOuverture && this.établissementTerritorialSanitaireIdentité.dateOuverture.value)
+    {
+      return StringFormater.formatDate(this.établissementTerritorialSanitaireIdentité.dateOuverture.value);
+    }
+    return "Non renseigné"
+  }
+
+  public get dateDeMiseÀJourOuvertureÉtablissementTerritorial(): string {
+    if(this.établissementTerritorialSanitaireIdentité.dateOuverture && this.établissementTerritorialSanitaireIdentité.dateOuverture.dateMiseÀJourSource)
+    {
+      return StringFormater.formatDate(this.établissementTerritorialSanitaireIdentité.dateOuverture.dateMiseÀJourSource);
+    }
+    return "Non renseigné"
+  }
+
   public get numéroFinessÉtablissementTerritorial(): string {
     return this.établissementTerritorialSanitaireIdentité.numéroFinessÉtablissementTerritorial.value;
   }

@@ -40,6 +40,7 @@ export function useRecherche() {
       estCeQueLesRésultatsSontReçus: false,
     });
     rechercher(state.terme, pageInitiale);
+    localStorage.setItem('searchItem', state.terme);
   };
 
   const rechercheOnChange = (event: ChangeEvent<HTMLInputElement>) => {

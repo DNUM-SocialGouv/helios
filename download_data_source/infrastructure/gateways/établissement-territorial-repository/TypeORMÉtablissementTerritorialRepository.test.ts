@@ -86,6 +86,7 @@ describe("Sauvegarde de l’établissement territorial", () => {
     établissementTerritorialIdentité1.typeÉtablissement = "F";
     établissementTerritorialIdentité1.téléphone = "fake";
     établissementTerritorialIdentité1.codeRégion = "84";
+    établissementTerritorialIdentité1.dateOuverture = "1901-02-02";
     await établissementTerritorialIdentitéRepository.insert([établissementTerritorialIdentité1]);
     await dateMiseÀJourFichierSourceRepository.insert([
       {
@@ -126,6 +127,7 @@ describe("Sauvegarde de l’établissement territorial", () => {
     établissementTerritorial1MisAJourAttendu.typeÉtablissement = "S";
     établissementTerritorial1MisAJourAttendu.téléphone = "0102030405";
     établissementTerritorial1MisAJourAttendu.codeRégion = "84";
+    établissementTerritorial1MisAJourAttendu.dateOuverture = "1901-02-02";
     const établissementTerritorial2MisAJourAttendu = new ÉtablissementTerritorialIdentitéModel();
     établissementTerritorial2MisAJourAttendu.adresseAcheminement = "59650 VILLENEUVE D ASCQ";
     établissementTerritorial2MisAJourAttendu.adresseNuméroVoie = "20";
@@ -149,6 +151,7 @@ describe("Sauvegarde de l’établissement territorial", () => {
     établissementTerritorial2MisAJourAttendu.typeÉtablissement = "P";
     établissementTerritorial2MisAJourAttendu.téléphone = "0102030406";
     établissementTerritorial2MisAJourAttendu.codeRégion = "84";
+    établissementTerritorial2MisAJourAttendu.dateOuverture = "1901-02-02";
 
     expect(établissementsTerritoriauxSauvés).toStrictEqual([établissementTerritorial1MisAJourAttendu, établissementTerritorial2MisAJourAttendu]);
     const dateMiseÀJourFichierSourceSauvée = await dateMiseÀJourFichierSourceRepository.find({ where: { fichier: FichierSource.FINESS_CS1400102 } });
@@ -214,6 +217,7 @@ describe("Sauvegarde de l’établissement territorial", () => {
     établissementTerritorialAttendu.typeÉtablissement = "S";
     établissementTerritorialAttendu.téléphone = "0102030405";
     établissementTerritorialAttendu.codeRégion = "84";
+    établissementTerritorialAttendu.dateOuverture = "2001-01-01"
 
     expect(établissementsTerritoriauxSauvés).toStrictEqual([établissementTerritorialAttendu]);
 

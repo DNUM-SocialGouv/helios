@@ -4,6 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import { RésultatDeRechercheTestBuilder } from "../../../../backend/test-builder/RésultatDeRechercheTestBuilder";
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
+import { StringFormater } from "../../commun/StringFormater";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { PageÉtablissementTerritorialSanitaire } from "../PageÉtablissementTerritorialSanitaire";
 
@@ -103,6 +104,34 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
     expect(nomDeLÉtablissement).toBeInTheDocument();
   });
 
+
+  
+  it("affiche la date d’ouverture", () => {
+    // WHEN
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageÉtablissementTerritorialSanitaire
+          rechercheViewModel={rechercheViewModel}
+          établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
+        />
+      </SessionProvider>
+    );
+
+    // THENs
+    const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
+    const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
+
+    const labelÉtablissement = within(indicateurs[1]).getByText(
+      textMatch(`${wording.DATE_D_OUVERTURE} - ${wording.miseÀJour("02/02/2022")} - Source : FINESS`),
+      { selector: "p" }
+    );
+    expect(labelÉtablissement).toBeInTheDocument();
+    const abréviationFiness = within(indicateurs[1]).getByText("FINESS", { selector: "abbr" });
+    expect(abréviationFiness).toHaveAttribute("title", wording.FINESS_TITLE);
+    const nomDeLÉtablissement = within(indicateurs[1]).getByText(StringFormater.formatDate(identité.dateOuverture.value), { selector: "p" });
+    expect(nomDeLÉtablissement).toBeInTheDocument();
+  });
+
   it("affiche le numéro FINESS", () => {
     // WHEN
     renderFakeComponent(
@@ -117,11 +146,11 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
     const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-    const libelléNuméroFiness = within(indicateurs[1]).getByText(textMatch(`${wording.NUMÉRO_FINESS} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`), {
+    const libelléNuméroFiness = within(indicateurs[2]).getByText(textMatch(`${wording.NUMÉRO_FINESS} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`), {
       selector: "p",
     });
     expect(libelléNuméroFiness).toBeInTheDocument();
-    const numéroFiness = within(indicateurs[1]).getByText(identité.numéroFinessÉtablissementTerritorial.value, { selector: "p" });
+    const numéroFiness = within(indicateurs[2]).getByText(identité.numéroFinessÉtablissementTerritorial.value, { selector: "p" });
     expect(numéroFiness).toBeInTheDocument();
   });
 
@@ -139,11 +168,11 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
     const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-    const libelléSiret = within(indicateurs[2]).getByText(textMatch(`${wording.SIRET} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`), {
+    const libelléSiret = within(indicateurs[3]).getByText(textMatch(`${wording.SIRET} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`), {
       selector: "p",
     });
     expect(libelléSiret).toBeInTheDocument();
-    const siret = within(indicateurs[2]).getByText(identité.siret.value, { selector: "p" });
+    const siret = within(indicateurs[3]).getByText(identité.siret.value, { selector: "p" });
     expect(siret).toBeInTheDocument();
   });
 
@@ -161,11 +190,11 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
     const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-    const libelléAdresse = within(indicateurs[3]).getByText(textMatch(`${wording.ADRESSE} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`), {
+    const libelléAdresse = within(indicateurs[4]).getByText(textMatch(`${wording.ADRESSE} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`), {
       selector: "p",
     });
     expect(libelléAdresse).toBeInTheDocument();
-    const adresse = within(indicateurs[3]).getByText("50 R PAUL PAINLEVE 01130 NANTUA", { selector: "p" });
+    const adresse = within(indicateurs[4]).getByText("50 R PAUL PAINLEVE 01130 NANTUA", { selector: "p" });
     expect(adresse).toBeInTheDocument();
   });
 
@@ -183,12 +212,12 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
     const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-    const libelléTéléphoneEtEmail = within(indicateurs[4]).getByText(
+    const libelléTéléphoneEtEmail = within(indicateurs[5]).getByText(
       textMatch(`${wording.TÉLÉPHONE_ET_EMAIL} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`),
       { selector: "p" }
     );
     expect(libelléTéléphoneEtEmail).toBeInTheDocument();
-    const téléphoneEtEmail = within(indicateurs[4]).getByText("04 74 75 48 00 | a@example.com", { selector: "p" });
+    const téléphoneEtEmail = within(indicateurs[5]).getByText("04 74 75 48 00 | a@example.com", { selector: "p" });
     expect(téléphoneEtEmail).toBeInTheDocument();
   });
 
@@ -206,12 +235,12 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
     const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-    const libelléEntitéJuridiqueDeRattachement = within(indicateurs[5]).getByText(
+    const libelléEntitéJuridiqueDeRattachement = within(indicateurs[6]).getByText(
       textMatch(`${wording.ENTITÉ_JURIDIQUE_DE_RATTACHEMENT} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`),
       { selector: "p" }
     );
     expect(libelléEntitéJuridiqueDeRattachement).toBeInTheDocument();
-    const entitéJuridiqueDeRattachement = within(indicateurs[5]).getByRole("link", { name: "EJ - 010008407 - HP VILLENEUVE DASCQ" });
+    const entitéJuridiqueDeRattachement = within(indicateurs[6]).getByRole("link", { name: "EJ - 010008407 - HP VILLENEUVE DASCQ" });
     expect(entitéJuridiqueDeRattachement).toHaveAttribute("href", `${paths.ENTITÉ_JURIDIQUE}/010008407`);
   });
 
@@ -229,12 +258,12 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
     const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-    const libelléCatégorieDeLÉtablissement = within(indicateurs[6]).getByText(
+    const libelléCatégorieDeLÉtablissement = within(indicateurs[7]).getByText(
       textMatch(`${wording.CATÉGORIE_DE_L_ÉTABLISSEMENT} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`),
       { selector: "p" }
     );
     expect(libelléCatégorieDeLÉtablissement).toBeInTheDocument();
-    const catégorieDeLÉtablissement = within(indicateurs[6]).getByText("355 - Centre Hospitalier (C.H.)", { selector: "p" });
+    const catégorieDeLÉtablissement = within(indicateurs[7]).getByText("355 - Centre Hospitalier (C.H.)", { selector: "p" });
     expect(catégorieDeLÉtablissement).toBeInTheDocument();
   });
 
@@ -252,12 +281,12 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
     const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-    const libelléModeDeTarification = within(indicateurs[7]).getByText(
+    const libelléModeDeTarification = within(indicateurs[8]).getByText(
       textMatch(`${wording.MODE_DE_TARIFICATION} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`),
       { selector: "p" }
     );
     expect(libelléModeDeTarification).toBeInTheDocument();
-    const modeDeTarification = within(indicateurs[7]).getByText("99 - Indéterminé", { selector: "p" });
+    const modeDeTarification = within(indicateurs[8]).getByText("99 - Indéterminé", { selector: "p" });
     expect(modeDeTarification).toBeInTheDocument();
   });
 
@@ -275,12 +304,12 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
     const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-    const libelléStatutÉtablissement = within(indicateurs[8]).getByText(
+    const libelléStatutÉtablissement = within(indicateurs[9]).getByText(
       textMatch(`${wording.STATUT_JURIDIQUE_EJ} - ${wording.miseÀJour("07/07/2021")} - Source : FINESS`),
       { selector: "p" }
     );
     expect(libelléStatutÉtablissement).toBeInTheDocument();
-    const statutÉtablissement = within(indicateurs[8]).getByText(identité.statutJuridique.value);
+    const statutÉtablissement = within(indicateurs[9]).getByText(identité.statutJuridique.value);
     expect(statutÉtablissement).toBeInTheDocument();
   });
 
@@ -307,7 +336,7 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
       // THEN
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
       const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-      const téléphoneEtEmail = within(indicateurs[4]).getByText(`${wording.NON_RENSEIGNÉ} | a@example.com`, { selector: "p" });
+      const téléphoneEtEmail = within(indicateurs[5]).getByText(`${wording.NON_RENSEIGNÉ} | a@example.com`, { selector: "p" });
       expect(téléphoneEtEmail).toBeInTheDocument();
     });
 
@@ -333,7 +362,7 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
       // THEN
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
       const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-      const téléphoneEtEmail = within(indicateurs[4]).getByText(`04 74 75 48 00 | ${wording.NON_RENSEIGNÉ}`, { selector: "p" });
+      const téléphoneEtEmail = within(indicateurs[5]).getByText(`04 74 75 48 00 | ${wording.NON_RENSEIGNÉ}`, { selector: "p" });
       expect(téléphoneEtEmail).toBeInTheDocument();
     });
   });
@@ -360,7 +389,7 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
     // THEN
     const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
     const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
-    const adresseIncomplète = within(indicateurs[3]).getByText("50 R 01130 NANTUA", { selector: "p" });
+    const adresseIncomplète = within(indicateurs[4]).getByText("50 R 01130 NANTUA", { selector: "p" });
     expect(adresseIncomplète).toBeInTheDocument();
   });
 });

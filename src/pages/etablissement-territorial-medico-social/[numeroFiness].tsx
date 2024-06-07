@@ -12,7 +12,6 @@ import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
 import { PageÉtablissementTerritorialMédicoSocial } from "../../frontend/ui/établissement-territorial-médico-social/PageÉtablissementTerritorialMédicoSocial";
 import { ÉtablissementTerritorialMédicoSocialViewModel } from "../../frontend/ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel";
 
-
 type RouterProps = Readonly<{
   établissementTerritorial: ÉtablissementTerritorialMédicoSocial;
   rechercheResult: any;
@@ -36,8 +35,7 @@ export default function Router({ rechercheResult, établissementTerritorial }: R
         <Spinner />
       )}
     </>
-
-  )
+  );
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<RouterProps>> {
@@ -58,11 +56,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
 
       const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, numeroFiness, 1);
 
-      return { props: { établissementTerritorial, rechercheResult: rechercheResult, } };
+      return { props: { établissementTerritorial, rechercheResult: rechercheResult } };
     } else {
       return { notFound: true };
     }
-
   } catch (error) {
     if (error instanceof ÉtablissementTerritorialMédicoSocialNonTrouvée) {
       dependencies.logger.error(error.message);

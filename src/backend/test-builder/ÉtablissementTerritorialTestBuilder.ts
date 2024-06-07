@@ -82,6 +82,10 @@ export class ÉtablissementTerritorialTestBuilder {
       dateMiseÀJourSource: "2022-02-02",
       value: "0102030405",
     },
+    dateOuverture: {
+      dateMiseÀJourSource: "2022-02-02",
+      value: "2001-01-01",
+    },
     codeRegion: '84'
   };
 
@@ -157,6 +161,10 @@ export class ÉtablissementTerritorialTestBuilder {
     téléphone: {
       dateMiseÀJourSource: "2022-02-02",
       value: "0102030406",
+    },
+    dateOuverture: {
+      dateMiseÀJourSource: "2022-02-02",
+      value: "2001-01-01",
     },
     codeRegion: '84'
   };
@@ -629,6 +637,71 @@ export class ÉtablissementTerritorialTestBuilder {
         "totalEncours": 12,
       },
     ],
+    evenementsIndesirables: [
+      {
+        "dateMiseAJourSource": "2022-02-02",
+        "evenementsClotures": [
+          {
+            "annee": 2023,
+            "clotDate": null,
+            "clotMotif": null,
+            "est_EIGS": false,
+            "etat": "CLOTURE",
+            "famille": "Evènements indésirables/graves associés aux soins",
+            "nature": "Maltraitance",
+            "numeroSIVSS": "123456",
+          }
+        ],
+        "evenementsEncours": [],
+        "libelle": "Evènements indésirables/graves associés aux soins",
+      }, {
+        "dateMiseAJourSource": "2022-02-02",
+        "evenementsEncours": [],
+        "evenementsClotures": [],
+        "libelle": "Evénements/incidents dans un établissement ou organisme",
+      }
+    ],
+    inspectionsEtControles: {
+      dateMiseAJourSource: '2022-02-02',
+      inspectionsEtControles: [
+        {
+          typeMission: 'Contrôle sur pièces',
+          themeRegional: 'Contrôles sur pièces - PLAN EHPAD 2022 2024',
+          typePlannification: 'Hors programme',
+          statutMission: 'Clôturé',
+          modaliteMission: 'Inopinée',
+          dateVisite: '2022-12-19',
+          dateRapport: '2023-02-20',
+          nombreEcart: 5,
+          nombreRemarque: 6,
+          injonction: 2,
+          prescription: 8,
+          recommandation: 1,
+          saisineCng: 7,
+          saisineJuridiction: 1,
+          saisineParquet: 1,
+          saisineAutre: 1,
+        },
+        {
+          typeMission: 'Inspection',
+          themeRegional: 'P23 Contrôle de la sécurité et de la qualité de la prise en charge médicamenteuse des résidents en EHPAD',
+          typePlannification: 'Hors programme',
+          modaliteMission: 'Inopinée',
+          statutMission: 'Clôturé',
+          dateVisite: '2022-12-19',
+          dateRapport: '2023-02-20',
+          nombreEcart: 1,
+          nombreRemarque: 6,
+          injonction: 1,
+          prescription: 1,
+          recommandation: 1,
+          saisineCng: 7,
+          saisineJuridiction: 3,
+          saisineParquet: 3,
+          saisineAutre: 3,
+        }
+      ]
+    }
   }
 
   public static créeUneIdentitéMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialIdentité>): ÉtablissementTerritorialIdentité {

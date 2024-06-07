@@ -36,4 +36,8 @@ def récupère_les_variables_d_environnement(
         FINESS_SFTP_LOCAL_PATH=signale_si_la_variable_n_est_pas_présente("SFTP_LOCAL_PATH"),
         UTILISATEURS_DATA_PATH=signale_si_la_variable_n_est_pas_présente("UTILISATEURS_DATA_PATH"),
         CHECKED_SIREC_DATA_PATH=signale_si_la_variable_n_est_pas_présente("CHECKED_SIREC_DATA_PATH"),
+        SIVSS_DATA_PATH=signale_si_la_variable_n_est_pas_présente("SIVSS_DATA_PATH"),
+        CHECKED_SIVSS_DATA_PATH=signale_si_la_variable_n_est_pas_présente("CHECKED_SIVSS_DATA_PATH"),
+        SIICEA_DATA_PATH=signale_si_la_variable_n_est_pas_présente("SIICEA_DATA_PATH"),
+        CHECKED_SIICEA_DATA_PATH=signale_si_la_variable_n_est_pas_présente("CHECKED_SIICEA_DATA_PATH"),
     )

@@ -93,6 +93,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       dateMiseÀJourSource: "2021-07-07",
       value: "0123456789",
     },
+    dateOuverture: {
+      dateMiseÀJourSource: "2022-02-02",
+      value: "2001-01-01",
+    },
     codeRegion: '84',
   };
 
@@ -519,7 +523,41 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
   ];
 
   public static qualite: ÉtablissementTerritorialMédicoSocial["qualite"] = {
-    reclamations: []
+    reclamations: [
+      {
+        numéroFinessÉtablissementTerritorial: '010005239',
+        année: 2021,
+        totalClotures: 2,
+        totalEncours: 1,
+        dateMiseÀJourSource: '2024-03-15',
+        details: [{
+          motif: 'Hôtellerie-locaux-restauration',
+          clot: 2,
+          encours: 1,
+        }]
+      }
+    ],
+    evenementsIndesirables: [{
+      libelle: 'Evènements indésirables/graves associés aux soins',
+      evenementsEncours: [],
+      evenementsClotures: [{
+        famille: 'Evènements indésirables/graves associés aux soins',
+        nature: 'Maltraitance',
+        numeroSIVSS: 123456,
+        annee: 2021,
+        etat: 'CLOTURE',
+        clotDate: 2019,
+        clotMotif: 'motif de test',
+        est_EIGS: true
+      }],
+      dateMiseAJourSource: '2024-03-15'
+    }, {
+      libelle: 'Evénements/incidents dans un établissement ou organisme',
+      evenementsEncours: [],
+      evenementsClotures: [],
+      dateMiseAJourSource: '2024-03-15'
+    }],
+    inspectionsEtControles: { dateMiseAJourSource: '2023-02-02', inspectionsEtControles: [] }
   };
 
   public static crée(

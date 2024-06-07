@@ -1,0 +1,45 @@
+.card-inspection-controle {
+  padding: 20px 15px;
+  border: 2px solid var(--grey-1000-50-active);
+
+  flex: 1 0 calc(50% - 20px); /* Each box takes up 50% minus the gap */
+  min-width: 550px; /* Minimum width to display two elements per row */
+
+  box-sizing: border-box;
+  max-width: 570px;
+}
+
+.iconeType {
+  zoom: .6;
+  margin-right: 5px;
+}
+
+.card-title {
+  margin: 6px 0 8px 0;
+}
+.card-sum-1 {
+  margin-bottom: 0;
+}
+.card-sum-2 {
+  margin-bottom: 0;
+}
+
+.card-type {
+  margin-top: 12px;
+  margin-bottom: 0;
+}
+
+.modaliteMission {
+  float: right;
+}
+
+.date-visite {
+  text-transform: none;
+  color: var(--purple-glycine-main-494);
+  background-color: var(--background-alt-purple-glycine);
+}
+
+.date-rapport {
+  text-transform: none;
+  background-color: var(--background-alt-purple-glycine-hover);
+}

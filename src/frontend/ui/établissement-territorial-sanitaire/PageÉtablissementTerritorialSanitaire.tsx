@@ -1,8 +1,9 @@
 import Head from "next/head";
-import { useRef, useCallback, useEffect } from "react";
+import { useRef, useCallback, useEffect, useContext } from "react";
 import { useReactToPrint } from "react-to-print";
 
 import { BtnDownloadPDF } from "../commun/BtnDownloadPDF/BtnDownloadPDF";
+import { BackToSearchContext, BackToSearchContextValue } from "../commun/contexts/BackToSearchContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { SeparatorHorizontal } from "../commun/Separateur/SeparatorHorizontal";
@@ -11,7 +12,7 @@ import { RechercheViewModel } from "../home/RechercheViewModel";
 import { BlocActivitéSanitaire } from "./bloc-activité/BlocActivitéSanitaire";
 import { BlocAutorisationEtCapacitéSanitaire } from "./bloc-autorisations/BlocAutorisationEtCapacitéSanitaire";
 import { BlocIdentitéSanitaire } from "./bloc-identité/BlocIdentitéSanitaire";
-// import BlocQualite from "./bloc-qualite/BlocQualite";
+import BlocQualite from "./bloc-qualite/BlocQualite";
 import { LogoÉtablissementTerritorial } from "./logo-établissement-territorial-sanitaire";
 import { ÉtablissementTerritorialSanitaireViewModel } from "./ÉtablissementTerritorialSanitaireViewModel";
 
@@ -22,6 +23,7 @@ type ÉtablissementTerritorialProps = Readonly<{
 
 export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, établissementTerritorialSanitaireViewModel }: ÉtablissementTerritorialProps) => {
   const { paths } = useDependencies();
+  const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
 
   useBreadcrumb([
     {
@@ -33,6 +35,7 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
       path: "",
     },
   ]);
+
 
   const componentRef = useRef(null);
 
@@ -62,6 +65,11 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
     }
   }, [onBeforeGetContentResolve.current]);
 
+  useEffect(() => {
+    if (backToSearchContext)
+      backToSearchContext.setIsInfoPage(true);
+  }, [backToSearchContext])
+
   return (
     <main className="fr-container">
       <Head>
@@ -78,7 +86,7 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
           />
           <SeparatorHorizontal></SeparatorHorizontal>
           <BlocActivitéSanitaire établissementTerritorialSanitaireActivitéViewModel={établissementTerritorialSanitaireViewModel.activitésViewModel} />
-          {/* <BlocQualite etablissementTerritorialQualiteSanitairelViewModel={établissementTerritorialSanitaireViewModel.qualiteViewModel} /> */}
+          <BlocQualite etablissementTerritorialQualiteSanitairelViewModel={établissementTerritorialSanitaireViewModel.qualiteViewModel} />
         </div>
       </>
     </main>

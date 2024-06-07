@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useEffect } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { Cartographie } from "./Cartographie/Cartographie";
@@ -23,7 +24,15 @@ export const PageRecherche = () => {
     résultats,
     terme,
     termeFixe,
+    rechercher,
   } = useRecherche();
+
+  useEffect(() => {
+    if (localStorage.getItem('searchItem') && localStorage.getItem('FromBackToSearch') === 'true') {
+      rechercher(localStorage.getItem('searchItem') || '', 1);
+      localStorage.setItem('FromBackToSearch', 'false');
+    }
+  }, [])
 
   return (
     <main className="fr-container">

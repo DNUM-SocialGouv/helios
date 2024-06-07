@@ -35,7 +35,9 @@ export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): En
         codeRegion: result.codeRegion,
         activités: activités,
         autorisationsEtCapacites: autorisationsEtCapacites,
-        budgetFinance: budgetFinance
+        budgetFinance: budgetFinance,
+        // to change "télEtEmail" by "dateOuverture"
+        dateOuverture: profil.identité.télEtEmail === 'ok' ? result.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
     };
 }
 
@@ -70,7 +72,9 @@ const filterIdentiteSanitaire = (identite: any, profil: any) => {
         téléphone: profil.télEtEmail === 'ok' ? identite.téléphone : { 'dateMiseÀJourSource': '', value: '' },
         raisonSocialeDeLEntitéDeRattachement: profil.EJ_rattachement === 'ok' ? identite.raisonSocialeDeLEntitéDeRattachement : { 'dateMiseÀJourSource': '', value: '' },
         statutJuridique: profil.statut_EJ === 'ok' ? identite.statutJuridique : { 'dateMiseÀJourSource': '', value: '' },
-        codeRegion: identite.codeRegion
+        codeRegion: identite.codeRegion,
+        // to change "télEtEmail" by "dateOuverture"
+        dateOuverture: profil.télEtEmail === 'ok' ? identite.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
     }
     return filtredIdentite;
 }
@@ -108,7 +112,9 @@ const filterAutorisationSanitaire = (autorisationCapacite: any, profil: any) => 
 
 const filterQualiteSanitaire = (qualite: any, profil: any) => {
     const filtredQualite = {
-        reclamations: profil.nombre_reclamation === 'ok' ? qualite.reclamations : [{ 'details': [] }],
+        reclamations: profil.DonnéesSirec === 'ok' ? qualite.reclamations : [{ 'details': [] }],
+        evenementsIndesirables: profil.DonnéesSivss === 'ok' ? qualite.evenementsIndesirables : [],
+        inspectionsEtControles: profil.DonnéesSiicea === 'ok' ? qualite.inspectionsEtControles : { dateMiseAJourSource: "", inspectionsEtControles: [] },
     }
     return filtredQualite;
 }
@@ -136,7 +142,8 @@ const filterIdentiteMedicoSocial = (identite: any, profil: any) => {
         raisonSocialeDeLEntitéDeRattachement: profil.EJ_rattachement === 'ok' ? identite.raisonSocialeDeLEntitéDeRattachement : { 'dateMiseÀJourSource': '', value: '' },
         statutJuridique: profil.statut_EJ === 'ok' ? identite.statutJuridique : { 'dateMiseÀJourSource': '', value: '' },
         estMonoÉtablissement: profil.estMonoÉtablissement === 'ok' ? identite.estMonoÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
-        codeRegion: identite.codeRegion
+        codeRegion: identite.codeRegion,
+        dateOuverture: profil.télEtEmail === 'ok' ? identite.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
     }
     return filtredIdentite;
 }
@@ -191,7 +198,9 @@ const filterressourcesHumainesMedicoSocial = (ressourcesHumaines: any, profil: a
 
 const filterQualiteMedicoSocial = (qualite: any, profil: any) => {
     const filtredQualite = {
-        reclamations: profil.nombre_reclamation === 'ok' ? qualite.reclamations : [{ 'details': [] }],
+        reclamations: profil.DonnéesSirec === 'ok' ? qualite.reclamations : [{ 'details': [] }],
+        evenementsIndesirables: profil.DonnéesSivss === 'ok' ? qualite.evenementsIndesirables : [],
+        inspectionsEtControles: profil.DonnéesSiicea === 'ok' ? qualite.inspectionsEtControles : { dateMiseAJourSource: "", inspectionsEtControles: [] },
     }
     return filtredQualite;
 }

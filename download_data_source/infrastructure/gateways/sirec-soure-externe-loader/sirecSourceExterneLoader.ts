@@ -8,9 +8,8 @@ import { Logger } from "../../../métier/gateways/Logger";
 import { containsCommaOrDotNumbers, containsNegativeNumbers, isValidFinessRpps, isValidYear } from "../../utils/sirecSourceExternalLoaderUtils";
 
 
-export class SirecSourceExterneLoader implements ControleDonneesSirecLoader {
-    private readonly prefixeDuFichierSirec = "sirec_";
 
+export class SirecSourceExterneLoader implements ControleDonneesSirecLoader {
     // Tableau des noms de colonnes prédéfinis
     private readonly predefinedColumnNames = [
         "IDENTIFIANT",
@@ -78,7 +77,6 @@ export class SirecSourceExterneLoader implements ControleDonneesSirecLoader {
     async checkDowloadedSirecFile(): Promise<void> {
         const cheminDuFichierSirec = this.recupereLeCheminDuFichierSirec(this.localPath);
         const cheminDuFichierSirecTaite = this.creerLeCheminDuFichierSirecTraite(this.localPath, this.destinationPath);
-
         const jsonData: any[] = [];
         try {
             const readStream = fs.createReadStream(cheminDuFichierSirec)
@@ -143,8 +141,9 @@ export class SirecSourceExterneLoader implements ControleDonneesSirecLoader {
     }
 
     private recupereFichierSirec(localPath: string): string {
+        const re = /(sirec_\d{8}.csv$)/i;
         const fichiersDuRépertoireSimple = readdirSync(`${localPath}`);
-        const fichiersDuRépertoireSimpleTrie = fichiersDuRépertoireSimple.filter((fichier) => fichier.includes(this.prefixeDuFichierSirec)).sort(this.sortByLastDate);
+        const fichiersDuRépertoireSimpleTrie = fichiersDuRépertoireSimple.filter((fichier) => fichier.match(re)).sort(this.sortByLastDate);
         return fichiersDuRépertoireSimpleTrie[0];
     }
 

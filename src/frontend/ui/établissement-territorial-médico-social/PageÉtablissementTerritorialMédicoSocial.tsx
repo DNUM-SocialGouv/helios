@@ -1,8 +1,9 @@
 import Head from "next/head";
-import { useRef, useCallback, useEffect } from "react";
+import { useRef, useCallback, useEffect, useContext } from "react";
 import { useReactToPrint } from "react-to-print";
 
 import { BtnDownloadPDF } from "../commun/BtnDownloadPDF/BtnDownloadPDF";
+import { BackToSearchContext, BackToSearchContextValue } from "../commun/contexts/BackToSearchContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { SeparatorHorizontal } from "../commun/Separateur/SeparatorHorizontal";
@@ -12,7 +13,7 @@ import { BlocActivitéMédicoSocial } from "./bloc-activité/BlocActivitéMédic
 import { BlocAutorisationEtCapacitéMédicoSocial } from "./bloc-autorisations/BlocAutorisationEtCapacitéMédicoSocial";
 import { BlocBudgetEtFinancesMédicoSocial } from "./bloc-budget-et-finances/BlocBudgetEtFinancesMédicoSocial";
 import { BlocIdentitéMédicoSocial } from "./bloc-identité/BlocIdentitéMédicoSocial";
-// import BlocQualite from "./bloc-qualite/BlocQualite";
+import BlocQualite from "./bloc-qualite/BlocQualite";
 import { BlocRessourcesHumainesMédicoSocial } from "./bloc-ressources-humaines/BlocRessourcesHumainesMédicoSocial";
 import { LogoÉtablissementTerritorial } from "./logo-établissement-territorial-médico-social";
 import { ÉtablissementTerritorialMédicoSocialViewModel } from "./ÉtablissementTerritorialMédicoSocialViewModel";
@@ -24,6 +25,7 @@ type ÉtablissementTerritorialProps = Readonly<{
 
 export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel, établissementTerritorialViewModel }: ÉtablissementTerritorialProps) => {
   const { paths } = useDependencies();
+  const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
 
   useBreadcrumb([
     {
@@ -63,7 +65,10 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
       onBeforeGetContentResolve.current();
     }
   }, [onBeforeGetContentResolve.current]);
-
+  useEffect(() => {
+    if (backToSearchContext)
+      backToSearchContext.setIsInfoPage(true);
+  }, [backToSearchContext])
   return (
     <main className="fr-container">
       <Head>
@@ -89,7 +94,7 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
           <BlocBudgetEtFinancesMédicoSocial
             établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={établissementTerritorialViewModel.budgetEtFinancesViewModel}
           />
-          {/* <BlocQualite etablissementTerritorialQualiteMédicoSocialViewModel={établissementTerritorialViewModel.qualiteViewModel} /> */}
+          <BlocQualite etablissementTerritorialQualiteMédicoSocialViewModel={établissementTerritorialViewModel.qualiteViewModel} />
         </div>
       </>
     </main>

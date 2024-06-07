@@ -6,14 +6,18 @@ type ActionneurDAccordéonProps = Readonly<{
   for: string;
   texteGras?: boolean;
   titre: string;
+  colorTiltle?: string;
 }>;
 
-export const TagCliquable = ({ for: identifiant, titre, texteGras = true }: ActionneurDAccordéonProps) => {
+export const TagCliquable = ({ for: identifiant, titre, texteGras = true, colorTiltle = "" }: ActionneurDAccordéonProps) => {
   return (
     <Link
       aria-controls={identifiant}
       aria-expanded="false"
-      className={`fr-tag fr-text-label--grey ${texteGras ? "fr-text--bold" : ""} ` + styles["tag-actionnable"]}
+      className={
+        `fr-tag ${colorTiltle === "blue" ? "fr-text-label-blue-france" : "fr-text-label--grey"}  ${texteGras ? "fr-text--bold" : ""} ` +
+        styles["tag-actionnable"]
+      }
       href="#"
       onClick={(event) => {
         event.preventDefault();
