@@ -1,0 +1,39 @@
+.envContainer {
+  
+  margin: 2rem;
+  background-color: #caf11d;
+  text-transform: capitalize;
+  
+}
+
+
+.subEnvContainer {
+  
+  margin: 2rem;
+  background-color: #15c423;
+  text-transform: capitalize;
+  
+}
+
+
+.modesDeDelegation {
+  
+  margin: 2rem;
+  background-color: #01f891;
+  text-transform: capitalize;
+  
+}
+
+.titleDetails
+{
+  background-color: rgb(237, 14, 226);
+  display: inline-flex;
+  width: 100%;
+}
+
+.jauge
+{
+  background-color: aqua;
+  width: 100px;
+}
+ 

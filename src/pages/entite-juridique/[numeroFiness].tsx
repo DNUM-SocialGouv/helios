@@ -25,6 +25,8 @@ export default function Router({ rechercheResult, entitéJuridique, établisseme
 
   if (!établissementsTerritoriauxRattachés || !entitéJuridique) return null;
 
+  console.log('222222222222222222');
+
   const entitéJuridiqueViewModel = new EntitéJuridiqueViewModel(entitéJuridique, wording);
   const établissementsTerritoriauxRattachéesViewModel = new EtablissementsTerritoriauxRattachésViewModel(établissementsTerritoriauxRattachés, wording);
   const rechercheViewModel = new RechercheViewModel(rechercheResult.résultats[0], paths);
@@ -55,9 +57,129 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       const entitéJuridiqueEndpoint = (await récupèreLEntitéJuridiqueEndpoint(dependencies, numeroFiness, codeRegion, codeProfiles)) as RouterProps;
       const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, numeroFiness, 1);
 
+      const allocationRessources = 
+        [
+          {
+          dateMiseÀJourSource: '2023-01-20',
+          année: 2021,
+          data:
+          [
+            {
+              enveloppe: 'FIR',
+              sousEnveloppe: 'Sanitaire',
+              modeDeDélégation: 'Intervention A',
+              montantNotifié: 100,
+            },
+            {
+              enveloppe: 'FIR',
+              sousEnveloppe: 'Sanitaire',
+              modeDeDélégation: 'Intervention B',
+              montantNotifié: 50,
+            },
+            {
+              enveloppe: 'FIR',
+              sousEnveloppe: 'Sanitaire',
+              modeDeDélégation: 'Intervention B',
+              montantNotifié: 100,
+            },
+            {
+              enveloppe: 'Forfaits',
+              sousEnveloppe: 'FAU',
+              modeDeDélégation: 'Sans objet',
+              montantNotifié: 70,
+            },
+            {
+              enveloppe: 'MIGAC',
+              sousEnveloppe: 'AC',
+              modeDeDélégation: '123',
+              montantNotifié: 60,
+            },
+            {
+              enveloppe: 'MIGAC',
+              sousEnveloppe: 'MIG',
+              modeDeDélégation: 'BASE',
+              montantNotifié: 100,
+            },
+            {
+              enveloppe: 'MIGAC',
+              sousEnveloppe: 'MIG',
+              modeDeDélégation: 'JPE_MERRI',
+              montantNotifié: 140,
+            },
+            {
+              enveloppe: 'Dotations de soins USLD',
+              sousEnveloppe: 'MIG',
+              modeDeDélégation: 'JPE_MERRI',
+              montantNotifié: 155,
+            },
+            {
+              enveloppe: 'DAF',
+              sousEnveloppe: 'DAF',
+              modeDeDélégation: 'JPE_MERRI',
+              montantNotifié: 120,
+            }
+          ]
+        },
+        {
+          dateMiseÀJourSource: '2023-01-20',
+          année: 2019,
+          data:
+          [
+            {
+              enveloppe: 'FIR',
+              sousEnveloppe: 'Sanitaire',
+              modeDeDélégation: 'Intervention A',
+              montantNotifié: 10723,
+            },
+            {
+              enveloppe: 'FIR',
+              sousEnveloppe: 'Sanitaire',
+              modeDeDélégation: 'Intervention B',
+              montantNotifié: 2000,
+            },
+            {
+              enveloppe: 'FIR',
+              sousEnveloppe: 'Sanitaire',
+              modeDeDélégation: 'Intervention B',
+              montantNotifié: 3000,
+            },
+            {
+              enveloppe: 'Forfaits',
+              sousEnveloppe: 'FAU',
+              modeDeDélégation: 'Sans objet',
+              montantNotifié: 479772,
+            },
+            {
+              enveloppe: 'MIGAC',
+              sousEnveloppe: 'AC',
+              modeDeDélégation: '123',
+              montantNotifié: 20000,
+            },
+            {
+              enveloppe: 'MIGAC',
+              sousEnveloppe: 'MIG',
+              modeDeDélégation: 'BASE',
+              montantNotifié: 17693,
+            },
+            {
+              enveloppe: 'MIGAC',
+              sousEnveloppe: 'MIG',
+              modeDeDélégation: 'JPE_MERRI',
+              montantNotifié: -80684,
+            }
+          ]
+        }
+      ];
+ 
       return {
         props: {
-          entitéJuridique: entitéJuridiqueEndpoint.entitéJuridique,
+
+          // this line is only for fornt test
+          entitéJuridique: {...entitéJuridiqueEndpoint.entitéJuridique, allocationRessources: allocationRessources},
+
+          // use this line after prepare real data
+          //entitéJuridique: entitéJuridiqueEndpoint.entitéJuridique,
+
           établissementsTerritoriauxRattachés: entitéJuridiqueEndpoint.établissementsTerritoriauxRattachés,
           rechercheResult: rechercheResult,
         },
