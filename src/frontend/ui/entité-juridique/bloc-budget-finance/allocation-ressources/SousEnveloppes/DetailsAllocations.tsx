@@ -6,29 +6,34 @@ import {
   colorsAllocations,
 } from "../../../../indicateur-métier/qualite/ReclamationsParAnnee/HistogrammeHorizontalRowMultiple/HistogrammeHorizontalRowMultiple";
 import styles from "./DetailsAllocations.module.css";
+import { useDependencies } from "../../../../commun/contexts/useDependencies";
 
 type ShowDetailsTitleProps = Readonly<{ for: string; children: ReactElement; direction?: string }>;
 const ShowDetailsTitle = ({ for: identifiant, children, direction = "right" }: ShowDetailsTitleProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <button
-      aria-controls={identifiant}
-      aria-expanded={isOpen}
-      className={
-        styles["titleDetails"] +
-        " fr-btn-NO fr-btn--sm-NO fr-btn--tertiary-no-outline-NO fr-btn--icon-" +
-        direction +
-        (isOpen ? " fr-icon-arrow-up-s-line" : " fr-icon-arrow-down-s-line")
-      }
-      data-fr-opened={isOpen}
-      icon-direction={direction}
-      onClick={() => {
-        setIsOpen(!isOpen);
-      }}
-    >
-      {children}
-    </button>
+<span
+  aria-controls={identifiant}
+  aria-expanded={isOpen}
+  className={
+    styles["titleDetails"] +
+    " fr-btn-NO fr-btn--sm-NO fr-btn--tertiary-no-outline-NO fr-btn--icon-" +
+    direction +
+    (isOpen ? " fr-icon-arrow-up-s-line" : " fr-icon-arrow-down-s-line")
+  }
+  data-fr-opened={isOpen}
+  icon-direction={direction}
+  onClick={() => {
+    setIsOpen(!isOpen);
+  }}
+  onKeyDown={() => {}} 
+  role="button"
+  tabIndex={0}
+>
+  {children}
+</span>
+
   );
 };
 
@@ -48,21 +53,17 @@ const ShowDetails = ({ dataTitle, children, id, className, dataName, directionIc
     </div>
   );
 };
-// const dataTest = [
-//   { key: "aaaa", value: 10 },
-//   { key: "BBB", value: 20 },
-//   { key: "CCC", value: 40 },
-//   { key: "KKKK", value: 30 },
-// ];
-
+ 
 type DetailsAllocationsProps = Readonly<{
   data: IEnveloppe[];
 }>;
 
 export function DetailsAllocations({ data }: DetailsAllocationsProps) {
+  const { wording } = useDependencies();
+
   return (
-    <>
-      {/* <HistogrammeHorizontalRowMultiple data={dataTest} realPercentage={100}/>  */}
+    <div className={styles['bigContainer']}>
+      <div className={styles['repBigTitle']}>{wording.REPARTITION_DES_SOUS_ENVELOPPES}</div>
 
       {data.map((enveloppe) => (
         <ShowDetails
@@ -108,13 +109,11 @@ export function DetailsAllocations({ data }: DetailsAllocationsProps) {
                   </div>
                 ))}
         
- 
-        
               </div>
             </ShowDetails>
           ))}
         </ShowDetails>
       ))}
-    </>
+    </div>
   );
 }

@@ -3,12 +3,20 @@ import ChartDataLabels, { Context } from "chartjs-plugin-datalabels";
 import { Doughnut } from "react-chartjs-2";
 
 import { couleurDeFondDuBloc, couleurDelAbscisse, couleurErreur, CouleurHistogramme } from "./couleursGraphique";
-import styles from "./Donut.module.css";
+import styles from "./DonutNoCenterText.module.css";
 import { construisLePluginDeLaLegendeDonut } from "./LegendPluginDonutNoCenterText";
 
-ChartJS.register(DoughnutController, ArcElement, Tooltip, Legend, /*construisLePluginDeTexteAuCentreDuDonut(),*/ construisLePluginDeLaLegendeDonut(), ChartDataLabels);
+ChartJS.register(
+  DoughnutController,
+  ArcElement,
+  Tooltip,
+  Legend,
+  /*construisLePluginDeTexteAuCentreDuDonut(),*/ construisLePluginDeLaLegendeDonut(),
+  ChartDataLabels
+);
 
 export function DonutNoCenterText(props: {
+  title?: string;
   valeurs: number[];
   libellés: string[];
   couleursDuDoughnut: CouleurHistogramme[];
@@ -33,12 +41,20 @@ export function DonutNoCenterText(props: {
   };
 
   return (
-    <div className={styles["donut-wrapper"]}>
-      <div>
-        <Doughnut data={data} options={optionsDiagrammeDoughnut(props.texteCentral, props.total, props.idDeLaLégende)} plugins={[construisLePluginDeLaLegendeDonut()]} />
+    <>
+      {props.title && <div className={styles["repBigTitleDonut"]}>{props.title}</div>}
+
+      <div className={styles["donut-wrapper"]}>
+        <div>
+          <Doughnut
+            data={data}
+            options={optionsDiagrammeDoughnut(props.texteCentral, props.total, props.idDeLaLégende)}
+            plugins={[construisLePluginDeLaLegendeDonut()]}
+          />
+        </div>
+        <menu className={styles["légende-donut"]} id={props.idDeLaLégende} />
       </div>
-      <menu className={styles["légende-donut"]} id={props.idDeLaLégende} />
-    </div>
+    </>
   );
 }
 
@@ -76,7 +92,7 @@ function optionsDiagrammeDoughnut(texteCentral: string, totalDesValeurs: number,
         if (!légende) return;
 
         const couleurs = chart.data.datasets[0].backgroundColor as string[];
- 
+
         const nouvellesCouleursDesArcs = couleurs.map((couleur, index) =>
           index !== indexDeLArcSurvoléCourant && associeLaCouleurTransparente[couleur] ? associeLaCouleurTransparente[couleur] : couleur
         );

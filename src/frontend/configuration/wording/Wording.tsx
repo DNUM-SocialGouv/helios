@@ -279,6 +279,8 @@ export interface Wording {
   readonly TITRE_IV: string;
   readonly COMPTE_DE_RÉSULTAT_CF: string;
   readonly ALLOCATION_DE_RESSOURCES: string;
+  readonly REPARTITION_DES_ENVELOPPES: string;
+  readonly REPARTITION_DES_SOUS_ENVELOPPES: string;
 
   readonly PRODUITS_PRINCIPAUX: string;
   readonly PRODUITS_ANNEXES: string;

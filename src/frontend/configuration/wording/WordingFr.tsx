@@ -334,6 +334,9 @@ export class WordingFr implements Wording {
   readonly TITRE_III: string = "Titre III";
   readonly TITRE_IV: string = "Titre IV";
   readonly ALLOCATION_DE_RESSOURCES: string = "Allocation de ressources";
+  readonly REPARTITION_DES_ENVELOPPES: string = "Répartition des eveveloppes";
+  readonly REPARTITION_DES_SOUS_ENVELOPPES: string = "Répartition des sous-eveveloppes";
+  
   readonly COMPTE_DE_RÉSULTAT: string = "Compte de résultat";
   readonly COMPTE_DE_RÉSULTAT_CF: string = "Compte de résultat (CF)";
   readonly PRODUITS_PRINCIPAUX: string = "Produits principaux";
