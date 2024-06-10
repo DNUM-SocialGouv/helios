@@ -23,14 +23,14 @@ export type AllocationValeursAvecMotif =
 export interface IModeDeDélégation {
   modeDeDélégation: string;
   montantNotifié: number;
-  pourcentage: string;
+  pourcentage: number;
 }
 
 // Définition du type pour SousEnveloppe
 export interface ISousEnveloppe {
   sousEnveloppe: string;
   total: number;
-  pourcentage: string;
+  pourcentage: number;
   modesDeDélégation: IModeDeDélégation[];
 }
 
@@ -38,6 +38,6 @@ export interface ISousEnveloppe {
 export interface IEnveloppe {
   enveloppe: string;
   total: number;
-  pourcentage: string;
+  pourcentage: number;
   sousEnveloppes: ISousEnveloppe[];
 }

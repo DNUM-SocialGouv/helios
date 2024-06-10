@@ -107,6 +107,48 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
               montantNotifié: 140,
             },
             {
+              enveloppe: 'MIGAC',
+              sousEnveloppe: 'MIG',
+              modeDeDélégation: 'TestA',
+              montantNotifié: 190,
+            },
+            {
+              enveloppe: 'MIGAC',
+              sousEnveloppe: 'MIG',
+              modeDeDélégation: 'TestB',
+              montantNotifié: 290,
+            },
+            {
+              enveloppe: 'MIGAC',
+              sousEnveloppe: 'MIG',
+              modeDeDélégation: 'TestC',
+              montantNotifié: 390,
+            },
+            {
+              enveloppe: 'MIGAC',
+              sousEnveloppe: 'MIG',
+              modeDeDélégation: 'TestC',
+              montantNotifié: 490,
+            },
+            {
+              enveloppe: 'MIGAC',
+              sousEnveloppe: 'MIG',
+              modeDeDélégation: 'TestD',
+              montantNotifié: 590,
+            },
+            {
+              enveloppe: 'MIGAC',
+              sousEnveloppe: 'MIG',
+              modeDeDélégation: 'TestE',
+              montantNotifié: 190,
+            },
+            {
+              enveloppe: 'MIGAC',
+              sousEnveloppe: 'MIG',
+              modeDeDélégation: 'TestJ',
+              montantNotifié: 190,
+            },
+            {
               enveloppe: 'Dotations de soins USLD',
               sousEnveloppe: 'MIG',
               modeDeDélégation: 'JPE_MERRI',
@@ -129,7 +171,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
               enveloppe: 'FIR',
               sousEnveloppe: 'Sanitaire',
               modeDeDélégation: 'Intervention A',
-              montantNotifié: 10723,
+              montantNotifié: 10723000,
             },
             {
               enveloppe: 'FIR',
@@ -147,7 +189,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
               enveloppe: 'Forfaits',
               sousEnveloppe: 'FAU',
               modeDeDélégation: 'Sans objet',
-              montantNotifié: 479772,
+              montantNotifié: 4798 ,
             },
             {
               enveloppe: 'MIGAC',
@@ -165,7 +207,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
               enveloppe: 'MIGAC',
               sousEnveloppe: 'MIG',
               modeDeDélégation: 'JPE_MERRI',
-              montantNotifié: -80684,
+              montantNotifié:  806 ,
             }
           ]
         }

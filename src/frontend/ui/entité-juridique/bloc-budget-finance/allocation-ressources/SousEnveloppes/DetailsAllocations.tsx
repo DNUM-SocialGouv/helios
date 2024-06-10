@@ -1,18 +1,28 @@
 import { ReactElement, useState } from "react";
 
 import { IEnveloppe } from "../../../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAllocationRessources";
+import {
+  HistogrammeHorizontalRowMultiple,
+  colorsAllocations,
+} from "../../../../indicateur-métier/qualite/ReclamationsParAnnee/HistogrammeHorizontalRowMultiple/HistogrammeHorizontalRowMultiple";
 import styles from "./DetailsAllocations.module.css";
 
-type ShowDetailsTitleProps = Readonly<{ for: string; children: ReactElement }>;
-const ShowDetailsTitle = ({ for: identifiant, children }: ShowDetailsTitleProps) => {
+type ShowDetailsTitleProps = Readonly<{ for: string; children: ReactElement; direction?: string }>;
+const ShowDetailsTitle = ({ for: identifiant, children, direction = "right" }: ShowDetailsTitleProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <button
       aria-controls={identifiant}
       aria-expanded={isOpen}
-      className={ styles["titleDetails"] + " fr-btn fr-btn--sm fr-btn--tertiary-no-outline fr-btn--icon-right " + (isOpen ? "fr-icon-arrow-up-s-line" : "fr-icon-arrow-down-s-line")}
+      className={
+        styles["titleDetails"] +
+        " fr-btn-NO fr-btn--sm-NO fr-btn--tertiary-no-outline-NO fr-btn--icon-" +
+        direction +
+        (isOpen ? " fr-icon-arrow-up-s-line" : " fr-icon-arrow-down-s-line")
+      }
       data-fr-opened={isOpen}
+      icon-direction={direction}
       onClick={() => {
         setIsOpen(!isOpen);
       }}
@@ -22,17 +32,28 @@ const ShowDetailsTitle = ({ for: identifiant, children }: ShowDetailsTitleProps)
   );
 };
 
-type ShowDetailsProps = Readonly<{ title: ReactElement; children: any; id: string; className: string }>;
-const ShowDetails = ({ title, children, id, className }: ShowDetailsProps) => {
+type ShowDetailsProps = Readonly<{ dataTitle: ReactElement; children: any; id: string; className: string; dataName?: string; directionIcone?: string }>;
+const ShowDetails = ({ dataTitle, children, id, className, dataName, directionIcone = "right" }: ShowDetailsProps) => {
   return (
     <div className={className}>
-      <ShowDetailsTitle for={id}>{title}</ShowDetailsTitle>
-      <ul className="fr-collapse niveau3" id={id}>
-        {children}
-      </ul>
+      <div className={styles["envTitle"]}>{dataName}</div>
+      <div className={styles["envContent"]}>
+        <ShowDetailsTitle direction={directionIcone} for={id}>
+          {dataTitle}
+        </ShowDetailsTitle>
+        <ul className="fr-collapse niveau3" id={id}>
+          {children}
+        </ul>
+      </div>
     </div>
   );
 };
+// const dataTest = [
+//   { key: "aaaa", value: 10 },
+//   { key: "BBB", value: 20 },
+//   { key: "CCC", value: 40 },
+//   { key: "KKKK", value: 30 },
+// ];
 
 type DetailsAllocationsProps = Readonly<{
   data: IEnveloppe[];
@@ -41,70 +62,58 @@ type DetailsAllocationsProps = Readonly<{
 export function DetailsAllocations({ data }: DetailsAllocationsProps) {
   return (
     <>
+      {/* <HistogrammeHorizontalRowMultiple data={dataTest} realPercentage={100}/>  */}
+
       {data.map((enveloppe) => (
         <ShowDetails
           className={styles["envContainer"]}
-          id={enveloppe.enveloppe}
-          key={enveloppe.enveloppe}
-          title={
+          dataName={`Enveloppe ${enveloppe.enveloppe}`}
+          dataTitle={
             <div className={styles["titleDetails"]}>
-              {enveloppe.enveloppe}: {enveloppe.total}{" "}  == {enveloppe.pourcentage} %{" "}
+              <HistogrammeHorizontalRowMultiple
+                data={enveloppe.sousEnveloppes.map((sousEnveloppe) => ({ key: sousEnveloppe.sousEnveloppe, value: sousEnveloppe.pourcentage }))}
+                realPercentage={enveloppe.pourcentage}
+              />
+              <span className={styles["envTotal"]}>{enveloppe.total}€</span>
             </div>
           }
+          directionIcone="left"
+          id={enveloppe.enveloppe}
+          key={enveloppe.enveloppe}
         >
-          {enveloppe.sousEnveloppes.map((sousEnveloppe) => (
+          {enveloppe.sousEnveloppes.map((sousEnveloppe, index) => (
             <ShowDetails
               className={styles["subEnvContainer"]}
+              dataTitle={
+                <>
+                  <div className={styles["carreSousEnveloppe"]} style={{ backgroundColor: colorsAllocations[index], color: colorsAllocations[index] }}>
+                    i
+                  </div>
+                  <span className={styles["subEnvTitle"]}>
+                    Sous enveloppe {sousEnveloppe.sousEnveloppe}{" "}
+                    <span className={styles["totalSousEnveloppe"]}>
+                      {" "}
+                      {sousEnveloppe.total}€ ({sousEnveloppe.pourcentage}%){" "}
+                    </span>{" "}
+                  </span>
+                </>
+              }
               id={enveloppe.enveloppe + sousEnveloppe.sousEnveloppe}
               key={sousEnveloppe.sousEnveloppe}
-              title={
-                <h4>
-                  {sousEnveloppe.sousEnveloppe}: {sousEnveloppe.total} == {sousEnveloppe.pourcentage} %{" "}
-                </h4>
-              }
             >
-              {sousEnveloppe.modesDeDélégation.map((mode) => (
-                <div className={styles["modesDeDelegation"]} key={mode.modeDeDélégation}>
-                  <b>mode De Délégation : {mode.modeDeDélégation} </b>
-                  <br />
-                  <b>pourcentage : {mode.pourcentage} </b>
-                  <br />
-                </div>
-              ))}
+              <div className={styles["modesDeDelegationContainer"]}>
+                {sousEnveloppe.modesDeDélégation.map((mode) => (
+                  <div className={styles["modesDeDelegationItem"]} key={mode.modeDeDélégation}>
+                    {mode.modeDeDélégation} : {mode.montantNotifié} ({mode.pourcentage} %)
+                  </div>
+                ))}
+        
+ 
+        
+              </div>
             </ShowDetails>
           ))}
         </ShowDetails>
-      ))}
-
-      {data.map((enveloppe) => (
-        <div className={styles["envContainer"]} key={enveloppe.enveloppe}>
-          <b>Enveloppe : {enveloppe.enveloppe} </b>
-          <br />
-          <b>total : {enveloppe.total} </b>
-          <br />
-          <b>pourcentage : {enveloppe.pourcentage} </b>
-          <br />
-
-          {enveloppe.sousEnveloppes.map((sousEnveloppe) => (
-            <div className={styles["subEnvContainer"]} key={sousEnveloppe.sousEnveloppe}>
-              <b>SousEnveloppe : {sousEnveloppe.sousEnveloppe} </b>
-              <br />
-              <b>total : {sousEnveloppe.total} </b>
-              <br />
-              <b>pourcentage : {sousEnveloppe.pourcentage} </b>
-              <br />
-
-              {sousEnveloppe.modesDeDélégation.map((mode) => (
-                <div className={styles["modesDeDelegation"]} key={mode.modeDeDélégation}>
-                  <b>mode De Délégation : {mode.modeDeDélégation} </b>
-                  <br />
-                  <b>pourcentage : {mode.pourcentage} </b>
-                  <br />
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
       ))}
     </>
   );

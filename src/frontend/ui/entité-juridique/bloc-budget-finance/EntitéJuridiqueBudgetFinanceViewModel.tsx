@@ -259,6 +259,8 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
 
   allocationRessourcesEnCoursGroubByEnveloppeSousEnvelopeETMode(annéeEnCours: number): any {
     const dataAllocationRessources= this.allocationRessourcesEnCours(annéeEnCours)
+
+    console.log('10/06', dataAllocationRessources)
  
     return this.allocationRessourcesGroubByEnveloppeSousEnvelopeETMode(dataAllocationRessources.data)
   }
@@ -372,7 +374,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     const valeursDesAllocationDeRessourceNoPourcentage = valeursAvecMotifNoPourcentage.map((item : AllocationValeursAvecMotif) => item.valeur);
     const motifsDesAllocationDeRessource = valeursAvecMotif.map((item : AllocationValeursAvecMotif) => item.motif);
 
-    const motifsDesAllocationDeRessourceWithPourcentage = valeursAvecMotif.map((item : AllocationValeursAvecMotif) => `${item.motif}  (${parseFloat(item.valeur.toFixed(2))}%)`);
+    const motifsDesAllocationDeRessourceWithPourcentage = valeursAvecMotif.map((item : AllocationValeursAvecMotif) => `${item.motif}  (${parseFloat(item.valeur.toFixed(1))}%)`);
     
     // const pourcentageDuAllocationDeRessourceHorsFormation = StringFormater.addPercentToValues([allocationDeRessourceHorsFormation])[0];
     // const texteCentral = this.leAllocationDeRessourceHorsFormationEstIlDansLesBornesAcceptables(allocationDeRessourceHorsFormation)

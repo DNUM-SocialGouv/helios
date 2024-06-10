@@ -1,35 +1,72 @@
 .envContainer {
-  
-  margin: 2rem;
-  background-color: #caf11d;
+  margin-bottom: 5px;
+  background-color: #d9f26a;
   text-transform: capitalize;
-  
+  display: flex;
 }
-
+.envTitle {
+  min-width: 170px;
+  max-width: 170px;
+  margin-right: 10px;
+}
+.envTotal
+{
+  padding: 5px 0 0 5px;
+}
 
 .subEnvContainer {
   
-  margin: 2rem;
+  margin-bottom: 5px;
   background-color: #15c423;
   text-transform: capitalize;
-  
 }
 
+.subEnvTitle
+{
+  font-size: medium;
+}
+ 
+.modesDeDelegationContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
 
-.modesDeDelegation {
-  
-  margin: 2rem;
+.modesDeDelegationItem {
   background-color: #01f891;
   text-transform: capitalize;
-  
+  box-sizing: border-box;  
+  background-color: lightblue;
+  padding: 5px;
+  font-size: smaller; 
+}
+
+@media (max-width: 600px) {
+  .modesDeDelegationItem {
+      flex: 1 1 calc(50% - 10px);  
+  }
+}
+
+@media (max-width: 400px) {
+  .modesDeDelegationItem {
+      flex: 1 1 100%;  
+  }
 }
 
 .titleDetails
 {
-  background-color: rgb(237, 14, 226);
+  background-color: rgb(192, 238, 241);
   display: inline-flex;
   width: 100%;
 }
+
+
+.titleDetails::before, .titleDetails::after
+{
+  margin-top: 5px;
+}
+
 
 .jauge
 {
@@ -37,3 +74,26 @@
   width: 100px;
 }
  
+
+.totalSousEnveloppe
+{
+  font-weight: bold;
+  margin: 0 5px;
+}
+
+.carreSousEnveloppe
+{
+  min-width: 18px;
+  min-height: 18px;
+  width: 18px;
+  height: 18px;
+  user-select: none;
+  margin-right: 5px;
+  margin-top: 2px;
+}
+ 
+.envContent
+{
+  min-width: 470px;
+  max-width: 470px;
+}
