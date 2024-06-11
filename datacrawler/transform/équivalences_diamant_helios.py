@@ -212,18 +212,17 @@ colonnes_a_lire_bloc_budget_finance_entite_juridique: List[str] = list(équivale
 index_du_bloc_budget_et_finances_entite_juridique: List[str] = ["numero_finess_entite_juridique", "annee"]
 
 équivalences_diamant_men_hapi_allocation_ressource_helios: ÉquivalencesDiamantHelios = {
-    "Finess EJ": ColonneHelios(nom="numero_finess_entite_juridique", type=str),
-    "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+    "Finess": ColonneHelios(nom="numero_finess_entite_juridique", type=str),
     "Année Campagne HAPI": ColonneHelios(nom="annee", type=str),
     "Mois": ColonneHelios(nom="mois", type=str),
     "Enveloppe": ColonneHelios(nom="enveloppe", type=str),
     "Sous Enveloppe": ColonneHelios(nom="sous_enveloppe", type=str),
     "Mode de Délégation": ColonneHelios(nom="mode_delegation", type=str),
-    "HAPI - Montant Notifié": ColonneHelios(nom="montant_notifie", type=float)
+    "HAPI - Montant Notifié": ColonneHelios(nom="montant", type=float)
 }
 
 colonnes_a_lire_allocation_ressource: List[str] = list(équivalences_diamant_men_hapi_allocation_ressource_helios.keys())
-index_allocation_ressource: List[str] = ["numero_finess_etablissement_territorial", "annee"]
+index_allocation_ressource: List[str] = ["numero_finess_entite_juridique", "annee", 'mois']
 
 def extrais_l_equivalence_des_types_des_colonnes(équivalences: ÉquivalencesDiamantHelios) -> Dict[str, type]:
     return {nom_diamant: colonne_diamant["type"] for nom_diamant, colonne_diamant in équivalences.items()}
