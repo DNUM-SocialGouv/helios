@@ -1,3 +1,4 @@
+import { AllocationRessource } from "../entities/AllocationRessource";
 import { EntitéJuridiqueIdentité } from "../entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueActivités } from "../entities/entité-juridique/EntitéJuridiqueActivités";
 import { EntitéJuridiqueAutorisationEtCapacitéLoader } from "../entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
@@ -13,4 +14,6 @@ export interface EntitéJuridiqueLoader {
 
   chargeBudgetFinance(numéroFiness: string): Promise<EntitéJuridiqueBudgetFinance[]>;
   chargeAutorisationsEtCapacités(numéroFiness: string): Promise<EntitéJuridiqueAutorisationEtCapacitéLoader>;
+
+  chargeAllocationRessource(numéroFiness: string): Promise<AllocationRessource>;
 }

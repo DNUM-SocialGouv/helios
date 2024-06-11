@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 
 import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
+import { AllocationRessourceModel } from "../../../../../database/models/AllocationRessourceModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
 import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
 import { BudgetEtFinancesEntiteJuridiqueModel } from "../../../../../database/models/BudgetEtFinancesEntiteJuridiqueModel";
@@ -9,6 +10,7 @@ import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
+import { AllocationRessource, AllocationRessourceData } from "../../../métier/entities/AllocationRessource";
 import { CatégorisationEnum, EntitéJuridiqueIdentité } from "../../../métier/entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueActivités } from "../../../métier/entities/entité-juridique/EntitéJuridiqueActivités";
 import {
@@ -63,6 +65,26 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
       .findOneBy({ fichier: FichierSource.DIAMANT_MEN_PMSI_ANNUEL })) as DateMiseÀJourFichierSourceModel;
 
     return this.construisEntitéJuridiqueActivites(activiteSanitareEJModel, dateMisAJourRPU, dateMiseAJourMenPmsi);
+  }
+
+  async chargeAllocationRessource(numéroFiness: string): Promise<AllocationRessource> {
+    const allocation = await (await this.orm)
+      .getRepository(AllocationRessourceModel)
+      .createQueryBuilder("allocation_ressource_ej")
+      .select(["allocation_ressource_ej.enveloppe", "allocation_ressource_ej.sous_enveloppe", "allocation_ressource_ej.mode_delegation", "allocation_ressource_ej.annee"])
+      .addSelect("SUM(allocation_ressource_ej.montant)", "montant_annuel")
+      .where("allocation_ressource_ej.numero_finess_entite_juridique = :finess", { finess: numéroFiness })
+      .groupBy("allocation_ressource_ej.enveloppe")
+      .addGroupBy("allocation_ressource_ej.sous_enveloppe")
+      .addGroupBy("allocation_ressource_ej.mode_delegation")
+      .addGroupBy("allocation_ressource_ej.annee")
+      .getRawMany();
+
+    const dateMiseAJourMenHapi = (await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.DIAMANT_MEN_HAPI })) as DateMiseÀJourFichierSourceModel;
+
+    return this.construisEntitéJuridiqueAllocation(allocation, dateMiseAJourMenHapi);
   }
 
   private construisEntitéJuridiqueActivites(
@@ -350,5 +372,32 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
       nombreDePlacesEnPsyHospitalisationPartielle: capacités.nombreDePlacesEnPsyHospitalisationPartielle,
       nombreDePlacesEnSsr: capacités.nombreDePlacesEnSsr,
     }));
+  }
+
+  private construisEntitéJuridiqueAllocation(
+    allocations: any[],
+    dateDeMiseÀJourDiamantMenHapiModel: DateMiseÀJourFichierSourceModel
+  ): AllocationRessource {
+    const allocationRessource = allocations
+      .reduce((acc: AllocationRessourceData[], curr: any) => {
+        let allocationRessourceAnnuel = acc.find((allocation) => allocation.année === curr.annee);
+
+        if (!allocationRessourceAnnuel) {
+          allocationRessourceAnnuel = { année: curr.annee, allocationRessoure: [] }
+          acc.push(allocationRessourceAnnuel);
+        }
+        allocationRessourceAnnuel.allocationRessoure.push({
+          enveloppe: curr.allocation_ressource_ej_enveloppe,
+          sousEnveloppe: curr.sous_enveloppe,
+          modeDeDélégation: curr.mode_delegation,
+          montantNotifié: curr.montant_annuel,
+        });
+        return acc;
+      }, [])
+
+    return {
+      dateMiseÀJourSource: dateDeMiseÀJourDiamantMenHapiModel.dernièreMiseÀJour,
+      data: allocationRessource
+    }
   }
 }

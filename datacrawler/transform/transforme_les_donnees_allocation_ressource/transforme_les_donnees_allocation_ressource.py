@@ -18,7 +18,5 @@ def transforme_les_donnees_allocation_ressource_ej(
     return (
         donnees_allocation_ressource[est_dans_finess]
         .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_diamant_men_hapi_allocation_ressource_helios))
-        .dropna(subset=index_allocation_ressource)
-        .drop_duplicates(subset=index_allocation_ressource)
         .set_index(index_allocation_ressource)
     )

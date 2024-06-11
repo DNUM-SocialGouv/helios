@@ -5,16 +5,16 @@ export class AjoutTableAllocationRessource1718010452960 implements MigrationInte
   async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
           CREATE TABLE allocation_ressource_ej (
+            id bigserial NOT NULL,
             annee INT NOT NULL,
             numero_finess_entite_juridique VARCHAR(9) NOT NULL,
             mois VARCHAR(255) NOT NULL,
-
             enveloppe VARCHAR(255) NOT NULL,
             sous_enveloppe VARCHAR(255) NOT NULL,
             mode_delegation VARCHAR(255) NOT NULL,
             montant FLOAT NOT NULL,
    
-            PRIMARY KEY (annee, numero_finess_entite_juridique, mois),
+            PRIMARY KEY (id),
    
             CONSTRAINT allocation_ressource_entite_juridique_foreign_key
             FOREIGN KEY (numero_finess_entite_juridique)

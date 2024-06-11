@@ -1,11 +1,14 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: "allocation_ressource_ej" })
 export class AllocationRessourceModel {
-    @PrimaryColumn({ name: "annee", type: "int" })
+    @PrimaryGeneratedColumn({ name: "id" })
+    public id!: number;
+
+    @Column({ name: "annee", type: "int" })
     public année!: number;
 
-    @PrimaryColumn({ length: 9, name: "numero_finess_entite_juridique" })
+    @Column({ length: 9, name: "numero_finess_entite_juridique" })
     public numéroFinessEntitéJuridique!: string;
 
     @Column({ name: "mois", type: "varchar" })
