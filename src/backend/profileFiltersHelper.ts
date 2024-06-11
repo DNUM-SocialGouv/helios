@@ -18,6 +18,7 @@ export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): En
     const activités = filterActiviteEJ(result.activités, profil.activités);
     const autorisationsEtCapacites = filterAutorisationCapaciteEJ(result.autorisationsEtCapacites, profil.autorisationsEtCapacités);
     const budgetFinance = filterBudgetFinanceEJ(result.budgetFinance, profil.budgetEtFinance);
+    const allocationRessoure = result.allocationRessource;
 
 
     return {
@@ -36,6 +37,7 @@ export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): En
         activités: activités,
         autorisationsEtCapacites: autorisationsEtCapacites,
         budgetFinance: budgetFinance,
+        allocationRessource: allocationRessoure,
         // to change "télEtEmail" by "dateOuverture"
         dateOuverture: profil.identité.télEtEmail === 'ok' ? result.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
     };
@@ -74,7 +76,7 @@ const filterIdentiteSanitaire = (identite: any, profil: any) => {
         statutJuridique: profil.statut_EJ === 'ok' ? identite.statutJuridique : { 'dateMiseÀJourSource': '', value: '' },
         codeRegion: identite.codeRegion,
         // to change "télEtEmail" by "dateOuverture"
-        dateOuverture:  profil.télEtEmail === 'ok' ? identite.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
+        dateOuverture: profil.télEtEmail === 'ok' ? identite.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
     }
     return filtredIdentite;
 }
@@ -143,7 +145,7 @@ const filterIdentiteMedicoSocial = (identite: any, profil: any) => {
         statutJuridique: profil.statut_EJ === 'ok' ? identite.statutJuridique : { 'dateMiseÀJourSource': '', value: '' },
         estMonoÉtablissement: profil.estMonoÉtablissement === 'ok' ? identite.estMonoÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
         codeRegion: identite.codeRegion,
-        dateOuverture:  profil.télEtEmail === 'ok' ? identite.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
+        dateOuverture: profil.télEtEmail === 'ok' ? identite.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
     }
     return filtredIdentite;
 }

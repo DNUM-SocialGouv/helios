@@ -52,6 +52,10 @@ export class EntitéJuridiqueViewModelTestBuilder {
     codeRegion: '84',
     activités: [],
     budgetFinance: [],
+    allocationRessource: {
+      dateMiseÀJourSource: "",
+      data: []
+    },
     autorisationsEtCapacites: {
       numéroFinessEntitéJuridique: "",
       capacités: [],

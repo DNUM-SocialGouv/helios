@@ -15,8 +15,8 @@ type EntitéJuridiqueEndpoint = Readonly<{
 export async function récupèreLEntitéJuridiqueEndpoint(dependencies: Dependencies, numéroFiness: string, codeRegion: string, codeProfiles: string[]): Promise<EntitéJuridiqueEndpoint> {
   const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(dependencies.entitéJuridiqueLoader);
   const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFiness);
-  const loginUseCase = new LoginUseCase(dependencies.utilisateurLoader);
 
+  const loginUseCase = new LoginUseCase(dependencies.utilisateurLoader);
   const profiles = await loginUseCase.getUserProfiles(codeProfiles) as ProfilModel[];
   const profilesInstitutionValues = profiles.map((profile) => profile?.value.institution.profilEJ)
   const profilesAutreRegValues = profiles.map((profile) => profile?.value.autreRegion.profilEJ)
