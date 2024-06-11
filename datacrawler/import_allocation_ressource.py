@@ -1,4 +1,5 @@
 import os
+
 from datetime import datetime
 import pandas as pd
 from logging import Logger
@@ -14,6 +15,7 @@ from datacrawler import (
     écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour
 ) 
 from datacrawler.transform.transforme_les_donnees_allocation_ressource.transforme_les_donnees_allocation_ressource import transforme_les_donnees_allocation_ressource_ej
+
 from datacrawler.transform.équivalences_diamant_helios import (
     colonnes_a_lire_allocation_ressource,
     extrais_l_equivalence_des_types_des_colonnes,
@@ -58,6 +60,7 @@ def import_allocation_ressource(donnees_allocation_ressource_filtrees: pd.DataFr
 if __name__ == "__main__":
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_données_helios = create_engine(variables_d_environnement["DATABASE_URL"])
+
     men_hapi_data_path = variables_d_environnement["DIAMANT_DATA_PATH"]
     fichiers = os.listdir(men_hapi_data_path)
 
@@ -68,3 +71,4 @@ if __name__ == "__main__":
     donnees_allocation_ressource_filtrees = check_downloaded_men_hapi_file(chemin_local_du_fichier_men_hapi)
 
     import_allocation_ressource(donnees_allocation_ressource_filtrees, base_de_données_helios, chemin_local_du_fichier_men_hapi, logger_helios)
+
