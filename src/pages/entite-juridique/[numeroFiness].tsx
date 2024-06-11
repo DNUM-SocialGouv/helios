@@ -25,8 +25,6 @@ export default function Router({ rechercheResult, entitéJuridique, établisseme
 
   if (!établissementsTerritoriauxRattachés || !entitéJuridique) return null;
 
-  console.log('222222222222222222');
-
   const entitéJuridiqueViewModel = new EntitéJuridiqueViewModel(entitéJuridique, wording);
   const établissementsTerritoriauxRattachéesViewModel = new EtablissementsTerritoriauxRattachésViewModel(établissementsTerritoriauxRattachés, wording);
   const rechercheViewModel = new RechercheViewModel(rechercheResult.résultats[0], paths);
@@ -68,7 +66,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
               enveloppe: 'FIR',
               sousEnveloppe: 'Sanitaire',
               modeDeDélégation: 'Intervention A',
-              montantNotifié: 100,
+              montantNotifié: 1900,
             },
             {
               enveloppe: 'FIR',
@@ -86,13 +84,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
               enveloppe: 'Forfaits',
               sousEnveloppe: 'FAU',
               modeDeDélégation: 'Sans objet',
-              montantNotifié: 70,
+              montantNotifié: 570,
             },
             {
               enveloppe: 'MIGAC',
               sousEnveloppe: 'AC',
               modeDeDélégation: '123',
-              montantNotifié: 60,
+              montantNotifié: 6660,
             },
             {
               enveloppe: 'MIGAC',
@@ -152,13 +150,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
               enveloppe: 'Dotations de soins USLD',
               sousEnveloppe: 'MIG',
               modeDeDélégation: 'JPE_MERRI',
-              montantNotifié: 155,
+              montantNotifié: 1559,
             },
             {
               enveloppe: 'DAF',
               sousEnveloppe: 'DAF',
               modeDeDélégation: 'JPE_MERRI',
-              montantNotifié: 120,
+              montantNotifié: 1201,
             }
           ]
         },

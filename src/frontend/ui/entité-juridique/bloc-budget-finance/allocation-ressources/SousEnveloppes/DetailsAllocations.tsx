@@ -41,7 +41,7 @@ type ShowDetailsProps = Readonly<{ dataTitle: ReactElement; children: any; id: s
 const ShowDetails = ({ dataTitle, children, id, className, dataName, directionIcone = "right" }: ShowDetailsProps) => {
   return (
     <div className={className}>
-      <div className={styles["envTitle"]}>{dataName}</div>
+      <div className={styles["envTitle"]}>{/*<button aria-controls={id} aria-expanded="false" data-fr-js-collapse-button="true" >*/}{dataName}{/*</button>*/}</div>
       <div className={styles["envContent"]}>
         <ShowDetailsTitle direction={directionIcone} for={id}>
           {dataTitle}
@@ -75,7 +75,7 @@ export function DetailsAllocations({ data }: DetailsAllocationsProps) {
                 data={enveloppe.sousEnveloppes.map((sousEnveloppe) => ({ key: sousEnveloppe.sousEnveloppe, value: sousEnveloppe.pourcentage }))}
                 realPercentage={enveloppe.pourcentage}
               />
-              <span className={styles["envTotal"]}>{enveloppe.total}€</span>
+              <span className={styles["envTotal"]}>{enveloppe.total} €</span>
             </div>
           }
           directionIcone="left"
@@ -88,13 +88,13 @@ export function DetailsAllocations({ data }: DetailsAllocationsProps) {
               dataTitle={
                 <>
                   <div className={styles["carreSousEnveloppe"]} style={{ backgroundColor: colorsAllocations[index], color: colorsAllocations[index] }}>
-                    i
+                  i
                   </div>
                   <span className={styles["subEnvTitle"]}>
                     Sous enveloppe {sousEnveloppe.sousEnveloppe}{" "}
                     <span className={styles["totalSousEnveloppe"]}>
                       {" "}
-                      {sousEnveloppe.total}€ ({sousEnveloppe.pourcentage}%){" "}
+                      {sousEnveloppe.total} € ({sousEnveloppe.pourcentage}%){" "}
                     </span>{" "}
                   </span>
                 </>

@@ -4,18 +4,16 @@ import {
   AllocationValeursAvecMotif,
   DataRowEntitéJuridiqueAllocationRessources,
   EntitéJuridiqueAllocationRessources,
+  IEnveloppe,
 } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAllocationRessources";
 import { EntitéJuridiqueBudgetFinance } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
 import {
-  couleurDuFond,
   couleurDuFondHistogrammeBleuFoncé,
   couleurDuFondHistogrammeSecondaire,
-  couleurErreur,
   CouleurHistogramme,
   couleurIdentifiant,
-  couleurSecondPlanHistogrammeDeDépassement,
   noir,
 } from "../../commun/Graphique/couleursGraphique";
 import { couleurDesArcsDuDonut, DonutNoCenterText } from "../../commun/Graphique/DonutNoCenterText";
@@ -25,7 +23,7 @@ import { StringFormater } from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";
 import { ResultatNetComptableViewModel } from "../../indicateur-métier/resultat-net-comptable/ResultatNetComptableViewModel";
 import { TauxDeCafViewModel } from "../../indicateur-métier/taux-de-caf/TauxDeCafViewModel";
-import { DetailsAllocations, SousEnveloppes } from "./allocation-ressources/SousEnveloppes/DetailsAllocations";
+import { DetailsAllocations } from "./allocation-ressources/SousEnveloppes/DetailsAllocations";
 import { RatioDependanceFinanciereViewModel } from "./ratio-dependance-financiere/RatioDependanceFinanciereViewModel";
 
 export class EntitéJuridiqueBudgetFinanceViewModel {
@@ -56,8 +54,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       [this.wording.MIGAC]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[4], couleurDuLibellé: noir },
     };
 
-    console.log("couleursDuDoughnutDesAllocationDeRessource  ", this.couleursDuDoughnutDesAllocationDeRessource);
-    this.annéesAvecDesAllocationDeRessource = this.anneesAvecTauxAbsenteisme();
+    this.annéesAvecDesAllocationDeRessource = this.lesAnnéesEffectivesDuAllocationRessources();
   }
 
   public get annéeInitiale() {
@@ -170,15 +167,15 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   }
 
   allocationRessourcesGroubByEnveloppe(data: DataRowEntitéJuridiqueAllocationRessources[]) {
-    // Calculer le montant total
+    // Calculer le montant total des montants notifiés
     const total = data.reduce((sum, item) => {
       if (item.montantNotifié !== null && item.montantNotifié !== "") {
         return sum + item.montantNotifié;
       }
       return sum;
     }, 0);
-
-    // Grouper les données et calculer les pourcentages
+  
+    // Grouper les montants par enveloppe et calculer les valeurs totales pour chaque enveloppe
     const groupedData = data.reduce((acc, item) => {
       if (item.enveloppe) {
         if (!acc[item.enveloppe]) {
@@ -190,20 +187,24 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       }
       return acc;
     }, {} as { [key: string]: AllocationValeursAvecMotif });
-
-    // Convertir les valeurs en pourcentages
-    Object.values(groupedData).forEach((item) => {
+  
+    // Convertir les valeurs totales en pourcentages
+    const percentageData = Object.values(groupedData).map((item) => {
       item.valeur = (item.valeur / total) * 100;
+      return item;
     });
-
-    return Object.values(groupedData);
+  
+    // Trier les données par valeur en ordre décroissant
+    percentageData.sort((a, b) => b.valeur - a.valeur);
+  
+    return percentageData;
   }
 
   allocationRessourcesGroubByEnveloppeSousEnvelopeETMode(data: DataRowEntitéJuridiqueAllocationRessources[]) {
     // Regrouper les données par enveloppe, sous-enveloppe et mode de délégation
     const groupedData = data.reduce((acc: Record<string, any>, item: DataRowEntitéJuridiqueAllocationRessources) => {
       const { enveloppe, sousEnveloppe, modeDeDélégation, montantNotifié } = item;
-
+  
       if (enveloppe) {
         if (!acc[enveloppe]) {
           acc[enveloppe] = { total: 0, sousEnveloppes: {} };
@@ -218,52 +219,73 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
             }
             acc[enveloppe].sousEnveloppes[sousEnveloppe].modesDeDélégation[modeDeDélégation] += montantNotifié;
           }
-
+  
           acc[enveloppe].sousEnveloppes[sousEnveloppe].total += montantNotifié;
         }
         acc[enveloppe].total += montantNotifié;
       }
       return acc;
     }, {});
-
+  
     // Calculer le total général
     const totalGeneral = Object.values(groupedData).reduce((sum, { total }) => sum + total, 0);
-
+  
     // Préparer les résultats finaux
     const result = Object.keys(groupedData).map((enveloppe) => {
       const totalEnveloppe = groupedData[enveloppe].total;
       const pourcentageEnveloppe = ((totalEnveloppe / totalGeneral) * 100).toFixed(0);
       const sousEnveloppes = groupedData[enveloppe].sousEnveloppes;
+  
+      // Trier les sous-enveloppes par pourcentage décroissant
       const sousEnveloppesResult = Object.keys(sousEnveloppes).map((sousEnveloppe) => {
         const totalSousEnveloppe = sousEnveloppes[sousEnveloppe].total;
         const pourcentageSousEnveloppe = ((totalSousEnveloppe / totalEnveloppe) * 100).toFixed(0);
         const modesDeDélégation = sousEnveloppes[sousEnveloppe].modesDeDélégation;
+  
+        // Trier les modes de délégation par pourcentage décroissant
         const modesDeDélégationResult = Object.keys(modesDeDélégation).map((modeDeDélégation) => {
           const montantNotifié = modesDeDélégation[modeDeDélégation];
           const pourcentageModeDeDélégation = ((montantNotifié / totalSousEnveloppe) * 100).toFixed(0);
           return { modeDeDélégation, montantNotifié, pourcentage: pourcentageModeDeDélégation };
-        });
+        }).sort((a, b) => parseFloat(b.pourcentage) - parseFloat(a.pourcentage)); // Tri par pourcentage décroissant
+  
         return { sousEnveloppe, total: totalSousEnveloppe, pourcentage: pourcentageSousEnveloppe, modesDeDélégation: modesDeDélégationResult };
-      });
+      }).sort((a, b) => parseFloat(b.pourcentage) - parseFloat(a.pourcentage)); // Tri par pourcentage décroissant
+  
       return { enveloppe, total: totalEnveloppe, pourcentage: pourcentageEnveloppe, sousEnveloppes: sousEnveloppesResult };
-    });
-
+    }).sort((a, b) => parseFloat(b.pourcentage) - parseFloat(a.pourcentage)); // Tri par pourcentage décroissant
+  
     return result;
   }
 
-  allocationRessourcesEnCoursGroubByEnveloppe(annéeEnCours: number, valeurs = false): any {
+  transformDataToTranscriptionData(data : IEnveloppe[]) {
+    const result: { key: string; value: any; }[] = [];
+  
+    data.forEach(enveloppeItem => {
+      // Ajouter l'objet pour l'enveloppe principale
+      result.push({ key: `Enveloppe ${enveloppeItem.enveloppe}`, value: enveloppeItem.total + ' €' });
+  
+      // Traiter les sous-enveloppes
+      enveloppeItem.sousEnveloppes.forEach(sousEnveloppeItem => {
+        result.push({ key: `Sous Enveloppe ${sousEnveloppeItem.sousEnveloppe}`, value: `${sousEnveloppeItem.total} € (${sousEnveloppeItem.pourcentage}%)` });
+  
+        // Traiter les modes de délégation
+        sousEnveloppeItem.modesDeDélégation.forEach(modeDeDélégationItem => {
+          result.push({ key: `${modeDeDélégationItem.modeDeDélégation}`, value: `${modeDeDélégationItem.montantNotifié} € (${modeDeDélégationItem.pourcentage}%)` });
+        });
+      });
+    });
+  
+    return result;
+  }
+  
+  allocationRessourcesEnCoursGroubByEnveloppe(annéeEnCours: number): any {
     const dataAllocationRessources = this.allocationRessourcesEnCours(annéeEnCours);
-    if (valeurs) {
-      return this.allocationRessourcesGroubByEnveloppeWithValues(dataAllocationRessources.data);
-    }
     return this.allocationRessourcesGroubByEnveloppe(dataAllocationRessources.data);
   }
 
   allocationRessourcesEnCoursGroubByEnveloppeSousEnvelopeETMode(annéeEnCours: number): any {
     const dataAllocationRessources = this.allocationRessourcesEnCours(annéeEnCours);
-
-    console.log("10/06", dataAllocationRessources);
-
     return this.allocationRessourcesGroubByEnveloppeSousEnvelopeETMode(dataAllocationRessources.data);
   }
 
@@ -308,7 +330,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     return this.couleursDuDoughnutDesAllocationDeRessource[motif].couleurDuLibellé;
   }
 
-  public anneesAvecTauxAbsenteisme(allocations: EntitéJuridiqueAllocationRessources[]): number[] {
+  public anneesAvecAllocationRessources(allocations: EntitéJuridiqueAllocationRessources[]): number[] {
     if (allocations) {
       return allocations.filter((allocation) => !this.allocationRessourcesVide(allocation)).map((allocation) => allocation.année);
     }
@@ -329,52 +351,37 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   public allocationDeRessource(annéeEnCours: number): ReactElement {
     if (!annéeEnCours) return this.pasDeAllocationDeRessource;
 
-    // const allocationDeRessourcesDeLAnnéeEnCours = this.trouveLesAllocationDeRessourceDeLAnnée(annéeEnCours);
-    // const [valeursAvecMotif, allocationDeRessourceHorsFormation] = this.construisLesAllocationDeRessource(allocationDeRessourcesDeLAnnéeEnCours);
     const couleursDuDoughnut: CouleurHistogramme[] = [];
     const couleursDesLibelles: string[] = [];
 
     const valeursAvecMotif = this.allocationRessourcesEnCoursGroubByEnveloppe(annéeEnCours);
-
-    const valeursAvecMotifNoPourcentage = this.allocationRessourcesEnCoursGroubByEnveloppe(annéeEnCours, true);
-
     const treeAllocationRessourcesGroubByEnveloppeSousEnvelopeETMode = this.allocationRessourcesEnCoursGroubByEnveloppeSousEnvelopeETMode(annéeEnCours);
 
-    console.log("1111111111111111111111", valeursAvecMotif);
-
-    console.log("22222222222222222", valeursAvecMotifNoPourcentage);
+     
+    const transformDataToTranscriptionData = this.transformDataToTranscriptionData(treeAllocationRessourcesGroubByEnveloppeSousEnvelopeETMode);
+    const transcriptionDataKeys = transformDataToTranscriptionData.map((item) => item.key)
+    const transcriptionDataValues = transformDataToTranscriptionData.map((item) => item.value)
 
     valeursAvecMotif.forEach((item: AllocationValeursAvecMotif) => {
-      /*if (!this.leAllocationDeRessourceDUnMotifEstIlDansLesBornesAcceptables(allocationDeRessource.valeur)) {
-        couleursDuDoughnut.push({
-          premierPlan: couleurErreur,
-          secondPlan: couleurSecondPlanHistogrammeDeDépassement,
-        });
-        couleursDesLibelles.push(couleurDuFond);
-      } else {*/
       couleursDuDoughnut.push(this.associeLaCouleurDeLArcAuMotifDuAllocationDeRessource(item.motif));
       couleursDesLibelles.push(this.associeLaCouleurDuLibelléAuMotifDAbsentéisme(item.motif));
-      //}
     });
 
     const valeursDesAllocationDeRessource = valeursAvecMotif.map((item: AllocationValeursAvecMotif) => Math.floor(item.valeur));
-    const valeursDesAllocationDeRessourceNoPourcentage = valeursAvecMotifNoPourcentage.map((item: AllocationValeursAvecMotif) => item.valeur);
+    const valeursDesAllocationDeRessourcePourcentage = valeursAvecMotif.map((item: AllocationValeursAvecMotif) => parseFloat(item.valeur.toFixed(1)));
+
+    
     const motifsDesAllocationDeRessource = valeursAvecMotif.map((item: AllocationValeursAvecMotif) => item.motif);
 
     const motifsDesAllocationDeRessourceWithPourcentage = valeursAvecMotif.map(
       (item: AllocationValeursAvecMotif) => `${item.motif}  (${parseFloat(item.valeur.toFixed(1))}%)`
     );
 
-    // const pourcentageDuAllocationDeRessourceHorsFormation = StringFormater.addPercentToValues([allocationDeRessourceHorsFormation])[0];
-    // const texteCentral = this.leAllocationDeRessourceHorsFormationEstIlDansLesBornesAcceptables(allocationDeRessourceHorsFormation)
-    //   ? pourcentageDuAllocationDeRessourceHorsFormation
-    //   : `! ${pourcentageDuAllocationDeRessourceHorsFormation}`;
-
     const listeAnnéesManquantes = annéesManquantes(this.annéesAvecDesAllocationDeRessource);
-
+ 
     return (
       <>
-        <div className="fr-grid-row fr-grid-row--gutters">
+        <div className="fr-grid-row fr-grid-row--gutters fr-mb-4w">
           <div className="fr-col-5">
             <DonutNoCenterText
               couleursDuDoughnut={couleursDuDoughnut}
@@ -390,17 +397,23 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
           <div className="fr-col-5">
             <DetailsAllocations data={treeAllocationRessourcesGroubByEnveloppeSousEnvelopeETMode} />
           </div>
-
-          {console.log("Adolato 4kkk", treeAllocationRessourcesGroubByEnveloppeSousEnvelopeETMode)}
         </div>
-        {/* {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>} */}
+        {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
+
         <Transcription
-          // disabled={listeAnnéesManquantes.length === 3}
-          entêteLibellé={/*this.wording.MOTIF_DU_TAUX_D_ABSENTÉISME*/ "Enveloppe"}
-          identifiants={[/*this.wording.TAUX*/ "HAPI - Montant Notifié", "Pourcentage"]}
+          entêteLibellé={this.wording.ALLOCATION_DE_RESSOURCES}
+          identifiants={[this.wording.REPARTITION_DES_ENVELOPPES]}
           libellés={motifsDesAllocationDeRessource}
-          valeurs={[valeursDesAllocationDeRessourceNoPourcentage, [...StringFormater.addPercentToValues(valeursDesAllocationDeRessource)]]}
+          valeurs={[ [...StringFormater.addPercentToValues(valeursDesAllocationDeRessourcePourcentage)] ]}
         />
+
+      <Transcription
+          entêteLibellé={this.wording.ALLOCATION_DE_RESSOURCES}
+          identifiants={[this.wording.REPARTITION_DES_SOUS_ENVELOPPES]}
+          libellés={transcriptionDataKeys}
+          valeurs={[ [... transcriptionDataValues] ]}
+        />
+
       </>
     );
   }

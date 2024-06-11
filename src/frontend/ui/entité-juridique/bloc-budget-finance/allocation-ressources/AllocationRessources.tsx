@@ -30,23 +30,7 @@ export function AllocationRessources({ entitéJuridiqueBudgetFinanceViewModel }:
       nomDeLIndicateur={<>{wording.ALLOCATION_DE_RESSOURCES}</>}
       source={wording.HAPI}
     >
-
- {console.log('allocationRessources groub by envloppe :: ', allocationRessourcesGroubByEnveloppe)}
- {console.log('allocationRessources :: ', allocationRessources)}
-
-
- {entitéJuridiqueBudgetFinanceViewModel.allocationDeRessource(annéeEnCours)}
-
-      {/* <HistogrammesHorizontaux
-        annéesManquantes={entitéJuridiqueBudgetFinanceViewModel.lesAnnéesEffectivesDuAllocationRessources()}
-        légende={entitéJuridiqueBudgetFinanceViewModel.légendeChart}
-        nom={wording.ALLOCATION_DE_RESSOURCES}
-        nombreDAnnéeTotale={entitéJuridiqueBudgetFinanceViewModel.NOMBRE_ANNEES}
-        valeursDesHistogrammes={[
-          entitéJuridiqueBudgetFinanceViewModel.dataGraphiqueCharges(allocationRessources),
-          entitéJuridiqueBudgetFinanceViewModel.dataGraphiqueProduits(allocationRessources),
-        ]}
-      /> */}
+      {entitéJuridiqueBudgetFinanceViewModel.allocationDeRessource(annéeEnCours)}
     </IndicateurGraphique>
   );
 }
