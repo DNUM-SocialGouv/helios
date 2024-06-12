@@ -56,6 +56,7 @@ import { AjoutEvenementsIndesirables1710326854362 } from "./migrations/171032685
 import { AjoutTableInspectionsControles1712743083892 } from "./migrations/1712743083892-AjoutTableInspectionsControles";
 import { AjoutDateOuverture1713452627276 } from "./migrations/1713452627276-AjoutDateOuverture";
 import { AjoutTableAllocationRessource1718010452960 } from './migrations/1718010452960-ajoutTableAllocationRessource';
+import { AjoutTableAllocationRessourceET1718177983190 } from "./migrations/1718177983190-AjoutTableAllocationRessourceET";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
@@ -63,6 +64,7 @@ import { ModificationValeurProfil1797341938070 } from "./migrations/179734193807
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "./models/ActivitéSanitaireEntitéJuridiqueModel";
 import { ActivitéSanitaireModel } from "./models/ActivitéSanitaireModel";
+import { AllocationRessourceETModel } from "./models/AllocationRessourceETModel";
 import { AllocationRessourceModel } from "./models/AllocationRessourceModel";
 import { AutorisationMédicoSocialModel } from "./models/AutorisationMédicoSocialModel";
 import { AutorisationSanitaireModel } from "./models/AutorisationSanitaireModel";
@@ -124,7 +126,8 @@ export default new DataSource({
     ReclamationETModel,
     EvenementIndesirableETModel,
     InspectionsControlesETModel,
-    AllocationRessourceModel
+    AllocationRessourceModel,
+    AllocationRessourceETModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -185,7 +188,8 @@ export default new DataSource({
     AjoutDateOuverture1713452627276,
     AjoutTableInspectionsControles1712743083892,
     ModificationValeurProfil1797341938070,
-    AjoutTableAllocationRessource1718010452960
+    AjoutTableAllocationRessource1718010452960,
+    AjoutTableAllocationRessourceET1718177983190
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
