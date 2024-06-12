@@ -19,6 +19,10 @@ export class RécupèreLÉtablissementTerritorialSanitaireUseCase {
       établissementTerritorialSanitaireOuErreur.numéroFinessEntitéJuridique.value
     );
 
+    const entitéJuridiqueDeRattachementEstPriveNonLucratif = await this.entitéJuridiqueLoader.chargeRattachementCategorieEstPriveNonLucratif(
+      établissementTerritorialSanitaireOuErreur.numéroFinessEntitéJuridique.value
+    );
+
     const établissementTerritorialSanitaireActivités = await this.établissementTerritorialSanitaireLoader.chargeActivité(
       numéroFinessÉtablissementTerritorialSanitaire
     );
@@ -31,6 +35,8 @@ export class RécupèreLÉtablissementTerritorialSanitaireUseCase {
       numéroFinessÉtablissementTerritorialSanitaire
     );
 
+    const budgetFinance = await this.établissementTerritorialSanitaireLoader.chargeBudgetFinance(numéroFinessÉtablissementTerritorialSanitaire);
+
     return {
       activités: établissementTerritorialSanitaireActivités,
       autorisationsEtCapacités: établissementTerritorialSanitaireAutorisations,
@@ -39,6 +45,8 @@ export class RécupèreLÉtablissementTerritorialSanitaireUseCase {
         ...établissementTerritorialSanitaireOuErreur,
         ...entitéJuridiqueDeRattachement,
       },
+      budgetFinance,
+      appartientAEtablissementsSantePrivesIntérêtsCollectif : entitéJuridiqueDeRattachementEstPriveNonLucratif,
     };
   }
 }

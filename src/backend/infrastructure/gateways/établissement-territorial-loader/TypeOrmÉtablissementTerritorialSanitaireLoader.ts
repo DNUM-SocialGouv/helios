@@ -3,6 +3,7 @@ import { DataSource } from "typeorm";
 import { ActivitéSanitaireModel } from "../../../../../database/models/ActivitéSanitaireModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
 import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
+import { BudgetEtFinancesSanitaireModel } from "../../../../../database/models/BudgetEtFinancesSanitaireModel";
 import { CapacitéAutorisationSanitaireModel } from "../../../../../database/models/CapacitéAutorisationSanitaireModel";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EvenementIndesirableETModel } from "../../../../../database/models/EvenementIndesirableModel";
@@ -12,6 +13,7 @@ import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../databa
 import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
+import { EntitéJuridiqueBudgetFinance } from "../../../métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { ÉtablissementTerritorialSanitaireActivité } from "../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
 import {
   AutorisationSanitaireForme,
@@ -830,6 +832,75 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       nombreDePlacesEnObstétrique: capacités.nombreDePlacesEnObstétrique,
       nombreDePlacesEnPsyHospitalisationPartielle: capacités.nombreDePlacesEnPsyHospitalisationPartielle,
       nombreDePlacesEnSsr: capacités.nombreDePlacesEnSsr,
+    }));
+  }
+  
+  async chargeBudgetFinance(numéroFinessEtablissementTerritorial: string): Promise<EntitéJuridiqueBudgetFinance[]> {
+    const budgetFinance = await (await this.orm).getRepository(BudgetEtFinancesSanitaireModel).find({
+      where: { numéroFinessEtablissementTerritorial },
+    });
+
+    const dateMisAJour = (await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.DIAMANT_QUO_SAN_FINANCE })) as DateMiseÀJourFichierSourceModel;
+
+    return this.construisBudgetFinanceSanitaire(budgetFinance, dateMisAJour);
+  }
+
+  private construisBudgetFinanceSanitaire(
+    budgetFinance: BudgetEtFinancesSanitaireModel[],
+    dateMisAJour: DateMiseÀJourFichierSourceModel
+  ): EntitéJuridiqueBudgetFinance[] {
+    return budgetFinance.map((budget) => ({
+      année: budget.année,
+      dateMiseÀJourSource: dateMisAJour.dernièreMiseÀJour,
+      depensesTitreIGlobal: budget.depensesTitreIGlobal,
+      depensesTitreIIGlobal: budget.depensesTitreIIGlobal,
+      depensesTitreIIIGlobal: budget.depensesTitreIIIGlobal,
+      depensesTitreIVGlobal: budget.depensesTitreIVGlobal,
+      totalDepensesGlobal: budget.depensesTitreIGlobal + budget.depensesTitreIIGlobal + budget.depensesTitreIIIGlobal + budget.depensesTitreIVGlobal,
+
+      recettesTitreIGlobal: budget.recettesTitreIGlobal,
+      recettesTitreIIGlobal: budget.recettesTitreIIGlobal,
+      recettesTitreIIIGlobal: budget.recettesTitreIIIGlobal,
+      recettesTitreIVGlobal: budget.recettesTitreIVGlobal,
+      totalRecettesGlobal: budget.recettesTitreIGlobal + budget.recettesTitreIIGlobal + budget.recettesTitreIIIGlobal + budget.recettesTitreIVGlobal,
+
+      depensesTitreIPrincipales: budget.depensesTitreIH,
+      depensesTitreIIPrincipales: budget.depensesTitreIIH,
+      depensesTitreIIIPrincipales: budget.depensesTitreIIIH,
+      depensesTitreIVPrincipales: budget.depensesTitreIVH,
+      totalDepensesPrincipales: budget.depensesTitreIH + budget.depensesTitreIIH + budget.depensesTitreIIIH + budget.depensesTitreIVH,
+
+      recettesTitreIPrincipales: budget.recettesTitreIH,
+      recettesTitreIIPrincipales: budget.recettesTitreIIH,
+      recettesTitreIIIPrincipales: budget.recettesTitreIIIH,
+      totalRecettesPrincipales: budget.recettesTitreIH + budget.recettesTitreIIH + budget.recettesTitreIIIH,
+
+      depensesTitreIAnnexe: budget.depensesTitreIGlobal - budget.depensesTitreIH,
+      depensesTitreIIAnnexe: budget.depensesTitreIIGlobal - budget.depensesTitreIIH,
+      depensesTitreIIIAnnexe: budget.depensesTitreIIIGlobal - budget.depensesTitreIIIH,
+      depensesTitreIVAnnexe: budget.depensesTitreIVGlobal - budget.depensesTitreIVH,
+      totalDepensesAnnexe:
+        budget.depensesTitreIGlobal -
+        budget.depensesTitreIH +
+        (budget.depensesTitreIIGlobal - budget.depensesTitreIIH) +
+        (budget.depensesTitreIIIGlobal - budget.depensesTitreIIIH) +
+        (budget.depensesTitreIVGlobal - budget.depensesTitreIVH),
+
+      recettesTitreIAnnexe: budget.recettesTitreIGlobal - budget.recettesTitreIH,
+      recettesTitreIIAnnexe: budget.recettesTitreIIGlobal - budget.recettesTitreIIH,
+      recettesTitreIIIAnnexe: budget.recettesTitreIIIGlobal - budget.recettesTitreIIIH,
+      recettesTitreIVAnnexe: budget.recettesTitreIVGlobal,
+      totalRecettesAnnexe:
+        budget.recettesTitreIGlobal -
+        budget.recettesTitreIH +
+        (budget.recettesTitreIIGlobal - budget.recettesTitreIIH) +
+        (budget.recettesTitreIIIGlobal - budget.recettesTitreIIIH) +
+        budget.recettesTitreIVGlobal,
+      resultatNetComptable: budget.resultatNetComptableSan,
+      ratioDependanceFinanciere: budget.ratioDependanceFinanciere,
+      tauxDeCafNetSan: budget.tauxDeCafNetteSan,
     }));
   }
 }
