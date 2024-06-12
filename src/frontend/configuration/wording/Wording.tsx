@@ -278,6 +278,10 @@ export interface Wording {
   readonly TITRE_III: string;
   readonly TITRE_IV: string;
   readonly COMPTE_DE_RÉSULTAT_CF: string;
+  readonly ALLOCATION_DE_RESSOURCES: string;
+  readonly POURCENTAGE: string;
+  readonly REPARTITION_DES_ENVELOPPES: string;
+  readonly REPARTITION_DES_SOUS_ENVELOPPES: string;
 
   readonly PRODUITS_PRINCIPAUX: string;
   readonly PRODUITS_ANNEXES: string;
@@ -286,6 +290,12 @@ export interface Wording {
   readonly BUDGET_PRINCIPAL: string;
   readonly BUDGET_ANNEXE: string;
 
+  readonly DAF: string;
+  readonly DOTATIONS_DE_SOINS_USLD: string;
+  readonly FIR: string;
+  readonly FORFAITS: string;
+  readonly MIGAC: string;
+ 
   // Bloc ressources humaines
   readonly TITRE_BLOC_RESSOURCES_HUMAINES: string;
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ: ReactElement;
@@ -326,6 +336,7 @@ export interface Wording {
   readonly SAE_TITLE: string;
   readonly RPU_TITLE: string;
   readonly ANCRE_TITLE: string;
+  readonly HAPI_TITLE: string;
   readonly SIREC_TITLE: string;
   readonly SIVSS_TITLE: string;
   readonly SIICEA_TITLE: string;
@@ -335,6 +346,7 @@ export interface Wording {
   readonly DIAMANT: ReactElement;
   readonly CNSA: ReactElement;
   readonly ANCRE: ReactElement;
+  readonly HAPI: ReactElement;
   readonly TDB_PERF: ReactElement;
   readonly PMSI: ReactElement;
   readonly ARHGOS: ReactElement;
