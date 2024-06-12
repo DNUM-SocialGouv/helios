@@ -8,13 +8,19 @@ from sqlalchemy.engine import Engine, create_engine
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_diamant
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_diamant
-from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_entites_juridiques_de_la_base
+from datacrawler.extract.lecteur_sql import (
+    récupère_les_numéros_finess_des_entites_juridiques_de_la_base,
+    récupère_les_numéros_finess_des_établissements_de_la_base
+)
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
-from datacrawler.load.nom_des_tables import TABLE_RESSOURCE_ALLOCATION_EJ, FichierSource
+from datacrawler.load.nom_des_tables import TABLE_RESSOURCE_ALLOCATION_EJ, TABLE_RESSOURCE_ALLOCATION_ET, FichierSource
 from datacrawler import (
     écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour
 ) 
-from datacrawler.transform.transforme_les_donnees_allocation_ressource.transforme_les_donnees_allocation_ressource import transforme_les_donnees_allocation_ressource_ej
+from datacrawler.transform.transforme_les_donnees_allocation_ressource.transforme_les_donnees_allocation_ressource import (
+    transforme_les_donnees_allocation_ressource_ej,
+    transforme_les_donnees_allocation_ressource_et
+)
 
 from datacrawler.transform.équivalences_diamant_helios import (
     colonnes_a_lire_allocation_ressource,
@@ -39,15 +45,21 @@ def check_downloaded_men_hapi_file(chemin_local_du_fichier_men_hapi: str) -> pd.
 
 def import_allocation_ressource(donnees_allocation_ressource_filtrees: pd.DataFrame, base_de_données: Engine, chemin_local_du_fichier_men_hapi: str,logger: Logger) -> None:
     numéros_finess_des_entites_juridiques_connues = récupère_les_numéros_finess_des_entites_juridiques_de_la_base(base_de_données)
+    numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)
+
     transform_donnees_allocation_ressource = transforme_les_donnees_allocation_ressource_ej(
         donnees_allocation_ressource_filtrees, numéros_finess_des_entites_juridiques_connues, logger
+    )
+
+    transform_donnees_allocation_ressource_et = transforme_les_donnees_allocation_ressource_et(
+        donnees_allocation_ressource_filtrees, numéros_finess_des_établissements_connus, logger
     )
 
     date_du_fichier_men_hapi = extrais_la_date_du_nom_de_fichier_diamant(chemin_local_du_fichier_men_hapi)
 
     with base_de_données.begin() as connection:
         écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
-            "indicateurs allocation ressource",
+            "indicateurs allocation ressource entité juridique",
             "DIAMANT",
             connection,
             TABLE_RESSOURCE_ALLOCATION_EJ,
@@ -56,6 +68,16 @@ def import_allocation_ressource(donnees_allocation_ressource_filtrees: pd.DataFr
             logger,
         )
 
+    with base_de_données.begin() as connection:
+        écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
+            "indicateurs allocation ressource établissement sanitaire",
+            "DIAMANT",
+            connection,
+            TABLE_RESSOURCE_ALLOCATION_ET,
+            transform_donnees_allocation_ressource_et,
+            [(FichierSource.DIAMANT_MEN_HAPI, date_du_fichier_men_hapi)],
+            logger,
+        ) 
 
 if __name__ == "__main__":
     logger_helios, variables_d_environnement = initialise_les_dépendances()

@@ -19,6 +19,7 @@ TABLES_DES_RECLAMATIONS = "reclamation_etablissement_territorial"
 TABLES_DES_EVENEMENTS_INDESIRABLES = "evenement_indesirable_etablissement_territorial"
 TABLES_DES_INSPECTIONS_ET_CONTROLES = "inspections_controles_etablissement_territorial"
 TABLE_RESSOURCE_ALLOCATION_EJ = "allocation_ressource_ej"
+TABLE_RESSOURCE_ALLOCATION_ET = "allocation_ressource_et"
 
 class FichierSource(Enum):
     DIAMANT_ANN_ERRD_EJ_ET = "ann_errd_ej_et"
