@@ -183,6 +183,10 @@ export const HistogrammeHorizontalWithToggle = ({
                     <div className={styles["barWithToggleWidth"]} key={histogramme.nom}>
                         {/*
                  // @ts-ignore */}
+
+                 {console.log('histogramme.chartData :',histogramme.chartData)}
+                 {console.log('options :', { ...histogramme.optionsHistogramme, aspectRatio })}
+ 
                         <Bar data={histogramme.chartData} options={{ ...histogramme.optionsHistogramme, aspectRatio }} />
                     </div>
                 ))}

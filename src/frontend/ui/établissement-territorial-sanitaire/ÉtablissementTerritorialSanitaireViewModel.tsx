@@ -34,7 +34,7 @@ export class ÉtablissementTerritorialSanitaireViewModel {
       wording,
       établissementTerritorial.qualite,
     )
-    this.entitéJuridiqueBudgetFinanceViewModel = new EntitéJuridiqueBudgetFinanceViewModel(établissementTerritorial.budgetFinance, wording);
+    this.entitéJuridiqueBudgetFinanceViewModel = new EntitéJuridiqueBudgetFinanceViewModel(établissementTerritorial.budgetFinance, établissementTerritorial.allocationRessources, wording);
   }
 
   public get titre(): string {

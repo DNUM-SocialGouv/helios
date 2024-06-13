@@ -139,7 +139,7 @@ export const BlocRessourcesHumainesMédicoSocial = ({
             identifiant="ressources-humaines-taux-d-absentéisme"
             nomDeLIndicateur={wording.TAUX_D_ABSENTÉISME}
             source={Sources(wording.TDB_PERF)}
-          >
+          >ddddddddddddddddddddddddd
             {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.tauxDAbsentéisme(annéeEnCours)}
           </IndicateurGraphique>
         ) : <></>}

@@ -836,7 +836,6 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       nombreDePlacesEnSsr: capacités.nombreDePlacesEnSsr,
     }));
   }
-
   async chargeBudgetFinance(numéroFinessEtablissementTerritorial: string): Promise<EntitéJuridiqueBudgetFinance[]> {
     const budgetFinance = await (await this.orm).getRepository(BudgetEtFinancesSanitaireModel).find({
       where: { numéroFinessEtablissementTerritorial },
