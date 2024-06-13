@@ -37,6 +37,8 @@ export class RécupèreLÉtablissementTerritorialSanitaireUseCase {
 
     const budgetFinance = await this.établissementTerritorialSanitaireLoader.chargeBudgetFinance(numéroFinessÉtablissementTerritorialSanitaire);
 
+    const allocationRessource = await this.établissementTerritorialSanitaireLoader.chargeAllocationRessource(numéroFinessÉtablissementTerritorialSanitaire);
+
     return {
       activités: établissementTerritorialSanitaireActivités,
       autorisationsEtCapacités: établissementTerritorialSanitaireAutorisations,
@@ -46,7 +48,8 @@ export class RécupèreLÉtablissementTerritorialSanitaireUseCase {
         ...entitéJuridiqueDeRattachement,
       },
       budgetFinance,
-      appartientAEtablissementsSantePrivesIntérêtsCollectif : entitéJuridiqueDeRattachementEstPriveNonLucratif,
+      allocationRessource,
+      appartientAEtablissementsSantePrivesIntérêtsCollectif: entitéJuridiqueDeRattachementEstPriveNonLucratif,
     };
   }
 }

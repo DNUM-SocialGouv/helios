@@ -56,6 +56,8 @@ import { AjoutEvenementsIndesirables1710326854362 } from "./migrations/171032685
 import { AjoutTableInspectionsControles1712743083892 } from "./migrations/1712743083892-AjoutTableInspectionsControles";
 import { AjoutDateOuverture1713452627276 } from "./migrations/1713452627276-AjoutDateOuverture";
 import { AjouterTableBudgetEtFinancesSanitaire1714055066913 } from "./migrations/1714055066913-AjouterTableBudget_et_finances_sanitaire";
+import { AjoutTableAllocationRessource1718010452960 } from './migrations/1718010452960-ajoutTableAllocationRessource';
+import { AjoutTableAllocationRessourceET1718177983190 } from "./migrations/1718177983190-AjoutTableAllocationRessourceET";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
@@ -65,6 +67,8 @@ import { AjoutAllocationDeRessourcesToBudgetEtFinance1798688226682 } from "./mig
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "./models/ActivitéSanitaireEntitéJuridiqueModel";
 import { ActivitéSanitaireModel } from "./models/ActivitéSanitaireModel";
+import { AllocationRessourceETModel } from "./models/AllocationRessourceETModel";
+import { AllocationRessourceModel } from "./models/AllocationRessourceModel";
 import { AutorisationMédicoSocialModel } from "./models/AutorisationMédicoSocialModel";
 import { AutorisationSanitaireModel } from "./models/AutorisationSanitaireModel";
 import { AutreActivitéSanitaireModel } from "./models/AutreActivitéSanitaireModel";
@@ -127,6 +131,8 @@ export default new DataSource({
     ReclamationETModel,
     EvenementIndesirableETModel,
     InspectionsControlesETModel,
+    AllocationRessourceModel,
+    AllocationRessourceETModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -189,7 +195,9 @@ export default new DataSource({
     AjouterTableBudgetEtFinancesSanitaire1714055066913,
     AjoutBudgetEtFinanceAProfilETSanitaire1797688226682,
     ModificationValeurProfil1797341938070,
-    AjoutAllocationDeRessourcesToBudgetEtFinance1798688226682
+    AjoutAllocationDeRessourcesToBudgetEtFinance1798688226682,
+    AjoutTableAllocationRessource1718010452960,
+    AjoutTableAllocationRessourceET1718177983190,
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
