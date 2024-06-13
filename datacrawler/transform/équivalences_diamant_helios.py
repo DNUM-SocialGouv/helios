@@ -214,6 +214,7 @@ index_du_bloc_budget_et_finances_entite_juridique: List[str] = ["numero_finess_e
 
 équivalences_diamant_men_hapi_allocation_ressource_helios: ÉquivalencesDiamantHelios = {
     "Finess": ColonneHelios(nom="numero_finess_entite_juridique", type=str),
+<<<<<<< HEAD
     "Année Campagne HAPI": ColonneHelios(nom="annee", type=str),
     "Mois": ColonneHelios(nom="mois", type=str),
     "Enveloppe": ColonneHelios(nom="enveloppe", type=str),
@@ -224,6 +225,8 @@ index_du_bloc_budget_et_finances_entite_juridique: List[str] = ["numero_finess_e
 
 équivalences_diamant_men_hapi_allocation_ressource_et_helios: ÉquivalencesDiamantHelios = {
     "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+=======
+>>>>>>> origin/feat-allocation-de-resources
     "Année Campagne HAPI": ColonneHelios(nom="annee", type=str),
     "Mois": ColonneHelios(nom="mois", type=str),
     "Enveloppe": ColonneHelios(nom="enveloppe", type=str),
